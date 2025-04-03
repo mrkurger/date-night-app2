@@ -1,0 +1,16 @@
+{
+  "name": "date-night-client",
+  "version": "1.0.0",
+  "description": "Frontend for Date Night App",
+  "scripts": {
+    "start": "echo 'Run a simple HTTP server for client/src, e.g., npx http-server client/src'",
+    "build": "echo 'Add build script if using bundlers/compilers'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    # Add Angular, Angular-Sanitize etc. here if managing via npm
+  },
+  "devDependencies": {
+    # Add client devDependencies (e.g., http-server, testing frameworks)
+  }
+}
