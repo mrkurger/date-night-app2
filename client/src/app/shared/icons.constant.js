@@ -1,4 +1,5 @@
-angular.module('classifiedsApp').constant('icons', {
+angular.module('dateNightApp.shared', [])
+.constant('icons', {
   next: `<svg width="24" height="24" viewBox="0 0 24 24">
     <path d="M9 18l6-6-6-6" stroke="currentColor" fill="none" stroke-width="2"/>
   </svg>`,
@@ -44,4 +45,7 @@ angular.module('dateNightApp.shared', [])
     DEFAULT_PROFILE: '/assets/images/default-profile.png',
     LOADING: '/assets/images/loading.gif',
     CHAT: '/assets/images/chat-icon.png'
-  });
+  })
+  .run(['$templateCache', function($templateCache) {
+    // Pre-load any icon templates if needed
+  }]);

@@ -24,3 +24,7 @@ pids/
 
 # OAuth keys
 auth-key.p8
+
+#db
+
+data/

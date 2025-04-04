@@ -2,8 +2,8 @@ angular.module('dateNightApp')
   .config(['$routeProvider', '$locationProvider', '$httpProvider', 
     function($routeProvider, $locationProvider, $httpProvider) {
       
-      // Enable HTML5 mode
-      $locationProvider.html5Mode(true);
+      // Disable HTML5 mode to use hashbang URLs
+      $locationProvider.html5Mode(false);
       $locationProvider.hashPrefix('!');
       
       // Add request interceptor for API URL

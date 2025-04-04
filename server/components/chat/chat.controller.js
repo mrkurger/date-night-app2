@@ -1,6 +1,13 @@
 const ChatService = require('../../services/chat.service');
 
 class ChatController {
+  constructor() {
+    // Bind methods to ensure proper 'this' context
+    this.getMessages = this.getMessages.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+    this.markAsRead = this.markAsRead.bind(this);
+  }
+
   async getMessages(req, res) {
     try {
       const messages = await ChatService.getMessages(

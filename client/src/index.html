@@ -14,17 +14,32 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <!-- Angular and Dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-animate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
   
   <!-- Add a Content Security Policy meta tag -->
   <base href="/">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:3000; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' http://localhost:3000;
+    script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval';
+    style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline';
+    font-src 'self' https://stackpath.bootstrapcdn.com;
+    img-src 'self' data: https:;
+    connect-src 'self' http://localhost:3000 ws://localhost:3000;
+  ">
   
-  <!-- Core Module -->
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico">
+  
+  <!-- Core Module (load first) -->
   <script src="app/core/core.module.js"></script>
+  <script src="app/shared/shared.module.js"></script>
   
   <!-- Feature Modules -->
   <script src="app/features/ads/ads.module.js"></script>
@@ -105,10 +120,8 @@
     </div>
   </nav>
   
-  <!-- Main Content -->
-  <main>
-    <div ng-view></div>
-  </main>
+  <!-- Angular view container -->
+  <div ng-view></div>
   
   <!-- Footer -->
   <footer class="footer mt-5 py-3 bg-light">

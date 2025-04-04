@@ -1,6 +1,4 @@
-// Export the ChatMessage model for easier imports
-const ChatMessage = require('./chat-message.model');
-
 module.exports = {
-  ChatMessage
+  routes: require('./chat.routes'),
+  controller: require('./chat.controller')
 };

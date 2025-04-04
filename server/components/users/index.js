@@ -1,6 +1,7 @@
 // Export the User model for easier imports
-const User = require('./user.model');
+const User = require('../../models/user.model');
 
 module.exports = {
-  User
+  routes: require('./user.routes'),
+  controller: require('./user.controller')
 };

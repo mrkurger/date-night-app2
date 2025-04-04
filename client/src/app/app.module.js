@@ -12,10 +12,14 @@ angular.module('dateNightApp', [
   'dateNightApp.tinder',
   'dateNightApp.gallery'
 ])
-.constant('API_URL', process.env.API_URL || 'http://localhost:3000/api')
-.constant('SOCKET_URL', process.env.SOCKET_URL || 'http://localhost:3000')
-.controller('MainController', ['$scope', 'ImageService', 'ChatPollingService', function($scope, ImageService, ChatPollingService) {
-  // Removed image hover and polling logic; now using new services.
-  ImageService.initHoverEffects();
-  ChatPollingService.start();
-}]);
+.constant('API_CONFIG', {
+  baseUrl: 'http://localhost:3000',
+  apiUrl: 'http://localhost:3000/api',
+  socketUrl: 'http://localhost:3000'
+})
+.controller('MainController', ['$scope', 'ImageService', 'ChatPollingService', 
+  function($scope, ImageService, ChatPollingService) {
+    ImageService.initHoverEffects();
+    ChatPollingService.start();
+  }
+]);

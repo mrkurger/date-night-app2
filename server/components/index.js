@@ -1,15 +1,15 @@
-// Import and re-export all models from component folders
-const { Ad } = require('./ads');
-const { User } = require('./users');
-const { ChatMessage } = require('./chat');
+// Import all models from the models directory
+const User = require('../models/user.model');
+const Ad = require('../models/ad.model');
+const ChatMessage = require('../models/chat-message.model');
 
 module.exports = {
-  // Models
-  Ad,
+  // Models (imported from models directory)
   User,
+  Ad,
   ChatMessage,
   
-  // Components (for potential future controllers/services exports)
+  // Feature components
   ads: require('./ads'),
   users: require('./users'),
   chat: require('./chat')
