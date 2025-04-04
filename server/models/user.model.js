@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const argon2 = require('argon2');
+const bcrypt = require('bcrypt'); // Keep for backward compatibility
 
 // Define the point schema for geospatial data
 const pointSchema = new mongoose.Schema({
@@ -179,6 +180,16 @@ if (mongoose.models.User) {
     updatedAt: {
       type: Date,
       default: Date.now
+    },
+    passwordChangedAt: {
+      type: Date
+    },
+    securityLockout: {
+      type: Date
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0
     }
   }, {
     timestamps: true // Automatically manage createdAt and updatedAt
@@ -194,10 +205,30 @@ if (mongoose.models.User) {
     if (!this.isModified('password')) return next();
 
     try {
-      // Generate a salt
-      const salt = await bcrypt.genSalt(10);
-      // Hash the password along with the new salt
-      this.password = await bcrypt.hash(this.password, salt);
+      // Check if the password is already hashed with bcrypt
+      if (this.password.startsWith('$2')) {
+        // Password is already hashed with bcrypt, no need to hash again
+        return next();
+      }
+
+      // Check if the password is already hashed with argon2
+      if (this.password.startsWith('$argon2')) {
+        // Password is already hashed with argon2, no need to hash again
+        return next();
+      }
+
+      // Hash the password with argon2
+      this.password = await argon2.hash(this.password, {
+        type: argon2.argon2id, // Use argon2id variant (recommended)
+        memoryCost: 2 ** 16, // 64 MiB
+        timeCost: 3, // 3 iterations
+        parallelism: 1, // 1 thread
+        hashLength: 32 // 32 bytes
+      });
+
+      // Set passwordChangedAt timestamp
+      this.passwordChangedAt = new Date();
+
       next();
     } catch (error) {
       next(error);
@@ -212,7 +243,18 @@ if (mongoose.models.User) {
 
   // Method to compare password for login
   userSchema.methods.comparePassword = async function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
+    // Check if password is hashed with bcrypt
+    if (this.password.startsWith('$2')) {
+      return bcrypt.compare(candidatePassword, this.password);
+    }
+
+    // Check if password is hashed with argon2
+    if (this.password.startsWith('$argon2')) {
+      return argon2.verify(this.password, candidatePassword);
+    }
+
+    // If password is not hashed (should never happen), return false
+    return false;
   };
 
   // Method to check if user is an advertiser

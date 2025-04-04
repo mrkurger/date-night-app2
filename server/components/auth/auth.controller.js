@@ -107,6 +107,47 @@ exports.logout = async (req, res) => {
         online: false,
         lastActive: new Date()
       });
+
+      // Blacklist the current token
+      if (req.token) {
+        const TokenBlacklist = require('../../models/token-blacklist.model');
+
+        // Get token expiration from decoded token
+        const expiresAt = new Date(req.tokenDecoded.exp * 1000);
+
+        // Add token to blacklist
+        await TokenBlacklist.blacklist(
+          req.token,
+          'access',
+          req.user._id,
+          'logout',
+          expiresAt
+        );
+
+        // Also blacklist refresh token if it exists
+        if (req.cookies && req.cookies.refresh_token) {
+          try {
+            const refreshToken = req.cookies.refresh_token;
+            const decoded = jwt.verify(
+              refreshToken,
+              process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET
+            );
+
+            const refreshExpiresAt = new Date(decoded.exp * 1000);
+
+            await TokenBlacklist.blacklist(
+              refreshToken,
+              'refresh',
+              req.user._id,
+              'logout',
+              refreshExpiresAt
+            );
+          } catch (error) {
+            // If refresh token is invalid, just continue
+            console.error('Error blacklisting refresh token:', error.message);
+          }
+        }
+      }
     }
 
     // Clear auth cookies

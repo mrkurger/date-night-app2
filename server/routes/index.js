@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const requestValidator = require('../middleware/requestValidator');
 const { csrfProtection, sendCsrfToken } = require('../middleware/csrf');
+const { staticCache, dynamicCache, noCache } = require('../middleware/cache');
 
 // Add correlation ID to each request for better logging and debugging
 router.use((req, res, next) => {

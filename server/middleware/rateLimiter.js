@@ -1,4 +1,5 @@
 const rateLimit = require('express-rate-limit');
+const { logger } = require('../utils/logger');
 
 /**
  * Create a rate limiter with the specified window and max requests
@@ -12,8 +13,68 @@ const createLimiter = (windowMs, max, message = 'Too many requests, please try a
   max,
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-  message: { success: false, error: message }
+  message: { success: false, error: message },
+  // Log rate limit hits
+  handler: (req, res, next, options) => {
+    logger.warn(`Rate limit exceeded: ${req.method} ${req.originalUrl}`, {
+      ip: req.ip,
+      userId: req.user ? req.user.id : 'unauthenticated',
+      correlationId: req.correlationId,
+      rateLimit: {
+        limit: options.max,
+        current: req.rateLimit.current,
+        remaining: req.rateLimit.remaining,
+        resetTime: new Date(req.rateLimit.resetTime)
+      }
+    });
+
+    res.status(options.statusCode).json(options.message);
+  }
 });
+
+/**
+ * Create a user-based rate limiter
+ * Uses user ID for authenticated users and IP for unauthenticated users
+ * @param {number} windowMs - Time window in milliseconds
+ * @param {number} maxAnonymous - Maximum requests for anonymous users
+ * @param {number} maxAuthenticated - Maximum requests for authenticated users
+ * @param {string} message - Error message to return
+ * @returns {Function} Express middleware
+ */
+const createUserLimiter = (windowMs, maxAnonymous, maxAuthenticated, message = 'Too many requests, please try again later.') => {
+  const limiter = rateLimit({
+    windowMs,
+    max: (req) => {
+      // Use higher limit for authenticated users
+      return req.user ? maxAuthenticated : maxAnonymous;
+    },
+    // Use user ID as key for authenticated users, IP for anonymous
+    keyGenerator: (req) => {
+      return req.user ? `user:${req.user.id}` : `ip:${req.ip}`;
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { success: false, error: message },
+    // Log rate limit hits
+    handler: (req, res, next, options) => {
+      logger.warn(`Rate limit exceeded: ${req.method} ${req.originalUrl}`, {
+        ip: req.ip,
+        userId: req.user ? req.user.id : 'unauthenticated',
+        correlationId: req.correlationId,
+        rateLimit: {
+          limit: options.max,
+          current: req.rateLimit.current,
+          remaining: req.rateLimit.remaining,
+          resetTime: new Date(req.rateLimit.resetTime)
+        }
+      });
+
+      res.status(options.statusCode).json(options.message);
+    }
+  });
+
+  return limiter;
+};
 
 module.exports = {
   // General API limiter - 100 requests per 15 minutes

@@ -18,6 +18,7 @@ const errorHandler = require('./middleware/errorHandler');
 const { csrfMiddleware } = require('./middleware/csrf');
 const cspNonce = require('./middleware/cspNonce');
 const securityHeaders = require('./middleware/securityHeaders');
+const { conditionalCache, etagCache } = require('./middleware/cache');
 
 // Initialize express
 const app = express();
@@ -27,6 +28,10 @@ app.use(cspNonce);
 
 // Apply additional security headers
 app.use(securityHeaders);
+
+// Apply caching middleware
+app.use(conditionalCache());
+app.use(etagCache());
 
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, 'logs');
@@ -40,21 +45,14 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
 
-// Setup request logging
-// Create a write stream for access logs
-const accessLogStream = fs.createWriteStream(
-  path.join(logsDir, 'access.log'),
-  { flags: 'a' }
-);
+// Setup request logging with winston
+const { requestLogger, logger } = require('./utils/logger');
 
-// Use morgan for logging
-if (process.env.NODE_ENV === 'production') {
-  // Log to file in production
-  app.use(morgan('combined', { stream: accessLogStream }));
-} else {
-  // Log to console in development
-  app.use(morgan('dev'));
-}
+// Use request logger middleware
+app.use(requestLogger);
+
+// Log application startup
+logger.info(`Application starting in ${process.env.NODE_ENV} mode`);
 
 // Security middleware
 // Set security HTTP headers with improved CSP
@@ -134,8 +132,9 @@ app.use(hpp({
 // Compression middleware
 app.use(compression());
 
-// Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Secure file serving
+const { secureFileServing } = require('./middleware/fileAccess');
+app.use('/uploads/*', secureFileServing);
 
 // MongoDB connection with retry logic
 const connectWithRetry = async (retries = 5, delay = 5000) => {

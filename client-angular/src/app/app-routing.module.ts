@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 
 const routes: Routes = [
   { path: '', redirectTo: '/ad-browser', pathMatch: 'full' },
   {
     path: 'ad-browser',
-    loadChildren: () => import('./features/ad-browser/ad-browser.module').then(m => m.AdBrowserModule)
+    loadChildren: () => import('./features/ad-browser/ad-browser.module').then(m => m.AdBrowserModule),
+    data: { preload: true, title: 'Browse Ads' }
   },
   {
     path: 'ad-details/:adId',
@@ -14,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+    data: { preload: true, title: 'Authentication' }
   },
   {
     path: 'profile',
@@ -57,7 +60,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: SelectivePreloadingStrategy,
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled',
+    initialNavigation: 'enabledBlocking' // for SSR
+  })],
+  exports: [RouterModule],
+  providers: [SelectivePreloadingStrategy]
 })
 export class AppRoutingModule { }

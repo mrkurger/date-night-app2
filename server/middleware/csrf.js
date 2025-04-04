@@ -1,41 +1,72 @@
-const csrf = require('csurf');
+const { doubleCsrf } = require('csrf-csrf');
 const cookieParser = require('cookie-parser');
 
-// Configure CSRF protection
-const csrfProtection = csrf({
-  cookie: {
+// CSRF protection configuration
+const csrfProtectionConfig = {
+  getSecret: () => process.env.CSRF_SECRET || 'default-csrf-secret-change-in-production',
+  cookieName: 'x-csrf-token',
+  cookieOptions: {
     httpOnly: true,
+    sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
+    path: '/'
+  },
+  size: 64, // Token size in bytes
+  ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
+  getTokenFromRequest: (req) => {
+    // Check for token in headers, then in request body
+    return req.headers['x-csrf-token'] || (req.body && req.body._csrf);
   }
-});
+};
+
+// Initialize CSRF protection
+const { generateToken, doubleCsrfProtection, validateRequest } = doubleCsrf(csrfProtectionConfig);
 
 // Middleware to handle CSRF errors
 const handleCsrfError = (err, req, res, next) => {
-  if (err.code !== 'EBADCSRFTOKEN') {
-    return next(err);
+  if (err && err.code === 'CSRF_INVALID') {
+    return res.status(403).json({
+      success: false,
+      message: 'Invalid or missing CSRF token. Please refresh the page and try again.'
+    });
   }
-
-  // Handle CSRF token errors
-  res.status(403).json({
-    success: false,
-    message: 'Invalid or missing CSRF token. Please refresh the page and try again.'
-  });
+  next(err);
 };
 
 // Middleware to send CSRF token to client
 const sendCsrfToken = (req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken(), {
+  // Generate a new CSRF token
+  const csrfToken = generateToken(res);
+
+  // Set token in a non-HttpOnly cookie for JavaScript access
+  res.cookie('XSRF-TOKEN', csrfToken, {
     httpOnly: false, // Client-side JavaScript needs to read this
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
+    sameSite: 'strict',
+    path: '/'
   });
+
   next();
 };
 
+// Middleware to validate CSRF token
+const validateCsrfToken = (req, res, next) => {
+  try {
+    validateRequest(req, res);
+    next();
+  } catch (error) {
+    res.status(403).json({
+      success: false,
+      message: 'Invalid or missing CSRF token. Please refresh the page and try again.'
+    });
+  }
+};
+
 module.exports = {
-  csrfProtection,
+  csrfProtection: doubleCsrfProtection,
   handleCsrfError,
   sendCsrfToken,
-  csrfMiddleware: [cookieParser(), csrfProtection, handleCsrfError, sendCsrfToken]
+  validateCsrfToken,
+  generateToken,
+  csrfMiddleware: [cookieParser(), doubleCsrfProtection, handleCsrfError, sendCsrfToken]
 };

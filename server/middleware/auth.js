@@ -1,7 +1,11 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const TokenBlacklist = require('../models/token-blacklist.model');
 
-// Middleware to authenticate users
+/**
+ * Middleware to authenticate users
+ * Verifies JWT token and checks if it's blacklisted
+ */
 exports.protect = exports.authenticate = async (req, res, next) => {
   try {
     let token;
@@ -22,6 +26,15 @@ exports.protect = exports.authenticate = async (req, res, next) => {
       });
     }
 
+    // Check if token is blacklisted
+    const isBlacklisted = await TokenBlacklist.isBlacklisted(token);
+    if (isBlacklisted) {
+      return res.status(401).json({
+        success: false,
+        message: 'Token has been revoked. Please log in again.'
+      });
+    }
+
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -35,12 +48,30 @@ exports.protect = exports.authenticate = async (req, res, next) => {
       });
     }
 
+    // Check if user has a security lockout
+    if (user.securityLockout && user.securityLockout > new Date()) {
+      return res.status(401).json({
+        success: false,
+        message: 'Account locked for security reasons. Please reset your password.'
+      });
+    }
+
+    // Check if user's last password change was after token issuance
+    if (user.passwordChangedAt && decoded.iat < user.passwordChangedAt.getTime() / 1000) {
+      return res.status(401).json({
+        success: false,
+        message: 'Password has been changed. Please log in again.'
+      });
+    }
+
     // Update last active timestamp
     user.lastActive = new Date();
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
-    // Add user to request
+    // Add user and token info to request
     req.user = user;
+    req.token = token;
+    req.tokenDecoded = decoded;
 
     next();
   } catch (error) {
@@ -66,7 +97,10 @@ exports.protect = exports.authenticate = async (req, res, next) => {
   }
 };
 
-// Middleware for optional authentication
+/**
+ * Middleware for optional authentication
+ * Verifies JWT token if present but doesn't require it
+ */
 exports.optionalAuth = async (req, res, next) => {
   try {
     let token;
@@ -85,6 +119,12 @@ exports.optionalAuth = async (req, res, next) => {
       return next();
     }
 
+    // Check if token is blacklisted
+    const isBlacklisted = await TokenBlacklist.isBlacklisted(token);
+    if (isBlacklisted) {
+      return next();
+    }
+
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -92,12 +132,24 @@ exports.optionalAuth = async (req, res, next) => {
     const user = await User.findById(decoded.id);
 
     if (user) {
+      // Check if user has a security lockout
+      if (user.securityLockout && user.securityLockout > new Date()) {
+        return next();
+      }
+
+      // Check if user's last password change was after token issuance
+      if (user.passwordChangedAt && decoded.iat < user.passwordChangedAt.getTime() / 1000) {
+        return next();
+      }
+
       // Update last active timestamp
       user.lastActive = new Date();
-      await user.save();
+      await user.save({ validateBeforeSave: false });
 
-      // Add user to request
+      // Add user and token info to request
       req.user = user;
+      req.token = token;
+      req.tokenDecoded = decoded;
     }
 
     next();
@@ -105,4 +157,28 @@ exports.optionalAuth = async (req, res, next) => {
     // Continue without authentication if token is invalid
     next();
   }
+};
+
+/**
+ * Middleware to restrict access to specific roles
+ * @param {Array} roles - Array of allowed roles
+ */
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required'
+      });
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You do not have permission to perform this action'
+      });
+    }
+
+    next();
+  };
 };

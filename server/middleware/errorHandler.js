@@ -50,38 +50,76 @@ const handleCastErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+// Import logger
+const { logger } = require('../utils/logger');
+
 /**
  * Send error response in development environment
  */
-const sendErrorDev = (err, res) => {
+const sendErrorDev = (err, req, res) => {
+  // Log error with request details
+  logger.error(`${err.statusCode} - ${err.message}`, {
+    error: err,
+    stack: err.stack,
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,
+    params: req.params,
+    query: req.query,
+    correlationId: req.correlationId,
+    userId: req.user ? req.user.id : 'unauthenticated'
+  });
+
   res.status(err.statusCode).json({
+    success: false,
     status: err.status,
     error: err,
     message: err.message,
-    stack: err.stack
+    stack: err.stack,
+    correlationId: req.correlationId
   });
 };
 
 /**
  * Send error response in production environment
  */
-const sendErrorProd = (err, res) => {
+const sendErrorProd = (err, req, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
+    // Log operational errors
+    logger.warn(`${err.statusCode} - ${err.message}`, {
+      error: err.name,
+      method: req.method,
+      url: req.originalUrl,
+      correlationId: req.correlationId,
+      userId: req.user ? req.user.id : 'unauthenticated'
+    });
+
     res.status(err.statusCode).json({
+      success: false,
       status: err.status,
-      message: err.message
+      message: err.message,
+      correlationId: req.correlationId
     });
   }
   // Programming or other unknown error: don't leak error details
   else {
-    // Log error for developers
-    console.error('ERROR 💥', err);
+    // Log programming errors with full details
+    logger.error(`500 - Unhandled Error: ${err.message}`, {
+      error: err,
+      stack: err.stack,
+      method: req.method,
+      url: req.originalUrl,
+      correlationId: req.correlationId,
+      userId: req.user ? req.user.id : 'unauthenticated'
+    });
 
     // Send generic message
     res.status(500).json({
+      success: false,
       status: 'error',
-      message: 'Something went wrong'
+      message: 'Something went wrong',
+      correlationId: req.correlationId
     });
   }
 };
@@ -93,12 +131,19 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  // Ensure correlation ID is available
+  if (!req.correlationId) {
+    req.correlationId = require('uuid').v4();
+  }
+
   // Different error handling for development and production
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   } else {
     let error = { ...err };
     error.message = err.message;
+    error.stack = err.stack;
+    error.name = err.name;
 
     // Handle specific error types
     if (error.name === 'CastError') error = handleCastErrorDB(error);
@@ -106,8 +151,14 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    if (error.name === 'MulterError') {
+      error = new AppError(`File upload error: ${error.message}`, 400);
+    }
+    if (error.name === 'SyntaxError' && error.message.includes('JSON')) {
+      error = new AppError('Invalid JSON in request body', 400);
+    }
 
-    sendErrorProd(error, res);
+    sendErrorProd(error, req, res);
   }
 };
 
