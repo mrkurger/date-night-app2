@@ -31,7 +31,7 @@ angular.module('dateNightApp')
     }
     
     // Set auth header for all requests
-    function setAuthHeader($http) {
+    function setAuthHeader() {
       const token = getToken();
       if (token) {
         $http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -39,7 +39,7 @@ angular.module('dateNightApp')
     }
     
     // Initialize auth header
-    setAuthHeader($http);
+    setAuthHeader();
     
     return {
       register: function(userData) {
@@ -48,7 +48,7 @@ angular.module('dateNightApp')
             if (response.data.token) {
               saveToken(response.data.token);
               saveUser(response.data.user);
-              setAuthHeader($http);
+              setAuthHeader();
             }
             return response;
           });
@@ -60,7 +60,7 @@ angular.module('dateNightApp')
             if (response.data.token) {
               saveToken(response.data.token);
               saveUser(response.data.user);
-              setAuthHeader($http);
+              setAuthHeader();
             }
             return response;
           });
@@ -80,6 +80,7 @@ angular.module('dateNightApp')
       
       getToken: getToken,
       getCurrentUser: getCurrentUser,
+      setAuthHeader: setAuthHeader,
       
       isAdvertiser: function() {
         const user = getCurrentUser();

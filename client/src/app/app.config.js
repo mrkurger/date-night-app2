@@ -91,10 +91,21 @@ angular.module('dateNightApp')
         }]);
     }
   ])
-  .run(['$rootScope', 'AuthService', 'ChatService', function($rootScope, AuthService, ChatService) {
+  .run(['$rootScope', 'AuthService', 'ChatService', '$location', function($rootScope, AuthService, ChatService, $location) {
     // Initialize authentication state
     $rootScope.isAuthenticated = AuthService.isAuthenticated();
     $rootScope.currentUser = AuthService.getCurrentUser();
+    
+    // Add logout function to rootScope
+    $rootScope.logout = function() {
+      AuthService.logout()
+        .then(function() {
+          $location.path('/login');
+        })
+        .catch(function(error) {
+          console.error('Logout error:', error);
+        });
+    };
     
     // Set up socket authentication if user is logged in
     if ($rootScope.isAuthenticated && $rootScope.currentUser) {
