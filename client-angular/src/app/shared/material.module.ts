@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,8 +45,22 @@ const materialModules = [
   MatChipsModule
 ];
 
+const commonModules = [
+  CommonModule,
+  ReactiveFormsModule,
+  FormsModule,
+  RouterModule
+];
+
 @NgModule({
-  imports: [...materialModules],
-  exports: [...materialModules]
+  imports: [...materialModules, ...commonModules],
+  exports: [...materialModules, ...commonModules]
 })
 export class MaterialModule { }
+
+// Export a SharedModule for backward compatibility
+@NgModule({
+  imports: [MaterialModule],
+  exports: [MaterialModule]
+})
+export class SharedModule { }

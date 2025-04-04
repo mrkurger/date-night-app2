@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService, ToastNotification as Notification, NotificationType } from '../../../core/services/notification.service';
+import { NotificationService, ToastNotification, NotificationType } from '../../../core/services/notification.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
@@ -115,6 +115,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   activeNotifications: Array<{
+    id?: string;
     type: NotificationType;
     message: string;
     state: 'visible' | 'hidden';
@@ -127,8 +128,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.notificationService.toasts$.subscribe(notification => {
-        this.showNotification(notification);
+      this.notificationService.toasts$.subscribe(notifications => {
+        // Handle array of notifications
+        if (Array.isArray(notifications)) {
+          // Process only new notifications that aren't already displayed
+          const currentIds = this.activeNotifications.map(n => n.id);
+          notifications.forEach(notification => {
+            if (!notification.id || !currentIds.includes(notification.id)) {
+              this.showNotification(notification);
+            }
+          });
+        }
       })
     );
   }
@@ -143,21 +153,22 @@ export class NotificationComponent implements OnInit, OnDestroy {
     });
   }
 
-  showNotification(notification: Notification): void {
+  showNotification(notification: ToastNotification): void {
     const newNotification = {
+      id: notification.id,
       type: notification.type,
       message: notification.message,
       state: 'visible' as 'visible' | 'hidden'
     };
-    
+
     this.activeNotifications.push(newNotification);
-    
+
     // Set timeout to remove notification
     const index = this.activeNotifications.length - 1;
     const timeoutId = window.setTimeout(() => {
       this.hideNotification(index);
     }, notification.duration || 3000);
-    
+
     this.activeNotifications[index].timeoutId = timeoutId;
   }
 
@@ -178,7 +189,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
       if (this.activeNotifications[index].timeoutId) {
         clearTimeout(this.activeNotifications[index].timeoutId);
       }
-      
+
+      // If notification has an ID, tell the service to remove it
+      const notificationId = this.activeNotifications[index].id;
+      if (notificationId) {
+        this.notificationService.removeToast(notificationId);
+      }
+
       // Remove notification from array
       this.activeNotifications.splice(index, 1);
     }

@@ -15,8 +15,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "seed": "node scripts/seed.js",
-    "mongodb": "mongod --dbpath ./data/db",
-    "dev": "concurrently \"npm run mongodb\" \"npm run start:server\" \"npm run start:client\""
+    "mongodb": "node scripts/ensure-mongodb.js",
+    "dev": "node scripts/ensure-mongodb.js && concurrently \"npm run start:server\" \"npm run start:client\""
   },
   "devDependencies": {
     "concurrently": "^8.0.1",

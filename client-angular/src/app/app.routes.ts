@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'ads',
@@ -26,27 +26,27 @@ export const routes: Routes = [
   {
     path: 'ad-management',
     loadChildren: () => import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'chat',
     loadChildren: () => import('./features/chat/chat.module').then(m => m.ChatModule),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'gallery',
     loadComponent: () => import('./features/gallery/gallery.component').then(m => m.GalleryComponent),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'tinder',
     loadComponent: () => import('./features/tinder/tinder.component').then(m => m.TinderComponent),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'payment',
     loadChildren: () => import('./features/payment/payment.module').then(m => m.PaymentModule),
-    canActivate: [authGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'touring',

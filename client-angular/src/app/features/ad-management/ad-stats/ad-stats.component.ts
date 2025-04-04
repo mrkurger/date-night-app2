@@ -4,6 +4,8 @@ import { MaterialModule } from '../../../shared/material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { AdService } from '../../../core/services/ad.service';
 
 @Component({
   selector: 'app-ad-stats',
@@ -17,9 +19,16 @@ export class AdStatsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   viewsData: any[] = [];
   clicksData: any[] = [];
+  adTitle = 'Loading...';
+  displayedColumns: string[] = ['date', 'views', 'clicks', 'inquiries', 'conversionRate'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(
+    private route: ActivatedRoute,
+    private adService: AdService
+  ) {}
 
   getTotalViews(data: any[]): number {
     return data.reduce((sum, item) => sum + (item.views || 0), 0);
@@ -40,7 +49,40 @@ export class AdStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadSampleData();
+    const adId = this.route.snapshot.paramMap.get('id');
+    if (adId) {
+      this.loading = true;
+      this.adService.getAdById(adId).subscribe({
+        next: (ad) => {
+          this.adTitle = ad.title;
+          this.loadSampleData(); // Replace with real data when available
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error loading ad:', error);
+          this.adTitle = 'Unknown Ad';
+          this.loading = false;
+        }
+      });
+    } else {
+      this.adTitle = 'Unknown Ad';
+      this.loadSampleData();
+    }
+  }
+
+  getBarHeight(item: any, data: any[]): string {
+    const maxValue = Math.max(...data.map(d => d.value));
+    const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
+    return `${percentage}%`;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   private loadSampleData() {
@@ -54,9 +96,13 @@ export class AdStatsComponent implements OnInit {
     }));
 
     this.dataSource.data = sampleData;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    
+
+    // Set up paginator and sort after data is loaded
+    setTimeout(() => {
+      if (this.paginator) this.dataSource.paginator = this.paginator;
+      if (this.sort) this.dataSource.sort = this.sort;
+    });
+
     this.viewsData = sampleData.map(item => ({
       name: item.date,
       value: item.views

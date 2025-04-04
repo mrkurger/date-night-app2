@@ -115,31 +115,42 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const connectWithRetry = async (retries = 5, delay = 5000) => {
   for (let i = 0; i < retries; i++) {
     try {
+      // Log the MongoDB URI we're connecting to (without credentials)
+      const sanitizedUri = config.mongoUri.replace(/:\/\/([^:]+):([^@]+)@/, '://$1:***@');
+      console.log(`Connecting to MongoDB: ${sanitizedUri}`);
+
+      // Connect with more robust options
       await mongoose.connect(config.mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        serverSelectionTimeoutMS: 10000,
+        connectTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+        family: 4 // Use IPv4, skip trying IPv6
       });
+
       console.log('MongoDB connected successfully');
+
+      // Set up event listeners for connection issues
+      mongoose.connection.on('disconnected', () => {
+        console.log('MongoDB disconnected');
+      });
+
+      mongoose.connection.on('reconnected', () => {
+        console.log('MongoDB reconnected');
+      });
+
+      mongoose.connection.on('error', (err) => {
+        console.error('MongoDB connection error:', err);
+      });
+
       break;
     } catch (err) {
-      if (err.code === 'EADDRINUSE') {
-        console.log('MongoDB address in use, attempting to recover...');
-        try {
-          // Close existing connections
-          await mongoose.connection.close();
-          // Wait for port to be released
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          continue;
-        } catch (closeErr) {
-          console.error('Error closing connection:', closeErr);
-        }
-      }
-      
+      console.error(`MongoDB connection attempt ${i+1}/${retries} failed:`, err.message);
+
       if (i === retries - 1) {
-        console.error('MongoDB connection failed after retries:', err);
+        console.error('MongoDB connection failed after all retries. Error details:', err);
         process.exit(1);
       }
-      
+
       console.log(`Retrying connection in ${delay/1000} seconds...`);
       await new Promise(resolve => setTimeout(resolve, delay));
     }

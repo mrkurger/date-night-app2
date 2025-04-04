@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
 // Middleware to authenticate users
-exports.authenticate = async (req, res, next) => {
+exports.protect = exports.authenticate = async (req, res, next) => {
   try {
     // Get token from header
     const authHeader = req.headers.authorization;

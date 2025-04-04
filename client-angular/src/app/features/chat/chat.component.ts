@@ -103,7 +103,9 @@ export class ChatComponent implements OnInit {
   }
 
   setupSocketListeners(): void {
-    this.chatService.onNewMessage().subscribe(message => {
+    this.chatService.connectSocket();
+
+    this.chatService.onNewMessage((message) => {
       // Update messages array if the message is for the current chat
       if (message.sender.id === this.recipientId || (message.recipient && message.recipient.id === this.recipientId)) {
         this.messages = [...this.messages, message];

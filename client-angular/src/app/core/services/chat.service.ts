@@ -1,8 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
+
+export interface ChatMessage {
+  _id: string;
+  roomId: string;
+  sender: string;
+  recipient?: string;
+  content: string;
+  timestamp: Date;
+  read: boolean;
+  type?: string;
+  attachments?: string[];
+  metadata?: any;
+  isEncrypted?: boolean;
+  encryptionData?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +26,19 @@ export class ChatService {
   private readonly apiUrl = environment.apiUrl + '/chat';
   private socket: Socket;
 
+  // Add unreadCount$ BehaviorSubject
+  private unreadCountSubject = new BehaviorSubject<number>(0);
+  public unreadCount$ = this.unreadCountSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.socket = io(environment.apiUrl, {
       autoConnect: false,
       withCredentials: true
+    });
+
+    // Listen for unread count updates from socket
+    this.socket.on('unread-count-update', (count: number) => {
+      this.unreadCountSubject.next(count);
     });
   }
 
@@ -38,16 +62,20 @@ export class ChatService {
     return this.http.get<any[]>(`${this.apiUrl}/rooms`);
   }
 
-  getMessages(roomId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/rooms/${roomId}/messages`);
+  getMessages(roomId: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/messages`);
   }
 
-  sendMessage(roomId: string, content: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/rooms/${roomId}/messages`, { content });
+  sendMessage(roomId: string, content: string): Observable<ChatMessage> {
+    return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, { message: content });
   }
 
   markMessagesAsRead(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/read`, {});
+  }
+
+  getUnreadCounts(): Observable<{ total: number; rooms: { [roomId: string]: number } }> {
+    return this.http.get<{ total: number; rooms: { [roomId: string]: number } }>(`${this.apiUrl}/unread`);
   }
 
   connectSocket(): void {
