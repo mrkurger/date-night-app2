@@ -2,6 +2,22 @@ angular.module('dateNightApp')
   .config(['$routeProvider', '$locationProvider', '$httpProvider', 
     function($routeProvider, $locationProvider, $httpProvider) {
       
+      // Enable HTML5 mode
+      $locationProvider.html5Mode(true);
+      $locationProvider.hashPrefix('!');
+      
+      // Add request interceptor for API URL
+      $httpProvider.interceptors.push(['API_URL', function(API_URL) {
+        return {
+          request: function(config) {
+            if (!config.url.startsWith('http')) {
+              config.url = API_URL + config.url;
+            }
+            return config;
+          }
+        };
+      }]);
+
       // Shared auth resolve function
       var requireAuth = ['AuthService', '$location', function(AuthService, $location) {
         if (!AuthService.isAuthenticated()) {
@@ -66,10 +82,6 @@ angular.module('dateNightApp')
         .otherwise({
           redirectTo: '/'
         });
-      
-      // Use HTML5 History API if available
-      $locationProvider.hashPrefix('!');
-      // TODO: Evaluate enabling $locationProvider.html5Mode(true) for cleaner URLs.
       
       // Configure HTTP interceptors for authentication
       $httpProvider.interceptors.push(['$q', '$location', 'AuthService', 

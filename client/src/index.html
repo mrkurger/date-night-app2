@@ -20,7 +20,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
   
   <!-- Add a Content Security Policy meta tag -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdnjs.cloudflare.com; style-src 'self' https://stackpath.bootstrapcdn.com">
+  <base href="/">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:3000; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline'">
   
   <!-- App Scripts -->
   <script src="app/app.module.js"></script>
@@ -44,7 +45,7 @@
   <script src="app/features/chat/chat.controller.js"></script>
   <script src="app/features/profile/profile.controller.js"></script>
 </head>
-<body>
+<body ng-cloak>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
