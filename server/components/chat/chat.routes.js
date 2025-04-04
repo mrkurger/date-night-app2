@@ -6,13 +6,40 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 // All chat routes require authentication
 router.use(authenticateToken);
 
-// Get messages between current user and recipient
-router.get('/:recipientId', chatController.getMessages);
+// Get rooms for current user
+router.get('/rooms', chatController.getRooms);
 
-// Send a new message
-router.post('/', chatController.sendMessage);
+// Get messages for a room
+router.get('/rooms/:roomId/messages', chatController.getMessages);
 
-// Mark message as read
-router.put('/:messageId/read', chatController.markAsRead);
+// Send a message to a room
+router.post('/rooms/:roomId/messages', chatController.sendMessage);
+
+// Create or get a direct message room
+router.post('/rooms/direct', chatController.createDirectRoom);
+
+// Create or get an ad chat room
+router.post('/rooms/ad', chatController.createAdRoom);
+
+// Create a group chat room
+router.post('/rooms/group', chatController.createGroupRoom);
+
+// Mark messages as read in a room
+router.post('/rooms/:roomId/read', chatController.markMessagesAsRead);
+
+// Get unread message counts
+router.get('/unread', chatController.getUnreadCounts);
+
+// Leave a group chat room
+router.post('/rooms/:roomId/leave', chatController.leaveRoom);
+
+// Get a specific room
+router.get('/rooms/:roomId', chatController.getRoom);
+
+// Setup room encryption
+router.post('/rooms/:roomId/encryption', chatController.setupRoomEncryption);
+
+// Update message expiry settings
+router.post('/rooms/:roomId/expiry', chatController.updateMessageExpiry);
 
 module.exports = router;

@@ -31,8 +31,33 @@ if (mongoose.models.ChatRoom) {
       },
       lastRead: {
         type: Date
+      },
+      // For E2E encryption
+      publicKey: {
+        type: String
+      },
+      encryptedRoomKey: {
+        type: String
       }
     }],
+    // Encryption settings
+    encryptionEnabled: {
+      type: Boolean,
+      default: true
+    },
+    encryptionVersion: {
+      type: Number,
+      default: 1
+    },
+    // For message auto-deletion
+    messageExpiryEnabled: {
+      type: Boolean,
+      default: false
+    },
+    messageExpiryTime: {
+      type: Number, // in hours
+      default: 24
+    },
     ad: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ad'

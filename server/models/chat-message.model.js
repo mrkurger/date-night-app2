@@ -22,7 +22,15 @@ if (mongoose.models.ChatMessage) {
       type: String,
       required: true,
       trim: true,
-      maxlength: 2000
+      maxlength: 10000 // Increased to accommodate encrypted content
+    },
+    isEncrypted: {
+      type: Boolean,
+      default: false
+    },
+    encryptionData: {
+      iv: String,
+      authTag: String
     },
     attachments: [{
       type: {
@@ -32,7 +40,15 @@ if (mongoose.models.ChatMessage) {
       url: String,
       name: String,
       size: Number,
-      mimeType: String
+      mimeType: String,
+      isEncrypted: {
+        type: Boolean,
+        default: false
+      },
+      encryptionData: {
+        iv: String,
+        authTag: String
+      }
     }],
     read: {
       type: Boolean,
@@ -48,6 +64,9 @@ if (mongoose.models.ChatMessage) {
     },
     metadata: {
       type: mongoose.Schema.Types.Mixed
+    },
+    expiresAt: {
+      type: Date
     },
     createdAt: {
       type: Date,

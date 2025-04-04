@@ -3,6 +3,7 @@ const ChatRoom = require('../models/chat-room.model');
 const User = require('../models/user.model');
 const Ad = require('../models/ad.model');
 const socketService = require('./socket.service');
+const cryptoHelpers = require('../utils/cryptoHelpers');
 const { AppError } = require('../middleware/errorHandler');
 
 class ChatService {
@@ -10,7 +11,6 @@ class ChatService {
   // TODO: Implement presence detection system
   // TODO: Add offline support with message storage
   // TODO: Add group chat support with roles
-  // TODO: Implement end-to-end encryption
   /**
    * Get messages for a chat room
    * @param {string} roomId - Chat room ID
@@ -75,7 +75,9 @@ class ChatService {
         recipientId = null,
         attachments = [],
         type = 'text',
-        metadata = {}
+        metadata = {},
+        isEncrypted = false,
+        encryptionData = null
       } = options;
 
       // Get chat room
@@ -94,6 +96,13 @@ class ChatService {
         throw new AppError('You are not a participant in this chat room', 403);
       }
 
+      // Handle message expiry if enabled
+      let expiresAt = null;
+      if (room.messageExpiryEnabled && room.messageExpiryTime > 0 && type !== 'system') {
+        expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + room.messageExpiryTime);
+      }
+
       // Create message
       const chatMessage = new ChatMessage({
         sender: senderId,
@@ -102,7 +111,10 @@ class ChatService {
         message,
         attachments,
         type,
-        metadata
+        metadata,
+        isEncrypted,
+        encryptionData,
+        expiresAt
       });
 
       await chatMessage.save();
@@ -115,8 +127,9 @@ class ChatService {
         .populate('sender', 'username profileImage')
         .populate('recipient', 'username profileImage');
 
-      // Notify room participants via WebSocket
-      socketService.sendToRoom(`chat:${roomId}`, 'chat:message', {
+      // Prepare message data for WebSocket
+      // Note: We send the encrypted message as is - decryption happens client-side
+      const messageData = {
         id: populatedMessage._id,
         roomId,
         sender: {
@@ -127,8 +140,14 @@ class ChatService {
         message: populatedMessage.message,
         type: populatedMessage.type,
         attachments: populatedMessage.attachments,
-        createdAt: populatedMessage.createdAt
-      });
+        isEncrypted: populatedMessage.isEncrypted,
+        encryptionData: populatedMessage.encryptionData,
+        createdAt: populatedMessage.createdAt,
+        expiresAt: populatedMessage.expiresAt
+      };
+
+      // Notify room participants via WebSocket
+      socketService.sendToRoom(`chat:${roomId}`, 'chat:message', messageData);
 
       // Send notification to recipient if specified
       if (recipientId) {
@@ -358,6 +377,60 @@ class ChatService {
   }
 
   /**
+   * Get a specific chat room by ID
+   * @param {string} roomId - Room ID
+   * @param {string} userId - User ID
+   * @returns {Promise<Object>} Chat room
+   */
+  async getRoomById(roomId, userId) {
+    try {
+      // Check if room exists
+      const room = await ChatRoom.findById(roomId)
+        .populate('participants.user', 'username profileImage online lastActive')
+        .populate('lastMessage')
+        .populate('ad', 'title profileImage');
+
+      if (!room) {
+        throw new AppError('Chat room not found', 404);
+      }
+
+      // Check if user is a participant
+      const isParticipant = room.participants.some(p =>
+        p.user._id.toString() === userId
+      );
+
+      if (!isParticipant) {
+        throw new AppError('You are not a participant in this chat room', 403);
+      }
+
+      // Format room data
+      const roomData = room.toObject();
+
+      // Get unread count
+      const unreadCount = await ChatMessage.getUnreadCountByRoom(userId, roomId);
+      roomData.unreadCount = unreadCount;
+
+      // Format participants
+      roomData.participants = roomData.participants.map(p => ({
+        ...p,
+        isCurrentUser: p.user._id.toString() === userId
+      }));
+
+      // Get other participant for direct chats
+      if (room.type === 'direct') {
+        roomData.otherParticipant = roomData.participants.find(
+          p => p.user._id.toString() !== userId
+        )?.user;
+      }
+
+      return roomData;
+    } catch (error) {
+      console.error('Error getting room by ID:', error);
+      throw new AppError(error.message || 'Failed to get chat room', 500);
+    }
+  }
+
+  /**
    * Mark messages as read in a room
    * @param {string} roomId - Chat room ID
    * @param {string} userId - User ID
@@ -436,6 +509,171 @@ class ChatService {
     } catch (error) {
       console.error('Error getting unread counts:', error);
       throw new AppError(error.message || 'Failed to get unread counts', 500);
+    }
+  }
+
+  /**
+   * Generate and distribute encryption keys for a chat room
+   * @param {string} roomId - Chat room ID
+   * @returns {Promise<Object>} Result
+   */
+  async setupRoomEncryption(roomId) {
+    try {
+      const room = await ChatRoom.findById(roomId);
+
+      if (!room) {
+        throw new AppError('Chat room not found', 404);
+      }
+
+      // Generate a symmetric key for the room
+      const roomKey = cryptoHelpers.generateEncryptionKey();
+
+      // For each participant, encrypt the room key with their public key
+      for (const participant of room.participants) {
+        // Get user's public key
+        const user = await User.findById(participant.user);
+
+        if (!user || !user.publicKey) {
+          // Generate a key pair for the user if they don't have one
+          const keyPair = cryptoHelpers.generateKeyPair();
+
+          if (!user) continue;
+
+          // Save public key to user
+          user.publicKey = keyPair.publicKey;
+          await user.save();
+
+          // Encrypt room key with user's public key
+          const encryptedRoomKey = cryptoHelpers.encryptWithPublicKey(roomKey, keyPair.publicKey);
+
+          // Save encrypted room key to participant
+          participant.publicKey = keyPair.publicKey;
+          participant.encryptedRoomKey = encryptedRoomKey;
+
+          // Send private key to user via secure channel (WebSocket)
+          socketService.sendToUser(user._id.toString(), 'chat:keys', {
+            type: 'private_key',
+            roomId: room._id,
+            privateKey: keyPair.privateKey
+          });
+        } else {
+          // User already has a public key
+          // Encrypt room key with user's public key
+          const encryptedRoomKey = cryptoHelpers.encryptWithPublicKey(roomKey, user.publicKey);
+
+          // Save encrypted room key to participant
+          participant.publicKey = user.publicKey;
+          participant.encryptedRoomKey = encryptedRoomKey;
+        }
+      }
+
+      // Enable encryption for the room
+      room.encryptionEnabled = true;
+      await room.save();
+
+      return {
+        success: true,
+        message: 'Room encryption set up successfully'
+      };
+    } catch (error) {
+      console.error('Error setting up room encryption:', error);
+      throw new AppError(error.message || 'Failed to set up room encryption', 500);
+    }
+  }
+
+  /**
+   * Update message expiry settings for a room
+   * @param {string} roomId - Chat room ID
+   * @param {boolean} enabled - Whether message expiry is enabled
+   * @param {number} expiryTime - Expiry time in hours
+   * @param {string} userId - User ID (must be admin)
+   * @returns {Promise<Object>} Updated room
+   */
+  async updateMessageExpiry(roomId, enabled, expiryTime, userId) {
+    try {
+      const room = await ChatRoom.findById(roomId);
+
+      if (!room) {
+        throw new AppError('Chat room not found', 404);
+      }
+
+      // Check if user is an admin
+      const participant = room.participants.find(p =>
+        p.user.toString() === userId && p.role === 'admin'
+      );
+
+      if (!participant) {
+        throw new AppError('Only admins can update message expiry settings', 403);
+      }
+
+      // Update settings
+      room.messageExpiryEnabled = enabled;
+
+      if (expiryTime !== undefined && expiryTime > 0) {
+        room.messageExpiryTime = expiryTime;
+      }
+
+      await room.save();
+
+      // Send system message
+      await this.sendMessage(
+        roomId,
+        userId,
+        `Message expiry ${enabled ? 'enabled' : 'disabled'}${enabled ? ` (${expiryTime} hours)` : ''}`,
+        {
+          type: 'system',
+          metadata: {
+            event: 'message_expiry_updated',
+            enabled,
+            expiryTime
+          }
+        }
+      );
+
+      return room;
+    } catch (error) {
+      console.error('Error updating message expiry:', error);
+      throw new AppError(error.message || 'Failed to update message expiry', 500);
+    }
+  }
+
+  /**
+   * Encrypt a message with the room key
+   * @param {string} message - Message to encrypt
+   * @param {string} roomId - Chat room ID
+   * @param {string} userId - User ID
+   * @returns {Promise<Object>} Encrypted message data
+   */
+  async encryptMessage(message, roomId, userId) {
+    try {
+      const room = await ChatRoom.findById(roomId);
+
+      if (!room) {
+        throw new AppError('Chat room not found', 404);
+      }
+
+      if (!room.encryptionEnabled) {
+        throw new AppError('Encryption is not enabled for this room', 400);
+      }
+
+      // Find participant
+      const participant = room.participants.find(p =>
+        p.user.toString() === userId
+      );
+
+      if (!participant || !participant.encryptedRoomKey) {
+        throw new AppError('You do not have encryption keys for this room', 403);
+      }
+
+      // Client should decrypt the room key with their private key and use it to encrypt the message
+      // This is just a placeholder for the server-side implementation
+      return {
+        success: true,
+        message: 'Message encryption should be handled by the client'
+      };
+    } catch (error) {
+      console.error('Error encrypting message:', error);
+      throw new AppError(error.message || 'Failed to encrypt message', 500);
     }
   }
 

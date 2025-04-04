@@ -157,4 +157,8 @@ const server = app.listen(PORT, () => {
 const socketService = require('./services/socket.service');
 socketService.initialize(server);
 
+// Initialize message cleanup scheduler
+const messageCleanup = require('./utils/messageCleanup');
+messageCleanup.init();
+
 module.exports = { app, server };

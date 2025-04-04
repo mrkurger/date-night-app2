@@ -97,6 +97,10 @@ if (mongoose.models.User) {
       type: String,
       maxlength: 500
     },
+    // For end-to-end encryption
+    publicKey: {
+      type: String
+    },
     preferences: {
       notifications: {
         email: { type: Boolean, default: true },

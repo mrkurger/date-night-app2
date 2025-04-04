@@ -20,16 +20,27 @@ export interface ChatMessage {
   };
   message: string;
   type: 'text' | 'image' | 'video' | 'file' | 'system';
+  isEncrypted?: boolean;
+  encryptionData?: {
+    iv: string;
+    authTag?: string;
+  };
   attachments?: Array<{
     type: 'image' | 'video' | 'file';
     url: string;
     name?: string;
     size?: number;
     mimeType?: string;
+    isEncrypted?: boolean;
+    encryptionData?: {
+      iv: string;
+      authTag?: string;
+    };
   }>;
   read: boolean;
   readAt?: Date;
   createdAt: Date;
+  expiresAt?: Date;
 }
 
 export interface ChatRoom {
@@ -48,7 +59,13 @@ export interface ChatRoom {
     joinedAt: Date;
     lastRead?: Date;
     isCurrentUser?: boolean;
+    publicKey?: string;
+    encryptedRoomKey?: string;
   }>;
+  encryptionEnabled?: boolean;
+  encryptionVersion?: number;
+  messageExpiryEnabled?: boolean;
+  messageExpiryTime?: number;
   ad?: {
     _id: string;
     title: string;
@@ -87,6 +104,10 @@ export class ChatService {
   private typingUsersSubject = new BehaviorSubject<Map<string, string>>(new Map());
   private unreadCountSubject = new BehaviorSubject<number>(0);
 
+  // For encryption
+  private privateKeysMap = new Map<string, string>(); // roomId -> privateKey
+  private roomKeysMap = new Map<string, string>(); // roomId -> roomKey
+
   public rooms$ = this.roomsSubject.asObservable();
   public currentRoom$ = this.currentRoomSubject.asObservable();
   public messages$ = this.messagesSubject.asObservable();
@@ -96,9 +117,11 @@ export class ChatService {
   constructor(
     private http: HttpClient,
     private socketService: SocketService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cryptoService: CryptoService
   ) {
     this.initializeSocketListeners();
+    this.loadEncryptionKeys();
   }
 
   /**
