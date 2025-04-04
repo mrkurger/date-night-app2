@@ -7,10 +7,18 @@
     "build": "echo 'Add build script if using bundlers/compilers'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    # Add Angular, Angular-Sanitize etc. here if managing via npm
-  },
-  "devDependencies": {
-    # Add client devDependencies (e.g., http-server, testing frameworks)
+    "dependencies": {
+      "angular": "^1.8.3",
+      "angular-route": "^1.8.3",
+      "angular-sanitize": "^1.8.3",
+      "angular-animate": "^1.8.3",
+      "angular-socket-io": "^0.7.0",
+      "bootstrap": "^4.6.2",
+      "jquery": "^3.6.4",
+      "socket.io-client": "^4.6.1"
+    },
+    "devDependencies": {
+      "http-server": "^14.1.1"
+    }
   }
-}
+  

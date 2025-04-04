@@ -1,0 +1,20 @@
+{
+    "name": "date-night-app",
+    "version": "1.0.0",
+    "description": "DateNight.io application",
+    "workspaces": [
+      "client",
+      "server"
+    ],
+    "scripts": {
+      "start": "npm run start-server",
+      "start-server": "npm run start --workspace=server",
+      "start-client": "npm run start --workspace=client",
+      "dev": "concurrently \"npm run dev --workspace=server\" \"npm run start --workspace=client\"",
+      "install-all": "npm install && npm install --workspace=client && npm install --workspace=server"
+    },
+    "devDependencies": {
+      "concurrently": "^8.0.1"
+    }
+  }
+  

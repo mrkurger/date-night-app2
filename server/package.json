@@ -8,23 +8,26 @@
     "dev": "nodemon -r dotenv/config server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.5.0",
-    "passport": "^0.6.0",
-    "passport-apple": "^2.0.2",
-    "passport-github2": "^0.1.12",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-reddit": "^1.1.0"
-    # Add other backend-specific dependencies here if needed
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-    # Add other backend devDependencies here if needed
+    "dependencies": {
+      "bcrypt": "^5.1.0",
+      "body-parser": "^1.20.2",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "express-session": "^1.17.3",
+      "jsonwebtoken": "^9.0.0",
+      "mongoose": "^7.1.0",
+      "morgan": "^1.10.0",
+      "passport": "^0.6.0",
+      "passport-apple": "^2.0.1",
+      "passport-github2": "^0.1.12",
+      "passport-google-oauth20": "^2.0.0",
+      "passport-jwt": "^4.0.1",
+      "passport-local": "^1.0.0",
+      "passport-reddit": "^1.1.0",
+      "socket.io": "^4.6.1"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.22"
+    }
   }
-}
