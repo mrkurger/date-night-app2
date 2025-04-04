@@ -1,70 +1,86 @@
 const { User } = require('../users');
-const { authenticateToken } = require('../../middleware/authenticateToken');
 
-module.exports = function(io) {
-  // Track online users
-  const onlineUsers = new Map();
+module.exports = (io) => {
+  // Store user socket mappings
+  const userSockets = {};
   
-  // Middleware to authenticate socket connections
-  io.use((socket, next) => {
-    const token = socket.handshake.auth.token;
-    if (!token) {
-      return next(new Error('Authentication required'));
-    }
+  io.on('connection', (socket) => {
+    console.log('New client connected');
     
-    // Reuse JWT verification logic
-    const verifyJWT = (token) => {
+    // User authentication via token
+    socket.on('authenticate', async (data) => {
       try {
-        const jwt = require('jsonwebtoken');
-        return jwt.verify(token, process.env.JWT_SECRET);
+        const { userId } = data;
+        
+        // Store user socket mapping
+        userSockets[userId] = socket.id;
+        
+        // Join room with user ID
+        socket.join(userId);
+        
+        // Update user status to online
+        await User.findByIdAndUpdate(userId, { online: true, lastActive: new Date() });
+        
+        // Notify others that user is online
+        socket.broadcast.emit('user_status_change', { userId, online: true });
+        
+        console.log(`User ${userId} authenticated`);
       } catch (err) {
-        return null;
+        console.error('Socket authentication error:', err);
       }
-    };
+    });
     
-    const user = verifyJWT(token);
-    if (!user) {
-      return next(new Error('Invalid token'));
-    }
-    
-    socket.user = user;
-    next();
-  });
-  
-  io.on('connection', async (socket) => {
-    const userId = socket.user._id;
-    
-    // Update user online status
-    try {
-      await User.findByIdAndUpdate(userId, { online: true, lastActive: new Date() });
-      
-      // Add to online users map
-      onlineUsers.set(userId.toString(), socket.id);
-      
-      // Join a room with their user ID for direct messaging
-      socket.join(userId.toString());
-      
-      // Broadcast online status
-      io.emit('user_status', { userId: userId.toString(), online: true });
-    } catch (err) {
-      console.error('Error updating user status:', err);
-    }
-    
-    // Handle client disconnect
+    // Handle user disconnect
     socket.on('disconnect', async () => {
       try {
-        await User.findByIdAndUpdate(userId, { online: false, lastActive: new Date() });
+        // Find user ID by socket ID
+        const userId = Object.keys(userSockets).find(key => userSockets[key] === socket.id);
         
-        // Remove from online users map
-        onlineUsers.delete(userId.toString());
-        
-        // Broadcast offline status
-        io.emit('user_status', { userId: userId.toString(), online: false });
+        if (userId) {
+          // Remove from socket mapping
+          delete userSockets[userId];
+          
+          // Update user status to offline
+          await User.findByIdAndUpdate(userId, { online: false, lastActive: new Date() });
+          
+          // Notify others that user is offline
+          socket.broadcast.emit('user_status_change', { userId, online: false });
+          
+          console.log(`User ${userId} disconnected`);
+        }
       } catch (err) {
-        console.error('Error updating user status on disconnect:', err);
+        console.error('Socket disconnect error:', err);
+      }
+    });
+    
+    // Handle chat message
+    socket.on('send_message', async (data) => {
+      try {
+        const { recipientId, message } = data;
+        
+        // If recipient is online, emit event to them
+        if (userSockets[recipientId]) {
+          io.to(recipientId).emit('new_message', message);
+        }
+      } catch (err) {
+        console.error('Socket message error:', err);
+      }
+    });
+    
+    // Handle typing indicator
+    socket.on('typing', (data) => {
+      const { recipientId } = data;
+      if (userSockets[recipientId]) {
+        io.to(recipientId).emit('typing', data);
+      }
+    });
+    
+    // Handle stop typing indicator
+    socket.on('stop_typing', (data) => {
+      const { recipientId } = data;
+      if (userSockets[recipientId]) {
+        io.to(recipientId).emit('stop_typing', data);
       }
     });
   });
-  
-  return io;
 };

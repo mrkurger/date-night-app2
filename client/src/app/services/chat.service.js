@@ -1,43 +1,62 @@
 angular.module('dateNightApp')
-  .service('ChatService', ['$http', 'AuthService', 'socketFactory', function($http, AuthService, socketFactory) {
+  .factory('ChatService', ['$http', 'socket', function($http, socket) {
     const baseUrl = '/api/chat';
     
-    // Initialize socket connection
-    const socket = socketFactory({
-      ioSocket: io.connect('/', {
-        auth: {
-          token: AuthService.getToken()
-        }
-      })
-    });
-    
-    this.socket = socket;
-    
-    // Chat methods
-    this.getMessages = function(recipientId) {
-      return $http.get(`${baseUrl}/${recipientId}`, {
-        headers: { Authorization: `Bearer ${AuthService.getToken()}` }
-      });
-    };
-    
-    this.sendMessage = function(recipientId, message) {
-      return $http.post(baseUrl, { recipientId, message }, {
-        headers: { Authorization: `Bearer ${AuthService.getToken()}` }
-      });
-    };
-    
-    this.markAsRead = function(messageId) {
-      return $http.put(`${baseUrl}/${messageId}/read`, {}, {
-        headers: { Authorization: `Bearer ${AuthService.getToken()}` }
-      });
-    };
-    
-    // Socket event listeners
-    this.onNewMessage = function(callback) {
+    // Socket event handlers
+    function onNewMessage(callback) {
       socket.on('new_message', callback);
-    };
+    }
     
-    this.onUserStatus = function(callback) {
-      socket.on('user_status', callback);
+    function onTyping(callback) {
+      socket.on('typing', callback);
+    }
+    
+    function onStopTyping(callback) {
+      socket.on('stop_typing', callback);
+    }
+    
+    function onUserStatusChange(callback) {
+      socket.on('user_status_change', callback);
+    }
+    
+    return {
+      getMessages: function(recipientId) {
+        return $http.get(`${baseUrl}/${recipientId}`);
+      },
+      
+      sendMessage: function(recipientId, message) {
+        return $http.post(baseUrl, { recipientId, message });
+      },
+      
+      markAsRead: function(messageId) {
+        return $http.put(`${baseUrl}/${messageId}/read`);
+      },
+      
+      getUnreadCount: function() {
+        return $http.get(`${baseUrl}/unread/count`);
+      },
+      
+      // Socket methods
+      sendMessageSocket: function(recipientId, message) {
+        socket.emit('send_message', { recipientId, message });
+      },
+      
+      sendTypingSignal: function(recipientId) {
+        socket.emit('typing', { recipientId });
+      },
+      
+      sendStopTypingSignal: function(recipientId) {
+        socket.emit('stop_typing', { recipientId });
+      },
+      
+      authenticate: function(userId) {
+        socket.emit('authenticate', { userId });
+      },
+      
+      // Event listeners
+      onNewMessage: onNewMessage,
+      onTyping: onTyping,
+      onStopTyping: onStopTyping,
+      onUserStatusChange: onUserStatusChange
     };
   }]);
