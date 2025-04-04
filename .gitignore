@@ -14,8 +14,8 @@ server/dist/
 *.env
 
 # Database files and directories
+data/db/
 data/
-db/
 
 # Logs and temporary files
 logs/
