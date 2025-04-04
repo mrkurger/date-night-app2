@@ -1,207 +1,272 @@
-# DateNight.io Classifieds (Project Codename: Solmeme)
+# DateNight.io - Advertisement Platform
 
 ## Description
 
-DateNight.io aims to be a platform offering classified advertisements primarily focused on Escort, Striptease, and Massage services, initially targeting the Scandinavian market with a focus on Norway[cite: 2, 4]. The platform connects service providers (advertisers) with users (seekers), incorporating modern web application features like real-time chat, location-based searching, and multiple Browse interfaces [cite: Investorpresentasjon.pdf]. Future plans include functionality for advertisers to host live cam shows[cite: 3].
+DateNight.io is a platform offering classified advertisements primarily focused on Escort, Striptease, and Massage services, initially targeting the Scandinavian market with a focus on Norway. The platform connects service providers (advertisers) with users (seekers), incorporating modern web application features like real-time chat, location-based searching, and multiple browsing interfaces.
 
-This project uses the MEAN stack (MongoDB, Express.js, Angular/AngularJS, Node.js).
+### Key Features
 
-**Note:** This project is currently undergoing a major code refactoring to improve structure and maintainability following an automated migration script. Manual code adjustments are in progress.
+- **Advertisement Platform**: Create, manage, and browse ads for escort and stripper services
+- **Travel Itinerary**: Track advertisers' locations when they are actively seeking clientele
+- **Real-time Chat**: Direct messaging between users and advertisers
+- **Multiple Browsing Interfaces**: Traditional list/grid view, Tinder-style swipe interface, Netflix-style gallery
+- **User Profiles**: Comprehensive profiles for both advertisers and users
+- **Monetization**: Ad sales, fees on camshows, fees on OnlyFans-like interactions
+
+This project uses the MEAN stack (MongoDB, Express.js, Angular, Node.js).
+
+**Note:** The project has been fully migrated from AngularJS to Angular. The new Angular frontend is located in the `client-angular/` directory.
 
 ## Project Structure
 
-The project is organized into separate `server` (backend) and `client` (frontend) directories.
+The project is organized into separate `server` (backend) and `client-angular` (frontend) directories.
 
+```
 .
 ├── README.md                   # This file
-├── client                      # Frontend (AngularJS - requires refactoring)
-│   ├── package.json            # Frontend dependencies (needs review/population)
+├── client-angular              # Frontend (Angular)
+│   ├── package.json            # Frontend dependencies
+│   ├── angular.json            # Angular CLI configuration
+│   ├── tsconfig.json           # TypeScript configuration
 │   └── src
 │       ├── app                 # Main application code
-│       │   ├── app.config.js   # Placeholder for Angular config (routing etc.)
-│       │   ├── app.module.js   # Root Angular module (contains monolithic controller - NEEDS SPLITTING)
-│       │   ├── components      # Shared/reusable UI components
-│       │   │   └── card        # Example placeholder
-│       │   ├── core            # Placeholder for core module (guards, interceptors)
-│       │   ├── features        # Feature modules/components (NEEDS POPULATION)
-│       │   │   ├── ad-browser  # Placeholder
-│       │   │   ├── ad-management # Placeholder
-│       │   │   ├── auth        # Placeholder
-│       │   │   ├── chat        # Placeholder
-│       │   │   ├── tinder      # Dedicated view and controller for Tinder-style swipe
-│       │   │   └── gallery     # Dedicated view and controller for Netflix-style gallery
-│       │   ├── models          # Placeholder for frontend models/interfaces
-│       │   ├── services        # Placeholder for Angular services (NEEDS POPULATION)
-│       │   └── shared          # Shared pipes, directives, constants
-│       │       └── icons.constant.js # Moved from original assets
+│       │   ├── app.component.ts # Root component
+│       │   ├── app.module.ts   # Root Angular module
+│       │   ├── app-routing.module.ts # Main routing configuration
+│       │   ├── core            # Core module (guards, interceptors, services)
+│       │   │   ├── guards      # Route guards for authentication
+│       │   │   ├── interceptors # HTTP interceptors
+│       │   │   ├── models      # Data models/interfaces
+│       │   │   └── services    # Core services
+│       │   ├── features        # Feature modules/components
+│       │   │   ├── ad-browser  # Ad browsing feature
+│       │   │   ├── ad-details  # Ad details feature
+│       │   │   ├── ad-management # Ad management feature
+│       │   │   ├── auth        # Authentication feature
+│       │   │   ├── chat        # Chat feature
+│       │   │   ├── gallery     # Gallery view feature
+│       │   │   ├── profile     # User profile feature
+│       │   │   └── tinder      # Tinder-style swipe feature
+│       │   └── shared          # Shared components, directives, pipes
 │       ├── assets              # Static assets
-│       │   ├── images          # Images (default profile placeholder might be here)
-│       │   └── styles          # Original styles moved here (needs review)
 │       ├── environments        # Environment-specific settings
-│       │   ├── environment.js
-│       │   └── environment.prod.js
-│       ├── index.html          # Main HTML entry point (paths NEED UPDATE)
-│       ├── main.js             # Placeholder for app bootstrap
 │       └── styles              # Global styles
-│           ├── base.css        # Placeholder
-│           ├── main.css        # Moved from original assets/styles
-│           └── variables.css   # Placeholder
-│   └── tests                   # Placeholder for frontend tests
 ├── scripts                     # Utility scripts
 │   ├── seed.js                 # Database seeding script
 │   └── setup.js                # Environment setup check script
 └── server                      # Backend (Node.js / Express)
-├── components              # Feature-based modules (NEED REFACTORING)
-│   ├── SCHEMA_REFACTOR_NEEDED.js # Original models/index.js (NEEDS SPLITTING)
-│   ├── ads
-│   │   ├── ad.controller.js # Placeholder (logic needs move from server.js)
-│   │   └── ad.routes.js    # Placeholder (routes need move from server.js)
-│   ├── auth
-│   │   ├── auth.controller.js # Placeholder
-│   │   └── auth.routes.js    # Placeholder
-│   ├── chat
-│   │   ├── chat.controller.js # Placeholder
-│   │   └── chat.routes.js    # Placeholder
-│   └── users
-│       ├── user.controller.js # Placeholder
-│       └── user.routes.js    # Placeholder
-├── config                  # Configuration files
-│   ├── database.js         # Placeholder (DB logic needs move from server.js)
-│   ├── environment.js      # Placeholder for env var handling
-│   ├── index.js            # Placeholder for main config export
-│   ├── oauth.js            # Moved from original config
-│   └── passport.js         # Moved from original auth
-├── middleware              # Custom Express middleware (NEEDS POPULATION)
-│   ├── authenticateToken.js # Placeholder
-│   └── errorHandler.js     # Placeholder
-├── package.json            # Backend dependencies
-├── server.js               # Main server entry point (Original index.js - NEEDS REFACTORING)
-├── services                # Placeholder for shared services
-├── tests                   # Placeholder for backend tests
-└── utils                   # Utility functions
-└── authHelpers.js      # Moved from original auth
+    ├── components              # Feature-based modules
+    │   ├── ads                 # Ad-related endpoints
+    │   │   ├── ad.controller.js # Ad controller
+    │   │   └── ad.routes.js    # Ad routes
+    │   ├── auth                # Authentication endpoints
+    │   │   ├── auth.controller.js # Auth controller
+    │   │   └── auth.routes.js  # Auth routes
+    │   ├── chat                # Chat endpoints
+    │   │   ├── chat.controller.js # Chat controller
+    │   │   └── chat.routes.js  # Chat routes
+    │   └── users               # User endpoints
+    │       ├── user.controller.js # User controller
+    │       └── user.routes.js  # User routes
+    ├── config                  # Configuration files
+    │   ├── database.js         # Database configuration
+    │   ├── environment.js      # Environment variables
+    │   ├── index.js            # Main config export
+    │   ├── oauth.js            # OAuth configuration
+    │   └── passport.js         # Passport configuration
+    ├── middleware              # Custom Express middleware
+    │   ├── authenticateToken.js # JWT authentication
+    │   ├── errorHandler.js     # Error handling
+    │   ├── index.js            # Middleware exports
+    │   ├── rateLimiter.js      # Rate limiting
+    │   └── requestValidator.js # Request validation
+    ├── models                  # Database models
+    │   ├── ad.model.js         # Ad model
+    │   ├── chat-message.model.js # Chat message model
+    │   └── user.model.js       # User model
+    ├── package.json            # Backend dependencies
+    ├── server.js               # Main server entry point
+    ├── services                # Business logic services
+    │   ├── ad.service.js       # Ad service
+    │   ├── auth.service.js     # Auth service
+    │   └── chat.service.js     # Chat service
+    └── utils                   # Utility functions
+        └── authHelpers.js      # Authentication helpers
+```
 
 ## Technology Stack
 
-* **MongoDB:** NoSQL Database
+* **MongoDB:** NoSQL Database for flexible data storage
 * **Express.js:** Backend web framework for Node.js
-* **AngularJS (v1.x):** Frontend framework (Note: Currently AngularJS based on `client/app.module.js`, requires refactoring)
+* **Angular:** Modern frontend framework (migrated from AngularJS)
 * **Node.js:** JavaScript runtime environment
+* **Socket.IO:** Real-time bidirectional event-based communication
+* **JWT:** JSON Web Tokens for secure authentication
+* **Mongoose:** MongoDB object modeling for Node.js
+* **RxJS:** Reactive Extensions Library for JavaScript
+* **Bootstrap:** Frontend CSS framework for responsive design
 
 ## Setup and Installation
 
 **Prerequisites:**
 
-* Node.js and npm installed
+* Node.js (v14+) and npm installed
 * MongoDB installed and running (`mongod`)
+* Angular CLI installed globally (`npm install -g @angular/cli`)
 
 **Steps:**
 
-1.  **Clone the repository (if applicable):**
-    ```bash
-    git clone <repository-url>
-    cd <project-root-directory> # Should contain client/ server/ scripts/ etc.
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd date-night-app
+   ```
 
-2.  **Configure Environment:**
-    * Copy the `.env.example` file to `.env`:
-        ```bash
-        cp .env.example .env
-        ```
-    * Edit the `.env` file with your specific credentials (MongoDB URI if needed, JWT Secret, OAuth Client IDs/Secrets). See OAuth Setup section below.
+2. **Configure Environment:**
+   * Copy the `.env.example` file to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   * Edit the `.env` file with your specific credentials (MongoDB URI, JWT Secret, OAuth Client IDs/Secrets)
 
-3.  **Install Dependencies:**
-    * Install backend dependencies:
-        ```bash
-        cd server
-        npm install
-        cd ..
-        ```
-    * Install frontend dependencies (Review/update `client/package.json` first if managing frontend via npm):
-        ```bash
-        cd client
-        npm install
-        cd ..
-        ```
-    * NOTE: If you encounter an error like "Cannot find module 'mongoose'", ensure you install mongoose in the project root:
-        ```bash
-        npm install mongoose
-        ```
+3. **Install Dependencies:**
+   * Install backend dependencies:
+     ```bash
+     cd server
+     npm install
+     cd ..
+     ```
+   * Install Angular frontend dependencies:
+     ```bash
+     cd client-angular
+     npm install
+     cd ..
+     ```
 
-4.  **Run Setup Script (Optional but Recommended):**
-    * Verifies environment variables and basic DB connection.
-    * Run from the project root:
-        ```bash
-        node scripts/setup.js
-        ```
+4. **Run Setup Script:**
+   * Verifies environment variables and basic DB connection:
+     ```bash
+     node scripts/setup.js
+     ```
 
-5.  **Seed Database (Optional):**
-    * Ensure your MongoDB server is running.
-    * Run the following command from the project root to populate dummy data:
-        ```bash
-        node scripts/seed.js
-        ```
-    * The script will connect to the database and insert sample documents (e.g. ads, users, etc.). Check the console output for progress and any errors.
+5. **Seed Database (Optional):**
+   * Ensure your MongoDB server is running
+   * Populate the database with sample data:
+     ```bash
+     node scripts/seed.js
+     ```
 
-6.  **Run the Application:**
-    * **Start the Backend Server:**
-        ```bash
-        cd server
-        npm run dev # Runs with nodemon for auto-restarts during development
-        # OR
-        npm start # Runs standard node server.js
-        ```
-        The server typically runs on `http://localhost:3000`.
-    * **Start the Frontend:** (Since it's currently AngularJS likely served statically without a build step)
-        * You need a simple HTTP server to serve the `client/src` directory.
-        * If you have `http-server` installed (`npm install -g http-server`):
-            ```bash
-            http-server client/src -p 8080
-            ```
-        * Access the frontend at `http://localhost:8080`.
+6. **Run the Application:**
+   * **Start the Backend Server:**
+     ```bash
+     cd server
+     npm run dev # Runs with nodemon for auto-restarts
+     ```
+     The server runs on `http://localhost:3000` by default.
+
+   * **Start the Angular Frontend:**
+     ```bash
+     cd client-angular
+     ng serve
+     ```
+     The Angular app runs on `http://localhost:4200` by default.
+
+7. **Access the Application:**
+   * Open your browser and navigate to `http://localhost:4200`
+   * The API is available at `http://localhost:3000/api/v1`
 
 ## Feature Roadmap & Status
 
-**Core Platform:**
+### Completed Features
 
-* **Ad Posting & Management:** ([Refactoring In Progress])  
-  - Migrate from a monolithic controller to feature-based modules.  
-  - Ensure proper separation for Escort/Striptease/Massage categories.
-  
-* **Authentication:** ([Refactoring In Progress])  
-  - Abstract duplicate resolve logic into a shared service.  
-  - Complete OAuth integration (GitHub, Google, Reddit, Apple).
+* **Angular Migration:** ✅
+  - Migrated all features from AngularJS to Angular
+  - Implemented lazy loading for all feature modules
+  - Enhanced authentication with token refresh and expiration handling
 
-**Browse & Searching:**
+* **Ad Management:** ✅
+  - Ad creation, editing, and deletion
+  - Ad categorization (Escort, Striptease, Massage)
+  - Image upload and management
 
-* **Tinder-style Swipe View:** ([Implemented, Needs Polishing])  
-  - Create a dedicated view and controller under `client/src/app/features/tinder`.
-  
-* **Netflix-style Gallery View:** ([Implemented, Needs Polishing])  
-  - Create a dedicated view and controller under `client/src/app/features/gallery`.
+* **Authentication:** ✅
+  - Email/password authentication
+  - OAuth integration (GitHub, Google, Reddit, Apple)
+  - JWT token management with refresh capability
 
-**User Interaction & Messaging:**
+* **Browse & Searching:** ✅
+  - Traditional list/grid view
+  - Tinder-style swipe interface
+  - Netflix-style gallery browsing
 
-* **Real-time Chat:** ([Partially Implemented, Refactoring Needed])  
-  - Improve notification, conversation history, and integrate socket reconnect logic.
-* **End-to-End Encrypted Chat / Auto Deletion:** ([Not Implemented])  
-  - New backend endpoints and client logic.
-* **User Favorite Lists & Reviews:** ([Not Implemented])  
-  - New modules for storing and displaying favorites and reviews.
+* **Basic Chat:** ✅
+  - Direct messaging between users and advertisers
+  - Message history
+  - Real-time updates with Socket.IO
 
-**Monetization & Advanced Features:**
+### In Progress Features
 
-* **Paid Newsfeed/Twitter Feed:** ([Not Implemented])  
-  - Feature for paid posts by advertisers.
-* **Live Sex Show / Camshow Functionality:** ([Not Implemented])  
-  - Ability for advertisers to broadcast paid shows.
-* **Microtransactions:** ([Not Implemented])  
-  - General concept for paid features.
+* **Enhanced Chat:** 🔄
+  - End-to-end encryption
+  - Message auto-deletion
+  - Typing indicators and read receipts
 
-**Other Implemented (Pre-Refactor):**
+* **Travel Itinerary:** 🔄
+  - Location tracking for advertisers
+  - Travel plan management
+  - Location-based matching
 
-* **Advertiser Travel Plan:** ([Implemented], [Refactoring Needed]) Feature exists in code allowing advertisers to list counties.
-* **County Filtering:** ([Implemented], [Refactoring Needed]) Client-side filtering by Norwegian county exists.
+* **User Interaction:** 🔄
+  - User favorite lists
+  - Reviews and ratings
+  - Enhanced user profiles
+
+### Planned Features
+
+* **Monetization:** 📅
+  - Premium ad placements
+  - Featured listings
+  - Subscription model
+
+* **Camshow Integration:** 📅
+  - Live streaming capability
+  - Tipping system
+  - Private shows
+
+* **OnlyFans-like Features:** 📅
+  - Content subscription
+  - Exclusive content access
+  - Direct support system
+
+## Development Roadmap
+
+### Phase 1: Core Platform (Completed)
+- ✅ Angular migration
+- ✅ Basic ad management
+- ✅ User authentication
+- ✅ Basic chat functionality
+- ✅ Multiple browsing interfaces
+
+### Phase 2: Enhanced Features (In Progress)
+- 🔄 Travel itinerary management
+- 🔄 Enhanced chat with encryption
+- 🔄 User interaction features (favorites, reviews)
+- 🔄 Location-based matching
+- 🔄 Advanced filtering options
+
+### Phase 3: Monetization (Planned)
+- 📅 Premium ad placements
+- 📅 Camshow integration
+- 📅 Subscription model
+- 📅 Payment processing
+- 📅 Content selling
+
+### Phase 4: Optimization & Scaling (Planned)
+- 📅 Performance optimization
+- 📅 Security enhancements
+- 📅 Analytics and monitoring
+- 📅 Mobile app development
+- 📅 Internationalization
 
 ## OAuth Setup Instructions
 
