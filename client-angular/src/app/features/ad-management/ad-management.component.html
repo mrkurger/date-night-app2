@@ -1,0 +1,32 @@
+<div class="ad-management-container">
+  <div class="header">
+    <h1>Ad Management</h1>
+    <p class="subtitle">Manage your advertisements and travel itineraries</p>
+  </div>
+
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       routerLink="list"
+       routerLinkActive #rla1="routerLinkActive"
+       [active]="rla1.isActive">
+      My Ads
+    </a>
+    <a mat-tab-link
+       routerLink="create"
+       routerLinkActive #rla2="routerLinkActive"
+       [active]="rla2.isActive">
+      Create New Ad
+    </a>
+    <a mat-tab-link
+       *ngIf="isAdmin"
+       routerLink="/admin/ads"
+       routerLinkActive #rla3="routerLinkActive"
+       [active]="rla3.isActive">
+      Admin Panel
+    </a>
+  </nav>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

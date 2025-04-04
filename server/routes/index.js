@@ -35,6 +35,7 @@ const authRoutes = require('../components/auth/auth.routes');
 const chatRoutes = require('../components/chat/chat.routes');
 const userRoutes = require('../components/users/user.routes');
 const paymentRoutes = require('../routes/payment.routes');
+const travelRoutes = require('../routes/travel.routes');
 
 // Apply specific middleware to routes
 router.use('/auth', authLimiter, authRoutes);
@@ -42,6 +43,7 @@ router.use('/ads', adRoutes);
 router.use('/chat', chatRoutes);
 router.use('/users', userRoutes);
 router.use('/payments', paymentRoutes);
+router.use('/travel', travelRoutes);
 
 // API health check endpoint
 router.get('/health', (req, res) => {

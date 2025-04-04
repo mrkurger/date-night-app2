@@ -50,6 +50,51 @@ const availabilitySchema = new mongoose.Schema({
   }
 });
 
+// Define the travel itinerary schema
+const travelItinerarySchema = new mongoose.Schema({
+  destination: {
+    city: {
+      type: String,
+      required: true
+    },
+    county: {
+      type: String,
+      required: true
+    },
+    country: {
+      type: String,
+      default: 'Norway'
+    },
+    location: {
+      type: pointSchema
+    }
+  },
+  arrivalDate: {
+    type: Date,
+    required: true
+  },
+  departureDate: {
+    type: Date,
+    required: true
+  },
+  accommodation: {
+    name: String,
+    address: String,
+    location: pointSchema,
+    showAccommodation: {
+      type: Boolean,
+      default: false
+    }
+  },
+  availability: [availabilitySchema],
+  notes: String,
+  status: {
+    type: String,
+    enum: ['planned', 'active', 'completed', 'cancelled'],
+    default: 'planned'
+  }
+});
+
 // Define the service schema
 const serviceSchema = new mongoose.Schema({
   name: {
@@ -189,6 +234,15 @@ if (mongoose.models.Ad) {
       ethnicity: String,
       languages: [String]
     },
+    travelItinerary: [travelItinerarySchema],
+    currentLocation: {
+      type: pointSchema,
+      default: null
+    },
+    isTouring: {
+      type: Boolean,
+      default: false
+    },
     createdAt: {
       type: Date,
       default: Date.now
@@ -307,6 +361,206 @@ if (mongoose.models.Ad) {
       }
     });
   };
+
+  // Static method to find ads by current location (including touring advertisers)
+  adSchema.statics.findByCurrentLocation = function(longitude, latitude, maxDistance = 10000) {
+    const now = new Date();
+
+    return this.find({
+      active: true,
+      expiresAt: { $gt: now },
+      $or: [
+        // Regular ads in this location
+        {
+          location: {
+            $near: {
+              $geometry: {
+                type: 'Point',
+                coordinates: [longitude, latitude]
+              },
+              $maxDistance: maxDistance // in meters
+            }
+          }
+        },
+        // Touring advertisers currently in this location
+        {
+          isTouring: true,
+          currentLocation: {
+            $near: {
+              $geometry: {
+                type: 'Point',
+                coordinates: [longitude, latitude]
+              },
+              $maxDistance: maxDistance // in meters
+            }
+          }
+        },
+        // Advertisers with active travel itineraries for this location
+        {
+          isTouring: true,
+          'travelItinerary.status': 'active',
+          'travelItinerary.arrivalDate': { $lte: now },
+          'travelItinerary.departureDate': { $gte: now },
+          'travelItinerary.destination.location': {
+            $near: {
+              $geometry: {
+                type: 'Point',
+                coordinates: [longitude, latitude]
+              },
+              $maxDistance: maxDistance // in meters
+            }
+          }
+        }
+      ]
+    });
+  };
+
+  // Static method to find touring advertisers
+  adSchema.statics.findTouring = function() {
+    return this.find({
+      active: true,
+      isTouring: true,
+      expiresAt: { $gt: new Date() }
+    });
+  };
+
+  // Static method to find ads with upcoming travel plans
+  adSchema.statics.findUpcomingTours = function(city = null, county = null, daysAhead = 30) {
+    const now = new Date();
+    const futureDate = new Date(now.getTime() + daysAhead * 24 * 60 * 60 * 1000);
+
+    const query = {
+      active: true,
+      isTouring: true,
+      'travelItinerary.status': 'planned',
+      'travelItinerary.arrivalDate': { $gte: now, $lte: futureDate }
+    };
+
+    if (city) {
+      query['travelItinerary.destination.city'] = city;
+    }
+
+    if (county) {
+      query['travelItinerary.destination.county'] = county;
+    }
+
+    return this.find(query).sort('travelItinerary.arrivalDate');
+  };
+
+  // Method to update advertiser's current location
+  adSchema.methods.updateCurrentLocation = async function(longitude, latitude) {
+    this.currentLocation = {
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    };
+
+    // If touring, check if this location matches any active itinerary
+    if (this.isTouring && this.travelItinerary && this.travelItinerary.length > 0) {
+      const now = new Date();
+
+      // Find active itineraries
+      const activeItineraries = this.travelItinerary.filter(itinerary =>
+        itinerary.status === 'planned' || itinerary.status === 'active'
+      );
+
+      for (const itinerary of activeItineraries) {
+        // Check if current date is within itinerary dates
+        if (now >= itinerary.arrivalDate && now <= itinerary.departureDate) {
+          // Check if current location is near destination
+          if (itinerary.destination.location && itinerary.destination.location.coordinates) {
+            const [destLong, destLat] = itinerary.destination.location.coordinates;
+
+            // Calculate distance (simple approximation)
+            const distance = calculateDistance(latitude, longitude, destLat, destLong);
+
+            // If within 20km of destination, mark itinerary as active
+            if (distance <= 20) {
+              itinerary.status = 'active';
+            }
+          }
+        } else if (now > itinerary.departureDate && itinerary.status === 'active') {
+          // Mark as completed if departure date has passed
+          itinerary.status = 'completed';
+        }
+      }
+    }
+
+    return this.save();
+  };
+
+  // Method to add a travel itinerary
+  adSchema.methods.addTravelItinerary = async function(itineraryData) {
+    if (!this.travelItinerary) {
+      this.travelItinerary = [];
+    }
+
+    this.travelItinerary.push(itineraryData);
+    this.isTouring = true;
+
+    return this.save();
+  };
+
+  // Method to update a travel itinerary
+  adSchema.methods.updateTravelItinerary = async function(itineraryId, updates) {
+    const itinerary = this.travelItinerary.id(itineraryId);
+
+    if (!itinerary) {
+      throw new Error('Itinerary not found');
+    }
+
+    Object.assign(itinerary, updates);
+
+    // If no more active or planned itineraries, set isTouring to false
+    const hasActiveItineraries = this.travelItinerary.some(
+      it => it.status === 'planned' || it.status === 'active'
+    );
+
+    if (!hasActiveItineraries) {
+      this.isTouring = false;
+    }
+
+    return this.save();
+  };
+
+  // Method to cancel a travel itinerary
+  adSchema.methods.cancelTravelItinerary = async function(itineraryId) {
+    const itinerary = this.travelItinerary.id(itineraryId);
+
+    if (!itinerary) {
+      throw new Error('Itinerary not found');
+    }
+
+    itinerary.status = 'cancelled';
+
+    // If no more active or planned itineraries, set isTouring to false
+    const hasActiveItineraries = this.travelItinerary.some(
+      it => it.status === 'planned' || it.status === 'active'
+    );
+
+    if (!hasActiveItineraries) {
+      this.isTouring = false;
+    }
+
+    return this.save();
+  };
+
+  // Helper function to calculate distance between two points (Haversine formula)
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c; // Distance in km
+    return distance;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI/180);
+  }
 
   module.exports = mongoose.model('Ad', adSchema);
 }
