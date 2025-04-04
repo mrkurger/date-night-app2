@@ -129,6 +129,15 @@ angular.module('dateNightApp')
       });
     };
     
+    // Load initial ads
+    AdService.getAds()
+      .then(function(response) {
+        $scope.ads = response.data;
+      })
+      .finally(function() {
+        $scope.loading = false;
+      });
+
     // Initialize
     $scope.loadAds();
   }]);

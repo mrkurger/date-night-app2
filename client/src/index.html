@@ -10,28 +10,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styles/main.css">
   
-  <!-- Libraries -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  
-  <!-- Angular and Dependencies -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-route.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-sanitize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-animate.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
-  
-  <!-- Add a Content Security Policy meta tag -->
-  <base href="/">
+  <!-- Updated Content Security Policy -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self' http://localhost:3000;
-    script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval';
+    script-src 'self' https://cdnjs.cloudflare.com;
     style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline';
     font-src 'self' https://stackpath.bootstrapcdn.com;
-    img-src 'self' data: https:;
     connect-src 'self' http://localhost:3000 ws://localhost:3000;
+    img-src 'self' data: https:;
   ">
   
   <!-- Favicon -->
@@ -39,6 +25,8 @@
   
   <!-- Core Module (load first) -->
   <script src="app/core/core.module.js"></script>
+
+  <!-- Shared Module -->
   <script src="app/shared/shared.module.js"></script>
   
   <!-- Feature Modules -->
@@ -75,7 +63,7 @@
   <script src="app/features/chat/chat.controller.js"></script>
   <script src="app/features/profile/profile.controller.js"></script>
 </head>
-<body ng-cloak>
+<body ng-cloak ng-controller="AppController">
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
@@ -88,8 +76,8 @@
           <li class="nav-item">
             <a class="nav-link" href="#!/">Browse</a>
           </li>
-          <!-- Show if authenticated -->
-          <li class="nav-item" ng-if="isAuthenticated && currentUser.role === 'advertiser'">
+          <!-- Show if authenticated and currentUser exists -->
+          <li class="nav-item" ng-if="isAuthenticated && currentUser && currentUser.role === 'advertiser'">
             <a class="nav-link" href="#!/my-ads">Manage Ads</a>
           </li>
           <li class="nav-item" ng-if="isAuthenticated">
@@ -104,8 +92,8 @@
           <li class="nav-item" ng-if="!isAuthenticated">
             <a class="nav-link" href="#!/register">Register</a>
           </li>
-          <!-- Show if authenticated -->
-          <li class="nav-item dropdown" ng-if="isAuthenticated">
+          <!-- Show if authenticated and currentUser exists -->
+          <li class="nav-item dropdown" ng-if="isAuthenticated && currentUser">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
               {{ currentUser.username }}
             </a>

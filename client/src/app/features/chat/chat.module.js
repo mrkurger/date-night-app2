@@ -6,6 +6,8 @@
  * @property {string} content
  * @property {boolean} read
  * @property {Date} createdAt
+ * @property {string} encryptionKey // TODO: Add for E2E encryption
+ * @property {string} attachmentUrl // TODO: Add for file sharing
  */
 
 angular.module('dateNightApp.chat', ['dateNightApp.core', 'btford.socket-io'])
@@ -22,3 +24,8 @@ angular.module('dateNightApp.chat', ['dateNightApp.core', 'btford.socket-io'])
       ChatService.initialize();
     }
   }]);
+
+// TODO: Add socket reconnection handling
+// TODO: Add offline message queue
+// TODO: Add encryption service
+// TODO: Add file upload handling

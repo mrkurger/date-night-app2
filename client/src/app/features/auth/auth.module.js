@@ -12,4 +12,16 @@ angular.module('dateNightApp.auth', ['dateNightApp.core'])
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
     notAuthorized: 'auth-not-authorized'
-  });
+  })
+  .controller('LoginController', ['$scope', function($scope) {
+    console.log('LoginController initialized');
+    // ...existing login logic...
+  }])
+  .controller('RegisterController', ['$scope', function($scope) {
+    console.log('RegisterController initialized');
+    // ...existing register logic...
+  }])
+  .controller('AuthCallbackController', ['$scope', function($scope) {
+    console.log('AuthCallbackController initialized');
+    // ...existing auth callback logic...
+  }]);

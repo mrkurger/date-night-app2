@@ -1,4 +1,9 @@
 require('dotenv').config();
+// TODO: Configure server (port, CORS, etc.)
+// TODO: Implement graceful shutdown
+// TODO: Setup request logging
+// TODO: Setup error handling middleware
+// TODO: Setup security middleware (rate limiting, etc.)
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -19,8 +24,8 @@ app.use(express.json());
 // Connect to database
 connectDB();
 
-// Routes
-app.use('/api', routes);
+// Routes: updated API versioning from '/api' to '/api/v1'
+app.use('/api/v1', routes);
 
 // Error handlers
 app.use((err, req, res, next) => {
@@ -31,6 +36,16 @@ app.use((err, req, res, next) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
+
+// Added graceful shutdown handling:
+const shutdown = () => {
+  console.log('Graceful shutdown initiated');
+  // ...existing cleanup logic if any...
+  process.exit(0);
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
 
 // Start server
 const PORT = process.env.PORT || 3000;

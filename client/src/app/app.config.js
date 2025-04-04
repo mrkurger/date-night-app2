@@ -1,4 +1,10 @@
 angular.module('dateNightApp')
+  .constant('API_URL', 'http://localhost:3000/api') 
+  // TODO: Add API version constant (e.g., /api/v1)
+  // TODO: Add environment config (dev, prod, staging)
+  // TODO: Add feature flags (enable/disable features)
+
+angular.module('dateNightApp')
   .config(['$routeProvider', '$locationProvider', '$httpProvider', 
     function($routeProvider, $locationProvider, $httpProvider) {
       
@@ -107,6 +113,10 @@ angular.module('dateNightApp')
             }
           };
         }]);
+
+      // TODO: Add route resolvers for data preloading
+      // TODO: Add route transition animations
+      // TODO: Add proper error handling for resolves
     }
   ])
   .run(['$rootScope', 'AuthService', 'ChatService', '$location', function($rootScope, AuthService, ChatService, $location) {

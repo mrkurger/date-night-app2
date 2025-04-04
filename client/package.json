@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Frontend for Date Night App",
   "scripts": {
-    "start": "http-server src -p 8080",
+    "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development --open",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "setup": "mkdir -p src/lib && cp node_modules/angular/angular.min.js src/lib/angular/ && cp node_modules/angular-*/angular-*.min.js src/lib/angular/"
   },
   "dependencies": {
     "angular": "^1.8.3",

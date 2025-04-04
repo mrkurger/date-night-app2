@@ -4,6 +4,7 @@ const Ad = require('../server/models/ad.model');
 const User = require('../server/models/user.model');
 
 async function verifySetup() {
+  // TODO: Check required environment variables
   console.log('Verifying setup...');
 
   try {

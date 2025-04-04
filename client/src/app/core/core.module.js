@@ -28,4 +28,22 @@ angular.module('dateNightApp.core', [])
         return response;
       }
     };
+  }])
+  .factory('AuthService', ['$http', '$q', function($http, $q) {
+    var currentUser = null;
+    
+    return {
+      isAuthenticated: function() {
+        // For development, return mock authentication
+        return $q.resolve(false);
+      },
+      getCurrentUser: function() {
+        // For development, return mock user
+        return $q.resolve(null);
+      },
+      logout: function() {
+        currentUser = null;
+        return $q.resolve();
+      }
+    };
   }]);

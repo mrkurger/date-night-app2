@@ -1,5 +1,5 @@
 angular.module('dateNightApp')
-  .factory('AdService', ['$http', 'API_URL', function($http, API_URL) {
+  .factory('AdService', ['$http', '$q', function($http, $q) {
     const baseUrl = '/api/ads';
     
     function getSwipeAds() {
@@ -14,9 +14,23 @@ angular.module('dateNightApp')
       return $http.get(`/ads/category/${category}`);
     }
 
+    function getAds() {
+      // For development, return mock data
+      return $q.resolve({
+        data: [
+          {
+            _id: '1',
+            title: 'Sample Ad',
+            description: 'This is a sample ad',
+            image: 'https://via.placeholder.com/300'
+          }
+        ]
+      });
+    }
+
     return {
       getAllAds: function() {
-        return $http.get(baseUrl);
+        return getAds();
       },
       
       getAdById: function(id) {

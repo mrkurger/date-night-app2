@@ -1,11 +1,20 @@
 const adService = require('../../services/ad.service');
 
 class AdController {
+  // TODO: Add request validation middleware
+  // TODO: Add rate limiting for ad creation
+  // TODO: Add image processing and optimization
+  // TODO: Add caching layer for frequently accessed ads
+
   async getAllAds(req, res) {
     try {
+      // TODO: Add pagination
+      // TODO: Add filtering
+      // TODO: Add sorting options
       const ads = await adService.getAllAds(req.query);
       res.json(ads);
     } catch (error) {
+      // TODO: Add proper error logging
       res.status(500).json({ error: error.message });
     }
   }

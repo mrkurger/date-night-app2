@@ -14,6 +14,10 @@ angular.module('dateNightApp.gallery', ['dateNightApp.core', 'dateNightApp.ads']
       });
   }])
   .service('GalleryLayoutService', [function() {
+    // TODO: Implement proper Netflix-style row calculations
+    // TODO: Add image lazy loading
+    // TODO: Add responsive breakpoints
+    // TODO: Add smooth animations
     return {
       calculateLayout: function(items, containerWidth) {
         // Implement Netflix-style row calculations
