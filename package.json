@@ -15,5 +15,9 @@
   },
   "devDependencies": {
     "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "helmet": "^8.1.0",
+    "mongoose": "^8.13.2"
   }
 }

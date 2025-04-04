@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { User, Ad } = require('../models');
+const { User, Ad } = require('../server/components');
 
 async function verifySetup() {
   console.log('Verifying setup...');

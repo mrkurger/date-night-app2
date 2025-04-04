@@ -123,6 +123,10 @@ The project is organized into separate `server` (backend) and `client` (frontend
         npm install
         cd ..
         ```
+    * NOTE: If you encounter an error like "Cannot find module 'mongoose'", ensure you install mongoose in the project root:
+        ```bash
+        npm install mongoose
+        ```
 
 4.  **Run Setup Script (Optional but Recommended):**
     * Verifies environment variables and basic DB connection.
@@ -132,11 +136,12 @@ The project is organized into separate `server` (backend) and `client` (frontend
         ```
 
 5.  **Seed Database (Optional):**
-    * Populates the database with initial dummy data.
-    * Run from the project root:
+    * Ensure your MongoDB server is running.
+    * Run the following command from the project root to populate dummy data:
         ```bash
         node scripts/seed.js
         ```
+    * The script will connect to the database and insert sample documents (e.g. ads, users, etc.). Check the console output for progress and any errors.
 
 6.  **Run the Application:**
     * **Start the Backend Server:**
