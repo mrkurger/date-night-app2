@@ -17,9 +17,9 @@ export class AppComponent implements OnInit, OnDestroy {
   unreadMessages = 0;
   notificationCount = 0;
 
-  private authSubscription: Subscription;
-  private chatSubscription: Subscription;
-  private notificationSubscription: Subscription;
+  private authSubscription: Subscription = new Subscription();
+  private chatSubscription: Subscription = new Subscription();
+  private notificationSubscription: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authSubscription = this.authService.currentUser$.subscribe(user => {
+    this.authSubscription = this.authService.currentUser$.subscribe((user: any) => {
       this.isAuthenticated = !!user;
 
       if (user) {
@@ -37,19 +37,31 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isAdvertiser = user.role === 'advertiser' || user.role === 'admin';
 
         // Initialize chat service if authenticated
-        this.chatService.initialize();
+        this.initializeChat();
 
         // Subscribe to unread messages
-        this.chatSubscription = this.chatService.unreadMessages$.subscribe(count => {
+        this.chatSubscription = this.chatService.unreadCount$.subscribe((count: number) => {
           this.unreadMessages = count;
         });
 
         // Subscribe to notifications
-        this.notificationSubscription = this.notificationService.notificationCount$.subscribe(count => {
+        this.notificationSubscription = this.notificationService.unreadCount$.subscribe((count: number) => {
           this.notificationCount = count;
         });
       }
     });
+  }
+
+  /**
+   * Initialize chat service
+   * Loads chat rooms and unread counts
+   */
+  private initializeChat(): void {
+    // Load chat rooms
+    this.chatService.getRooms().subscribe();
+
+    // Get unread counts
+    this.chatService.getUnreadCounts().subscribe();
   }
 
   ngOnDestroy(): void {
