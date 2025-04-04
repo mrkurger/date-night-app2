@@ -1,101 +1,178 @@
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const { ExtractJwt } = require('passport-jwt');
 const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const RedditStrategy = require('passport-reddit').Strategy;
-const AppleStrategy = require('passport-apple');
-const { User } = require('../models');
-const config = require('../config/oauth');
-const jwt = require('jsonwebtoken');
-const { normalizeProfile, createUniqueUsername } = require('./helpers');
+const AppleStrategy = require('passport-apple').Strategy;
+const bcrypt = require('bcrypt');
+const { User } = require('../components/users');
 
-function generateJWT(user) {
-  return jwt.sign(
-    { id: user._id, username: user.username, role: user.role },
-    process.env.JWT_SECRET || 'your-secret-key',
-    { expiresIn: '24h' }
-  );
-}
+// Local Strategy (username/password)
+passport.use(new LocalStrategy(
+  async (username, password, done) => {
+    try {
+      // Find the user
+      const user = await User.findOne({ username });
+      if (!user) {
+        return done(null, false, { message: 'Invalid username or password' });
+      }
+      
+      // Verify password
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return done(null, false, { message: 'Invalid username or password' });
+      }
+      
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  }
+));
 
-async function findOrCreateUser(profile, provider) {
+// JWT Strategy
+passport.use(new JwtStrategy({
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET
+}, async (payload, done) => {
   try {
-    const query = { [`socialProfiles.${provider}.id`]: profile.id };
-    let user = await User.findOne(query);
+    const user = await User.findById(payload._id);
+    if (!user) {
+      return done(null, false);
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err, false);
+  }
+}));
+
+// GitHub Strategy
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.SERVER_URL + '/auth/github/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if user exists
+    let user = await User.findOne({ 'socialProfiles.github.id': profile.id });
     
     if (!user) {
-      const normalizedProfile = await normalizeProfile(profile, provider);
-      const username = await createUniqueUsername(normalizedProfile.username);
-      
-      user = await User.create({
-        username,
+      // Create new user
+      user = new User({
+        username: `github_${profile.id}`,
         role: 'user',
-        email: normalizedProfile.email,
         socialProfiles: {
-          [provider]: { 
-            id: profile.id,
-            email: normalizedProfile.email
-          }
+          github: { id: profile.id }
         }
       });
+      await user.save();
     }
     
-    // Update last active
-    user.lastActive = new Date();
-    user.online = true;
-    await user.save();
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+}));
+
+// Google Strategy
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.SERVER_URL + '/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if user exists
+    let user = await User.findOne({ 'socialProfiles.google.id': profile.id });
     
-    return user;
-  } catch (error) {
-    console.error('Error in findOrCreateUser:', error);
-    throw error;
-  }
-}
-
-passport.use(new GitHubStrategy(config.github,
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await findOrCreateUser(profile, 'github');
-      return done(null, user);
-    } catch (err) {
-      console.error('Error in GitHubStrategy:', err);
-      return done(err, null);
+    if (!user) {
+      // Create new user
+      user = new User({
+        username: `google_${profile.id}`,
+        role: 'user',
+        socialProfiles: {
+          google: { id: profile.id }
+        }
+      });
+      await user.save();
     }
+    
+    return done(null, user);
+  } catch (err) {
+    return done(err);
   }
-));
+}));
 
-passport.use(new GoogleStrategy(config.google,
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await findOrCreateUser(profile, 'google');
-      return done(null, user);
-    } catch (err) {
-      console.error('Error in GoogleStrategy:', err);
-      return done(err, null);
+// Reddit Strategy
+passport.use(new RedditStrategy({
+  clientID: process.env.REDDIT_CLIENT_ID,
+  clientSecret: process.env.REDDIT_CLIENT_SECRET,
+  callbackURL: process.env.SERVER_URL + '/auth/reddit/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if user exists
+    let user = await User.findOne({ 'socialProfiles.reddit.id': profile.id });
+    
+    if (!user) {
+      // Create new user
+      user = new User({
+        username: `reddit_${profile.id}`,
+        role: 'user',
+        socialProfiles: {
+          reddit: { id: profile.id }
+        }
+      });
+      await user.save();
     }
+    
+    return done(null, user);
+  } catch (err) {
+    return done(err);
   }
-));
+}));
 
-passport.use(new RedditStrategy(config.reddit,
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await findOrCreateUser(profile, 'reddit');
-      return done(null, user);
-    } catch (err) {
-      console.error('Error in RedditStrategy:', err);
-      return done(err, null);
+// Apple Strategy
+passport.use(new AppleStrategy({
+  clientID: process.env.APPLE_CLIENT_ID,
+  teamID: process.env.APPLE_TEAM_ID,
+  callbackURL: process.env.SERVER_URL + '/auth/apple/callback',
+  keyID: process.env.APPLE_KEY_ID,
+  privateKeyLocation: process.env.APPLE_PRIVATE_KEY_LOCATION
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if user exists
+    let user = await User.findOne({ 'socialProfiles.apple.id': profile.id });
+    
+    if (!user) {
+      // Create new user
+      user = new User({
+        username: `apple_${profile.id}`,
+        role: 'user',
+        socialProfiles: {
+          apple: { id: profile.id }
+        }
+      });
+      await user.save();
     }
+    
+    return done(null, user);
+  } catch (err) {
+    return done(err);
   }
-));
+}));
 
-passport.use(new AppleStrategy(config.apple,
-  async (req, accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await findOrCreateUser(profile, 'apple');
-      return done(null, user);
-    } catch (err) {
-      console.error('Error in AppleStrategy:', err);
-      return done(err, null);
-    }
+// Serialize user
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+// Deserialize user
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
   }
-));
-
-module.exports = { passport, generateJWT };
+});
