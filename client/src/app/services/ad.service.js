@@ -1,7 +1,19 @@
 angular.module('dateNightApp')
-  .factory('AdService', ['$http', function($http) {
+  .factory('AdService', ['$http', 'API_URL', function($http, API_URL) {
     const baseUrl = '/api/ads';
     
+    function getSwipeAds() {
+      return $http.get('/ads/swipe');
+    }
+
+    function getCategories() {
+      return $http.get('/ads/categories');
+    }
+
+    function getAdsByCategory(category) {
+      return $http.get(`/ads/category/${category}`);
+    }
+
     return {
       getAllAds: function() {
         return $http.get(baseUrl);
@@ -31,6 +43,10 @@ angular.module('dateNightApp')
       
       filterByCounty: function(county) {
         return $http.get(`${baseUrl}/filter/county/${county}`);
-      }
+      },
+
+      getSwipeAds: getSwipeAds,
+      getCategories: getCategories,
+      getAdsByCategory: getAdsByCategory
     };
   }]);
