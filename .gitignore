@@ -34,3 +34,6 @@ data/db/WiredTiger.wt
 data/db/WiredTiger.turtle
 data/db/index-5-6965801790087775312.wt
 data/db/collection-4-6965801790087775312.wt
+data/db/WiredTiger.turtle
+data/db/journal/WiredTigerLog.0000000002
+data/db/WiredTiger.wt
