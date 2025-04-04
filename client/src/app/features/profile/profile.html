@@ -1,0 +1,135 @@
+<div class="container profile-container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h3>My Profile</h3>
+            <button ng-if="!editMode" class="btn btn-primary" ng-click="toggleEditMode()">
+              <i class="fa fa-edit"></i> Edit Profile
+            </button>
+          </div>
+          
+          <div class="card-body">
+            <div ng-if="loading" class="text-center p-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            
+            <div ng-if="error" class="alert alert-danger">
+              {{ error }}
+            </div>
+            
+            <!-- View Mode -->
+            <div ng-if="!loading && !editMode">
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <strong>Username</strong>
+                </div>
+                <div class="col-md-8">
+                  {{ user.username }}
+                </div>
+              </div>
+              
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <strong>Account Type</strong>
+                </div>
+                <div class="col-md-8">
+                  {{ user.role === 'advertiser' ? 'Advertiser' : 'User' }}
+                </div>
+              </div>
+              
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <strong>Member Since</strong>
+                </div>
+                <div class="col-md-8">
+                  {{ user.createdAt | date:'mediumDate' }}
+                </div>
+              </div>
+              
+              <!-- Travel Plan (Advertisers Only) -->
+              <div ng-if="user.role === 'advertiser'" class="travel-plan">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4>My Travel Plan</h4>
+                  <button class="btn btn-sm btn-primary" ng-click="toggleTravelPlanEdit()">
+                    <i class="fa" ng-class="{'fa-pencil': !travelPlanEdit, 'fa-times': travelPlanEdit}"></i>
+                    {{ travelPlanEdit ? 'Cancel' : 'Edit' }}
+                  </button>
+                </div>
+                
+                <!-- Edit Travel Plan -->
+                <div ng-if="travelPlanEdit" class="mb-3">
+                  <div class="input-group">
+                    <select class="form-control" ng-model="selectedCounty">
+                      <option value="">Select a county</option>
+                      <option ng-repeat="county in counties" value="{{county}}" ng-if="!user.travelPlan.includes(county)">
+                        {{county}}
+                      </option>
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-primary" ng-click="addCounty()" ng-disabled="!selectedCounty">
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Display Travel Plan -->
+                <div class="travel-plan-counties">
+                  <span ng-if="user.travelPlan.length === 0" class="text-muted">No travel plan set</span>
+                  
+                  <div ng-if="user.travelPlan.length > 0" class="d-flex flex-wrap">
+                    <div ng-repeat="county in user.travelPlan" class="badge badge-primary mr-2 mb-2 p-2">
+                      {{ county }}
+                      <button ng-if="travelPlanEdit" class="btn btn-sm btn-link text-white p-0 ml-1" ng-click="removeCounty(county)">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Edit Mode -->
+            <form ng-if="!loading && editMode" name="profileForm" ng-submit="saveProfile()" novalidate>
+              <div class="form-group row">
+                <label for="username" class="col-md-4 col-form-label">Username</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="username" name="username" ng-model="userData.username" required minlength="3">
+                  <div ng-show="profileForm.username.$touched && profileForm.username.$error.required" class="text-danger">
+                    Username is required
+                  </div>
+                  <div ng-show="profileForm.username.$touched && profileForm.username.$error.minlength" class="text-danger">
+                    Username must be at least 3 characters
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Account Type</label>
+                <div class="col-md-8 pt-2">
+                  {{ userData.role === 'advertiser' ? 'Advertiser' : 'User' }}
+                  <small class="form-text text-muted">Account type cannot be changed</small>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-primary" ng-disabled="profileForm.$invalid || loading">
+                    <span ng-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Save Changes
+                  </button>
+                  <button type="button" class="btn btn-secondary ml-2" ng-click="toggleEditMode()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
