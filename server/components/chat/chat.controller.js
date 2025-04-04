@@ -1,39 +1,43 @@
-const { ChatMessage } = require('./');
+const { ChatMessage } = require('../');
 const { User } = require('../users');
 
-exports.getMessages = async (req, res, next) => {
+exports.getMessages = async (req, res) => {
   try {
     const { recipientId } = req.params;
+    const senderId = req.user._id;
     
-    // Get messages between current user and specified recipient
+    // Fetch messages between the two users
     const messages = await ChatMessage.find({
       $or: [
-        { sender: req.user._id, recipient: recipientId },
-        { sender: recipientId, recipient: req.user._id }
+        { sender: senderId, recipient: recipientId },
+        { sender: recipientId, recipient: senderId }
       ]
     }).sort({ timestamp: 1 });
     
     res.json(messages);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
   }
 };
 
-exports.sendMessage = async (req, res, next) => {
+exports.sendMessage = async (req, res) => {
   try {
     const { recipientId, message } = req.body;
+    const senderId = req.user._id;
     
-    // Check if recipient exists
+    // Validate recipient exists
     const recipient = await User.findById(recipientId);
     if (!recipient) {
       return res.status(404).json({ message: 'Recipient not found' });
     }
     
-    // Create and save the message
+    // Create and save message
     const chatMessage = new ChatMessage({
-      sender: req.user._id,
+      sender: senderId,
       recipient: recipientId,
-      message
+      message,
+      timestamp: new Date(),
+      read: false
     });
     
     await chatMessage.save();
@@ -43,22 +47,24 @@ exports.sendMessage = async (req, res, next) => {
     
     res.status(201).json(chatMessage);
   } catch (err) {
-    next(err);
+    res.status(400).json({ message: err.message });
   }
 };
 
-exports.markAsRead = async (req, res, next) => {
+exports.markAsRead = async (req, res) => {
   try {
     const { messageId } = req.params;
+    const userId = req.user._id;
     
     const message = await ChatMessage.findById(messageId);
+    
     if (!message) {
       return res.status(404).json({ message: 'Message not found' });
     }
     
-    // Only recipient can mark as read
-    if (message.recipient.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: 'Not authorized' });
+    // Verify user is the recipient
+    if (message.recipient.toString() !== userId.toString()) {
+      return res.status(403).json({ message: 'Not authorized to mark this message as read' });
     }
     
     message.read = true;
@@ -66,6 +72,21 @@ exports.markAsRead = async (req, res, next) => {
     
     res.json({ message: 'Message marked as read' });
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getUnreadCount = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    
+    const count = await ChatMessage.countDocuments({
+      recipient: userId,
+      read: false
+    });
+    
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

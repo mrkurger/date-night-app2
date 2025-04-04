@@ -3,14 +3,12 @@ const router = express.Router();
 const userController = require('./user.controller');
 const { authenticateToken } = require('../../middleware/authenticateToken');
 
-// All routes require authentication
-router.use(authenticateToken);
+// Protected routes (require authentication)
+router.get('/me', authenticateToken, userController.getCurrentUser);
+router.put('/me', authenticateToken, userController.updateUser);
+router.put('/travel-plan', authenticateToken, userController.updateTravelPlan);
 
-// User profile routes
-router.get('/profile', userController.getProfile);
-router.put('/profile', userController.updateProfile);
-
-// Travel plan routes (for advertisers)
-router.put('/travel-plan', userController.updateTravelPlan);
+// Public routes
+router.get('/:userId/status', userController.getUserStatus);
 
 module.exports = router;

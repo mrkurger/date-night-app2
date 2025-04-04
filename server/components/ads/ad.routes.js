@@ -7,8 +7,9 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 router.get('/', adController.getAllAds);
 router.get('/:id', adController.getAdById);
 router.get('/search/nearby', adController.searchNearby);
+router.get('/filter/county/:county', adController.filterByCounty);
 
-// Protected routes
+// Protected routes (require authentication)
 router.post('/', authenticateToken, adController.createAd);
 router.put('/:id', authenticateToken, adController.updateAd);
 router.delete('/:id', authenticateToken, adController.deleteAd);

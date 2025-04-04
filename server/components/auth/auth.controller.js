@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const { User } = require('../users');
+const passport = require('passport');
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   try {
-    const { username, password, role } = req.body;
+    const { username, password, role = 'user' } = req.body;
     
-    // Check if user already exists
+    // Check if username already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(409).json({ message: 'Username already exists' });
+      return res.status(400).json({ message: 'Username already taken' });
     }
     
     // Hash password
@@ -20,102 +20,85 @@ exports.register = async (req, res, next) => {
     const user = new User({
       username,
       password: hashedPassword,
-      role: role || 'user'
+      role: ['user', 'advertiser'].includes(role) ? role : 'user'
     });
     
     await user.save();
     
-    // Generate token
+    // Generate JWT token
     const token = jwt.sign(
       { _id: user._id, username: user.username, role: user.role }, 
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: '7d' }
     );
     
-    res.status(201).json({ token, user: { _id: user._id, username, role: user.role } });
+    res.status(201).json({ token, user: { 
+      _id: user._id, 
+      username: user.username, 
+      role: user.role 
+    }});
   } catch (err) {
-    next(err);
+    res.status(400).json({ message: err.message });
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     passport.authenticate('local', { session: false }, (err, user, info) => {
-      if (err) return next(err);
+      if (err) return res.status(500).json({ message: err.message });
       if (!user) return res.status(401).json({ message: info.message });
       
-      // Update last active
+      // Generate JWT token
+      const token = jwt.sign(
+        { _id: user._id, username: user.username, role: user.role }, 
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+      
+      // Update last active status
       user.lastActive = new Date();
       user.online = true;
       user.save();
       
-      // Generate token
-      const token = jwt.sign(
-        { _id: user._id, username: user.username, role: user.role }, 
-        process.env.JWT_SECRET,
-        { expiresIn: '24h' }
-      );
-      
-      res.json({ token, user: { _id: user._id, username: user.username, role: user.role } });
-    })(req, res, next);
+      res.json({ token, user: { 
+        _id: user._id, 
+        username: user.username, 
+        role: user.role 
+      }});
+    })(req, res);
   } catch (err) {
-    next(err);
+    res.status(400).json({ message: err.message });
   }
 };
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   try {
+    // Update user status if authenticated
     if (req.user) {
-      const user = await User.findById(req.user._id);
-      if (user) {
-        user.online = false;
-        await user.save();
-      }
+      await User.findByIdAndUpdate(req.user._id, {
+        online: false,
+        lastActive: new Date()
+      });
     }
+    
     res.json({ message: 'Logged out successfully' });
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
   }
 };
 
-// OAuth handlers
+// Social login handlers
 exports.githubCallback = (req, res) => {
   const token = jwt.sign(
-    { _id: req.user._id, username: req.user.username, role: req.user.role },
+    { _id: req.user._id, username: req.user.username, role: req.user.role }, 
     process.env.JWT_SECRET,
-    { expiresIn: '24h' }
+    { expiresIn: '7d' }
   );
   
   // Redirect to frontend with token
   res.redirect(`${process.env.CLIENT_URL}/auth-callback?token=${token}`);
 };
 
-exports.googleCallback = (req, res) => {
-  const token = jwt.sign(
-    { _id: req.user._id, username: req.user.username, role: req.user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-  
-  res.redirect(`${process.env.CLIENT_URL}/auth-callback?token=${token}`);
-};
-
-exports.redditCallback = (req, res) => {
-  const token = jwt.sign(
-    { _id: req.user._id, username: req.user.username, role: req.user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-  
-  res.redirect(`${process.env.CLIENT_URL}/auth-callback?token=${token}`);
-};
-
-exports.appleCallback = (req, res) => {
-  const token = jwt.sign(
-    { _id: req.user._id, username: req.user.username, role: req.user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-  
-  res.redirect(`${process.env.CLIENT_URL}/auth-callback?token=${token}`);
-};
+exports.googleCallback = exports.githubCallback;
+exports.redditCallback = exports.githubCallback;
+exports.appleCallback = exports.githubCallback;
