@@ -27,33 +27,30 @@ export class AuthService {
    * Check if user is authenticated on service initialization
    */
   private checkAuthStatus(): void {
-    const token = localStorage.getItem('token');
-    const expirationTime = localStorage.getItem('tokenExpiration');
-
-    if (!token || !expirationTime) {
-      return;
-    }
-
-    const expirationDate = new Date(expirationTime);
-    const now = new Date();
-
-    if (expirationDate <= now) {
-      // Token expired, try to refresh
-      this.refreshToken().subscribe({
-        error: () => this.logout()
-      });
-    } else {
-      // Token still valid
-      this.validateToken().subscribe();
-      this.setAutoLogout(expirationDate.getTime() - now.getTime());
-    }
+    // With HttpOnly cookies, we need to validate with the server
+    // We don't have access to the token expiration time client-side
+    this.validateToken().subscribe({
+      next: (user) => {
+        // Set auto refresh token timer (every 12 hours)
+        this.setAutoRefresh(12 * 60 * 60 * 1000);
+      },
+      error: () => {
+        // Try to refresh the token if validation fails
+        this.refreshToken().subscribe({
+          error: () => {
+            // Clear user state if refresh fails
+            this.currentUserSubject.next(null);
+          }
+        });
+      }
+    });
   }
 
   /**
    * Login with email and password
    */
   login(credentials: LoginDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
 
@@ -61,7 +58,7 @@ export class AuthService {
    * Register new user
    */
   register(userData: RegisterDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData)
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
 
@@ -69,30 +66,33 @@ export class AuthService {
    * Logout user and clear stored data
    */
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
-    localStorage.removeItem('refreshToken');
+    // Send logout request to server to clear cookies
+    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+          }
 
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/auth/login']);
+          this.currentUserSubject.next(null);
+          this.router.navigate(['/auth/login']);
+        },
+        error: (err) => {
+          console.error('Logout error:', err);
+          // Still clear local state even if server request fails
+          this.currentUserSubject.next(null);
+          this.router.navigate(['/auth/login']);
+        }
+      });
   }
 
   /**
-   * Handle OAuth callback with token
+   * Handle OAuth callback
+   * The token is now stored in HttpOnly cookies by the server
    */
-  handleOAuthCallback(token: string): Observable<User> {
-    localStorage.setItem('token', token);
-
-    // Set token expiration (assuming 15 minutes from now)
-    const expirationDate = new Date(new Date().getTime() + 15 * 60 * 1000);
-    localStorage.setItem('tokenExpiration', expirationDate.toISOString());
-
-    this.setAutoLogout(15 * 60 * 1000);
-
+  handleOAuthCallback(): Observable<User> {
+    // No need to store token in localStorage anymore
+    // Just validate the token that's in the cookie
     return this.validateToken();
   }
 
@@ -100,17 +100,12 @@ export class AuthService {
    * Refresh the access token
    */
   refreshToken(): Observable<AuthResponse> {
-    const refreshToken = localStorage.getItem('refreshToken');
-
-    if (!refreshToken) {
-      return throwError(() => new Error('No refresh token available'));
-    }
-
-    return this.http.post<AuthResponse>(`${this.apiUrl}/refresh-token`, { refreshToken })
+    return this.http.post<AuthResponse>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
         tap(response => this.handleAuthResponse(response)),
         catchError(error => {
-          this.logout();
+          // Don't call logout here to avoid infinite loop
+          this.currentUserSubject.next(null);
           return throwError(() => error);
         })
       );
@@ -132,26 +127,35 @@ export class AuthService {
 
   /**
    * Get stored token
+   *
+   * Note: This method is kept for compatibility with existing code,
+   * but it will always return null since we're using HttpOnly cookies now.
+   * The auth interceptor has been updated to handle this.
    */
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return null; // Token is in HttpOnly cookie, not accessible via JS
   }
 
   /**
    * Validate the current token
    */
   private validateToken(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/validate`)
+    return this.http.get<any>(`${this.apiUrl}/validate`, { withCredentials: true })
       .pipe(
-        tap(user => {
-          // Add id property as alias to _id for compatibility
-          if (user && user._id) {
-            user.id = user._id;
+        tap(response => {
+          if (response && response.user) {
+            const user = response.user;
+            // Add id property as alias to _id for compatibility
+            if (user && user._id) {
+              user.id = user._id;
+            }
+            this.currentUserSubject.next(user);
+            return user;
           }
-          this.currentUserSubject.next(user);
+          return response;
         }),
         catchError(error => {
-          this.logout();
+          // Don't call logout here to avoid infinite loop
           return throwError(() => error);
         })
       );
@@ -161,44 +165,38 @@ export class AuthService {
    * Handle authentication response
    */
   private handleAuthResponse(response: AuthResponse): void {
-    const { token, refreshToken, expiresIn } = response;
-
-    if (token) {
-      localStorage.setItem('token', token);
-
-      // Calculate expiration time
-      const expirationDuration = expiresIn ? expiresIn * 1000 : 15 * 60 * 1000; // Default to 15 minutes
-      const expirationDate = new Date(new Date().getTime() + expirationDuration);
-
-      localStorage.setItem('tokenExpiration', expirationDate.toISOString());
-
-      if (refreshToken) {
-        localStorage.setItem('refreshToken', refreshToken);
-      }
-
+    // Token is now stored in HttpOnly cookies by the server
+    // We just need to update the user state
+    if (response && response.user) {
       // Add id property as alias to _id for compatibility
       if (response.user && response.user._id) {
         response.user.id = response.user._id;
       }
 
       this.currentUserSubject.next(response.user);
-      this.setAutoLogout(expirationDuration);
+
+      // Set auto refresh timer
+      const expirationDuration = response.expiresIn ? response.expiresIn * 1000 : 24 * 60 * 60 * 1000; // Default to 24 hours
+      this.setAutoRefresh(expirationDuration * 0.8); // Refresh at 80% of token lifetime
     }
   }
 
   /**
-   * Set timer for automatic logout when token expires
+   * Set timer for automatic token refresh
    */
-  private setAutoLogout(expirationDuration: number): void {
+  private setAutoRefresh(refreshDuration: number): void {
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
 
     this.tokenExpirationTimer = setTimeout(() => {
-      // Try to refresh token first
+      // Refresh token
       this.refreshToken().subscribe({
-        error: () => this.logout()
+        error: () => {
+          // If refresh fails, clear user state
+          this.currentUserSubject.next(null);
+        }
       });
-    }, expirationDuration);
+    }, refreshDuration);
   }
 }

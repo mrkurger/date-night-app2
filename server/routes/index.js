@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const helmet = require('helmet');
 const compression = require('compression');
 const requestValidator = require('../middleware/requestValidator');
+const { csrfProtection, sendCsrfToken } = require('../middleware/csrf');
 
 // Add correlation ID to each request for better logging and debugging
 router.use((req, res, next) => {
@@ -14,14 +15,16 @@ router.use((req, res, next) => {
   next();
 });
 
-// Apply rate limiting to auth routes
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // limit each IP to 10 requests per windowMs for auth routes
-  message: 'Too many authentication attempts, please try again later',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// Import rate limiters
+const {
+  authLimiter,
+  registrationLimiter,
+  chatLimiter,
+  adCreationLimiter,
+  mediaUploadLimiter,
+  searchLimiter,
+  profileUpdateLimiter
+} = require('../middleware/rateLimiter');
 
 // Apply security headers
 router.use(helmet());
@@ -41,17 +44,24 @@ const verificationRoutes = require('../routes/verification.routes');
 const reviewRoutes = require('../routes/review.routes');
 const safetyRoutes = require('../routes/safety.routes');
 
-// Apply specific middleware to routes
-router.use('/auth', authLimiter, authRoutes);
-router.use('/ads', adRoutes);
-router.use('/chat', chatRoutes);
-router.use('/users', userRoutes);
-router.use('/payments', paymentRoutes);
-router.use('/travel', travelRoutes);
-router.use('/media', mediaRoutes);
-router.use('/verification', verificationRoutes);
-router.use('/reviews', reviewRoutes);
-router.use('/safety', safetyRoutes);
+// CSRF token endpoint
+router.get('/csrf-token', csrfProtection, sendCsrfToken, (req, res) => {
+  res.status(200).json({ success: true });
+});
+
+// Apply specific middleware to routes with granular rate limiting
+router.use('/auth', authLimiter, csrfProtection, authRoutes);
+
+// Apply CSRF protection and rate limiting to sensitive routes
+router.use('/ads', csrfProtection, adCreationLimiter, adRoutes);
+router.use('/chat', csrfProtection, chatLimiter, chatRoutes);
+router.use('/users', csrfProtection, profileUpdateLimiter, userRoutes);
+router.use('/payments', csrfProtection, authLimiter, paymentRoutes);
+router.use('/travel', csrfProtection, profileUpdateLimiter, travelRoutes);
+router.use('/media', csrfProtection, mediaUploadLimiter, mediaRoutes);
+router.use('/verification', csrfProtection, authLimiter, verificationRoutes);
+router.use('/reviews', csrfProtection, profileUpdateLimiter, reviewRoutes);
+router.use('/safety', csrfProtection, authLimiter, safetyRoutes);
 
 // API health check endpoint
 router.get('/health', (req, res) => {

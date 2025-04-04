@@ -3,11 +3,35 @@ const router = express.Router();
 const passport = require('passport');
 const authController = require('./auth.controller');
 const { protect } = require('../../middleware/auth');
+const { registrationLimiter, passwordResetLimiter } = require('../../middleware/rateLimiter');
 
-// Local authentication
-router.post('/register', authController.register);
-router.post('/login', authController.login);
+// Local authentication with rate limiting
+router.post('/register', registrationLimiter, authController.register);
+router.post('/login', authController.login); // Already has authLimiter from index.js
 router.post('/logout', protect, authController.logout);
+router.post('/refresh-token', authController.refreshToken);
+
+// Password reset endpoints with rate limiting
+router.post('/forgot-password', passwordResetLimiter, (req, res) => {
+  // Placeholder for future implementation
+  res.status(501).json({ message: 'Not implemented yet' });
+});
+router.post('/reset-password', passwordResetLimiter, (req, res) => {
+  // Placeholder for future implementation
+  res.status(501).json({ message: 'Not implemented yet' });
+});
+
+// Validate token endpoint
+router.get('/validate', protect, (req, res) => {
+  res.json({
+    success: true,
+    user: {
+      _id: req.user._id,
+      username: req.user.username,
+      role: req.user.role
+    }
+  });
+});
 
 // GitHub OAuth
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ChatService } from './core/services/chat.service';
+import { CsrfService } from './core/services/csrf.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 
 @Component({
@@ -29,10 +30,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private notificationService: NotificationService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private csrfService: CsrfService
   ) {}
 
   ngOnInit(): void {
+    // Initialize CSRF protection
+    this.csrfService.initializeCsrf().subscribe();
+
     this.authSubscription = this.authService.currentUser$.subscribe((user: any) => {
       this.isAuthenticated = !!user;
 

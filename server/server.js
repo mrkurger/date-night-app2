@@ -11,12 +11,18 @@ const hpp = require('hpp');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const config = require('./config/environment');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
+const { csrfMiddleware } = require('./middleware/csrf');
+const cspNonce = require('./middleware/cspNonce');
 
 // Initialize express
 const app = express();
+
+// Generate CSP nonce for each request
+app.use(cspNonce);
 
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, 'logs');
@@ -47,20 +53,36 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Security middleware
-// Set security HTTP headers with configuration for Angular
+// Set security HTTP headers with improved CSP
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      // Use nonce-based CSP instead of unsafe-inline and unsafe-eval
+      scriptSrc: [
+        "'self'",
+        (req, res) => `'nonce-${res.locals.cspNonce}'`
+      ],
+      styleSrc: [
+        "'self'",
+        (req, res) => `'nonce-${res.locals.cspNonce}'`,
+        "https://fonts.googleapis.com"
+      ],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://*.googleapis.com"],
-      connectSrc: ["'self'", "wss:", "ws:", "https://api.stripe.com"]
+      connectSrc: ["'self'", "wss:", "ws:", "https://api.stripe.com"],
+      // Add additional security directives
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+      frameAncestors: ["'self'"]
     }
   },
+  // Additional security headers
   crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "cross-origin" }
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  xssFilter: true,
+  noSniff: true
 }));
 
 // Enable CORS
@@ -157,7 +179,11 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
   }
 };
 
+// Parse cookies for CSRF
+app.use(cookieParser());
+
 // API routes with versioning
+// Apply CSRF protection to sensitive routes
 app.use('/api/v1', routes);
 
 // Handle 404 routes
