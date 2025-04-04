@@ -57,4 +57,13 @@ const adSchema = new mongoose.Schema({
 // Add geospatial index for location-based queries
 adSchema.index({ location: '2dsphere' });
 
+// Ensure indexes are created
+adSchema.post('save', async function() {
+  try {
+    await this.collection.createIndex({ location: '2dsphere' });
+  } catch (error) {
+    console.error('Error creating index:', error);
+  }
+});
+
 module.exports = mongoose.model('Ad', adSchema);
