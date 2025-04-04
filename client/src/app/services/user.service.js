@@ -1,22 +1,17 @@
 angular.module('dateNightApp')
   .factory('UserService', ['$http', function($http) {
-    const baseUrl = '/api/users';
-    
     return {
       getCurrentUser: function() {
-        return $http.get(`${baseUrl}/me`);
+        return $http.get('/api/users/me');
       },
-      
       updateUser: function(userData) {
-        return $http.put(`${baseUrl}/me`, userData);
+        return $http.put('/api/users/me', userData);
       },
-      
-      updateTravelPlan: function(travelPlan) {
-        return $http.put(`${baseUrl}/travel-plan`, { travelPlan: travelPlan });
+      updateTravelPlan: function(counties) {
+        return $http.put('/api/users/travel-plan', { counties });
       },
-      
       getUserStatus: function(userId) {
-        return $http.get(`${baseUrl}/${userId}/status`);
+        return $http.get(`/api/users/${userId}/status`);
       }
     };
   }]);

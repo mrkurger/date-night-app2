@@ -1,16 +1,19 @@
 angular.module('dateNightApp')
   .factory('ChatPollingService', ['$interval', 'ChatService', function($interval, ChatService) {
-    var pollingInterval;
+    let pollingPromise;
+    
     return {
       start: function() {
-        // TODO (Severity medium): Implement chat polling logic (or use sockets)
-        pollingInterval = $interval(function() {
-          ChatService.fetchLatestMessages();
-        }, 5000);
+        if (!pollingPromise) {
+          pollingPromise = $interval(function() {
+            ChatService.getUnreadCount();
+          }, 30000); // Poll every 30 seconds
+        }
       },
       stop: function() {
-        if (pollingInterval) {
-          $interval.cancel(pollingInterval);
+        if (pollingPromise) {
+          $interval.cancel(pollingPromise);
+          pollingPromise = null;
         }
       }
     };

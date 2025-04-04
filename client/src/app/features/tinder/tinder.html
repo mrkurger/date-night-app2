@@ -1,7 +1,27 @@
 <!-- HTML markup based on prototype images -->
 <div class="tinder-view">
-  <!-- ...existing code... -->
   <h1>Tinder-Style Swipe Ads</h1>
-  <!-- Ad cards and swipe buttons -->
-  <!-- ...existing code... -->
+  <div class="container mt-4">
+    <div class="card swipe-card" ng-if="hasMoreAds()">
+      <img ng-src="{{getCurrentAd().profileImage || '/assets/images/default-profile.png'}}" 
+           class="card-img-top" alt="Profile Image">
+      <div class="card-body">
+        <h5 class="card-title">{{getCurrentAd().title}}</h5>
+        <p class="card-text">{{getCurrentAd().description}}</p>
+        <p class="text-muted">{{getCurrentAd().county}}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button class="btn btn-danger" ng-click="swipe('left')">
+          <i class="fa fa-times"></i>
+        </button>
+        <button class="btn btn-success" ng-click="swipe('right')">
+          <i class="fa fa-heart"></i>
+        </button>
+      </div>
+    </div>
+    <div class="text-center mt-4" ng-if="!hasMoreAds()">
+      <h3>No more ads to show!</h3>
+      <button class="btn btn-primary mt-3" ng-click="loadMoreAds()">Load More</button>
+    </div>
+  </div>
 </div>

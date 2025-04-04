@@ -4,41 +4,53 @@ const { User, Ad } = require('../server/components');
 
 async function verifySetup() {
   console.log('Verifying setup...');
+  console.log('Checking MongoDB connection...');
 
-  // Check environment variables
-  const requiredEnvVars = [
-    'JWT_SECRET',
-    'GITHUB_CLIENT_ID',
-    'GITHUB_CLIENT_SECRET',
-    'GOOGLE_CLIENT_ID',
-    'GOOGLE_CLIENT_SECRET',
-    'REDDIT_CLIENT_ID',
-    'REDDIT_CLIENT_SECRET'
-  ];
-
-  const missingVars = requiredEnvVars.filter(v => !process.env[v]);
-  if (missingVars.length) {
-    console.error('Missing environment variables:', missingVars);
-    process.exit(1);
-  }
-
-  // Test database connection
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/travelling_fortune_tellers', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-    console.log('MongoDB connection successful');
+    // Check if MongoDB is running
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/date_night');
+    console.log('✓ MongoDB connection successful');
 
-    // Verify indexes
-    await Ad.collection.getIndexes();
-    await User.collection.getIndexes();
-    console.log('Database indexes verified');
+    // Verify models and indexes
+    await Promise.all([
+      Ad.collection.getIndexes(),
+      User.collection.getIndexes()
+    ]);
+    console.log('✓ Database indexes verified');
 
-    console.log('Setup verification complete!');
+    // Check environment variables
+    const requiredEnvVars = [
+      'JWT_SECRET',
+      'JWT_REFRESH_SECRET'
+    ];
+
+    const missingVars = requiredEnvVars.filter(v => !process.env[v]);
+    if (missingVars.length) {
+      console.error('❌ Missing required environment variables:', missingVars);
+      process.exit(1);
+    }
+    console.log('✓ Environment variables verified');
+
+    console.log('\nSetup verification complete! ✨');
+    await mongoose.connection.close();
     process.exit(0);
   } catch (error) {
-    console.error('Setup verification failed:', error);
+    console.error('\n❌ Setup verification failed:');
+    
+    if (error.code === 'ECONNREFUSED') {
+      console.error(`
+Make sure MongoDB is running:
+1. Start MongoDB:
+   $ mongod
+2. In a new terminal, verify MongoDB is running:
+   $ mongosh
+3. Run setup again:
+   $ node scripts/setup.js
+      `);
+    } else {
+      console.error(error);
+    }
+    
     process.exit(1);
   }
 }

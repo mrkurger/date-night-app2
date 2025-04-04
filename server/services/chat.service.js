@@ -2,7 +2,7 @@ const ChatMessage = require('../models/chat-message.model');
 const User = require('../models/user.model');
 
 class ChatService {
-  constructor(io) {
+  constructor(io) {  // Real-time with Socket.IO
     this.io = io;
   }
 

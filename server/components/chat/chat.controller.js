@@ -1,97 +1,39 @@
-const { ChatMessage } = require('../');
-const { User } = require('../users');
+const ChatService = require('../../services/chat.service');
 
-exports.getMessages = async (req, res) => {
-  try {
-    const { recipientId } = req.params;
-    const senderId = req.user._id;
-    
-    // Fetch messages between the two users
-    const messages = await ChatMessage.find({
-      $or: [
-        { sender: senderId, recipient: recipientId },
-        { sender: recipientId, recipient: senderId }
-      ]
-    }).sort({ timestamp: 1 });
-    
-    res.json(messages);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-exports.sendMessage = async (req, res) => {
-  try {
-    const { recipientId, message } = req.body;
-    const senderId = req.user._id;
-    
-    // Validate recipient exists
-    const recipient = await User.findById(recipientId);
-    if (!recipient) {
-      return res.status(404).json({ message: 'Recipient not found' });
+class ChatController {
+  async getMessages(req, res) {
+    try {
+      const messages = await ChatService.getMessages(
+        req.user.id,
+        req.params.recipientId
+      );
+      res.json(messages);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-    
-    // Create and save message
-    const chatMessage = new ChatMessage({
-      sender: senderId,
-      recipient: recipientId,
-      message,
-      timestamp: new Date(),
-      read: false
-    });
-    
-    await chatMessage.save();
-    
-    // Emit socket event (handled by chat.socket.js)
-    req.app.get('io').to(recipientId.toString()).emit('new_message', chatMessage);
-    
-    res.status(201).json(chatMessage);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
   }
-};
 
-exports.markAsRead = async (req, res) => {
-  try {
-    const { messageId } = req.params;
-    const userId = req.user._id;
-    
-    const message = await ChatMessage.findById(messageId);
-    
-    if (!message) {
-      return res.status(404).json({ message: 'Message not found' });
+  async sendMessage(req, res) {
+    try {
+      const message = await ChatService.sendMessage(
+        req.user.id,
+        req.body.recipientId,
+        req.body.content
+      );
+      res.json(message);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
-    
-    // Verify user is the recipient
-    if (message.recipient.toString() !== userId.toString()) {
-      return res.status(403).json({ message: 'Not authorized to mark this message as read' });
+  }
+
+  async markAsRead(req, res) {
+    try {
+      await ChatService.markAsRead(req.params.messageId);
+      res.sendStatus(200);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
-    
-    message.read = true;
-    await message.save();
-    
-    res.json({ message: 'Message marked as read' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
-};
+}
 
-exports.getUnreadCount = async (req, res) => {
-  try {
-    const userId = req.user._id;
-    
-    const count = await ChatMessage.countDocuments({
-      recipient: userId,
-      read: false
-    });
-    
-    res.json({ count });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-exports.deleteOldChats = function() {
-  // Scheduled task for 24hr auto-deletion of chats
-  // ...existing code...
-};
+module.exports = new ChatController();

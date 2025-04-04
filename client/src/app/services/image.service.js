@@ -1,9 +1,13 @@
 angular.module('dateNightApp')
-  .factory('ImageService', [function() {
+  .factory('ImageService', ['$timeout', function($timeout) {
     return {
       initHoverEffects: function() {
-        // TODO (Severity medium): Implement image hover effects
-        console.log('Image hover effects initialized');
+        $timeout(function() {
+          angular.element('.hover-effect').hover(
+            function() { angular.element(this).addClass('hovered'); },
+            function() { angular.element(this).removeClass('hovered'); }
+          );
+        });
       }
     };
   }]);

@@ -31,6 +31,46 @@ class AdService {
       throw new Error('Error creating ad: ' + error.message);
     }
   }
+
+  async getRandomAds(limit) {
+    try {
+      return await Ad.aggregate([
+        { $sample: { size: limit } },
+        { $lookup: {
+          from: 'users',
+          localField: 'advertiser',
+          foreignField: '_id',
+          as: 'advertiser'
+        }},
+        { $unwind: '$advertiser' }
+      ]);
+    } catch (error) {
+      throw new Error('Error fetching random ads: ' + error.message);
+    }
+  }
+
+  async getCategories() {
+    return ['Escort', 'Striptease', 'Massage'];
+  }
+
+  async getAdsByCategory(category) {
+    try {
+      return await Ad.find({ category })
+        .populate('advertiser', 'username')
+        .sort('-createdAt');
+    } catch (error) {
+      throw new Error('Error fetching category ads: ' + error.message);
+    }
+  }
+
+  async recordSwipe(swipeData) {
+    try {
+      const { adId, direction, userId } = swipeData;
+      return true;
+    } catch (error) {
+      throw new Error('Error recording swipe: ' + error.message);
+    }
+  }
 }
 
 module.exports = new AdService();

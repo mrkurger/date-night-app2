@@ -15,4 +15,37 @@ body {
   padding: 20px;
 }
 
-/* ...existing styles from index.html... */
+/* Add to existing styles */
+.swipe-card {
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.swipe-card .card-img-top {
+  height: 400px;
+  object-fit: cover;
+}
+
+.gallery-card {
+  transition: transform 0.2s;
+}
+
+.gallery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.gallery-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Hover effects */
+.hover-effect {
+  transition: all 0.3s ease;
+}
+
+.hover-effect.hovered {
+  transform: scale(1.05);
+}

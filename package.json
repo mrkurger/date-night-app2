@@ -7,14 +7,14 @@
     "server"
   ],
   "scripts": {
-    "start": "npm run start-server",
-    "start-server": "npm run start --workspace=server",
-    "start-client": "npm run start --workspace=client",
-    "dev": "concurrently \"npm run dev --workspace=server\" \"npm run start --workspace=client\"",
-    "install-all": "npm install && npm install --workspace=client && npm install --workspace=server",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:server": "cd server && npm run dev",
+    "start:client": "cd client && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "seed": "node scripts/seed.js"
   },
   "devDependencies": {
     "concurrently": "^8.0.1",
