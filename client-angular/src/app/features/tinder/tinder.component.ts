@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { CachingService } from '../../core/services/caching.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { take } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 declare var bootstrap: any;
 
@@ -15,6 +16,8 @@ declare var bootstrap: any;
   selector: 'app-tinder',
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   animations: [
     trigger('cardState', [
       state('default', style({

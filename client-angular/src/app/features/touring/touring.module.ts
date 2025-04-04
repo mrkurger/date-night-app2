@@ -12,13 +12,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    TouringComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TouringComponent
   ]
 })
 export class TouringModule { }

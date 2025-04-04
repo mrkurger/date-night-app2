@@ -12,6 +12,14 @@ export class AdService {
 
   constructor(private http: HttpClient) {}
 
+  getAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl);
+  }
+
+  getAdById(id: string): Observable<Ad> {
+    return this.http.get<Ad>(`${this.apiUrl}/${id}`);
+  }
+
   getUserAds(userId: string): Observable<Ad[]> {
     return this.http.get<Ad[]>(`${this.apiUrl}/user/${userId}`);
   }
@@ -38,8 +46,30 @@ export class AdService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getSwipeAds(): Observable<Ad[]> {
-    return this.http.get<Ad[]>(`${this.apiUrl}/swipe`);
+  getSwipeAds(filters?: any): Observable<Ad[]> {
+    let url = `${this.apiUrl}/swipe`;
+
+    if (filters) {
+      const queryParams = new URLSearchParams();
+
+      if (filters.category) {
+        queryParams.append('category', filters.category);
+      }
+
+      if (filters.location) {
+        queryParams.append('location', filters.location);
+      }
+
+      if (filters.touringOnly !== undefined) {
+        queryParams.append('touringOnly', filters.touringOnly.toString());
+      }
+
+      if (queryParams.toString()) {
+        url += `?${queryParams.toString()}`;
+      }
+    }
+
+    return this.http.get<Ad[]>(url);
   }
 
   getCategories(): Observable<string[]> {
@@ -52,5 +82,15 @@ export class AdService {
 
   recordSwipe(adId: string, direction: 'left' | 'right'): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${adId}/swipe`, { direction });
+  }
+
+  searchNearby(longitude: number, latitude: number, radius: number): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`${this.apiUrl}/nearby`, {
+      params: {
+        longitude: longitude.toString(),
+        latitude: latitude.toString(),
+        radius: radius.toString()
+      }
+    });
   }
 }

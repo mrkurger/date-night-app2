@@ -6,7 +6,6 @@ const { v4: uuidv4 } = require('uuid');
 const helmet = require('helmet');
 const compression = require('compression');
 const requestValidator = require('../middleware/requestValidator');
-const { asyncHandler } = require('../middleware/asyncHandler');
 
 // Add correlation ID to each request for better logging and debugging
 router.use((req, res, next) => {

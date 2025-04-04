@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService, Notification, NotificationType } from '../../../core/services/notification.service';
+import { NotificationService, ToastNotification as Notification, NotificationType } from '../../../core/services/notification.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notification',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <div class="notifications-container">
       <div *ngFor="let notification of activeNotifications; let i = index"
@@ -124,7 +127,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.notificationService.notifications$.subscribe(notification => {
+      this.notificationService.toasts$.subscribe(notification => {
         this.showNotification(notification);
       })
     );

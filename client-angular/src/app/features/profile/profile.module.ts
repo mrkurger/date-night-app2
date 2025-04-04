@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfileComponent } from './components/profile/profile.component';
-import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ProfileComponent } from './profile.component';
+import { EditProfileComponent } from './edit-profile.component';
 
 const routes: Routes = [
   { path: '', component: ProfileComponent },
@@ -11,11 +11,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ProfileComponent, EditProfileComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ProfileComponent,
+    EditProfileComponent
   ]
 })
 export class ProfileModule { }

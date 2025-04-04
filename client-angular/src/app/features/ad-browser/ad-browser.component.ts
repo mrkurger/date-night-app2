@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AdService } from '../../../services/ad.service';
+import { AdService } from '../../core/services/ad.service';
 
 @Component({
   selector: 'app-ad-browser',

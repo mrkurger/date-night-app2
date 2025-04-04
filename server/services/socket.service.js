@@ -1,4 +1,3 @@
-const socketIo = require('socket.io');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const ChatMessage = require('../models/chat-message.model');
@@ -15,6 +14,7 @@ class SocketService {
    * @param {Object} server - HTTP server instance
    */
   initialize(server) {
+    const socketIo = require('socket.io');
     this.io = socketIo(server, {
       cors: {
         origin: process.env.CLIENT_URL || 'http://localhost:4200',

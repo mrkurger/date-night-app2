@@ -1,17 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
-import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../core/services/user.service';
+import { AuthService } from '../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styles: [`
+    .profile-container {
+      padding: 20px;
+    }
+    .profile-header {
+      margin-bottom: 20px;
+    }
+    .profile-section {
+      margin-bottom: 15px;
+    }
+  `],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class ProfileComponent implements OnInit {
   user: any;
   error: string | null = null;
 
-  constructor(private userService: UserService, private authService: AuthService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -29,10 +47,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  updateProfile(updatedData: any): void {
-    this.userService.updateUserProfile(this.user._id, updatedData).subscribe({
-      next: data => this.user = data,
-      error: err => this.error = 'Failed to update profile'
-    });
+  navigateToEdit(): void {
+    this.router.navigate(['/profile/edit']);
   }
 }

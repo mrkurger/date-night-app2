@@ -3,7 +3,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://localhost:3000/api/v1',
   socketUrl: 'http://localhost:3000',
   stripePublicKey: 'pk_test_your_stripe_key',
   googleMapsApiKey: 'your_google_maps_api_key',

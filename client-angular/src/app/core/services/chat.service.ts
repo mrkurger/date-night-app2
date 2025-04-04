@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SocketService } from './socket.service';
 import { NotificationService, AppNotification } from './notification.service';
+import { CryptoService } from './crypto.service';
 
 export interface ChatMessage {
   id: string;
@@ -122,6 +123,32 @@ export class ChatService {
   ) {
     this.initializeSocketListeners();
     this.loadEncryptionKeys();
+  }
+
+  /**
+   * Load encryption keys from local storage
+   */
+  private loadEncryptionKeys(): void {
+    try {
+      // Load private keys
+      const privateKeysJson = localStorage.getItem('chat_private_keys');
+      if (privateKeysJson) {
+        const privateKeys = JSON.parse(privateKeysJson);
+        this.privateKeysMap = new Map(Object.entries(privateKeys));
+      }
+
+      // Load room keys
+      const roomKeysJson = localStorage.getItem('chat_room_keys');
+      if (roomKeysJson) {
+        const roomKeys = JSON.parse(roomKeysJson);
+        this.roomKeysMap = new Map(Object.entries(roomKeys));
+      }
+    } catch (error) {
+      console.error('Failed to load encryption keys:', error);
+      // Clear potentially corrupted keys
+      localStorage.removeItem('chat_private_keys');
+      localStorage.removeItem('chat_room_keys');
+    }
   }
 
   /**
@@ -584,7 +611,7 @@ export class ChatService {
    */
   private isCurrentUser(userId: string): boolean {
     const currentRoom = this.currentRoomSubject.value;
-    if (!currentRoom) return false;
+    if (!currentRoom || !currentRoom.participants) return false;
 
     return currentRoom.participants.some(p =>
       p.user._id === userId && p.isCurrentUser
@@ -624,5 +651,13 @@ export class ChatService {
    */
   getUnreadCount(): number {
     return this.unreadCountSubject.value;
+  }
+
+  /**
+   * Listen for new messages
+   * @returns Observable that emits when a new message is received
+   */
+  onNewMessage(): Observable<ChatMessage> {
+    return this.socketService.on<ChatMessage>('chat:message');
   }
 }

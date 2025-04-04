@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
 
-const socketConfig: SocketIoConfig = { url: environment.apiUrl, options: {} };
+const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} };
 
 @NgModule({
   declarations: [

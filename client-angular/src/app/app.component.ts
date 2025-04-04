@@ -1,14 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ChatService } from './core/services/chat.service';
+import { NotificationComponent } from './shared/components/notification/notification.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.new.html',
-  styleUrls: ['./app.component.new.css']
+  styleUrls: ['./app.component.new.css'],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, NotificationComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;

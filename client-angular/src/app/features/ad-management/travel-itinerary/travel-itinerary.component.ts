@@ -1,17 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TravelService, TravelItinerary } from '../../../core/services/travel.service';
 import { AdService } from '../../../core/services/ad.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-travel-itinerary',
   templateUrl: './travel-itinerary.component.html',
-  styleUrls: ['./travel-itinerary.component.scss']
+  styleUrls: ['./travel-itinerary.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatIconModule,
+    MatCardModule,
+    MatProgressSpinnerModule
+  ]
 })
 export class TravelItineraryComponent implements OnInit {
   adId: string;

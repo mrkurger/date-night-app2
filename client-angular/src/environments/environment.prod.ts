@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.your-domain.com/api',
+  apiUrl: 'https://api.your-domain.com/api/v1',
   socketUrl: 'https://api.your-domain.com',
   stripePublicKey: 'pk_live_your_stripe_key',
   googleMapsApiKey: 'your_google_maps_api_key',

@@ -7,15 +7,14 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
 import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
-  declarations: [
+  declarations: [],
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
     ImageGalleryComponent,
     LoadingSpinnerComponent,
     ErrorMessageComponent,
     NotificationComponent
-  ],
-  imports: [
-    CommonModule,
-    BrowserAnimationsModule
   ],
   exports: [
     ImageGalleryComponent,

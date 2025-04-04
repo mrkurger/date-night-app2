@@ -3,7 +3,7 @@ const router = express.Router();
 const { body } = require('express-validator');
 const multer = require('multer');
 const mediaController = require('../controllers/media.controller');
-const authenticateToken = require('../middleware/authenticateToken');
+const { protect } = require('../middleware/auth');
 
 // Configure multer for memory storage
 const storage = multer.memoryStorage();
@@ -25,7 +25,7 @@ const upload = multer({
 // Upload media for an ad
 router.post(
   '/:adId/upload',
-  authenticateToken,
+  protect,
   upload.single('media'),
   mediaController.uploadMedia
 );
@@ -33,14 +33,14 @@ router.post(
 // Delete media from an ad
 router.delete(
   '/:adId/media/:mediaId',
-  authenticateToken,
+  protect,
   mediaController.deleteMedia
 );
 
 // Moderate media (admin only)
 router.put(
   '/:adId/media/:mediaId/moderate',
-  authenticateToken,
+  protect,
   [
     body('status')
       .isIn(['approved', 'rejected'])
@@ -53,7 +53,7 @@ router.put(
 // Set featured media for an ad
 router.put(
   '/:adId/media/:mediaId/featured',
-  authenticateToken,
+  protect,
   mediaController.setFeaturedMedia
 );
 
@@ -66,7 +66,7 @@ router.get(
 // Get all media pending moderation (admin only)
 router.get(
   '/moderation/pending',
-  authenticateToken,
+  protect,
   mediaController.getPendingModerationMedia
 );
 

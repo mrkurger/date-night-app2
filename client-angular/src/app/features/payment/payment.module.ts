@@ -14,16 +14,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    PaymentComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [
+    RouterModule.forChild(routes),
     PaymentComponent
-  ]
+  ],
+  exports: []
 })
 export class PaymentModule { }

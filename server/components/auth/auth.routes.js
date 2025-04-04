@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const authController = require('./auth.controller');
-const { authenticateToken } = require('../../middleware/authenticateToken');
+const { protect } = require('../../middleware/auth');
 
 // Local authentication
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-router.post('/logout', authenticateToken, authController.logout);
+router.post('/logout', protect, authController.logout);
 
 // GitHub OAuth
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));

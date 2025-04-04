@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const chatController = require('./chat.controller');
-const { authenticateToken } = require('../../middleware/authenticateToken');
+const { protect } = require('../../middleware/auth');
 
 // All chat routes require authentication
-router.use(authenticateToken);
+router.use(protect);
 
 // Get rooms for current user
 router.get('/rooms', chatController.getRooms);

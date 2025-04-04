@@ -143,7 +143,13 @@ export class AuthService {
   private validateToken(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/validate`)
       .pipe(
-        tap(user => this.currentUserSubject.next(user)),
+        tap(user => {
+          // Add id property as alias to _id for compatibility
+          if (user && user._id) {
+            user.id = user._id;
+          }
+          this.currentUserSubject.next(user);
+        }),
         catchError(error => {
           this.logout();
           return throwError(() => error);
@@ -168,6 +174,11 @@ export class AuthService {
 
       if (refreshToken) {
         localStorage.setItem('refreshToken', refreshToken);
+      }
+
+      // Add id property as alias to _id for compatibility
+      if (response.user && response.user._id) {
+        response.user.id = response.user._id;
       }
 
       this.currentUserSubject.next(response.user);

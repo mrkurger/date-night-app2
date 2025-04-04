@@ -11,14 +11,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    ChatComponent
-  ],
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ChatComponent // Import the standalone component instead of declaring it
   ]
 })
 export class ChatModule { }

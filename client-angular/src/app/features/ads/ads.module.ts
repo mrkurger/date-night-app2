@@ -15,16 +15,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
+  declarations: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
     AdListComponent,
     AdCreateComponent,
     AdDetailComponent,
     SwipeViewComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes)
   ]
 })
 export class AdsModule { }

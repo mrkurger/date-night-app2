@@ -50,13 +50,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AdManagementComponent,
-    AdFormComponent,
-    AdListComponent,
-    AdStatsComponent,
-    TravelItineraryComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -80,7 +74,12 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatBadgeModule
+    MatBadgeModule,
+    AdManagementComponent,
+    AdFormComponent,
+    AdListComponent,
+    AdStatsComponent,
+    TravelItineraryComponent
   ]
 })
 export class AdManagementModule { }

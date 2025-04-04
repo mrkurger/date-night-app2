@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { AdBrowserComponent } from './ad-browser/ad-browser.component';
 import { AdDetailsComponent } from './ad-details/ad-details.component';
-import { AdManagementComponent } from './ad-management/ad-management.component';
+// Standalone components are imported but not declared in the module
 import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -14,16 +13,15 @@ import { TinderComponent } from './tinder/tinder.component';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
-  ],
-  declarations: [
-    AdBrowserComponent,
-    AdDetailsComponent,
-    AdManagementComponent,
+    SharedModule,
+    // Include standalone components in imports if they're used in routes
     ChatComponent,
     ProfileComponent,
     GalleryComponent,
     TinderComponent
+  ],
+  declarations: [
+    AdDetailsComponent
   ]
 })
 export class FeaturesModule { }

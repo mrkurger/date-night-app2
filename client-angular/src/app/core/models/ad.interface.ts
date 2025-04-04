@@ -17,7 +17,7 @@ export interface Ad {
 }
 
 export interface AdCreateDTO extends Omit<Ad, '_id' | 'advertiser' | 'createdAt' | 'updatedAt'> {
-  images: File[];
+  images: (string | File)[];  // Allow both string and File types
 }
 
 export interface AdUpdateDTO extends Partial<AdCreateDTO> {}

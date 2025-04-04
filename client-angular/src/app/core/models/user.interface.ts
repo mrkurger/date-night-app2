@@ -1,8 +1,10 @@
 export interface User {
   _id: string;
+  id?: string; // Alias for _id for compatibility
   username: string;
   email: string;
   role: 'user' | 'advertiser' | 'admin';
+  roles?: string[]; // For role-based authorization
   online?: boolean;
   lastActive?: Date;
   createdAt?: Date;
@@ -15,6 +17,8 @@ export interface User {
     reddit?: { id: string };
     apple?: { id: string };
   };
+  subscriptionTier?: 'free' | 'premium' | 'vip';
+  subscriptionExpires?: Date;
 }
 
 export interface TravelPlanItem {

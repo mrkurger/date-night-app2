@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AdService } from '../../../../core/services/ad.service';
 import { Ad } from '../../../../core/models/ad.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-swipe-view',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <div class="container mt-4">
       <div *ngIf="currentAd" class="swipe-card">

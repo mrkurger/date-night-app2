@@ -167,4 +167,19 @@ export class SocketService {
   markNotificationRead(notificationId: string): void {
     this.emit('notification:read', notificationId);
   }
+
+  /**
+   * Handle a specific event
+   * @param event Event name
+   * @returns Observable that emits when the event occurs
+   */
+  private handleEvent(event: string): Observable<any> {
+    return new Observable(observer => {
+      if (!this.socket) {
+        observer.error('Socket not connected');
+        return; // Add proper return value
+      }
+      // Additional event handling logic can be added here
+    });
+  }
 }

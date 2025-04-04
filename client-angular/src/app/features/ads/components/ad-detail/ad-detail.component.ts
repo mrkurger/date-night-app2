@@ -1,11 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AdService } from '../../../services/ad.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AdService } from '../../../../core/services/ad.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ad-detail',
   templateUrl: './ad-detail.component.html',
-  styleUrls: ['./ad-detail.component.css']
+  styles: [`
+    .ad-detail-container {
+      padding: 20px;
+    }
+    .ad-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    .ad-description {
+      margin-bottom: 20px;
+    }
+    .ad-image {
+      max-width: 100%;
+      margin-bottom: 15px;
+    }
+    .action-buttons {
+      margin-top: 20px;
+    }
+  `],
+  standalone: true,
+  imports: [CommonModule, RouterLink]
 })
 export class AdDetailComponent implements OnInit {
   ad: any;

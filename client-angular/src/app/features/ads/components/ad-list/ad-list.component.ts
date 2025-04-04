@@ -1,10 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { AdService } from '../../../services/ad.service';
+import { AdService } from '../../../../core/services/ad.service';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ad-list',
   templateUrl: './ad-list.component.html',
-  styleUrls: ['./ad-list.component.css']
+  styles: [`
+    .ad-list-container {
+      padding: 20px;
+    }
+    .ad-card {
+      margin-bottom: 20px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      padding: 15px;
+    }
+    .ad-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .ad-price {
+      font-weight: bold;
+      color: #28a745;
+    }
+    .ad-location {
+      color: #6c757d;
+      font-size: 14px;
+    }
+    .filter-section {
+      margin-bottom: 20px;
+    }
+  `],
+  standalone: true,
+  imports: [CommonModule, RouterLink]
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];

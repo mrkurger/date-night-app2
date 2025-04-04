@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from '../../core/services/chat.service';
+import { ChatService, ChatMessage } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   template: `
     <div class="container mt-4">
       <div class="chat-container">
         <div class="message-list">
-          <div *ngFor="let message of messages" class="message" [class.sent]="message.senderId === currentUserId">
-            <p>{{message.text}}</p>
+          <div *ngFor="let message of messages" class="message" [class.sent]="message.sender.id === currentUserId">
+            <p>{{message.message}}</p>
           </div>
         </div>
         <div class="message-input">
@@ -62,7 +66,8 @@ export class ChatComponent implements OnInit {
     private chatService: ChatService,
     private authService: AuthService,
   ) {
-    this.currentUserId = this.authService.getCurrentUser()._id;
+    const currentUser = this.authService.getCurrentUser();
+    this.currentUserId = currentUser ? currentUser._id : '';
   }
 
   ngOnInit(): void {
@@ -100,7 +105,7 @@ export class ChatComponent implements OnInit {
   setupSocketListeners(): void {
     this.chatService.onNewMessage().subscribe(message => {
       // Update messages array if the message is for the current chat
-      if (message.senderId === this.recipientId || message.recipientId === this.recipientId) {
+      if (message.sender.id === this.recipientId || (message.recipient && message.recipient.id === this.recipientId)) {
         this.messages = [...this.messages, message];
       }
     });

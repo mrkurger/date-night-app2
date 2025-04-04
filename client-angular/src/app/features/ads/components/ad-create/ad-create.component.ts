@@ -1,12 +1,31 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdService } from '../../../services/ad.service';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AdService } from '../../../../core/services/ad.service';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ad-create',
   templateUrl: './ad-create.component.html',
-  styleUrls: ['./ad-create.component.css']
+  styles: [`
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .error-message {
+      color: #dc3545;
+      margin-top: 5px;
+    }
+    .submit-button {
+      margin-top: 20px;
+    }
+  `],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, RouterLink]
 })
 export class AdCreateComponent {
   adForm: FormGroup;

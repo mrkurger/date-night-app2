@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TravelService, TouringAd } from '../../core/services/travel.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { finalize, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-touring',
   templateUrl: './touring.component.html',
-  styleUrls: ['./touring.component.scss']
+  styleUrls: ['./touring.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class TouringComponent implements OnInit {
   touringAds: TouringAd[] = [];

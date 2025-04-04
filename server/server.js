@@ -23,6 +23,12 @@ if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
 }
 
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
 // Setup request logging
 // Create a write stream for access logs
 const accessLogStream = fs.createWriteStream(
@@ -40,15 +46,28 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Security middleware
-// Set security HTTP headers
-app.use(helmet());
+// Set security HTTP headers with configuration for Angular
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "blob:", "https://*.googleapis.com"],
+      connectSrc: ["'self'", "wss:", "ws:", "https://api.stripe.com"]
+    }
+  },
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
 // Enable CORS
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:4200',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
 }));
 
 // Rate limiting

@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Media, PendingMedia, ModerationRequest } from '../../../core/models/media.interface';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, throwError } from 'rxjs';
 import { takeUntil, catchError, retry, finalize } from 'rxjs/operators';
 import { ContentSanitizerService } from '../../../core/services/content-sanitizer.service';
+import { CommonModule } from '@angular/common';
 
 /**
  * Component for content moderation by administrators
@@ -15,7 +16,9 @@ import { ContentSanitizerService } from '../../../core/services/content-sanitize
 @Component({
   selector: 'app-content-moderation',
   templateUrl: './content-moderation.component.html',
-  styleUrls: ['./content-moderation.component.scss']
+  styleUrls: ['./content-moderation.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class ContentModerationComponent implements OnInit, OnDestroy {
   // Data

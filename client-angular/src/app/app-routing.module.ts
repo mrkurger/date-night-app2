@@ -39,6 +39,20 @@ const routes: Routes = [
     loadChildren: () => import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'ad-management',
+    loadChildren: () => import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('./features/payment/payment.module').then(m => m.PaymentModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'touring',
+    loadChildren: () => import('./features/touring/touring.module').then(m => m.TouringModule)
+  },
   { path: '**', redirectTo: '/ad-browser' }
 ];
 
