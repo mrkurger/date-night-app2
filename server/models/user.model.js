@@ -126,6 +126,20 @@ if (mongoose.models.User) {
       default: 'free'
     },
     subscriptionExpires: Date,
+    stripeCustomerId: String,
+    stripeSubscriptionId: String,
+    paymentMethods: [{
+      type: {
+        type: String,
+        enum: ['card', 'bank_account'],
+        required: true
+      },
+      lastFour: String,
+      brand: String,
+      expiryMonth: Number,
+      expiryYear: Number,
+      isDefault: Boolean
+    }],
     createdAt: {
       type: Date,
       default: Date.now

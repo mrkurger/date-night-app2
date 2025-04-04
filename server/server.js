@@ -153,4 +153,8 @@ const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
+// Initialize Socket.IO
+const socketService = require('./services/socket.service');
+socketService.initialize(server);
+
 module.exports = { app, server };

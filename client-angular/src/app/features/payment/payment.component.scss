@@ -1,0 +1,222 @@
+.payment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.payment-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+}
+
+.current-subscription {
+  margin-bottom: 3rem;
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #eee;
+      padding: 1.5rem;
+      
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333;
+      }
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      
+      p {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+      
+      .text-warning {
+        color: #ffc107;
+      }
+    }
+  }
+}
+
+.subscription-plans {
+  margin-bottom: 3rem;
+  
+  .plan-card {
+    height: 100%;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    &.selected {
+      transform: scale(1.05);
+      border: 2px solid #007bff;
+      box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
+    }
+    
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #eee;
+      padding: 1.5rem;
+      text-align: center;
+      
+      h3 {
+        margin: 0;
+        font-size: 1.8rem;
+        color: #333;
+      }
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      text-align: center;
+      
+      .price {
+        margin-bottom: 1.5rem;
+        
+        .amount {
+          font-size: 2.5rem;
+          font-weight: bold;
+          color: #333;
+        }
+        
+        .period {
+          font-size: 1.2rem;
+          color: #666;
+        }
+      }
+      
+      .description {
+        margin-bottom: 1.5rem;
+        color: #666;
+      }
+      
+      .features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+        
+        li {
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #eee;
+          
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+      
+      .btn {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+.payment-form {
+  margin-top: 3rem;
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #eee;
+      padding: 1.5rem;
+      
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333;
+      }
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+        
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: #333;
+        }
+        
+        .form-control {
+          padding: 0.75rem;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          
+          &:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+          }
+        }
+        
+        .invalid-feedback {
+          color: #dc3545;
+          margin-top: 0.25rem;
+        }
+      }
+      
+      #card-element {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+      
+      .card-errors {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: #fff;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+        
+        &:hover {
+          background-color: #218838;
+          border-color: #1e7e34;
+        }
+      }
+      
+      .payment-details {
+        margin-top: 1.5rem;
+        text-align: center;
+        
+        p {
+          margin-bottom: 0.5rem;
+          
+          &.text-muted {
+            color: #6c757d;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
