@@ -2,12 +2,13 @@ const Ad = require('../models/ad.model');
 const User = require('../models/user.model');
 const { AppError } = require('../middleware/errorHandler');
 const socketService = require('./socket.service');
+const logger = require('../utils/logger').logger;
+const NodeCache = require('node-cache');
+
+// Initialize cache with 5 minute TTL and check period of 10 minutes
+const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });
 
 class TravelService {
-  // TODO: Implement geolocation verification
-  // TODO: Add travel history tracking
-  // TODO: Implement notification system for travel updates
-  // TODO: Add location-based matching algorithm
   /**
    * Get all travel itineraries for an ad
    * @param {string} adId - Ad ID
@@ -15,15 +16,32 @@ class TravelService {
    */
   async getItineraries(adId) {
     try {
+      // Check cache first
+      const cacheKey = `itineraries:${adId}`;
+      const cachedData = cache.get(cacheKey);
+
+      if (cachedData) {
+        logger.debug(`Cache hit for itineraries of ad ${adId}`);
+        return cachedData;
+      }
+
       const ad = await Ad.findById(adId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
-      return ad.travelItinerary || [];
+
+      const itineraries = ad.travelItinerary || [];
+
+      // Cache the result
+      cache.set(cacheKey, itineraries);
+
+      return itineraries;
     } catch (error) {
-      console.error('Error getting travel itineraries:', error);
+      logger.error(`Error getting travel itineraries for ad ${adId}:`, error);
+      if (error instanceof AppError) {
+        throw error;
+      }
       throw new AppError(error.message || 'Failed to get travel itineraries', 500);
     }
   }
@@ -38,25 +56,41 @@ class TravelService {
   async addItinerary(adId, itineraryData, userId) {
     try {
       const ad = await Ad.findById(adId).populate('advertiser');
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       // Check if user is the advertiser
       if (ad.advertiser._id.toString() !== userId) {
+        logger.warn(`Unauthorized attempt to add itinerary to ad ${adId} by user ${userId}`);
         throw new AppError('You are not authorized to update this ad', 403);
       }
-      
+
+      // Add geolocation data if not provided
+      if (itineraryData.destination && !itineraryData.destination.location) {
+        itineraryData.destination.location = await this.geocodeLocation(
+          itineraryData.destination.city,
+          itineraryData.destination.county,
+          itineraryData.destination.country || 'Norway'
+        );
+      }
+
       // Add itinerary
       await ad.addTravelItinerary(itineraryData);
-      
+
       // Notify followers if any
-      this.notifyFollowers(ad._id, ad.advertiser.username, itineraryData);
-      
+      await this.notifyFollowers(ad._id, ad.advertiser.username, itineraryData);
+
+      // Invalidate cache
+      this.invalidateCache(adId);
+
       return ad;
     } catch (error) {
-      console.error('Error adding travel itinerary:', error);
+      logger.error(`Error adding travel itinerary to ad ${adId}:`, error);
+      if (error instanceof AppError) {
+        throw error;
+      }
       throw new AppError(error.message || 'Failed to add travel itinerary', 500);
     }
   }
@@ -72,29 +106,51 @@ class TravelService {
   async updateItinerary(adId, itineraryId, updates, userId) {
     try {
       const ad = await Ad.findById(adId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       // Check if user is the advertiser
       if (ad.advertiser.toString() !== userId) {
+        logger.warn(`Unauthorized attempt to update itinerary ${itineraryId} for ad ${adId} by user ${userId}`);
         throw new AppError('You are not authorized to update this ad', 403);
       }
-      
+
+      // Check if itinerary exists
+      const itinerary = ad.travelItinerary.id(itineraryId);
+      if (!itinerary) {
+        throw new AppError('Itinerary not found', 404);
+      }
+
+      // Add geolocation data if destination is updated but location is not provided
+      if (updates.destination && !updates.destination.location) {
+        updates.destination.location = await this.geocodeLocation(
+          updates.destination.city || itinerary.destination.city,
+          updates.destination.county || itinerary.destination.county,
+          (updates.destination.country || itinerary.destination.country || 'Norway')
+        );
+      }
+
       // Update itinerary
       await ad.updateTravelItinerary(itineraryId, updates);
-      
+
       // If status changed to active, notify followers
       if (updates.status === 'active') {
-        const itinerary = ad.travelItinerary.id(itineraryId);
+        const updatedItinerary = ad.travelItinerary.id(itineraryId);
         const advertiser = await User.findById(ad.advertiser);
-        this.notifyFollowers(ad._id, advertiser.username, itinerary);
+        await this.notifyFollowers(ad._id, advertiser.username, updatedItinerary);
       }
-      
+
+      // Invalidate cache
+      this.invalidateCache(adId);
+
       return ad;
     } catch (error) {
-      console.error('Error updating travel itinerary:', error);
+      logger.error(`Error updating travel itinerary ${itineraryId} for ad ${adId}:`, error);
+      if (error instanceof AppError) {
+        throw error;
+      }
       throw new AppError(error.message || 'Failed to update travel itinerary', 500);
     }
   }
@@ -109,33 +165,40 @@ class TravelService {
   async cancelItinerary(adId, itineraryId, userId) {
     try {
       const ad = await Ad.findById(adId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       // Check if user is the advertiser
       if (ad.advertiser.toString() !== userId) {
+        logger.warn(`Unauthorized attempt to cancel itinerary ${itineraryId} for ad ${adId} by user ${userId}`);
         throw new AppError('You are not authorized to update this ad', 403);
       }
-      
+
       // Get itinerary before cancelling for notification
       const itinerary = ad.travelItinerary.id(itineraryId);
-      
+
       if (!itinerary) {
         throw new AppError('Itinerary not found', 404);
       }
-      
+
       // Cancel itinerary
       await ad.cancelTravelItinerary(itineraryId);
-      
+
       // Notify followers about cancellation
       const advertiser = await User.findById(ad.advertiser);
-      this.notifyCancellation(ad._id, advertiser.username, itinerary);
-      
+      await this.notifyCancellation(ad._id, advertiser.username, itinerary);
+
+      // Invalidate cache
+      this.invalidateCache(adId);
+
       return ad;
     } catch (error) {
-      console.error('Error cancelling travel itinerary:', error);
+      logger.error(`Error cancelling travel itinerary ${itineraryId} for ad ${adId}:`, error);
+      if (error instanceof AppError) {
+        throw error;
+      }
       throw new AppError(error.message || 'Failed to cancel travel itinerary', 500);
     }
   }
@@ -151,22 +214,34 @@ class TravelService {
   async updateLocation(adId, longitude, latitude, userId) {
     try {
       const ad = await Ad.findById(adId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       // Check if user is the advertiser
       if (ad.advertiser.toString() !== userId) {
+        logger.warn(`Unauthorized attempt to update location for ad ${adId} by user ${userId}`);
         throw new AppError('You are not authorized to update this ad', 403);
       }
-      
+
+      // Verify location is within reasonable bounds
+      if (!this.isValidCoordinate(longitude, latitude)) {
+        throw new AppError('Invalid coordinates provided', 400);
+      }
+
       // Update location
       await ad.updateCurrentLocation(longitude, latitude);
-      
+
+      // Invalidate location-based caches
+      this.invalidateLocationCaches();
+
       return ad;
     } catch (error) {
-      console.error('Error updating location:', error);
+      logger.error(`Error updating location for ad ${adId}:`, error);
+      if (error instanceof AppError) {
+        throw error;
+      }
       throw new AppError(error.message || 'Failed to update location', 500);
     }
   }
@@ -177,11 +252,25 @@ class TravelService {
    */
   async findTouringAdvertisers() {
     try {
-      return await Ad.findTouring()
+      // Check cache first
+      const cacheKey = 'touring:advertisers';
+      const cachedData = cache.get(cacheKey);
+
+      if (cachedData) {
+        logger.debug('Cache hit for touring advertisers');
+        return cachedData;
+      }
+
+      const ads = await Ad.findTouring()
         .populate('advertiser', 'username profileImage')
         .sort('-createdAt');
+
+      // Cache the result
+      cache.set(cacheKey, ads, 60); // 1 minute TTL for touring data (more dynamic)
+
+      return ads;
     } catch (error) {
-      console.error('Error finding touring advertisers:', error);
+      logger.error('Error finding touring advertisers:', error);
       throw new AppError(error.message || 'Failed to find touring advertisers', 500);
     }
   }
@@ -195,11 +284,25 @@ class TravelService {
    */
   async findUpcomingTours(city = null, county = null, daysAhead = 30) {
     try {
-      return await Ad.findUpcomingTours(city, county, daysAhead)
+      // Check cache first
+      const cacheKey = `upcoming:${city || 'all'}:${county || 'all'}:${daysAhead}`;
+      const cachedData = cache.get(cacheKey);
+
+      if (cachedData) {
+        logger.debug(`Cache hit for upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead})`);
+        return cachedData;
+      }
+
+      const ads = await Ad.findUpcomingTours(city, county, daysAhead)
         .populate('advertiser', 'username profileImage')
         .sort('travelItinerary.arrivalDate');
+
+      // Cache the result
+      cache.set(cacheKey, ads, 300); // 5 minute TTL
+
+      return ads;
     } catch (error) {
-      console.error('Error finding upcoming tours:', error);
+      logger.error(`Error finding upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead}):`, error);
       throw new AppError(error.message || 'Failed to find upcoming tours', 500);
     }
   }
@@ -213,11 +316,25 @@ class TravelService {
    */
   async findByLocation(longitude, latitude, maxDistance = 10000) {
     try {
-      return await Ad.findByCurrentLocation(longitude, latitude, maxDistance)
+      // For location queries, use a shorter cache time as locations change frequently
+      const cacheKey = `location:${longitude.toFixed(3)}:${latitude.toFixed(3)}:${maxDistance}`;
+      const cachedData = cache.get(cacheKey);
+
+      if (cachedData) {
+        logger.debug(`Cache hit for location search (${longitude}, ${latitude}, ${maxDistance}m)`);
+        return cachedData;
+      }
+
+      const ads = await Ad.findByCurrentLocation(longitude, latitude, maxDistance)
         .populate('advertiser', 'username profileImage')
         .sort('-featured -boosted -createdAt');
+
+      // Cache the result with a shorter TTL
+      cache.set(cacheKey, ads, 60); // 1 minute TTL for location data
+
+      return ads;
     } catch (error) {
-      console.error('Error finding ads by location:', error);
+      logger.error(`Error finding ads by location (${longitude}, ${latitude}, ${maxDistance}m):`, error);
       throw new AppError(error.message || 'Failed to find ads by location', 500);
     }
   }
@@ -234,14 +351,14 @@ class TravelService {
       const followers = await User.find({
         'following.advertiser': adId
       });
-      
+
       if (followers.length === 0) {
         return;
       }
-      
+
       const arrivalDate = new Date(itinerary.arrivalDate).toLocaleDateString();
       const departureDate = new Date(itinerary.departureDate).toLocaleDateString();
-      
+
       const notification = {
         type: 'ad',
         message: `${advertiserName} will be in ${itinerary.destination.city} from ${arrivalDate} to ${departureDate}`,
@@ -251,15 +368,21 @@ class TravelService {
           destination: itinerary.destination.city,
           arrivalDate: itinerary.arrivalDate,
           departureDate: itinerary.departureDate
-        }
+        },
+        timestamp: new Date()
       };
-      
+
       // Send notification to each follower
-      followers.forEach(follower => {
-        socketService.sendNotification(follower._id.toString(), notification);
-      });
+      const notificationPromises = followers.map(follower =>
+        socketService.sendNotification(follower._id.toString(), notification)
+      );
+
+      await Promise.allSettled(notificationPromises);
+
+      logger.info(`Sent travel itinerary notifications to ${followers.length} followers for ad ${adId}`);
     } catch (error) {
-      console.error('Error notifying followers:', error);
+      logger.error(`Error notifying followers about itinerary for ad ${adId}:`, error);
+      // Don't throw here to prevent the main operation from failing
     }
   }
 
@@ -275,14 +398,14 @@ class TravelService {
       const followers = await User.find({
         'following.advertiser': adId
       });
-      
+
       if (followers.length === 0) {
         return;
       }
-      
+
       const arrivalDate = new Date(itinerary.arrivalDate).toLocaleDateString();
       const departureDate = new Date(itinerary.departureDate).toLocaleDateString();
-      
+
       const notification = {
         type: 'ad',
         message: `${advertiserName} has cancelled their trip to ${itinerary.destination.city} (${arrivalDate} - ${departureDate})`,
@@ -291,16 +414,101 @@ class TravelService {
           itineraryId: itinerary._id,
           destination: itinerary.destination.city,
           cancelled: true
-        }
+        },
+        timestamp: new Date()
       };
-      
+
       // Send notification to each follower
-      followers.forEach(follower => {
-        socketService.sendNotification(follower._id.toString(), notification);
-      });
+      const notificationPromises = followers.map(follower =>
+        socketService.sendNotification(follower._id.toString(), notification)
+      );
+
+      await Promise.allSettled(notificationPromises);
+
+      logger.info(`Sent cancellation notifications to ${followers.length} followers for ad ${adId}`);
     } catch (error) {
-      console.error('Error notifying followers about cancellation:', error);
+      logger.error(`Error notifying followers about cancellation for ad ${adId}:`, error);
+      // Don't throw here to prevent the main operation from failing
     }
+  }
+
+  /**
+   * Geocode a location to get coordinates
+   * @param {string} city - City name
+   * @param {string} county - County name
+   * @param {string} country - Country name
+   * @returns {Promise<Object>} Location object with coordinates
+   */
+  async geocodeLocation(city, county, country) {
+    try {
+      // This is a placeholder for actual geocoding service
+      // In a real implementation, you would call a geocoding API
+      // For now, we'll return a dummy point in Norway
+
+      // TODO: Implement actual geocoding service
+      logger.info(`Geocoding location: ${city}, ${county}, ${country}`);
+
+      return {
+        type: 'Point',
+        coordinates: [10.7522, 59.9139] // Oslo coordinates as default
+      };
+    } catch (error) {
+      logger.error(`Error geocoding location (${city}, ${county}, ${country}):`, error);
+      // Return null if geocoding fails, the model will handle this
+      return null;
+    }
+  }
+
+  /**
+   * Validate coordinates
+   * @param {number} longitude - Longitude
+   * @param {number} latitude - Latitude
+   * @returns {boolean} Whether coordinates are valid
+   */
+  isValidCoordinate(longitude, latitude) {
+    return (
+      !isNaN(longitude) &&
+      !isNaN(latitude) &&
+      longitude >= -180 &&
+      longitude <= 180 &&
+      latitude >= -90 &&
+      latitude <= 90
+    );
+  }
+
+  /**
+   * Invalidate cache for a specific ad
+   * @param {string} adId - Ad ID
+   */
+  invalidateCache(adId) {
+    cache.del(`itineraries:${adId}`);
+    // Also invalidate general caches that might contain this ad
+    this.invalidateGeneralCaches();
+  }
+
+  /**
+   * Invalidate location-based caches
+   */
+  invalidateLocationCaches() {
+    // Get all keys and delete those related to locations
+    const keys = cache.keys();
+    const locationKeys = keys.filter(key => key.startsWith('location:'));
+    locationKeys.forEach(key => cache.del(key));
+
+    // Also invalidate touring advertisers cache
+    cache.del('touring:advertisers');
+  }
+
+  /**
+   * Invalidate general caches
+   */
+  invalidateGeneralCaches() {
+    cache.del('touring:advertisers');
+
+    // Get all keys and delete those related to upcoming tours
+    const keys = cache.keys();
+    const upcomingKeys = keys.filter(key => key.startsWith('upcoming:'));
+    upcomingKeys.forEach(key => cache.del(key));
   }
 }
 
