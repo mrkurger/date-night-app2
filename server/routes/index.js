@@ -37,6 +37,9 @@ const userRoutes = require('../components/users/user.routes');
 const paymentRoutes = require('../routes/payment.routes');
 const travelRoutes = require('../routes/travel.routes');
 const mediaRoutes = require('../routes/media.routes');
+const verificationRoutes = require('../routes/verification.routes');
+const reviewRoutes = require('../routes/review.routes');
+const safetyRoutes = require('../routes/safety.routes');
 
 // Apply specific middleware to routes
 router.use('/auth', authLimiter, authRoutes);
@@ -46,6 +49,9 @@ router.use('/users', userRoutes);
 router.use('/payments', paymentRoutes);
 router.use('/travel', travelRoutes);
 router.use('/media', mediaRoutes);
+router.use('/verification', verificationRoutes);
+router.use('/reviews', reviewRoutes);
+router.use('/safety', safetyRoutes);
 
 // API health check endpoint
 router.get('/health', (req, res) => {

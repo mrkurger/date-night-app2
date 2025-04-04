@@ -120,6 +120,34 @@ if (mongoose.models.User) {
     verificationToken: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    verificationLevel: {
+      type: Number,
+      min: 0,
+      max: 5,
+      default: 0
+    },
+    verificationBadges: {
+      identity: { type: Boolean, default: false },
+      photo: { type: Boolean, default: false },
+      phone: { type: Boolean, default: false },
+      email: { type: Boolean, default: false },
+      address: { type: Boolean, default: false }
+    },
+    safetySettings: {
+      emergencyContacts: [{
+        name: String,
+        phone: String,
+        email: String,
+        relationship: String
+      }],
+      safetyCode: String,
+      distressCode: String,
+      autoCheckIn: {
+        enabled: { type: Boolean, default: false },
+        intervalMinutes: { type: Number, default: 30 },
+        missedCheckInsBeforeAlert: { type: Number, default: 2 }
+      }
+    },
     subscriptionTier: {
       type: String,
       enum: ['free', 'premium', 'vip'],
