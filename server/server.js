@@ -17,12 +17,16 @@ const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
 const { csrfMiddleware } = require('./middleware/csrf');
 const cspNonce = require('./middleware/cspNonce');
+const securityHeaders = require('./middleware/securityHeaders');
 
 // Initialize express
 const app = express();
 
 // Generate CSP nonce for each request
 app.use(cspNonce);
+
+// Apply additional security headers
+app.use(securityHeaders);
 
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, 'logs');
