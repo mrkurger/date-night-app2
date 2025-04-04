@@ -39,3 +39,5 @@ data/db/journal/WiredTigerLog.0000000002
 data/db/WiredTiger.wt
 data/db/WiredTiger.turtle
 data/db/WiredTiger.wt
+data/db/WiredTiger.wt
+data/db/WiredTiger.turtle

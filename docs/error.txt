@@ -1,69 +1,9 @@
-
-oivindlund@Mac date-night-app % npm run dev        
-
-> date-night-app@1.0.0 dev
-> concurrently "npm run mongodb" "npm run start:server" "npm run start:client"
-
-[1] 
-[1] > date-night-app@1.0.0 start:server
-[1] > cd server && npm run dev
-[1] 
-[0] 
-[0] > date-night-app@1.0.0 mongodb
-[0] > mongod --dbpath ./data/db
-[0] 
-[2] 
-[2] > date-night-app@1.0.0 start:client
-[2] > cd client-angular && npm start
-[2] 
-[1] 
-[1] > date-night-server@1.0.0 dev
-[1] > npx nodemon -r dotenv/config server.js
-[1] 
-[2] 
-[2] > client-angular@0.0.0 start
-[2] > ng serve
-[2] 
-[0] {"t":{"$date":"2025-04-04T16:42:03.596+02:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"thread1","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"thread1","msg":"Multi threading initialized"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"thread1","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set at least one of the related parameters","attr":{"relatedParameters":["tcpFastOpenServer","tcpFastOpenClient","tcpFastOpenQueueSize"]}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"thread1","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":25},"outgoing":{"minWireVersion":6,"maxWireVersion":25},"isInternalClient":true}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"TENANT_M", "id":7091600, "ctx":"thread1","msg":"Starting TenantMigrationAccessBlockerRegistry"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":41675,"port":27017,"dbPath":"./data/db","architecture":"64-bit","host":"mbpair.local"}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"8.0.5","gitVersion":"cb9e2e5e552ee39dea1e39d7859336456d0c9820","modules":[],"allocator":"system","environment":{"distarch":"aarch64","target_arch":"aarch64"}}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Mac OS X","version":"24.3.0"}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.598+02:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"storage":{"dbPath":"./data/db"}}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"NETWORK",  "id":5693100, "ctx":"initandlisten","msg":"Asio socket.set_option failed with std::system_error","attr":{"note":"acceptor TCP fast open","option":{"level":6,"name":261,"data":"00 04 00 00"},"error":{"what":"set_option: Invalid argument","message":"Invalid argument","category":"asio.system","value":22}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"E",  "c":"CONTROL",  "id":20568,   "ctx":"initandlisten","msg":"Error setting up listener","attr":{"error":{"code":9001,"codeName":"SocketException","errmsg":"127.0.0.1:27017 :: caused by :: setup bind :: caused by :: Address already in use"}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"REPL",     "id":4784900, "ctx":"initandlisten","msg":"Stepping down the ReplicationCoordinator for shutdown","attr":{"waitTimeMillis":15000}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"REPL",     "id":4794602, "ctx":"initandlisten","msg":"Attempting to enter quiesce mode"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"-",        "id":6371601, "ctx":"initandlisten","msg":"Shutting down the FLE Crud thread pool"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"COMMAND",  "id":4784901, "ctx":"initandlisten","msg":"Shutting down the MirrorMaestro"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"SHARDING", "id":4784902, "ctx":"initandlisten","msg":"Shutting down the WaitForMajorityService"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"NETWORK",  "id":4784905, "ctx":"initandlisten","msg":"Shutting down the global connection pool"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"NETWORK",  "id":4784918, "ctx":"initandlisten","msg":"Shutting down the ReplicaSetMonitor"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"SHARDING", "id":4784921, "ctx":"initandlisten","msg":"Shutting down the MigrationUtilExecutor"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"ASIO",     "id":22582,   "ctx":"MigrationUtil-TaskExecutor","msg":"Killing all outstanding egress activity."}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":4784928, "ctx":"initandlisten","msg":"Shutting down the TTL monitor"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":6278511, "ctx":"initandlisten","msg":"Shutting down the Change Stream Expired Pre-images Remover"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":4784929, "ctx":"initandlisten","msg":"Acquiring the global lock for shutdown"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"-",        "id":4784931, "ctx":"initandlisten","msg":"Dropping the scope cache for shutdown"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":20565,   "ctx":"initandlisten","msg":"Now exiting"}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":8423404, "ctx":"initandlisten","msg":"mongod shutdown complete","attr":{"Summary of time elapsed":{"Statistics":{"Enter terminal shutdown":"0 ms","Step down the replication coordinator for shutdown":"0 ms","Time spent in quiesce mode":"0 ms","Shut down FLE Crud subsystem":"0 ms","Shut down MirrorMaestro":"0 ms","Shut down WaitForMajorityService":"0 ms","Shut down the global connection pool":"0 ms","Shut down the replica set monitor":"0 ms","Shut down the migration util executor":"0 ms","Shut down the TTL monitor":"0 ms","Shut down expired pre-images and documents removers":"0 ms","Wait for the oplog cap maintainer thread to stop":"0 ms","Shut down full-time data capture":"0 ms","Shut down online certificate status protocol manager":"0 ms","shutdownTask total elapsed time":"0 ms"}}}}
-[0] {"t":{"$date":"2025-04-04T16:42:03.599+02:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"initandlisten","msg":"Shutting down","attr":{"exitCode":48}}
 [0] npm run mongodb exited with code 48
-[2] Node.js version v23.9.0 detected.
-[2] Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/about/previous-releases/.
 [1] [nodemon] 2.0.22
 [1] [nodemon] to restart at any time, enter `rs`
 [1] [nodemon] watching path(s): *.*
 [1] [nodemon] watching extensions: js,mjs,json
 [1] [nodemon] starting `node -r dotenv/config server.js`
-[2] Component HMR has been enabled.
-[2] If you encounter application reload issues, you can manually reload the page to bypass HMR and/or disable this feature with the `--no-hmr` command line option.
-[2] Please consider reporting any issues you encounter here: https://github.com/angular/angular-cli/issues
-[2] 
-[2] ❯ Building...
 [1] /Users/oivindlund/date-night-app/node_modules/express/lib/router/index.js:462
 [1]     throw new TypeError('Router.use() requires a middleware function')
 [1]     ^
@@ -82,359 +22,26 @@ oivindlund@Mac date-night-app % npm run dev
 [1] 
 [1] Node.js v23.9.0
 [1] [nodemon] app crashed - waiting for file changes before starting...
+[2] Component HMR has been enabled.
+[2] If you encounter application reload issues, you can manually reload the page to bypass HMR and/or disable this feature with the `--no-hmr` command line option.
+[2] Please consider reporting any issues you encounter here: https://github.com/angular/angular-cli/issues
+[2] 
+[2] ❯ Building...
 [2] ✔ Building...
-[2] Application bundle generation failed. [1.439 seconds]
+[2] Application bundle generation failed. [1.393 seconds]
 [2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
+[2] ▲ [WARNING] TS-998113: DatePipe is not used within the template of AdFormComponent [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:4:8:
-[2]       4 │   <div *ngIf="loading" class="loading-spinner">
-[2]         ╵         ~~~~
+[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:21:4:
+[2]       21 │     DatePipe
+[2]          ╵     ~~~~~~~~
 [2] 
-[2]   Error occurs in the template of component AdFormComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2] ▲ [WARNING] TS-998113: MatTabNavPanel is not used within the template of AdManagementComponent [plugin angular-compiler]
 [2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:8:54:
-[2]       8 │   <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
-[2]         ╵                                                       ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:15:24:
-[2]       15 │             <mat-error *ngIf="adForm.get('title')?.hasError('requi...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:18:24:
-[2]       18 │             <mat-error *ngIf="adForm.get('title')?.hasError('maxle...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:29:24:
-[2]       29 │             <mat-error *ngIf="adForm.get('description')?.hasError(...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:32:24:
-[2]       32 │             <mat-error *ngIf="adForm.get('description')?.hasError(...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:42:27:
-[2]       42 │               <mat-option *ngFor="let category of categories" [val...
-[2]          ╵                            ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:46:24:
-[2]       46 │             <mat-error *ngIf="adForm.get('category')?.hasError('re...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:55:24:
-[2]       55 │             <mat-error *ngIf="adForm.get('price')?.hasError('requi...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:58:24:
-[2]       58 │             <mat-error *ngIf="adForm.get('price')?.hasError('min')">
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:68:24:
-[2]       68 │             <mat-error *ngIf="adForm.get('location')?.hasError('re...
-[2]          ╵                         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:9:8:
-[2]       9 │   <div *ngIf="loading" class="loading-container">
-[2]         ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:16:8:
-[2]       16 │   <div *ngIf="error" class="alert alert-danger">
-[2]          ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:20:8:
-[2]       20 │   <div *ngIf="!loading && ads.length === 0" class="no-ads-container">
-[2]          ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:29:8:
-[2]       29 │   <div *ngIf="!loading && ads.length > 0" class="ad-cards">
-[2]          ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:30:10:
-[2]       30 │     <div *ngFor="let ad of ads" class="ad-card">
-[2]          ╵           ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:34:17:
-[2]       34 │           <span *ngIf="ad.featured" class="featured-badge">Feature...
-[2]          ╵                  ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:35:17:
-[2]       35 │           <span *ngIf="ad.boosted" class="boosted-badge">Boosted</...
-[2]          ╵                  ~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:82:16:
-[2]       82 │           <div *ngIf="ad.isTouring" class="touring-status">
-[2]          ╵                 ~~~~
-[2] 
-  Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:27:8:
-[2]       27 │        *ngIf="isAdmin"
-[2]          ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:4:8:
-[2]       4 │   <div *ngIf="loading" class="loading-spinner">
-[2]         ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngIf` directive was used in the template, but neither the `NgIf` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @if or make sure that either the `NgIf` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:8:8:
-[2]       8 │   <div *ngIf="!loading" class="stats-content">
-[2]         ╵         ~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:44:18:
-[2]       44 │                  *ngFor="let item of viewsData"
-[2]          ╵                   ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:50:18:
-[2]       50 │             <div *ngFor="let item of viewsData" class="chart-label">
-[2]          ╵                   ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:64:18:
-[2]       64 │                  *ngFor="let item of clicksData"
-[2]          ╵                   ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] NG8103: The `*ngFor` directive was used in the template, but neither the `NgFor` directive nor the `CommonModule` was imported. Use Angular's built-in control flow @for or make sure that either the `NgFor` directive or the `CommonModule` is included in the `@Component.imports` array of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:70:18:
-[2]       70 │             <div *ngFor="let item of clicksData" class="chart-label">
-[2]          ╵                   ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] TS-998113: RouterLink is not used within the template of AdCreateComponent [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ads/components/ad-create/ad-create.component.ts:28:47:
-[2]       28 │   imports: [ReactiveFormsModule, CommonModule, RouterLink]
-[2]          ╵                                                ~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] TS-998113: RouterLink is not used within the template of AdDetailComponent [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ads/components/ad-detail/ad-detail.component.ts:29:26:
-[2]       29 │   imports: [CommonModule, RouterLink]
-[2]          ╵                           ~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-management.component.ts:20:4:
+[2]       20 │     MatTabNavPanel
+[2]          ╵     ~~~~~~~~~~~~~~
 [2] 
 [2] 
 [2] ▲ [WARNING] TS-998113: RouterLink is not used within the template of RegisterComponent [plugin angular-compiler]
@@ -444,1049 +51,242 @@ oivindlund@Mac date-night-app % npm run dev
 [2]          ╵                                                ~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] Could not resolve "./features/gallery/gallery.module"
+[2] ✘ [ERROR] TS2339: Property 'unreadCount$' does not exist on type 'ChatService'. [plugin angular-compiler]
 [2] 
-[2]     src/app/app.routes.ts:36:35:
-[2]       36 │ ... () => import('./features/gallery/gallery.module').then(m => m....
-[2]          ╵                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/app.component.ts:47:49:
+[2]       47 │ ...iption = this.chatService.unreadCount$.subscribe((count: number...
+[2]          ╵                              ~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] TS2307: Cannot find module './features/gallery/gallery.module' or its corresponding type declarations. [plugin angular-compiler]
+[2] ✘ [ERROR] TS2339: Property 'unreadCount$' does not exist on type 'NotificationService'. [plugin angular-compiler]
 [2] 
-[2]     src/app/app.routes.ts:38:31:
-[2]       38 │ ... () => import('./features/gallery/gallery.module').then(m => m....
-[2]          ╵                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/app.component.ts:52:65:
+[2]       52 │ ... this.notificationService.unreadCount$.subscribe((count: number...
+[2]          ╵                              ~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] Could not resolve "./features/tinder/tinder.module"
+[2] ✘ [ERROR] TS2339: Property 'getUnreadCounts' does not exist on type 'ChatService'. [plugin angular-compiler]
 [2] 
-[2]     src/app/app.routes.ts:41:35:
-[2]       41 │ ...: () => import('./features/tinder/tinder.module').then(m => m.T...
-[2]          ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/app.component.ts:68:21:
+[2]       68 │     this.chatService.getUnreadCounts().subscribe();
+[2]          ╵                      ~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] TS2307: Cannot find module './features/tinder/tinder.module' or its corresponding type declarations. [plugin angular-compiler]
+[2] ✘ [ERROR] TS2724: '"./core/guards/auth.guard"' has no exported member named 'authGuard'. Did you mean 'AuthGuard'? [plugin angular-compiler]
 [2] 
-[2]     src/app/app.routes.ts:43:31:
-[2]       43 │ ...: () => import('./features/tinder/tinder.module').then(m => m.T...
-[2]          ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/app.routes.ts:2:9:
+[2]       2 │ import { authGuard } from './core/guards/auth.guard';
+[2]         ╵          ~~~~~~~~~
 [2] 
+[2]   'AuthGuard' is declared here.
 [2] 
-[2] ✘ [ERROR] TS2430: Interface 'AdCreateDTO' incorrectly extends interface 'Omit<Ad, "advertiser" | "_id" | "createdAt" | "updatedAt">'.
-[2]   Types of property 'images' are incompatible.
-[2]     Type '(string | File)[]' is not assignable to type 'string[]'.
-[2]       Type 'string | File' is not assignable to type 'string'.
-[2]         Type 'File' is not assignable to type 'string'. [plugin angular-compiler]
+[2]     src/app/core/guards/auth.guard.ts:9:13:
+[2]       9 │ export class AuthGuard {
+[2]         ╵              ~~~~~~~~~
 [2] 
-[2]     src/app/core/models/ad.interface.ts:19:17:
-[2]       19 │ export interface AdCreateDTO extends Omit<Ad, '_id' | 'advertiser'...
-[2]          ╵                  ~~~~~~~~~~~
 [2] 
+[2] ✘ [ERROR] TS2339: Property 'stripePublicKey' does not exist on type '{ production: boolean; apiUrl: string; chatWsUrl: string; defaultImageUrl: string; maxUploadSize: number; supportedImageTypes: string[]; mapboxToken: string; }'. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] TS7030: Not all code paths return a value. [plugin angular-compiler]
+[2]     src/app/core/services/payment.service.ts:85:44:
+[2]       85 │     this.stripe = window.Stripe(environment.stripePublicKey);
+[2]          ╵                                             ~~~~~~~~~~~~~~~
 [2] 
-[2]     src/app/core/services/socket.service.ts:92:8:
-[2]       92 │         return;
-[2]          ╵         ~~~~~~
 [2] 
+[2] ✘ [ERROR] TS-992008: Could not find stylesheet file './ad-browser.component.scss'. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] TS-992008: Could not find stylesheet file './ad-browser.component.css'. [plugin angular-compiler]
+[2]     src/app/features/ad-browser/ad-browser.component.ts:10:14:
+[2]       10 │   styleUrls: ['./ad-browser.component.scss'],
+[2]          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
-[2]     src/app/features/ad-browser/ad-browser.component.ts:8:14:
-[2]       8 │   styleUrls: ['./ad-browser.component.css']
-[2]         ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
+[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] TS-996008: Component AdBrowserComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead? [plugin angular-compiler]
+[2]     src/app/features/ad-browser/ad-browser.module.ts:4:9:
+[2]       4 │ import { SharedModule } from '../../shared/material.module';
+[2]         ╵          ~~~~~~~~~~~~
 [2] 
-[2]     src/app/features/ad-browser/ad-browser.module.ts:13:4:
-[2]       13 │     AdBrowserComponent
-[2]          ╵     ~~~~~~~~~~~~~~~~~~
 [2] 
+[2] ✘ [ERROR] TS-991010: Value at position 1 in the NgModule.imports of AdBrowserModule is not a reference
+[2]   Value could not be determined statically. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] Could not resolve "./ad-detail.component"
+[2]     src/app/features/ad-browser/ad-browser.module.ts:15:11:
+[2]       15 │   imports: [
+[2]          ╵            ^
 [2] 
-[2]     src/app/features/ad-details/ad-details.module.ts:4:34:
-[2]       4 │ import { AdDetailComponent } from './ad-detail.component';
-[2]         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~
+[2]   Unknown reference.
 [2] 
+[2]     src/app/features/ad-browser/ad-browser.module.ts:17:4:
+[2]       17 │     SharedModule,
+[2]          ╵     ~~~~~~~~~~~~
 [2] 
-[2] ✘ [ERROR] TS2307: Cannot find module './ad-detail.component' or its corresponding type declarations. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-details/ad-details.module.ts:4:34:
-[2]       4 │ import { AdDetailComponent } from './ad-detail.component';
-[2]         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
 [2] 
+[2]     src/app/features/ad-management/ad-management.module.ts:25:9:
+[2]       25 │ import { SharedModule } from '../../shared/material.module';
+[2]          ╵          ~~~~~~~~~~~~
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-spinner' is not a known element:
-[2] 1. If 'mat-spinner' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:5:4:
-[2]       5 │     <mat-spinner diameter="40"></mat-spinner>
-[2]         ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] TS-991010: Value at position 3 in the NgModule.imports of AdManagementModule is not a reference
+[2]   Value could not be determined statically. [plugin angular-compiler]
 [2] 
-[2]   Error occurs in the template of component AdFormComponent.
+[2]     src/app/features/ad-management/ad-management.module.ts:54:11:
+[2]       54 │   imports: [
+[2]          ╵            ^
 [2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]   Unknown reference.
 [2] 
+[2]     src/app/features/ad-management/ad-management.module.ts:58:4:
+[2]       58 │     SharedModule,
+[2]          ╵     ~~~~~~~~~~~~
 [2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:8:8:
-[2]       8 │   <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
-[2]         ╵         ~~~~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] NG9: Property 'adTitle' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card' is not a known element:
-[2] 1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:9:4:
-[2]       9 │     <mat-card>
-[2]         ╵     ~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-content' is not a known element:
-[2] 1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:10:6:
-[2]       10 │       <mat-card-content>
-[2]          ╵       ~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:12:10:
-[2]       12 │           <mat-form-field appearance="outline" class="full-width">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:13:12:
-[2]       13 │             <mat-label>Title</mat-label>
-[2]          ╵             ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:15:12:
-[2]       15 │             <mat-error *ngIf="adForm.get('title')?.hasError('requi...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:18:12:
-[2]       18 │             <mat-error *ngIf="adForm.get('title')?.hasError('maxle...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:25:10:
-[2]       25 │           <mat-form-field appearance="outline" class="full-width">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-[2] 1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:26:12:
-[2]       26 │             <mat-label>Description</mat-label>
-[2]          ╵             ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:29:12:
-[2]       29 │             <mat-error *ngIf="adForm.get('description')?.hasError(...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:32:12:
-[2]       32 │             <mat-error *ngIf="adForm.get('description')?.hasError(...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:39:10:
-[2]       39 │           <mat-form-field appearance="outline">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-[2] 1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:40:12:
-[2]       40 │             <mat-label>Category</mat-label>
-[2]          ╵             ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-select' is not a known element:
-1. If 'mat-select' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-select' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:41:12:
-[2]       41 │             <mat-select formControlName="category">
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-option' is not a known element:
-[2] 1. If 'mat-option' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-option' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:42:14:
-[2]       42 │ ...          <mat-option *ngFor="let category of categories" [valu...
-[2]          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'value' since it isn't a known property of 'mat-option'.
-[2] 1. If 'mat-option' is an Angular component and it has 'value' input, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-option' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
-[2] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:42:62:
-[2]       42 │ ...mat-option *ngFor="let category of categories" [value]="category">
-[2]          ╵                                                   ~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:46:12:
-[2]       46 │             <mat-error *ngIf="adForm.get('category')?.hasError('re...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:51:10:
-[2]       51 │           <mat-form-field appearance="outline">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-[2] 1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:52:12:
-[2]       52 │             <mat-label>Price (USD)</mat-label>
-[2]          ╵             ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:55:12:
-[2]       55 │             <mat-error *ngIf="adForm.get('price')?.hasError('requi...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:58:12:
-[2]       58 │             <mat-error *ngIf="adForm.get('price')?.hasError('min')">
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:65:10:
-[2]       65 │           <mat-form-field appearance="outline" class="full-width">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-[2] 1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:66:12:
-[2]       66 │             <mat-label>Location</mat-label>
-[2]          ╵             ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-error' is not a known element:
-[2] 1. If 'mat-error' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-error' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:68:12:
-[2]       68 │             <mat-error *ngIf="adForm.get('location')?.hasError('re...
-[2]          ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-checkbox' is not a known element:
-[2] 1. If 'mat-checkbox' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-checkbox' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:75:10:
-[2]       75 │           <mat-checkbox formControlName="isActive" color="primary">
-[2]          ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-actions' is not a known element:
-[2] 1. If 'mat-card-actions' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-actions' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.html:81:6:
-[2]       81 │       <mat-card-actions align="end">
-[2]          ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdFormComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-form.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:37:31:
-[2]       37 │ ...d-status" [ngClass]="{'active': ad.active, 'inactive': !ad.acti...
-[2]          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8004: No pipe found with name 'slice'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.html:45:78:
-[2]       45 │ ...ription || (ad.description | slice:0:100) }}{{ (ad.description?...
-[2]          ╵                                 ~~~~~
-[2] 
-[2]   Error occurs in the template of component AdListComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-list/ad-list.component.ts:9:15:
-[2]       9 │   templateUrl: './ad-list.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8003: No directive found with exportAs 'routerLinkActive'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:10:31:
-[2]       10 │        routerLinkActive #rla1="routerLinkActive"
-[2]          ╵                                ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'active' since it isn't a known property of 'a'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:11:7:
-[2]       11 │        [active]="rla1.isActive">
-[2]          ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8003: No directive found with exportAs 'routerLinkActive'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:16:31:
-[2]       16 │        routerLinkActive #rla2="routerLinkActive"
-[2]          ╵                                ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'active' since it isn't a known property of 'a'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:17:7:
-[2]       17 │        [active]="rla2.isActive">
-[2]          ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8003: No directive found with exportAs 'routerLinkActive'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:22:31:
-[2]       22 │        routerLinkActive #rla3="routerLinkActive"
-[2]          ╵                                ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'active' since it isn't a known property of 'a'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:23:7:
-[2]       23 │        [active]="rla3.isActive">
-[2]          ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8003: No directive found with exportAs 'routerLinkActive'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:29:31:
-[2]       29 │        routerLinkActive #rla4="routerLinkActive"
-[2]          ╵                                ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'active' since it isn't a known property of 'a'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:30:7:
-[2]       30 │        [active]="rla4.isActive">
-[2]          ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'router-outlet' is not a known element:
-[2] 1. If 'router-outlet' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.html:36:4:
-[2]       36 │     <router-outlet></router-outlet>
-[2]          ╵     ~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdManagementComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:8:15:
-[2]       8 │   templateUrl: './ad-management.component.html',
-[2]         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-spinner' is not a known element:
-[2] 1. If 'mat-spinner' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:5:4:
-[2]       5 │     <mat-spinner diameter="40"></mat-spinner>
-[2]         ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:2:25:
+[2]       2 │   <h2>Statistics for "{{ adTitle }}"</h2>
+[2]         ╵                          ~~~~~~~
 [2] 
 [2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card' is not a known element:
-[2] 1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2] ✘ [ERROR] NG9: Property 'getBarHeight' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:9:4:
-[2]       9 │     <mat-card class="summary-card">
-[2]         ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:45:33:
+[2]       45 │                  [style.height]="getBarHeight(item, viewsData)"
+[2]          ╵                                  ~~~~~~~~~~~~
 [2] 
 [2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-header' is not a known element:
-[2] 1. If 'mat-card-header' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2] ✘ [ERROR] NG9: Property 'getBarHeight' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:10:6:
-[2]       10 │       <mat-card-header>
-[2]          ╵       ~~~~~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:65:33:
+[2]       65 │                  [style.height]="getBarHeight(item, clicksData)"
+[2]          ╵                                  ~~~~~~~~~~~~
 [2] 
 [2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-title' is not a known element:
-[2] 1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2] ✘ [ERROR] NG9: Property 'applyFilter' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:11:8:
-[2]       11 │         <mat-card-title>Performance Summary (Last 7 Days)</mat-car...
-[2]          ╵         ~~~~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:86:35:
+[2]       86 │ ... <input matInput (keyup)="applyFilter($event)" placeholder="Sea...
+[2]          ╵                              ~~~~~~~~~~~
 [2] 
 [2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-content' is not a known element:
-[2] 1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2] ✘ [ERROR] NG9: Property 'displayedColumns' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:13:6:
-[2]       13 │       <mat-card-content class="summary-metrics">
-[2]          ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:121:49:
+[2]       121 │ ...     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+[2]           ╵                                              ~~~~~~~~~~~~~~~~
 [2] 
 [2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG9: Property 'getTotalViews' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
+[2] ✘ [ERROR] NG9: Property 'displayedColumns' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:15:39:
-[2]       15 │ ... class="metric-value">{{ getTotalViews(dataSource.data.slice(0,...
-[2]          ╵                             ~~~~~~~~~~~~~
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:122:54:
+[2]       122 │ ...tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+[2]           ╵                                             ~~~~~~~~~~~~~~~~
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
+  Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
+[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
+[2]       10 │   templateUrl: './ad-stats.component.html',
 [2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG9: Property 'getTotalClicks' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
+[2] ✘ [ERROR] TS2305: Module '"../../core/services/chat.service"' has no exported member 'ChatMessage'. [plugin angular-compiler]
 [2] 
-    src/app/features/ad-management/ad-stats/ad-stats.component.html:19:39:
-[2]       19 │ ... class="metric-value">{{ getTotalClicks(dataSource.data.slice(0...
-[2]          ╵                             ~~~~~~~~~~~~~~
+[2]     src/app/features/chat/chat.component.ts:2:22:
+[2]       2 │ import { ChatService, ChatMessage } from '../../core/services/chat....
+[2]         ╵                       ~~~~~~~~~~~
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] TS2554: Expected 1 arguments, but got 0. [plugin angular-compiler]
 [2] 
+[2]     src/app/features/chat/chat.component.ts:106:21:
+[2]       106 │     this.chatService.onNewMessage().subscribe(message => {
+[2]           ╵                      ~~~~~~~~~~~~
 [2] 
-[2] ✘ [ERROR] NG9: Property 'getTotalInquiries' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
+[2]   An argument for 'callback' was not provided.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:23:39:
-[2]       23 │ ...lass="metric-value">{{ getTotalInquiries(dataSource.data.slice(...
-[2]          ╵                           ~~~~~~~~~~~~~~~~~
+[2]     src/app/core/services/chat.service.ts:61:15:
+[2]       61 │   onNewMessage(callback: (message: any) => void): void {
+[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] TS2339: Property 'subscribe' does not exist on type 'void'. [plugin angular-compiler]
 [2] 
+[2]     src/app/features/chat/chat.component.ts:106:36:
+[2]       106 │     this.chatService.onNewMessage().subscribe(message => {
+[2]           ╵                                     ~~~~~~~~~
 [2] 
-[2] ✘ [ERROR] NG9: Property 'getConversionRate' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:28:15:
-[2]       28 │             {{ getConversionRate(dataSource.data.slice(0, 7)) }}%
-[2]          ╵                ~~~~~~~~~~~~~~~~~
+[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
+[2]     src/app/features/chat/chat.module.ts:5:9:
+[2]       5 │ import { SharedModule } from '../../shared/material.module';
+[2]         ╵          ~~~~~~~~~~~~
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
+[2] ✘ [ERROR] TS-991010: Value at position 2 in the NgModule.imports of ChatModule is not a reference
+[2]   Value could not be determined statically. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card' is not a known element:
-[2] 1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2]     src/app/features/chat/chat.module.ts:14:11:
+[2]       14 │   imports: [
+[2]          ╵            ^
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:37:6:
-[2]       37 │       <mat-card class="chart-card">
-[2]          ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]   Unknown reference.
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
+[2]     src/app/features/chat/chat.module.ts:17:4:
+[2]       17 │     SharedModule,
+[2]          ╵     ~~~~~~~~~~~~
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [2] 
+[2] ✘ [ERROR] TS2305: Module '"../../../core/services/notification.service"' has no exported member 'ToastNotification'. [plugin angular-compiler]
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-header' is not a known element:
-[2] 1. If 'mat-card-header' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2]     src/app/shared/components/notification/notification.component.ts:3:30:
+[2]       3 │ ... { NotificationService, ToastNotification as Notification, Notif...
+[2]         ╵                            ~~~~~~~~~~~~~~~~~
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:38:8:
-[2]       38 │         <mat-card-header>
-[2]          ╵         ~~~~~~~~~~~~~~~~~
 [2] 
-[2]   Error occurs in the template of component AdStatsComponent.
+[2] ✘ [ERROR] TS2305: Module '"../../../core/services/notification.service"' has no exported member 'NotificationType'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/shared/components/notification/notification.component.ts:3:65:
+[2]       3 │ ...cation as Notification, NotificationType } from '../../../core/s...
+[2]         ╵                            ~~~~~~~~~~~~~~~~
 [2] 
 [2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-title' is not a known element:
-[2] 1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+[2] ✘ [ERROR] TS2339: Property 'toasts$' does not exist on type 'NotificationService'. [plugin angular-compiler]
 [2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:39:10:
-[2]       39 │           <mat-card-title>Daily Views</mat-card-title>
-[2]          ╵           ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-content' is not a known element:
-[2] 1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:41:8:
-[2]       41 │         <mat-card-content class="chart-placeholder">
-[2]          ╵         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8004: No pipe found with name 'date'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:51:29:
-[2]       51 │               {{ item.name | date:'MM/dd' }}
-[2]          ╵                              ~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card' is not a known element:
-[2] 1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:57:6:
-[2]       57 │       <mat-card class="chart-card">
-[2]          ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-header' is not a known element:
-[2] 1. If 'mat-card-header' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:58:8:
-[2]       58 │         <mat-card-header>
-[2]          ╵         ~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-title' is not a known element:
-[2] 1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-    src/app/features/ad-management/ad-stats/ad-stats.component.html:59:10:
-[2]       59 │           <mat-card-title>Daily Clicks</mat-card-title>
-[2]          ╵           ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-content' is not a known element:
-[2] 1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:61:8:
-[2]       61 │         <mat-card-content class="chart-placeholder">
-[2]          ╵         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8004: No pipe found with name 'date'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:71:29:
-[2]       71 │               {{ item.name | date:'MM/dd' }}
-[2]          ╵                              ~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card' is not a known element:
-[2] 1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:79:4:
-[2]       79 │     <mat-card class="table-card">
-[2]          ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-header' is not a known element:
-[2] 1. If 'mat-card-header' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:80:6:
-[2]       80 │       <mat-card-header>
-[2]          ╵       ~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-title' is not a known element:
-[2] 1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:81:8:
-[2]       81 │         <mat-card-title>Detailed Statistics</mat-card-title>
-[2]          ╵         ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-card-content' is not a known element:
-[2] 1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:83:6:
-[2]       83 │       <mat-card-content>
-[2]          ╵       ~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-form-field' is not a known element:
-[2] 1. If 'mat-form-field' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:84:8:
-[2]       84 │         <mat-form-field appearance="outline" class="filter-field">
-[2]          ╵         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-label' is not a known element:
-[2] 1. If 'mat-label' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:85:10:
-[2]       85 │           <mat-label>Filter</mat-label>
-[2]          ╵           ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'dataSource' since it isn't a known property of 'table'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:90:27:
-[2]       90 │           <table mat-table [dataSource]="dataSource" matSort>
-[2]          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8004: No pipe found with name 'date'. [plugin angular-compiler]
-[2] 
-    src/app/features/ad-management/ad-stats/ad-stats.component.html:94:63:
-[2]       94 │ ...     <td mat-cell *matCellDef="let row"> {{row.date | date}} </td>
-[2]          ╵                                                          ~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8001: 'mat-paginator' is not a known element:
-[2] 1. If 'mat-paginator' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-paginator' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:125:10:
-[2]       125 │           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" ari...
-[2]           ╵           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG8002: Can't bind to 'pageSizeOptions' since it isn't a known property of 'mat-paginator'.
-[2] 1. If 'mat-paginator' is an Angular component and it has 'pageSizeOptions' input, then verify that it is included in the '@Component.imports' of this component.
-[2] 2. If 'mat-paginator' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
-[2] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:125:25:
-[2]       125 │ ...at-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="...
-[2]           ╵                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:17:15:
-[2]       17 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2]     src/app/shared/components/notification/notification.component.ts:130:31:
+[2]       130 │       this.notificationService.toasts$.subscribe(notification => {
+[2]           ╵                                ~~~~~~~
 [2] 
 [2] 
 [2] Watch mode enabled. Watching for file changes...
-
 
