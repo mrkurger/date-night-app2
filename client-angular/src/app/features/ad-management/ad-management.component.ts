@@ -1,12 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router, RouterOutlet } from '@angular/router';
+import { MaterialModule } from '../../shared/material.module';
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
+import { MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-ad-management',
   templateUrl: './ad-management.component.html',
-  styleUrls: ['./ad-management.component.scss']
+  styleUrls: ['./ad-management.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterOutlet,
+    MaterialModule,
+    MatTabNav,
+    MatTabNavPanel
+  ]
 })
 export class AdManagementComponent implements OnInit {
   ads: any[] = [];
@@ -21,37 +33,11 @@ export class AdManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadAds();
     this.checkUserRole();
   }
 
-  private loadAds(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      this.router.navigate(['/auth/login']);
-      return;
-    }
-
-    this.loading = true;
-
-    this.adService.getUserAds(currentUser.id).subscribe({
-      next: (ads) => {
-        this.ads = ads;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load ads';
-        this.loading = false;
-        console.error(err);
-      }
-    });
-  }
-
   private checkUserRole(): void {
-    this.authService.currentUser$.subscribe(user => {
-      if (user) {
-        this.isAdmin = user.role === 'admin';
-      }
-    });
+    const user = this.authService.getCurrentUser();
+    this.isAdmin = user?.roles?.includes('admin') || false;
   }
 }

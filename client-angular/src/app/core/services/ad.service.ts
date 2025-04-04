@@ -8,12 +8,12 @@ import { Ad, AdCreateDTO, AdUpdateDTO } from '../models/ad.interface';
   providedIn: 'root'
 })
 export class AdService {
-  private apiUrl = `${environment.apiUrl}/ads`;
+  private readonly apiUrl = environment.apiUrl + '/ads';
 
   constructor(private http: HttpClient) {}
 
-  getAds(): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl);
+  getAds(filters?: any): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl, { params: filters });
   }
 
   getAdById(id: string): Observable<Ad> {
@@ -25,25 +25,27 @@ export class AdService {
   }
 
   createAd(adData: AdCreateDTO): Observable<Ad> {
-    const formData = new FormData();
-    Object.keys(adData).forEach(key => {
-      if (key === 'images') {
-        adData.images.forEach((image: File) => {
-          formData.append('images', image);
-        });
-      } else {
-        formData.append(key, JSON.stringify(adData[key as keyof AdCreateDTO]));
-      }
-    });
-    return this.http.post<Ad>(this.apiUrl, formData);
+    return this.http.post<Ad>(this.apiUrl, adData);
+  }
+
+  createAdWithImages(formData: FormData): Observable<Ad> {
+    return this.http.post<Ad>(`${this.apiUrl}/with-images`, formData);
   }
 
   updateAd(id: string, adData: AdUpdateDTO): Observable<Ad> {
     return this.http.put<Ad>(`${this.apiUrl}/${id}`, adData);
   }
 
+  updateAdImages(id: string, formData: FormData): Observable<Ad> {
+    return this.http.put<Ad>(`${this.apiUrl}/${id}/images`, formData);
+  }
+
   deleteAd(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  deleteAdImage(adId: string, imageId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${adId}/images/${imageId}`);
   }
 
   getSwipeAds(filters?: any): Observable<Ad[]> {
@@ -92,5 +94,27 @@ export class AdService {
         radius: radius.toString()
       }
     });
+  }
+
+  getTrendingAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`${this.apiUrl}/trending`);
+  }
+
+  getFeaturedAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`${this.apiUrl}/featured`);
+  }
+
+  searchAds(query: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(`${this.apiUrl}/search`, {
+      params: { q: query }
+    });
+  }
+
+  reportAd(id: string, reason: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${id}/report`, { reason });
+  }
+
+  toggleActiveStatus(id: string, isActive: boolean): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { isActive });
   }
 }

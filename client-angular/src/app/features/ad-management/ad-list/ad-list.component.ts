@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { MaterialModule } from '../../../shared/material.module';
 import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -7,9 +9,11 @@ import { NotificationService } from '../../../core/services/notification.service
 @Component({
   selector: 'app-ad-list',
   templateUrl: './ad-list.component.html',
-  styleUrls: ['./ad-list.component.scss']
+  styleUrls: ['./ad-list.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MaterialModule]
 })
-export class AdListComponent implements OnInit {
+export class AdListComponent {
   ads: any[] = [];
   loading = false;
   error = '';

@@ -3,11 +3,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api/v1',
-  socketUrl: 'http://localhost:3000',
-  stripePublicKey: 'pk_test_your_stripe_key',
-  googleMapsApiKey: 'your_google_maps_api_key',
-  version: '0.1.0',
-  sentryDsn: '',
-  recaptchaSiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' // Test key
+  apiUrl: 'http://localhost:3000/api',
+  chatWsUrl: 'ws://localhost:3000',
+  defaultImageUrl: '/assets/images/default-ad.jpg',
+  maxUploadSize: 5 * 1024 * 1024, // 5MB
+  supportedImageTypes: ['image/jpeg', 'image/png', 'image/webp'],
+  mapboxToken: 'your_mapbox_token', // Replace with actual token if using location features
 };

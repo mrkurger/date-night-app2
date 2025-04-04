@@ -3,3 +3,41 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Snackbar styles */
+.success-snackbar {
+  background: #43a047;
+  color: white;
+}
+
+.error-snackbar {
+  background: #d32f2f;
+  color: white;
+}
+
+.warning-snackbar {
+  background: #ffa000;
+  color: white;
+}
+
+.info-snackbar {
+  background: #1976d2;
+  color: white;
+}
+
+.mat-mdc-snack-bar-action .mdc-button__label {
+  color: white;
+}
+
+/* Form styles */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-snack-bar-container {
+  margin: 1rem !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border-radius: 4px !important;
+}

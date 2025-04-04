@@ -1,60 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../shared/material.module';
 
 @Component({
   selector: 'app-gallery',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   template: `
-    <div class="container mt-4">
-      <div *ngIf="loading" class="text-center">Loading...</div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-      
-      <div class="row">
-        <div *ngFor="let category of categories" class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{category.name}}</h5>
-              <p class="card-text">{{category.description}}</p>
-              <button (click)="loadAdsByCategory(category.id)" class="btn btn-primary">
-                View Ads
-              </button>
-            </div>
+    <div class="gallery-container mat-elevation-z2">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Photo Gallery</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="gallery-grid">
+            <!-- Gallery content will be implemented here -->
+            <p>Gallery feature coming soon...</p>
           </div>
-        </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
     </div>
-  `
+  `,
+  styles: [`
+    .gallery-container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }
+  `],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MaterialModule]
 })
 export class GalleryComponent implements OnInit {
-  categories: any[] = [];
-  loading = false;
-  error = '';
-
-  constructor(private adService: AdService) {}
-
   ngOnInit(): void {
-    this.loadCategories();
-  }
-
-  loadCategories(): void {
-    this.loading = true;
-    this.adService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load categories';
-        this.loading = false;
-      }
-    });
-  }
-
-  loadAdsByCategory(categoryId: string): void {
-    // Implementation for loading ads by category
+    // Initialization logic will be added here
   }
 }

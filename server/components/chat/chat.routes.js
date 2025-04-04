@@ -3,7 +3,7 @@ const router = express.Router();
 const chatController = require('./chat.controller');
 const { protect } = require('../../middleware/auth');
 
-// All chat routes require authentication
+// Apply authentication middleware to all chat routes
 router.use(protect);
 
 // Get rooms for current user
@@ -30,7 +30,7 @@ router.post('/rooms/:roomId/read', chatController.markMessagesAsRead);
 // Get unread message counts
 router.get('/unread', chatController.getUnreadCounts);
 
-// Leave a group chat room
+// Leave a chat room
 router.post('/rooms/:roomId/leave', chatController.leaveRoom);
 
 // Get a specific room

@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../shared/material.module';
 
 @Component({
   selector: 'app-ad-browser',
   templateUrl: './ad-browser.component.html',
-  styleUrls: ['./ad-browser.component.css']
+  styleUrls: ['./ad-browser.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MaterialModule]
 })
 export class AdBrowserComponent implements OnInit {
   ads: any[] = [];

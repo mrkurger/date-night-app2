@@ -10,7 +10,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
 const fs = require('fs');
-const { connectDB, closeDB } = require('./config/database');
+const mongoose = require('mongoose');
+const config = require('./config');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -110,8 +111,40 @@ app.use(compression());
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Connect to database
-connectDB();
+// MongoDB connection with retry logic
+const connectWithRetry = async (retries = 5, delay = 5000) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await mongoose.connect(config.mongoUri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      });
+      console.log('MongoDB connected successfully');
+      break;
+    } catch (err) {
+      if (err.code === 'EADDRINUSE') {
+        console.log('MongoDB address in use, attempting to recover...');
+        try {
+          // Close existing connections
+          await mongoose.connection.close();
+          // Wait for port to be released
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          continue;
+        } catch (closeErr) {
+          console.error('Error closing connection:', closeErr);
+        }
+      }
+      
+      if (i === retries - 1) {
+        console.error('MongoDB connection failed after retries:', err);
+        process.exit(1);
+      }
+      
+      console.log(`Retrying connection in ${delay/1000} seconds...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+};
 
 // API routes with versioning
 app.use('/api/v1', routes);
@@ -131,7 +164,7 @@ const shutdown = async (signal) => {
   console.log(`${signal} received. Starting graceful shutdown...`);
 
   // Close database connection
-  await closeDB();
+  await mongoose.connection.close();
   console.log('Database connections closed');
 
   // Close server
@@ -166,18 +199,24 @@ process.on('unhandledRejection', (reason, promise) => {
   shutdown('UNHANDLED REJECTION');
 });
 
-// Start server
+// Start server only after MongoDB connects
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+
+connectWithRetry().then(() => {
+  const server = app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  });
+
+  // Initialize Socket.IO
+  const socketService = require('./services/socket.service');
+  socketService.initialize(server);
+
+  // Initialize message cleanup scheduler
+  const messageCleanup = require('./utils/messageCleanup');
+  messageCleanup.init();
+}).catch(err => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
 });
 
-// Initialize Socket.IO
-const socketService = require('./services/socket.service');
-socketService.initialize(server);
-
-// Initialize message cleanup scheduler
-const messageCleanup = require('./utils/messageCleanup');
-messageCleanup.init();
-
-module.exports = { app, server };
+module.exports = { app };

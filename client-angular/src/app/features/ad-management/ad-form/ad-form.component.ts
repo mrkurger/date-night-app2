@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../../shared/material.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
@@ -8,7 +11,15 @@ import { switchMap, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-ad-form',
   templateUrl: './ad-form.component.html',
-  styleUrls: ['./ad-form.component.scss']
+  styleUrls: ['./ad-form.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MaterialModule,
+    DatePipe
+  ]
 })
 export class AdFormComponent implements OnInit {
   adForm: FormGroup;
