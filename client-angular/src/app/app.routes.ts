@@ -49,6 +49,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'touring',
+    loadChildren: () => import('./features/touring/touring.module').then(m => m.TouringModule)
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

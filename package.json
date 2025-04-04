@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "DateNight.io application",
   "workspaces": [
-    "client",
+    "client-angular",
     "server"
   ],
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "cd server && npm run dev",
-    "start:client": "cd client && npm start",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "start:client": "cd client-angular && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client-angular && npm install",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

@@ -19,98 +19,36 @@ This project uses the MEAN stack (MongoDB, Express.js, Angular, Node.js).
 
 ## Project Structure
 
-The project is organized into separate `server` (backend) and `client-angular` (frontend) directories.
+The project uses a modern Angular frontend with an Express.js backend:
 
 ```
 .
-├── README.md                   # This file
-├── client-angular              # Frontend (Angular)
-│   ├── package.json            # Frontend dependencies
-│   ├── angular.json            # Angular CLI configuration
-│   ├── tsconfig.json           # TypeScript configuration
-│   └── src
-│       ├── app                 # Main application code
-│       │   ├── app.component.ts # Root component
-│       │   ├── app.module.ts   # Root Angular module
-│       │   ├── app-routing.module.ts # Main routing configuration
-│       │   ├── core            # Core module (guards, interceptors, services)
-│       │   │   ├── guards      # Route guards for authentication
-│       │   │   ├── interceptors # HTTP interceptors
-│       │   │   ├── models      # Data models/interfaces
-│       │   │   └── services    # Core services
-│       │   ├── features        # Feature modules/components
-│       │   │   ├── ad-browser  # Ad browsing feature
-│       │   │   ├── ad-details  # Ad details feature
-│       │   │   ├── ad-management # Ad management feature
-│       │   │   ├── auth        # Authentication feature
-│       │   │   ├── chat        # Chat feature
-│       │   │   ├── gallery     # Gallery view feature
-│       │   │   ├── profile     # User profile feature
-│       │   │   └── tinder      # Tinder-style swipe feature
-│       │   └── shared          # Shared components, directives, pipes
-│       ├── assets              # Static assets
-│       ├── environments        # Environment-specific settings
-│       └── styles              # Global styles
-├── scripts                     # Utility scripts
-│   ├── seed.js                 # Database seeding script
-│   └── setup.js                # Environment setup check script
-└── server                      # Backend (Node.js / Express)
-    ├── components              # Feature-based modules
-    │   ├── ads                 # Ad-related endpoints
-    │   │   ├── ad.controller.js # Ad controller
-    │   │   └── ad.routes.js    # Ad routes
-    │   ├── auth                # Authentication endpoints
-    │   │   ├── auth.controller.js # Auth controller
-    │   │   └── auth.routes.js  # Auth routes
-    │   ├── chat                # Chat endpoints
-    │   │   ├── chat.controller.js # Chat controller
-    │   │   └── chat.routes.js  # Chat routes
-    │   └── users               # User endpoints
-    │       ├── user.controller.js # User controller
-    │       └── user.routes.js  # User routes
-    ├── config                  # Configuration files
-    │   ├── database.js         # Database configuration
-    │   ├── environment.js      # Environment variables
-    │   ├── index.js            # Main config export
-    │   ├── oauth.js            # OAuth configuration
-    │   └── passport.js         # Passport configuration
-    ├── middleware              # Custom Express middleware
-    │   ├── authenticateToken.js # JWT authentication
-    │   ├── errorHandler.js     # Error handling
-    │   ├── index.js            # Middleware exports
-    │   ├── rateLimiter.js      # Rate limiting
-    │   └── requestValidator.js # Request validation
-    ├── models                  # Database models
-    │   ├── ad.model.js         # Ad model
-    │   ├── chat-message.model.js # Chat message model
-    │   └── user.model.js       # User model
-    ├── package.json            # Backend dependencies
-    ├── server.js               # Main server entry point
-    ├── services                # Business logic services
-    │   ├── ad.service.js       # Ad service
-    │   ├── auth.service.js     # Auth service
-    │   └── chat.service.js     # Chat service
-    └── utils                   # Utility functions
-        └── authHelpers.js      # Authentication helpers
+├── README.md                   # Project documentation
+├── client-angular/            # Angular frontend application
+├── server/                    # Express.js backend
+├── docs/                      # Project documentation
+└── scripts/                   # Utility scripts
 ```
 
 ## Technology Stack
 
-* **MongoDB:** NoSQL Database for flexible data storage
-* **Express.js:** Backend web framework for Node.js
-* **Angular:** Modern frontend framework (migrated from AngularJS)
-* **Node.js:** JavaScript runtime environment
-* **Socket.IO:** Real-time bidirectional event-based communication
-* **JWT:** JSON Web Tokens for secure authentication
-* **Mongoose:** MongoDB object modeling for Node.js
-* **RxJS:** Reactive Extensions Library for JavaScript
-* **Bootstrap:** Frontend CSS framework for responsive design
+* **Frontend:**
+  * Angular 19.2
+  * RxJS
+  * Socket.IO Client
+  * Bootstrap 5
+* **Backend:**
+  * Node.js & Express
+  * MongoDB & Mongoose
+  * Socket.IO
+  * JWT Authentication
+  * Passport.js
 
 ## Setup and Installation
 
 **Prerequisites:**
 
-* Node.js (v14+) and npm installed
+* Node.js (v18+) and npm installed
 * MongoDB installed and running (`mongod`)
 * Angular CLI installed globally (`npm install -g @angular/cli`)
 
@@ -130,18 +68,9 @@ The project is organized into separate `server` (backend) and `client-angular` (
    * Edit the `.env` file with your specific credentials (MongoDB URI, JWT Secret, OAuth Client IDs/Secrets)
 
 3. **Install Dependencies:**
-   * Install backend dependencies:
-     ```bash
-     cd server
-     npm install
-     cd ..
-     ```
-   * Install Angular frontend dependencies:
-     ```bash
-     cd client-angular
-     npm install
-     cd ..
-     ```
+   ```bash
+   npm run install-all
+   ```
 
 4. **Run Setup Script:**
    * Verifies environment variables and basic DB connection:
@@ -157,19 +86,9 @@ The project is organized into separate `server` (backend) and `client-angular` (
      ```
 
 6. **Run the Application:**
-   * **Start the Backend Server:**
-     ```bash
-     cd server
-     npm run dev # Runs with nodemon for auto-restarts
-     ```
-     The server runs on `http://localhost:3000` by default.
-
-   * **Start the Angular Frontend:**
-     ```bash
-     cd client-angular
-     ng serve
-     ```
-     The Angular app runs on `http://localhost:4200` by default.
+   ```bash
+   npm run dev
+   ```
 
 7. **Access the Application:**
    * Open your browser and navigate to `http://localhost:4200`
@@ -177,96 +96,24 @@ The project is organized into separate `server` (backend) and `client-angular` (
 
 ## Feature Roadmap & Status
 
-### Completed Features
+### Completed ✅
+- Angular migration from AngularJS
+- Core authentication system
+- Basic chat functionality
+- Ad management features
+- Multiple browsing interfaces
 
-* **Angular Migration:** ✅
-  - Migrated all features from AngularJS to Angular
-  - Implemented lazy loading for all feature modules
-  - Enhanced authentication with token refresh and expiration handling
+### In Progress 🔄
+- Enhanced chat with encryption
+- Travel itinerary system
+- User interaction features
+- Location-based matching
 
-* **Ad Management:** ✅
-  - Ad creation, editing, and deletion
-  - Ad categorization (Escort, Striptease, Massage)
-  - Image upload and management
-
-* **Authentication:** ✅
-  - Email/password authentication
-  - OAuth integration (GitHub, Google, Reddit, Apple)
-  - JWT token management with refresh capability
-
-* **Browse & Searching:** ✅
-  - Traditional list/grid view
-  - Tinder-style swipe interface
-  - Netflix-style gallery browsing
-
-* **Basic Chat:** ✅
-  - Direct messaging between users and advertisers
-  - Message history
-  - Real-time updates with Socket.IO
-
-### In Progress Features
-
-* **Enhanced Chat:** 🔄
-  - End-to-end encryption
-  - Message auto-deletion
-  - Typing indicators and read receipts
-
-* **Travel Itinerary:** 🔄
-  - Location tracking for advertisers
-  - Travel plan management
-  - Location-based matching
-
-* **User Interaction:** 🔄
-  - User favorite lists
-  - Reviews and ratings
-  - Enhanced user profiles
-
-### Planned Features
-
-* **Monetization:** 📅
-  - Premium ad placements
-  - Featured listings
-  - Subscription model
-
-* **Camshow Integration:** 📅
-  - Live streaming capability
-  - Tipping system
-  - Private shows
-
-* **OnlyFans-like Features:** 📅
-  - Content subscription
-  - Exclusive content access
-  - Direct support system
-
-## Development Roadmap
-
-### Phase 1: Core Platform (Completed)
-- ✅ Angular migration
-- ✅ Basic ad management
-- ✅ User authentication
-- ✅ Basic chat functionality
-- ✅ Multiple browsing interfaces
-
-### Phase 2: Enhanced Features (In Progress)
-- 🔄 Travel itinerary management
-- 🔄 Enhanced chat with encryption
-- 🔄 User interaction features (favorites, reviews)
-- 🔄 Location-based matching
-- 🔄 Advanced filtering options
-
-### Phase 3: Monetization (Planned)
-- 📅 Premium ad placements
-- 📅 Camshow integration
-- 📅 Subscription model
-- 📅 Payment processing
-- 📅 Content selling
-
-### Phase 4: Optimization & Scaling (Planned)
-- 📅 Performance optimization
-- 📅 Security enhancements
-- 📅 Analytics and monitoring
-- 📅 Mobile app development
-- 📅 Internationalization
+### Planned 📅
+- Advanced monetization features
+- Camshow integration
+- Mobile app development
+- Analytics and monitoring
 
 ## OAuth Setup Instructions
 
