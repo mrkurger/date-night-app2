@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const travelController = require('../controllers/travel.controller');
 const { protect, authorize } = require('../middleware/auth');
-const { rateLimiter } = require('../middleware/rateLimiter');
+const { apiLimiter } = require('../middleware/rateLimiter');
 
 // Apply rate limiting to all routes
-router.use(rateLimiter.apiLimiter);
+router.use(apiLimiter);
 
 // Public routes
 router.get('/touring', travelController.getTouringAdvertisers);
