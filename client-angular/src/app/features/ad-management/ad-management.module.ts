@@ -22,7 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatBadgeModule } from '@angular/material/badge';
 
-import { SharedModule } from '../../shared/material.module';
+import { MaterialModule } from '../../shared/material.module';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { RoleGuard } from '../../core/guards/role.guard';
 
@@ -55,7 +55,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    SharedModule,
+    MaterialModule,
     MatTabsModule,
     MatButtonModule,
     MatIconModule,

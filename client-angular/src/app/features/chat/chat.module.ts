@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/material.module';
+import { MaterialModule } from '../../shared/material.module';
 import { ChatComponent } from './chat.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
+    MaterialModule,
     RouterModule.forChild(routes),
     ChatComponent // Import the standalone component instead of declaring it
   ]

@@ -11,7 +11,7 @@ const hpp = require('hpp');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const config = require('./config');
+const config = require('./config/environment');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -212,9 +212,10 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Start server only after MongoDB connects
 const PORT = process.env.PORT || 3000;
+let server; // Declare server variable in global scope
 
 connectWithRetry().then(() => {
-  const server = app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
   });
 

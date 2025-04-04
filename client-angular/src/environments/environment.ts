@@ -9,5 +9,5 @@ export const environment = {
   maxUploadSize: 5 * 1024 * 1024, // 5MB
   supportedImageTypes: ['image/jpeg', 'image/png', 'image/webp'],
   mapboxToken: 'your_mapbox_token', // Replace with actual token if using location features
-  stripePublicKey: 'pk_test_sample_key', // Replace with actual Stripe public key in production
+  stripePublicKey: 'pk_test_51NxSampleTestKeyDoNotUseInProductionXYZ', // Replace with actual Stripe public key in production
 };

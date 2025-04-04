@@ -1,8 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService, ChatMessage } from '../../core/services/chat.service';
+import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+// Define the ChatMessage interface locally until it's properly exported from the service
+interface ChatMessage {
+  _id: string;
+  sender: {
+    id: string;
+    username: string;
+  };
+  recipient?: {
+    id: string;
+    username: string;
+  };
+  message: string;
+  timestamp: Date;
+  read: boolean;
+}
 
 @Component({
   selector: 'app-chat',

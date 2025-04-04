@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../../shared/material.module';
+import { MaterialModule } from '../../shared/material.module';
 import { AdBrowserComponent } from './ad-browser.component';
 
 const routes: Routes = [
@@ -9,13 +9,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AdBrowserComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
-    SharedModule,
-    RouterModule.forChild(routes)
+    MaterialModule,
+    RouterModule.forChild(routes),
+    AdBrowserComponent
   ]
 })
 export class AdBrowserModule { }

@@ -1,8 +1,25 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService, ToastNotification, NotificationType } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+
+// Define these types locally until they're properly exported from the service
+export enum NotificationType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info'
+}
+
+export interface ToastNotification {
+  id: string;
+  message: string;
+  type: NotificationType;
+  timestamp: Date;
+  autoClose?: boolean;
+  duration?: number;
+}
 
 @Component({
   selector: 'app-notification',

@@ -30,3 +30,5 @@ tmp/
 .vscode/
 
 data/db/*
+data/db/WiredTiger.turtle
+data/db/WiredTiger.wt
