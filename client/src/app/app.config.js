@@ -71,13 +71,21 @@ angular.module('dateNightApp')
         // New routes for feature prototypes
         .when('/tinder', {
           templateUrl: 'app/features/tinder/tinder.html',
-          controller: 'TinderController'
-          // TODO: Consider splitting Tinder-specific logic into its own Angular module.
+          controller: 'TinderController',
+          resolve: {
+            ads: ['AdService', function(AdService) {
+              return AdService.getSwipeAds();
+            }]
+          }
         })
         .when('/gallery', {
           templateUrl: 'app/features/gallery/gallery.html',
-          controller: 'GalleryController'
-          // TODO: Refactor gallery controller for better separation of concerns.
+          controller: 'GalleryController',
+          resolve: {
+            categories: ['AdService', function(AdService) {
+              return AdService.getCategories();
+            }]
+          }
         })
         .otherwise({
           redirectTo: '/'
