@@ -90,3 +90,18 @@ exports.getUnreadCount = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.getChatMessages = function(req, res) {
+  // Retrieve messages logic
+  // ...existing code...
+};
+
+exports.sendMessage = function(req, res) {
+  // Send message logic with optional E2E encryption
+  // ...existing code...
+};
+
+exports.deleteOldChats = function() {
+  // Scheduled task for 24hr auto-deletion of chats
+  // ...existing code...
+};

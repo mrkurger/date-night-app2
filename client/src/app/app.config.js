@@ -2,6 +2,15 @@ angular.module('dateNightApp')
   .config(['$routeProvider', '$locationProvider', '$httpProvider', 
     function($routeProvider, $locationProvider, $httpProvider) {
       
+      // Shared auth resolve function
+      var requireAuth = ['AuthService', '$location', function(AuthService, $location) {
+        if (!AuthService.isAuthenticated()) {
+          $location.path('/login');
+          return false;
+        }
+        return true;
+      }];
+      
       // Configure routes
       $routeProvider
         // Public routes
@@ -30,41 +39,27 @@ angular.module('dateNightApp')
         .when('/my-ads', {
           templateUrl: 'app/features/ad-management/ad-management.html',
           controller: 'AdManagementController',
-          resolve: {
-            auth: ['AuthService', '$location', function(AuthService, $location) {
-              if (!AuthService.isAuthenticated()) {
-                $location.path('/login');
-                return false;
-              }
-              return true;
-            }]
-          }
+          resolve: { auth: requireAuth }
         })
         .when('/chat/:userId', {
           templateUrl: 'app/features/chat/chat.html',
           controller: 'ChatController',
-          resolve: {
-            auth: ['AuthService', '$location', function(AuthService, $location) {
-              if (!AuthService.isAuthenticated()) {
-                $location.path('/login');
-                return false;
-              }
-              return true;
-            }]
-          }
+          resolve: { auth: requireAuth }
         })
         .when('/profile', {
           templateUrl: 'app/features/profile/profile.html',
           controller: 'ProfileController',
-          resolve: {
-            auth: ['AuthService', '$location', function(AuthService, $location) {
-              if (!AuthService.isAuthenticated()) {
-                $location.path('/login');
-                return false;
-              }
-              return true;
-            }]
-          }
+          resolve: { auth: requireAuth }
+        })
+        
+        // New routes for feature prototypes
+        .when('/tinder', {
+          templateUrl: 'app/features/tinder/tinder.html',
+          controller: 'TinderController'
+        })
+        .when('/gallery', {
+          templateUrl: 'app/features/gallery/gallery.html',
+          controller: 'GalleryController'
         })
         .otherwise({
           redirectTo: '/'

@@ -27,7 +27,9 @@ The project is organized into separate `server` (backend) and `client` (frontend
 │       │   │   ├── ad-browser  # Placeholder
 │       │   │   ├── ad-management # Placeholder
 │       │   │   ├── auth        # Placeholder
-│       │   └── │   └── chat        # Placeholder
+│       │   │   ├── chat        # Placeholder
+│       │   │   ├── tinder      # Dedicated view and controller for Tinder-style swipe
+│       │   │   └── gallery     # Dedicated view and controller for Netflix-style gallery
 │       │   ├── models          # Placeholder for frontend models/interfaces
 │       │   ├── services        # Placeholder for Angular services (NEEDS POPULATION)
 │       │   └── shared          # Shared pipes, directives, constants
@@ -155,38 +157,41 @@ The project is organized into separate `server` (backend) and `client` (frontend
 
 ## Feature Roadmap & Status
 
-This project aims to implement the features described in the `Investorpresentasjon.pdf` [cite: uploaded:solmeme/Investorpresentasjon.pdf] and discussed during initial analysis.
-
 **Core Platform:**
 
-* **Ad Posting & Management:** ([Partially Implemented], [Refactoring Needed]) Basic ad CRUD exists. Needs specific categories.
-* **Ad Categories (Escort/Striptease/Massage):** ([Not Implemented]) [cite: 2] Current system is generic.
-* **User / Advertiser Roles:** ([Implemented], [Refactoring Needed]) Basic role differentiation exists.
-* **User Authentication (Local):** ([Implemented], [Refactoring Needed]) Username/password login exists.
-* **OAuth Social Login (GitHub, Google, Reddit, Apple):** ([Implemented], [Refactoring Needed]) Setup exists in backend/frontend stubs.
+* **Ad Posting & Management:** ([Refactoring In Progress])  
+  - Migrate from a monolithic controller to feature-based modules.  
+  - Ensure proper separation for Escort/Striptease/Massage categories.
+  
+* **Authentication:** ([Refactoring In Progress])  
+  - Abstract duplicate resolve logic into a shared service.  
+  - Complete OAuth integration (GitHub, Google, Reddit, Apple).
 
 **Browse & Searching:**
 
-* **Tinder-style Swipe View:** ([Implemented], [Refactoring Needed]) [cite: 9] Exists in original client code.
-* **Netflix-style Gallery View:** ([Implemented], [Refactoring Needed]) [cite: 12] Exists in original client code.
-* **Location/Proximity Search:** ([Implemented], [Refactoring Needed]) [cite: 19, 20] GeoJSON search exists in backend/client.
+* **Tinder-style Swipe View:** ([Implemented, Needs Polishing])  
+  - Create a dedicated view and controller under `client/src/app/features/tinder`.
+  
+* **Netflix-style Gallery View:** ([Implemented, Needs Polishing])  
+  - Create a dedicated view and controller under `client/src/app/features/gallery`.
 
-**User Interaction & Social Features:**
+**User Interaction & Messaging:**
 
-* **Real-time Chat:** ([Partially Implemented], [Refactoring Needed]) [cite: 8, 23] Basic chat functionality exists.
-* **End-to-End Encrypted Chat:** ([Not Implemented]) [cite: 23, 24] PDF requirement not met.
-* **Automatic 24hr Chat Deletion:** ([Not Implemented]) [cite: 25] PDF requirement not met.
-* **User Favorite Lists:** ([Not Implemented]) [cite: 10, 16, 18] Ability for users to save/list favorite ads.
-* **User Reviews System:** ([Not Implemented]) [cite: 21, 22] Ability for users to read/write reviews.
-* **Advertiser Rating of Users:** ([Not Implemented]) [cite: 30, 31] Ability for advertisers to rate users.
-* **Online Status Indicators:** ([Implemented], [Refactoring Needed]) Exists in original code.
-* **Image Verification:** ([Not Implemented]) [cite: 149] Mechanism to verify ad/profile images.
+* **Real-time Chat:** ([Partially Implemented, Refactoring Needed])  
+  - Improve notification, conversation history, and integrate socket reconnect logic.
+* **End-to-End Encrypted Chat / Auto Deletion:** ([Not Implemented])  
+  - New backend endpoints and client logic.
+* **User Favorite Lists & Reviews:** ([Not Implemented])  
+  - New modules for storing and displaying favorites and reviews.
 
 **Monetization & Advanced Features:**
 
-* **Paid Newsfeed/Twitter Feed:** ([Not Implemented]) [cite: 8, 26, 28] Feature for paid posts by advertisers.
-* **Live Sex Show / Camshow Functionality:** ([Not Implemented]) [cite: 3, 32] Ability for advertisers to broadcast paid shows.
-* **Microtransactions:** ([Not Implemented]) [cite: 7] General concept for paid features.
+* **Paid Newsfeed/Twitter Feed:** ([Not Implemented])  
+  - Feature for paid posts by advertisers.
+* **Live Sex Show / Camshow Functionality:** ([Not Implemented])  
+  - Ability for advertisers to broadcast paid shows.
+* **Microtransactions:** ([Not Implemented])  
+  - General concept for paid features.
 
 **Other Implemented (Pre-Refactor):**
 
