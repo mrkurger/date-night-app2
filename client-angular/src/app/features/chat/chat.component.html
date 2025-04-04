@@ -1,0 +1,7 @@
+<div *ngIf="error">{{ error }}</div>
+<div *ngFor="let msg of messages">
+  <p>{{ msg.content }}</p>
+  <button (click)="markAsRead(msg._id)">Mark as Read</button>
+</div>
+<textarea [(ngModel)]="newMessage"></textarea>
+<button (click)="sendMessage()">Send</button>

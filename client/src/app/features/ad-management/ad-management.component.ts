@@ -28,5 +28,5 @@ export class AdManagementComponent implements OnInit {
       }
     });
   }
-  // ...other methods for create, edit, update, delete...
+  // ...additional methods for creating, editing, deleting ads...
 }

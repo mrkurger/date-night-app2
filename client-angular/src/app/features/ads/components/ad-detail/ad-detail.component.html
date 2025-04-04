@@ -1,0 +1,6 @@
+<div *ngIf="loading">Loading ad details...</div>
+<div *ngIf="error">{{ error }}</div>
+<div *ngIf="ad">
+  <h2>{{ ad.title }}</h2>
+  <p>{{ ad.description }}</p>
+</div>

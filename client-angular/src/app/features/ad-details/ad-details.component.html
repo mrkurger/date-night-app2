@@ -1,0 +1,14 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+<div *ngIf="ad">
+  <h2>{{ ad.title }}</h2>
+  <p>{{ ad.description }}</p>
+  <button (click)="startChat()">Contact Advertiser</button>
+  <button (click)="toggleFavorite()">
+    {{ isFavorite() ? 'Unfavorite' : 'Favorite' }}
+  </button>
+  <div *ngIf="isOwner">
+    <!-- Additional owner controls -->
+    <p>You are the owner of this ad.</p>
+  </div>
+</div>

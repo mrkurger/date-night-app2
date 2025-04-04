@@ -1,0 +1,16 @@
+<form [formGroup]="adForm" (ngSubmit)="createAd()">
+  <div>
+    <label>Title</label>
+    <input formControlName="title">
+  </div>
+  <div>
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+  </div>
+  <div>
+    <label>Category</label>
+    <input formControlName="category">
+  </div>
+  <div *ngIf="error">{{ error }}</div>
+  <button type="submit">Create Ad</button>
+</form>

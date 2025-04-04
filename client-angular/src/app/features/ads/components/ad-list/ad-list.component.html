@@ -1,0 +1,11 @@
+<div *ngIf="loading">Loading ads...</div>
+<div *ngIf="error">{{ error }}</div>
+<div *ngIf="ads.length">
+  <ul>
+    <li *ngFor="let ad of ads">
+      <h3>{{ ad.title }}</h3>
+      <p>{{ ad.description }}</p>
+      <a [routerLink]="['/ad-details', ad._id]">View Details</a>
+    </li>
+  </ul>
+</div>
