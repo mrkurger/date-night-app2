@@ -1,0 +1,68 @@
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { PendingMedia } from '../../../../core/models/media.interface';
+import { SafeUrl } from '@angular/platform-browser';
+import { ContentSanitizerService } from '../../../../core/services/content-sanitizer.service';
+
+/**
+ * Component for displaying and handling media moderation in a modal
+ */
+@Component({
+  selector: 'app-moderation-modal',
+  templateUrl: './moderation-modal.component.html',
+  styleUrls: ['./moderation-modal.component.scss']
+})
+export class ModerationModalComponent implements OnChanges {
+  @Input() media: PendingMedia | null = null;
+  @Input() form!: FormGroup;
+  @Output() onSubmit = new EventEmitter<void>();
+  @Output() onClose = new EventEmitter<void>();
+
+  safeMediaUrl: SafeUrl | null = null;
+  isFullscreen = false;
+  mediaError = false;
+
+  constructor(private contentSanitizer: ContentSanitizerService) {}
+
+  /**
+   * Lifecycle hook that is called when input properties change
+   * Sanitizes the media URL for safe display
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['media'] && this.media && this.media.url) {
+      // Reset error state
+      this.mediaError = false;
+
+      // Validate URL before sanitizing
+      if (this.contentSanitizer.isValidUrl(this.media.url)) {
+        this.safeMediaUrl = this.contentSanitizer.sanitizeUrl(this.media.url);
+      } else {
+        console.error('Invalid media URL:', this.media.url);
+        this.mediaError = true;
+      }
+    }
+  }
+
+  /**
+   * Toggles fullscreen mode for media preview
+   */
+  toggleFullscreen(): void {
+    this.isFullscreen = !this.isFullscreen;
+  }
+
+  /**
+   * Validates the form before submission
+   */
+  validateAndSubmit(): void {
+    if (this.form.valid) {
+      this.onSubmit.emit();
+    }
+  }
+
+  /**
+   * Handles media loading errors
+   */
+  onMediaError(): void {
+    this.mediaError = true;
+  }
+}

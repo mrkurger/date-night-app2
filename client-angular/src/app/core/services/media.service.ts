@@ -3,6 +3,7 @@ import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CachingService } from './caching.service';
+import { PendingMedia, ModerationRequest } from '../models/media.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class MediaService {
    * @param file The file to upload
    * @returns Observable of the upload progress or completion
    */
-  uploadMedia(adId: string, file: File): Observable<any> {
+  uploadMedia(adId: string, file: File): Observable<HttpEvent<any>> {
     const formData = new FormData();
     formData.append('media', file);
 
-    return this.http.post(`${this.apiUrl}/${adId}/upload`, formData, {
+    return this.http.post<HttpEvent<any>>(`${this.apiUrl}/${adId}/upload`, formData, {
       reportProgress: true,
       observe: 'events'
     });
@@ -37,8 +38,8 @@ export class MediaService {
    * @param mediaId The ID of the media to delete
    * @returns Observable of the response
    */
-  deleteMedia(adId: string, mediaId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${adId}/media/${mediaId}`);
+  deleteMedia(adId: string, mediaId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${adId}/media/${mediaId}`);
   }
 
   /**
@@ -47,8 +48,8 @@ export class MediaService {
    * @param mediaId The ID of the media to set as featured
    * @returns Observable of the response
    */
-  setFeaturedMedia(adId: string, mediaId: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${adId}/media/${mediaId}/featured`, {});
+  setFeaturedMedia(adId: string, mediaId: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${adId}/media/${mediaId}/featured`, {});
   }
 
   /**
@@ -64,8 +65,8 @@ export class MediaService {
    * Get all media pending moderation (admin only)
    * @returns Observable of the pending media
    */
-  getPendingModerationMedia(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/moderation/pending`);
+  getPendingModerationMedia(): Observable<PendingMedia[]> {
+    return this.http.get<PendingMedia[]>(`${this.apiUrl}/pending`);
   }
 
   /**
@@ -76,7 +77,7 @@ export class MediaService {
    * @param notes Optional moderation notes
    * @returns Observable of the response
    */
-  moderateMedia(adId: string, mediaId: string, status: 'approved' | 'rejected', notes: string = ''): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${adId}/media/${mediaId}/moderate`, { status, notes });
+  moderateMedia(adId: string, mediaId: string, status: 'approved' | 'rejected', notes: string = ''): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${adId}/moderate/${mediaId}`, { status, notes });
   }
 }

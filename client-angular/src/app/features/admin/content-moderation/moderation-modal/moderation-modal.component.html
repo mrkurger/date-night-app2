@@ -1,0 +1,118 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    <i class="fas" [ngClass]="media?.type === 'video' ? 'fa-video-camera' : 'fa-image'"></i>
+    Moderate Content
+  </h4>
+  <button type="button" class="btn-close" (click)="onClose.emit()"></button>
+</div>
+
+<div class="modal-body">
+  <!-- Media Preview -->
+  <div class="media-preview" *ngIf="media" [ngClass]="{'fullscreen': isFullscreen}">
+    <!-- Media Error State -->
+    <div *ngIf="mediaError" class="media-error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>Unable to load media content</p>
+      <small>The media may be unavailable or in an unsupported format</small>
+    </div>
+
+    <!-- Image Preview -->
+    <img *ngIf="!mediaError && media.type === 'image'"
+         [src]="safeMediaUrl"
+         alt="Content preview"
+         (error)="onMediaError()">
+
+    <!-- Video Preview -->
+    <video *ngIf="!mediaError && media.type === 'video'"
+           [src]="safeMediaUrl"
+           controls
+           (error)="onMediaError()"></video>
+
+    <!-- Fullscreen Toggle -->
+    <button class="fullscreen-toggle" (click)="toggleFullscreen()" *ngIf="!mediaError">
+      <i class="fas" [ngClass]="isFullscreen ? 'fa-compress' : 'fa-expand'"></i>
+    </button>
+  </div>
+
+  <!-- Media Information -->
+  <div class="media-info" *ngIf="media">
+    <div class="media-detail">
+      <label>Ad Title:</label>
+      <span>{{ media.adTitle }}</span>
+    </div>
+    <div class="media-detail">
+      <label>Media Type:</label>
+      <span>{{ media.type | titlecase }}</span>
+    </div>
+    <div class="media-detail">
+      <label>Uploaded:</label>
+      <span>{{ media.createdAt | date:'medium' }}</span>
+    </div>
+  </div>
+
+  <!-- Moderation Form -->
+  <form [formGroup]="form" class="moderation-form">
+    <div class="form-group">
+      <label class="form-label">Moderation Decision</label>
+      <div class="status-options">
+        <div class="status-option"
+             [ngClass]="{'selected': form.get('status')?.value === 'approved', 'approved': form.get('status')?.value === 'approved'}"
+             (click)="form.get('status')?.setValue('approved')">
+          <i class="fas fa-check-circle text-success"></i>
+          <div class="status-label">Approve</div>
+          <small>Content meets platform guidelines</small>
+        </div>
+        <div class="status-option"
+             [ngClass]="{'selected': form.get('status')?.value === 'rejected', 'rejected': form.get('status')?.value === 'rejected'}"
+             (click)="form.get('status')?.setValue('rejected')">
+          <i class="fas fa-times-circle text-danger"></i>
+          <div class="status-label">Reject</div>
+          <small>Content violates platform guidelines</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group notes-field">
+      <label class="form-label">Moderation Notes</label>
+      <textarea class="form-control" formControlName="notes" rows="4"
+                placeholder="Provide detailed explanation for your decision..."></textarea>
+      <div class="char-count"
+           [ngClass]="{'warning': form.get('notes')?.value?.length > 400, 'danger': form.get('notes')?.value?.length > 450}">
+        {{ form.get('notes')?.value?.length || 0 }}/500 characters
+      </div>
+      <div class="invalid-feedback" *ngIf="form.get('notes')?.invalid && form.get('notes')?.touched">
+        Notes are required and must be less than 500 characters.
+      </div>
+    </div>
+  </form>
+
+  <!-- Moderation Guidelines -->
+  <div class="moderation-guidelines">
+    <h5><i class="fas fa-info-circle"></i> Moderation Guidelines</h5>
+    <ul>
+      <li><strong>Reject</strong> content that contains explicit nudity, violence, or illegal activities</li>
+      <li><strong>Reject</strong> content that includes minors in inappropriate contexts</li>
+      <li><strong>Reject</strong> content that contains personally identifiable information</li>
+      <li><strong>Approve</strong> content that follows platform guidelines for adult content</li>
+      <li>Always provide clear notes explaining your decision, especially for rejections</li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onClose.emit()">Cancel</button>
+  <button *ngIf="form.get('status')?.value === 'rejected'"
+          type="button"
+          class="btn btn-reject"
+          [disabled]="form.invalid"
+          (click)="validateAndSubmit()">
+    <i class="fas fa-ban"></i> Reject Content
+  </button>
+  <button *ngIf="form.get('status')?.value === 'approved'"
+          type="button"
+          class="btn btn-approve"
+          [disabled]="form.invalid"
+          (click)="validateAndSubmit()">
+    <i class="fas fa-check"></i> Approve Content
+  </button>
+</div>
