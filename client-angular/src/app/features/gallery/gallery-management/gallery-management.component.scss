@@ -1,0 +1,219 @@
+.gallery-management {
+  margin-bottom: 2rem;
+  
+  h3 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  .upload-section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    .file-upload {
+      margin-bottom: 1rem;
+      
+      input[type="file"] {
+        display: none;
+      }
+      
+      label {
+        display: inline-block;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        
+        i {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    
+    .selected-files {
+      margin-top: 1.5rem;
+      
+      h4 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        
+        .preview-item {
+          width: 120px;
+          text-align: center;
+          
+          img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+          }
+          
+          .file-name {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+      
+      .upload-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .progress-container {
+        margin-top: 1rem;
+        
+        .progress {
+          height: 0.5rem;
+          border-radius: 0.25rem;
+        }
+      }
+    }
+  }
+  
+  .media-gallery {
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .no-media {
+      text-align: center;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      color: #666;
+    }
+    
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      
+      .media-item {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+        
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        &.featured {
+          border: 2px solid #ffc107;
+          
+          &::before {
+            content: '★';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffc107;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1;
+          }
+        }
+        
+        .media-content {
+          height: 200px;
+          
+          .image-container {
+            height: 100%;
+            
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          
+          .video-container {
+            height: 100%;
+            
+            video {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+        
+        .media-info {
+          padding: 1rem;
+          background-color: white;
+          
+          .media-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            
+            &.status-approved {
+              background-color: #d4edda;
+              color: #155724;
+            }
+            
+            &.status-rejected {
+              background-color: #f8d7da;
+              color: #721c24;
+            }
+            
+            &.status-pending {
+              background-color: #fff3cd;
+              color: #856404;
+            }
+          }
+          
+          .media-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            
+            button {
+              i {
+                margin-right: 0.25rem;
+              }
+            }
+          }
+          
+          .moderation-notes {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #721c24;
+            background-color: #f8d7da;
+            padding: 0.5rem;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+  }
+}

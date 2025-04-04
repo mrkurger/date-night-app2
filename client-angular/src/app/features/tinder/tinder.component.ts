@@ -1,65 +1,355 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { AdService } from '../../core/services/ad.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CachingService } from '../../core/services/caching.service';
 
 @Component({
   selector: 'app-tinder',
-  template: `
-    <div class="container mt-4">
-      <div *ngIf="currentAd" class="card swipe-card">
-        <img [src]="currentAd.imageUrl" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">{{currentAd.title}}</h5>
-          <p class="card-text">{{currentAd.description}}</p>
-        </div>
-        <div class="card-footer">
-          <button (click)="onSwipe('left')" class="btn btn-danger">×</button>
-          <button (click)="onSwipe('right')" class="btn btn-success">♥</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .swipe-card {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-  `]
+  templateUrl: './tinder.component.html',
+  styleUrls: ['./tinder.component.scss'],
+  animations: [
+    trigger('cardAnimation', [
+      state('default', style({
+        transform: 'scale(1) translateX(0)',
+        opacity: 1,
+        zIndex: 5
+      })),
+      state('swiped-left', style({
+        transform: 'scale(0.8) translateX(-200%)',
+        opacity: 0,
+        zIndex: 1
+      })),
+      state('swiped-right', style({
+        transform: 'scale(0.8) translateX(200%)',
+        opacity: 0,
+        zIndex: 1
+      })),
+      transition('default => swiped-left', animate('400ms ease-out')),
+      transition('default => swiped-right', animate('400ms ease-out')),
+      transition('* => default', animate('400ms ease-in'))
+    ])
+  ]
 })
-export class TinderComponent implements OnInit {
+export class TinderComponent implements OnInit, AfterViewInit {
+  @ViewChild('swipeContainer') swipeContainer: ElementRef;
+
   ads: any[] = [];
   currentAd: any = null;
+  nextAd: any = null;
   loading = false;
+  error = '';
 
-  constructor(private adService: AdService) {}
+  // Swipe tracking
+  startX = 0;
+  currentX = 0;
+  swipeThreshold = 150;
+  isDragging = false;
+  cardState = 'default';
+
+  // Current media index for carousel
+  currentMediaIndex = 0;
+
+  // Preloaded images
+  preloadedImages: HTMLImageElement[] = [];
+
+  // Screen size detection
+  isMobile = false;
+
+  constructor(
+    private adService: AdService,
+    private notificationService: NotificationService,
+    private router: Router,
+    private cachingService: CachingService
+  ) {}
 
   ngOnInit(): void {
+    this.checkScreenSize();
     this.loadSwipeAds();
+  }
+
+  ngAfterViewInit(): void {
+    // Add touch and mouse event listeners
+    if (this.swipeContainer) {
+      const element = this.swipeContainer.nativeElement;
+
+      // Touch events
+      element.addEventListener('touchstart', this.onTouchStart.bind(this));
+      element.addEventListener('touchmove', this.onTouchMove.bind(this));
+      element.addEventListener('touchend', this.onTouchEnd.bind(this));
+
+      // Mouse events
+      element.addEventListener('mousedown', this.onMouseDown.bind(this));
+      element.addEventListener('mousemove', this.onMouseMove.bind(this));
+      element.addEventListener('mouseup', this.onMouseUp.bind(this));
+      element.addEventListener('mouseleave', this.onMouseUp.bind(this));
+    }
+  }
+
+  @HostListener('window:resize')
+  checkScreenSize(): void {
+    this.isMobile = window.innerWidth < 768;
   }
 
   loadSwipeAds(): void {
     this.loading = true;
     this.adService.getSwipeAds().subscribe({
       next: (ads) => {
-        this.ads = ads;
-        this.currentAd = this.ads[0];
+        this.ads = ads.filter(ad => ad.media && ad.media.length > 0);
+
+        if (this.ads.length > 0) {
+          this.currentAd = this.ads[0];
+          this.currentMediaIndex = 0;
+
+          // Preload next ad images
+          if (this.ads.length > 1) {
+            this.nextAd = this.ads[1];
+            this.preloadImages(this.nextAd);
+          }
+        } else {
+          this.currentAd = null;
+          this.error = 'No ads available for swiping';
+        }
+
         this.loading = false;
       },
       error: (err) => {
         console.error('Failed to load ads for swiping', err);
         this.loading = false;
+        this.error = 'Failed to load ads';
+        this.notificationService.error('Failed to load ads for swiping');
       }
     });
+  }
+
+  preloadImages(ad: any): void {
+    if (ad && ad.media) {
+      ad.media.forEach((media: any) => {
+        if (media.type === 'image' && media.url) {
+          const img = new Image();
+          img.src = media.url;
+          this.preloadedImages.push(img);
+        }
+      });
+    }
   }
 
   onSwipe(direction: 'left' | 'right'): void {
     if (!this.currentAd) return;
 
-    this.adService.recordSwipe(this.currentAd.id, direction).subscribe({
+    this.cardState = direction === 'left' ? 'swiped-left' : 'swiped-right';
+
+    // Record swipe after animation
+    setTimeout(() => {
+      this.recordSwipeAndAdvance(direction);
+    }, 400);
+  }
+
+  recordSwipeAndAdvance(direction: 'left' | 'right'): void {
+    this.adService.recordSwipe(this.currentAd._id, direction).subscribe({
       next: () => {
+        // Show match notification if swiped right
+        if (direction === 'right') {
+          // Simulate a match with 20% probability
+          if (Math.random() < 0.2) {
+            this.notificationService.success('It\'s a match! 🎉');
+          }
+        }
+
+        // Move to next ad
         this.ads.shift();
         this.currentAd = this.ads[0];
+        this.currentMediaIndex = 0;
+        this.cardState = 'default';
+
+        // Preload next ad images
+        if (this.ads.length > 1) {
+          this.nextAd = this.ads[1];
+          this.preloadImages(this.nextAd);
+        } else {
+          this.nextAd = null;
+        }
+
+        // Load more ads if running low
+        if (this.ads.length < 3) {
+          this.loadMoreAds();
+        }
       },
-      error: (err) => console.error('Failed to record swipe', err)
+      error: (err) => {
+        console.error('Failed to record swipe', err);
+        this.notificationService.error('Failed to record your preference');
+        this.cardState = 'default';
+      }
     });
+  }
+
+  loadMoreAds(): void {
+    // This would typically call an API with pagination or "load more" functionality
+    // For now, we'll just reload the initial set if we're running low
+    if (this.ads.length < 3) {
+      this.adService.getSwipeAds().subscribe({
+        next: (ads) => {
+          // Filter out ads we already have
+          const newAds = ads.filter(ad =>
+            !this.ads.some(existingAd => existingAd._id === ad._id)
+          );
+
+          this.ads = [...this.ads, ...newAds];
+
+          // Preload next ad images if we have a new next ad
+          if (this.ads.length > 1 && !this.nextAd) {
+            this.nextAd = this.ads[1];
+            this.preloadImages(this.nextAd);
+          }
+        },
+        error: (err) => console.error('Failed to load more ads', err)
+      });
+    }
+  }
+
+  // Touch event handlers
+  onTouchStart(event: TouchEvent): void {
+    if (!this.currentAd) return;
+    this.startX = event.touches[0].clientX;
+    this.isDragging = true;
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    if (!this.isDragging) return;
+    this.currentX = event.touches[0].clientX;
+    this.updateCardPosition();
+  }
+
+  onTouchEnd(): void {
+    if (!this.isDragging) return;
+    this.isDragging = false;
+    this.completeSwipe();
+  }
+
+  // Mouse event handlers
+  onMouseDown(event: MouseEvent): void {
+    if (!this.currentAd) return;
+    this.startX = event.clientX;
+    this.isDragging = true;
+  }
+
+  onMouseMove(event: MouseEvent): void {
+    if (!this.isDragging) return;
+    this.currentX = event.clientX;
+    this.updateCardPosition();
+  }
+
+  onMouseUp(): void {
+    if (!this.isDragging) return;
+    this.isDragging = false;
+    this.completeSwipe();
+  }
+
+  // Update card position during drag
+  updateCardPosition(): void {
+    if (!this.swipeContainer) return;
+
+    const card = this.swipeContainer.nativeElement.querySelector('.swipe-card');
+    if (!card) return;
+
+    const deltaX = this.currentX - this.startX;
+    const rotation = deltaX * 0.1; // Rotate slightly while dragging
+
+    card.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+
+    // Adjust opacity of like/dislike indicators
+    const likeIndicator = card.querySelector('.like-indicator');
+    const dislikeIndicator = card.querySelector('.dislike-indicator');
+
+    if (likeIndicator && dislikeIndicator) {
+      if (deltaX > 0) {
+        likeIndicator.style.opacity = Math.min(deltaX / this.swipeThreshold, 1);
+        dislikeIndicator.style.opacity = 0;
+      } else if (deltaX < 0) {
+        dislikeIndicator.style.opacity = Math.min(Math.abs(deltaX) / this.swipeThreshold, 1);
+        likeIndicator.style.opacity = 0;
+      } else {
+        likeIndicator.style.opacity = 0;
+        dislikeIndicator.style.opacity = 0;
+      }
+    }
+  }
+
+  // Complete the swipe action
+  completeSwipe(): void {
+    if (!this.swipeContainer) return;
+
+    const card = this.swipeContainer.nativeElement.querySelector('.swipe-card');
+    if (!card) return;
+
+    const deltaX = this.currentX - this.startX;
+
+    if (Math.abs(deltaX) >= this.swipeThreshold) {
+      // Swipe was strong enough to count
+      const direction = deltaX > 0 ? 'right' : 'left';
+      this.onSwipe(direction);
+    } else {
+      // Reset card position with animation
+      card.style.transition = 'transform 0.3s ease';
+      card.style.transform = 'translateX(0) rotate(0deg)';
+
+      // Reset indicators
+      const likeIndicator = card.querySelector('.like-indicator');
+      const dislikeIndicator = card.querySelector('.dislike-indicator');
+
+      if (likeIndicator && dislikeIndicator) {
+        likeIndicator.style.opacity = 0;
+        dislikeIndicator.style.opacity = 0;
+      }
+
+      // Remove transition after animation completes
+      setTimeout(() => {
+        card.style.transition = '';
+      }, 300);
+    }
+  }
+
+  // Navigate through media carousel
+  nextMedia(): void {
+    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length <= 1) return;
+
+    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.currentAd.media.length;
+  }
+
+  prevMedia(): void {
+    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length <= 1) return;
+
+    this.currentMediaIndex = (this.currentMediaIndex - 1 + this.currentAd.media.length) % this.currentAd.media.length;
+  }
+
+  // View ad details
+  viewAdDetails(): void {
+    if (!this.currentAd) return;
+    this.router.navigate(['/ad-details', this.currentAd._id]);
+  }
+
+  // Get current media URL
+  getCurrentMediaUrl(): string {
+    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length === 0) {
+      return '/assets/images/default-profile.jpg';
+    }
+
+    return this.currentAd.media[this.currentMediaIndex].url;
+  }
+
+  // Check if current media is a video
+  isCurrentMediaVideo(): boolean {
+    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length === 0) {
+      return false;
+    }
+
+    return this.currentAd.media[this.currentMediaIndex].type === 'video';
+  }
+
+  // Get media indicator dots
+  getMediaDots(): number[] {
+    if (!this.currentAd || !this.currentAd.media) return [];
+    return Array(this.currentAd.media.length).fill(0).map((_, i) => i);
   }
 }
