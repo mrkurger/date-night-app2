@@ -28,3 +28,9 @@ tmp/
 .DS_Store
 .idea/
 .vscode/
+data/db/journal/WiredTigerLog.0000000002
+data/db/diagnostic.data/metrics.2025-04-04T03-03-46Z-00000
+data/db/WiredTiger.wt
+data/db/WiredTiger.turtle
+data/db/index-5-6965801790087775312.wt
+data/db/collection-4-6965801790087775312.wt
