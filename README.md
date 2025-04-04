@@ -154,271 +154,299 @@ Instructions for setting up OAuth credentials (update callback URLs if your port
 5.  Go to Certificates, IDs & Profiles -> Identifiers -> Services IDs -> Create Service ID. Configure domains and redirect URLs (`http://localhost:3000/auth/apple/callback`). Note the Identifier (becomes Client ID).
 6.  Add credentials to `.env`: `APPLE_CLIENT_ID` (Service ID Identifier), `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY_LOCATION` (path to downloaded `.p8` file).
 
-## Client-Side TODO List
+# TODOs Summary
+
+This document provides a comprehensive list of all TODOs identified in the codebase, organized by component and priority.
+
+## Client-Side TODOs
 
 ### Core Architecture
 - [ ] **Module Organization**
-  - Create missing module files:
-    - `/client/src/app/core/core.module.js`
-    - `/client/src/app/shared/shared.module.js`
-    - `/client/src/app/features/tinder/tinder.module.js` 
-    - `/client/src/app/features/gallery/gallery.module.js`
+  - Update Angular module structure to match current best practices
+  - Ensure proper lazy loading configuration for all feature modules
+  - Implement proper state management patterns
 
 ### Features
-- [ ] **Gallery View** (`/client/src/app/features/gallery/`)
-  - Complete Netflix-style layout calculations in GalleryLayoutService
-  - Add image lazy loading
-  - Implement category filtering
-  - Add responsive grid layout
 
-- [ ] **Chat System** (`/client/src/app/features/chat/`)
-  - Add socket reconnection logic
-  - Implement message encryption
-  - Add typing indicator debouncing
-  - Add message delivery status
-  - Add file attachment support
-  - Add message search
+#### Gallery View (`/client-angular/src/app/features/gallery/`)
+- [ ] Complete Netflix-style layout calculations in GalleryLayoutService
+- [ ] Add image lazy loading for performance optimization
+- [ ] Implement category filtering with proper UI controls
+- [ ] Add responsive grid layout for different screen sizes
+- [ ] Implement infinite scroll for gallery browsing
 
-- [ ] **Ad Management** (`/client/src/app/features/ad-management/`)
-  - Add image upload with preview
-  - Add drag-and-drop support
-  - Implement county selection map
-  - Add ad status tracking
-  - Add analytics dashboard
+#### Chat System (`/client-angular/src/app/features/chat/`)
+- [ ] Add socket reconnection logic to handle network interruptions
+- [ ] Implement message encryption for private communications
+- [ ] Add typing indicator debouncing to prevent excessive events
+- [ ] Add message delivery status indicators (sent, delivered, read)
+- [ ] Add file attachment support with preview functionality
+- [ ] Add message search with highlighting
+- [ ] Implement offline message queue for disconnected users
 
-- [ ] **Authentication** (`/client/src/app/features/auth/`)
-  - Complete OAuth provider integrations
-  - Add session refresh logic
-  - Add "Remember Me" functionality
-  - Implement 2FA support
+#### Ad Management (`/client-angular/src/app/features/ad-management/`)
+- [ ] Add image upload with preview and cropping functionality
+- [ ] Add drag-and-drop support for image reordering
+- [ ] Implement county selection map for Norway
+- [ ] Add ad status tracking with visual indicators
+- [ ] Add analytics dashboard for ad performance
+- [ ] Implement ad boosting and featuring options
+
+#### Authentication (`/client-angular/src/app/features/auth/`)
+- [ ] Complete OAuth provider integrations (Google, GitHub, Reddit, Apple)
+- [ ] Add session refresh logic to handle token expiration
+- [ ] Add "Remember Me" functionality with secure storage
+- [ ] Implement 2FA support with multiple options
+- [ ] Add account recovery workflows
+
+#### Travel Itinerary (`/client-angular/src/app/features/touring/`)
+- [ ] Implement map visualization for travel routes
+- [ ] Add calendar integration for scheduling
+- [ ] Implement notification system for travel updates
+- [ ] Add location verification system
+- [ ] Implement availability scheduling interface
 
 ### Services
-- [ ] **ChatService** (`/client/src/app/services/chat.service.js`)
-  - Add offline message queue
-  - Implement retry logic
-  - Add presence detection
-  - Add read receipts
 
-- [ ] **AdService** (`/client/src/app/services/ad.service.js`)
-  - Add caching layer
-  - Implement infinite scroll
-  - Add search optimization
-  - Add location-based sorting
+#### ChatService (`/client-angular/src/app/core/services/chat.service.ts`)
+- [ ] Add offline message queue with persistence
+- [ ] Implement retry logic for failed message delivery
+- [ ] Add presence detection with online/offline indicators
+- [ ] Add read receipts with timestamp display
+- [ ] Implement message encryption/decryption
 
-- [ ] **ImageService** (`/client/src/app/services/image.service.js`)
-  - Add image compression
-  - Implement CDN integration
-  - Add image validation
-  - Support multiple formats
+#### AdService (`/client-angular/src/app/core/services/ad.service.ts`)
+- [ ] Add caching layer for frequently accessed ads
+- [ ] Implement infinite scroll with efficient data loading
+- [ ] Add search optimization with filters and sorting
+- [ ] Add location-based sorting and filtering
+- [ ] Implement ad recommendation algorithm
+
+#### ImageService (`/client-angular/src/app/core/services/media.service.ts`)
+- [ ] Add image compression before upload
+- [ ] Implement CDN integration for faster delivery
+- [ ] Add image validation for size, dimensions, and content
+- [ ] Support multiple formats (JPEG, PNG, WebP)
+- [ ] Add image optimization pipeline
+
+#### TravelService (`/client-angular/src/app/core/services/travel.service.ts`)
+- [ ] Add geolocation services integration
+- [ ] Implement travel history tracking
+- [ ] Add notification scheduling for travel updates
+- [ ] Implement location verification
 
 ### UI Components
-- [ ] **Shared Components**
-  - Create loading spinner directive
-  - Add error message component
-  - Implement toast notifications
-  - Add confirmation dialogs
+- [ ] Create loading spinner directive with customizable appearance
+- [ ] Add error message component with retry functionality
+- [ ] Implement toast notifications system
+- [ ] Add confirmation dialogs with customizable actions
+- [ ] Create responsive navigation components
 
 ### Testing & Quality
-- [ ] **Test Coverage**
-  - Add unit tests for all services
-  - Create component test suite
-  - Add E2E test scenarios
-  - Implement test data factories
+- [ ] Add unit tests for all services with high coverage
+- [ ] Create component test suite for UI validation
+- [ ] Add E2E test scenarios for critical user flows
+- [ ] Implement test data factories for consistent testing
+- [ ] Add visual regression testing
 
 ### Performance
-- [ ] **Optimization**
-  - Add lazy loading for features
-  - Implement service worker
-  - Add client-side caching
-  - Optimize bundle size
+- [ ] Add lazy loading for all feature modules
+- [ ] Implement service worker for offline capabilities
+- [ ] Add client-side caching strategies
+- [ ] Optimize bundle size with code splitting
+- [ ] Implement virtual scrolling for large lists
 
 ### Security
-- [ ] **Client Security**
-  - Complete CSP configuration
-  - Add input sanitization
-  - Implement XSS protection
-  - Add CSRF tokens
+- [ ] Complete Content Security Policy configuration
+- [ ] Add input sanitization for all user inputs
+- [ ] Implement XSS protection measures
+- [ ] Add CSRF tokens for form submissions
+- [ ] Implement secure storage for sensitive data
 
-## Server-Side TODO List
+## Server-Side TODOs
 
 ### Architecture & Structure
-- [ ] **Component Organization**
-  - Split monolithic controllers into feature modules
-  - Implement proper dependency injection
-  - Add service layer abstractions
-  - Add repository pattern for data access
+- [ ] Split monolithic controllers into feature modules
+- [ ] Implement proper dependency injection pattern
+- [ ] Add service layer abstractions for business logic
+- [ ] Add repository pattern for data access
+- [ ] Refactor schema definitions in `SCHEMA_REFACTOR_NEEDED.js`
 
 ### API & Routes
-- [ ] **Route Organization**
-  - Add API versioning (`/api/v1/...`)
-  - Implement proper route documentation
-  - Add OpenAPI/Swagger specs
-  - Add rate limiting per endpoint
+- [ ] Add API versioning (`/api/v1/...`)
+- [ ] Implement proper route documentation
+- [ ] Add OpenAPI/Swagger specs for API documentation
+- [ ] Add rate limiting per endpoint
+- [ ] Implement consistent error response format
 
 ### Controllers
-- [ ] **Ad Controller** (`/server/components/ads/ad.controller.js`)
-  - Add request validation
-  - Implement caching
-  - Add pagination
-  - Add sorting and filtering
-  - Add image processing
 
-- [ ] **Chat Controller** (`/server/components/chat/chat.controller.js`)
-  - Add message encryption
-  - Implement file upload
-  - Add message persistence
-  - Add user presence tracking
+#### Ad Controller (`/server/components/ads/ad.controller.js`)
+- [ ] Add request validation middleware
+- [ ] Add rate limiting for ad creation
+- [ ] Add image processing and optimization
+- [ ] Add caching layer for frequently accessed ads
+- [ ] Add pagination for ad listings
+- [ ] Add filtering and sorting options
+- [ ] Add proper error logging
+
+#### Chat Controller (`/server/components/chat/chat.controller.js`)
+- [ ] Add message encryption for privacy
+- [ ] Implement file upload functionality
+- [ ] Add message persistence for offline users
+- [ ] Add user presence tracking
+- [ ] Implement group chat functionality
+
+#### Travel Controller (`/server/controllers/travel.controller.js`)
+- [ ] Add validation for travel itinerary data
+- [ ] Implement location verification
+- [ ] Add notification system for travel updates
+- [ ] Implement geofencing for location tracking
 
 ### Models
-- [ ] **Database Models**
-  - Add validation schemas
-  - Implement lifecycle hooks
-  - Add indexing strategies
-  - Add data access control
-  - Add audit logging
+- [ ] Add comprehensive validation schemas
+- [ ] Implement lifecycle hooks for data processing
+- [ ] Add indexing strategies for performance
+- [ ] Add data access control for security
+- [ ] Add audit logging for changes
 
 ### Middleware
-- [ ] **Security Middleware**
-  - Add rate limiting
-  - Implement CORS properly
-  - Add request validation
-  - Add API key authentication
-  - Add request logging
+
+#### Request Validator (`/server/middleware/requestValidator.js`)
+- [ ] Add schema validation
+- [ ] Add sanitization
+- [ ] Add custom validators
+- [ ] Add validation error handling
+
+#### Security Middleware
+- [ ] Add rate limiting for API endpoints
+- [ ] Implement CORS properly with appropriate restrictions
+- [ ] Add request validation for all inputs
+- [ ] Add API key authentication for external services
+- [ ] Add request logging for audit trails
 
 ### Services
-- [ ] **Ad Service**
-  - Add caching layer
-  - Implement search
-  - Add recommendation engine
-  - Add analytics tracking
 
-- [ ] **Chat Service**
-  - Add message queue
-  - Implement presence
-  - Add offline support
-  - Add group chat support
+#### Ad Service (`/server/services/ad.service.js`)
+- [ ] Add caching layer for performance
+- [ ] Implement search functionality with filters
+- [ ] Add recommendation engine based on user preferences
+- [ ] Add analytics tracking for ad performance
+- [ ] Implement ad moderation workflow
+
+#### Chat Service (`/server/services/chat.service.js`)
+- [ ] Add message queue for reliable delivery
+- [ ] Implement presence detection system
+- [ ] Add offline support with message storage
+- [ ] Add group chat support with roles
+- [ ] Implement end-to-end encryption
+
+#### Travel Service (`/server/services/travel.service.js`)
+- [ ] Implement geolocation verification
+- [ ] Add travel history tracking
+- [ ] Implement notification system for travel updates
+- [ ] Add location-based matching algorithm
 
 ### Testing
-- [ ] **Unit Tests**
-  - Add controller tests
-  - Add service tests
-  - Add model tests
-  - Add middleware tests
-
-- [ ] **Integration Tests**
-  - Add API endpoint tests
-  - Test WebSocket functionality
-  - Add load testing
-  - Add security testing
+- [ ] Add controller unit tests
+- [ ] Add service unit tests
+- [ ] Add model unit tests
+- [ ] Add middleware unit tests
+- [ ] Add API endpoint integration tests
+- [ ] Test WebSocket functionality
+- [ ] Add load testing for performance validation
+- [ ] Add security testing for vulnerability detection
 
 ### Performance
-- [ ] **Optimization**
-  - Add response compression
-  - Implement caching strategies
-  - Add database query optimization
-  - Add connection pooling
+- [ ] Add response compression
+- [ ] Implement caching strategies for frequent requests
+- [ ] Add database query optimization
+- [ ] Add connection pooling for database
+- [ ] Implement request batching where appropriate
 
 ### Security
-- [ ] **Server Security**
-  - Add input sanitization
-  - Implement rate limiting
-  - Add security headers
-  - Add request validation
-  - Add audit logging
-  - Add IP blocking
+- [ ] Add input sanitization for all user inputs
+- [ ] Implement rate limiting for authentication attempts
+- [ ] Add security headers (HSTS, X-Content-Type-Options, etc.)
+- [ ] Add request validation for all endpoints
+- [ ] Add audit logging for security events
+- [ ] Add IP blocking for suspicious activity
 
 ### Monitoring
-- [ ] **Server Monitoring**
-  - Add performance metrics
-  - Implement error tracking
-  - Add usage analytics
-  - Add health checks
+- [ ] Add performance metrics collection
+- [ ] Implement error tracking and alerting
+- [ ] Add usage analytics for feature adoption
+- [ ] Add health checks for system components
+- [ ] Implement logging infrastructure
 
 ### Documentation
-- [ ] **API Documentation**
-  - Add OpenAPI specs
-  - Create API reference
-  - Add code documentation
-  - Create architecture diagrams
+- [ ] Add OpenAPI specifications
+- [ ] Create comprehensive API reference
+- [ ] Add code documentation with JSDoc
+- [ ] Create architecture diagrams
+- [ ] Add deployment documentation
 
-## TODO List & Missing Components
+## DevOps TODOs
 
-### Frontend (client/)
-- [ ] **Core Module**
-  - Create `app/core/core.module.js`
-  - Implement authentication guards
-  - Add HTTP interceptors for JWT tokens
-  - Add error handling interceptor
+### CI/CD
+- [ ] Set up continuous integration pipeline
+- [ ] Implement automated testing in CI
+- [ ] Add deployment automation
+- [ ] Implement environment-specific configurations
 
-- [ ] **Shared Module**
-  - Create `app/shared/shared.module.js`
-  - Add common directives (loading spinner, error messages)
-  - Add shared pipes/filters
+### Infrastructure
+- [ ] Add database migration scripts
+- [ ] Add production build optimization
+- [ ] Add Docker configuration for containerization
+- [ ] Implement infrastructure as code
+- [ ] Set up monitoring and alerting
 
-- [ ] **Feature Modules**
-  - Implement Tinder-style swipe view (`app/features/tinder/`)
-  - Implement Netflix-style gallery view (`app/features/gallery/`)
-  - Complete chat module real-time functionality
-  - Add end-to-end encryption to chat
+### Backup & Recovery
+- [ ] Implement automated database backups
+- [ ] Add disaster recovery procedures
+- [ ] Implement data retention policies
 
-- [ ] **Services**
-  - Complete `auth.service.js` with OAuth providers
-  - Add `chat-polling.service.js` fallback
-  - Add `socket.service.js` reconnection logic
-  - Add `image.service.js` for upload/optimization
+## Feature TODOs
 
-### Backend (server/)
-- [ ] **Components**
-  - Split monolithic controllers into feature modules
-  - Move routes from server.js to feature route files
-  - Add proper error handling middleware
+### Chat System
+- [ ] Add real-time notifications for new messages
+- [ ] Add message history with search functionality
+- [ ] Add file sharing with preview
+- [ ] Add end-to-end encryption for privacy
+- [ ] Implement group chat with moderation
 
-- [ ] **Config**
-  - Move database logic to dedicated config
-  - Add environment configuration handling
-  - Add OAuth provider configuration
+### Ad Management
+- [ ] Add image upload/optimization pipeline
+- [ ] Add location services for geographic targeting
+- [ ] Add category management with filtering
+- [ ] Add reporting system for inappropriate content
+- [ ] Implement ad analytics dashboard
 
-- [ ] **Models**
-  - Split schema definitions into separate files
-  - Add proper validation
-  - Add indexes for performance
+### Travel Itinerary
+- [ ] Implement location verification system
+- [ ] Add notification system for travel updates
+- [ ] Add calendar integration
+- [ ] Implement availability scheduling
+- [ ] Add map visualization for travel routes
 
-### Testing
-- [ ] **Frontend Tests**
-  - Add unit tests for services
-  - Add component tests
-  - Add E2E tests with Protractor
+### Monetization
+- [ ] Implement ad boosting and featuring options
+- [ ] Add subscription management for premium features
+- [ ] Implement payment processing integration
+- [ ] Add analytics for revenue tracking
+- [ ] Implement referral system
 
-- [ ] **Backend Tests**
-  - Add unit tests for models
-  - Add integration tests for API endpoints
-  - Add WebSocket testing
+## Progress Tracking
+- Current Status: Early Development/Refactoring
+- Next Milestone: Complete Core Infrastructure
+- Priority: Security & Authentication
 
-### DevOps
-- [ ] **Setup Scripts**
-  - Add database migration scripts
-  - Add production build scripts
-  - Add Docker configuration
-
-### Security
-- [ ] **Authentication**
-  - Complete OAuth provider integrations
-  - Add rate limiting
-  - Add CSRF protection
-  - Review Content Security Policy
-
-### Features
-- [ ] **Chat System**
-  - Add real-time notifications
-  - Add message history
-  - Add file sharing
-  - Add end-to-end encryption
-
-- [ ] **Ad Management**
-  - Add image upload/optimization
-  - Add location services
-  - Add category management
-  - Add reporting system
+## Areas for Improvement
+- Refactor monolithic controllers into feature-specific modules
+- Clean up and properly populate the custom Express middleware
+- Split and modularize Angular components for better maintainability
+- Enhance error handling in HTTP interceptors
+- Review and update static asset paths and environment configurations
 
 ## Progress Tracking
 - Current Status: Early Development/Refactoring

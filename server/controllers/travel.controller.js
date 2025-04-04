@@ -2,6 +2,11 @@ const travelService = require('../services/travel.service');
 const { asyncHandler } = require('../middleware/asyncHandler');
 const { AppError } = require('../middleware/errorHandler');
 
+// TODO: Add validation for travel itinerary data
+// TODO: Implement location verification
+// TODO: Add notification system for travel updates
+// TODO: Implement geofencing for location tracking
+
 /**
  * Get all travel itineraries for an ad
  * @route GET /api/travel/ad/:adId

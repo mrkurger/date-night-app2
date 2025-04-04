@@ -1,6 +1,12 @@
 const ChatService = require('../../services/chat.service');
 
 class ChatController {
+  // TODO: Add message encryption for privacy
+  // TODO: Implement file upload functionality
+  // TODO: Add message persistence for offline users
+  // TODO: Add user presence tracking
+  // TODO: Implement group chat functionality
+
   constructor() {
     // Bind methods to ensure proper 'this' context
     this.getMessages = this.getMessages.bind(this);

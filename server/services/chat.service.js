@@ -6,6 +6,11 @@ const socketService = require('./socket.service');
 const { AppError } = require('../middleware/errorHandler');
 
 class ChatService {
+  // TODO: Add message queue for reliable delivery
+  // TODO: Implement presence detection system
+  // TODO: Add offline support with message storage
+  // TODO: Add group chat support with roles
+  // TODO: Implement end-to-end encryption
   /**
    * Get messages for a chat room
    * @param {string} roomId - Chat room ID

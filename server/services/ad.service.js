@@ -1,6 +1,11 @@
 const Ad = require('../models/ad.model');
 
 class AdService {
+  // TODO: Add caching layer for performance
+  // TODO: Implement search functionality with filters
+  // TODO: Add recommendation engine based on user preferences
+  // TODO: Add analytics tracking for ad performance
+  // TODO: Implement ad moderation workflow
   async getAllAds(filters = {}) {
     try {
       return await Ad.find(filters).populate('advertiser', 'username');

@@ -4,6 +4,10 @@ const { AppError } = require('../middleware/errorHandler');
 const socketService = require('./socket.service');
 
 class TravelService {
+  // TODO: Implement geolocation verification
+  // TODO: Add travel history tracking
+  // TODO: Implement notification system for travel updates
+  // TODO: Add location-based matching algorithm
   /**
    * Get all travel itineraries for an ad
    * @param {string} adId - Ad ID
