@@ -1,40 +1,65 @@
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<header class="app-header">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" routerLink="/">DateNight.io</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" routerLink="/">
+        <span class="brand-text">DateNight<span class="brand-accent">.io</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/ad-browser" routerLinkActive="active">Browse</a>
+            <a class="nav-link" routerLink="/ad-browser" routerLinkActive="active">
+              <i class="fas fa-search"></i> Browse
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/gallery" routerLinkActive="active">Gallery</a>
+            <a class="nav-link" routerLink="/gallery" routerLinkActive="active">
+              <i class="fas fa-images"></i> Gallery
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/tinder" routerLinkActive="active">Swipe</a>
+            <a class="nav-link" routerLink="/tinder" routerLinkActive="active">
+              <i class="fas fa-heart"></i> Swipe
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="isAuthenticated && isAdvertiser">
+            <a class="nav-link" routerLink="/my-ads" routerLinkActive="active">
+              <i class="fas fa-ad"></i> My Ads
+            </a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" routerLink="/my-ads" routerLinkActive="active">My Ads</a>
-          </li>
-          <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" routerLink="/chat" routerLinkActive="active">Chat</a>
+            <a class="nav-link" routerLink="/chat" routerLinkActive="active">
+              <i class="fas fa-comments"></i> Chat
+              <span class="badge rounded-pill bg-danger" *ngIf="unreadMessages > 0">{{unreadMessages}}</span>
+            </a>
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item" *ngIf="!isAuthenticated">
-            <a class="nav-link" routerLink="/auth/login" routerLinkActive="active">Login</a>
-          </li>
-          <li class="nav-item" *ngIf="!isAuthenticated">
-            <a class="nav-link" routerLink="/auth/register" routerLinkActive="active">Register</a>
-          </li>
           <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+            <a class="nav-link notification-icon" routerLink="/notifications">
+              <i class="fas fa-bell"></i>
+              <span class="badge rounded-pill bg-danger" *ngIf="notificationCount > 0">{{notificationCount}}</span>
+            </a>
           </li>
-          <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" (click)="logout()" style="cursor: pointer;">Logout</a>
+          <li class="nav-item" *ngIf="!isAuthenticated">
+            <a class="nav-link btn-outline-login" routerLink="/auth/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="!isAuthenticated">
+            <a class="nav-link btn-signup" routerLink="/auth/register" routerLinkActive="active">Sign Up</a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="isAuthenticated">
+            <a class="nav-link dropdown-toggle user-menu" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle"></i> {{username}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="/profile"><i class="fas fa-user"></i> Profile</a></li>
+              <li><a class="dropdown-item" routerLink="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+              <li *ngIf="isAdvertiser"><a class="dropdown-item" routerLink="/touring"><i class="fas fa-map-marked-alt"></i> Travel Plans</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -42,14 +67,42 @@
   </nav>
 </header>
 
-<main class="container mt-4">
-  <router-outlet></router-outlet>
+<main class="app-main">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </main>
 
 <app-notification></app-notification>
 
-<footer class="bg-dark text-white mt-5 py-3">
-  <div class="container text-center">
-    <p>&copy; 2024 DateNight.io - All rights reserved</p>
+<footer class="app-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="footer-heading">DateNight.io</h5>
+        <p class="footer-text">The premier platform for escort, striptease, and massage services in Scandinavia.</p>
+      </div>
+      <div class="col-md-4">
+        <h5 class="footer-heading">Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5 class="footer-heading">Connect With Us</h5>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 DateNight.io - All rights reserved</p>
+    </div>
   </div>
 </footer>

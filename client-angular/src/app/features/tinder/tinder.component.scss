@@ -1,0 +1,501 @@
+/* Tinder Component Styles */
+:host {
+  display: block;
+}
+
+.tinder-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.tinder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.tinder-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin: 0;
+}
+
+.filter-button {
+  background-color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-speed) ease;
+}
+
+.filter-button:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.filter-button i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-text {
+  margin-top: 1rem;
+  color: var(--gray-color);
+  font-weight: 500;
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-icon {
+  font-size: 3rem;
+  color: var(--danger-color);
+  margin-bottom: 1rem;
+}
+
+.error-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 1.5rem;
+}
+
+.retry-button {
+  padding: 0.5rem 1.5rem;
+}
+
+.retry-button i {
+  margin-right: 0.5rem;
+}
+
+/* Empty State */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: var(--gray-color);
+  margin-bottom: 1rem;
+}
+
+.empty-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+}
+
+.empty-subtext {
+  color: var(--gray-color);
+}
+
+/* Swipe Area */
+.swipe-area {
+  position: relative;
+  height: 600px;
+  max-height: 70vh;
+  perspective: 1000px;
+  touch-action: pan-y;
+}
+
+.swipe-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center center;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+}
+
+.swipe-card:active {
+  cursor: grabbing;
+}
+
+.swipe-card.swiped-left {
+  transform: translateX(-150%) rotate(-20deg);
+  opacity: 0;
+}
+
+.swipe-card.swiped-right {
+  transform: translateX(150%) rotate(20deg);
+  opacity: 0;
+}
+
+/* Card Media */
+.card-media {
+  position: relative;
+  height: 70%;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Media Navigation */
+.media-dots {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.media-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.media-dot.active {
+  width: 20px;
+  border-radius: 3px;
+  background-color: white;
+}
+
+.media-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.media-nav-button:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+/* Like/Dislike Indicators */
+.like-indicator,
+.dislike-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.like-indicator {
+  right: 20px;
+  color: var(--success-color);
+  border: 4px solid var(--success-color);
+  transform: translateY(-50%) rotate(20deg) scale(0);
+}
+
+.dislike-indicator {
+  left: 20px;
+  color: var(--danger-color);
+  border: 4px solid var(--danger-color);
+  transform: translateY(-50%) rotate(-20deg) scale(0);
+}
+
+.like-indicator i,
+.dislike-indicator i {
+  margin-right: 10px;
+}
+
+/* Card Content */
+.card-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.card-age {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+.card-location {
+  color: var(--gray-color);
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-location i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-description {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: var(--dark-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.card-tag {
+  background-color: rgba(108, 99, 255, 0.1);
+  color: var(--secondary-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.action-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.action-button i {
+  font-size: 1.25rem;
+}
+
+.info-button {
+  background-color: white;
+  color: var(--info-color);
+  border: 1px solid var(--info-color);
+}
+
+.dislike-button {
+  background-color: white;
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.like-button {
+  background-color: white;
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
+
+.chat-button {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.dislike-button:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.like-button:hover {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.info-button:hover {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.chat-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Next Card Preview (for smooth transitions) */
+.next-card-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: var(--border-radius);
+  border: none;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modal-title {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .swipe-area {
+    height: 500px;
+  }
+  
+  .card-media {
+    height: 60%;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+  }
+  
+  .action-button {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 576px) {
+  .swipe-area {
+    height: 450px;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .card-media {
+    height: 55%;
+  }
+  
+  .action-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .action-button i {
+    font-size: 1rem;
+  }
+}

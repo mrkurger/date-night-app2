@@ -1,0 +1,171 @@
+<div class="tinder-container">
+  <div class="tinder-header">
+    <h1 class="tinder-title">Discover</h1>
+    <div class="tinder-filters">
+      <button class="filter-button" (click)="openFilters()">
+        <i class="fas fa-sliders-h"></i> Filters
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-container" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="loading-text">Finding matches for you...</p>
+  </div>
+
+  <div class="error-container" *ngIf="error && !loading">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <p class="error-text">{{ error }}</p>
+    <button class="btn btn-primary retry-button" (click)="loadSwipeAds()">
+      <i class="fas fa-redo"></i> Try Again
+    </button>
+  </div>
+
+  <div class="empty-container" *ngIf="!loading && !error && (!ads || ads.length === 0)">
+    <div class="empty-icon">
+      <i class="fas fa-search"></i>
+    </div>
+    <p class="empty-text">No more profiles to show</p>
+    <p class="empty-subtext">Try adjusting your filters or check back later</p>
+  </div>
+
+  <div class="swipe-area" #swipeContainer *ngIf="!loading && !error && currentAd">
+    <div class="swipe-card" [ngClass]="cardState">
+      <!-- Media Carousel -->
+      <div class="card-media">
+        <div *ngIf="isCurrentMediaVideo()" class="video-container">
+          <video controls>
+            <source [src]="getCurrentMediaUrl()" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <img *ngIf="!isCurrentMediaVideo()" [src]="getCurrentMediaUrl()" alt="Profile Image" class="card-image">
+        
+        <!-- Media Navigation Dots -->
+        <div class="media-dots" *ngIf="currentAd?.media && currentAd.media.length > 1">
+          <div 
+            *ngFor="let dot of getMediaDots(); let i = index" 
+            class="media-dot" 
+            [ngClass]="{'active': i === currentMediaIndex}"
+            (click)="$event.stopPropagation(); currentMediaIndex = i">
+          </div>
+        </div>
+        
+        <!-- Media Navigation Arrows -->
+        <button 
+          *ngIf="currentAd?.media && currentAd.media.length > 1" 
+          class="media-nav-button prev-button" 
+          (click)="$event.stopPropagation(); prevMedia()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button 
+          *ngIf="currentAd?.media && currentAd.media.length > 1" 
+          class="media-nav-button next-button" 
+          (click)="$event.stopPropagation(); nextMedia()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Like/Dislike Indicators -->
+        <div class="like-indicator">
+          <i class="fas fa-heart"></i>
+          <span>LIKE</span>
+        </div>
+        <div class="dislike-indicator">
+          <i class="fas fa-times"></i>
+          <span>NOPE</span>
+        </div>
+      </div>
+      
+      <!-- Card Content -->
+      <div class="card-content">
+        <div class="card-header">
+          <h2 class="card-title">{{ currentAd.title }} <span class="card-age" *ngIf="currentAd.age">{{ currentAd.age }}</span></h2>
+          <p class="card-location" *ngIf="currentAd.location">
+            <i class="fas fa-map-marker-alt"></i> {{ currentAd.location }}
+          </p>
+        </div>
+        
+        <div class="card-body">
+          <p class="card-description">{{ currentAd.description }}</p>
+          
+          <div class="card-tags" *ngIf="currentAd.tags && currentAd.tags.length">
+            <span class="card-tag" *ngFor="let tag of currentAd.tags">{{ tag }}</span>
+          </div>
+        </div>
+        
+        <div class="card-footer">
+          <button class="action-button info-button" (click)="viewAdDetails()">
+            <i class="fas fa-info-circle"></i>
+          </button>
+          <button class="action-button dislike-button" (click)="onSwipe('left')">
+            <i class="fas fa-times"></i>
+          </button>
+          <button class="action-button like-button" (click)="onSwipe('right')">
+            <i class="fas fa-heart"></i>
+          </button>
+          <button class="action-button chat-button" (click)="startChat()">
+            <i class="fas fa-comment"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Next Card Preview (for smooth transitions) -->
+  <div class="next-card-preview" *ngIf="nextAd">
+    <div class="swipe-card">
+      <div class="card-media">
+        <img [src]="nextAd.media && nextAd.media.length ? nextAd.media[0].url : '/assets/images/default-profile.jpg'" alt="Next Profile" class="card-image">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters Modal -->
+<div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filtersModalLabel">Filter Profiles</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="filterForm">
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" formControlName="category">
+              <option value="">All Categories</option>
+              <option value="Escort">Escort</option>
+              <option value="Striptease">Striptease</option>
+              <option value="Massage">Massage</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <select class="form-select" id="location" formControlName="location">
+              <option value="">All Locations</option>
+              <option *ngFor="let county of counties" [value]="county">{{ county }}</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Currently Touring</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="touringOnly" formControlName="touringOnly">
+              <label class="form-check-label" for="touringOnly">Show only touring profiles</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="applyFilters()" data-bs-dismiss="modal">Apply Filters</button>
+      </div>
+    </div>
+  </div>
+</div>

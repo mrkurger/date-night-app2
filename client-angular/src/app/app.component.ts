@@ -8,7 +8,7 @@ import { ChatService } from './core/services/chat.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.new.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.new.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;

@@ -1,34 +1,45 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CachingService } from '../../core/services/caching.service';
+import { ChatService } from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+import { take } from 'rxjs/operators';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-tinder',
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   animations: [
-    trigger('cardAnimation', [
+    trigger('cardState', [
       state('default', style({
-        transform: 'scale(1) translateX(0)',
-        opacity: 1,
-        zIndex: 5
+        transform: 'none'
       })),
       state('swiped-left', style({
-        transform: 'scale(0.8) translateX(-200%)',
-        opacity: 0,
-        zIndex: 1
+        transform: 'translateX(-150%) rotate(-20deg)',
+        opacity: 0
       })),
       state('swiped-right', style({
-        transform: 'scale(0.8) translateX(200%)',
-        opacity: 0,
-        zIndex: 1
+        transform: 'translateX(150%) rotate(20deg)',
+        opacity: 0
       })),
-      transition('default => swiped-left', animate('400ms ease-out')),
-      transition('default => swiped-right', animate('400ms ease-out')),
-      transition('* => default', animate('400ms ease-in'))
+      transition('default => swiped-left', [
+        animate('400ms ease-out')
+      ]),
+      transition('default => swiped-right', [
+        animate('400ms ease-out')
+      ]),
+      transition('swiped-left => default', [
+        animate('400ms ease-out')
+      ]),
+      transition('swiped-right => default', [
+        animate('400ms ease-out')
+      ])
     ])
   ]
 })
@@ -57,12 +68,31 @@ export class TinderComponent implements OnInit, AfterViewInit {
   // Screen size detection
   isMobile = false;
 
+  // Filter form
+  filterForm: FormGroup;
+
+  // Norwegian counties for filter
+  counties = [
+    'Agder', 'Innlandet', 'Møre og Romsdal', 'Nordland', 'Oslo',
+    'Rogaland', 'Troms og Finnmark', 'Trøndelag', 'Vestfold og Telemark',
+    'Vestland', 'Viken'
+  ];
+
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
     private router: Router,
-    private cachingService: CachingService
-  ) {}
+    private cachingService: CachingService,
+    private formBuilder: FormBuilder,
+    private chatService: ChatService,
+    private authService: AuthService
+  ) {
+    this.filterForm = this.formBuilder.group({
+      category: [''],
+      location: [''],
+      touringOnly: [false]
+    });
+  }
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -329,6 +359,31 @@ export class TinderComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/ad-details', this.currentAd._id]);
   }
 
+  // Start a chat with the advertiser
+  startChat(): void {
+    if (!this.currentAd) return;
+
+    this.authService.currentUser$.pipe(take(1)).subscribe(user => {
+      if (!user) {
+        this.notificationService.info('Please log in to start a chat');
+        this.router.navigate(['/auth/login'], {
+          queryParams: { returnUrl: `/ad-details/${this.currentAd._id}` }
+        });
+        return;
+      }
+
+      this.chatService.createAdRoom(this.currentAd._id).subscribe({
+        next: (room) => {
+          this.router.navigate(['/chat'], { queryParams: { roomId: room._id } });
+        },
+        error: (err) => {
+          console.error('Failed to create chat room', err);
+          this.notificationService.error('Failed to start chat. Please try again.');
+        }
+      });
+    });
+  }
+
   // Get current media URL
   getCurrentMediaUrl(): string {
     if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length === 0) {
@@ -351,5 +406,56 @@ export class TinderComponent implements OnInit, AfterViewInit {
   getMediaDots(): number[] {
     if (!this.currentAd || !this.currentAd.media) return [];
     return Array(this.currentAd.media.length).fill(0).map((_, i) => i);
+  }
+
+  // Open filters modal
+  openFilters(): void {
+    const modalElement = document.getElementById('filtersModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  // Apply filters and reload ads
+  applyFilters(): void {
+    this.loadSwipeAds();
+  }
+
+  // Load ads with current filters
+  loadSwipeAds(): void {
+    this.loading = true;
+    this.error = '';
+
+    const filters = this.filterForm.value;
+
+    this.adService.getSwipeAds(filters).subscribe({
+      next: (ads) => {
+        this.ads = ads.filter(ad => ad.media && ad.media.length > 0);
+
+        if (this.ads.length > 0) {
+          this.currentAd = this.ads[0];
+          this.currentMediaIndex = 0;
+          this.cardState = 'default';
+
+          // Preload next ad images
+          if (this.ads.length > 1) {
+            this.nextAd = this.ads[1];
+            this.preloadImages(this.nextAd);
+          }
+        } else {
+          this.currentAd = null;
+          this.error = 'No ads available for swiping';
+        }
+
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load ads for swiping', err);
+        this.loading = false;
+        this.error = 'Failed to load ads';
+        this.notificationService.error('Failed to load ads for swiping');
+      }
+    });
   }
 }
