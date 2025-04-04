@@ -1,26 +1,8 @@
 angular.module('dateNightApp', [
   'ngSanitize'
 ])
-.controller('MainController', ['$scope', '$interval', function($scope, $interval) {
-  $scope.changeImage = function(ad) {
-    if (ad.album && ad.album.length) {
-      if (!ad.originalImage) {
-        ad.originalImage = ad.profileImage;
-        ad.currentImageIndex = 0;
-      }
-      ad.currentImageIndex = (ad.currentImageIndex + 1) % ad.album.length;
-      ad.profileImage = ad.album[ad.currentImageIndex];
-    }
-  };
-
-  $scope.restoreImage = function(ad) {
-    if (ad.originalImage) {
-      ad.profileImage = ad.originalImage;
-      ad.currentImageIndex = 0;
-    }
-  };
-
-  $interval(function() {
-    // Logic for updateUnreadCount and loadChatPreviews
-  }, 5000);
+.controller('MainController', ['$scope', function($scope) {
+  // Removed image hover and polling logic; these will be handled in:
+  // - an ImageService and/or individual controllers for image components
+  // - a ChatPollingService (or integrated real-time via sockets)
 }]);

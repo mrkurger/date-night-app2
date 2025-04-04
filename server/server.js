@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet'); // Added for security
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -33,9 +34,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // initialize express app
 const app = express();
 
-// Add more detailed CORS configuration
+// Use Helmet to set secure HTTP headers
+app.use(helmet());
+
+// Enhance CORS configuration (review origin per deployment)
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CLIENT_URL || 'http://localhost:8080',
   credentials: true
 }));
 
@@ -392,12 +396,13 @@ app.get('/auth/apple/callback',
   handleOAuthCallback
 );
 
-// Add error handlers
+// Global error handler to avoid leaking sensitive error details
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something broke!' });
+  console.error('Internal error:', err);
+  res.status(500).json({ error: 'Internal Server Error' });
 });
 
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });

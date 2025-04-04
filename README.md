@@ -237,4 +237,10 @@ Instructions for setting up OAuth credentials (update callback URLs if your port
 5.  Go to Certificates, IDs & Profiles -> Identifiers -> Services IDs -> Create Service ID. Configure domains and redirect URLs (`http://localhost:3000/auth/apple/callback`). Note the Identifier (becomes Client ID).
 6.  Add credentials to `.env`: `APPLE_CLIENT_ID` (Service ID Identifier), `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY_LOCATION` (path to downloaded `.p8` file).
 
----
+## Areas for Improvement
+
+- Refactor monolithic controllers (e.g. in client/app.module.js) into feature-specific modules.
+- Clean up and properly populate the custom Express middleware under the /middleware directory.
+- Split and modularize AngularJS components for authentication, ad management, and chat.
+- Enhance error handling in $http interceptors.
+- Review and update static asset paths and environment configurations.

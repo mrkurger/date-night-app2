@@ -56,10 +56,12 @@ angular.module('dateNightApp')
         .when('/tinder', {
           templateUrl: 'app/features/tinder/tinder.html',
           controller: 'TinderController'
+          // TODO: Consider splitting Tinder-specific logic into its own Angular module.
         })
         .when('/gallery', {
           templateUrl: 'app/features/gallery/gallery.html',
           controller: 'GalleryController'
+          // TODO: Refactor gallery controller for better separation of concerns.
         })
         .otherwise({
           redirectTo: '/'
@@ -67,6 +69,7 @@ angular.module('dateNightApp')
       
       // Use HTML5 History API if available
       $locationProvider.hashPrefix('!');
+      // TODO: Evaluate enabling $locationProvider.html5Mode(true) for cleaner URLs.
       
       // Configure HTTP interceptors for authentication
       $httpProvider.interceptors.push(['$q', '$location', 'AuthService', 
