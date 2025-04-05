@@ -11,17 +11,18 @@
 
 /* View Selector Tabs */
 .view-selector {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 1rem 0;
+  background-color: var(--neutral-100);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4) 0;
   position: sticky;
   top: 70px; /* Adjust based on your header height */
-  z-index: 100;
+  z-index: var(--z-index-sticky);
+  border-bottom: var(--border-width-thin) solid var(--neutral-300);
 }
 
 .view-tabs {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   overflow-x: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -34,48 +35,57 @@
 .view-tab {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
   border: none;
   background-color: transparent;
-  color: var(--gray-color);
-  font-weight: 500;
-  border-radius: var(--border-radius);
-  transition: all var(--transition-speed) ease;
+  color: var(--neutral-600);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal) var(--transition-timing-default);
   white-space: nowrap;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
 }
 
 .view-tab:hover {
-  color: var(--primary-color);
-  background-color: rgba(255, 77, 126, 0.05);
+  color: var(--primary);
+  background-color: rgba(255, 51, 102, 0.05);
 }
 
 .view-tab.active {
-  color: var(--primary-color);
-  background-color: rgba(255, 77, 126, 0.1);
+  color: var(--primary);
+  background-color: rgba(255, 51, 102, 0.1);
 }
 
 .view-tab i {
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
 }
 
 /* View Content */
 .view-content {
   flex: 1;
+  animation: fadeIn var(--transition-normal) var(--transition-timing-default);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .view-tab {
-    padding: 0.5rem 1rem;
+    padding: var(--space-2) var(--space-4);
   }
-  
+
   .view-tab span {
     display: none;
   }
-  
+
   .view-tab i {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
     margin: 0;
   }
 }

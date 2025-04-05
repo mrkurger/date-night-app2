@@ -5,7 +5,7 @@
         <span class="brand-text">DateNight<span class="brand-accent">.io</span></span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
@@ -32,7 +32,7 @@
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/chat" routerLinkActive="active">
               <i class="fas fa-comments"></i> Chat
-              <span class="badge rounded-pill bg-danger" *ngIf="unreadMessages > 0">{{unreadMessages}}</span>
+              <span class="badge" *ngIf="unreadMessages > 0">{{unreadMessages}}</span>
             </a>
           </li>
         </ul>
@@ -40,7 +40,7 @@
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link notification-icon" routerLink="/notifications">
               <i class="fas fa-bell"></i>
-              <span class="badge rounded-pill bg-danger" *ngIf="notificationCount > 0">{{notificationCount}}</span>
+              <span class="badge" *ngIf="notificationCount > 0">{{notificationCount}}</span>
             </a>
           </li>
           <li class="nav-item" *ngIf="!isAuthenticated">
@@ -80,7 +80,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <h5 class="footer-heading">DateNight.io</h5>
+        <h5 class="footer-heading">DateNight<span style="color: var(--primary);">.io</span></h5>
         <p class="footer-text">The premier platform for escort, striptease, and massage services in Scandinavia.</p>
       </div>
       <div class="col-md-4">
@@ -95,10 +95,10 @@
       <div class="col-md-4">
         <h5 class="footer-heading">Connect With Us</h5>
         <div class="social-links">
-          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
         </div>
       </div>
     </div>
