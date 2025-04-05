@@ -28,6 +28,12 @@ else
   echo -e "NPM binary: ${RED}Not found${NC}"
 fi
 
+if [ -f "$(which npx 2>/dev/null)" ]; then
+  echo -e "NPX binary: ${GREEN}Found at $(which npx)${NC}"
+else
+  echo -e "NPX binary: ${RED}Not found${NC}"
+fi
+
 # Check immutable status using macOS chflags
 if [ -f "$(which node 2>/dev/null)" ]; then
   NODE_FLAGS=$(ls -lO $(which node 2>/dev/null) 2>/dev/null | grep -o "uchg" || echo "No")
@@ -47,15 +53,28 @@ if [ -f "$(which npm 2>/dev/null)" ]; then
   fi
 fi
 
-# Check directory protection
-if [ -f "$(which node 2>/dev/null)" ]; then
-  NODE_DIR=$(dirname $(which node 2>/dev/null))
-  DIR_FLAGS=$(ls -lO "$NODE_DIR" 2>/dev/null | grep -o "uchg" || echo "No")
-  if [ "$DIR_FLAGS" = "uchg" ]; then
-    echo -e "Node directory immutable status: ${GREEN}Protected${NC}"
+if [ -f "$(which npx 2>/dev/null)" ]; then
+  NPX_FLAGS=$(ls -lO $(which npx 2>/dev/null) 2>/dev/null | grep -o "uchg" || echo "No")
+  if [ "$NPX_FLAGS" = "uchg" ]; then
+    echo -e "NPX immutable status: ${GREEN}Protected${NC}"
   else
-    echo -e "Node directory immutable status: ${RED}Not protected${NC}"
+    echo -e "NPX immutable status: ${RED}Not protected${NC}"
   fi
+fi
+
+# Check installation directory protection
+NODE_VERSION_CLEAN=$(echo $NODE_VERSION | sed 's/v//')
+if [ -d "/usr/local/nodejs-$NODE_VERSION_CLEAN" ]; then
+  echo -e "Node.js installation directory: ${GREEN}Found at /usr/local/nodejs-$NODE_VERSION_CLEAN${NC}"
+
+  INSTALL_DIR_FLAGS=$(ls -lO "/usr/local/nodejs-$NODE_VERSION_CLEAN" 2>/dev/null | grep -o "uchg" || echo "No")
+  if [ "$INSTALL_DIR_FLAGS" = "uchg" ]; then
+    echo -e "Installation directory immutable status: ${GREEN}Protected${NC}"
+  else
+    echo -e "Installation directory immutable status: ${RED}Not protected${NC}"
+  fi
+else
+  echo -e "Node.js installation directory: ${RED}Not found${NC}"
 fi
 
 # Check protection scripts
@@ -93,8 +112,18 @@ else
   echo -e "Protection service: ${RED}Not running${NC}"
 fi
 
+# Check if symlinks point to our protected installation
+if [ -f "$(which node 2>/dev/null)" ] && [ -d "/usr/local/nodejs-$NODE_VERSION_CLEAN" ]; then
+  NODE_SYMLINK_TARGET=$(readlink $(which node) || echo "Not a symlink")
+  if [[ "$NODE_SYMLINK_TARGET" == "/usr/local/nodejs-$NODE_VERSION_CLEAN/bin/node" ]]; then
+    echo -e "Node symlink: ${GREEN}Correctly points to protected installation${NC}"
+  else
+    echo -e "Node symlink: ${RED}Does not point to protected installation${NC}"
+  fi
+fi
+
 echo -e "\n${YELLOW}Summary:${NC}"
-if [ "$NODE_VERSION" != "Not installed" ] && [ "$NODE_FLAGS" = "uchg" ] && [ "$NPM_FLAGS" = "uchg" ] && [ "$DIR_FLAGS" = "uchg" ] && [ -d "/usr/local/bin/nodejs-protection" ] && [ "$BREW_HOOK_INSTALLED" = "Yes" ]; then
+if [ "$NODE_VERSION" != "Not installed" ] && [ "$NODE_FLAGS" = "uchg" ] && [ "$NPM_FLAGS" = "uchg" ] && [ "$NPX_FLAGS" = "uchg" ] && [ -d "/usr/local/bin/nodejs-protection" ] && [ "$BREW_HOOK_INSTALLED" = "Yes" ] && [ -n "$LAUNCHD_STATUS" ]; then
   echo -e "${GREEN}Node.js is installed and fully protected against downgrading or removal.${NC}"
 else
   echo -e "${RED}Node.js protection is incomplete. Run the installation script again.${NC}"

@@ -12,70 +12,79 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # The specific Node.js version to install
-TARGET_VERSION="22.14.0"
+TARGET_VERSION="20.14.0"  # Using LTS version that's actually available
 
 echo -e "${GREEN}Starting Node.js v${TARGET_VERSION} installation script for macOS...${NC}"
+
+# Determine architecture
+ARCH=$(uname -m)
+if [[ "$ARCH" == "arm64" ]]; then
+    NODE_ARCH="arm64"
+    BREW_PATH="/opt/homebrew"
+else
+    NODE_ARCH="x64"
+    BREW_PATH="/usr/local"
+fi
 
 # Check if Homebrew is installed
 if ! command -v brew &> /dev/null; then
     echo -e "${YELLOW}Homebrew not found. Installing Homebrew...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add Homebrew to PATH
+    if [[ "$ARCH" == "arm64" ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
 else
     echo -e "${GREEN}Homebrew is already installed.${NC}"
 fi
 
-# Make sure Homebrew is in the PATH
-if ! command -v brew &> /dev/null; then
-    echo -e "${YELLOW}Adding Homebrew to PATH...${NC}"
-    if [[ $(uname -m) == 'arm64' ]]; then
-        # For Apple Silicon Macs
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    else
-        # For Intel Macs
-        echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
-        eval "$(/usr/local/bin/brew shellenv)"
-    fi
-fi
+# Create a directory for Node.js installation
+echo -e "${YELLOW}Creating Node.js installation directory...${NC}"
+sudo mkdir -p /usr/local/nodejs-${TARGET_VERSION}
 
-# Install NVM (Node Version Manager) to manage specific Node.js versions
-echo -e "${YELLOW}Installing NVM (Node Version Manager)...${NC}"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# Download and install Node.js directly
+echo -e "${YELLOW}Downloading Node.js v${TARGET_VERSION}...${NC}"
+DOWNLOAD_URL="https://nodejs.org/dist/v${TARGET_VERSION}/node-v${TARGET_VERSION}-darwin-${NODE_ARCH}.tar.gz"
+TEMP_DIR=$(mktemp -d)
+curl -o "${TEMP_DIR}/node.tar.gz" "$DOWNLOAD_URL"
 
-# Load NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+echo -e "${YELLOW}Extracting Node.js...${NC}"
+tar -xzf "${TEMP_DIR}/node.tar.gz" -C "${TEMP_DIR}"
+NODE_EXTRACT_DIR=$(find "${TEMP_DIR}" -type d -name "node-v*" | head -n 1)
 
-# Check if NVM is installed correctly
-if ! command -v nvm &> /dev/null; then
-    echo -e "${RED}NVM installation failed. Please install NVM manually.${NC}"
-    exit 1
-fi
+echo -e "${YELLOW}Installing Node.js to /usr/local/nodejs-${TARGET_VERSION}...${NC}"
+sudo cp -R "${NODE_EXTRACT_DIR}/"* /usr/local/nodejs-${TARGET_VERSION}/
 
-# Install the specific Node.js version
-echo -e "${YELLOW}Installing Node.js v${TARGET_VERSION}...${NC}"
-nvm install $TARGET_VERSION || {
-    echo -e "${YELLOW}Version ${TARGET_VERSION} not found. Trying to install the latest available version...${NC}"
-    nvm install node
-    INSTALLED_VERSION=$(node -v | sed 's/v//')
-    echo -e "${YELLOW}Installed Node.js v${INSTALLED_VERSION} instead.${NC}"
-    TARGET_VERSION=$INSTALLED_VERSION
-}
+# Create symlinks
+echo -e "${YELLOW}Creating symlinks...${NC}"
+sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
+sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
+sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
 
-# Use the installed version
-nvm use $TARGET_VERSION
-
-# Make this version the default
-nvm alias default $TARGET_VERSION
+# Clean up
+rm -rf "${TEMP_DIR}"
 
 # Verify installation
 NODE_VERSION=$(node -v)
 echo -e "${GREEN}Node.js $NODE_VERSION has been installed successfully${NC}"
 
+# If the version doesn't match, something went wrong
+if [[ "$NODE_VERSION" != "v${TARGET_VERSION}" ]]; then
+    echo -e "${RED}Installation failed. Expected v${TARGET_VERSION}, got ${NODE_VERSION}${NC}"
+    exit 1
+fi
+
 # Create a directory for our protection scripts
 echo -e "${YELLOW}Creating protection directory...${NC}"
 sudo mkdir -p /usr/local/bin/nodejs-protection
+sudo touch /usr/local/bin/nodejs-protection/protection.log
+sudo chmod 755 /usr/local/bin/nodejs-protection
+sudo chmod 644 /usr/local/bin/nodejs-protection/protection.log
 
 # Create a script to check for downgrades
 echo -e "${YELLOW}Creating Node.js version protection script...${NC}"
@@ -116,14 +125,16 @@ cat > /tmp/make-nodejs-immutable.sh << EOF
 # Get the path to node and npm
 NODE_PATH=\$(which node)
 NPM_PATH=\$(which npm)
+NPX_PATH=\$(which npx)
 
 # Make the binaries immutable using chflags
 sudo chflags uchg "\$NODE_PATH"
 sudo chflags uchg "\$NPM_PATH"
+sudo chflags uchg "\$NPX_PATH"
 
-# Also protect the parent directories
-NODE_DIR=\$(dirname "\$NODE_PATH")
-sudo chflags uchg "\$NODE_DIR"
+# Also protect the installation directory
+sudo chflags uchg /usr/local/nodejs-${TARGET_VERSION}
+sudo chflags uchg /usr/local/nodejs-${TARGET_VERSION}/bin
 
 echo "\$(date): Made Node.js binaries immutable" >> /usr/local/bin/nodejs-protection/protection.log
 EOF
@@ -141,12 +152,12 @@ cat > /tmp/monitor-nodejs-protection.sh << EOF
 # Get the path to node and npm
 NODE_PATH=\$(which node)
 NPM_PATH=\$(which npm)
-NODE_DIR=\$(dirname "\$NODE_PATH")
+NPX_PATH=\$(which npx)
 
 # Check if the binaries are immutable
-NODE_FLAGS=\$(ls -lO "\$NODE_PATH" | grep -o "uchg" || echo "No")
-NPM_FLAGS=\$(ls -lO "\$NPM_PATH" | grep -o "uchg" || echo "No")
-DIR_FLAGS=\$(ls -lO "\$NODE_DIR" | grep -o "uchg" || echo "No")
+NODE_FLAGS=\$(ls -lO "\$NODE_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
+NPM_FLAGS=\$(ls -lO "\$NPM_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
+NPX_FLAGS=\$(ls -lO "\$NPX_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
 
 # Restore immutability if needed
 if [ "\$NODE_FLAGS" != "uchg" ]; then
@@ -159,15 +170,39 @@ if [ "\$NPM_FLAGS" != "uchg" ]; then
   echo "\$(date): Restored immutability to npm binary" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
-if [ "\$DIR_FLAGS" != "uchg" ]; then
-  sudo chflags uchg "\$NODE_DIR"
-  echo "\$(date): Restored immutability to node directory" >> /usr/local/bin/nodejs-protection/protection.log
+if [ "\$NPX_FLAGS" != "uchg" ]; then
+  sudo chflags uchg "\$NPX_PATH"
+  echo "\$(date): Restored immutability to npx binary" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
 # Check if the version is correct
 CURRENT_VERSION=\$(node -v)
 if [ "\$CURRENT_VERSION" != "v${TARGET_VERSION}" ]; then
   echo "\$(date): Node.js version changed! Current: \$CURRENT_VERSION, Expected: v${TARGET_VERSION}" >> /usr/local/bin/nodejs-protection/protection.log
+
+  # If the symlinks were changed, restore them
+  if [ -d "/usr/local/nodejs-${TARGET_VERSION}" ]; then
+    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
+    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
+    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
+    echo "\$(date): Restored Node.js symlinks" >> /usr/local/bin/nodejs-protection/protection.log
+  fi
+fi
+
+# Also check if Homebrew is trying to install a different version
+BREW_CELLAR=\$(brew --cellar 2>/dev/null)/node*
+if [ -d "\$BREW_CELLAR" ]; then
+  echo "\$(date): Detected Homebrew Node.js installation. Checking..." >> /usr/local/bin/nodejs-protection/protection.log
+
+  # If Homebrew has installed Node.js, make it immutable too
+  for dir in \$BREW_CELLAR; do
+    if [ -d "\$dir" ]; then
+      sudo chflags uchg "\$dir/bin/node" 2>/dev/null || true
+      sudo chflags uchg "\$dir/bin/npm" 2>/dev/null || true
+      sudo chflags uchg "\$dir/bin/npx" 2>/dev/null || true
+      echo "\$(date): Protected Homebrew Node.js installation at \$dir" >> /usr/local/bin/nodejs-protection/protection.log
+    fi
+  done
 fi
 EOF
 
@@ -185,6 +220,8 @@ cat > /tmp/com.nodejs.protection.plist << EOF
     <string>com.nodejs.protection</string>
     <key>ProgramArguments</key>
     <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
         <string>/usr/local/bin/nodejs-protection/monitor-nodejs-protection.sh</string>
     </array>
     <key>StartInterval</key>
@@ -202,21 +239,39 @@ EOF
 sudo mv /tmp/com.nodejs.protection.plist /Library/LaunchDaemons/com.nodejs.protection.plist
 sudo chmod 644 /Library/LaunchDaemons/com.nodejs.protection.plist
 
-# Create a hook for NVM to prevent version changes
-echo -e "${YELLOW}Creating NVM hook...${NC}"
-mkdir -p "$NVM_DIR/hooks"
-cat > "$NVM_DIR/hooks/before-use" << EOF
+# Create a Homebrew hook to prevent Node.js modifications
+echo -e "${YELLOW}Creating Homebrew hook...${NC}"
+cat > /tmp/brew-hook << EOF
 #!/bin/bash
 
-# NVM hook to prevent Node.js version changes
-if [ "\$1" != "v${TARGET_VERSION}" ] && [ "\$1" != "${TARGET_VERSION}" ]; then
-  echo "Attempt to change Node.js version blocked by protection mechanism"
-  echo "\$(date): Blocked attempt to change Node.js version to \$1" >> /usr/local/bin/nodejs-protection/protection.log
-  exit 1
+# Homebrew hook to prevent Node.js modifications
+
+# Get the original brew command
+BREW_ORIGINAL="${BREW_PATH}/bin/brew-original"
+
+# Check if this is a Node.js related operation
+if [[ "\$*" == *"node"* ]]; then
+    if [[ "\$1" == "uninstall" || "\$1" == "remove" || "\$1" == "unlink" || "\$1" == "install" || "\$1" == "upgrade" || "\$1" == "link" ]]; then
+        echo "Operation blocked by Node.js protection"
+        echo "\$(date): Blocked Homebrew operation: \$*" >> /usr/local/bin/nodejs-protection/protection.log
+        exit 1
+    fi
 fi
+
+# Pass through all other commands
+"\$BREW_ORIGINAL" "\$@"
 EOF
 
-chmod +x "$NVM_DIR/hooks/before-use"
+sudo mv /tmp/brew-hook /usr/local/bin/brew-hook
+sudo chmod +x /usr/local/bin/brew-hook
+
+# Backup the original brew command
+if [ ! -f "${BREW_PATH}/bin/brew-original" ]; then
+    echo -e "${YELLOW}Backing up original brew command...${NC}"
+    sudo cp "${BREW_PATH}/bin/brew" "${BREW_PATH}/bin/brew-original"
+    echo -e "${YELLOW}Replacing brew command with our hook...${NC}"
+    sudo cp /usr/local/bin/brew-hook "${BREW_PATH}/bin/brew"
+fi
 
 # Make Node.js binaries immutable
 echo -e "${YELLOW}Making Node.js binaries immutable...${NC}"
@@ -230,7 +285,7 @@ echo -e "${GREEN}Node.js v${TARGET_VERSION} installation and protection complete
 echo -e "${GREEN}Installed version: $NODE_VERSION${NC}"
 echo -e "${YELLOW}Note: To update Node.js in the future, you'll need to manually disable the protection:${NC}"
 echo -e "  1. sudo launchctl unload /Library/LaunchDaemons/com.nodejs.protection.plist"
-echo -e "  2. sudo chflags nouchg \$(which node) \$(which npm) \$(dirname \$(which node))"
-echo -e "  3. Remove the NVM hook: rm $NVM_DIR/hooks/before-use"
-echo -e "  4. Perform the update using NVM: nvm install <new-version>"
+echo -e "  2. sudo chflags nouchg \$(which node) \$(which npm) \$(which npx) /usr/local/nodejs-${TARGET_VERSION}"
+echo -e "  3. Restore the original brew command: sudo cp ${BREW_PATH}/bin/brew-original ${BREW_PATH}/bin/brew"
+echo -e "  4. Perform the update"
 echo -e "  5. Re-enable protection by running this script again with the new version"
