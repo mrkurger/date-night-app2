@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
+import { MainLayoutComponent } from '../../shared/layouts/main-layout/main-layout.component';
 import { Ad } from '../../core/models/ad.interface';
 
 @Component({

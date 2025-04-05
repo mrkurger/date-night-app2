@@ -18,6 +18,7 @@ export interface Ad {
     url: string;
   }[];
   advertiser: string;
+  userId: string;  // ID of the user who created the ad
 
   // Status flags
   isActive: boolean;

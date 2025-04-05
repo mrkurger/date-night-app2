@@ -199,4 +199,97 @@ export class AuthService {
       });
     }, refreshDuration);
   }
+
+  /**
+   * Update user profile information
+   * @param profileData User profile data to update
+   */
+  updateProfile(profileData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
+      .pipe(
+        tap(response => {
+          // Update the current user with new profile data
+          if (response && response.user) {
+            // Add id property as alias to _id for compatibility
+            if (response.user && response.user._id) {
+              response.user.id = response.user._id;
+            }
+            this.currentUserSubject.next(response.user);
+          }
+          return response;
+        })
+      );
+  }
+
+  /**
+   * Change user password
+   * @param passwordData Object containing currentPassword and newPassword
+   */
+  changePassword(passwordData: { currentPassword: string; newPassword: string }): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/password`, passwordData, { withCredentials: true });
+  }
+
+  /**
+   * Update user notification settings
+   * @param notificationSettings Notification preferences
+   */
+  updateNotificationSettings(notificationSettings: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/notification-settings`, notificationSettings, { withCredentials: true })
+      .pipe(
+        tap(response => {
+          // Update the current user with new notification settings
+          if (response && response.user) {
+            const currentUser = this.currentUserSubject.value;
+            if (currentUser) {
+              const updatedUser = {
+                ...currentUser,
+                notificationSettings: response.user.notificationSettings || notificationSettings
+              };
+              this.currentUserSubject.next(updatedUser);
+            }
+          }
+          return response;
+        })
+      );
+  }
+
+  /**
+   * Update user privacy settings
+   * @param privacySettings Privacy preferences
+   */
+  updatePrivacySettings(privacySettings: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
+      .pipe(
+        tap(response => {
+          // Update the current user with new privacy settings
+          if (response && response.user) {
+            const currentUser = this.currentUserSubject.value;
+            if (currentUser) {
+              const updatedUser = {
+                ...currentUser,
+                privacySettings: response.user.privacySettings || privacySettings
+              };
+              this.currentUserSubject.next(updatedUser);
+            }
+          }
+          return response;
+        })
+      );
+  }
+
+  /**
+   * Delete user account
+   */
+  deleteAccount(): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/account`, { withCredentials: true })
+      .pipe(
+        tap(() => {
+          // Clear user state after successful deletion
+          this.currentUserSubject.next(null);
+          if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+          }
+        })
+      );
+  }
 }

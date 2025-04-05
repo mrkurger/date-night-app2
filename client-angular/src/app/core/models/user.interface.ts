@@ -3,6 +3,9 @@ export interface User {
   id?: string; // Alias for _id for compatibility
   username: string;
   email: string;
+  name?: string; // Full name of the user
+  phone?: string; // Phone number
+  bio?: string; // User biography or description
   role: 'user' | 'advertiser' | 'admin';
   roles?: string[]; // For role-based authorization
   online?: boolean;
@@ -19,6 +22,18 @@ export interface User {
   };
   subscriptionTier?: 'free' | 'premium' | 'vip';
   subscriptionExpires?: Date;
+  notificationSettings?: {
+    emailNotifications?: boolean;
+    chatNotifications?: boolean;
+    marketingEmails?: boolean;
+    newMatchNotifications?: boolean;
+  };
+  privacySettings?: {
+    profileVisibility?: 'public' | 'private' | 'friends';
+    showOnlineStatus?: boolean;
+    allowMessaging?: 'all' | 'friends' | 'none';
+    dataSharing?: boolean;
+  };
 }
 
 export interface TravelPlanItem {
