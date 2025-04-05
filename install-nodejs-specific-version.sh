@@ -12,7 +12,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # The specific Node.js version to install
-TARGET_VERSION="20.14.0"  # Using LTS version that's actually available
+TARGET_VERSION="22.1.0"  # Using LTS version 22
 
 echo -e "${GREEN}Starting Node.js v${TARGET_VERSION} installation script for macOS...${NC}"
 
@@ -60,23 +60,77 @@ NODE_EXTRACT_DIR=$(find "${TEMP_DIR}" -type d -name "node-v*" | head -n 1)
 echo -e "${YELLOW}Installing Node.js to /usr/local/nodejs-${TARGET_VERSION}...${NC}"
 sudo cp -R "${NODE_EXTRACT_DIR}/"* /usr/local/nodejs-${TARGET_VERSION}/
 
-# Create symlinks
+# Check for existing Node.js installations from Homebrew
+echo -e "${YELLOW}Checking for existing Node.js installations...${NC}"
+if command -v brew &> /dev/null; then
+    # Don't run brew as root
+    if [ "$(id -u)" -eq 0 ]; then
+        echo -e "${YELLOW}Running as root, will check for Homebrew Node.js installation after script completes${NC}"
+    else
+        BREW_NODE=$(brew list | grep node || echo "")
+        if [ -n "$BREW_NODE" ]; then
+            echo -e "${YELLOW}Found existing Node.js installation via Homebrew. Will temporarily unlink it.${NC}"
+            brew unlink node || true
+        fi
+    fi
+fi
+
+# Clean up any previous protected installation
+echo -e "${YELLOW}Cleaning up previous protected installation...${NC}"
+if [ -d "/usr/local/nodejs-${TARGET_VERSION}" ]; then
+    echo -e "${YELLOW}Found existing installation at /usr/local/nodejs-${TARGET_VERSION}. Removing...${NC}"
+    sudo chflags -R nouchg "/usr/local/nodejs-${TARGET_VERSION}" 2>/dev/null || true
+    sudo rm -rf "/usr/local/nodejs-${TARGET_VERSION}"
+fi
+
+# Create symlinks with absolute paths to ensure they take precedence
 echo -e "${YELLOW}Creating symlinks...${NC}"
+sudo rm -f /usr/local/bin/node /usr/local/bin/npm /usr/local/bin/npx
 sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
 sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
 sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
 
+# Add our bin directory to the beginning of PATH for this script
+export PATH="/usr/local/bin:$PATH"
+
+# Create a shell profile snippet to ensure our Node.js is used
+echo -e "${YELLOW}Creating shell profile snippet...${NC}"
+cat > /tmp/nodejs-protected-path.sh << EOF
+# Added by Node.js protection script
+# This ensures the protected Node.js installation is used
+export PATH="/usr/local/bin:\$PATH"
+EOF
+
+# Add to user's shell profile if not already there
+for PROFILE in ~/.zshrc ~/.bash_profile ~/.bashrc; do
+    if [ -f "$PROFILE" ]; then
+        if ! grep -q "Added by Node.js protection script" "$PROFILE"; then
+            echo -e "${YELLOW}Adding PATH configuration to $PROFILE${NC}"
+            cat /tmp/nodejs-protected-path.sh >> "$PROFILE"
+        fi
+    fi
+done
+
 # Clean up
 rm -rf "${TEMP_DIR}"
 
-# Verify installation
-NODE_VERSION=$(node -v)
+# Verify installation with full path to ensure we're checking our version
+NODE_VERSION=$(/usr/local/nodejs-${TARGET_VERSION}/bin/node -v)
 echo -e "${GREEN}Node.js $NODE_VERSION has been installed successfully${NC}"
 
 # If the version doesn't match, something went wrong
 if [[ "$NODE_VERSION" != "v${TARGET_VERSION}" ]]; then
     echo -e "${RED}Installation failed. Expected v${TARGET_VERSION}, got ${NODE_VERSION}${NC}"
     exit 1
+fi
+
+# Check if the symlinks are working correctly
+SYMLINK_NODE_VERSION=$(/usr/local/bin/node -v 2>/dev/null || echo "Not available")
+if [[ "$SYMLINK_NODE_VERSION" != "v${TARGET_VERSION}" ]]; then
+    echo -e "${YELLOW}Warning: Symlinked node is reporting version ${SYMLINK_NODE_VERSION} instead of v${TARGET_VERSION}${NC}"
+    echo -e "${YELLOW}This could be because another Node.js installation is taking precedence in your PATH.${NC}"
+    echo -e "${YELLOW}After installation, you may need to restart your terminal or run:${NC}"
+    echo -e "${YELLOW}  export PATH=\"/usr/local/bin:\$PATH\"${NC}"
 fi
 
 # Create a directory for our protection scripts
@@ -149,60 +203,107 @@ cat > /tmp/monitor-nodejs-protection.sh << EOF
 
 # Script to monitor and protect Node.js on macOS
 
-# Get the path to node and npm
-NODE_PATH=\$(which node)
-NPM_PATH=\$(which npm)
-NPX_PATH=\$(which npx)
+# Ensure our protected version is in the PATH
+export PATH="/usr/local/bin:/usr/local/nodejs-${TARGET_VERSION}/bin:\$PATH"
+
+# Check if our installation directory exists
+if [ ! -d "/usr/local/nodejs-${TARGET_VERSION}" ]; then
+  echo "\$(date): ERROR: Protected Node.js installation directory not found!" >> /usr/local/bin/nodejs-protection/protection.log
+  exit 1
+fi
+
+# Check if our binaries exist in the installation directory
+if [ ! -f "/usr/local/nodejs-${TARGET_VERSION}/bin/node" ]; then
+  echo "\$(date): ERROR: Node binary not found in protected installation!" >> /usr/local/bin/nodejs-protection/protection.log
+  exit 1
+fi
+
+# Check if the symlinks exist and point to our installation
+NODE_SYMLINK_TARGET=\$(readlink /usr/local/bin/node 2>/dev/null || echo "Not a symlink")
+NPM_SYMLINK_TARGET=\$(readlink /usr/local/bin/npm 2>/dev/null || echo "Not a symlink")
+NPX_SYMLINK_TARGET=\$(readlink /usr/local/bin/npx 2>/dev/null || echo "Not a symlink")
+
+# Restore symlinks if they don't point to our installation
+if [[ "\$NODE_SYMLINK_TARGET" != "/usr/local/nodejs-${TARGET_VERSION}/bin/node" ]]; then
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
+  echo "\$(date): Restored node symlink" >> /usr/local/bin/nodejs-protection/protection.log
+fi
+
+if [[ "\$NPM_SYMLINK_TARGET" != "/usr/local/nodejs-${TARGET_VERSION}/bin/npm" ]]; then
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
+  echo "\$(date): Restored npm symlink" >> /usr/local/bin/nodejs-protection/protection.log
+fi
+
+if [[ "\$NPX_SYMLINK_TARGET" != "/usr/local/nodejs-${TARGET_VERSION}/bin/npx" ]]; then
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
+  echo "\$(date): Restored npx symlink" >> /usr/local/bin/nodejs-protection/protection.log
+fi
 
 # Check if the binaries are immutable
-NODE_FLAGS=\$(ls -lO "\$NODE_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
-NPM_FLAGS=\$(ls -lO "\$NPM_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
-NPX_FLAGS=\$(ls -lO "\$NPX_PATH" 2>/dev/null | grep -o "uchg" || echo "No")
+NODE_FLAGS=\$(ls -lO "/usr/local/bin/node" 2>/dev/null | grep -o "uchg" || echo "No")
+NPM_FLAGS=\$(ls -lO "/usr/local/bin/npm" 2>/dev/null | grep -o "uchg" || echo "No")
+NPX_FLAGS=\$(ls -lO "/usr/local/bin/npx" 2>/dev/null | grep -o "uchg" || echo "No")
+INSTALL_FLAGS=\$(ls -lO "/usr/local/nodejs-${TARGET_VERSION}" 2>/dev/null | grep -o "uchg" || echo "No")
 
 # Restore immutability if needed
 if [ "\$NODE_FLAGS" != "uchg" ]; then
-  sudo chflags uchg "\$NODE_PATH"
+  sudo chflags uchg "/usr/local/bin/node"
   echo "\$(date): Restored immutability to node binary" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
 if [ "\$NPM_FLAGS" != "uchg" ]; then
-  sudo chflags uchg "\$NPM_PATH"
+  sudo chflags uchg "/usr/local/bin/npm"
   echo "\$(date): Restored immutability to npm binary" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
 if [ "\$NPX_FLAGS" != "uchg" ]; then
-  sudo chflags uchg "\$NPX_PATH"
+  sudo chflags uchg "/usr/local/bin/npx"
   echo "\$(date): Restored immutability to npx binary" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
-# Check if the version is correct
-CURRENT_VERSION=\$(node -v)
-if [ "\$CURRENT_VERSION" != "v${TARGET_VERSION}" ]; then
-  echo "\$(date): Node.js version changed! Current: \$CURRENT_VERSION, Expected: v${TARGET_VERSION}" >> /usr/local/bin/nodejs-protection/protection.log
+if [ "\$INSTALL_FLAGS" != "uchg" ]; then
+  sudo chflags uchg "/usr/local/nodejs-${TARGET_VERSION}"
+  sudo chflags uchg "/usr/local/nodejs-${TARGET_VERSION}/bin"
+  echo "\$(date): Restored immutability to installation directory" >> /usr/local/bin/nodejs-protection/protection.log
+fi
 
-  # If the symlinks were changed, restore them
-  if [ -d "/usr/local/nodejs-${TARGET_VERSION}" ]; then
-    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
-    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
-    sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
-    echo "\$(date): Restored Node.js symlinks" >> /usr/local/bin/nodejs-protection/protection.log
+# Check if the version is correct
+CURRENT_VERSION=\$(/usr/local/bin/node -v 2>/dev/null || echo "Unknown")
+if [ "\$CURRENT_VERSION" != "v${TARGET_VERSION}" ]; then
+  echo "\$(date): Node.js version mismatch! Current: \$CURRENT_VERSION, Expected: v${TARGET_VERSION}" >> /usr/local/bin/nodejs-protection/protection.log
+
+  # Check if Homebrew is trying to override our Node.js
+  if command -v brew &> /dev/null; then
+    BREW_NODE=\$(brew list | grep node || echo "")
+    if [ -n "\$BREW_NODE" ]; then
+      echo "\$(date): Detected Homebrew Node.js installation. Unlinking..." >> /usr/local/bin/nodejs-protection/protection.log
+      brew unlink node 2>/dev/null || true
+    fi
   fi
+
+  # Restore our symlinks again
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
+  sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
+  echo "\$(date): Forcefully restored Node.js symlinks" >> /usr/local/bin/nodejs-protection/protection.log
 fi
 
 # Also check if Homebrew is trying to install a different version
-BREW_CELLAR=\$(brew --cellar 2>/dev/null)/node*
-if [ -d "\$BREW_CELLAR" ]; then
-  echo "\$(date): Detected Homebrew Node.js installation. Checking..." >> /usr/local/bin/nodejs-protection/protection.log
+if command -v brew &> /dev/null; then
+  BREW_CELLAR=\$(brew --cellar 2>/dev/null)/node*
+  if [ -d "\$BREW_CELLAR" ]; then
+    echo "\$(date): Detected Homebrew Node.js installation. Checking..." >> /usr/local/bin/nodejs-protection/protection.log
 
-  # If Homebrew has installed Node.js, make it immutable too
-  for dir in \$BREW_CELLAR; do
-    if [ -d "\$dir" ]; then
-      sudo chflags uchg "\$dir/bin/node" 2>/dev/null || true
-      sudo chflags uchg "\$dir/bin/npm" 2>/dev/null || true
-      sudo chflags uchg "\$dir/bin/npx" 2>/dev/null || true
-      echo "\$(date): Protected Homebrew Node.js installation at \$dir" >> /usr/local/bin/nodejs-protection/protection.log
-    fi
-  done
+    # If Homebrew has installed Node.js, make it immutable too
+    for dir in \$BREW_CELLAR; do
+      if [ -d "\$dir" ]; then
+        sudo chflags uchg "\$dir/bin/node" 2>/dev/null || true
+        sudo chflags uchg "\$dir/bin/npm" 2>/dev/null || true
+        sudo chflags uchg "\$dir/bin/npx" 2>/dev/null || true
+        echo "\$(date): Protected Homebrew Node.js installation at \$dir" >> /usr/local/bin/nodejs-protection/protection.log
+      fi
+    done
+  fi
 fi
 EOF
 
@@ -221,7 +322,6 @@ cat > /tmp/com.nodejs.protection.plist << EOF
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>-c</string>
         <string>/usr/local/bin/nodejs-protection/monitor-nodejs-protection.sh</string>
     </array>
     <key>StartInterval</key>
@@ -232,6 +332,10 @@ cat > /tmp/com.nodejs.protection.plist << EOF
     <string>/usr/local/bin/nodejs-protection/protection.log</string>
     <key>StandardOutPath</key>
     <string>/usr/local/bin/nodejs-protection/protection.log</string>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>60</integer>
 </dict>
 </plist>
 EOF
@@ -249,13 +353,35 @@ cat > /tmp/brew-hook << EOF
 # Get the original brew command
 BREW_ORIGINAL="${BREW_PATH}/bin/brew-original"
 
-# Check if this is a Node.js related operation
-if [[ "\$*" == *"node"* ]]; then
-    if [[ "\$1" == "uninstall" || "\$1" == "remove" || "\$1" == "unlink" || "\$1" == "install" || "\$1" == "upgrade" || "\$1" == "link" ]]; then
-        echo "Operation blocked by Node.js protection"
+# Log all brew commands for debugging
+echo "\$(date): Brew command executed: \$*" >> /usr/local/bin/nodejs-protection/brew-commands.log
+
+# Block any Node.js related operations
+if [[ "\$*" == *"node"* || "\$*" == *"npm"* || "\$*" == *"npx"* ]]; then
+    if [[ "\$1" == "uninstall" || "\$1" == "remove" || "\$1" == "unlink" || "\$1" == "install" || "\$1" == "upgrade" || "\$1" == "link" || "\$1" == "reinstall" || "\$1" == "pin" || "\$1" == "unpin" ]]; then
+        echo "Operation blocked by Node.js protection mechanism"
         echo "\$(date): Blocked Homebrew operation: \$*" >> /usr/local/bin/nodejs-protection/protection.log
         exit 1
     fi
+fi
+
+# Also block any operations that might affect our symlinks
+if [[ "\$1" == "link" || "\$1" == "unlink" ]]; then
+    echo "\$(date): Checking if operation affects Node.js symlinks: \$*" >> /usr/local/bin/nodejs-protection/brew-commands.log
+
+    # Execute the command but restore our symlinks immediately after
+    "\$BREW_ORIGINAL" "\$@"
+    RESULT=\$?
+
+    # Restore our symlinks regardless of what happened
+    if [ -d "/usr/local/nodejs-${TARGET_VERSION}" ]; then
+        sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/node /usr/local/bin/node
+        sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npm /usr/local/bin/npm
+        sudo ln -sf /usr/local/nodejs-${TARGET_VERSION}/bin/npx /usr/local/bin/npx
+        echo "\$(date): Restored Node.js symlinks after brew \$1 operation" >> /usr/local/bin/nodejs-protection/protection.log
+    fi
+
+    exit \$RESULT
 fi
 
 # Pass through all other commands

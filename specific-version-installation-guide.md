@@ -1,6 +1,6 @@
 # Installing a Specific Node.js Version on macOS
 
-This guide explains how to install a specific version of Node.js (20.14.0) on macOS and configure it to prevent downgrading or removal.
+This guide explains how to install a specific version of Node.js (22.1.0) on macOS and configure it to prevent downgrading or removal.
 
 ## Installation
 
@@ -16,7 +16,7 @@ This guide explains how to install a specific version of Node.js (20.14.0) on ma
 
 3. Verify the installation:
    ```bash
-   node -v  # Should show v20.14.0
+   node -v  # Should show v22.1.0
    npm -v
    ```
 
@@ -30,8 +30,8 @@ This guide explains how to install a specific version of Node.js (20.14.0) on ma
 The installation script performs the following actions:
 
 1. Installs Homebrew if not already installed
-2. Downloads and installs Node.js version 20.14.0 directly from the official Node.js website
-3. Creates a dedicated installation directory at `/usr/local/nodejs-20.14.0`
+2. Downloads and installs Node.js version 22.1.0 directly from the official Node.js website
+3. Creates a dedicated installation directory at `/usr/local/nodejs-22.1.0`
 4. Creates symlinks in `/usr/local/bin` to the installed binaries
 5. Implements multiple protection mechanisms to prevent Node.js from being downgraded or removed:
    - Homebrew hooks that block package operations on Node.js
@@ -73,7 +73,7 @@ To update Node.js in the future, you'll need to temporarily disable the protecti
 
 2. Remove the immutable attribute from the binaries and installation directory:
    ```bash
-   sudo chflags nouchg $(which node) $(which npm) $(which npx) /usr/local/nodejs-20.14.0
+   sudo chflags nouchg $(which node) $(which npm) $(which npx) /usr/local/nodejs-22.1.0
    ```
 
 3. Restore the original brew command:
@@ -99,7 +99,7 @@ If you need to completely remove the protection mechanisms:
 
 2. Remove the immutable attribute:
    ```bash
-   sudo chflags nouchg $(which node) $(which npm) $(which npx) /usr/local/nodejs-20.14.0
+   sudo chflags nouchg $(which node) $(which npm) $(which npx) /usr/local/nodejs-22.1.0
    ```
 
 3. Restore the original brew command:
@@ -119,7 +119,7 @@ If you need to completely remove the protection mechanisms:
 
 5. To completely remove the installed Node.js:
    ```bash
-   sudo rm -rf /usr/local/nodejs-20.14.0
+   sudo rm -rf /usr/local/nodejs-22.1.0
    sudo rm /usr/local/bin/node
    sudo rm /usr/local/bin/npm
    sudo rm /usr/local/bin/npx

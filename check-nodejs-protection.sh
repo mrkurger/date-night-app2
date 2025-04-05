@@ -11,8 +11,18 @@ NC='\033[0m' # No Color
 
 echo -e "${YELLOW}Checking Node.js protection status on macOS...${NC}"
 
-# Check Node.js version
+# Check Node.js version from both PATH and protected installation
 NODE_VERSION=$(node -v 2>/dev/null || echo "Not installed")
+PROTECTED_VERSION=""
+
+# Find protected installation
+for dir in /usr/local/nodejs-*; do
+  if [ -d "$dir" ] && [ -f "$dir/bin/node" ]; then
+    PROTECTED_INSTALL_DIR="$dir"
+    PROTECTED_VERSION=$("$dir/bin/node" -v 2>/dev/null || echo "Not available")
+    break
+  fi
+done
 echo -e "Node.js version: ${GREEN}$NODE_VERSION${NC}"
 
 # Check if binaries exist
@@ -113,18 +123,86 @@ else
 fi
 
 # Check if symlinks point to our protected installation
-if [ -f "$(which node 2>/dev/null)" ] && [ -d "/usr/local/nodejs-$NODE_VERSION_CLEAN" ]; then
-  NODE_SYMLINK_TARGET=$(readlink $(which node) || echo "Not a symlink")
-  if [[ "$NODE_SYMLINK_TARGET" == "/usr/local/nodejs-$NODE_VERSION_CLEAN/bin/node" ]]; then
-    echo -e "Node symlink: ${GREEN}Correctly points to protected installation${NC}"
-  else
-    echo -e "Node symlink: ${RED}Does not point to protected installation${NC}"
+if [ -z "$PROTECTED_INSTALL_DIR" ]; then
+  # Try to find any protected installation directory if not already found
+  for dir in /usr/local/nodejs-*; do
+    if [ -d "$dir" ] && [ -f "$dir/bin/node" ]; then
+      PROTECTED_INSTALL_DIR="$dir"
+      PROTECTED_VERSION=$(basename "$dir" | sed 's/nodejs-//')
+      break
+    fi
+  done
+else
+  echo -e "Protected Node.js version: ${GREEN}$PROTECTED_VERSION${NC}"
+fi
+
+if [ -n "$PROTECTED_INSTALL_DIR" ]; then
+  echo -e "Protected installation: ${GREEN}Found at $PROTECTED_INSTALL_DIR${NC}"
+
+  if [ -f "$(which node 2>/dev/null)" ]; then
+    NODE_SYMLINK_TARGET=$(readlink $(which node) || echo "Not a symlink")
+    if [[ "$NODE_SYMLINK_TARGET" == "$PROTECTED_INSTALL_DIR/bin/node" ]]; then
+      echo -e "Node symlink: ${GREEN}Correctly points to protected installation${NC}"
+    else
+      echo -e "Node symlink: ${RED}Does not point to protected installation${NC}"
+      echo -e "  Current: ${YELLOW}$NODE_SYMLINK_TARGET${NC}"
+      echo -e "  Expected: ${YELLOW}$PROTECTED_INSTALL_DIR/bin/node${NC}"
+    fi
   fi
+else
+  echo -e "Protected installation: ${RED}Not found${NC}"
 fi
 
 echo -e "\n${YELLOW}Summary:${NC}"
-if [ "$NODE_VERSION" != "Not installed" ] && [ "$NODE_FLAGS" = "uchg" ] && [ "$NPM_FLAGS" = "uchg" ] && [ "$NPX_FLAGS" = "uchg" ] && [ -d "/usr/local/bin/nodejs-protection" ] && [ "$BREW_HOOK_INSTALLED" = "Yes" ] && [ -n "$LAUNCHD_STATUS" ]; then
-  echo -e "${GREEN}Node.js is installed and fully protected against downgrading or removal.${NC}"
+
+# Check if we have a protected installation
+if [ -n "$PROTECTED_INSTALL_DIR" ]; then
+  # Check if the current node version matches the protected version
+  if [[ "$NODE_VERSION" == "$PROTECTED_VERSION" ]]; then
+    echo -e "${GREEN}Node.js version matches protected installation.${NC}"
+  else
+    echo -e "${RED}Node.js version mismatch! Current: $NODE_VERSION, Protected: $PROTECTED_VERSION${NC}"
+    echo -e "${YELLOW}This suggests the symlinks are not correctly pointing to the protected installation.${NC}"
+    echo -e "${YELLOW}Try adding /usr/local/bin to the beginning of your PATH:${NC}"
+    echo -e "${YELLOW}  export PATH=\"/usr/local/bin:\$PATH\"${NC}"
+  fi
+
+  # Check if symlinks are correct
+  if [[ "$NODE_SYMLINK_TARGET" == "$PROTECTED_INSTALL_DIR/bin/node" ]]; then
+    echo -e "${GREEN}Node.js symlinks are correctly configured.${NC}"
+  else
+    echo -e "${RED}Node.js symlinks are not pointing to the protected installation.${NC}"
+  fi
+
+  # Check protection mechanisms
+  if [ "$NODE_FLAGS" = "uchg" ] && [ "$NPM_FLAGS" = "uchg" ] && [ "$NPX_FLAGS" = "uchg" ] && [ -d "/usr/local/bin/nodejs-protection" ] && [ "$BREW_HOOK_INSTALLED" = "Yes" ] && [ -n "$LAUNCHD_STATUS" ]; then
+    echo -e "${GREEN}Protection mechanisms are active.${NC}"
+  else
+    echo -e "${RED}Some protection mechanisms are not active.${NC}"
+  fi
+
+  # Overall status
+  if [[ "$NODE_VERSION" == "v$PROTECTED_VERSION" ]] && [[ "$NODE_SYMLINK_TARGET" == "$PROTECTED_INSTALL_DIR/bin/node" ]] && [ "$NODE_FLAGS" = "uchg" ] && [ "$NPM_FLAGS" = "uchg" ] && [ "$NPX_FLAGS" = "uchg" ] && [ -d "/usr/local/bin/nodejs-protection" ] && [ "$BREW_HOOK_INSTALLED" = "Yes" ] && [ -n "$LAUNCHD_STATUS" ]; then
+    echo -e "\n${GREEN}Node.js is installed and fully protected against downgrading or removal.${NC}"
+  else
+    echo -e "\n${RED}Node.js protection is incomplete. Run the installation script again.${NC}"
+
+    # Provide specific recommendations
+    if [[ "$NODE_VERSION" != "$PROTECTED_VERSION" ]]; then
+      echo -e "${YELLOW}Recommendation: Run 'sudo ./install-nodejs-specific-version.sh' to fix symlinks.${NC}"
+      echo -e "${YELLOW}Alternatively, add /usr/local/bin to the beginning of your PATH:${NC}"
+      echo -e "${YELLOW}  export PATH=\"/usr/local/bin:\$PATH\"${NC}"
+      echo -e "${YELLOW}And add this line to your shell profile (~/.zshrc or ~/.bash_profile).${NC}"
+    fi
+
+    if [ "$NODE_FLAGS" != "uchg" ] || [ "$NPM_FLAGS" != "uchg" ] || [ "$NPX_FLAGS" != "uchg" ]; then
+      echo -e "${YELLOW}Recommendation: Run 'sudo /usr/local/bin/nodejs-protection/make-nodejs-immutable.sh' to restore immutability.${NC}"
+    fi
+
+    if [ ! -n "$LAUNCHD_STATUS" ]; then
+      echo -e "${YELLOW}Recommendation: Run 'sudo launchctl load /Library/LaunchDaemons/com.nodejs.protection.plist' to start the protection service.${NC}"
+    fi
+  fi
 else
-  echo -e "${RED}Node.js protection is incomplete. Run the installation script again.${NC}"
+  echo -e "${RED}No protected Node.js installation found. Run the installation script.${NC}"
 fi
