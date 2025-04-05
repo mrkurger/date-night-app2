@@ -17,17 +17,17 @@ import { Ad } from '../../core/models/ad.interface';
 })
 export class NetflixViewComponent implements OnInit, AfterViewInit {
   @ViewChildren('rowContainer') rowContainers!: QueryList<ElementRef>;
-  
+
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
   adsByCategory: { [key: string]: Ad[] } = {};
   loading = true;
   error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
-  
+
   // For hero section
   featuredAd: Ad | null = null;
-  
+
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
@@ -48,11 +48,11 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
       this.isAuthenticated = !!user;
     });
   }
-  
+
   ngAfterViewInit(): void {
     // Initialize any carousel behaviors after view is initialized
   }
-  
+
   loadAds(): void {
     this.loading = true;
     this.error = null;
@@ -119,7 +119,8 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
             console.error('Error loading trending ads:', err);
             // Continue loading other categories even if trending fails
             this.adsByCategory['Most Popular'] = [];
-            this.loadRemainingCategories(allAds);
+            // Pass an empty array since allAds is not defined in this scope
+            this.loadRemainingCategories([]);
           }
         });
       },
@@ -147,7 +148,7 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
   }
 
   private loadRemainingCategories(existingAds?: Ad[]): void {
-    if (existingAds) {
+    if (existingAds && existingAds.length > 0) {
       this.processAllAds(existingAds);
     } else {
       this.adService.getAds().subscribe({
@@ -196,8 +197,7 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
 
     this.loading = false;
   }
-  }
-  
+
   // Helper method to shuffle array for demo purposes
   private shuffleArray(array: any[]): any[] {
     const newArray = [...array];
@@ -207,28 +207,28 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     }
     return newArray;
   }
-  
+
   scrollRow(category: string, direction: 'left' | 'right'): void {
     const rowIndex = this.categories.indexOf(category);
     if (rowIndex === -1) return;
-    
+
     const container = this.rowContainers.toArray()[rowIndex].nativeElement;
     const scrollAmount = container.clientWidth * 0.8;
-    const newScrollPosition = direction === 'left' 
-      ? container.scrollLeft - scrollAmount 
+    const newScrollPosition = direction === 'left'
+      ? container.scrollLeft - scrollAmount
       : container.scrollLeft + scrollAmount;
-    
+
     container.scrollTo({
       left: newScrollPosition,
       behavior: 'smooth'
     });
   }
-  
+
   viewAdDetails(adId: string): void {
     // Navigate to ad details page
     window.location.href = `/ad-details/${adId}`;
   }
-  
+
   likeAd(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
 
@@ -248,7 +248,7 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   startChat(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
 
@@ -267,19 +267,19 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   getMediaUrl(ad: Ad): string {
     if (ad.images && ad.images.length > 0) {
       return ad.images[0];
     }
     return '/assets/images/default-profile.jpg';
   }
-  
+
   applyFilters(): void {
     // Apply filters logic
     this.loadAds();
   }
-  
+
   openFilters(): void {
     // Open filters modal
     const modal = document.getElementById('filtersModal');

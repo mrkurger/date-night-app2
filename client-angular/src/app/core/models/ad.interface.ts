@@ -13,6 +13,10 @@ export interface Ad {
   price: number;
   location: string;
   images: string[];
+  media: {
+    type: string;  // 'image' or 'video'
+    url: string;
+  }[];
   advertiser: string;
 
   // Status flags
@@ -41,6 +45,8 @@ export interface Ad {
   // UI-specific properties (may be derived from server data)
   tags?: string[];      // Used for displaying ad tags in list view
   views?: number;       // Mapped from viewCount for UI consistency
+  age?: number;         // Age of the advertiser or service provider
+  cardState?: string;   // For Tinder-style swiping animations
 }
 
 // Interface for creating new ads
@@ -51,6 +57,11 @@ export interface AdCreateDTO {
   price: number;
   location: string;
   isActive: boolean;
+  age?: number;
+  media?: {
+    type: string;  // 'image' or 'video'
+    url: string;
+  }[];
   tourDates?: {
     start: string;
     end: string;
@@ -62,6 +73,7 @@ export interface AdCreateDTO {
 export interface AdUpdateDTO extends Partial<AdCreateDTO> {
   isFeatured?: boolean;
   isTouring?: boolean;
+  tags?: string[];
 }
 
 // Interface for filtering ads
@@ -70,10 +82,13 @@ export interface AdFilters {
   location?: string;
   minPrice?: number;
   maxPrice?: number;
+  minAge?: number;
+  maxAge?: number;
   isActive?: boolean;
   isFeatured?: boolean;
   isTouring?: boolean;
-  sortBy?: 'price' | 'createdAt' | 'viewCount' | 'clickCount';
+  tags?: string[];
+  sortBy?: 'price' | 'createdAt' | 'viewCount' | 'clickCount' | 'age';
   sortOrder?: 'asc' | 'desc';
 }
 
