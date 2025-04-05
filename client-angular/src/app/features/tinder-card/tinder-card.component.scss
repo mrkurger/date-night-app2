@@ -134,7 +134,8 @@
   display: flex;
   align-items: center;
   opacity: 0;
-  transition: all var(--transition-normal) var(--transition-timing-default);
+  visibility: hidden; /* Hide completely when not active */
+  transition: all var(--transition-normal) var(--transition-timing-default), visibility var(--transition-normal) var(--transition-timing-default);
   z-index: 10;
 }
 
@@ -209,7 +210,9 @@
   color: var(--neutral-700);
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3; /* Standard property for compatibility */
   -webkit-box-orient: vertical;
+  box-orient: vertical; /* Standard property for compatibility */
   overflow: hidden;
   font-size: var(--font-size-md);
 }
@@ -312,6 +315,7 @@
   .card-description {
     font-size: var(--font-size-sm);
     -webkit-line-clamp: 2;
+    line-clamp: 2; /* Standard property for compatibility */
   }
 
   .action-button {

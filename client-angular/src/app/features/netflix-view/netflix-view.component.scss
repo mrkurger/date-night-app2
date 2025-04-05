@@ -42,6 +42,7 @@
     rgba(0, 0, 0, 0.8) 100%
   );
   z-index: 2;
+  pointer-events: none; /* Ensure gradient doesn't block clicks */
 }
 
 .hero-content {
@@ -328,6 +329,7 @@
 
 .row-item:hover .row-item-overlay {
   opacity: 1;
+  visibility: visible; /* Show on hover */
   pointer-events: auto; /* Re-enable pointer events on hover */
 }
 
@@ -364,7 +366,8 @@
   justify-content: space-between;
   padding: var(--space-4);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  visibility: hidden; /* Hide completely when not hovered */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   pointer-events: none; /* Ensure overlay doesn't block clicks */
 }
 

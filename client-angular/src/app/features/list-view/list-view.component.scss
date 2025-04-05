@@ -317,12 +317,14 @@
 .carousel-control-next {
   width: 15%;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  visibility: hidden; /* Hide completely when not hovered */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .list-item-media:hover .carousel-control-prev,
 .list-item-media:hover .carousel-control-next {
   opacity: 0.8;
+  visibility: visible; /* Show on hover */
 }
 
 .carousel-control-prev-icon,

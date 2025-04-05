@@ -1,0 +1,16 @@
+// Design System Index
+// This file serves as the main entry point for the design system
+
+// Import all design system partials
+@forward 'variables';
+@forward 'typography';
+@forward 'components';
+@forward 'utilities';
+@forward 'animations';
+@forward 'reset';
+
+// Export mixins and variables for use in components
+@use 'variables' as *;
+@use 'typography' as *;
+@use 'components' as *;
+@use 'animations' as *;
