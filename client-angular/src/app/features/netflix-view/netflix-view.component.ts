@@ -7,13 +7,14 @@ import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-netflix-view',
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent]
 })
 export class NetflixViewComponent implements OnInit, AfterViewInit {
   @ViewChildren('rowContainer') rowContainers!: QueryList<ElementRef>;

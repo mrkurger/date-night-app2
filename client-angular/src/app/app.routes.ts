@@ -16,12 +16,21 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'settings',
+    loadComponent: () => import('./features/user-settings/user-settings.component').then(m => m.UserSettingsComponent),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'ads',
     loadChildren: () => import('./features/ads/ads.module').then(m => m.AdsModule)
   },
   {
     path: 'ad-details/:id',
     loadChildren: () => import('./features/ad-details/ad-details.module').then(m => m.AdDetailsModule)
+  },
+  {
+    path: 'advertiser/:id',
+    loadComponent: () => import('./features/advertiser-profile/advertiser-profile.component').then(m => m.AdvertiserProfileComponent)
   },
   {
     path: 'ad-management',
@@ -39,16 +48,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'tinder',
-    loadComponent: () => import('./features/tinder/tinder.component').then(m => m.TinderComponent),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'netflix-view',
+    path: 'browse',
     loadComponent: () => import('./features/netflix-view/netflix-view.component').then(m => m.NetflixViewComponent)
   },
   {
-    path: 'list-view',
+    path: 'swipe',
+    loadComponent: () => import('./features/tinder/tinder.component').then(m => m.TinderComponent)
+  },
+  {
+    path: 'list',
     loadComponent: () => import('./features/list-view/list-view.component').then(m => m.ListViewComponent)
   },
   {
