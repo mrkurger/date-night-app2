@@ -4,7 +4,7 @@ import { RouterModule, Router, RouterOutlet } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
-import { MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
+import { MatTabNav } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-ad-management',
@@ -16,8 +16,7 @@ import { MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
     RouterModule,
     RouterOutlet,
     MaterialModule,
-    MatTabNav,
-    MatTabNavPanel
+    MatTabNav
   ]
 })
 export class AdManagementComponent implements OnInit {

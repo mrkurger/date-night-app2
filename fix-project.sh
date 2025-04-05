@@ -32,6 +32,8 @@ check_success() {
 echo -e "${MAGENTA}Step 1: Making scripts executable...${RESET}"
 chmod +x $PROJECT_ROOT/scripts/*.js
 chmod +x $PROJECT_ROOT/server/scripts/*.js
+# Ensure update-packages.js is executable
+chmod +x $PROJECT_ROOT/scripts/update-packages.js
 check_success "Making scripts executable"
 
 # Step 2: Update package.json files to use correct versions
@@ -81,8 +83,14 @@ cd $PROJECT_ROOT
 node scripts/ensure-mongodb.js
 check_success "Checking MongoDB setup"
 
-# Step 7: Verify server/scripts directory
-echo -e "${MAGENTA}Step 7: Verifying server/scripts directory...${RESET}"
+# Step 7: Updating packages
+echo -e "${MAGENTA}Step 7: Updating packages...${RESET}"
+cd $PROJECT_ROOT
+npm run update-packages
+check_success "Updating packages"
+
+# Step 8: Verify server/scripts directory
+echo -e "${MAGENTA}Step 8: Verifying server/scripts directory...${RESET}"
 if [ ! -d "$SERVER_DIR/scripts" ]; then
   echo -e "${YELLOW}Creating server/scripts directory...${RESET}"
   mkdir -p "$SERVER_DIR/scripts"

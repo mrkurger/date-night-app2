@@ -48,7 +48,7 @@ The project uses a modern Angular frontend with an Express.js backend:
 
 **Prerequisites:**
 
-* Node.js (v18+) and npm installed
+* Node.js v22.14.0 and npm v10.9.2 installed
 * MongoDB installed and running (`mongod`)
 * Angular CLI installed globally (`npm install -g @angular/cli`)
 

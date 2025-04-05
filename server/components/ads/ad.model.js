@@ -78,4 +78,9 @@ adSchema.pre('save', function(next) {
   next();
 });
 
-module.exports = mongoose.model('Ad', adSchema);
+// Check if model already exists before defining
+if (mongoose.models.Ad) {
+  module.exports = mongoose.model('Ad');
+} else {
+  module.exports = mongoose.model('Ad', adSchema);
+}

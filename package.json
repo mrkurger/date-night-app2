@@ -26,7 +26,8 @@
     "audit-fix": "npm audit fix --force",
     "make-executable": "bash ./make-scripts-executable.sh",
     "fix-all": "bash ./fix-project.sh",
-    "check-node": "node scripts/check-node-version.js"
+    "check-node": "node scripts/check-node-version.js",
+    "update-packages": "node scripts/update-packages.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
@@ -48,5 +49,9 @@
     "semver": "^7.6.0",
     "tough-cookie": "^4.1.3",
     "word-wrap": "^1.2.5"
+  },
+  "engines": {
+    "node": "22.14.0",
+    "npm": "10.9.2"
   }
 }

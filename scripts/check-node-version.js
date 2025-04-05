@@ -13,13 +13,42 @@ const path = require('path');
 const currentVersion = process.version;
 console.log(`Current Node.js version: ${currentVersion}`);
 
+// Get current npm version
+let npmVersion;
+try {
+  npmVersion = execSync('npm -v').toString().trim();
+  console.log(`Current npm version: ${npmVersion}`);
+} catch (error) {
+  console.warn('\x1b[33m%s\x1b[0m', 'Could not determine npm version.');
+}
+
+// Expected versions
+const expectedNodeVersion = 'v22.14.0';
+const expectedNpmVersion = '10.9.2';
+
+// Check if Node.js version matches expected
+if (currentVersion !== expectedNodeVersion) {
+  console.warn('\x1b[33m%s\x1b[0m', `WARNING: Your Node.js version (${currentVersion}) does not match the expected version (${expectedNodeVersion}).`);
+  console.warn('\x1b[33m%s\x1b[0m', 'This might cause compatibility issues with the project.');
+} else {
+  console.log('\x1b[32m%s\x1b[0m', `✓ Node.js version matches expected (${expectedNodeVersion}).`);
+}
+
+// Check if npm version matches expected
+if (npmVersion && npmVersion !== expectedNpmVersion) {
+  console.warn('\x1b[33m%s\x1b[0m', `WARNING: Your npm version (${npmVersion}) does not match the expected version (${expectedNpmVersion}).`);
+  console.warn('\x1b[33m%s\x1b[0m', 'This might cause compatibility issues with the project.');
+} else if (npmVersion) {
+  console.log('\x1b[32m%s\x1b[0m', `✓ npm version matches expected (${expectedNpmVersion}).`);
+}
+
 // Check if it's an odd-numbered version
 const major = semver.major(currentVersion);
 if (major % 2 !== 0) {
   console.warn('\x1b[33m%s\x1b[0m', `WARNING: You are using Node.js ${currentVersion}, which is an odd-numbered version.`);
   console.warn('\x1b[33m%s\x1b[0m', 'Odd-numbered versions are not LTS (Long Term Support) and are not recommended for production.');
   console.warn('\x1b[33m%s\x1b[0m', 'Consider switching to an even-numbered LTS version like 18.x, 20.x, or 22.x.');
-  
+
   // Check if nvm is installed
   try {
     execSync('command -v nvm', { stdio: 'ignore' });

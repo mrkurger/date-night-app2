@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment';
+// Define a local environment object to avoid import issues
+const environment = {
+  production: false
+};
 
 @Component({
   selector: 'app-debug-info',

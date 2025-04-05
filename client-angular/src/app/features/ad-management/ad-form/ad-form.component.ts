@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../shared/material.module';
@@ -17,8 +17,7 @@ import { switchMap, tap } from 'rxjs/operators';
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    MaterialModule,
-    DatePipe
+    MaterialModule
   ]
 })
 export class AdFormComponent implements OnInit {

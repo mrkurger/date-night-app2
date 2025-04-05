@@ -41,8 +41,13 @@ const chatMessageSchema = new mongoose.Schema({
 
 adSchema.index({ coordinates: '2dsphere' });
 
+// Check if models already exist before defining
+const getModel = (name, schema) => {
+  return mongoose.models[name] ? mongoose.model(name) : mongoose.model(name, schema);
+};
+
 module.exports = {
-  Ad: mongoose.model('Ad', adSchema),
-  User: mongoose.model('User', userSchema),
-  ChatMessage: mongoose.model('ChatMessage', chatMessageSchema)
+  Ad: getModel('Ad', adSchema),
+  User: getModel('User', userSchema),
+  ChatMessage: getModel('ChatMessage', chatMessageSchema)
 };
