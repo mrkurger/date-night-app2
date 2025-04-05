@@ -1,0 +1,218 @@
+
+/* Theme CSS */
+
+/* Light Theme (default) */
+:root {
+  --primary-rgb: 255, 51, 102;
+  --secondary-rgb: 51, 204, 255;
+  --success-rgb: 40, 167, 69;
+  --danger-rgb: 220, 53, 69;
+  --warning-rgb: 255, 193, 7;
+  --info-rgb: 23, 162, 184;
+  
+  --body-bg: var(--neutral-100);
+  --body-color: var(--neutral-900);
+  
+  --link-color: var(--primary);
+  --link-hover-color: var(--primary-dark);
+  
+  --heading-color: var(--neutral-900);
+  
+  --border-color: var(--neutral-300);
+  
+  --card-bg: var(--neutral-100);
+  --card-border-color: var(--neutral-300);
+  
+  --input-bg: var(--neutral-100);
+  --input-color: var(--neutral-900);
+  --input-border-color: var(--neutral-400);
+  --input-focus-border-color: var(--primary-light);
+  --input-focus-box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25);
+  
+  --btn-default-bg: var(--neutral-200);
+  --btn-default-color: var(--neutral-900);
+  --btn-default-border-color: var(--neutral-300);
+  
+  --navbar-bg: var(--neutral-100);
+  --navbar-color: var(--neutral-900);
+  --navbar-hover-color: var(--primary);
+  --navbar-active-color: var(--primary);
+  --navbar-border-color: var(--neutral-300);
+  
+  --footer-bg: var(--neutral-800);
+  --footer-color: var(--neutral-200);
+  --footer-link-color: var(--neutral-100);
+  --footer-link-hover-color: var(--primary-light);
+}
+
+/* Dark Theme */
+.dark-theme {
+  --body-bg: var(--neutral-900);
+  --body-color: var(--neutral-200);
+  
+  --link-color: var(--primary-light);
+  --link-hover-color: var(--primary);
+  
+  --heading-color: var(--neutral-100);
+  
+  --border-color: var(--neutral-700);
+  
+  --card-bg: var(--neutral-800);
+  --card-border-color: var(--neutral-700);
+  
+  --input-bg: var(--neutral-800);
+  --input-color: var(--neutral-200);
+  --input-border-color: var(--neutral-700);
+  --input-focus-border-color: var(--primary);
+  --input-focus-box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.5);
+  
+  --btn-default-bg: var(--neutral-700);
+  --btn-default-color: var(--neutral-200);
+  --btn-default-border-color: var(--neutral-600);
+  
+  --navbar-bg: var(--neutral-900);
+  --navbar-color: var(--neutral-200);
+  --navbar-hover-color: var(--primary-light);
+  --navbar-active-color: var(--primary-light);
+  --navbar-border-color: var(--neutral-700);
+  
+  --footer-bg: var(--neutral-900);
+  --footer-color: var(--neutral-300);
+  --footer-link-color: var(--neutral-200);
+  --footer-link-hover-color: var(--primary-light);
+}
+
+/* Apply theme variables */
+body {
+  background-color: var(--body-bg);
+  color: var(--body-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border-color);
+}
+
+.form-control {
+  background-color: var(--input-bg);
+  color: var(--input-color);
+  border-color: var(--input-border-color);
+}
+
+.form-control:focus {
+  border-color: var(--input-focus-border-color);
+  box-shadow: var(--input-focus-box-shadow);
+}
+
+.btn-default {
+  background-color: var(--btn-default-bg);
+  color: var(--btn-default-color);
+  border-color: var(--btn-default-border-color);
+}
+
+.navbar {
+  background-color: var(--navbar-bg);
+  color: var(--navbar-color);
+  border-color: var(--navbar-border-color);
+}
+
+.navbar-nav .nav-link {
+  color: var(--navbar-color);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: var(--navbar-hover-color);
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--navbar-active-color);
+}
+
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-color);
+}
+
+.footer a {
+  color: var(--footer-link-color);
+}
+
+.footer a:hover {
+  color: var(--footer-link-hover-color);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--navbar-color);
+  transition: all var(--transition-normal) var(--transition-timing-default);
+}
+
+.theme-toggle:hover {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--navbar-hover-color);
+}
+
+.theme-toggle i {
+  font-size: var(--font-size-lg);
+}
+
+/* System preference based theme */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    --body-bg: var(--neutral-900);
+    --body-color: var(--neutral-200);
+    
+    --link-color: var(--primary-light);
+    --link-hover-color: var(--primary);
+    
+    --heading-color: var(--neutral-100);
+    
+    --border-color: var(--neutral-700);
+    
+    --card-bg: var(--neutral-800);
+    --card-border-color: var(--neutral-700);
+    
+    --input-bg: var(--neutral-800);
+    --input-color: var(--neutral-200);
+    --input-border-color: var(--neutral-700);
+    --input-focus-border-color: var(--primary);
+    --input-focus-box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.5);
+    
+    --btn-default-bg: var(--neutral-700);
+    --btn-default-color: var(--neutral-200);
+    --btn-default-border-color: var(--neutral-600);
+    
+    --navbar-bg: var(--neutral-900);
+    --navbar-color: var(--neutral-200);
+    --navbar-hover-color: var(--primary-light);
+    --navbar-active-color: var(--primary-light);
+    --navbar-border-color: var(--neutral-700);
+    
+    --footer-bg: var(--neutral-900);
+    --footer-color: var(--neutral-300);
+    --footer-link-color: var(--neutral-200);
+    --footer-link-hover-color: var(--primary-light);
+  }
+}
