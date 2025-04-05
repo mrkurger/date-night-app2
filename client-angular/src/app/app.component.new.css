@@ -1,23 +1,25 @@
 /* Main Variables */
 :root {
-  --primary-color: #ff4d7e;
-  --primary-dark: #e6365f;
-  --primary-light: #ff6b93;
-  --secondary-color: #6c63ff;
-  --accent-color: #ff9d4d;
-  --dark-color: #1a1a2e;
-  --light-color: #f8f9fa;
-  --gray-color: #6c757d;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --warning-color: #ffc107;
-  --info-color: #17a2b8;
-  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
-  --border-radius: 8px;
-  --transition-speed: 0.3s;
+  /* Using standardized variable names from variables.css */
+  /* These are kept for backward compatibility but should be phased out */
+  --primary-color: var(--primary);
+  --primary-dark: var(--primary-dark);
+  --primary-light: var(--primary-light);
+  --secondary-color: var(--secondary);
+  --accent-color: var(--accent);
+  --dark-color: var(--neutral-900);
+  --light-color: var(--neutral-100);
+  --gray-color: var(--neutral-600);
+  --success-color: var(--success);
+  --danger-color: var(--danger);
+  --warning-color: var(--warning);
+  --info-color: var(--info);
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --border-radius: var(--border-radius-md);
+  --transition-speed: var(--transition-normal);
 }
 
 /* Global Styles */

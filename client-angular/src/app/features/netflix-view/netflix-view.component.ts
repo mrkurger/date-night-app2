@@ -284,10 +284,65 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     // Open filters modal
     const modal = document.getElementById('filtersModal');
     if (modal) {
-      // Using Bootstrap's modal API
-      // @ts-ignore
-      const bsModal = new bootstrap.Modal(modal);
-      bsModal.show();
+      try {
+        // Try to use Bootstrap's modal API if available
+        // @ts-ignore
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+          // @ts-ignore
+          const bsModal = new bootstrap.Modal(modal);
+          bsModal.show();
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.add('show');
+          modal.style.display = 'block';
+          document.body.classList.add('modal-open');
+
+          // Create backdrop if it doesn't exist
+          let backdrop = document.querySelector('.modal-backdrop');
+          if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade show';
+            document.body.appendChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error('Error opening modal:', error);
+        // Simple fallback
+        modal.style.display = 'block';
+      }
+    }
+  }
+
+  // Add method to close modal for completeness
+  closeFilters(): void {
+    const modal = document.getElementById('filtersModal');
+    if (modal) {
+      try {
+        // Try to use Bootstrap's modal API if available
+        // @ts-ignore
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+          // @ts-ignore
+          const bsModal = bootstrap.Modal.getInstance(modal);
+          if (bsModal) {
+            bsModal.hide();
+          }
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.remove('show');
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+
+          // Remove backdrop
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.parentNode?.removeChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error('Error closing modal:', error);
+        // Simple fallback
+        modal.style.display = 'none';
+      }
     }
   }
 }

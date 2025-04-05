@@ -82,6 +82,12 @@ These components are integrated into a unified browsing experience with tab-base
    - [x] Add progress indicators
    - [x] Improve loading animations
 
+4. **CSS Variable Standardization**
+   - [ ] Resolve inconsistency between global variables and component variables
+   - [ ] Standardize on single naming convention (prefer `--primary` over `--primary-color`)
+   - [ ] Update all components to use standardized variable names
+   - [ ] Document variable usage guidelines
+
 ### UX Improvements
 
 1. **Filter Enhancements**

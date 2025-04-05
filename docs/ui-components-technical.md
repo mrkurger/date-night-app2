@@ -403,25 +403,56 @@ ngOnInit(): void {
 ## CSS Architecture
 
 ### Variables and Theming
-The components use CSS variables for consistent theming:
+The application uses a comprehensive set of CSS variables for consistent theming. These are defined in two main locations:
 
+1. **Global Variables** (`/client-angular/src/styles/variables.css`):
+```scss
+:root {
+  /* Color Palette */
+  --primary: #ff4d7e;
+  --primary-light: #ff6b93;
+  --primary-dark: #e6365f;
+  --secondary: #6c63ff;
+  --secondary-light: #8a83ff;
+  --secondary-dark: #5a52e0;
+  --accent: #ff9d4d;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --info: #17a2b8;
+
+  /* Neutral Colors */
+  --neutral-100: #ffffff;
+  --neutral-200: #f8f9fa;
+  --neutral-300: #e9ecef;
+  --neutral-400: #dee2e6;
+  --neutral-500: #adb5bd;
+  --neutral-600: #6c757d;
+  --neutral-700: #495057;
+  --neutral-800: #343a40;
+  --neutral-900: #212529;
+
+  /* Typography, spacing, borders, shadows, etc. */
+  /* ... */
+}
+```
+
+2. **App Component Variables** (`/client-angular/src/app/app.component.new.css`):
 ```scss
 :root {
   --primary-color: #ff4d7e;
+  --primary-dark: #e6365f;
+  --primary-light: #ff6b93;
   --secondary-color: #6c63ff;
-  --dark-color: #2d3748;
-  --gray-color: #718096;
-  --light-color: #f7fafc;
-  --danger-color: #e53e3e;
-  --success-color: #38a169;
-  --info-color: #3182ce;
-  --border-radius: 8px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --transition-speed: 0.3s;
+  --accent-color: #ff9d4d;
+  --dark-color: #1a1a2e;
+  --light-color: #f8f9fa;
+  --gray-color: #6c757d;
+  /* ... */
 }
 ```
+
+> **Note**: There is currently an inconsistency between these two variable sets. For new components, use the global variables from `variables.css` (e.g., `--primary` instead of `--primary-color`). This inconsistency will be addressed in a future refactoring.
 
 ### Responsive Design
 Media queries are used for responsive design:
@@ -612,11 +643,36 @@ End-to-end tests should cover:
    - The list view uses client-side pagination which may not be optimal for very large datasets
    - Consider implementing server-side pagination for production
 
-3. **Browser Compatibility**
+3. **Overlay Implementation Considerations**
+   - The Netflix view's card overlay implementation requires careful handling of pointer events
+   - Without proper pointer-events management, the overlay may appear as a permanent black layer on some devices
+   - Current implementation uses:
+     ```scss
+     .row-item-overlay {
+       /* Other styles... */
+       opacity: 0;
+       transition: opacity 0.3s ease;
+       pointer-events: none; /* Ensure overlay doesn't block clicks */
+     }
+
+     .row-item:hover .row-item-overlay {
+       opacity: 1;
+       pointer-events: auto; /* Re-enable pointer events on hover */
+     }
+
+     .action-button {
+       /* Other styles... */
+       position: relative;
+       z-index: 20; /* Ensure buttons are above the overlay */
+       pointer-events: auto; /* Ensure buttons are always clickable */
+     }
+     ```
+
+4. **Browser Compatibility**
    - CSS Grid and Flexbox are used extensively, which may have limited support in older browsers
    - Some CSS variables may need fallbacks for older browsers
 
-4. **Animation Performance**
+5. **Animation Performance**
    - Complex animations may cause performance issues on low-end devices
    - Consider reducing animation complexity for better performance
 
