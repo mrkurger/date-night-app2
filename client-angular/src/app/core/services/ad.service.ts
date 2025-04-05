@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Ad, AdCreateDTO, AdUpdateDTO } from '../models/ad.interface';
 
@@ -13,7 +14,55 @@ export class AdService {
   constructor(private http: HttpClient) {}
 
   getAds(filters?: any): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl, { params: filters });
+    return this.http.get<Ad[]>(this.apiUrl, { params: filters }).pipe(
+      catchError(error => {
+        console.error('Error fetching ads from API:', error);
+        return of(this.getMockAds());
+      })
+    );
+  }
+
+  // Generate mock ads for development and testing
+  private getMockAds(): Ad[] {
+    const mockAds: Ad[] = [];
+    const categories = ['Escort', 'Massage', 'Striptease'];
+    const locations = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger'];
+
+    for (let i = 1; i <= 20; i++) {
+      const category = categories[Math.floor(Math.random() * categories.length)];
+      const location = locations[Math.floor(Math.random() * locations.length)];
+      const isFeatured = Math.random() > 0.7;
+      const isTrending = Math.random() > 0.7;
+      const isTouring = Math.random() > 0.7;
+
+      mockAds.push({
+        _id: `mock-ad-${i}`,
+        title: `${category} Service ${i}`,
+        description: `This is a mock ${category.toLowerCase()} service located in ${location}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+        category,
+        price: Math.floor(Math.random() * 1000) + 500,
+        location,
+        images: [`https://picsum.photos/id/${i + 10}/500/700`],
+        media: [
+          { type: 'image', url: `https://picsum.photos/id/${i + 10}/500/700` },
+          { type: 'image', url: `https://picsum.photos/id/${i + 30}/500/700` }
+        ],
+        advertiser: `advertiser-${i}`,
+        isActive: true,
+        isFeatured,
+        isTrending,
+        isTouring,
+        viewCount: Math.floor(Math.random() * 1000),
+        clickCount: Math.floor(Math.random() * 500),
+        inquiryCount: Math.floor(Math.random() * 100),
+        createdAt: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
+        updatedAt: new Date().toISOString(),
+        tags: [category, location, isTouring ? 'Touring' : ''],
+        age: Math.floor(Math.random() * 15) + 20
+      });
+    }
+
+    return mockAds;
   }
 
   getAdById(id: string): Observable<Ad> {

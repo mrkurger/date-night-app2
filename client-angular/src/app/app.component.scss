@@ -292,15 +292,31 @@
     box-shadow: var(--shadow-md);
     margin-top: var(--space-4);
     border: var(--border-width-thin) solid var(--neutral-300);
+    position: absolute;
+    width: calc(100% - 2rem);
+    left: 1rem;
+    top: 100%;
+    z-index: var(--z-index-dropdown);
   }
-  
+
   .navbar-nav .nav-item {
     margin: var(--space-1) 0;
   }
-  
+
   .dropdown-menu {
     box-shadow: none;
     border: var(--border-width-thin) solid var(--neutral-300);
+  }
+}
+
+/* Ensure navbar is horizontal on larger screens */
+@media (min-width: 993px) {
+  .navbar-nav {
+    flex-direction: row;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 var(--space-2);
   }
 }
 
