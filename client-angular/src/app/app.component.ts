@@ -1,21 +1,24 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ChatService } from './core/services/chat.service';
 import { CsrfService } from './core/services/csrf.service';
 import { PlatformService } from './core/services/platform.service';
+import { PwaService } from './core/services/pwa.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
+import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import { Meta, Title } from '@angular/platform-browser';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.new.html',
   styleUrls: ['./app.component.new.css'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NotificationComponent]
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, NotificationComponent, DebugInfoComponent, NgIf]
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
@@ -35,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private csrfService: CsrfService,
     private platformService: PlatformService,
+    private pwaService: PwaService,
     private titleService: Title,
     private metaService: Meta
   ) {

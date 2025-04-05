@@ -56,23 +56,41 @@ logger.info(`Application starting in ${process.env.NODE_ENV} mode`);
 
 // Security middleware
 // Set security HTTP headers with improved CSP
+// Allow unsafe-eval in development mode for Angular
+const isDevelopment = process.env.NODE_ENV === 'development';
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      // Use nonce-based CSP instead of unsafe-inline and unsafe-eval
+      // Use nonce-based CSP and allow unsafe-eval in development
       scriptSrc: [
-        "'self'",
-        (req, res) => `'nonce-${res.locals.cspNonce}'`
+        '\'self\'',
+        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+        ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
+        (req, res) => `'nonce-${res.locals.cspNonce}'`,
+        ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : [])
       ],
       styleSrc: [
-        "'self'",
+        '\'self\'',
+        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+        "\'unsafe-inline\'",
         (req, res) => `'nonce-${res.locals.cspNonce}'`,
+        "'unsafe-inline'", // Angular needs this
         "https://fonts.googleapis.com"
       ],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://*.googleapis.com"],
-      connectSrc: ["'self'", "wss:", "ws:", "https://api.stripe.com"],
+      connectSrc: [
+        '\'self\'',
+        "wss:",
+        "ws:",
+        "https://api.stripe.com",
+        ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : []),
+        "wss:",
+        "ws:",
+        "https://api.stripe.com",
+        ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : [])
+      ],
       // Add additional security directives
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
