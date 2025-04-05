@@ -1,5 +1,11 @@
-// Interface for ads from the server
+/**
+ * Interface for ads from the server
+ *
+ * Note: This interface includes both properties returned directly from the server
+ * and derived properties used in the UI components.
+ */
 export interface Ad {
+  // Core properties
   _id: string;
   title: string;
   description: string;
@@ -8,21 +14,33 @@ export interface Ad {
   location: string;
   images: string[];
   advertiser: string;
+
+  // Status flags
   isActive: boolean;
   isFeatured: boolean;
   isTrending: boolean;
   isTouring: boolean;
-  viewCount: number;
+
+  // Analytics
+  viewCount: number;  // From server
   clickCount: number;
   inquiryCount: number;
+
+  // Timestamps
   createdAt: string;
   updatedAt: string;
   expiresAt?: string;
+
+  // Tour information
   tourDates?: {
     start: string;
     end: string;
     cities: string[];
   };
+
+  // UI-specific properties (may be derived from server data)
+  tags?: string[];      // Used for displaying ad tags in list view
+  views?: number;       // Mapped from viewCount for UI consistency
 }
 
 // Interface for creating new ads

@@ -36,6 +36,9 @@ export class ListViewComponent implements OnInit {
     { value: 'nameDesc', label: 'Name (Z-A)' }
   ];
   currentSort = 'newest';
+
+  // Search debouncing
+  private searchTimeout: ReturnType<typeof setTimeout>;
   
   constructor(
     private adService: AdService,
@@ -64,13 +67,31 @@ export class ListViewComponent implements OnInit {
     });
   }
   
+  /**
+   * Loads advertisements from the server and maps the data to match template expectations.
+   *
+   * This method:
+   * 1. Fetches ads from the AdService
+   * 2. Maps server data properties to UI-specific properties:
+   *    - Maps 'viewCount' to 'views' for template compatibility
+   *    - Ensures 'tags' is always defined (as an empty array if not present)
+   * 3. Applies any active filters
+   * 4. Updates loading state
+   */
   loadAds(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.adService.getAds().subscribe({
       next: (ads) => {
-        this.ads = ads;
+        // Map server data to match template expectations
+        this.ads = ads.map(ad => ({
+          ...ad,
+          // Map viewCount to views for template compatibility
+          views: ad.viewCount,
+          // Ensure tags is defined (even if empty)
+          tags: ad.tags || []
+        }));
         this.applyFilters();
         this.loading = false;
       },
@@ -246,6 +267,10 @@ export class ListViewComponent implements OnInit {
     });
   }
   
+  /**
+   * Handles search input changes with debouncing to prevent excessive filter operations.
+   * Waits 300ms after the last keystroke before applying filters.
+   */
   onSearchChange(): void {
     // Debounce search to avoid too many filter operations
     clearTimeout(this.searchTimeout);
@@ -265,5 +290,5 @@ export class ListViewComponent implements OnInit {
     }
   }
 
-  private searchTimeout: any;
+  // This line is no longer needed as we've properly declared searchTimeout above
 }
