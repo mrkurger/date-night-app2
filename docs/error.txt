@@ -1,292 +1,167 @@
-[0] npm run mongodb exited with code 48
-[1] [nodemon] 2.0.22
-[1] [nodemon] to restart at any time, enter `rs`
-[1] [nodemon] watching path(s): *.*
-[1] [nodemon] watching extensions: js,mjs,json
-[1] [nodemon] starting `node -r dotenv/config server.js`
-[1] /Users/oivindlund/date-night-app/node_modules/express/lib/router/index.js:462
-[1]     throw new TypeError('Router.use() requires a middleware function')
-[1]     ^
+[1] Application bundle generation failed. [1.281 seconds]
 [1] 
-[1] TypeError: Router.use() requires a middleware function
-[1]     at Function.use (/Users/oivindlund/date-night-app/node_modules/express/lib/router/index.js:462:11)
-[1]     at Object.<anonymous> (/Users/oivindlund/date-night-app/server/components/chat/chat.routes.js:7:8)
-[1]     at Module._compile (node:internal/modules/cjs/loader:1734:14)
-[1]     at Object..js (node:internal/modules/cjs/loader:1899:10)
-[1]     at Module.load (node:internal/modules/cjs/loader:1469:32)
-[1]     at Function._load (node:internal/modules/cjs/loader:1286:12)
-[1]     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-[1]     at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-[1]     at Module.require (node:internal/modules/cjs/loader:1491:12)
-[1]     at require (node:internal/modules/helpers:135:16)
+[1] ✘ [ERROR] NG9: Type 'AbstractControl<any, any>' is missing the following properties from type 'FormControl<any>': defaultValue, registerOnChange, registerOnDisabledChange [plugin angular-compiler]
 [1] 
-[1] Node.js v23.9.0
-[1] [nodemon] app crashed - waiting for file changes before starting...
-[2] Component HMR has been enabled.
-[2] If you encounter application reload issues, you can manually reload the page to bypass HMR and/or disable this feature with the `--no-hmr` command line option.
-[2] Please consider reporting any issues you encounter here: https://github.com/angular/angular-cli/issues
-[2] 
-[2] ❯ Building...
-[2] ✔ Building...
-[2] Application bundle generation failed. [1.393 seconds]
-[2] 
-[2] ▲ [WARNING] TS-998113: DatePipe is not used within the template of AdFormComponent [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-form/ad-form.component.ts:21:4:
-[2]       21 │     DatePipe
-[2]          ╵     ~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] TS-998113: MatTabNavPanel is not used within the template of AdManagementComponent [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.component.ts:20:4:
-[2]       20 │     MatTabNavPanel
-[2]          ╵     ~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ▲ [WARNING] TS-998113: RouterLink is not used within the template of RegisterComponent [plugin angular-compiler]
-[2] 
-[2]     src/app/features/auth/components/register/register.component.ts:10:47:
-[2]       10 │   imports: [ReactiveFormsModule, CommonModule, RouterLink],
-[2]          ╵                                                ~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'unreadCount$' does not exist on type 'ChatService'. [plugin angular-compiler]
-[2] 
-[2]     src/app/app.component.ts:47:49:
-[2]       47 │ ...iption = this.chatService.unreadCount$.subscribe((count: number...
-[2]          ╵                              ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'unreadCount$' does not exist on type 'NotificationService'. [plugin angular-compiler]
-[2] 
-[2]     src/app/app.component.ts:52:65:
-[2]       52 │ ... this.notificationService.unreadCount$.subscribe((count: number...
-[2]          ╵                              ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'getUnreadCounts' does not exist on type 'ChatService'. [plugin angular-compiler]
-[2] 
-[2]     src/app/app.component.ts:68:21:
-[2]       68 │     this.chatService.getUnreadCounts().subscribe();
-[2]          ╵                      ~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2724: '"./core/guards/auth.guard"' has no exported member named 'authGuard'. Did you mean 'AuthGuard'? [plugin angular-compiler]
-[2] 
-[2]     src/app/app.routes.ts:2:9:
-[2]       2 │ import { authGuard } from './core/guards/auth.guard';
-[2]         ╵          ~~~~~~~~~
-[2] 
-[2]   'AuthGuard' is declared here.
-[2] 
-[2]     src/app/core/guards/auth.guard.ts:9:13:
-[2]       9 │ export class AuthGuard {
-[2]         ╵              ~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'stripePublicKey' does not exist on type '{ production: boolean; apiUrl: string; chatWsUrl: string; defaultImageUrl: string; maxUploadSize: number; supportedImageTypes: string[]; mapboxToken: string; }'. [plugin angular-compiler]
-[2] 
-[2]     src/app/core/services/payment.service.ts:85:44:
-[2]       85 │     this.stripe = window.Stripe(environment.stripePublicKey);
-[2]          ╵                                             ~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS-992008: Could not find stylesheet file './ad-browser.component.scss'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-browser/ad-browser.component.ts:10:14:
-[2]       10 │   styleUrls: ['./ad-browser.component.scss'],
-[2]          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-browser/ad-browser.module.ts:4:9:
-[2]       4 │ import { SharedModule } from '../../shared/material.module';
-[2]         ╵          ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS-991010: Value at position 1 in the NgModule.imports of AdBrowserModule is not a reference
-[2]   Value could not be determined statically. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-browser/ad-browser.module.ts:15:11:
-[2]       15 │   imports: [
-[2]          ╵            ^
-[2] 
-[2]   Unknown reference.
-[2] 
-[2]     src/app/features/ad-browser/ad-browser.module.ts:17:4:
-[2]       17 │     SharedModule,
-[2]          ╵     ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.module.ts:25:9:
-[2]       25 │ import { SharedModule } from '../../shared/material.module';
-[2]          ╵          ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS-991010: Value at position 3 in the NgModule.imports of AdManagementModule is not a reference
-[2]   Value could not be determined statically. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-management.module.ts:54:11:
-[2]       54 │   imports: [
-[2]          ╵            ^
-[2] 
-[2]   Unknown reference.
-[2] 
-[2]     src/app/features/ad-management/ad-management.module.ts:58:4:
-[2]       58 │     SharedModule,
-[2]          ╵     ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'adTitle' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:2:25:
-[2]       2 │   <h2>Statistics for "{{ adTitle }}"</h2>
-[2]         ╵                          ~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'getBarHeight' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:45:33:
-[2]       45 │                  [style.height]="getBarHeight(item, viewsData)"
-[2]          ╵                                  ~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'getBarHeight' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:65:33:
-[2]       65 │                  [style.height]="getBarHeight(item, clicksData)"
-[2]          ╵                                  ~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'applyFilter' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:86:35:
-[2]       86 │ ... <input matInput (keyup)="applyFilter($event)" placeholder="Sea...
-[2]          ╵                              ~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'displayedColumns' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:121:49:
-[2]       121 │ ...     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-[2]           ╵                                              ~~~~~~~~~~~~~~~~
-[2] 
-[2]   Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] NG9: Property 'displayedColumns' does not exist on type 'AdStatsComponent'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.html:122:54:
-[2]       122 │ ...tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-[2]           ╵                                             ~~~~~~~~~~~~~~~~
-[2] 
-  Error occurs in the template of component AdStatsComponent.
-[2] 
-[2]     src/app/features/ad-management/ad-stats/ad-stats.component.ts:10:15:
-[2]       10 │   templateUrl: './ad-stats.component.html',
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../core/services/chat.service"' has no exported member 'ChatMessage'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/chat/chat.component.ts:2:22:
-[2]       2 │ import { ChatService, ChatMessage } from '../../core/services/chat....
-[2]         ╵                       ~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2554: Expected 1 arguments, but got 0. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/chat/chat.component.ts:106:21:
-[2]       106 │     this.chatService.onNewMessage().subscribe(message => {
-[2]           ╵                      ~~~~~~~~~~~~
-[2] 
-[2]   An argument for 'callback' was not provided.
-[2] 
-[2]     src/app/core/services/chat.service.ts:61:15:
-[2]       61 │   onNewMessage(callback: (message: any) => void): void {
-[2]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'subscribe' does not exist on type 'void'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/chat/chat.component.ts:106:36:
-[2]       106 │     this.chatService.onNewMessage().subscribe(message => {
-[2]           ╵                                     ~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../shared/material.module"' has no exported member 'SharedModule'. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/chat/chat.module.ts:5:9:
-[2]       5 │ import { SharedModule } from '../../shared/material.module';
-[2]         ╵          ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS-991010: Value at position 2 in the NgModule.imports of ChatModule is not a reference
-[2]   Value could not be determined statically. [plugin angular-compiler]
-[2] 
-[2]     src/app/features/chat/chat.module.ts:14:11:
-[2]       14 │   imports: [
-[2]          ╵            ^
-[2] 
-[2]   Unknown reference.
-[2] 
-[2]     src/app/features/chat/chat.module.ts:17:4:
-[2]       17 │     SharedModule,
-[2]          ╵     ~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../../core/services/notification.service"' has no exported member 'ToastNotification'. [plugin angular-compiler]
-[2] 
-[2]     src/app/shared/components/notification/notification.component.ts:3:30:
-[2]       3 │ ... { NotificationService, ToastNotification as Notification, Notif...
-[2]         ╵                            ~~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2305: Module '"../../../core/services/notification.service"' has no exported member 'NotificationType'. [plugin angular-compiler]
-[2] 
-[2]     src/app/shared/components/notification/notification.component.ts:3:65:
-[2]       3 │ ...cation as Notification, NotificationType } from '../../../core/s...
-[2]         ╵                            ~~~~~~~~~~~~~~~~
-[2] 
-[2] 
-[2] ✘ [ERROR] TS2339: Property 'toasts$' does not exist on type 'NotificationService'. [plugin angular-compiler]
-[2] 
-[2]     src/app/shared/components/notification/notification.component.ts:130:31:
-[2]       130 │       this.notificationService.toasts$.subscribe(notification => {
-[2]           ╵                                ~~~~~~~
-[2] 
-[2] 
-[2] Watch mode enabled. Watching for file changes...
+[1]     src/app/features/list-view/list-view.component.html:14:13:
+[1]       14 │             [formControl]="filterForm.controls['searchQuery']"
+[1]          ╵              ~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component ListViewComponent.
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:13:15:
+[1]       13 │   templateUrl: './list-view.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG9: Property 'openFilters' does not exist on type 'ListViewComponent'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.html:33:73:
+[1]       33 │ ...s="btn btn-outline-primary filter-button" (click)="openFilters()">
+[1]          ╵                                                       ~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component ListViewComponent.
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:13:15:
+[1]       13 │   templateUrl: './list-view.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2307: Cannot find module '../../core/models/ad.model' or its corresponding type declarations. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:9:19:
+[1]       9 │ import { Ad } from '../../core/models/ad.model';
+[1]         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2339: Property 'likeAd' does not exist on type 'AdService'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:202:19:
+[1]       202 │     this.adService.likeAd(adId).subscribe({
+[1]           ╵                    ~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2551: Property 'createRoom' does not exist on type 'ChatService'. Did you mean 'createAdRoom'? [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:221:21:
+[1]       221 │     this.chatService.createRoom(adId).subscribe({
+[1]           ╵                      ~~~~~~~~~~
+[1] 
+[1]   'createAdRoom' is declared here.
+[1] 
+[1]     src/app/core/services/chat.service.ts:53:2:
+[1]       53 │   createAdRoom(adId: string): Observable<any> {
+[1]          ╵   ~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2307: Cannot find module '../../core/models/ad.model' or its corresponding type declarations. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:9:19:
+[1]       9 │ import { Ad } from '../../core/models/ad.model';
+[1]         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2339: Property 'likeAd' does not exist on type 'AdService'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:123:19:
+[1]       123 │     this.adService.likeAd(adId).subscribe({
+[1]           ╵                    ~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2551: Property 'createRoom' does not exist on type 'ChatService'. Did you mean 'createAdRoom'? [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:142:21:
+[1]       142 │     this.chatService.createRoom(adId).subscribe({
+[1]           ╵                      ~~~~~~~~~~
+[1] 
+[1]   'createAdRoom' is declared here.
+[1] 
+[1]     src/app/core/services/chat.service.ts:53:2:
+[1]       53 │   createAdRoom(adId: string): Observable<any> {
+[1]          ╵   ~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ❯ Changes detected. Rebuilding...
+[1] ✔ Changes detected. Rebuilding...
+[1] Application bundle generation failed. [0.317 seconds]
+[1] 
+[1] ✘ [ERROR] NG9: Type 'AbstractControl<any, any>' is missing the following properties from type 'FormControl<any>': defaultValue, registerOnChange, registerOnDisabledChange [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.html:14:13:
+[1]       14 │             [formControl]="filterForm.controls['searchQuery']"
+[1]          ╵              ~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component ListViewComponent.
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:13:15:
+[1]       13 │   templateUrl: './list-view.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG9: Property 'openFilters' does not exist on type 'ListViewComponent'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.html:33:73:
+[1]       33 │ ...s="btn btn-outline-primary filter-button" (click)="openFilters()">
+[1]          ╵                                                       ~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component ListViewComponent.
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:13:15:
+[1]       13 │   templateUrl: './list-view.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2307: Cannot find module '../../core/models/ad.model' or its corresponding type declarations. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:9:19:
+[1]       9 │ import { Ad } from '../../core/models/ad.model';
+[1]         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2339: Property 'likeAd' does not exist on type 'AdService'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:202:19:
+[1]       202 │     this.adService.likeAd(adId).subscribe({
+[1]           ╵                    ~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2551: Property 'createRoom' does not exist on type 'ChatService'. Did you mean 'createAdRoom'? [plugin angular-compiler]
+[1] 
+[1]     src/app/features/list-view/list-view.component.ts:221:21:
+[1]       221 │     this.chatService.createRoom(adId).subscribe({
+[1]           ╵                      ~~~~~~~~~~
+[1] 
+[1]   'createAdRoom' is declared here.
+[1] 
+[1]     src/app/core/services/chat.service.ts:53:2:
+[1]       53 │   createAdRoom(adId: string): Observable<any> {
+[1]          ╵   ~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2307: Cannot find module '../../core/models/ad.model' or its corresponding type declarations. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:9:19:
+[1]       9 │ import { Ad } from '../../core/models/ad.model';
+[1]         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2339: Property 'likeAd' does not exist on type 'AdService'. [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:123:19:
+[1]       123 │     this.adService.likeAd(adId).subscribe({
+[1]           ╵                    ~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] TS2551: Property 'createRoom' does not exist on type 'ChatService'. Did you mean 'createAdRoom'? [plugin angular-compiler]
+[1] 
+[1]     src/app/features/netflix-view/netflix-view.component.ts:142:21:
+[1]       142 │     this.chatService.createRoom(adId).subscribe({
+[1]           ╵                      ~~~~~~~~~~
+[1] 
+[1]   'createAdRoom' is declared here.
+[1] 
+[1]     src/app/core/services/chat.service.ts:53:2:
+[1]       53 │   createAdRoom(adId: string): Observable<any> {
+[1]          ╵   ~~~~~~~~~~~~
+[1] 
+[1] 
 
