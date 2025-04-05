@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { Injectable, inject } from '@angular/core';
+import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { filter } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
 
@@ -7,26 +7,33 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class PwaService {
-  constructor(
-    private swUpdate: SwUpdate,
-    private notificationService: NotificationService
-  ) {
+  private swUpdate = inject(SwUpdate);
+  private notificationService = inject(NotificationService);
+
+  constructor() {
     // Check for service worker updates
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates
-        .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
+        .pipe(filter((evt: VersionEvent) => evt.type === 'VERSION_READY'))
         .subscribe(() => {
-          this.notificationService.info(
-            'A new version of the app is available. Reload the page to update.',
-            'Update Available',
-            {
-              duration: 10000,
-              action: 'Reload'
-            }
-          ).onAction().subscribe(() => {
-            window.location.reload();
-          });
+          this.showUpdateNotification();
         });
+    }
+  }
+
+  /**
+   * Show update notification with reload option
+   */
+  private showUpdateNotification() {
+    const notification = this.notificationService.info(
+      'A new version of the app is available. Reload the page to update.'
+    );
+    
+    // If the notification service supports actions, subscribe to them
+    if (notification && typeof notification.onAction === 'function') {
+      notification.onAction().subscribe(() => {
+        window.location.reload();
+      });
     }
   }
 
@@ -41,16 +48,7 @@ export class PwaService {
     return this.swUpdate.checkForUpdate()
       .then(hasUpdate => {
         if (hasUpdate) {
-          this.notificationService.info(
-            'A new version of the app is available. Reload the page to update.',
-            'Update Available',
-            {
-              duration: 10000,
-              action: 'Reload'
-            }
-          ).onAction().subscribe(() => {
-            window.location.reload();
-          });
+          this.showUpdateNotification();
         }
         return hasUpdate;
       })

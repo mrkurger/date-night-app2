@@ -44,12 +44,13 @@ export class NotificationService {
     this.unreadCountSubject.next(0);
   }
 
-  success(message: string): void {
-    this.snackBar.open(message, 'Close', {
+  success(message: string, action = 'Close', options = {}) {
+    const snackBarRef = this.snackBar.open(message, action, {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: ['success-snackbar']
+      panelClass: ['success-snackbar'],
+      ...options
     });
 
     // Also add to toasts
@@ -61,14 +62,17 @@ export class NotificationService {
       autoClose: true,
       duration: 3000
     });
+
+    return snackBarRef;
   }
 
-  error(message: string): void {
-    this.snackBar.open(message, 'Close', {
+  error(message: string, action = 'Close', options = {}) {
+    const snackBarRef = this.snackBar.open(message, action, {
       duration: 5000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: ['error-snackbar']
+      panelClass: ['error-snackbar'],
+      ...options
     });
 
     // Also add to toasts
@@ -80,14 +84,17 @@ export class NotificationService {
       autoClose: true,
       duration: 5000
     });
+
+    return snackBarRef;
   }
 
-  warning(message: string): void {
-    this.snackBar.open(message, 'Close', {
+  warning(message: string, action = 'Close', options = {}) {
+    const snackBarRef = this.snackBar.open(message, action, {
       duration: 4000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: ['warning-snackbar']
+      panelClass: ['warning-snackbar'],
+      ...options
     });
 
     // Also add to toasts
@@ -99,14 +106,17 @@ export class NotificationService {
       autoClose: true,
       duration: 4000
     });
+
+    return snackBarRef;
   }
 
-  info(message: string): void {
-    this.snackBar.open(message, 'Close', {
+  info(message: string, action = 'Close', options = {}) {
+    const snackBarRef = this.snackBar.open(message, action, {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: ['info-snackbar']
+      panelClass: ['info-snackbar'],
+      ...options
     });
 
     // Also add to toasts
@@ -118,6 +128,8 @@ export class NotificationService {
       autoClose: true,
       duration: 3000
     });
+
+    return snackBarRef;
   }
 
   // Add a toast notification
