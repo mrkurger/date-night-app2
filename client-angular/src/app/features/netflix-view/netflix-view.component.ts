@@ -56,29 +56,146 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
   loadAds(): void {
     this.loading = true;
     this.error = null;
-    
-    this.adService.getAds().subscribe({
-      next: (ads) => {
-        // Organize ads by category
-        this.categories.forEach(category => {
-          // For demo purposes, we're just randomly assigning ads to categories
-          // In a real app, you would filter based on actual categories
-          this.adsByCategory[category] = this.shuffleArray([...ads]).slice(0, 10);
-        });
-        
-        // Set a featured ad for the hero section
-        if (ads.length > 0) {
-          this.featuredAd = ads[Math.floor(Math.random() * ads.length)];
+
+    // First, try to get featured ads
+    this.adService.getFeaturedAds().subscribe({
+      next: (featuredAds) => {
+        if (featuredAds && featuredAds.length > 0) {
+          this.adsByCategory['Featured'] = featuredAds;
+          // Set a featured ad for the hero section
+          this.featuredAd = featuredAds[0];
+        } else {
+          this.adsByCategory['Featured'] = [];
         }
-        
-        this.loading = false;
+
+        // Then get trending ads
+        this.adService.getTrendingAds().subscribe({
+          next: (trendingAds) => {
+            this.adsByCategory['Most Popular'] = trendingAds;
+
+            // Get all ads for other categories
+            this.adService.getAds().subscribe({
+              next: (allAds) => {
+                if (allAds && allAds.length > 0) {
+                  // If we don't have a featured ad yet, set one from all ads
+                  if (!this.featuredAd && allAds.length > 0) {
+                    this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)];
+                  }
+
+                  // Set New Arrivals (sort by creation date)
+                  const newArrivals = [...allAds].sort((a, b) => {
+                    const dateA = new Date(a.createdAt || 0);
+                    const dateB = new Date(b.createdAt || 0);
+                    return dateB.getTime() - dateA.getTime();
+                  }).slice(0, 10);
+                  this.adsByCategory['New Arrivals'] = newArrivals;
+
+                  // Set Nearby (for now, just random selection)
+                  this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
+
+                  // Set Touring (filter by isTouring flag)
+                  const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
+                  this.adsByCategory['Touring'] = touringAds.length > 0 ?
+                    touringAds : this.shuffleArray([...allAds]).slice(0, 10);
+                } else {
+                  // If no ads found, set empty arrays for remaining categories
+                  this.categories.forEach(category => {
+                    if (!this.adsByCategory[category]) {
+                      this.adsByCategory[category] = [];
+                    }
+                  });
+                }
+
+                this.loading = false;
+              },
+              error: (err) => {
+                this.error = 'Failed to load ads. Please try again.';
+                this.loading = false;
+                console.error('Error loading all ads:', err);
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error loading trending ads:', err);
+            // Continue loading other categories even if trending fails
+            this.adsByCategory['Most Popular'] = [];
+            this.loadRemainingCategories(allAds);
+          }
+        });
       },
       error: (err) => {
-        this.error = 'Failed to load ads. Please try again.';
-        this.loading = false;
-        console.error('Error loading ads:', err);
+        console.error('Error loading featured ads:', err);
+        // Continue loading other categories even if featured fails
+        this.adsByCategory['Featured'] = [];
+        this.loadTrendingAndRemainingAds();
       }
     });
+  }
+
+  private loadTrendingAndRemainingAds(): void {
+    this.adService.getTrendingAds().subscribe({
+      next: (trendingAds) => {
+        this.adsByCategory['Most Popular'] = trendingAds;
+        this.loadRemainingCategories();
+      },
+      error: (err) => {
+        console.error('Error loading trending ads:', err);
+        this.adsByCategory['Most Popular'] = [];
+        this.loadRemainingCategories();
+      }
+    });
+  }
+
+  private loadRemainingCategories(existingAds?: Ad[]): void {
+    if (existingAds) {
+      this.processAllAds(existingAds);
+    } else {
+      this.adService.getAds().subscribe({
+        next: (allAds) => {
+          this.processAllAds(allAds);
+        },
+        error: (err) => {
+          this.error = 'Failed to load ads. Please try again.';
+          this.loading = false;
+          console.error('Error loading all ads:', err);
+        }
+      });
+    }
+  }
+
+  private processAllAds(allAds: Ad[]): void {
+    if (allAds && allAds.length > 0) {
+      // If we don't have a featured ad yet, set one from all ads
+      if (!this.featuredAd && allAds.length > 0) {
+        this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)];
+      }
+
+      // Set New Arrivals (sort by creation date)
+      const newArrivals = [...allAds].sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0);
+        const dateB = new Date(b.createdAt || 0);
+        return dateB.getTime() - dateA.getTime();
+      }).slice(0, 10);
+      this.adsByCategory['New Arrivals'] = newArrivals;
+
+      // Set Nearby (for now, just random selection)
+      this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
+
+      // Set Touring (filter by isTouring flag)
+      const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
+      this.adsByCategory['Touring'] = touringAds.length > 0 ?
+        touringAds : this.shuffleArray([...allAds]).slice(0, 10);
+    } else {
+      // If no ads found, set empty arrays for remaining categories
+      this.categories.forEach(category => {
+        if (!this.adsByCategory[category]) {
+          this.adsByCategory[category] = [];
+        }
+      });
+    }
+
+    this.loading = false;
+  }
   }
   
   // Helper method to shuffle array for demo purposes
