@@ -10,6 +10,7 @@ export interface ChatMessage {
   sender: string;
   recipient?: string;
   content: string;
+  message?: string; // For compatibility with the component
   timestamp: Date;
   read: boolean;
   type?: string;
@@ -17,6 +18,16 @@ export interface ChatMessage {
   metadata?: any;
   isEncrypted?: boolean;
   encryptionData?: any;
+}
+
+export interface Contact {
+  id: string;
+  name: string;
+  lastMessage: string;
+  lastMessageTime: Date;
+  unreadCount: number;
+  online: boolean;
+  avatar?: string;
 }
 
 @Injectable({
@@ -92,5 +103,46 @@ export class ChatService {
 
   onMessageRead(callback: (data: any) => void): void {
     this.socket.on('message-read', callback);
+  }
+
+  // Get contacts (users with whom the current user has chatted)
+  getContacts(): Observable<Contact[]> {
+    return this.http.get<Contact[]>(`${this.apiUrl}/contacts`);
+  }
+
+  // Mark a specific message as read
+  markAsRead(messageId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/messages/${messageId}/read`, {});
+  }
+
+  // For demo purposes - this method would be removed in production
+  // It returns mock data when the real API endpoint is not available
+  getMockContacts(): Contact[] {
+    return [
+      {
+        id: '1',
+        name: 'John Doe',
+        lastMessage: 'Hey, how are you doing?',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
+        unreadCount: 2,
+        online: true
+      },
+      {
+        id: '2',
+        name: 'Jane Smith',
+        lastMessage: 'See you tomorrow!',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
+        unreadCount: 0,
+        online: false
+      },
+      {
+        id: '3',
+        name: 'Mike Johnson',
+        lastMessage: 'Thanks for the info',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
+        unreadCount: 0,
+        online: true
+      }
+    ];
   }
 }

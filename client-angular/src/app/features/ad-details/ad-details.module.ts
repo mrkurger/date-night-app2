@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AdDetailComponent } from '../ads/components/ad-detail/ad-detail.component';
+import { AdDetailsComponent } from './ad-details.component';
 
 const routes: Routes = [
-  { path: '', component: AdDetailComponent }
+  { path: '', component: AdDetailsComponent }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    AdDetailComponent
+    AdDetailsComponent
   ]
 })
 export class AdDetailsModule { }

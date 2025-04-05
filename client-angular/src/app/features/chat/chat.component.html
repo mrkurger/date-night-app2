@@ -1,7 +1,94 @@
-<div *ngIf="error">{{ error }}</div>
-<div *ngFor="let msg of messages">
-  <p>{{ msg.content }}</p>
-  <button (click)="markAsRead(msg._id)">Mark as Read</button>
+<div class="chat-container">
+  <div class="chat-sidebar">
+    <div class="chat-header">
+      <h2>Messages</h2>
+    </div>
+
+    <div class="chat-search">
+      <input type="text" placeholder="Search conversations..." [(ngModel)]="searchTerm">
+    </div>
+
+    <div class="chat-contacts">
+      <div *ngFor="let contact of contacts"
+           class="contact-item"
+           [class.active]="selectedContactId === contact.id"
+           (click)="selectContact(contact.id)">
+        <div class="avatar avatar-md">
+          <span>{{ contact.name.charAt(0) | uppercase }}</span>
+        </div>
+        <div class="contact-info">
+          <div class="contact-name">{{ contact.name }}</div>
+          <div class="contact-preview">{{ contact.lastMessage }}</div>
+        </div>
+        <div class="contact-meta">
+          <div class="contact-time">{{ contact.lastMessageTime | date:'shortTime' }}</div>
+          <div class="unread-badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
+        </div>
+      </div>
+
+      <div *ngIf="contacts.length === 0" class="empty-contacts">
+        <p>No conversations yet</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-main">
+    <div *ngIf="selectedContactId" class="chat-conversation">
+      <div class="chat-main-header">
+        <div class="avatar avatar-md">
+          <span>{{ getSelectedContact()?.name.charAt(0) | uppercase }}</span>
+        </div>
+        <div class="chat-recipient">
+          <div class="recipient-name">{{ getSelectedContact()?.name }}</div>
+          <div class="recipient-status" [class.online]="getSelectedContact()?.online">
+            {{ getSelectedContact()?.online ? 'Online' : 'Offline' }}
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-ghost btn-icon">
+            <i class="icon-phone"></i>
+          </button>
+          <button class="btn btn-ghost btn-icon">
+            <i class="icon-more"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="message-list">
+        <div *ngFor="let message of messages"
+             class="message"
+             [class.sent]="message.sender.id === currentUserId"
+             [class.received]="message.sender.id !== currentUserId">
+          <div class="message-content">{{ message.message }}</div>
+          <div class="message-meta">
+            <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
+            <span class="message-status" [class.read]="message.read">
+              <i class="icon-check"></i>
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="messages.length === 0" class="empty-messages">
+          <p>No messages yet. Start the conversation!</p>
+        </div>
+      </div>
+
+      <div class="message-input">
+        <input [(ngModel)]="newMessage"
+               (keyup.enter)="sendMessage()"
+               placeholder="Type a message...">
+        <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
+          <i class="icon-send"></i>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!selectedContactId" class="empty-state">
+      <div class="empty-icon">
+        <i class="icon-message-circle"></i>
+      </div>
+      <h3>Select a conversation</h3>
+      <p>Choose a contact from the list to start chatting</p>
+    </div>
+  </div>
 </div>
-<textarea [(ngModel)]="newMessage"></textarea>
-<button (click)="sendMessage()">Send</button>

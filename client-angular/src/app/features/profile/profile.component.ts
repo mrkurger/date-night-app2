@@ -7,17 +7,7 @@ import { RouterModule, Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styles: [`
-    .profile-container {
-      padding: 20px;
-    }
-    .profile-header {
-      margin-bottom: 20px;
-    }
-    .profile-section {
-      margin-bottom: 15px;
-    }
-  `],
+  styleUrls: ['./profile.component.scss'],
   standalone: true,
   imports: [CommonModule, RouterModule]
 })
@@ -49,5 +39,9 @@ export class ProfileComponent implements OnInit {
 
   navigateToEdit(): void {
     this.router.navigate(['/profile/edit']);
+  }
+
+  navigateToAds(): void {
+    this.router.navigate(['/ad-management']);
   }
 }
