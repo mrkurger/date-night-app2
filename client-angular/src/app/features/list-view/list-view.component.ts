@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,9 @@ import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 
+// Declare Bootstrap types for TypeScript
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
@@ -15,7 +18,7 @@ import { Ad } from '../../core/models/ad.interface';
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule]
 })
-export class ListViewComponent implements OnInit {
+export class ListViewComponent implements OnInit, AfterViewInit {
   ads: Ad[] = [];
   filteredAds: Ad[] = [];
   loading = true;
@@ -60,11 +63,39 @@ export class ListViewComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.isAuthenticated = !!user;
     });
-    
+
     // Subscribe to filter form changes
     this.filterForm.valueChanges.subscribe(() => {
       this.applyFilters();
     });
+  }
+
+  /**
+   * After the view is initialized, set up the carousels for ads with multiple images
+   */
+  ngAfterViewInit(): void {
+    this.initializeCarousels();
+  }
+
+  /**
+   * Initialize Bootstrap carousels for ads with multiple images
+   * This needs to be called after the view is initialized and whenever the list of ads changes
+   */
+  private initializeCarousels(): void {
+    setTimeout(() => {
+      // Find all carousel elements and initialize them with Bootstrap
+      const carouselElements = document.querySelectorAll('.carousel');
+      carouselElements.forEach(carouselEl => {
+        // Initialize Bootstrap carousel with options
+        new bootstrap.Carousel(carouselEl, {
+          interval: 5000,  // Auto-cycle every 5 seconds
+          wrap: true,      // Cycle continuously
+          keyboard: true,  // React to keyboard events
+          pause: 'hover',  // Pause on mouse enter
+          touch: true      // Allow touch swipe
+        });
+      });
+    }, 100); // Small delay to ensure DOM is ready
   }
   
   /**
@@ -144,6 +175,10 @@ export class ListViewComponent implements OnInit {
     // Update pagination
     this.totalPages = Math.ceil(this.filteredAds.length / this.itemsPerPage);
     this.currentPage = 1;
+
+    // Initialize carousels for the filtered ads after a short delay
+    // to ensure the DOM has been updated
+    setTimeout(() => this.initializeCarousels(), 100);
   }
   
   sortAds(): void {
@@ -251,11 +286,27 @@ export class ListViewComponent implements OnInit {
     });
   }
   
+  /**
+   * Gets the media URL for an ad
+   * Prioritizes the first image in the ad's images array
+   * Falls back to default profile image if no images are available
+   */
   getMediaUrl(ad: Ad): string {
     if (ad.images && ad.images.length > 0) {
       return ad.images[0];
     }
-    return '/assets/images/default-profile.jpg';
+    return '/assets/img/default-profile.jpg';
+  }
+
+  /**
+   * Handles image loading errors by setting a fallback image
+   * This ensures that the UI doesn't break if an image fails to load
+   */
+  handleImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '/assets/img/profile1.jpg'; // Use the first profile image as fallback
+    // Log the error for debugging purposes
+    console.warn('Image failed to load, using fallback image:', imgElement.alt);
   }
   
   clearFilters(): void {

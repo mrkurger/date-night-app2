@@ -80,10 +80,52 @@
       <div class="list-items" *ngIf="filteredAds.length > 0">
         <div class="list-item" *ngFor="let ad of getCurrentPageAds()" (click)="viewAdDetails(ad._id)">
           <div class="list-item-media">
-            <img [src]="getMediaUrl(ad)" alt="{{ ad.title }}" class="list-item-image">
+            <!-- Single image display if only one image is available -->
+            <img *ngIf="ad.images && ad.images.length === 1"
+                 [src]="ad.images[0]"
+                 alt="{{ ad.title }}"
+                 class="list-item-image"
+                 (error)="handleImageError($event)">
+
+            <!-- Image carousel if multiple images are available -->
+            <div *ngIf="ad.images && ad.images.length > 1" class="carousel slide" [attr.id]="'adCarousel-' + ad._id">
+              <div class="carousel-inner">
+                <div *ngFor="let image of ad.images; let i = index"
+                     class="carousel-item"
+                     [class.active]="i === 0">
+                  <img [src]="image"
+                       class="list-item-image"
+                       alt="{{ ad.title }} - Image {{ i + 1 }}"
+                       (error)="handleImageError($event)">
+                </div>
+              </div>
+              <!-- Carousel controls -->
+              <button class="carousel-control-prev" type="button"
+                      [attr.data-bs-target]="'#adCarousel-' + ad._id"
+                      data-bs-slide="prev"
+                      (click)="$event.stopPropagation()">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button"
+                      [attr.data-bs-target]="'#adCarousel-' + ad._id"
+                      data-bs-slide="next"
+                      (click)="$event.stopPropagation()">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+            <!-- Fallback if no images are available -->
+            <img *ngIf="!ad.images || ad.images.length === 0"
+                 src="/assets/img/default-profile.jpg"
+                 alt="{{ ad.title }}"
+                 class="list-item-image">
+
             <div class="list-item-badges">
               <span class="badge category-badge" *ngIf="ad.category">{{ ad.category }}</span>
               <span class="badge touring-badge" *ngIf="ad.isTouring">Touring</span>
+              <span class="badge age-badge" *ngIf="ad.age">{{ ad.age }}</span>
             </div>
           </div>
           

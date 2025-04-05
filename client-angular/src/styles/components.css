@@ -910,6 +910,11 @@
   opacity: 0.5;
 }
 
+/* Ensure modal backdrop is only visible when modal is active */
+body:not(.modal-open) .modal-backdrop {
+  display: none;
+}
+
 .modal-header {
   display: flex;
   align-items: flex-start;

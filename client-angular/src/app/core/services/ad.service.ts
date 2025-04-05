@@ -42,25 +42,77 @@ export class AdService {
     const mockAds: Ad[] = [];
     const categories = ['Escort', 'Massage', 'Striptease'];
     const locations = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger'];
+    const names = ['Sofia', 'Emma', 'Isabella', 'Olivia', 'Mia', 'Amelia', 'Ava', 'Ella', 'Sophia', 'Charlotte'];
+    const descriptions = [
+      'Professional and discreet service. Available for outcalls and incalls.',
+      'Offering a luxurious and unforgettable experience. Book in advance.',
+      'New in town! Limited time only. Don\'t miss your chance.',
+      'VIP service with a personal touch. 100% satisfaction guaranteed.',
+      'Experienced and passionate. Let me take care of all your needs.',
+      'Elite companion available for dinner dates and private meetings.',
+      'Touring this week only! Book your appointment now.',
+      'Exclusive service for discerning gentlemen. References required.',
+      'Independent provider with a warm personality and stunning looks.',
+      'High-class service with attention to detail. No rush experience.'
+    ];
 
+    // Use profile images from assets/img folder
+    const profileImages = [
+      '/assets/img/profile1.jpg',
+      '/assets/img/profile2.jpg',
+      '/assets/img/profile3.jpg',
+      '/assets/img/profile4.jpg',
+      '/assets/img/profile5.jpg',
+      '/assets/img/profile6.jpg',
+      '/assets/img/profile7.jpg',
+      '/assets/img/profile8.jpg',
+      '/assets/img/profile9.jpg',
+      '/assets/img/profile10.jpg'
+    ];
+
+    // Generate a set of unique ads
     for (let i = 1; i <= 20; i++) {
       const category = categories[Math.floor(Math.random() * categories.length)];
       const location = locations[Math.floor(Math.random() * locations.length)];
+      const name = names[Math.floor(Math.random() * names.length)];
+      const description = descriptions[Math.floor(Math.random() * descriptions.length)];
       const isFeatured = Math.random() > 0.7;
       const isTrending = Math.random() > 0.7;
       const isTouring = Math.random() > 0.7;
+      const age = Math.floor(Math.random() * 15) + 20;
+
+      // Select a profile image based on index (to ensure variety)
+      const profileImageIndex = (i - 1) % profileImages.length;
+      const profileImage = profileImages[profileImageIndex];
+
+      // Select a second image that's different from the first
+      const secondImageIndex = (profileImageIndex + 1) % profileImages.length;
+      const secondImage = profileImages[secondImageIndex];
+
+      // Generate additional tags based on service type
+      const serviceTags = [];
+      if (category === 'Escort') {
+        serviceTags.push(...['GFE', 'Dinner Date', 'Overnight', 'Travel Companion'].slice(0, Math.floor(Math.random() * 3) + 1));
+      } else if (category === 'Massage') {
+        serviceTags.push(...['Swedish', 'Deep Tissue', 'Aromatherapy', 'Hot Stone'].slice(0, Math.floor(Math.random() * 3) + 1));
+      } else if (category === 'Striptease') {
+        serviceTags.push(...['Private Show', 'Bachelor Party', 'Birthday', 'Corporate Event'].slice(0, Math.floor(Math.random() * 3) + 1));
+      }
+
+      // Create a more realistic title
+      const title = `${name} - ${age} - ${category}`;
 
       mockAds.push({
         _id: `mock-ad-${i}`,
-        title: `${category} Service ${i}`,
-        description: `This is a mock ${category.toLowerCase()} service located in ${location}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+        title: title,
+        description: `${description} Located in ${location}. Available for bookings 7 days a week. Contact for more information.`,
         category,
         price: Math.floor(Math.random() * 1000) + 500,
         location,
-        images: [`https://picsum.photos/id/${i + 10}/500/700`],
+        images: [profileImage, secondImage],
         media: [
-          { type: 'image', url: `https://picsum.photos/id/${i + 10}/500/700` },
-          { type: 'image', url: `https://picsum.photos/id/${i + 30}/500/700` }
+          { type: 'image', url: profileImage },
+          { type: 'image', url: secondImage }
         ],
         advertiser: `advertiser-${i}`,
         isActive: true,
@@ -72,8 +124,8 @@ export class AdService {
         inquiryCount: Math.floor(Math.random() * 100),
         createdAt: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
         updatedAt: new Date().toISOString(),
-        tags: [category, location, isTouring ? 'Touring' : ''],
-        age: Math.floor(Math.random() * 15) + 20
+        tags: [...serviceTags, category, location, isTouring ? 'Touring' : ''],
+        age
       });
     }
 

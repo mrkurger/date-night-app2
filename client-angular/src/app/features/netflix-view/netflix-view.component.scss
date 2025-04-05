@@ -327,6 +327,7 @@
 
 .row-item:hover .row-item-overlay {
   opacity: 1;
+  pointer-events: auto; /* Re-enable pointer events on hover */
 }
 
 .row-item-media {
@@ -363,6 +364,7 @@
   padding: var(--space-4);
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none; /* Ensure overlay doesn't block clicks */
 }
 
 .row-item-info {
@@ -410,6 +412,9 @@
   transition: all var(--transition-normal) var(--transition-timing-default);
   box-shadow: var(--shadow-md);
   font-size: var(--font-size-sm);
+  position: relative;
+  z-index: 20; /* Ensure buttons are above the overlay */
+  pointer-events: auto; /* Ensure buttons are always clickable */
 }
 
 .action-button:hover {
