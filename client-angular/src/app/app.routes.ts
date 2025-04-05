@@ -4,7 +4,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./features/ad-browser/ad-browser.module').then(m => m.AdBrowserModule)
+    loadComponent: () => import('./features/browse/browse.component').then(m => m.BrowseComponent)
   },
   {
     path: 'auth',
@@ -42,6 +42,14 @@ export const routes: Routes = [
     path: 'tinder',
     loadComponent: () => import('./features/tinder/tinder.component').then(m => m.TinderComponent),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'netflix-view',
+    loadComponent: () => import('./features/netflix-view/netflix-view.component').then(m => m.NetflixViewComponent)
+  },
+  {
+    path: 'list-view',
+    loadComponent: () => import('./features/list-view/list-view.component').then(m => m.ListViewComponent)
   },
   {
     path: 'payment',

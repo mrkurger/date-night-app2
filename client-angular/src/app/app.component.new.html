@@ -10,18 +10,18 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/ad-browser" routerLinkActive="active">
-              <i class="fas fa-search"></i> Browse
+            <a class="nav-link" routerLink="/" [queryParams]="{view: 'netflix'}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+              <i class="fas fa-th-large"></i> Browse
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/gallery" routerLinkActive="active">
-              <i class="fas fa-images"></i> Gallery
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tinder" routerLinkActive="active">
+            <a class="nav-link" routerLink="/" [queryParams]="{view: 'tinder'}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
               <i class="fas fa-heart"></i> Swipe
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/" [queryParams]="{view: 'list'}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+              <i class="fas fa-list"></i> List
             </a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated && isAdvertiser">

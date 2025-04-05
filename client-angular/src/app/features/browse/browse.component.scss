@@ -1,0 +1,81 @@
+/* Browse Component Styles */
+:host {
+  display: block;
+}
+
+.browse-container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px); /* Adjust based on your header height */
+}
+
+/* View Selector Tabs */
+.view-selector {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  position: sticky;
+  top: 70px; /* Adjust based on your header height */
+  z-index: 100;
+}
+
+.view-tabs {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.view-tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.view-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  color: var(--gray-color);
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed) ease;
+  white-space: nowrap;
+}
+
+.view-tab:hover {
+  color: var(--primary-color);
+  background-color: rgba(255, 77, 126, 0.05);
+}
+
+.view-tab.active {
+  color: var(--primary-color);
+  background-color: rgba(255, 77, 126, 0.1);
+}
+
+.view-tab i {
+  font-size: 1.1rem;
+}
+
+/* View Content */
+.view-content {
+  flex: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .view-tab {
+    padding: 0.5rem 1rem;
+  }
+  
+  .view-tab span {
+    display: none;
+  }
+  
+  .view-tab i {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+}
