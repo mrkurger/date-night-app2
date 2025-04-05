@@ -108,20 +108,50 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.chatService.getMessages(this.selectedContactId).subscribe({
         next: (messages) => {
           // Transform the messages from the service format to the component format
-          this.messages = messages.map(msg => ({
-            _id: msg._id,
-            sender: {
-              id: typeof msg.sender === 'string' ? msg.sender : msg.sender.id,
-              username: typeof msg.sender === 'string' ? 'User' : msg.sender.username
-            },
-            recipient: msg.recipient ? {
-              id: typeof msg.recipient === 'string' ? msg.recipient : msg.recipient.id,
-              username: typeof msg.recipient === 'string' ? 'Recipient' : msg.recipient.username
-            } : undefined,
-            message: msg.message || msg.content,
-            timestamp: msg.timestamp,
-            read: msg.read
-          }));
+          this.messages = messages.map(msg => {
+            // Create a properly typed sender object
+            let senderObj: {id: string; username: string};
+            if (typeof msg.sender === 'string') {
+              senderObj = {
+                id: msg.sender,
+                username: 'User'
+              };
+            } else {
+              // Handle the case where sender is an object
+              const senderAsObj = msg.sender as any; // Use any to bypass type checking
+              senderObj = {
+                id: senderAsObj.id || 'unknown',
+                username: senderAsObj.username || 'Unknown User'
+              };
+            }
+
+            // Create a properly typed recipient object if it exists
+            let recipientObj: {id: string; username: string} | undefined = undefined;
+            if (msg.recipient) {
+              if (typeof msg.recipient === 'string') {
+                recipientObj = {
+                  id: msg.recipient,
+                  username: 'Recipient'
+                };
+              } else {
+                // Handle the case where recipient is an object
+                const recipientAsObj = msg.recipient as any; // Use any to bypass type checking
+                recipientObj = {
+                  id: recipientAsObj.id || 'unknown',
+                  username: recipientAsObj.username || 'Unknown Recipient'
+                };
+              }
+            }
+
+            return {
+              _id: msg._id,
+              sender: senderObj,
+              recipient: recipientObj,
+              message: msg.message || msg.content,
+              timestamp: msg.timestamp,
+              read: msg.read
+            };
+          });
         },
         error: (err) => console.error('Error loading messages:', err)
       });
