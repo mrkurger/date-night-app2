@@ -9,6 +9,10 @@
 .d-flex { display: flex !important; }
 .d-inline-flex { display: inline-flex !important; }
 .d-grid { display: grid !important; }
+.d-contents { display: contents !important; }
+.d-table { display: table !important; }
+.d-table-row { display: table-row !important; }
+.d-table-cell { display: table-cell !important; }
 
 /* Flex utilities */
 .flex-row { flex-direction: row !important; }
@@ -320,6 +324,60 @@
 .user-select-auto { user-select: auto !important; }
 .user-select-none { user-select: none !important; }
 .user-select-text { user-select: text !important; }
+
+/* Transitions and Animations */
+.transition-none { transition: none !important; }
+.transition-all { transition: all var(--transition-normal) var(--transition-timing-default) !important; }
+.transition-fast { transition: all var(--transition-fast) var(--transition-timing-default) !important; }
+.transition-slow { transition: all var(--transition-slow) var(--transition-timing-default) !important; }
+.transition-bounce { transition: all var(--transition-normal) var(--transition-timing-bounce) !important; }
+.transition-colors { transition: background-color var(--transition-normal) var(--transition-timing-default), border-color var(--transition-normal) var(--transition-timing-default), color var(--transition-normal) var(--transition-timing-default), fill var(--transition-normal) var(--transition-timing-default), stroke var(--transition-normal) var(--transition-timing-default) !important; }
+.transition-opacity { transition: opacity var(--transition-normal) var(--transition-timing-default) !important; }
+.transition-shadow { transition: box-shadow var(--transition-normal) var(--transition-timing-default) !important; }
+.transition-transform { transition: transform var(--transition-normal) var(--transition-timing-default) !important; }
+
+/* Transforms */
+.scale-0 { transform: scale(0) !important; }
+.scale-50 { transform: scale(0.5) !important; }
+.scale-75 { transform: scale(0.75) !important; }
+.scale-90 { transform: scale(0.9) !important; }
+.scale-95 { transform: scale(0.95) !important; }
+.scale-100 { transform: scale(1) !important; }
+.scale-105 { transform: scale(1.05) !important; }
+.scale-110 { transform: scale(1.1) !important; }
+.scale-125 { transform: scale(1.25) !important; }
+.scale-150 { transform: scale(1.5) !important; }
+
+.rotate-0 { transform: rotate(0deg) !important; }
+.rotate-45 { transform: rotate(45deg) !important; }
+.rotate-90 { transform: rotate(90deg) !important; }
+.rotate-180 { transform: rotate(180deg) !important; }
+.rotate-270 { transform: rotate(270deg) !important; }
+.rotate-n45 { transform: rotate(-45deg) !important; }
+.rotate-n90 { transform: rotate(-90deg) !important; }
+.rotate-n180 { transform: rotate(-180deg) !important; }
+
+.translate-x-0 { transform: translateX(0) !important; }
+.translate-x-50 { transform: translateX(50%) !important; }
+.translate-x-100 { transform: translateX(100%) !important; }
+.translate-x-n50 { transform: translateX(-50%) !important; }
+.translate-x-n100 { transform: translateX(-100%) !important; }
+
+.translate-y-0 { transform: translateY(0) !important; }
+.translate-y-50 { transform: translateY(50%) !important; }
+.translate-y-100 { transform: translateY(100%) !important; }
+.translate-y-n50 { transform: translateY(-50%) !important; }
+.translate-y-n100 { transform: translateY(-100%) !important; }
+
+/* Hover Effects */
+.hover-scale:hover { transform: scale(1.05) !important; }
+.hover-shadow:hover { box-shadow: var(--shadow-lg) !important; }
+.hover-lift:hover { transform: translateY(-4px) !important; }
+.hover-opacity:hover { opacity: 0.8 !important; }
+.hover-bg-primary:hover { background-color: var(--primary) !important; color: white !important; }
+.hover-bg-secondary:hover { background-color: var(--secondary) !important; color: white !important; }
+.hover-text-primary:hover { color: var(--primary) !important; }
+.hover-text-secondary:hover { color: var(--secondary) !important; }
 
 /* Accessibility */
 .sr-only {

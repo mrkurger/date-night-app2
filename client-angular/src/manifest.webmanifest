@@ -1,8 +1,8 @@
 {
   "name": "Date Night",
   "short_name": "DateNight",
-  "theme_color": "#ff4081",
-  "background_color": "#fafafa",
+  "theme_color": "#ff4d7e",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
