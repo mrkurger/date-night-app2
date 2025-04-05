@@ -22,6 +22,19 @@ export class AdService {
     );
   }
 
+  getSwipeAds(filters?: any): Observable<Ad[]> {
+    // This method is specifically for the Tinder component
+    // It could have special filtering or sorting logic in the future
+    return this.getAds(filters);
+  }
+
+  recordSwipe(adId: string, direction: 'left' | 'right'): Observable<any> {
+    // In a real app, this would send the swipe data to the server
+    // For now, we'll just simulate a successful response
+    console.log(`Recorded ${direction} swipe for ad ${adId}`);
+    return of({ success: true });
+  }
+
   // Generate mock ads for development and testing
   private getMockAds(): Ad[] {
     const mockAds: Ad[] = [];
