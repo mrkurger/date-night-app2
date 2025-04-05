@@ -23,6 +23,39 @@ All components are implemented as Angular standalone components, which:
 - Simplifies dependency management
 - Enables more efficient lazy loading
 
+### Data Models
+
+The application uses the following key data models:
+
+```typescript
+// Ad interface for displaying advertisements
+export interface Ad {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  location: string;
+  images: string[];
+  advertiser: string;
+  isActive: boolean;
+  isFeatured: boolean;
+  isTrending: boolean;
+  isTouring: boolean;
+  viewCount: number;
+  clickCount: number;
+  inquiryCount: number;
+  createdAt: string;
+  updatedAt: string;
+  expiresAt?: string;
+  tourDates?: {
+    start: string;
+    end: string;
+    cities: string[];
+  };
+}
+```
+
 ## Netflix View Implementation
 
 ### Key Files
@@ -73,6 +106,52 @@ The hero section features a prominent profile with a background image and gradie
   </div>
   <!-- Hero content -->
 </div>
+```
+
+#### User Interactions
+The Netflix view provides several user interactions:
+
+```typescript
+// Like an ad using the recordSwipe method
+likeAd(adId: string, event?: Event): void {
+  if (event) event.stopPropagation();
+
+  if (!this.isAuthenticated) {
+    this.notificationService.error('Please log in to like ads');
+    return;
+  }
+
+  // Using recordSwipe with 'right' direction as a like action
+  this.adService.recordSwipe(adId, 'right').subscribe({
+    next: () => {
+      this.notificationService.success('Added to your favorites');
+    },
+    error: (err) => {
+      this.notificationService.error('Failed to like ad');
+      console.error('Error liking ad:', err);
+    }
+  });
+}
+
+// Start a chat about an ad
+startChat(adId: string, event?: Event): void {
+  if (event) event.stopPropagation();
+
+  if (!this.isAuthenticated) {
+    this.notificationService.error('Please log in to start a chat');
+    return;
+  }
+
+  this.chatService.createAdRoom(adId).subscribe({
+    next: (room) => {
+      window.location.href = `/chat/${room._id}`;
+    },
+    error: (err) => {
+      this.notificationService.error('Failed to start chat');
+      console.error('Error starting chat:', err);
+    }
+  });
+}
 ```
 
 ## Tinder Card Implementation
@@ -171,17 +250,17 @@ The list view implements reactive filtering and sorting:
 ```typescript
 applyFilters(): void {
   const filters = this.filterForm.value;
-  
+
   // Apply filters
   this.filteredAds = this.ads.filter(ad => {
     // Filter logic
     // ...
     return true;
   });
-  
+
   // Apply sorting
   this.sortAds();
-  
+
   // Update pagination
   this.totalPages = Math.ceil(this.filteredAds.length / this.itemsPerPage);
   this.currentPage = 1;
@@ -196,6 +275,53 @@ sortAds(): void {
     // ...
   }
 }
+```
+
+#### User Interactions
+The list view provides several user interactions:
+
+```typescript
+// Like an ad using the recordSwipe method
+likeAd(adId: string, event?: Event): void {
+  if (event) event.stopPropagation();
+
+  if (!this.isAuthenticated) {
+    this.notificationService.error('Please log in to like ads');
+    return;
+  }
+
+  // Using recordSwipe with 'right' direction as a like action
+  this.adService.recordSwipe(adId, 'right').subscribe({
+    next: () => {
+      this.notificationService.success('Added to your favorites');
+    },
+    error: (err) => {
+      this.notificationService.error('Failed to like ad');
+      console.error('Error liking ad:', err);
+    }
+  });
+}
+
+// Start a chat about an ad
+startChat(adId: string, event?: Event): void {
+  if (event) event.stopPropagation();
+
+  if (!this.isAuthenticated) {
+    this.notificationService.error('Please log in to start a chat');
+    return;
+  }
+
+  this.chatService.createAdRoom(adId).subscribe({
+    next: (room) => {
+      window.location.href = `/chat/${room._id}`;
+    },
+    error: (err) => {
+      this.notificationService.error('Failed to start chat');
+      console.error('Error starting chat:', err);
+    }
+  });
+}
+```
 ```
 
 #### Pagination

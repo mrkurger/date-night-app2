@@ -6,7 +6,7 @@ import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Ad } from '../../core/models/ad.model';
+import { Ad } from '../../core/models/ad.interface';
 
 @Component({
   selector: 'app-netflix-view',
@@ -114,13 +114,14 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
   
   likeAd(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     if (!this.isAuthenticated) {
       this.notificationService.error('Please log in to like ads');
       return;
     }
-    
-    this.adService.likeAd(adId).subscribe({
+
+    // Using recordSwipe with 'right' direction as a like action
+    this.adService.recordSwipe(adId, 'right').subscribe({
       next: () => {
         this.notificationService.success('Added to your favorites');
       },
@@ -133,13 +134,13 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
   
   startChat(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     if (!this.isAuthenticated) {
       this.notificationService.error('Please log in to start a chat');
       return;
     }
-    
-    this.chatService.createRoom(adId).subscribe({
+
+    this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
         window.location.href = `/chat/${room._id}`;
       },
@@ -151,8 +152,8 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
   }
   
   getMediaUrl(ad: Ad): string {
-    if (ad.media && ad.media.length > 0) {
-      return ad.media[0].url;
+    if (ad.images && ad.images.length > 0) {
+      return ad.images[0];
     }
     return '/assets/images/default-profile.jpg';
   }

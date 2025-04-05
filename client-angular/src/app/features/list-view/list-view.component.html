@@ -7,11 +7,11 @@
       <!-- Search and Filters -->
       <div class="search-filters">
         <div class="search-box">
-          <input 
-            type="text" 
-            class="form-control search-input" 
-            placeholder="Search profiles..." 
-            [formControl]="filterForm.controls['searchQuery']"
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Search profiles..."
+            [formControlName]="'searchQuery'"
             (input)="onSearchChange()">
           <i class="fas fa-search search-icon"></i>
         </div>
