@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
+import { LocationService } from '../../../core/services/location.service';
+import { NorwayCity } from '../../../core/constants/norway-locations';
 
 @Component({
   selector: 'app-ad-form',
@@ -28,17 +30,27 @@ export class AdFormComponent implements OnInit {
   categories = [
     'Escort', 'Stripper', 'Massage', 'Companion', 'Other'
   ];
+  counties: string[] = [];
+  cities: NorwayCity[] = [];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private locationService: LocationService
   ) {
     this.adForm = this.createForm();
   }
 
   ngOnInit(): void {
+    // Load counties
+    this.loading = true;
+    this.locationService.getCounties().subscribe(counties => {
+      this.counties = counties;
+      this.loading = false;
+    });
+
     this.route.paramMap.pipe(
       switchMap(params => {
         this.adId = params.get('id');
@@ -53,7 +65,8 @@ export class AdFormComponent implements OnInit {
             description: 'This is a sample ad description',
             category: 'Escort',
             price: 200,
-            location: 'New York',
+            county: 'Oslo',
+            city: 'Oslo',
             isActive: true
           });
         }
@@ -62,10 +75,35 @@ export class AdFormComponent implements OnInit {
       tap(ad => {
         if (ad) {
           this.adForm.patchValue(ad);
+          
+          // Load cities for the selected county
+          if (ad.county) {
+            this.loadCitiesForCounty(ad.county);
+          }
         }
         this.loading = false;
       })
     ).subscribe();
+  }
+  
+  /**
+   * Load cities when county changes
+   */
+  onCountyChange(): void {
+    const county = this.adForm.get('county')?.value;
+    if (county) {
+      this.loadCitiesForCounty(county);
+      this.adForm.get('city')?.setValue(''); // Reset city when county changes
+    }
+  }
+  
+  /**
+   * Load cities for a specific county
+   */
+  private loadCitiesForCounty(county: string): void {
+    this.locationService.getCitiesByCounty(county).subscribe(cities => {
+      this.cities = cities;
+    });
   }
 
   createForm(): FormGroup {
@@ -74,7 +112,8 @@ export class AdFormComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(1000)]],
       category: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(0)]],
-      location: ['', Validators.required],
+      county: ['', Validators.required],
+      city: ['', Validators.required],
       isActive: [true]
     });
   }

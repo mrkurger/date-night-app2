@@ -44,6 +44,7 @@ const mediaRoutes = require('../routes/media.routes');
 const verificationRoutes = require('../routes/verification.routes');
 const reviewRoutes = require('../routes/review.routes');
 const safetyRoutes = require('../routes/safety.routes');
+const locationRoutes = require('../routes/location.routes');
 
 // CSRF token endpoint
 router.get('/csrf-token', csrfProtection, sendCsrfToken, (req, res) => {
@@ -63,6 +64,7 @@ router.use('/media', csrfProtection, mediaUploadLimiter, mediaRoutes);
 router.use('/verification', csrfProtection, authLimiter, verificationRoutes);
 router.use('/reviews', csrfProtection, profileUpdateLimiter, reviewRoutes);
 router.use('/safety', csrfProtection, authLimiter, safetyRoutes);
+router.use('/locations', locationRoutes); // No CSRF for public location data
 
 // API health check endpoint
 router.get('/health', (req, res) => {

@@ -61,12 +61,28 @@
           </mat-form-field>
         </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Location</mat-label>
-            <input matInput formControlName="location" placeholder="City, State">
-            <mat-error *ngIf="adForm.get('location')?.hasError('required')">
-              Location is required
+        <div class="form-row two-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>County</mat-label>
+            <mat-select formControlName="county" (selectionChange)="onCountyChange()">
+              <mat-option *ngFor="let county of counties" [value]="county">
+                {{ county }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="adForm.get('county')?.hasError('required')">
+              County is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <mat-select formControlName="city">
+              <mat-option *ngFor="let city of cities" [value]="city.name">
+                {{ city.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="adForm.get('city')?.hasError('required')">
+              City is required
             </mat-error>
           </mat-form-field>
         </div>
