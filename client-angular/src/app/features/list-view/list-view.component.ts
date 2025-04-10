@@ -1,12 +1,21 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
+import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Declare Bootstrap types for TypeScript
 declare var bootstrap: any;
@@ -16,7 +25,20 @@ declare var bootstrap: any;
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule,
+    AdCardComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
+  ]
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
   ads: Ad[] = [];
@@ -43,12 +65,16 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   // Search debouncing
   private searchTimeout: ReturnType<typeof setTimeout>;
   
+  // View options
+  viewMode: 'grid' | 'list' = 'grid';
+  
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
     private chatService: ChatService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -243,8 +269,40 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
   
   viewAdDetails(adId: string): void {
-    // Navigate to ad details page
-    window.location.href = `/ad-details/${adId}`;
+    // Navigate to ad details page using Angular Router
+    this.router.navigate(['/ad-details', adId]);
+  }
+  
+  /**
+   * Toggle between grid and list view modes
+   */
+  toggleViewMode(): void {
+    this.viewMode = this.viewMode === 'grid' ? 'list' : 'grid';
+  }
+  
+  /**
+   * Share an ad with others
+   */
+  shareAd(adId: string): void {
+    if (navigator.share) {
+      // Use Web Share API if available
+      navigator.share({
+        title: 'Check out this profile on DateNight.io',
+        text: 'I found an interesting profile you might like',
+        url: `${window.location.origin}/ad-details/${adId}`
+      }).catch(err => {
+        console.error('Error sharing:', err);
+      });
+    } else {
+      // Fallback: copy link to clipboard
+      const url = `${window.location.origin}/ad-details/${adId}`;
+      navigator.clipboard.writeText(url).then(() => {
+        this.notificationService.success('Link copied to clipboard');
+      }).catch(err => {
+        console.error('Error copying to clipboard:', err);
+        this.notificationService.error('Failed to copy link');
+      });
+    }
   }
   
   likeAd(adId: string, event?: Event): void {
@@ -296,6 +354,20 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       return ad.images[0];
     }
     return '/assets/img/default-profile.jpg';
+  }
+  
+  /**
+   * Determines if an ad is new (less than 7 days old)
+   */
+  isNewAd(ad: Ad): boolean {
+    if (!ad.createdAt) return false;
+    
+    const now = new Date();
+    const created = new Date(ad.createdAt);
+    const diffMs = now.getTime() - created.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    return diffDays < 7;
   }
 
   /**

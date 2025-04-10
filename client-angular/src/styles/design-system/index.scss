@@ -1,16 +1,19 @@
 // Design System Index
 // This file serves as the main entry point for the design system
 
-// Import all design system partials
-@forward 'variables';
-@forward 'typography';
-@forward 'components';
-@forward 'utilities';
-@forward 'animations';
-@forward 'reset';
+// Import new design system
+@forward '../../app/core/design/design-tokens';
+@forward '../../app/core/design/components';
+@forward '../../app/core/design/main';
+
+// Legacy imports - to be removed after migration
+// @forward 'variables';
+// @forward 'typography';
+// @forward 'components';
+// @forward 'utilities';
+// @forward 'animations';
+// @forward 'reset';
 
 // Export mixins and variables for use in components
-@use 'variables' as *;
-@use 'typography' as *;
-@use 'components' as *;
-@use 'animations' as *;
+@use '../../app/core/design/design-tokens' as *;
+@use '../../app/core/design/components' as *;

@@ -2,42 +2,47 @@
   <div class="container">
     <!-- Header Section -->
     <div class="list-header">
-      <h1 class="list-title">Browse Profiles</h1>
+      <h1 class="section-title">Browse Profiles</h1>
       
       <!-- Search and Filters -->
       <div class="search-filters">
         <div class="search-box">
-          <form [formGroup]="filterForm">
-            <input
-              type="text"
-              class="form-control search-input"
-              placeholder="Search profiles..."
-              formControlName="searchQuery"
-              (input)="onSearchChange()">
-          </form>
-          <i class="fas fa-search search-icon"></i>
+          <mat-form-field appearance="outline" class="search-input-field">
+            <mat-label>Search profiles...</mat-label>
+            <input matInput [formControl]="filterForm.controls['searchQuery']" (input)="onSearchChange()">
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
         </div>
         
         <div class="filter-actions">
-          <div class="dropdown sort-dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-sort"></i> Sort
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-              <li *ngFor="let option of sortOptions">
-                <a class="dropdown-item" [class.active]="currentSort === option.value" (click)="changeSort(option.value)">
-                  {{ option.label }}
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <button class="btn btn-outline-primary filter-button" (click)="openFilters()">
-            <i class="fas fa-sliders-h"></i> Filters
+          <!-- View Mode Toggle -->
+          <button mat-icon-button color="primary" matTooltip="Toggle View" (click)="toggleViewMode()">
+            <mat-icon>{{ viewMode === 'grid' ? 'view_list' : 'grid_view' }}</mat-icon>
           </button>
           
-          <button class="btn btn-outline-secondary clear-button" (click)="clearFilters()" *ngIf="filterForm.dirty">
-            <i class="fas fa-times"></i> Clear
+          <!-- Sort Dropdown -->
+          <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-button">
+            <mat-icon>sort</mat-icon>
+            <span>Sort</span>
+          </button>
+          <mat-menu #sortMenu="matMenu">
+            <button mat-menu-item *ngFor="let option of sortOptions" 
+                    [class.active]="currentSort === option.value" 
+                    (click)="changeSort(option.value)">
+              {{ option.label }}
+            </button>
+          </mat-menu>
+          
+          <!-- Filter Button -->
+          <button mat-button color="primary" (click)="openFilters()">
+            <mat-icon>filter_list</mat-icon>
+            <span>Filters</span>
+          </button>
+          
+          <!-- Clear Filters Button -->
+          <button mat-button color="warn" (click)="clearFilters()" *ngIf="filterForm.dirty">
+            <mat-icon>clear</mat-icon>
+            <span>Clear</span>
           </button>
         </div>
       </div>
@@ -45,20 +50,17 @@
     
     <!-- Loading State -->
     <div class="loading-container" *ngIf="loading">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+      <mat-spinner diameter="40"></mat-spinner>
       <p class="loading-text">Loading profiles...</p>
     </div>
     
     <!-- Error State -->
     <div class="error-container" *ngIf="error && !loading">
-      <div class="error-icon">
-        <i class="fas fa-exclamation-circle"></i>
-      </div>
+      <mat-icon class="error-icon">error_outline</mat-icon>
       <p class="error-text">{{ error }}</p>
-      <button class="btn btn-primary retry-button" (click)="loadAds()">
-        <i class="fas fa-redo"></i> Try Again
+      <button mat-raised-button color="primary" (click)="loadAds()">
+        <mat-icon>refresh</mat-icon>
+        Try Again
       </button>
     </div>
     
@@ -66,133 +68,39 @@
     <div class="list-content" *ngIf="!loading && !error">
       <!-- Empty State -->
       <div class="empty-container" *ngIf="filteredAds.length === 0">
-        <div class="empty-icon">
-          <i class="fas fa-search"></i>
-        </div>
+        <mat-icon class="empty-icon">search_off</mat-icon>
         <p class="empty-text">No profiles found</p>
         <p class="empty-subtext">Try adjusting your filters or search query</p>
-        <button class="btn btn-outline-primary" (click)="clearFilters()">
-          <i class="fas fa-times"></i> Clear Filters
+        <button mat-raised-button color="primary" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+          Clear Filters
         </button>
       </div>
       
-      <!-- List Items -->
-      <div class="list-items" *ngIf="filteredAds.length > 0">
-        <div class="list-item" *ngFor="let ad of getCurrentPageAds()" (click)="viewAdDetails(ad._id)">
-          <div class="list-item-media">
-            <!-- Single image display if only one image is available -->
-            <img *ngIf="ad.images && ad.images.length === 1"
-                 [src]="ad.images[0]"
-                 alt="{{ ad.title }}"
-                 class="list-item-image"
-                 (error)="handleImageError($event)">
-
-            <!-- Image carousel if multiple images are available -->
-            <div *ngIf="ad.images && ad.images.length > 1" class="carousel slide" [attr.id]="'adCarousel-' + ad._id">
-              <div class="carousel-inner">
-                <div *ngFor="let image of ad.images; let i = index"
-                     class="carousel-item"
-                     [class.active]="i === 0">
-                  <img [src]="image"
-                       class="list-item-image"
-                       alt="{{ ad.title }} - Image {{ i + 1 }}"
-                       (error)="handleImageError($event)">
-                </div>
-              </div>
-              <!-- Carousel controls -->
-              <button class="carousel-control-prev" type="button"
-                      [attr.data-bs-target]="'#adCarousel-' + ad._id"
-                      data-bs-slide="prev"
-                      (click)="$event.stopPropagation()">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button"
-                      [attr.data-bs-target]="'#adCarousel-' + ad._id"
-                      data-bs-slide="next"
-                      (click)="$event.stopPropagation()">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-
-            <!-- Fallback if no images are available -->
-            <img *ngIf="!ad.images || ad.images.length === 0"
-                 src="/assets/img/default-profile.jpg"
-                 alt="{{ ad.title }}"
-                 class="list-item-image">
-
-            <div class="list-item-badges">
-              <span class="badge category-badge" *ngIf="ad.category">{{ ad.category }}</span>
-              <span class="badge touring-badge" *ngIf="ad.isTouring">Touring</span>
-              <span class="badge age-badge" *ngIf="ad.age">{{ ad.age }}</span>
-            </div>
-          </div>
-          
-          <div class="list-item-content">
-            <div class="list-item-header">
-              <h3 class="list-item-title">{{ ad.title }}</h3>
-              <p class="list-item-location" *ngIf="ad.location">
-                <i class="fas fa-map-marker-alt"></i> {{ ad.location }}
-              </p>
-            </div>
-            
-            <div class="list-item-body">
-              <p class="list-item-description">{{ ad.description | slice:0:150 }}{{ ad.description.length > 150 ? '...' : '' }}</p>
-              
-              <div class="list-item-tags" *ngIf="ad.tags && ad.tags.length">
-                <span class="list-item-tag" *ngFor="let tag of ad.tags.slice(0, 3)">{{ tag }}</span>
-                <span class="list-item-tag more-tag" *ngIf="ad.tags.length > 3">+{{ ad.tags.length - 3 }} more</span>
-              </div>
-            </div>
-            
-            <div class="list-item-footer">
-              <div class="list-item-meta">
-                <span class="list-item-date">
-                  <i class="far fa-calendar-alt"></i> {{ ad.createdAt | date:'mediumDate' }}
-                </span>
-                <span class="list-item-views" *ngIf="ad.views">
-                  <i class="far fa-eye"></i> {{ ad.views }} views
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="list-item-actions">
-            <button class="action-button info-button" (click)="$event.stopPropagation(); viewAdDetails(ad._id)">
-              <i class="fas fa-info-circle"></i>
-            </button>
-            <button class="action-button like-button" (click)="$event.stopPropagation(); likeAd(ad._id, $event)">
-              <i class="fas fa-heart"></i>
-            </button>
-            <button class="action-button chat-button" (click)="$event.stopPropagation(); startChat(ad._id, $event)">
-              <i class="fas fa-comment"></i>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Pagination -->
-        <div class="pagination-container" *ngIf="totalPages > 1">
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item" [class.disabled]="currentPage === 1">
-                <a class="page-link" (click)="goToPage(currentPage - 1)" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              
-              <li class="page-item" *ngFor="let page of getPaginationArray()" [class.active]="page === currentPage">
-                <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
-              </li>
-              
-              <li class="page-item" [class.disabled]="currentPage === totalPages">
-                <a class="page-link" (click)="goToPage(currentPage + 1)" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+      <!-- Grid/List View -->
+      <div class="ad-grid" [class.ad-list]="viewMode === 'list'" *ngIf="filteredAds.length > 0">
+        <app-ad-card 
+          *ngFor="let ad of getCurrentPageAds()" 
+          [ad]="ad"
+          [layout]="viewMode"
+          [isFeatured]="ad.isFeatured"
+          [isNew]="isNewAd(ad)"
+          [isTrending]="ad.isTrending"
+          (viewDetails)="viewAdDetails($event)"
+          (like)="likeAd($event)"
+          (chat)="startChat($event)"
+          (share)="shareAd($event)">
+        </app-ad-card>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="pagination-container" *ngIf="totalPages > 1">
+        <mat-paginator 
+          [length]="filteredAds.length"
+          [pageSize]="itemsPerPage"
+          [pageIndex]="currentPage - 1"
+          (page)="goToPage($event.pageIndex + 1)">
+        </mat-paginator>
       </div>
     </div>
   </div>
@@ -208,39 +116,37 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="filterForm">
-          <div class="mb-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" formControlName="category">
-              <option value="">All Categories</option>
-              <option value="Escort">Escort</option>
-              <option value="Striptease">Striptease</option>
-              <option value="Massage">Massage</option>
-            </select>
-          </div>
+          <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="">All Categories</mat-option>
+              <mat-option value="Escort">Escort</mat-option>
+              <mat-option value="Striptease">Striptease</mat-option>
+              <mat-option value="Massage">Massage</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+              <mat-option value="">All Locations</mat-option>
+              <mat-option value="Oslo">Oslo</mat-option>
+              <mat-option value="Bergen">Bergen</mat-option>
+              <mat-option value="Trondheim">Trondheim</mat-option>
+              <mat-option value="Stavanger">Stavanger</mat-option>
+            </mat-select>
+          </mat-form-field>
           
           <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <select class="form-select" id="location" formControlName="location">
-              <option value="">All Locations</option>
-              <option value="Oslo">Oslo</option>
-              <option value="Bergen">Bergen</option>
-              <option value="Trondheim">Trondheim</option>
-              <option value="Stavanger">Stavanger</option>
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Currently Touring</label>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="touringOnly" formControlName="touringOnly">
-              <label class="form-check-label" for="touringOnly">Show only touring profiles</label>
-            </div>
+            <mat-checkbox formControlName="touringOnly" color="primary">
+              Show only touring profiles
+            </mat-checkbox>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeFilters()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="applyFilters(); closeFilters()">Apply Filters</button>
+        <button mat-button (click)="closeFilters()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="applyFilters(); closeFilters()">Apply Filters</button>
       </div>
     </div>
   </div>
