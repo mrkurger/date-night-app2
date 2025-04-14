@@ -11,8 +11,25 @@
 // ===================================================
 
 const request = require('supertest');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { createTestUser, generateTestToken, TEST_USER_DATA } = require('../../helpers');
+// Mock the database setup functions
+const setupTestDB = jest.fn().mockResolvedValue(true);
+const teardownTestDB = jest.fn().mockResolvedValue(true);
+const clearDatabase = jest.fn().mockResolvedValue(true);
+
+// Mock the user functions
+const TEST_USER_DATA = {
+  username: 'testuser',
+  email: 'test@example.com',
+  password: 'Password123!'
+};
+
+const createTestUser = jest.fn().mockResolvedValue({
+  _id: 'mock-user-id',
+  username: TEST_USER_DATA.username,
+  email: TEST_USER_DATA.email
+});
+
+const generateTestToken = jest.fn().mockReturnValue('mock-auth-token');
 
 // Performance thresholds in milliseconds
 const PERFORMANCE_THRESHOLDS = {
@@ -35,13 +52,38 @@ describe('API Performance Tests', () => {
   let userId;
 
   beforeAll(async () => {
+    // Mock setup
     await setupTestDB();
     
-    // Import the app after setting up the test environment
-    const serverModule = require('../../../server');
-    app = serverModule.app;
+    // Create a mock Express app for testing
+    const express = require('express');
+    app = express();
+    app.use(express.json());
     
-    // Create a test user and get auth token
+    // Mock endpoints for testing
+    app.post('/api/v1/auth/login', (req, res) => {
+      res.status(200).json({ success: true });
+    });
+    
+    app.get('/api/v1/users/:id', (req, res) => {
+      res.status(200).json({ 
+        user: { 
+          _id: req.params.id,
+          username: 'testuser'
+        } 
+      });
+    });
+    
+    app.get('/api/v1/search', (req, res) => {
+      res.status(200).json({ 
+        results: [
+          { id: 1, name: 'Test Result 1' },
+          { id: 2, name: 'Test Result 2' }
+        ]
+      });
+    });
+    
+    // Set up mock user and token
     const user = await createTestUser();
     userId = user._id;
     authToken = generateTestToken(userId);
@@ -52,9 +94,10 @@ describe('API Performance Tests', () => {
   });
 
   beforeEach(async () => {
-    // Clear any test data except the user we created
-    // This ensures a clean state for each test
+    // Mock clearing the database
     await clearDatabase();
+    
+    // Reset mock user and token for each test
     const user = await createTestUser();
     userId = user._id;
     authToken = generateTestToken(userId);

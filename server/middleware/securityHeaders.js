@@ -11,7 +11,22 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
+const helmet = require('helmet');
+
+// Create a middleware function that applies all security headers
 const securityHeaders = (req, res, next) => {
+  // X-Content-Type-Options
+  // Prevents browsers from MIME-sniffing a response away from the declared content-type
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  
+  // X-Frame-Options
+  // Prevents clickjacking by disallowing the page to be embedded in a frame
+  res.setHeader('X-Frame-Options', 'DENY');
+  
+  // X-XSS-Protection
+  // Enables the Cross-site scripting (XSS) filter in browsers
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
   // Strict-Transport-Security
   // Force HTTPS in production
   if (process.env.NODE_ENV === 'production') {

@@ -38,15 +38,15 @@ module.exports = {
       displayName: 'server-integration',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/server/tests/integration/**/*.test.js'],
-      setupFilesAfterEnv: ['jest-extended/all'],
-      testTimeout: 30000 // Longer timeout for integration tests
+      setupFilesAfterEnv: ['jest-extended/all']
+      // Integration tests may take longer to run
     },
     {
       displayName: 'server-performance',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/server/tests/performance/**/*.test.js'],
-      setupFilesAfterEnv: ['jest-extended/all'],
-      testTimeout: 60000 // Even longer timeout for performance tests
+      setupFilesAfterEnv: ['jest-extended/all']
+      // Performance tests may take even longer to run
     },
     
     // Client-side tests (Angular tests are handled by Karma)

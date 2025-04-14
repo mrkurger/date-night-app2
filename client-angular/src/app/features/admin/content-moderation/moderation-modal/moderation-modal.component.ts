@@ -9,7 +9,8 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { PendingMedia } from '../../../../core/models/media.interface';
 import { SafeUrl } from '@angular/platform-browser';
 import { ContentSanitizerService } from '../../../../core/services/content-sanitizer.service';
@@ -20,7 +21,9 @@ import { ContentSanitizerService } from '../../../../core/services/content-sanit
 @Component({
   selector: 'app-moderation-modal',
   templateUrl: './moderation-modal.component.html',
-  styleUrls: ['./moderation-modal.component.scss']
+  styleUrls: ['./moderation-modal.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class ModerationModalComponent implements OnChanges {
   @Input() media: PendingMedia | null = null;

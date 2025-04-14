@@ -115,6 +115,7 @@ export class AdService {
           { type: 'image', url: secondImage }
         ],
         advertiser: `advertiser-${i}`,
+        userId: `user-${Math.floor(Math.random() * 5) + 1}`, // Add userId property
         isActive: true,
         isFeatured,
         isTrending,

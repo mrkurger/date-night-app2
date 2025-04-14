@@ -10,7 +10,7 @@
 // ===================================================
 const express = require('express');
 const router = express.Router();
-const asyncHandler = require('../middleware/asyncHandler');
+const { asyncHandler } = require('../middleware/asyncHandler');
 
 // Import the Norway locations data
 const norwayLocations = require('../data/norway-locations');

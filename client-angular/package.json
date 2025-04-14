@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve client-angular",
-    "build": "ng build client-angular && node src/csp-config.js",
+    "build": "ng build client-angular",
     "watch": "ng build client-angular --watch --configuration development",
     "test": "ng test client-angular",
     "update-csp": "node src/csp-config.js"
@@ -23,6 +23,7 @@
     "@angular/router": "19.2.5",
     "@angular/service-worker": "19.2.5",
     "@fortawesome/fontawesome-free": "^6.5.1",
+    "@ng-bootstrap/ng-bootstrap": "18.0.0",
     "bootstrap": "^5.3.2",
     "ngx-socket-io": "^4.5.1",
     "rxjs": "~7.8.0",

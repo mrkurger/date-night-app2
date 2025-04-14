@@ -24,20 +24,17 @@ describe('AuthService', () => {
   const mockUser = {
     _id: 'user123',
     username: 'testuser',
-    email: 'test@example.com',
-    firstName: 'Test',
-    lastName: 'User'
+    email: 'test@example.com'
   };
 
   const mockCredentials = {
-    username: 'testuser',
+    email: 'test@example.com',
     password: 'Password123!'
   };
 
   const mockAuthResponse = {
     user: mockUser,
-    accessToken: 'mock-access-token',
-    refreshToken: 'mock-refresh-token'
+    token: 'mock-token'
   };
 
   beforeEach(() => {
@@ -65,12 +62,10 @@ describe('AuthService', () => {
   });
 
   describe('login', () => {
-    it('should send login request and store tokens', () => {
-      service.login(mockCredentials.username, mockCredentials.password).subscribe(response => {
+    it('should send login request and store token', () => {
+      service.login(mockCredentials).subscribe(response => {
         expect(response).toEqual(mockAuthResponse);
-        expect(localStorage.getItem('accessToken')).toBe(mockAuthResponse.accessToken);
-        expect(localStorage.getItem('refreshToken')).toBe(mockAuthResponse.refreshToken);
-        expect(service.currentUser).toEqual(mockUser);
+        expect(localStorage.getItem('token')).toBe(mockAuthResponse.token);
       });
 
       const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
@@ -86,12 +81,11 @@ describe('AuthService', () => {
         statusText: 'Unauthorized'
       };
 
-      service.login(mockCredentials.username, 'wrongpassword').subscribe({
+      service.login({...mockCredentials, password: 'wrongpassword'}).subscribe({
         next: () => fail('should have failed with 401 error'),
         error: error => {
           expect(error.status).toBe(401);
-          expect(localStorage.getItem('accessToken')).toBeNull();
-          expect(localStorage.getItem('refreshToken')).toBeNull();
+          expect(localStorage.getItem('token')).toBeNull();
         }
       });
 
@@ -100,100 +94,43 @@ describe('AuthService', () => {
     });
   });
 
-  describe('register', () => {
-    const mockRegisterData = {
-      username: 'newuser',
-      email: 'new@example.com',
-      password: 'Password123!',
-      firstName: 'New',
-      lastName: 'User'
-    };
-
-    it('should send register request and store tokens', () => {
-      service.register(mockRegisterData).subscribe(response => {
-        expect(response).toEqual(mockAuthResponse);
-        expect(localStorage.getItem('accessToken')).toBe(mockAuthResponse.accessToken);
-        expect(localStorage.getItem('refreshToken')).toBe(mockAuthResponse.refreshToken);
-        expect(service.currentUser).toEqual(mockUser);
-      });
-
-      const req = httpMock.expectOne(`${environment.apiUrl}/auth/register`);
-      expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual(mockRegisterData);
-      
-      req.flush(mockAuthResponse);
-    });
-  });
-
   describe('logout', () => {
-    it('should clear tokens and user data', () => {
+    it('should send logout request and clear token', () => {
       // Setup initial state
-      localStorage.setItem('accessToken', mockAuthResponse.accessToken);
-      localStorage.setItem('refreshToken', mockAuthResponse.refreshToken);
-      service.currentUser = mockUser;
+      localStorage.setItem('token', mockAuthResponse.token);
+      localStorage.setItem('currentUser', JSON.stringify(mockUser));
       
-      service.logout();
+      service.logout().subscribe(() => {
+        expect(localStorage.getItem('token')).toBeNull();
+        expect(localStorage.getItem('currentUser')).toBeNull();
+      });
       
-      expect(localStorage.getItem('accessToken')).toBeNull();
-      expect(localStorage.getItem('refreshToken')).toBeNull();
-      expect(service.currentUser).toBeNull();
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      expect(req.request.method).toBe('POST');
+      req.flush({ success: true });
     });
   });
 
-  describe('refreshToken', () => {
-    it('should send refresh token request and update access token', () => {
-      // Setup initial state
-      localStorage.setItem('refreshToken', mockAuthResponse.refreshToken);
-      
-      const refreshResponse = {
-        accessToken: 'new-access-token',
-        user: mockUser
-      };
-      
-      service.refreshToken().subscribe(response => {
-        expect(response).toEqual(refreshResponse);
-        expect(localStorage.getItem('accessToken')).toBe(refreshResponse.accessToken);
-        expect(service.currentUser).toEqual(mockUser);
-      });
-
-      const req = httpMock.expectOne(`${environment.apiUrl}/auth/refresh-token`);
-      expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual({ refreshToken: mockAuthResponse.refreshToken });
-      
-      req.flush(refreshResponse);
+  describe('getCurrentUser', () => {
+    it('should return user from localStorage', () => {
+      localStorage.setItem('currentUser', JSON.stringify(mockUser));
+      const user = service.getCurrentUser();
+      expect(user).toEqual(mockUser);
     });
 
-    it('should handle refresh token error', () => {
-      // Setup initial state
-      localStorage.setItem('refreshToken', 'invalid-refresh-token');
-      
-      const errorResponse = {
-        status: 401,
-        statusText: 'Unauthorized'
-      };
-
-      service.refreshToken().subscribe({
-        next: () => fail('should have failed with 401 error'),
-        error: error => {
-          expect(error.status).toBe(401);
-          // Should clear tokens on refresh failure
-          expect(localStorage.getItem('accessToken')).toBeNull();
-          expect(localStorage.getItem('refreshToken')).toBeNull();
-        }
-      });
-
-      const req = httpMock.expectOne(`${environment.apiUrl}/auth/refresh-token`);
-      req.flush('Invalid token', errorResponse);
+    it('should return null when no user is stored', () => {
+      const user = service.getCurrentUser();
+      expect(user).toBeNull();
     });
   });
 
   describe('isAuthenticated', () => {
-    it('should return true when access token exists', () => {
-      localStorage.setItem('accessToken', mockAuthResponse.accessToken);
+    it('should return true when token exists', () => {
+      localStorage.setItem('token', mockAuthResponse.token);
       expect(service.isAuthenticated()).toBe(true);
     });
 
-    it('should return false when access token does not exist', () => {
+    it('should return false when token does not exist', () => {
       expect(service.isAuthenticated()).toBe(false);
     });
   });

@@ -51,11 +51,11 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "jest-extended": "4.0.2",
+    "jest-junit": "16.0.0",
+    "mongodb-memory-server": "9.5.0",
     "nodemon": "^3.1.0",
-    "supertest": "^6.3.3",
-    "mongodb-memory-server": "^9.1.6",
-    "jest-extended": "^4.0.2",
-    "jest-junit": "^16.0.0"
+    "supertest": "6.3.4"
   },
   "engines": {
     "node": "22.14.0",

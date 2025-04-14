@@ -32,20 +32,44 @@ const handleCspViolation = (req, res) => {
 
 /**
  * Configure and apply CSP middleware
+ * @returns {Function} Express middleware function
  */
-const cspMiddleware = (app) => {
-  // Apply CSP using helmet
-  app.use(
-    helmet.contentSecurityPolicy({
-      directives: cspConfig.directives,
-      reportOnly: cspConfig.reportOnly
-    })
-  );
+const cspMiddleware = () => {
+  // Create middleware function that can be used with app.use()
+  const middleware = (req, res, next) => {
+    // Apply CSP headers based on configuration
+    const headerName = cspConfig.reportOnly ? 
+      'Content-Security-Policy-Report-Only' : 
+      'Content-Security-Policy';
+    
+    // Build CSP header value from directives
+    const headerValue = Object.entries(cspConfig.directives)
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return `${key} ${value.join(' ')}`;
+        }
+        return `${key} ${value}`;
+      })
+      .join('; ');
+    
+    // Set the header
+    res.setHeader(headerName, headerValue);
+    
+    next();
+  };
 
-  // Add endpoint for CSP violation reports
-  app.post('/api/v1/csp-report', handleCspViolation);
-
+  // Log configuration on first use
   logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
+  
+  return middleware;
 };
 
-module.exports = cspMiddleware;
+// Add endpoint handler for CSP violation reports
+const setupCspReportEndpoint = (app) => {
+  app.post('/api/v1/csp-report', handleCspViolation);
+};
+
+module.exports = {
+  middleware: cspMiddleware,
+  setupReportEndpoint: setupCspReportEndpoint
+};
