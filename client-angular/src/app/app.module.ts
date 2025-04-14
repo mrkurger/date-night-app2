@@ -11,11 +11,18 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
 
+/**
+ * @deprecated This module is being phased out in favor of the standalone component approach.
+ * See app.config.ts and main.ts for the new bootstrapping method.
+ * 
+ * This module is kept for backward compatibility during the transition period.
+ * New features should use the standalone component pattern.
+ */
 const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} };
 
 @NgModule({
   declarations: [
-    AppComponent
+    // AppComponent is now a standalone component and should not be declared here
   ],
   imports: [
     BrowserModule,
@@ -30,6 +37,6 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
-  bootstrap: [AppComponent]
+  // AppComponent is now bootstrapped via bootstrapApplication in main.ts
 })
 export class AppModule { }

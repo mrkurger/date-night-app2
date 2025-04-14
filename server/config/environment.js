@@ -1,4 +1,21 @@
 // Load environment variables based on NODE_ENV
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for environment configuration
+// 
+// COMMON CUSTOMIZATIONS:
+// - port: Server port number (default: 3000 for development, 3001 for test)
+//   Related to: server/server.js:app.listen
+// - mongoUri: MongoDB connection string (default: mongodb://localhost:27017/datenight_dev for development)
+//   Related to: server/config/database.js:mongoose.connect
+// - jwtSecret: Secret for JWT token generation (default: dev_jwt_secret for development)
+//   Related to: server/services/auth.service.js:jwt.sign
+// - sessionSecret: Secret for session management (default: dev_session_secret for development)
+//   Related to: server/middleware/session.js
+// - clientUrl: URL for client application (default: http://localhost:4200)
+//   Related to: server/config/cors.js:origin
+// ===================================================
 const environment = process.env.NODE_ENV || 'development';
 
 const config = {

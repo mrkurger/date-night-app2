@@ -1,0 +1,112 @@
+@import '../../../../core/design/design-tokens';
+
+// Emerald Label Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/Label
+
+.emerald-label {
+  display: inline-flex;
+  align-items: center;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-sm;
+  
+  // Label Sizes
+  &--small {
+    padding: 2px 6px;
+    font-size: $font-size-xs;
+    
+    .emerald-label__icon {
+      font-size: 10px;
+      margin-right: 4px;
+    }
+  }
+  
+  &--medium {
+    padding: 4px 8px;
+    font-size: $font-size-sm;
+    
+    .emerald-label__icon {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+  
+  &--large {
+    padding: 6px 12px;
+    font-size: $font-size-base;
+    
+    .emerald-label__icon {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+  }
+  
+  // Label Variants
+  &--primary {
+    background-color: $primary-100;
+    color: $primary-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $primary-300;
+    }
+  }
+  
+  &--success {
+    background-color: $success-100;
+    color: $success-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $success-300;
+    }
+  }
+  
+  &--warning {
+    background-color: $warning-100;
+    color: $warning-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $warning-300;
+    }
+  }
+  
+  &--danger {
+    background-color: $danger-100;
+    color: $danger-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $danger-300;
+    }
+  }
+  
+  &--info {
+    background-color: $info-100;
+    color: $info-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $info-300;
+    }
+  }
+  
+  &--neutral {
+    background-color: $neutral-200;
+    color: $neutral-700;
+    
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $neutral-300;
+    }
+  }
+  
+  // Label Shapes
+  &--rounded {
+    border-radius: $border-radius-md;
+  }
+  
+  &--pill {
+    border-radius: 9999px;
+  }
+}

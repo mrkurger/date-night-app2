@@ -15,8 +15,8 @@ import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.new.html',
-  styleUrls: ['./app.component.new.css'],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, NotificationComponent, DebugInfoComponent, NgIf]
 })

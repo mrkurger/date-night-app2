@@ -42,7 +42,11 @@ The project uses a modern Angular frontend with an Express.js backend:
 │   ├── services/              # Business logic services
 │   └── utils/                 # Utility functions
 ├── docs/                      # Project documentation
+│   ├── CUSTOMIZATION_GUIDE.md # Guide for the customization system
+│   └── CONFIG_INDEX.md        # Index of all customizable settings
 └── scripts/                   # Utility scripts
+    ├── update_customization_headers.py  # Updates customization headers
+    └── update_config_index.py           # Updates the configuration index
 ```
 
 ## Technology Stack
@@ -111,6 +115,41 @@ The project uses a modern Angular frontend with an Express.js backend:
 7. **Access the Application:**
    * Open your browser and navigate to `http://localhost:4200`
    * The API is available at `http://localhost:3000/api/v1`
+
+## Customization System
+
+The project implements a standardized customization system to make it easy for developers to locate, understand, and modify configuration settings across the entire codebase.
+
+### Key Components
+
+1. **CUSTOMIZATION_GUIDE.md**: Central documentation explaining how to use the customization system
+2. **CONFIG_INDEX.md**: A comprehensive catalog of all customizable settings
+3. **Standardized Headers**: All files with customizable settings include a standardized header
+4. **Maintenance Utilities**: Scripts to maintain the customization system
+
+### How to Use
+
+1. Consult the **CONFIG_INDEX.md** file to find the settings you want to customize
+2. Navigate to the specific file containing the settings
+3. Make your changes following the guidelines in the file's header
+
+### Updating the Customization System
+
+When adding new customizable settings:
+
+```bash
+# Make the scripts executable
+chmod +x scripts/make_customization_scripts_executable.sh
+./scripts/make_customization_scripts_executable.sh
+
+# Update customization headers
+python3 scripts/update_customization_headers.py
+
+# Update the configuration index
+python3 scripts/update_config_index.py
+```
+
+For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md).
 
 ## Feature Roadmap & Status
 

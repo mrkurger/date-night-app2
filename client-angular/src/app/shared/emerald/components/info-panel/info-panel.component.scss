@@ -1,0 +1,230 @@
+@import '../../../../core/design/design-tokens';
+
+// Emerald InfoPanel Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+
+.emerald-info-panel {
+  background-color: $neutral-100;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  
+  // Panel Variants
+  &--bordered {
+    border: 1px solid $neutral-300;
+  }
+  
+  &--shadowed {
+    box-shadow: $shadow-md;
+  }
+  
+  // Panel Header
+  &__header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $neutral-200;
+    
+    .emerald-info-panel--collapsible & {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $neutral-100;
+      }
+    }
+  }
+  
+  &__title-container {
+    flex: 1;
+  }
+  
+  &__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+  }
+  
+  &__subtitle {
+    margin: 4px 0 0;
+    font-size: $font-size-sm;
+    color: $neutral-600;
+  }
+  
+  // Collapse Toggle
+  &__toggle {
+    background: none;
+    border: none;
+    color: $neutral-600;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      color: $neutral-900;
+    }
+  }
+  
+  // Panel Content
+  &__content {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
+    
+    .emerald-info-panel--collapsed & {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+  
+  &__items {
+    padding: 16px;
+  }
+  
+  // Panel Item
+  &__item {
+    display: flex;
+    margin-bottom: 12px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__item-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: $neutral-700;
+    font-size: $font-size-sm;
+  }
+  
+  &__item-icon {
+    margin-right: 8px;
+    color: $neutral-600;
+    width: 16px;
+    text-align: center;
+  }
+  
+  &__item-value {
+    flex: 1;
+    text-align: right;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+    font-size: $font-size-sm;
+  }
+  
+  // Badge Value
+  &__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    
+    &--primary {
+      background-color: $primary-100;
+      color: $primary-700;
+    }
+    
+    &--success {
+      background-color: $success-100;
+      color: $success-700;
+    }
+    
+    &--warning {
+      background-color: $warning-100;
+      color: $warning-700;
+    }
+    
+    &--danger {
+      background-color: $danger-100;
+      color: $danger-700;
+    }
+    
+    &--info {
+      background-color: $info-100;
+      color: $info-700;
+    }
+    
+    &--neutral {
+      background-color: $neutral-200;
+      color: $neutral-700;
+    }
+  }
+  
+  // Progress Value
+  &__progress {
+    position: relative;
+    height: 8px;
+    width: 100px;
+    background-color: $neutral-200;
+    border-radius: $border-radius-full;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  &__progress-bar {
+    height: 100%;
+    border-radius: $border-radius-full;
+    
+    &--primary {
+      background-color: $primary;
+    }
+    
+    &--success {
+      background-color: $success;
+    }
+    
+    &--warning {
+      background-color: $warning;
+    }
+    
+    &--danger {
+      background-color: $danger;
+    }
+    
+    &--info {
+      background-color: $info;
+    }
+    
+    &--neutral {
+      background-color: $neutral-600;
+    }
+  }
+  
+  &__progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $font-size-xs;
+    color: $neutral-900;
+    text-shadow: 0 0 2px rgba($neutral-100, 0.8);
+  }
+  
+  // Boolean Value
+  &__boolean {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    
+    &--true {
+      background-color: $success-100;
+      color: $success;
+    }
+    
+    &--false {
+      background-color: $danger-100;
+      color: $danger;
+    }
+  }
+}

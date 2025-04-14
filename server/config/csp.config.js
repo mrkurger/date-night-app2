@@ -5,6 +5,22 @@
  * Different configurations are provided for development and production environments.
  */
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for Content Security Policy (CSP)
+// 
+// COMMON CUSTOMIZATIONS:
+// - baseDirectives: Base CSP directives used in both environments (default: see below)
+//   Related to: client-angular/src/csp-config.js
+// - developmentDirectives: Development-specific CSP directives (default: includes unsafe-eval)
+//   Valid values: Any valid CSP directive
+// - productionDirectives: Production-specific CSP directives (default: more restrictive)
+//   Related to: server/middleware/securityHeaders.js
+// - reportOnly: Whether to only report CSP violations without enforcing (default: true in development)
+//   Valid values: true, false
+// ===================================================
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Base CSP directives used in both development and production
