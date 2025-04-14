@@ -14,9 +14,19 @@
     "install-missing": "node scripts/install-missing-deps.js",
     "fix-csp": "node scripts/fix-csp-issues.js",
     "fix-csp:restart": "node scripts/fix-csp-issues.js --restart",
+    
     "test": "jest",
+    "test:server": "jest --selectProjects server-unit server-integration",
+    "test:server:unit": "jest --selectProjects server-unit",
+    "test:server:integration": "jest --selectProjects server-integration",
+    "test:server:performance": "jest --selectProjects server-performance",
+    "test:client": "cd client-angular && npm test",
+    "test:client:coverage": "cd client-angular && npm run test:coverage",
+    "test:all": "npm run test:server && npm run test:client",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
+    
     "seed": "node scripts/seed.js",
     "mongodb": "node scripts/ensure-mongodb.js",
     "fix-mongodb": "node scripts/fix-mongodb-issues.js",
@@ -27,7 +37,11 @@
     "make-executable": "bash ./make-scripts-executable.sh",
     "fix-all": "bash ./fix-project.sh",
     "check-node": "node scripts/check-node-version.js",
-    "update-packages": "node scripts/update-packages.js"
+    "update-packages": "node scripts/update-packages.js",
+    
+    "analyze:security": "npm audit && cd server && npm audit && cd ../client-angular && npm audit",
+    "analyze:performance": "npm run test:server:performance",
+    "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
