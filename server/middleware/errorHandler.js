@@ -1,6 +1,15 @@
 /**
  * Custom error class for API errors
  */
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for errorHandler settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);

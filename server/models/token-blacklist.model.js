@@ -3,6 +3,15 @@
  * Stores revoked tokens until they expire
  */
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for token-blacklist.model settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const mongoose = require('mongoose');
 
 const tokenBlacklistSchema = new mongoose.Schema({

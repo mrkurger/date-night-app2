@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for messageCleanup settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const ChatMessage = require('../models/chat-message.model');
 const cron = require('node-cron');
 

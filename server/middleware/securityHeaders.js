@@ -2,6 +2,15 @@
  * Middleware to add additional security headers
  * These headers provide extra protection against common web vulnerabilities
  */
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for securityHeaders settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const securityHeaders = (req, res, next) => {
   // Strict-Transport-Security
   // Force HTTPS in production

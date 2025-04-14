@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for server settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - PORT: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');

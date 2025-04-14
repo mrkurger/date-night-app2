@@ -8,6 +8,15 @@
  * @param {Object} query - Express request query object
  * @returns {Object} Pagination parameters
  */
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for pagination settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const getPaginationParams = (query) => {
   const page = parseInt(query.page) || 1;
   const limit = parseInt(query.limit) || 10;

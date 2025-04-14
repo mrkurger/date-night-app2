@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (gallery-management.component)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { MediaService } from '../../../core/services/media.service';

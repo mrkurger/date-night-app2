@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for payment.controller settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const paymentService = require('../services/payment.service');
 const { AppError } = require('../middleware/errorHandler');
 

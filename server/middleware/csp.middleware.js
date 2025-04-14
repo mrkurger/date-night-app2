@@ -5,6 +5,15 @@
  * to protect against XSS and other code injection attacks.
  */
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for csp.middleware settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const helmet = require('helmet');
 const cspConfig = require('../config/csp.config');
 const logger = require('../utils/logger').logger;

@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for ad.model settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - R: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const mongoose = require('mongoose');
 
 // Define the point schema for geospatial data

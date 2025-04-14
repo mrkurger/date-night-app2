@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for configuration settings (app.config)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';

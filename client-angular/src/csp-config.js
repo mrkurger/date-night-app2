@@ -5,6 +5,15 @@
  * It's used by the Angular build process to inject the appropriate CSP.
  */
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for configuration settings (csp-config)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const fs = require('fs');
 const path = require('path');
 

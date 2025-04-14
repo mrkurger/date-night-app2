@@ -3,6 +3,15 @@
  * Implements validation rules for various API endpoints
  */
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for validator settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const { body, query, param, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 

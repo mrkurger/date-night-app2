@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (content-moderation.component.spec)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';

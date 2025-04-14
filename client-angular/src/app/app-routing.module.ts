@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for app-routing.module settings
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';

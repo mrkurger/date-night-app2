@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (content-moderation.component)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
