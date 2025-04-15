@@ -68,9 +68,10 @@
             <emerald-card-grid
               *ngIf="adsByCategory[category]?.length > 0"
               [items]="adsByCategory[category]"
-              layout="netflix"
-              [gap]="16"
-              [animated]="true"
+              [layout]="cardGridConfig.layout"
+              [gap]="cardGridConfig.gap"
+              [animated]="cardGridConfig.animated"
+              [itemsPerRow]="cardGridConfig.itemsPerRow"
               (itemClick)="viewAdDetails($event._id)">
               <ng-template #itemTemplate let-ad>
                 <emerald-app-card
@@ -145,8 +146,13 @@
           </form>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">
+            <i class="fas fa-undo"></i> Reset
+          </button>
           <button type="button" class="btn btn-secondary" (click)="closeFilters()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="applyFilters(); closeFilters()">Apply Filters</button>
+          <button type="button" class="btn btn-primary" (click)="applyFilters(); closeFilters()">
+            <i class="fas fa-check"></i> Apply Filters
+          </button>
         </div>
       </div>
     </div>

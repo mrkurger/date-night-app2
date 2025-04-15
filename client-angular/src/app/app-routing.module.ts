@@ -9,9 +9,31 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
-import { routes } from './app.routes';
+import { AuthGuard } from './core/guards/auth.guard';
+
+const routes: Routes = [
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'ads',
+    loadChildren: () => import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    redirectTo: '/browse',
+    pathMatch: 'full'
+  }
+];
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.

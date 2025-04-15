@@ -52,11 +52,14 @@ import {
     ToggleComponent
   ]
 })
-export class NetflixViewComponent implements OnInit, AfterViewInit {
-  @ViewChildren('rowContainer') rowContainers!: QueryList<ElementRef>;
-
+export class NetflixViewComponent implements OnInit {
+  // Define categories for Netflix-style rows
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
+  
+  // Store ads by category
   adsByCategory: { [key: string]: Ad[] } = {};
+  
+  // Component state
   loading = true;
   error: string | null = null;
   filterForm: FormGroup;
@@ -64,6 +67,20 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
 
   // For hero section
   featuredAd: Ad | null = null;
+  
+  // CardGrid configuration
+  cardGridConfig = {
+    layout: 'netflix',
+    gap: 16,
+    animated: true,
+    itemsPerRow: {
+      xs: 2,  // Extra small devices (phones)
+      sm: 3,  // Small devices (tablets)
+      md: 4,  // Medium devices (small laptops)
+      lg: 5,  // Large devices (desktops)
+      xl: 6   // Extra large devices (large desktops)
+    }
+  };
 
   constructor(
     private adService: AdService,
@@ -79,15 +96,19 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Initialize the component
+   * - Load ads from the service
+   * - Check authentication status
+   */
   ngOnInit(): void {
+    // Load ads for all categories
     this.loadAds();
+    
+    // Subscribe to authentication state
     this.authService.currentUser$.subscribe(user => {
       this.isAuthenticated = !!user;
     });
-  }
-
-  ngAfterViewInit(): void {
-    // Initialize any carousel behaviors after view is initialized
   }
 
   loadAds(): void {
@@ -235,7 +256,11 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     this.loading = false;
   }
 
-  // Helper method to shuffle array for demo purposes
+  /**
+   * Helper method to shuffle array for demo purposes
+   * @param array The array to shuffle
+   * @returns A new shuffled array
+   */
   private shuffleArray(array: any[]): any[] {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -245,30 +270,24 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     return newArray;
   }
 
-  scrollRow(category: string, direction: 'left' | 'right'): void {
-    const rowIndex = this.categories.indexOf(category);
-    if (rowIndex === -1) return;
-
-    const container = this.rowContainers.toArray()[rowIndex].nativeElement;
-    const scrollAmount = container.clientWidth * 0.8;
-    const newScrollPosition = direction === 'left'
-      ? container.scrollLeft - scrollAmount
-      : container.scrollLeft + scrollAmount;
-
-    container.scrollTo({
-      left: newScrollPosition,
-      behavior: 'smooth'
-    });
-  }
-
+  /**
+   * Navigate to ad details page
+   * @param adId The ID of the ad to view
+   */
   viewAdDetails(adId: string): void {
     // Navigate to ad details page
     window.location.href = `/ad-details/${adId}`;
   }
 
+  /**
+   * Add an ad to favorites
+   * @param adId The ID of the ad to like
+   * @param event Optional event to stop propagation
+   */
   likeAd(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
 
+    // Check if user is authenticated
     if (!this.isAuthenticated) {
       this.notificationService.error('Please log in to like ads');
       return;
@@ -286,14 +305,21 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Start a chat with an advertiser
+   * @param adId The ID of the ad to chat about
+   * @param event Optional event to stop propagation
+   */
   startChat(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
 
+    // Check if user is authenticated
     if (!this.isAuthenticated) {
       this.notificationService.error('Please log in to start a chat');
       return;
     }
 
+    // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
         window.location.href = `/chat/${room._id}`;
@@ -326,6 +352,11 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Get the media URL for an ad
+   * @param ad The ad object
+   * @returns The URL of the first image or a default image
+   */
   getMediaUrl(ad: Ad): string {
     if (ad.images && ad.images.length > 0) {
       return ad.images[0];
@@ -333,13 +364,23 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     return '/assets/images/default-profile.jpg';
   }
 
+  /**
+   * Apply filters and reload ads
+   */
   applyFilters(): void {
-    // Apply filters logic
+    // TODO: Implement filter logic based on filterForm values
+    // For now, just reload all ads
     this.loadAds();
+    
+    // Show success notification
+    this.notificationService.success('Filters applied');
   }
 
+  /**
+   * Open the filters modal
+   */
   openFilters(): void {
-    // Open filters modal
+    // Open filters modal using Bootstrap
     const modal = document.getElementById('filtersModal');
     if (modal) {
       try {
@@ -371,7 +412,9 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Add method to close modal for completeness
+  /**
+   * Close the filters modal
+   */
   closeFilters(): void {
     const modal = document.getElementById('filtersModal');
     if (modal) {
@@ -402,5 +445,19 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
         modal.style.display = 'none';
       }
     }
+  }
+  
+  /**
+   * Reset filters to default values
+   */
+  resetFilters(): void {
+    this.filterForm.reset({
+      category: '',
+      location: '',
+      touringOnly: false
+    });
+    
+    // Apply the reset filters
+    this.applyFilters();
   }
 }
