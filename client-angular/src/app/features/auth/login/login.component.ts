@@ -8,58 +8,65 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../core/services/user.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
-  template: `
-    <div class="container mt-5">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" formControlName="password">
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="loading">
-          {{loading ? 'Loading...' : 'Login'}}
-        </button>
-        <div *ngIf="error" class="alert alert-danger mt-3">{{error}}</div>
-      </form>
-    </div>
-  `
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
-  error = '';
+  isLoading = false;
+  errorMessage = '';
+  returnUrl: string = '/dashboard';
+  hidePassword = true;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) return;
+  ngOnInit(): void {
+    // Get return url from route parameters or default to '/dashboard'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
     
-    this.loading = true;
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigate(['/browse']),
-      error: err => {
-        this.error = err.message || 'Login failed';
-        this.loading = false;
-      }
-    });
+    // Redirect if already logged in
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate([this.returnUrl]);
+    }
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const { email, password } = this.loginForm.value;
+
+    this.userService.login({ email, password })
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: () => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error: (error) => {
+          this.errorMessage = error.message || 'Login failed. Please check your credentials.';
+        }
+      });
   }
 }

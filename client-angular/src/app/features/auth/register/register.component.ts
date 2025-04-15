@@ -8,63 +8,77 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
-  template: `
-    <div class="container mt-5">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Display Name</label>
-          <input type="text" class="form-control" formControlName="displayName">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" formControlName="password">
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="loading">
-          {{loading ? 'Loading...' : 'Register'}}
-        </button>
-        <div *ngIf="error" class="alert alert-danger mt-3">{{error}}</div>
-      </form>
-    </div>
-  `
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  loading = false;
-  error = '';
+  isLoading = false;
+  errorMessage = '';
+  hidePassword = true;
+  hideConfirmPassword = true;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      displayName: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
+      role: ['user', Validators.required],
+      termsAccepted: [false, Validators.requiredTrue]
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  ngOnInit(): void {
+    // Redirect if already logged in
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    }
+    
+    return null;
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid) return;
-    
-    this.loading = true;
-    this.authService.register(this.registerForm.value).subscribe({
-      next: () => this.router.navigate(['/browse']),
-      error: err => {
-        this.error = err.message || 'Registration failed';
-        this.loading = false;
-      }
-    });
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const { username, email, password, role } = this.registerForm.value;
+
+    this.userService.register({ username, email, password, role })
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.errorMessage = error.message || 'Registration failed. Please try again.';
+        }
+      });
   }
 }
