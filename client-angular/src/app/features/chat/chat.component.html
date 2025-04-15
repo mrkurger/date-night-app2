@@ -1,94 +1,486 @@
 <div class="chat-container">
+  <!-- Left Sidebar with Conversation List -->
   <div class="chat-sidebar">
     <div class="chat-header">
       <h2>Messages</h2>
+      <div class="chat-header-actions">
+        <button mat-icon-button matTooltip="New Message" (click)="openNewMessageDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Settings" [matMenuTriggerFor]="settingsMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #settingsMenu="matMenu">
+          <button mat-menu-item (click)="toggleNotifications()">
+            <mat-icon>{{ notificationsEnabled ? 'notifications' : 'notifications_off' }}</mat-icon>
+            <span>{{ notificationsEnabled ? 'Mute Notifications' : 'Enable Notifications' }}</span>
+          </button>
+          <button mat-menu-item (click)="markAllAsRead()">
+            <mat-icon>done_all</mat-icon>
+            <span>Mark All as Read</span>
+          </button>
+          <button mat-menu-item (click)="archiveAllChats()">
+            <mat-icon>archive</mat-icon>
+            <span>Archive All</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
 
     <div class="chat-search">
-      <input type="text" placeholder="Search conversations..." [(ngModel)]="searchTerm">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search conversations..." [(ngModel)]="searchTerm">
+        <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      
+      <!-- Conversation Filters -->
+      <div class="conversation-filters">
+        <button mat-button [class.active]="currentFilter === 'all'" (click)="filterConversations('all')">All</button>
+        <button mat-button [class.active]="currentFilter === 'unread'" (click)="filterConversations('unread')">Unread</button>
+        <button mat-button [class.active]="currentFilter === 'archived'" (click)="filterConversations('archived')">Archived</button>
+      </div>
     </div>
 
     <div class="chat-contacts">
-      <div *ngFor="let contact of contacts"
+      <!-- Loading State -->
+      <div *ngIf="loadingContacts" class="contacts-loading">
+        <emerald-skeleton-loader type="list" [count]="3" [animated]="true"></emerald-skeleton-loader>
+      </div>
+      
+      <!-- Contact List -->
+      <div *ngFor="let contact of filteredContacts"
            class="contact-item"
            [class.active]="selectedContactId === contact.id"
+           [class.unread]="contact.unreadCount > 0"
            (click)="selectContact(contact.id)">
-        <div class="avatar avatar-md">
-          <span>{{ contact.name.charAt(0) | uppercase }}</span>
-        </div>
+        <emerald-avatar
+          [imageUrl]="contact.imageUrl"
+          [name]="contact.name"
+          [isOnline]="contact.online"
+          size="medium">
+        </emerald-avatar>
+        
         <div class="contact-info">
-          <div class="contact-name">{{ contact.name }}</div>
-          <div class="contact-preview">{{ contact.lastMessage }}</div>
-        </div>
-        <div class="contact-meta">
-          <div class="contact-time">{{ contact.lastMessageTime | date:'shortTime' }}</div>
-          <div class="unread-badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
-        </div>
-      </div>
-
-      <div *ngIf="contacts.length === 0" class="empty-contacts">
-        <p>No conversations yet</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="chat-main">
-    <div *ngIf="selectedContactId" class="chat-conversation">
-      <div class="chat-main-header">
-        <div class="avatar avatar-md">
-          <span>{{ getSelectedContact()?.name.charAt(0) | uppercase }}</span>
-        </div>
-        <div class="chat-recipient">
-          <div class="recipient-name">{{ getSelectedContact()?.name }}</div>
-          <div class="recipient-status" [class.online]="getSelectedContact()?.online">
-            {{ getSelectedContact()?.online ? 'Online' : 'Offline' }}
+          <div class="contact-name-row">
+            <div class="contact-name">{{ contact.name }}</div>
+            <div class="contact-time">{{ contact.lastMessageTime | date:'shortTime' }}</div>
+          </div>
+          <div class="contact-preview-row">
+            <div class="contact-preview">
+              <span *ngIf="contact.typing" class="typing-indicator">typing...</span>
+              <span *ngIf="!contact.typing">{{ contact.lastMessage }}</span>
+            </div>
+            <div class="contact-badges">
+              <div class="unread-badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
+              <mat-icon *ngIf="contact.pinned" class="pin-icon">push_pin</mat-icon>
+            </div>
           </div>
         </div>
-        <div class="header-actions">
-          <button class="btn btn-ghost btn-icon">
-            <i class="icon-phone"></i>
-          </button>
-          <button class="btn btn-ghost btn-icon">
-            <i class="icon-more"></i>
-          </button>
-        </div>
       </div>
 
-      <div class="message-list">
-        <div *ngFor="let message of messages"
-             class="message"
-             [class.sent]="message.sender.id === currentUserId"
-             [class.received]="message.sender.id !== currentUserId">
-          <div class="message-content">{{ message.message }}</div>
-          <div class="message-meta">
-            <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
-            <span class="message-status" [class.read]="message.read">
-              <i class="icon-check"></i>
-            </span>
-          </div>
-        </div>
-
-        <div *ngIf="messages.length === 0" class="empty-messages">
-          <p>No messages yet. Start the conversation!</p>
-        </div>
-      </div>
-
-      <div class="message-input">
-        <input [(ngModel)]="newMessage"
-               (keyup.enter)="sendMessage()"
-               placeholder="Type a message...">
-        <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
-          <i class="icon-send"></i>
+      <!-- Empty State -->
+      <div *ngIf="filteredContacts.length === 0 && !loadingContacts" class="empty-contacts">
+        <mat-icon>forum</mat-icon>
+        <p>No conversations found</p>
+        <button mat-stroked-button color="primary" (click)="openNewMessageDialog()">
+          <mat-icon>add</mat-icon>
+          Start a new chat
         </button>
       </div>
     </div>
+  </div>
 
-    <div *ngIf="!selectedContactId" class="empty-state">
-      <div class="empty-icon">
-        <i class="icon-message-circle"></i>
+  <!-- Main Chat Area -->
+  <div class="chat-main">
+    <!-- Active Conversation -->
+    <div *ngIf="selectedContactId" class="chat-conversation">
+      <!-- Conversation Header -->
+      <div class="chat-main-header">
+        <div class="header-left">
+          <button mat-icon-button class="back-button" (click)="deselectContact()" matTooltip="Back to conversations">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          
+          <emerald-avatar
+            [imageUrl]="getSelectedContact()?.imageUrl"
+            [name]="getSelectedContact()?.name"
+            [isOnline]="getSelectedContact()?.online"
+            size="medium"
+            (avatarClick)="viewContactProfile()">
+          </emerald-avatar>
+          
+          <div class="chat-recipient">
+            <div class="recipient-name">{{ getSelectedContact()?.name }}</div>
+            <div class="recipient-status" [class.online]="getSelectedContact()?.online">
+              {{ getSelectedContact()?.online ? 'Online' : 'Last seen ' + (getSelectedContact()?.lastSeen | date:'shortTime') }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button mat-icon-button matTooltip="Media Gallery" (click)="openMediaGallery()">
+            <mat-icon>photo_library</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Search in Conversation" (click)="openSearchInChat()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="chatMenu" matTooltip="More Options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #chatMenu="matMenu">
+            <button mat-menu-item (click)="togglePin()">
+              <mat-icon>{{ isPinned() ? 'push_pin' : 'push_pin' }}</mat-icon>
+              <span>{{ isPinned() ? 'Unpin Conversation' : 'Pin Conversation' }}</span>
+            </button>
+            <button mat-menu-item (click)="blockContact()">
+              <mat-icon>block</mat-icon>
+              <span>Block Contact</span>
+            </button>
+            <button mat-menu-item (click)="clearConversation()">
+              <mat-icon>delete_sweep</mat-icon>
+              <span>Clear Conversation</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
-      <h3>Select a conversation</h3>
-      <p>Choose a contact from the list to start chatting</p>
+
+      <!-- Message List -->
+      <div class="message-list" #messageList>
+        <!-- Date Separator -->
+        <div *ngFor="let group of messageGroups" class="message-group">
+          <div class="date-separator">
+            <span>{{ group.date | date:'mediumDate' }}</span>
+          </div>
+          
+          <!-- Messages -->
+          <div *ngFor="let message of group.messages"
+               class="message"
+               [class.sent]="message.sender.id === currentUserId"
+               [class.received]="message.sender.id !== currentUserId">
+            
+            <!-- Sender Avatar (only for received messages) -->
+            <emerald-avatar
+              *ngIf="message.sender.id !== currentUserId"
+              [imageUrl]="getContactById(message.sender.id)?.imageUrl"
+              [name]="message.sender.username"
+              size="small"
+              class="message-avatar">
+            </emerald-avatar>
+            
+            <!-- Message Content -->
+            <div class="message-bubble">
+              <!-- Message Text -->
+              <div class="message-content" [innerHTML]="formatMessageContent(message.message)"></div>
+              
+              <!-- Message Attachments -->
+              <div *ngIf="message.attachments && message.attachments.length > 0" class="message-attachments">
+                <!-- Image Attachment -->
+                <div *ngFor="let attachment of message.attachments" class="attachment">
+                  <img *ngIf="isImageAttachment(attachment)" 
+                       [src]="attachment.url" 
+                       [alt]="attachment.name"
+                       (click)="openImagePreview(attachment)">
+                  
+                  <!-- File Attachment -->
+                  <div *ngIf="!isImageAttachment(attachment)" class="file-attachment" (click)="downloadAttachment(attachment)">
+                    <mat-icon>{{ getFileIcon(attachment) }}</mat-icon>
+                    <div class="file-info">
+                      <div class="file-name">{{ attachment.name }}</div>
+                      <div class="file-size">{{ formatFileSize(attachment.size) }}</div>
+                    </div>
+                    <button mat-icon-button>
+                      <mat-icon>download</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Message Metadata -->
+              <div class="message-meta">
+                <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
+                <span *ngIf="message.sender.id === currentUserId" class="message-status" [class.read]="message.read">
+                  <mat-icon class="status-icon">{{ message.read ? 'done_all' : 'done' }}</mat-icon>
+                </span>
+              </div>
+            </div>
+            
+            <!-- Message Actions -->
+            <div class="message-actions">
+              <button mat-icon-button [matMenuTriggerFor]="messageMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #messageMenu="matMenu">
+                <button mat-menu-item (click)="replyToMessage(message)">
+                  <mat-icon>reply</mat-icon>
+                  <span>Reply</span>
+                </button>
+                <button mat-menu-item (click)="forwardMessage(message)">
+                  <mat-icon>forward</mat-icon>
+                  <span>Forward</span>
+                </button>
+                <button mat-menu-item (click)="copyMessage(message)">
+                  <mat-icon>content_copy</mat-icon>
+                  <span>Copy</span>
+                </button>
+                <button mat-menu-item (click)="deleteMessage(message)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Typing Indicator -->
+        <div *ngIf="isContactTyping" class="typing-indicator-container">
+          <emerald-avatar
+            [imageUrl]="getSelectedContact()?.imageUrl"
+            [name]="getSelectedContact()?.name"
+            size="small">
+          </emerald-avatar>
+          <div class="typing-bubble">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="messages.length === 0" class="empty-messages">
+          <mat-icon>chat</mat-icon>
+          <h3>No messages yet</h3>
+          <p>Start the conversation by sending a message below!</p>
+        </div>
+      </div>
+
+      <!-- Reply Preview (if replying to a message) -->
+      <div *ngIf="replyingTo" class="reply-preview">
+        <div class="reply-content">
+          <mat-icon>reply</mat-icon>
+          <div class="reply-text">
+            <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
+            <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
+          </div>
+        </div>
+        <button mat-icon-button (click)="cancelReply()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <!-- Message Input Area -->
+      <div class="message-input-container">
+        <!-- Attachment Button -->
+        <button mat-icon-button matTooltip="Add Attachment" (click)="openAttachmentMenu()" class="attachment-button">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        
+        <!-- Text Input -->
+        <div class="message-input">
+          <textarea 
+            [(ngModel)]="newMessage"
+            (keyup.enter)="handleEnterKey($event)"
+            (input)="onTyping()"
+            placeholder="Type a message..."
+            rows="1"
+            #messageInput>
+          </textarea>
+          
+          <!-- Emoji Picker -->
+          <button mat-icon-button matTooltip="Add Emoji" (click)="toggleEmojiPicker()" class="emoji-button">
+            <mat-icon>sentiment_satisfied_alt</mat-icon>
+          </button>
+        </div>
+        
+        <!-- Send Button -->
+        <button 
+          mat-fab 
+          color="primary" 
+          class="send-button" 
+          (click)="sendMessage()" 
+          [disabled]="!canSendMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+      
+      <!-- Emoji Picker (hidden by default) -->
+      <div *ngIf="showEmojiPicker" class="emoji-picker">
+        <div class="emoji-categories">
+          <button mat-icon-button *ngFor="let category of emojiCategories" (click)="selectEmojiCategory(category)">
+            <mat-icon>{{ category.icon }}</mat-icon>
+          </button>
+        </div>
+        <div class="emoji-list">
+          <button 
+            *ngFor="let emoji of currentCategoryEmojis" 
+            class="emoji-item" 
+            (click)="addEmoji(emoji)">
+            {{ emoji }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State (No Conversation Selected) -->
+    <div *ngIf="!selectedContactId" class="empty-state">
+      <div class="empty-state-content">
+        <mat-icon class="empty-icon">chat</mat-icon>
+        <h3>Select a conversation</h3>
+        <p>Choose a contact from the list to start chatting</p>
+        <button mat-raised-button color="primary" (click)="openNewMessageDialog()">
+          <mat-icon>add</mat-icon>
+          Start a new chat
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- New Message Dialog Template -->
+<ng-template #newMessageDialog>
+  <h2 mat-dialog-title>New Message</h2>
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search contacts</mat-label>
+      <input matInput [(ngModel)]="newMessageSearch" placeholder="Type a name...">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    
+    <div class="contact-list">
+      <div *ngFor="let contact of filteredNewMessageContacts" 
+           class="contact-option"
+           (click)="selectNewMessageContact(contact)">
+        <emerald-avatar
+          [imageUrl]="contact.imageUrl"
+          [name]="contact.name"
+          [isOnline]="contact.online"
+          size="small">
+        </emerald-avatar>
+        <div class="contact-name">{{ contact.name }}</div>
+      </div>
+      
+      <div *ngIf="filteredNewMessageContacts.length === 0" class="no-contacts">
+        <p>No contacts found</p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Image Preview Dialog Template -->
+<ng-template #imagePreviewDialog>
+  <div class="image-preview-container">
+    <button mat-icon-button class="close-button" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+    
+    <img [src]="previewImage?.url" [alt]="previewImage?.name" class="preview-image">
+    
+    <div class="image-preview-actions">
+      <button mat-icon-button matTooltip="Download" (click)="downloadImage()">
+        <mat-icon>download</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Share" (click)="shareImage()">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Search in Chat Dialog Template -->
+<ng-template #searchInChatDialog>
+  <h2 mat-dialog-title>Search in Conversation</h2>
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search messages</mat-label>
+      <input matInput [(ngModel)]="chatSearchQuery" placeholder="Type to search...">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    
+    <div class="search-results">
+      <div *ngFor="let result of chatSearchResults" 
+           class="search-result-item"
+           (click)="scrollToMessage(result)">
+        <div class="result-sender">{{ result.sender.username }}</div>
+        <div class="result-message" [innerHTML]="highlightSearchText(result.message)"></div>
+        <div class="result-time">{{ result.timestamp | date:'short' }}</div>
+      </div>
+      
+      <div *ngIf="chatSearchResults.length === 0 && chatSearchQuery" class="no-results">
+        <p>No messages found</p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Media Gallery Dialog Template -->
+<ng-template #mediaGalleryDialog>
+  <h2 mat-dialog-title>Media Gallery</h2>
+  <mat-dialog-content>
+    <div class="gallery-tabs">
+      <button mat-button [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">Images</button>
+      <button mat-button [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">Files</button>
+      <button mat-button [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">Links</button>
+    </div>
+    
+    <!-- Images Tab -->
+    <div *ngIf="galleryTab === 'images'" class="gallery-images">
+      <div *ngFor="let image of galleryImages" class="gallery-image" (click)="openImagePreview(image)">
+        <img [src]="image.url" [alt]="image.name">
+      </div>
+      
+      <div *ngIf="galleryImages.length === 0" class="no-media">
+        <p>No images shared in this conversation</p>
+      </div>
+    </div>
+    
+    <!-- Files Tab -->
+    <div *ngIf="galleryTab === 'files'" class="gallery-files">
+      <div *ngFor="let file of galleryFiles" class="gallery-file" (click)="downloadAttachment(file)">
+        <mat-icon>{{ getFileIcon(file) }}</mat-icon>
+        <div class="file-info">
+          <div class="file-name">{{ file.name }}</div>
+          <div class="file-meta">
+            <span class="file-size">{{ formatFileSize(file.size) }}</span>
+            <span class="file-date">{{ file.timestamp | date:'shortDate' }}</span>
+          </div>
+        </div>
+        <button mat-icon-button>
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+      
+      <div *ngIf="galleryFiles.length === 0" class="no-media">
+        <p>No files shared in this conversation</p>
+      </div>
+    </div>
+    
+    <!-- Links Tab -->
+    <div *ngIf="galleryTab === 'links'" class="gallery-links">
+      <div *ngFor="let link of galleryLinks" class="gallery-link" (click)="openLink(link.url)">
+        <mat-icon>link</mat-icon>
+        <div class="link-info">
+          <div class="link-title">{{ link.title || link.url }}</div>
+          <div class="link-url">{{ link.url }}</div>
+        </div>
+        <div class="link-date">{{ link.timestamp | date:'shortDate' }}</div>
+      </div>
+      
+      <div *ngIf="galleryLinks.length === 0" class="no-media">
+        <p>No links shared in this conversation</p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>

@@ -5,15 +5,30 @@
 // This file contains settings for chat.module settings
 // 
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
+// - ENABLE_REAL_TIME_FEATURES: Enable real-time chat features (default: true)
+// - ENABLE_MEDIA_SHARING: Enable media sharing in chat (default: true)
+// - ENABLE_EMOJI_PICKER: Enable emoji picker in chat (default: true)
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
 import { ChatComponent } from './chat.component';
+
+// Material Modules
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+
+// Emerald Components
+import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
+import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
 
 const routes: Routes = [
   { path: '', component: ChatComponent },
@@ -24,9 +39,26 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
-    ChatComponent // Import the standalone component instead of declaring it
+    
+    // Material Modules
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatTabsModule,
+    
+    // Emerald Components
+    AvatarComponent,
+    SkeletonLoaderComponent,
+    
+    // Standalone Component
+    ChatComponent
   ]
 })
 export class ChatModule { }
