@@ -9,8 +9,11 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/auth.service';
+import { UserProfile } from '../../core/models/user.interface';
+import { catchError, finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
@@ -22,29 +25,65 @@ import { RouterModule, Router } from '@angular/router';
   imports: [CommonModule, RouterModule]
 })
 export class ProfileComponent implements OnInit {
-  user: any;
-  error: string | null = null;
+  profileForm: FormGroup;
+  userProfile: UserProfile | null = null;
+  isLoading = false;
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
+    private fb: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.profileForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      bio: [''],
+      phoneNumber: [''],
+      'location.city': [''],
+      'location.country': [''],
+      'preferences.notifications': [true],
+      'preferences.privacy': ['public']
+    });
+  }
 
   ngOnInit(): void {
     this.loadUserProfile();
   }
 
   loadUserProfile(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser) {
-      this.userService.getUserProfile(currentUser._id).subscribe({
-        next: data => this.user = data,
-        error: err => this.error = 'Failed to load profile'
+    this.isLoading = true;
+    this.userService.getCurrentUser()
+      .pipe(
+        catchError(error => {
+          this.errorMessage = 'Failed to load profile: ' + error.message;
+          return of(null);
+        }),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe(user => {
+        if (user) {
+          this.userProfile = user as UserProfile;
+          this.updateFormValues();
+        }
       });
-    } else {
-      this.error = 'User not authenticated';
-    }
+  }
+
+  updateFormValues(): void {
+    if (!this.userProfile) return;
+    
+    this.profileForm.patchValue({
+      firstName: this.userProfile.firstName || '',
+      lastName: this.userProfile.lastName || '',
+      bio: this.userProfile.bio || '',
+      phoneNumber: this.userProfile.phoneNumber || '',
+      'location.city': this.userProfile.location?.city || '',
+      'location.country': this.userProfile.location?.country || '',
+      'preferences.notifications': this.userProfile.preferences?.notifications ?? true,
+      'preferences.privacy': this.userProfile.preferences?.privacy || 'public'
+    });
   }
 
   navigateToEdit(): void {

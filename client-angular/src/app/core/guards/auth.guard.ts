@@ -1,23 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { map, Observable } from 'rxjs';
+import { 
+  CanActivate, 
+  ActivatedRouteSnapshot, 
+  RouterStateSnapshot, 
+  Router 
+} from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard {
-  constructor(private auth: AuthService, private router: Router) {}
-
-  canActivate(): Observable<boolean> {
-    return this.auth.currentUser$.pipe(
-      map(user => {
-        if (!user) {
-          this.router.navigate(['/auth/login']);
-          return false;
-        }
-        return true;
-      })
-    );
+export class AuthGuard implements CanActivate {
+  
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    if (this.userService.isAuthenticated()) {
+      return true;
+    }
+    
+    // Store the attempted URL for redirecting after login
+    this.router.navigate(['/login'], { 
+      queryParams: { returnUrl: state.url }
+    });
+    return false;
   }
 }

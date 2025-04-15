@@ -20,6 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.
@@ -45,7 +47,8 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
     SocketIoModule.forRoot(socketConfig)
   ],
   providers: [
-    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   // AppComponent is now bootstrapped via bootstrapApplication in main.ts
 })
