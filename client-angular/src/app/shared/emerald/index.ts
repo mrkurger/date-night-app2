@@ -16,6 +16,11 @@ export * from './components/page-header/page-header.component';
 export * from './components/skeleton-loader/skeleton-loader.component';
 export * from './components/toggle/toggle.component';
 
+// New Components
+export * from './components/card-grid/card-grid.component';
+export * from './components/pager/pager.component';
+export * from './components/floating-action-button/floating-action-button.component';
+
 // Interfaces
 export { DropdownItem } from './components/avatar/avatar.component';
 export { CarouselItem } from './components/carousel/carousel.component';

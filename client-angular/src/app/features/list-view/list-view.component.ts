@@ -27,6 +27,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+// Import Emerald components
+import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
+import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
+import { PagerComponent } from '../../shared/emerald/components/pager/pager.component';
+
 // Declare Bootstrap types for TypeScript
 declare var bootstrap: any;
 
@@ -47,7 +52,11 @@ declare var bootstrap: any;
     MatSelectModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    // Emerald components
+    AppCardComponent,
+    CardGridComponent,
+    PagerComponent
   ]
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
@@ -248,6 +257,19 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+    }
+  }
+  
+  /**
+   * Change the number of items displayed per page
+   */
+  changePageSize(size: number): void {
+    this.itemsPerPage = size;
+    this.totalPages = Math.ceil(this.filteredAds.length / this.itemsPerPage);
+    
+    // Adjust current page if it's now out of bounds
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages || 1;
     }
   }
   

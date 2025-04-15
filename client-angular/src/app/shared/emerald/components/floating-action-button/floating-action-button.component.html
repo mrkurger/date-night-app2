@@ -1,0 +1,41 @@
+<!-- Emerald FloatingActionButton Component -->
+<!-- Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton -->
+
+<div class="emerald-fab-container" 
+     [ngClass]="{'emerald-fab-container--' + position}">
+  
+  <!-- Main Floating Action Button -->
+  <button class="emerald-fab" 
+          [ngClass]="{'emerald-fab--' + color, 
+                     'emerald-fab--' + size,
+                     'emerald-fab--open': menuOpen}"
+          [disabled]="disabled"
+          (click)="toggleMenu($event)"
+          [attr.aria-label]="label">
+    <i class="fas" [ngClass]="icon"></i>
+    
+    <!-- Tooltip -->
+    <span *ngIf="showTooltip && tooltipText" class="emerald-fab__tooltip">
+      {{ tooltipText }}
+    </span>
+  </button>
+  
+  <!-- Menu Items -->
+  <div *ngIf="hasMenu" 
+       class="emerald-fab-menu" 
+       [ngClass]="{'emerald-fab-menu--open': menuOpen, 'emerald-fab-menu--' + position}">
+    <button *ngFor="let item of menuItems" 
+            class="emerald-fab-menu__item" 
+            [ngClass]="'emerald-fab-menu__item--' + color"
+            (click)="onMenuItemClick(item, $event)"
+            [attr.aria-label]="item.label">
+      <i class="fas" [ngClass]="item.icon"></i>
+      <span class="emerald-fab-menu__item-label">{{ item.label }}</span>
+    </button>
+  </div>
+  
+  <!-- Backdrop for closing menu when clicking outside -->
+  <div *ngIf="menuOpen" 
+       class="emerald-fab-backdrop" 
+       (click)="closeMenu()"></div>
+</div>

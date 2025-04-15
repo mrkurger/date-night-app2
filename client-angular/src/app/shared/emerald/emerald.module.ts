@@ -5,11 +5,27 @@
 // This file contains settings for emerald.module settings
 // 
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
+// - NOTIFICATION_DURATION: Duration for notifications in milliseconds (default: 3000)
+//   Related to: client-angular/src/app/core/services/notification.service.ts
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Import all Emerald components
+import { AppCardComponent } from './components/app-card/app-card.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { InfoPanelComponent } from './components/info-panel/info-panel.component';
+import { LabelComponent } from './components/label/label.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+
+// Import new components we'll create
+import { CardGridComponent } from './components/card-grid/card-grid.component';
+import { PagerComponent } from './components/pager/pager.component';
+import { FloatingActionButtonComponent } from './components/floating-action-button/floating-action-button.component';
 
 /**
  * Emerald.js Integration Module
@@ -20,24 +36,53 @@ import { CommonModule } from '@angular/common';
  * Documentation: https://docs-emerald.condorlabs.io/
  * 
  * Components included:
- * - AppCard: https://docs-emerald.condorlabs.io/AppCard
- * - Label: https://docs-emerald.condorlabs.io/Label
- * - Avatar: https://docs-emerald.condorlabs.io/Avatar
- * - DropdownItem: https://docs-emerald.condorlabs.io/DropdownItem
- * - Carousel: https://docs-emerald.condorlabs.io/Carousel
- * - InfoPanel: https://docs-emerald.condorlabs.io/InfoPanel
- * - PageHeader: https://docs-emerald.condorlabs.io/PageHeader
- * - SkeletonLoader: https://docs-emerald.condorlabs.io/SkeletonLoader
- * - Toggle: https://docs-emerald.condorlabs.io/Toggle
- * - CardGrid: https://docs-emerald.condorlabs.io/CardGrid
- * - Pager: https://docs-emerald.condorlabs.io/Pager
- * - FloatingActionButton: https://docs-emerald.condorlabs.io/FloatingActionButton
+ * - AppCard: Card component for displaying ads in various layouts
+ * - Label: Label component for displaying status and categories
+ * - Avatar: Avatar component for user profiles with online status
+ * - Carousel: Carousel component for image galleries
+ * - InfoPanel: Panel component for structured information display
+ * - PageHeader: Header component with breadcrumbs and actions
+ * - SkeletonLoader: Loading skeleton for content placeholders
+ * - Toggle: Toggle switch for boolean settings
+ * - CardGrid: Grid layout for displaying multiple cards
+ * - Pager: Pagination component for navigating through results
+ * - FloatingActionButton: Floating action button for primary actions
  */
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
+  declarations: [
+    // These components are also standalone, but we include them here
+    // for backwards compatibility with non-standalone components
+    CardGridComponent,
+    PagerComponent,
+    FloatingActionButtonComponent
   ],
-  exports: []
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    // Import standalone components
+    AppCardComponent,
+    AvatarComponent,
+    CarouselComponent,
+    InfoPanelComponent,
+    LabelComponent,
+    PageHeaderComponent,
+    SkeletonLoaderComponent,
+    ToggleComponent
+  ],
+  exports: [
+    // Export all components for use in other modules
+    AppCardComponent,
+    AvatarComponent,
+    CarouselComponent,
+    InfoPanelComponent,
+    LabelComponent,
+    PageHeaderComponent,
+    SkeletonLoaderComponent,
+    ToggleComponent,
+    CardGridComponent,
+    PagerComponent,
+    FloatingActionButtonComponent
+  ]
 })
 export class EmeraldModule { }

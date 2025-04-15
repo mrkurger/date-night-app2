@@ -90,6 +90,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'wallet',
+    loadChildren: () => import('./features/wallet/wallet.module').then(m => m.WalletModule),
+    canActivate: [AuthGuard],
+    data: { title: 'My Wallet' }
+  },
+  {
     path: 'touring',
     loadChildren: () => import('./features/touring/touring.module').then(m => m.TouringModule)
   },

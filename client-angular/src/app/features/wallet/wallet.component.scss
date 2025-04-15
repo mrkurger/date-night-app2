@@ -1,0 +1,368 @@
+@import '../../../app/core/design/design-tokens.scss';
+
+.wallet-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  
+  .wallet-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .wallet-actions {
+    display: flex;
+    gap: 12px;
+    
+    button {
+      min-width: 100px;
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  
+  p {
+    margin-top: 16px;
+    color: $neutral-600;
+  }
+}
+
+.balance-overview {
+  margin-bottom: 32px;
+  
+  .total-balance-card {
+    background-color: $primary-500;
+    color: white;
+    margin-bottom: 24px;
+    
+    mat-card-title, mat-card-subtitle {
+      color: white;
+    }
+    
+    .total-balance {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 16px 0;
+    }
+  }
+  
+  .currency-balances {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    
+    .currency-balance-card {
+      h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+    }
+  }
+}
+
+.wallet-tabs {
+  .mat-mdc-tab-body-wrapper {
+    padding: 24px 0;
+  }
+}
+
+.transactions-container {
+  .transactions-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    
+    mat-form-field {
+      width: 200px;
+    }
+  }
+  
+  .transactions-table-container {
+    position: relative;
+    min-height: 200px;
+    
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    
+    .transactions-table {
+      width: 100%;
+      
+      .transaction-type {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        
+        &.transaction-deposit {
+          background-color: $success-100;
+          color: $success-700;
+        }
+        
+        &.transaction-withdrawal {
+          background-color: $warning-100;
+          color: $warning-700;
+        }
+        
+        &.transaction-transfer {
+          background-color: $info-100;
+          color: $info-700;
+        }
+        
+        &.transaction-payment {
+          background-color: $primary-100;
+          color: $primary-700;
+        }
+        
+        &.transaction-refund {
+          background-color: $success-100;
+          color: $success-700;
+        }
+        
+        &.transaction-fee {
+          background-color: $neutral-100;
+          color: $neutral-700;
+        }
+      }
+      
+      .transaction-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        
+        &.status-pending {
+          background-color: $warning-100;
+          color: $warning-700;
+        }
+        
+        &.status-completed {
+          background-color: $success-100;
+          color: $success-700;
+        }
+        
+        &.status-failed {
+          background-color: $error-100;
+          color: $error-700;
+        }
+        
+        &.status-cancelled {
+          background-color: $neutral-100;
+          color: $neutral-700;
+        }
+      }
+      
+      .positive-amount {
+        color: $success-500;
+        font-weight: 500;
+      }
+      
+      .negative-amount {
+        color: $error-500;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .pagination-container {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.payment-methods-container {
+  .payment-methods-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    h2 {
+      margin: 0;
+    }
+  }
+  
+  .payment-methods-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    
+    .payment-method-card {
+      .default-badge {
+        background-color: $primary-500;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-left: 8px;
+      }
+      
+      .crypto-address {
+        display: flex;
+        align-items: center;
+        font-family: monospace;
+        background-color: $neutral-100;
+        padding: 8px;
+        border-radius: 4px;
+        
+        button {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  
+  h2 {
+    margin-bottom: 24px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .settings-section {
+    margin-bottom: 32px;
+    
+    h3 {
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    
+    h4 {
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+  }
+  
+  .notification-group {
+    margin-bottom: 24px;
+    
+    mat-checkbox {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+  
+  .form-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: $neutral-400;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    margin-bottom: 24px;
+    color: $neutral-600;
+    font-size: 18px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .wallet-header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .wallet-title {
+      margin-bottom: 16px;
+    }
+    
+    .wallet-actions {
+      width: 100%;
+      
+      button {
+        flex: 1;
+      }
+    }
+  }
+  
+  .transactions-filters {
+    flex-direction: column;
+    
+    mat-form-field {
+      width: 100% !important;
+    }
+  }
+  
+  .currency-balances {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .payment-methods-list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+// Define variables for colors
+$primary-100: #e8f0fe;
+$primary-500: #4285f4;
+$primary-700: #1a73e8;
+
+$success-100: #e6f4ea;
+$success-500: #34a853;
+$success-700: #137333;
+
+$warning-100: #fef7e0;
+$warning-500: #fbbc04;
+$warning-700: #ea8600;
+
+$error-100: #fce8e6;
+$error-500: #ea4335;
+$error-700: #c5221f;
+
+$info-100: #e8f0fe;
+$info-500: #4285f4;
+$info-700: #1a73e8;
+
+$neutral-100: #f8f9fa;
+$neutral-400: #dadce0;
+$neutral-600: #70757a;
+$neutral-700: #5f6368;

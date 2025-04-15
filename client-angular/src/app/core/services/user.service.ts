@@ -59,4 +59,13 @@ export class UserService {
   getFavorites(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/favorites`);
   }
+  
+  /**
+   * Search users by username or email
+   * @param query Search query
+   * @returns Observable of search results
+   */
+  searchUsers(query: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/search?q=${query}`);
+  }
 }
