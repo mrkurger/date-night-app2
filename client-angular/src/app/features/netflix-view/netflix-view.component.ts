@@ -5,8 +5,10 @@
 // This file contains settings for component configuration (netflix-view.component)
 // 
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
+// - HERO_SECTION_HEIGHT: Height of the hero section (default: 70vh)
+//   Related to: netflix-view.component.scss:$hero-section-height
+// - CARD_ANIMATION_DURATION: Duration of card hover animations (default: 300ms)
+//   Related to: netflix-view.component.scss:$card-animation-duration
 // ===================================================
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,12 +21,36 @@ import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
+// Import Emerald components
+import { 
+  AppCardComponent, 
+  CardGridComponent, 
+  PageHeaderComponent,
+  SkeletonLoaderComponent,
+  LabelComponent,
+  FloatingActionButtonComponent,
+  ToggleComponent
+} from '../../shared/emerald';
+
 @Component({
   selector: 'app-netflix-view',
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent]
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule, 
+    MainLayoutComponent,
+    // Add Emerald components
+    AppCardComponent,
+    CardGridComponent,
+    PageHeaderComponent,
+    SkeletonLoaderComponent,
+    LabelComponent,
+    FloatingActionButtonComponent,
+    ToggleComponent
+  ]
 })
 export class NetflixViewComponent implements OnInit, AfterViewInit {
   @ViewChildren('rowContainer') rowContainers!: QueryList<ElementRef>;
@@ -277,6 +303,27 @@ export class NetflixViewComponent implements OnInit, AfterViewInit {
         console.error('Error starting chat:', err);
       }
     });
+  }
+
+  /**
+   * Handle actions from the hero section
+   * @param action The action object from the PageHeader component
+   * @param adId The ID of the ad
+   */
+  onHeroAction(action: any, adId: string): void {
+    switch (action.id) {
+      case 'view':
+        this.viewAdDetails(adId);
+        break;
+      case 'favorite':
+        this.likeAd(adId);
+        break;
+      case 'chat':
+        this.startChat(adId);
+        break;
+      default:
+        console.warn('Unknown action:', action.id);
+    }
   }
 
   getMediaUrl(ad: Ad): string {

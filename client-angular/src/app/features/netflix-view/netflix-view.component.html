@@ -1,31 +1,22 @@
 <app-main-layout activeView="netflix">
   <div class="netflix-container">
-    <!-- Hero Section -->
-    <div class="hero-section" *ngIf="featuredAd">
-      <div class="hero-background" [style.background-image]="'url(' + getMediaUrl(featuredAd) + ')'">
-        <div class="hero-gradient"></div>
-      </div>
-      <div class="hero-content container">
-        <div class="hero-info">
-          <h1 class="hero-title">{{ featuredAd.title }}</h1>
-          <p class="hero-location" *ngIf="featuredAd.location">
-            <i class="fas fa-map-marker-alt"></i> {{ featuredAd.location }}
-          </p>
-          <p class="hero-description">{{ featuredAd.description }}</p>
-          <div class="hero-actions">
-            <button class="btn btn-primary btn-view" (click)="viewAdDetails(featuredAd._id)">
-              <i class="fas fa-info-circle"></i> View Profile
-            </button>
-            <button class="btn btn-outline-light btn-like" (click)="likeAd(featuredAd._id, $event)">
-              <i class="fas fa-heart"></i> Add to Favorites
-            </button>
-            <button class="btn btn-outline-light btn-chat" (click)="startChat(featuredAd._id, $event)">
-              <i class="fas fa-comment"></i> Start Chat
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Hero Section with Emerald PageHeader -->
+    <emerald-page-header 
+      *ngIf="featuredAd"
+      [title]="featuredAd.title"
+      [subtitle]="featuredAd.location"
+      [backgroundImage]="getMediaUrl(featuredAd)"
+      [avatarUrl]="featuredAd.advertiserImage"
+      [avatarName]="featuredAd.advertiserName"
+      [avatarIsOnline]="featuredAd.isAdvertiserOnline"
+      [actions]="[
+        {id: 'view', label: 'View Profile', icon: 'fas fa-info-circle', primary: true},
+        {id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart'},
+        {id: 'chat', label: 'Start Chat', icon: 'fas fa-comment'}
+      ]"
+      (actionClick)="onHeroAction($event, featuredAd._id)">
+      <p class="hero-description">{{ featuredAd.description }}</p>
+    </emerald-page-header>
 
     <!-- Main Content -->
     <div class="netflix-content">
@@ -41,11 +32,13 @@
         </div>
       </div>
 
-      <!-- Loading State -->
+      <!-- Loading State with Emerald SkeletonLoader -->
       <div class="loading-container" *ngIf="loading">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+        <emerald-skeleton-loader
+          type="card"
+          [count]="5"
+          [animated]="true">
+        </emerald-skeleton-loader>
         <p class="loading-text">Loading content...</p>
       </div>
 
@@ -60,61 +53,52 @@
         </button>
       </div>
 
-      <!-- Netflix-style Rows -->
+      <!-- Netflix-style Rows with Emerald CardGrid and AppCard -->
       <div class="netflix-rows" *ngIf="!loading && !error">
         <div class="row-section" *ngFor="let category of categories; let i = index">
           <div class="container">
             <h2 class="row-title">{{ category }}</h2>
 
-            <div class="row-container-wrapper">
-              <button class="row-nav prev-button" (click)="scrollRow(category, 'left')">
-                <i class="fas fa-chevron-left"></i>
-              </button>
-
-              <div class="row-container" #rowContainer>
-                <div class="row-item" *ngFor="let ad of adsByCategory[category]" (click)="viewAdDetails(ad._id)">
-                  <div class="row-item-media">
-                    <img
-                      [src]="getMediaUrl(ad)"
-                      alt="{{ ad.title }}"
-                      class="row-item-image">
-
-                    <div class="row-item-overlay">
-                      <div class="row-item-info">
-                        <h3 class="row-item-title">{{ ad.title }}</h3>
-                        <p class="row-item-location" *ngIf="ad.location">
-                          <i class="fas fa-map-marker-alt"></i> {{ ad.location }}
-                        </p>
-                      </div>
-                      <div class="row-item-actions">
-                        <button class="action-button info-button" (click)="$event.stopPropagation(); viewAdDetails(ad._id)">
-                          <i class="fas fa-info-circle"></i>
-                        </button>
-                        <button class="action-button like-button" (click)="$event.stopPropagation(); likeAd(ad._id, $event)">
-                          <i class="fas fa-heart"></i>
-                        </button>
-                        <button class="action-button chat-button" (click)="$event.stopPropagation(); startChat(ad._id, $event)">
-                          <i class="fas fa-comment"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <button class="row-nav next-button" (click)="scrollRow(category, 'right')">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-
+            <!-- Empty state handling -->
             <div class="empty-row" *ngIf="adsByCategory[category]?.length === 0">
               <p class="empty-row-text">No profiles in this category</p>
             </div>
+
+            <!-- Using Emerald CardGrid for each row -->
+            <emerald-card-grid
+              *ngIf="adsByCategory[category]?.length > 0"
+              [items]="adsByCategory[category]"
+              layout="netflix"
+              [gap]="16"
+              [animated]="true"
+              (itemClick)="viewAdDetails($event._id)">
+              <ng-template #itemTemplate let-ad>
+                <emerald-app-card
+                  [ad]="ad"
+                  layout="netflix"
+                  [isOnline]="ad.isAdvertiserOnline"
+                  (viewDetails)="viewAdDetails($event)"
+                  (like)="likeAd($event)"
+                  (chat)="startChat($event)">
+                </emerald-app-card>
+              </ng-template>
+            </emerald-card-grid>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Floating Action Button for Filters -->
+  <emerald-floating-action-button
+    icon="fa-sliders-h"
+    label="Filters"
+    color="primary"
+    position="bottom-right"
+    [showTooltip]="true"
+    tooltipText="Filter Profiles"
+    (buttonClick)="openFilters()">
+  </emerald-floating-action-button>
 
   <!-- Filters Modal -->
   <div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
@@ -149,10 +133,14 @@
 
             <div class="mb-3">
               <label class="form-label">Currently Touring</label>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="touringOnly" formControlName="touringOnly">
-                <label class="form-check-label" for="touringOnly">Show only touring profiles</label>
-              </div>
+              <!-- Using Emerald Toggle -->
+              <emerald-toggle
+                label="Show only touring profiles"
+                labelPosition="right"
+                color="primary"
+                [value]="filterForm.get('touringOnly')?.value"
+                (change)="filterForm.get('touringOnly')?.setValue($event)">
+              </emerald-toggle>
             </div>
           </form>
         </div>
