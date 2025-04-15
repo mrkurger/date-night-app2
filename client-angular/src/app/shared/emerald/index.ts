@@ -7,22 +7,24 @@
  */
 
 // Components
-export * from './components/app-card/app-card.component';
-export * from './components/avatar/avatar.component';
-export * from './components/carousel/carousel.component';
-export * from './components/info-panel/info-panel.component';
-export * from './components/label/label.component';
-export * from './components/page-header/page-header.component';
-export * from './components/skeleton-loader/skeleton-loader.component';
-export * from './components/toggle/toggle.component';
+export * from './app-card/app-card.component';
+export * from './avatar/avatar.component';
+export * from './carousel/carousel.component';
+export * from './info-panel/info-panel.component';
+export * from './label/label.component';
+export * from './page-header/page-header.component';
+export * from './skeleton-loader/skeleton-loader.component';
+export * from './toggle/toggle.component';
 
 // New Components
-export * from './components/card-grid/card-grid.component';
-export * from './components/pager/pager.component';
-export * from './components/floating-action-button/floating-action-button.component';
+export * from './card-grid/card-grid.component';
+export * from './pager/pager.component';
+export * from './floating-action-button/floating-action-button.component';
+export * from './tinder-card/tinder-card.component';
 
 // Interfaces
-export { DropdownItem } from './components/avatar/avatar.component';
-export { CarouselItem } from './components/carousel/carousel.component';
-export { InfoPanelItem } from './components/info-panel/info-panel.component';
-export { Breadcrumb, HeaderAction } from './components/page-header/page-header.component';
+export { DropdownItem } from './avatar/avatar.component';
+export { CarouselItem } from './carousel/carousel.component';
+export { InfoPanelItem } from './info-panel/info-panel.component';
+export { Breadcrumb, HeaderAction } from './page-header/page-header.component';
+export { TinderCardMedia, TinderCardAction } from './tinder-card/tinder-card.component';

@@ -8,7 +8,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,26 +19,82 @@ import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
+// Import Emerald components
+import { 
+  TinderCardComponent, 
+  TinderCardMedia,
+  FloatingActionButtonComponent,
+  SkeletonLoaderComponent,
+  ToggleComponent,
+  LabelComponent
+} from '../../shared/emerald';
+
 @Component({
   selector: 'app-tinder',
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent]
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule, 
+    MainLayoutComponent,
+    TinderCardComponent,
+    FloatingActionButtonComponent,
+    SkeletonLoaderComponent,
+    ToggleComponent,
+    LabelComponent
+  ]
 })
-export class TinderComponent implements OnInit, AfterViewInit {
-  @ViewChild('swipeContainer') swipeContainer!: ElementRef;
-
+export class TinderComponent implements OnInit {
+  /**
+   * Array of all ads available for swiping
+   */
   ads: Ad[] = [];
+  
+  /**
+   * Current ad being displayed
+   */
   currentAd: Ad | null = null;
+  
+  /**
+   * Next ad in the queue (for preloading)
+   */
   nextAd: Ad | null = null;
-  currentMediaIndex = 0;
+  
+  /**
+   * Current state of the card ('', 'like', 'dislike')
+   */
   cardState = '';
+  
+  /**
+   * Loading state
+   */
   loading = true;
+  
+  /**
+   * Error message
+   */
   error: string | null = null;
+  
+  /**
+   * Filter form
+   */
   filterForm: FormGroup;
-  counties: string[] = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Kristiansand'];
+  
+  /**
+   * Available counties for location filter
+   */
+  counties: string[] = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Kristiansand', 'Tromsø'];
+  
+  /**
+   * Authentication state
+   */
+  isAuthenticated = false;
 
+  /**
+   * Constructor
+   */
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
@@ -46,6 +102,7 @@ export class TinderComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private fb: FormBuilder
   ) {
+    // Initialize filter form
     this.filterForm = this.fb.group({
       category: [''],
       location: [''],
@@ -53,19 +110,26 @@ export class TinderComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Initialize component
+   */
   ngOnInit(): void {
+    // Load ads
     this.loadSwipeAds();
+    
+    // Check authentication status
+    this.authService.currentUser$.subscribe(user => {
+      this.isAuthenticated = !!user;
+    });
   }
 
-  ngAfterViewInit(): void {
-    if (this.swipeContainer) {
-      this.initializeSwipeEvents();
-    }
-  }
-
+  /**
+   * Load ads for swiping
+   */
   loadSwipeAds(): void {
     this.loading = true;
     this.error = null;
+    this.cardState = '';
 
     // Get filter values
     const filters = this.filterForm.value;
@@ -76,7 +140,6 @@ export class TinderComponent implements OnInit, AfterViewInit {
           this.ads = ads;
           this.currentAd = ads[0];
           this.nextAd = ads.length > 1 ? ads[1] : null;
-          this.currentMediaIndex = 0;
         } else {
           this.currentAd = null;
           this.nextAd = null;
@@ -92,148 +155,18 @@ export class TinderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  initializeSwipeEvents(): void {
-    const element = this.swipeContainer.nativeElement;
-    let startX = 0;
-    let startY = 0;
-    let moveX = 0;
-    let moveY = 0;
-
-    // Touch start event
-    element.addEventListener('touchstart', (e: TouchEvent) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-    });
-
-    // Touch move event
-    element.addEventListener('touchmove', (e: TouchEvent) => {
-      if (!this.currentAd) return;
-
-      moveX = e.touches[0].clientX - startX;
-      moveY = e.touches[0].clientY - startY;
-
-      const rotation = moveX * 0.1; // Rotate slightly based on swipe distance
-
-      // Apply transform to the card
-      const card = element.querySelector('.swipe-card');
-      if (card) {
-        card.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${rotation}deg)`;
-
-        // Show like/dislike indicators based on swipe direction
-        if (moveX > 50) {
-          this.cardState = 'like';
-        } else if (moveX < -50) {
-          this.cardState = 'dislike';
-        } else {
-          this.cardState = '';
-        }
-      }
-    });
-
-    // Touch end event
-    element.addEventListener('touchend', () => {
-      if (!this.currentAd) return;
-
-      // If swiped far enough, trigger the swipe action
-      if (moveX > 100) {
-        this.onSwipe('right');
-      } else if (moveX < -100) {
-        this.onSwipe('left');
-      } else {
-        // Reset card position with animation
-        const card = element.querySelector('.swipe-card');
-        if (card) {
-          card.style.transition = 'transform 0.3s ease';
-          card.style.transform = 'translate(0, 0) rotate(0deg)';
-          setTimeout(() => {
-            card.style.transition = '';
-          }, 300);
-        }
-        this.cardState = '';
-      }
-
-      // Reset values
-      startX = 0;
-      startY = 0;
-      moveX = 0;
-      moveY = 0;
-    });
-
-    // Mouse events for desktop
-    element.addEventListener('mousedown', (e: MouseEvent) => {
-      startX = e.clientX;
-      startY = e.clientY;
-      element.style.cursor = 'grabbing';
-
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!this.currentAd) return;
-
-        moveX = e.clientX - startX;
-        moveY = e.clientY - startY;
-
-        const rotation = moveX * 0.1;
-
-        const card = element.querySelector('.swipe-card');
-        if (card) {
-          card.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${rotation}deg)`;
-
-          if (moveX > 50) {
-            this.cardState = 'like';
-          } else if (moveX < -50) {
-            this.cardState = 'dislike';
-          } else {
-            this.cardState = '';
-          }
-        }
-      };
-
-      const handleMouseUp = () => {
-        element.style.cursor = '';
-
-        if (!this.currentAd) return;
-
-        if (moveX > 100) {
-          this.onSwipe('right');
-        } else if (moveX < -100) {
-          this.onSwipe('left');
-        } else {
-          const card = element.querySelector('.swipe-card');
-          if (card) {
-            card.style.transition = 'transform 0.3s ease';
-            card.style.transform = 'translate(0, 0) rotate(0deg)';
-            setTimeout(() => {
-              card.style.transition = '';
-            }, 300);
-          }
-          this.cardState = '';
-        }
-
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-
-        startX = 0;
-        startY = 0;
-        moveX = 0;
-        moveY = 0;
-      };
-
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    });
-  }
-
-  onSwipe(direction: 'left' | 'right'): void {
+  /**
+   * Handle swipe event from TinderCard component
+   * @param event Swipe event with direction and itemId
+   */
+  onSwipe(event: { direction: 'left' | 'right', itemId: string }): void {
     if (!this.currentAd) return;
 
+    const direction = event.direction;
     const currentAdId = this.currentAd._id;
 
-    // Animate the card off screen
-    const card = this.swipeContainer.nativeElement.querySelector('.swipe-card');
-    if (card) {
-      const xOffset = direction === 'right' ? window.innerWidth : -window.innerWidth;
-      card.style.transition = 'transform 0.5s ease';
-      card.style.transform = `translate(${xOffset}px, 0) rotate(${direction === 'right' ? 30 : -30}deg)`;
-    }
+    // Set card state for animation
+    this.cardState = direction === 'right' ? 'like' : 'dislike';
 
     // Record the swipe
     this.adService.recordSwipe(currentAdId, direction).subscribe({
@@ -255,7 +188,6 @@ export class TinderComponent implements OnInit, AfterViewInit {
 
       // Set the next ad as current
       this.currentAd = this.nextAd;
-      this.currentMediaIndex = 0;
 
       // Set the next ad in queue
       this.nextAd = this.ads.length > 1 ? this.ads[1] : null;
@@ -271,77 +203,165 @@ export class TinderComponent implements OnInit, AfterViewInit {
     }, 500);
   }
 
-  prevMedia(): void {
-    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length <= 1) return;
-
-    this.currentMediaIndex = (this.currentMediaIndex - 1 + this.currentAd.media.length) % this.currentAd.media.length;
+  /**
+   * Handle media change event from TinderCard component
+   * @param index New media index
+   */
+  onMediaChange(index: number): void {
+    // This method can be used to track media changes if needed
+    console.log('Media changed to index:', index);
   }
 
-  nextMedia(): void {
-    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length <= 1) return;
-
-    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.currentAd.media.length;
-  }
-
-  getCurrentMediaUrl(): string {
-    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length === 0) {
-      return '/assets/images/default-profile.jpg';
+  /**
+   * Handle card action click
+   * @param event Action event with id and itemId
+   */
+  onCardAction(event: { id: string, itemId: string }): void {
+    if (!this.currentAd) return;
+    
+    switch (event.id) {
+      case 'info':
+        this.viewAdDetails();
+        break;
+      case 'chat':
+        this.startChat();
+        break;
+      default:
+        console.warn('Unknown action:', event.id);
     }
-
-    return this.currentAd.media[this.currentMediaIndex].url;
   }
 
-  isCurrentMediaVideo(): boolean {
-    if (!this.currentAd || !this.currentAd.media || this.currentAd.media.length === 0) {
-      return false;
-    }
-
-    const media = this.currentAd.media[this.currentMediaIndex];
-    return media.type === 'video';
-  }
-
-  getMediaDots(): number[] {
-    if (!this.currentAd || !this.currentAd.media) return [];
-    return Array(this.currentAd.media.length).fill(0).map((_, i) => i);
-  }
-
+  /**
+   * Navigate to ad details page
+   */
   viewAdDetails(): void {
     if (!this.currentAd) return;
     window.location.href = `/ad-details/${this.currentAd._id}`;
   }
 
+  /**
+   * Start a chat with the advertiser
+   */
   startChat(): void {
     if (!this.currentAd) return;
 
-    this.authService.currentUser$.subscribe(user => {
-      if (!user) {
-        this.notificationService.error('Please log in to start a chat');
-        return;
-      }
+    if (!this.isAuthenticated) {
+      this.notificationService.error('Please log in to start a chat');
+      return;
+    }
 
-      this.chatService.createAdRoom(this.currentAd!._id).subscribe({
-        next: (room) => {
-          window.location.href = `/chat/${room._id}`;
-        },
-        error: (err) => {
-          this.notificationService.error('Failed to start chat');
-          console.error('Error starting chat:', err);
-        }
-      });
+    this.chatService.createAdRoom(this.currentAd._id).subscribe({
+      next: (room) => {
+        window.location.href = `/chat/${room._id}`;
+      },
+      error: (err) => {
+        this.notificationService.error('Failed to start chat');
+        console.error('Error starting chat:', err);
+      }
     });
   }
 
+  /**
+   * Convert ad media to TinderCardMedia format
+   * @param ad The ad to convert media from
+   * @returns Array of TinderCardMedia objects
+   */
+  getCardMedia(ad: Ad): TinderCardMedia[] {
+    if (!ad.media || ad.media.length === 0) {
+      // If no media, return a default image
+      return [{ url: '/assets/images/default-profile.jpg', type: 'image' }];
+    }
+    
+    return ad.media;
+  }
+
+  /**
+   * Open filters modal
+   */
   openFilters(): void {
     const modal = document.getElementById('filtersModal');
     if (modal) {
-      // Using Bootstrap's modal API
-      // @ts-ignore
-      const bsModal = new bootstrap.Modal(modal);
-      bsModal.show();
+      try {
+        // Try to use Bootstrap's modal API if available
+        // @ts-ignore
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+          // @ts-ignore
+          const bsModal = new bootstrap.Modal(modal);
+          bsModal.show();
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.add('show');
+          modal.style.display = 'block';
+          document.body.classList.add('modal-open');
+
+          // Create backdrop if it doesn't exist
+          let backdrop = document.querySelector('.modal-backdrop');
+          if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade show';
+            document.body.appendChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error('Error opening modal:', error);
+        // Simple fallback
+        modal.style.display = 'block';
+      }
     }
   }
 
+  /**
+   * Close filters modal
+   */
+  closeFilters(): void {
+    const modal = document.getElementById('filtersModal');
+    if (modal) {
+      try {
+        // Try to use Bootstrap's modal API if available
+        // @ts-ignore
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+          // @ts-ignore
+          const bsModal = bootstrap.Modal.getInstance(modal);
+          if (bsModal) {
+            bsModal.hide();
+          }
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.remove('show');
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+
+          // Remove backdrop
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.parentNode?.removeChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error('Error closing modal:', error);
+        // Simple fallback
+        modal.style.display = 'none';
+      }
+    }
+  }
+
+  /**
+   * Apply filters and reload ads
+   */
   applyFilters(): void {
     this.loadSwipeAds();
+    this.closeFilters();
+    this.notificationService.success('Filters applied');
+  }
+
+  /**
+   * Reset filters to default values
+   */
+  resetFilters(): void {
+    this.filterForm.reset({
+      category: '',
+      location: '',
+      touringOnly: false
+    });
   }
 }
