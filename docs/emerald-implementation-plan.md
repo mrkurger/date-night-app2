@@ -31,6 +31,8 @@ This document outlines the plan for implementing and enhancing the Emerald.js co
 - ✅ Enhance Netflix-style view with smooth animations
 - ✅ Improve Netflix-style view with Emerald components
 - ✅ Add configurable responsive layouts for card grids
+- ✅ Enhance card interactions with tooltips and consistent behavior
+- ✅ Add tag display with Label component
 - ⏳ Improve Tinder-style view with gesture support
 - ⏳ Optimize list view for better information density
 

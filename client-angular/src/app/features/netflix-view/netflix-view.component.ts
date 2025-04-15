@@ -351,6 +351,30 @@ export class NetflixViewComponent implements OnInit {
         console.warn('Unknown action:', action.id);
     }
   }
+  
+  /**
+   * Handle actions from card components
+   * @param event The action event from the AppCard component
+   * @param adId The ID of the ad
+   */
+  onCardAction(event: {id: string, itemId?: string}, adId: string): void {
+    // Use the itemId from the event if available, otherwise use the provided adId
+    const targetAdId = event.itemId || adId;
+    
+    switch (event.id) {
+      case 'view':
+        this.viewAdDetails(targetAdId);
+        break;
+      case 'favorite':
+        this.likeAd(targetAdId);
+        break;
+      case 'chat':
+        this.startChat(targetAdId);
+        break;
+      default:
+        console.warn('Unknown card action:', event.id);
+    }
+  }
 
   /**
    * Get the media URL for an ad
