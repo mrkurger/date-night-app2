@@ -151,12 +151,15 @@ describe('NotificationService', () => {
       const duration = 1000;
       
       // Create a new toast with a specific duration
-      const toastId = service.success(message, 'Close', { duration });
+      service.success(message, 'Close', { duration });
       
       // Verify toast was added
       let toasts: ToastNotification[] = [];
       const subscription = service.toasts$.subscribe(t => toasts = t);
       expect(toasts.length).toBe(1);
+      
+      // Get the toast ID
+      const toastId = toasts[0].id;
       
       // Fast-forward time
       tick(duration + 100);

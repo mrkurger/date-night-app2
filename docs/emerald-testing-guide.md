@@ -9,7 +9,8 @@ This guide provides instructions and best practices for testing Emerald.js compo
 3. [Unit Testing Components](#unit-testing-components)
 4. [Integration Testing](#integration-testing)
 5. [Test Examples](#test-examples)
-6. [Best Practices](#best-practices)
+6. [Common Issues and Solutions](#common-issues-and-solutions)
+7. [Best Practices](#best-practices)
 
 ## Introduction
 
@@ -42,20 +43,27 @@ Example:
 ```typescript
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { MyComponent } from './my-component.component';
 
 describe('MyComponent', () => {
   let component: MyComponent;
   let fixture: ComponentFixture<MyComponent>;
+  let debugElement: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MyComponent]
+      imports: [
+        CommonModule,
+        MyComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MyComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -119,18 +127,20 @@ To test how components interact with each other, create a test host component:
 ```typescript
 @Component({
   template: `
-    <emerald-parent>
-      <emerald-child [input]="value" (output)="handleOutput($event)"></emerald-child>
-    </emerald-parent>
-  `
+    <emerald-card-grid
+      [items]="items"
+      [layout]="layout"
+      (cardClick)="onCardClick($event)">
+    </emerald-card-grid>
+  `,
+  standalone: true,
+  imports: [CardGridComponent]
 })
 class TestHostComponent {
-  value = 'test';
-  outputValue: any;
+  items = MOCK_ITEMS;
+  layout = 'default';
   
-  handleOutput(value: any) {
-    this.outputValue = value;
-  }
+  onCardClick(id: string) {}
 }
 
 describe('Component Interaction', () => {
@@ -139,8 +149,11 @@ describe('Component Interaction', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TestHostComponent],
-      imports: [ParentComponent, ChildComponent]
+      imports: [
+        CommonModule,
+        TestHostComponent,
+        CardGridComponent
+      ]
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
@@ -166,14 +179,39 @@ The AppCard component test demonstrates how to test a complex component with mul
 
 ```typescript
 // See client-angular/src/app/shared/emerald/app-card/app-card.component.spec.ts
+
+describe('AppCardComponent', () => {
+  // Setup code...
+
+  describe('Component Initialization', () => {
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should initialize with default values', () => {
+      const newComponent = new AppCardComponent();
+      expect(newComponent.layout).toBe('default');
+      expect(newComponent.title).toBe('');
+      // Check other default values...
+    });
+  });
+
+  describe('Event Handling', () => {
+    it('should emit click event when card is clicked', () => {
+      spyOn(component.click, 'emit');
+      component.handleClick();
+      expect(component.click.emit).toHaveBeenCalledWith(mockItem.id);
+    });
+  });
+
+  describe('Tag Handling', () => {
+    it('should limit visible tags based on maxTags property', () => {
+      component.maxTags = 2;
+      expect(component.visibleTags.length).toBe(2);
+    });
+  });
+});
 ```
-
-Key aspects of this test:
-
-- Testing different layout variations
-- Testing conditional rendering (avatar, tags, etc.)
-- Testing event emissions
-- Testing accessibility attributes
 
 ### CardGrid Component Test
 
@@ -181,41 +219,233 @@ The CardGrid component test demonstrates how to test a component that manages a 
 
 ```typescript
 // See client-angular/src/app/shared/emerald/card-grid/card-grid.component.spec.ts
+
+describe('CardGridComponent', () => {
+  // Setup code...
+
+  describe('Layout Rendering', () => {
+    it('should apply default layout class', () => {
+      const gridElement = debugElement.query(By.css('.emerald-card-grid--default'));
+      expect(gridElement).toBeTruthy();
+    });
+
+    it('should apply masonry layout class when layout is set to masonry', () => {
+      component.layout = 'masonry';
+      fixture.detectChanges();
+      
+      const gridElement = debugElement.query(By.css('.emerald-card-grid--masonry'));
+      expect(gridElement).toBeTruthy();
+    });
+  });
+
+  describe('Event Handling', () => {
+    it('should emit cardClick event when handleCardClick is called', () => {
+      spyOn(component.cardClick, 'emit');
+      component.handleCardClick('item1');
+      expect(component.cardClick.emit).toHaveBeenCalledWith('item1');
+    });
+  });
+});
 ```
 
-Key aspects of this test:
+## Common Issues and Solutions
 
-- Using a test host component to simulate real usage
-- Testing responsive behavior
-- Testing different layout variations
-- Testing item rendering and interactions
+### 1. Component Path Mismatches
 
-### Netflix View Component Test
+**Issue**: Tests import components from incorrect paths, causing mismatches between test expectations and actual component behavior.
 
-The Netflix view component test demonstrates how to test a feature component that uses multiple Emerald components:
+**Solution**:
+- Ensure imports in test files match the actual component paths
+- Check for duplicate component implementations in different directories
+- Example:
+  ```typescript
+  // WRONG
+  import { CardGridComponent } from './card-grid.component';
+  
+  // CORRECT (if component is in a different directory)
+  import { CardGridComponent } from '../components/card-grid/card-grid.component';
+  ```
 
-```typescript
-// See client-angular/src/app/features/netflix-view/netflix-view.component.spec.ts
-```
+### 2. SCSS Import Path Issues
 
-Key aspects of this test:
+**Issue**: SCSS imports fail in component tests due to incorrect paths or missing design tokens.
 
-- Mocking services
-- Testing component initialization
-- Testing user interactions
-- Testing error handling
+**Solution**:
+- Ensure SCSS import paths are correct and consistent
+- Create fallback variables for missing design tokens
+- Example:
+  ```scss
+  // WRONG
+  @import '../../../../../core/design/design-tokens';
+  
+  // CORRECT
+  @import '../../../../../app/core/design/design-tokens';
+  
+  // Add fallback variables if needed
+  $primary: $primary-500;
+  $danger: $error;
+  ```
+
+### 3. Mock Data Inconsistencies
+
+**Issue**: Mock data not matching the actual interface requirements, causing type errors.
+
+**Solution**:
+- Create shared mock data factories that follow the interface definitions
+- Use TypeScript's type checking to ensure mock data is valid
+- Example:
+  ```typescript
+  // Define a mock factory for items used in CardGrid
+  const MOCK_ITEMS = [
+    {
+      id: 'item1',
+      title: 'Item 1',
+      subtitle: 'Subtitle 1',
+      description: 'Description for item 1',
+      imageUrl: 'https://example.com/image1.jpg',
+      tags: ['tag1', 'tag2'],
+      actions: [
+        { id: 'action1', icon: 'heart', tooltip: 'Like' },
+        { id: 'action2', icon: 'comment', tooltip: 'Comment' }
+      ]
+    },
+    // More items...
+  ];
+  ```
+
+### 4. Component Version Mismatches
+
+**Issue**: Multiple versions of the same component exist in different directories, causing confusion in tests.
+
+**Solution**:
+- Identify which version of the component is being used in the application
+- Update tests to use the correct component version
+- Add comments to clarify which version is being tested
+- Example:
+  ```typescript
+  /**
+   * This test is for the AppCardComponent in the shared/emerald/app-card directory,
+   * which is the simplified version used for general card displays.
+   * 
+   * For the ad-specific version, see the tests in shared/emerald/components/app-card.
+   */
+  describe('AppCardComponent (Basic Version)', () => {
+    // Test implementation...
+  });
+  ```
+
+### 5. Event Emission Testing
+
+**Issue**: Difficulty testing event emissions from nested components.
+
+**Solution**:
+- Use a test host component to capture events
+- Directly test the component's event emission methods
+- Example:
+  ```typescript
+  // Direct method testing
+  it('should emit cardClick event when handleCardClick is called', () => {
+    spyOn(component.cardClick, 'emit');
+    component.handleCardClick('item1');
+    expect(component.cardClick.emit).toHaveBeenCalledWith('item1');
+  });
+  
+  // Host component testing
+  it('should propagate cardClick event from host component', () => {
+    spyOn(hostComponent, 'onCardClick');
+    const cardElements = hostFixture.debugElement.queryAll(By.css('app-card'));
+    const firstCard = cardElements[0];
+    firstCard.triggerEventHandler('viewDetails', MOCK_ITEMS[0].id);
+    expect(hostComponent.onCardClick).toHaveBeenCalledWith(MOCK_ITEMS[0].id);
+  });
+  ```
 
 ## Best Practices
 
-1. **Test Behavior, Not Implementation**: Focus on testing what the component does, not how it does it.
-2. **Isolate Tests**: Each test should be independent and not rely on the state of other tests.
-3. **Mock Dependencies**: Use mock services and components to isolate the component being tested.
-4. **Test Edge Cases**: Test how the component behaves with empty data, errors, and other edge cases.
-5. **Test Accessibility**: Ensure components have appropriate ARIA attributes and keyboard navigation.
-6. **Keep Tests Simple**: Each test should test one specific aspect of the component.
-7. **Use Descriptive Test Names**: Test names should clearly describe what is being tested.
-8. **Organize Tests Logically**: Group related tests using describe blocks.
-9. **Test Responsive Behavior**: Verify components work correctly at different screen sizes.
-10. **Test Performance**: Ensure components perform well, especially with large data sets.
+### 1. Component Testing Structure
+
+- **Initialization Tests**: Verify the component creates successfully and initializes with correct default values
+- **Input Tests**: Test how the component responds to different input values
+- **Output Tests**: Verify that events are emitted correctly
+- **UI State Tests**: Check that the UI reflects the component's state
+- **Edge Case Tests**: Test empty states, loading states, and error states
+
+### 2. Emerald-Specific Testing Guidelines
+
+- **Test Layout Variations**: Emerald components often support multiple layouts (default, compact, masonry, etc.)
+- **Test Responsive Behavior**: Verify that components adapt correctly to different screen sizes
+- **Test Accessibility**: Ensure components have appropriate ARIA attributes and keyboard navigation
+- **Test Theme Support**: Verify that components apply the correct theme classes
+- **Test Animation States**: Check that animations are applied correctly
+
+### 3. Documentation in Tests
+
+- Add a header comment to each test file explaining:
+  - What component is being tested
+  - Any special considerations for testing this component
+  - Related components or dependencies
+- Example:
+  ```typescript
+  // ===================================================
+  // CUSTOMIZABLE SETTINGS IN THIS FILE
+  // ===================================================
+  // This file contains tests for the Emerald CardGrid component
+  // 
+  // COMMON CUSTOMIZATIONS:
+  // - MOCK_ITEMS: Mock items data for testing
+  // ===================================================
+  ```
+
+### 4. Test Organization
+
+- Group related tests using nested `describe` blocks
+- Use clear, descriptive test names that explain the expected behavior
+- Organize tests by component feature or behavior
+- Example:
+  ```typescript
+  describe('CardGridComponent', () => {
+    // Setup code...
+    
+    describe('Component Initialization', () => {
+      // Tests for component creation and default values
+    });
+    
+    describe('Layout Rendering', () => {
+      // Tests for different layout options
+    });
+    
+    describe('Item Rendering', () => {
+      // Tests for rendering items correctly
+    });
+    
+    describe('Event Handling', () => {
+      // Tests for event emissions
+    });
+  });
+  ```
+
+### 5. Mock Data Management
+
+- Create reusable mock data factories for common data structures
+- Keep mock data consistent across tests
+- Include all required properties in mock data
+- Add optional properties that might affect component behavior
+
+### 6. Testing Utility Methods
+
+- Create helper methods for common testing tasks
+- Example:
+  ```typescript
+  // Helper to find elements by test ID
+  function findByTestId(testId: string): DebugElement {
+    return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
+  }
+  
+  // Helper to trigger events
+  function triggerClick(element: DebugElement): void {
+    element.triggerEventHandler('click', null);
+    fixture.detectChanges();
+  }
+  ```
 
 By following these guidelines, you can ensure that Emerald components are thoroughly tested and maintain their functionality over time.

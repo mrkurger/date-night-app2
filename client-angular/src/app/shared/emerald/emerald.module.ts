@@ -53,7 +53,6 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     // These components are also standalone, but we include them here
     // for backwards compatibility with non-standalone components
     CardGridComponent,
-    PagerComponent,
     FloatingActionButtonComponent
   ],
   imports: [
@@ -67,6 +66,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     InfoPanelComponent,
     LabelComponent,
     PageHeaderComponent,
+    PagerComponent,
     SkeletonLoaderComponent,
     ToggleComponent
   ],

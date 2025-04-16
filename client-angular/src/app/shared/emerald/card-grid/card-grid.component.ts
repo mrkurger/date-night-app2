@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppCardComponent } from '../app-card/app-card.component';
+import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
 
 /**
  * Card Grid Component
@@ -13,7 +14,7 @@ import { AppCardComponent } from '../app-card/app-card.component';
   templateUrl: '../components/card-grid/card-grid.component.html',
   styleUrls: ['../components/card-grid/card-grid.component.scss'],
   standalone: true,
-  imports: [CommonModule, AppCardComponent]
+  imports: [CommonModule, AppCardComponent, SkeletonLoaderComponent]
 })
 export class CardGridComponent {
   /**
@@ -40,7 +41,7 @@ export class CardGridComponent {
   /**
    * The layout style of the grid
    */
-  @Input() layout: 'default' | 'compact' | 'masonry' = 'default';
+  @Input() layout: 'default' | 'compact' | 'masonry' | 'netflix' = 'default';
   
   /**
    * The card layout style
@@ -53,9 +54,30 @@ export class CardGridComponent {
   @Input() columns: number = 4;
   
   /**
+   * The gap between grid items in pixels
+   */
+  @Input() gap: number = 16;
+  
+  /**
+   * Whether to animate the grid items
+   */
+  @Input() animated: boolean = true;
+  
+  /**
    * Whether the grid is in a loading state
    */
   @Input() isLoading: boolean = false;
+  
+  /**
+   * Alias for isLoading to match the component in components directory
+   */
+  @Input() set loading(value: boolean) {
+    this.isLoading = value;
+  }
+  
+  get loading(): boolean {
+    return this.isLoading;
+  }
   
   /**
    * The message to display when there are no items
@@ -89,5 +111,34 @@ export class CardGridComponent {
    */
   handleActionClick(event: { id: string; itemId: string }): void {
     this.actionClick.emit(event);
+  }
+  
+  /**
+   * Get the grid style based on the inputs
+   */
+  getGridStyle(): { [key: string]: string } {
+    if (this.layout === 'netflix') {
+      return {};
+    }
+    
+    return {
+      'display': 'grid',
+      'grid-template-columns': `repeat(${this.columns}, 1fr)`,
+      'gap': `${this.gap}px`
+    };
+  }
+  
+  /**
+   * Handle item click
+   */
+  onItemClick(item: any): void {
+    this.cardClick.emit(item.id);
+  }
+  
+  /**
+   * Get skeleton array for loading state
+   */
+  getSkeletonArray(): number[] {
+    return Array(this.columns * 2).fill(0).map((_, i) => i);
   }
 }

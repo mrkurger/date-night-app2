@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class CSPInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Only add CSP headers to same-origin requests
-    if (req.url.startsWith('/') || req.url.startsWith(window.location.origin)) {
+    if (this.isSameOrigin(req.url)) {
       const cspReq = req.clone({
         setHeaders: {
           'Content-Security-Policy': this.getCSPPolicy()
@@ -23,6 +23,26 @@ export class CSPInterceptor implements HttpInterceptor {
     }
     
     return next.handle(req);
+  }
+  
+  /**
+   * Determines if a URL is same-origin relative to the current window location
+   * @param url The URL to check
+   * @returns True if the URL is same-origin, false otherwise
+   */
+  private isSameOrigin(url: string): boolean {
+    // Relative URLs are always same-origin
+    if (url.startsWith('/')) {
+      return true;
+    }
+    
+    try {
+      // For absolute URLs, compare origins
+      return url.startsWith(window.location.origin);
+    } catch (e) {
+      // If there's an error parsing the URL, assume it's not same-origin
+      return false;
+    }
   }
 
   private getCSPPolicy(): string {

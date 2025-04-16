@@ -2,6 +2,36 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { CSPInterceptor } from './csp.interceptor';
+import { Injectable } from '@angular/core';
+
+/**
+ * Mock Location Service to avoid issues with window.location
+ */
+@Injectable()
+class MockLocationService {
+  private _origin: string = 'http://localhost:4200';
+  
+  get origin(): string {
+    return this._origin;
+  }
+  
+  set origin(value: string) {
+    this._origin = value;
+  }
+  
+  isSameOrigin(url: string): boolean {
+    if (url.startsWith('/')) {
+      return true;
+    }
+    
+    try {
+      const urlObj = new URL(url);
+      return urlObj.origin === this.origin;
+    } catch (e) {
+      return false;
+    }
+  }
+}
 
 /**
  * Unit tests for the CSPInterceptor
@@ -15,19 +45,25 @@ describe('CSPInterceptor', () => {
   let httpClient: HttpClient;
   let httpMock: HttpTestingController;
   let interceptor: CSPInterceptor;
+  let locationService: MockLocationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         CSPInterceptor,
-        { provide: HTTP_INTERCEPTORS, useClass: CSPInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: CSPInterceptor, multi: true },
+        MockLocationService
       ]
     });
 
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
     interceptor = TestBed.inject(CSPInterceptor);
+    locationService = TestBed.inject(MockLocationService);
+    
+    // Patch the interceptor to use our mock location service
+    interceptor['isSameOrigin'] = (url: string) => locationService.isSameOrigin(url);
   });
 
   afterEach(() => {
@@ -35,25 +71,16 @@ describe('CSPInterceptor', () => {
   });
 
   it('should add CSP headers to same-origin requests', () => {
-    // Mock window.location.origin
-    const originalLocation = window.location;
-    Object.defineProperty(window, 'location', {
-      value: {
-        origin: 'http://localhost:4200'
-      },
-      writable: true
-    });
-
+    // Set the origin in our mock service
+    locationService.origin = 'http://localhost:4200';
+    
     httpClient.get('/api/test').subscribe();
 
     const req = httpMock.expectOne('/api/test');
     expect(req.request.headers.has('Content-Security-Policy')).toBeTrue();
     
-    // Restore original location
-    Object.defineProperty(window, 'location', {
-      value: originalLocation,
-      writable: true
-    });
+    // Verify the request continues
+    req.flush({ success: true });
   });
 
   it('should not add CSP headers to cross-origin requests', () => {
@@ -61,18 +88,15 @@ describe('CSPInterceptor', () => {
 
     const req = httpMock.expectOne('https://external-api.com/test');
     expect(req.request.headers.has('Content-Security-Policy')).toBeFalse();
+    
+    // Verify the request continues
+    req.flush({ success: true });
   });
 
   it('should include all required CSP directives', () => {
-    // Mock window.location.origin
-    const originalLocation = window.location;
-    Object.defineProperty(window, 'location', {
-      value: {
-        origin: 'http://localhost:4200'
-      },
-      writable: true
-    });
-
+    // Set the origin in our mock service
+    locationService.origin = 'http://localhost:4200';
+    
     httpClient.get('/api/test').subscribe();
 
     const req = httpMock.expectOne('/api/test');
@@ -93,11 +117,8 @@ describe('CSPInterceptor', () => {
     expect(cspHeader).toContain('frame-ancestors');
     expect(cspHeader).toContain('upgrade-insecure-requests');
     
-    // Restore original location
-    Object.defineProperty(window, 'location', {
-      value: originalLocation,
-      writable: true
-    });
+    // Verify the request continues
+    req.flush({ success: true });
   });
 
   it('should include trusted domains in CSP policy', () => {

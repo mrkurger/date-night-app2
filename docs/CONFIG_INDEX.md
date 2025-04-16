@@ -91,6 +91,16 @@ This document serves as a central reference for all customizable settings in the
 
 This section will be populated as shared configuration settings are identified across the codebase.
 
+## Related Documentation
+
+For additional information on specific aspects of the Date Night App, refer to these guides:
+
+- [CUSTOMIZATION_GUIDE.md](./CUSTOMIZATION_GUIDE.md) - How to customize components and settings
+- [TESTING_GUIDE.md](./TESTING_GUIDE.md) - General testing strategy and guidelines
+- [ANGULAR_TESTING_LESSONS.md](./ANGULAR_TESTING_LESSONS.md) - Lessons learned and best practices for Angular testing
+- [emerald-components.md](./emerald-components.md) - Documentation for Emerald UI components
+- [emerald-testing-guide.md](./emerald-testing-guide.md) - Testing Emerald components
+
 ---
 
 *This index is automatically generated and maintained by the update_config_index.py script. Do not edit manually.*

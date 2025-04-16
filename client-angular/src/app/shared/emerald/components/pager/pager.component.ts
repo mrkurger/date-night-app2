@@ -23,7 +23,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'emerald-pager',
   templateUrl: './pager.component.html',
-  styleUrls: ['./pager.component.scss']
+  styleUrls: ['./pager.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class PagerComponent implements OnChanges {
   /**

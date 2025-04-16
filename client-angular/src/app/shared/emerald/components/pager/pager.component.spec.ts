@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PagerComponent } from './pager.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 describe('PagerComponent', () => {
   let component: PagerComponent;
@@ -9,8 +10,7 @@ describe('PagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule],
-      declarations: [PagerComponent] // PagerComponent is not standalone
+      imports: [CommonModule, FormsModule, PagerComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PagerComponent);
@@ -20,6 +20,9 @@ describe('PagerComponent', () => {
     component.currentPage = 3;
     component.totalPages = 10;
     component.maxVisiblePages = 5;
+    
+    // Manually call calculateVisiblePages to ensure visiblePages is populated
+    component.calculateVisiblePages();
     
     fixture.detectChanges();
   });

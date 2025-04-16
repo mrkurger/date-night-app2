@@ -126,6 +126,8 @@ Angular tests use Karma, which is configured in `client-angular/karma.conf.js`.
    - Test state management
    - Test error handling
 
+> **Note:** For detailed Angular testing patterns, common issues, and solutions, refer to [ANGULAR_TESTING_LESSONS.md](./ANGULAR_TESTING_LESSONS.md)
+
 ## Test Helpers and Utilities
 
 ### Server Test Helpers

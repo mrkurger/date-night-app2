@@ -21,7 +21,20 @@
           <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
         </ng-container>
         <ng-template #defaultTemplate>
-          <emerald-app-card *ngIf="item.title" [ad]="item" layout="netflix"></emerald-app-card>
+          <emerald-app-card *ngIf="item.title" 
+            [title]="item.title"
+            [subtitle]="item.subtitle"
+            [description]="item.description"
+            [imageUrl]="item.imageUrl"
+            [avatarUrl]="item.avatarUrl"
+            [avatarName]="item.avatarName"
+            [isOnline]="item.isOnline"
+            [tags]="item.tags"
+            [actions]="item.actions"
+            [itemId]="item.id"
+            [layout]="cardLayout"
+            (click)="handleCardClick(item.id)"
+            (actionClick)="handleActionClick($event)"></emerald-app-card>
           <div *ngIf="!item.title" class="emerald-card-grid__default-item">
             {{ item.name || item.label || 'Item' }}
           </div>
@@ -44,7 +57,20 @@
       <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
     </ng-container>
     <ng-template #defaultTemplate>
-      <emerald-app-card *ngIf="item.title" [ad]="item" layout="netflix"></emerald-app-card>
+      <emerald-app-card *ngIf="item.title" 
+        [title]="item.title"
+        [subtitle]="item.subtitle"
+        [description]="item.description"
+        [imageUrl]="item.imageUrl"
+        [avatarUrl]="item.avatarUrl"
+        [avatarName]="item.avatarName"
+        [isOnline]="item.isOnline"
+        [tags]="item.tags"
+        [actions]="item.actions"
+        [itemId]="item.id"
+        [layout]="cardLayout"
+        (click)="handleCardClick(item.id)"
+        (actionClick)="handleActionClick($event)"></emerald-app-card>
       <div *ngIf="!item.title" class="emerald-card-grid__default-item">
         {{ item.name || item.label || 'Item' }}
       </div>

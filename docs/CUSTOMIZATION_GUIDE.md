@@ -13,7 +13,8 @@ This guide explains the standardized customization system implemented across the
 5. [Common Customization Scenarios](#common-customization-scenarios)
 6. [UI/UX Customization with Emerald.js](#uiux-customization-with-emeraldjs)
 7. [Theming](#theming)
-8. [Troubleshooting](#troubleshooting)
+8. [Testing Customized Components](#testing-customized-components)
+9. [Troubleshooting](#troubleshooting)
 
 ## Key Components
 
@@ -248,6 +249,63 @@ Components use CSS variables for styling, which can be overridden in your compon
 ```
 
 #### 3. Custom CSS Classes
+
+## Testing Customized Components
+
+When customizing components, it's important to ensure that your changes don't break existing functionality. The Date Night App includes a comprehensive testing framework to help you verify your customizations.
+
+### Unit Testing Customized Components
+
+For detailed guidance on testing Angular components, including common issues and solutions, refer to [ANGULAR_TESTING_LESSONS.md](./ANGULAR_TESTING_LESSONS.md).
+
+Key considerations when testing customized components:
+
+1. **Test Input Variations**: Verify that the component behaves correctly with different input values
+2. **Test Event Emissions**: Ensure that output events are emitted correctly
+3. **Test Styling**: Verify that CSS customizations are applied correctly
+4. **Test Edge Cases**: Check behavior with empty, null, or invalid inputs
+
+Example test for a customized Emerald component:
+
+```typescript
+describe('CustomizedAppCardComponent', () => {
+  let component: AppCardComponent;
+  let fixture: ComponentFixture<AppCardComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        CommonModule,
+        AppCardComponent
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AppCardComponent);
+    component = fixture.componentInstance;
+    
+    // Set custom inputs
+    component.ad = mockAd;
+    component.layout = 'netflix';
+    component.showActions = true;
+    
+    fixture.detectChanges();
+  });
+
+  it('should apply custom layout', () => {
+    const element = fixture.nativeElement;
+    expect(element.querySelector('.netflix-layout')).toBeTruthy();
+  });
+
+  it('should emit viewDetails event when clicked', () => {
+    spyOn(component.viewDetails, 'emit');
+    
+    const cardElement = fixture.nativeElement.querySelector('.card-container');
+    cardElement.click();
+    
+    expect(component.viewDetails.emit).toHaveBeenCalledWith(mockAd._id);
+  });
+});
+```
 
 You can add custom CSS classes to components and use them to override the default styles:
 
