@@ -13,6 +13,10 @@ This document contains lessons learned by the AI while working on the Date Night
   - [SCSS Variables](#scss-variables)
 - [Angular Router Testing](#angular-router-testing)
 - [HTTP Service Testing](#http-service-testing)
+- [Map Integration Patterns](#map-integration-patterns)
+  - [Reusable Map Component](#reusable-map-component)
+  - [Accessibility Considerations](#accessibility-considerations)
+  - [Performance Optimization](#performance-optimization)
 - [Debugging Strategies](#debugging-strategies)
 - [Linting and Formatting](#linting-and-formatting)
   - [ESLint Configuration](#eslint-configuration)
@@ -269,6 +273,235 @@ expect(req.request.method).toBe('POST');
 req.flush(mockResponse); // For success
 // OR
 req.error(new ErrorEvent('Network error'), { status: 500 }); // For error
+```
+
+## Map Integration Patterns
+
+### Reusable Map Component
+
+When implementing map functionality in Angular applications, a reusable component approach provides several benefits:
+
+1. **Encapsulation**: All map-related logic is contained within a single component
+2. **Reusability**: The same map component can be used across different features
+3. **Maintainability**: Updates to map functionality only need to be made in one place
+4. **Configurability**: Input parameters allow for customization without modifying the component
+
+The recommended pattern for map integration includes:
+
+```typescript
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.scss'],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  // Configuration inputs
+  @Input() height: string = '400px';
+  @Input() initialLatitude: number = 59.9139;
+  @Input() initialLongitude: number = 10.7522;
+  @Input() initialZoom: number = 6;
+  @Input() markers: MapMarker[] = [];
+  @Input() selectable: boolean = false;
+  @Input() showCurrentLocation: boolean = false;
+
+  // Output events
+  @Output() markerClick = new EventEmitter<MapMarker>();
+  @Output() locationSelected = new EventEmitter<{
+    latitude: number;
+    longitude: number;
+    address?: string;
+  }>();
+
+  // Implementation details...
+}
+```
+
+### Accessibility Considerations
+
+When implementing interactive map components, ensure accessibility by:
+
+1. **Keyboard Navigation**: Implement keyboard controls for map navigation and interaction:
+
+```typescript
+private setupKeyboardAccessibility(): void {
+  document.addEventListener('keydown', this.handleKeyboardNavigation);
+}
+
+private handleKeyboardNavigation = (e: KeyboardEvent): void => {
+  if (!this.map || !this.keyboardControlActive) return;
+
+  // Only handle events when map is focused
+  const mapContainer = this.map.getContainer();
+  if (document.activeElement !== mapContainer) return;
+
+  // Handle arrow keys, space, etc.
+  switch (e.key) {
+    case 'ArrowUp':
+      // Move map up
+      break;
+    case 'ArrowDown':
+      // Move map down
+      break;
+    // Other keys...
+  }
+};
+```
+
+2. **Screen Reader Support**: Provide appropriate ARIA attributes and announcements:
+
+```typescript
+// In HTML template
+<div id="map" class="map"
+     tabindex="0"
+     role="application"
+     aria-label="Interactive map">
+</div>
+
+<div class="sr-only" aria-live="polite">
+  <!-- Screen reader announcements -->
+</div>
+
+// In component class
+private announceToScreenReader(message: string): void {
+  const srAnnouncer = document.querySelector('.sr-only');
+  if (srAnnouncer) {
+    srAnnouncer.textContent = message;
+  }
+}
+```
+
+3. **Focus Management**: Clearly indicate which element has focus:
+
+```scss
+.map:focus {
+  outline: 3px solid #4a90e2;
+  outline-offset: -3px;
+}
+
+.map.map-focused {
+  outline: 3px solid #4a90e2;
+  outline-offset: -3px;
+}
+```
+
+4. **Alternative Interactions**: Provide alternative ways to interact with the map:
+
+```html
+<div class="map-accessibility-controls">
+  <button
+    class="btn btn-sm btn-outline-secondary"
+    (click)="centerMap(initialLatitude, initialLongitude, initialZoom)"
+    aria-label="Reset map view"
+    title="Reset map view"
+  >
+    <i class="fas fa-home" aria-hidden="true"></i>
+  </button>
+  <!-- Other controls -->
+</div>
+```
+
+### Performance Optimization
+
+For optimal map performance:
+
+1. **Lazy Loading**: Load map libraries only when needed:
+
+```typescript
+// In component or service
+private loadLeaflet(): Promise<void> {
+  return new Promise<void>((resolve) => {
+    if (typeof L !== 'undefined') {
+      resolve();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = () => resolve();
+    document.head.appendChild(script);
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+    link.crossOrigin = '';
+    document.head.appendChild(link);
+  });
+}
+```
+
+2. **Marker Clustering**: Use clustering for large numbers of markers:
+
+```typescript
+// In component
+private setupMarkerClustering(): void {
+  if (!this.map) return;
+
+  // Clear existing cluster group
+  if (this.markerClusterGroup) {
+    this.map.removeLayer(this.markerClusterGroup);
+  }
+
+  // Create new cluster group
+  this.markerClusterGroup = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true
+  });
+
+  // Add markers to cluster group
+  this.markers.forEach(marker => {
+    const leafletMarker = L.marker([marker.latitude, marker.longitude], {
+      icon: this.createMarkerIcon(marker.color || 'blue')
+    });
+
+    leafletMarker.bindPopup(this.createPopupContent(marker));
+    leafletMarker.on('click', () => this.onMarkerClick(marker));
+
+    this.markerClusterGroup.addLayer(leafletMarker);
+  });
+
+  // Add cluster group to map
+  this.map.addLayer(this.markerClusterGroup);
+}
+```
+
+3. **Viewport Optimization**: Only render markers in the current viewport:
+
+```typescript
+private updateVisibleMarkers(): void {
+  if (!this.map || !this.markers.length) return;
+
+  const bounds = this.map.getBounds();
+  const visibleMarkers = this.markers.filter(marker =>
+    bounds.contains(L.latLng(marker.latitude, marker.longitude))
+  );
+
+  // Only render visible markers
+  this.renderMarkers(visibleMarkers);
+}
+```
+
+4. **Event Throttling**: Throttle event handlers for better performance:
+
+```typescript
+private setupMapEvents(): void {
+  if (!this.map) return;
+
+  // Throttle move events
+  let timeout: any;
+  this.map.on('move', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      this.updateVisibleMarkers();
+    }, 100);
+  });
+}
 ```
 
 ## Debugging Strategies

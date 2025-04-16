@@ -16,6 +16,14 @@ This document contains lessons learned from unit testing the Date Night App proj
 - [Test Setup Best Practices](#test-setup-best-practices)
 - [Mocking Components and Services](#mocking-components-and-services)
 - [Testing Asynchronous Code](#testing-asynchronous-code)
+- [Testing Map Components](#testing-map-components)
+  - [Mocking External Map Libraries](#mocking-external-map-libraries)
+  - [Testing Map Initialization](#testing-map-initialization)
+  - [Testing Map Events](#testing-map-events)
+  - [Testing Map Markers](#testing-map-markers)
+  - [Testing Geolocation](#testing-geolocation)
+  - [Testing Performance Monitoring](#testing-performance-monitoring)
+  - [Testing Map Component Cleanup](#testing-map-component-cleanup)
 
 ## Angular Component Testing
 
@@ -472,4 +480,286 @@ it('should load data asynchronously', fakeAsync(() => {
 
   expect(component.items).toEqual(['item1', 'item2']);
 }));
+```
+
+## Testing Map Components
+
+When testing components that use mapping libraries like Leaflet, special considerations are needed:
+
+### Mocking External Map Libraries
+
+Mock the external map library to avoid DOM manipulation during tests:
+
+```typescript
+// Mock Leaflet
+jest.mock('leaflet', () => {
+  const originalModule = jest.requireActual('leaflet');
+
+  // Create mock map instance
+  const mockMap = {
+    setView: jest.fn().mockReturnThis(),
+    remove: jest.fn(),
+    on: jest.fn().mockReturnThis(),
+    off: jest.fn(),
+    invalidateSize: jest.fn(),
+    addLayer: jest.fn(),
+    removeLayer: jest.fn(),
+    getZoom: jest.fn().mockReturnValue(10),
+    setZoom: jest.fn(),
+    getCenter: jest.fn().mockReturnValue({ lat: 0, lng: 0 }),
+    flyTo: jest.fn(),
+    getBounds: jest.fn().mockReturnValue({
+      contains: jest.fn().mockReturnValue(true),
+    }),
+    fitBounds: jest.fn(),
+    closePopup: jest.fn(),
+  };
+
+  // Create mock marker
+  const mockMarker = {
+    addTo: jest.fn().mockReturnThis(),
+    setLatLng: jest.fn().mockReturnThis(),
+    bindPopup: jest.fn().mockReturnThis(),
+    openPopup: jest.fn(),
+    remove: jest.fn(),
+    on: jest.fn().mockReturnThis(),
+  };
+
+  // Create mock layer group
+  const mockLayerGroup = {
+    addTo: jest.fn().mockReturnThis(),
+    addLayer: jest.fn(),
+    removeLayer: jest.fn(),
+    clearLayers: jest.fn(),
+  };
+
+  return {
+    ...originalModule,
+    map: jest.fn().mockReturnValue(mockMap),
+    marker: jest.fn().mockReturnValue(mockMarker),
+    layerGroup: jest.fn().mockReturnValue(mockLayerGroup),
+    tileLayer: jest.fn().mockReturnValue({
+      addTo: jest.fn(),
+    }),
+    icon: jest.fn().mockReturnValue({}),
+    divIcon: jest.fn().mockReturnValue({}),
+    popup: jest.fn().mockReturnValue({
+      setLatLng: jest.fn().mockReturnThis(),
+      setContent: jest.fn().mockReturnThis(),
+      openOn: jest.fn(),
+    }),
+    latLngBounds: jest.fn().mockReturnValue({}),
+  };
+});
+```
+
+### Testing Map Initialization
+
+Test that the map is properly initialized:
+
+```typescript
+it('should initialize map on ngAfterViewInit', () => {
+  // Spy on Leaflet map creation
+  const mapSpy = spyOn(L, 'map').and.callThrough();
+
+  // Call ngAfterViewInit
+  component.ngAfterViewInit();
+
+  // Verify map was created
+  expect(mapSpy).toHaveBeenCalled();
+  expect(component.map).toBeTruthy();
+});
+```
+
+### Testing Map Events
+
+Test map event handlers by simulating events:
+
+```typescript
+it('should handle map click events', () => {
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Get the click handler from the map.on call
+  const clickHandler = L.map().on.calls.argsFor(0)[1];
+
+  // Create mock event
+  const mockEvent = {
+    latlng: { lat: 10, lng: 20 },
+  };
+
+  // Call the handler directly
+  clickHandler(mockEvent);
+
+  // Verify the component handled the event
+  expect(component.selectedLocation).toEqual({
+    latitude: 10,
+    longitude: 20,
+  });
+});
+```
+
+### Testing Map Markers
+
+Test marker creation and interaction:
+
+```typescript
+it('should add markers to the map', () => {
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Set markers
+  component.markers = [
+    { id: '1', latitude: 10, longitude: 20, title: 'Marker 1' },
+    { id: '2', latitude: 30, longitude: 40, title: 'Marker 2' },
+  ];
+
+  // Call method to add markers
+  component.updateMarkers(component.markers);
+
+  // Verify markers were created
+  expect(L.marker).toHaveBeenCalledTimes(2);
+  expect(L.marker).toHaveBeenCalledWith([10, 20], jasmine.any(Object));
+  expect(L.marker).toHaveBeenCalledWith([30, 40], jasmine.any(Object));
+});
+
+it('should handle marker click events', () => {
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Set markers
+  component.markers = [{ id: '1', latitude: 10, longitude: 20, title: 'Marker 1' }];
+
+  // Update markers
+  component.updateMarkers(component.markers);
+
+  // Spy on output event
+  spyOn(component.markerClick, 'emit');
+
+  // Get the click handler from the marker.on call
+  const clickHandler = L.marker().on.calls.argsFor(0)[1];
+
+  // Call the handler directly
+  clickHandler();
+
+  // Verify the event was emitted
+  expect(component.markerClick.emit).toHaveBeenCalledWith(component.markers[0]);
+});
+```
+
+### Testing Geolocation
+
+Mock the geolocation API for testing:
+
+```typescript
+it('should show user location when available', fakeAsync(() => {
+  // Mock successful geolocation
+  const mockGeolocation = {
+    getCurrentPosition: jasmine.createSpy().and.callFake(successCallback => {
+      successCallback({
+        coords: {
+          latitude: 10,
+          longitude: 20,
+        },
+      });
+    }),
+  };
+
+  // Replace navigator.geolocation
+  spyOnProperty(navigator, 'geolocation').and.returnValue(mockGeolocation);
+
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Call method to show user location
+  component.showCurrentLocation();
+  tick();
+
+  // Verify marker was created at the right position
+  expect(L.marker).toHaveBeenCalledWith([10, 20], jasmine.any(Object));
+}));
+
+it('should handle geolocation errors', fakeAsync(() => {
+  // Mock geolocation error
+  const mockGeolocation = {
+    getCurrentPosition: jasmine.createSpy().and.callFake((successCallback, errorCallback) => {
+      errorCallback({
+        code: 1, // PERMISSION_DENIED
+        message: 'User denied geolocation',
+      });
+    }),
+  };
+
+  // Replace navigator.geolocation
+  spyOnProperty(navigator, 'geolocation').and.returnValue(mockGeolocation);
+
+  // Spy on error handling
+  spyOn(console, 'error');
+
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Call method to show user location
+  component.showCurrentLocation();
+  tick();
+
+  // Verify error was handled
+  expect(console.error).toHaveBeenCalled();
+  expect(L.popup).toHaveBeenCalled();
+}));
+```
+
+### Testing Performance Monitoring
+
+Test that performance metrics are properly tracked:
+
+```typescript
+it('should track map initialization time', () => {
+  // Spy on monitoring service
+  const monitoringSpy = spyOn(monitoringService, 'trackInitialization');
+
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Verify monitoring service was called
+  expect(monitoringSpy).toHaveBeenCalled();
+  expect(monitoringSpy.calls.first().args[0]).toBeGreaterThan(0);
+});
+
+it('should track marker rendering performance', () => {
+  // Spy on monitoring service
+  const renderSpy = spyOn(monitoringService, 'trackRender');
+  const markersSpy = spyOn(monitoringService, 'trackMarkers');
+
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Update markers
+  component.updateMarkers([{ id: '1', latitude: 10, longitude: 20, title: 'Test' }]);
+
+  // Verify monitoring service was called
+  expect(renderSpy).toHaveBeenCalled();
+  expect(markersSpy).toHaveBeenCalledWith(1, 'update');
+});
+```
+
+### Testing Map Component Cleanup
+
+Test that resources are properly cleaned up:
+
+```typescript
+it('should clean up resources on destroy', () => {
+  // Initialize component
+  component.ngAfterViewInit();
+
+  // Get reference to map
+  const map = component.map;
+
+  // Destroy component
+  component.ngOnDestroy();
+
+  // Verify map was removed
+  expect(map.remove).toHaveBeenCalled();
+  expect(component.map).toBeNull();
+});
 ```

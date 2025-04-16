@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,7 +15,7 @@ import { TravelService, TravelItinerary } from '../../../core/services/travel.se
 import { AdService } from '../../../core/services/ad.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Observable, of } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize, tap, switchMap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MapComponent, MapMarker } from '../../../shared/components/map/map.component';
+import { LocationService } from '../../../core/services/location.service';
+import { GeocodingService } from '../../../core/services/geocoding.service';
+import { NorwayCity, NorwayCounty } from '../../../core/constants/norway-locations';
 
 @Component({
   selector: 'app-travel-itinerary',
@@ -43,9 +49,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MapComponent,
   ],
 })
 export class TravelItineraryComponent implements OnInit {
+  @ViewChild('itineraryMap') itineraryMap?: MapComponent;
+  @ViewChild('locationMap') locationMap?: MapComponent;
+
   adId: string;
   itineraryForm: FormGroup;
   itineraries: TravelItinerary[] = [];
@@ -58,12 +70,27 @@ export class TravelItineraryComponent implements OnInit {
   trackingLocation = false;
   currentPosition: { longitude: number; latitude: number } | null = null;
 
+  // For map
+  mapMarkers: MapMarker[] = [];
+  selectedLocation: { latitude: number; longitude: number; address?: string } | null = null;
+
+  // For location selection
+  counties: string[] = [];
+  cities: NorwayCity[] = [];
+  filteredCities: NorwayCity[] = [];
+
+  // View state
+  activeTab = 0;
+  showMap = true;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private travelService: TravelService,
     private adService: AdService,
     private notificationService: NotificationService,
+    private locationService: LocationService,
+    private geocodingService: GeocodingService,
     private snackBar: MatSnackBar
   ) {
     this.adId = this.route.snapshot.paramMap.get('id') || '';
@@ -73,12 +100,20 @@ export class TravelItineraryComponent implements OnInit {
         city: ['', [Validators.required]],
         county: ['', [Validators.required]],
         country: ['Norway'],
+        location: this.fb.group({
+          type: ['Point'],
+          coordinates: [null],
+        }),
       }),
       arrivalDate: [null, [Validators.required]],
       departureDate: [null, [Validators.required]],
       accommodation: this.fb.group({
         name: [''],
         address: [''],
+        location: this.fb.group({
+          type: ['Point'],
+          coordinates: [null],
+        }),
         showAccommodation: [false],
       }),
       notes: [''],
@@ -88,6 +123,67 @@ export class TravelItineraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadItineraries();
+    this.loadLocations();
+
+    // Listen for county changes to update cities
+    this.itineraryForm.get('destination.county')?.valueChanges.subscribe(county => {
+      if (county) {
+        this.loadCitiesByCounty(county);
+      }
+    });
+
+    // Listen for city changes to update coordinates
+    this.itineraryForm.get('destination.city')?.valueChanges.subscribe(city => {
+      if (city && typeof city === 'string') {
+        this.updateCityCoordinates(city);
+      }
+    });
+  }
+
+  loadLocations(): void {
+    // Load counties
+    this.locationService.getCounties().subscribe(counties => {
+      this.counties = counties;
+    });
+  }
+
+  loadCitiesByCounty(county: string): void {
+    this.locationService.getCitiesByCounty(county).subscribe(cities => {
+      this.cities = cities;
+      this.filteredCities = cities;
+    });
+  }
+
+  updateCityCoordinates(city: string): void {
+    const county = this.itineraryForm.get('destination.county')?.value;
+    if (!county) return;
+
+    this.locationService.getCityCoordinates(city).subscribe(coordinates => {
+      if (coordinates) {
+        this.itineraryForm.get('destination.location.coordinates')?.setValue(coordinates);
+
+        // Update map if available
+        if (this.itineraryMap) {
+          this.itineraryMap.setSelectedLocation(coordinates[1], coordinates[0]);
+          this.itineraryMap.centerMap(coordinates[1], coordinates[0], 10);
+        }
+      } else {
+        // If coordinates not found in local database, try geocoding
+        this.geocodingService.geocodeLocation(city, county).subscribe(result => {
+          if (result && result.coordinates) {
+            this.itineraryForm
+              .get('destination.location.coordinates')
+              ?.setValue(result.coordinates);
+
+            // Update map if available
+            if (this.itineraryMap) {
+              this.itineraryMap.setSelectedLocation(result.coordinates[1], result.coordinates[0]);
+              this.itineraryMap.centerMap(result.coordinates[1], result.coordinates[0], 10);
+            }
+          }
+        });
+      }
+    });
   }
 
   loadItineraries(): void {
@@ -107,7 +203,48 @@ export class TravelItineraryComponent implements OnInit {
       )
       .subscribe(itineraries => {
         this.itineraries = itineraries;
+        this.updateMapMarkers();
       });
+  }
+
+  updateMapMarkers(): void {
+    // Create markers for each itinerary
+    this.mapMarkers = this.itineraries
+      .filter(
+        itinerary =>
+          itinerary.destination?.location?.coordinates && itinerary.status !== 'cancelled'
+      )
+      .map(itinerary => {
+        const [longitude, latitude] = itinerary.destination.location!.coordinates;
+        return {
+          id: itinerary._id || '',
+          latitude,
+          longitude,
+          title: `${itinerary.destination.city}, ${itinerary.destination.county}`,
+          description: `${this.formatDate(itinerary.arrivalDate)} - ${this.formatDate(itinerary.departureDate)}`,
+          color: this.getStatusColor(itinerary.status),
+        };
+      });
+
+    // Update map if available
+    if (this.itineraryMap) {
+      this.itineraryMap.updateMarkers(this.mapMarkers);
+    }
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'planned':
+        return 'blue';
+      case 'active':
+        return 'green';
+      case 'completed':
+        return 'gray';
+      case 'cancelled':
+        return 'red';
+      default:
+        return 'blue';
+    }
   }
 
   onSubmit(): void {
@@ -179,6 +316,16 @@ export class TravelItineraryComponent implements OnInit {
     };
 
     this.itineraryForm.patchValue(formattedItinerary);
+
+    // Switch to form tab
+    this.activeTab = 0;
+
+    // Update map if coordinates are available
+    if (itinerary.destination?.location?.coordinates && this.itineraryMap) {
+      const [longitude, latitude] = itinerary.destination.location.coordinates;
+      this.itineraryMap.setSelectedLocation(latitude, longitude);
+      this.itineraryMap.centerMap(latitude, longitude, 10);
+    }
   }
 
   cancelItinerary(itinerary: TravelItinerary): void {
@@ -209,14 +356,27 @@ export class TravelItineraryComponent implements OnInit {
     this.itineraryForm.reset({
       destination: {
         country: 'Norway',
+        location: {
+          type: 'Point',
+        },
       },
       status: 'planned',
       accommodation: {
         showAccommodation: false,
+        location: {
+          type: 'Point',
+        },
       },
     });
     this.editMode = false;
     this.currentItineraryId = null;
+    this.selectedLocation = null;
+
+    // Reset map
+    if (this.itineraryMap) {
+      // Center back to Norway
+      this.itineraryMap.centerMap(59.9139, 10.7522, 6);
+    }
   }
 
   startLocationTracking(): void {
@@ -233,6 +393,12 @@ export class TravelItineraryComponent implements OnInit {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
+
+        // Update location map if available
+        if (this.locationMap) {
+          this.locationMap.setSelectedLocation(position.coords.latitude, position.coords.longitude);
+          this.locationMap.centerMap(position.coords.latitude, position.coords.longitude, 13);
+        }
 
         this.updateLocation();
       },
@@ -270,13 +436,72 @@ export class TravelItineraryComponent implements OnInit {
         }),
         finalize(() => {
           this.trackingLocation = false;
+        }),
+        // Get address information for the current location
+        switchMap(response => {
+          if (response && this.currentPosition) {
+            return this.geocodingService
+              .reverseGeocode(this.currentPosition.longitude, this.currentPosition.latitude)
+              .pipe(
+                map(addressInfo => ({ response, addressInfo })),
+                catchError(() => of({ response, addressInfo: null }))
+              );
+          }
+          return of({ response: null, addressInfo: null });
         })
       )
-      .subscribe(response => {
+      .subscribe(({ response, addressInfo }) => {
         if (response) {
-          this.notificationService.success('Location updated successfully');
+          let successMessage = 'Location updated successfully';
+
+          if (addressInfo) {
+            successMessage += ` (${addressInfo.city}, ${addressInfo.county})`;
+          }
+
+          this.notificationService.success(successMessage);
         }
       });
+  }
+
+  onMapLocationSelected(location: { latitude: number; longitude: number; address?: string }): void {
+    this.selectedLocation = location;
+
+    // Update form with selected location
+    const coordinates: [number, number] = [location.longitude, location.latitude];
+    this.itineraryForm.get('destination.location.coordinates')?.setValue(coordinates);
+
+    // Try to get city and county information
+    this.geocodingService
+      .reverseGeocode(location.longitude, location.latitude)
+      .subscribe(result => {
+        if (result) {
+          this.itineraryForm.get('destination.city')?.setValue(result.city);
+          this.itineraryForm.get('destination.county')?.setValue(result.county);
+          this.itineraryForm.get('destination.country')?.setValue(result.country || 'Norway');
+        }
+      });
+  }
+
+  onMarkerClick(marker: MapMarker): void {
+    // Find the corresponding itinerary
+    const itinerary = this.itineraries.find(i => i._id === marker.id);
+    if (itinerary) {
+      // Show details or edit the itinerary
+      this.editItinerary(itinerary);
+    }
+  }
+
+  onTabChange(event: any): void {
+    this.activeTab = event.index;
+
+    // Refresh maps when tab changes to ensure proper rendering
+    setTimeout(() => {
+      if (this.activeTab === 0 && this.itineraryMap) {
+        this.itineraryMap.refreshMap();
+      } else if (this.activeTab === 2 && this.locationMap) {
+        this.locationMap.refreshMap();
+      }
+    }, 100);
   }
 
   // Helper to mark all controls in a form group as touched

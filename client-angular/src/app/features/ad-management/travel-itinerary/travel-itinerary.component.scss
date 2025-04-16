@@ -20,7 +20,7 @@ h4 {
 }
 
 .card {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border: none;
   margin-bottom: 20px;
@@ -55,8 +55,8 @@ label {
   transition: border-color 0.15s ease-in-out;
 
   &:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
   }
 
   &.is-invalid {
@@ -92,12 +92,12 @@ label {
   transition: all 0.2s ease;
 
   &.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
 
     &:hover:not(:disabled) {
-      background-color: #0069d9;
-      border-color: #0062cc;
+      background-color: #138496;
+      border-color: #117a8b;
     }
   }
 
@@ -237,3 +237,51 @@ label {
 .text-muted {
   color: #6c757d;
 }
+
+/* Map marker legend */
+.marker-legend {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.marker-planned {
+  background-color: #17a2b8;
+}
+
+.marker-active {
+  background-color: #28a745;
+}
+
+.marker-completed {
+  background-color: #6c757d;
+}
+
+.marker-cancelled {
+  background-color: #dc3545;
+}
+
+/* Tab styling */
+::ng-deep .mat-mdc-tab-header {
+  margin-bottom: 20px;
+}
+
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+/* Card styling for active itineraries */
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}
+
+/* Add Leaflet CSS */
+@import 'leaflet/dist/leaflet.css';
