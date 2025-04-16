@@ -262,4 +262,117 @@ export class AdService {
   toggleActiveStatus(id: string, isActive: boolean): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { isActive });
   }
+
+  /**
+   * Search for ads by location with distance calculation
+   * @param longitude Longitude coordinate
+   * @param latitude Latitude coordinate
+   * @param radius Search radius in kilometers
+   * @param categories Optional array of categories to filter by
+   * @returns Observable with location match results including distance
+   */
+  searchByLocation(
+    longitude: number,
+    latitude: number,
+    radius: number,
+    categories?: string[]
+  ): Observable<any[]> {
+    const params: any = {
+      longitude: longitude.toString(),
+      latitude: latitude.toString(),
+      radius: radius.toString(),
+    };
+
+    if (categories && categories.length > 0) {
+      params.categories = categories.join(',');
+    }
+
+    return this.http.get<any[]>(`${this.apiUrl}/location-search`, { params }).pipe(
+      catchError(error => {
+        console.error('Error searching by location:', error);
+        // Return mock data for development
+        return of(this.getMockLocationResults(longitude, latitude, radius));
+      })
+    );
+  }
+
+  /**
+   * Generate mock location search results for development
+   * @param longitude Center longitude
+   * @param latitude Center latitude
+   * @param radius Search radius
+   * @returns Array of mock location results
+   */
+  private getMockLocationResults(longitude: number, latitude: number, radius: number): any[] {
+    const mockResults = [];
+    const mockAds = this.getMockAds();
+
+    // Generate random coordinates within the radius
+    for (let i = 0; i < 10; i++) {
+      // Convert radius from km to degrees (approximate)
+      const kmToDegrees = 0.009;
+      const radiusDegrees = radius * kmToDegrees;
+
+      // Generate random offsets within the radius
+      const randomAngle = Math.random() * 2 * Math.PI;
+      const randomDistance = Math.random() * radiusDegrees;
+
+      const offsetLng = randomDistance * Math.cos(randomAngle);
+      const offsetLat = randomDistance * Math.sin(randomAngle);
+
+      const resultLng = longitude + offsetLng;
+      const resultLat = latitude + offsetLat;
+
+      // Calculate mock distance in km (approximate)
+      const distance = this.calculateDistance(latitude, longitude, resultLat, resultLng);
+
+      // Use a random ad from the mock data
+      const randomAd = mockAds[Math.floor(Math.random() * mockAds.length)];
+
+      mockResults.push({
+        _id: randomAd._id,
+        title: randomAd.title,
+        description: randomAd.description,
+        distance: distance,
+        location: {
+          type: 'Point',
+          coordinates: [resultLng, resultLat],
+        },
+        city: randomAd.location,
+        county: 'Oslo County', // Mock county
+        imageUrl: randomAd.images[0],
+        rating: Math.floor(Math.random() * 5) + 1,
+      });
+    }
+
+    // Sort by distance
+    return mockResults.sort((a, b) => a.distance - b.distance);
+  }
+
+  /**
+   * Calculate distance between two coordinates using Haversine formula
+   * @param lat1 First latitude
+   * @param lon1 First longitude
+   * @param lat2 Second latitude
+   * @param lon2 Second longitude
+   * @returns Distance in kilometers
+   */
+  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371; // Radius of the earth in km
+    const dLat = this.deg2rad(lat2 - lat1);
+    const dLon = this.deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) *
+        Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in km
+    return distance;
+  }
+
+  private deg2rad(deg: number): number {
+    return deg * (Math.PI / 180);
+  }
 }

@@ -1298,9 +1298,70 @@ GitHub Actions can introduce security risks if not properly configured:
    - Set `CI=true` environment variable in all workflow jobs
    - Modify scripts to handle CI environments differently when needed
    - Skip development-only tools like git hooks (husky) in CI environments
+
+5. **Git Operations in Workflows**:
+
+   - Handle potential conflicts when pushing changes from workflows
+   - Implement branching strategies for conflicting changes
+   - Use pull requests for changes that can't be directly pushed
+
+### CI/CD and Git Hooks
+
+When working with Git hooks like Husky in CI/CD environments, several patterns have proven effective:
+
+1. **Conditional Execution**:
+
+   - Skip Git hooks in CI environments to prevent errors
+   - Use environment variables to detect CI environments
+   - Example in package.json:
+     ```json
+     "prepare": "[ -n \"$CI\" ] || husky"
+     ```
+
+2. **Preinstall Scripts**:
+
+   - Use preinstall scripts to configure the environment before dependencies are installed
+   - Create configuration files dynamically based on the environment
+   - Example:
+     ```json
+     "preinstall": "node scripts/disable-husky-in-ci.js"
+     ```
+
+3. **Environment Detection**:
+
+   - Use a consistent approach to detect CI environments across different CI providers
+   - Check for common CI environment variables: CI, GITHUB_ACTIONS, GITLAB_CI, JENKINS_URL
+   - Example:
+     ```javascript
+     const isCI = Boolean(
+       process.env.CI ||
+         process.env.GITHUB_ACTIONS ||
+         process.env.GITLAB_CI ||
+         process.env.JENKINS_URL
+     );
+     ```
+
+4. **Fallback Mechanisms**:
+
+   - Implement fallback mechanisms for when environment detection fails
+   - Use configuration files (.huskyrc, .lintstagedrc) that can be overridden
+   - Example .huskyrc:
+     ```sh
+     #!/bin/sh
+     # Skip husky hooks in CI environments
+     if [ -n "$CI" ]; then
+       exit 0
+     fi
+     ```
+
+5. **Documentation**:
+
+   - Document CI/CD configuration in a dedicated file
+   - Include troubleshooting steps for common issues
+   - Explain the rationale behind CI/CD design decisions
    - Use conditional logic in npm scripts: `[ -n "$CI" ] || command`
 
-5. **Workflow Error Monitoring**:
+6. **Workflow Error Monitoring**:
 
    - Implement automated collection of workflow error logs
    - Use the `workflow_run` event to trigger log collection after workflow completion
@@ -1308,7 +1369,7 @@ GitHub Actions can introduce security risks if not properly configured:
    - Create analysis tools to identify common error patterns
    - Provide specific recommendations for fixing issues
 
-6. **Git Conflict Handling in Workflows**:
+7. **Git Conflict Handling in Workflows**:
    - Check for potential conflicts before pushing changes
    - Use `git merge-tree` to detect conflicts without modifying the working tree
    - Create feature branches for changes when conflicts are detected
