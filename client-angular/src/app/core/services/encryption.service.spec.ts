@@ -82,6 +82,78 @@ describe('EncryptionService', () => {
     });
   });
 
+  describe('temporary messages', () => {
+    it('should include TTL when encrypting messages', async () => {
+      const roomId = 'test-room-id';
+      const message = 'This is a temporary message';
+      const ttl = 3600000; // 1 hour in milliseconds
+
+      // Mock the necessary methods
+      spyOn(service, 'isEncryptionAvailable').and.returnValue(true);
+      spyOn(service as any, 'getRoomKey').and.resolveTo({} as CryptoKey);
+      spyOn(service as any, 'calculateMessageExpiry').and.returnValue(Date.now() + 86400000); // 1 day
+
+      // Mock the crypto API
+      const mockEncryptedBuffer = new Uint8Array([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      ]).buffer;
+      spyOn(window.crypto.subtle, 'encrypt').and.resolveTo(mockEncryptedBuffer);
+      spyOn(service as any, 'arrayBufferToBase64').and.returnValue('test-encrypted-data');
+
+      // Call encryptMessage with a TTL
+      const result = await service.encryptMessage(roomId, message, ttl);
+
+      // Verify the result
+      expect(result).toBeTruthy();
+      expect(result.ciphertext).toBeDefined();
+      expect(result.iv).toBeDefined();
+      expect(result.authTag).toBeDefined();
+
+      // The expiresAt should be set to now + ttl (approximately)
+      const expectedExpiry = Date.now() + ttl;
+      const actualExpiry = result.expiresAt;
+
+      // Allow for a small time difference (up to 1 second)
+      expect(Math.abs(actualExpiry - expectedExpiry)).toBeLessThan(1000);
+
+      // Verify that calculateMessageExpiry was not called (since we provided a TTL)
+      expect(service['calculateMessageExpiry']).not.toHaveBeenCalled();
+    });
+
+    it('should use default expiry when no TTL is provided', async () => {
+      const roomId = 'test-room-id';
+      const message = 'This is a message with default expiry';
+      const defaultExpiry = Date.now() + 86400000; // 1 day
+
+      // Mock the necessary methods
+      spyOn(service, 'isEncryptionAvailable').and.returnValue(true);
+      spyOn(service as any, 'getRoomKey').and.resolveTo({} as CryptoKey);
+      spyOn(service as any, 'calculateMessageExpiry').and.returnValue(defaultExpiry);
+
+      // Mock the crypto API
+      const mockEncryptedBuffer = new Uint8Array([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      ]).buffer;
+      spyOn(window.crypto.subtle, 'encrypt').and.resolveTo(mockEncryptedBuffer);
+      spyOn(service as any, 'arrayBufferToBase64').and.returnValue('test-encrypted-data');
+
+      // Call encryptMessage without a TTL
+      const result = await service.encryptMessage(roomId, message);
+
+      // Verify the result
+      expect(result).toBeTruthy();
+      expect(result.ciphertext).toBeDefined();
+      expect(result.iv).toBeDefined();
+      expect(result.authTag).toBeDefined();
+
+      // The expiresAt should be set to the value from calculateMessageExpiry
+      expect(result.expiresAt).toBe(defaultExpiry);
+
+      // Verify that calculateMessageExpiry was called
+      expect(service['calculateMessageExpiry']).toHaveBeenCalledWith(roomId);
+    });
+  });
+
   describe('encryptMessage and decryptMessage', () => {
     it('should encrypt and decrypt a message correctly', async () => {
       const roomId = 'test-room-id';

@@ -17,6 +17,30 @@ $sidebar-width: 320px;
 $message-bubble-sent: $primary-500;
 $message-bubble-received: $neutral-100;
 $typing-indicator-color: $primary-500;
+$temporary-message-color: $warning-500;
+$temporary-message-bg: rgba($warning-100, 0.3);
+
+// Animations
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($warning-500, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($warning-500, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($warning-500, 0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 // Chat Container
 .chat-container {
@@ -401,6 +425,42 @@ $typing-indicator-color: $primary-500;
     box-shadow: $shadow-sm;
     max-width: 100%;
     word-break: break-word;
+    position: relative;
+
+    // Styling for temporary messages
+    &.temporary-message {
+      border: 1px dashed $temporary-message-color;
+    }
+
+    // Styling for messages about to expire
+    &.about-to-expire {
+      animation: pulse 2s infinite;
+      border: 1px dashed $temporary-message-color;
+
+      .temporary-message-indicator {
+        animation: spin 2s infinite linear;
+      }
+    }
+
+    .temporary-message-indicator {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: $temporary-message-color;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .mat-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        color: white;
+      }
+    }
   }
 
   .message-content {
@@ -474,6 +534,18 @@ $typing-indicator-color: $primary-500;
       color: rgba(255, 255, 255, 0.8);
     }
 
+    .message-expiry {
+      display: flex;
+      align-items: center;
+
+      .expiry-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        color: $temporary-message-color;
+      }
+    }
+
     .status-icon {
       font-size: 14px;
       width: 14px;
@@ -486,6 +558,10 @@ $typing-indicator-color: $primary-500;
     .message-time,
     .status-icon {
       color: $neutral-600;
+    }
+
+    .message-expiry .expiry-icon {
+      color: $temporary-message-color;
     }
   }
 
@@ -637,6 +713,17 @@ $typing-indicator-color: $primary-500;
   background-color: $neutral-100;
   border-radius: $border-radius-lg;
   padding: $spacing-2;
+  transition: background-color 0.3s ease;
+
+  // Temporary message mode styling
+  &.temp-message-mode {
+    background-color: $temporary-message-bg;
+    border: 1px dashed $temporary-message-color;
+
+    textarea::placeholder {
+      color: $temporary-message-color;
+    }
+  }
 
   textarea {
     flex: 1;
@@ -652,11 +739,32 @@ $typing-indicator-color: $primary-500;
       outline: none;
     }
   }
+
+  // Temporary message duration selector
+  .temp-message-duration {
+    display: flex;
+    align-items: center;
+    color: $temporary-message-color;
+    font-size: $font-size-sm;
+    margin-right: $spacing-2;
+
+    .mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      margin-right: $spacing-1;
+    }
+  }
 }
 
 .attachment-button,
-.emoji-button {
+.emoji-button,
+.temp-message-button {
   color: $neutral-600;
+
+  &.active {
+    color: $temporary-message-color;
+  }
 }
 
 .send-button {

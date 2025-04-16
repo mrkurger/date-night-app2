@@ -176,6 +176,10 @@
               <mat-icon>{{ isPinned() ? 'push_pin' : 'push_pin' }}</mat-icon>
               <span>{{ isPinned() ? 'Unpin Conversation' : 'Pin Conversation' }}</span>
             </button>
+            <button mat-menu-item [matMenuTriggerFor]="autoDeletionMenu">
+              <mat-icon>auto_delete</mat-icon>
+              <span>Message Auto-Deletion</span>
+            </button>
             <button mat-menu-item (click)="blockContact()">
               <mat-icon>block</mat-icon>
               <span>Block Contact</span>
@@ -183,6 +187,26 @@
             <button mat-menu-item (click)="clearConversation()">
               <mat-icon>delete_sweep</mat-icon>
               <span>Clear Conversation</span>
+            </button>
+          </mat-menu>
+
+          <!-- Auto-Deletion Submenu -->
+          <mat-menu #autoDeletionMenu="matMenu">
+            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 1)">
+              <mat-icon>timer</mat-icon>
+              <span>Delete after 1 day</span>
+            </button>
+            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 7)">
+              <mat-icon>timer</mat-icon>
+              <span>Delete after 7 days</span>
+            </button>
+            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 30)">
+              <mat-icon>timer</mat-icon>
+              <span>Delete after 30 days</span>
+            </button>
+            <button mat-menu-item (click)="configureMessageAutoDeletion(false, 0)">
+              <mat-icon>timer_off</mat-icon>
+              <span>Disable auto-deletion</span>
             </button>
           </mat-menu>
         </div>
@@ -214,7 +238,20 @@
             </emerald-avatar>
 
             <!-- Message Content -->
-            <div class="message-bubble">
+            <div
+              class="message-bubble"
+              [class.temporary-message]="message.expiresAt"
+              [class.about-to-expire]="message.expiresAt && isAboutToExpire(message.expiresAt)"
+            >
+              <!-- Temporary Message Indicator -->
+              <div
+                *ngIf="message.expiresAt"
+                class="temporary-message-indicator"
+                [matTooltip]="getRemainingTime(message.expiresAt)"
+              >
+                <mat-icon>timer</mat-icon>
+              </div>
+
               <!-- Message Text -->
               <div
                 class="message-content"
@@ -256,6 +293,14 @@
               <!-- Message Metadata -->
               <div class="message-meta">
                 <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
+                <!-- Expiry indicator for temporary messages -->
+                <span
+                  *ngIf="message.expiresAt"
+                  class="message-expiry"
+                  [matTooltip]="getRemainingTime(message.expiresAt)"
+                >
+                  <mat-icon class="expiry-icon">timer</mat-icon>
+                </span>
                 <span
                   *ngIf="message.sender.id === currentUserId"
                   class="message-status"
@@ -344,13 +389,28 @@
           <mat-icon>attach_file</mat-icon>
         </button>
 
+        <!-- Temporary Message Button -->
+        <button
+          mat-icon-button
+          [matTooltip]="
+            temporaryMessageMode ? 'Temporary message mode enabled' : 'Send temporary message'
+          "
+          (click)="toggleTemporaryMessageMode()"
+          class="temp-message-button"
+          [class.active]="temporaryMessageMode"
+        >
+          <mat-icon>timer</mat-icon>
+        </button>
+
         <!-- Text Input -->
-        <div class="message-input">
+        <div class="message-input" [class.temp-message-mode]="temporaryMessageMode">
           <textarea
             [(ngModel)]="newMessage"
             (keyup.enter)="handleEnterKey($event)"
             (input)="onTyping()"
-            placeholder="Type a message..."
+            [placeholder]="
+              temporaryMessageMode ? 'Type a temporary message...' : 'Type a message...'
+            "
             rows="1"
             #messageInput
           >
@@ -365,15 +425,33 @@
           >
             <mat-icon>sentiment_satisfied_alt</mat-icon>
           </button>
+
+          <!-- Temporary Message Duration (only shown when temp mode is active) -->
+          <div *ngIf="temporaryMessageMode" class="temp-message-duration">
+            <button mat-button [matMenuTriggerFor]="tempDurationMenu">
+              <mat-icon>schedule</mat-icon>
+              <span>{{ formatTTL(temporaryMessageTTL) }}</span>
+            </button>
+            <mat-menu #tempDurationMenu="matMenu">
+              <button mat-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
+              <button mat-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
+            </mat-menu>
+          </div>
         </div>
 
         <!-- Send Button -->
         <button
           mat-fab
-          color="primary"
+          [color]="temporaryMessageMode ? 'accent' : 'primary'"
           class="send-button"
           (click)="sendMessage()"
           [disabled]="!canSendMessage()"
+          [matTooltip]="temporaryMessageMode ? 'Send temporary message' : 'Send message'"
         >
           <mat-icon>send</mat-icon>
         </button>

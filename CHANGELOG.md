@@ -1,5 +1,35 @@
 # Change Log
 
+## 2024-05-29
+
+### Added
+
+- **Temporary Messages Feature**
+  - Implemented temporary messages that automatically expire after a set time
+  - Added UI controls for enabling temporary message mode
+  - Created dropdown menu for selecting message expiration time (1 hour to 7 days)
+  - Added visual indicators for temporary messages with timer icon and dashed border
+  - Implemented automatic message expiration with client-side cleanup
+  - Added tooltips showing remaining time until message expiration
+  - Updated encryption service to handle message expiration
+  - Created comprehensive documentation for the temporary messages feature
+
+### Improved
+
+- **Chat Privacy and Security**
+  - Enhanced message handling with expiration support
+  - Added visual distinction for temporary vs. permanent messages
+  - Improved user experience with clear indicators for message status
+  - Added automatic cleanup of expired messages from the UI
+
+### Documentation
+
+- **Temporary Messages**
+  - Created detailed documentation in docs/features/temporary-messages.md
+  - Documented implementation details, usage instructions, and security considerations
+  - Added code comments explaining the temporary message workflow
+  - Updated code with clear annotations for future developers
+
 ## 2024-05-28
 
 ### Improved

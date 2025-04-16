@@ -7,12 +7,14 @@
 // - KEY_STORAGE_PREFIX: Prefix for keys stored in localStorage (default: 'chat_keys_')
 // - ENABLE_ENCRYPTION: Enable end-to-end encryption (default: true)
 // - KEY_PAIR_ALGORITHM: Algorithm used for key pair generation (default: 'RSA-OAEP')
+// - MESSAGE_AUTO_DELETION: Enable automatic message deletion (default: true)
+// - DEFAULT_MESSAGE_TTL: Default time-to-live for messages in milliseconds (default: 7 days)
 // ===================================================
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from, of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { Observable, from, of, timer } from 'rxjs';
+import { map, catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -21,6 +23,8 @@ const KEY_STORAGE_PREFIX = 'chat_keys_';
 const ENABLE_ENCRYPTION = true;
 const KEY_PAIR_ALGORITHM = 'RSA-OAEP';
 const SYMMETRIC_ALGORITHM = 'AES-GCM';
+const MESSAGE_AUTO_DELETION = true;
+const DEFAULT_MESSAGE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
 export interface EncryptionKeys {
   publicKey: string;
@@ -31,6 +35,7 @@ export interface EncryptedData {
   ciphertext: string;
   iv: string;
   authTag?: string;
+  expiresAt?: number; // Timestamp when the message should expire
 }
 
 export interface RoomKeys {
@@ -38,6 +43,11 @@ export interface RoomKeys {
   symmetricKey: string;
   encryptedSymmetricKey: string;
   publicKeys: { [userId: string]: string };
+}
+
+export interface MessageExpirySettings {
+  enabled: boolean;
+  ttl: number; // Time-to-live in milliseconds
 }
 
 @Injectable({
@@ -48,6 +58,11 @@ export class EncryptionService {
   private keyPair: CryptoKeyPair | null = null;
   private roomKeys: Map<string, CryptoKey> = new Map();
   private isInitialized = false;
+  private messageExpirySettings: Map<string, MessageExpirySettings> = new Map(); // Room-specific expiry settings
+  private defaultExpirySettings: MessageExpirySettings = {
+    enabled: MESSAGE_AUTO_DELETION,
+    ttl: DEFAULT_MESSAGE_TTL,
+  };
 
   constructor(
     private http: HttpClient,
@@ -97,12 +112,104 @@ export class EncryptionService {
       // Load room keys from localStorage
       await this.loadStoredRoomKeys();
 
+      // Load message expiry settings
+      this.loadExpirySettings();
+
+      // Start the message expiry checker if auto-deletion is enabled
+      if (MESSAGE_AUTO_DELETION) {
+        this.startMessageExpiryChecker();
+      }
+
       this.isInitialized = true;
       console.log('Encryption service initialized successfully');
       return true;
     } catch (error) {
       console.error('Error initializing encryption service:', error);
       return false;
+    }
+  }
+
+  /**
+   * Load all message expiry settings from localStorage
+   */
+  private loadExpirySettings(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return;
+
+    try {
+      const key = `${KEY_STORAGE_PREFIX}${userId}_expiry_settings`;
+      const storedSettings = localStorage.getItem(key);
+      if (!storedSettings) return;
+
+      const settingsMap = JSON.parse(storedSettings);
+
+      // Load settings into memory
+      Object.entries(settingsMap).forEach(([roomId, settings]) => {
+        this.messageExpirySettings.set(roomId, settings as MessageExpirySettings);
+      });
+
+      console.log(`Loaded expiry settings for ${this.messageExpirySettings.size} rooms`);
+    } catch (error) {
+      console.error('Error loading message expiry settings:', error);
+    }
+  }
+
+  /**
+   * Start the periodic checker for expired messages
+   * This runs every minute to check for and delete expired messages
+   */
+  private startMessageExpiryChecker(): void {
+    // Check for expired messages every minute
+    const checkInterval = 60 * 1000; // 1 minute
+
+    // Set up interval to check for expired messages
+    setInterval(() => {
+      this.checkAndDeleteExpiredMessages();
+    }, checkInterval);
+
+    console.log('Message expiry checker started');
+  }
+
+  /**
+   * Check for and delete expired messages
+   */
+  async checkAndDeleteExpiredMessages(): Promise<void> {
+    if (!this.isEncryptionAvailable()) return;
+
+    try {
+      // Get all rooms with messages
+      const rooms = await this.http.get<string[]>(`${this.apiUrl}/rooms-with-messages`).toPromise();
+
+      if (!rooms || rooms.length === 0) return;
+
+      const now = Date.now();
+
+      // Check each room for expired messages
+      for (const roomId of rooms) {
+        // Get expiry settings for this room
+        const settings = this.getMessageExpirySettings(roomId);
+
+        // Skip if auto-deletion is disabled for this room
+        if (!settings.enabled) continue;
+
+        // Get expired messages for this room
+        const expiredMessages = await this.http
+          .get<string[]>(`${this.apiUrl}/expired-messages/${roomId}?timestamp=${now}`)
+          .toPromise();
+
+        if (!expiredMessages || expiredMessages.length === 0) continue;
+
+        console.log(`Found ${expiredMessages.length} expired messages in room ${roomId}`);
+
+        // Delete expired messages
+        await this.http
+          .post(`${this.apiUrl}/delete-messages`, { messageIds: expiredMessages })
+          .toPromise();
+
+        console.log(`Deleted ${expiredMessages.length} expired messages from room ${roomId}`);
+      }
+    } catch (error) {
+      console.error('Error checking for expired messages:', error);
     }
   }
 
@@ -542,7 +649,103 @@ export class EncryptionService {
   /**
    * Encrypt a message for a specific room
    */
-  async encryptMessage(roomId: string, message: string): Promise<EncryptedData | null> {
+  /**
+   * Set message expiry settings for a specific room
+   * @param roomId The room ID
+   * @param settings The expiry settings to apply
+   */
+  setMessageExpirySettings(roomId: string, settings: MessageExpirySettings): void {
+    this.messageExpirySettings.set(roomId, settings);
+
+    // Store settings in localStorage for persistence
+    this.storeExpirySettings(roomId, settings);
+  }
+
+  /**
+   * Get message expiry settings for a specific room
+   * @param roomId The room ID
+   * @returns The expiry settings for the room, or the default settings if none are set
+   */
+  getMessageExpirySettings(roomId: string): MessageExpirySettings {
+    // Check if we have room-specific settings
+    if (this.messageExpirySettings.has(roomId)) {
+      return this.messageExpirySettings.get(roomId)!;
+    }
+
+    // Try to load from localStorage
+    const storedSettings = this.getStoredExpirySettings(roomId);
+    if (storedSettings) {
+      this.messageExpirySettings.set(roomId, storedSettings);
+      return storedSettings;
+    }
+
+    // Fall back to default settings
+    return this.defaultExpirySettings;
+  }
+
+  /**
+   * Store message expiry settings in localStorage
+   * @param roomId The room ID
+   * @param settings The settings to store
+   */
+  private storeExpirySettings(roomId: string, settings: MessageExpirySettings): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return;
+
+    try {
+      const key = `${KEY_STORAGE_PREFIX}${userId}_expiry_settings`;
+      const existingSettings = localStorage.getItem(key);
+      const settingsMap = existingSettings ? JSON.parse(existingSettings) : {};
+
+      settingsMap[roomId] = settings;
+      localStorage.setItem(key, JSON.stringify(settingsMap));
+    } catch (error) {
+      console.error('Error storing message expiry settings:', error);
+    }
+  }
+
+  /**
+   * Get stored message expiry settings from localStorage
+   * @param roomId The room ID
+   * @returns The stored settings, or null if none exist
+   */
+  private getStoredExpirySettings(roomId: string): MessageExpirySettings | null {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return null;
+
+    try {
+      const key = `${KEY_STORAGE_PREFIX}${userId}_expiry_settings`;
+      const storedSettings = localStorage.getItem(key);
+      if (!storedSettings) return null;
+
+      const settingsMap = JSON.parse(storedSettings);
+      return settingsMap[roomId] || null;
+    } catch (error) {
+      console.error('Error retrieving stored message expiry settings:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Calculate the expiry timestamp for a message
+   * @param roomId The room ID
+   * @returns The timestamp when the message should expire, or undefined if auto-deletion is disabled
+   */
+  private calculateMessageExpiry(roomId: string): number | undefined {
+    const settings = this.getMessageExpirySettings(roomId);
+
+    if (!settings.enabled) {
+      return undefined;
+    }
+
+    return Date.now() + settings.ttl;
+  }
+
+  async encryptMessage(
+    roomId: string,
+    message: string,
+    ttl?: number
+  ): Promise<EncryptedData | null> {
     if (!this.isEncryptionAvailable()) {
       return null;
     }
@@ -575,10 +778,15 @@ export class EncryptionService {
       const ciphertext = encryptedBytes.slice(0, ciphertextLength);
       const authTag = encryptedBytes.slice(ciphertextLength);
 
+      // Calculate message expiry timestamp
+      // If a specific TTL is provided, use it; otherwise, use the default expiry calculation
+      const expiresAt = ttl ? Date.now() + ttl : this.calculateMessageExpiry(roomId);
+
       return {
         ciphertext: this.arrayBufferToBase64(ciphertext),
         iv: this.arrayBufferToBase64(iv),
         authTag: this.arrayBufferToBase64(authTag),
+        expiresAt,
       };
     } catch (error) {
       console.error('Error encrypting message:', error);

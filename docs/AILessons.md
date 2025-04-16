@@ -25,6 +25,8 @@ This document contains lessons learned by the AI while working on the Date Night
 - [Code Duplication Patterns](#code-duplication-patterns)
   - [Utility Functions](#utility-functions)
   - [HTTP Error Handling](#http-error-handling)
+- [Feature Implementation Patterns](#feature-implementation-patterns)
+  - [Temporary Messages](#temporary-messages)
 - [Documentation Best Practices](#documentation-best-practices)
 - [Security Best Practices](#security-best-practices)
   - [Dependency Management](#dependency-management)
@@ -1244,6 +1246,52 @@ For projects with many warnings that need to be addressed over time:
    - Add timestamps to error responses for troubleshooting
    - Include request identifiers for correlation with server logs
    - Structure error details in a way that's easy to consume by error handling components
+
+## Feature Implementation Patterns
+
+### Temporary Messages
+
+When implementing features that involve time-based expiration like temporary messages:
+
+1. **Data Model Considerations**:
+
+   - Add expiration-related fields to your data model (e.g., `expiresAt`, `ttl`)
+   - Use consistent time units across the application (e.g., milliseconds for internal processing, hours for user-facing options)
+   - Include conversion utilities to transform between different time units
+
+2. **User Interface Design**:
+
+   - Provide clear visual indicators for temporary content (dashed borders, icons)
+   - Use tooltips to show remaining time until expiration
+   - Implement toggles and dropdowns for selecting expiration times
+   - Ensure the UI state clearly indicates when temporary mode is active
+
+3. **Client-Side Implementation**:
+
+   - Set up periodic checks for expired content (e.g., using setInterval)
+   - Clean up interval timers in component destruction hooks
+   - Implement graceful handling of expired content (fade out, remove from UI)
+   - Use reactive programming patterns to handle state changes
+
+4. **Server-Side Implementation**:
+
+   - Store expiration times in UTC to avoid timezone issues
+   - Implement background jobs to clean up expired content
+   - Add indexes on expiration fields for efficient querying
+   - Consider soft deletion for audit purposes
+
+5. **Security Considerations**:
+
+   - Warn users about limitations (screenshots, copies can still be made)
+   - Implement server-side validation of expiration times
+   - Ensure expired content is properly removed from all storage locations
+   - Consider encryption for sensitive temporary content
+
+6. **Testing Strategies**:
+   - Use time mocking to test expiration without waiting
+   - Test edge cases (immediate expiration, far future expiration)
+   - Verify cleanup processes work correctly
+   - Test across different timezones
 
 ## Documentation Best Practices
 

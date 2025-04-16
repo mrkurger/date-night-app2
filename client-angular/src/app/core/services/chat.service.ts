@@ -20,6 +20,9 @@ import { EncryptionService, EncryptedData } from './encryption.service';
 // Constants
 export const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 export const TYPING_INDICATOR_TIMEOUT = 3000; // 3 seconds
+export const ENABLE_MESSAGE_ENCRYPTION = true; // Enable end-to-end encryption for messages
+export const ENABLE_MESSAGE_AUTO_DELETION = true; // Enable automatic message deletion
+export const DEFAULT_MESSAGE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
 export interface ChatMessage {
   _id: string;
@@ -36,6 +39,7 @@ export interface ChatMessage {
   metadata?: any;
   isEncrypted?: boolean;
   encryptionData?: any;
+  expiresAt?: number; // Timestamp when the message should expire
 }
 
 export interface Attachment {
@@ -304,15 +308,24 @@ export class ChatService {
 
   /**
    * Send a message to a chat room
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param replyToId Optional ID of the message being replied to
+   * @param ttl Optional time-to-live in milliseconds for message auto-deletion
    */
-  sendMessage(roomId: string, content: string, replyToId?: string): Observable<ChatMessage> {
+  sendMessage(
+    roomId: string,
+    content: string,
+    replyToId?: string,
+    ttl?: number
+  ): Observable<ChatMessage> {
     // Check if encryption is available
     if (this.encryptionService.isEncryptionAvailable()) {
-      return from(this.encryptionService.encryptMessage(roomId, content)).pipe(
+      return from(this.encryptionService.encryptMessage(roomId, content, ttl)).pipe(
         switchMap(encryptedData => {
           if (!encryptedData) {
             // Fall back to unencrypted message if encryption fails
-            return this.sendUnencryptedMessage(roomId, content, replyToId);
+            return this.sendUnencryptedMessage(roomId, content, replyToId, ttl);
           }
 
           // Send encrypted message
@@ -324,44 +337,71 @@ export class ChatService {
               iv: encryptedData.iv,
               authTag: encryptedData.authTag,
             },
+            expiresAt: encryptedData.expiresAt || (ttl ? Date.now() + ttl : undefined),
           });
         })
       );
     } else {
       // Send unencrypted message
-      return this.sendUnencryptedMessage(roomId, content, replyToId);
+      return this.sendUnencryptedMessage(roomId, content, replyToId, ttl);
     }
   }
 
   /**
    * Send an unencrypted message to a chat room
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param replyToId Optional ID of the message being replied to
+   * @param ttl Optional time-to-live in milliseconds for message auto-deletion
    */
   private sendUnencryptedMessage(
     roomId: string,
     content: string,
-    replyToId?: string
+    replyToId?: string,
+    ttl?: number
   ): Observable<ChatMessage> {
+    // Calculate expiry time if ttl is provided
+    const expiresAt = ttl ? Date.now() + ttl : undefined;
+
     return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, {
       message: content,
       replyTo: replyToId,
       isEncrypted: false,
+      expiresAt,
     });
   }
 
   /**
    * Send a message with attachments
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param files Array of files to attach
+   * @param replyToId Optional ID of the message being replied to
+   * @param ttl Optional time-to-live in milliseconds for message auto-deletion
    */
   sendMessageWithAttachments(
     roomId: string,
     content: string,
     files: File[],
-    replyToId?: string
+    replyToId?: string,
+    ttl?: number
   ): Observable<ChatMessage> {
     const formData = new FormData();
     formData.append('message', content);
 
     if (replyToId) {
       formData.append('replyTo', replyToId);
+    }
+
+    // Add expiry time if ttl is provided or auto-deletion is enabled
+    if (ttl) {
+      formData.append('expiresAt', (Date.now() + ttl).toString());
+    } else if (ENABLE_MESSAGE_AUTO_DELETION) {
+      // Get room-specific settings or use defaults
+      const settings = this.getMessageAutoDeletionSettings(roomId);
+      if (settings.enabled) {
+        formData.append('expiresAt', (Date.now() + settings.ttl).toString());
+      }
     }
 
     files.forEach((file, index) => {
@@ -372,6 +412,24 @@ export class ChatService {
       `${this.apiUrl}/rooms/${roomId}/messages/attachments`,
       formData
     );
+  }
+
+  /**
+   * Send a temporary message with attachments (auto-deletion)
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param files Array of files to attach
+   * @param ttl Time-to-live in milliseconds
+   * @param replyToId Optional ID of the message being replied to
+   */
+  sendTemporaryMessageWithAttachments(
+    roomId: string,
+    content: string,
+    files: File[],
+    ttl: number,
+    replyToId?: string
+  ): Observable<ChatMessage> {
+    return this.sendMessageWithAttachments(roomId, content, files, replyToId, ttl);
   }
 
   /**
@@ -502,6 +560,15 @@ export class ChatService {
   }
 
   /**
+   * Convert hours to milliseconds for TTL
+   * @param hours Number of hours
+   * @returns Milliseconds
+   */
+  convertHoursToMilliseconds(hours: number): number {
+    return hours * 60 * 60 * 1000;
+  }
+
+  /**
    * Get contacts (users with whom the current user has chatted)
    */
   getContacts(): Observable<Contact[]> {
@@ -532,6 +599,68 @@ export class ChatService {
    */
   pinRoom(roomId: string, pinned: boolean): Observable<ChatRoom> {
     return this.http.put<ChatRoom>(`${this.apiUrl}/rooms/${roomId}/pin`, { pinned });
+  }
+
+  /**
+   * Configure message auto-deletion settings for a room
+   * @param roomId The ID of the chat room
+   * @param enabled Whether auto-deletion is enabled
+   * @param ttl Time-to-live in milliseconds (how long messages should last)
+   */
+  configureMessageAutoDeletion(
+    roomId: string,
+    enabled: boolean,
+    ttl: number = DEFAULT_MESSAGE_TTL
+  ): Observable<boolean> {
+    if (!this.encryptionService.isEncryptionAvailable()) {
+      console.warn('Encryption service not available, cannot configure message auto-deletion');
+      return of(false);
+    }
+
+    // Configure the settings in the encryption service
+    this.encryptionService.setMessageExpirySettings(roomId, { enabled, ttl });
+
+    // Also update the server with these settings
+    return this.http
+      .post<{
+        success: boolean;
+      }>(`${this.apiUrl}/rooms/${roomId}/expiry-settings`, { enabled, ttl })
+      .pipe(
+        map(response => response.success),
+        catchError(error => {
+          console.error('Error configuring message auto-deletion:', error);
+          return of(false);
+        })
+      );
+  }
+
+  /**
+   * Get the current message auto-deletion settings for a room
+   * @param roomId The ID of the chat room
+   * @returns The current expiry settings
+   */
+  getMessageAutoDeletionSettings(roomId: string): { enabled: boolean; ttl: number } {
+    if (!this.encryptionService.isEncryptionAvailable()) {
+      return { enabled: ENABLE_MESSAGE_AUTO_DELETION, ttl: DEFAULT_MESSAGE_TTL };
+    }
+
+    return this.encryptionService.getMessageExpirySettings(roomId);
+  }
+
+  /**
+   * Send a message with a specific time-to-live (auto-deletion)
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param ttl Time-to-live in milliseconds
+   * @param replyToId Optional ID of the message being replied to
+   */
+  sendTemporaryMessage(
+    roomId: string,
+    content: string,
+    ttl: number,
+    replyToId?: string
+  ): Observable<ChatMessage> {
+    return this.sendMessage(roomId, content, replyToId, ttl);
   }
 
   /**

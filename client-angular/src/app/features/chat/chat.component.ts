@@ -57,6 +57,9 @@ interface ChatMessage {
   read: boolean;
   attachments?: Attachment[];
   replyTo?: string; // ID of the message being replied to
+  expiresAt?: Date; // Optional expiration date for temporary messages
+  ttl?: number; // Time to live in hours
+  expiryWarningShown?: boolean; // Flag to track if expiry warning has been shown
 }
 
 interface Contact {
@@ -145,6 +148,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   // Reply functionality
   replyingTo: ChatMessage | null = null;
+
+  // Temporary message functionality
+  temporaryMessageMode = false;
+  temporaryMessageTTL = 24; // Default: 24 hours
+  expiryCheckInterval: any; // For the timer that checks expired messages
+
+  // Message auto-deletion settings
+  messageAutoDeletionEnabled = true;
+  messageExpiryTime = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+  temporaryMessageMode = false; // When true, next message will be temporary
+  temporaryMessageTTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
   // New message dialog
   newMessageSearch = '';
@@ -274,11 +288,32 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (params['userId']) {
         this.selectedContactId = params['userId'];
         this.loadMessages();
+        this.loadMessageAutoDeletionSettings();
       }
     });
 
     this.subscriptions.push(routeSub);
     this.setupSocketListeners();
+
+    // Set up a timer to check for expired messages every minute
+    this.expiryCheckInterval = setInterval(() => {
+      this.checkExpiredMessages();
+    }, 60000); // 60000 ms = 1 minute
+  }
+
+  /**
+   * Load message auto-deletion settings for the current chat room
+   */
+  loadMessageAutoDeletionSettings(): void {
+    if (!this.selectedContactId) return;
+
+    const settings = this.chatService.getMessageAutoDeletionSettings(this.selectedContactId);
+    this.messageAutoDeletionEnabled = settings.enabled;
+    this.messageExpiryTime = settings.ttl;
+
+    console.log(
+      `Loaded message auto-deletion settings for room ${this.selectedContactId}: enabled=${settings.enabled}, ttl=${this.formatTTL(settings.ttl)}`
+    );
   }
 
   ngAfterViewChecked(): void {
@@ -292,6 +327,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy(): void {
     // Clean up subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
+
+    // Clear the expiry check interval
+    if (this.expiryCheckInterval) {
+      clearInterval(this.expiryCheckInterval);
+    }
   }
 
   /**
@@ -519,38 +559,133 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.canSendMessage()) {
       const replyToId = this.replyingTo?._id;
 
-      this.chatService.sendMessage(this.selectedContactId, this.newMessage, replyToId).subscribe({
-        next: response => {
-          // Add the message to our list immediately for better UX
-          const newMessage: ChatMessage = {
-            _id: response._id || Date.now().toString(),
-            sender: {
-              id: this.currentUserId,
-              username: 'You',
-            },
-            message: this.newMessage,
-            timestamp: new Date(),
-            read: false,
-            replyTo: replyToId,
-          };
+      // Determine if this should be a temporary message with custom TTL
+      let ttl: number | undefined;
+      if (this.temporaryMessageMode) {
+        // Convert hours to milliseconds
+        ttl = this.chatService.convertHoursToMilliseconds(this.temporaryMessageTTL);
+        // Reset temporary message mode after sending
+        this.temporaryMessageMode = false;
+      } else if (this.messageAutoDeletionEnabled) {
+        ttl = this.messageExpiryTime;
+      }
 
-          this.messages = [...this.messages, newMessage];
-          this.groupMessagesByDate();
-          this.newMessage = '';
-          this.replyingTo = null;
+      this.chatService
+        .sendMessage(this.selectedContactId, this.newMessage, replyToId, ttl)
+        .subscribe({
+          next: response => {
+            // Add the message to our list immediately for better UX
+            const newMessage: ChatMessage = {
+              _id: response._id || Date.now().toString(),
+              sender: {
+                id: this.currentUserId,
+                username: 'You',
+              },
+              message: this.newMessage,
+              timestamp: new Date(),
+              read: false,
+              replyTo: replyToId,
+              expiresAt: response.expiresAt || (ttl ? Date.now() + ttl : undefined),
+            };
 
-          // Update the last message in contacts
-          this.updateContactLastMessage(this.selectedContactId, newMessage.message);
+            this.messages = [...this.messages, newMessage];
+            this.groupMessagesByDate();
+            this.newMessage = '';
+            this.replyingTo = null;
 
-          // Scroll to bottom
-          this.shouldScrollToBottom = true;
-        },
-        error: err => {
-          console.error('Error sending message:', err);
-          this.notificationService.error('Failed to send message. Please try again.');
-        },
-      });
+            // Update the last message in contacts
+            this.updateContactLastMessage(this.selectedContactId, newMessage.message);
+
+            // Scroll to bottom
+            this.shouldScrollToBottom = true;
+          },
+          error: err => {
+            console.error('Error sending message:', err);
+            this.notificationService.error('Failed to send message. Please try again.');
+          },
+        });
     }
+  }
+
+  /**
+   * Toggle temporary message mode
+   * When enabled, the next message sent will auto-delete after the specified TTL
+   */
+  toggleTemporaryMessageMode(): void {
+    this.temporaryMessageMode = !this.temporaryMessageMode;
+
+    if (this.temporaryMessageMode) {
+      this.notificationService.info(
+        `Temporary message mode enabled. Next message will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`
+      );
+    } else {
+      this.notificationService.info('Temporary message mode disabled.');
+    }
+  }
+
+  /**
+   * Set the TTL for temporary messages
+   * @param hours Number of hours before the message auto-deletes
+   */
+  setTemporaryMessageTTL(hours: number): void {
+    this.temporaryMessageTTL = hours * 60 * 60 * 1000;
+
+    if (this.temporaryMessageMode) {
+      this.notificationService.info(
+        `Temporary messages will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`
+      );
+    }
+  }
+
+  /**
+   * Format a TTL value in milliseconds to a human-readable string
+   */
+  private formatTTL(ttl: number): string {
+    const hours = ttl / (60 * 60 * 1000);
+
+    if (hours < 1) {
+      return `${Math.round(hours * 60)} minutes`;
+    } else if (hours === 1) {
+      return '1 hour';
+    } else if (hours < 24) {
+      return `${hours} hours`;
+    } else {
+      const days = hours / 24;
+      if (days === 1) {
+        return '1 day';
+      } else {
+        return `${days} days`;
+      }
+    }
+  }
+
+  /**
+   * Configure message auto-deletion settings for the current chat room
+   */
+  configureMessageAutoDeletion(enabled: boolean, days: number): void {
+    if (!this.selectedContactId) return;
+
+    const ttl = days * 24 * 60 * 60 * 1000;
+    this.messageAutoDeletionEnabled = enabled;
+    this.messageExpiryTime = ttl;
+
+    this.chatService.configureMessageAutoDeletion(this.selectedContactId, enabled, ttl).subscribe({
+      next: success => {
+        if (success) {
+          this.notificationService.success(
+            enabled
+              ? `Messages will auto-delete after ${days} days.`
+              : 'Message auto-deletion disabled.'
+          );
+        } else {
+          this.notificationService.error('Failed to update message auto-deletion settings.');
+        }
+      },
+      error: err => {
+        console.error('Error configuring message auto-deletion:', err);
+        this.notificationService.error('Failed to update message auto-deletion settings.');
+      },
+    });
   }
 
   /**
@@ -558,6 +693,141 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   canSendMessage(): boolean {
     return !!this.newMessage.trim() && !!this.selectedContactId;
+  }
+
+  /**
+   * Toggle temporary message mode
+   */
+  toggleTemporaryMessageMode(): void {
+    this.temporaryMessageMode = !this.temporaryMessageMode;
+
+    // Focus on the message input after toggling
+    setTimeout(() => {
+      if (this.messageInput) {
+        this.messageInput.nativeElement.focus();
+      }
+    }, 0);
+  }
+
+  /**
+   * Set the TTL (time to live) for temporary messages
+   * @param hours Number of hours before the message expires
+   */
+  setTemporaryMessageTTL(hours: number): void {
+    this.temporaryMessageTTL = hours;
+  }
+
+  /**
+   * Format the TTL for display
+   * @param hours Number of hours
+   * @returns Formatted string (e.g., "1 hour", "24 hours")
+   */
+  formatTTL(hours: number): string {
+    return hours === 1 ? '1 hour' : `${hours} hours`;
+  }
+
+  /**
+   * Check for expired messages and remove them from the UI
+   * This should be called periodically to clean up expired messages
+   */
+  checkExpiredMessages(): void {
+    const now = new Date().getTime();
+    const expiredMessageIds: string[] = [];
+    const aboutToExpireIds: string[] = [];
+    const warningThreshold = 5 * 60 * 1000; // 5 minutes
+
+    // Find expired and about-to-expire messages
+    this.messages.forEach(message => {
+      if (message.expiresAt) {
+        const expiryTime = new Date(message.expiresAt).getTime();
+
+        if (expiryTime <= now) {
+          // Message has expired
+          expiredMessageIds.push(message._id);
+        } else if (expiryTime - now <= warningThreshold && !message.expiryWarningShown) {
+          // Message will expire soon and warning hasn't been shown yet
+          aboutToExpireIds.push(message._id);
+          message.expiryWarningShown = true; // Mark that we've shown the warning
+        }
+      }
+    });
+
+    // Show warnings for messages about to expire
+    if (aboutToExpireIds.length > 0) {
+      if (aboutToExpireIds.length === 1) {
+        this.notificationService.info('A message will expire soon');
+      } else {
+        this.notificationService.info(`${aboutToExpireIds.length} messages will expire soon`);
+      }
+    }
+
+    // Remove expired messages
+    if (expiredMessageIds.length > 0) {
+      this.messages = this.messages.filter(message => !expiredMessageIds.includes(message._id));
+      this.groupMessagesByDate();
+
+      // Notify the user that messages have expired
+      if (expiredMessageIds.length === 1) {
+        this.notificationService.info('A temporary message has expired and been removed');
+      } else {
+        this.notificationService.info(
+          `${expiredMessageIds.length} temporary messages have expired and been removed`
+        );
+      }
+    }
+  }
+
+  /**
+   * Calculate the remaining time for a temporary message
+   * @param expiresAt The expiration timestamp
+   * @returns Formatted string showing remaining time
+   */
+  getRemainingTime(expiresAt: Date): string {
+    if (!expiresAt) {
+      return '';
+    }
+
+    const now = new Date().getTime();
+    const expiry = new Date(expiresAt).getTime();
+    const diff = expiry - now;
+
+    if (diff <= 0) {
+      return 'Expired';
+    }
+
+    // Convert to appropriate units
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d remaining`;
+    } else if (hours > 0) {
+      return `${hours}h remaining`;
+    } else if (minutes > 0) {
+      return `${minutes}m remaining`;
+    } else {
+      return `${seconds}s remaining`;
+    }
+  }
+
+  /**
+   * Check if a message is about to expire (within 5 minutes)
+   * @param expiresAt The expiration timestamp
+   * @returns True if the message will expire within 5 minutes
+   */
+  isAboutToExpire(expiresAt: Date): boolean {
+    if (!expiresAt) {
+      return false;
+    }
+
+    const now = new Date().getTime();
+    const expiry = new Date(expiresAt).getTime();
+    const diff = expiry - now;
+    const warningThreshold = 5 * 60 * 1000; // 5 minutes
+
+    return diff > 0 && diff <= warningThreshold;
   }
 
   /**
@@ -688,12 +958,16 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Load messages for this contact
     this.loadMessages();
 
+    // Load message auto-deletion settings for this contact
+    this.loadMessageAutoDeletionSettings();
+
     // Reset unread count for this contact
     this.resetUnreadCount(contactId);
 
     // Reset UI state
     this.replyingTo = null;
     this.showEmojiPicker = false;
+    this.temporaryMessageMode = false;
   }
 
   /**
@@ -1124,6 +1398,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     // In a real app, you would open a file picker or menu
     // For now, we'll just show a notification
     this.notificationService.info('Attachment feature coming soon');
+
+    // When implementing file uploads, make sure to handle temporary messages:
+    // 1. Check if temporaryMessageMode is enabled
+    // 2. If enabled, use the temporaryMessageTTL value for the attachment TTL
+    // 3. Use chatService.convertHoursToMilliseconds(this.temporaryMessageTTL) to convert to milliseconds
+    // 4. Pass the TTL to the chatService.sendMessageWithAttachments method
   }
 
   /**

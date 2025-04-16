@@ -16,110 +16,129 @@ This document serves as a central reference for all documentation in the Date Ni
 
 ## Project Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| README.md | Main project documentation | [/README.md](/README.md) |
-| ChangeLog.md | History of changes to the project | [/docs/ChangeLog.md](/docs/ChangeLog.md) |
-| Requirements.md | Project requirements and specifications | [/docs/requirements.md](/docs/requirements.md) |
-| Task List | Current tasks and their status | [/docs/task-list.md](/docs/task-list.md) |
-| Completion Plan 2024 | Plan for completing the project in 2024 | [/docs/completion-plan-2024.md](/docs/completion-plan-2024.md) |
-| Migration Completion Plan | Plan for completing the Angular migration | [/docs/migration-completion-plan.md](/docs/migration-completion-plan.md) |
-| Implementation Plan | General implementation plan | [/docs/implementation-plan.md](/docs/implementation-plan.md) |
-| Architecture | System architecture documentation | [/docs/ARCHITECTURE.md](/docs/ARCHITECTURE.md) |
-| Deprecated Code | List of deprecated code that should be avoided | [/docs/DEPRECATED.md](/docs/DEPRECATED.md) |
-| Code Duplication | List of code duplication that should be refactored | [/docs/DUPLICATES.md](/docs/DUPLICATES.md) |
-| Documentation Improvements | Summary of documentation improvements | [/docs/documentation-improvements.md](/docs/documentation-improvements.md) |
-| Codebase Analysis | Analysis of the codebase | [/docs/codebase-analysis.md](/docs/codebase-analysis.md) |
+| Document                   | Description                                        | Location                                                                   |
+| -------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------- |
+| README.md                  | Main project documentation                         | [/README.md](/README.md)                                                   |
+| ChangeLog.md               | History of changes to the project                  | [/docs/ChangeLog.md](/docs/ChangeLog.md)                                   |
+| Requirements.md            | Project requirements and specifications            | [/docs/requirements.md](/docs/requirements.md)                             |
+| Task List                  | Current tasks and their status                     | [/docs/task-list.md](/docs/task-list.md)                                   |
+| Completion Plan 2024       | Plan for completing the project in 2024            | [/docs/completion-plan-2024.md](/docs/completion-plan-2024.md)             |
+| Migration Completion Plan  | Plan for completing the Angular migration          | [/docs/migration-completion-plan.md](/docs/migration-completion-plan.md)   |
+| Implementation Plan        | General implementation plan                        | [/docs/implementation-plan.md](/docs/implementation-plan.md)               |
+| Architecture               | System architecture documentation                  | [/docs/ARCHITECTURE.md](/docs/ARCHITECTURE.md)                             |
+| Deprecated Code            | List of deprecated code that should be avoided     | [/docs/DEPRECATED.md](/docs/DEPRECATED.md)                                 |
+| Code Duplication           | List of code duplication that should be refactored | [/docs/DUPLICATES.md](/docs/DUPLICATES.md)                                 |
+| Documentation Improvements | Summary of documentation improvements              | [/docs/documentation-improvements.md](/docs/documentation-improvements.md) |
+| Codebase Analysis          | Analysis of the codebase                           | [/docs/codebase-analysis.md](/docs/codebase-analysis.md)                   |
 
 ## Development Guides
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| Setup Guide | Guide for setting up the development environment | [/SETUP.md](/SETUP.md) |
-| Node.js Installation Guide | Guide for installing Node.js | [/nodejs-installation-guide.md](/nodejs-installation-guide.md) |
-| Specific Version Installation Guide | Guide for installing specific versions of Node.js | [/specific-version-installation-guide.md](/specific-version-installation-guide.md) |
-| MongoDB Troubleshooting | Guide for troubleshooting MongoDB issues | [/MONGODB_TROUBLESHOOTING.md](/MONGODB_TROUBLESHOOTING.md) |
-| Angular Migration Guide | Guide for migrating from AngularJS to Angular | [/client-angular/MIGRATION_GUIDE.md](/client-angular/MIGRATION_GUIDE.md) |
-| Angular README | Documentation for the Angular client | [/client-angular/README.md](/client-angular/README.md) |
-| Angular Cleanup Instructions | Instructions for cleaning up the Angular codebase | [/client-angular/src/app/CLEANUP_INSTRUCTIONS.md](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md) |
+| Document                            | Description                                       | Location                                                                                           |
+| ----------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Setup Guide                         | Guide for setting up the development environment  | [/SETUP.md](/SETUP.md)                                                                             |
+| Node.js Installation Guide          | Guide for installing Node.js                      | [/nodejs-installation-guide.md](/nodejs-installation-guide.md)                                     |
+| Specific Version Installation Guide | Guide for installing specific versions of Node.js | [/specific-version-installation-guide.md](/specific-version-installation-guide.md)                 |
+| MongoDB Troubleshooting             | Guide for troubleshooting MongoDB issues          | [/MONGODB_TROUBLESHOOTING.md](/MONGODB_TROUBLESHOOTING.md)                                         |
+| Angular Migration Guide             | Guide for migrating from AngularJS to Angular     | [/client-angular/MIGRATION_GUIDE.md](/client-angular/MIGRATION_GUIDE.md)                           |
+| Angular README                      | Documentation for the Angular client              | [/client-angular/README.md](/client-angular/README.md)                                             |
+| Angular Cleanup Instructions        | Instructions for cleaning up the Angular codebase | [/client-angular/src/app/CLEANUP_INSTRUCTIONS.md](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md) |
 
 ## Testing Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| Testing Guide | General testing strategy and guidelines | [/docs/TESTING_GUIDE.md](/docs/TESTING_GUIDE.md) |
-| Angular Testing Lessons | Lessons learned from Angular testing | [/docs/ANGULAR_TESTING_LESSONS.md](/docs/ANGULAR_TESTING_LESSONS.md) |
-| Unit Testing Lessons | Lessons learned from unit testing | [/docs/UnitTestLessons.md](/docs/UnitTestLessons.md) |
-| Unit Testing Strategy | Strategy for unit testing | [/docs/UnitStrat.md](/docs/UnitStrat.md) |
-| Example Unit Strategy | Example of a unit testing strategy | [/docs/Example_UnitStrat.md](/docs/Example_UnitStrat.md) |
-| Frontend Testing Review | Review of frontend testing | [/FRONTEND_TESTING_REVIEW.md](/FRONTEND_TESTING_REVIEW.md) |
-| Testing Improvements | Improvements to testing | [/TESTING_IMPROVEMENTS.md](/TESTING_IMPROVEMENTS.md) |
-| Angular Test Fixes | Fixes for Angular tests | [/client-angular/TEST_FIXES.md](/client-angular/TEST_FIXES.md) |
-| Server Tests README | Documentation for server tests | [/server/tests/README.md](/server/tests/README.md) |
+| Document                | Description                             | Location                                                             |
+| ----------------------- | --------------------------------------- | -------------------------------------------------------------------- |
+| Testing Guide           | General testing strategy and guidelines | [/docs/TESTING_GUIDE.md](/docs/TESTING_GUIDE.md)                     |
+| Angular Testing Lessons | Lessons learned from Angular testing    | [/docs/ANGULAR_TESTING_LESSONS.md](/docs/ANGULAR_TESTING_LESSONS.md) |
+| Unit Testing Lessons    | Lessons learned from unit testing       | [/docs/UnitTestLessons.md](/docs/UnitTestLessons.md)                 |
+| Unit Testing Strategy   | Strategy for unit testing               | [/docs/UnitStrat.md](/docs/UnitStrat.md)                             |
+| Example Unit Strategy   | Example of a unit testing strategy      | [/docs/Example_UnitStrat.md](/docs/Example_UnitStrat.md)             |
+| Frontend Testing Review | Review of frontend testing              | [/FRONTEND_TESTING_REVIEW.md](/FRONTEND_TESTING_REVIEW.md)           |
+| Testing Improvements    | Improvements to testing                 | [/TESTING_IMPROVEMENTS.md](/TESTING_IMPROVEMENTS.md)                 |
+| Angular Test Fixes      | Fixes for Angular tests                 | [/client-angular/TEST_FIXES.md](/client-angular/TEST_FIXES.md)       |
+| Server Tests README     | Documentation for server tests          | [/server/tests/README.md](/server/tests/README.md)                   |
 
 ## UI/UX Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| UI/UX Roadmap | Roadmap for UI/UX improvements | [/docs/ui-ux-roadmap.md](/docs/ui-ux-roadmap.md) |
-| UI/UX Implementation | Implementation details for UI/UX | [/docs/ui-ux-implementation.md](/docs/ui-ux-implementation.md) |
-| UI/UX Improvement Summary | Summary of UI/UX improvements | [/docs/ui-ux-improvement-summary.md](/docs/ui-ux-improvement-summary.md) |
-| UI/UX Completion Report | Report on UI/UX completion | [/docs/ui-ux-completion-report.md](/docs/ui-ux-completion-report.md) |
-| UI Components Technical | Technical details of UI components | [/docs/ui-components-technical.md](/docs/ui-components-technical.md) |
-| Styling Guide | Guide for styling components | [/docs/styling-guide.md](/docs/styling-guide.md) |
-| UI/UX Completion README | README for UI/UX completion | [/UI-UX-COMPLETION-README.md](/UI-UX-COMPLETION-README.md) |
+| Document                  | Description                        | Location                                                                 |
+| ------------------------- | ---------------------------------- | ------------------------------------------------------------------------ |
+| UI/UX Roadmap             | Roadmap for UI/UX improvements     | [/docs/ui-ux-roadmap.md](/docs/ui-ux-roadmap.md)                         |
+| UI/UX Implementation      | Implementation details for UI/UX   | [/docs/ui-ux-implementation.md](/docs/ui-ux-implementation.md)           |
+| UI/UX Improvement Summary | Summary of UI/UX improvements      | [/docs/ui-ux-improvement-summary.md](/docs/ui-ux-improvement-summary.md) |
+| UI/UX Completion Report   | Report on UI/UX completion         | [/docs/ui-ux-completion-report.md](/docs/ui-ux-completion-report.md)     |
+| UI Components Technical   | Technical details of UI components | [/docs/ui-components-technical.md](/docs/ui-components-technical.md)     |
+| Styling Guide             | Guide for styling components       | [/docs/styling-guide.md](/docs/styling-guide.md)                         |
+| UI/UX Completion README   | README for UI/UX completion        | [/UI-UX-COMPLETION-README.md](/UI-UX-COMPLETION-README.md)               |
 
 ## Customization Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| Customization Guide | Guide for using the customization system | [/docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md) |
-| Configuration Index | Index of all customizable settings | [/docs/CONFIG_INDEX.md](/docs/CONFIG_INDEX.md) |
-| CSP Configuration | Guide for configuring Content Security Policy | [/docs/csp-configuration.md](/docs/csp-configuration.md) |
-| Location Data | Documentation for location data | [/docs/location-data.md](/docs/location-data.md) |
+| Document            | Description                                   | Location                                                     |
+| ------------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| Customization Guide | Guide for using the customization system      | [/docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md) |
+| Configuration Index | Index of all customizable settings            | [/docs/CONFIG_INDEX.md](/docs/CONFIG_INDEX.md)               |
+| CSP Configuration   | Guide for configuring Content Security Policy | [/docs/csp-configuration.md](/docs/csp-configuration.md)     |
+| Location Data       | Documentation for location data               | [/docs/location-data.md](/docs/location-data.md)             |
 
 ## Emerald Component Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| Emerald Components | Documentation for Emerald UI components | [/docs/emerald-components.md](/docs/emerald-components.md) |
-| Emerald Components Changelog | Changelog for Emerald components | [/docs/emerald-components-changelog.md](/docs/emerald-components-changelog.md) |
-| Emerald Implementation Plan | Plan for implementing Emerald components | [/docs/emerald-implementation-plan.md](/docs/emerald-implementation-plan.md) |
-| Emerald Implementation Report | Report on Emerald implementation | [/docs/emerald-implementation-report.md](/docs/emerald-implementation-report.md) |
-| Emerald Implementation Summary | Summary of Emerald implementation | [/docs/emerald-implementation-summary.md](/docs/emerald-implementation-summary.md) |
-| Emerald Testing Guide | Guide for testing Emerald components | [/docs/emerald-testing-guide.md](/docs/emerald-testing-guide.md) |
-| Emerald Components README | README for Emerald components | [/client-angular/src/app/shared/emerald/README.md](/client-angular/src/app/shared/emerald/README.md) |
-| Emerald Components List | List of Emerald components | [/client-angular/src/app/shared/emerald/COMPONENTS.md](/client-angular/src/app/shared/emerald/COMPONENTS.md) |
+| Document                       | Description                              | Location                                                                                                     |
+| ------------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Emerald Components             | Documentation for Emerald UI components  | [/docs/emerald-components.md](/docs/emerald-components.md)                                                   |
+| Emerald Components Changelog   | Changelog for Emerald components         | [/docs/emerald-components-changelog.md](/docs/emerald-components-changelog.md)                               |
+| Emerald Implementation Plan    | Plan for implementing Emerald components | [/docs/emerald-implementation-plan.md](/docs/emerald-implementation-plan.md)                                 |
+| Emerald Implementation Report  | Report on Emerald implementation         | [/docs/emerald-implementation-report.md](/docs/emerald-implementation-report.md)                             |
+| Emerald Implementation Summary | Summary of Emerald implementation        | [/docs/emerald-implementation-summary.md](/docs/emerald-implementation-summary.md)                           |
+| Emerald Testing Guide          | Guide for testing Emerald components     | [/docs/emerald-testing-guide.md](/docs/emerald-testing-guide.md)                                             |
+| Emerald Components README      | README for Emerald components            | [/client-angular/src/app/shared/emerald/README.md](/client-angular/src/app/shared/emerald/README.md)         |
+| Emerald Components List        | List of Emerald components               | [/client-angular/src/app/shared/emerald/COMPONENTS.md](/client-angular/src/app/shared/emerald/COMPONENTS.md) |
 
 ## Lessons Learned
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| AI Lessons | Lessons learned by the AI while working on the project | [/docs/AILessons.md](/docs/AILessons.md) |
-| Unit Testing Lessons | Comprehensive lessons learned from unit testing | [/docs/UnitTestingLessons.md](/docs/UnitTestingLessons.md) |
+| Document             | Description                                            | Location                                                   |
+| -------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
+| AI Lessons           | Lessons learned by the AI while working on the project | [/docs/AILessons.md](/docs/AILessons.md)                   |
+| Unit Testing Lessons | Comprehensive lessons learned from unit testing        | [/docs/UnitTestingLessons.md](/docs/UnitTestingLessons.md) |
 
 ## API Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
+| Document      | Description                             | Location                                                       |
+| ------------- | --------------------------------------- | -------------------------------------------------------------- |
 | Travel Module | Documentation for the travel module API | [/server/docs/travel-module.md](/server/docs/travel-module.md) |
+
+## Security Documentation
+
+| Document                   | Description                                           | Location                                                                   |
+| -------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------- |
+| End-to-End Encryption      | Implementation details of the E2EE chat system        | [/docs/END_TO_END_ENCRYPTION.md](/docs/END_TO_END_ENCRYPTION.md)           |
+| Security Best Practices    | Security best practices for the application           | [/docs/SECURITY_BEST_PRACTICES.md](/docs/SECURITY_BEST_PRACTICES.md)       |
+| Authentication Flow        | Details of the authentication system                  | [/docs/AUTHENTICATION_FLOW.md](/docs/AUTHENTICATION_FLOW.md)               |
+| Data Protection            | How user data is protected in the application         | [/docs/DATA_PROTECTION.md](/docs/DATA_PROTECTION.md)                       |
+| Snyk Workflow              | Documentation for the Snyk security scanning workflow | [/docs/SNYK_WORKFLOW.md](/docs/SNYK_WORKFLOW.md)                           |
+| Snyk Token Setup           | Guide for setting up Snyk API token                   | [/docs/SNYK_TOKEN_SETUP.md](/docs/SNYK_TOKEN_SETUP.md)                     |
+| Security Remediation Guide | Guide for fixing security vulnerabilities             | [/docs/SECURITY_REMEDIATION_GUIDE.md](/docs/SECURITY_REMEDIATION_GUIDE.md) |
+| Snyk Reports README        | Overview of Snyk security reports                     | [/docs/snyk-reports/README.md](/docs/snyk-reports/README.md)               |
 
 ## Maintenance Documentation
 
-| Document | Description | Location |
-|----------|-------------|----------|
-| Documentation Index | This document | [/docs/DOCUMENTATION_INDEX.md](/docs/DOCUMENTATION_INDEX.md) |
+| Document                  | Description                                    | Location                                                                 |
+| ------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------ |
+| Documentation Index       | This document                                  | [/docs/DOCUMENTATION_INDEX.md](/docs/DOCUMENTATION_INDEX.md)             |
+| Snyk Workflow             | Documentation for the Snyk security workflow   | [/docs/SNYK_WORKFLOW.md](/docs/SNYK_WORKFLOW.md)                         |
+| GitHub Insights Workflow  | Documentation for the GitHub Insights workflow | [/docs/GITHUB_INSIGHTS_WORKFLOW.md](/docs/GITHUB_INSIGHTS_WORKFLOW.md)   |
+| Security Alerts Workflow  | Documentation for the Security Alerts workflow | [/docs/SECURITY_ALERTS_WORKFLOW.md](/docs/SECURITY_ALERTS_WORKFLOW.md)   |
+| Workflow Error Monitoring | Documentation for workflow error monitoring    | [/docs/WORKFLOW_ERROR_MONITORING.md](/docs/WORKFLOW_ERROR_MONITORING.md) |
 
 ## Documentation Standards
 
 When creating or updating documentation, follow these standards:
 
 1. **File Naming**: Use consistent file naming conventions
+
    - Use `.md` extension for all documentation files
    - Use uppercase for main documentation files (e.g., README.md, SETUP.md)
    - Use lowercase with hyphens for specific documentation files (e.g., ui-ux-roadmap.md)
 
 2. **Structure**: Include the following sections in all documentation files
+
    - Title (H1)
    - Brief description
    - Table of Contents
@@ -127,6 +146,7 @@ When creating or updating documentation, follow these standards:
    - Conclusion or summary (if applicable)
 
 3. **Formatting**: Use consistent formatting
+
    - Use Markdown formatting for all documentation
    - Use tables for structured data
    - Use code blocks for code examples
@@ -134,10 +154,12 @@ When creating or updating documentation, follow these standards:
    - Use blockquotes for important notes or warnings
 
 4. **Links**: Use relative links to other documentation files
+
    - Use relative links to files in the same directory (e.g., `[link](example.md)`)
    - Use absolute links to files in different directories (e.g., `[link](/docs/example.md)`)
 
 5. **Images**: Use images to illustrate complex concepts
+
    - Store images in the `/docs/images` directory
    - Use descriptive file names for images
    - Include alt text for all images
