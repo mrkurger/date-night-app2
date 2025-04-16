@@ -3,127 +3,135 @@
  * 
  * This file contains all design tokens used throughout the application.
  * Always reference these variables instead of hardcoding values to maintain consistency.
+ * 
+ * IMPORTANT: This file now forwards the Emerald UI aligned design tokens.
+ * The original tokens are kept for backward compatibility but will be deprecated.
  */
 
-// Color Palette
-// Primary colors - Main brand colors
-$primary-50: #f9f2ff; // Extra lightest
-$primary-100: #f2e6ff; // Lightest
-$primary-200: #d9b3ff;
-$primary-300: #bf80ff;
-$primary-400: #a64dff;
-$primary-500: #8c1aff; // Base primary
-$primary-600: #7000e6;
-$primary-700: #5500b3;
-$primary-800: #3a0080;
-$primary-900: #1f004d; // Darkest
+// Import Emerald UI aligned tokens
+@import 'emerald-tokens';
 
-// Secondary colors - Complementary to primary
-$secondary-100: #e6fff2;
-$secondary-200: #b3ffd9;
-$secondary-300: #80ffbf;
-$secondary-400: #4dffa6;
-$secondary-500: #1aff8c; // Base secondary
-$secondary-600: #00e670;
-$secondary-700: #00b355;
-$secondary-800: #00803a;
-$secondary-900: #004d1f;
+// Legacy tokens - kept for backward compatibility
+// These will be deprecated in future versions
 
-// Neutral colors - For text, backgrounds, etc.
-$neutral-50: #fafafa; // Extra light gray
-$neutral-100: #ffffff; // White
-$neutral-200: #f5f5f5;
-$neutral-300: #e0e0e0;
-$neutral-400: #bdbdbd;
-$neutral-500: #9e9e9e; // Base neutral
-$neutral-600: #757575;
-$neutral-700: #616161;
-$neutral-800: #424242;
-$neutral-900: #212121; // Almost black
+// Primary colors - Main brand colors (DEPRECATED - use Emerald tokens instead)
+$primary-50: #fff2f6; // Extra lightest
+$primary-100: #ffe6ec; // Lightest
+$primary-200: #ffb3c5;
+$primary-300: #ff809e;
+$primary-400: #ff4d77;
+$primary-500: $color-primary; // Base primary
+$primary-600: #e62e5c;
+$primary-700: #b32348;
+$primary-800: #801934;
+$primary-900: #4d0f1f; // Darkest
 
-// Semantic colors - For status, alerts, etc.
-$success: #4caf50;
-$success-100: #e8f5e9; // Lightest success
-$success-200: #c8e6c9;
-$success-300: #a5d6a7;
-$success-400: #81c784;
-$success-500: #66bb6a;
-$success-600: #4caf50; // Same as $success
-$success-700: #43a047;
-$success-800: #388e3c;
-$success-900: #2e7d32; // Same as $success-dark
-$success-light: #a5d6a7; // Kept for backward compatibility
-$success-dark: #2e7d32; // Kept for backward compatibility
+// Secondary colors - Complementary to primary (DEPRECATED - use Emerald tokens instead)
+$secondary-100: #f2f1ff;
+$secondary-200: #e6e4ff;
+$secondary-300: #b3b0ff;
+$secondary-400: #807dff;
+$secondary-500: $color-secondary; // Base secondary
+$secondary-600: #5b53e6;
+$secondary-700: #4840b3;
+$secondary-800: #322d80;
+$secondary-900: #1d1a4d;
 
-$warning: #ffc107;
-$warning-100: #fff8e1; // Lightest warning
-$warning-200: #ffecb3;
-$warning-300: #ffe082;
-$warning-400: #ffd54f;
-$warning-500: #ffca28;
-$warning-600: #ffc107; // Same as $warning
-$warning-700: #ffb300;
-$warning-800: #ffa000;
-$warning-900: #ff8f00;
-$warning-light: #ffe082; // Kept for backward compatibility
-$warning-dark: #ffa000; // Kept for backward compatibility
+// Neutral colors - For text, backgrounds, etc. (DEPRECATED - use Emerald tokens instead)
+$neutral-50: $color-light-gray-1; // Extra light gray
+$neutral-100: $color-white; // White
+$neutral-200: $color-light-gray-2;
+$neutral-300: $color-medium-gray-1;
+$neutral-400: $color-medium-gray-2;
+$neutral-500: $color-dark-gray-1; // Base neutral
+$neutral-600: $color-dark-gray-2;
+$neutral-700: $color-dark-gray-3;
+$neutral-800: darken($color-dark-gray-3, 10%);
+$neutral-900: $color-black; // Almost black
 
-$error: #f44336;
-$error-100: #ffebee; // Lightest error
-$error-200: #ffcdd2;
-$error-300: #ef9a9a;
-$error-400: #e57373;
-$error-500: #ef5350;
-$error-600: #f44336; // Same as $error
-$error-700: #e53935;
-$error-800: #d32f2f;
-$error-900: #c62828; // Same as $error-dark
-$error-light: #ef9a9a; // Kept for backward compatibility
-$error-dark: #c62828; // Kept for backward compatibility
+// Semantic colors - For status, alerts, etc. (DEPRECATED - use Emerald tokens instead)
+$success: $color-success;
+$success-100: lighten($color-success, 40%); // Lightest success
+$success-200: lighten($color-success, 30%);
+$success-300: lighten($color-success, 20%);
+$success-400: lighten($color-success, 10%);
+$success-500: $color-success;
+$success-600: darken($color-success, 10%);
+$success-700: darken($color-success, 20%);
+$success-800: darken($color-success, 30%);
+$success-900: darken($color-success, 40%);
+$success-light: lighten($color-success, 20%); // Kept for backward compatibility
+$success-dark: darken($color-success, 20%); // Kept for backward compatibility
 
-$info: #2196f3;
-$info-100: #e3f2fd; // Lightest info
-$info-200: #bbdefb;
-$info-300: #90caf9;
-$info-400: #64b5f6;
-$info-500: #42a5f5;
-$info-600: #2196f3; // Same as $info
-$info-700: #1e88e5;
-$info-800: #1976d2;
-$info-900: #1565c0; // Same as $info-dark
-$info-light: #90caf9; // Kept for backward compatibility
-$info-dark: #1565c0; // Kept for backward compatibility
+$warning: $color-warning;
+$warning-100: lighten($color-warning, 40%); // Lightest warning
+$warning-200: lighten($color-warning, 30%);
+$warning-300: lighten($color-warning, 20%);
+$warning-400: lighten($color-warning, 10%);
+$warning-500: $color-warning;
+$warning-600: darken($color-warning, 10%);
+$warning-700: darken($color-warning, 20%);
+$warning-800: darken($color-warning, 30%);
+$warning-900: darken($color-warning, 40%);
+$warning-light: lighten($color-warning, 20%); // Kept for backward compatibility
+$warning-dark: darken($color-warning, 20%); // Kept for backward compatibility
 
-// Typography
+$error: $color-error;
+$error-100: lighten($color-error, 40%); // Lightest error
+$error-200: lighten($color-error, 30%);
+$error-300: lighten($color-error, 20%);
+$error-400: lighten($color-error, 10%);
+$error-500: $color-error;
+$error-600: darken($color-error, 10%);
+$error-700: darken($color-error, 20%);
+$error-800: darken($color-error, 30%);
+$error-900: darken($color-error, 40%);
+$error-light: lighten($color-error, 20%); // Kept for backward compatibility
+$error-dark: darken($color-error, 20%); // Kept for backward compatibility
+
+$info: $color-info;
+$info-100: lighten($color-info, 40%); // Lightest info
+$info-200: lighten($color-info, 30%);
+$info-300: lighten($color-info, 20%);
+$info-400: lighten($color-info, 10%);
+$info-500: $color-info;
+$info-600: darken($color-info, 10%);
+$info-700: darken($color-info, 20%);
+$info-800: darken($color-info, 30%);
+$info-900: darken($color-info, 40%);
+$info-light: lighten($color-info, 20%); // Kept for backward compatibility
+$info-dark: darken($color-info, 20%); // Kept for backward compatibility
+
+// Typography (DEPRECATED - use Emerald tokens instead)
 // Font families
-$font-primary: 'Poppins', sans-serif;
-$font-secondary: 'Roboto', sans-serif;
+$font-primary: $font-family-heading;
+$font-secondary: $font-family-base;
 $font-monospace: 'Roboto Mono', monospace;
 
-// Font sizes
-$font-size-xs: 0.75rem; // 12px
-$font-size-sm: 0.875rem; // 14px
-$font-size-base: 1rem; // 16px
-$font-size-md: 1.125rem; // 18px
-$font-size-lg: 1.25rem; // 20px
-$font-size-xl: 1.5rem; // 24px
-$font-size-2xl: 1.875rem; // 30px
-$font-size-3xl: 2.25rem; // 36px
-$font-size-4xl: 3rem; // 48px
+// Font sizes - mapped to Emerald tokens
+$font-size-xs: $font-size-xs;
+$font-size-sm: $font-size-sm;
+$font-size-base: $font-size-base;
+$font-size-md: $font-size-lg;
+$font-size-lg: $font-size-xl;
+$font-size-xl: $font-size-2xl;
+$font-size-2xl: $font-size-3xl;
+$font-size-3xl: $font-size-4xl;
+$font-size-4xl: $font-size-5xl;
 
-// Font weights
-$font-weight-light: 300;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
+// Font weights - mapped to Emerald tokens
+$font-weight-light: $font-weight-light;
+$font-weight-regular: $font-weight-regular;
+$font-weight-medium: $font-weight-medium;
+$font-weight-semibold: $font-weight-semibold;
+$font-weight-bold: $font-weight-bold;
 
-// Line heights
-$line-height-tight: 1.25;
-$line-height-snug: 1.375;
-$line-height-normal: 1.5;
-$line-height-relaxed: 1.625;
-$line-height-loose: 2;
+// Line heights - mapped to Emerald tokens
+$line-height-tight: $line-height-tight;
+$line-height-snug: $line-height-snug;
+$line-height-normal: $line-height-normal;
+$line-height-relaxed: $line-height-relaxed;
+$line-height-loose: $line-height-loose;
 
 // Letter spacing
 $letter-spacing-tight: -0.025em;
@@ -132,48 +140,40 @@ $letter-spacing-wide: 0.025em;
 $letter-spacing-wider: 0.05em;
 $letter-spacing-widest: 0.1em;
 
-// Spacing
-$spacing-0: 0;
-$spacing-1: 0.25rem; // 4px
-$spacing-2: 0.5rem; // 8px
-$spacing-3: 0.75rem; // 12px
-$spacing-4: 1rem; // 16px
-$spacing-5: 1.25rem; // 20px
-$spacing-6: 1.5rem; // 24px
-$spacing-8: 2rem; // 32px
-$spacing-10: 2.5rem; // 40px
-$spacing-12: 3rem; // 48px
-$spacing-16: 4rem; // 64px
-$spacing-20: 5rem; // 80px
-$spacing-24: 6rem; // 96px
+// Spacing - mapped to Emerald tokens
+$spacing-0: $spacing-0;
+$spacing-1: $spacing-1;
+$spacing-2: $spacing-2;
+$spacing-3: $spacing-3;
+$spacing-4: $spacing-4;
+$spacing-5: $spacing-5;
+$spacing-6: $spacing-6;
+$spacing-8: $spacing-8;
+$spacing-10: $spacing-10;
+$spacing-12: $spacing-12;
+$spacing-16: $spacing-16;
+$spacing-20: $spacing-20;
+$spacing-24: $spacing-24;
 $spacing-32: 8rem; // 128px
 
-// Border radius
-$border-radius-none: 0;
-$border-radius-sm: 0.125rem; // 2px
-$border-radius-md: 0.25rem; // 4px
-$border-radius-lg: 0.5rem; // 8px
-$border-radius-xl: 0.75rem; // 12px
-$border-radius-2xl: 1rem; // 16px
-$border-radius-full: 9999px; // Fully rounded
+// Border radius - mapped to Emerald tokens
+$border-radius-none: $border-radius-none;
+$border-radius-sm: $border-radius-sm;
+$border-radius-md: $border-radius-md;
+$border-radius-lg: $border-radius-lg;
+$border-radius-xl: $border-radius-xl;
+$border-radius-2xl: $border-radius-2xl;
+$border-radius-full: $border-radius-full;
 
-// Shadows
-$shadow-none: none;
-$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-sm:
-  0 1px 3px 0 rgba(0, 0, 0, 0.1),
-  0 1px 2px 0 rgba(0, 0, 0, 0.06);
-$shadow-md:
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg:
-  0 10px 15px -3px rgba(0, 0, 0, 0.1),
-  0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl:
-  0 20px 25px -5px rgba(0, 0, 0, 0.1),
-  0 10px 10px -5px rgba(0, 0, 0, 0.04);
-$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+// Shadows - mapped to Emerald tokens
+$shadow-none: $shadow-none;
+$shadow-xs: $shadow-xs;
+$shadow-sm: $shadow-sm;
+$shadow-md: $shadow-md;
+$shadow-lg: $shadow-lg;
+$shadow-xl: $shadow-xl;
+$shadow-2xl: $shadow-2xl;
+$shadow-inner: $shadow-inner;
 
 // Z-index
 $z-index-0: 0;
@@ -184,39 +184,39 @@ $z-index-40: 40;
 $z-index-50: 50;
 $z-index-auto: auto;
 
-// Transitions
-$transition-fast: 150ms;
-$transition-normal: 300ms;
-$transition-slow: 500ms;
-$transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-$transition-ease-in: cubic-bezier(0.4, 0, 1, 1);
-$transition-ease-out: cubic-bezier(0, 0, 0.2, 1);
-$transition-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+// Transitions - mapped to Emerald tokens
+$transition-fast: $transition-fast;
+$transition-normal: $transition-normal;
+$transition-slow: $transition-slow;
+$transition-ease: $transition-timing-default;
+$transition-ease-in: $transition-timing-in;
+$transition-ease-out: $transition-timing-out;
+$transition-ease-in-out: $transition-timing-default;
 
-// Breakpoints
-$breakpoint-xs: 0;
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
-$breakpoint-2xl: 1400px;
+// Breakpoints - mapped to Emerald tokens
+$breakpoint-xs: $breakpoint-mobile-small;
+$breakpoint-sm: $breakpoint-mobile;
+$breakpoint-md: $breakpoint-tablet;
+$breakpoint-lg: $breakpoint-desktop;
+$breakpoint-xl: $breakpoint-desktop-large;
+$breakpoint-2xl: $breakpoint-desktop-xl;
 
-// Container max widths
-$container-sm: 540px;
-$container-md: 720px;
-$container-lg: 960px;
-$container-xl: 1140px;
-$container-2xl: 1320px;
+// Container max widths - mapped to Emerald tokens
+$container-sm: $container-sm;
+$container-md: $container-md;
+$container-lg: $container-lg;
+$container-xl: $container-xl;
+$container-2xl: $container-2xl;
 
-// Grid columns
-$grid-columns: 12;
-$grid-gutter-width: 1.5rem;
+// Grid columns - mapped to Emerald tokens
+$grid-columns: $grid-columns;
+$grid-gutter-width: $grid-gutter-width;
 
-// Animation
-$animation-duration-fast: 150ms;
-$animation-duration-normal: 300ms;
-$animation-duration-slow: 500ms;
-$animation-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
-$animation-timing-ease-in: cubic-bezier(0.4, 0, 1, 1);
-$animation-timing-ease-out: cubic-bezier(0, 0, 0.2, 1);
-$animation-timing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+// Animation - mapped to Emerald tokens
+$animation-duration-fast: $animation-duration-fast;
+$animation-duration-normal: $animation-duration-normal;
+$animation-duration-slow: $animation-duration-slow;
+$animation-timing-ease: $transition-timing-default;
+$animation-timing-ease-in: $transition-timing-in;
+$animation-timing-ease-out: $transition-timing-out;
+$animation-timing-ease-in-out: $transition-timing-default;

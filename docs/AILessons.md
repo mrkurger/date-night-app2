@@ -49,6 +49,122 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Component Architecture](#component-architecture)
   - [Dialog Service Pattern](#dialog-service-pattern)
   - [Form Validation](#form-validation)
+- [Design System Implementation](#design-system-implementation)
+  - [Form Component Integration](#form-component-integration)
+  - [Component Demo Page](#component-demo-page)
+  - [Design System Documentation](#design-system-documentation)
+
+## Design System Implementation
+
+### Form Component Integration
+
+When integrating form components into a design system, we discovered several important patterns:
+
+1. **Component Hierarchy**: Form components should follow a consistent pattern with:
+
+   - A container element that handles layout and spacing
+   - A label element that clearly identifies the input
+   - The input element itself with appropriate attributes
+   - Helper text or error message elements for feedback
+
+2. **Accessibility Considerations**:
+
+   - All form elements should have proper labels
+   - Error messages should be associated with inputs using aria-describedby
+   - Focus states should be clearly visible
+   - Required fields should be marked visually and with aria-required
+   - Disabled states should use both the disabled attribute and aria-disabled
+
+3. **State Management**:
+
+   - Implement ControlValueAccessor for seamless integration with Angular forms
+   - Handle all input states: default, focus, hover, disabled, readonly, error
+   - Provide clear visual feedback for each state
+   - Emit appropriate events for value changes, focus, and blur
+
+4. **Styling Patterns**:
+
+   - Use BEM naming convention for component classes
+   - Create variants (outlined, filled, standard) using modifier classes
+   - Size variants should adjust padding, font size, and height proportionally
+   - Use CSS custom properties for theme-specific values
+   - Implement dark mode styles using media queries and class selectors
+
+5. **Documentation Best Practices**:
+   - Document all component properties, events, and methods
+   - Provide usage examples for common scenarios
+   - Include accessibility guidelines
+   - Document all variants and states
+   - Include information about form integration
+
+### Component Demo Page
+
+When creating a design system demo page, we found these effective approaches:
+
+1. **Structured Organization**:
+
+   - Group related components together
+   - Use clear section headings
+   - Provide context and usage guidelines
+   - Show components in different states and variants
+
+2. **Interactive Examples**:
+
+   - Allow users to interact with components
+   - Show real-time feedback
+   - Demonstrate form validation
+   - Include code examples
+
+3. **Responsive Demonstration**:
+
+   - Show how components behave at different screen sizes
+   - Provide responsive layout examples
+   - Demonstrate mobile-specific interactions
+
+4. **Accessibility Demonstration**:
+   - Show keyboard navigation
+   - Demonstrate screen reader compatibility
+   - Highlight accessibility features
+
+### Design System Documentation
+
+Effective design system documentation follows these patterns:
+
+1. **Hierarchical Structure**:
+
+   - Organize documentation by component type
+   - Provide a clear navigation structure
+   - Include a search function for quick access
+   - Link related components and concepts
+
+2. **Component Documentation**:
+
+   - Include a component overview with purpose and use cases
+   - Document all properties, events, and methods
+   - Provide usage examples with code snippets
+   - Include visual examples of variants and states
+   - Document accessibility considerations
+   - Include performance considerations
+
+3. **Design Token Documentation**:
+
+   - Document all design tokens with descriptions and values
+   - Group tokens by category (colors, typography, spacing, etc.)
+   - Show visual examples of tokens in use
+   - Provide usage guidelines for each token category
+
+4. **Guidelines and Best Practices**:
+
+   - Include guidelines for component usage
+   - Document best practices for implementation
+   - Provide examples of common patterns
+   - Include anti-patterns to avoid
+
+5. **Living Documentation**:
+   - Keep documentation in sync with the actual implementation
+   - Include version information and change history
+   - Provide a feedback mechanism for users
+   - Regularly review and update documentation
 
 ## Error Handling and Telemetry
 

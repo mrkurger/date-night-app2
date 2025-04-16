@@ -1,0 +1,78 @@
+/**
+ * Icon Component Styles
+ * 
+ * Implements the DateNight.io icon styles using the design system.
+ */
+
+@use 'src/app/core/design/main' as ds;
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  fill: currentColor;
+
+  // Size variants
+  &--small {
+    width: 16px;
+    height: 16px;
+  }
+
+  &--medium {
+    width: 24px;
+    height: 24px;
+  }
+
+  &--large {
+    width: 32px;
+    height: 32px;
+  }
+
+  // Color variants
+  &--primary {
+    color: ds.$color-primary;
+  }
+
+  &--secondary {
+    color: ds.$color-secondary;
+  }
+
+  &--success {
+    color: ds.$color-success;
+  }
+
+  &--warning {
+    color: ds.$color-warning;
+  }
+
+  &--error {
+    color: ds.$color-error;
+  }
+
+  &--info {
+    color: ds.$color-info;
+  }
+
+  // Placeholder for when icon is not found
+  &--placeholder {
+    display: inline-block;
+    background-color: currentColor;
+    opacity: 0.2;
+    border-radius: ds.$border-radius-sm;
+  }
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .icon {
+      &--primary {
+        color: ds.$color-primary-light;
+      }
+
+      &--secondary {
+        color: lighten(ds.$color-secondary, 10%);
+      }
+    }
+  }
+}

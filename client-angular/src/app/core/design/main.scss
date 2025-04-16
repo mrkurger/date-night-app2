@@ -18,9 +18,11 @@
 // Import design tokens - this is the ONLY place that should directly import design-tokens.scss
 @use 'design-tokens' as *;
 @forward 'components';
+@forward 'typography-mixins';
+@forward 'spacing-utilities';
 
 // Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono&display=swap');
 
 // Reset and base styles
 *,
@@ -30,7 +32,7 @@
 }
 
 html {
-  font-family: $font-primary;
+  font-family: $font-family-base;
   line-height: $line-height-normal;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -39,12 +41,12 @@ html {
 
 body {
   margin: 0;
-  font-family: $font-primary;
+  font-family: $font-family-base;
   font-size: $font-size-base;
   font-weight: $font-weight-regular;
   line-height: $line-height-normal;
-  color: $neutral-900;
-  background-color: $neutral-200;
+  color: $color-dark-gray-2;
+  background-color: $color-light-gray-1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -58,33 +60,62 @@ h5,
 h6 {
   margin-top: 0;
   margin-bottom: $spacing-3;
+  font-family: $font-family-heading;
   font-weight: $font-weight-semibold;
   line-height: $line-height-tight;
-  color: $neutral-900;
+  color: $color-dark-gray-3;
 }
 
 h1 {
   font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-3xl;
+  }
 }
 
 h2 {
   font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-2xl;
+  }
 }
 
 h3 {
   font-size: $font-size-2xl;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-xl;
+  }
 }
 
 h4 {
   font-size: $font-size-xl;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-lg;
+  }
 }
 
 h5 {
   font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-base;
+  }
 }
 
 h6 {
   font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-sm;
+  }
 }
 
 p {
@@ -93,14 +124,19 @@ p {
 }
 
 a {
-  color: $primary-500;
+  color: $color-primary;
   text-decoration: none;
   background-color: transparent;
-  transition: color $transition-normal $transition-ease;
+  transition: color $transition-normal $transition-timing-default;
 
   &:hover {
-    color: $primary-700;
+    color: $color-primary-dark;
     text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($color-primary, 0.5);
+    outline-offset: 2px;
   }
 }
 
@@ -115,12 +151,12 @@ ol {
 // Code
 code,
 pre {
-  font-family: $font-monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: $font-size-sm;
 }
 
 code {
-  color: $primary-700;
+  color: $color-primary-dark;
   word-wrap: break-word;
 }
 
@@ -130,8 +166,8 @@ pre {
   margin-bottom: $spacing-4;
   overflow: auto;
   font-size: $font-size-sm;
-  color: $neutral-900;
-  background-color: $neutral-200;
+  color: $color-dark-gray-2;
+  background-color: $color-light-gray-2;
   border-radius: $border-radius-md;
   padding: $spacing-3;
 }
@@ -148,7 +184,7 @@ img {
 table {
   width: 100%;
   margin-bottom: $spacing-4;
-  color: $neutral-900;
+  color: $color-dark-gray-2;
   border-collapse: collapse;
 }
 
@@ -156,14 +192,14 @@ th {
   text-align: inherit;
   padding: $spacing-3;
   vertical-align: bottom;
-  border-bottom: 2px solid $neutral-300;
+  border-bottom: 2px solid $color-light-gray-2;
   font-weight: $font-weight-semibold;
 }
 
 td {
   padding: $spacing-3;
   vertical-align: top;
-  border-top: 1px solid $neutral-300;
+  border-top: 1px solid $color-light-gray-2;
 }
 
 // Container
@@ -174,23 +210,23 @@ td {
   margin-right: auto;
   margin-left: auto;
 
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-mobile) {
     max-width: $container-sm;
   }
 
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-tablet) {
     max-width: $container-md;
   }
 
-  @media (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-desktop) {
     max-width: $container-lg;
   }
 
-  @media (min-width: $breakpoint-xl) {
+  @media (min-width: $breakpoint-desktop-large) {
     max-width: $container-xl;
   }
 
-  @media (min-width: $breakpoint-2xl) {
+  @media (min-width: $breakpoint-desktop-xl) {
     max-width: $container-2xl;
   }
 }
@@ -228,7 +264,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-sm) {
+@media (min-width: $breakpoint-mobile) {
   @for $i from 1 through $grid-columns {
     .col-sm-#{$i} {
       flex: 0 0 percentage($i / $grid-columns);
@@ -237,7 +273,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-md) {
+@media (min-width: $breakpoint-tablet) {
   @for $i from 1 through $grid-columns {
     .col-md-#{$i} {
       flex: 0 0 percentage($i / $grid-columns);
@@ -246,7 +282,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-lg) {
+@media (min-width: $breakpoint-desktop) {
   @for $i from 1 through $grid-columns {
     .col-lg-#{$i} {
       flex: 0 0 percentage($i / $grid-columns);
@@ -255,7 +291,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-xl) {
+@media (min-width: $breakpoint-desktop-large) {
   @for $i from 1 through $grid-columns {
     .col-xl-#{$i} {
       flex: 0 0 percentage($i / $grid-columns);
@@ -273,40 +309,145 @@ td {
   display: block !important;
 }
 
-@media (min-width: $breakpoint-sm) {
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+.d-grid {
+  display: grid !important;
+}
+
+@media (min-width: $breakpoint-mobile) {
   .d-sm-none {
     display: none !important;
   }
   .d-sm-block {
     display: block !important;
   }
+  .d-sm-flex {
+    display: flex !important;
+  }
+  .d-sm-inline-flex {
+    display: inline-flex !important;
+  }
+  .d-sm-grid {
+    display: grid !important;
+  }
 }
 
-@media (min-width: $breakpoint-md) {
+@media (min-width: $breakpoint-tablet) {
   .d-md-none {
     display: none !important;
   }
   .d-md-block {
     display: block !important;
   }
+  .d-md-flex {
+    display: flex !important;
+  }
+  .d-md-inline-flex {
+    display: inline-flex !important;
+  }
+  .d-md-grid {
+    display: grid !important;
+  }
 }
 
-@media (min-width: $breakpoint-lg) {
+@media (min-width: $breakpoint-desktop) {
   .d-lg-none {
     display: none !important;
   }
   .d-lg-block {
     display: block !important;
   }
+  .d-lg-flex {
+    display: flex !important;
+  }
+  .d-lg-inline-flex {
+    display: inline-flex !important;
+  }
+  .d-lg-grid {
+    display: grid !important;
+  }
 }
 
-@media (min-width: $breakpoint-xl) {
+@media (min-width: $breakpoint-desktop-large) {
   .d-xl-none {
     display: none !important;
   }
   .d-xl-block {
     display: block !important;
   }
+  .d-xl-flex {
+    display: flex !important;
+  }
+  .d-xl-inline-flex {
+    display: inline-flex !important;
+  }
+  .d-xl-grid {
+    display: grid !important;
+  }
+}
+
+// Flex utilities
+.flex-row {
+  flex-direction: row !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.justify-content-around {
+  justify-content: space-around !important;
+}
+
+.align-items-start {
+  align-items: flex-start !important;
+}
+
+.align-items-end {
+  align-items: flex-end !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.align-items-baseline {
+  align-items: baseline !important;
+}
+
+.align-items-stretch {
+  align-items: stretch !important;
 }
 
 // Animations
@@ -362,31 +503,31 @@ td {
 .animate-fade-in {
   animation-name: fadeIn;
   animation-duration: $animation-duration-normal;
-  animation-timing-function: $animation-timing-ease;
+  animation-timing-function: $transition-timing-default;
 }
 
 .animate-slide-up {
   animation-name: slideInUp;
   animation-duration: $animation-duration-normal;
-  animation-timing-function: $animation-timing-ease;
+  animation-timing-function: $transition-timing-default;
 }
 
 .animate-slide-down {
   animation-name: slideInDown;
   animation-duration: $animation-duration-normal;
-  animation-timing-function: $animation-timing-ease;
+  animation-timing-function: $transition-timing-default;
 }
 
 .animate-slide-left {
   animation-name: slideInLeft;
   animation-duration: $animation-duration-normal;
-  animation-timing-function: $animation-timing-ease;
+  animation-timing-function: $transition-timing-default;
 }
 
 .animate-slide-right {
   animation-name: slideInRight;
   animation-duration: $animation-duration-normal;
-  animation-timing-function: $animation-timing-ease;
+  animation-timing-function: $transition-timing-default;
 }
 
 // App-specific global styles
@@ -412,7 +553,7 @@ td {
     left: 0;
     width: 60px;
     height: 4px;
-    background-color: $primary-500;
+    background-color: $color-primary;
     border-radius: $border-radius-full;
   }
 }
@@ -432,15 +573,211 @@ td {
 
 // Focus styles for keyboard navigation
 :focus-visible {
-  outline: 2px solid $primary-500;
+  outline: 2px solid $color-primary;
   outline-offset: 2px;
+}
+
+// Width and height utilities
+.w-100 {
+  width: 100% !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.mw-100 {
+  max-width: 100% !important;
+}
+
+.mh-100 {
+  max-height: 100% !important;
+}
+
+// Text utilities
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-nowrap {
+  white-space: nowrap !important;
+}
+
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+// Text colors
+.text-primary {
+  color: $color-primary !important;
+}
+
+.text-secondary {
+  color: $color-secondary !important;
+}
+
+.text-success {
+  color: $color-success !important;
+}
+
+.text-warning {
+  color: $color-warning !important;
+}
+
+.text-danger {
+  color: $color-error !important;
+}
+
+.text-info {
+  color: $color-info !important;
+}
+
+.text-light {
+  color: $color-light-gray-1 !important;
+}
+
+.text-dark {
+  color: $color-dark-gray-3 !important;
+}
+
+.text-muted {
+  color: $color-dark-gray-1 !important;
+}
+
+.text-white {
+  color: $color-white !important;
+}
+
+// Background colors
+.bg-primary {
+  background-color: $color-primary !important;
+}
+
+.bg-secondary {
+  background-color: $color-secondary !important;
+}
+
+.bg-success {
+  background-color: $color-success !important;
+}
+
+.bg-warning {
+  background-color: $color-warning !important;
+}
+
+.bg-danger {
+  background-color: $color-error !important;
+}
+
+.bg-info {
+  background-color: $color-info !important;
+}
+
+.bg-light {
+  background-color: $color-light-gray-1 !important;
+}
+
+.bg-dark {
+  background-color: $color-dark-gray-3 !important;
+}
+
+.bg-white {
+  background-color: $color-white !important;
+}
+
+// Border utilities
+.border {
+  border: 1px solid $color-light-gray-2 !important;
+}
+
+.border-top {
+  border-top: 1px solid $color-light-gray-2 !important;
+}
+
+.border-right {
+  border-right: 1px solid $color-light-gray-2 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $color-light-gray-2 !important;
+}
+
+.border-left {
+  border-left: 1px solid $color-light-gray-2 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.rounded {
+  border-radius: $border-radius-md !important;
+}
+
+.rounded-sm {
+  border-radius: $border-radius-sm !important;
+}
+
+.rounded-lg {
+  border-radius: $border-radius-lg !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: $border-radius-full !important;
+}
+
+// Shadow utilities
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.shadow-sm {
+  box-shadow: $shadow-sm !important;
+}
+
+.shadow {
+  box-shadow: $shadow-md !important;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg !important;
 }
 
 // Dark mode support
 @media (prefers-color-scheme: dark) {
   body.dark-mode-enabled {
-    color: $neutral-200;
-    background-color: $neutral-900;
+    color: $color-light-gray-1;
+    background-color: $color-dark-gray-3;
 
     h1,
     h2,
@@ -448,56 +785,84 @@ td {
     h4,
     h5,
     h6 {
-      color: $neutral-100;
+      color: $color-white;
+    }
+
+    a {
+      color: $color-primary-light;
+
+      &:hover {
+        color: lighten($color-primary-light, 10%);
+      }
     }
 
     .card {
-      background-color: $neutral-800;
-      border-color: $neutral-700;
+      background-color: $color-dark-gray-2;
+      border-color: $color-dark-gray-1;
 
       .card-header,
       .card-footer {
-        background-color: $neutral-800;
-        border-color: $neutral-700;
+        background-color: $color-dark-gray-2;
+        border-color: $color-dark-gray-1;
       }
     }
 
     .form-control {
-      color: $neutral-200;
-      background-color: $neutral-800;
-      border-color: $neutral-700;
+      color: $color-light-gray-1;
+      background-color: $color-dark-gray-2;
+      border-color: $color-dark-gray-1;
 
       &:focus {
-        color: $neutral-100;
-        background-color: $neutral-800;
+        color: $color-white;
+        background-color: $color-dark-gray-2;
       }
 
       &::placeholder {
-        color: $neutral-500;
+        color: $color-medium-gray-2;
       }
     }
 
     .modal-content {
-      background-color: $neutral-800;
-      border-color: $neutral-700;
+      background-color: $color-dark-gray-2;
+      border-color: $color-dark-gray-1;
     }
 
     .modal-header,
     .modal-footer {
-      border-color: $neutral-700;
+      border-color: $color-dark-gray-1;
     }
 
     .table {
-      color: $neutral-200;
+      color: $color-light-gray-1;
 
       th,
       td {
-        border-color: $neutral-700;
+        border-color: $color-dark-gray-1;
       }
     }
 
     .text-muted {
-      color: $neutral-400 !important;
+      color: $color-medium-gray-2 !important;
+    }
+
+    .border {
+      border-color: $color-dark-gray-1 !important;
+    }
+
+    .border-top {
+      border-top-color: $color-dark-gray-1 !important;
+    }
+
+    .border-right {
+      border-right-color: $color-dark-gray-1 !important;
+    }
+
+    .border-bottom {
+      border-bottom-color: $color-dark-gray-1 !important;
+    }
+
+    .border-left {
+      border-left-color: $color-dark-gray-1 !important;
     }
   }
 }

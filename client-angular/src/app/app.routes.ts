@@ -104,6 +104,16 @@ export const routes: Routes = [
     data: { title: 'List View' },
   },
 
+  // Design System Demo
+  {
+    path: 'design-system',
+    loadComponent: () =>
+      import('./features/design-system-demo/design-system-demo.component').then(
+        m => m.DesignSystemDemoComponent
+      ),
+    data: { title: 'Design System Demo' },
+  },
+
   // Legacy routes - to be migrated to standalone components
   {
     path: 'ads',
