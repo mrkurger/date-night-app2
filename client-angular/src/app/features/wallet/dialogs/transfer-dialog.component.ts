@@ -31,10 +31,10 @@ import { UserService } from '../../../core/services/user.service';
 import { NotificationService } from '../../../core/services/notification.service';
 
 interface UserSearchResult {
-  _id: string;
+  id: string;
   username: string;
   displayName: string;
-  profileImage?: string;
+  avatarUrl?: string;
 }
 
 @Component({
@@ -89,8 +89,8 @@ interface UserSearchResult {
             <mat-option *ngFor="let user of filteredUsers" [value]="user">
               <div class="user-option">
                 <img
-                  *ngIf="user.profileImage"
-                  [src]="user.profileImage"
+                  *ngIf="user.avatarUrl"
+                  [src]="user.avatarUrl"
                   class="user-avatar"
                   alt="{{ user.displayName || user.username }}"
                 />
@@ -309,10 +309,11 @@ export class TransferDialogComponent implements OnInit {
             } else {
               // Convert User to UserSearchResult if needed
               return {
-                id: user.id,
+                id: user.id || user._id,
                 username: user.username,
-                displayName: `${user.firstName} ${user.lastName}`.trim() || user.username,
-                avatarUrl: user.avatarUrl,
+                displayName:
+                  `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username,
+                avatarUrl: user.avatarUrl || user.profileImage || '',
               } as UserSearchResult;
             }
           });
@@ -347,7 +348,7 @@ export class TransferDialogComponent implements OnInit {
     const { currency, amount, recipientUsername, description } = this.transferForm.value;
 
     // Get recipient user ID
-    const recipientUserId = typeof recipientUsername === 'object' ? recipientUsername._id : null;
+    const recipientUserId = typeof recipientUsername === 'object' ? recipientUsername.id : null;
 
     if (!recipientUserId) {
       this.transferForm.get('recipientUsername')?.setErrors({ invalidUser: true });

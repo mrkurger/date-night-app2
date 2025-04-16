@@ -55,7 +55,7 @@ export class CardGridComponent {
   /**
    * The card layout style
    */
-  @Input() cardLayout: 'default' | 'netflix' | 'tinder' = 'default';
+  @Input() cardLayout: 'default' | 'netflix' | 'tinder' | 'list' | 'compact' = 'default';
 
   /**
    * The number of columns in the grid

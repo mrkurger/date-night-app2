@@ -32,7 +32,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 })
 export class AdCardComponent {
   @Input() ad!: Ad;
-  @Input() layout: 'grid' | 'list' | 'compact' = 'grid';
+  @Input() layout: 'grid' | 'list' | 'compact' | 'netflix' | 'tinder' = 'grid';
   @Input() showActions = true;
   @Input() showDescription = true;
   @Input() showBadges = true;

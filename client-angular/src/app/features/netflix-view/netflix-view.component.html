@@ -6,9 +6,9 @@
       [title]="featuredAd.title"
       [subtitle]="featuredAd.location"
       [backgroundImage]="getMediaUrl(featuredAd)"
-      [avatarUrl]="featuredAd.advertiserImage"
-      [avatarName]="featuredAd.advertiserName"
-      [avatarIsOnline]="featuredAd.isAdvertiserOnline"
+      [avatarUrl]="getAdvertiserImage(featuredAd)"
+      [avatarName]="getAdvertiserName(featuredAd)"
+      [avatarIsOnline]="featuredAd.isAdvertiserOnline || false"
       [actions]="[
         { id: 'view', label: 'View Profile', icon: 'fas fa-info-circle', primary: true },
         { id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart' },
@@ -103,7 +103,7 @@
                     { id: 'favorite', icon: 'fas fa-heart', tooltip: 'Add to Favorites' },
                     { id: 'chat', icon: 'fas fa-comment', tooltip: 'Start Chat' },
                   ]"
-                  (actionClick)="onCardAction($event, ad._id)"
+                  (actionClick)="onCardAction({ id: $event.toString(), itemId: ad._id }, ad._id)"
                 >
                 </emerald-app-card>
               </ng-template>

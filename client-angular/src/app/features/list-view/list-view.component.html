@@ -16,7 +16,7 @@
           <mat-label>Search profiles...</mat-label>
           <input
             matInput
-            [formControl]="filterForm.controls['searchQuery']"
+            [formControl]="$any(filterForm.controls['searchQuery'])"
             (input)="onSearchChange()"
           />
           <mat-icon matPrefix>search</mat-icon>
@@ -252,7 +252,7 @@
             <emerald-app-card
               [ad]="ad"
               [layout]="
-                viewMode === 'list' ? 'list' : viewMode === 'compact' ? 'compact' : 'netflix'
+                viewMode === 'list' ? 'list' : viewMode === 'compact' ? 'tinder' : 'netflix'
               "
               [isOnline]="ad.isAdvertiserOnline"
               [showActions]="true"

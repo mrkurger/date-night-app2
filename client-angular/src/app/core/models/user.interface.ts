@@ -37,6 +37,7 @@ export interface User {
     dataSharing?: boolean;
   };
   profileImage?: string;
+  avatarUrl?: string; // Alias for profileImage for compatibility
   location?: {
     city?: string;
     country?: string;
@@ -45,6 +46,7 @@ export interface User {
 
 export interface UserProfile extends User {
   phoneNumber?: string;
+  website?: string;
   preferences?: {
     notifications?: boolean;
     darkMode?: boolean;

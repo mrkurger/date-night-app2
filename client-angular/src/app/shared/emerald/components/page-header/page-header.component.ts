@@ -68,5 +68,6 @@ export interface HeaderAction {
   label: string;
   icon?: string;
   variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+  primary?: boolean;
   action?: () => void;
 }

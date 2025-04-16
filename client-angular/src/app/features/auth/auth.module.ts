@@ -33,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -46,6 +46,8 @@ const routes: Routes = [
     MatRadioModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
+    LoginComponent,
+    RegisterComponent,
   ],
 })
 export class AuthModule {}

@@ -76,7 +76,7 @@ export class NetflixViewComponent implements OnInit {
 
   // CardGrid configuration
   cardGridConfig = {
-    layout: 'netflix',
+    layout: 'netflix' as 'netflix' | 'grid' | 'masonry',
     gap: 16,
     animated: true,
     itemsPerRow: {
@@ -403,6 +403,48 @@ export class NetflixViewComponent implements OnInit {
       return ad.images[0];
     }
     return '/assets/images/default-profile.jpg';
+  }
+
+  /**
+   * Get the advertiser image for an ad
+   * @param ad The ad object
+   * @returns The advertiser image URL or a default image
+   */
+  getAdvertiserImage(ad: Ad): string {
+    if (!ad) {
+      return '/assets/images/default-profile.jpg';
+    }
+
+    if (ad.advertiserImage) {
+      return ad.advertiserImage;
+    }
+
+    if (typeof ad.advertiser === 'object' && ad.advertiser?.profileImage) {
+      return ad.advertiser.profileImage;
+    }
+
+    return '/assets/images/default-profile.jpg';
+  }
+
+  /**
+   * Get the advertiser name for an ad
+   * @param ad The ad object
+   * @returns The advertiser name or a default name
+   */
+  getAdvertiserName(ad: Ad): string {
+    if (!ad) {
+      return 'Unknown';
+    }
+
+    if (ad.advertiserName) {
+      return ad.advertiserName;
+    }
+
+    if (typeof ad.advertiser === 'object' && ad.advertiser?.username) {
+      return ad.advertiser.username;
+    }
+
+    return 'Unknown';
   }
 
   /**

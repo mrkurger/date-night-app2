@@ -56,8 +56,9 @@ interface SortOption {
 interface HeaderAction {
   id: string;
   label: string;
-  icon: string;
+  icon?: string;
   type?: 'primary' | 'secondary' | 'danger';
+  primary?: boolean;
 }
 
 interface FilterItem {

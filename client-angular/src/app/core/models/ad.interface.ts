@@ -17,14 +17,23 @@ export interface Ad {
     type: string; // 'image' or 'video'
     url: string;
   }[];
-  advertiser: string;
+  advertiser:
+    | string
+    | {
+        username: string;
+        profileImage?: string;
+      };
   userId: string; // ID of the user who created the ad
+  advertiserName?: string; // Name of the advertiser
+  advertiserImage?: string; // Profile image of the advertiser
 
   // Status flags
   isActive: boolean;
   isFeatured: boolean;
   isTrending: boolean;
   isTouring: boolean;
+  isVerified?: boolean;
+  isAdvertiserOnline?: boolean;
 
   // Analytics
   viewCount: number; // From server
@@ -48,6 +57,14 @@ export interface Ad {
   views?: number; // Mapped from viewCount for UI consistency
   age?: number; // Age of the advertiser or service provider
   cardState?: string; // For Tinder-style swiping animations
+  reviews?: Array<{
+    id: string;
+    userId: string;
+    username: string;
+    rating: number;
+    comment: string;
+    date: string;
+  }>;
 }
 
 // Interface for creating new ads
