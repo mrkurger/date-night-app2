@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
@@ -17,9 +17,15 @@ import { ChatService } from './core/services/chat.service';
 import { CsrfService } from './core/services/csrf.service';
 import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
+import { OnboardingService } from './core/services/onboarding.service';
+import { ThemeService } from './core/services/theme.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
+import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
+import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
+import { ContextualHelpComponent } from './shared/components/contextual-help/contextual-help.component';
+import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
@@ -36,6 +42,10 @@ import { NgIf } from '@angular/common';
     NotificationComponent,
     DebugInfoComponent,
     AlertNotificationsComponent,
+    OnboardingComponent,
+    FeatureTourComponent,
+    ContextualHelpComponent,
+    BreadcrumbsComponent,
     NgIf,
   ],
 })
@@ -49,9 +59,18 @@ export class AppComponent implements OnInit, OnDestroy {
   deferredPrompt: any;
   showInstallPrompt = false;
 
+  // Onboarding properties
+  showOnboarding = false;
+  showFeatureTour = false;
+  onboardingSteps: any[] = [];
+  featureTourSteps: any[] = [];
+  contextualHelpItems: any[] = [];
+
   private authSubscription: Subscription = new Subscription();
   private chatSubscription: Subscription = new Subscription();
   private notificationSubscription: Subscription = new Subscription();
+  private onboardingSubscription: Subscription = new Subscription();
+  private themeSubscription: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
@@ -62,7 +81,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private platformService: PlatformService,
     private pwaService: PwaService,
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private themeService: ThemeService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {
     // Set default meta tags for SEO
     this.titleService.setTitle('Date Night App - Find Your Perfect Match');
@@ -97,6 +119,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Add theme-transition class to body
+    this.renderer.addClass(this.document.body, 'theme-transition');
+
     // Only run browser-specific code when in browser environment
     this.platformService.runInBrowser(() => {
       // Initialize CSRF protection
@@ -153,6 +178,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (this.notificationSubscription) {
       this.notificationSubscription.unsubscribe();
+    }
+
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
     }
   }
 

@@ -1,0 +1,28 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+  <ol class="breadcrumb-list">
+    <li
+      *ngFor="let breadcrumb of visibleBreadcrumbs; let last = last"
+      class="breadcrumb-item"
+      [class.active]="last"
+    >
+      <a *ngIf="!last && breadcrumb.url" [routerLink]="breadcrumb.url" class="breadcrumb-link">
+        <mat-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}</mat-icon>
+        <span>{{ breadcrumb.label }}</span>
+      </a>
+
+      <span *ngIf="!last && !breadcrumb.url" class="breadcrumb-text">
+        <mat-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}</mat-icon>
+        <span>{{ breadcrumb.label }}</span>
+      </span>
+
+      <span *ngIf="last" class="breadcrumb-current">
+        <mat-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}</mat-icon>
+        <span>{{ breadcrumb.label }}</span>
+      </span>
+
+      <mat-icon *ngIf="!last" class="breadcrumb-separator" aria-hidden="true">{{
+        separator
+      }}</mat-icon>
+    </li>
+  </ol>
+</nav>

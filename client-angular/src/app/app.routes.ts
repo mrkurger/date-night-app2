@@ -114,6 +114,16 @@ export const routes: Routes = [
     data: { title: 'Design System Demo' },
   },
 
+  // Preferences Demo
+  {
+    path: 'preferences-demo',
+    loadComponent: () =>
+      import('./features/preferences-demo/preferences-demo.component').then(
+        m => m.PreferencesDemoComponent
+      ),
+    data: { title: 'User Preferences Demo' },
+  },
+
   // Legacy routes - to be migrated to standalone components
   {
     path: 'ads',

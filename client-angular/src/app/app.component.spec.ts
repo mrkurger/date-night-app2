@@ -20,6 +20,7 @@ import { ChatService } from './core/services/chat.service';
 import { CsrfService } from './core/services/csrf.service';
 import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
+import { ThemeService } from './core/services/theme.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
@@ -45,6 +46,7 @@ describe('AppComponent', () => {
   let mockCsrfService: jasmine.SpyObj<CsrfService>;
   let mockPlatformService: jasmine.SpyObj<PlatformService>;
   let mockPwaService: jasmine.SpyObj<PwaService>;
+  let mockThemeService: jasmine.SpyObj<ThemeService>;
   let mockTitleService: jasmine.SpyObj<Title>;
   let mockMetaService: jasmine.SpyObj<Meta>;
   let router: Router;
@@ -72,6 +74,10 @@ describe('AppComponent', () => {
     mockCsrfService = jasmine.createSpyObj('CsrfService', ['initializeCsrf']);
     mockPlatformService = jasmine.createSpyObj('PlatformService', ['runInBrowser', 'isBrowser']);
     mockPwaService = jasmine.createSpyObj('PwaService', ['checkForUpdate', 'installPwa']);
+    mockThemeService = jasmine.createSpyObj('ThemeService', ['setTheme', 'toggleTheme'], {
+      isDarkMode$: of(false),
+      theme$: of('light'),
+    });
     mockTitleService = jasmine.createSpyObj('Title', ['setTitle']);
     mockMetaService = jasmine.createSpyObj('Meta', ['addTags', 'updateTag']);
 
@@ -124,6 +130,7 @@ describe('AppComponent', () => {
         { provide: CsrfService, useValue: mockCsrfService },
         { provide: PlatformService, useValue: mockPlatformService },
         { provide: PwaService, useValue: mockPwaService },
+        { provide: ThemeService, useValue: mockThemeService },
         { provide: Title, useValue: mockTitleService },
         { provide: Meta, useValue: mockMetaService },
         // Remove the Router provider since RouterTestingModule provides it
@@ -254,6 +261,7 @@ describe('AppComponent', () => {
     const authSpy = spyOn(component['authSubscription'], 'unsubscribe');
     const chatSpy = spyOn(component['chatSubscription'], 'unsubscribe');
     const notificationSpy = spyOn(component['notificationSubscription'], 'unsubscribe');
+    const themeSpy = spyOn(component['themeSubscription'], 'unsubscribe');
 
     // Trigger ngOnDestroy
     component.ngOnDestroy();
@@ -262,5 +270,17 @@ describe('AppComponent', () => {
     expect(authSpy).toHaveBeenCalled();
     expect(chatSpy).toHaveBeenCalled();
     expect(notificationSpy).toHaveBeenCalled();
+    expect(themeSpy).toHaveBeenCalled();
+  });
+
+  it('should add theme-transition class to body on init', () => {
+    // Create a spy on the renderer addClass method
+    const addClassSpy = spyOn(component['renderer'], 'addClass');
+
+    // Call ngOnInit
+    component.ngOnInit();
+
+    // Verify addClass was called with the body element and theme-transition class
+    expect(addClassSpy).toHaveBeenCalledWith(component['document'].body, 'theme-transition');
   });
 });

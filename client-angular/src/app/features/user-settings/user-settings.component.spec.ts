@@ -16,6 +16,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserSettingsComponent } from './user-settings.component';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { CommonTestModule, MockMainLayoutComponent } from '../../testing/common-test.module';
 import { createMockService } from '../../testing/test-utils';
 
@@ -24,6 +26,8 @@ describe('UserSettingsComponent', () => {
   let fixture: ComponentFixture<UserSettingsComponent>;
   let authService: AuthService;
   let notificationService: NotificationService;
+  let themeService: ThemeService;
+  let userPreferencesService: UserPreferencesService;
   let router: Router;
 
   // Mock user data
@@ -77,6 +81,64 @@ describe('UserSettingsComponent', () => {
     error() {}
   }
 
+  class MockThemeService {
+    theme$ = of('system');
+
+    getCurrentTheme() {
+      return 'system';
+    }
+
+    setTheme(theme: string) {}
+  }
+
+  class MockUserPreferencesService {
+    preferences$ = of({
+      defaultViewType: 'netflix',
+      contentDensity: 'comfortable',
+      cardSize: 'medium',
+      savedFilters: {},
+      recentlyViewed: [],
+      favorites: [],
+    });
+
+    contentDensityOptions = [
+      { value: 'comfortable', label: 'Comfortable' },
+      { value: 'compact', label: 'Compact' },
+      { value: 'condensed', label: 'Condensed' },
+    ];
+
+    cardSizeOptions = [
+      { value: 'small', label: 'Small' },
+      { value: 'medium', label: 'Medium' },
+      { value: 'large', label: 'Large' },
+    ];
+
+    getPreferences() {
+      return {
+        defaultViewType: 'netflix',
+        contentDensity: 'comfortable',
+        cardSize: 'medium',
+        savedFilters: {},
+        recentlyViewed: [],
+        favorites: [],
+      };
+    }
+
+    updatePreferences() {}
+
+    setDefaultViewType() {}
+
+    setContentDensity() {}
+
+    setCardSize() {}
+
+    saveFilter() {}
+
+    getSavedFilter() {}
+
+    deleteSavedFilter() {}
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -88,6 +150,8 @@ describe('UserSettingsComponent', () => {
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         { provide: NotificationService, useClass: MockNotificationService },
+        { provide: ThemeService, useClass: MockThemeService },
+        { provide: UserPreferencesService, useClass: MockUserPreferencesService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
@@ -96,6 +160,8 @@ describe('UserSettingsComponent', () => {
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);
     notificationService = TestBed.inject(NotificationService);
+    themeService = TestBed.inject(ThemeService);
+    userPreferencesService = TestBed.inject(UserPreferencesService);
     router = TestBed.inject(Router);
 
     // Spy on router navigation
@@ -131,6 +197,35 @@ describe('UserSettingsComponent', () => {
         dataSharing: false,
       });
       expect(component.loading).toBeFalse();
+    }));
+
+    it('should load theme settings on init', fakeAsync(() => {
+      spyOn(themeService, 'getCurrentTheme').and.returnValue('system');
+
+      component.ngOnInit();
+      tick();
+
+      expect(component.currentTheme).toBe('system');
+    }));
+
+    it('should load display settings on init', fakeAsync(() => {
+      spyOn(userPreferencesService, 'getPreferences').and.returnValue({
+        defaultViewType: 'netflix',
+        contentDensity: 'comfortable',
+        cardSize: 'medium',
+        savedFilters: {},
+        recentlyViewed: [],
+        favorites: [],
+      });
+
+      component.ngOnInit();
+      tick();
+
+      expect(component.displayForm.value).toEqual({
+        defaultViewType: 'netflix',
+        contentDensity: 'comfortable',
+        cardSize: 'medium',
+      });
     }));
   });
 
@@ -278,6 +373,78 @@ describe('UserSettingsComponent', () => {
       });
 
       expect(component.passwordForm.hasError('passwordMismatch')).toBeFalse();
+    });
+  });
+
+  describe('theme and display settings', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+      fixture.detectChanges();
+    });
+
+    it('should set theme when setTheme is called', () => {
+      spyOn(themeService, 'setTheme');
+
+      component.setTheme('dark');
+
+      expect(themeService.setTheme).toHaveBeenCalledWith('dark');
+    });
+
+    it('should save display settings when saveDisplaySettings is called', () => {
+      spyOn(userPreferencesService, 'updatePreferences');
+      spyOn(notificationService, 'success');
+
+      component.displayForm.patchValue({
+        defaultViewType: 'list',
+        contentDensity: 'compact',
+        cardSize: 'large',
+      });
+
+      component.saveDisplaySettings();
+
+      expect(userPreferencesService.updatePreferences).toHaveBeenCalledWith({
+        defaultViewType: 'list',
+        contentDensity: 'compact',
+        cardSize: 'large',
+      });
+      expect(notificationService.success).toHaveBeenCalledWith(
+        'Display settings saved successfully'
+      );
+    });
+
+    it('should handle errors when saving display settings', () => {
+      spyOn(userPreferencesService, 'updatePreferences').and.throwError('Update failed');
+      spyOn(notificationService, 'error');
+      spyOn(console, 'error');
+
+      component.saveDisplaySettings();
+
+      expect(notificationService.error).toHaveBeenCalledWith('Failed to save display settings');
+      expect(console.error).toHaveBeenCalled();
+    });
+
+    it('should reset display settings to defaults when resetDisplaySettings is called', () => {
+      spyOn(component, 'saveDisplaySettings');
+
+      // First change the values
+      component.displayForm.patchValue({
+        defaultViewType: 'list',
+        contentDensity: 'condensed',
+        cardSize: 'small',
+      });
+
+      // Then reset
+      component.resetDisplaySettings();
+
+      // Check that values were reset
+      expect(component.displayForm.value).toEqual({
+        defaultViewType: 'netflix',
+        contentDensity: 'comfortable',
+        cardSize: 'medium',
+      });
+
+      // Check that save was called
+      expect(component.saveDisplaySettings).toHaveBeenCalled();
     });
   });
 });

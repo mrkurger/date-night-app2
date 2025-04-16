@@ -6,6 +6,12 @@
     'ad-card-featured': isFeatured,
     'ad-card-new': isNew,
     'ad-card-trending': isTrending,
+    'ad-card-size-small': cardSize === 'small',
+    'ad-card-size-medium': cardSize === 'medium',
+    'ad-card-size-large': cardSize === 'large',
+    'ad-card-density-comfortable': contentDensity === 'comfortable',
+    'ad-card-density-compact': contentDensity === 'compact',
+    'ad-card-density-condensed': contentDensity === 'condensed',
   }"
   (click)="onViewDetails()"
 >

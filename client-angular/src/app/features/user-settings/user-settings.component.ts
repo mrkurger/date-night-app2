@@ -7,13 +7,20 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import {
+  UserPreferencesService,
+  ContentDensity,
+  CardSize,
+} from '../../core/services/user-preferences.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-settings',
@@ -22,19 +29,27 @@ import { MainLayoutComponent } from '../../shared/components/main-layout/main-la
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
 })
-export class UserSettingsComponent implements OnInit {
+export class UserSettingsComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   passwordForm: FormGroup;
   notificationForm: FormGroup;
   privacyForm: FormGroup;
+  displayForm: FormGroup;
   loading = false;
   user: any = null;
   activeTab = 'profile';
+  currentTheme: 'light' | 'dark' | 'system' = 'system';
+  contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
+  cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private notificationService: NotificationService,
+    private themeService: ThemeService,
+    private userPreferencesService: UserPreferencesService,
     private router: Router
   ) {
     this.profileForm = this.fb.group({
@@ -66,48 +81,105 @@ export class UserSettingsComponent implements OnInit {
       allowMessaging: ['all'],
       dataSharing: [false],
     });
+
+    this.displayForm = this.fb.group({
+      defaultViewType: ['netflix'],
+      contentDensity: ['comfortable'],
+      cardSize: ['medium'],
+    });
+
+    // Get content density and card size options from the service
+    this.contentDensityOptions = this.userPreferencesService.contentDensityOptions;
+    this.cardSizeOptions = this.userPreferencesService.cardSizeOptions;
   }
 
   ngOnInit(): void {
     this.loadUserData();
+    this.loadThemeSettings();
+    this.loadDisplaySettings();
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   loadUserData(): void {
     this.loading = true;
-    this.authService.currentUser$.subscribe(user => {
-      if (user) {
-        this.user = user;
+    this.subscriptions.push(
+      this.authService.currentUser$.subscribe(user => {
+        if (user) {
+          this.user = user;
 
-        // Populate profile form
-        this.profileForm.patchValue({
-          name: user.name || '',
-          email: user.email || '',
-          phone: user.phone || '',
-          bio: user.bio || '',
-        });
-
-        // Populate notification settings if available
-        if (user.notificationSettings) {
-          this.notificationForm.patchValue({
-            emailNotifications: user.notificationSettings.emailNotifications ?? true,
-            chatNotifications: user.notificationSettings.chatNotifications ?? true,
-            marketingEmails: user.notificationSettings.marketingEmails ?? false,
-            newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
+          // Populate profile form
+          this.profileForm.patchValue({
+            name: user.name || '',
+            email: user.email || '',
+            phone: user.phone || '',
+            bio: user.bio || '',
           });
-        }
 
-        // Populate privacy settings if available
-        if (user.privacySettings) {
-          this.privacyForm.patchValue({
-            profileVisibility: user.privacySettings.profileVisibility || 'public',
-            showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
-            allowMessaging: user.privacySettings.allowMessaging || 'all',
-            dataSharing: user.privacySettings.dataSharing ?? false,
-          });
+          // Populate notification settings if available
+          if (user.notificationSettings) {
+            this.notificationForm.patchValue({
+              emailNotifications: user.notificationSettings.emailNotifications ?? true,
+              chatNotifications: user.notificationSettings.chatNotifications ?? true,
+              marketingEmails: user.notificationSettings.marketingEmails ?? false,
+              newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
+            });
+          }
+
+          // Populate privacy settings if available
+          if (user.privacySettings) {
+            this.privacyForm.patchValue({
+              profileVisibility: user.privacySettings.profileVisibility || 'public',
+              showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
+              allowMessaging: user.privacySettings.allowMessaging || 'all',
+              dataSharing: user.privacySettings.dataSharing ?? false,
+            });
+          }
         }
-      }
-      this.loading = false;
+        this.loading = false;
+      })
+    );
+  }
+
+  loadThemeSettings(): void {
+    // Get current theme
+    this.currentTheme = this.themeService.getCurrentTheme();
+
+    // Subscribe to theme changes
+    this.subscriptions.push(
+      this.themeService.theme$.subscribe(theme => {
+        this.currentTheme = theme;
+      })
+    );
+  }
+
+  loadDisplaySettings(): void {
+    // Get user preferences
+    const preferences = this.userPreferencesService.getPreferences();
+
+    // Populate display form
+    this.displayForm.patchValue({
+      defaultViewType: preferences.defaultViewType,
+      contentDensity: preferences.contentDensity,
+      cardSize: preferences.cardSize,
     });
+
+    // Subscribe to preference changes
+    this.subscriptions.push(
+      this.userPreferencesService.preferences$.subscribe(prefs => {
+        this.displayForm.patchValue(
+          {
+            defaultViewType: prefs.defaultViewType,
+            contentDensity: prefs.contentDensity,
+            cardSize: prefs.cardSize,
+          },
+          { emitEvent: false }
+        );
+      })
+    );
   }
 
   passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
@@ -226,5 +298,54 @@ export class UserSettingsComponent implements OnInit {
         },
       });
     }
+  }
+
+  /**
+   * Set the theme
+   * @param theme The theme to set
+   */
+  setTheme(theme: 'light' | 'dark' | 'system'): void {
+    this.themeService.setTheme(theme);
+  }
+
+  /**
+   * Save display settings
+   */
+  saveDisplaySettings(): void {
+    this.loading = true;
+
+    try {
+      const displaySettings = this.displayForm.value;
+
+      // Update user preferences
+      this.userPreferencesService.updatePreferences({
+        defaultViewType: displaySettings.defaultViewType,
+        contentDensity: displaySettings.contentDensity,
+        cardSize: displaySettings.cardSize,
+      });
+
+      this.notificationService.success('Display settings saved successfully');
+      this.displayForm.markAsPristine();
+    } catch (error) {
+      console.error('Error saving display settings:', error);
+      this.notificationService.error('Failed to save display settings');
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  /**
+   * Reset display settings to defaults
+   */
+  resetDisplaySettings(): void {
+    // Reset to default values
+    this.displayForm.patchValue({
+      defaultViewType: 'netflix',
+      contentDensity: 'comfortable',
+      cardSize: 'medium',
+    });
+
+    // Save the default values
+    this.saveDisplaySettings();
   }
 }

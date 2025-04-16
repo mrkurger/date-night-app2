@@ -27,6 +27,7 @@ This document contains lessons learned by the AI while working on the Date Night
   - [HTTP Error Handling](#http-error-handling)
 - [Feature Implementation Patterns](#feature-implementation-patterns)
   - [Temporary Messages](#temporary-messages)
+  - [Theme Toggle Implementation](#theme-toggle-implementation)
 - [Documentation Best Practices](#documentation-best-practices)
 - [Security Best Practices](#security-best-practices)
   - [Dependency Management](#dependency-management)
@@ -47,12 +48,18 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Tagging and Categorization](#tagging-and-categorization)
 - [Review System Implementation](#review-system-implementation)
   - [Component Architecture](#component-architecture)
+- [User Preferences Implementation](#user-preferences-implementation)
+  - [Preference Storage](#preference-storage)
+  - [Reactive Updates](#reactive-updates)
+  - [Component Integration](#component-integration)
+  - [CSS Implementation](#css-implementation)
   - [Dialog Service Pattern](#dialog-service-pattern)
   - [Form Validation](#form-validation)
 - [Design System Implementation](#design-system-implementation)
   - [Form Component Integration](#form-component-integration)
   - [Component Demo Page](#component-demo-page)
   - [Design System Documentation](#design-system-documentation)
+  - [Theme System Implementation](#theme-system-implementation)
 
 ## Design System Implementation
 
@@ -127,6 +134,73 @@ When creating a design system demo page, we found these effective approaches:
    - Highlight accessibility features
 
 ### Design System Documentation
+
+[Content for Design System Documentation section]
+
+### Theme System Implementation
+
+For detailed implementation of the theme system, see [THEME_SYSTEM.md](./THEME_SYSTEM.md).
+
+When implementing a theme system as part of a design system, we discovered several important patterns:
+
+1. **Theme Architecture**:
+
+   - Separate theme definitions from component styles
+   - Create a dedicated theme file (e.g., `theme.css`)
+   - Use semantic naming for variables (e.g., `--body-bg` instead of `--light-gray`)
+   - Define both direct variables (e.g., `--primary-500`) and semantic variables (e.g., `--link-color`)
+   - Organize CSS variables hierarchically (base colors → semantic variables → component variables)
+
+2. **Theme Switching Logic**:
+
+   - Implement clean, reusable theme switching functions in a dedicated service
+   - Use class-based approach for theme application (`light-theme`, `dark-theme` classes)
+   - Ensure smooth transitions between themes with CSS transitions
+   - Handle edge cases (e.g., system preference changes)
+   - Emit events for theme changes to allow components to react
+   - Persist user preferences in localStorage
+
+3. **System Preference Integration**:
+
+   - Use `prefers-color-scheme` media query for system preference detection
+   - Combine with user preferences for optimal experience
+   - Implement a preference hierarchy: explicit user choice > system preference > default
+   - Listen for system preference changes with `window.matchMedia().addEventListener()`
+   - Apply appropriate theme when system preference changes if user has selected "system" preference
+
+4. **Component Guidelines**:
+
+   - Document how components should use theme variables
+   - Create examples of theme-aware components
+   - Test all components in all supported themes
+   - Ensure consistent appearance across themes
+   - Provide theme-specific variants when necessary
+   - Use CSS custom properties for all theme-related styles
+   - Apply the `theme-transition` class to elements that should animate during theme changes
+
+5. **Accessibility Considerations**:
+
+   - Ensure sufficient contrast in both themes
+   - Support high contrast mode with appropriate media queries
+   - Respect user's reduced motion preferences
+   - Provide clear focus indicators in both themes
+   - Include proper ARIA attributes for theme toggle controls
+   - Test with screen readers and keyboard navigation
+
+6. **Performance Optimization**:
+
+   - Minimize DOM manipulations during theme changes
+   - Use efficient CSS selectors
+   - Batch theme-related updates
+   - Avoid layout thrashing by using CSS variables
+   - Implement lazy loading for theme-specific assets
+
+7. **Reusable Theme Toggle Component**:
+   - Create a flexible, reusable theme toggle component
+   - Support multiple display modes (icon-only, with-label, toggle switch)
+   - Allow customization of labels and positions
+   - Implement smooth animations for state changes
+   - Ensure keyboard accessibility and proper focus management
 
 Effective design system documentation follows these patterns:
 
@@ -1366,6 +1440,40 @@ For projects with many warnings that need to be addressed over time:
 ## Feature Implementation Patterns
 
 ### Temporary Messages
+
+[Content for Temporary Messages section]
+
+### Theme Toggle Implementation
+
+For detailed lessons on theme toggle implementation, see [AILessons-theme-toggle.md](./AILessons-theme-toggle.md).
+
+When implementing the theme toggle feature in the DateNight.io application, we discovered several important patterns:
+
+1. **CSS Variables for Theming**:
+
+   - Use CSS variables for all theme-related values
+   - Define variables at the `:root` level for the default theme
+   - Use class selectors (e.g., `.dark-theme`) for theme variants
+   - Group related variables logically (colors, typography, spacing, etc.)
+
+2. **Theme Persistence**:
+
+   - Store theme preferences in localStorage for persistence
+   - Implement a fallback to system preference if no stored preference exists
+   - Load preferences early in the application lifecycle to prevent flashing
+
+3. **Accessibility Considerations**:
+
+   - Include proper ARIA labels for screen readers
+   - Ensure keyboard accessibility
+   - Provide visible focus states
+   - Use high contrast colors for better visibility
+
+4. **Component Integration**:
+   - Place the toggle in a consistent, easily accessible location
+   - Adapt the toggle presentation based on available space (full toggle vs. icon-only)
+   - Use existing design system components when available
+   - Ensure the toggle state clearly indicates the current theme
 
 When implementing features that involve time-based expiration like temporary messages:
 

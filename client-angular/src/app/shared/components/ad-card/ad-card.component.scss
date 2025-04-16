@@ -22,6 +22,136 @@
     }
   }
 
+  // Card Size Variations
+  &.ad-card-size-small {
+    .ad-card-media {
+      height: 140px;
+    }
+
+    .ad-card-title {
+      font-size: $font-size-base;
+    }
+
+    &.ad-card-list {
+      height: 140px;
+
+      .ad-card-media {
+        width: 140px;
+        min-width: 140px;
+      }
+    }
+  }
+
+  &.ad-card-size-medium {
+    .ad-card-media {
+      height: 180px;
+    }
+
+    .ad-card-title {
+      font-size: $font-size-lg;
+    }
+
+    &.ad-card-list {
+      height: 180px;
+
+      .ad-card-media {
+        width: 180px;
+        min-width: 180px;
+      }
+    }
+  }
+
+  &.ad-card-size-large {
+    .ad-card-media {
+      height: 220px;
+    }
+
+    .ad-card-title {
+      font-size: $font-size-xl;
+    }
+
+    &.ad-card-list {
+      height: 220px;
+
+      .ad-card-media {
+        width: 220px;
+        min-width: 220px;
+      }
+    }
+  }
+
+  // Content Density Variations
+  &.ad-card-density-comfortable {
+    .ad-card-content {
+      padding: $spacing-4;
+    }
+
+    .ad-card-description {
+      margin-bottom: $spacing-4;
+      -webkit-line-clamp: 3;
+    }
+
+    .ad-card-footer {
+      margin-top: $spacing-3;
+    }
+  }
+
+  &.ad-card-density-compact {
+    .ad-card-content {
+      padding: $spacing-3;
+    }
+
+    .ad-card-description {
+      margin-bottom: $spacing-3;
+      font-size: $font-size-xs;
+      -webkit-line-clamp: 2;
+    }
+
+    .ad-card-footer {
+      margin-top: $spacing-2;
+    }
+
+    .ad-card-meta {
+      font-size: $font-size-xs;
+    }
+  }
+
+  &.ad-card-density-condensed {
+    .ad-card-content {
+      padding: $spacing-2;
+    }
+
+    .ad-card-title {
+      margin-bottom: $spacing-1;
+    }
+
+    .ad-card-description {
+      margin-bottom: $spacing-2;
+      font-size: $font-size-xs;
+      -webkit-line-clamp: 1;
+    }
+
+    .ad-card-footer {
+      margin-top: $spacing-1;
+    }
+
+    .ad-card-meta {
+      font-size: $font-size-xs;
+    }
+
+    .ad-card-actions button {
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
   // List layout
   &.ad-card-list {
     flex-direction: row;
@@ -64,6 +194,141 @@
 
     .ad-card-meta {
       display: none;
+    }
+  }
+
+  // Card sizes
+  &.ad-card-size-small {
+    .ad-card-media {
+      height: 160px;
+    }
+
+    .ad-card-title {
+      font-size: $font-size-sm;
+    }
+
+    .ad-card-description {
+      font-size: $font-size-xs;
+      max-height: 2.4em;
+    }
+
+    .ad-card-content {
+      padding: $spacing-2;
+    }
+
+    .ad-card-footer {
+      padding-top: $spacing-2;
+    }
+
+    .tag {
+      font-size: $font-size-xs;
+      padding: $spacing-1 $spacing-2;
+    }
+
+    &.ad-card-list {
+      height: 120px;
+
+      .ad-card-media {
+        width: 120px;
+        min-width: 120px;
+      }
+    }
+  }
+
+  &.ad-card-size-medium {
+    // Default styles already applied
+  }
+
+  &.ad-card-size-large {
+    .ad-card-media {
+      height: 240px;
+    }
+
+    .ad-card-title {
+      font-size: $font-size-lg;
+    }
+
+    .ad-card-description {
+      font-size: $font-size-md;
+      max-height: 4.8em;
+    }
+
+    .ad-card-content {
+      padding: $spacing-4;
+    }
+
+    .ad-card-footer {
+      padding-top: $spacing-4;
+    }
+
+    .tag {
+      font-size: $font-size-sm;
+      padding: $spacing-1 $spacing-3;
+    }
+
+    &.ad-card-list {
+      height: 220px;
+
+      .ad-card-media {
+        width: 220px;
+        min-width: 220px;
+      }
+    }
+  }
+
+  // Content density
+  &.ad-card-density-comfortable {
+    // Default styles already applied
+  }
+
+  &.ad-card-density-compact {
+    .ad-card-content {
+      padding: $spacing-2;
+    }
+
+    .ad-card-title {
+      margin-bottom: $spacing-1;
+    }
+
+    .ad-card-description {
+      margin-bottom: $spacing-1;
+    }
+
+    .ad-card-footer {
+      padding-top: $spacing-1;
+    }
+
+    .ad-card-tags {
+      margin-bottom: $spacing-1;
+    }
+  }
+
+  &.ad-card-density-condensed {
+    .ad-card-content {
+      padding: $spacing-1;
+    }
+
+    .ad-card-title {
+      margin-bottom: $spacing-1;
+      line-height: 1.2;
+    }
+
+    .ad-card-description {
+      margin-bottom: $spacing-1;
+      line-height: 1.2;
+    }
+
+    .ad-card-footer {
+      padding-top: $spacing-1;
+    }
+
+    .ad-card-tags {
+      margin-bottom: $spacing-1;
+      gap: $spacing-1;
+    }
+
+    .ad-card-meta {
+      font-size: $font-size-xs;
     }
   }
 

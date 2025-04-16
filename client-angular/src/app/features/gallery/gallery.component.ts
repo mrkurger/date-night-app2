@@ -4,13 +4,16 @@
 // This file contains settings for component configuration (gallery.component)
 //
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
+// - DEFAULT_VIEW_MODE: Default view mode (default: 'grid')
+//   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gallery',
@@ -19,9 +22,29 @@ import { MaterialModule } from '../../shared/material.module';
       <mat-card>
         <mat-card-header>
           <mat-card-title>Photo Gallery</mat-card-title>
+          <div class="view-toggle">
+            <button
+              mat-icon-button
+              [color]="viewMode === 'grid' ? 'primary' : ''"
+              (click)="setViewMode('grid')"
+              aria-label="Grid view"
+            >
+              <mat-icon>grid_view</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              [color]="viewMode === 'list' ? 'primary' : ''"
+              (click)="setViewMode('list')"
+              aria-label="List view"
+            >
+              <mat-icon>view_list</mat-icon>
+            </button>
+          </div>
         </mat-card-header>
         <mat-card-content>
-          <div class="gallery-grid">
+          <div
+            [ngClass]="{ 'gallery-grid': viewMode === 'grid', 'gallery-list': viewMode === 'list' }"
+          >
             <!-- Gallery content will be implemented here -->
             <p>Gallery feature coming soon...</p>
           </div>
@@ -42,13 +65,63 @@ import { MaterialModule } from '../../shared/material.module';
         gap: 16px;
         padding: 16px;
       }
+      .gallery-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+      }
+      .view-toggle {
+        display: flex;
+        margin-left: auto;
+      }
     `,
   ],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [CommonModule, RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnInit, OnDestroy {
+  viewMode: 'grid' | 'list' = 'grid';
+  private subscriptions: Subscription[] = [];
+
+  constructor(private userPreferencesService: UserPreferencesService) {}
+
   ngOnInit(): void {
-    // Initialization logic will be added here
+    // Load user preferences
+    const preferences = this.userPreferencesService.getPreferences();
+
+    // Set view mode based on user preferences
+    if (preferences.defaultViewType === 'list') {
+      this.viewMode = 'list';
+    } else {
+      this.viewMode = 'grid';
+    }
+
+    // Subscribe to preference changes
+    this.subscriptions.push(
+      this.userPreferencesService.preferences$.subscribe(prefs => {
+        if (prefs.defaultViewType === 'list') {
+          this.viewMode = 'list';
+        } else {
+          this.viewMode = 'grid';
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  /**
+   * Set the view mode and save it to user preferences
+   * @param mode The view mode to set
+   */
+  setViewMode(mode: 'grid' | 'list'): void {
+    this.viewMode = mode;
+
+    // Save view mode to user preferences
+    this.userPreferencesService.setDefaultViewType(mode === 'list' ? 'list' : 'netflix');
   }
 }

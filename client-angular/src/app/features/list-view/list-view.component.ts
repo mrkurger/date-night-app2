@@ -20,6 +20,7 @@ import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Ad } from '../../core/models/ad.interface';
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 
@@ -166,6 +167,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     private chatService: ChatService,
     private authService: AuthService,
+    private userPreferencesService: UserPreferencesService,
     private fb: FormBuilder,
     private router: Router,
     private dialog: MatDialog
@@ -192,6 +194,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
     // Load saved filters from localStorage
     this.loadSavedFilters();
+
+    // Load user preferences for view mode
+    const preferences = this.userPreferencesService.getPreferences();
+
+    // Set default view mode from user preferences
+    if (preferences.defaultViewType === 'list') {
+      this.viewMode = 'list';
+    } else if (preferences.defaultViewType === 'tinder') {
+      this.viewMode = 'compact';
+    } else {
+      this.viewMode = 'grid'; // Netflix view is grid view
+    }
   }
 
   ngOnInit(): void {
@@ -203,6 +217,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     // Subscribe to filter form changes
     this.filterForm.valueChanges.subscribe(() => {
       this.updateActiveFilterCount();
+    });
+
+    // Subscribe to user preferences changes
+    this.userPreferencesService.preferences$.subscribe(prefs => {
+      // Update view mode when preferences change
+      if (prefs.defaultViewType === 'list') {
+        this.viewMode = 'list';
+      } else if (prefs.defaultViewType === 'tinder') {
+        this.viewMode = 'compact';
+      } else {
+        this.viewMode = 'grid'; // Netflix view is grid view
+      }
     });
   }
 
@@ -405,10 +431,24 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Set the view mode (grid, list, or compact)
+   * Set the view mode (grid, list, or compact) and save to user preferences
    */
   setViewMode(mode: 'grid' | 'list' | 'compact'): void {
     this.viewMode = mode;
+
+    // Map view mode to preference value
+    let defaultViewType: 'netflix' | 'tinder' | 'list';
+
+    if (mode === 'grid') {
+      defaultViewType = 'netflix';
+    } else if (mode === 'compact') {
+      defaultViewType = 'tinder';
+    } else {
+      defaultViewType = 'list';
+    }
+
+    // Save to user preferences
+    this.userPreferencesService.setDefaultViewType(defaultViewType);
   }
 
   /**
@@ -761,6 +801,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
         this.savedFilters.push(newFilter);
         this.saveSavedFilters();
+
+        // Also save to user preferences
+        this.userPreferencesService.saveFilter(result, this.filterForm.value);
+
         this.notificationService.success(`Filter "${result}" saved successfully`);
       }
     });
@@ -791,12 +835,24 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Handle custom saved filters
+    // First check user preferences for the filter
+    const userFilter = this.userPreferencesService.getSavedFilter(filterId);
+    if (userFilter) {
+      this.filterForm.patchValue(userFilter);
+      this.applyFilters();
+      this.notificationService.success(`Filter "${filterId}" loaded`);
+      return;
+    }
+
+    // Fall back to local saved filters
     const savedFilter = this.savedFilters.find(f => f.id === filterId);
     if (savedFilter) {
       this.filterForm.patchValue(savedFilter.filter);
       this.applyFilters();
       this.notificationService.success(`Filter "${savedFilter.name}" loaded`);
+
+      // Migrate to user preferences for future use
+      this.userPreferencesService.saveFilter(savedFilter.name, savedFilter.filter);
     }
   }
 
@@ -811,9 +867,26 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * Load filters from localStorage
    */
   private loadSavedFilters(): void {
-    const savedFilters = localStorage.getItem('savedFilters');
-    if (savedFilters) {
-      this.savedFilters = JSON.parse(savedFilters);
+    // First try to load from user preferences
+    const preferences = this.userPreferencesService.getPreferences();
+    if (preferences.savedFilters && Object.keys(preferences.savedFilters).length > 0) {
+      // Convert user preferences format to our local format
+      this.savedFilters = Object.entries(preferences.savedFilters).map(([name, filter]) => ({
+        id: name,
+        name: name,
+        filter: filter,
+      }));
+    } else {
+      // Fall back to localStorage for backward compatibility
+      const savedFilters = localStorage.getItem('savedFilters');
+      if (savedFilters) {
+        this.savedFilters = JSON.parse(savedFilters);
+
+        // Migrate to user preferences
+        this.savedFilters.forEach(filter => {
+          this.userPreferencesService.saveFilter(filter.name, filter.filter);
+        });
+      }
     }
   }
 }

@@ -1,5 +1,30 @@
 # Change Log
 
+## 2025-05-20: User Preferences Implementation
+
+### Added
+
+- User preferences system for customizing the browsing experience
+  - Default view type preference (Netflix, Tinder, List)
+  - Content density preference (Comfortable, Compact, Condensed)
+  - Card size preference (Small, Medium, Large)
+- Preferences Demo component to showcase user preferences in action
+- Documentation for user preferences implementation
+- Integration of user preferences with Browse, Gallery, and Ad Card components
+- Persistent storage of preferences using localStorage
+
+### Changed
+
+- Updated Browse component to use user preferences for default view type
+- Updated Gallery component to use user preferences for default view type
+- Enhanced Ad Card component to adjust appearance based on content density and card size
+- Improved User Settings component with preview of preference changes
+
+### Fixed
+
+- Fixed issue where view type was not persisted across page refreshes
+- Addressed inconsistent card sizing across different components
+
 ## 2025-05-15: Design System Implementation
 
 ### Added

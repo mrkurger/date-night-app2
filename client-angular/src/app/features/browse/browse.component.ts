@@ -4,15 +4,17 @@
 // This file contains settings for component configuration (browse.component)
 //
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
+// - DEFAULT_VIEW: Default view type (default: 'netflix')
+//   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { NetflixViewComponent } from '../netflix-view/netflix-view.component';
 import { TinderComponent } from '../tinder/tinder.component';
 import { ListViewComponent } from '../list-view/list-view.component';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-browse',
@@ -21,26 +23,53 @@ import { ListViewComponent } from '../list-view/list-view.component';
   standalone: true,
   imports: [CommonModule, RouterModule, NetflixViewComponent, TinderComponent, ListViewComponent],
 })
-export class BrowseComponent implements OnInit {
+export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userPreferencesService: UserPreferencesService
   ) {}
 
   ngOnInit(): void {
     // Get the view from the route query params
-    this.route.queryParams.subscribe(params => {
-      if (params['view']) {
-        const view = params['view'];
-        if (['netflix', 'tinder', 'list'].includes(view)) {
-          this.activeView = view;
+    this.subscriptions.push(
+      this.route.queryParams.subscribe(params => {
+        if (params['view']) {
+          const view = params['view'];
+          if (['netflix', 'tinder', 'list'].includes(view)) {
+            this.activeView = view;
+
+            // Save the view preference
+            this.userPreferencesService.setDefaultViewType(view);
+          }
+        } else {
+          // If no view is specified in the URL, use the user's preference
+          const preferences = this.userPreferencesService.getPreferences();
+          this.activeView = preferences.defaultViewType;
+
+          // Update the URL to reflect the user's preference
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { view: this.activeView },
+            queryParamsHandling: 'merge',
+          });
         }
-      }
-    });
+      })
+    );
   }
 
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  /**
+   * Change the active view and update user preferences
+   * @param view The view to change to
+   */
   changeView(view: 'netflix' | 'tinder' | 'list'): void {
     this.activeView = view;
 
@@ -50,5 +79,8 @@ export class BrowseComponent implements OnInit {
       queryParams: { view },
       queryParamsHandling: 'merge',
     });
+
+    // Save the view preference
+    this.userPreferencesService.setDefaultViewType(view);
   }
 }

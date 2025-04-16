@@ -54,6 +54,15 @@
               <i class="fas fa-shield-alt"></i> Privacy
             </button>
           </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'display'"
+              (click)="setActiveTab('display')"
+            >
+              <i class="fas fa-desktop"></i> Display
+            </button>
+          </li>
         </ul>
       </div>
 
@@ -379,6 +388,127 @@
             <div class="form-actions">
               <button type="submit" class="btn btn-primary" [disabled]="loading">
                 <i class="fas fa-save"></i> Save Privacy Settings
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Display Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'display' && !loading">
+          <h2 class="panel-title">Display Settings</h2>
+          <p class="panel-description">Customize your viewing experience</p>
+
+          <form [formGroup]="displayForm" (ngSubmit)="saveDisplaySettings()">
+            <!-- Theme Selection -->
+            <div class="form-group">
+              <label class="form-label">Theme</label>
+              <div class="theme-options">
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'light'"
+                  (click)="setTheme('light')"
+                >
+                  <div class="theme-preview theme-preview-light">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">Light</span>
+                </div>
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'dark'"
+                  (click)="setTheme('dark')"
+                >
+                  <div class="theme-preview theme-preview-dark">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">Dark</span>
+                </div>
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'system'"
+                  (click)="setTheme('system')"
+                >
+                  <div class="theme-preview theme-preview-system">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">System</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Default View Type -->
+            <div class="form-group">
+              <label for="defaultViewType" class="form-label">Default View Type</label>
+              <select id="defaultViewType" formControlName="defaultViewType" class="form-select">
+                <option value="netflix">Netflix View</option>
+                <option value="tinder">Tinder View</option>
+                <option value="list">List View</option>
+              </select>
+              <small class="form-text text-muted"
+                >Choose your preferred view when browsing profiles</small
+              >
+            </div>
+
+            <!-- Content Density -->
+            <div class="form-group">
+              <label for="contentDensity" class="form-label">Content Density</label>
+              <select id="contentDensity" formControlName="contentDensity" class="form-select">
+                <option *ngFor="let option of contentDensityOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+              <small class="form-text text-muted">Adjust how compact content appears</small>
+            </div>
+
+            <!-- Card Size -->
+            <div class="form-group">
+              <label for="cardSize" class="form-label">Card Size</label>
+              <select id="cardSize" formControlName="cardSize" class="form-select">
+                <option *ngFor="let option of cardSizeOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+              <small class="form-text text-muted">Choose the size of profile cards</small>
+            </div>
+
+            <!-- Preview -->
+            <div class="display-preview">
+              <h4>Preview</h4>
+              <div
+                class="preview-container"
+                [attr.data-density]="displayForm.get('contentDensity')?.value"
+                [attr.data-size]="displayForm.get('cardSize')?.value"
+              >
+                <div class="preview-card">
+                  <div class="preview-card-image"></div>
+                  <div class="preview-card-content">
+                    <div class="preview-card-title"></div>
+                    <div class="preview-card-text"></div>
+                  </div>
+                </div>
+                <div class="preview-card">
+                  <div class="preview-card-image"></div>
+                  <div class="preview-card-content">
+                    <div class="preview-card-title"></div>
+                    <div class="preview-card-text"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" (click)="resetDisplaySettings()">
+                <i class="fas fa-undo"></i> Reset to Defaults
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="displayForm.pristine || loading"
+              >
+                <i class="fas fa-save"></i> Save Display Settings
               </button>
             </div>
           </form>

@@ -1,0 +1,79 @@
+<div class="checklist-container" [class.collapsed]="isCollapsed">
+  <div class="checklist-header" (click)="collapsible && toggleCollapse()">
+    <div class="header-content">
+      <h3 class="checklist-title">{{ title }}</h3>
+      <p class="checklist-subtitle" *ngIf="!isCollapsed">{{ subtitle }}</p>
+
+      <div class="progress-container" *ngIf="showProgress && !isCollapsed">
+        <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+        <span class="progress-text">{{ completedCount }} of {{ items.length }} completed</span>
+      </div>
+    </div>
+
+    <button
+      *ngIf="collapsible"
+      mat-icon-button
+      class="collapse-button"
+      [attr.aria-label]="isCollapsed ? 'Expand checklist' : 'Collapse checklist'"
+    >
+      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
+  </div>
+
+  <div class="checklist-content" *ngIf="!isCollapsed">
+    <div class="checklist-items">
+      <div *ngFor="let item of items" class="checklist-item" [class.completed]="item.completed">
+        <div class="item-checkbox">
+          <mat-checkbox
+            [checked]="item.completed"
+            [disabled]="item.completed"
+            (change)="markItemCompleted(item)"
+          >
+          </mat-checkbox>
+        </div>
+
+        <div class="item-content" (click)="handleItemClick(item)">
+          <div class="item-icon" *ngIf="item.icon">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </div>
+
+          <div class="item-text">
+            <h4 class="item-title">{{ item.title }}</h4>
+            <p class="item-description">{{ item.description }}</p>
+
+            <div class="item-reward" *ngIf="showRewards && item.reward">
+              <mat-icon *ngIf="item.reward.type === 'badge'">stars</mat-icon>
+              <mat-icon *ngIf="item.reward.type === 'points'">toll</mat-icon>
+              <mat-icon *ngIf="item.reward.type === 'feature'">lock_open</mat-icon>
+              <span class="reward-text">
+                {{
+                  item.reward.type === 'points' ? item.reward.value + ' points' : item.reward.value
+                }}
+              </span>
+            </div>
+          </div>
+
+          <div class="item-action">
+            <button
+              mat-button
+              color="primary"
+              *ngIf="item.route && !item.completed"
+              [routerLink]="item.route"
+            >
+              Go
+            </button>
+
+            <mat-icon *ngIf="item.completed" class="completed-icon">check_circle</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-footer" *ngIf="isAllCompleted">
+      <div class="completion-message">
+        <mat-icon>celebration</mat-icon>
+        <span>All tasks completed!</span>
+      </div>
+    </div>
+  </div>
+</div>

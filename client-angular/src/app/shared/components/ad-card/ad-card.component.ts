@@ -7,14 +7,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../../core/models/ad.interface';
+import { UserPreferencesService } from '../../../core/services/user-preferences.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ad-card',
@@ -30,7 +32,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatBadgeModule,
   ],
 })
-export class AdCardComponent {
+export class AdCardComponent implements OnInit, OnDestroy {
   @Input() ad!: Ad;
   @Input() layout: 'grid' | 'list' | 'compact' | 'netflix' | 'tinder' = 'grid';
   @Input() showActions = true;
@@ -45,6 +47,34 @@ export class AdCardComponent {
   @Output() like = new EventEmitter<string>();
   @Output() chat = new EventEmitter<string>();
   @Output() share = new EventEmitter<string>();
+
+  // User preference properties
+  cardSize: 'small' | 'medium' | 'large' = 'medium';
+  contentDensity: 'comfortable' | 'compact' | 'condensed' = 'comfortable';
+
+  private subscriptions: Subscription[] = [];
+
+  constructor(private userPreferencesService: UserPreferencesService) {}
+
+  ngOnInit(): void {
+    // Load initial preferences
+    const preferences = this.userPreferencesService.getPreferences();
+    this.cardSize = preferences.cardSize;
+    this.contentDensity = preferences.contentDensity;
+
+    // Subscribe to preference changes
+    this.subscriptions.push(
+      this.userPreferencesService.preferences$.subscribe(prefs => {
+        this.cardSize = prefs.cardSize;
+        this.contentDensity = prefs.contentDensity;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 
   /**
    * Get the primary image URL for the ad
@@ -117,10 +147,25 @@ export class AdCardComponent {
   }
 
   /**
-   * Get a truncated description
+   * Get a truncated description based on content density
    */
-  getTruncatedDescription(maxLength = 120): string {
+  getTruncatedDescription(): string {
     if (!this.ad.description) return '';
+
+    // Set max length based on content density
+    let maxLength = 120;
+
+    switch (this.contentDensity) {
+      case 'comfortable':
+        maxLength = 120;
+        break;
+      case 'compact':
+        maxLength = 80;
+        break;
+      case 'condensed':
+        maxLength = 40;
+        break;
+    }
 
     if (this.ad.description.length <= maxLength) {
       return this.ad.description;

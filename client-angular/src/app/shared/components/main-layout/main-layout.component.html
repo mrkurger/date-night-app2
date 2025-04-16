@@ -57,6 +57,12 @@
               <span *ngIf="!isMenuCollapsed">Settings</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/preferences-demo">
+              <i class="fas fa-sliders-h"></i>
+              <span *ngIf="!isMenuCollapsed">Preferences Demo</span>
+            </a>
+          </li>
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/my-ads">
               <i class="fas fa-ad"></i>
@@ -85,8 +91,29 @@
       </nav>
 
       <div class="sidebar-footer" *ngIf="!isMenuCollapsed">
+        <div class="theme-toggle-container">
+          <app-theme-toggle
+            mode="toggle"
+            label="Dark Mode"
+            labelPosition="left"
+            ariaLabel="Toggle dark mode"
+          ></app-theme-toggle>
+        </div>
         <a class="upgrade-link" routerLink="/upgrade">
           <i class="fas fa-crown"></i> Upgrade to Premium
+        </a>
+      </div>
+
+      <!-- Collapsed sidebar footer with just icons -->
+      <div class="sidebar-footer sidebar-footer--collapsed" *ngIf="isMenuCollapsed">
+        <app-theme-toggle mode="icon-only" ariaLabel="Toggle dark mode"></app-theme-toggle>
+        <a
+          class="upgrade-link upgrade-link--collapsed"
+          routerLink="/upgrade"
+          aria-label="Upgrade to Premium"
+          title="Upgrade to Premium"
+        >
+          <i class="fas fa-crown"></i>
         </a>
       </div>
     </div>
