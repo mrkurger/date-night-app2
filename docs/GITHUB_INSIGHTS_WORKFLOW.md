@@ -66,13 +66,24 @@ The second approach uses git commands and shell scripts to gather information ab
 
 ## Setting Up the Workflows
 
-Both workflows are already configured in the repository. If you encounter permission issues with the first approach, you can disable it and rely on the alternative approach:
+Three workflows are available in the repository:
+
+1. **Sync GitHub Insights** (Original): Uses GitHub API but may encounter permission issues
+2. **Sync GitHub Insights (Fixed)**: An improved version of the original with better error handling
+3. **Sync GitHub Insights (Alternative)**: Uses git commands instead of the GitHub API
+
+If you encounter permission issues with the first approach:
 
 1. Go to your GitHub repository
 2. Navigate to **Actions** > **Sync GitHub Insights**
 3. Click the three dots menu (⋮) and select **Disable workflow**
-4. Then go to **Sync GitHub Insights (Alternative)**
+4. Then go to **Sync GitHub Insights (Fixed)** or **Sync GitHub Insights (Alternative)**
 5. If it's disabled, click **Enable workflow**
+
+We recommend trying the workflows in this order:
+
+1. First try **Sync GitHub Insights (Fixed)** as it provides the most comprehensive information if permissions are available
+2. If that fails, use **Sync GitHub Insights (Alternative)** which works without special permissions
 
 ## Customizing the Reports
 
