@@ -10,7 +10,7 @@
 // ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -100,7 +100,8 @@ export class TinderComponent implements OnInit {
     private notificationService: NotificationService,
     private chatService: ChatService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     // Initialize filter form
     this.filterForm = this.fb.group({
@@ -236,7 +237,7 @@ export class TinderComponent implements OnInit {
    */
   viewAdDetails(): void {
     if (!this.currentAd) return;
-    window.location.href = `/ad-details/${this.currentAd._id}`;
+    this.router.navigateByUrl(`/ad-details/${this.currentAd._id}`);
   }
 
   /**
@@ -252,7 +253,7 @@ export class TinderComponent implements OnInit {
 
     this.chatService.createAdRoom(this.currentAd._id).subscribe({
       next: (room) => {
-        window.location.href = `/chat/${room._id}`;
+        this.router.navigateByUrl(`/chat/${room._id}`);
       },
       error: (err) => {
         this.notificationService.error('Failed to start chat');
@@ -272,7 +273,11 @@ export class TinderComponent implements OnInit {
       return [{ url: '/assets/images/default-profile.jpg', type: 'image' }];
     }
     
-    return ad.media;
+    // Convert ad.media to TinderCardMedia format
+    return ad.media.map(item => ({
+      url: item.url,
+      type: item.type === 'image' || item.type === 'video' ? item.type : 'image'
+    }));
   }
 
   /**

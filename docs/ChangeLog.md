@@ -1,5 +1,146 @@
 # Change Log
 
+## 2025-04-19: Documentation Improvements
+
+### Documentation Updates
+
+1. **README.md**
+   - Added comprehensive table of contents
+   - Organized documentation links by category
+   - Added links to all documentation files in the project
+   - Added descriptions for each documentation file
+
+2. **Table of Contents Improvements**
+   - Added or improved table of contents in UnitTestLessons.md, UnitTestingLessons.md, AILessons.md, CUSTOMIZATION_GUIDE.md, and CONFIG_INDEX.md
+   - Ensured consistent formatting and structure across documentation files
+
+3. **New Documentation Files**
+   - Created DEPRECATED.md to document deprecated code
+   - Created DUPLICATES.md to document code duplication
+   - Created documentation-improvements.md to summarize documentation improvements
+
+4. **Customization System Updates**
+   - Ran update_customization_headers.py to ensure all relevant files have proper customization headers
+   - Ran update_config_index.py to update the configuration index
+   - Updated CONFIG_INDEX.md to ensure its table of contents is complete
+
+### Improvements
+
+1. **Documentation Organization**
+   - Improved organization and structure of documentation
+   - Made documentation more accessible and easier to navigate
+   - Ensured consistent formatting and style across documentation files
+
+2. **Customization Documentation**
+   - Improved documentation for the customization system
+   - Made it easier to find and modify configuration settings
+   - Ensured all customizable settings are properly documented
+
+## 2025-04-18: Unit Testing Strategy Updates
+
+### Documentation Updates
+
+1. **UnitStrat.md**
+   - Added new section on "Common Testing Issues and Solutions"
+   - Added subsections for Angular Component Testing Issues, Server-Side Testing Issues, and Test Maintenance Issues
+   - Added new section on "Angular Component Test Automation"
+   - Added best practices for "Defensive Programming in Tests" and "Component Null Handling"
+   - Updated General Best Practices to include Interface Changes
+   - Reorganized document structure for better readability
+
+### Improvements
+
+1. **Testing Documentation**
+   - Incorporated lessons learned from recent testing efforts
+   - Added code examples for common testing patterns
+   - Added solutions for SCSS import issues, component dependencies, and service mocking
+   - Added guidance on handling asynchronous testing and interface changes
+
+## 2025-04-16: Ad Interface and Component Test Fixes
+
+### Fixed Issues
+
+1. **Ad Interface Updates in Tests**
+   - Updated mock Ad data in tinder.component.spec.ts to match the new Ad interface
+   - Updated mock Ad data in advertiser-profile.component.spec.ts to match the new Ad interface
+   - Updated getCardMedia method in tinder.component.ts to properly handle the new Ad interface
+
+2. **Component Dependencies**
+   - Fixed import path for MainLayoutComponent in advertiser-profile.component.ts
+   - Added MockMainLayoutComponent to tinder.component.spec.ts, advertiser-profile.component.spec.ts, and user-settings.component.spec.ts to fix dependency issues
+
+3. **SCSS Import Issues**
+   - Created mock SCSS files (variables.scss and mixins.scss) to fix SCSS import issues
+   - Fixed SCSS import paths in tinder.component.scss
+
+### Documentation Updates
+
+1. **UnitTestLessons.md**
+   - Created new document to capture lessons learned from unit testing
+   - Added sections on interface updates, component dependencies, and SCSS issues
+   - Documented best practices for mocking components and services
+
+### Identified Issues
+
+1. **Build Failures**
+   - Missing dependencies (angularx-qrcode) causing build failures
+   - SCSS import conflicts in the build environment
+   - Component dependency issues in the EmeraldModule
+
+## 2025-04-16: Auth Service and AppCardComponent Test Fixes
+
+### Fixed Issues
+
+1. **Auth Service Error Messages**
+   - Fixed error message in `authenticate` method to match test expectations (changed "Invalid credentials" to "Invalid password")
+   - Updated `validateRefreshToken` method to properly propagate "User not found" errors
+   - All server-side tests now pass successfully
+
+2. **AppCardComponent Null Handling**
+   - Added null checks throughout the AppCardComponent to handle undefined ad objects
+   - Updated all methods to check for ad existence before accessing properties
+   - Fixed ngOnInit to handle the case when ad is undefined
+   - Added defensive programming to prevent "Cannot read properties of undefined" errors
+
+### Documentation Updates
+
+1. **CHANGELOG.md**
+   - Added documentation of auth service fixes
+   - Added documentation of AppCardComponent fixes
+
+## 2025-04-17: Backend and Frontend Fixes
+
+### Fixed Issues
+
+1. **CSP Middleware Implementation**
+   - Fixed the Content Security Policy middleware implementation in `server/middleware/csp.middleware.js`
+   - Updated CSP configuration to properly support Angular components and Emerald UI
+   - Added support for docs-emerald.condorlabs.io in CSP directives
+
+2. **Auth Service Test Issues**
+   - Fixed error message mismatch in auth.service.js (changed "Invalid password" to "Invalid credentials")
+   - Fixed refreshToken test method name to match implementation
+   - Simplified mock implementation for User.findOne in register tests
+
+3. **Angular Component Issues**
+   - Added missing imports to CardGridComponent (AppCardComponent, SkeletonLoaderComponent)
+   - Added missing methods to CardGridComponent (handleCardClick, handleActionClick)
+   - Fixed component property binding issues
+
+4. **User Model Schema**
+   - Added firstName and lastName fields to User model schema to match test expectations
+   - Ensured backward compatibility with existing code
+
+5. **Mongoose Schema Warnings**
+   - Fixed duplicate schema indexes in token-blacklist.model.js
+   - Moved index definitions into schema field definitions
+
+### Documentation Updates
+
+1. **CHANGELOG.md**
+   - Added detailed documentation of all fixes
+   - Categorized changes by component and issue type
+
 ## 2025-04-16: Unit Testing Fixes (Part 2)
 
 ### Fixed Issues

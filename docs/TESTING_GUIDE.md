@@ -120,13 +120,14 @@ Angular tests use Karma, which is configured in `client-angular/karma.conf.js`.
    - Test form validation
    - Test user interactions
    - Test component state changes
+   - Test navigation using Angular Router instead of direct window.location.href manipulation
 
 2. **Service Tests**
    - Test API interactions
    - Test state management
    - Test error handling
 
-> **Note:** For detailed Angular testing patterns, common issues, and solutions, refer to [ANGULAR_TESTING_LESSONS.md](./ANGULAR_TESTING_LESSONS.md)
+> **Note:** For detailed Angular testing patterns, common issues, and solutions, refer to [UnitTestingLessons.md](./UnitTestingLessons.md)
 
 ## Test Helpers and Utilities
 

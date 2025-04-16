@@ -2,7 +2,97 @@
 
 This document contains lessons learned by the AI while working on the Date Night App project.
 
+## Table of Contents
+
+- [Backend Testing](#backend-testing)
+  - [Mongoose Schema Testing](#mongoose-schema-testing)
+  - [Content Security Policy (CSP)](#content-security-policy-csp)
+- [Angular Testing](#angular-testing)
+  - [Component Dependencies](#component-dependencies)
+  - [Standalone Components](#standalone-components)
+  - [SCSS Variables](#scss-variables)
+- [Angular Router Testing](#angular-router-testing)
+- [HTTP Service Testing](#http-service-testing)
+- [Debugging Strategies](#debugging-strategies)
+
+## Backend Testing
+
+### Mongoose Schema Testing
+
+1. **Schema Field Validation**: When testing Mongoose models, ensure that the test data matches the schema definition. If tests expect fields like `firstName` and `lastName` but the schema only has `name`, either update the schema or modify the tests.
+
+2. **Duplicate Indexes**: Avoid defining the same index multiple times. If you're seeing warnings about duplicate indexes, consider:
+   - Defining indexes directly in the schema field with `index: true`
+   - Removing duplicate `schema.index()` calls
+   - Using compound indexes when appropriate
+
+3. **Test Data Consistency**: Ensure test data in helper files matches the model schema. Check files like `helpers.js` that define test data constants.
+
+### Content Security Policy (CSP)
+
+1. **Middleware Implementation**: When implementing CSP middleware, ensure the function returns the middleware directly:
+
+```javascript
+// CORRECT
+const cspMiddleware = () => {
+  return (req, res, next) => {
+    // Set headers
+    next();
+  };
+};
+
+// INCORRECT
+const cspMiddleware = () => {
+  const middleware = (req, res, next) => {
+    // Set headers
+    next();
+  };
+  return middleware;
+};
+```
+
+2. **Angular CSP Requirements**: Angular applications need specific CSP directives:
+   - `'unsafe-inline'` for styles (Angular uses inline styles)
+   - `'unsafe-eval'` for development (Angular JIT compilation)
+   - Hash or nonce for inline scripts in production
+
+3. **External Resources**: If your application uses external resources (like UI libraries), add their domains to the appropriate CSP directives.
+
 ## Angular Testing
+
+### Component Dependencies
+
+1. **Missing Component Imports**: When using standalone components, ensure all components used in the template are properly imported:
+
+```typescript
+@Component({
+  // ...
+  standalone: true,
+  imports: [
+    CommonModule,
+    ComponentUsedInTemplate, // Don't forget this!
+    AnotherComponentUsedInTemplate
+  ]
+})
+```
+
+2. **Missing Methods**: If your template references methods that don't exist in the component class, add them:
+
+```typescript
+// If your template has (click)="handleCardClick(item.id)"
+handleCardClick(id: string): void {
+  // Implementation
+}
+```
+
+3. **Component Property Binding**: Ensure all properties bound in the template are defined in the component class:
+
+```typescript
+// If your template has [layout]="cardLayout"
+get cardLayout(): string {
+  return this.layout === 'netflix' ? 'netflix' : 'default';
+}
+```
 
 ### Standalone Components
 
@@ -112,6 +202,33 @@ providers: [
   { provide: AuthService, useValue: mockAuthService },
   { provide: Router, useValue: mockRouter } // Don't do this!
 ]
+```
+
+4. **Use Angular Router Instead of window.location.href**: When implementing navigation in components, use Angular Router instead of direct window.location.href manipulation to make testing easier:
+
+```typescript
+// PROBLEMATIC - Hard to test because it causes page reloads in tests
+viewAdDetails(adId: string): void {
+  window.location.href = `/ad-details/${adId}`;
+}
+
+// BETTER - Use Angular Router for easier testing
+constructor(private router: Router) {}
+
+viewAdDetails(adId: string): void {
+  this.router.navigateByUrl(`/ad-details/${adId}`);
+}
+
+// In tests, spy on router.navigateByUrl
+beforeEach(() => {
+  router = TestBed.inject(Router);
+  spyOn(router, 'navigateByUrl').and.stub();
+});
+
+it('should navigate to ad details', () => {
+  component.viewAdDetails('123');
+  expect(router.navigateByUrl).toHaveBeenCalledWith('/ad-details/123');
+});
 ```
 
 ## HTTP Service Testing

@@ -23,7 +23,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'emerald-floating-action-button',
   templateUrl: './floating-action-button.component.html',
-  styleUrls: ['./floating-action-button.component.scss']
+  styleUrls: ['./floating-action-button.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class FloatingActionButtonComponent {
   /**

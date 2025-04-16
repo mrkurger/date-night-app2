@@ -2,6 +2,17 @@
 
 This document contains lessons learned from unit testing the Date Night App project.
 
+## Table of Contents
+
+- [Angular Component Testing](#angular-component-testing)
+  - [Standalone Components](#standalone-components)
+  - [SCSS in Component Tests](#scss-in-component-tests)
+- [Service Testing](#service-testing)
+- [Angular Component Testing](#angular-component-testing-1)
+  - [Defensive Programming](#defensive-programming)
+- [Backend Testing Tips](#backend-testing-tips)
+- [General Testing Tips](#general-testing-tips)
+
 ## Angular Component Testing
 
 ### Standalone Components
@@ -109,6 +120,33 @@ providers: [
 ]
 ```
 
+7. **Handling window.location.href in Tests**: When testing components that use direct window.location.href navigation, use Angular Router instead to make testing easier:
+
+```typescript
+// PROBLEMATIC - Hard to test because it causes page reloads in tests
+viewAdDetails(adId: string): void {
+  window.location.href = `/ad-details/${adId}`;
+}
+
+// BETTER - Use Angular Router for easier testing
+constructor(private router: Router) {}
+
+viewAdDetails(adId: string): void {
+  this.router.navigateByUrl(`/ad-details/${adId}`);
+}
+
+// In tests, spy on router.navigateByUrl
+beforeEach(() => {
+  router = TestBed.inject(Router);
+  spyOn(router, 'navigateByUrl').and.stub();
+});
+
+it('should navigate to ad details', () => {
+  component.viewAdDetails('123');
+  expect(router.navigateByUrl).toHaveBeenCalledWith('/ad-details/123');
+});
+```
+
 ### SCSS in Component Tests
 
 When testing components with SCSS:
@@ -159,6 +197,71 @@ service.uploadMedia(mockAdId, mockFile).subscribe({
   complete: () => fail('Expected error, not complete') // This might fail unexpectedly
 });
 ```
+
+## Angular Component Testing
+
+### Defensive Programming
+
+1. **Null Checks**: Always add null checks in component methods to handle cases where inputs might be undefined:
+
+```typescript
+// INCORRECT - Will cause "Cannot read properties of undefined" in tests
+getPrimaryImage(): string {
+  return this.ad.images[0];
+}
+
+// CORRECT - Handles undefined inputs gracefully
+getPrimaryImage(): string {
+  if (!this.ad || !this.ad.images || this.ad.images.length === 0) {
+    return '/assets/img/default-profile.jpg';
+  }
+  return this.ad.images[0];
+}
+```
+
+2. **Event Handlers**: Add null checks in event handlers to prevent errors when component properties are undefined:
+
+```typescript
+// INCORRECT - Will cause errors if this.ad is undefined
+onViewDetails(event?: Event): void {
+  if (event) event.stopPropagation();
+  this.viewDetails.emit(this.ad._id);
+}
+
+// CORRECT - Checks if this.ad exists before accessing properties
+onViewDetails(event?: Event): void {
+  if (event) event.stopPropagation();
+  if (this.ad && this.ad._id) {
+    this.viewDetails.emit(this.ad._id);
+  }
+}
+```
+
+3. **Initialization**: Handle undefined inputs in ngOnInit to prevent template binding errors:
+
+```typescript
+// INCORRECT - Will cause errors if this.ad is undefined
+ngOnInit(): void {
+  this.backgroundImageUrl = this.getPrimaryImage();
+}
+
+// CORRECT - Handles the case when this.ad is undefined
+ngOnInit(): void {
+  if (this.ad) {
+    this.backgroundImageUrl = this.getPrimaryImage();
+  } else {
+    this.backgroundImageUrl = '/assets/img/default-profile.jpg';
+  }
+}
+```
+
+## Backend Testing Tips
+
+1. **Error Message Consistency**: Ensure error messages in the code match exactly what's expected in tests. Inconsistencies between error messages in implementation and tests are a common source of test failures.
+
+2. **Error Propagation**: When catching and re-throwing errors, be careful about preserving specific error types or messages that tests might be expecting. Consider checking the original error message before deciding what to throw.
+
+3. **Mock Implementation**: When mocking database models or external services, ensure the mock implementation returns objects with the same structure and methods as the real implementation.
 
 ## General Testing Tips
 

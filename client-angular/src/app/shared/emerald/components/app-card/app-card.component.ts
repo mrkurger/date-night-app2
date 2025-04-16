@@ -49,17 +49,29 @@ export class AppCardComponent implements OnInit {
   constructor() { }
   
   ngOnInit(): void {
-    this.backgroundImageUrl = this.getPrimaryImage();
+    // Only set the background image if the ad is defined
+    if (this.ad) {
+      this.backgroundImageUrl = this.getPrimaryImage();
+    } else {
+      this.backgroundImageUrl = '/assets/img/default-profile.jpg';
+    }
   }
   
   /**
    * Get the primary image URL for the ad
    */
   getPrimaryImage(): string {
+    // Check if ad is defined
+    if (!this.ad) {
+      return '/assets/img/default-profile.jpg';
+    }
+    
+    // Check for images array
     if (this.ad.images && this.ad.images.length > 0) {
       return this.ad.images[0];
     }
     
+    // Check for media array
     if (this.ad.media && this.ad.media.length > 0) {
       const image = this.ad.media.find(m => m.type === 'image');
       if (image) {
@@ -74,11 +86,18 @@ export class AppCardComponent implements OnInit {
    * Get the current media URL for the carousel
    */
   getCurrentMediaUrl(): string {
-    if (this.ad.media && this.ad.media.length > 0) {
+    // Check if ad is defined
+    if (!this.ad) {
+      return '/assets/img/default-profile.jpg';
+    }
+    
+    // Check for media array
+    if (this.ad.media && this.ad.media.length > 0 && this.currentMediaIndex < this.ad.media.length) {
       return this.ad.media[this.currentMediaIndex].url;
     }
     
-    if (this.ad.images && this.ad.images.length > 0) {
+    // Check for images array
+    if (this.ad.images && this.ad.images.length > 0 && this.currentMediaIndex < this.ad.images.length) {
       return this.ad.images[this.currentMediaIndex];
     }
     
@@ -90,6 +109,11 @@ export class AppCardComponent implements OnInit {
    */
   nextMedia(event: Event): void {
     event.stopPropagation();
+    
+    // Check if ad is defined
+    if (!this.ad) {
+      return;
+    }
     
     if (this.ad.media && this.ad.media.length > 0) {
       this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.media.length;
@@ -106,6 +130,11 @@ export class AppCardComponent implements OnInit {
   prevMedia(event: Event): void {
     event.stopPropagation();
     
+    // Check if ad is defined
+    if (!this.ad) {
+      return;
+    }
+    
     if (this.ad.media && this.ad.media.length > 0) {
       this.currentMediaIndex = (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
@@ -119,6 +148,11 @@ export class AppCardComponent implements OnInit {
    * Get the total number of media items
    */
   getMediaCount(): number {
+    // Check if ad is defined
+    if (!this.ad) {
+      return 0;
+    }
+    
     if (this.ad.media && this.ad.media.length > 0) {
       return this.ad.media.length;
     }
@@ -165,7 +199,10 @@ export class AppCardComponent implements OnInit {
    * For maxLength=10, it returns "This is a ..."
    */
   getTruncatedDescription(maxLength: number = 120): string {
-    if (!this.ad.description) return '';
+    // Check if ad is defined
+    if (!this.ad || !this.ad.description) {
+      return '';
+    }
     
     if (this.ad.description.length <= maxLength) {
       return this.ad.description;
@@ -192,7 +229,9 @@ export class AppCardComponent implements OnInit {
    */
   onViewDetails(event?: Event): void {
     if (event) event.stopPropagation();
-    this.viewDetails.emit(this.ad._id);
+    if (this.ad && this.ad._id) {
+      this.viewDetails.emit(this.ad._id);
+    }
   }
   
   /**
@@ -200,7 +239,9 @@ export class AppCardComponent implements OnInit {
    */
   onLike(event: Event): void {
     event.stopPropagation();
-    this.like.emit(this.ad._id);
+    if (this.ad && this.ad._id) {
+      this.like.emit(this.ad._id);
+    }
   }
   
   /**
@@ -208,7 +249,9 @@ export class AppCardComponent implements OnInit {
    */
   onChat(event: Event): void {
     event.stopPropagation();
-    this.chat.emit(this.ad._id);
+    if (this.ad && this.ad._id) {
+      this.chat.emit(this.ad._id);
+    }
   }
   
   /**
@@ -216,7 +259,9 @@ export class AppCardComponent implements OnInit {
    */
   onShare(event: Event): void {
     event.stopPropagation();
-    this.share.emit(this.ad._id);
+    if (this.ad && this.ad._id) {
+      this.share.emit(this.ad._id);
+    }
   }
   
   /**
@@ -224,6 +269,8 @@ export class AppCardComponent implements OnInit {
    */
   onSwipe(direction: 'left' | 'right', event?: Event): void {
     if (event) event.stopPropagation();
-    this.swiped.emit({ direction, adId: this.ad._id });
+    if (this.ad && this.ad._id) {
+      this.swiped.emit({ direction, adId: this.ad._id });
+    }
   }
 }

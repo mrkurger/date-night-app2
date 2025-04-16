@@ -64,6 +64,11 @@ class AuthService {
 
       return user;
     } catch (error) {
+      // If the error is already 'User not found', rethrow it
+      if (error.message === 'User not found') {
+        throw error;
+      }
+      // Otherwise, throw the generic invalid token error
       throw new Error('Invalid refresh token');
     }
   }

@@ -1,5 +1,25 @@
 # DateNight.io - Advertisement Platform
 
+## Table of Contents
+
+- [Description](#description)
+  - [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [Technology Stack](#technology-stack)
+- [Setup and Installation](#setup-and-installation)
+- [Customization System](#customization-system)
+- [Feature Roadmap & Status](#feature-roadmap--status)
+- [Development Roadmap](#development-roadmap)
+- [OAuth Setup Instructions](#oauth-setup-instructions)
+- [TODOs Summary](#todos-summary)
+- [Documentation](#documentation)
+  - [Project Documentation](#project-documentation)
+  - [Development Guides](#development-guides)
+  - [Testing Documentation](#testing-documentation)
+  - [UI/UX Documentation](#uiux-documentation)
+  - [Customization Documentation](#customization-documentation)
+  - [Lessons Learned](#lessons-learned)
+
 ## Description
 
 DateNight.io is a platform offering classified advertisements primarily focused on Escort, Striptease, and Massage services, initially targeting the Scandinavian market with a focus on Norway. The platform connects service providers (advertisers) with users (seekers), incorporating modern web application features like real-time chat, location-based searching, and multiple browsing interfaces.
@@ -515,7 +535,70 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - Enhance error handling in HTTP interceptors
 - Review and update static asset paths and environment configurations
 
+## Documentation
+
+This section provides links to all documentation files in the project, organized by category.
+
+### Project Documentation
+
+- [ChangeLog.md](docs/ChangeLog.md) - History of changes to the project
+- [Requirements.md](docs/requirements.md) - Project requirements and specifications
+- [Task List](docs/task-list.md) - Current tasks and their status
+- [Completion Plan 2024](docs/completion-plan-2024.md) - Plan for completing the project in 2024
+- [Migration Completion Plan](docs/migration-completion-plan.md) - Plan for completing the Angular migration
+- [Implementation Plan](docs/implementation-plan.md) - General implementation plan
+- [Deprecated Code](docs/DEPRECATED.md) - List of deprecated code that should be avoided
+- [Code Duplication](docs/DUPLICATES.md) - List of code duplication that should be refactored
+- [Documentation Improvements](docs/documentation-improvements.md) - Summary of documentation improvements
+
+### Development Guides
+
+- [Setup Guide](SETUP.md) - Guide for setting up the development environment
+- [Node.js Installation Guide](nodejs-installation-guide.md) - Guide for installing Node.js
+- [Specific Version Installation Guide](specific-version-installation-guide.md) - Guide for installing specific versions of Node.js
+- [MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.md) - Guide for troubleshooting MongoDB issues
+
+### Testing Documentation
+
+- [Testing Guide](docs/TESTING_GUIDE.md) - General testing strategy and guidelines
+- [Angular Testing Lessons](docs/ANGULAR_TESTING_LESSONS.md) - Lessons learned from Angular testing
+- [Unit Testing Lessons](docs/UnitTestLessons.md) - Lessons learned from unit testing
+- [Unit Testing Strategy](docs/UnitStrat.md) - Strategy for unit testing
+- [Example Unit Strategy](docs/Example_UnitStrat.md) - Example of a unit testing strategy
+- [Frontend Testing Review](FRONTEND_TESTING_REVIEW.md) - Review of frontend testing
+- [Testing Improvements](TESTING_IMPROVEMENTS.md) - Improvements to testing
+
+### UI/UX Documentation
+
+- [UI/UX Roadmap](docs/ui-ux-roadmap.md) - Roadmap for UI/UX improvements
+- [UI/UX Implementation](docs/ui-ux-implementation.md) - Implementation details for UI/UX
+- [UI/UX Improvement Summary](docs/ui-ux-improvement-summary.md) - Summary of UI/UX improvements
+- [UI/UX Completion Report](docs/ui-ux-completion-report.md) - Report on UI/UX completion
+- [UI Components Technical](docs/ui-components-technical.md) - Technical details of UI components
+- [Styling Guide](docs/styling-guide.md) - Guide for styling components
+
+### Customization Documentation
+
+- [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Guide for using the customization system
+- [Configuration Index](docs/CONFIG_INDEX.md) - Index of all customizable settings
+- [CSP Configuration](docs/csp-configuration.md) - Guide for configuring Content Security Policy
+
+### Emerald Component Documentation
+
+- [Emerald Components](docs/emerald-components.md) - Documentation for Emerald UI components
+- [Emerald Components Changelog](docs/emerald-components-changelog.md) - Changelog for Emerald components
+- [Emerald Implementation Plan](docs/emerald-implementation-plan.md) - Plan for implementing Emerald components
+- [Emerald Implementation Report](docs/emerald-implementation-report.md) - Report on Emerald implementation
+- [Emerald Implementation Summary](docs/emerald-implementation-summary.md) - Summary of Emerald implementation
+- [Emerald Testing Guide](docs/emerald-testing-guide.md) - Guide for testing Emerald components
+
+### Lessons Learned
+
+- [AI Lessons](docs/AILessons.md) - Lessons learned by the AI while working on the project
+- [Unit Testing Lessons](docs/UnitTestingLessons.md) - Comprehensive lessons learned from unit testing
+
 ## Progress Tracking
+
 - Current Status: Early Development/Refactoring
 - Next Milestone: Complete Core Infrastructure
 - Priority: Security & Authentication
@@ -524,6 +607,6 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 
 - Refactor monolithic controllers (e.g. in client/app.module.js) into feature-specific modules.
 - Clean up and properly populate the custom Express middleware under the /middleware directory.
-- Split and modularize AngularJS components for authentication, ad management, and chat.
-- Enhance error handling in $http interceptors.
+- Split and modularize Angular components for authentication, ad management, and chat.
+- Enhance error handling in HTTP interceptors.
 - Review and update static asset paths and environment configurations.

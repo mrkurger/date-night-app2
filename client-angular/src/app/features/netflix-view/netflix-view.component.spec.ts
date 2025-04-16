@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { NetflixViewComponent } from './netflix-view.component';
 import { AdService } from '../../core/services/ad.service';
@@ -101,6 +102,7 @@ describe('NetflixViewComponent', () => {
   let notificationService: NotificationService;
   let chatService: ChatService;
   let authService: AuthService;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -132,6 +134,10 @@ describe('NetflixViewComponent', () => {
     notificationService = TestBed.inject(NotificationService);
     chatService = TestBed.inject(ChatService);
     authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
+    
+    // Spy on router navigation
+    spyOn(router, 'navigateByUrl').and.stub();
   });
 
   it('should create', () => {
@@ -193,17 +199,10 @@ describe('NetflixViewComponent', () => {
     });
 
     it('should navigate to ad details when viewAdDetails is called', () => {
-      // Create a spy object for window.location
-      const locationSpy = jasmine.createSpyObj('location', [], {
-        href: ''
-      });
-      
-      // Replace window.location with the spy
-      spyOnProperty(window, 'location', 'get').and.returnValue(locationSpy);
-      
       component.viewAdDetails('1');
       
-      expect(locationSpy.href).toBe('/ad-details/1');
+      // Check that router.navigateByUrl was called with the correct URL
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/ad-details/1');
     });
 
     it('should like an ad when likeAd is called', () => {
@@ -228,18 +227,10 @@ describe('NetflixViewComponent', () => {
     it('should start chat when startChat is called', () => {
       spyOn(chatService, 'createAdRoom').and.callThrough();
       
-      // Create a spy object for window.location
-      const locationSpy = jasmine.createSpyObj('location', [], {
-        href: ''
-      });
-      
-      // Replace window.location with the spy
-      spyOnProperty(window, 'location', 'get').and.returnValue(locationSpy);
-      
       component.startChat('1');
       
       expect(chatService.createAdRoom).toHaveBeenCalledWith('1');
-      expect(locationSpy.href).toBe('/chat/chat-room-1');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/chat/chat-room-1');
     });
 
     it('should show error notification when starting chat without authentication', () => {
@@ -363,13 +354,21 @@ describe('NetflixViewComponent', () => {
 
     it('should shuffle array correctly', () => {
       // This is a bit tricky to test since shuffling is random
-      // We'll just check that the array length remains the same
+      // We'll just check that the array length remains the same and contains the same elements
       const original = [1, 2, 3, 4, 5];
       const shuffled = component['shuffleArray'](original);
       
       expect(shuffled.length).toBe(original.length);
-      expect(shuffled).not.toEqual(original); // This might occasionally fail due to randomness
-      expect(shuffled.sort()).toEqual(original.sort());
+      
+      // Check that all elements from original are in shuffled
+      original.forEach(item => {
+        expect(shuffled).toContain(item);
+      });
+      
+      // Check that all elements from shuffled are in original
+      shuffled.forEach(item => {
+        expect(original).toContain(item);
+      });
     });
   });
 });

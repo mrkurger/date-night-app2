@@ -1,3 +1,13 @@
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (app-card.component)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LabelComponent } from '../components/label/label.component';
@@ -117,6 +127,9 @@ export class AppCardComponent {
    * Gets the visible tags based on the maxTags limit
    */
   get visibleTags(): string[] {
+    if (!this.tags) {
+      return [];
+    }
     return this.tags.slice(0, this.maxTags);
   }
 }

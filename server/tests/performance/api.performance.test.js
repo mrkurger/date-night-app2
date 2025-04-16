@@ -11,10 +11,8 @@
 // ===================================================
 
 const request = require('supertest');
-// Mock the database setup functions
-const setupTestDB = jest.fn().mockResolvedValue(true);
-const teardownTestDB = jest.fn().mockResolvedValue(true);
-const clearDatabase = jest.fn().mockResolvedValue(true);
+// Import the setup functions directly from the setup.js file in the parent directory
+const { setupTestDB, teardownTestDB, clearDatabase } = require('../setup');
 
 // Mock the user functions
 const TEST_USER_DATA = {

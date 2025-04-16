@@ -10,12 +10,12 @@
 // ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { MainLayoutComponent } from '../../shared/layouts/main-layout/main-layout.component';
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { Ad } from '../../core/models/ad.interface';
 
 @Component({
@@ -35,6 +35,7 @@ export class AdvertiserProfileComponent implements OnInit {
   
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private adService: AdService,
     private authService: AuthService,
     private notificationService: NotificationService,
@@ -157,7 +158,7 @@ export class AdvertiserProfileComponent implements OnInit {
         next: () => {
           this.notificationService.success('Ad deleted successfully');
           // Navigate to my ads page
-          window.location.href = '/my-ads';
+          this.router.navigateByUrl('/my-ads');
         },
         error: (err) => {
           this.error = 'Failed to delete ad';
@@ -173,7 +174,7 @@ export class AdvertiserProfileComponent implements OnInit {
     if (!this.ad) return;
     
     // Navigate to upgrade page with ad ID
-    window.location.href = `/upgrade?adId=${this.ad._id}`;
+    this.router.navigateByUrl(`/upgrade?adId=${this.ad._id}`);
   }
   
   getMediaUrl(index: number = 0): string {

@@ -1,5 +1,23 @@
 # Change Log
 
+## 2024-05-19
+
+### Fixed
+- Fixed Angular component tests with improved navigation testing
+  - Replaced direct window.location.href manipulation with Angular Router in NetflixViewComponent
+  - Updated tests to use router.navigateByUrl spies instead of window.location.href checks
+  - Fixed navigation tests for viewAdDetails and startChat methods
+  - Added proper Router injection in component constructor
+  - Updated documentation with best practices for testing navigation
+
+### Improved
+- Enhanced testing documentation with new lessons learned
+  - Updated UnitTestingLessons.md with section on handling window.location.href in tests
+  - Updated TESTING_GUIDE.md to recommend using Angular Router for navigation
+  - Added new entry to AILessons.md about navigation testing best practices
+  - Provided detailed code examples for proper navigation testing
+  - Added cross-references between related documentation files
+
 ## 2024-05-18
 
 ### Fixed

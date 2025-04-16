@@ -7,6 +7,15 @@
 // - MOCK_AD: Mock ad data for testing
 // - TEST_SCENARIOS: Test scenarios for component functionality
 // ===================================================
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (app-card.component.unit.spec)
+// 
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppCardComponent } from './app-card.component';
 import { CommonModule } from '@angular/common';

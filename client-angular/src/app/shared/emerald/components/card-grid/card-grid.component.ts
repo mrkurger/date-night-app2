@@ -12,6 +12,8 @@
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../../../core/models/ad.interface';
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { AppCardComponent } from '../app-card/app-card.component';
 
 /**
  * Emerald CardGrid Component
@@ -26,7 +28,7 @@ import { Ad } from '../../../../core/models/ad.interface';
   templateUrl: './card-grid.component.html',
   styleUrls: ['./card-grid.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, SkeletonLoaderComponent, AppCardComponent]
 })
 export class CardGridComponent {
   /**
@@ -119,5 +121,27 @@ export class CardGridComponent {
    */
   getSkeletonArray(): number[] {
     return Array(this.skeletonCount).fill(0).map((_, i) => i);
+  }
+  
+  /**
+   * Card layout for emerald-app-card
+   */
+  get cardLayout(): string {
+    return this.layout === 'netflix' ? 'netflix' : 'default';
+  }
+  
+  /**
+   * Handle card click event
+   */
+  handleCardClick(id: string): void {
+    // Prevent double click handling
+    event?.stopPropagation();
+  }
+  
+  /**
+   * Handle action click event
+   */
+  handleActionClick(event: any): void {
+    // Handle action click
   }
 }

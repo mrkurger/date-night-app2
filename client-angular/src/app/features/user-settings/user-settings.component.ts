@@ -10,7 +10,7 @@
 // ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -35,7 +35,8 @@ export class UserSettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -214,7 +215,7 @@ export class UserSettingsComponent implements OnInit {
           this.loading = false;
           this.notificationService.success('Your account has been deleted');
           // Redirect to home page
-          window.location.href = '/';
+          this.router.navigateByUrl('/');
         },
         error: (error) => {
           this.loading = false;

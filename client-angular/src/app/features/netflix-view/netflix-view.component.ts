@@ -12,7 +12,7 @@
 // ===================================================
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren, QueryList, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -86,7 +86,8 @@ export class NetflixViewComponent implements OnInit {
     private notificationService: NotificationService,
     private chatService: ChatService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -274,8 +275,8 @@ export class NetflixViewComponent implements OnInit {
    * @param adId The ID of the ad to view
    */
   viewAdDetails(adId: string): void {
-    // Navigate to ad details page
-    window.location.href = `/ad-details/${adId}`;
+    // Navigate to ad details page using Angular Router
+    this.router.navigateByUrl(`/ad-details/${adId}`);
   }
 
   /**
@@ -321,7 +322,7 @@ export class NetflixViewComponent implements OnInit {
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        window.location.href = `/chat/${room._id}`;
+        this.router.navigateByUrl(`/chat/${room._id}`);
       },
       error: (err) => {
         this.notificationService.error('Failed to start chat');
@@ -381,6 +382,10 @@ export class NetflixViewComponent implements OnInit {
    * @returns The URL of the first image or a default image
    */
   getMediaUrl(ad: Ad): string {
+    if (!ad) {
+      return '/assets/images/default-profile.jpg';
+    }
+    
     if (ad.images && ad.images.length > 0) {
       return ad.images[0];
     }

@@ -18,7 +18,8 @@ const tokenBlacklistSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   tokenType: {
     type: String,
@@ -28,7 +29,8 @@ const tokenBlacklistSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
   reason: {
     type: String,
@@ -46,9 +48,7 @@ const tokenBlacklistSchema = new mongoose.Schema({
   }
 });
 
-// Create indexes for faster lookups
-tokenBlacklistSchema.index({ token: 1 });
-tokenBlacklistSchema.index({ userId: 1 });
+// Indexes are defined in the schema fields
 
 // Static method to check if a token is blacklisted
 tokenBlacklistSchema.statics.isBlacklisted = async function(token) {

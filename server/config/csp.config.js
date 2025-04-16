@@ -26,10 +26,10 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // Base CSP directives used in both development and production
 const baseDirectives = {
   'default-src': ["'self'"],
-  'img-src': ["'self'", 'data:', 'blob:'],
-  'font-src': ["'self'", 'https://fonts.gstatic.com'],
-  'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-  'connect-src': ["'self'", 'ws:', 'wss:'],
+  'img-src': ["'self'", 'data:', 'blob:', 'https://docs-emerald.condorlabs.io'],
+  'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://docs-emerald.condorlabs.io'],
+  'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://docs-emerald.condorlabs.io'],
+  'connect-src': ["'self'", 'ws:', 'wss:', 'https://docs-emerald.condorlabs.io'],
   'frame-src': ["'self'"],
   'object-src': ["'none'"],
   'base-uri': ["'self'"],
@@ -46,13 +46,15 @@ const developmentDirectives = {
     "'self'", 
     "'unsafe-eval'", 
     "'unsafe-inline'", 
-    'https://cdn.jsdelivr.net'
+    'https://cdn.jsdelivr.net',
+    'https://docs-emerald.condorlabs.io'
   ],
   // More permissive connect-src for development tools
   'connect-src': [
     ...baseDirectives['connect-src'],
     'http://localhost:*',
-    'ws://localhost:*'
+    'ws://localhost:*',
+    'https://docs-emerald.condorlabs.io'
   ]
 };
 
@@ -60,7 +62,13 @@ const developmentDirectives = {
 const productionDirectives = {
   ...baseDirectives,
   // More restrictive script-src for production
-  'script-src': ["'self'", 'https://cdn.jsdelivr.net'],
+  'script-src': [
+    "'self'", 
+    'https://cdn.jsdelivr.net',
+    'https://docs-emerald.condorlabs.io',
+    // Allow Angular's inline scripts with nonces or hashes in production
+    "'sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'"
+  ],
   // Add report-uri for CSP violation reporting in production
   'report-uri': ['/api/v1/csp-report']
 };

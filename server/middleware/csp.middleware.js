@@ -35,8 +35,11 @@ const handleCspViolation = (req, res) => {
  * @returns {Function} Express middleware function
  */
 const cspMiddleware = () => {
-  // Create middleware function that can be used with app.use()
-  const middleware = (req, res, next) => {
+  // Log configuration on first use
+  logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
+  
+  // Return middleware function that can be used with app.use()
+  return (req, res, next) => {
     // Apply CSP headers based on configuration
     const headerName = cspConfig.reportOnly ? 
       'Content-Security-Policy-Report-Only' : 
@@ -57,11 +60,6 @@ const cspMiddleware = () => {
     
     next();
   };
-
-  // Log configuration on first use
-  logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
-  
-  return middleware;
 };
 
 // Add endpoint handler for CSP violation reports

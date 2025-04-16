@@ -79,6 +79,14 @@ if (mongoose.models.User) {
       required: true,
       minlength: 8
     },
+    firstName: {
+      type: String,
+      trim: true
+    },
+    lastName: {
+      type: String,
+      trim: true
+    },
     name: {
       type: String,
       trim: true

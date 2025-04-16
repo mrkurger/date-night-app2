@@ -41,9 +41,10 @@
     <!-- Content Overlay with Blur Effect -->
     <div class="emerald-app-card__content-overlay">
       <div class="emerald-app-card__content">
-        <h3 class="emerald-app-card__title">{{ ad.title }}</h3>
+        <h3 class="emerald-app-card__title" *ngIf="ad">{{ ad.title }}</h3>
+        <h3 class="emerald-app-card__title" *ngIf="!ad">Untitled</h3>
         
-        <div class="emerald-app-card__meta">
+        <div class="emerald-app-card__meta" *ngIf="ad">
           <div class="emerald-app-card__location" *ngIf="ad.location">
             <i class="fas fa-map-marker-alt"></i>
             <span>{{ ad.location }}</span>
@@ -55,7 +56,7 @@
           </div>
         </div>
         
-        <p class="emerald-app-card__description" *ngIf="showDescription && ad.description">
+        <p class="emerald-app-card__description" *ngIf="ad && showDescription && ad.description">
           {{ getTruncatedDescription() }}
         </p>
       </div>
