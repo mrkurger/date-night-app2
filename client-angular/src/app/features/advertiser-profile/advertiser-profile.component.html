@@ -38,7 +38,7 @@
               class="thumbnail-row"
               *ngIf="(ad.media && ad.media.length > 1) || (ad.images && ad.images.length > 1)"
             >
-              <div class="thumbnail" *ngFor="let media of ad.media || ad.images; let i = index">
+              <div class="thumbnail" *ngFor="let i of getMediaIndices(); let idx = index">
                 <img
                   [src]="getMediaUrl(i)"
                   [alt]="'Thumbnail ' + (i + 1)"

@@ -7,6 +7,7 @@
 
 // Color Palette
 // Primary colors - Main brand colors
+$primary-50: #f9f2ff; // Extra lightest
 $primary-100: #f2e6ff; // Lightest
 $primary-200: #d9b3ff;
 $primary-300: #bf80ff;
@@ -29,6 +30,7 @@ $secondary-800: #00803a;
 $secondary-900: #004d1f;
 
 // Neutral colors - For text, backgrounds, etc.
+$neutral-50: #fafafa; // Extra light gray
 $neutral-100: #ffffff; // White
 $neutral-200: #f5f5f5;
 $neutral-300: #e0e0e0;
@@ -41,20 +43,56 @@ $neutral-900: #212121; // Almost black
 
 // Semantic colors - For status, alerts, etc.
 $success: #4caf50;
-$success-light: #a5d6a7;
-$success-dark: #2e7d32;
+$success-100: #e8f5e9; // Lightest success
+$success-200: #c8e6c9;
+$success-300: #a5d6a7;
+$success-400: #81c784;
+$success-500: #66bb6a;
+$success-600: #4caf50; // Same as $success
+$success-700: #43a047;
+$success-800: #388e3c;
+$success-900: #2e7d32; // Same as $success-dark
+$success-light: #a5d6a7; // Kept for backward compatibility
+$success-dark: #2e7d32; // Kept for backward compatibility
 
 $warning: #ffc107;
-$warning-light: #ffe082;
-$warning-dark: #ffa000;
+$warning-100: #fff8e1; // Lightest warning
+$warning-200: #ffecb3;
+$warning-300: #ffe082;
+$warning-400: #ffd54f;
+$warning-500: #ffca28;
+$warning-600: #ffc107; // Same as $warning
+$warning-700: #ffb300;
+$warning-800: #ffa000;
+$warning-900: #ff8f00;
+$warning-light: #ffe082; // Kept for backward compatibility
+$warning-dark: #ffa000; // Kept for backward compatibility
 
 $error: #f44336;
-$error-light: #ef9a9a;
-$error-dark: #c62828;
+$error-100: #ffebee; // Lightest error
+$error-200: #ffcdd2;
+$error-300: #ef9a9a;
+$error-400: #e57373;
+$error-500: #ef5350;
+$error-600: #f44336; // Same as $error
+$error-700: #e53935;
+$error-800: #d32f2f;
+$error-900: #c62828; // Same as $error-dark
+$error-light: #ef9a9a; // Kept for backward compatibility
+$error-dark: #c62828; // Kept for backward compatibility
 
 $info: #2196f3;
-$info-light: #90caf9;
-$info-dark: #1565c0;
+$info-100: #e3f2fd; // Lightest info
+$info-200: #bbdefb;
+$info-300: #90caf9;
+$info-400: #64b5f6;
+$info-500: #42a5f5;
+$info-600: #2196f3; // Same as $info
+$info-700: #1e88e5;
+$info-800: #1976d2;
+$info-900: #1565c0; // Same as $info-dark
+$info-light: #90caf9; // Kept for backward compatibility
+$info-dark: #1565c0; // Kept for backward compatibility
 
 // Typography
 // Font families

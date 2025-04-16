@@ -115,8 +115,34 @@ export class AdDetailsComponent implements OnInit {
   startChat(): void {
     if (this.ad) {
       // Navigate to chat with the advertiser
-      this.router.navigate(['/chat', this.ad.advertiser]);
+      const advertiserId =
+        typeof this.ad.advertiser === 'object' ? this.ad.advertiser.username : this.ad.advertiser;
+      this.router.navigate(['/chat', advertiserId]);
     }
+  }
+
+  getAdvertiserInitial(ad: Ad): string {
+    if (!ad || !ad.advertiser) {
+      return 'U';
+    }
+
+    if (typeof ad.advertiser === 'object') {
+      return ad.advertiser.username.charAt(0);
+    }
+
+    return ad.advertiser.charAt(0);
+  }
+
+  getAdvertiserName(ad: Ad): string {
+    if (!ad || !ad.advertiser) {
+      return 'Unknown';
+    }
+
+    if (typeof ad.advertiser === 'object') {
+      return ad.advertiser.username;
+    }
+
+    return ad.advertiser;
   }
 
   toggleFavorite(): void {

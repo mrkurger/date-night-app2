@@ -47,7 +47,7 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    // AuthInterceptor is already provided in CoreModule
   ],
   // AppComponent is now bootstrapped via bootstrapApplication in main.ts
 })

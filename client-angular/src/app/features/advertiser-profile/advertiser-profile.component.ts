@@ -192,4 +192,14 @@ export class AdvertiserProfileComponent implements OnInit {
 
     return '/assets/images/default-profile.jpg';
   }
+
+  getMediaIndices(): number[] {
+    if (!this.ad) return [];
+
+    const mediaLength = this.ad.media?.length || 0;
+    const imagesLength = this.ad.images?.length || 0;
+    const totalLength = Math.max(mediaLength, imagesLength);
+
+    return Array.from({ length: totalLength }, (_, i) => i);
+  }
 }

@@ -91,10 +91,11 @@ export const routes: Routes = [
       import('./features/ad-browser/ad-browser.module').then(m => m.AdBrowserModule),
     data: { preload: true, title: 'Browse Ads' },
   },
-  {
-    path: 'tinder',
-    loadChildren: () => import('./features/tinder/tinder.module').then(m => m.TinderModule),
-  },
+  // Tinder module temporarily disabled
+  // {
+  //   path: 'tinder',
+  //   loadChildren: () => import('./features/tinder/tinder.module').then(m => m.TinderModule),
+  // },
   {
     path: 'payment',
     loadChildren: () => import('./features/payment/payment.module').then(m => m.PaymentModule),

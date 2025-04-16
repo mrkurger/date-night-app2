@@ -65,6 +65,13 @@ export interface Ad {
     comment: string;
     date: string;
   }>;
+  services?: Array<{
+    id: string;
+    name: string;
+    description?: string;
+    price?: number;
+    duration?: number;
+  }>;
 }
 
 // Interface for creating new ads

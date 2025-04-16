@@ -77,10 +77,10 @@
     <div class="ad-details-sidebar">
       <div class="advertiser-info">
         <div class="avatar avatar-md">
-          <span>{{ ad.advertiser.charAt(0) | uppercase }}</span>
+          <span>{{ getAdvertiserInitial(ad) | uppercase }}</span>
         </div>
         <div>
-          <div class="advertiser-name">{{ ad.advertiser }}</div>
+          <div class="advertiser-name">{{ getAdvertiserName(ad) }}</div>
           <div class="advertiser-since">Member since {{ ad.createdAt | date: 'MMM yyyy' }}</div>
         </div>
       </div>

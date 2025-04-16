@@ -15,16 +15,49 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CSPInterceptor } from './interceptors/csp.interceptor';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
+import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
+
+// Factory functions to avoid circular dependencies
+export function cspInterceptorFactory() {
+  return new CSPInterceptor();
+}
+
+export function authInterceptorFactory(
+  authService: AuthService,
+  userService: UserService,
+  router: Router
+) {
+  return new AuthInterceptor(authService, userService, router);
+}
+
+export function csrfInterceptorFactory() {
+  return new CsrfInterceptor();
+}
+
+export function httpErrorInterceptorFactory(router: Router) {
+  return new HttpErrorInterceptor(router);
+}
 
 @NgModule({
   imports: [CommonModule, HttpClientModule],
   providers: [
     AuthService,
     // Order matters for interceptors - they are applied in the order listed
-    { provide: HTTP_INTERCEPTORS, useClass: CSPInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: authInterceptorFactory,
+      deps: [AuthService, UserService, Router],
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useFactory: csrfInterceptorFactory, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: httpErrorInterceptorFactory,
+      deps: [Router],
+      multi: true,
+    },
   ],
 })
 export class CoreModule {}

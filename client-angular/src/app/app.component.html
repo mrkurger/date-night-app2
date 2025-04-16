@@ -67,7 +67,7 @@
               <span
                 class="badge"
                 *ngIf="unreadMessages > 0"
-                aria-label="{{ unreadMessages }} unread messages"
+                [attr.aria-label]="unreadMessages + ' unread messages'"
               >
                 {{ unreadMessages }}
               </span>

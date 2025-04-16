@@ -563,8 +563,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   /**
    * Handle Enter key in message input
    */
-  handleEnterKey(event: KeyboardEvent): void {
-    if (!event.shiftKey) {
+  handleEnterKey(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    if (!keyboardEvent.shiftKey) {
       event.preventDefault();
       this.sendMessage();
     }
