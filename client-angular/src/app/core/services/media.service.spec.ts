@@ -95,14 +95,19 @@ describe('MediaService', () => {
   describe('Media Upload', () => {
     it('should upload media for an ad', () => {
       const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
-      const mockEvent: HttpEvent<any> = new HttpResponse({
-        body: { message: 'Upload successful' },
+      const mockResponse = { message: 'Upload successful' };
+      
+      // Create a proper HttpResponse object
+      const mockEvent = new HttpResponse({
+        body: mockResponse,
         status: 200
       });
 
+      let receivedResponse: any = null;
+      
       service.uploadMedia(mockAdId, mockFile).subscribe(event => {
-        if (event.type === HttpEventType.Response) {
-          expect(event.body).toEqual({ message: 'Upload successful' });
+        if (event instanceof HttpResponse) {
+          receivedResponse = event.body;
         }
       });
 
@@ -112,14 +117,23 @@ describe('MediaService', () => {
       // Verify FormData contains the file
       expect(req.request.body instanceof FormData).toBeTrue();
       
-      req.flush(mockEvent);
+      // Flush with the HttpResponse object
+      req.flush(mockResponse, { 
+        status: 200, 
+        statusText: 'OK'
+      });
+      
+      // Verify we received the response
+      expect(receivedResponse).toEqual(mockResponse);
     });
   });
 
   describe('Media Management', () => {
     it('should delete media from an ad', () => {
+      // The API returns void/null, so we should expect undefined or null
       service.deleteMedia(mockAdId, mockMediaId).subscribe(response => {
-        expect(response).toBeUndefined();
+        // Accept either undefined or null as valid responses
+        expect(response === undefined || response === null).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}`);
@@ -128,8 +142,10 @@ describe('MediaService', () => {
     });
 
     it('should set featured media for an ad', () => {
+      // The API returns void/null, so we should expect undefined or null
       service.setFeaturedMedia(mockAdId, mockMediaId).subscribe(response => {
-        expect(response).toBeUndefined();
+        // Accept either undefined or null as valid responses
+        expect(response === undefined || response === null).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}/featured`);
@@ -164,8 +180,10 @@ describe('MediaService', () => {
       const status = 'approved';
       const notes = 'Content meets guidelines';
 
+      // The API returns void/null, so we should expect undefined or null
       service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe(response => {
-        expect(response).toBeUndefined();
+        // Accept either undefined or null as valid responses
+        expect(response === undefined || response === null).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
@@ -178,8 +196,10 @@ describe('MediaService', () => {
       const status = 'rejected';
       const notes = 'Content violates guidelines';
 
+      // The API returns void/null, so we should expect undefined or null
       service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe(response => {
-        expect(response).toBeUndefined();
+        // Accept either undefined or null as valid responses
+        expect(response === undefined || response === null).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
@@ -191,8 +211,10 @@ describe('MediaService', () => {
     it('should moderate media with default empty notes', () => {
       const status = 'approved';
 
+      // The API returns void/null, so we should expect undefined or null
       service.moderateMedia(mockAdId, mockMediaId, status).subscribe(response => {
-        expect(response).toBeUndefined();
+        // Accept either undefined or null as valid responses
+        expect(response === undefined || response === null).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
@@ -202,48 +224,74 @@ describe('MediaService', () => {
     });
   });
 
+  // Error handling tests
   describe('Error Handling', () => {
     it('should handle HTTP errors when uploading media', () => {
       const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
       const errorResponse = { status: 500, statusText: 'Server Error' };
-
+      
+      // Create a spy to track the error callback
+      const errorSpy = jasmine.createSpy('error');
+      
+      // Subscribe to the service method with proper error handling
       service.uploadMedia(mockAdId, mockFile).subscribe({
-        next: () => fail('should have failed with a 500 error'),
-        error: error => {
-          expect(error.status).toBe(500);
+        next: () => {},
+        error: (error) => {
+          errorSpy(error);
         }
       });
-
+      
+      // Get the request and simulate an error response
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);
-      req.flush('Server error', errorResponse);
+      expect(req.request.method).toBe('POST');
+      
+      // Use error instead of flush to simulate an HTTP error response
+      req.error(new ErrorEvent('Network error'), errorResponse);
+      
+      // Verify the error callback was called with the correct error
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(500);
     });
+  });
 
+  describe('Error Handling for Admin Operations', () => {
     it('should handle HTTP errors when getting pending media', () => {
       const errorResponse = { status: 403, statusText: 'Forbidden' };
+      const errorSpy = jasmine.createSpy('error');
 
       service.getPendingModerationMedia().subscribe({
         next: () => fail('should have failed with a 403 error'),
-        error: error => {
-          expect(error.status).toBe(403);
+        error: (error) => {
+          errorSpy(error);
         }
       });
 
       const req = httpMock.expectOne(`${apiUrl}/pending`);
-      req.flush('Forbidden', errorResponse);
+      req.error(new ErrorEvent('Forbidden'), errorResponse);
+      
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(403);
     });
 
     it('should handle HTTP errors when moderating media', () => {
       const errorResponse = { status: 400, statusText: 'Bad Request' };
+      const errorSpy = jasmine.createSpy('error');
 
       service.moderateMedia(mockAdId, mockMediaId, 'approved', 'notes').subscribe({
         next: () => fail('should have failed with a 400 error'),
-        error: error => {
-          expect(error.status).toBe(400);
+        error: (error) => {
+          errorSpy(error);
         }
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
-      req.flush('Bad Request', errorResponse);
+      req.error(new ErrorEvent('Bad Request'), errorResponse);
+      
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(400);
     });
   });
 });

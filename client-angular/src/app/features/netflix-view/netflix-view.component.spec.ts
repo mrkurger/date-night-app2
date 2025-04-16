@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { NetflixViewComponent } from './netflix-view.component';
 import { AdService } from '../../core/services/ad.service';
@@ -74,6 +75,13 @@ class MockAdService {
 class MockNotificationService {
   success(message: string) {}
   error(message: string) {}
+  info(message: string) {}
+  warning(message: string) {}
+  removeToast(id: string) {}
+  
+  // Mock observables
+  toasts$ = of([]);
+  unreadCount$ = of(0);
 }
 
 class MockChatService {
@@ -99,14 +107,23 @@ describe('NetflixViewComponent', () => {
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        NetflixViewComponent
+        NetflixViewComponent,
+        // Import Emerald components
+        AppCardComponent, 
+        CardGridComponent, 
+        PageHeaderComponent,
+        SkeletonLoaderComponent,
+        LabelComponent,
+        FloatingActionButtonComponent,
+        ToggleComponent
       ],
       providers: [
         { provide: AdService, useClass: MockAdService },
         { provide: NotificationService, useClass: MockNotificationService },
         { provide: ChatService, useClass: MockChatService },
         { provide: AuthService, useClass: MockAuthService }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add this to handle custom elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetflixViewComponent);

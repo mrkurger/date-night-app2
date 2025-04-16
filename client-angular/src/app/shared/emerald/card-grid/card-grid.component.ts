@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppCardComponent } from '../app-card/app-card.component';
 import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
@@ -141,4 +141,9 @@ export class CardGridComponent {
   getSkeletonArray(): number[] {
     return Array(this.columns * 2).fill(0).map((_, i) => i);
   }
+  
+  /**
+   * Optional template for custom item rendering
+   */
+  @ContentChild('itemTemplate') itemTemplate?: TemplateRef<any>;
 }

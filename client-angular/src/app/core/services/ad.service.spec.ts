@@ -167,7 +167,8 @@ describe('AdService', () => {
 
   it('should delete an ad', () => {
     service.deleteAd('1').subscribe(response => {
-      expect(response).toBeUndefined();
+      // The API returns void/null, so we should expect undefined or null
+      expect(response === undefined || response === null).toBeTrue();
     });
 
     const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);

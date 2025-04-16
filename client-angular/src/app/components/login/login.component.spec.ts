@@ -15,6 +15,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of, throwError, Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,13 +24,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LoginComponent } from '../../features/auth/login/login.component';
-import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
 import { User, AuthResponse } from '../../core/models/user.interface';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authService: jasmine.SpyObj<AuthService>;
+  let userService: jasmine.SpyObj<UserService>;
   let router: Router;
 
   const mockUser: User = {
@@ -50,14 +51,18 @@ describe('LoginComponent', () => {
   };
 
   beforeEach(async () => {
-    // Create spy for AuthService
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
+    // Create spy for UserService
+    const userServiceSpy = jasmine.createSpyObj('UserService', ['login', 'isAuthenticated']);
+    userServiceSpy.isAuthenticated.and.returnValue(false); // Default to not authenticated
 
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'browse', component: LoginComponent },
+          { path: 'dashboard', component: LoginComponent }
+        ]),
         HttpClientTestingModule,
         BrowserAnimationsModule,
         MatCardModule,
@@ -68,12 +73,13 @@ describe('LoginComponent', () => {
         MatProgressSpinnerModule,
         LoginComponent
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
       providers: [
-        { provide: AuthService, useValue: authServiceSpy }
+        { provide: UserService, useValue: userServiceSpy }
       ]
     }).compileComponents();
 
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     router = TestBed.inject(Router);
   });
 
@@ -106,7 +112,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.valid).toBeTruthy();
   });
 
-  it('should call AuthService.login when form is submitted', () => {
+  it('should call UserService.login when form is submitted', () => {
     // Setup form with valid data
     const loginData = {
       email: 'test@example.com',
@@ -116,7 +122,7 @@ describe('LoginComponent', () => {
     component.loginForm.patchValue(loginData);
     
     // Mock successful login
-    authService.login.and.returnValue(of(mockAuthResponse));
+    userService.login.and.returnValue(of(mockAuthResponse));
     
     // Spy on router navigation
     spyOn(router, 'navigate');
@@ -125,10 +131,10 @@ describe('LoginComponent', () => {
     component.onSubmit();
     
     // Verify service was called with correct parameters
-    expect(authService.login).toHaveBeenCalledWith(loginData);
+    expect(userService.login).toHaveBeenCalledWith(loginData);
     
     // Verify navigation occurred
-    expect(router.navigate).toHaveBeenCalledWith(['/browse']);
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
   it('should display error message on login failure', () => {
@@ -140,7 +146,7 @@ describe('LoginComponent', () => {
     
     // Mock failed login
     const errorResponse = { message: 'Invalid credentials' };
-    authService.login.and.returnValue(throwError(() => errorResponse));
+    userService.login.and.returnValue(throwError(() => errorResponse));
     
     // Submit form
     component.onSubmit();
@@ -151,7 +157,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.alert-danger')).toBeTruthy();
+    expect(compiled.querySelector('.error-message')).toBeTruthy();
   });
 
   it('should disable submit button while loading', () => {
@@ -162,7 +168,7 @@ describe('LoginComponent', () => {
     });
     
     // Create a delayed observable to simulate network request
-    authService.login.and.returnValue(new Observable(observer => {
+    userService.login.and.returnValue(new Observable(observer => {
       // This will be resolved after a delay
       setTimeout(() => {
         observer.next(mockAuthResponse);

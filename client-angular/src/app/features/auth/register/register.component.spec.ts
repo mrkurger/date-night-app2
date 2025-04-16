@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AuthResponse } from '../../../core/models/user.interface';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 // Material Modules
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +31,11 @@ describe('RegisterComponent', () => {
     const userServiceSpy = jasmine.createSpyObj('UserService', ['register', 'isAuthenticated']);
 
     await TestBed.configureTestingModule({
+      declarations: [
+        // RegisterComponent is now a standalone component, so it should be in imports
+      ],
       imports: [
+        RegisterComponent, // Moved from declarations to imports
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
@@ -42,10 +47,10 @@ describe('RegisterComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
-        RegisterComponent,
         MatRadioModule,
         MatProgressSpinnerModule
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
       providers: [
         { provide: UserService, useValue: userServiceSpy }
       ]

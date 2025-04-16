@@ -24,7 +24,9 @@ import { Ad } from '../../../../core/models/ad.interface';
 @Component({
   selector: 'emerald-card-grid',
   templateUrl: './card-grid.component.html',
-  styleUrls: ['./card-grid.component.scss']
+  styleUrls: ['./card-grid.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class CardGridComponent {
   /**

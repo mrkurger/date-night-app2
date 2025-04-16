@@ -86,6 +86,53 @@ This document captures key lessons learned while working with Angular unit tests
   });
   ```
 
+#### 3.1 HTTP Error Handling in Tests
+
+**Issue**: Tests for error handling in HTTP services often fail with "Expected error, not success" because the error callbacks are not properly triggered or captured.
+
+**Solution**:
+- Use proper error handling in test callbacks
+- Explicitly capture error objects for verification
+- Use error spy functions to track error handling
+- Example:
+  ```typescript
+  it('should handle HTTP errors', () => {
+    const errorResponse = { status: 404, statusText: 'Not Found' };
+    const errorSpy = jasmine.createSpy('error');
+    
+    service.getData().subscribe({
+      next: () => fail('Expected error, not success'),
+      error: (error) => {
+        errorSpy(error);
+      }
+    });
+    
+    const req = httpMock.expectOne('api/data');
+    req.error(new ErrorEvent('Not Found'), errorResponse);
+    
+    expect(errorSpy).toHaveBeenCalled();
+    const errorArg = errorSpy.calls.mostRecent().args[0];
+    expect(errorArg.status).toBe(404);
+  });
+  ```
+
+#### 3.2 Browser-specific URL Validation
+
+**Issue**: URL validation tests can be inconsistent across browsers because different browsers have different URL parsing rules.
+
+**Solution**:
+- Use reliably invalid URL formats for testing
+- Avoid edge cases that might be valid in some browsers
+- Test with clearly valid and clearly invalid URLs
+- Example:
+  ```typescript
+  // WRONG - Some browsers consider this valid
+  expect(service.isValidUrl('http:example.com')).toBeFalse();
+  
+  // BETTER - More reliably invalid across browsers
+  expect(service.isValidUrl('http:///example')).toBeFalse();
+  ```
+
 ### 4. Testing Asynchronous Operations
 
 **Issue**: Tests involving timers, promises, or observables often fail due to timing issues.

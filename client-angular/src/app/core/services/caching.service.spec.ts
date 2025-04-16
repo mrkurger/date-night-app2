@@ -70,24 +70,47 @@ describe('CachingService', () => {
       const url = '/api/test';
       const cacheTime = 100; // 100ms cache time
 
-      // First request to cache the data
-      service.get(url, cacheTime).subscribe();
-      httpMock.expectOne(url).flush(testData1);
-
-      // Wait for cache to expire
+      // Install jasmine clock before any operations
       jasmine.clock().install();
-      jasmine.clock().tick(cacheTime + 1);
+      
+      // Mock Date.now to control time
+      const originalDateNow = Date.now;
+      const startTime = 1000;
+      let currentTime = startTime;
+      
+      spyOn(Date, 'now').and.callFake(() => currentTime);
 
-      // Second request should fetch fresh data
-      service.get(url, cacheTime).subscribe(data => {
-        expect(data).toEqual(testData2);
-      });
+      try {
+        // First request to cache the data
+        service.get(url, cacheTime).subscribe();
+        httpMock.expectOne(url).flush(testData1);
 
-      const req = httpMock.expectOne(url);
-      expect(req.request.method).toBe('GET');
-      req.flush(testData2);
+        // Verify data is cached
+        service.get(url, cacheTime).subscribe(data => {
+          expect(data).toEqual(testData1);
+        });
+        httpMock.expectNone(url);
 
-      jasmine.clock().uninstall();
+        // Advance time to expire the cache
+        currentTime = startTime + cacheTime + 1;
+        
+        // Second request should fetch fresh data
+        let receivedData: any;
+        service.get(url, cacheTime).subscribe(data => {
+          receivedData = data;
+        });
+
+        const req = httpMock.expectOne(url);
+        expect(req.request.method).toBe('GET');
+        req.flush(testData2);
+        
+        // Verify we got the new data
+        expect(receivedData).toEqual(testData2);
+      } finally {
+        // Restore original Date.now
+        (Date.now as any) = originalDateNow;
+        jasmine.clock().uninstall();
+      }
     });
   });
 
@@ -106,12 +129,31 @@ describe('CachingService', () => {
       httpMock.expectNone(invalidateUrl);
 
       // Post data and invalidate cache
-      service.post(url, testData, [invalidateUrl]).subscribe();
-      httpMock.expectOne(url).flush({ success: true });
+      let postResponse: any;
+      service.post(url, testData, [invalidateUrl]).subscribe(response => {
+        postResponse = response;
+      });
+      
+      const postReq = httpMock.expectOne(url);
+      expect(postReq.request.method).toBe('POST');
+      expect(postReq.request.body).toEqual(testData);
+      postReq.flush({ success: true });
+      
+      // Verify we got the response
+      expect(postResponse).toEqual({ success: true });
 
       // Verify the cache was invalidated
-      service.get(invalidateUrl).subscribe();
-      httpMock.expectOne(invalidateUrl);
+      let getResponse: any;
+      service.get(invalidateUrl).subscribe(response => {
+        getResponse = response;
+      });
+      
+      const getReq = httpMock.expectOne(invalidateUrl);
+      expect(getReq.request.method).toBe('GET');
+      getReq.flush([testData, { id: 2, name: 'Test 2' }]);
+      
+      // Verify we got the new data
+      expect(getResponse).toEqual([testData, { id: 2, name: 'Test 2' }]);
     });
   });
 
@@ -136,8 +178,11 @@ describe('CachingService', () => {
 
       // Clear cache
       service.clearCache();
+      
+      // Add explicit expectation for the cache to be empty
+      expect(service['cache'].size).toBe(0);
 
-      // Verify cache is cleared
+      // Verify cache is cleared by checking that new requests go to the server
       service.get(url1).subscribe();
       service.get(url2).subscribe();
       httpMock.expectOne(url1);
@@ -172,14 +217,30 @@ describe('CachingService', () => {
 
       // Clear cache with pattern
       service.clearCachePattern('/api/users');
+      
+      // Add explicit expectation for the cache to be partially cleared
+      // We expect only the URLs matching the pattern to be removed
+      expect(service['cache'].has(url1)).toBeFalse();
+      expect(service['cache'].has(url2)).toBeFalse();
+      expect(service['cache'].has(url3)).toBeTrue();
 
       // Verify matching cache items are cleared
-      service.get(url1).subscribe();
-      service.get(url2).subscribe();
-      service.get(url3).subscribe();
-      httpMock.expectOne(url1);
-      httpMock.expectOne(url2);
+      let response1: any, response2: any, response3: any;
+      
+      service.get(url1).subscribe(data => response1 = data);
+      const req1 = httpMock.expectOne(url1);
+      req1.flush({ id: 1, name: 'New Test 1' });
+      expect(response1).toEqual({ id: 1, name: 'New Test 1' });
+      
+      service.get(url2).subscribe(data => response2 = data);
+      const req2 = httpMock.expectOne(url2);
+      req2.flush({ id: 2, name: 'New Test 2' });
+      expect(response2).toEqual({ id: 2, name: 'New Test 2' });
+      
+      // This one should still be cached
+      service.get(url3).subscribe(data => response3 = data);
       httpMock.expectNone(url3);
+      expect(response3).toEqual(testData);
     });
   });
 });

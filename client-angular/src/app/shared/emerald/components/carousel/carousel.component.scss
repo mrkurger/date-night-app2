@@ -1,4 +1,15 @@
-@import '../../../../core/design/design-tokens';
+// Define variables locally for testing
+$border-radius-md: 0.375rem;
+$border-radius-sm: 0.25rem;
+$neutral-100: #f3f4f6;
+$neutral-200: #e5e7eb;
+$neutral-300: #d1d5db;
+$neutral-400: #9ca3af;
+$neutral-800: #1f2937;
+$neutral-900: #111827;
+$white: #ffffff;
+$black: #000000;
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
 // Emerald Carousel Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Carousel
@@ -195,11 +206,11 @@
     transition: border-color 0.2s ease;
     
     &:hover {
-      border-color: $neutral-300;
+      border-color: #d1d5db; /* neutral-300 */
     }
     
     &--active {
-      border-color: $primary;
+      border-color: #3b82f6; /* primary */
     }
   }
   

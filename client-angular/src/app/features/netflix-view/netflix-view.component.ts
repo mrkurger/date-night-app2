@@ -10,7 +10,7 @@
 // - CARD_ANIMATION_DURATION: Duration of card hover animations (default: 300ms)
 //   Related to: netflix-view.component.scss:$card-animation-duration
 // ===================================================
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren, QueryList, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -48,7 +48,8 @@ import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.c
     LabelComponent,
     FloatingActionButtonComponent,
     ToggleComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add schema for custom elements
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows

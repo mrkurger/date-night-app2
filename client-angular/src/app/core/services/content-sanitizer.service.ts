@@ -69,6 +69,11 @@ export class ContentSanitizerService {
         return true;
       }
       
+      // Reject potentially dangerous protocols
+      if (url.toLowerCase().startsWith('javascript:')) {
+        return false;
+      }
+      
       // Otherwise, try to create a URL object
       new URL(url);
       return true;

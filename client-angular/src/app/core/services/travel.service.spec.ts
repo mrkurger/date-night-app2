@@ -296,4 +296,84 @@ describe('TravelService', () => {
       req.flush(mockResponse);
     });
   });
+
+  // Error handling tests
+  describe('Error Handling', () => {
+    it('should handle HTTP errors when getting itineraries', () => {
+      const adId = '123';
+      const errorResponse = { status: 404, statusText: 'Not Found' };
+      const errorSpy = jasmine.createSpy('error');
+
+      service.getItineraries(adId).subscribe({
+        next: () => fail('should have failed with a 404 error'),
+        error: (error) => {
+          errorSpy(error);
+        }
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/ad/${adId}`);
+      req.error(new ErrorEvent('Not Found'), errorResponse);
+      
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(404);
+    });
+
+    it('should handle HTTP errors when adding itinerary', () => {
+      const adId = '123';
+      const newItinerary: TravelItinerary = {
+        destination: {
+          city: 'Bergen',
+          county: 'Vestland',
+          location: {
+            type: 'Point',
+            coordinates: [5.3221, 60.3913]
+          }
+        },
+        arrivalDate: new Date('2023-07-01'),
+        departureDate: new Date('2023-07-07'),
+        status: 'planned'
+      };
+      
+      const errorResponse = { status: 400, statusText: 'Bad Request' };
+      const errorSpy = jasmine.createSpy('error');
+
+      service.addItinerary(adId, newItinerary).subscribe({
+        next: () => fail('should have failed with a 400 error'),
+        error: (error) => {
+          errorSpy(error);
+        }
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/ad/${adId}`);
+      req.error(new ErrorEvent('Bad Request'), errorResponse);
+      
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(400);
+    });
+
+    it('should handle HTTP errors when updating location', () => {
+      const adId = '123';
+      const longitude = 10.7522;
+      const latitude = 59.9139;
+      
+      const errorResponse = { status: 500, statusText: 'Server Error' };
+      const errorSpy = jasmine.createSpy('error');
+
+      service.updateLocation(adId, longitude, latitude).subscribe({
+        next: () => fail('should have failed with a 500 error'),
+        error: (error) => {
+          errorSpy(error);
+        }
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/ad/${adId}/location`);
+      req.error(new ErrorEvent('Server Error'), errorResponse);
+      
+      expect(errorSpy).toHaveBeenCalled();
+      const errorArg = errorSpy.calls.mostRecent().args[0];
+      expect(errorArg.status).toBe(500);
+    });
+  });
 });
