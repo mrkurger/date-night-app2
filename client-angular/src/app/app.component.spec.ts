@@ -69,13 +69,20 @@ describe('AppComponent', () => {
     // Configure mock behavior
     mockCsrfService.initializeCsrf.and.returnValue(of({}));
     mockChatService.getRooms.and.returnValue(of([]));
-    mockChatService.getUnreadCounts.and.returnValue(of(5));
+    mockChatService.getUnreadCounts.and.returnValue(of({
+      total: 5,
+      rooms: { 'room1': 3, 'room2': 2 }
+    }));
     mockPlatformService.runInBrowser.and.callFake((callback) => callback());
     mockPlatformService.isBrowser.and.returnValue(true);
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', component: AppComponent },
+          { path: 'login', component: AppComponent }
+        ]),
         AppComponent,
         NotificationComponent,
         DebugInfoComponent

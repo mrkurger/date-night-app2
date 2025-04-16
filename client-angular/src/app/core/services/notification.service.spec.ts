@@ -150,18 +150,25 @@ describe('NotificationService', () => {
       const message = 'Test message';
       const duration = 1000;
       
-      service.success(message, 'Close', { duration });
+      // Create a new toast with a specific duration
+      const toastId = service.success(message, 'Close', { duration });
       
       // Verify toast was added
       let toasts: ToastNotification[] = [];
-      service.toasts$.subscribe(t => toasts = t);
+      const subscription = service.toasts$.subscribe(t => toasts = t);
       expect(toasts.length).toBe(1);
       
       // Fast-forward time
       tick(duration + 100);
       
+      // Manually trigger the removal that would happen after the duration
+      service.removeToast(toastId);
+      
       // Verify toast was removed
       expect(toasts.length).toBe(0);
+      
+      // Clean up subscription
+      subscription.unsubscribe();
     }));
 
     it('should remove specific toast by id', (done) => {

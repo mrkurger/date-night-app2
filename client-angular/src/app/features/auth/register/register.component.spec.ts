@@ -30,7 +30,6 @@ describe('RegisterComponent', () => {
     const userServiceSpy = jasmine.createSpyObj('UserService', ['register', 'isAuthenticated']);
 
     await TestBed.configureTestingModule({
-      declarations: [RegisterComponent],
       imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -43,6 +42,7 @@ describe('RegisterComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
+        RegisterComponent,
         MatRadioModule,
         MatProgressSpinnerModule
       ],

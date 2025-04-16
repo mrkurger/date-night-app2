@@ -2,13 +2,13 @@
 <!-- Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton -->
 
 <div class="emerald-fab-container" 
-     [ngClass]="{'emerald-fab-container--' + position}">
+     [ngClass]="'emerald-fab-container--' + position">
   
   <!-- Main Floating Action Button -->
   <button class="emerald-fab" 
-          [ngClass]="{'emerald-fab--' + color, 
+          [ngClass]="['emerald-fab--' + color, 
                      'emerald-fab--' + size,
-                     'emerald-fab--open': menuOpen}"
+                     {'emerald-fab--open': menuOpen}]"
           [disabled]="disabled"
           (click)="toggleMenu($event)"
           [attr.aria-label]="label">
@@ -23,7 +23,7 @@
   <!-- Menu Items -->
   <div *ngIf="hasMenu" 
        class="emerald-fab-menu" 
-       [ngClass]="{'emerald-fab-menu--open': menuOpen, 'emerald-fab-menu--' + position}">
+       [ngClass]="['emerald-fab-menu--' + position, {'emerald-fab-menu--open': menuOpen}]">
     <button *ngFor="let item of menuItems" 
             class="emerald-fab-menu__item" 
             [ngClass]="'emerald-fab-menu__item--' + color"

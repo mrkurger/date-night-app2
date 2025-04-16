@@ -48,6 +48,44 @@ export class AppCardComponent implements OnInit {
   
   constructor() { }
   
+  /**
+   * Get the number of media items in the ad
+   * @returns The number of media items
+   */
+  getMediaCount(): number {
+    if (!this.ad || !this.ad.media) {
+      return 0;
+    }
+    return this.ad.media.length;
+  }
+  
+  /**
+   * Format a price value with currency symbol and thousands separator
+   * @param price The price to format
+   * @returns Formatted price string
+   */
+  formatPrice(price: number): string {
+    // Round to nearest integer and format with $ and commas
+    return '$' + Math.round(price).toLocaleString('en-US');
+  }
+  
+  /**
+   * Get a truncated version of the description
+   * @param maxLength Maximum length of the description
+   * @returns Truncated description with ellipsis
+   */
+  getTruncatedDescription(maxLength: number): string {
+    if (!this.ad || !this.ad.description) {
+      return '';
+    }
+    
+    if (this.ad.description.length <= maxLength) {
+      return this.ad.description;
+    }
+    
+    return this.ad.description.substring(0, maxLength) + '...';
+  }
+  
   ngOnInit(): void {
     this.backgroundImageUrl = this.getPrimaryImage();
   }

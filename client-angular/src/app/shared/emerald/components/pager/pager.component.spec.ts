@@ -10,7 +10,7 @@ describe('PagerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CommonModule],
-      declarations: [PagerComponent]
+      declarations: [PagerComponent] // PagerComponent is not standalone
     }).compileComponents();
 
     fixture = TestBed.createComponent(PagerComponent);

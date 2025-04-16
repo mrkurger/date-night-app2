@@ -27,7 +27,9 @@ describe('AuthService', () => {
     id: '123', // Alias for _id
     username: 'testuser',
     email: 'test@example.com',
-    role: 'user'
+    role: 'user',
+    createdAt: new Date(),
+    updatedAt: new Date()
   };
 
   // Mock auth response that matches the AuthResponse interface
@@ -58,6 +60,14 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
+    // Handle any pending refresh token requests
+    const refreshRequests = httpMock.match(`${apiUrl}/refresh-token`);
+    if (refreshRequests.length > 0) {
+      refreshRequests.forEach(req => {
+        req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
+      });
+    }
+    
     // Verify that there are no outstanding requests
     httpMock.verify();
   });
@@ -144,9 +154,9 @@ describe('AuthService', () => {
 
   describe('handleOAuthCallback', () => {
     it('should validate token and update user state', () => {
+      let userResult: any;
       service.handleOAuthCallback().subscribe(user => {
-        expect(user).toEqual(mockUser);
-        expect(service.isAuthenticated()).toBeTrue();
+        userResult = user;
       });
 
       const req = httpMock.expectOne(`${apiUrl}/validate`);
@@ -154,11 +164,20 @@ describe('AuthService', () => {
       expect(req.request.withCredentials).toBeTrue();
       
       req.flush({ success: true, user: mockUser });
+      
+      expect(userResult).toEqual(mockUser);
+      expect(service.isAuthenticated()).toBeTrue();
     });
   });
 
   describe('refreshToken', () => {
     it('should send refresh token request and update user state', () => {
+      // Clear any pending refresh token requests
+      const pendingRequests = httpMock.match(`${apiUrl}/refresh-token`);
+      pendingRequests.forEach(req => {
+        req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
+      });
+      
       service.refreshToken().subscribe(response => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
