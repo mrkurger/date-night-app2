@@ -26,6 +26,10 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Utility Functions](#utility-functions)
   - [HTTP Error Handling](#http-error-handling)
 - [Documentation Best Practices](#documentation-best-practices)
+- [Security Best Practices](#security-best-practices)
+  - [Dependency Management](#dependency-management)
+  - [GitHub Actions Security](#github-actions-security)
+  - [Package Overrides](#package-overrides)
 - [Error Handling and Telemetry](#error-handling-and-telemetry)
   - [HTTP Error Interceptor Pattern](#http-error-interceptor-pattern)
   - [Telemetry Service Design](#telemetry-service-design)
@@ -1241,6 +1245,101 @@ For projects with many warnings that need to be addressed over time:
    - Structure error details in a way that's easy to consume by error handling components
 
 ## Documentation Best Practices
+
+## Security Best Practices
+
+The Date Night App project has implemented several security best practices to protect against common vulnerabilities and ensure the application remains secure over time.
+
+### Dependency Management
+
+Effective dependency management is crucial for maintaining security in modern applications:
+
+1. **Regular Security Audits**:
+
+   - Run `npm audit` regularly to identify vulnerabilities in dependencies
+   - Automate security checks in CI/CD pipelines
+   - Review security alerts from GitHub Dependabot
+
+2. **Version Pinning**:
+
+   - Pin exact versions for critical dependencies to prevent unexpected updates
+   - Use caret (^) for minor updates only when confident in backward compatibility
+   - Regularly test with newer versions in a controlled environment
+
+3. **Vulnerability Response Process**:
+   - Prioritize vulnerabilities based on severity (high, medium, low)
+   - Establish a clear process for addressing security alerts
+   - Document all security-related changes in CHANGELOG.md
+
+### GitHub Actions Security
+
+GitHub Actions can introduce security risks if not properly configured:
+
+1. **Action Version Pinning**:
+
+   - Always pin GitHub Actions to specific versions (e.g., `actions/checkout@v4`)
+   - Avoid using `@master` or `@main` which can introduce unexpected changes
+   - Regularly update actions to patched versions
+
+2. **Artifact Security**:
+
+   - Use the latest version of artifact-related actions to prevent poisoning attacks
+   - Validate artifacts before using them in subsequent steps
+   - Implement proper permissions for artifact access
+
+3. **Secrets Management**:
+   - Use GitHub Secrets for sensitive information
+   - Limit secret access to only the workflows that need them
+   - Regularly rotate secrets and tokens
+
+### Package Overrides
+
+Package overrides provide a powerful mechanism for addressing security vulnerabilities:
+
+1. **When to Use Overrides**:
+
+   - When direct dependencies have vulnerable sub-dependencies
+   - When waiting for upstream packages to update their dependencies
+   - To enforce consistent versions across the dependency tree
+
+2. **Implementation Patterns**:
+
+   - Use the `overrides` field in package.json
+   - Specify the minimum secure version with caret (^)
+   - Document all overrides with references to CVEs or security advisories
+
+3. **Monitoring and Maintenance**:
+   - Regularly review and update overrides
+   - Remove overrides when direct dependencies are updated
+   - Test thoroughly after applying overrides to ensure compatibility
+
+### Lessons Learned
+
+From our recent security fixes, we've learned several important lessons:
+
+1. **Proactive Monitoring**: Regular monitoring of security advisories is essential for identifying vulnerabilities early.
+
+2. **Centralized Overrides**: Implementing overrides at the root package.json level ensures consistent security across all parts of the application.
+
+3. **Documentation**: Documenting all security fixes in the CHANGELOG helps track security improvements over time.
+
+4. **Testing After Fixes**: Always test thoroughly after applying security fixes to ensure they don't introduce regressions.
+
+5. **GitHub Workflow Security**: GitHub Actions workflows require the same security attention as application code, especially for artifact handling.
+
+### Best Practices for Future Development
+
+For future development, we recommend:
+
+1. **Automated Security Scanning**: Implement automated security scanning in CI/CD pipelines.
+
+2. **Dependency Update Strategy**: Establish a regular schedule for reviewing and updating dependencies.
+
+3. **Security Response Plan**: Develop a formal security response plan for addressing vulnerabilities.
+
+4. **Security Documentation**: Maintain comprehensive security documentation for the project.
+
+5. **Developer Training**: Ensure all developers understand security best practices for dependency management.
 
 ### Purpose-Specific Documentation
 

@@ -1,5 +1,23 @@
 # Change Log
 
+## 2025-04-16: Security Fixes and Workflow Improvements
+
+### Security Fixes
+
+#### High Severity
+
+- **dawidd6/action-download-artifact**: Updated from v2 to v6 in `.github/workflows/sync-test-reports.yml` to fix artifact poisoning vulnerability (GHSA-5xr6-xhww-33m4)
+- **semver**: Updated from ^7.7.1 to ^7.5.4 in both root and server package.json to fix Regular Expression Denial of Service vulnerability (GHSA-c2qf-rxjj-qqgw)
+
+#### Medium Severity
+
+- **vite**: Updated from ^6.2.6 to ^6.2.7 in all package.json files to fix server.fs.deny bypass vulnerabilities (GHSA-356w-63v5-8wf4, GHSA-xcj6-pq6g-qj4x)
+- **got**: Added override for ^12.1.0 in root package.json to fix UNIX socket redirect vulnerability (GHSA-pfrx-2q88-qq97)
+
+### Workflow Improvements
+
+- **Angular Tests**: Added `--no-progress` flag to unit test command to improve CI output and potentially fix failing tests
+
 ## 2025-04-16: Angular Testing Improvements, Design System Fixes, and Documentation Updates
 
 ### Fixed
