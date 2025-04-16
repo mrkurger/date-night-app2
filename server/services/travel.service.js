@@ -11,6 +11,7 @@ const Ad = require('../models/ad.model');
 const User = require('../models/user.model');
 const { AppError } = require('../middleware/errorHandler');
 const socketService = require('./socket.service');
+const geocodingService = require('./geocoding.service');
 const logger = require('../utils/logger').logger;
 const NodeCache = require('node-cache');
 
@@ -461,22 +462,13 @@ class TravelService {
    * Geocode a location to get coordinates
    * @param {string} city - City name
    * @param {string} county - County name
-   * @param {string} country - Country name
+   * @param {string} country - Country name (default: Norway)
    * @returns {Promise<Object>} Location object with coordinates
    */
   async geocodeLocation(city, county, country) {
     try {
-      // This is a placeholder for actual geocoding service
-      // In a real implementation, you would call a geocoding API
-      // For now, we'll return a dummy point in Norway
-
-      // TODO: Implement actual geocoding service
-      logger.info(`Geocoding location: ${city}, ${county}, ${country}`);
-
-      return {
-        type: 'Point',
-        coordinates: [10.7522, 59.9139], // Oslo coordinates as default
-      };
+      // Use the dedicated geocoding service
+      return await geocodingService.geocodeLocation(city, county, country);
     } catch (error) {
       logger.error(`Error geocoding location (${city}, ${county}, ${country}):`, error);
       // Return null if geocoding fails, the model will handle this

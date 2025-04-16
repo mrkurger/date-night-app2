@@ -18,6 +18,7 @@ import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 import { Router } from '@angular/router';
 import { UserService } from './services/user.service';
 import { CsrfService } from './services/csrf.service';
+import { NotificationService } from './services/notification.service';
 
 // Factory functions to avoid circular dependencies
 export function cspInterceptorFactory() {
@@ -36,8 +37,11 @@ export function csrfInterceptorFactory(csrfService: CsrfService) {
   return new CsrfInterceptor(csrfService);
 }
 
-export function httpErrorInterceptorFactory(router: Router) {
-  return new HttpErrorInterceptor(router);
+export function httpErrorInterceptorFactory(
+  router: Router,
+  notificationService: NotificationService
+) {
+  return new HttpErrorInterceptor(router, notificationService);
 }
 
 @NgModule({
@@ -61,7 +65,7 @@ export function httpErrorInterceptorFactory(router: Router) {
     {
       provide: HTTP_INTERCEPTORS,
       useFactory: httpErrorInterceptorFactory,
-      deps: [Router],
+      deps: [Router, NotificationService],
       multi: true,
     },
   ],

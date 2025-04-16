@@ -10,6 +10,8 @@
 const express = require('express');
 const router = express.Router();
 const { asyncHandler } = require('../middleware/asyncHandler');
+const { authenticate, authorize } = require('../middleware/auth');
+const locationController = require('../controllers/location.controller');
 
 // Import the Norway locations data
 const norwayLocations = require('../data/norway-locations');
@@ -107,6 +109,65 @@ router.get(
 
     res.json({ city, county, distance });
   })
+);
+
+/**
+ * @route   GET /api/v1/locations/search
+ * @desc    Search locations by name
+ * @access  Public
+ */
+router.get('/search', asyncHandler(locationController.searchLocations));
+
+/**
+ * @route   GET /api/v1/locations/nearby
+ * @desc    Get locations near coordinates
+ * @access  Public
+ */
+router.get('/nearby', asyncHandler(locationController.getNearbyLocations));
+
+/**
+ * @route   GET /api/v1/locations/popular
+ * @desc    Get popular locations
+ * @access  Public
+ */
+router.get('/popular', asyncHandler(locationController.getPopularLocations));
+
+/**
+ * @route   GET /api/v1/locations/:id
+ * @desc    Get location by ID
+ * @access  Public
+ */
+router.get('/:id', asyncHandler(locationController.getLocationById));
+
+/**
+ * @route   POST /api/v1/locations
+ * @desc    Create a new location
+ * @access  Admin
+ */
+router.post('/', authenticate, authorize('admin'), asyncHandler(locationController.createLocation));
+
+/**
+ * @route   PUT /api/v1/locations/:id
+ * @desc    Update a location
+ * @access  Admin
+ */
+router.put(
+  '/:id',
+  authenticate,
+  authorize('admin'),
+  asyncHandler(locationController.updateLocation)
+);
+
+/**
+ * @route   DELETE /api/v1/locations/:id
+ * @desc    Delete a location
+ * @access  Admin
+ */
+router.delete(
+  '/:id',
+  authenticate,
+  authorize('admin'),
+  asyncHandler(locationController.deleteLocation)
 );
 
 module.exports = router;

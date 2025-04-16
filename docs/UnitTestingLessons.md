@@ -16,6 +16,9 @@ This document contains lessons learned from unit testing the Date Night App proj
 - [Test Setup Best Practices](#test-setup-best-practices)
 - [Mocking Components and Services](#mocking-components-and-services)
 - [Testing Asynchronous Code](#testing-asynchronous-code)
+- [Testing Angular Material Components](#testing-angular-material-components)
+  - [Dialog Testing](#dialog-testing)
+  - [Form Control Testing](#form-control-testing)
 - [Testing Map Components](#testing-map-components)
   - [Mocking External Map Libraries](#mocking-external-map-libraries)
   - [Testing Map Initialization](#testing-map-initialization)
@@ -480,6 +483,168 @@ it('should load data asynchronously', fakeAsync(() => {
 
   expect(component.items).toEqual(['item1', 'item2']);
 }));
+```
+
+## Testing Angular Material Components
+
+### Dialog Testing
+
+When testing components that use Angular Material dialogs:
+
+1. **Mock MatDialog**: Create a spy for MatDialog to avoid opening actual dialogs during tests:
+
+```typescript
+const dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+TestBed.configureTestingModule({
+  providers: [{ provide: MatDialog, useValue: dialogSpy }],
+});
+```
+
+2. **Mock Dialog Reference**: Create a spy for the dialog reference returned by MatDialog.open:
+
+```typescript
+const dialogRefSpyObj = jasmine.createSpyObj('MatDialogRef', {
+  afterClosed: of('dialog result'),
+});
+dialogSpy.open.and.returnValue(dialogRefSpyObj);
+```
+
+3. **Test Dialog Opening**: Verify that the dialog is opened with the correct parameters:
+
+```typescript
+component.openDialog();
+expect(dialogSpy.open).toHaveBeenCalledWith(DialogComponent, {
+  width: '500px',
+  data: { title: 'Test Dialog' },
+});
+```
+
+4. **Test Dialog Results**: Verify that the component handles dialog results correctly:
+
+```typescript
+component.openDialog();
+expect(component.dialogResult).toBe('dialog result');
+```
+
+5. **Testing Dialog Components**: When testing the dialog component itself:
+
+```typescript
+// Create mock for MatDialogRef and MAT_DIALOG_DATA
+const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+const mockDialogData = { title: 'Test Title', notes: 'Test Notes' };
+
+// Configure TestBed with the mocks
+TestBed.configureTestingModule({
+  imports: [
+    // Required Angular Material modules
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    NoopAnimationsModule, // Important for Material animations
+    DialogComponent, // If it's a standalone component
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+    { provide: MatDialogRef, useValue: dialogRefSpy },
+  ],
+});
+```
+
+6. **Testing Dialog Actions**: Test that dialog actions (like close, save, cancel) work correctly:
+
+```typescript
+it('should close the dialog with result when save is clicked', () => {
+  component.result = 'Updated Result';
+  component.onSave();
+  expect(dialogRefSpy.close).toHaveBeenCalledWith('Updated Result');
+});
+
+it('should close the dialog with no result when cancel is clicked', () => {
+  component.onCancel();
+  expect(dialogRefSpy.close).toHaveBeenCalledWith();
+});
+```
+
+7. **Testing Dialog Initialization**: Verify that the dialog initializes with the provided data:
+
+```typescript
+it('should initialize with the provided data', () => {
+  expect(component.title).toBe('Test Title');
+  expect(component.notes).toBe('Test Notes');
+});
+```
+
+8. **Testing Dialog Content**: Test that the dialog displays the correct content:
+
+```typescript
+it('should display the dialog title', () => {
+  const titleElement = fixture.nativeElement.querySelector('h2');
+  expect(titleElement.textContent).toBe('Test Title');
+});
+```
+
+### Form Control Testing
+
+When testing components with form controls:
+
+1. **Import Required Modules**: Make sure to import ReactiveFormsModule or FormsModule in your test module:
+
+```typescript
+TestBed.configureTestingModule({
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NoopAnimationsModule, // Required for animations in Material components
+  ],
+});
+```
+
+2. **Test Form Initialization**: Verify that form controls are initialized correctly:
+
+```typescript
+it('should initialize the form with default values', () => {
+  expect(component.form.get('name').value).toBe('');
+  expect(component.form.get('email').value).toBe('');
+});
+```
+
+3. **Test Form Validation**: Verify that form validation works correctly:
+
+```typescript
+it('should validate required fields', () => {
+  const nameControl = component.form.get('name');
+  nameControl.setValue('');
+  expect(nameControl.valid).toBeFalse();
+  expect(nameControl.hasError('required')).toBeTrue();
+
+  nameControl.setValue('Test Name');
+  expect(nameControl.valid).toBeTrue();
+});
+```
+
+4. **Test Form Submission**: Verify that form submission works correctly:
+
+```typescript
+it('should submit the form when valid', () => {
+  spyOn(component, 'onSubmit').and.callThrough();
+  spyOn(userService, 'updateUser').and.returnValue(of({}));
+
+  component.form.setValue({
+    name: 'Test Name',
+    email: 'test@example.com',
+  });
+
+  const submitButton = fixture.debugElement.query(By.css('button[type="submit"]'));
+  submitButton.nativeElement.click();
+
+  expect(component.onSubmit).toHaveBeenCalled();
+  expect(userService.updateUser).toHaveBeenCalledWith({
+    name: 'Test Name',
+    email: 'test@example.com',
+  });
+});
 ```
 
 ## Testing Map Components

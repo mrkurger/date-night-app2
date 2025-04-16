@@ -198,6 +198,12 @@ if (mongoose.models.User) {
           isDefault: Boolean,
         },
       ],
+      // Virtual reference to favorites
+      favorites: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Ad',
+        default: [],
+      },
       createdAt: {
         type: Date,
         default: Date.now,

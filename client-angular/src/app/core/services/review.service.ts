@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Review } from '../models/review.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +36,42 @@ export class ReviewService {
   ): Observable<any> {
     return this.http.get(
       `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`
+    );
+  }
+
+  /**
+   * Get reviews for an advertiser (typed version)
+   * @param advertiserId Advertiser ID
+   * @param page Page number
+   * @param limit Items per page
+   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
+   */
+  getReviewsByAdvertiser(
+    advertiserId: string,
+    page = 1,
+    limit = 10,
+    sort = 'newest'
+  ): Observable<{ reviews: Review[]; totalPages: number; totalReviews: number }> {
+    return this.http.get<{ reviews: Review[]; totalPages: number; totalReviews: number }>(
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`
+    );
+  }
+
+  /**
+   * Get reviews for an ad
+   * @param adId Ad ID
+   * @param page Page number
+   * @param limit Items per page
+   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
+   */
+  getReviewsByAd(
+    adId: string,
+    page = 1,
+    limit = 10,
+    sort = 'newest'
+  ): Observable<{ reviews: Review[]; totalPages: number; totalReviews: number }> {
+    return this.http.get<{ reviews: Review[]; totalPages: number; totalReviews: number }>(
+      `${this.apiUrl}/ad/${adId}?page=${page}&limit=${limit}&sort=${sort}`
     );
   }
 
@@ -123,5 +161,31 @@ export class ReviewService {
    */
   rejectReview(reviewId: string, moderationNotes: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/reject/${reviewId}`, { moderationNotes });
+  }
+
+  /**
+   * Get review statistics for an advertiser
+   * @param advertiserId Advertiser ID
+   */
+  getReviewStats(advertiserId: string): Observable<{
+    averageRating: number;
+    totalReviews: number;
+    categoryAverages: {
+      communication: number;
+      appearance: number;
+      location: number;
+      value: number;
+    };
+  }> {
+    return this.http.get<{
+      averageRating: number;
+      totalReviews: number;
+      categoryAverages: {
+        communication: number;
+        appearance: number;
+        location: number;
+        value: number;
+      };
+    }>(`${this.apiUrl}/stats/${advertiserId}`);
   }
 }

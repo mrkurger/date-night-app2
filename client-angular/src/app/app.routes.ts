@@ -55,6 +55,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'favorites',
+    loadChildren: () =>
+      import('./features/favorites/favorites.module').then(m => m.FavoritesModule),
+    canActivate: [AuthGuard],
+    data: { title: 'My Favorites' },
+  },
+  {
     path: 'gallery',
     loadComponent: () =>
       import('./features/gallery/gallery.component').then(m => m.GalleryComponent),

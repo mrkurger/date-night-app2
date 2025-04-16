@@ -22,6 +22,12 @@ This document contains lessons learned by the AI while working on the Date Night
   - [ESLint Configuration](#eslint-configuration)
   - [NPM Scripts](#npm-scripts)
   - [Common Issues](#common-issues)
+- [Code Duplication Patterns](#code-duplication-patterns)
+  - [Utility Functions](#utility-functions)
+  - [HTTP Error Handling](#http-error-handling)
+- [Documentation Best Practices](#documentation-best-practices)
+  - [Purpose-Specific Documentation](#purpose-specific-documentation)
+  - [Implementation vs. Verification](#implementation-vs-verification)
 
 ## Backend Testing
 
@@ -595,3 +601,114 @@ For projects with many warnings that need to be addressed over time:
    - When mocking these arrays, you need to explicitly add these methods to your mock objects
    - Structure your mock objects to match the actual implementation, including array-like properties (indexes, length)
    - Use Jest's `mockImplementation` to create proper behavior for methods like `id()`, `find()`, etc.
+
+## Code Duplication Patterns
+
+### Utility Functions
+
+1. **Validation Utilities**: When implementing validation utilities:
+
+   - Create a dedicated utility file for all validation functions
+   - Use TypeScript function signatures with clear parameter and return types
+   - Include comprehensive JSDoc comments for each function
+   - Implement thorough unit tests with both valid and invalid test cases
+   - Consider configurability for functions with multiple validation rules
+   - Use consistent error handling patterns across all validation functions
+
+2. **String Manipulation Utilities**: When implementing string utilities:
+   - Centralize all string manipulation functions in a single utility file
+   - Handle edge cases like null/undefined inputs gracefully
+   - Support internationalization where appropriate (e.g., date formatting)
+   - Use native JavaScript methods where possible for better performance
+   - Include comprehensive unit tests with various input formats
+   - Consider performance implications for functions used in loops or with large strings
+
+### HTTP Error Handling
+
+1. **Centralized Error Interceptor**: When implementing HTTP error handling:
+
+   - Use Angular's HTTP interceptor mechanism for centralized error handling
+   - Implement configurable retry logic with exponential backoff
+   - Categorize errors with specific error codes for easier handling
+   - Provide both user-friendly messages and technical details
+   - Sanitize sensitive information in error logs
+   - Include request context in error details for debugging
+   - Add comprehensive unit tests for different error scenarios
+   - Make the interceptor configurable to adapt to different application needs
+
+2. **Error Response Structure**: Standardize error response structure:
+   - Use consistent error codes across the application
+   - Include both user-facing messages and technical details
+   - Add timestamps to error responses for troubleshooting
+   - Include request identifiers for correlation with server logs
+   - Structure error details in a way that's easy to consume by error handling components
+
+## Documentation Best Practices
+
+### Purpose-Specific Documentation
+
+1. **Respect Document Purpose**: Each documentation file has a specific purpose and should only be updated for that purpose:
+
+   - `CHANGELOG.md`: Document changes made to the codebase with dates and descriptions
+   - `DUPLICATES.md`: Track code duplication and refactoring status, not feature implementations
+   - `IMPLEMENTATION_SUMMARY.md`: Summarize implemented features and their details
+   - `UnitTestingLessons.md`: Document lessons learned about unit testing
+   - `AILessons.md`: Document general lessons learned by the AI during development
+
+2. **Avoid Cross-Purpose Updates**: Do not update documents for purposes they weren't designed for:
+
+   ```
+   // INCORRECT: Updating DUPLICATES.md to mark a feature as completed
+   | Review Display | Multiple components | Extract to shared review components | Completed |
+
+   // CORRECT: Only update DUPLICATES.md when refactoring duplicated code
+   | Review Display | Multiple components | Extract to shared review components | Pending |
+   ```
+
+3. **Document Verification vs. Implementation**: Be clear about whether you're documenting verification of existing features or implementation of new ones:
+
+   ```
+   // INCORRECT: Claiming implementation when only verifying
+   "Implemented comprehensive reviews and ratings system"
+
+   // CORRECT: Clearly indicating verification
+   "Verified existing implementation of reviews and ratings system"
+   ```
+
+### Implementation vs. Verification
+
+1. **Be Precise About Contributions**: When documenting work, be precise about what was actually done:
+
+   - **Implementation**: Creating new code or functionality that didn't exist before
+   - **Verification**: Confirming that existing code works as expected
+   - **Documentation**: Describing existing functionality without changing it
+   - **Enhancement**: Improving existing functionality without changing its core behavior
+
+2. **Use Appropriate Verbs**: Choose verbs that accurately reflect the work performed:
+
+   - "Implemented" or "Created" for new features
+   - "Verified" or "Confirmed" for checking existing features
+   - "Documented" or "Described" for adding documentation
+   - "Enhanced" or "Improved" for making existing features better
+
+3. **Changelog Accuracy**: Ensure changelog entries accurately reflect the nature of changes:
+
+   ```
+   // INCORRECT
+   ### Added
+   - Implemented reviews and ratings system
+
+   // CORRECT (if only verifying)
+   ### Documentation
+   - Verified and documented existing reviews and ratings system
+   ```
+
+4. **Avoid Claiming Credit**: Don't claim credit for implementing features that were already in place:
+
+   ```
+   // INCORRECT: Taking credit for existing work
+   "I implemented the geocoding service with multiple fallback strategies"
+
+   // CORRECT: Acknowledging existing implementation
+   "The geocoding service is well-implemented with multiple fallback strategies"
+   ```
