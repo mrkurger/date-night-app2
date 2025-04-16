@@ -75,25 +75,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
    * Height of the map container (CSS value)
    * @default '400px'
    */
-  @Input() height: string = '400px';
+  @Input() height = '400px';
 
   /**
    * Initial latitude for map center
    * @default 59.9139 (Oslo, Norway)
    */
-  @Input() initialLatitude: number = 59.9139; // Oslo, Norway
+  @Input() initialLatitude = 59.9139; // Oslo, Norway
 
   /**
    * Initial longitude for map center
    * @default 10.7522 (Oslo, Norway)
    */
-  @Input() initialLongitude: number = 10.7522; // Oslo, Norway
+  @Input() initialLongitude = 10.7522; // Oslo, Norway
 
   /**
    * Initial zoom level
    * @default 6
    */
-  @Input() initialZoom: number = 6;
+  @Input() initialZoom = 6;
 
   /**
    * Array of markers to display on the map
@@ -105,13 +105,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
    * Whether the map allows location selection via clicking
    * @default false
    */
-  @Input() selectable: boolean = false;
+  @Input() selectable = false;
 
   /**
    * Whether to show the user's current location on the map
    * @default false
    */
-  @Input() showCurrentLocation: boolean = false;
+  @Input() showCurrentLocation = false;
 
   /**
    * Event emitted when a marker is clicked

@@ -285,8 +285,8 @@ export class EncryptionService {
 
     // Export our public key for the server
     return from(this.exportKeyPair(this.keyPair)).pipe(
-      switchMap(keys => {
-        return this.http.post<{
+      switchMap(keys =>
+        this.http.post<{
           success: boolean;
           encryptedKey?: string;
           isNewSetup?: boolean;
@@ -294,8 +294,8 @@ export class EncryptionService {
         }>(`${this.apiUrl}/setup-room`, {
           roomId,
           publicKey: keys.publicKey,
-        });
-      }),
+        })
+      ),
       switchMap(async response => {
         if (!response.success) {
           console.error('Server reported failure in room encryption setup');
@@ -657,14 +657,14 @@ export class EncryptionService {
     }
 
     return from(this.exportKeyPair(this.keyPair)).pipe(
-      switchMap(keys => {
-        return this.http.post<{
+      switchMap(keys =>
+        this.http.post<{
           success: boolean;
           roomKeyId?: string;
         }>(`${this.apiUrl}/rotate-key/${roomId}`, {
           publicKey: keys.publicKey,
-        });
-      }),
+        })
+      ),
       switchMap(async response => {
         if (!response.success) {
           console.error('Server reported failure in key rotation');

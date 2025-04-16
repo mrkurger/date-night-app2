@@ -203,14 +203,14 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
   ],
 })
 export class ReviewSummaryComponent implements OnInit {
-  @Input() advertiserId: string = '';
-  @Input() title: string = 'Ratings & Reviews';
-  @Input() showCategoryRatings: boolean = true;
-  @Input() showWriteReviewButton: boolean = true;
+  @Input() advertiserId = '';
+  @Input() title = 'Ratings & Reviews';
+  @Input() showCategoryRatings = true;
+  @Input() showWriteReviewButton = true;
   @Input() writeReviewClicked = new EventEmitter<void>();
 
   ratings: AdvertiserRatings | null = null;
-  loading: boolean = false;
+  loading = false;
 
   constructor(private reviewService: ReviewService) {}
 

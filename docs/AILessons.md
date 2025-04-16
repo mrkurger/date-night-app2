@@ -1429,7 +1429,69 @@ When implementing a favorites system in a web application, several patterns and 
 
 Batch operations allow users to perform actions on multiple items at once, improving efficiency and user experience. Key implementation patterns include:
 
-1. **Consistent API Design**: Design batch endpoints with consistent patterns:
+1. **Client-Side Batch Operations**: Two main approaches for client-side batch operations:
+
+   ```typescript
+   // Approach 1: Using Promise.all with firstValueFrom
+   const updatePromises = selectedItems.map(itemId =>
+     firstValueFrom(this.itemService.updateItem(itemId, newData))
+   );
+
+   Promise.all(updatePromises)
+     .then(() => {
+       // Update local state
+       this.items.forEach(item => {
+         if (this.selectedItems.includes(item.id)) {
+           // Update item properties
+           item.property = newValue;
+         }
+       });
+       this.notificationService.success(`Updated ${this.selectedItems.length} items`);
+     })
+     .catch(error => {
+       console.error('Error in batch operation:', error);
+       this.notificationService.error('Failed to update some items');
+     });
+
+   // Approach 2: Using individual subscriptions with counters
+   let completed = 0;
+   let failed = 0;
+
+   this.selectedItems.forEach(itemId => {
+     this.itemService.updateItem(itemId, newData).subscribe({
+       next: () => {
+         completed++;
+
+         // Find and update the item in the list
+         const item = this.items.find(i => i.id === itemId);
+         if (item) {
+           item.property = newValue;
+         }
+
+         // When all operations are complete
+         if (completed + failed === this.selectedItems.length) {
+           this.notificationService.success(`Updated ${completed} items`);
+           if (failed > 0) {
+             this.notificationService.error(`Failed to update ${failed} items`);
+           }
+         }
+       },
+       error: () => {
+         failed++;
+
+         // When all operations are complete
+         if (completed + failed === this.selectedItems.length) {
+           if (completed > 0) {
+             this.notificationService.success(`Updated ${completed} items`);
+           }
+           this.notificationService.error(`Failed to update ${failed} items`);
+         }
+       },
+     });
+   });
+   ```
+
+2. **Server-Side Batch Endpoints**: Design batch endpoints with consistent patterns:
 
 ```typescript
 // Controller method for batch operations

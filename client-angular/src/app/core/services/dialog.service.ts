@@ -128,7 +128,12 @@ export class DialogService {
       width: '500px',
       maxWidth: '95vw',
       disableClose: false,
-      data,
+      data: {
+        title: data.title,
+        tags: data.tags || [],
+        suggestedTags: data.suggestedTags || [],
+        maxTags: data.maxTags || 20,
+      },
     });
 
     return dialogRef.afterClosed();

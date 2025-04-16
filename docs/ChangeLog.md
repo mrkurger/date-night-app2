@@ -4,9 +4,13 @@
 
 ### New Features
 
-- **Workflow Error Monitoring**: Added a new workflow (`sync-workflow-errors.yml`) that automatically collects logs from failed GitHub Actions workflows
+- **Workflow Error Monitoring**: Added a new workflow (`sync-workflow-errors-fixed.yml`) that automatically collects logs from failed GitHub Actions workflows
 - **Error Analysis Tool**: Created a script (`scripts/analyze-workflow-errors.js`) to analyze workflow error logs and generate reports with recommendations
 - **Automated Reporting**: The system automatically identifies common error patterns and provides specific recommendations for fixing them
+
+### Fixed
+
+- **Workflow Compatibility**: Fixed compatibility issues with the Octokit library by removing the throttling plugin and using a more stable version of the REST API client
 
 ## 2025-04-16: Security Fixes and Workflow Improvements
 

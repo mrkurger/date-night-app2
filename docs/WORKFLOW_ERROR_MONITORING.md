@@ -10,7 +10,7 @@ The workflow error monitoring system automatically collects logs from failed Git
 
 ### 1. Log Collection Workflow
 
-The `sync-workflow-errors.yml` workflow is responsible for collecting logs from failed workflows:
+The `sync-workflow-errors-fixed.yml` workflow is responsible for collecting logs from failed workflows:
 
 - **Trigger**: Runs after any workflow completes, on a schedule (every 6 hours), or manually
 - **Permissions**: Requires `contents: write` and `actions: read` permissions
@@ -92,7 +92,7 @@ This will create a report at `workflow-error-report.md` with:
 You can manually trigger the log collection workflow:
 
 1. Go to the "Actions" tab in the GitHub repository
-2. Select the "Sync Workflow Error Logs" workflow
+2. Select the "Sync Workflow Error Logs" workflow (using the fixed version)
 3. Click "Run workflow"
 4. Select the branch and click "Run workflow"
 
