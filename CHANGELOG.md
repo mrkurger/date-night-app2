@@ -1,5 +1,25 @@
 # Change Log
 
+## 2024-05-10
+
+### Security & Dependencies
+- Updated dependencies to address security vulnerabilities and improve stability:
+  - Updated `semver` from 7.6.0 to 7.7.1
+    - Includes bug fixes and performance improvements
+    - Updated in both root package.json and server package.json overrides
+  - Updated `nodemon` from 3.1.0 to 3.1.9
+    - Includes stability improvements and bug fixes
+    - Updated in server package.json
+  - Added override for `vite` to ensure version 6.2.6 or later
+    - Addresses security vulnerabilities in earlier versions
+    - Added to all package.json files (root, server, client-angular)
+  - Removed deprecated `csurf` package
+    - Replaced by the already-implemented `csrf-csrf` package
+    - Addresses security vulnerabilities in the deprecated package
+  - Added override for `cookie` to ensure version 0.7.2 or later
+    - Addresses security vulnerabilities in earlier versions
+    - Resolves dependency conflicts between packages requiring different versions
+
 ## 2024-05-09
 
 ### Added
