@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for payment.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -19,18 +18,13 @@ const routes: Routes = [
   {
     path: '',
     component: PaymentComponent,
-    canActivate: [AuthGuard]
-  }
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    PaymentComponent
-  ],
-  exports: []
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), PaymentComponent],
+  exports: [],
 })
-export class PaymentModule { }
+export class PaymentModule {}

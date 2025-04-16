@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (gallery.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -30,21 +29,23 @@ import { MaterialModule } from '../../shared/material.module';
       </mat-card>
     </div>
   `,
-  styles: [`
-    .gallery-container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      padding: 16px;
-    }
-  `],
+  styles: [
+    `
+      .gallery-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 16px;
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule]
+  imports: [CommonModule, RouterModule, MaterialModule],
 })
 export class GalleryComponent implements OnInit {
   ngOnInit(): void {

@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (travel.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -123,7 +122,9 @@ class TravelService {
 
       // Check if user is the advertiser
       if (ad.advertiser.toString() !== userId) {
-        logger.warn(`Unauthorized attempt to update itinerary ${itineraryId} for ad ${adId} by user ${userId}`);
+        logger.warn(
+          `Unauthorized attempt to update itinerary ${itineraryId} for ad ${adId} by user ${userId}`
+        );
         throw new AppError('You are not authorized to update this ad', 403);
       }
 
@@ -138,7 +139,7 @@ class TravelService {
         updates.destination.location = await this.geocodeLocation(
           updates.destination.city || itinerary.destination.city,
           updates.destination.county || itinerary.destination.county,
-          (updates.destination.country || itinerary.destination.country || 'Norway')
+          updates.destination.country || itinerary.destination.country || 'Norway'
         );
       }
 
@@ -182,7 +183,9 @@ class TravelService {
 
       // Check if user is the advertiser
       if (ad.advertiser.toString() !== userId) {
-        logger.warn(`Unauthorized attempt to cancel itinerary ${itineraryId} for ad ${adId} by user ${userId}`);
+        logger.warn(
+          `Unauthorized attempt to cancel itinerary ${itineraryId} for ad ${adId} by user ${userId}`
+        );
         throw new AppError('You are not authorized to update this ad', 403);
       }
 
@@ -299,7 +302,9 @@ class TravelService {
       const cachedData = cache.get(cacheKey);
 
       if (cachedData) {
-        logger.debug(`Cache hit for upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead})`);
+        logger.debug(
+          `Cache hit for upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead})`
+        );
         return cachedData;
       }
 
@@ -312,7 +317,10 @@ class TravelService {
 
       return ads;
     } catch (error) {
-      logger.error(`Error finding upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead}):`, error);
+      logger.error(
+        `Error finding upcoming tours (city: ${city}, county: ${county}, days: ${daysAhead}):`,
+        error
+      );
       throw new AppError(error.message || 'Failed to find upcoming tours', 500);
     }
   }
@@ -344,7 +352,10 @@ class TravelService {
 
       return ads;
     } catch (error) {
-      logger.error(`Error finding ads by location (${longitude}, ${latitude}, ${maxDistance}m):`, error);
+      logger.error(
+        `Error finding ads by location (${longitude}, ${latitude}, ${maxDistance}m):`,
+        error
+      );
       throw new AppError(error.message || 'Failed to find ads by location', 500);
     }
   }
@@ -359,7 +370,7 @@ class TravelService {
     try {
       // Find users who follow this advertiser
       const followers = await User.find({
-        'following.advertiser': adId
+        'following.advertiser': adId,
       });
 
       if (followers.length === 0) {
@@ -377,9 +388,9 @@ class TravelService {
           itineraryId: itinerary._id,
           destination: itinerary.destination.city,
           arrivalDate: itinerary.arrivalDate,
-          departureDate: itinerary.departureDate
+          departureDate: itinerary.departureDate,
         },
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
       // Send notification to each follower
@@ -389,7 +400,9 @@ class TravelService {
 
       await Promise.allSettled(notificationPromises);
 
-      logger.info(`Sent travel itinerary notifications to ${followers.length} followers for ad ${adId}`);
+      logger.info(
+        `Sent travel itinerary notifications to ${followers.length} followers for ad ${adId}`
+      );
     } catch (error) {
       logger.error(`Error notifying followers about itinerary for ad ${adId}:`, error);
       // Don't throw here to prevent the main operation from failing
@@ -406,7 +419,7 @@ class TravelService {
     try {
       // Find users who follow this advertiser
       const followers = await User.find({
-        'following.advertiser': adId
+        'following.advertiser': adId,
       });
 
       if (followers.length === 0) {
@@ -423,9 +436,9 @@ class TravelService {
           adId,
           itineraryId: itinerary._id,
           destination: itinerary.destination.city,
-          cancelled: true
+          cancelled: true,
         },
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
       // Send notification to each follower
@@ -435,7 +448,9 @@ class TravelService {
 
       await Promise.allSettled(notificationPromises);
 
-      logger.info(`Sent cancellation notifications to ${followers.length} followers for ad ${adId}`);
+      logger.info(
+        `Sent cancellation notifications to ${followers.length} followers for ad ${adId}`
+      );
     } catch (error) {
       logger.error(`Error notifying followers about cancellation for ad ${adId}:`, error);
       // Don't throw here to prevent the main operation from failing
@@ -460,7 +475,7 @@ class TravelService {
 
       return {
         type: 'Point',
-        coordinates: [10.7522, 59.9139] // Oslo coordinates as default
+        coordinates: [10.7522, 59.9139], // Oslo coordinates as default
       };
     } catch (error) {
       logger.error(`Error geocoding location (${city}, ${county}, ${country}):`, error);

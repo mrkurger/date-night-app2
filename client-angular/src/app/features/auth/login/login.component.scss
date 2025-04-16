@@ -65,13 +65,13 @@
   border-radius: $border-radius-md;
   font-size: $font-size-base;
   transition: border-color $transition-normal $transition-ease;
-  
+
   &:focus {
     outline: none;
     border-color: $primary-500;
     box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
   }
-  
+
   &.is-invalid {
     border-color: $error;
   }
@@ -112,11 +112,11 @@
   font-weight: $font-weight-semibold;
   cursor: pointer;
   transition: background-color $transition-normal $transition-ease;
-  
+
   &:hover {
     background-color: $primary-600;
   }
-  
+
   &:disabled {
     background-color: $neutral-400;
     cursor: not-allowed;
@@ -133,12 +133,12 @@
 .register-link {
   font-size: $font-size-sm;
   color: $neutral-700;
-  
+
   a {
     color: $primary-500;
     text-decoration: none;
     font-weight: $font-weight-semibold;
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -157,8 +157,9 @@
   color: $neutral-600;
   text-align: center;
   position: relative;
-  
-  &::before, &::after {
+
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -166,11 +167,11 @@
     height: 1px;
     background-color: $neutral-300;
   }
-  
+
   &::before {
     left: 0;
   }
-  
+
   &::after {
     right: 0;
   }
@@ -194,22 +195,22 @@
   border: none;
   cursor: pointer;
   transition: all $transition-normal $transition-ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: $shadow-md;
   }
-  
+
   &--google {
-    background-color: #DB4437;
+    background-color: #db4437;
     color: $neutral-100;
   }
-  
+
   &--facebook {
-    background-color: #4267B2;
+    background-color: #4267b2;
     color: $neutral-100;
   }
-  
+
   &--apple {
     background-color: #000000;
     color: $neutral-100;
@@ -221,13 +222,13 @@
   margin-bottom: $spacing-4;
   border-radius: $border-radius-md;
   font-size: $font-size-sm;
-  
+
   &-danger {
     background-color: rgba($error, 0.1);
     color: $error-dark;
     border: 1px solid rgba($error, 0.2);
   }
-  
+
   &-success {
     background-color: rgba($success, 0.1);
     color: darken($success, 10%);
@@ -248,7 +249,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // Responsive styles
@@ -256,15 +259,15 @@
   .login-container {
     padding: $spacing-4;
   }
-  
+
   .login-card {
     box-shadow: none;
   }
-  
+
   .login-header {
     padding: $spacing-4;
   }
-  
+
   .login-body {
     padding: $spacing-4;
   }

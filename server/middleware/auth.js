@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for auth settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -32,7 +31,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Authentication required. No token provided.'
+        message: 'Authentication required. No token provided.',
       });
     }
 
@@ -41,7 +40,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (isBlacklisted) {
       return res.status(401).json({
         success: false,
-        message: 'Token has been revoked. Please log in again.'
+        message: 'Token has been revoked. Please log in again.',
       });
     }
 
@@ -54,7 +53,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'User not found'
+        message: 'User not found',
       });
     }
 
@@ -62,7 +61,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (user.securityLockout && user.securityLockout > new Date()) {
       return res.status(401).json({
         success: false,
-        message: 'Account locked for security reasons. Please reset your password.'
+        message: 'Account locked for security reasons. Please reset your password.',
       });
     }
 
@@ -70,7 +69,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (user.passwordChangedAt && decoded.iat < user.passwordChangedAt.getTime() / 1000) {
       return res.status(401).json({
         success: false,
-        message: 'Password has been changed. Please log in again.'
+        message: 'Password has been changed. Please log in again.',
       });
     }
 
@@ -88,21 +87,21 @@ exports.protect = exports.authenticate = async (req, res, next) => {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({
         success: false,
-        message: 'Token expired'
+        message: 'Token expired',
       });
     }
 
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({
         success: false,
-        message: 'Invalid token'
+        message: 'Invalid token',
       });
     }
 
     res.status(500).json({
       success: false,
       message: 'Authentication error',
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -178,14 +177,14 @@ exports.restrictTo = (...roles) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        message: 'Authentication required'
+        message: 'Authentication required',
       });
     }
 
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        message: 'You do not have permission to perform this action'
+        message: 'You do not have permission to perform this action',
       });
     }
 

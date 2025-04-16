@@ -1,14 +1,13 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-list.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MaterialModule } from '../../../shared/material.module';
@@ -21,9 +20,9 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule]
+  imports: [CommonModule, RouterModule, MaterialModule],
 })
-export class AdListComponent {
+export class AdListComponent implements OnInit {
   ads: any[] = [];
   loading = false;
   error = '';
@@ -45,20 +44,20 @@ export class AdListComponent {
       this.router.navigate(['/auth/login']);
       return;
     }
-    
+
     this.loading = true;
-    
+
     this.adService.getUserAds(currentUser.id).subscribe({
-      next: (ads) => {
+      next: ads => {
         this.ads = ads;
         this.loading = false;
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to load ads';
         this.loading = false;
         this.notificationService.error('Failed to load your ads');
         console.error(err);
-      }
+      },
     });
   }
 
@@ -81,10 +80,10 @@ export class AdListComponent {
           this.notificationService.success('Ad deleted successfully');
           this.loadAds(); // Reload the list
         },
-        error: (err) => {
+        error: err => {
           this.notificationService.error('Failed to delete ad');
           console.error(err);
-        }
+        },
       });
     }
   }

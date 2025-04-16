@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-management.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -21,13 +20,7 @@ import { MatTabNav } from '@angular/material/tabs';
   templateUrl: './ad-management.component.html',
   styleUrls: ['./ad-management.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterOutlet,
-    MaterialModule,
-    MatTabNav
-  ]
+  imports: [CommonModule, RouterModule, RouterOutlet, MaterialModule, MatTabNav],
 })
 export class AdManagementComponent implements OnInit {
   ads: any[] = [];

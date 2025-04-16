@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (floating-action-button.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - BUTTON_SIZE: Size of the button in pixels (default: varies by size prop)
 //   Related to: floating-action-button.component.scss
@@ -14,10 +14,10 @@ import { CommonModule } from '@angular/common';
 
 /**
  * Emerald FloatingActionButton Component
- * 
+ *
  * A floating action button for primary actions.
  * This component provides a prominent way to promote a primary action.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
  */
 @Component({
@@ -25,88 +25,89 @@ import { CommonModule } from '@angular/common';
   templateUrl: './floating-action-button.component.html',
   styleUrls: ['./floating-action-button.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class FloatingActionButtonComponent {
   /**
    * The icon to display in the button
    * Uses Font Awesome icons (e.g., 'fa-plus')
    */
-  @Input() icon: string = 'fa-plus';
-  
+  @Input() icon = 'fa-plus';
+
   /**
    * The label for the button (for accessibility)
    */
-  @Input() label: string = 'Action';
-  
+  @Input() label = 'Action';
+
   /**
    * The color variant of the button
    */
   @Input() color: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' = 'primary';
-  
+
   /**
    * The size of the button
    */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
-  
+
   /**
    * The position of the button
    */
-  @Input() position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center' = 'bottom-right';
-  
+  @Input() position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center' =
+    'bottom-right';
+
   /**
    * Whether to show a tooltip on hover
    */
-  @Input() showTooltip: boolean = false;
-  
+  @Input() showTooltip = false;
+
   /**
    * The text to display in the tooltip
    */
-  @Input() tooltipText: string = '';
-  
+  @Input() tooltipText = '';
+
   /**
    * Whether the button is disabled
    */
-  @Input() disabled: boolean = false;
-  
+  @Input() disabled = false;
+
   /**
    * Whether to show a menu of actions when clicked
    */
-  @Input() hasMenu: boolean = false;
-  
+  @Input() hasMenu = false;
+
   /**
    * The menu items to display
    */
   @Input() menuItems: { icon: string; label: string; action?: string }[] = [];
-  
+
   /**
    * Whether the menu is currently open
    */
-  @Input() menuOpen: boolean = false;
-  
+  @Input() menuOpen = false;
+
   /**
    * Emitted when the button is clicked
    */
   @Output() buttonClick = new EventEmitter<void>();
-  
+
   /**
    * Emitted when a menu item is clicked
    */
   @Output() menuItemClick = new EventEmitter<{ icon: string; label: string; action?: string }>();
-  
+
   /**
    * Toggle the menu open/closed
    */
   toggleMenu(event: Event): void {
     event.stopPropagation();
-    
+
     if (this.hasMenu) {
       this.menuOpen = !this.menuOpen;
     } else {
       this.buttonClick.emit();
     }
   }
-  
+
   /**
    * Handle menu item click
    */
@@ -115,7 +116,7 @@ export class FloatingActionButtonComponent {
     this.menuItemClick.emit(item);
     this.menuOpen = false;
   }
-  
+
   /**
    * Close the menu when clicking outside
    */

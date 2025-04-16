@@ -4,9 +4,9 @@
 
 As part of the standardization of Angular component file naming conventions, the following files have been deleted as they were no longer used:
 
-1. ✅ `/Users/oivindlund/date-night-app/client-angular/src/app/app.component.new.html` - DELETED
-2. ✅ `/Users/oivindlund/date-night-app/client-angular/src/app/app.component.new.css` - DELETED
-3. ✅ `/Users/oivindlund/date-night-app/client-angular/src/app/app.component.css` - DELETED
+1. ✅ `/client-angular/src/app/app.component.new.html` - DELETED
+2. ✅ `/client-angular/src/app/app.component.new.css` - DELETED
+3. ✅ `/client-angular/src/app/app.component.css` - DELETED
 
 These files were previously used but have been replaced with standard Angular naming conventions:
 - `app.component.html` (instead of app.component.new.html)

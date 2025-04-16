@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (advertiser-profile.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -23,7 +22,7 @@ import { Ad } from '../../core/models/ad.interface';
   templateUrl: './advertiser-profile.component.html',
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;
@@ -32,7 +31,7 @@ export class AdvertiserProfileComponent implements OnInit {
   isOwner = false;
   editMode = false;
   adForm: FormGroup;
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -48,10 +47,10 @@ export class AdvertiserProfileComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
       isTouring: [false],
-      tags: ['']
+      tags: [''],
     });
   }
-  
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const adId = params.get('id');
@@ -63,21 +62,21 @@ export class AdvertiserProfileComponent implements OnInit {
       }
     });
   }
-  
+
   loadAd(adId: string): void {
     this.loading = true;
     this.adService.getAdById(adId).subscribe({
-      next: (ad) => {
+      next: ad => {
         this.ad = ad;
         this.loading = false;
-        
+
         // Check if current user is the owner
         this.authService.currentUser$.subscribe(user => {
           if (user && ad.userId === user._id) {
             this.isOwner = true;
           }
         });
-        
+
         // Initialize form with ad data
         this.adForm.patchValue({
           title: ad.title,
@@ -86,55 +85,58 @@ export class AdvertiserProfileComponent implements OnInit {
           price: ad.price || 0,
           category: ad.category,
           isTouring: ad.isTouring || false,
-          tags: ad.tags ? ad.tags.join(', ') : ''
+          tags: ad.tags ? ad.tags.join(', ') : '',
         });
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to load ad details';
         this.loading = false;
         console.error('Error loading ad:', err);
-      }
+      },
     });
   }
-  
+
   toggleEditMode(): void {
     this.editMode = !this.editMode;
   }
-  
+
   saveChanges(): void {
     if (this.adForm.invalid) {
       this.notificationService.error('Please fix the form errors before submitting');
       return;
     }
-    
+
     if (!this.ad) return;
-    
+
     const updatedAd = {
       ...this.ad,
       ...this.adForm.value,
-      tags: this.adForm.value.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag)
+      tags: this.adForm.value.tags
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag),
     };
-    
+
     this.loading = true;
     this.adService.updateAd(this.ad._id, updatedAd).subscribe({
-      next: (ad) => {
+      next: ad => {
         this.ad = ad;
         this.loading = false;
         this.editMode = false;
         this.notificationService.success('Ad updated successfully');
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to update ad';
         this.loading = false;
         console.error('Error updating ad:', err);
         this.notificationService.error('Failed to update ad');
-      }
+      },
     });
   }
-  
+
   cancelEdit(): void {
     this.editMode = false;
-    
+
     // Reset form to original values
     if (this.ad) {
       this.adForm.patchValue({
@@ -144,14 +146,14 @@ export class AdvertiserProfileComponent implements OnInit {
         price: this.ad.price || 0,
         category: this.ad.category,
         isTouring: this.ad.isTouring || false,
-        tags: this.ad.tags ? this.ad.tags.join(', ') : ''
+        tags: this.ad.tags ? this.ad.tags.join(', ') : '',
       });
     }
   }
-  
+
   deleteAd(): void {
     if (!this.ad) return;
-    
+
     if (confirm('Are you sure you want to delete this ad? This action cannot be undone.')) {
       this.loading = true;
       this.adService.deleteAd(this.ad._id).subscribe({
@@ -160,34 +162,34 @@ export class AdvertiserProfileComponent implements OnInit {
           // Navigate to my ads page
           this.router.navigateByUrl('/my-ads');
         },
-        error: (err) => {
+        error: err => {
           this.error = 'Failed to delete ad';
           this.loading = false;
           console.error('Error deleting ad:', err);
           this.notificationService.error('Failed to delete ad');
-        }
+        },
       });
     }
   }
-  
+
   upgradeToFeatured(): void {
     if (!this.ad) return;
-    
+
     // Navigate to upgrade page with ad ID
     this.router.navigateByUrl(`/upgrade?adId=${this.ad._id}`);
   }
-  
-  getMediaUrl(index: number = 0): string {
+
+  getMediaUrl(index = 0): string {
     if (!this.ad) return '/assets/images/default-profile.jpg';
-    
+
     if (this.ad.media && this.ad.media.length > index) {
       return this.ad.media[index].url;
     }
-    
+
     if (this.ad.images && this.ad.images.length > index) {
       return this.ad.images[index];
     }
-    
+
     return '/assets/images/default-profile.jpg';
   }
 }

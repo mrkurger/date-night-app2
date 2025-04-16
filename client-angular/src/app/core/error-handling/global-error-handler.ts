@@ -34,7 +34,9 @@ export class GlobalErrorHandler implements ErrorHandler {
     switch (error.status) {
       case 0:
         // Connection error
-        this.showErrorMessage('Could not connect to the server. Please check your internet connection.');
+        this.showErrorMessage(
+          'Could not connect to the server. Please check your internet connection.'
+        );
         break;
       case 401:
         // Unauthorized
@@ -77,7 +79,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   private logErrorToService(error: Error | HttpErrorResponse): void {
     // In a real application, you would send the error to a logging service
     // For example, using a service like Sentry or a custom API endpoint
-    
     // Example implementation:
     // this.loggingService.logError({
     //   message: error.message,

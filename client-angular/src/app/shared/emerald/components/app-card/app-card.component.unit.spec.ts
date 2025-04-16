@@ -2,7 +2,7 @@
 // UNIT TESTS FOR APP CARD COMPONENT
 // ===================================================
 // This file contains unit tests for the AppCardComponent
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AD: Mock ad data for testing
 // - TEST_SCENARIOS: Test scenarios for component functionality
@@ -11,7 +11,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (app-card.component.unit.spec)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -44,23 +44,17 @@ describe('AppCardComponent (Unit Tests)', () => {
     tags: ['tag1', 'tag2', 'tag3'],
     media: [
       { url: 'https://example.com/image1.jpg', type: 'image' },
-      { url: 'https://example.com/image2.jpg', type: 'image' }
+      { url: 'https://example.com/image2.jpg', type: 'image' },
     ],
-    images: [
-      'https://example.com/image1.jpg',
-      'https://example.com/image2.jpg'
-    ],
+    images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    userId: 'user123'
+    userId: 'user123',
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        AppCardComponent
-      ]
+      imports: [CommonModule, AppCardComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppCardComponent);
@@ -110,7 +104,7 @@ describe('AppCardComponent (Unit Tests)', () => {
   it('should handle image loading error', () => {
     const mockEvent = { target: { src: 'invalid-url' } } as unknown as Event;
     component.onImageError(mockEvent);
-    
+
     expect((mockEvent.target as HTMLImageElement).src).toBe('/assets/img/default-profile.jpg');
   });
 
@@ -123,9 +117,10 @@ describe('AppCardComponent (Unit Tests)', () => {
 
   // Test: Truncate long description
   it('should truncate long description', () => {
-    const longDescription = 'This is a very long description that should be truncated when displayed on the card.';
+    const longDescription =
+      'This is a very long description that should be truncated when displayed on the card.';
     component.ad = { ...mockAd, description: longDescription };
-    
+
     expect(component.getTruncatedDescription(20)).toBe('This is a very long d...');
     expect(component.getTruncatedDescription(10)).toBe('This is a ...');
   });
@@ -134,7 +129,7 @@ describe('AppCardComponent (Unit Tests)', () => {
   it('should handle empty description', () => {
     component.ad = { ...mockAd, description: '' };
     expect(component.getTruncatedDescription(20)).toBe('');
-    
+
     component.ad = { ...mockAd, description: undefined };
     expect(component.getTruncatedDescription(20)).toBe('');
   });

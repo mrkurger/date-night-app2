@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (tinder.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -20,13 +19,13 @@ import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 // Import Emerald components
-import { 
-  TinderCardComponent, 
+import {
+  TinderCardComponent,
   TinderCardMedia,
   FloatingActionButtonComponent,
   SkeletonLoaderComponent,
   ToggleComponent,
-  LabelComponent
+  LabelComponent,
 } from '../../shared/emerald';
 
 @Component({
@@ -35,58 +34,58 @@ import {
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    ReactiveFormsModule, 
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
     MainLayoutComponent,
     TinderCardComponent,
     FloatingActionButtonComponent,
     SkeletonLoaderComponent,
     ToggleComponent,
-    LabelComponent
-  ]
+    LabelComponent,
+  ],
 })
 export class TinderComponent implements OnInit {
   /**
    * Array of all ads available for swiping
    */
   ads: Ad[] = [];
-  
+
   /**
    * Current ad being displayed
    */
   currentAd: Ad | null = null;
-  
+
   /**
    * Next ad in the queue (for preloading)
    */
   nextAd: Ad | null = null;
-  
+
   /**
    * Current state of the card ('', 'like', 'dislike')
    */
   cardState = '';
-  
+
   /**
    * Loading state
    */
   loading = true;
-  
+
   /**
    * Error message
    */
   error: string | null = null;
-  
+
   /**
    * Filter form
    */
   filterForm: FormGroup;
-  
+
   /**
    * Available counties for location filter
    */
   counties: string[] = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Kristiansand', 'Tromsø'];
-  
+
   /**
    * Authentication state
    */
@@ -107,7 +106,7 @@ export class TinderComponent implements OnInit {
     this.filterForm = this.fb.group({
       category: [''],
       location: [''],
-      touringOnly: [false]
+      touringOnly: [false],
     });
   }
 
@@ -117,7 +116,7 @@ export class TinderComponent implements OnInit {
   ngOnInit(): void {
     // Load ads
     this.loadSwipeAds();
-    
+
     // Check authentication status
     this.authService.currentUser$.subscribe(user => {
       this.isAuthenticated = !!user;
@@ -136,7 +135,7 @@ export class TinderComponent implements OnInit {
     const filters = this.filterForm.value;
 
     this.adService.getSwipeAds(filters).subscribe({
-      next: (ads) => {
+      next: ads => {
         if (ads && ads.length > 0) {
           this.ads = ads;
           this.currentAd = ads[0];
@@ -148,11 +147,11 @@ export class TinderComponent implements OnInit {
         }
         this.loading = false;
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
         console.error('Error loading swipe ads:', err);
-      }
+      },
     });
   }
 
@@ -160,7 +159,7 @@ export class TinderComponent implements OnInit {
    * Handle swipe event from TinderCard component
    * @param event Swipe event with direction and itemId
    */
-  onSwipe(event: { direction: 'left' | 'right', itemId: string }): void {
+  onSwipe(event: { direction: 'left' | 'right'; itemId: string }): void {
     if (!this.currentAd) return;
 
     const direction = event.direction;
@@ -177,9 +176,9 @@ export class TinderComponent implements OnInit {
           this.notificationService.success('Added to your favorites');
         }
       },
-      error: (err) => {
+      error: err => {
         console.error('Error recording swipe:', err);
-      }
+      },
     });
 
     // Move to the next card after animation
@@ -217,9 +216,9 @@ export class TinderComponent implements OnInit {
    * Handle card action click
    * @param event Action event with id and itemId
    */
-  onCardAction(event: { id: string, itemId: string }): void {
+  onCardAction(event: { id: string; itemId: string }): void {
     if (!this.currentAd) return;
-    
+
     switch (event.id) {
       case 'info':
         this.viewAdDetails();
@@ -252,13 +251,13 @@ export class TinderComponent implements OnInit {
     }
 
     this.chatService.createAdRoom(this.currentAd._id).subscribe({
-      next: (room) => {
+      next: room => {
         this.router.navigateByUrl(`/chat/${room._id}`);
       },
-      error: (err) => {
+      error: err => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
-      }
+      },
     });
   }
 
@@ -272,11 +271,11 @@ export class TinderComponent implements OnInit {
       // If no media, return a default image
       return [{ url: '/assets/images/default-profile.jpg', type: 'image' }];
     }
-    
+
     // Convert ad.media to TinderCardMedia format
     return ad.media.map(item => ({
       url: item.url,
-      type: item.type === 'image' || item.type === 'video' ? item.type : 'image'
+      type: item.type === 'image' || item.type === 'video' ? item.type : 'image',
     }));
   }
 
@@ -366,7 +365,7 @@ export class TinderComponent implements OnInit {
     this.filterForm.reset({
       category: '',
       location: '',
-      touringOnly: false
+      touringOnly: false,
     });
   }
 }

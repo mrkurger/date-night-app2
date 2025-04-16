@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 
 /**
  * CSRF Interceptor
- * 
+ *
  * This interceptor adds CSRF token to modifying requests (POST, PUT, DELETE, PATCH)
  * It extracts the token from cookies rather than injecting the CsrfService
  * to avoid circular dependencies.
@@ -16,16 +16,16 @@ export class CsrfInterceptor implements HttpInterceptor {
     // Only add CSRF token for API requests that modify data
     if (request.url.includes(environment.apiUrl) && this.isModifyingRequest(request)) {
       const csrfToken = this.getCsrfToken();
-      
+
       if (csrfToken) {
         request = request.clone({
           setHeaders: {
-            'X-XSRF-TOKEN': csrfToken
-          }
+            'X-XSRF-TOKEN': csrfToken,
+          },
         });
       }
     }
-    
+
     return next.handle(request);
   }
 

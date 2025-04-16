@@ -19,69 +19,71 @@
   font-weight: $font-weight-semibold;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
   &:hover {
     transform: scale(1.05);
     box-shadow: $shadow-sm;
   }
-  
+
   // Avatar Sizes
   &--small {
     width: 32px;
     height: 32px;
     font-size: $font-size-xs;
-    
+
     .emerald-avatar__status {
       width: 8px;
       height: 8px;
       border-width: 1px;
     }
-    
+
     .emerald-avatar__dropdown-indicator {
       font-size: 8px;
     }
   }
-  
+
   &--medium {
     width: 48px;
     height: 48px;
     font-size: $font-size-sm;
-    
+
     .emerald-avatar__status {
       width: 10px;
       height: 10px;
       border-width: 2px;
     }
-    
+
     .emerald-avatar__dropdown-indicator {
       font-size: 10px;
     }
   }
-  
+
   &--large {
     width: 64px;
     height: 64px;
     font-size: $font-size-base;
-    
+
     .emerald-avatar__status {
       width: 12px;
       height: 12px;
       border-width: 2px;
     }
-    
+
     .emerald-avatar__dropdown-indicator {
       font-size: 12px;
     }
   }
-  
+
   // Avatar Image
   &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   // Fallback to Initials
   &__initials {
     display: flex;
@@ -90,12 +92,12 @@
     width: 100%;
     height: 100%;
   }
-  
+
   // No Image Fallback
   &--no-image .emerald-avatar__initials {
     display: flex;
   }
-  
+
   // Online Status Indicator
   &__status {
     position: absolute;
@@ -104,16 +106,16 @@
     border-radius: 50%;
     border-style: solid;
     border-color: $neutral-100;
-    
+
     &--online {
       background-color: $success;
     }
-    
+
     &--offline {
       background-color: $neutral-500;
     }
   }
-  
+
   // Dropdown Toggle Indicator
   &__dropdown-indicator {
     position: absolute;
@@ -143,7 +145,7 @@
   z-index: 1000;
   overflow: hidden;
   animation: dropdown-fade-in 0.2s ease;
-  
+
   // Dropdown Arrow
   &-arrow {
     position: absolute;
@@ -155,7 +157,7 @@
     transform: rotate(45deg);
     box-shadow: $shadow-xs;
   }
-  
+
   // Dropdown Menu
   &-menu {
     position: relative;
@@ -164,12 +166,12 @@
     padding: 8px 0;
     z-index: 1;
   }
-  
+
   // Dropdown Item
   &-item {
     position: relative;
   }
-  
+
   // Dropdown Link
   &-link,
   &-button {
@@ -184,12 +186,12 @@
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+
     &:hover {
       background-color: $neutral-200;
     }
   }
-  
+
   // Dropdown Icon
   &-icon {
     margin-right: 12px;
@@ -197,13 +199,13 @@
     text-align: center;
     color: $neutral-600;
   }
-  
+
   // Dropdown Label
   &-label {
     flex: 1;
     font-size: $font-size-sm;
   }
-  
+
   // Dropdown Divider
   &-divider {
     height: 1px;

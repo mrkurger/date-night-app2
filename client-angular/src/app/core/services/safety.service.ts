@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SafetyService {
   private apiUrl = `${environment.apiUrl}/safety`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Create a new safety check-in
@@ -25,11 +25,7 @@ export class SafetyService {
    * @param page Page number
    * @param limit Items per page
    */
-  getUserSafetyCheckins(
-    status?: string,
-    page: number = 1,
-    limit: number = 10
-  ): Observable<any> {
+  getUserSafetyCheckins(status?: string, page = 1, limit = 10): Observable<any> {
     let url = `${this.apiUrl}/checkins?page=${page}&limit=${limit}`;
     if (status) {
       url += `&status=${status}`;
@@ -83,7 +79,7 @@ export class SafetyService {
   ): Observable<any> {
     return this.http.post(`${this.apiUrl}/checkin/${checkinId}/respond`, {
       response,
-      coordinates
+      coordinates,
     });
   }
 

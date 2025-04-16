@@ -23,7 +23,7 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private readonly apiUrl = environment.apiUrl + '/users';
@@ -71,11 +71,10 @@ export class UserService {
    * @param credentials User login credentials
    */
   login(credentials: LoginCredentials): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.authUrl}/login`, credentials)
-      .pipe(
-        tap(response => this.handleAuthentication(response)),
-        catchError(this.handleError)
-      );
+    return this.http.post<AuthResponse>(`${this.authUrl}/login`, credentials).pipe(
+      tap(response => this.handleAuthentication(response)),
+      catchError(this.handleError)
+    );
   }
 
   /**
@@ -83,11 +82,10 @@ export class UserService {
    * @param userData User registration data
    */
   register(userData: RegisterData): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.authUrl}/register`, userData)
-      .pipe(
-        tap(response => this.handleAuthentication(response)),
-        catchError(this.handleError)
-      );
+    return this.http.post<AuthResponse>(`${this.authUrl}/register`, userData).pipe(
+      tap(response => this.handleAuthentication(response)),
+      catchError(this.handleError)
+    );
   }
 
   /**
@@ -104,7 +102,8 @@ export class UserService {
    * @param userId User ID
    */
   getUserProfile(userId: string): Observable<UserProfile> {
-    return this.http.get<UserProfile>(`${this.apiUrl}/${userId}`)
+    return this.http
+      .get<UserProfile>(`${this.apiUrl}/${userId}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -113,16 +112,15 @@ export class UserService {
    * @param formData Form data with profile updates
    */
   updateProfile(formData: FormData): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.apiUrl}/profile`, formData)
-      .pipe(
-        tap(user => {
-          // Update current user if it's the logged-in user
-          if (this.currentUser && this.currentUser._id === user._id) {
-            this.currentUserSubject.next(user);
-          }
-        }),
-        catchError(this.handleError)
-      );
+    return this.http.put<UserProfile>(`${this.apiUrl}/profile`, formData).pipe(
+      tap(user => {
+        // Update current user if it's the logged-in user
+        if (this.currentUser && this.currentUser._id === user._id) {
+          this.currentUserSubject.next(user);
+        }
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
@@ -131,7 +129,8 @@ export class UserService {
    * @param userData Updated user data
    */
   updateUserProfile(userId: string, userData: Partial<UserProfile>): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.apiUrl}/${userId}`, userData)
+    return this.http
+      .put<UserProfile>(`${this.apiUrl}/${userId}`, userData)
       .pipe(catchError(this.handleError));
   }
 
@@ -140,45 +139,50 @@ export class UserService {
    * @param userId User ID
    */
   getPublicProfile(userId: string): Observable<PublicProfile> {
-    return this.http.get<PublicProfile>(`${this.apiUrl}/${userId}/public`)
+    return this.http
+      .get<PublicProfile>(`${this.apiUrl}/${userId}/public`)
       .pipe(catchError(this.handleError));
   }
 
   checkFavorite(adId: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/favorites/check/${adId}`)
+    return this.http
+      .get<boolean>(`${this.apiUrl}/favorites/check/${adId}`)
       .pipe(catchError(this.handleError));
   }
 
   addFavorite(adId: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/favorites/${adId}`, {})
+    return this.http
+      .post<void>(`${this.apiUrl}/favorites/${adId}`, {})
       .pipe(catchError(this.handleError));
   }
 
   removeFavorite(adId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/favorites/${adId}`)
+    return this.http
+      .delete<void>(`${this.apiUrl}/favorites/${adId}`)
       .pipe(catchError(this.handleError));
   }
 
   getFavorites(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/favorites`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<string[]>(`${this.apiUrl}/favorites`).pipe(catchError(this.handleError));
   }
-  
+
   /**
    * Search users by username or email
    * @param query Search query
    * @returns Observable of search results
    */
   searchUsers(query: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/search`, {
-      params: { q: query }
-    }).pipe(catchError(this.handleError));
+    return this.http
+      .get<User[]>(`${this.apiUrl}/search`, {
+        params: { q: query },
+      })
+      .pipe(catchError(this.handleError));
   }
 
   private hasValidToken(): boolean {
     const token = localStorage.getItem('token');
     if (!token) return false;
-    
+
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.exp > Date.now() / 1000;
@@ -205,7 +209,7 @@ export class UserService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
@@ -213,7 +217,7 @@ export class UserService {
       // Server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    
+
     return throwError(() => new Error(errorMessage));
   }
 
@@ -221,10 +225,9 @@ export class UserService {
    * Get the current user profile
    */
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`)
-      .pipe(
-        tap(user => this.currentUserSubject.next(user)),
-        catchError(this.handleError)
-      );
+    return this.http.get<User>(`${this.apiUrl}/me`).pipe(
+      tap(user => this.currentUserSubject.next(user)),
+      catchError(this.handleError)
+    );
   }
 }

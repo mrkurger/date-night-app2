@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
  * Custom preloading strategy that selectively preloads modules based on data in the route
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SelectivePreloadingStrategy implements PreloadingStrategy {
   preloadedModules: string[] = [];
@@ -18,12 +18,12 @@ export class SelectivePreloadingStrategy implements PreloadingStrategy {
     if (route.data?.preload && route.path) {
       // Add the route path to the preloaded modules list
       this.preloadedModules.push(route.path);
-      
+
       // Log the preloaded module in development mode
       if (!environment.production) {
         console.log(`Preloaded: ${route.path}`);
       }
-      
+
       return load();
     } else {
       return of(null);

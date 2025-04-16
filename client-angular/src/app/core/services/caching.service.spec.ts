@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (caching.service.spec)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -19,7 +18,7 @@ describe('CachingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CachingService]
+      providers: [CachingService],
     });
     service = TestBed.inject(CachingService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -72,12 +71,12 @@ describe('CachingService', () => {
 
       // Install jasmine clock before any operations
       jasmine.clock().install();
-      
+
       // Mock Date.now to control time
       const originalDateNow = Date.now;
       const startTime = 1000;
       let currentTime = startTime;
-      
+
       spyOn(Date, 'now').and.callFake(() => currentTime);
 
       try {
@@ -93,7 +92,7 @@ describe('CachingService', () => {
 
         // Advance time to expire the cache
         currentTime = startTime + cacheTime + 1;
-        
+
         // Second request should fetch fresh data
         let receivedData: any;
         service.get(url, cacheTime).subscribe(data => {
@@ -103,7 +102,7 @@ describe('CachingService', () => {
         const req = httpMock.expectOne(url);
         expect(req.request.method).toBe('GET');
         req.flush(testData2);
-        
+
         // Verify we got the new data
         expect(receivedData).toEqual(testData2);
       } finally {
@@ -133,12 +132,12 @@ describe('CachingService', () => {
       service.post(url, testData, [invalidateUrl]).subscribe(response => {
         postResponse = response;
       });
-      
+
       const postReq = httpMock.expectOne(url);
       expect(postReq.request.method).toBe('POST');
       expect(postReq.request.body).toEqual(testData);
       postReq.flush({ success: true });
-      
+
       // Verify we got the response
       expect(postResponse).toEqual({ success: true });
 
@@ -147,11 +146,11 @@ describe('CachingService', () => {
       service.get(invalidateUrl).subscribe(response => {
         getResponse = response;
       });
-      
+
       const getReq = httpMock.expectOne(invalidateUrl);
       expect(getReq.request.method).toBe('GET');
       getReq.flush([testData, { id: 2, name: 'Test 2' }]);
-      
+
       // Verify we got the new data
       expect(getResponse).toEqual([testData, { id: 2, name: 'Test 2' }]);
     });
@@ -178,7 +177,7 @@ describe('CachingService', () => {
 
       // Clear cache
       service.clearCache();
-      
+
       // Add explicit expectation for the cache to be empty
       expect(service['cache'].size).toBe(0);
 
@@ -217,7 +216,7 @@ describe('CachingService', () => {
 
       // Clear cache with pattern
       service.clearCachePattern('/api/users');
-      
+
       // Add explicit expectation for the cache to be partially cleared
       // We expect only the URLs matching the pattern to be removed
       expect(service['cache'].has(url1)).toBeFalse();
@@ -226,19 +225,19 @@ describe('CachingService', () => {
 
       // Verify matching cache items are cleared
       let response1: any, response2: any, response3: any;
-      
-      service.get(url1).subscribe(data => response1 = data);
+
+      service.get(url1).subscribe(data => (response1 = data));
       const req1 = httpMock.expectOne(url1);
       req1.flush({ id: 1, name: 'New Test 1' });
       expect(response1).toEqual({ id: 1, name: 'New Test 1' });
-      
-      service.get(url2).subscribe(data => response2 = data);
+
+      service.get(url2).subscribe(data => (response2 = data));
       const req2 = httpMock.expectOne(url2);
       req2.flush({ id: 2, name: 'New Test 2' });
       expect(response2).toEqual({ id: 2, name: 'New Test 2' });
-      
+
       // This one should still be cached
-      service.get(url3).subscribe(data => response3 = data);
+      service.get(url3).subscribe(data => (response3 = data));
       httpMock.expectNone(url3);
       expect(response3).toEqual(testData);
     });

@@ -1,7 +1,7 @@
 <app-main-layout activeView="netflix">
   <div class="netflix-container">
     <!-- Hero Section with Emerald PageHeader -->
-    <emerald-page-header 
+    <emerald-page-header
       *ngIf="featuredAd"
       [title]="featuredAd.title"
       [subtitle]="featuredAd.location"
@@ -10,22 +10,24 @@
       [avatarName]="featuredAd.advertiserName"
       [avatarIsOnline]="featuredAd.isAdvertiserOnline"
       [actions]="[
-        {id: 'view', label: 'View Profile', icon: 'fas fa-info-circle', primary: true},
-        {id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart'},
-        {id: 'chat', label: 'Start Chat', icon: 'fas fa-comment'}
+        { id: 'view', label: 'View Profile', icon: 'fas fa-info-circle', primary: true },
+        { id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart' },
+        { id: 'chat', label: 'Start Chat', icon: 'fas fa-comment' },
       ]"
-      (actionClick)="onHeroAction($event, featuredAd._id)">
+      (actionClick)="onHeroAction($event, featuredAd._id)"
+    >
       <!-- Custom hero content -->
       <div class="hero-content">
         <p class="hero-description">{{ featuredAd.description }}</p>
-        
+
         <!-- Additional hero content - can be expanded later -->
         <div class="hero-tags" *ngIf="featuredAd.tags && featuredAd.tags.length > 0">
-          <emerald-label 
-            *ngFor="let tag of featuredAd.tags.slice(0, 5)" 
+          <emerald-label
+            *ngFor="let tag of featuredAd.tags.slice(0, 5)"
             [text]="tag"
             size="small"
-            color="secondary">
+            color="secondary"
+          >
           </emerald-label>
         </div>
       </div>
@@ -47,11 +49,7 @@
 
       <!-- Loading State with Emerald SkeletonLoader -->
       <div class="loading-container" *ngIf="loading">
-        <emerald-skeleton-loader
-          type="card"
-          [count]="5"
-          [animated]="true"
-          [layout]="'netflix'">
+        <emerald-skeleton-loader type="card" [count]="5" [animated]="true" [layout]="'netflix'">
         </emerald-skeleton-loader>
         <p class="loading-text">Loading profiles...</p>
       </div>
@@ -86,7 +84,8 @@
               [gap]="cardGridConfig.gap"
               [animated]="cardGridConfig.animated"
               [itemsPerRow]="cardGridConfig.itemsPerRow"
-              (itemClick)="viewAdDetails($event._id)">
+              (itemClick)="viewAdDetails($event._id)"
+            >
               <ng-template #itemTemplate let-ad>
                 <emerald-app-card
                   [title]="ad.title"
@@ -100,11 +99,12 @@
                   [layout]="'netflix'"
                   [itemId]="ad._id"
                   [actions]="[
-                    {id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Profile'},
-                    {id: 'favorite', icon: 'fas fa-heart', tooltip: 'Add to Favorites'},
-                    {id: 'chat', icon: 'fas fa-comment', tooltip: 'Start Chat'}
+                    { id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Profile' },
+                    { id: 'favorite', icon: 'fas fa-heart', tooltip: 'Add to Favorites' },
+                    { id: 'chat', icon: 'fas fa-comment', tooltip: 'Start Chat' },
                   ]"
-                  (actionClick)="onCardAction($event, ad._id)">
+                  (actionClick)="onCardAction($event, ad._id)"
+                >
                 </emerald-app-card>
               </ng-template>
             </emerald-card-grid>
@@ -122,25 +122,35 @@
     position="bottom-right"
     [showTooltip]="true"
     tooltipText="Filter Profiles"
-    (buttonClick)="openFilters()">
+    (buttonClick)="openFilters()"
+  >
   </emerald-floating-action-button>
 
   <!-- Filters Modal -->
-  <div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="filtersModal"
+    tabindex="-1"
+    aria-labelledby="filtersModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="filtersModalLabel">
             <i class="fas fa-filter"></i> Filter Profiles
           </h5>
-          <button type="button" class="btn-close" (click)="closeFilters()" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeFilters()"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="filterForm">
             <div class="mb-3">
-              <label for="category" class="form-label">
-                <i class="fas fa-tag"></i> Category
-              </label>
+              <label for="category" class="form-label"> <i class="fas fa-tag"></i> Category </label>
               <select class="form-select" id="category" formControlName="category">
                 <option value="">All Categories</option>
                 <option value="Escort">Escort</option>
@@ -176,7 +186,8 @@
                 labelPosition="right"
                 color="primary"
                 [value]="filterForm.get('touringOnly')?.value"
-                (change)="filterForm.get('touringOnly')?.setValue($event)">
+                (change)="filterForm.get('touringOnly')?.setValue($event)"
+              >
               </emerald-toggle>
             </div>
           </form>

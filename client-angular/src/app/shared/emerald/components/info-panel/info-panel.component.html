@@ -1,28 +1,36 @@
 <!-- Emerald InfoPanel Component -->
 <!-- Documentation: https://docs-emerald.condorlabs.io/InfoPanel -->
 
-<div class="emerald-info-panel" 
-     [ngClass]="{'emerald-info-panel--bordered': variant === 'bordered',
-                'emerald-info-panel--shadowed': variant === 'shadowed',
-                'emerald-info-panel--collapsible': collapsible,
-                'emerald-info-panel--collapsed': isCollapsed}">
-  
+<div
+  class="emerald-info-panel"
+  [ngClass]="{
+    'emerald-info-panel--bordered': variant === 'bordered',
+    'emerald-info-panel--shadowed': variant === 'shadowed',
+    'emerald-info-panel--collapsible': collapsible,
+    'emerald-info-panel--collapsed': isCollapsed,
+  }"
+>
   <!-- Panel Header -->
   <div class="emerald-info-panel__header" (click)="toggleCollapse()">
     <div class="emerald-info-panel__title-container">
       <h3 class="emerald-info-panel__title">{{ title }}</h3>
       <p *ngIf="subtitle" class="emerald-info-panel__subtitle">{{ subtitle }}</p>
     </div>
-    
+
     <!-- Collapse Toggle -->
-    <button *ngIf="collapsible" 
-            class="emerald-info-panel__toggle" 
-            [attr.aria-expanded]="!isCollapsed" 
-            [attr.aria-label]="isCollapsed ? 'Expand panel' : 'Collapse panel'">
-      <i class="fas" [ngClass]="{'fa-chevron-down': !isCollapsed, 'fa-chevron-right': isCollapsed}"></i>
+    <button
+      *ngIf="collapsible"
+      class="emerald-info-panel__toggle"
+      [attr.aria-expanded]="!isCollapsed"
+      [attr.aria-label]="isCollapsed ? 'Expand panel' : 'Collapse panel'"
+    >
+      <i
+        class="fas"
+        [ngClass]="{ 'fa-chevron-down': !isCollapsed, 'fa-chevron-right': isCollapsed }"
+      ></i>
     </button>
   </div>
-  
+
   <!-- Panel Content -->
   <div class="emerald-info-panel__content">
     <div class="emerald-info-panel__items">
@@ -32,43 +40,55 @@
           <i *ngIf="item.icon" class="emerald-info-panel__item-icon {{ item.icon }}"></i>
           <span>{{ item.label }}</span>
         </div>
-        
+
         <!-- Item Value -->
         <div class="emerald-info-panel__item-value">
           <!-- Text Value -->
           <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
-          
+
           <!-- Badge Value -->
-          <span *ngIf="item.type === 'badge'" 
-                class="emerald-info-panel__badge"
-                [ngClass]="{'emerald-info-panel__badge--primary': item.variant === 'primary',
-                           'emerald-info-panel__badge--success': item.variant === 'success',
-                           'emerald-info-panel__badge--warning': item.variant === 'warning',
-                           'emerald-info-panel__badge--danger': item.variant === 'danger',
-                           'emerald-info-panel__badge--info': item.variant === 'info',
-                           'emerald-info-panel__badge--neutral': item.variant === 'neutral' || !item.variant}">
+          <span
+            *ngIf="item.type === 'badge'"
+            class="emerald-info-panel__badge"
+            [ngClass]="{
+              'emerald-info-panel__badge--primary': item.variant === 'primary',
+              'emerald-info-panel__badge--success': item.variant === 'success',
+              'emerald-info-panel__badge--warning': item.variant === 'warning',
+              'emerald-info-panel__badge--danger': item.variant === 'danger',
+              'emerald-info-panel__badge--info': item.variant === 'info',
+              'emerald-info-panel__badge--neutral': item.variant === 'neutral' || !item.variant,
+            }"
+          >
             {{ item.value }}
           </span>
-          
+
           <!-- Progress Value -->
           <div *ngIf="item.type === 'progress'" class="emerald-info-panel__progress">
-            <div class="emerald-info-panel__progress-bar" 
-                 [ngClass]="{'emerald-info-panel__progress-bar--primary': item.variant === 'primary',
-                            'emerald-info-panel__progress-bar--success': item.variant === 'success',
-                            'emerald-info-panel__progress-bar--warning': item.variant === 'warning',
-                            'emerald-info-panel__progress-bar--danger': item.variant === 'danger',
-                            'emerald-info-panel__progress-bar--info': item.variant === 'info',
-                            'emerald-info-panel__progress-bar--neutral': item.variant === 'neutral' || !item.variant}"
-                 [style.width.%]="item.value">
-            </div>
+            <div
+              class="emerald-info-panel__progress-bar"
+              [ngClass]="{
+                'emerald-info-panel__progress-bar--primary': item.variant === 'primary',
+                'emerald-info-panel__progress-bar--success': item.variant === 'success',
+                'emerald-info-panel__progress-bar--warning': item.variant === 'warning',
+                'emerald-info-panel__progress-bar--danger': item.variant === 'danger',
+                'emerald-info-panel__progress-bar--info': item.variant === 'info',
+                'emerald-info-panel__progress-bar--neutral':
+                  item.variant === 'neutral' || !item.variant,
+              }"
+              [style.width.%]="item.value"
+            ></div>
             <span class="emerald-info-panel__progress-text">{{ item.value }}%</span>
           </div>
-          
+
           <!-- Boolean Value -->
           <span *ngIf="item.type === 'boolean'" class="emerald-info-panel__boolean">
-            <i class="fas" 
-               [ngClass]="{'fa-check emerald-info-panel__boolean--true': item.value, 
-                          'fa-times emerald-info-panel__boolean--false': !item.value}">
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-check emerald-info-panel__boolean--true': item.value,
+                'fa-times emerald-info-panel__boolean--false': !item.value,
+              }"
+            >
             </i>
           </span>
         </div>

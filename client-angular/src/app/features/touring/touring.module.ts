@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for touring.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -17,17 +16,12 @@ import { TouringComponent } from './touring.component';
 const routes: Routes = [
   {
     path: '',
-    component: TouringComponent
-  }
+    component: TouringComponent,
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    TouringComponent
-  ]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), TouringComponent],
 })
-export class TouringModule { }
+export class TouringModule {}

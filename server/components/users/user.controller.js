@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (user.controller)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -25,13 +24,11 @@ exports.updateUser = async (req, res) => {
     // Prevent updating sensitive fields
     delete updates.password;
     delete updates.role;
-    
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      updates,
-      { new: true }
-    ).select('-password');
-    
+
+    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true }).select(
+      '-password'
+    );
+
     res.json(user);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -41,16 +38,16 @@ exports.updateUser = async (req, res) => {
 exports.updateTravelPlan = async (req, res) => {
   try {
     const { travelPlan } = req.body;
-    
+
     // Ensure user is an advertiser
     const user = await User.findById(req.user._id);
     if (user.role !== 'advertiser') {
       return res.status(403).json({ message: 'Only advertisers can set travel plans' });
     }
-    
+
     user.travelPlan = travelPlan;
     await user.save();
-    
+
     res.json({ travelPlan: user.travelPlan });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -68,7 +65,7 @@ exports.getUserStatus = async (req, res) => {
 
     res.json({
       online: user.online,
-      lastActive: user.lastActive
+      lastActive: user.lastActive,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -87,7 +84,7 @@ exports.changePassword = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-        message: 'Current password is incorrect'
+        message: 'Current password is incorrect',
       });
     }
 
@@ -111,13 +108,7 @@ exports.changePassword = async (req, res) => {
 
     // Blacklist current token if it exists
     if (req.token) {
-      await TokenBlacklist.blacklist(
-        req.token,
-        'access',
-        user._id,
-        'password_change',
-        expiresAt
-      );
+      await TokenBlacklist.blacklist(req.token, 'access', user._id, 'password_change', expiresAt);
     }
 
     // Also blacklist refresh token if it exists
@@ -141,25 +132,25 @@ exports.changePassword = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 0
+      maxAge: 0,
     });
 
     res.cookie('refresh_token', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 0
+      maxAge: 0,
     });
 
     res.json({
       success: true,
-      message: 'Password changed successfully. Please log in again with your new password.'
+      message: 'Password changed successfully. Please log in again with your new password.',
     });
   } catch (err) {
     res.status(500).json({
       success: false,
       message: 'Error changing password',
-      error: err.message
+      error: err.message,
     });
   }
 };

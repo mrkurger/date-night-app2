@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-create.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -25,84 +24,86 @@ interface ImagePreview {
 @Component({
   selector: 'app-ad-create',
   templateUrl: './ad-create.component.html',
-  styles: [`
-    .form-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 2rem;
-    }
-    .ad-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .form-field {
-      width: 100%;
-    }
-    .error-message {
-      color: #f44336;
-      margin: 1rem 0;
-      text-align: center;
-    }
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    mat-spinner {
-      display: inline-block;
-      margin-right: 8px;
-    }
+  styles: [
+    `
+      .form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+      .ad-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .form-field {
+        width: 100%;
+      }
+      .error-message {
+        color: #f44336;
+        margin: 1rem 0;
+        text-align: center;
+      }
+      .button-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      mat-spinner {
+        display: inline-block;
+        margin-right: 8px;
+      }
 
-    .image-upload-section {
-      margin: 1rem 0;
-    }
+      .image-upload-section {
+        margin: 1rem 0;
+      }
 
-    .file-upload-label {
-      display: inline-block;
-      margin-bottom: 0.5rem;
-    }
+      .file-upload-label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
 
-    .image-preview-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+      .image-preview-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
 
-    .image-preview {
-      position: relative;
-      height: 150px;
-      border-radius: 4px;
-      overflow: hidden;
-    }
+      .image-preview {
+        position: relative;
+        height: 150px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
 
-    .image-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+      .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-    .remove-image {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      background: rgba(0, 0, 0, 0.5) !important;
-    }
+      .remove-image {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background: rgba(0, 0, 0, 0.5) !important;
+      }
 
-    .image-error {
-      margin-top: 0.5rem;
-    }
+      .image-error {
+        margin-top: 0.5rem;
+      }
 
-    mat-hint {
-      display: block;
-      margin-top: 0.25rem;
-      color: rgba(0, 0, 0, 0.6);
-    }
-  `],
+      mat-hint {
+        display: block;
+        margin-top: 0.25rem;
+        color: rgba(0, 0, 0, 0.6);
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterLink]
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterLink],
 })
 export class AdCreateComponent implements OnInit {
   adForm: FormGroup;
@@ -126,7 +127,7 @@ export class AdCreateComponent implements OnInit {
       category: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(0)]],
       location: ['', Validators.required],
-      isActive: [true]
+      isActive: [true],
     });
   }
 
@@ -165,7 +166,7 @@ export class AdCreateComponent implements OnInit {
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.selectedImages.push({
           file,
-          preview: e.target?.result as string
+          preview: e.target?.result as string,
         });
       };
       reader.readAsDataURL(file);
@@ -182,11 +183,11 @@ export class AdCreateComponent implements OnInit {
 
   private loadCategories(): void {
     this.adService.getCategories().subscribe({
-      next: (categories) => this.categories = categories,
-      error: (err) => {
+      next: categories => (this.categories = categories),
+      error: err => {
         this.error = 'Failed to load categories';
         console.error('Error loading categories:', err);
-      }
+      },
     });
   }
 
@@ -210,17 +211,17 @@ export class AdCreateComponent implements OnInit {
     });
 
     this.adService.createAdWithImages(formData).subscribe({
-      next: (ad) => {
+      next: ad => {
         this.loading = false;
         this.notificationService.success('Ad created successfully');
         this.router.navigate(['/ads', ad._id]);
       },
-      error: (err) => {
+      error: err => {
         this.loading = false;
         this.error = 'Failed to create ad';
         this.notificationService.error(this.error);
         console.error('Error creating ad:', err);
-      }
+      },
     });
   }
 }

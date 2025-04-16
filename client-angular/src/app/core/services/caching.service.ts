@@ -4,13 +4,13 @@ import { Observable, of } from 'rxjs';
 import { tap, shareReplay } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CachingService {
-  private cache: Map<string, { data: any, timestamp: number }> = new Map();
+  private cache: Map<string, { data: any; timestamp: number }> = new Map();
   private readonly DEFAULT_CACHE_TIME = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get data from cache or fetch from server
@@ -30,7 +30,7 @@ export class CachingService {
       tap(response => {
         this.cache.set(url, {
           data: response,
-          timestamp: now
+          timestamp: now,
         });
       }),
       shareReplay(1)

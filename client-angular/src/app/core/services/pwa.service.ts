@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PwaService {
   private swUpdate = inject(SwUpdate);
@@ -28,7 +28,7 @@ export class PwaService {
     const notification = this.notificationService.info(
       'A new version of the app is available. Reload the page to update.'
     );
-    
+
     // If the notification service supports actions, subscribe to them
     if (notification && typeof notification.onAction === 'function') {
       notification.onAction().subscribe(() => {
@@ -44,8 +44,9 @@ export class PwaService {
     if (!this.swUpdate.isEnabled) {
       return Promise.resolve(false);
     }
-    
-    return this.swUpdate.checkForUpdate()
+
+    return this.swUpdate
+      .checkForUpdate()
       .then(hasUpdate => {
         if (hasUpdate) {
           this.showUpdateNotification();

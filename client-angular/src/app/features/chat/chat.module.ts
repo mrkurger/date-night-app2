@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for chat.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - ENABLE_REAL_TIME_FEATURES: Enable real-time chat features (default: true)
 // - ENABLE_MEDIA_SHARING: Enable media sharing in chat (default: true)
@@ -32,7 +31,7 @@ import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleto
 
 const routes: Routes = [
   { path: '', component: ChatComponent },
-  { path: ':userId', component: ChatComponent }
+  { path: ':userId', component: ChatComponent },
 ];
 
 @NgModule({
@@ -42,7 +41,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
-    
+
     // Material Modules
     MatDialogModule,
     MatIconModule,
@@ -52,13 +51,13 @@ const routes: Routes = [
     MatMenuModule,
     MatTooltipModule,
     MatTabsModule,
-    
+
     // Emerald Components
     AvatarComponent,
     SkeletonLoaderComponent,
-    
+
     // Standalone Component
-    ChatComponent
-  ]
+    ChatComponent,
+  ],
 })
-export class ChatModule { }
+export class ChatModule {}

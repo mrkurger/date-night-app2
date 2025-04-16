@@ -263,6 +263,20 @@ ngOnInit(): void {
 
 3. **Mock Implementation**: When mocking database models or external services, ensure the mock implementation returns objects with the same structure and methods as the real implementation.
 
+4. **Testing MongoDB Models**: When testing MongoDB models:
+   - Use `mongodb-memory-server` for in-memory database testing to avoid affecting production data
+   - Create separate test data constants for each model type to ensure test clarity
+   - Test both successful creation and validation failures
+   - For models with relationships, create the related entities first (e.g., create User before Wallet, and Wallet before PaymentMethod)
+   - Test all enum validations by attempting to save invalid values
+   - Verify both required fields and default values
+   - For models with methods, test each method in isolation
+   - Use `beforeEach` to set up test data and `afterEach` to clear the database between tests
+   - When testing methods that modify the database, reload the entity from the database to verify changes were persisted
+   - For methods that throw errors, use try/catch blocks in tests rather than expect().rejects.toThrow() for more reliable testing
+   - Test nested schema structures (e.g., balances, transactions, payment methods in a wallet) thoroughly
+   - Verify that unique constraints are enforced at the database level
+
 ## General Testing Tips
 
 1. **Incremental Fixes**: When dealing with multiple test failures, fix them one by one and run tests after each fix to track progress.

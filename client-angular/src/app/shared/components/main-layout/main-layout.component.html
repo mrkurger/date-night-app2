@@ -9,7 +9,7 @@
         <a routerLink="/">DateNight.io</a>
       </div>
     </div>
-    
+
     <div class="sidebar-content">
       <nav class="sidebar-nav">
         <ul class="nav-list">
@@ -83,7 +83,7 @@
           </li>
         </ul>
       </nav>
-      
+
       <div class="sidebar-footer" *ngIf="!isMenuCollapsed">
         <a class="upgrade-link" routerLink="/upgrade">
           <i class="fas fa-crown"></i> Upgrade to Premium
@@ -91,18 +91,18 @@
       </div>
     </div>
   </aside>
-  
+
   <!-- Main Content Area -->
   <main class="main-content">
     <ng-content></ng-content>
   </main>
-  
+
   <!-- Right Sidebar for Premium Ads -->
   <aside class="sidebar sidebar-right">
     <div class="sidebar-header">
       <h3 class="premium-title">Premium Ads</h3>
     </div>
-    
+
     <div class="sidebar-content">
       <!-- Loading State -->
       <div class="premium-loading" *ngIf="loading">
@@ -110,16 +110,20 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      
+
       <!-- Premium Ads List -->
       <div class="premium-ads" *ngIf="!loading">
         <div class="empty-premium" *ngIf="premiumAds.length === 0">
           <p>No premium ads available</p>
         </div>
-        
-        <div class="premium-ad" *ngFor="let ad of premiumAds" [routerLink]="['/ad-details', ad._id]">
+
+        <div
+          class="premium-ad"
+          *ngFor="let ad of premiumAds"
+          [routerLink]="['/ad-details', ad._id]"
+        >
           <div class="premium-ad-media">
-            <img [src]="getMediaUrl(ad)" [alt]="ad.title" class="premium-ad-image">
+            <img [src]="getMediaUrl(ad)" [alt]="ad.title" class="premium-ad-image" />
             <div class="premium-badge">
               <i class="fas fa-crown"></i>
             </div>
@@ -132,7 +136,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Become Premium CTA -->
       <div class="premium-cta">
         <p>Want to be featured here?</p>

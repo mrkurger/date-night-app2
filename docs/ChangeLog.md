@@ -1,32 +1,62 @@
 # Change Log
 
+## 2025-04-16: Linting and Test Fixes
+
+### Fixed
+
+- Fixed variable naming conflict in wallet service test where `paymentMethods` was renamed to `paymentMethodsArray` to avoid conflict with array methods like `find()`.
+- Fixed auth middleware test by properly mocking JWT verification and user lookup in the optionalAuth test.
+
+### Added
+
+- Added documentation in AILessons.md about common linting and formatting issues, including:
+  - HTML file handling in ESLint
+  - Cypress test configuration
+  - NPM script patterns for handling warnings vs errors
+  - Variable naming best practices to avoid conflicts with array methods
+
 ## 2025-04-19: Documentation Improvements
 
 ### Documentation Updates
 
 1. **README.md**
+
    - Added comprehensive table of contents
    - Organized documentation links by category
    - Added links to all documentation files in the project
    - Added descriptions for each documentation file
 
 2. **Table of Contents Improvements**
+
    - Added or improved table of contents in UnitTestLessons.md, UnitTestingLessons.md, AILessons.md, CUSTOMIZATION_GUIDE.md, and CONFIG_INDEX.md
    - Ensured consistent formatting and structure across documentation files
 
 3. **New Documentation Files**
+
    - Created DEPRECATED.md to document deprecated code
    - Created DUPLICATES.md to document code duplication
    - Created documentation-improvements.md to summarize documentation improvements
+   - Created DOCUMENTATION_INDEX.md as a comprehensive index of all documentation
+   - Created DOCUMENTATION_STYLE_GUIDE.md with guidelines for writing documentation
+   - Created ARCHITECTURE.md with system architecture documentation
 
 4. **Customization System Updates**
+
    - Ran update_customization_headers.py to ensure all relevant files have proper customization headers
    - Ran update_config_index.py to update the configuration index
    - Updated CONFIG_INDEX.md to ensure its table of contents is complete
 
+5. **New Scripts**
+   - Created check_documentation_links.py to check for broken links in documentation
+   - Created fix_documentation_links.py to fix common broken link patterns
+   - Created generate_documentation_diagrams.py to generate documentation diagrams
+   - Created test_documentation.sh to test documentation for CI/CD integration
+   - Created documentation-link-check-report.md to report broken links
+
 ### Improvements
 
 1. **Documentation Organization**
+
    - Improved organization and structure of documentation
    - Made documentation more accessible and easier to navigate
    - Ensured consistent formatting and style across documentation files
@@ -61,11 +91,13 @@
 ### Fixed Issues
 
 1. **Ad Interface Updates in Tests**
+
    - Updated mock Ad data in tinder.component.spec.ts to match the new Ad interface
    - Updated mock Ad data in advertiser-profile.component.spec.ts to match the new Ad interface
    - Updated getCardMedia method in tinder.component.ts to properly handle the new Ad interface
 
 2. **Component Dependencies**
+
    - Fixed import path for MainLayoutComponent in advertiser-profile.component.ts
    - Added MockMainLayoutComponent to tinder.component.spec.ts, advertiser-profile.component.spec.ts, and user-settings.component.spec.ts to fix dependency issues
 
@@ -92,6 +124,7 @@
 ### Fixed Issues
 
 1. **Auth Service Error Messages**
+
    - Fixed error message in `authenticate` method to match test expectations (changed "Invalid credentials" to "Invalid password")
    - Updated `validateRefreshToken` method to properly propagate "User not found" errors
    - All server-side tests now pass successfully
@@ -113,21 +146,25 @@
 ### Fixed Issues
 
 1. **CSP Middleware Implementation**
+
    - Fixed the Content Security Policy middleware implementation in `server/middleware/csp.middleware.js`
    - Updated CSP configuration to properly support Angular components and Emerald UI
    - Added support for docs-emerald.condorlabs.io in CSP directives
 
 2. **Auth Service Test Issues**
+
    - Fixed error message mismatch in auth.service.js (changed "Invalid password" to "Invalid credentials")
    - Fixed refreshToken test method name to match implementation
    - Simplified mock implementation for User.findOne in register tests
 
 3. **Angular Component Issues**
+
    - Added missing imports to CardGridComponent (AppCardComponent, SkeletonLoaderComponent)
    - Added missing methods to CardGridComponent (handleCardClick, handleActionClick)
    - Fixed component property binding issues
 
 4. **User Model Schema**
+
    - Added firstName and lastName fields to User model schema to match test expectations
    - Ensured backward compatibility with existing code
 
@@ -146,6 +183,7 @@
 ### Fixed Issues
 
 1. **NotificationService Mocking**
+
    - Added missing observable properties (`toasts$` and `unreadCount$`) to NotificationService mocks
    - Added missing methods (`info`, `warning`, `removeToast`) to NotificationService mocks
    - Fixed mocks in content-moderation.component.spec.ts and netflix-view.component.spec.ts
@@ -167,10 +205,12 @@
 ### Fixed Issues
 
 1. **NetflixViewComponent**
+
    - Added `CUSTOM_ELEMENTS_SCHEMA` to component configuration to handle unknown elements
    - Updated component schema configuration to properly handle custom elements
 
 2. **MediaService Tests**
+
    - Fixed error handling test in `media.service.spec.ts`
    - Removed `fail()` calls in the `next` callback that were causing false failures
    - Reorganized test structure for better clarity
@@ -192,10 +232,12 @@
 ### Remaining Issues
 
 1. **LoginComponent Tests**
+
    - Tests for form submission and error handling still failing
    - Need to investigate form initialization and submission handling
 
 2. **ContentSanitizer Tests**
+
    - Some tests are still failing with "Error sanitizing URL" messages
    - These are expected errors in test scenarios but need to be properly handled
 

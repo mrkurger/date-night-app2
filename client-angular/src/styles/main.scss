@@ -96,25 +96,25 @@ body {
     background-color: white;
     color: black;
   }
-  
+
   .app-header,
   .app-footer,
   .no-print {
     display: none !important;
   }
-  
+
   .main-content {
     margin: 0;
     padding: 0;
   }
-  
+
   a {
     text-decoration: none;
     color: black;
   }
-  
+
   a[href]:after {
-    content: " (" attr(href) ")";
+    content: ' (' attr(href) ')';
     font-size: 90%;
     color: #333;
   }

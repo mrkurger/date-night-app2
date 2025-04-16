@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VerificationService {
   private apiUrl = `${environment.apiUrl}/verification`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get verification status for current user
@@ -99,7 +99,7 @@ export class VerificationService {
     return this.http.post(`${this.apiUrl}/admin/approve`, {
       verificationId,
       type,
-      notes
+      notes,
     });
   }
 
@@ -110,12 +110,17 @@ export class VerificationService {
    * @param reason Rejection reason
    * @param notes Optional notes
    */
-  rejectVerification(verificationId: string, type: string, reason: string, notes?: string): Observable<any> {
+  rejectVerification(
+    verificationId: string,
+    type: string,
+    reason: string,
+    notes?: string
+  ): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/reject`, {
       verificationId,
       type,
       reason,
-      notes
+      notes,
     });
   }
 }

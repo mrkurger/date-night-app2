@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { 
-  NORWAY_COUNTIES, 
-  NorwayCounty, 
-  NorwayCity, 
-  getAllCounties, 
+import {
+  NORWAY_COUNTIES,
+  NorwayCounty,
+  NorwayCity,
+  getAllCounties,
   getCitiesByCounty,
-  getCityCoordinates
+  getCityCoordinates,
 } from '../constants/norway-locations';
 import { environment } from '../../../environments/environment';
 
@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment';
  * Provides methods for retrieving counties, cities, and coordinates
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
   private readonly apiUrl = environment.apiUrl + '/locations';
@@ -29,9 +29,9 @@ export class LocationService {
    */
   getCounties(): Observable<string[]> {
     // First try to get from API, fall back to local constants if API fails
-    return this.http.get<string[]>(`${this.apiUrl}/counties`).pipe(
-      catchError(() => of(getAllCounties()))
-    );
+    return this.http
+      .get<string[]>(`${this.apiUrl}/counties`)
+      .pipe(catchError(() => of(getAllCounties())));
   }
 
   /**
@@ -39,9 +39,9 @@ export class LocationService {
    * @param countyName The name of the county
    */
   getCitiesByCounty(countyName: string): Observable<NorwayCity[]> {
-    return this.http.get<NorwayCity[]>(`${this.apiUrl}/counties/${countyName}/cities`).pipe(
-      catchError(() => of(getCitiesByCounty(countyName)))
-    );
+    return this.http
+      .get<NorwayCity[]>(`${this.apiUrl}/counties/${countyName}/cities`)
+      .pipe(catchError(() => of(getCitiesByCounty(countyName))));
   }
 
   /**
@@ -50,9 +50,7 @@ export class LocationService {
   getAllCities(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/cities`).pipe(
       catchError(() => {
-        const cities = NORWAY_COUNTIES.flatMap(county => 
-          county.cities.map(city => city.name)
-        );
+        const cities = NORWAY_COUNTIES.flatMap(county => county.cities.map(city => city.name));
         return of(cities);
       })
     );
@@ -63,10 +61,12 @@ export class LocationService {
    * @param cityName The name of the city
    */
   getCityCoordinates(cityName: string): Observable<[number, number] | null> {
-    return this.http.get<{coordinates: [number, number]}>(`${this.apiUrl}/cities/${cityName}/coordinates`).pipe(
-      map(response => response.coordinates),
-      catchError(() => of(getCityCoordinates(cityName)))
-    );
+    return this.http
+      .get<{ coordinates: [number, number] }>(`${this.apiUrl}/cities/${cityName}/coordinates`)
+      .pipe(
+        map(response => response.coordinates),
+        catchError(() => of(getCityCoordinates(cityName)))
+      );
   }
 
   /**
@@ -78,11 +78,11 @@ export class LocationService {
         observer.error('Geolocation is not supported by your browser');
       } else {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
+          position => {
             observer.next(position);
             observer.complete();
           },
-          (error) => {
+          error => {
             observer.error(error);
           },
           { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -96,38 +96,45 @@ export class LocationService {
    * @param latitude The latitude
    * @param longitude The longitude
    */
-  findNearestCity(latitude: number, longitude: number): Observable<{city: string, county: string, distance: number}> {
-    return this.http.get<{city: string, county: string, distance: number}>(
-      `${this.apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`
-    ).pipe(
-      catchError(() => {
-        // Calculate nearest city locally if API fails
-        let nearestCity = '';
-        let nearestCounty = '';
-        let minDistance = Number.MAX_VALUE;
+  findNearestCity(
+    latitude: number,
+    longitude: number
+  ): Observable<{ city: string; county: string; distance: number }> {
+    return this.http
+      .get<{
+        city: string;
+        county: string;
+        distance: number;
+      }>(`${this.apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`)
+      .pipe(
+        catchError(() => {
+          // Calculate nearest city locally if API fails
+          let nearestCity = '';
+          let nearestCounty = '';
+          let minDistance = Number.MAX_VALUE;
 
-        NORWAY_COUNTIES.forEach(county => {
-          county.cities.forEach(city => {
-            if (city.coordinates) {
-              const [cityLong, cityLat] = city.coordinates;
-              const distance = this.calculateDistance(latitude, longitude, cityLat, cityLong);
-              
-              if (distance < minDistance) {
-                minDistance = distance;
-                nearestCity = city.name;
-                nearestCounty = county.name;
+          NORWAY_COUNTIES.forEach(county => {
+            county.cities.forEach(city => {
+              if (city.coordinates) {
+                const [cityLong, cityLat] = city.coordinates;
+                const distance = this.calculateDistance(latitude, longitude, cityLat, cityLong);
+
+                if (distance < minDistance) {
+                  minDistance = distance;
+                  nearestCity = city.name;
+                  nearestCounty = county.name;
+                }
               }
-            }
+            });
           });
-        });
 
-        return of({
-          city: nearestCity,
-          county: nearestCounty,
-          distance: minDistance
-        });
-      })
-    );
+          return of({
+            city: nearestCity,
+            county: nearestCounty,
+            distance: minDistance,
+          });
+        })
+      );
   }
 
   /**
@@ -144,8 +151,10 @@ export class LocationService {
     const dLon = this.deg2rad(lon2 - lon1);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.cos(this.deg2rad(lat1)) *
+        Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c; // Distance in km
     return distance;

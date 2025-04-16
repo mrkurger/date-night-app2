@@ -1,0 +1,89 @@
+# Database Schema
+
+MongoDB schema for the Date Night App
+
+```mermaid
+
+classDiagram
+    class User {
+        +String _id
+        +String email
+        +String password
+        +String name
+        +String role
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    class Advertisement {
+        +String _id
+        +String title
+        +String description
+        +Number price
+        +String category
+        +Object location
+        +Array images
+        +Array tags
+        +String user
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    class TravelLocation {
+        +String _id
+        +String city
+        +String country
+        +Array coordinates
+        +Date startDate
+        +Date endDate
+        +String notes
+        +String user
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    class Conversation {
+        +String _id
+        +Array participants
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    class Message {
+        +String _id
+        +String text
+        +String sender
+        +String conversation
+        +Date createdAt
+    }
+    
+    class PaymentMethod {
+        +String _id
+        +String user
+        +String type
+        +Object details
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    class Payment {
+        +String _id
+        +String user
+        +Number amount
+        +String currency
+        +String status
+        +String description
+        +String paymentMethod
+        +Date createdAt
+        +Date updatedAt
+    }
+    
+    User "1" -- "n" Advertisement : creates
+    User "1" -- "n" TravelLocation : plans
+    User "1" -- "n" Conversation : participates
+    User "1" -- "n" Message : sends
+    User "1" -- "n" PaymentMethod : owns
+    User "1" -- "n" Payment : makes
+    Conversation "1" -- "n" Message : contains
+
+```

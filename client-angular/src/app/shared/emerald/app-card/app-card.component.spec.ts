@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the Emerald AppCard component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEM: Mock item data for testing
 // ===================================================
@@ -23,9 +23,9 @@ import { LabelComponent } from '../components/label/label.component';
   template: `
     <div class="emerald-app-card" [ngClass]="'emerald-app-card--' + layout">
       <div class="emerald-app-card__content">
-        <h3 class="emerald-app-card__title">{{title}}</h3>
-        <p class="emerald-app-card__subtitle" *ngIf="subtitle">{{subtitle}}</p>
-        <p class="emerald-app-card__description" *ngIf="description">{{description}}</p>
+        <h3 class="emerald-app-card__title">{{ title }}</h3>
+        <p class="emerald-app-card__subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+        <p class="emerald-app-card__description" *ngIf="description">{{ description }}</p>
         <div class="emerald-app-card__tags" *ngIf="visibleTags.length > 0">
           <emerald-label *ngFor="let tag of visibleTags" [text]="tag"></emerald-label>
         </div>
@@ -33,7 +33,7 @@ import { LabelComponent } from '../components/label/label.component';
     </div>
   `,
   standalone: true,
-  imports: [CommonModule, LabelComponent]
+  imports: [CommonModule, LabelComponent],
 })
 class TestAppCardComponent extends AppCardComponent {}
 
@@ -55,24 +55,20 @@ describe('AppCardComponent (Basic Version)', () => {
     tags: ['tag1', 'tag2', 'tag3', 'tag4'],
     actions: [
       { id: 'action1', icon: 'heart', tooltip: 'Like' },
-      { id: 'action2', icon: 'comment', tooltip: 'Comment' }
-    ]
+      { id: 'action2', icon: 'comment', tooltip: 'Comment' },
+    ],
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TestAppCardComponent,
-        LabelComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA] // Ignore unknown elements/attributes
+      imports: [CommonModule, TestAppCardComponent, LabelComponent],
+      schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements/attributes
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestAppCardComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    
+
     // Set the mock item data
     component.title = mockItem.title;
     component.subtitle = mockItem.subtitle;
@@ -84,7 +80,7 @@ describe('AppCardComponent (Basic Version)', () => {
     component.tags = mockItem.tags;
     component.itemId = mockItem.id;
     component.actions = mockItem.actions;
-    
+
     fixture.detectChanges();
   });
 
@@ -113,9 +109,9 @@ describe('AppCardComponent (Basic Version)', () => {
   describe('Event Handling', () => {
     it('should emit click event when card is clicked', () => {
       spyOn(component.click, 'emit');
-      
+
       component.handleClick();
-      
+
       expect(component.click.emit).toHaveBeenCalledWith(mockItem.id);
     });
 
@@ -123,13 +119,13 @@ describe('AppCardComponent (Basic Version)', () => {
       spyOn(component.actionClick, 'emit');
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.handleActionClick(event, 'action1');
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.actionClick.emit).toHaveBeenCalledWith({
         id: 'action1',
-        itemId: mockItem.id
+        itemId: mockItem.id,
       });
     });
   });
@@ -138,7 +134,7 @@ describe('AppCardComponent (Basic Version)', () => {
     it('should limit visible tags based on maxTags property', () => {
       component.maxTags = 2;
       fixture.detectChanges();
-      
+
       expect(component.visibleTags.length).toBe(2);
       expect(component.visibleTags).toEqual(['tag1', 'tag2']);
     });
@@ -146,7 +142,7 @@ describe('AppCardComponent (Basic Version)', () => {
     it('should show all tags when maxTags is greater than tags length', () => {
       component.maxTags = 10;
       fixture.detectChanges();
-      
+
       expect(component.visibleTags.length).toBe(mockItem.tags.length);
       expect(component.visibleTags).toEqual(mockItem.tags);
     });

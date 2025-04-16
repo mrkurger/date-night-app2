@@ -7,7 +7,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for validator settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -16,7 +16,7 @@ const { body, query, param, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
 // Helper function to check if a string is a valid MongoDB ObjectId
-const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
+const isValidObjectId = value => mongoose.Types.ObjectId.isValid(value);
 
 // Helper function to validate validation results
 const validate = (req, res, next) => {
@@ -26,8 +26,8 @@ const validate = (req, res, next) => {
       success: false,
       errors: errors.array().map(error => ({
         field: error.param,
-        message: error.msg
-      }))
+        message: error.msg,
+      })),
     });
   }
   next();
@@ -60,29 +60,25 @@ const registerValidation = [
     .isLength({ min: 8 })
     .withMessage('Password must be at least 8 characters long')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
-    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+    .withMessage(
+      'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+    ),
 
   body('role')
     .optional()
     .isIn(['user', 'advertiser'])
     .withMessage('Role must be either "user" or "advertiser"'),
 
-  validate
+  validate,
 ];
 
 // Login validation
 const loginValidation = [
-  body('username')
-    .trim()
-    .notEmpty()
-    .withMessage('Username is required')
-    .escape(),
+  body('username').trim().notEmpty().withMessage('Username is required').escape(),
 
-  body('password')
-    .notEmpty()
-    .withMessage('Password is required'),
+  body('password').notEmpty().withMessage('Password is required'),
 
-  validate
+  validate,
 ];
 
 // Ad creation validation
@@ -103,17 +99,9 @@ const adValidation = [
     .isIn(['Escort', 'Striptease', 'Massage', 'Webcam', 'Phone', 'Other'])
     .withMessage('Invalid category'),
 
-  body('county')
-    .trim()
-    .notEmpty()
-    .withMessage('County is required')
-    .escape(),
+  body('county').trim().notEmpty().withMessage('County is required').escape(),
 
-  body('city')
-    .trim()
-    .notEmpty()
-    .withMessage('City is required')
-    .escape(),
+  body('city').trim().notEmpty().withMessage('City is required').escape(),
 
   body('location.coordinates')
     .isArray({ min: 2, max: 2 })
@@ -135,7 +123,7 @@ const adValidation = [
     .isIn(['30min', '1hour', '2hours', 'overnight', 'custom'])
     .withMessage('Invalid duration'),
 
-  validate
+  validate,
 ];
 
 // Ad update validation
@@ -159,19 +147,9 @@ const adUpdateValidation = [
     .isIn(['Escort', 'Striptease', 'Massage', 'Webcam', 'Phone', 'Other'])
     .withMessage('Invalid category'),
 
-  body('county')
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage('County is required')
-    .escape(),
+  body('county').optional().trim().notEmpty().withMessage('County is required').escape(),
 
-  body('city')
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage('City is required')
-    .escape(),
+  body('city').optional().trim().notEmpty().withMessage('City is required').escape(),
 
   body('location.coordinates')
     .optional()
@@ -188,7 +166,7 @@ const adUpdateValidation = [
     .isFloat({ min: -90, max: 90 })
     .withMessage('Latitude must be between -90 and 90'),
 
-  validate
+  validate,
 ];
 
 // Chat message validation
@@ -201,53 +179,42 @@ const chatMessageValidation = [
     .withMessage('Message cannot exceed 1000 characters')
     .escape(),
 
-  body('recipient')
-    .custom(isValidObjectId)
-    .withMessage('Invalid recipient ID'),
+  body('recipient').custom(isValidObjectId).withMessage('Invalid recipient ID'),
 
-  validate
+  validate,
 ];
 
 // ID parameter validation
 const idParamValidation = [
-  param('id')
-    .custom(isValidObjectId)
-    .withMessage('Invalid ID format'),
+  param('id').custom(isValidObjectId).withMessage('Invalid ID format'),
 
-  validate
+  validate,
 ];
 
 // Ad ID parameter validation
 const adIdParamValidation = [
-  param('adId')
-    .custom(isValidObjectId)
-    .withMessage('Invalid ad ID format'),
+  param('adId').custom(isValidObjectId).withMessage('Invalid ad ID format'),
 
-  validate
+  validate,
 ];
 
 // User ID parameter validation
 const userIdParamValidation = [
-  param('userId')
-    .custom(isValidObjectId)
-    .withMessage('Invalid user ID format'),
+  param('userId').custom(isValidObjectId).withMessage('Invalid user ID format'),
 
-  validate
+  validate,
 ];
 
 // Pagination query validation
 const paginationValidation = [
-  query('page')
-    .optional()
-    .isInt({ min: 1 })
-    .withMessage('Page must be a positive integer'),
+  query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
 
   query('limit')
     .optional()
     .isInt({ min: 1, max: 100 })
     .withMessage('Limit must be between 1 and 100'),
 
-  validate
+  validate,
 ];
 
 // Search query validation
@@ -259,7 +226,7 @@ const searchValidation = [
     .withMessage('Search term must be between 2 and 50 characters')
     .escape(),
 
-  validate
+  validate,
 ];
 
 // Password reset validation
@@ -270,7 +237,7 @@ const passwordResetValidation = [
     .withMessage('Please provide a valid email address')
     .normalizeEmail(),
 
-  validate
+  validate,
 ];
 
 // New password validation
@@ -279,17 +246,18 @@ const newPasswordValidation = [
     .isLength({ min: 8 })
     .withMessage('Password must be at least 8 characters long')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
-    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+    .withMessage(
+      'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+    ),
 
-  body('confirmPassword')
-    .custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error('Password confirmation does not match password');
-      }
-      return true;
-    }),
+  body('confirmPassword').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Password confirmation does not match password');
+    }
+    return true;
+  }),
 
-  validate
+  validate,
 ];
 
 // Profile update validation
@@ -315,22 +283,14 @@ const profileUpdateValidation = [
     .withMessage('Please provide a valid email address')
     .normalizeEmail(),
 
-  validate
+  validate,
 ];
 
 // Travel plan validation
 const travelPlanValidation = [
-  body('destination.city')
-    .trim()
-    .notEmpty()
-    .withMessage('City is required')
-    .escape(),
+  body('destination.city').trim().notEmpty().withMessage('City is required').escape(),
 
-  body('destination.county')
-    .trim()
-    .notEmpty()
-    .withMessage('County is required')
-    .escape(),
+  body('destination.county').trim().notEmpty().withMessage('County is required').escape(),
 
   body('destination.location.coordinates')
     .isArray({ min: 2, max: 2 })
@@ -368,7 +328,7 @@ const travelPlanValidation = [
       return true;
     }),
 
-  validate
+  validate,
 ];
 
 module.exports = {
@@ -387,5 +347,5 @@ module.exports = {
   passwordResetValidation,
   newPasswordValidation,
   profileUpdateValidation,
-  travelPlanValidation
+  travelPlanValidation,
 };

@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the ContentSanitizerService
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_SERVICES: Mock service configurations
 //   Related to: client-angular/src/app/core/services/*.ts
@@ -20,19 +20,16 @@ describe('ContentSanitizerService', () => {
   beforeEach(() => {
     sanitizerSpy = jasmine.createSpyObj('DomSanitizer', [
       'bypassSecurityTrustUrl',
-      'bypassSecurityTrustResourceUrl'
+      'bypassSecurityTrustResourceUrl',
     ]);
-    
+
     sanitizerSpy.bypassSecurityTrustUrl.and.returnValue('sanitized-url' as any);
     sanitizerSpy.bypassSecurityTrustResourceUrl.and.returnValue('sanitized-resource-url' as any);
 
     TestBed.configureTestingModule({
-      providers: [
-        ContentSanitizerService,
-        { provide: DomSanitizer, useValue: sanitizerSpy }
-      ]
+      providers: [ContentSanitizerService, { provide: DomSanitizer, useValue: sanitizerSpy }],
     });
-    
+
     service = TestBed.inject(ContentSanitizerService);
   });
 
@@ -44,7 +41,7 @@ describe('ContentSanitizerService', () => {
     it('should sanitize absolute URLs', () => {
       const url = 'https://example.com/image.jpg';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -52,7 +49,7 @@ describe('ContentSanitizerService', () => {
     it('should handle relative URLs starting with /', () => {
       const url = '/assets/images/image.jpg';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -60,7 +57,7 @@ describe('ContentSanitizerService', () => {
     it('should prepend / to relative URLs not starting with /', () => {
       const url = 'assets/images/image.jpg';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith('/assets/images/image.jpg');
       expect(result).toBe('sanitized-url');
     });
@@ -73,9 +70,9 @@ describe('ContentSanitizerService', () => {
 
     it('should handle errors and return empty string', () => {
       sanitizerSpy.bypassSecurityTrustUrl.and.throwError('Test error');
-      
+
       const result = service.sanitizeUrl('https://example.com/image.jpg');
-      
+
       expect(result).toBe('');
     });
 
@@ -83,7 +80,7 @@ describe('ContentSanitizerService', () => {
     it('should sanitize URLs with special characters', () => {
       const url = 'https://example.com/image with spaces.jpg';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -92,7 +89,7 @@ describe('ContentSanitizerService', () => {
     it('should sanitize URLs with query parameters', () => {
       const url = 'https://example.com/image.jpg?width=100&height=200';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -101,7 +98,7 @@ describe('ContentSanitizerService', () => {
     it('should handle URLs with fragment identifiers', () => {
       const url = 'https://example.com/page.html#section1';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -110,7 +107,7 @@ describe('ContentSanitizerService', () => {
     it('should handle URLs with port numbers', () => {
       const url = 'https://example.com:8080/image.jpg';
       const result = service.sanitizeUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-url');
     });
@@ -120,7 +117,7 @@ describe('ContentSanitizerService', () => {
     it('should sanitize resource URLs', () => {
       const url = 'https://example.com/iframe-content';
       const result = service.sanitizeResourceUrl(url);
-      
+
       expect(sanitizerSpy.bypassSecurityTrustResourceUrl).toHaveBeenCalledWith(url);
       expect(result).toBe('sanitized-resource-url');
     });
@@ -133,9 +130,9 @@ describe('ContentSanitizerService', () => {
 
     it('should handle errors and return empty string', () => {
       sanitizerSpy.bypassSecurityTrustResourceUrl.and.throwError('Test error');
-      
+
       const result = service.sanitizeResourceUrl('https://example.com/iframe-content');
-      
+
       expect(result).toBe('');
     });
   });

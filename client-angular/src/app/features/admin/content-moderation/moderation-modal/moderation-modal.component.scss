@@ -7,7 +7,8 @@
   background-color: #000;
   min-height: 300px;
 
-  img, video {
+  img,
+  video {
     width: 100%;
     max-height: 400px;
     object-fit: contain;
@@ -80,7 +81,8 @@
     align-items: center;
     justify-content: center;
 
-    img, video {
+    img,
+    video {
       max-height: 90vh;
       max-width: 90vw;
     }
@@ -99,10 +101,10 @@
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1.5rem;
-  
+
   .media-detail {
     margin-bottom: 0.5rem;
-    
+
     label {
       font-weight: 600;
       margin-right: 0.5rem;
@@ -114,12 +116,12 @@
   .form-group {
     margin-bottom: 1.5rem;
   }
-  
+
   .status-options {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-    
+
     .status-option {
       flex: 1;
       padding: 1rem;
@@ -128,49 +130,49 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
-      
+
       &:hover {
         border-color: #adb5bd;
       }
-      
+
       &.selected {
         &.approved {
           border-color: #28a745;
           background-color: rgba(40, 167, 69, 0.1);
         }
-        
+
         &.rejected {
           border-color: #dc3545;
           background-color: rgba(220, 53, 69, 0.1);
         }
       }
-      
+
       i {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
       }
-      
+
       .status-label {
         font-weight: 600;
       }
     }
   }
-  
+
   .notes-field {
     textarea {
       resize: vertical;
       min-height: 100px;
     }
-    
+
     .char-count {
       text-align: right;
       font-size: 0.8rem;
       color: #6c757d;
-      
+
       &.warning {
         color: #ffc107;
       }
-      
+
       &.danger {
         color: #dc3545;
       }
@@ -183,17 +185,17 @@
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1.5rem;
-  
+
   h5 {
     font-weight: 600;
     margin-bottom: 0.75rem;
     font-size: 1rem;
   }
-  
+
   ul {
     padding-left: 1.5rem;
     margin-bottom: 0;
-    
+
     li {
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
@@ -205,17 +207,17 @@
   .btn-approve {
     background-color: #28a745;
     border-color: #28a745;
-    
+
     &:hover {
       background-color: #218838;
       border-color: #1e7e34;
     }
   }
-  
+
   .btn-reject {
     background-color: #dc3545;
     border-color: #dc3545;
-    
+
     &:hover {
       background-color: #c82333;
       border-color: #bd2130;

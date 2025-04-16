@@ -6,7 +6,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
  * Used for handling platform-specific code in SSR
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlatformService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}

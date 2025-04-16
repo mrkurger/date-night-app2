@@ -1,0 +1,8 @@
+node_modules
+coverage
+dist
+.angular
+.git
+.github
+*.md
+package-lock.json

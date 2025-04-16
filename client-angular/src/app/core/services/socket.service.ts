@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketService {
   private socket: Socket | null = null;
@@ -38,12 +38,12 @@ export class SocketService {
 
     this.socket = io(environment.apiUrl, {
       auth: {
-        token
+        token,
       },
       transports: ['websocket'],
       reconnection: true,
       reconnectionAttempts: 5,
-      reconnectionDelay: 1000
+      reconnectionDelay: 1000,
     });
 
     this.socket.on('connect', () => {
@@ -56,7 +56,7 @@ export class SocketService {
       this.connected = false;
     });
 
-    this.socket.on('connect_error', (error) => {
+    this.socket.on('connect_error', error => {
       console.error('Socket connection error:', error);
       this.connected = false;
     });
@@ -144,7 +144,7 @@ export class SocketService {
     this.emit('chat:message', {
       roomId,
       message,
-      recipientId
+      recipientId,
     });
   }
 
@@ -156,7 +156,7 @@ export class SocketService {
   sendTypingIndicator(roomId: string, isTyping: boolean): void {
     this.emit('chat:typing', {
       roomId,
-      isTyping
+      isTyping,
     });
   }
 

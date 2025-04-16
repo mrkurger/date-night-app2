@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for ad-management.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -54,9 +53,9 @@ const routes: Routes = [
       { path: 'create', component: AdFormComponent },
       { path: 'edit/:id', component: AdFormComponent },
       { path: 'stats/:id', component: AdStatsComponent },
-      { path: 'travel/:id', component: TravelItineraryComponent }
-    ]
-  }
+      { path: 'travel/:id', component: TravelItineraryComponent },
+    ],
+  },
 ];
 
 @NgModule({
@@ -89,7 +88,7 @@ const routes: Routes = [
     AdFormComponent,
     AdListComponent,
     AdStatsComponent,
-    TravelItineraryComponent
-  ]
+    TravelItineraryComponent,
+  ],
 })
-export class AdManagementModule { }
+export class AdManagementModule {}

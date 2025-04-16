@@ -38,14 +38,30 @@
     "update-packages": "node scripts/update-packages.js",
     "analyze:security": "npm audit && cd server && npm audit && cd ../client-angular && npm audit",
     "analyze:performance": "npm run test:server:performance",
-    "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html"
+    "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html",
+    "prepare": "husky",
+    "lint": "npm run lint:server && npm run lint:client",
+    "lint:server": "cd server && npm run lint || true",
+    "lint:client": "cd client-angular && npm run lint || true",
+    "lint:fix": "npm run lint:server:fix && npm run lint:client:fix",
+    "lint:server:fix": "cd server && npm run lint:fix || true",
+    "lint:client:fix": "cd client-angular && npm run lint:fix || true",
+    "format": "npm run format:server && npm run format:client",
+    "format:server": "cd server && npm run format",
+    "format:client": "cd client-angular && npm run format",
+    "format:check": "npm run format:server:check && npm run format:client:check",
+    "format:server:check": "cd server && npm run format:check",
+    "format:client:check": "cd client-angular && npm run format:check",
+    "format:all": "npm run format && npm run lint:fix"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
     "angular-mocks": "^1.8.3",
     "concurrently": "^8.2.2",
+    "husky": "9.1.7",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "15.5.1"
   },
   "dependencies": {
     "@popperjs/core": "2.11.8",

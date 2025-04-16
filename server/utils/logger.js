@@ -7,7 +7,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for logger settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -32,10 +32,7 @@ const consoleFormat = printf(({ level, message, timestamp, ...meta }) => {
 });
 
 // Define log format for file output
-const fileFormat = combine(
-  timestamp(),
-  json()
-);
+const fileFormat = combine(timestamp(), json());
 
 // Create file transport for error logs
 const errorFileTransport = new transports.DailyRotateFile({
@@ -44,7 +41,7 @@ const errorFileTransport = new transports.DailyRotateFile({
   level: 'error',
   maxSize: '20m',
   maxFiles: '14d',
-  format: fileFormat
+  format: fileFormat,
 });
 
 // Create file transport for combined logs
@@ -53,38 +50,30 @@ const combinedFileTransport = new transports.DailyRotateFile({
   datePattern: 'YYYY-MM-DD',
   maxSize: '20m',
   maxFiles: '14d',
-  format: fileFormat
+  format: fileFormat,
 });
 
 // Create console transport
 const consoleTransport = new transports.Console({
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-  format: combine(
-    colorize(),
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    consoleFormat
-  )
+  format: combine(colorize(), timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), consoleFormat),
 });
 
 // Create logger instance
 const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
   defaultMeta: { service: 'date-night-api' },
-  transports: [
-    consoleTransport,
-    errorFileTransport,
-    combinedFileTransport
-  ],
+  transports: [consoleTransport, errorFileTransport, combinedFileTransport],
   // Handle uncaught exceptions and unhandled rejections
   exceptionHandlers: [
     new transports.File({ filename: path.join(logsDir, 'exceptions.log') }),
-    consoleTransport
+    consoleTransport,
   ],
   rejectionHandlers: [
     new transports.File({ filename: path.join(logsDir, 'rejections.log') }),
-    consoleTransport
+    consoleTransport,
   ],
-  exitOnError: false
+  exitOnError: false,
 });
 
 // Add request logger middleware
@@ -95,12 +84,12 @@ const requestLogger = (req, res, next) => {
   }
 
   const start = Date.now();
-  
+
   // Log when the request completes
   res.on('finish', () => {
     const duration = Date.now() - start;
     const logLevel = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
-    
+
     logger.log(logLevel, `${req.method} ${req.originalUrl}`, {
       method: req.method,
       url: req.originalUrl,
@@ -108,14 +97,14 @@ const requestLogger = (req, res, next) => {
       duration: `${duration}ms`,
       ip: req.ip,
       userAgent: req.get('user-agent'),
-      correlationId: req.correlationId
+      correlationId: req.correlationId,
     });
   });
-  
+
   next();
 };
 
 module.exports = {
   logger,
-  requestLogger
+  requestLogger,
 };

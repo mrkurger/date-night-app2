@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-details.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -22,7 +21,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './ad-details.component.html',
   styleUrls: ['./ad-details.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class AdDetailsComponent implements OnInit {
   ad: Ad | null = null;
@@ -52,7 +51,7 @@ export class AdDetailsComponent implements OnInit {
     if (id) {
       this.loading = true;
       this.adService.getAdById(id).subscribe({
-        next: (ad) => {
+        next: ad => {
           this.ad = ad;
           this.loading = false;
 
@@ -69,11 +68,11 @@ export class AdDetailsComponent implements OnInit {
             this.isOwner = true;
           }
         },
-        error: (err) => {
+        error: err => {
           console.error('Error fetching ad details:', err);
           this.error = 'Failed to load ad details. Please try again.';
           this.loading = false;
-        }
+        },
       });
     } else {
       this.error = 'Ad ID not found';
@@ -85,8 +84,8 @@ export class AdDetailsComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.userService.getFavorites().subscribe({
-        next: (favorites) => this.favorites = favorites,
-        error: (err) => console.error('Error loading favorites:', err)
+        next: favorites => (this.favorites = favorites),
+        error: err => console.error('Error loading favorites:', err),
       });
     }
   }
@@ -103,10 +102,12 @@ export class AdDetailsComponent implements OnInit {
 
   prevImage(): void {
     if (this.ad && this.ad.media && this.ad.media.length > 0) {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.ad.media.length) % this.ad.media.length;
+      this.currentImageIndex =
+        (this.currentImageIndex - 1 + this.ad.media.length) % this.ad.media.length;
       this.currentImage = this.ad.media[this.currentImageIndex].url;
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.ad.images.length) % this.ad.images.length;
+      this.currentImageIndex =
+        (this.currentImageIndex - 1 + this.ad.images.length) % this.ad.images.length;
       this.currentImage = this.ad.images[this.currentImageIndex];
     }
   }
@@ -133,10 +134,10 @@ export class AdDetailsComponent implements OnInit {
           this.favorites = this.favorites.filter(id => id !== this.ad?._id);
           this.notificationService.success('Removed from favorites');
         },
-        error: (err) => {
+        error: err => {
           console.error('Error removing from favorites:', err);
           this.notificationService.error('Failed to remove from favorites');
-        }
+        },
       });
     } else {
       this.userService.addFavorite(this.ad._id).subscribe({
@@ -144,10 +145,10 @@ export class AdDetailsComponent implements OnInit {
           this.favorites.push(this.ad?._id || '');
           this.notificationService.success('Added to favorites');
         },
-        error: (err) => {
+        error: err => {
           console.error('Error adding to favorites:', err);
           this.notificationService.error('Failed to add to favorites');
-        }
+        },
       });
     }
   }
@@ -166,10 +167,10 @@ export class AdDetailsComponent implements OnInit {
         next: () => {
           this.notificationService.success('Ad reported successfully');
         },
-        error: (err) => {
+        error: err => {
           console.error('Error reporting ad:', err);
           this.notificationService.error('Failed to report ad');
-        }
+        },
       });
     }
   }
@@ -192,12 +193,14 @@ export class AdDetailsComponent implements OnInit {
     this.adService.toggleActiveStatus(this.ad._id, newStatus).subscribe({
       next: () => {
         if (this.ad) this.ad.isActive = newStatus;
-        this.notificationService.success(`Ad ${newStatus ? 'activated' : 'deactivated'} successfully`);
+        this.notificationService.success(
+          `Ad ${newStatus ? 'activated' : 'deactivated'} successfully`
+        );
       },
-      error: (err) => {
+      error: err => {
         console.error('Error toggling ad status:', err);
         this.notificationService.error('Failed to update ad status');
-      }
+      },
     });
   }
 
@@ -210,10 +213,10 @@ export class AdDetailsComponent implements OnInit {
           this.notificationService.success('Ad deleted successfully');
           this.router.navigate(['/ad-management']);
         },
-        error: (err) => {
+        error: err => {
           console.error('Error deleting ad:', err);
           this.notificationService.error('Failed to delete ad');
-        }
+        },
       });
     }
   }

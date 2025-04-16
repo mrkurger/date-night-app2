@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (user-settings.component.spec)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -22,7 +21,7 @@ import { NotificationService } from '../../core/services/notification.service';
 // Mock MainLayoutComponent
 @Component({
   selector: 'app-main-layout',
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -46,36 +45,36 @@ describe('UserSettingsComponent', () => {
       emailNotifications: true,
       chatNotifications: true,
       marketingEmails: false,
-      newMatchNotifications: true
+      newMatchNotifications: true,
     },
     privacySettings: {
       profileVisibility: 'public',
       showOnlineStatus: true,
       allowMessaging: 'all',
-      dataSharing: false
-    }
+      dataSharing: false,
+    },
   };
 
   // Mock services
   class MockAuthService {
     currentUser$ = of(mockUser);
-    
+
     updateProfile() {
       return of({ success: true });
     }
-    
+
     changePassword() {
       return of({ success: true });
     }
-    
+
     updateNotificationSettings() {
       return of({ success: true });
     }
-    
+
     updatePrivacySettings() {
       return of({ success: true });
     }
-    
+
     deleteAccount() {
       return of({ success: true });
     }
@@ -88,19 +87,13 @@ describe('UserSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        UserSettingsComponent
-      ],
-      declarations: [
-        MockMainLayoutComponent
-      ],
+      imports: [RouterTestingModule, ReactiveFormsModule, UserSettingsComponent],
+      declarations: [MockMainLayoutComponent],
       providers: [
         { provide: AuthService, useClass: MockAuthService },
-        { provide: NotificationService, useClass: MockNotificationService }
+        { provide: NotificationService, useClass: MockNotificationService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserSettingsComponent);
@@ -108,7 +101,7 @@ describe('UserSettingsComponent', () => {
     authService = TestBed.inject(AuthService);
     notificationService = TestBed.inject(NotificationService);
     router = TestBed.inject(Router);
-    
+
     // Spy on router navigation
     spyOn(router, 'navigateByUrl').and.stub();
   });
@@ -121,25 +114,25 @@ describe('UserSettingsComponent', () => {
     it('should load user data on init', fakeAsync(() => {
       component.ngOnInit();
       tick();
-      
+
       expect(component.user).toEqual(mockUser);
       expect(component.profileForm.value).toEqual({
         name: 'Test User',
         email: 'test@example.com',
         phone: '+1234567890',
-        bio: 'Test bio'
+        bio: 'Test bio',
       });
       expect(component.notificationForm.value).toEqual({
         emailNotifications: true,
         chatNotifications: true,
         marketingEmails: false,
-        newMatchNotifications: true
+        newMatchNotifications: true,
       });
       expect(component.privacyForm.value).toEqual({
         profileVisibility: 'public',
         showOnlineStatus: true,
         allowMessaging: 'all',
-        dataSharing: false
+        dataSharing: false,
       });
       expect(component.loading).toBeFalse();
     }));
@@ -154,9 +147,9 @@ describe('UserSettingsComponent', () => {
     it('should update profile when saveProfile is called', () => {
       spyOn(authService, 'updateProfile').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.saveProfile();
-      
+
       expect(authService.updateProfile).toHaveBeenCalledWith(component.profileForm.value);
       expect(notificationService.success).toHaveBeenCalledWith('Profile updated successfully');
       expect(component.loading).toBeFalse();
@@ -165,27 +158,29 @@ describe('UserSettingsComponent', () => {
     it('should show error when profile form is invalid', () => {
       component.profileForm.controls['name'].setValue(''); // Make form invalid
       spyOn(notificationService, 'error').and.callThrough();
-      
+
       component.saveProfile();
-      
-      expect(notificationService.error).toHaveBeenCalledWith('Please fix the form errors before submitting');
+
+      expect(notificationService.error).toHaveBeenCalledWith(
+        'Please fix the form errors before submitting'
+      );
     });
 
     it('should change password when changePassword is called', () => {
       component.passwordForm.setValue({
         currentPassword: 'oldPassword',
         newPassword: 'newPassword',
-        confirmPassword: 'newPassword'
+        confirmPassword: 'newPassword',
       });
-      
+
       spyOn(authService, 'changePassword').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.changePassword();
-      
+
       expect(authService.changePassword).toHaveBeenCalledWith({
         currentPassword: 'oldPassword',
-        newPassword: 'newPassword'
+        newPassword: 'newPassword',
       });
       expect(notificationService.success).toHaveBeenCalledWith('Password changed successfully');
       expect(component.loading).toBeFalse();
@@ -194,10 +189,12 @@ describe('UserSettingsComponent', () => {
     it('should update notification settings when saveNotificationSettings is called', () => {
       spyOn(authService, 'updateNotificationSettings').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.saveNotificationSettings();
-      
-      expect(authService.updateNotificationSettings).toHaveBeenCalledWith(component.notificationForm.value);
+
+      expect(authService.updateNotificationSettings).toHaveBeenCalledWith(
+        component.notificationForm.value
+      );
       expect(notificationService.success).toHaveBeenCalledWith('Notification settings updated');
       expect(component.loading).toBeFalse();
     });
@@ -205,9 +202,9 @@ describe('UserSettingsComponent', () => {
     it('should update privacy settings when savePrivacySettings is called', () => {
       spyOn(authService, 'updatePrivacySettings').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.savePrivacySettings();
-      
+
       expect(authService.updatePrivacySettings).toHaveBeenCalledWith(component.privacyForm.value);
       expect(notificationService.success).toHaveBeenCalledWith('Privacy settings updated');
       expect(component.loading).toBeFalse();
@@ -224,10 +221,10 @@ describe('UserSettingsComponent', () => {
       spyOn(window, 'confirm').and.returnValue(true);
       spyOn(authService, 'deleteAccount').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.deleteAccount();
       tick();
-      
+
       expect(authService.deleteAccount).toHaveBeenCalled();
       expect(notificationService.success).toHaveBeenCalledWith('Your account has been deleted');
       expect(router.navigateByUrl).toHaveBeenCalledWith('/');
@@ -237,21 +234,23 @@ describe('UserSettingsComponent', () => {
     it('should not delete account when user cancels confirmation', () => {
       spyOn(window, 'confirm').and.returnValue(false);
       spyOn(authService, 'deleteAccount').and.callThrough();
-      
+
       component.deleteAccount();
-      
+
       expect(authService.deleteAccount).not.toHaveBeenCalled();
     });
 
     it('should handle error when deleting account fails', fakeAsync(() => {
       spyOn(window, 'confirm').and.returnValue(true);
-      spyOn(authService, 'deleteAccount').and.returnValue(throwError(() => new Error('Delete failed')));
+      spyOn(authService, 'deleteAccount').and.returnValue(
+        throwError(() => new Error('Delete failed'))
+      );
       spyOn(notificationService, 'error').and.callThrough();
       spyOn(console, 'error').and.callThrough();
-      
+
       component.deleteAccount();
       tick();
-      
+
       expect(notificationService.error).toHaveBeenCalledWith('Failed to delete account');
       expect(console.error).toHaveBeenCalled();
       expect(component.loading).toBeFalse();
@@ -262,7 +261,7 @@ describe('UserSettingsComponent', () => {
     it('should set active tab', () => {
       component.setActiveTab('password');
       expect(component.activeTab).toBe('password');
-      
+
       component.setActiveTab('notifications');
       expect(component.activeTab).toBe('notifications');
     });
@@ -271,17 +270,17 @@ describe('UserSettingsComponent', () => {
       component.passwordForm.setValue({
         currentPassword: 'oldPassword',
         newPassword: 'newPassword',
-        confirmPassword: 'differentPassword'
+        confirmPassword: 'differentPassword',
       });
-      
+
       expect(component.passwordForm.hasError('passwordMismatch')).toBeTrue();
-      
+
       component.passwordForm.setValue({
         currentPassword: 'oldPassword',
         newPassword: 'newPassword',
-        confirmPassword: 'newPassword'
+        confirmPassword: 'newPassword',
       });
-      
+
       expect(component.passwordForm.hasError('passwordMismatch')).toBeFalse();
     });
   });

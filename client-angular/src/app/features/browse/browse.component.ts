@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (browse.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -20,17 +19,11 @@ import { ListViewComponent } from '../list-view/list-view.component';
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule, 
-    NetflixViewComponent, 
-    TinderComponent, 
-    ListViewComponent
-  ]
+  imports: [CommonModule, RouterModule, NetflixViewComponent, TinderComponent, ListViewComponent],
 })
 export class BrowseComponent implements OnInit {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router
@@ -42,20 +35,20 @@ export class BrowseComponent implements OnInit {
       if (params['view']) {
         const view = params['view'];
         if (['netflix', 'tinder', 'list'].includes(view)) {
-          this.activeView = view as any;
+          this.activeView = view;
         }
       }
     });
   }
-  
+
   changeView(view: 'netflix' | 'tinder' | 'list'): void {
     this.activeView = view;
-    
+
     // Update the URL without reloading the page
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { view },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
   }
 }

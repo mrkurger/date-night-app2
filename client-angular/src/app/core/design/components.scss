@@ -24,10 +24,11 @@
   padding: $spacing-2 $spacing-4;
   font-size: $font-size-base;
   border-radius: $border-radius-md;
-  transition: color $transition-normal $transition-ease, 
-              background-color $transition-normal $transition-ease,
-              border-color $transition-normal $transition-ease,
-              box-shadow $transition-normal $transition-ease;
+  transition:
+    color $transition-normal $transition-ease,
+    background-color $transition-normal $transition-ease,
+    border-color $transition-normal $transition-ease,
+    box-shadow $transition-normal $transition-ease;
 
   &:focus {
     outline: 0;
@@ -39,12 +40,14 @@
     pointer-events: none;
   }
 
-  i, .icon {
+  i,
+  .icon {
     margin-right: $spacing-2;
   }
 
   &.btn-icon-only {
-    i, .icon {
+    i,
+    .icon {
       margin-right: 0;
     }
   }
@@ -151,8 +154,9 @@
   border: 1px solid $neutral-300;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-sm;
-  transition: transform $transition-normal $transition-ease, 
-              box-shadow $transition-normal $transition-ease;
+  transition:
+    transform $transition-normal $transition-ease,
+    box-shadow $transition-normal $transition-ease;
 
   &:hover {
     transform: translateY(-2px);
@@ -210,7 +214,9 @@
 // Featured card
 .card-featured {
   border-color: $primary-300;
-  box-shadow: 0 0 0 1px $primary-300, $shadow-md;
+  box-shadow:
+    0 0 0 1px $primary-300,
+    $shadow-md;
 
   &:before {
     content: 'Featured';
@@ -252,8 +258,9 @@
   background-clip: padding-box;
   border: 1px solid $neutral-400;
   border-radius: $border-radius-md;
-  transition: border-color $transition-normal $transition-ease, 
-              box-shadow $transition-normal $transition-ease;
+  transition:
+    border-color $transition-normal $transition-ease,
+    box-shadow $transition-normal $transition-ease;
 
   &:focus {
     color: $neutral-900;
@@ -327,8 +334,9 @@ select.form-control {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: $border-radius-full;
-  transition: color $transition-normal $transition-ease, 
-              background-color $transition-normal $transition-ease;
+  transition:
+    color $transition-normal $transition-ease,
+    background-color $transition-normal $transition-ease;
 }
 
 .badge-primary {
@@ -403,7 +411,7 @@ select.form-control {
   border: 0.25em solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spinner-border .75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
 }
 
 .spinner-sm {
@@ -413,7 +421,9 @@ select.form-control {
 }
 
 @keyframes spinner-border {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // Tooltip styles
@@ -544,9 +554,10 @@ select.form-control {
   text-decoration: none;
   background-color: $neutral-100;
   border: 1px solid $neutral-300;
-  transition: color $transition-normal $transition-ease, 
-              background-color $transition-normal $transition-ease,
-              border-color $transition-normal $transition-ease;
+  transition:
+    color $transition-normal $transition-ease,
+    background-color $transition-normal $transition-ease,
+    border-color $transition-normal $transition-ease;
   padding: $spacing-2 $spacing-3;
 
   &:hover {

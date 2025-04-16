@@ -1,7 +1,9 @@
 <div class="touring-container">
   <div class="header">
     <h1>Touring Advertisers</h1>
-    <p class="subtitle">Find advertisers who are currently touring or planning to visit your area</p>
+    <p class="subtitle">
+      Find advertisers who are currently touring or planning to visit your area
+    </p>
   </div>
 
   <div class="row">
@@ -17,15 +19,15 @@
             <div class="spinner-border"></div>
             <p>Loading touring advertisers...</p>
           </div>
-          
+
           <div *ngIf="!loading && touringAds.length === 0" class="text-center">
             <p>No advertisers are currently touring.</p>
           </div>
-          
+
           <div *ngIf="!loading && touringAds.length > 0" class="touring-grid">
             <div *ngFor="let ad of touringAds" class="touring-card">
               <div class="touring-card-image">
-                <img [src]="ad.profileImage" [alt]="ad.title">
+                <img [src]="ad.profileImage" [alt]="ad.title" />
                 <div class="touring-badge">Touring</div>
               </div>
               <div class="touring-card-content">
@@ -37,7 +39,11 @@
                 </p>
                 <div class="touring-card-actions">
                   <a [routerLink]="['/ad-details', ad._id]" class="btn btn-primary">View Profile</a>
-                  <a [routerLink]="['/chat']" [queryParams]="{adId: ad._id}" class="btn btn-outline-primary">
+                  <a
+                    [routerLink]="['/chat']"
+                    [queryParams]="{ adId: ad._id }"
+                    class="btn btn-outline-primary"
+                  >
                     <i class="fas fa-comment"></i> Chat
                   </a>
                 </div>
@@ -47,7 +53,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Upcoming Tours Section -->
     <div class="col-md-6">
       <div class="card">
@@ -95,25 +101,25 @@
               </button>
             </div>
           </form>
-          
+
           <div *ngIf="loading" class="text-center mt-4">
             <div class="spinner-border"></div>
             <p>Loading upcoming tours...</p>
           </div>
-          
+
           <div *ngIf="!loading && upcomingTours.length === 0" class="text-center mt-4">
             <p>No upcoming tours match your filters.</p>
           </div>
-          
+
           <div *ngIf="!loading && upcomingTours.length > 0" class="upcoming-list mt-4">
             <div *ngFor="let ad of upcomingTours" class="upcoming-item">
               <div class="upcoming-image">
-                <img [src]="ad.profileImage" [alt]="ad.title">
+                <img [src]="ad.profileImage" [alt]="ad.title" />
               </div>
               <div class="upcoming-content">
                 <h3>{{ ad.title }}</h3>
                 <p class="advertiser">{{ ad.advertiser.username }}</p>
-                
+
                 <div *ngFor="let itinerary of ad.travelItinerary" class="itinerary-item">
                   <div *ngIf="itinerary.status === 'planned'" class="itinerary-details">
                     <div class="destination">
@@ -122,14 +128,21 @@
                     </div>
                     <div class="dates">
                       <i class="far fa-calendar-alt"></i>
-                      {{ formatDate(itinerary.arrivalDate) }} - {{ formatDate(itinerary.departureDate) }}
+                      {{ formatDate(itinerary.arrivalDate) }} -
+                      {{ formatDate(itinerary.departureDate) }}
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="upcoming-actions">
-                  <a [routerLink]="['/ad-details', ad._id]" class="btn btn-sm btn-primary">View Profile</a>
-                  <a [routerLink]="['/chat']" [queryParams]="{adId: ad._id}" class="btn btn-sm btn-outline-primary">
+                  <a [routerLink]="['/ad-details', ad._id]" class="btn btn-sm btn-primary"
+                    >View Profile</a
+                  >
+                  <a
+                    [routerLink]="['/chat']"
+                    [queryParams]="{ adId: ad._id }"
+                    class="btn btn-sm btn-outline-primary"
+                  >
                     <i class="fas fa-comment"></i> Chat
                   </a>
                 </div>

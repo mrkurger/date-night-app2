@@ -55,12 +55,12 @@ export interface TouringAd {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TravelService {
   private apiUrl = `${environment.apiUrl}/travel`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get all travel itineraries for an ad
@@ -88,7 +88,11 @@ export class TravelService {
    * @param updates Updates to apply
    * @returns Observable of updated itinerary
    */
-  updateItinerary(adId: string, itineraryId: string, updates: Partial<TravelItinerary>): Observable<TravelItinerary> {
+  updateItinerary(
+    adId: string,
+    itineraryId: string,
+    updates: Partial<TravelItinerary>
+  ): Observable<TravelItinerary> {
     return this.http.put<TravelItinerary>(
       `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,
       updates
@@ -101,7 +105,10 @@ export class TravelService {
    * @param itineraryId Itinerary ID
    * @returns Observable of operation result
    */
-  cancelItinerary(adId: string, itineraryId: string): Observable<{ success: boolean; message: string }> {
+  cancelItinerary(
+    adId: string,
+    itineraryId: string
+  ): Observable<{ success: boolean; message: string }> {
     return this.http.delete<{ success: boolean; message: string }>(
       `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`
     );
@@ -114,7 +121,11 @@ export class TravelService {
    * @param latitude Latitude
    * @returns Observable of updated location
    */
-  updateLocation(adId: string, longitude: number, latitude: number): Observable<{
+  updateLocation(
+    adId: string,
+    longitude: number,
+    latitude: number
+  ): Observable<{
     success: boolean;
     data: {
       currentLocation: {
@@ -124,10 +135,7 @@ export class TravelService {
       isTouring: boolean;
     };
   }> {
-    return this.http.put<any>(
-      `${this.apiUrl}/ad/${adId}/location`,
-      { longitude, latitude }
-    );
+    return this.http.put<any>(`${this.apiUrl}/ad/${adId}/location`, { longitude, latitude });
   }
 
   /**
@@ -147,25 +155,29 @@ export class TravelService {
    * @param days Days ahead to look (default: 30)
    * @returns Observable of upcoming tours
    */
-  getUpcomingTours(city?: string, county?: string, days?: number): Observable<{
+  getUpcomingTours(
+    city?: string,
+    county?: string,
+    days?: number
+  ): Observable<{
     success: boolean;
     count: number;
     data: TouringAd[];
   }> {
     let params = new HttpParams();
-    
+
     if (city) {
       params = params.set('city', city);
     }
-    
+
     if (county) {
       params = params.set('county', county);
     }
-    
+
     if (days) {
       params = params.set('days', days.toString());
     }
-    
+
     return this.http.get<{ success: boolean; count: number; data: TouringAd[] }>(
       `${this.apiUrl}/upcoming`,
       { params }
@@ -179,7 +191,11 @@ export class TravelService {
    * @param distance Max distance in meters (default: 10000)
    * @returns Observable of ads
    */
-  getAdsByLocation(longitude: number, latitude: number, distance?: number): Observable<{
+  getAdsByLocation(
+    longitude: number,
+    latitude: number,
+    distance?: number
+  ): Observable<{
     success: boolean;
     count: number;
     data: TouringAd[];
@@ -187,11 +203,11 @@ export class TravelService {
     let params = new HttpParams()
       .set('longitude', longitude.toString())
       .set('latitude', latitude.toString());
-    
+
     if (distance) {
       params = params.set('distance', distance.toString());
     }
-    
+
     return this.http.get<{ success: boolean; count: number; data: TouringAd[] }>(
       `${this.apiUrl}/location`,
       { params }

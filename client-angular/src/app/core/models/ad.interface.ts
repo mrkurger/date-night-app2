@@ -14,11 +14,11 @@ export interface Ad {
   location: string;
   images: string[];
   media: {
-    type: string;  // 'image' or 'video'
+    type: string; // 'image' or 'video'
     url: string;
   }[];
   advertiser: string;
-  userId: string;  // ID of the user who created the ad
+  userId: string; // ID of the user who created the ad
 
   // Status flags
   isActive: boolean;
@@ -27,7 +27,7 @@ export interface Ad {
   isTouring: boolean;
 
   // Analytics
-  viewCount: number;  // From server
+  viewCount: number; // From server
   clickCount: number;
   inquiryCount: number;
 
@@ -44,10 +44,10 @@ export interface Ad {
   };
 
   // UI-specific properties (may be derived from server data)
-  tags?: string[];      // Used for displaying ad tags in list view
-  views?: number;       // Mapped from viewCount for UI consistency
-  age?: number;         // Age of the advertiser or service provider
-  cardState?: string;   // For Tinder-style swiping animations
+  tags?: string[]; // Used for displaying ad tags in list view
+  views?: number; // Mapped from viewCount for UI consistency
+  age?: number; // Age of the advertiser or service provider
+  cardState?: string; // For Tinder-style swiping animations
 }
 
 // Interface for creating new ads
@@ -60,7 +60,7 @@ export interface AdCreateDTO {
   isActive: boolean;
   age?: number;
   media?: {
-    type: string;  // 'image' or 'video'
+    type: string; // 'image' or 'video'
     url: string;
   }[];
   tourDates?: {

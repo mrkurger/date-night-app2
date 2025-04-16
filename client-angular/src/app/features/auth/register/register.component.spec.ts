@@ -48,12 +48,10 @@ describe('RegisterComponent', () => {
         MatIconModule,
         MatCheckboxModule,
         MatRadioModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
-      providers: [
-        { provide: UserService, useValue: userServiceSpy }
-      ]
+      providers: [{ provide: UserService, useValue: userServiceSpy }],
     }).compileComponents();
 
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
@@ -84,18 +82,18 @@ describe('RegisterComponent', () => {
   it('should redirect to dashboard if already authenticated', () => {
     spyOn(router, 'navigate');
     userService.isAuthenticated.and.returnValue(true);
-    
+
     component.ngOnInit();
-    
+
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
   it('should validate form correctly', () => {
     const form = component.registerForm;
-    
+
     // Form should be invalid initially
     expect(form.valid).toBeFalsy();
-    
+
     // Fill in valid data
     form.patchValue({
       username: 'testuser',
@@ -103,23 +101,23 @@ describe('RegisterComponent', () => {
       password: 'password123',
       confirmPassword: 'password123',
       role: 'user',
-      termsAccepted: true
+      termsAccepted: true,
     });
-    
+
     expect(form.valid).toBeTruthy();
-    
+
     // Test password mismatch validation
     form.patchValue({
-      confirmPassword: 'different'
+      confirmPassword: 'different',
     });
-    
+
     expect(form.valid).toBeFalsy();
     expect(form.get('confirmPassword')?.hasError('passwordMismatch')).toBeTruthy();
   });
 
   it('should not submit if form is invalid', () => {
     spyOn(component, 'onSubmit').and.callThrough();
-    
+
     const mockAuthResponse: AuthResponse = {
       token: 'mock-token',
       user: {
@@ -128,20 +126,20 @@ describe('RegisterComponent', () => {
         email: 'test@example.com',
         role: 'user',
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     };
     userService.register.and.returnValue(of(mockAuthResponse));
-    
+
     // Trigger submit with invalid form
     component.onSubmit();
-    
+
     expect(userService.register).not.toHaveBeenCalled();
   });
 
   it('should submit form and navigate to dashboard on success', () => {
     spyOn(router, 'navigate');
-    
+
     const mockAuthResponse: AuthResponse = {
       token: 'mock-token',
       user: {
@@ -150,11 +148,11 @@ describe('RegisterComponent', () => {
         email: 'test@example.com',
         role: 'user',
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     };
     userService.register.and.returnValue(of(mockAuthResponse));
-    
+
     // Fill in valid form data
     component.registerForm.patchValue({
       username: 'testuser',
@@ -162,19 +160,19 @@ describe('RegisterComponent', () => {
       password: 'password123',
       confirmPassword: 'password123',
       role: 'user',
-      termsAccepted: true
+      termsAccepted: true,
     });
-    
+
     // Submit the form
     component.onSubmit();
-    
+
     expect(userService.register).toHaveBeenCalledWith({
       username: 'testuser',
       email: 'test@example.com',
       password: 'password123',
-      role: 'user'
+      role: 'user',
     });
-    
+
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
     expect(component.isLoading).toBeFalse();
   });
@@ -182,7 +180,7 @@ describe('RegisterComponent', () => {
   it('should handle registration error', () => {
     const errorMessage = 'Registration failed';
     userService.register.and.returnValue(throwError(() => ({ message: errorMessage })));
-    
+
     // Fill in valid form data
     component.registerForm.patchValue({
       username: 'testuser',
@@ -190,22 +188,22 @@ describe('RegisterComponent', () => {
       password: 'password123',
       confirmPassword: 'password123',
       role: 'user',
-      termsAccepted: true
+      termsAccepted: true,
     });
-    
+
     // Submit the form
     component.onSubmit();
-    
+
     expect(component.errorMessage).toBe(errorMessage);
     expect(component.isLoading).toBeFalse();
   });
 
   it('should toggle password visibility', () => {
     expect(component.hidePassword).toBeTrue();
-    
+
     // Simulate clicking the password visibility toggle
     component.hidePassword = !component.hidePassword;
-    
+
     expect(component.hidePassword).toBeFalse();
   });
 });

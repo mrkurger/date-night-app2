@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (moderation-modal.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -23,7 +22,7 @@ import { ContentSanitizerService } from '../../../../core/services/content-sanit
   templateUrl: './moderation-modal.component.html',
   styleUrls: ['./moderation-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class ModerationModalComponent implements OnChanges {
   @Input() media: PendingMedia | null = null;

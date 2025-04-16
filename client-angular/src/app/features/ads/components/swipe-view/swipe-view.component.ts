@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (swipe-view.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -20,30 +19,32 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="container mt-4">
       <div *ngIf="currentAd" class="swipe-card">
-        <img [src]="currentAd.images[0]" alt="Ad Image" class="card-img-top">
+        <img [src]="currentAd.images[0]" alt="Ad Image" class="card-img-top" />
         <div class="card-body">
-          <h5 class="card-title">{{currentAd.title}}</h5>
-          <p class="card-text">{{currentAd.description}}</p>
+          <h5 class="card-title">{{ currentAd.title }}</h5>
+          <p class="card-text">{{ currentAd.description }}</p>
           <button (click)="swipe('left')" class="btn btn-danger">Reject</button>
           <button (click)="swipe('right')" class="btn btn-success">Accept</button>
         </div>
       </div>
     </div>
   `,
-  styles: [`
-    .swipe-card {
-      /* Add styling for the swipeable card */
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    .card-img-top {
-      max-height: 200px;
-      object-fit: cover;
-    }
-  `]
+  styles: [
+    `
+      .swipe-card {
+        /* Add styling for the swipeable card */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .card-img-top {
+        max-height: 200px;
+        object-fit: cover;
+      }
+    `,
+  ],
 })
 export class SwipeViewComponent implements OnInit {
   ads: Ad[] = [];
@@ -58,11 +59,11 @@ export class SwipeViewComponent implements OnInit {
 
   loadAds(): void {
     this.adService.getSwipeAds().subscribe({
-      next: (ads) => {
+      next: ads => {
         this.ads = ads;
         this.showNextAd();
       },
-      error: (err) => console.error('Error loading ads:', err)
+      error: err => console.error('Error loading ads:', err),
     });
   }
 
@@ -79,7 +80,7 @@ export class SwipeViewComponent implements OnInit {
     if (this.currentAd) {
       this.adService.recordSwipe(this.currentAd._id, direction).subscribe({
         next: () => this.showNextAd(),
-        error: (err) => console.error('Error recording swipe:', err)
+        error: err => console.error('Error recording swipe:', err),
       });
     }
   }

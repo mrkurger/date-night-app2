@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (register.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -28,15 +27,15 @@ import { CommonModule } from '@angular/common';
               <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label>Username</label>
-                  <input type="text" formControlName="username" class="form-control">
+                  <input type="text" formControlName="username" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="email" formControlName="email" class="form-control">
+                  <input type="email" formControlName="email" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" formControlName="password" class="form-control">
+                  <input type="password" formControlName="password" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label>Account Type</label>
@@ -45,8 +44,12 @@ import { CommonModule } from '@angular/common';
                     <option value="advertiser">Advertiser</option>
                   </select>
                 </div>
-                <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-                <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
+                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                <button
+                  type="submit"
+                  class="btn btn-primary w-100"
+                  [disabled]="registerForm.invalid"
+                >
                   Register
                 </button>
               </form>
@@ -55,11 +58,11 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  error: string = '';
+  error = '';
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +73,7 @@ export class RegisterComponent {
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['user', Validators.required]
+      role: ['user', Validators.required],
     });
   }
 
@@ -78,7 +81,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.auth.register(this.registerForm.value).subscribe({
         next: () => this.router.navigate(['/ads']),
-        error: err => this.error = err.error.message || 'Registration failed'
+        error: err => (this.error = err.error.message || 'Registration failed'),
       });
     }
   }

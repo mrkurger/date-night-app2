@@ -7,8 +7,12 @@ $neutral-700: #374151;
 $neutral-800: #1f2937;
 $neutral-900: #111827;
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $primary: #3b82f6;
 $danger: #ef4444;
 $success: #10b981;
@@ -46,7 +50,9 @@ $font-size-2xl: 1.5rem;
   overflow: hidden;
   background-color: $neutral-100;
   box-shadow: $shadow-lg;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   transform-origin: center center;
   cursor: grab;
   display: flex;
@@ -184,7 +190,9 @@ $font-size-2xl: 1.5rem;
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease, visibility 0.3s ease;
+  transition:
+    all 0.3s ease,
+    visibility 0.3s ease;
   z-index: 10;
 }
 
@@ -359,17 +367,17 @@ $font-size-2xl: 1.5rem;
   .emerald-tinder-card__media {
     height: 60%;
   }
-  
+
   .emerald-tinder-card__title {
     font-size: $font-size-lg;
   }
-  
+
   .emerald-tinder-card__description {
     font-size: $font-size-xs;
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
-  
+
   .emerald-tinder-card__action-button {
     width: 36px;
     height: 36px;
@@ -380,16 +388,16 @@ $font-size-2xl: 1.5rem;
   .emerald-tinder-card__content {
     padding: $spacing-3;
   }
-  
+
   .emerald-tinder-card__media {
     height: 55%;
   }
-  
+
   .emerald-tinder-card__action-button {
     width: 32px;
     height: 32px;
   }
-  
+
   .emerald-tinder-card__action-button i {
     font-size: $font-size-sm;
   }

@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for the chat service
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
 // - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
@@ -79,7 +79,7 @@ export interface TypingIndicator {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
   private readonly apiUrl = environment.apiUrl + '/chat';
@@ -88,23 +88,23 @@ export class ChatService {
   // BehaviorSubjects for reactive state
   private unreadCountSubject = new BehaviorSubject<number>(0);
   public unreadCount$ = this.unreadCountSubject.asObservable();
-  
+
   private onlineUsersSubject = new BehaviorSubject<string[]>([]);
   public onlineUsers$ = this.onlineUsersSubject.asObservable();
-  
-  private typingUsersSubject = new BehaviorSubject<{[key: string]: boolean}>({});
+
+  private typingUsersSubject = new BehaviorSubject<{ [key: string]: boolean }>({});
   public typingUsers$ = this.typingUsersSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.socket = io(environment.apiUrl, {
       autoConnect: false,
-      withCredentials: true
+      withCredentials: true,
     });
 
     // Set up socket event listeners
     this.setupSocketListeners();
   }
-  
+
   /**
    * Set up socket event listeners
    */
@@ -113,25 +113,25 @@ export class ChatService {
     this.socket.on('unread-count-update', (count: number) => {
       this.unreadCountSubject.next(count);
     });
-    
+
     // Listen for online users updates
     this.socket.on('online-users-update', (users: string[]) => {
       this.onlineUsersSubject.next(users);
     });
-    
+
     // Listen for typing indicators
     this.socket.on('typing-indicator', (data: TypingIndicator) => {
       const typingUsers = this.typingUsersSubject.value;
       typingUsers[data.userId] = data.typing;
-      this.typingUsersSubject.next({...typingUsers});
-      
+      this.typingUsersSubject.next({ ...typingUsers });
+
       // Auto-reset typing status after timeout
       if (data.typing) {
         setTimeout(() => {
           const updatedTypingUsers = this.typingUsersSubject.value;
           if (updatedTypingUsers[data.userId]) {
             updatedTypingUsers[data.userId] = false;
-            this.typingUsersSubject.next({...updatedTypingUsers});
+            this.typingUsersSubject.next({ ...updatedTypingUsers });
           }
         }, TYPING_INDICATOR_TIMEOUT);
       }
@@ -176,7 +176,7 @@ export class ChatService {
   /**
    * Get messages for a specific chat room
    */
-  getMessages(roomId: string, limit: number = 50, before?: string): Observable<ChatMessage[]> {
+  getMessages(roomId: string, limit = 50, before?: string): Observable<ChatMessage[]> {
     let url = `${this.apiUrl}/rooms/${roomId}/messages?limit=${limit}`;
     if (before) {
       url += `&before=${before}`;
@@ -188,41 +188,49 @@ export class ChatService {
    * Send a message to a chat room
    */
   sendMessage(roomId: string, content: string, replyToId?: string): Observable<ChatMessage> {
-    return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, { 
+    return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, {
       message: content,
-      replyTo: replyToId
+      replyTo: replyToId,
     });
   }
-  
+
   /**
    * Send a message with attachments
    */
-  sendMessageWithAttachments(roomId: string, content: string, files: File[], replyToId?: string): Observable<ChatMessage> {
+  sendMessageWithAttachments(
+    roomId: string,
+    content: string,
+    files: File[],
+    replyToId?: string
+  ): Observable<ChatMessage> {
     const formData = new FormData();
     formData.append('message', content);
-    
+
     if (replyToId) {
       formData.append('replyTo', replyToId);
     }
-    
+
     files.forEach((file, index) => {
-      formData.append(`attachments`, file, file.name);
+      formData.append('attachments', file, file.name);
     });
-    
-    return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages/attachments`, formData);
+
+    return this.http.post<ChatMessage>(
+      `${this.apiUrl}/rooms/${roomId}/messages/attachments`,
+      formData
+    );
   }
-  
+
   /**
    * Upload an attachment with progress tracking
    */
   uploadAttachment(roomId: string, file: File): Observable<HttpEvent<any>> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    
+
     const req = new HttpRequest('POST', `${this.apiUrl}/attachments/upload`, formData, {
-      reportProgress: true
+      reportProgress: true,
     });
-    
+
     return this.http.request(req);
   }
 
@@ -237,7 +245,9 @@ export class ChatService {
    * Get unread message counts
    */
   getUnreadCounts(): Observable<{ total: number; rooms: { [roomId: string]: number } }> {
-    return this.http.get<{ total: number; rooms: { [roomId: string]: number } }>(`${this.apiUrl}/unread`);
+    return this.http.get<{ total: number; rooms: { [roomId: string]: number } }>(
+      `${this.apiUrl}/unread`
+    );
   }
 
   /**
@@ -271,14 +281,14 @@ export class ChatService {
   onMessageRead(callback: (data: { messageId: string; userId: string }) => void): void {
     this.socket.on('message-read', callback);
   }
-  
+
   /**
    * Listen for typing indicator events
    */
   onTypingIndicator(callback: (data: TypingIndicator) => void): void {
     this.socket.on('typing-indicator', callback);
   }
-  
+
   /**
    * Send typing indicator
    */
@@ -304,35 +314,37 @@ export class ChatService {
   markAsRead(messageId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/messages/${messageId}/read`, {});
   }
-  
+
   /**
    * Delete a message
    */
   deleteMessage(messageId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/messages/${messageId}`);
   }
-  
+
   /**
    * Pin a chat room
    */
   pinRoom(roomId: string, pinned: boolean): Observable<ChatRoom> {
     return this.http.put<ChatRoom>(`${this.apiUrl}/rooms/${roomId}/pin`, { pinned });
   }
-  
+
   /**
    * Archive a chat room
    */
   archiveRoom(roomId: string, archived: boolean): Observable<ChatRoom> {
     return this.http.put<ChatRoom>(`${this.apiUrl}/rooms/${roomId}/archive`, { archived });
   }
-  
+
   /**
    * Search messages in a room
    */
   searchMessages(roomId: string, query: string): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/search?q=${encodeURIComponent(query)}`);
+    return this.http.get<ChatMessage[]>(
+      `${this.apiUrl}/rooms/${roomId}/search?q=${encodeURIComponent(query)}`
+    );
   }
-  
+
   /**
    * Get media shared in a room
    */
@@ -355,7 +367,7 @@ export class ChatService {
         lastSeen: new Date(Date.now() - 1000 * 60 * 2), // 2 minutes ago
         unreadCount: 2,
         online: true,
-        pinned: true
+        pinned: true,
       },
       {
         id: '2',
@@ -365,7 +377,7 @@ export class ChatService {
         lastMessageTime: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
         lastSeen: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
         unreadCount: 0,
-        online: false
+        online: false,
       },
       {
         id: '3',
@@ -375,7 +387,7 @@ export class ChatService {
         lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
         lastSeen: new Date(Date.now() - 1000 * 60 * 120), // 2 hours ago
         unreadCount: 0,
-        online: true
+        online: true,
       },
       {
         id: '4',
@@ -386,18 +398,18 @@ export class ChatService {
         lastSeen: new Date(Date.now() - 1000 * 60 * 240), // 4 hours ago
         unreadCount: 0,
         online: false,
-        archived: true
+        archived: true,
       },
       {
         id: '5',
         name: 'David Brown',
         imageUrl: '/assets/img/default-profile.jpg',
-        lastMessage: 'Let me know when you\'re free to talk',
+        lastMessage: "Let me know when you're free to talk",
         lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
         lastSeen: new Date(Date.now() - 1000 * 60 * 60 * 12), // 12 hours ago
         unreadCount: 1,
-        online: false
-      }
+        online: false,
+      },
     ];
   }
 }

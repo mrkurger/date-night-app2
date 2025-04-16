@@ -1,0 +1,796 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains tests for the wallet service
+//
+// COMMON CUSTOMIZATIONS:
+// - MOCK_WALLET_DATA: Test wallet data for wallet service tests
+//   Related to: server/tests/helpers.js:TEST_WALLET_DATA
+// - MOCK_PAYMENT_METHOD_DATA: Test payment method data for wallet service tests
+//   Related to: server/models/wallet.model.js:paymentMethodSchema
+// ===================================================
+
+const mongoose = require('mongoose');
+const walletService = require('../../../services/wallet.service');
+const Wallet = require('../../../models/wallet.model');
+const User = require('../../../models/user.model');
+const { AppError } = require('../../../middleware/errorHandler');
+const stripeModule = require('stripe');
+const { TEST_USER_DATA } = require('../../helpers');
+
+// Mock the models and external services
+jest.mock('../../../models/wallet.model');
+jest.mock('../../../models/user.model');
+jest.mock('stripe', () => {
+  return jest.fn().mockImplementation(() => ({
+    paymentIntents: {
+      create: jest.fn().mockResolvedValue({
+        id: 'pi_test123',
+        client_secret: 'pi_test123_secret',
+        status: 'succeeded',
+      }),
+    },
+    payouts: {
+      create: jest.fn().mockResolvedValue({
+        id: 'po_test123',
+        status: 'pending',
+      }),
+    },
+  }));
+});
+
+describe('Wallet Service', () => {
+  let mockUser;
+  let mockWallet;
+  let mockTransaction;
+  let mockPaymentMethod;
+
+  beforeEach(() => {
+    // Reset mocks
+    jest.clearAllMocks();
+
+    // Create mock user
+    mockUser = {
+      _id: new mongoose.Types.ObjectId(),
+      ...TEST_USER_DATA,
+      username: 'testuser',
+      save: jest.fn().mockResolvedValue(true),
+    };
+
+    // Create mock transaction
+    mockTransaction = {
+      _id: new mongoose.Types.ObjectId(),
+      type: 'deposit',
+      amount: 10000, // 100 NOK in øre
+      currency: 'NOK',
+      status: 'completed',
+      description: 'Test deposit',
+      metadata: {
+        paymentIntentId: 'pi_test123',
+        provider: 'stripe',
+      },
+      fee: {
+        amount: 150, // 1.5% of 10000
+        currency: 'NOK',
+      },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    // Create mock payment method
+    mockPaymentMethod = {
+      _id: new mongoose.Types.ObjectId(),
+      type: 'card',
+      provider: 'stripe',
+      isDefault: true,
+      cardDetails: {
+        lastFour: '4242',
+        brand: 'visa',
+        expiryMonth: 12,
+        expiryYear: 2025,
+        tokenId: 'tok_visa_testtoken',
+      },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    // Create mock wallet
+    mockWallet = {
+      _id: new mongoose.Types.ObjectId(),
+      userId: mockUser._id,
+      balances: [
+        {
+          currency: 'NOK',
+          available: 10000,
+          pending: 0,
+          reserved: 0,
+        },
+      ],
+      transactions: [mockTransaction],
+      paymentMethods: [mockPaymentMethod],
+      settings: {
+        defaultCurrency: 'NOK',
+        autoWithdrawal: {
+          enabled: false,
+          threshold: 100000,
+        },
+        notificationPreferences: {
+          email: {
+            deposit: true,
+            withdrawal: true,
+            payment: true,
+          },
+          push: {
+            deposit: true,
+            withdrawal: true,
+            payment: true,
+          },
+        },
+      },
+      // Mock the id method for subdocuments
+      paymentMethodsArray: {
+        id: jest.fn().mockImplementation(id => {
+          return mockPaymentMethod._id.toString() === id.toString() ? mockPaymentMethod : null;
+        }),
+        find: jest.fn().mockImplementation(criteria => {
+          return [mockPaymentMethod].find(pm => {
+            for (const key in criteria) {
+              if (key === 'type' && pm.type !== criteria[key]) return false;
+              if (key === 'cryptoDetails.currency' && pm.cryptoDetails?.currency !== criteria[key])
+                return false;
+            }
+            return true;
+          });
+        }),
+        filter: jest.fn().mockImplementation(filterFn => {
+          return [mockPaymentMethod].filter(filterFn);
+        }),
+        push: jest.fn().mockImplementation(item => {
+          return [mockPaymentMethod, item];
+        }),
+      },
+      getBalance: jest.fn().mockImplementation(currency => {
+        const balance = mockWallet.balances.find(b => b.currency === currency);
+        if (!balance) {
+          return {
+            currency,
+            available: 0,
+            pending: 0,
+            reserved: 0,
+          };
+        }
+        return balance;
+      }),
+      addTransaction: jest.fn().mockImplementation(transaction => {
+        mockWallet.transactions.push(transaction);
+        return Promise.resolve(mockWallet);
+      }),
+      updateBalance: jest.fn().mockImplementation((currency, amount, type = 'available') => {
+        let balance = mockWallet.balances.find(b => b.currency === currency);
+
+        if (!balance) {
+          balance = {
+            currency,
+            available: 0,
+            pending: 0,
+            reserved: 0,
+          };
+          mockWallet.balances.push(balance);
+        }
+
+        balance[type] += amount;
+
+        return Promise.resolve(mockWallet);
+      }),
+      addPaymentMethod: jest.fn().mockImplementation(paymentMethod => {
+        mockWallet.paymentMethods.push(paymentMethod);
+        return Promise.resolve(mockWallet);
+      }),
+      removePaymentMethod: jest.fn().mockImplementation(paymentMethodId => {
+        mockWallet.paymentMethods = mockWallet.paymentMethods.filter(
+          pm => pm._id.toString() !== paymentMethodId.toString()
+        );
+        return Promise.resolve(mockWallet);
+      }),
+      setDefaultPaymentMethod: jest.fn().mockImplementation(paymentMethodId => {
+        const paymentMethod = mockWallet.paymentMethods.id(paymentMethodId);
+
+        if (!paymentMethod) {
+          throw new Error('Payment method not found');
+        }
+
+        // Since we're mocking, we don't need to actually update all payment methods
+        // Just set this one as default
+        paymentMethod.isDefault = true;
+
+        return Promise.resolve(mockWallet);
+      }),
+      save: jest.fn().mockResolvedValue(mockWallet),
+    };
+
+    // Mock User.findById
+    User.findById = jest.fn().mockResolvedValue(mockUser);
+
+    // Mock Wallet.findOne
+    Wallet.findOne = jest.fn().mockResolvedValue(mockWallet);
+
+    // Mock Wallet constructor
+    Wallet.mockImplementation(() => mockWallet);
+
+    // The stripe mock is already set up in the jest.mock call
+  });
+
+  describe('getOrCreateWallet', () => {
+    it('should return an existing wallet', async () => {
+      const result = await walletService.getOrCreateWallet(mockUser._id);
+
+      expect(User.findById).toHaveBeenCalledWith(mockUser._id);
+      expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUser._id });
+      expect(result).toEqual(mockWallet);
+    });
+
+    it('should create a new wallet if one does not exist', async () => {
+      // Mock Wallet.findOne to return null
+      Wallet.findOne.mockResolvedValue(null);
+
+      const result = await walletService.getOrCreateWallet(mockUser._id);
+
+      expect(User.findById).toHaveBeenCalledWith(mockUser._id);
+      expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUser._id });
+      expect(Wallet).toHaveBeenCalledWith({
+        userId: mockUser._id,
+        balances: [
+          {
+            currency: 'NOK',
+            available: 0,
+            pending: 0,
+            reserved: 0,
+          },
+        ],
+        settings: {
+          defaultCurrency: 'NOK',
+        },
+      });
+      expect(mockWallet.save).toHaveBeenCalled();
+      expect(result).toEqual(mockWallet);
+    });
+
+    it('should throw an error if user is not found', async () => {
+      // Mock User.findById to return null
+      User.findById.mockResolvedValue(null);
+
+      await expect(walletService.getOrCreateWallet(mockUser._id)).rejects.toThrow('User not found');
+    });
+  });
+
+  describe('getWalletBalance', () => {
+    it('should return all balances if no currency is specified', async () => {
+      const result = await walletService.getWalletBalance(mockUser._id);
+
+      expect(result).toEqual(mockWallet.balances);
+    });
+
+    it('should return balance for a specific currency', async () => {
+      const result = await walletService.getWalletBalance(mockUser._id, 'NOK');
+
+      expect(mockWallet.getBalance).toHaveBeenCalledWith('NOK');
+      expect(result).toEqual(mockWallet.balances[0]);
+    });
+
+    it('should return zero balance for a non-existent currency', async () => {
+      const result = await walletService.getWalletBalance(mockUser._id, 'USD');
+
+      expect(mockWallet.getBalance).toHaveBeenCalledWith('USD');
+      expect(result).toEqual({
+        currency: 'USD',
+        available: 0,
+        pending: 0,
+        reserved: 0,
+      });
+    });
+  });
+
+  describe('getWalletTransactions', () => {
+    it('should return all transactions with pagination', async () => {
+      const result = await walletService.getWalletTransactions(mockUser._id);
+
+      expect(result).toHaveProperty('transactions');
+      expect(result).toHaveProperty('pagination');
+      expect(result.transactions).toEqual([mockTransaction]);
+      expect(result.pagination).toEqual({
+        page: 1,
+        limit: 20,
+        total: 1,
+        pages: 1,
+      });
+    });
+
+    it('should filter transactions by type', async () => {
+      // Add another transaction of a different type
+      const withdrawalTransaction = {
+        ...mockTransaction,
+        _id: new mongoose.Types.ObjectId(),
+        type: 'withdrawal',
+      };
+      mockWallet.transactions.push(withdrawalTransaction);
+
+      const result = await walletService.getWalletTransactions(mockUser._id, { type: 'deposit' });
+
+      expect(result.transactions).toHaveLength(1);
+      expect(result.transactions[0].type).toBe('deposit');
+      expect(result.pagination.total).toBe(1);
+    });
+
+    it('should filter transactions by status', async () => {
+      // Add another transaction with a different status
+      const pendingTransaction = {
+        ...mockTransaction,
+        _id: new mongoose.Types.ObjectId(),
+        status: 'pending',
+      };
+      mockWallet.transactions.push(pendingTransaction);
+
+      const result = await walletService.getWalletTransactions(mockUser._id, {
+        status: 'completed',
+      });
+
+      expect(result.transactions).toHaveLength(1);
+      expect(result.transactions[0].status).toBe('completed');
+      expect(result.pagination.total).toBe(1);
+    });
+
+    it('should filter transactions by currency', async () => {
+      // Add another transaction with a different currency
+      const usdTransaction = {
+        ...mockTransaction,
+        _id: new mongoose.Types.ObjectId(),
+        currency: 'USD',
+      };
+      mockWallet.transactions.push(usdTransaction);
+
+      const result = await walletService.getWalletTransactions(mockUser._id, { currency: 'NOK' });
+
+      expect(result.transactions).toHaveLength(1);
+      expect(result.transactions[0].currency).toBe('NOK');
+      expect(result.pagination.total).toBe(1);
+    });
+
+    it('should filter transactions by date range', async () => {
+      // Add transactions with different dates
+      const oldTransaction = {
+        ...mockTransaction,
+        _id: new mongoose.Types.ObjectId(),
+        createdAt: new Date('2020-01-01'),
+      };
+      const newTransaction = {
+        ...mockTransaction,
+        _id: new mongoose.Types.ObjectId(),
+        createdAt: new Date('2023-01-01'),
+      };
+      mockWallet.transactions = [oldTransaction, newTransaction];
+
+      const result = await walletService.getWalletTransactions(mockUser._id, {
+        startDate: '2022-01-01',
+        endDate: '2023-12-31',
+      });
+
+      expect(result.transactions).toHaveLength(1);
+      expect(result.transactions[0].createdAt).toEqual(newTransaction.createdAt);
+      expect(result.pagination.total).toBe(1);
+    });
+
+    it('should handle pagination correctly', async () => {
+      // Add multiple transactions
+      mockWallet.transactions = [];
+      for (let i = 0; i < 25; i++) {
+        mockWallet.transactions.push({
+          ...mockTransaction,
+          _id: new mongoose.Types.ObjectId(),
+          description: `Transaction ${i + 1}`,
+        });
+      }
+
+      // Get page 2 with 10 items per page
+      const result = await walletService.getWalletTransactions(mockUser._id, {}, 2, 10);
+
+      expect(result.transactions).toHaveLength(10);
+      expect(result.pagination).toEqual({
+        page: 2,
+        limit: 10,
+        total: 25,
+        pages: 3,
+      });
+    });
+  });
+
+  describe('getWalletPaymentMethods', () => {
+    it('should return all payment methods', async () => {
+      const result = await walletService.getWalletPaymentMethods(mockUser._id);
+
+      expect(result).toEqual(mockWallet.paymentMethods);
+    });
+  });
+
+  describe('addPaymentMethod', () => {
+    it('should add a card payment method', async () => {
+      const paymentMethodData = {
+        type: 'card',
+        provider: 'stripe',
+        isDefault: true,
+        cardDetails: {
+          lastFour: '1234',
+          brand: 'mastercard',
+          expiryMonth: 12,
+          expiryYear: 2025,
+          tokenId: 'tok_mastercard_testtoken',
+        },
+      };
+
+      const result = await walletService.addPaymentMethod(mockUser._id, paymentMethodData);
+
+      expect(mockWallet.addPaymentMethod).toHaveBeenCalledWith(paymentMethodData);
+      expect(result).toEqual(mockWallet.paymentMethods[mockWallet.paymentMethods.length - 1]);
+    });
+
+    it('should add a bank account payment method', async () => {
+      const paymentMethodData = {
+        type: 'bank_account',
+        provider: 'stripe',
+        isDefault: true,
+        bankDetails: {
+          accountType: 'checking',
+          lastFour: '6789',
+          bankName: 'Test Bank',
+          country: 'NO',
+          currency: 'NOK',
+          tokenId: 'ba_testtoken',
+        },
+      };
+
+      const result = await walletService.addPaymentMethod(mockUser._id, paymentMethodData);
+
+      expect(mockWallet.addPaymentMethod).toHaveBeenCalledWith(paymentMethodData);
+      expect(result).toEqual(mockWallet.paymentMethods[mockWallet.paymentMethods.length - 1]);
+    });
+
+    it('should add a crypto address payment method', async () => {
+      const paymentMethodData = {
+        type: 'crypto_address',
+        provider: 'coinbase',
+        isDefault: true,
+        cryptoDetails: {
+          currency: 'BTC',
+          address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+          network: 'mainnet',
+        },
+      };
+
+      const result = await walletService.addPaymentMethod(mockUser._id, paymentMethodData);
+
+      expect(mockWallet.addPaymentMethod).toHaveBeenCalledWith(paymentMethodData);
+      expect(result).toEqual(mockWallet.paymentMethods[mockWallet.paymentMethods.length - 1]);
+    });
+
+    it('should throw an error if payment method type is missing', async () => {
+      const paymentMethodData = {
+        provider: 'stripe',
+        isDefault: true,
+        cardDetails: {
+          lastFour: '4242',
+          brand: 'visa',
+          expiryMonth: 12,
+          expiryYear: 2025,
+          tokenId: 'tok_visa_testtoken',
+        },
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Payment method type is required'
+      );
+    });
+
+    it('should throw an error if payment method provider is missing', async () => {
+      const paymentMethodData = {
+        type: 'card',
+        isDefault: true,
+        cardDetails: {
+          lastFour: '4242',
+          brand: 'visa',
+          expiryMonth: 12,
+          expiryYear: 2025,
+          tokenId: 'tok_visa_testtoken',
+        },
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Payment method provider is required'
+      );
+    });
+
+    it('should throw an error if card details are missing for card payment method', async () => {
+      const paymentMethodData = {
+        type: 'card',
+        provider: 'stripe',
+        isDefault: true,
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Card details are required'
+      );
+    });
+
+    it('should throw an error if bank details are missing for bank account payment method', async () => {
+      const paymentMethodData = {
+        type: 'bank_account',
+        provider: 'stripe',
+        isDefault: true,
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Bank account details are required'
+      );
+    });
+
+    it('should throw an error if crypto details are missing for crypto address payment method', async () => {
+      const paymentMethodData = {
+        type: 'crypto_address',
+        provider: 'coinbase',
+        isDefault: true,
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Crypto address details are required'
+      );
+    });
+
+    it('should throw an error if cryptocurrency is not supported', async () => {
+      const paymentMethodData = {
+        type: 'crypto_address',
+        provider: 'coinbase',
+        isDefault: true,
+        cryptoDetails: {
+          currency: 'UNSUPPORTED',
+          address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+          network: 'mainnet',
+        },
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Unsupported cryptocurrency: UNSUPPORTED'
+      );
+    });
+
+    it('should throw an error if payment method type is not supported', async () => {
+      const paymentMethodData = {
+        type: 'unsupported',
+        provider: 'stripe',
+        isDefault: true,
+      };
+
+      await expect(walletService.addPaymentMethod(mockUser._id, paymentMethodData)).rejects.toThrow(
+        'Unsupported payment method type: unsupported'
+      );
+    });
+  });
+
+  describe('removePaymentMethod', () => {
+    it('should remove a payment method', async () => {
+      const result = await walletService.removePaymentMethod(mockUser._id, mockPaymentMethod._id);
+
+      expect(mockWallet.removePaymentMethod).toHaveBeenCalledWith(mockPaymentMethod._id);
+      expect(result).toBe(true);
+    });
+
+    it('should throw an error if payment method is not found', async () => {
+      // Mock wallet.paymentMethods.id to return null
+      mockWallet.paymentMethods.id = jest.fn().mockReturnValue(null);
+
+      await expect(
+        walletService.removePaymentMethod(mockUser._id, 'nonexistent_id')
+      ).rejects.toThrow('Payment method not found');
+    });
+  });
+
+  describe('setDefaultPaymentMethod', () => {
+    it('should set a payment method as default', async () => {
+      const result = await walletService.setDefaultPaymentMethod(
+        mockUser._id,
+        mockPaymentMethod._id
+      );
+
+      expect(mockWallet.setDefaultPaymentMethod).toHaveBeenCalledWith(mockPaymentMethod._id);
+      expect(result).toEqual(mockPaymentMethod);
+    });
+
+    it('should throw an error if payment method is not found', async () => {
+      // Mock wallet.paymentMethods.id to return null
+      mockWallet.paymentMethods.id = jest.fn().mockReturnValue(null);
+
+      await expect(
+        walletService.setDefaultPaymentMethod(mockUser._id, 'nonexistent_id')
+      ).rejects.toThrow('Payment method not found');
+    });
+  });
+
+  describe('depositFundsWithStripe', () => {
+    // Mock process.env.STRIPE_SECRET_KEY
+    const originalEnv = process.env;
+
+    beforeEach(() => {
+      process.env = { ...originalEnv, STRIPE_SECRET_KEY: 'sk_test_123' };
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it('should deposit funds with Stripe', async () => {
+      const amount = 10000; // 100 NOK in øre
+      const currency = 'NOK';
+      const paymentMethodId = 'pm_test123';
+      const description = 'Test deposit';
+
+      // Get the stripe instance from the mock
+      const stripeInstance = stripeModule();
+
+      // Spy on the methods we need to verify
+      const addTransactionSpy = jest.spyOn(mockWallet, 'addTransaction');
+      const updateBalanceSpy = jest.spyOn(mockWallet, 'updateBalance');
+
+      // Call the method under test
+      const result = await walletService.depositFundsWithStripe(
+        mockUser._id,
+        amount,
+        currency,
+        paymentMethodId,
+        description
+      );
+
+      // Check that transaction was added to wallet
+      expect(addTransactionSpy).toHaveBeenCalled();
+
+      // Check that wallet balance was updated
+      expect(updateBalanceSpy).toHaveBeenCalledWith(currency, 9850); // 10000 - 150 (1.5% fee)
+
+      // Check the result
+      expect(result).toHaveProperty('transaction');
+      expect(result).toHaveProperty('clientSecret');
+      expect(result.clientSecret).toBe('pi_test123_secret');
+    });
+
+    it('should throw an error if amount is invalid', async () => {
+      await expect(
+        walletService.depositFundsWithStripe(mockUser._id, 0, 'NOK', 'pm_test123', 'Test deposit')
+      ).rejects.toThrow('Valid amount is required');
+    });
+
+    it('should throw an error if currency is not supported', async () => {
+      await expect(
+        walletService.depositFundsWithStripe(
+          mockUser._id,
+          10000,
+          'UNSUPPORTED',
+          'pm_test123',
+          'Test deposit'
+        )
+      ).rejects.toThrow('Unsupported currency: UNSUPPORTED');
+    });
+
+    it('should throw an error if payment method ID is missing', async () => {
+      await expect(
+        walletService.depositFundsWithStripe(mockUser._id, 10000, 'NOK', null, 'Test deposit')
+      ).rejects.toThrow('Payment method ID is required');
+    });
+  });
+
+  describe('withdrawFunds', () => {
+    it('should withdraw funds from wallet', async () => {
+      const amount = 10000; // 100 NOK in øre
+      const currency = 'NOK';
+      const paymentMethodId = mockPaymentMethod._id;
+      const description = 'Test withdrawal';
+
+      // Spy on the methods we need to verify
+      const addTransactionSpy = jest.spyOn(mockWallet, 'addTransaction');
+      const updateBalanceSpy = jest.spyOn(mockWallet, 'updateBalance');
+
+      // Call the method under test
+      const result = await walletService.withdrawFunds(
+        mockUser._id,
+        amount,
+        currency,
+        paymentMethodId,
+        description
+      );
+
+      // Check that transaction was added to wallet
+      expect(addTransactionSpy).toHaveBeenCalled();
+
+      // Check that wallet balance was updated (available decreased, reserved increased)
+      expect(updateBalanceSpy).toHaveBeenCalledWith(currency, -amount, 'available');
+      expect(updateBalanceSpy).toHaveBeenCalledWith(currency, amount, 'reserved');
+
+      // Check the result
+      expect(result).toHaveProperty('type', 'withdrawal');
+      expect(result).toHaveProperty('amount', -amount);
+      expect(result).toHaveProperty('currency', currency);
+      expect(result).toHaveProperty('status', 'pending');
+      expect(result).toHaveProperty('description', description);
+      expect(result).toHaveProperty('metadata.paymentMethodId');
+      expect(result).toHaveProperty('fee.amount');
+    });
+
+    it('should throw an error if amount is invalid', async () => {
+      await expect(
+        walletService.withdrawFunds(mockUser._id, 0, 'NOK', mockPaymentMethod._id)
+      ).rejects.toThrow('Valid amount is required');
+    });
+
+    it('should throw an error if amount is below minimum withdrawal', async () => {
+      // Assuming MINIMUM_WITHDRAWAL is 10000
+      await expect(
+        walletService.withdrawFunds(
+          mockUser._id,
+          1000, // 10 NOK, below minimum
+          'NOK',
+          mockPaymentMethod._id
+        )
+      ).rejects.toThrow('Minimum withdrawal amount');
+    });
+
+    it('should throw an error if currency is not supported', async () => {
+      await expect(
+        walletService.withdrawFunds(mockUser._id, 10000, 'UNSUPPORTED', mockPaymentMethod._id)
+      ).rejects.toThrow('Unsupported currency');
+    });
+
+    it('should throw an error if payment method ID is missing', async () => {
+      await expect(walletService.withdrawFunds(mockUser._id, 10000, 'NOK', null)).rejects.toThrow(
+        'Payment method ID is required'
+      );
+    });
+
+    it('should throw an error if payment method is not found', async () => {
+      const nonExistentPaymentMethodId = new mongoose.Types.ObjectId();
+
+      await expect(
+        walletService.withdrawFunds(mockUser._id, 10000, 'NOK', nonExistentPaymentMethodId)
+      ).rejects.toThrow('Payment method not found');
+    });
+
+    it('should throw an error if wallet has insufficient balance', async () => {
+      // Mock insufficient balance
+      mockWallet.getBalance = jest.fn().mockImplementation(currency => {
+        return {
+          currency,
+          available: 5000, // Only 50 NOK available
+          pending: 0,
+          reserved: 0,
+        };
+      });
+
+      await expect(
+        walletService.withdrawFunds(
+          mockUser._id,
+          10000, // Trying to withdraw 100 NOK
+          'NOK',
+          mockPaymentMethod._id
+        )
+      ).rejects.toThrow('Insufficient balance');
+
+      // Restore the original mock
+      mockWallet.getBalance = jest.fn().mockImplementation(currency => {
+        const balance = mockWallet.balances.find(b => b.currency === currency);
+        if (!balance) {
+          return {
+            currency,
+            available: 0,
+            pending: 0,
+            reserved: 0,
+          };
+        }
+        return balance;
+      });
+    });
+  });
+});

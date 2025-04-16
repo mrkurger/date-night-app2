@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the moderation modal component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_MEDIA: Mock media data for testing
 //   Related to: client-angular/src/app/core/models/media.interface.ts
@@ -31,7 +31,7 @@ describe('ModerationModalComponent', () => {
     adTitle: 'Test Ad 1',
     type: 'image',
     url: 'https://example.com/image1.jpg',
-    createdAt: new Date('2023-01-01')
+    createdAt: new Date('2023-01-01'),
   };
 
   // Mock media data for video type
@@ -41,37 +41,37 @@ describe('ModerationModalComponent', () => {
     adTitle: 'Test Ad 2',
     type: 'video',
     url: 'https://example.com/video1.mp4',
-    createdAt: new Date('2023-01-02')
+    createdAt: new Date('2023-01-02'),
   };
 
   beforeEach(async () => {
     // Create spy for ContentSanitizerService
-    contentSanitizerServiceSpy = jasmine.createSpyObj('ContentSanitizerService', ['sanitizeUrl', 'isValidUrl']);
+    contentSanitizerServiceSpy = jasmine.createSpyObj('ContentSanitizerService', [
+      'sanitizeUrl',
+      'isValidUrl',
+    ]);
     contentSanitizerServiceSpy.sanitizeUrl.and.returnValue('safe-url');
     contentSanitizerServiceSpy.isValidUrl.and.returnValue(true);
 
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        ModerationModalComponent
-      ],
+      imports: [ReactiveFormsModule, ModerationModalComponent],
       providers: [
         FormBuilder,
-        { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy }
-      ]
+        { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy },
+      ],
     }).compileComponents();
 
     formBuilder = TestBed.inject(FormBuilder);
     fixture = TestBed.createComponent(ModerationModalComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    
+
     // Create a form for testing
     component.form = formBuilder.group({
       status: ['approved', [Validators.required]],
-      notes: ['', [Validators.maxLength(500), Validators.required]]
+      notes: ['', [Validators.maxLength(500), Validators.required]],
     });
-    
+
     fixture.detectChanges();
   });
 
@@ -97,11 +97,11 @@ describe('ModerationModalComponent', () => {
   describe('Media URL Handling', () => {
     it('should sanitize media URL on changes for image type', () => {
       component.media = mockImageMedia;
-      
+
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true)
+        media: new SimpleChange(null, mockImageMedia, true),
       });
-      
+
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockImageMedia.url);
       expect(contentSanitizerServiceSpy.sanitizeUrl).toHaveBeenCalledWith(mockImageMedia.url);
       expect(component.safeMediaUrl).toBe('safe-url');
@@ -110,11 +110,11 @@ describe('ModerationModalComponent', () => {
 
     it('should sanitize media URL on changes for video type', () => {
       component.media = mockVideoMedia;
-      
+
       component.ngOnChanges({
-        media: new SimpleChange(null, mockVideoMedia, true)
+        media: new SimpleChange(null, mockVideoMedia, true),
       });
-      
+
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockVideoMedia.url);
       expect(contentSanitizerServiceSpy.sanitizeUrl).toHaveBeenCalledWith(mockVideoMedia.url);
       expect(component.safeMediaUrl).toBe('safe-url');
@@ -123,13 +123,13 @@ describe('ModerationModalComponent', () => {
 
     it('should handle invalid URLs', () => {
       contentSanitizerServiceSpy.isValidUrl.and.returnValue(false);
-      
+
       component.media = mockImageMedia;
-      
+
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true)
+        media: new SimpleChange(null, mockImageMedia, true),
       });
-      
+
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockImageMedia.url);
       expect(contentSanitizerServiceSpy.sanitizeUrl).not.toHaveBeenCalled();
       expect(component.mediaError).toBeTrue();
@@ -137,11 +137,11 @@ describe('ModerationModalComponent', () => {
 
     it('should not process URL if media is null', () => {
       component.media = null;
-      
+
       component.ngOnChanges({
-        media: new SimpleChange(mockImageMedia, null, false)
+        media: new SimpleChange(mockImageMedia, null, false),
       });
-      
+
       expect(contentSanitizerServiceSpy.isValidUrl).not.toHaveBeenCalled();
       expect(contentSanitizerServiceSpy.sanitizeUrl).not.toHaveBeenCalled();
     });
@@ -149,11 +149,11 @@ describe('ModerationModalComponent', () => {
     it('should not process URL if media has no URL', () => {
       const mediaWithoutUrl = { ...mockImageMedia, url: undefined };
       component.media = mediaWithoutUrl;
-      
+
       component.ngOnChanges({
-        media: new SimpleChange(null, mediaWithoutUrl, true)
+        media: new SimpleChange(null, mediaWithoutUrl, true),
       });
-      
+
       expect(contentSanitizerServiceSpy.isValidUrl).not.toHaveBeenCalled();
       expect(contentSanitizerServiceSpy.sanitizeUrl).not.toHaveBeenCalled();
     });
@@ -161,13 +161,13 @@ describe('ModerationModalComponent', () => {
     it('should reset error state on new media', () => {
       // First set error state
       component.mediaError = true;
-      
+
       // Then process new media
       component.media = mockImageMedia;
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true)
+        media: new SimpleChange(null, mockImageMedia, true),
       });
-      
+
       expect(component.mediaError).toBeFalse();
     });
   });
@@ -175,39 +175,39 @@ describe('ModerationModalComponent', () => {
   describe('UI Interaction', () => {
     it('should toggle fullscreen mode', () => {
       expect(component.isFullscreen).toBeFalse();
-      
+
       component.toggleFullscreen();
       expect(component.isFullscreen).toBeTrue();
-      
+
       component.toggleFullscreen();
       expect(component.isFullscreen).toBeFalse();
     });
 
     it('should emit close event when close button is clicked', () => {
       spyOn(component.onClose, 'emit');
-      
+
       // Set up component with media
       component.media = mockImageMedia;
       fixture.detectChanges();
-      
+
       // Find and click the close button
       const closeButton = debugElement.query(By.css('.btn-close'));
       closeButton.nativeElement.click();
-      
+
       expect(component.onClose.emit).toHaveBeenCalled();
     });
 
     it('should emit close event when cancel button is clicked', () => {
       spyOn(component.onClose, 'emit');
-      
+
       // Set up component with media
       component.media = mockImageMedia;
       fixture.detectChanges();
-      
+
       // Find and click the cancel button
       const cancelButton = debugElement.query(By.css('.btn-secondary'));
       cancelButton.nativeElement.click();
-      
+
       expect(component.onClose.emit).toHaveBeenCalled();
     });
   });
@@ -215,54 +215,54 @@ describe('ModerationModalComponent', () => {
   describe('Form Validation and Submission', () => {
     it('should emit submit event when form is valid with approved status', () => {
       spyOn(component.onSubmit, 'emit');
-      
+
       component.form.setValue({
         status: 'approved',
-        notes: 'Content meets guidelines'
+        notes: 'Content meets guidelines',
       });
-      
+
       component.validateAndSubmit();
-      
+
       expect(component.onSubmit.emit).toHaveBeenCalled();
     });
 
     it('should emit submit event when form is valid with rejected status', () => {
       spyOn(component.onSubmit, 'emit');
-      
+
       component.form.setValue({
         status: 'rejected',
-        notes: 'Content violates guidelines'
+        notes: 'Content violates guidelines',
       });
-      
+
       component.validateAndSubmit();
-      
+
       expect(component.onSubmit.emit).toHaveBeenCalled();
     });
 
     it('should not emit submit event when form is invalid due to empty notes', () => {
       spyOn(component.onSubmit, 'emit');
-      
+
       component.form.setValue({
         status: 'approved',
-        notes: '' // Empty notes, which is invalid
+        notes: '', // Empty notes, which is invalid
       });
-      
+
       component.validateAndSubmit();
-      
+
       expect(component.onSubmit.emit).not.toHaveBeenCalled();
     });
 
     it('should not emit submit event when form is invalid due to missing status', () => {
       spyOn(component.onSubmit, 'emit');
-      
+
       // Set notes but leave status as null
       component.form.patchValue({
-        notes: 'Valid notes'
+        notes: 'Valid notes',
       });
       component.form.get('status')?.setValue(null);
-      
+
       component.validateAndSubmit();
-      
+
       expect(component.onSubmit.emit).not.toHaveBeenCalled();
     });
 
@@ -270,11 +270,11 @@ describe('ModerationModalComponent', () => {
       // First set status to rejected
       component.form.get('status')?.setValue('rejected');
       fixture.detectChanges();
-      
+
       // Find and click the approve option
       const approveOption = debugElement.query(By.css('.status-option:first-child'));
       approveOption.nativeElement.click();
-      
+
       expect(component.form.get('status')?.value).toBe('approved');
     });
 
@@ -282,11 +282,11 @@ describe('ModerationModalComponent', () => {
       // First set status to approved
       component.form.get('status')?.setValue('approved');
       fixture.detectChanges();
-      
+
       // Find and click the reject option
       const rejectOption = debugElement.query(By.css('.status-option:last-child'));
       rejectOption.nativeElement.click();
-      
+
       expect(component.form.get('status')?.value).toBe('rejected');
     });
   });
@@ -294,9 +294,9 @@ describe('ModerationModalComponent', () => {
   describe('Media Error Handling', () => {
     it('should handle media loading errors', () => {
       component.mediaError = false;
-      
+
       component.onMediaError();
-      
+
       expect(component.mediaError).toBeTrue();
     });
 
@@ -305,7 +305,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockImageMedia;
       component.mediaError = true;
       fixture.detectChanges();
-      
+
       // Check if error message is displayed
       const errorElement = debugElement.query(By.css('.media-error'));
       expect(errorElement).toBeTruthy();
@@ -319,7 +319,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockImageMedia;
       component.safeMediaUrl = 'safe-url' as any;
       fixture.detectChanges();
-      
+
       // Check if image element is rendered
       const imageElement = debugElement.query(By.css('img'));
       expect(imageElement).toBeTruthy();
@@ -331,7 +331,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockVideoMedia;
       component.safeMediaUrl = 'safe-url' as any;
       fixture.detectChanges();
-      
+
       // Check if video element is rendered
       const videoElement = debugElement.query(By.css('video'));
       expect(videoElement).toBeTruthy();
@@ -343,7 +343,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockImageMedia;
       component.isFullscreen = true;
       fixture.detectChanges();
-      
+
       // Check if fullscreen class is applied
       const previewElement = debugElement.query(By.css('.media-preview'));
       expect(previewElement.classes['fullscreen']).toBeTrue();
@@ -353,21 +353,21 @@ describe('ModerationModalComponent', () => {
       // Set up component with media
       component.media = mockImageMedia;
       fixture.detectChanges();
-      
+
       // Set status to approved
       component.form.get('status')?.setValue('approved');
       fixture.detectChanges();
-      
+
       // Check if approve button is shown
       let approveButton = debugElement.query(By.css('.btn-approve'));
       let rejectButton = debugElement.query(By.css('.btn-reject'));
       expect(approveButton).toBeTruthy();
       expect(rejectButton).toBeFalsy();
-      
+
       // Set status to rejected
       component.form.get('status')?.setValue('rejected');
       fixture.detectChanges();
-      
+
       // Check if reject button is shown
       approveButton = debugElement.query(By.css('.btn-approve'));
       rejectButton = debugElement.query(By.css('.btn-reject'));
@@ -378,14 +378,14 @@ describe('ModerationModalComponent', () => {
     it('should disable submit button when form is invalid', () => {
       // Set up component with media
       component.media = mockImageMedia;
-      
+
       // Set form to invalid state
       component.form.setValue({
         status: 'approved',
-        notes: '' // Empty notes, which is invalid
+        notes: '', // Empty notes, which is invalid
       });
       fixture.detectChanges();
-      
+
       // Check if button is disabled
       const submitButton = debugElement.query(By.css('.btn-approve'));
       expect(submitButton.nativeElement.disabled).toBeTrue();
@@ -394,14 +394,14 @@ describe('ModerationModalComponent', () => {
     it('should enable submit button when form is valid', () => {
       // Set up component with media
       component.media = mockImageMedia;
-      
+
       // Set form to valid state
       component.form.setValue({
         status: 'approved',
-        notes: 'Valid notes'
+        notes: 'Valid notes',
       });
       fixture.detectChanges();
-      
+
       // Check if button is enabled
       const submitButton = debugElement.query(By.css('.btn-approve'));
       expect(submitButton.nativeElement.disabled).toBeFalse();

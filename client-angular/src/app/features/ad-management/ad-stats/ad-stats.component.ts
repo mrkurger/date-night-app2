@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-stats.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -22,7 +21,7 @@ import { AdService } from '../../../core/services/ad.service';
   templateUrl: './ad-stats.component.html',
   styleUrls: ['./ad-stats.component.scss'],
   standalone: true,
-  imports: [CommonModule, MaterialModule, DatePipe]
+  imports: [CommonModule, MaterialModule, DatePipe],
 })
 export class AdStatsComponent implements OnInit {
   loading = false;
@@ -63,16 +62,16 @@ export class AdStatsComponent implements OnInit {
     if (adId) {
       this.loading = true;
       this.adService.getAdById(adId).subscribe({
-        next: (ad) => {
+        next: ad => {
           this.adTitle = ad.title;
           this.loadSampleData(); // Replace with real data when available
           this.loading = false;
         },
-        error: (error) => {
+        error: error => {
           console.error('Error loading ad:', error);
           this.adTitle = 'Unknown Ad';
           this.loading = false;
-        }
+        },
       });
     } else {
       this.adTitle = 'Unknown Ad';
@@ -97,12 +96,12 @@ export class AdStatsComponent implements OnInit {
 
   private loadSampleData() {
     const today = new Date();
-    const sampleData = Array.from({length: 7}, (_, i) => ({
-      date: new Date(today.getTime() - (6-i) * 24 * 60 * 60 * 1000),
+    const sampleData = Array.from({ length: 7 }, (_, i) => ({
+      date: new Date(today.getTime() - (6 - i) * 24 * 60 * 60 * 1000),
       views: Math.floor(Math.random() * 100),
       clicks: Math.floor(Math.random() * 50),
       inquiries: Math.floor(Math.random() * 10),
-      conversionRate: Math.random() * 100
+      conversionRate: Math.random() * 100,
     }));
 
     this.dataSource.data = sampleData;
@@ -115,11 +114,11 @@ export class AdStatsComponent implements OnInit {
 
     this.viewsData = sampleData.map(item => ({
       name: item.date,
-      value: item.views
+      value: item.views,
     }));
     this.clicksData = sampleData.map(item => ({
       name: item.date,
-      value: item.clicks
+      value: item.clicks,
     }));
   }
 }

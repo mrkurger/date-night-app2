@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Ad, AdCreateDTO, AdUpdateDTO } from '../models/ad.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdService {
   private readonly apiUrl = environment.apiUrl + '/ads';
@@ -42,18 +42,29 @@ export class AdService {
     const mockAds: Ad[] = [];
     const categories = ['Escort', 'Massage', 'Striptease'];
     const locations = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger'];
-    const names = ['Sofia', 'Emma', 'Isabella', 'Olivia', 'Mia', 'Amelia', 'Ava', 'Ella', 'Sophia', 'Charlotte'];
+    const names = [
+      'Sofia',
+      'Emma',
+      'Isabella',
+      'Olivia',
+      'Mia',
+      'Amelia',
+      'Ava',
+      'Ella',
+      'Sophia',
+      'Charlotte',
+    ];
     const descriptions = [
       'Professional and discreet service. Available for outcalls and incalls.',
       'Offering a luxurious and unforgettable experience. Book in advance.',
-      'New in town! Limited time only. Don\'t miss your chance.',
+      "New in town! Limited time only. Don't miss your chance.",
       'VIP service with a personal touch. 100% satisfaction guaranteed.',
       'Experienced and passionate. Let me take care of all your needs.',
       'Elite companion available for dinner dates and private meetings.',
       'Touring this week only! Book your appointment now.',
       'Exclusive service for discerning gentlemen. References required.',
       'Independent provider with a warm personality and stunning looks.',
-      'High-class service with attention to detail. No rush experience.'
+      'High-class service with attention to detail. No rush experience.',
     ];
 
     // Use profile images from assets/img folder
@@ -67,7 +78,7 @@ export class AdService {
       '/assets/img/profile7.jpg',
       '/assets/img/profile8.jpg',
       '/assets/img/profile9.jpg',
-      '/assets/img/profile10.jpg'
+      '/assets/img/profile10.jpg',
     ];
 
     // Generate a set of unique ads
@@ -92,11 +103,26 @@ export class AdService {
       // Generate additional tags based on service type
       const serviceTags = [];
       if (category === 'Escort') {
-        serviceTags.push(...['GFE', 'Dinner Date', 'Overnight', 'Travel Companion'].slice(0, Math.floor(Math.random() * 3) + 1));
+        serviceTags.push(
+          ...['GFE', 'Dinner Date', 'Overnight', 'Travel Companion'].slice(
+            0,
+            Math.floor(Math.random() * 3) + 1
+          )
+        );
       } else if (category === 'Massage') {
-        serviceTags.push(...['Swedish', 'Deep Tissue', 'Aromatherapy', 'Hot Stone'].slice(0, Math.floor(Math.random() * 3) + 1));
+        serviceTags.push(
+          ...['Swedish', 'Deep Tissue', 'Aromatherapy', 'Hot Stone'].slice(
+            0,
+            Math.floor(Math.random() * 3) + 1
+          )
+        );
       } else if (category === 'Striptease') {
-        serviceTags.push(...['Private Show', 'Bachelor Party', 'Birthday', 'Corporate Event'].slice(0, Math.floor(Math.random() * 3) + 1));
+        serviceTags.push(
+          ...['Private Show', 'Bachelor Party', 'Birthday', 'Corporate Event'].slice(
+            0,
+            Math.floor(Math.random() * 3) + 1
+          )
+        );
       }
 
       // Create a more realistic title
@@ -112,7 +138,7 @@ export class AdService {
         images: [profileImage, secondImage],
         media: [
           { type: 'image', url: profileImage },
-          { type: 'image', url: secondImage }
+          { type: 'image', url: secondImage },
         ],
         advertiser: `advertiser-${i}`,
         userId: `user-${Math.floor(Math.random() * 5) + 1}`, // Add userId property
@@ -123,10 +149,12 @@ export class AdService {
         viewCount: Math.floor(Math.random() * 1000),
         clickCount: Math.floor(Math.random() * 500),
         inquiryCount: Math.floor(Math.random() * 100),
-        createdAt: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
+        createdAt: new Date(
+          Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000
+        ).toISOString(),
         updatedAt: new Date().toISOString(),
         tags: [...serviceTags, category, location, isTouring ? 'Touring' : ''],
-        age
+        age,
       });
     }
 
@@ -208,8 +236,8 @@ export class AdService {
       params: {
         longitude: longitude.toString(),
         latitude: latitude.toString(),
-        radius: radius.toString()
-      }
+        radius: radius.toString(),
+      },
     });
   }
 
@@ -223,7 +251,7 @@ export class AdService {
 
   searchAds(query: string): Observable<Ad[]> {
     return this.http.get<Ad[]>(`${this.apiUrl}/search`, {
-      params: { q: query }
+      params: { q: query },
     });
   }
 

@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the login component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AUTH_SERVICE: Mock authentication service configuration
 //   Related to: client-angular/src/app/core/services/auth.service.ts
@@ -40,14 +40,14 @@ describe('LoginComponent', () => {
     email: 'test@example.com',
     role: 'user',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   };
 
   const mockAuthResponse: AuthResponse = {
     token: 'mock-token',
     refreshToken: 'mock-refresh-token',
     expiresIn: 86400,
-    user: mockUser
+    user: mockUser,
   };
 
   beforeEach(async () => {
@@ -61,7 +61,7 @@ describe('LoginComponent', () => {
         FormsModule,
         RouterTestingModule.withRoutes([
           { path: 'browse', component: LoginComponent },
-          { path: 'dashboard', component: LoginComponent }
+          { path: 'dashboard', component: LoginComponent },
         ]),
         HttpClientTestingModule,
         BrowserAnimationsModule,
@@ -71,12 +71,10 @@ describe('LoginComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatProgressSpinnerModule,
-        LoginComponent
+        LoginComponent,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
-      providers: [
-        { provide: UserService, useValue: userServiceSpy }
-      ]
+      providers: [{ provide: UserService, useValue: userServiceSpy }],
     }).compileComponents();
 
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
@@ -106,9 +104,9 @@ describe('LoginComponent', () => {
   it('should mark form as valid when all fields are filled', () => {
     component.loginForm.patchValue({
       email: 'test@example.com',
-      password: 'Password123!'
+      password: 'Password123!',
     });
-    
+
     expect(component.loginForm.valid).toBeTruthy();
   });
 
@@ -116,23 +114,23 @@ describe('LoginComponent', () => {
     // Setup form with valid data
     const loginData = {
       email: 'test@example.com',
-      password: 'Password123!'
+      password: 'Password123!',
     };
-    
+
     component.loginForm.patchValue(loginData);
-    
+
     // Mock successful login
     userService.login.and.returnValue(of(mockAuthResponse));
-    
+
     // Spy on router navigation
     spyOn(router, 'navigate');
-    
+
     // Submit form
     component.onSubmit();
-    
+
     // Verify service was called with correct parameters
     expect(userService.login).toHaveBeenCalledWith(loginData);
-    
+
     // Verify navigation occurred
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
@@ -141,21 +139,21 @@ describe('LoginComponent', () => {
     // Setup form with valid data
     component.loginForm.patchValue({
       email: 'test@example.com',
-      password: 'wrongpassword'
+      password: 'wrongpassword',
     });
-    
+
     // Mock failed login
     const errorResponse = { message: 'Invalid credentials' };
     userService.login.and.returnValue(throwError(() => errorResponse));
-    
+
     // Submit form
     component.onSubmit();
-    
+
     // Verify error is displayed
     expect(component.errorMessage).toBe('Invalid credentials');
-    
+
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.error-message')).toBeTruthy();
   });
@@ -164,26 +162,28 @@ describe('LoginComponent', () => {
     // Setup form with valid data
     component.loginForm.patchValue({
       email: 'test@example.com',
-      password: 'Password123!'
+      password: 'Password123!',
     });
-    
+
     // Create a delayed observable to simulate network request
-    userService.login.and.returnValue(new Observable(observer => {
-      // This will be resolved after a delay
-      setTimeout(() => {
-        observer.next(mockAuthResponse);
-        observer.complete();
-      }, 100);
-    }));
-    
+    userService.login.and.returnValue(
+      new Observable(observer => {
+        // This will be resolved after a delay
+        setTimeout(() => {
+          observer.next(mockAuthResponse);
+          observer.complete();
+        }, 100);
+      })
+    );
+
     // Submit form
     component.onSubmit();
-    
+
     // Verify loading state
     expect(component.isLoading).toBe(true);
-    
+
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const submitButton = compiled.querySelector('button[type="submit"]');
     expect(submitButton.disabled).toBe(true);

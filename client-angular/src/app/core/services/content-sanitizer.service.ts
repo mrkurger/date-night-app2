@@ -6,7 +6,7 @@ import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browse
  * Provides methods to safely handle URLs and HTML content
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContentSanitizerService {
   constructor(private sanitizer: DomSanitizer) {}
@@ -20,14 +20,14 @@ export class ContentSanitizerService {
     if (!url) {
       return '';
     }
-    
+
     // Validate URL format
     try {
       // For relative URLs, prepend with origin if they don't start with /
       if (!url.startsWith('http') && !url.startsWith('/')) {
         url = '/' + url;
       }
-      
+
       return this.sanitizer.bypassSecurityTrustUrl(url);
     } catch (error) {
       console.error('Error sanitizing URL:', error);
@@ -44,7 +44,7 @@ export class ContentSanitizerService {
     if (!url) {
       return '';
     }
-    
+
     try {
       return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     } catch (error) {
@@ -62,18 +62,18 @@ export class ContentSanitizerService {
     if (!url) {
       return false;
     }
-    
+
     try {
       // For relative URLs, consider them valid if they start with /
       if (url.startsWith('/')) {
         return true;
       }
-      
+
       // Reject potentially dangerous protocols
       if (url.toLowerCase().startsWith('javascript:')) {
         return false;
       }
-      
+
       // Otherwise, try to create a URL object
       new URL(url);
       return true;

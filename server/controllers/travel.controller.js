@@ -14,7 +14,7 @@ exports.getItineraries = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: itineraries
+    data: itineraries,
   });
 });
 
@@ -35,7 +35,7 @@ exports.addItinerary = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    data: ad.travelItinerary
+    data: ad.travelItinerary,
   });
 });
 
@@ -56,7 +56,7 @@ exports.updateItinerary = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: ad.travelItinerary.id(itineraryId)
+    data: ad.travelItinerary.id(itineraryId),
   });
 });
 
@@ -75,7 +75,7 @@ exports.cancelItinerary = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: 'Travel itinerary cancelled successfully'
+    message: 'Travel itinerary cancelled successfully',
   });
 });
 
@@ -103,8 +103,8 @@ exports.updateLocation = asyncHandler(async (req, res) => {
     success: true,
     data: {
       currentLocation: ad.currentLocation,
-      isTouring: ad.isTouring
-    }
+      isTouring: ad.isTouring,
+    },
   });
 });
 
@@ -119,7 +119,7 @@ exports.getTouringAdvertisers = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     count: ads.length,
-    data: ads
+    data: ads,
   });
 });
 
@@ -137,7 +137,7 @@ exports.getUpcomingTours = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     count: ads.length,
-    data: ads
+    data: ads,
   });
 });
 
@@ -161,6 +161,6 @@ exports.getAdsByLocation = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     count: ads.length,
-    data: ads
+    data: ads,
   });
 });

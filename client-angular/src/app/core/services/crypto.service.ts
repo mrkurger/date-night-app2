@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CryptoService {
   private keyCache = new Map<string, CryptoKey>();
   private keyPairCache = new Map<string, CryptoKeyPair>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Generate a random encryption key
@@ -17,7 +17,7 @@ export class CryptoService {
     const key = await window.crypto.subtle.generateKey(
       {
         name: 'AES-GCM',
-        length: 256
+        length: 256,
       },
       true,
       ['encrypt', 'decrypt']
@@ -31,13 +31,13 @@ export class CryptoService {
    * Generate a key pair for asymmetric encryption
    * @returns Promise<{publicKey: string, privateKey: string}>
    */
-  async generateKeyPair(): Promise<{publicKey: string, privateKey: string}> {
+  async generateKeyPair(): Promise<{ publicKey: string; privateKey: string }> {
     const keyPair = await window.crypto.subtle.generateKey(
       {
         name: 'RSA-OAEP',
         modulusLength: 2048,
         publicExponent: new Uint8Array([1, 0, 1]),
-        hash: 'SHA-256'
+        hash: 'SHA-256',
       },
       true,
       ['encrypt', 'decrypt']
@@ -48,7 +48,7 @@ export class CryptoService {
 
     return {
       publicKey: this.arrayBufferToBase64(exportedPublicKey),
-      privateKey: this.arrayBufferToBase64(exportedPrivateKey)
+      privateKey: this.arrayBufferToBase64(exportedPrivateKey),
     };
   }
 
@@ -60,18 +60,18 @@ export class CryptoService {
    */
   async encryptWithPublicKey(message: string, publicKeyBase64: string): Promise<string> {
     const publicKey = await this.importPublicKey(publicKeyBase64);
-    
+
     const encoder = new TextEncoder();
     const data = encoder.encode(message);
-    
+
     const encrypted = await window.crypto.subtle.encrypt(
       {
-        name: 'RSA-OAEP'
+        name: 'RSA-OAEP',
       },
       publicKey,
       data
     );
-    
+
     return this.arrayBufferToBase64(encrypted);
   }
 
@@ -81,19 +81,22 @@ export class CryptoService {
    * @param privateKeyBase64 Base64 encoded private key
    * @returns Promise<string> Decrypted message
    */
-  async decryptWithPrivateKey(encryptedMessageBase64: string, privateKeyBase64: string): Promise<string> {
+  async decryptWithPrivateKey(
+    encryptedMessageBase64: string,
+    privateKeyBase64: string
+  ): Promise<string> {
     const privateKey = await this.importPrivateKey(privateKeyBase64);
-    
+
     const encryptedData = this.base64ToArrayBuffer(encryptedMessageBase64);
-    
+
     const decrypted = await window.crypto.subtle.decrypt(
       {
-        name: 'RSA-OAEP'
+        name: 'RSA-OAEP',
       },
       privateKey,
       encryptedData
     );
-    
+
     const decoder = new TextDecoder();
     return decoder.decode(decrypted);
   }
@@ -104,26 +107,29 @@ export class CryptoService {
    * @param keyBase64 Base64 encoded key
    * @returns Promise<{iv: string, encrypted: string, authTag: string}>
    */
-  async encryptWithSymmetricKey(message: string, keyBase64: string): Promise<{iv: string, encrypted: string}> {
+  async encryptWithSymmetricKey(
+    message: string,
+    keyBase64: string
+  ): Promise<{ iv: string; encrypted: string }> {
     const key = await this.importSymmetricKey(keyBase64);
-    
+
     const encoder = new TextEncoder();
     const data = encoder.encode(message);
-    
+
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
-    
+
     const encrypted = await window.crypto.subtle.encrypt(
       {
         name: 'AES-GCM',
-        iv
+        iv,
       },
       key,
       data
     );
-    
+
     return {
       iv: this.arrayBufferToBase64(iv),
-      encrypted: this.arrayBufferToBase64(encrypted)
+      encrypted: this.arrayBufferToBase64(encrypted),
     };
   }
 
@@ -133,21 +139,24 @@ export class CryptoService {
    * @param keyBase64 Base64 encoded key
    * @returns Promise<string> Decrypted message
    */
-  async decryptWithSymmetricKey(encryptedData: {iv: string, encrypted: string}, keyBase64: string): Promise<string> {
+  async decryptWithSymmetricKey(
+    encryptedData: { iv: string; encrypted: string },
+    keyBase64: string
+  ): Promise<string> {
     const key = await this.importSymmetricKey(keyBase64);
-    
+
     const iv = this.base64ToArrayBuffer(encryptedData.iv);
     const encryptedMessage = this.base64ToArrayBuffer(encryptedData.encrypted);
-    
+
     const decrypted = await window.crypto.subtle.decrypt(
       {
         name: 'AES-GCM',
-        iv
+        iv,
       },
       key,
       encryptedMessage
     );
-    
+
     const decoder = new TextDecoder();
     return decoder.decode(decrypted);
   }
@@ -161,20 +170,20 @@ export class CryptoService {
     if (this.keyCache.has(publicKeyBase64)) {
       return this.keyCache.get(publicKeyBase64)!;
     }
-    
+
     const publicKeyData = this.base64ToArrayBuffer(publicKeyBase64);
-    
+
     const publicKey = await window.crypto.subtle.importKey(
       'spki',
       publicKeyData,
       {
         name: 'RSA-OAEP',
-        hash: 'SHA-256'
+        hash: 'SHA-256',
       },
       false,
       ['encrypt']
     );
-    
+
     this.keyCache.set(publicKeyBase64, publicKey);
     return publicKey;
   }
@@ -188,20 +197,20 @@ export class CryptoService {
     if (this.keyCache.has(privateKeyBase64)) {
       return this.keyCache.get(privateKeyBase64)!;
     }
-    
+
     const privateKeyData = this.base64ToArrayBuffer(privateKeyBase64);
-    
+
     const privateKey = await window.crypto.subtle.importKey(
       'pkcs8',
       privateKeyData,
       {
         name: 'RSA-OAEP',
-        hash: 'SHA-256'
+        hash: 'SHA-256',
       },
       false,
       ['decrypt']
     );
-    
+
     this.keyCache.set(privateKeyBase64, privateKey);
     return privateKey;
   }
@@ -215,19 +224,19 @@ export class CryptoService {
     if (this.keyCache.has(keyBase64)) {
       return this.keyCache.get(keyBase64)!;
     }
-    
+
     const keyData = this.base64ToArrayBuffer(keyBase64);
-    
+
     const key = await window.crypto.subtle.importKey(
       'raw',
       keyData,
       {
-        name: 'AES-GCM'
+        name: 'AES-GCM',
       },
       false,
       ['encrypt', 'decrypt']
     );
-    
+
     this.keyCache.set(keyBase64, key);
     return key;
   }

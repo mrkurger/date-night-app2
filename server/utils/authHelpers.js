@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for authHelpers settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -34,23 +33,23 @@ async function normalizeProfile(profile, provider) {
   return {
     username: username || `${provider}_${profile.id}`,
     email,
-    provider
+    provider,
   };
 }
 
 async function createUniqueUsername(baseUsername) {
   let username = baseUsername;
   let counter = 1;
-  
+
   while (await User.findOne({ username })) {
     username = `${baseUsername}${counter}`;
     counter++;
   }
-  
+
   return username;
 }
 
 module.exports = {
   normalizeProfile,
-  createUniqueUsername
+  createUniqueUsername,
 };

@@ -12,7 +12,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap');
 
 // Reset and base styles
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -37,7 +39,12 @@ body {
 }
 
 // Typography
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: $spacing-3;
   font-weight: $font-weight-semibold;
@@ -87,14 +94,16 @@ a {
 }
 
 // Lists
-ul, ol {
+ul,
+ol {
   padding-left: $spacing-5;
   margin-top: 0;
   margin-bottom: $spacing-4;
 }
 
 // Code
-code, pre {
+code,
+pre {
   font-family: $font-monospace;
   font-size: $font-size-sm;
 }
@@ -384,7 +393,7 @@ td {
 .section-title {
   margin-bottom: $spacing-6;
   position: relative;
-  
+
   &:after {
     content: '';
     position: absolute;
@@ -421,53 +430,61 @@ td {
   body.dark-mode-enabled {
     color: $neutral-200;
     background-color: $neutral-900;
-    
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: $neutral-100;
     }
-    
+
     .card {
       background-color: $neutral-800;
       border-color: $neutral-700;
-      
-      .card-header, .card-footer {
+
+      .card-header,
+      .card-footer {
         background-color: $neutral-800;
         border-color: $neutral-700;
       }
     }
-    
+
     .form-control {
       color: $neutral-200;
       background-color: $neutral-800;
       border-color: $neutral-700;
-      
+
       &:focus {
         color: $neutral-100;
         background-color: $neutral-800;
       }
-      
+
       &::placeholder {
         color: $neutral-500;
       }
     }
-    
+
     .modal-content {
       background-color: $neutral-800;
       border-color: $neutral-700;
     }
-    
-    .modal-header, .modal-footer {
+
+    .modal-header,
+    .modal-footer {
       border-color: $neutral-700;
     }
-    
+
     .table {
       color: $neutral-200;
-      
-      th, td {
+
+      th,
+      td {
         border-color: $neutral-700;
       }
     }
-    
+
     .text-muted {
       color: $neutral-400 !important;
     }

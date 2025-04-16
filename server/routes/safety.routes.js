@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for safety.routes settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -39,10 +38,18 @@ router.post('/checkin/:checkinId/respond', authenticate, safetyController.record
 router.post('/checkin/:checkinId/verify', authenticate, safetyController.verifyWithSafetyCode);
 
 // Add emergency contact to a check-in
-router.post('/checkin/:checkinId/emergency-contact', authenticate, safetyController.addEmergencyContact);
+router.post(
+  '/checkin/:checkinId/emergency-contact',
+  authenticate,
+  safetyController.addEmergencyContact
+);
 
 // Remove emergency contact from a check-in
-router.delete('/checkin/:checkinId/emergency-contact/:contactId', authenticate, safetyController.removeEmergencyContact);
+router.delete(
+  '/checkin/:checkinId/emergency-contact/:contactId',
+  authenticate,
+  safetyController.removeEmergencyContact
+);
 
 // Get user's safety settings
 router.get('/settings', authenticate, safetyController.getUserSafetySettings);
@@ -51,6 +58,11 @@ router.get('/settings', authenticate, safetyController.getUserSafetySettings);
 router.put('/settings', authenticate, safetyController.updateSafetySettings);
 
 // Admin routes
-router.get('/admin/attention-required', authenticate, isAdmin, safetyController.getCheckinsRequiringAttention);
+router.get(
+  '/admin/attention-required',
+  authenticate,
+  isAdmin,
+  safetyController.getCheckinsRequiringAttention
+);
 
 module.exports = router;

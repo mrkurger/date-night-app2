@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (card-grid.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -15,7 +14,7 @@ import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-
 
 /**
  * Card Grid Component
- * 
+ *
  * A responsive grid layout for displaying cards.
  * Supports various layouts including default, compact, and masonry.
  */
@@ -24,7 +23,7 @@ import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-
   templateUrl: '../components/card-grid/card-grid.component.html',
   styleUrls: ['../components/card-grid/card-grid.component.scss'],
   standalone: true,
-  imports: [CommonModule, AppCardComponent, SkeletonLoaderComponent]
+  imports: [CommonModule, AppCardComponent, SkeletonLoaderComponent],
 })
 export class CardGridComponent {
   /**
@@ -47,58 +46,58 @@ export class CardGridComponent {
     }>;
     [key: string]: any;
   }> = [];
-  
+
   /**
    * The layout style of the grid
    */
   @Input() layout: 'default' | 'compact' | 'masonry' | 'netflix' = 'default';
-  
+
   /**
    * The card layout style
    */
   @Input() cardLayout: 'default' | 'netflix' | 'tinder' = 'default';
-  
+
   /**
    * The number of columns in the grid
    */
-  @Input() columns: number = 4;
-  
+  @Input() columns = 4;
+
   /**
    * The gap between grid items in pixels
    */
-  @Input() gap: number = 16;
-  
+  @Input() gap = 16;
+
   /**
    * Whether to animate the grid items
    */
-  @Input() animated: boolean = true;
-  
+  @Input() animated = true;
+
   /**
    * Whether the grid is in a loading state
    */
-  @Input() isLoading: boolean = false;
-  
+  @Input() isLoading = false;
+
   /**
    * Alias for isLoading to match the component in components directory
    */
   @Input() set loading(value: boolean) {
     this.isLoading = value;
   }
-  
+
   get loading(): boolean {
     return this.isLoading;
   }
-  
+
   /**
    * The message to display when there are no items
    */
-  @Input() emptyStateMessage: string = 'No items to display';
-  
+  @Input() emptyStateMessage = 'No items to display';
+
   /**
    * Event emitted when a card is clicked
    */
   @Output() cardClick = new EventEmitter<string>();
-  
+
   /**
    * Event emitted when an action button is clicked
    */
@@ -106,7 +105,7 @@ export class CardGridComponent {
     id: string;
     itemId: string;
   }>();
-  
+
   /**
    * Handles the click event on a card
    * @param itemId The ID of the clicked item
@@ -114,7 +113,7 @@ export class CardGridComponent {
   handleCardClick(itemId: string): void {
     this.cardClick.emit(itemId);
   }
-  
+
   /**
    * Handles the click event on an action button
    * @param event The action click event
@@ -122,7 +121,7 @@ export class CardGridComponent {
   handleActionClick(event: { id: string; itemId: string }): void {
     this.actionClick.emit(event);
   }
-  
+
   /**
    * Get the grid style based on the inputs
    */
@@ -130,28 +129,30 @@ export class CardGridComponent {
     if (this.layout === 'netflix') {
       return {};
     }
-    
+
     return {
-      'display': 'grid',
+      display: 'grid',
       'grid-template-columns': `repeat(${this.columns}, 1fr)`,
-      'gap': `${this.gap}px`
+      gap: `${this.gap}px`,
     };
   }
-  
+
   /**
    * Handle item click
    */
   onItemClick(item: any): void {
     this.cardClick.emit(item.id);
   }
-  
+
   /**
    * Get skeleton array for loading state
    */
   getSkeletonArray(): number[] {
-    return Array(this.columns * 2).fill(0).map((_, i) => i);
+    return Array(this.columns * 2)
+      .fill(0)
+      .map((_, i) => i);
   }
-  
+
   /**
    * Optional template for custom item rendering
    */

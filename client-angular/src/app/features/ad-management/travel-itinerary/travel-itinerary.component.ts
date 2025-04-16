@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (travel-itinerary.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -43,8 +42,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatIconModule,
     MatCardModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+  ],
 })
 export class TravelItineraryComponent implements OnInit {
   adId: string;
@@ -54,11 +53,11 @@ export class TravelItineraryComponent implements OnInit {
   submitting = false;
   editMode = false;
   currentItineraryId: string | null = null;
-  
+
   // For location tracking
   trackingLocation = false;
   currentPosition: { longitude: number; latitude: number } | null = null;
-  
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -68,22 +67,22 @@ export class TravelItineraryComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.adId = this.route.snapshot.paramMap.get('id') || '';
-    
+
     this.itineraryForm = this.fb.group({
       destination: this.fb.group({
         city: ['', [Validators.required]],
         county: ['', [Validators.required]],
-        country: ['Norway']
+        country: ['Norway'],
       }),
       arrivalDate: [null, [Validators.required]],
       departureDate: [null, [Validators.required]],
       accommodation: this.fb.group({
         name: [''],
         address: [''],
-        showAccommodation: [false]
+        showAccommodation: [false],
       }),
       notes: [''],
-      status: ['planned']
+      status: ['planned'],
     });
   }
 
@@ -93,8 +92,9 @@ export class TravelItineraryComponent implements OnInit {
 
   loadItineraries(): void {
     this.loading = true;
-    
-    this.travelService.getItineraries(this.adId)
+
+    this.travelService
+      .getItineraries(this.adId)
       .pipe(
         catchError(error => {
           this.notificationService.error('Failed to load travel itineraries');
@@ -115,47 +115,42 @@ export class TravelItineraryComponent implements OnInit {
       this.markFormGroupTouched(this.itineraryForm);
       return;
     }
-    
+
     const formData = this.itineraryForm.value;
-    
+
     // Validate dates
     const arrivalDate = new Date(formData.arrivalDate);
     const departureDate = new Date(formData.departureDate);
-    
+
     if (arrivalDate > departureDate) {
       this.notificationService.error('Arrival date must be before departure date');
       return;
     }
-    
+
     this.submitting = true;
-    
+
     let action$: Observable<any>;
-    
+
     if (this.editMode && this.currentItineraryId) {
       // Update existing itinerary
-      action$ = this.travelService.updateItinerary(
-        this.adId,
-        this.currentItineraryId,
-        formData
-      ).pipe(
-        tap(() => {
-          this.notificationService.success('Travel itinerary updated successfully');
-          this.resetForm();
-        })
-      );
+      action$ = this.travelService
+        .updateItinerary(this.adId, this.currentItineraryId, formData)
+        .pipe(
+          tap(() => {
+            this.notificationService.success('Travel itinerary updated successfully');
+            this.resetForm();
+          })
+        );
     } else {
       // Add new itinerary
-      action$ = this.travelService.addItinerary(
-        this.adId,
-        formData
-      ).pipe(
+      action$ = this.travelService.addItinerary(this.adId, formData).pipe(
         tap(() => {
           this.notificationService.success('Travel itinerary added successfully');
           this.resetForm();
         })
       );
     }
-    
+
     action$
       .pipe(
         catchError(error => {
@@ -175,28 +170,31 @@ export class TravelItineraryComponent implements OnInit {
   editItinerary(itinerary: TravelItinerary): void {
     this.editMode = true;
     this.currentItineraryId = itinerary._id || null;
-    
+
     // Convert dates to proper format for form
     const formattedItinerary = {
       ...itinerary,
       arrivalDate: new Date(itinerary.arrivalDate),
-      departureDate: new Date(itinerary.departureDate)
+      departureDate: new Date(itinerary.departureDate),
     };
-    
+
     this.itineraryForm.patchValue(formattedItinerary);
   }
 
   cancelItinerary(itinerary: TravelItinerary): void {
     if (!itinerary._id) return;
-    
+
     if (!confirm('Are you sure you want to cancel this travel itinerary?')) {
       return;
     }
-    
-    this.travelService.cancelItinerary(this.adId, itinerary._id)
+
+    this.travelService
+      .cancelItinerary(this.adId, itinerary._id)
       .pipe(
         catchError(error => {
-          this.notificationService.error(error.error?.message || 'Failed to cancel travel itinerary');
+          this.notificationService.error(
+            error.error?.message || 'Failed to cancel travel itinerary'
+          );
           console.error('Error cancelling itinerary:', error);
           return of(null);
         })
@@ -210,12 +208,12 @@ export class TravelItineraryComponent implements OnInit {
   resetForm(): void {
     this.itineraryForm.reset({
       destination: {
-        country: 'Norway'
+        country: 'Norway',
       },
       status: 'planned',
       accommodation: {
-        showAccommodation: false
-      }
+        showAccommodation: false,
+      },
     });
     this.editMode = false;
     this.currentItineraryId = null;
@@ -226,21 +224,21 @@ export class TravelItineraryComponent implements OnInit {
       this.notificationService.error('Geolocation is not supported by your browser');
       return;
     }
-    
+
     this.trackingLocation = true;
-    
+
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         this.currentPosition = {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+          longitude: position.coords.longitude,
         };
-        
+
         this.updateLocation();
       },
-      (error) => {
+      error => {
         this.trackingLocation = false;
-        
+
         switch (error.code) {
           case error.PERMISSION_DENIED:
             this.notificationService.error('Location permission denied');
@@ -261,12 +259,9 @@ export class TravelItineraryComponent implements OnInit {
 
   updateLocation(): void {
     if (!this.currentPosition) return;
-    
-    this.travelService.updateLocation(
-      this.adId,
-      this.currentPosition.longitude,
-      this.currentPosition.latitude
-    )
+
+    this.travelService
+      .updateLocation(this.adId, this.currentPosition.longitude, this.currentPosition.latitude)
       .pipe(
         catchError(error => {
           this.notificationService.error(error.error?.message || 'Failed to update location');
@@ -288,7 +283,7 @@ export class TravelItineraryComponent implements OnInit {
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-      
+
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       }

@@ -1,16 +1,21 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (transfer-dialog.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -122,64 +127,66 @@ interface UserSearchResult {
       </button>
     </mat-dialog-actions>
   `,
-  styles: [`
-    .transfer-form {
-      padding: 16px 0;
-    }
-    
-    .full-width {
-      width: 100%;
-    }
-    
-    .no-balances {
-      margin: 16px 0;
-      text-align: center;
-      
-      p {
-        margin-bottom: 16px;
-        color: #f44336;
+  styles: [
+    `
+      .transfer-form {
+        padding: 16px 0;
       }
-    }
-    
-    .processing-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 0;
-      
-      p {
-        margin-top: 16px;
+
+      .full-width {
+        width: 100%;
       }
-    }
-    
-    .user-option {
-      display: flex;
-      align-items: center;
-      
-      .user-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        margin-right: 12px;
-        object-fit: cover;
+
+      .no-balances {
+        margin: 16px 0;
+        text-align: center;
+
+        p {
+          margin-bottom: 16px;
+          color: #f44336;
+        }
       }
-      
-      .user-info {
+
+      .processing-container {
         display: flex;
         flex-direction: column;
-        
-        .user-display-name {
-          font-weight: 500;
-        }
-        
-        .user-username {
-          font-size: 12px;
-          color: rgba(0, 0, 0, 0.6);
+        align-items: center;
+        justify-content: center;
+        padding: 24px 0;
+
+        p {
+          margin-top: 16px;
         }
       }
-    }
-  `],
+
+      .user-option {
+        display: flex;
+        align-items: center;
+
+        .user-avatar {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          margin-right: 12px;
+          object-fit: cover;
+        }
+
+        .user-info {
+          display: flex;
+          flex-direction: column;
+
+          .user-display-name {
+            font-weight: 500;
+          }
+
+          .user-username {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+          }
+        }
+      }
+    `,
+  ],
   standalone: true,
   imports: [
     CommonModule,
@@ -192,20 +199,21 @@ interface UserSearchResult {
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatAutocompleteModule
-  ]
+    MatAutocompleteModule,
+  ],
 })
 export class TransferDialogComponent implements OnInit {
   transferForm: FormGroup;
   processingTransfer = false;
   maxAmount = 0;
-  
+
   // User search
   filteredUsers: UserSearchResult[] = [];
-  
+
   constructor(
     private dialogRef: MatDialogRef<TransferDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
       balances: WalletBalance[];
       selectedCurrency: string;
     },
@@ -216,26 +224,27 @@ export class TransferDialogComponent implements OnInit {
   ) {
     // Filter balances with available funds
     this.balances = data.balances.filter(b => b.available > 0);
-    
+
     // Initialize form
     this.transferForm = this.fb.group({
       currency: [data.selectedCurrency, Validators.required],
       amount: [0, [Validators.required, Validators.min(1)]],
       recipientUsername: ['', [Validators.required]],
-      description: ['']
+      description: [''],
     });
   }
-  
+
   // Filtered balances
   balances: WalletBalance[] = [];
-  
+
   ngOnInit(): void {
     // Update max amount when currency changes
     this.updateMaxAmount();
-    
+
     // Setup user search
-    this.transferForm.get('recipientUsername')?.valueChanges
-      .pipe(
+    this.transferForm
+      .get('recipientUsername')
+      ?.valueChanges.pipe(
         debounceTime(300),
         switchMap(value => {
           if (typeof value === 'string' && value.length >= 2) {
@@ -248,7 +257,7 @@ export class TransferDialogComponent implements OnInit {
         this.filteredUsers = users;
       });
   }
-  
+
   /**
    * Update maximum amount based on selected currency
    */
@@ -258,23 +267,21 @@ export class TransferDialogComponent implements OnInit {
       this.maxAmount = 0;
       return;
     }
-    
+
     const balance = this.balances.find(b => b.currency === currency);
     this.maxAmount = balance ? balance.available : 0;
-    
+
     // Update amount validator
-    this.transferForm.get('amount')?.setValidators([
-      Validators.required,
-      Validators.min(1),
-      Validators.max(this.maxAmount)
-    ]);
+    this.transferForm
+      .get('amount')
+      ?.setValidators([Validators.required, Validators.min(1), Validators.max(this.maxAmount)]);
     this.transferForm.get('amount')?.updateValueAndValidity();
-    
+
     // Set default amount to 50% of available balance
     const defaultAmount = Math.floor(this.maxAmount / 2);
     this.transferForm.patchValue({ amount: defaultAmount > 0 ? defaultAmount : 0 });
   }
-  
+
   /**
    * Search users by username or email
    */
@@ -286,7 +293,7 @@ export class TransferDialogComponent implements OnInit {
       })
     );
   }
-  
+
   /**
    * Display username in autocomplete
    */
@@ -294,9 +301,9 @@ export class TransferDialogComponent implements OnInit {
     if (typeof user === 'string') {
       return user;
     }
-    return user ? (user.displayName || user.username) : '';
+    return user ? user.displayName || user.username : '';
   }
-  
+
   /**
    * Transfer funds
    */
@@ -304,31 +311,32 @@ export class TransferDialogComponent implements OnInit {
     if (this.transferForm.invalid) {
       return;
     }
-    
+
     const { currency, amount, recipientUsername, description } = this.transferForm.value;
-    
+
     // Get recipient user ID
     const recipientUserId = typeof recipientUsername === 'object' ? recipientUsername._id : null;
-    
+
     if (!recipientUserId) {
       this.transferForm.get('recipientUsername')?.setErrors({ invalidUser: true });
       return;
     }
-    
+
     this.processingTransfer = true;
-    
-    this.walletService.transferFunds(recipientUserId, amount, currency, description)
-      .subscribe({
-        next: (transaction) => {
-          this.processingTransfer = false;
-          this.notificationService.success(`Successfully transferred ${this.walletService.formatCurrency(amount, currency)}`);
-          this.dialogRef.close(true);
-        },
-        error: (error) => {
-          this.processingTransfer = false;
-          console.error('Error transferring funds:', error);
-          this.notificationService.error('Failed to transfer funds. Please try again.');
-        }
-      });
+
+    this.walletService.transferFunds(recipientUserId, amount, currency, description).subscribe({
+      next: transaction => {
+        this.processingTransfer = false;
+        this.notificationService.success(
+          `Successfully transferred ${this.walletService.formatCurrency(amount, currency)}`
+        );
+        this.dialogRef.close(true);
+      },
+      error: error => {
+        this.processingTransfer = false;
+        console.error('Error transferring funds:', error);
+        this.notificationService.error('Failed to transfer funds. Please try again.');
+      },
+    });
   }
 }

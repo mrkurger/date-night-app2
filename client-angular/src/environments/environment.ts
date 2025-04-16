@@ -5,7 +5,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for the Angular client environment (development)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - apiUrl: Base URL for API requests (default: 'http://localhost:3000/api/v1')
 //   Related to: server/config/environment.js:clientUrl

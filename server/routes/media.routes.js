@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for media.routes settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -33,19 +32,10 @@ const upload = multer({
 });
 
 // Upload media for an ad
-router.post(
-  '/:adId/upload',
-  protect,
-  upload.single('media'),
-  mediaController.uploadMedia
-);
+router.post('/:adId/upload', protect, upload.single('media'), mediaController.uploadMedia);
 
 // Delete media from an ad
-router.delete(
-  '/:adId/media/:mediaId',
-  protect,
-  mediaController.deleteMedia
-);
+router.delete('/:adId/media/:mediaId', protect, mediaController.deleteMedia);
 
 // Moderate media (admin only)
 router.put(
@@ -61,23 +51,12 @@ router.put(
 );
 
 // Set featured media for an ad
-router.put(
-  '/:adId/media/:mediaId/featured',
-  protect,
-  mediaController.setFeaturedMedia
-);
+router.put('/:adId/media/:mediaId/featured', protect, mediaController.setFeaturedMedia);
 
 // Get all media for an ad
-router.get(
-  '/:adId/media',
-  mediaController.getAdMedia
-);
+router.get('/:adId/media', mediaController.getAdMedia);
 
 // Get all media pending moderation (admin only)
-router.get(
-  '/moderation/pending',
-  protect,
-  mediaController.getPendingModerationMedia
-);
+router.get('/moderation/pending', protect, mediaController.getPendingModerationMedia);
 
 module.exports = router;

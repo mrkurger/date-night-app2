@@ -7,70 +7,73 @@
   border-radius: $border-radius-lg;
   overflow: hidden;
   box-shadow: $shadow-sm;
-  transition: transform $transition-normal $transition-ease, 
-              box-shadow $transition-normal $transition-ease;
+  transition:
+    transform $transition-normal $transition-ease,
+    box-shadow $transition-normal $transition-ease;
   cursor: pointer;
   height: 100%;
-  
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: $shadow-md;
-    
+
     .ad-card-image {
       transform: scale(1.05);
     }
   }
-  
+
   // List layout
   &.ad-card-list {
     flex-direction: row;
     height: 180px;
-    
+
     .ad-card-media {
       width: 180px;
       min-width: 180px;
       height: 100%;
     }
-    
+
     .ad-card-content {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    
+
     .ad-card-footer {
       margin-top: auto;
     }
   }
-  
+
   // Compact layout
   &.ad-card-compact {
     .ad-card-media {
       height: 140px;
     }
-    
+
     .ad-card-title {
       font-size: $font-size-md;
     }
-    
+
     .ad-card-description {
       display: none;
     }
-    
+
     .ad-card-tags {
       display: none;
     }
-    
+
     .ad-card-meta {
       display: none;
     }
   }
-  
+
   // Featured card
   &.ad-card-featured {
     border: 2px solid $primary-300;
-    box-shadow: 0 0 0 1px $primary-300, $shadow-md;
-    
+    box-shadow:
+      0 0 0 1px $primary-300,
+      $shadow-md;
+
     &::before {
       content: 'Featured';
       position: absolute;
@@ -86,7 +89,7 @@
       z-index: 2;
     }
   }
-  
+
   // New card
   &.ad-card-new {
     &::after {
@@ -104,7 +107,7 @@
       z-index: 2;
     }
   }
-  
+
   // Trending card
   &.ad-card-trending {
     &::after {
@@ -129,14 +132,14 @@
   position: relative;
   height: 220px;
   overflow: hidden;
-  
+
   .ad-card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform $transition-normal $transition-ease;
   }
-  
+
   // Image count badge
   .image-count {
     position: absolute;
@@ -150,7 +153,7 @@
     align-items: center;
     font-size: $font-size-sm;
     z-index: 1;
-    
+
     mat-icon {
       font-size: 16px;
       width: 16px;
@@ -158,7 +161,7 @@
       margin-right: $spacing-1;
     }
   }
-  
+
   // Status badges
   .status-badges {
     position: absolute;
@@ -168,43 +171,43 @@
     flex-wrap: wrap;
     gap: $spacing-1;
     z-index: 1;
-    
+
     .badge {
       padding: $spacing-1 $spacing-2;
       border-radius: $border-radius-sm;
       font-size: $font-size-xs;
       font-weight: $font-weight-semibold;
       text-transform: uppercase;
-      
+
       &.badge-featured {
         background-color: $primary-500;
         color: $neutral-100;
       }
-      
+
       &.badge-new {
         background-color: $success;
         color: $neutral-100;
       }
-      
+
       &.badge-trending {
         background-color: $warning;
         color: $neutral-900;
       }
-      
+
       &.badge-touring {
         background-color: $info;
         color: $neutral-100;
       }
     }
   }
-  
+
   // Category badge
   .category-badge {
     position: absolute;
     top: $spacing-3;
     left: $spacing-3;
     z-index: 1;
-    
+
     .badge {
       background-color: rgba($neutral-900, 0.7);
       color: $neutral-100;
@@ -214,14 +217,14 @@
       font-weight: $font-weight-semibold;
     }
   }
-  
+
   // Price badge
   .price-badge {
     position: absolute;
     bottom: $spacing-3;
     right: $spacing-3;
     z-index: 1;
-    
+
     .badge-price {
       background-color: $secondary-500;
       color: $neutral-900;
@@ -267,7 +270,7 @@
   margin: 0;
   color: $neutral-600;
   font-size: $font-size-sm;
-  
+
   mat-icon {
     font-size: 16px;
     width: 16px;
@@ -295,14 +298,14 @@
   flex-wrap: wrap;
   gap: $spacing-1;
   margin-bottom: $spacing-3;
-  
+
   .tag {
     background-color: $neutral-200;
     color: $neutral-700;
     padding: $spacing-1 $spacing-2;
     border-radius: $border-radius-full;
     font-size: $font-size-xs;
-    
+
     &.more-tag {
       background-color: $neutral-300;
       color: $neutral-800;
@@ -325,14 +328,14 @@
   display: flex;
   align-items: center;
   gap: $spacing-3;
-  
+
   .ad-card-date,
   .ad-card-views {
     display: flex;
     align-items: center;
     color: $neutral-600;
     font-size: $font-size-xs;
-    
+
     mat-icon {
       font-size: 14px;
       width: 14px;
@@ -346,12 +349,12 @@
 .ad-card-actions {
   display: flex;
   gap: $spacing-1;
-  
+
   button {
     width: 32px;
     height: 32px;
     line-height: 32px;
-    
+
     mat-icon {
       font-size: 18px;
       width: 18px;
@@ -365,7 +368,7 @@
   .ad-card.ad-card-list {
     flex-direction: column;
     height: auto;
-    
+
     .ad-card-media {
       width: 100%;
       height: 180px;
@@ -377,21 +380,21 @@
   .ad-card-media {
     height: 180px;
   }
-  
+
   .ad-card-title {
     font-size: $font-size-base;
   }
-  
+
   .ad-card-content {
     padding: $spacing-3;
   }
-  
+
   .ad-card-footer {
     flex-direction: column;
     align-items: flex-start;
     gap: $spacing-2;
   }
-  
+
   .ad-card-actions {
     width: 100%;
     justify-content: space-between;

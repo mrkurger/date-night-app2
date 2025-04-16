@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth token to request if available
     const token = localStorage.getItem('token');
-    
+
     if (token) {
       request = this.addToken(request, token);
     }
@@ -42,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // This ensures cookies are sent with cross-origin requests
     if (request.url.includes(environment.apiUrl)) {
       request = request.clone({
-        withCredentials: true
+        withCredentials: true,
       });
     }
 
@@ -61,8 +61,8 @@ export class AuthInterceptor implements HttpInterceptor {
   private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
     return request.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 }

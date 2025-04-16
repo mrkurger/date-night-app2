@@ -168,9 +168,9 @@ If you have issues connecting to MongoDB, ensure:
 
 For more detailed documentation on the application's features and architecture, see:
 
-- [Travel Module Documentation](server/docs/travel-module.md)
-- [API Documentation](server/docs/api.md)
-- [Requirements Specification](docs/requirements.md)# DateNight.io Setup Guide
+- [Travel Module Documentation](/server/docs/travel-module.md)
+- [API Documentation](/server/docs/api.md)
+- [Requirements Specification](/docs/requirements.md)# DateNight.io Setup Guide
 
 This guide will help you set up and run the DateNight.io application on your local machine.
 
@@ -325,6 +325,6 @@ If you have issues connecting to MongoDB, ensure:
 
 For more detailed documentation on the application's features and architecture, see:
 
-- [Travel Module Documentation](server/docs/travel-module.md)
-- [API Documentation](server/docs/api.md)
-- [Requirements Specification](docs/requirements.md)
+- [Travel Module Documentation](/server/docs/travel-module.md)
+- [API Documentation](/server/docs/api.md)
+- [Requirements Specification](/docs/requirements.md)

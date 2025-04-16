@@ -133,6 +133,8 @@ exports.getPendingModerationMedia = async (req, res) => {
     res.status(200).json(pendingMedia);
   } catch (error) {
     console.error('Error in getPendingModerationMedia controller:', error);
-    res.status(500).json({ message: 'Error getting pending moderation media', error: error.message });
+    res
+      .status(500)
+      .json({ message: 'Error getting pending moderation media', error: error.message });
   }
 };

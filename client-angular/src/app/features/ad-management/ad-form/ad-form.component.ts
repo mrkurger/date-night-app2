@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-form.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -25,21 +24,14 @@ import { NorwayCity } from '../../../core/constants/norway-locations';
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MaterialModule
-  ]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MaterialModule],
 })
 export class AdFormComponent implements OnInit {
   adForm: FormGroup;
   isEditMode = false;
   adId: string | null = null;
   loading = false;
-  categories = [
-    'Escort', 'Stripper', 'Massage', 'Companion', 'Other'
-  ];
+  categories = ['Escort', 'Stripper', 'Massage', 'Companion', 'Other'];
   counties: string[] = [];
   cities: NorwayCity[] = [];
 
@@ -61,41 +53,43 @@ export class AdFormComponent implements OnInit {
       this.loading = false;
     });
 
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        this.adId = params.get('id');
-        this.isEditMode = !!this.adId;
-        
-        if (this.isEditMode && this.adId) {
-          this.loading = true;
-          // In a real app, you would fetch the ad data from a service
-          // return this.adService.getAd(this.adId);
-          return of({
-            title: 'Sample Ad',
-            description: 'This is a sample ad description',
-            category: 'Escort',
-            price: 200,
-            county: 'Oslo',
-            city: 'Oslo',
-            isActive: true
-          });
-        }
-        return of(null);
-      }),
-      tap(ad => {
-        if (ad) {
-          this.adForm.patchValue(ad);
-          
-          // Load cities for the selected county
-          if (ad.county) {
-            this.loadCitiesForCounty(ad.county);
+    this.route.paramMap
+      .pipe(
+        switchMap(params => {
+          this.adId = params.get('id');
+          this.isEditMode = !!this.adId;
+
+          if (this.isEditMode && this.adId) {
+            this.loading = true;
+            // In a real app, you would fetch the ad data from a service
+            // return this.adService.getAd(this.adId);
+            return of({
+              title: 'Sample Ad',
+              description: 'This is a sample ad description',
+              category: 'Escort',
+              price: 200,
+              county: 'Oslo',
+              city: 'Oslo',
+              isActive: true,
+            });
           }
-        }
-        this.loading = false;
-      })
-    ).subscribe();
+          return of(null);
+        }),
+        tap(ad => {
+          if (ad) {
+            this.adForm.patchValue(ad);
+
+            // Load cities for the selected county
+            if (ad.county) {
+              this.loadCitiesForCounty(ad.county);
+            }
+          }
+          this.loading = false;
+        })
+      )
+      .subscribe();
   }
-  
+
   /**
    * Load cities when county changes
    */
@@ -106,7 +100,7 @@ export class AdFormComponent implements OnInit {
       this.adForm.get('city')?.setValue(''); // Reset city when county changes
     }
   }
-  
+
   /**
    * Load cities for a specific county
    */
@@ -124,7 +118,7 @@ export class AdFormComponent implements OnInit {
       price: [null, [Validators.required, Validators.min(0)]],
       county: ['', Validators.required],
       city: ['', Validators.required],
-      isActive: [true]
+      isActive: [true],
     });
   }
 
@@ -137,18 +131,16 @@ export class AdFormComponent implements OnInit {
     const adData = this.adForm.value;
 
     // In a real app, you would save the ad data using a service
-    // const request = this.isEditMode 
+    // const request = this.isEditMode
     //   ? this.adService.updateAd(this.adId, adData)
     //   : this.adService.createAd(adData);
 
     // Simulating API call
     setTimeout(() => {
       this.loading = false;
-      this.snackBar.open(
-        `Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`, 
-        'Close', 
-        { duration: 3000 }
-      );
+      this.snackBar.open(`Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`, 'Close', {
+        duration: 3000,
+      });
       this.router.navigate(['../list'], { relativeTo: this.route });
     }, 1000);
   }

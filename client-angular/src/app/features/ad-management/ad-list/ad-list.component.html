@@ -22,7 +22,9 @@
       <i class="fas fa-ad fa-3x"></i>
       <h3>No Advertisements Yet</h3>
       <p>You haven't created any advertisements yet. Click the button below to get started.</p>
-      <button class="btn btn-primary" routerLink="/ad-management/create">Create Your First Ad</button>
+      <button class="btn btn-primary" routerLink="/ad-management/create">
+        Create Your First Ad
+      </button>
     </div>
   </div>
 
@@ -30,20 +32,23 @@
     <div *ngFor="let ad of ads" class="ad-card">
       <div class="ad-card-header">
         <div class="ad-image">
-          <img [src]="ad.profileImage || 'assets/images/placeholder.jpg'" [alt]="ad.title">
+          <img [src]="ad.profileImage || 'assets/images/placeholder.jpg'" [alt]="ad.title" />
           <span *ngIf="ad.featured" class="featured-badge">Featured</span>
           <span *ngIf="ad.boosted" class="boosted-badge">Boosted</span>
         </div>
-        <div class="ad-status" [ngClass]="{'active': ad.active, 'inactive': !ad.active}">
+        <div class="ad-status" [ngClass]="{ active: ad.active, inactive: !ad.active }">
           {{ ad.active ? 'Active' : 'Inactive' }}
         </div>
       </div>
-      
+
       <div class="ad-card-body">
         <h3 class="ad-title">{{ ad.title }}</h3>
         <p class="ad-category">{{ ad.category }} • {{ ad.city }}, {{ ad.county }}</p>
-        <p class="ad-description">{{ ad.shortDescription || (ad.description | slice:0:100) }}{{ (ad.description?.length > 100) ? '...' : '' }}</p>
-        
+        <p class="ad-description">
+          {{ ad.shortDescription || (ad.description | slice: 0 : 100)
+          }}{{ ad.description?.length > 100 ? '...' : '' }}
+        </p>
+
         <div class="ad-stats">
           <div class="stat">
             <i class="fas fa-eye"></i>
@@ -59,7 +64,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="ad-card-footer">
         <div class="ad-actions">
           <button class="btn btn-sm btn-outline-primary" (click)="editAd(ad._id)">
@@ -72,12 +77,12 @@
             <i class="fas fa-trash"></i> Delete
           </button>
         </div>
-        
+
         <div class="travel-management">
           <button class="btn btn-sm btn-outline-success" (click)="manageTravelItinerary(ad._id)">
             <i class="fas fa-map-marker-alt"></i> Manage Travel
           </button>
-          
+
           <!-- Show touring status if applicable -->
           <div *ngIf="ad.isTouring" class="touring-status">
             <i class="fas fa-plane"></i> Currently Touring

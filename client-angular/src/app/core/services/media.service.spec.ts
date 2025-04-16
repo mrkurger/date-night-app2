@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the media service
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_MEDIA: Mock media data for testing
 //   Related to: client-angular/src/app/core/models/media.interface.ts
@@ -27,7 +27,7 @@ describe('MediaService', () => {
   // Mock data for testing
   const mockAdId = 'ad123';
   const mockMediaId = 'media123';
-  
+
   const mockPendingMedia: PendingMedia[] = [
     {
       _id: 'media1',
@@ -35,7 +35,7 @@ describe('MediaService', () => {
       adTitle: 'Test Ad 1',
       type: 'image',
       url: 'https://example.com/image1.jpg',
-      createdAt: new Date('2023-01-01')
+      createdAt: new Date('2023-01-01'),
     },
     {
       _id: 'media2',
@@ -43,8 +43,8 @@ describe('MediaService', () => {
       adTitle: 'Test Ad 2',
       type: 'video',
       url: 'https://example.com/video1.mp4',
-      createdAt: new Date('2023-01-02')
-    }
+      createdAt: new Date('2023-01-02'),
+    },
   ];
 
   const mockAdMedia = [
@@ -54,7 +54,7 @@ describe('MediaService', () => {
       url: 'https://example.com/image1.jpg',
       isFeatured: true,
       status: 'approved',
-      createdAt: new Date('2023-01-01')
+      createdAt: new Date('2023-01-01'),
     },
     {
       _id: 'media2',
@@ -62,22 +62,19 @@ describe('MediaService', () => {
       url: 'https://example.com/video1.mp4',
       isFeatured: false,
       status: 'approved',
-      createdAt: new Date('2023-01-02')
-    }
+      createdAt: new Date('2023-01-02'),
+    },
   ];
 
   beforeEach(() => {
     // Create a spy for the CachingService
     cachingServiceSpy = jasmine.createSpyObj('CachingService', ['get']);
-    
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        MediaService,
-        { provide: CachingService, useValue: cachingServiceSpy }
-      ]
+      providers: [MediaService, { provide: CachingService, useValue: cachingServiceSpy }],
     });
-    
+
     service = TestBed.inject(MediaService);
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -96,15 +93,15 @@ describe('MediaService', () => {
     it('should upload media for an ad', () => {
       const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
       const mockResponse = { message: 'Upload successful' };
-      
+
       // Create a proper HttpResponse object
       const mockEvent = new HttpResponse({
         body: mockResponse,
-        status: 200
+        status: 200,
       });
 
       let receivedResponse: any = null;
-      
+
       service.uploadMedia(mockAdId, mockFile).subscribe(event => {
         if (event instanceof HttpResponse) {
           receivedResponse = event.body;
@@ -113,16 +110,16 @@ describe('MediaService', () => {
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);
       expect(req.request.method).toBe('POST');
-      
+
       // Verify FormData contains the file
       expect(req.request.body instanceof FormData).toBeTrue();
-      
+
       // Flush with the HttpResponse object
-      req.flush(mockResponse, { 
-        status: 200, 
-        statusText: 'OK'
+      req.flush(mockResponse, {
+        status: 200,
+        statusText: 'OK',
       });
-      
+
       // Verify we received the response
       expect(receivedResponse).toEqual(mockResponse);
     });
@@ -229,25 +226,25 @@ describe('MediaService', () => {
     it('should handle HTTP errors when uploading media', () => {
       const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
       const errorResponse = { status: 500, statusText: 'Server Error' };
-      
+
       // Create a spy to track the error callback
       const errorSpy = jasmine.createSpy('error');
-      
+
       // Subscribe to the service method with proper error handling
       service.uploadMedia(mockAdId, mockFile).subscribe({
         next: () => {},
-        error: (error) => {
+        error: error => {
           errorSpy(error);
-        }
+        },
       });
-      
+
       // Get the request and simulate an error response
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);
       expect(req.request.method).toBe('POST');
-      
+
       // Use error instead of flush to simulate an HTTP error response
       req.error(new ErrorEvent('Network error'), errorResponse);
-      
+
       // Verify the error callback was called with the correct error
       expect(errorSpy).toHaveBeenCalled();
       const errorArg = errorSpy.calls.mostRecent().args[0];
@@ -262,14 +259,14 @@ describe('MediaService', () => {
 
       service.getPendingModerationMedia().subscribe({
         next: () => fail('should have failed with a 403 error'),
-        error: (error) => {
+        error: error => {
           errorSpy(error);
-        }
+        },
       });
 
       const req = httpMock.expectOne(`${apiUrl}/pending`);
       req.error(new ErrorEvent('Forbidden'), errorResponse);
-      
+
       expect(errorSpy).toHaveBeenCalled();
       const errorArg = errorSpy.calls.mostRecent().args[0];
       expect(errorArg.status).toBe(403);
@@ -281,14 +278,14 @@ describe('MediaService', () => {
 
       service.moderateMedia(mockAdId, mockMediaId, 'approved', 'notes').subscribe({
         next: () => fail('should have failed with a 400 error'),
-        error: (error) => {
+        error: error => {
           errorSpy(error);
-        }
+        },
       });
 
       const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
       req.error(new ErrorEvent('Bad Request'), errorResponse);
-      
+
       expect(errorSpy).toHaveBeenCalled();
       const errorArg = errorSpy.calls.mostRecent().args[0];
       expect(errorArg.status).toBe(400);

@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (ad.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -39,7 +38,7 @@ class AdService {
       const ad = new Ad({
         ...adData,
         advertiser: userId,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
       return await ad.save();
     } catch (error) {
@@ -51,13 +50,15 @@ class AdService {
     try {
       return await Ad.aggregate([
         { $sample: { size: limit } },
-        { $lookup: {
-          from: 'users',
-          localField: 'advertiser',
-          foreignField: '_id',
-          as: 'advertiser'
-        }},
-        { $unwind: '$advertiser' }
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'advertiser',
+            foreignField: '_id',
+            as: 'advertiser',
+          },
+        },
+        { $unwind: '$advertiser' },
       ]);
     } catch (error) {
       throw new Error('Error fetching random ads: ' + error.message);
@@ -70,9 +71,7 @@ class AdService {
 
   async getAdsByCategory(category) {
     try {
-      return await Ad.find({ category })
-        .populate('advertiser', 'username')
-        .sort('-createdAt');
+      return await Ad.find({ category }).populate('advertiser', 'username').sort('-createdAt');
     } catch (error) {
       throw new Error('Error fetching category ads: ' + error.message);
     }

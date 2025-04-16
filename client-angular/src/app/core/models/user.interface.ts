@@ -3,61 +3,61 @@ export interface User {
   id?: string; // Alias for _id for compatibility
   username: string;
   email: string;
-    firstName?: string;
-    lastName?: string;
-    name?: string; // Full name of the user
-    phone?: string; // Phone number
-    bio?: string; // User biography or description
-    role: 'user' | 'advertiser' | 'admin';
-    roles?: string[]; // For role-based authorization
-    online?: boolean;
-    lastActive?: Date;
-    createdAt: Date;
-    updatedAt: Date;
-    travelPlan?: TravelPlanItem[];
-    album?: string[];
-    socialProfiles?: {
-      github?: { id: string };
-      google?: { id: string };
-      reddit?: { id: string };
-      apple?: { id: string };
-    };
-    subscriptionTier?: 'free' | 'premium' | 'vip';
-    subscriptionExpires?: Date;
-    notificationSettings?: {
-      emailNotifications?: boolean;
-      chatNotifications?: boolean;
-      marketingEmails?: boolean;
-      newMatchNotifications?: boolean;
-    };
-    privacySettings?: {
-      profileVisibility?: 'public' | 'private' | 'friends';
-      showOnlineStatus?: boolean;
-      allowMessaging?: 'all' | 'friends' | 'none';
-      dataSharing?: boolean;
-    };
-    profileImage?: string;
-    location?: {
-      city?: string;
-      country?: string;
-    };
-  }
-  
-  export interface UserProfile extends User {
-    phoneNumber?: string;
-    preferences?: {
-      notifications?: boolean;
-      darkMode?: boolean;
-      language?: string;
-    };
-  }
-  
-  export interface PublicProfile {
-    _id: string;
-    username: string;
-    profileImage?: string;
-    bio?: string;
-    role: string;
+  firstName?: string;
+  lastName?: string;
+  name?: string; // Full name of the user
+  phone?: string; // Phone number
+  bio?: string; // User biography or description
+  role: 'user' | 'advertiser' | 'admin';
+  roles?: string[]; // For role-based authorization
+  online?: boolean;
+  lastActive?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  travelPlan?: TravelPlanItem[];
+  album?: string[];
+  socialProfiles?: {
+    github?: { id: string };
+    google?: { id: string };
+    reddit?: { id: string };
+    apple?: { id: string };
+  };
+  subscriptionTier?: 'free' | 'premium' | 'vip';
+  subscriptionExpires?: Date;
+  notificationSettings?: {
+    emailNotifications?: boolean;
+    chatNotifications?: boolean;
+    marketingEmails?: boolean;
+    newMatchNotifications?: boolean;
+  };
+  privacySettings?: {
+    profileVisibility?: 'public' | 'private' | 'friends';
+    showOnlineStatus?: boolean;
+    allowMessaging?: 'all' | 'friends' | 'none';
+    dataSharing?: boolean;
+  };
+  profileImage?: string;
+  location?: {
+    city?: string;
+    country?: string;
+  };
+}
+
+export interface UserProfile extends User {
+  phoneNumber?: string;
+  preferences?: {
+    notifications?: boolean;
+    darkMode?: boolean;
+    language?: string;
+  };
+}
+
+export interface PublicProfile {
+  _id: string;
+  username: string;
+  profileImage?: string;
+  bio?: string;
+  role: string;
 }
 
 export interface TravelPlanItem {

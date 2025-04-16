@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the Emerald AppCard component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AD: Mock ad data for testing
 //   Related to: client-angular/src/app/core/models/ad.interface.ts
@@ -24,14 +24,15 @@ describe('AppCardComponent', () => {
   const mockAd: Ad = {
     _id: 'ad123',
     title: 'Test Ad',
-    description: 'This is a test ad description that is long enough to test truncation functionality in the component.',
+    description:
+      'This is a test ad description that is long enough to test truncation functionality in the component.',
     category: 'Test Category',
     price: 100,
     location: 'Test Location',
     images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
     media: [
       { type: 'image', url: 'https://example.com/media1.jpg' },
-      { type: 'video', url: 'https://example.com/video1.mp4' }
+      { type: 'video', url: 'https://example.com/video1.mp4' },
     ],
     advertiser: 'Test Advertiser',
     userId: 'user123',
@@ -43,24 +44,21 @@ describe('AppCardComponent', () => {
     clickCount: 50,
     inquiryCount: 10,
     createdAt: '2023-01-01T00:00:00.000Z',
-    updatedAt: '2023-01-02T00:00:00.000Z'
+    updatedAt: '2023-01-02T00:00:00.000Z',
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        AppCardComponent
-      ]
+      imports: [CommonModule, AppCardComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppCardComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    
+
     // Set the mock ad data
     component.ad = mockAd;
-    
+
     fixture.detectChanges();
   });
 
@@ -87,45 +85,45 @@ describe('AppCardComponent', () => {
     it('should get primary image from images array', () => {
       const testAd = { ...mockAd, media: [] };
       component.ad = testAd;
-      
+
       expect(component.getPrimaryImage()).toBe(testAd.images[0]);
     });
 
     it('should get primary image from media array', () => {
       const testAd = { ...mockAd, images: [] };
       component.ad = testAd;
-      
+
       expect(component.getPrimaryImage()).toBe(testAd.media[0].url);
     });
 
     it('should return default image when no images or media are available', () => {
       const testAd = { ...mockAd, images: [], media: [] };
       component.ad = testAd;
-      
+
       expect(component.getPrimaryImage()).toBe('/assets/img/default-profile.jpg');
     });
 
     it('should get current media URL from media array', () => {
       component.currentMediaIndex = 1;
       component.ad = { ...mockAd, images: [] };
-      
+
       expect(component.getCurrentMediaUrl()).toBe(mockAd.media[1].url);
     });
 
     it('should get current media URL from images array', () => {
       component.currentMediaIndex = 1;
       component.ad = { ...mockAd, media: [] };
-      
+
       expect(component.getCurrentMediaUrl()).toBe(mockAd.images[1]);
     });
 
     it('should navigate to next media item', () => {
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.currentMediaIndex = 0;
       component.nextMedia(event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.currentMediaIndex).toBe(1);
       expect(component.backgroundImageUrl).toBe(component.getCurrentMediaUrl());
@@ -134,10 +132,10 @@ describe('AppCardComponent', () => {
     it('should navigate to previous media item', () => {
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.currentMediaIndex = 1;
       component.prevMedia(event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.currentMediaIndex).toBe(0);
       expect(component.backgroundImageUrl).toBe(component.getCurrentMediaUrl());
@@ -145,28 +143,28 @@ describe('AppCardComponent', () => {
 
     it('should wrap around when navigating past the last media item', () => {
       const event = new Event('click');
-      
+
       component.currentMediaIndex = component.ad.media.length - 1;
       component.nextMedia(event);
-      
+
       expect(component.currentMediaIndex).toBe(0);
     });
 
     it('should wrap around when navigating before the first media item', () => {
       const event = new Event('click');
-      
+
       component.currentMediaIndex = 0;
       component.prevMedia(event);
-      
+
       expect(component.currentMediaIndex).toBe(component.ad.media.length - 1);
     });
 
     it('should get correct media count', () => {
       expect(component.getMediaCount()).toBe(2);
-      
+
       component.ad = { ...mockAd, media: [] };
       expect(component.getMediaCount()).toBe(2);
-      
+
       component.ad = { ...mockAd, images: [], media: [] };
       expect(component.getMediaCount()).toBe(0);
     });
@@ -179,7 +177,7 @@ describe('AppCardComponent', () => {
     it('should handle image loading error', () => {
       const mockEvent = { target: { src: 'invalid-url' } } as unknown as Event;
       component.onImageError(mockEvent);
-      
+
       expect((mockEvent.target as HTMLImageElement).src).toBe('/assets/img/default-profile.jpg');
     });
   });
@@ -192,9 +190,10 @@ describe('AppCardComponent', () => {
     });
 
     it('should truncate description', () => {
-      const longDescription = 'This is a very long description that should be truncated when displayed on the card.';
+      const longDescription =
+        'This is a very long description that should be truncated when displayed on the card.';
       component.ad = { ...mockAd, description: longDescription };
-      
+
       expect(component.getTruncatedDescription(20)).toBe('This is a very long d...');
       expect(component.getTruncatedDescription(10)).toBe('This is a ...');
     });
@@ -202,13 +201,13 @@ describe('AppCardComponent', () => {
     it('should not truncate short descriptions', () => {
       const shortDescription = 'Short description';
       component.ad = { ...mockAd, description: shortDescription };
-      
+
       expect(component.getTruncatedDescription(20)).toBe(shortDescription);
     });
 
     it('should handle empty description', () => {
       component.ad = { ...mockAd, description: '' };
-      
+
       expect(component.getTruncatedDescription()).toBe('');
     });
   });
@@ -216,9 +215,9 @@ describe('AppCardComponent', () => {
   describe('Event Handling', () => {
     it('should emit viewDetails event', () => {
       spyOn(component.viewDetails, 'emit');
-      
+
       component.onViewDetails();
-      
+
       expect(component.viewDetails.emit).toHaveBeenCalledWith(mockAd._id);
     });
 
@@ -226,9 +225,9 @@ describe('AppCardComponent', () => {
       spyOn(component.like, 'emit');
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.onLike(event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.like.emit).toHaveBeenCalledWith(mockAd._id);
     });
@@ -237,9 +236,9 @@ describe('AppCardComponent', () => {
       spyOn(component.chat, 'emit');
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.onChat(event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.chat.emit).toHaveBeenCalledWith(mockAd._id);
     });
@@ -248,9 +247,9 @@ describe('AppCardComponent', () => {
       spyOn(component.share, 'emit');
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.onShare(event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.share.emit).toHaveBeenCalledWith(mockAd._id);
     });
@@ -259,9 +258,9 @@ describe('AppCardComponent', () => {
       spyOn(component.swiped, 'emit');
       const event = new Event('click');
       spyOn(event, 'stopPropagation');
-      
+
       component.onSwipe('right', event);
-      
+
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.swiped.emit).toHaveBeenCalledWith({ direction: 'right', adId: mockAd._id });
     });
@@ -272,18 +271,18 @@ describe('AppCardComponent', () => {
       // Default layout (netflix)
       let cardElement = debugElement.query(By.css('.emerald-app-card--netflix'));
       expect(cardElement).toBeTruthy();
-      
+
       // Change to tinder layout
       component.layout = 'tinder';
       fixture.detectChanges();
-      
+
       cardElement = debugElement.query(By.css('.emerald-app-card--tinder'));
       expect(cardElement).toBeTruthy();
-      
+
       // Change to list layout
       component.layout = 'list';
       fixture.detectChanges();
-      
+
       cardElement = debugElement.query(By.css('.emerald-app-card--list'));
       expect(cardElement).toBeTruthy();
     });
@@ -292,11 +291,11 @@ describe('AppCardComponent', () => {
       // Default (offline)
       let statusElement = debugElement.query(By.css('.emerald-app-card__status-label--offline'));
       expect(statusElement).toBeTruthy();
-      
+
       // Change to online
       component.isOnline = true;
       fixture.detectChanges();
-      
+
       statusElement = debugElement.query(By.css('.emerald-app-card__status-label--online'));
       expect(statusElement).toBeTruthy();
     });
@@ -304,7 +303,7 @@ describe('AppCardComponent', () => {
     it('should show media navigation when multiple media items exist', () => {
       const navButtons = debugElement.queryAll(By.css('.emerald-app-card__media-nav'));
       expect(navButtons.length).toBe(2);
-      
+
       const dots = debugElement.queryAll(By.css('.emerald-app-card__media-dot'));
       expect(dots.length).toBe(2);
     });
@@ -312,10 +311,10 @@ describe('AppCardComponent', () => {
     it('should hide media navigation when only one media item exists', () => {
       component.ad = { ...mockAd, images: ['https://example.com/image1.jpg'], media: [] };
       fixture.detectChanges();
-      
+
       const navButtons = debugElement.queryAll(By.css('.emerald-app-card__media-nav'));
       expect(navButtons.length).toBe(0);
-      
+
       const dots = debugElement.queryAll(By.css('.emerald-app-card__media-dot'));
       expect(dots.length).toBe(0);
     });
@@ -340,7 +339,7 @@ describe('AppCardComponent', () => {
     it('should show description when showDescription is true', () => {
       component.showDescription = true;
       fixture.detectChanges();
-      
+
       const descriptionElement = debugElement.query(By.css('.emerald-app-card__description'));
       expect(descriptionElement).toBeTruthy();
     });
@@ -348,7 +347,7 @@ describe('AppCardComponent', () => {
     it('should hide description when showDescription is false', () => {
       component.showDescription = false;
       fixture.detectChanges();
-      
+
       const descriptionElement = debugElement.query(By.css('.emerald-app-card__description'));
       expect(descriptionElement).toBeFalsy();
     });
@@ -356,7 +355,7 @@ describe('AppCardComponent', () => {
     it('should show actions when showActions is true', () => {
       component.showActions = true;
       fixture.detectChanges();
-      
+
       const actionsElement = debugElement.query(By.css('.emerald-app-card__actions'));
       expect(actionsElement).toBeTruthy();
     });
@@ -364,7 +363,7 @@ describe('AppCardComponent', () => {
     it('should hide actions when showActions is false', () => {
       component.showActions = false;
       fixture.detectChanges();
-      
+
       const actionsElement = debugElement.query(By.css('.emerald-app-card__actions'));
       expect(actionsElement).toBeFalsy();
     });
@@ -373,11 +372,11 @@ describe('AppCardComponent', () => {
       // Netflix layout (default)
       let swipeActionsElement = debugElement.query(By.css('.emerald-app-card__swipe-actions'));
       expect(swipeActionsElement).toBeFalsy();
-      
+
       // Tinder layout
       component.layout = 'tinder';
       fixture.detectChanges();
-      
+
       swipeActionsElement = debugElement.query(By.css('.emerald-app-card__swipe-actions'));
       expect(swipeActionsElement).toBeTruthy();
     });

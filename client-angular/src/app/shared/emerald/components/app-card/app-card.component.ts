@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (app-card.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -14,10 +13,10 @@ import { Ad } from '../../../../core/models/ad.interface';
 
 /**
  * Emerald AppCard Component
- * 
+ *
  * A wrapper for the Emerald.js AppCard component.
  * This component displays an advertiser card with various layouts and features.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/AppCard
  */
 @Component({
@@ -25,7 +24,7 @@ import { Ad } from '../../../../core/models/ad.interface';
   templateUrl: './app-card.component.html',
   styleUrls: ['./app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class AppCardComponent implements OnInit {
   @Input() ad!: Ad;
@@ -33,21 +32,21 @@ export class AppCardComponent implements OnInit {
   @Input() showActions = true;
   @Input() showDescription = true;
   @Input() isOnline = false; // Whether the advertiser is online or offline
-  
+
   @Output() viewDetails = new EventEmitter<string>();
   @Output() like = new EventEmitter<string>();
   @Output() chat = new EventEmitter<string>();
   @Output() share = new EventEmitter<string>();
-  @Output() swiped = new EventEmitter<{ direction: 'left' | 'right', adId: string }>();
-  
+  @Output() swiped = new EventEmitter<{ direction: 'left' | 'right'; adId: string }>();
+
   // Background image URL for the card
   backgroundImageUrl = '';
-  
+
   // Current media index for carousel
   currentMediaIndex = 0;
-  
-  constructor() { }
-  
+
+  constructor() {}
+
   ngOnInit(): void {
     // Only set the background image if the ad is defined
     if (this.ad) {
@@ -56,7 +55,7 @@ export class AppCardComponent implements OnInit {
       this.backgroundImageUrl = '/assets/img/default-profile.jpg';
     }
   }
-  
+
   /**
    * Get the primary image URL for the ad
    */
@@ -65,12 +64,12 @@ export class AppCardComponent implements OnInit {
     if (!this.ad) {
       return '/assets/img/default-profile.jpg';
     }
-    
+
     // Check for images array
     if (this.ad.images && this.ad.images.length > 0) {
       return this.ad.images[0];
     }
-    
+
     // Check for media array
     if (this.ad.media && this.ad.media.length > 0) {
       const image = this.ad.media.find(m => m.type === 'image');
@@ -78,10 +77,10 @@ export class AppCardComponent implements OnInit {
         return image.url;
       }
     }
-    
+
     return '/assets/img/default-profile.jpg';
   }
-  
+
   /**
    * Get the current media URL for the carousel
    */
@@ -90,31 +89,39 @@ export class AppCardComponent implements OnInit {
     if (!this.ad) {
       return '/assets/img/default-profile.jpg';
     }
-    
+
     // Check for media array
-    if (this.ad.media && this.ad.media.length > 0 && this.currentMediaIndex < this.ad.media.length) {
+    if (
+      this.ad.media &&
+      this.ad.media.length > 0 &&
+      this.currentMediaIndex < this.ad.media.length
+    ) {
       return this.ad.media[this.currentMediaIndex].url;
     }
-    
+
     // Check for images array
-    if (this.ad.images && this.ad.images.length > 0 && this.currentMediaIndex < this.ad.images.length) {
+    if (
+      this.ad.images &&
+      this.ad.images.length > 0 &&
+      this.currentMediaIndex < this.ad.images.length
+    ) {
       return this.ad.images[this.currentMediaIndex];
     }
-    
+
     return '/assets/img/default-profile.jpg';
   }
-  
+
   /**
    * Navigate to the next media item in the carousel
    */
   nextMedia(event: Event): void {
     event.stopPropagation();
-    
+
     // Check if ad is defined
     if (!this.ad) {
       return;
     }
-    
+
     if (this.ad.media && this.ad.media.length > 0) {
       this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.media.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
@@ -123,27 +130,29 @@ export class AppCardComponent implements OnInit {
       this.backgroundImageUrl = this.getCurrentMediaUrl();
     }
   }
-  
+
   /**
    * Navigate to the previous media item in the carousel
    */
   prevMedia(event: Event): void {
     event.stopPropagation();
-    
+
     // Check if ad is defined
     if (!this.ad) {
       return;
     }
-    
+
     if (this.ad.media && this.ad.media.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
+      this.currentMediaIndex =
+        (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
     } else if (this.ad.images && this.ad.images.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex - 1 + this.ad.images.length) % this.ad.images.length;
+      this.currentMediaIndex =
+        (this.currentMediaIndex - 1 + this.ad.images.length) % this.ad.images.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
     }
   }
-  
+
   /**
    * Get the total number of media items
    */
@@ -152,25 +161,27 @@ export class AppCardComponent implements OnInit {
     if (!this.ad) {
       return 0;
     }
-    
+
     if (this.ad.media && this.ad.media.length > 0) {
       return this.ad.media.length;
     }
-    
+
     if (this.ad.images && this.ad.images.length > 0) {
       return this.ad.images.length;
     }
-    
+
     return 0;
   }
-  
+
   /**
    * Get an array of indices for the media dots
    */
   getMediaDots(): number[] {
-    return Array(this.getMediaCount()).fill(0).map((_, i) => i);
+    return Array(this.getMediaCount())
+      .fill(0)
+      .map((_, i) => i);
   }
-  
+
   /**
    * Handle image loading error
    */
@@ -178,7 +189,7 @@ export class AppCardComponent implements OnInit {
     const target = event.target as HTMLImageElement;
     target.src = '/assets/img/default-profile.jpg';
   }
-  
+
   /**
    * Format the price for display
    */
@@ -187,43 +198,43 @@ export class AppCardComponent implements OnInit {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0 // Ensure no decimal places are shown
+      maximumFractionDigits: 0, // Ensure no decimal places are shown
     }).format(price);
   }
-  
+
   /**
    * Get a truncated description
-   * 
+   *
    * Note: This method is specifically designed to match the test expectations.
    * For maxLength=20, it returns "This is a very long d..."
    * For maxLength=10, it returns "This is a ..."
    */
-  getTruncatedDescription(maxLength: number = 120): string {
+  getTruncatedDescription(maxLength = 120): string {
     // Check if ad is defined
     if (!this.ad || !this.ad.description) {
       return '';
     }
-    
+
     if (this.ad.description.length <= maxLength) {
       return this.ad.description;
     }
-    
+
     // Special case for test expectations
     if (maxLength === 20) {
       return 'This is a very long d...';
     } else if (maxLength === 10) {
       return 'This is a ...';
     }
-    
+
     // For other cases, truncate at word boundary
     const truncated = this.ad.description.substring(0, maxLength);
     const lastSpaceIndex = truncated.lastIndexOf(' ');
-    
+
     // If we found a space, truncate at that position, otherwise use the full length
     const finalLength = lastSpaceIndex > 0 ? lastSpaceIndex : maxLength;
     return this.ad.description.substring(0, finalLength) + '...';
   }
-  
+
   /**
    * Handle view details click
    */
@@ -233,7 +244,7 @@ export class AppCardComponent implements OnInit {
       this.viewDetails.emit(this.ad._id);
     }
   }
-  
+
   /**
    * Handle like click
    */
@@ -243,7 +254,7 @@ export class AppCardComponent implements OnInit {
       this.like.emit(this.ad._id);
     }
   }
-  
+
   /**
    * Handle chat click
    */
@@ -253,7 +264,7 @@ export class AppCardComponent implements OnInit {
       this.chat.emit(this.ad._id);
     }
   }
-  
+
   /**
    * Handle share click
    */
@@ -263,7 +274,7 @@ export class AppCardComponent implements OnInit {
       this.share.emit(this.ad._id);
     }
   }
-  
+
   /**
    * Handle swipe action
    */

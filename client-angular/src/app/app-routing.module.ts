@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for app-routing.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -16,40 +15,43 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: 'profile',
     loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'ads',
-    loadChildren: () => import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
+    canActivate: [AuthGuard],
   },
   {
     path: '',
     redirectTo: '/browse',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.
  * See app.config.ts and app.routes.ts for the new routing configuration.
- * 
+ *
  * This module is kept for backward compatibility during the transition period.
  * New routes should be added to app.routes.ts.
  */
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: SelectivePreloadingStrategy,
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled',
-    initialNavigation: 'enabledBlocking' // for SSR
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: SelectivePreloadingStrategy,
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      initialNavigation: 'enabledBlocking', // for SSR
+    }),
+  ],
   exports: [RouterModule],
-  providers: [SelectivePreloadingStrategy]
+  providers: [SelectivePreloadingStrategy],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

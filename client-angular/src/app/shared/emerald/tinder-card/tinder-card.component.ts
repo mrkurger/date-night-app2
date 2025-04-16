@@ -1,14 +1,21 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (tinder-card.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LabelComponent } from '../components/label/label.component';
 
@@ -32,7 +39,7 @@ export interface TinderCardAction {
 
 /**
  * Emerald Tinder Card Component
- * 
+ *
  * A card component for Tinder-style swiping interfaces with gesture support
  */
 @Component({
@@ -40,23 +47,23 @@ export interface TinderCardAction {
   standalone: true,
   imports: [CommonModule, LabelComponent],
   templateUrl: './tinder-card.component.html',
-  styleUrls: ['./tinder-card.component.scss']
+  styleUrls: ['./tinder-card.component.scss'],
 })
 export class TinderCardComponent implements AfterViewInit, OnDestroy {
   /**
    * Title of the card
    */
-  @Input() title: string = '';
+  @Input() title = '';
 
   /**
    * Subtitle of the card (e.g., location)
    */
-  @Input() subtitle: string = '';
+  @Input() subtitle = '';
 
   /**
    * Description text
    */
-  @Input() description: string = '';
+  @Input() description = '';
 
   /**
    * Array of media items (images/videos)
@@ -71,17 +78,17 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
   /**
    * ID of the item represented by this card
    */
-  @Input() itemId: string = '';
+  @Input() itemId = '';
 
   /**
    * Age to display next to the title
    */
-  @Input() age: string = '';
+  @Input() age = '';
 
   /**
    * Whether the card is swipeable
    */
-  @Input() swipeable: boolean = true;
+  @Input() swipeable = true;
 
   /**
    * Array of action buttons to display
@@ -96,12 +103,12 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
   /**
    * Emitted when the card is swiped
    */
-  @Output() swipe = new EventEmitter<{ direction: 'left' | 'right', itemId: string }>();
+  @Output() swipe = new EventEmitter<{ direction: 'left' | 'right'; itemId: string }>();
 
   /**
    * Emitted when an action button is clicked
    */
-  @Output() actionClick = new EventEmitter<{ id: string, itemId: string }>();
+  @Output() actionClick = new EventEmitter<{ id: string; itemId: string }>();
 
   /**
    * Emitted when the media is changed
@@ -199,7 +206,7 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
       () => card.removeEventListener('touchstart', touchStartListener),
       () => card.removeEventListener('touchmove', touchMoveListener),
       () => card.removeEventListener('touchend', touchEndListener),
-      () => card.removeEventListener('mousedown', mouseDownListener)
+      () => card.removeEventListener('mousedown', mouseDownListener),
     ];
   }
 
@@ -325,6 +332,8 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
    */
   getMediaDots(): number[] {
     if (!this.media) return [];
-    return Array(this.media.length).fill(0).map((_, i) => i);
+    return Array(this.media.length)
+      .fill(0)
+      .map((_, i) => i);
   }
 }

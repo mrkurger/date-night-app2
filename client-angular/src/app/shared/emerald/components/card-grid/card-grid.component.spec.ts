@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (card-grid.component.spec)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -21,20 +20,20 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
   selector: 'emerald-app-card',
   template: '<div class="mock-card">{{ title }}</div>',
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 class MockAppCardComponent {
-  @Input() title: string = '';
-  @Input() subtitle: string = '';
-  @Input() description: string = '';
-  @Input() imageUrl: string = '';
-  @Input() avatarUrl: string = '';
-  @Input() avatarName: string = '';
-  @Input() isOnline: boolean = false;
+  @Input() title = '';
+  @Input() subtitle = '';
+  @Input() description = '';
+  @Input() imageUrl = '';
+  @Input() avatarUrl = '';
+  @Input() avatarName = '';
+  @Input() isOnline = false;
   @Input() tags: string[] = [];
   @Input() actions: any[] = [];
-  @Input() itemId: string = '';
-  @Input() layout: string = '';
+  @Input() itemId = '';
+  @Input() layout = '';
 }
 
 // Test host component with template reference
@@ -43,8 +42,8 @@ class MockAppCardComponent {
     <ng-template #customTemplate let-item>
       <div class="custom-template">{{ item.title }}</div>
     </ng-template>
-    
-    <emerald-card-grid 
+
+    <emerald-card-grid
       [items]="items"
       [columns]="columns"
       [gap]="gap"
@@ -54,31 +53,32 @@ class MockAppCardComponent {
       [animated]="animated"
       [layout]="layout"
       [itemTemplate]="useCustomTemplate ? customTemplate : null"
-      (itemClick)="onItemClick($event)">
+      (itemClick)="onItemClick($event)"
+    >
     </emerald-card-grid>
   `,
   standalone: true,
-  imports: [CommonModule, CardGridComponent]
+  imports: [CommonModule, CardGridComponent],
 })
 class TestHostComponent {
   @ViewChild('customTemplate') customTemplate!: TemplateRef<any>;
-  
+
   items: any[] = [
     { id: '1', title: 'Item 1', description: 'Description 1' },
     { id: '2', title: 'Item 2', description: 'Description 2' },
-    { id: '3', title: 'Item 3', description: 'Description 3' }
+    { id: '3', title: 'Item 3', description: 'Description 3' },
   ];
   columns: number | null = null;
-  gap: number = 16;
-  minItemWidth: number = 280;
-  loading: boolean = false;
-  skeletonCount: number = 6;
-  animated: boolean = true;
+  gap = 16;
+  minItemWidth = 280;
+  loading = false;
+  skeletonCount = 6;
+  animated = true;
   layout: 'grid' | 'masonry' | 'netflix' = 'grid';
-  useCustomTemplate: boolean = false;
-  
+  useCustomTemplate = false;
+
   clickedItem: any = null;
-  
+
   onItemClick(item: any): void {
     this.clickedItem = item;
   }
@@ -96,8 +96,8 @@ describe('CardGridComponent', () => {
         CardGridComponent,
         MockAppCardComponent,
         SkeletonLoaderComponent,
-        TestHostComponent
-      ]
+        TestHostComponent,
+      ],
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
@@ -127,10 +127,10 @@ describe('CardGridComponent', () => {
   it('should render grid layout correctly', () => {
     hostComponent.layout = 'grid';
     hostFixture.detectChanges();
-    
+
     const gridElement = debugElement.query(By.css('.emerald-card-grid'));
     expect(gridElement).toBeTruthy();
-    
+
     // Check if the grid style is applied correctly
     const gridStyles = gridElement.styles;
     expect(gridStyles['display']).toBe('grid');
@@ -141,11 +141,11 @@ describe('CardGridComponent', () => {
   it('should render masonry layout correctly', () => {
     hostComponent.layout = 'masonry';
     hostFixture.detectChanges();
-    
+
     const gridElement = debugElement.query(By.css('.emerald-card-grid'));
     expect(gridElement).toBeTruthy();
     expect(gridElement.classes['emerald-card-grid--masonry']).toBeTrue();
-    
+
     // Check if masonry items have the correct class
     const masonryItems = debugElement.queryAll(By.css('.emerald-card-grid__item--masonry'));
     expect(masonryItems.length).toBe(3);
@@ -154,13 +154,13 @@ describe('CardGridComponent', () => {
   it('should render netflix layout correctly', () => {
     hostComponent.layout = 'netflix';
     hostFixture.detectChanges();
-    
+
     const netflixGrid = debugElement.query(By.css('.emerald-card-grid--netflix'));
     expect(netflixGrid).toBeTruthy();
-    
+
     const netflixRow = debugElement.query(By.css('.emerald-card-grid__netflix-row'));
     expect(netflixRow).toBeTruthy();
-    
+
     const netflixItems = debugElement.queryAll(By.css('.emerald-card-grid__item--netflix'));
     expect(netflixItems.length).toBe(3);
   });
@@ -169,11 +169,11 @@ describe('CardGridComponent', () => {
     // Find the first grid item
     const firstItem = debugElement.query(By.css('.emerald-card-grid__item'));
     expect(firstItem).toBeTruthy();
-    
+
     // Trigger click event
     firstItem.triggerEventHandler('click', null);
     hostFixture.detectChanges();
-    
+
     // Check if the clicked item is correctly captured
     expect(hostComponent.clickedItem).toBeTruthy();
     expect(hostComponent.clickedItem.id).toBe('1');
@@ -182,15 +182,15 @@ describe('CardGridComponent', () => {
   it('should display loading skeletons', () => {
     hostComponent.loading = true;
     hostFixture.detectChanges();
-    
+
     // Check if skeleton loaders are displayed
     const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
     expect(skeletonLoaders.length).toBe(6); // Default skeletonCount is 6
-    
+
     // Change skeleton count
     hostComponent.skeletonCount = 3;
     hostFixture.detectChanges();
-    
+
     const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
     expect(updatedSkeletonLoaders.length).toBe(3);
   });
@@ -198,11 +198,11 @@ describe('CardGridComponent', () => {
   it('should use custom item template', () => {
     hostComponent.useCustomTemplate = true;
     hostFixture.detectChanges();
-    
+
     // Check if custom template is used
     const customTemplateElements = debugElement.queryAll(By.css('.custom-template'));
     expect(customTemplateElements.length).toBe(3);
-    
+
     // Verify content
     expect(customTemplateElements[0].nativeElement.textContent).toContain('Item 1');
     expect(customTemplateElements[1].nativeElement.textContent).toContain('Item 2');
@@ -212,11 +212,11 @@ describe('CardGridComponent', () => {
   it('should handle empty items array', () => {
     hostComponent.items = [];
     hostFixture.detectChanges();
-    
+
     // Check if empty state is displayed
     const emptyState = debugElement.query(By.css('.emerald-card-grid__empty'));
     expect(emptyState).toBeTruthy();
-    
+
     // Verify empty state content
     expect(emptyState.nativeElement.textContent).toContain('No items found');
   });

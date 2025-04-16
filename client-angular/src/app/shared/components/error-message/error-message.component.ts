@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (error-message.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -31,43 +30,45 @@ import { CommonModule } from '@angular/common';
       </div>
     </div>
   `,
-  styles: [`
-    .error-container {
-      display: flex;
-      padding: 16px;
-      background-color: #ffebee;
-      border-radius: 4px;
-      margin: 16px 0;
-      align-items: flex-start;
-    }
-    .error-icon {
-      color: #f44336;
-      margin-right: 16px;
-      font-size: 24px;
-      height: 24px;
-      width: 24px;
-    }
-    .error-content {
-      flex: 1;
-    }
-    .error-title {
-      margin: 0 0 8px 0;
-      font-size: 16px;
-      font-weight: 500;
-      color: #d32f2f;
-    }
-    .error-message {
-      margin: 0 0 8px 0;
-      color: #616161;
-    }
-    .error-actions {
-      margin-top: 8px;
-    }
-  `]
+  styles: [
+    `
+      .error-container {
+        display: flex;
+        padding: 16px;
+        background-color: #ffebee;
+        border-radius: 4px;
+        margin: 16px 0;
+        align-items: flex-start;
+      }
+      .error-icon {
+        color: #f44336;
+        margin-right: 16px;
+        font-size: 24px;
+        height: 24px;
+        width: 24px;
+      }
+      .error-content {
+        flex: 1;
+      }
+      .error-title {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: #d32f2f;
+      }
+      .error-message {
+        margin: 0 0 8px 0;
+        color: #616161;
+      }
+      .error-actions {
+        margin-top: 8px;
+      }
+    `,
+  ],
 })
 export class ErrorMessageComponent {
-  @Input() title: string = 'Error';
-  @Input() message: string = 'An error occurred. Please try again later.';
-  @Input() showRetry: boolean = true;
+  @Input() title = 'Error';
+  @Input() message = 'An error occurred. Please try again later.';
+  @Input() showRetry = true;
   @Output() onRetry = new EventEmitter<void>();
 }

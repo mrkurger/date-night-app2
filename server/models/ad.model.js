@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for ad.model settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - R: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -15,12 +14,12 @@ const pointSchema = new mongoose.Schema({
   type: {
     type: String,
     enum: ['Point'],
-    default: 'Point'
+    default: 'Point',
   },
   coordinates: {
     type: [Number], // [longitude, latitude]
-    required: true
-  }
+    required: true,
+  },
 });
 
 // Define the pricing schema
@@ -28,36 +27,36 @@ const pricingSchema = new mongoose.Schema({
   amount: {
     type: Number,
     required: true,
-    min: 0
+    min: 0,
   },
   currency: {
     type: String,
-    default: 'NOK'
+    default: 'NOK',
   },
   duration: {
     type: String,
     enum: ['30min', '1hour', '2hours', 'overnight', 'custom'],
-    required: true
+    required: true,
   },
   customDuration: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 // Define the availability schema
 const availabilitySchema = new mongoose.Schema({
   dayOfWeek: {
     type: Number, // 0-6 (Sunday-Saturday)
-    required: true
+    required: true,
   },
   startTime: {
     type: String, // HH:MM format
-    required: true
+    required: true,
   },
   endTime: {
     type: String, // HH:MM format
-    required: true
-  }
+    required: true,
+  },
 });
 
 // Define the travel itinerary schema
@@ -65,27 +64,27 @@ const travelItinerarySchema = new mongoose.Schema({
   destination: {
     city: {
       type: String,
-      required: true
+      required: true,
     },
     county: {
       type: String,
-      required: true
+      required: true,
     },
     country: {
       type: String,
-      default: 'Norway'
+      default: 'Norway',
     },
     location: {
-      type: pointSchema
-    }
+      type: pointSchema,
+    },
   },
   arrivalDate: {
     type: Date,
-    required: true
+    required: true,
   },
   departureDate: {
     type: Date,
-    required: true
+    required: true,
   },
   accommodation: {
     name: String,
@@ -93,180 +92,185 @@ const travelItinerarySchema = new mongoose.Schema({
     location: pointSchema,
     showAccommodation: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   availability: [availabilitySchema],
   notes: String,
   status: {
     type: String,
     enum: ['planned', 'active', 'completed', 'cancelled'],
-    default: 'planned'
-  }
+    default: 'planned',
+  },
 });
 
 // Define the service schema
 const serviceSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
-    type: String
+    type: String,
   },
   price: {
     type: Number,
-    min: 0
+    min: 0,
   },
   included: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 // Check if model already exists before defining
 if (mongoose.models.Ad) {
   module.exports = mongoose.model('Ad');
 } else {
-  const adSchema = new mongoose.Schema({
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: 100
-    },
-    description: {
-      type: String,
-      required: true,
-      maxlength: 2000
-    },
-    shortDescription: {
-      type: String,
-      maxlength: 200
-    },
-    advertiser: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
-    },
-    category: {
-      type: String,
-      enum: ['Escort', 'Striptease', 'Massage', 'Webcam', 'Phone', 'Other'],
-      required: true
-    },
-    subcategory: {
-      type: String
-    },
-    county: {  // For Norwegian counties
-      type: String,
-      required: true
-    },
-    city: {
-      type: String,
-      required: true
-    },
-    location: {  // For geo-based search
-      type: pointSchema,
-      required: true
-    },
-    address: {
-      street: String,
-      postalCode: String,
-      hidden: { type: Boolean, default: true } // Whether to hide exact address
-    },
-    contact: {
-      phone: String,
-      email: String,
-      website: String,
-      telegram: String,
-      whatsapp: String,
-      preferred: {
+  const adSchema = new mongoose.Schema(
+    {
+      title: {
         type: String,
-        enum: ['phone', 'email', 'telegram', 'whatsapp'],
-        default: 'phone'
-      }
-    },
-    pricing: [pricingSchema],
-    availability: [availabilitySchema],
-    services: [serviceSchema],
-    profileImage: {
-      type: String,
-      required: true
-    },
-    album: [String],
-    featured: {
-      type: Boolean,
-      default: false
-    },
-    verified: {
-      type: Boolean,
-      default: false
-    },
-    active: {
-      type: Boolean,
-      default: true
-    },
-    boosted: {
-      type: Boolean,
-      default: false
-    },
-    boostExpires: {
-      type: Date
-    },
-    views: {
-      type: Number,
-      default: 0
-    },
-    clicks: {
-      type: Number,
-      default: 0
-    },
-    likes: {
-      type: Number,
-      default: 0
-    },
-    ageVerificationRequired: {
-      type: Boolean,
-      default: true
-    },
-    tags: [String],
-    attributes: {
-      age: Number,
-      gender: {
-        type: String,
-        enum: ['female', 'male', 'transgender', 'non-binary', 'other']
+        required: true,
+        trim: true,
+        maxlength: 100,
       },
-      height: Number, // in cm
-      weight: Number, // in kg
-      bodyType: String,
-      hairColor: String,
-      eyeColor: String,
-      ethnicity: String,
-      languages: [String]
+      description: {
+        type: String,
+        required: true,
+        maxlength: 2000,
+      },
+      shortDescription: {
+        type: String,
+        maxlength: 200,
+      },
+      advertiser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      category: {
+        type: String,
+        enum: ['Escort', 'Striptease', 'Massage', 'Webcam', 'Phone', 'Other'],
+        required: true,
+      },
+      subcategory: {
+        type: String,
+      },
+      county: {
+        // For Norwegian counties
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      location: {
+        // For geo-based search
+        type: pointSchema,
+        required: true,
+      },
+      address: {
+        street: String,
+        postalCode: String,
+        hidden: { type: Boolean, default: true }, // Whether to hide exact address
+      },
+      contact: {
+        phone: String,
+        email: String,
+        website: String,
+        telegram: String,
+        whatsapp: String,
+        preferred: {
+          type: String,
+          enum: ['phone', 'email', 'telegram', 'whatsapp'],
+          default: 'phone',
+        },
+      },
+      pricing: [pricingSchema],
+      availability: [availabilitySchema],
+      services: [serviceSchema],
+      profileImage: {
+        type: String,
+        required: true,
+      },
+      album: [String],
+      featured: {
+        type: Boolean,
+        default: false,
+      },
+      verified: {
+        type: Boolean,
+        default: false,
+      },
+      active: {
+        type: Boolean,
+        default: true,
+      },
+      boosted: {
+        type: Boolean,
+        default: false,
+      },
+      boostExpires: {
+        type: Date,
+      },
+      views: {
+        type: Number,
+        default: 0,
+      },
+      clicks: {
+        type: Number,
+        default: 0,
+      },
+      likes: {
+        type: Number,
+        default: 0,
+      },
+      ageVerificationRequired: {
+        type: Boolean,
+        default: true,
+      },
+      tags: [String],
+      attributes: {
+        age: Number,
+        gender: {
+          type: String,
+          enum: ['female', 'male', 'transgender', 'non-binary', 'other'],
+        },
+        height: Number, // in cm
+        weight: Number, // in kg
+        bodyType: String,
+        hairColor: String,
+        eyeColor: String,
+        ethnicity: String,
+        languages: [String],
+      },
+      travelItinerary: [travelItinerarySchema],
+      currentLocation: {
+        type: pointSchema,
+        default: null,
+      },
+      isTouring: {
+        type: Boolean,
+        default: false,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      updatedAt: {
+        type: Date,
+        default: Date.now,
+      },
+      expiresAt: {
+        type: Date,
+      },
     },
-    travelItinerary: [travelItinerarySchema],
-    currentLocation: {
-      type: pointSchema,
-      default: null
-    },
-    isTouring: {
-      type: Boolean,
-      default: false
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now
-    },
-    expiresAt: {
-      type: Date
+    {
+      timestamps: true, // Automatically manage createdAt and updatedAt
     }
-  }, {
-    timestamps: true // Automatically manage createdAt and updatedAt
-  });
+  );
 
   // Add geospatial index for location-based queries
   adSchema.index({ location: '2dsphere' });
@@ -278,7 +282,7 @@ if (mongoose.models.Ad) {
     shortDescription: 'text',
     tags: 'text',
     city: 'text',
-    county: 'text'
+    county: 'text',
   });
 
   // Add compound index for filtering
@@ -286,18 +290,18 @@ if (mongoose.models.Ad) {
     category: 1,
     active: 1,
     county: 1,
-    city: 1
+    city: 1,
   });
 
   // Add index for sorting by featured and boosted ads
   adSchema.index({
     featured: -1,
     boosted: -1,
-    createdAt: -1
+    createdAt: -1,
   });
 
   // Pre-save middleware to set expiration date if not set
-  adSchema.pre('save', function(next) {
+  adSchema.pre('save', function (next) {
     if (!this.expiresAt) {
       // Default ad expiration is 30 days from creation
       this.expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
@@ -306,57 +310,57 @@ if (mongoose.models.Ad) {
   });
 
   // Virtual for ad's full URL
-  adSchema.virtual('url').get(function() {
+  adSchema.virtual('url').get(function () {
     return `/ads/${this._id}`;
   });
 
   // Method to check if ad is expired
-  adSchema.methods.isExpired = function() {
+  adSchema.methods.isExpired = function () {
     return this.expiresAt && this.expiresAt < new Date();
   };
 
   // Method to check if ad is boosted
-  adSchema.methods.isBoosted = function() {
+  adSchema.methods.isBoosted = function () {
     return this.boosted && this.boostExpires && this.boostExpires > new Date();
   };
 
   // Method to increment view count
-  adSchema.methods.incrementViews = async function() {
+  adSchema.methods.incrementViews = async function () {
     this.views += 1;
     return this.save();
   };
 
   // Method to increment click count
-  adSchema.methods.incrementClicks = async function() {
+  adSchema.methods.incrementClicks = async function () {
     this.clicks += 1;
     return this.save();
   };
 
   // Method to toggle like
-  adSchema.methods.toggleLike = async function() {
+  adSchema.methods.toggleLike = async function () {
     this.likes += 1;
     return this.save();
   };
 
   // Static method to find active ads
-  adSchema.statics.findActive = function() {
+  adSchema.statics.findActive = function () {
     return this.find({
       active: true,
-      expiresAt: { $gt: new Date() }
+      expiresAt: { $gt: new Date() },
     });
   };
 
   // Static method to find featured ads
-  adSchema.statics.findFeatured = function() {
+  adSchema.statics.findFeatured = function () {
     return this.find({
       active: true,
       featured: true,
-      expiresAt: { $gt: new Date() }
+      expiresAt: { $gt: new Date() },
     });
   };
 
   // Static method to find ads by location
-  adSchema.statics.findByLocation = function(longitude, latitude, maxDistance = 10000) {
+  adSchema.statics.findByLocation = function (longitude, latitude, maxDistance = 10000) {
     return this.find({
       active: true,
       expiresAt: { $gt: new Date() },
@@ -364,16 +368,16 @@ if (mongoose.models.Ad) {
         $near: {
           $geometry: {
             type: 'Point',
-            coordinates: [longitude, latitude]
+            coordinates: [longitude, latitude],
           },
-          $maxDistance: maxDistance // in meters
-        }
-      }
+          $maxDistance: maxDistance, // in meters
+        },
+      },
     });
   };
 
   // Static method to find ads by current location (including touring advertisers)
-  adSchema.statics.findByCurrentLocation = function(longitude, latitude, maxDistance = 10000) {
+  adSchema.statics.findByCurrentLocation = function (longitude, latitude, maxDistance = 10000) {
     const now = new Date();
 
     return this.find({
@@ -386,11 +390,11 @@ if (mongoose.models.Ad) {
             $near: {
               $geometry: {
                 type: 'Point',
-                coordinates: [longitude, latitude]
+                coordinates: [longitude, latitude],
               },
-              $maxDistance: maxDistance // in meters
-            }
-          }
+              $maxDistance: maxDistance, // in meters
+            },
+          },
         },
         // Touring advertisers currently in this location
         {
@@ -399,11 +403,11 @@ if (mongoose.models.Ad) {
             $near: {
               $geometry: {
                 type: 'Point',
-                coordinates: [longitude, latitude]
+                coordinates: [longitude, latitude],
               },
-              $maxDistance: maxDistance // in meters
-            }
-          }
+              $maxDistance: maxDistance, // in meters
+            },
+          },
         },
         // Advertisers with active travel itineraries for this location
         {
@@ -415,27 +419,27 @@ if (mongoose.models.Ad) {
             $near: {
               $geometry: {
                 type: 'Point',
-                coordinates: [longitude, latitude]
+                coordinates: [longitude, latitude],
               },
-              $maxDistance: maxDistance // in meters
-            }
-          }
-        }
-      ]
+              $maxDistance: maxDistance, // in meters
+            },
+          },
+        },
+      ],
     });
   };
 
   // Static method to find touring advertisers
-  adSchema.statics.findTouring = function() {
+  adSchema.statics.findTouring = function () {
     return this.find({
       active: true,
       isTouring: true,
-      expiresAt: { $gt: new Date() }
+      expiresAt: { $gt: new Date() },
     });
   };
 
   // Static method to find ads with upcoming travel plans
-  adSchema.statics.findUpcomingTours = function(city = null, county = null, daysAhead = 30) {
+  adSchema.statics.findUpcomingTours = function (city = null, county = null, daysAhead = 30) {
     const now = new Date();
     const futureDate = new Date(now.getTime() + daysAhead * 24 * 60 * 60 * 1000);
 
@@ -443,7 +447,7 @@ if (mongoose.models.Ad) {
       active: true,
       isTouring: true,
       'travelItinerary.status': 'planned',
-      'travelItinerary.arrivalDate': { $gte: now, $lte: futureDate }
+      'travelItinerary.arrivalDate': { $gte: now, $lte: futureDate },
     };
 
     if (city) {
@@ -458,10 +462,10 @@ if (mongoose.models.Ad) {
   };
 
   // Method to update advertiser's current location
-  adSchema.methods.updateCurrentLocation = async function(longitude, latitude) {
+  adSchema.methods.updateCurrentLocation = async function (longitude, latitude) {
     this.currentLocation = {
       type: 'Point',
-      coordinates: [longitude, latitude]
+      coordinates: [longitude, latitude],
     };
 
     // If touring, check if this location matches any active itinerary
@@ -469,8 +473,8 @@ if (mongoose.models.Ad) {
       const now = new Date();
 
       // Find active itineraries
-      const activeItineraries = this.travelItinerary.filter(itinerary =>
-        itinerary.status === 'planned' || itinerary.status === 'active'
+      const activeItineraries = this.travelItinerary.filter(
+        itinerary => itinerary.status === 'planned' || itinerary.status === 'active'
       );
 
       for (const itinerary of activeItineraries) {
@@ -499,7 +503,7 @@ if (mongoose.models.Ad) {
   };
 
   // Method to add a travel itinerary
-  adSchema.methods.addTravelItinerary = async function(itineraryData) {
+  adSchema.methods.addTravelItinerary = async function (itineraryData) {
     if (!this.travelItinerary) {
       this.travelItinerary = [];
     }
@@ -511,7 +515,7 @@ if (mongoose.models.Ad) {
   };
 
   // Method to update a travel itinerary
-  adSchema.methods.updateTravelItinerary = async function(itineraryId, updates) {
+  adSchema.methods.updateTravelItinerary = async function (itineraryId, updates) {
     const itinerary = this.travelItinerary.id(itineraryId);
 
     if (!itinerary) {
@@ -533,7 +537,7 @@ if (mongoose.models.Ad) {
   };
 
   // Method to cancel a travel itinerary
-  adSchema.methods.cancelTravelItinerary = async function(itineraryId) {
+  adSchema.methods.cancelTravelItinerary = async function (itineraryId) {
     const itinerary = this.travelItinerary.id(itineraryId);
 
     if (!itinerary) {
@@ -560,16 +564,15 @@ if (mongoose.models.Ad) {
     const dLat = deg2rad(lat2 - lat1);
     const dLon = deg2rad(lon2 - lon1);
     const a =
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c; // Distance in km
     return distance;
   }
 
   function deg2rad(deg) {
-    return deg * (Math.PI/180);
+    return deg * (Math.PI / 180);
   }
 
   module.exports = mongoose.model('Ad', adSchema);

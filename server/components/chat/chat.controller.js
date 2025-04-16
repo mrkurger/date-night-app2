@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (chat.controller)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -51,7 +50,7 @@ class ChatController {
         limit: req.query.limit ? parseInt(req.query.limit) : 50,
         before: req.query.before || null,
         after: req.query.after || null,
-        includeSystem: req.query.includeSystem !== 'false'
+        includeSystem: req.query.includeSystem !== 'false',
       };
 
       const messages = await ChatService.getMessages(roomId, options);
@@ -65,21 +64,17 @@ class ChatController {
   sendMessage(req, res) {
     return asyncHandler(async (req, res) => {
       const { roomId } = req.params;
-      const { message, recipientId, attachments, type, metadata, isEncrypted, encryptionData } = req.body;
+      const { message, recipientId, attachments, type, metadata, isEncrypted, encryptionData } =
+        req.body;
 
-      const sentMessage = await ChatService.sendMessage(
-        roomId,
-        req.user.id,
-        message,
-        {
-          recipientId,
-          attachments,
-          type,
-          metadata,
-          isEncrypted,
-          encryptionData
-        }
-      );
+      const sentMessage = await ChatService.sendMessage(roomId, req.user.id, message, {
+        recipientId,
+        attachments,
+        type,
+        metadata,
+        isEncrypted,
+        encryptionData,
+      });
 
       res.status(201).json(sentMessage);
     })(req, res);
@@ -95,7 +90,7 @@ class ChatController {
       if (!userId) {
         return res.status(400).json({
           success: false,
-          message: 'User ID is required'
+          message: 'User ID is required',
         });
       }
 
@@ -114,7 +109,7 @@ class ChatController {
       if (!adId) {
         return res.status(400).json({
           success: false,
-          message: 'Ad ID is required'
+          message: 'Ad ID is required',
         });
       }
 
@@ -133,7 +128,7 @@ class ChatController {
       if (!name) {
         return res.status(400).json({
           success: false,
-          message: 'Group name is required'
+          message: 'Group name is required',
         });
       }
 
@@ -196,16 +191,11 @@ class ChatController {
       if (enabled === undefined) {
         return res.status(400).json({
           success: false,
-          message: 'Enabled flag is required'
+          message: 'Enabled flag is required',
         });
       }
 
-      const room = await ChatService.updateMessageExpiry(
-        roomId,
-        enabled,
-        expiryTime,
-        req.user.id
-      );
+      const room = await ChatService.updateMessageExpiry(roomId, enabled, expiryTime, req.user.id);
 
       res.status(200).json(room);
     })(req, res);

@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the chat message model
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - TEST_MESSAGE_DATA: Test message data (default: imported from helpers)
 //   Related to: server/tests/helpers.js:TEST_MESSAGE_DATA
@@ -17,7 +17,7 @@ const { TEST_USER_DATA, TEST_MESSAGE_DATA } = require('../../helpers');
 describe('ChatMessage Model', () => {
   let sender;
   let recipient;
-  
+
   // Setup and teardown for all tests
   beforeAll(async () => {
     await setupTestDB();
@@ -38,7 +38,7 @@ describe('ChatMessage Model', () => {
     const senderUser = new User({
       ...TEST_USER_DATA,
       username: 'sender',
-      email: 'sender@example.com'
+      email: 'sender@example.com',
     });
     sender = await senderUser.save();
 
@@ -46,7 +46,7 @@ describe('ChatMessage Model', () => {
     const recipientUser = new User({
       ...TEST_USER_DATA,
       username: 'recipient',
-      email: 'recipient@example.com'
+      email: 'recipient@example.com',
     });
     recipient = await recipientUser.save();
   });
@@ -57,12 +57,12 @@ describe('ChatMessage Model', () => {
         sender: sender._id,
         recipient: recipient._id,
         roomId: 'room123',
-        message: 'Hello, this is a test message'
+        message: 'Hello, this is a test message',
       };
 
       const chatMessage = new ChatMessage(messageData);
       const savedMessage = await chatMessage.save();
-      
+
       // Verify the saved message
       expect(savedMessage._id).toBeDefined();
       expect(savedMessage.sender.toString()).toBe(sender._id.toString());
@@ -77,7 +77,7 @@ describe('ChatMessage Model', () => {
 
     it('should require sender, roomId, and message', async () => {
       const messageWithoutRequiredFields = new ChatMessage({
-        recipient: recipient._id
+        recipient: recipient._id,
       });
 
       // Expect validation to fail
@@ -89,9 +89,9 @@ describe('ChatMessage Model', () => {
         sender: sender._id,
         recipient: recipient._id,
         roomId: 'room123',
-        message: 'a'.repeat(10001) // Too long (max is 10000)
+        message: 'a'.repeat(10001), // Too long (max is 10000)
       });
-      
+
       await expect(messageWithLongText.save()).rejects.toThrow();
     });
 
@@ -100,11 +100,11 @@ describe('ChatMessage Model', () => {
         sender: sender._id,
         recipient: recipient._id,
         roomId: 'room123',
-        message: '  Hello, this is a test message  '
+        message: '  Hello, this is a test message  ',
       });
-      
+
       const savedMessage = await messageWithWhitespace.save();
-      
+
       expect(savedMessage.message).toBe('Hello, this is a test message');
     });
   });
@@ -122,20 +122,20 @@ describe('ChatMessage Model', () => {
             url: 'https://example.com/image.jpg',
             name: 'image.jpg',
             size: 1024,
-            mimeType: 'image/jpeg'
+            mimeType: 'image/jpeg',
           },
           {
             type: 'file',
             url: 'https://example.com/document.pdf',
             name: 'document.pdf',
             size: 2048,
-            mimeType: 'application/pdf'
-          }
-        ]
+            mimeType: 'application/pdf',
+          },
+        ],
       });
-      
+
       const savedMessage = await messageWithAttachments.save();
-      
+
       expect(savedMessage.attachments.length).toBe(2);
       expect(savedMessage.attachments[0].type).toBe('image');
       expect(savedMessage.attachments[0].url).toBe('https://example.com/image.jpg');
@@ -154,11 +154,11 @@ describe('ChatMessage Model', () => {
             type: 'invalid-type', // Invalid type
             url: 'https://example.com/file',
             name: 'file',
-            size: 1024
-          }
-        ]
+            size: 1024,
+          },
+        ],
       });
-      
+
       await expect(messageWithInvalidAttachment.save()).rejects.toThrow();
     });
   });
@@ -173,12 +173,12 @@ describe('ChatMessage Model', () => {
         isEncrypted: true,
         encryptionData: {
           iv: 'abc123',
-          authTag: 'def456'
-        }
+          authTag: 'def456',
+        },
       });
-      
+
       const savedMessage = await encryptedMessage.save();
-      
+
       expect(savedMessage.isEncrypted).toBe(true);
       expect(savedMessage.encryptionData.iv).toBe('abc123');
       expect(savedMessage.encryptionData.authTag).toBe('def456');
@@ -200,14 +200,14 @@ describe('ChatMessage Model', () => {
             isEncrypted: true,
             encryptionData: {
               iv: 'ghi789',
-              authTag: 'jkl012'
-            }
-          }
-        ]
+              authTag: 'jkl012',
+            },
+          },
+        ],
       });
-      
+
       const savedMessage = await messageWithEncryptedAttachment.save();
-      
+
       expect(savedMessage.attachments[0].isEncrypted).toBe(true);
       expect(savedMessage.attachments[0].encryptionData.iv).toBe('ghi789');
       expect(savedMessage.attachments[0].encryptionData.authTag).toBe('jkl012');
@@ -221,11 +221,11 @@ describe('ChatMessage Model', () => {
         recipient: recipient._id,
         roomId: 'room123',
         message: 'User has joined the chat',
-        type: 'system'
+        type: 'system',
       });
-      
+
       const savedMessage = await systemMessage.save();
-      
+
       expect(savedMessage.isSystem).toBe(true);
     });
 
@@ -235,11 +235,11 @@ describe('ChatMessage Model', () => {
         recipient: recipient._id,
         roomId: 'room123',
         message: 'Hello there',
-        type: 'text'
+        type: 'text',
       });
-      
+
       const savedMessage = await regularMessage.save();
-      
+
       expect(savedMessage.isSystem).toBe(false);
     });
 
@@ -255,13 +255,13 @@ describe('ChatMessage Model', () => {
             url: 'https://example.com/image.jpg',
             name: 'image.jpg',
             size: 1024,
-            mimeType: 'image/jpeg'
-          }
-        ]
+            mimeType: 'image/jpeg',
+          },
+        ],
       });
-      
+
       const savedMessage = await messageWithAttachment.save();
-      
+
       expect(savedMessage.hasAttachments).toBe(true);
     });
 
@@ -270,11 +270,11 @@ describe('ChatMessage Model', () => {
         sender: sender._id,
         recipient: recipient._id,
         roomId: 'room123',
-        message: 'No attachments here'
+        message: 'No attachments here',
       });
-      
+
       const savedMessage = await messageWithoutAttachment.save();
-      
+
       expect(savedMessage.hasAttachments).toBe(false);
     });
   });
@@ -285,18 +285,18 @@ describe('ChatMessage Model', () => {
         sender: sender._id,
         recipient: recipient._id,
         roomId: 'room123',
-        message: 'Read this message'
+        message: 'Read this message',
       });
-      
+
       const savedMessage = await message.save();
-      
+
       // Initially message should be unread
       expect(savedMessage.read).toBe(false);
       expect(savedMessage.readAt).toBeUndefined();
-      
+
       // Mark as read
       await savedMessage.markAsRead();
-      
+
       // Message should now be marked as read
       expect(savedMessage.read).toBe(true);
       expect(savedMessage.readAt).toBeDefined();
@@ -309,15 +309,15 @@ describe('ChatMessage Model', () => {
         roomId: 'room123',
         message: 'Already read message',
         read: true,
-        readAt: new Date('2023-01-01')
+        readAt: new Date('2023-01-01'),
       });
-      
+
       const savedMessage = await message.save();
       const initialReadAt = savedMessage.readAt;
-      
+
       // Try to mark as read again
       await savedMessage.markAsRead();
-      
+
       // ReadAt should not change
       expect(savedMessage.readAt).toEqual(initialReadAt);
     });
@@ -332,35 +332,35 @@ describe('ChatMessage Model', () => {
           recipient: recipient._id,
           roomId: 'room1',
           message: 'Message 1',
-          read: false
+          read: false,
         },
         {
           sender: sender._id,
           recipient: recipient._id,
           roomId: 'room1',
           message: 'Message 2',
-          read: true
+          read: true,
         },
         {
           sender: recipient._id,
           recipient: sender._id,
           roomId: 'room1',
           message: 'Message 3',
-          read: false
+          read: false,
         },
         {
           sender: sender._id,
           recipient: recipient._id,
           roomId: 'room2',
           message: 'Message 4',
-          read: false
-        }
+          read: false,
+        },
       ]);
     });
 
     it('should get unread count for a user', async () => {
       const unreadCount = await ChatMessage.getUnreadCount(recipient._id);
-      
+
       // recipient should have 2 unread messages (Message 1 and Message 4)
       expect(unreadCount).toBe(2);
     });
@@ -368,10 +368,10 @@ describe('ChatMessage Model', () => {
     it('should get unread count by room', async () => {
       const unreadCountRoom1 = await ChatMessage.getUnreadCountByRoom(recipient._id, 'room1');
       const unreadCountRoom2 = await ChatMessage.getUnreadCountByRoom(recipient._id, 'room2');
-      
+
       // recipient should have 1 unread message in room1 (Message 1)
       expect(unreadCountRoom1).toBe(1);
-      
+
       // recipient should have 1 unread message in room2 (Message 4)
       expect(unreadCountRoom2).toBe(1);
     });
@@ -384,21 +384,21 @@ describe('ChatMessage Model', () => {
         roomId: 'room2',
         message: 'Latest message',
         read: false,
-        createdAt: new Date(Date.now() + 1000) // Ensure this is the latest
+        createdAt: new Date(Date.now() + 1000), // Ensure this is the latest
       });
-      
+
       const conversations = await ChatMessage.getRecentConversations(sender._id);
-      
+
       // Should have 2 conversations (room1 and room2)
       expect(conversations.length).toBe(2);
-      
+
       // First conversation should be room2 (has the latest message)
       expect(conversations[0].roomId).toBe('room2');
       expect(conversations[0].latestMessage.message).toBe('Latest message');
-      
+
       // Second conversation should be room1
       expect(conversations[1].roomId).toBe('room1');
-      
+
       // Unread counts should be correct
       expect(conversations[0].unreadCount).toBe(1); // 1 unread in room2 for sender
       expect(conversations[1].unreadCount).toBe(1); // 1 unread in room1 for sender

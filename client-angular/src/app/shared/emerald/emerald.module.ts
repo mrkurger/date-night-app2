@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for emerald.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - NOTIFICATION_DURATION: Duration for notifications in milliseconds (default: 3000)
 //   Related to: client-angular/src/app/core/services/notification.service.ts
@@ -29,12 +28,12 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
 
 /**
  * Emerald.js Integration Module
- * 
+ *
  * This module provides Angular wrappers for Emerald.js UI components.
  * Emerald.js is a UI component library that provides a set of reusable UI components.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/
- * 
+ *
  * Components included:
  * - AppCard: Card component for displaying ads in various layouts
  * - Label: Label component for displaying status and categories
@@ -53,7 +52,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     // These components are also standalone, but we include them here
     // for backwards compatibility with non-standalone components
     CardGridComponent,
-    FloatingActionButtonComponent
+    FloatingActionButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -68,7 +67,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     PageHeaderComponent,
     PagerComponent,
     SkeletonLoaderComponent,
-    ToggleComponent
+    ToggleComponent,
   ],
   exports: [
     // Export all components for use in other modules
@@ -82,7 +81,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     ToggleComponent,
     CardGridComponent,
     PagerComponent,
-    FloatingActionButtonComponent
-  ]
+    FloatingActionButtonComponent,
+  ],
 })
-export class EmeraldModule { }
+export class EmeraldModule {}

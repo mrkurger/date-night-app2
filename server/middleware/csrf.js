@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for csrf settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -19,14 +18,14 @@ const csrfProtectionConfig = {
     httpOnly: true,
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
-    path: '/'
+    path: '/',
   },
   size: 64, // Token size in bytes
   ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
-  getTokenFromRequest: (req) => {
+  getTokenFromRequest: req => {
     // Check for token in headers, then in request body
     return req.headers['x-csrf-token'] || (req.body && req.body._csrf);
-  }
+  },
 };
 
 // Initialize CSRF protection
@@ -37,7 +36,7 @@ let generateToken, doubleCsrfProtection, validateRequest;
 
 if (isTestEnvironment) {
   // Mock implementations for testing
-  generateToken = (res) => 'test-csrf-token';
+  generateToken = res => 'test-csrf-token';
   doubleCsrfProtection = (req, res, next) => next();
   validateRequest = (req, res) => true;
 } else {
@@ -54,11 +53,11 @@ const handleCsrfError = (err, req, res, next) => {
   if (isTestEnvironment) {
     return next(err);
   }
-  
+
   if (err && err.code === 'CSRF_INVALID') {
     return res.status(403).json({
       success: false,
-      message: 'Invalid or missing CSRF token. Please refresh the page and try again.'
+      message: 'Invalid or missing CSRF token. Please refresh the page and try again.',
     });
   }
   next(err);
@@ -74,7 +73,7 @@ const sendCsrfToken = (req, res, next) => {
     httpOnly: false, // Client-side JavaScript needs to read this
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    path: '/'
+    path: '/',
   });
 
   next();
@@ -86,14 +85,14 @@ const validateCsrfToken = (req, res, next) => {
   if (isTestEnvironment) {
     return next();
   }
-  
+
   try {
     validateRequest(req, res);
     next();
   } catch (error) {
     res.status(403).json({
       success: false,
-      message: 'Invalid or missing CSRF token. Please refresh the page and try again.'
+      message: 'Invalid or missing CSRF token. Please refresh the page and try again.',
     });
   }
 };
@@ -104,5 +103,5 @@ module.exports = {
   sendCsrfToken,
   validateCsrfToken,
   generateToken,
-  csrfMiddleware: [cookieParser(), doubleCsrfProtection, handleCsrfError, sendCsrfToken]
+  csrfMiddleware: [cookieParser(), doubleCsrfProtection, handleCsrfError, sendCsrfToken],
 };

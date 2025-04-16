@@ -5,7 +5,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for errorHandler settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -24,8 +24,7 @@ class AppError extends Error {
 /**
  * Handle JWT token errors
  */
-const handleJWTError = () =>
-  new AppError('Invalid token. Please log in again.', 401);
+const handleJWTError = () => new AppError('Invalid token. Please log in again.', 401);
 
 /**
  * Handle JWT token expiration
@@ -36,7 +35,7 @@ const handleJWTExpiredError = () =>
 /**
  * Handle MongoDB duplicate key errors
  */
-const handleDuplicateFieldsDB = (err) => {
+const handleDuplicateFieldsDB = err => {
   const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
   const message = `Duplicate field value: ${value}. Please use another value.`;
   return new AppError(message, 400);
@@ -45,7 +44,7 @@ const handleDuplicateFieldsDB = (err) => {
 /**
  * Handle MongoDB validation errors
  */
-const handleValidationErrorDB = (err) => {
+const handleValidationErrorDB = err => {
   const errors = Object.values(err.errors).map(el => el.message);
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
@@ -54,7 +53,7 @@ const handleValidationErrorDB = (err) => {
 /**
  * Handle MongoDB cast errors
  */
-const handleCastErrorDB = (err) => {
+const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
@@ -76,7 +75,7 @@ const sendErrorDev = (err, req, res) => {
     params: req.params,
     query: req.query,
     correlationId: req.correlationId,
-    userId: req.user ? req.user.id : 'unauthenticated'
+    userId: req.user ? req.user.id : 'unauthenticated',
   });
 
   res.status(err.statusCode).json({
@@ -85,7 +84,7 @@ const sendErrorDev = (err, req, res) => {
     error: err,
     message: err.message,
     stack: err.stack,
-    correlationId: req.correlationId
+    correlationId: req.correlationId,
   });
 };
 
@@ -101,14 +100,14 @@ const sendErrorProd = (err, req, res) => {
       method: req.method,
       url: req.originalUrl,
       correlationId: req.correlationId,
-      userId: req.user ? req.user.id : 'unauthenticated'
+      userId: req.user ? req.user.id : 'unauthenticated',
     });
 
     res.status(err.statusCode).json({
       success: false,
       status: err.status,
       message: err.message,
-      correlationId: req.correlationId
+      correlationId: req.correlationId,
     });
   }
   // Programming or other unknown error: don't leak error details
@@ -120,7 +119,7 @@ const sendErrorProd = (err, req, res) => {
       method: req.method,
       url: req.originalUrl,
       correlationId: req.correlationId,
-      userId: req.user ? req.user.id : 'unauthenticated'
+      userId: req.user ? req.user.id : 'unauthenticated',
     });
 
     // Send generic message
@@ -128,7 +127,7 @@ const sendErrorProd = (err, req, res) => {
       success: false,
       status: 'error',
       message: 'Something went wrong',
-      correlationId: req.correlationId
+      correlationId: req.correlationId,
     });
   }
 };

@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (notification.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -18,7 +17,7 @@ export enum NotificationType {
   SUCCESS = 'success',
   ERROR = 'error',
   WARNING = 'warning',
-  INFO = 'info'
+  INFO = 'info',
 }
 
 export interface ToastNotification {
@@ -31,7 +30,7 @@ export interface ToastNotification {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   private readonly apiUrl = environment.apiUrl + '/notifications';
@@ -60,7 +59,7 @@ export class NotificationService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       panelClass: ['success-snackbar'],
-      ...options
+      ...options,
     });
 
     // Also add to toasts
@@ -70,7 +69,7 @@ export class NotificationService {
       type: NotificationType.SUCCESS,
       timestamp: new Date(),
       autoClose: true,
-      duration: 3000
+      duration: 3000,
     });
 
     return snackBarRef;
@@ -82,7 +81,7 @@ export class NotificationService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       panelClass: ['error-snackbar'],
-      ...options
+      ...options,
     });
 
     // Also add to toasts
@@ -92,7 +91,7 @@ export class NotificationService {
       type: NotificationType.ERROR,
       timestamp: new Date(),
       autoClose: true,
-      duration: 5000
+      duration: 5000,
     });
 
     return snackBarRef;
@@ -104,7 +103,7 @@ export class NotificationService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       panelClass: ['warning-snackbar'],
-      ...options
+      ...options,
     });
 
     // Also add to toasts
@@ -114,7 +113,7 @@ export class NotificationService {
       type: NotificationType.WARNING,
       timestamp: new Date(),
       autoClose: true,
-      duration: 4000
+      duration: 4000,
     });
 
     return snackBarRef;
@@ -126,7 +125,7 @@ export class NotificationService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       panelClass: ['info-snackbar'],
-      ...options
+      ...options,
     });
 
     // Also add to toasts
@@ -136,7 +135,7 @@ export class NotificationService {
       type: NotificationType.INFO,
       timestamp: new Date(),
       autoClose: true,
-      duration: 3000
+      duration: 3000,
     });
 
     return snackBarRef;
@@ -162,7 +161,9 @@ export class NotificationService {
 
   // Generate a unique ID for toasts
   private generateId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return (
+      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    );
   }
 
   // Get unread notifications count from the server

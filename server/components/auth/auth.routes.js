@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (auth.routes)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -38,35 +37,39 @@ router.get('/validate', protect, (req, res) => {
     user: {
       _id: req.user._id,
       username: req.user.username,
-      role: req.user.role
-    }
+      role: req.user.role,
+    },
   });
 });
 
 // GitHub OAuth
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
-router.get('/github/callback', 
+router.get(
+  '/github/callback',
   passport.authenticate('github', { failureRedirect: '/login', session: false }),
   authController.githubCallback
 );
 
 // Google OAuth
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback',
+router.get(
+  '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   authController.googleCallback
 );
 
 // Reddit OAuth
 router.get('/reddit', passport.authenticate('reddit'));
-router.get('/reddit/callback',
+router.get(
+  '/reddit/callback',
   passport.authenticate('reddit', { failureRedirect: '/login', session: false }),
   authController.redditCallback
 );
 
 // Apple OAuth
 router.get('/apple', passport.authenticate('apple'));
-router.get('/apple/callback',
+router.get(
+  '/apple/callback',
   passport.authenticate('apple', { failureRedirect: '/login', session: false }),
   authController.appleCallback
 );

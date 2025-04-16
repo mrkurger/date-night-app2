@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for payment.controller settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -24,22 +23,21 @@ class PaymentController {
   async createPaymentIntent(req, res, next) {
     try {
       const { amount, currency, metadata } = req.body;
-      
+
       if (!amount || amount <= 0) {
         return next(new AppError('Valid amount is required', 400));
       }
-      
-      const paymentIntent = await paymentService.createPaymentIntent(
-        amount,
-        currency || 'nok',
-        { ...metadata, userId: req.user.id }
-      );
-      
+
+      const paymentIntent = await paymentService.createPaymentIntent(amount, currency || 'nok', {
+        ...metadata,
+        userId: req.user.id,
+      });
+
       res.status(200).json({
         status: 'success',
         data: {
-          clientSecret: paymentIntent.client_secret
-        }
+          clientSecret: paymentIntent.client_secret,
+        },
       });
     } catch (error) {
       next(error);
@@ -55,20 +53,20 @@ class PaymentController {
   async createSubscription(req, res, next) {
     try {
       const { priceId, paymentMethodId } = req.body;
-      
+
       if (!priceId || !paymentMethodId) {
         return next(new AppError('Price ID and payment method ID are required', 400));
       }
-      
+
       const subscription = await paymentService.createSubscription(
         req.user.id,
         priceId,
         paymentMethodId
       );
-      
+
       res.status(200).json({
         status: 'success',
-        data: subscription
+        data: subscription,
       });
     } catch (error) {
       next(error);
@@ -84,10 +82,10 @@ class PaymentController {
   async cancelSubscription(req, res, next) {
     try {
       const result = await paymentService.cancelSubscription(req.user.id);
-      
+
       res.status(200).json({
         status: 'success',
-        data: result
+        data: result,
       });
     } catch (error) {
       next(error);
@@ -103,21 +101,16 @@ class PaymentController {
   async boostAd(req, res, next) {
     try {
       const { adId, days, paymentMethodId } = req.body;
-      
+
       if (!adId || !paymentMethodId) {
         return next(new AppError('Ad ID and payment method ID are required', 400));
       }
-      
-      const result = await paymentService.boostAd(
-        adId,
-        req.user.id,
-        days || 7,
-        paymentMethodId
-      );
-      
+
+      const result = await paymentService.boostAd(adId, req.user.id, days || 7, paymentMethodId);
+
       res.status(200).json({
         status: 'success',
-        data: result
+        data: result,
       });
     } catch (error) {
       next(error);
@@ -133,20 +126,16 @@ class PaymentController {
   async featureAd(req, res, next) {
     try {
       const { adId, paymentMethodId } = req.body;
-      
+
       if (!adId || !paymentMethodId) {
         return next(new AppError('Ad ID and payment method ID are required', 400));
       }
-      
-      const result = await paymentService.featureAd(
-        adId,
-        req.user.id,
-        paymentMethodId
-      );
-      
+
+      const result = await paymentService.featureAd(adId, req.user.id, paymentMethodId);
+
       res.status(200).json({
         status: 'success',
-        data: result
+        data: result,
       });
     } catch (error) {
       next(error);
@@ -162,14 +151,14 @@ class PaymentController {
   async handleWebhook(req, res, next) {
     try {
       const sig = req.headers['stripe-signature'];
-      
+
       if (!sig) {
         return next(new AppError('Stripe signature is missing', 400));
       }
-      
+
       // Verify webhook signature
       let event;
-      
+
       try {
         const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
         event = stripe.webhooks.constructEvent(
@@ -180,10 +169,10 @@ class PaymentController {
       } catch (err) {
         return next(new AppError(`Webhook signature verification failed: ${err.message}`, 400));
       }
-      
+
       // Process the event
       const result = await paymentService.handleWebhookEvent(event);
-      
+
       res.status(200).json({ received: true, ...result });
     } catch (error) {
       next(error);
@@ -199,12 +188,12 @@ class PaymentController {
   async getSubscriptionPrices(req, res, next) {
     try {
       const prices = await paymentService.getSubscriptionPrices();
-      
+
       res.status(200).json({
         status: 'success',
         data: {
-          prices
-        }
+          prices,
+        },
       });
     } catch (error) {
       next(error);

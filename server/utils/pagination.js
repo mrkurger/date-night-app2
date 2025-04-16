@@ -12,20 +12,20 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for pagination settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const getPaginationParams = (query) => {
+const getPaginationParams = query => {
   const page = parseInt(query.page) || 1;
   const limit = parseInt(query.limit) || 10;
   const maxLimit = 100; // Maximum allowed limit
-  
+
   return {
     page: Math.max(1, page), // Ensure page is at least 1
     limit: Math.min(Math.max(1, limit), maxLimit), // Ensure limit is between 1 and maxLimit
-    skip: (Math.max(1, page) - 1) * Math.min(Math.max(1, limit), maxLimit)
+    skip: (Math.max(1, page) - 1) * Math.min(Math.max(1, limit), maxLimit),
   };
 };
 
@@ -42,23 +42,23 @@ const createPaginatedResponse = (data, totalItems, page, limit, baseUrl = '') =>
   const totalPages = Math.ceil(totalItems / limit);
   const hasNextPage = page < totalPages;
   const hasPrevPage = page > 1;
-  
+
   // Build pagination links
   const links = {};
-  
+
   if (baseUrl) {
     if (hasNextPage) {
       links.next = `${baseUrl}?page=${page + 1}&limit=${limit}`;
     }
-    
+
     if (hasPrevPage) {
       links.prev = `${baseUrl}?page=${page - 1}&limit=${limit}`;
     }
-    
+
     links.first = `${baseUrl}?page=1&limit=${limit}`;
     links.last = `${baseUrl}?page=${totalPages}&limit=${limit}`;
   }
-  
+
   return {
     data,
     pagination: {
@@ -67,13 +67,13 @@ const createPaginatedResponse = (data, totalItems, page, limit, baseUrl = '') =>
       currentPage: page,
       itemsPerPage: limit,
       hasNextPage,
-      hasPrevPage
+      hasPrevPage,
     },
-    links
+    links,
   };
 };
 
 module.exports = {
   getPaginationParams,
-  createPaginatedResponse
+  createPaginatedResponse,
 };

@@ -5,7 +5,10 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
   font-family: var(--font-family-base);
@@ -115,8 +118,9 @@ body {
 .mat-mdc-card {
   border-radius: var(--border-radius-lg) !important;
   box-shadow: var(--shadow-md) !important;
-  transition: transform var(--transition-normal) var(--transition-timing-default),
-              box-shadow var(--transition-normal) var(--transition-timing-default) !important;
+  transition:
+    transform var(--transition-normal) var(--transition-timing-default),
+    box-shadow var(--transition-normal) var(--transition-timing-default) !important;
 }
 
 .mat-mdc-card:hover {
@@ -160,17 +164,28 @@ body {
 }
 
 /* Checkbox styles */
-.mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
   background-color: var(--primary) !important;
   border-color: var(--primary) !important;
 }
 
 /* Radio button styles */
-.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__outer-circle {
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__outer-circle {
   border-color: var(--primary) !important;
 }
 
-.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__inner-circle {
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__inner-circle {
   background-color: var(--primary) !important;
 }
 

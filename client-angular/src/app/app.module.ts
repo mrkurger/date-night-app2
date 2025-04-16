@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for app.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -26,7 +25,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.
  * See app.config.ts and main.ts for the new bootstrapping method.
- * 
+ *
  * This module is kept for backward compatibility during the transition period.
  * New features should use the standalone component pattern.
  */
@@ -44,12 +43,12 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
     CoreModule,
     SharedModule,
     AppRoutingModule,
-    SocketIoModule.forRoot(socketConfig)
+    SocketIoModule.forRoot(socketConfig),
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   // AppComponent is now bootstrapped via bootstrapApplication in main.ts
 })
-export class AppModule { }
+export class AppModule {}

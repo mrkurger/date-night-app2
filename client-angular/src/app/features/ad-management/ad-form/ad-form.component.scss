@@ -16,11 +16,11 @@
 
   .form-row {
     margin-bottom: 16px;
-    
+
     &.two-columns {
       display: flex;
       gap: 16px;
-      
+
       mat-form-field {
         flex: 1;
       }

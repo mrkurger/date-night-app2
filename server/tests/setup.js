@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for test environment setup
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - TEST_MONGODB_URI: MongoDB connection string for tests (default: mongodb://localhost:27017/datenight_test)
 //   Related to: server/config/environment.js:mongoUri
@@ -24,14 +24,14 @@ module.exports.setupTestDB = async () => {
   // Create an in-memory MongoDB server
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
-  
+
   // Connect to the in-memory database
   await mongoose.connect(mongoUri, {
     // These options are no longer needed in Mongoose 6+, but kept for clarity
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  
+
   console.log(`Connected to in-memory MongoDB at ${mongoUri}`);
 };
 
@@ -53,7 +53,7 @@ module.exports.teardownTestDB = async () => {
  */
 module.exports.clearDatabase = async () => {
   const collections = mongoose.connection.collections;
-  
+
   for (const key in collections) {
     const collection = collections[key];
     await collection.deleteMany({});
@@ -76,14 +76,14 @@ module.exports.mockModel = (Model, mockData) => {
     create: Model.create,
     save: Model.prototype.save,
   };
-  
+
   // Mock the methods
   Model.find = jest.fn().mockResolvedValue(mockData);
   Model.findById = jest.fn().mockResolvedValue(mockData[0]);
   Model.findOne = jest.fn().mockResolvedValue(mockData[0]);
   Model.create = jest.fn().mockResolvedValue(mockData[0]);
   Model.prototype.save = jest.fn().mockResolvedValue(mockData[0]);
-  
+
   // Return a function to restore the original methods
   return () => {
     Model.find = originalMethods.find;

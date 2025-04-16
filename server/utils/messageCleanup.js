@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for messageCleanup settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -39,12 +38,12 @@ class MessageCleanup {
   async cleanupExpiredMessages() {
     try {
       const now = new Date();
-      
+
       // Find and delete expired messages
       const result = await ChatMessage.deleteMany({
-        expiresAt: { $lt: now }
+        expiresAt: { $lt: now },
       });
-      
+
       console.log(`Deleted ${result.deletedCount} expired messages`);
       return result.deletedCount;
     } catch (error) {

@@ -9,7 +9,9 @@ $neutral-800: #1f2937;
 $neutral-900: #111827;
 $white: #ffffff;
 $black: #000000;
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
 // Emerald Carousel Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Carousel
@@ -19,38 +21,38 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
   width: 100%;
   overflow: hidden;
   border-radius: $border-radius-md;
-  
+
   // Aspect Ratios
   &--1-1 {
     .emerald-carousel__main {
       padding-bottom: 100%; // 1:1 aspect ratio
     }
   }
-  
+
   &--4-3 {
     .emerald-carousel__main {
       padding-bottom: 75%; // 4:3 aspect ratio
     }
   }
-  
+
   &--16-9 {
     .emerald-carousel__main {
       padding-bottom: 56.25%; // 16:9 aspect ratio
     }
   }
-  
+
   &--21-9 {
     .emerald-carousel__main {
       padding-bottom: 42.85%; // 21:9 aspect ratio
     }
   }
-  
+
   // Main Carousel
   &__main {
     position: relative;
     width: 100%;
   }
-  
+
   // Carousel Items Container
   &__items {
     position: absolute;
@@ -59,7 +61,7 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     width: 100%;
     height: 100%;
   }
-  
+
   // Carousel Item
   &__item {
     position: absolute;
@@ -69,27 +71,27 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     height: 100%;
     opacity: 0;
     transition: opacity 0.5s ease;
-    
+
     &--active {
       opacity: 1;
       z-index: 1;
     }
   }
-  
+
   // Carousel Image
   &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   // Carousel Video
   &__video {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   // Navigation Arrows
   &__arrows {
     position: absolute;
@@ -100,7 +102,7 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     z-index: 2;
     pointer-events: none;
   }
-  
+
   &__arrow {
     position: absolute;
     top: 50%;
@@ -116,22 +118,24 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     justify-content: center;
     cursor: pointer;
     pointer-events: auto;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
     &:hover {
       background-color: rgba($neutral-900, 0.8);
       transform: translateY(-50%) scale(1.1);
     }
-    
+
     &--prev {
       left: 16px;
     }
-    
+
     &--next {
       right: 16px;
     }
   }
-  
+
   // Navigation Dots
   &__dots {
     position: absolute;
@@ -142,7 +146,7 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     gap: 8px;
     z-index: 2;
   }
-  
+
   &__dot {
     width: 10px;
     height: 10px;
@@ -150,51 +154,53 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     background-color: rgba($neutral-100, 0.5);
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
     &:hover {
       background-color: rgba($neutral-100, 0.8);
     }
-    
+
     &--active {
       background-color: $neutral-100;
       transform: scale(1.2);
     }
   }
-  
+
   // Thumbnails
   &--with-thumbnails {
     .emerald-carousel__main {
       margin-bottom: 8px;
     }
   }
-  
+
   &__thumbnails {
     width: 100%;
     overflow-x: auto;
     scrollbar-width: thin;
-    
+
     &::-webkit-scrollbar {
       height: 6px;
     }
-    
+
     &::-webkit-scrollbar-track {
       background: $neutral-200;
       border-radius: 3px;
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background-color: $neutral-400;
       border-radius: 3px;
     }
   }
-  
+
   &__thumbnails-container {
     display: flex;
     gap: 8px;
     padding: 4px 0;
   }
-  
+
   &__thumbnail {
     width: 60px;
     height: 60px;
@@ -204,16 +210,16 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
     padding: 0;
     cursor: pointer;
     transition: border-color 0.2s ease;
-    
+
     &:hover {
       border-color: #d1d5db; /* neutral-300 */
     }
-    
+
     &--active {
       border-color: #3b82f6; /* primary */
     }
   }
-  
+
   &__thumbnail-image {
     width: 100%;
     height: 100%;

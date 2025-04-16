@@ -2,13 +2,28 @@
   <div class="wallet-header">
     <h1 class="wallet-title">My Wallet</h1>
     <div class="wallet-actions">
-      <button mat-raised-button color="primary" (click)="openDepositDialog()" [disabled]="loading.wallet">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openDepositDialog()"
+        [disabled]="loading.wallet"
+      >
         <mat-icon>add</mat-icon> Deposit
       </button>
-      <button mat-raised-button color="accent" (click)="openWithdrawDialog()" [disabled]="loading.wallet">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="openWithdrawDialog()"
+        [disabled]="loading.wallet"
+      >
         <mat-icon>remove</mat-icon> Withdraw
       </button>
-      <button mat-raised-button color="basic" (click)="openTransferDialog()" [disabled]="loading.wallet">
+      <button
+        mat-raised-button
+        color="basic"
+        (click)="openTransferDialog()"
+        [disabled]="loading.wallet"
+      >
         <mat-icon>swap_horiz</mat-icon> Transfer
       </button>
     </div>
@@ -40,7 +55,9 @@
           <mat-card-header>
             <mat-card-title>{{ balance.currency }}</mat-card-title>
             <mat-card-subtitle>
-              <span *ngIf="balance.pending > 0">{{ walletService.formatCurrency(balance.pending, balance.currency) }} pending</span>
+              <span *ngIf="balance.pending > 0"
+                >{{ walletService.formatCurrency(balance.pending, balance.currency) }} pending</span
+              >
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
@@ -68,7 +85,10 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Status</mat-label>
-              <mat-select [(ngModel)]="transactionFilters.status" (selectionChange)="applyFilters()">
+              <mat-select
+                [(ngModel)]="transactionFilters.status"
+                (selectionChange)="applyFilters()"
+              >
                 <mat-option *ngFor="let status of transactionStatuses" [value]="status.value">
                   {{ status.label }}
                 </mat-option>
@@ -77,7 +97,10 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Currency</mat-label>
-              <mat-select [(ngModel)]="transactionFilters.currency" (selectionChange)="applyFilters()">
+              <mat-select
+                [(ngModel)]="transactionFilters.currency"
+                (selectionChange)="applyFilters()"
+              >
                 <mat-option value="">All Currencies</mat-option>
                 <mat-option *ngFor="let balance of balances" [value]="balance.currency">
                   {{ balance.currency }}
@@ -101,7 +124,7 @@
               <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>Date</th>
                 <td mat-cell *matCellDef="let transaction">
-                  {{ transaction.createdAt | date:'medium' }}
+                  {{ transaction.createdAt | date: 'medium' }}
                 </td>
               </ng-container>
 
@@ -109,7 +132,10 @@
               <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef>Type</th>
                 <td mat-cell *matCellDef="let transaction">
-                  <span class="transaction-type" [ngClass]="getTransactionTypeClass(transaction.type)">
+                  <span
+                    class="transaction-type"
+                    [ngClass]="getTransactionTypeClass(transaction.type)"
+                  >
                     {{ transaction.type | titlecase }}
                   </span>
                 </td>
@@ -119,7 +145,12 @@
               <ng-container matColumnDef="amount">
                 <th mat-header-cell *matHeaderCellDef>Amount</th>
                 <td mat-cell *matCellDef="let transaction">
-                  <span [ngClass]="{'positive-amount': transaction.amount > 0, 'negative-amount': transaction.amount < 0}">
+                  <span
+                    [ngClass]="{
+                      'positive-amount': transaction.amount > 0,
+                      'negative-amount': transaction.amount < 0,
+                    }"
+                  >
                     {{ formatTransactionAmount(transaction) }}
                   </span>
                 </td>
@@ -129,7 +160,10 @@
               <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef>Status</th>
                 <td mat-cell *matCellDef="let transaction">
-                  <span class="transaction-status" [ngClass]="getTransactionStatusClass(transaction.status)">
+                  <span
+                    class="transaction-status"
+                    [ngClass]="getTransactionStatusClass(transaction.status)"
+                  >
                     {{ transaction.status | titlecase }}
                   </span>
                 </td>
@@ -139,14 +173,19 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let transaction">
-                  <button mat-icon-button color="primary" (click)="openTransactionDetailsDialog(transaction)" matTooltip="View Details">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="openTransactionDetailsDialog(transaction)"
+                    matTooltip="View Details"
+                  >
                     <mat-icon>info</mat-icon>
                   </button>
                 </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
 
             <!-- No transactions message -->
@@ -170,7 +209,8 @@
                 size="medium"
                 align="center"
                 (pageChange)="onPageChange($event)"
-                (pageSizeChange)="onPageSizeChange($event)">
+                (pageSizeChange)="onPageSizeChange($event)"
+              >
               </emerald-pager>
             </div>
           </div>
@@ -218,7 +258,11 @@
               <mat-card-content>
                 <!-- Card details -->
                 <div *ngIf="method.type === 'card' && method.cardDetails">
-                  <p>Expires: {{ method.cardDetails.expiryMonth }}/{{ method.cardDetails.expiryYear }}</p>
+                  <p>
+                    Expires: {{ method.cardDetails.expiryMonth }}/{{
+                      method.cardDetails.expiryYear
+                    }}
+                  </p>
                 </div>
 
                 <!-- Bank account details -->
@@ -229,8 +273,14 @@
                 <!-- Crypto address details -->
                 <div *ngIf="method.type === 'crypto_address' && method.cryptoDetails">
                   <p class="crypto-address">
-                    {{ method.cryptoDetails.address | slice:0:10 }}...{{ method.cryptoDetails.address | slice:-10 }}
-                    <button mat-icon-button [cdkCopyToClipboard]="method.cryptoDetails.address" matTooltip="Copy Address">
+                    {{ method.cryptoDetails.address | slice: 0 : 10 }}...{{
+                      method.cryptoDetails.address | slice: -10
+                    }}
+                    <button
+                      mat-icon-button
+                      [cdkCopyToClipboard]="method.cryptoDetails.address"
+                      matTooltip="Copy Address"
+                    >
                       <mat-icon>content_copy</mat-icon>
                     </button>
                   </p>
@@ -245,7 +295,12 @@
                 <button mat-button color="warn" (click)="removePaymentMethod(method._id)">
                   <mat-icon>delete</mat-icon> Remove
                 </button>
-                <button mat-button color="primary" (click)="setDefaultPaymentMethod(method._id)" [disabled]="method.isDefault">
+                <button
+                  mat-button
+                  color="primary"
+                  (click)="setDefaultPaymentMethod(method._id)"
+                  [disabled]="method.isDefault"
+                >
                   <mat-icon>star</mat-icon> Set as Default
                 </button>
               </mat-card-actions>
@@ -264,10 +319,16 @@
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Default Currency</mat-label>
               <mat-select formControlName="defaultCurrency">
-                <mat-option *ngFor="let currency of walletService.SUPPORTED_CURRENCIES" [value]="currency">
+                <mat-option
+                  *ngFor="let currency of walletService.SUPPORTED_CURRENCIES"
+                  [value]="currency"
+                >
                   {{ currency }}
                 </mat-option>
-                <mat-option *ngFor="let currency of walletService.SUPPORTED_CRYPTOCURRENCIES" [value]="currency">
+                <mat-option
+                  *ngFor="let currency of walletService.SUPPORTED_CRYPTOCURRENCIES"
+                  [value]="currency"
+                >
                   {{ currency }}
                 </mat-option>
               </mat-select>
@@ -277,16 +338,18 @@
             <!-- Auto Withdrawal Settings -->
             <div formGroupName="autoWithdrawal" class="settings-section">
               <h3>Automatic Withdrawal</h3>
-              
+
               <mat-slide-toggle formControlName="enabled" color="primary">
                 Enable Automatic Withdrawal
               </mat-slide-toggle>
-              
+
               <div *ngIf="settingsForm.get('autoWithdrawal.enabled')?.value">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Threshold Amount (NOK)</mat-label>
-                  <input matInput type="number" formControlName="threshold" min="10000">
-                  <mat-hint>Withdrawal will be triggered when your balance exceeds this amount</mat-hint>
+                  <input matInput type="number" formControlName="threshold" min="10000" />
+                  <mat-hint
+                    >Withdrawal will be triggered when your balance exceeds this amount</mat-hint
+                  >
                   <mat-error *ngIf="settingsForm.get('autoWithdrawal.threshold')?.hasError('min')">
                     Minimum threshold is 100 NOK
                   </mat-error>
@@ -307,42 +370,39 @@
             <!-- Notification Preferences -->
             <div formGroupName="notificationPreferences" class="settings-section">
               <h3>Notification Preferences</h3>
-              
+
               <div formGroupName="email" class="notification-group">
                 <h4>Email Notifications</h4>
-                
-                <mat-checkbox formControlName="deposit" color="primary">
-                  Deposits
-                </mat-checkbox>
-                
+
+                <mat-checkbox formControlName="deposit" color="primary"> Deposits </mat-checkbox>
+
                 <mat-checkbox formControlName="withdrawal" color="primary">
                   Withdrawals
                 </mat-checkbox>
-                
-                <mat-checkbox formControlName="payment" color="primary">
-                  Payments
-                </mat-checkbox>
+
+                <mat-checkbox formControlName="payment" color="primary"> Payments </mat-checkbox>
               </div>
-              
+
               <div formGroupName="push" class="notification-group">
                 <h4>Push Notifications</h4>
-                
-                <mat-checkbox formControlName="deposit" color="primary">
-                  Deposits
-                </mat-checkbox>
-                
+
+                <mat-checkbox formControlName="deposit" color="primary"> Deposits </mat-checkbox>
+
                 <mat-checkbox formControlName="withdrawal" color="primary">
                   Withdrawals
                 </mat-checkbox>
-                
-                <mat-checkbox formControlName="payment" color="primary">
-                  Payments
-                </mat-checkbox>
+
+                <mat-checkbox formControlName="payment" color="primary"> Payments </mat-checkbox>
               </div>
             </div>
 
             <div class="form-actions">
-              <button mat-raised-button color="primary" type="submit" [disabled]="settingsForm.invalid">
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="settingsForm.invalid"
+              >
                 Save Settings
               </button>
             </div>
@@ -361,6 +421,7 @@
   [menuItems]="[
     { icon: 'add', label: 'Deposit', action: openDepositDialog.bind(this) },
     { icon: 'remove', label: 'Withdraw', action: openWithdrawDialog.bind(this) },
-    { icon: 'swap_horiz', label: 'Transfer', action: openTransferDialog.bind(this) }
-  ]">
+    { icon: 'swap_horiz', label: 'Transfer', action: openTransferDialog.bind(this) },
+  ]"
+>
 </emerald-floating-action-button>

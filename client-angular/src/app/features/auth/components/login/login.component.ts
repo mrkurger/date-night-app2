@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (login.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -28,13 +27,13 @@ import { CommonModule } from '@angular/common';
               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="email" formControlName="email" class="form-control">
+                  <input type="email" formControlName="email" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" formControlName="password" class="form-control">
+                  <input type="password" formControlName="password" class="form-control" />
                 </div>
-                <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
                 <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
                   Login
                 </button>
@@ -47,11 +46,11 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  error: string = '';
+  error = '';
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +59,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -68,7 +67,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).subscribe({
         next: () => this.router.navigate(['/ads']),
-        error: err => this.error = err.error.message || 'Login failed'
+        error: err => (this.error = err.error.message || 'Login failed'),
       });
     }
   }

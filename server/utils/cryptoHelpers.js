@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for cryptoHelpers settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -32,12 +31,12 @@ class CryptoHelpers {
       modulusLength: 2048,
       publicKeyEncoding: {
         type: 'spki',
-        format: 'pem'
+        format: 'pem',
       },
       privateKeyEncoding: {
         type: 'pkcs8',
-        format: 'pem'
-      }
+        format: 'pem',
+      },
     });
 
     return { publicKey, privateKey };
@@ -54,7 +53,7 @@ class CryptoHelpers {
     const encrypted = crypto.publicEncrypt(
       {
         key: publicKey,
-        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
       },
       buffer
     );
@@ -72,7 +71,7 @@ class CryptoHelpers {
     const decrypted = crypto.privateDecrypt(
       {
         key: privateKey,
-        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
       },
       buffer
     );
@@ -89,16 +88,16 @@ class CryptoHelpers {
     const iv = crypto.randomBytes(16);
     const keyBuffer = Buffer.from(key, 'base64');
     const cipher = crypto.createCipheriv('aes-256-gcm', keyBuffer, iv);
-    
+
     let encrypted = cipher.update(message, 'utf8', 'base64');
     encrypted += cipher.final('base64');
-    
+
     const authTag = cipher.getAuthTag().toString('base64');
-    
+
     return {
       iv: iv.toString('base64'),
       encrypted,
-      authTag
+      authTag,
     };
   }
 
@@ -113,13 +112,13 @@ class CryptoHelpers {
     const keyBuffer = Buffer.from(key, 'base64');
     const ivBuffer = Buffer.from(iv, 'base64');
     const authTagBuffer = Buffer.from(authTag, 'base64');
-    
+
     const decipher = crypto.createDecipheriv('aes-256-gcm', keyBuffer, ivBuffer);
     decipher.setAuthTag(authTagBuffer);
-    
+
     let decrypted = decipher.update(encrypted, 'base64', 'utf8');
     decrypted += decipher.final('utf8');
-    
+
     return decrypted;
   }
 

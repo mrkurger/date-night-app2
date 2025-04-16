@@ -4,7 +4,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains styles for the list view component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - $filter-sidebar-width: Width of the filter sidebar (default: 320px)
 // - $card-hover-transform: Transform effect on card hover (default: translateY(-8px) scale(1.02))
@@ -59,10 +59,10 @@ $active-filter-bg: $primary-100;
   border-radius: $border-radius-md;
   padding: $spacing-1;
   margin-right: $spacing-2;
-  
+
   button {
     border-radius: $border-radius-md;
-    
+
     &.active {
       background-color: $primary-500;
       color: white;
@@ -107,14 +107,14 @@ $active-filter-bg: $primary-100;
   flex-shrink: 0;
   transition: transform 0.3s ease;
   z-index: 10;
-  
+
   @media (max-width: $breakpoint-lg) {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(-100%);
-    
+
     &.open {
       transform: translateX(0);
     }
@@ -128,7 +128,7 @@ $active-filter-bg: $primary-100;
   margin-bottom: $spacing-4;
   padding-bottom: $spacing-3;
   border-bottom: 1px solid $neutral-300;
-  
+
   h3 {
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
@@ -140,47 +140,47 @@ $active-filter-bg: $primary-100;
   max-height: calc(100vh - 150px);
   overflow-y: auto;
   padding-right: $spacing-2;
-  
+
   h4 {
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
     margin: $spacing-4 0 $spacing-2;
     color: $neutral-700;
   }
-  
+
   .filter-group {
     display: flex;
     flex-direction: column;
     gap: $spacing-2;
     margin-bottom: $spacing-4;
   }
-  
+
   .full-width {
     width: 100%;
   }
-  
+
   .date-range-picker {
     display: flex;
     gap: $spacing-2;
     margin-bottom: $spacing-4;
-    
+
     mat-form-field {
       flex: 1;
     }
   }
-  
+
   .saved-filters {
     display: flex;
     flex-direction: column;
     gap: $spacing-2;
     margin-bottom: $spacing-6;
-    
+
     .saved-filter-btn {
       text-align: left;
       justify-content: flex-start;
     }
   }
-  
+
   .filter-actions {
     display: flex;
     justify-content: space-between;
@@ -219,11 +219,11 @@ $active-filter-bg: $primary-100;
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-2;
-  
+
   mat-chip {
     background-color: $active-filter-bg;
-    
-    &[color="warn"] {
+
+    &[color='warn'] {
       background-color: $error-100;
       color: $error;
     }
@@ -310,16 +310,18 @@ $active-filter-bg: $primary-100;
 /* Card Hover Effects */
 ::ng-deep {
   .emerald-app-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
     &:hover {
       transform: $card-hover-transform;
       box-shadow: $shadow-lg;
     }
   }
-  
+
   // List view specific styles
-  .emerald-app-card[ng-reflect-layout="list"] {
+  .emerald-app-card[ng-reflect-layout='list'] {
     &:hover {
       transform: translateY(0) scale(1.01);
     }
@@ -331,7 +333,7 @@ $active-filter-bg: $primary-100;
   .content-with-sidebar {
     flex-direction: column;
   }
-  
+
   .main-content {
     width: 100%;
   }
@@ -342,16 +344,16 @@ $active-filter-bg: $primary-100;
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .view-controls {
     margin-top: $spacing-4;
     justify-content: space-between;
   }
-  
+
   .active-filters {
     flex-direction: column;
     align-items: flex-start;
-    
+
     .active-filters-label {
       margin-bottom: $spacing-2;
     }
@@ -364,7 +366,7 @@ $active-filter-bg: $primary-100;
     justify-content: space-between;
     margin-bottom: $spacing-2;
   }
-  
+
   .sort-button {
     width: 100%;
     justify-content: space-between;

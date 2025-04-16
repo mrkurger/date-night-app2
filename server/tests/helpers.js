@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains helper functions for testing
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - TEST_USER_DATA: Default test user data (default: see object below)
 //   Related to: server/models/user.model.js
@@ -27,8 +27,8 @@ const TEST_USER_DATA = {
   gender: 'other',
   location: {
     city: 'Oslo',
-    country: 'Norway'
-  }
+    country: 'Norway',
+  },
 };
 
 // Default test ad data
@@ -38,9 +38,7 @@ const TEST_AD_DATA = {
   price: 100,
   location: 'Oslo',
   category: 'Dinner',
-  media: [
-    { url: '/assets/images/test-image-1.jpg', type: 'image' }
-  ],
+  media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],
   images: ['/assets/images/test-image-1.jpg'],
   advertiser: 'Test User',
   isActive: true,
@@ -50,7 +48,7 @@ const TEST_AD_DATA = {
   viewCount: 0,
   clickCount: 0,
   inquiryCount: 0,
-  tags: ['tag1', 'tag2']
+  tags: ['tag1', 'tag2'],
 };
 
 // Default test message data
@@ -59,7 +57,7 @@ const TEST_MESSAGE_DATA = {
   sender: new mongoose.Types.ObjectId(),
   receiver: new mongoose.Types.ObjectId(),
   roomId: new mongoose.Types.ObjectId(),
-  isRead: false
+  isRead: false,
 };
 
 /**
@@ -70,16 +68,16 @@ const TEST_MESSAGE_DATA = {
 const createTestUser = async (userData = {}) => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(
-    userData.password || TEST_USER_DATA.password, 
+    userData.password || TEST_USER_DATA.password,
     saltRounds
   );
-  
+
   const user = new User({
     ...TEST_USER_DATA,
     ...userData,
-    password: hashedPassword
+    password: hashedPassword,
   });
-  
+
   await user.save();
   return user;
 };
@@ -92,18 +90,18 @@ const createTestUser = async (userData = {}) => {
  */
 const createTestUsers = async (count, baseUserData = {}) => {
   const users = [];
-  
+
   for (let i = 0; i < count; i++) {
     const userData = {
       ...baseUserData,
       username: `testuser${i}`,
-      email: `test${i}@example.com`
+      email: `test${i}@example.com`,
     };
-    
+
     const user = await createTestUser(userData);
     users.push(user);
   }
-  
+
   return users;
 };
 
@@ -115,9 +113,9 @@ const createTestUsers = async (count, baseUserData = {}) => {
  */
 const generateTestToken = (userId, additionalClaims = {}) => {
   return jwt.sign(
-    { 
+    {
       sub: userId,
-      ...additionalClaims
+      ...additionalClaims,
     },
     process.env.JWT_SECRET || 'test_jwt_secret',
     { expiresIn: '1h' }
@@ -129,7 +127,7 @@ const generateTestToken = (userId, additionalClaims = {}) => {
  * @param {string} userId - User ID to include in the token
  * @returns {string} Refresh token
  */
-const generateRefreshToken = (userId) => {
+const generateRefreshToken = userId => {
   return jwt.sign(
     { sub: userId },
     process.env.REFRESH_TOKEN_SECRET || 'test_refresh_token_secret',
@@ -159,9 +157,9 @@ const mockRequest = (options = {}) => {
     query: {},
     headers: {},
     cookies: {},
-    ...options
+    ...options,
   };
-  
+
   return req;
 };
 
@@ -171,7 +169,7 @@ const mockRequest = (options = {}) => {
  */
 const mockResponse = () => {
   const res = {};
-  
+
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
@@ -179,7 +177,7 @@ const mockResponse = () => {
   res.clearCookie = jest.fn().mockReturnValue(res);
   res.redirect = jest.fn().mockReturnValue(res);
   res.locals = {};
-  
+
   return res;
 };
 
@@ -207,7 +205,7 @@ const createError = (message, statusCode = 500) => {
  */
 const createTimingUtil = () => {
   const startTime = process.hrtime();
-  
+
   return {
     /**
      * Get elapsed time in milliseconds
@@ -215,8 +213,8 @@ const createTimingUtil = () => {
      */
     getElapsedTimeInMs: () => {
       const elapsedTime = process.hrtime(startTime);
-      return (elapsedTime[0] * 1000) + (elapsedTime[1] / 1000000);
-    }
+      return elapsedTime[0] * 1000 + elapsedTime[1] / 1000000;
+    },
   };
 };
 
@@ -233,5 +231,5 @@ module.exports = {
   mockResponse,
   mockNext,
   createError,
-  createTimingUtil
+  createTimingUtil,
 };

@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for travel.routes settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -19,11 +18,7 @@ const travelValidator = require('../middleware/validators/travel.validator');
 router.use(authenticateToken);
 
 // Routes for managing travel itineraries
-router.get(
-  '/ad/:adId',
-  travelValidator.validateAdId,
-  travelController.getItineraries
-);
+router.get('/ad/:adId', travelValidator.validateAdId, travelController.getItineraries);
 
 router.post(
   '/ad/:adId',
@@ -60,10 +55,7 @@ router.put(
 );
 
 // Public routes for browsing travel information
-router.get(
-  '/touring',
-  travelController.getTouringAdvertisers
-);
+router.get('/touring', travelController.getTouringAdvertisers);
 
 router.get(
   '/upcoming',
@@ -71,10 +63,6 @@ router.get(
   travelController.getUpcomingTours
 );
 
-router.get(
-  '/location',
-  travelValidator.validateLocationQuery,
-  travelController.getAdsByLocation
-);
+router.get('/location', travelValidator.validateLocationQuery, travelController.getAdsByLocation);
 
 module.exports = router;

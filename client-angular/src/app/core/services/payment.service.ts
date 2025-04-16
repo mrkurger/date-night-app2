@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (payment.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -67,7 +66,7 @@ export interface PaymentMethod {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaymentService {
   private apiUrl = `${environment.apiUrl}/payments`;
@@ -87,7 +86,7 @@ export class PaymentService {
       script.async = true;
       document.body.appendChild(script);
 
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         script.onload = () => resolve();
       });
     }
@@ -111,11 +110,15 @@ export class PaymentService {
    * @param currency Currency code (e.g., 'usd', 'nok')
    * @param metadata Additional metadata for the payment
    */
-  createPaymentIntent(amount: number, currency: string = 'nok', metadata: any = {}): Observable<PaymentIntent> {
+  createPaymentIntent(
+    amount: number,
+    currency = 'nok',
+    metadata: any = {}
+  ): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(`${this.apiUrl}/create-payment-intent`, {
       amount,
       currency,
-      metadata
+      metadata,
     });
   }
 
@@ -134,7 +137,7 @@ export class PaymentService {
   createSubscription(priceId: string, paymentMethodId: string): Observable<Subscription> {
     return this.http.post<Subscription>(`${this.apiUrl}/create-subscription`, {
       priceId,
-      paymentMethodId
+      paymentMethodId,
     });
   }
 
@@ -151,11 +154,11 @@ export class PaymentService {
    * @param days Number of days to boost
    * @param paymentMethodId Stripe payment method ID
    */
-  boostAd(adId: string, days: number = 7, paymentMethodId: string): Observable<BoostAdResult> {
+  boostAd(adId: string, days = 7, paymentMethodId: string): Observable<BoostAdResult> {
     return this.http.post<BoostAdResult>(`${this.apiUrl}/boost-ad`, {
       adId,
       days,
-      paymentMethodId
+      paymentMethodId,
     });
   }
 
@@ -167,7 +170,7 @@ export class PaymentService {
   featureAd(adId: string, paymentMethodId: string): Observable<FeatureAdResult> {
     return this.http.post<FeatureAdResult>(`${this.apiUrl}/feature-ad`, {
       adId,
-      paymentMethodId
+      paymentMethodId,
     });
   }
 
@@ -175,7 +178,9 @@ export class PaymentService {
    * Create a payment method setup
    */
   async createSetupIntent(): Promise<string> {
-    const response = await this.http.post<{ clientSecret: string }>(`${this.apiUrl}/create-setup-intent`, {}).toPromise();
+    const response = await this.http
+      .post<{ clientSecret: string }>(`${this.apiUrl}/create-setup-intent`, {})
+      .toPromise();
     return response.clientSecret;
   }
 
@@ -192,13 +197,13 @@ export class PaymentService {
         fontSmoothing: 'antialiased',
         fontSize: '16px',
         '::placeholder': {
-          color: '#aab7c4'
-        }
+          color: '#aab7c4',
+        },
       },
       invalid: {
         color: '#fa755a',
-        iconColor: '#fa755a'
-      }
+        iconColor: '#fa755a',
+      },
     };
 
     const cardElement = elements.create('card', { style });
@@ -217,8 +222,8 @@ export class PaymentService {
         card: cardElement,
         billing_details: {
           // You can add billing details here if needed
-        }
-      }
+        },
+      },
     });
 
     if (result.error) {
@@ -233,11 +238,11 @@ export class PaymentService {
    * @param amount Amount in smallest currency unit (e.g., cents)
    * @param currency Currency code (e.g., 'usd', 'nok')
    */
-  formatCurrency(amount: number, currency: string = 'nok'): string {
+  formatCurrency(amount: number, currency = 'nok'): string {
     return new Intl.NumberFormat('no-NO', {
       style: 'currency',
       currency: currency.toUpperCase(),
-      minimumFractionDigits: 0
+      minimumFractionDigits: 0,
     }).format(amount / 100);
   }
 }

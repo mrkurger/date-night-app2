@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for wallet.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -51,8 +50,8 @@ const routes: Routes = [
   {
     path: '',
     component: WalletComponent,
-    canActivate: [AuthGuard]
-  }
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -94,7 +93,7 @@ const routes: Routes = [
     WithdrawDialogComponent,
     TransferDialogComponent,
     AddPaymentMethodDialogComponent,
-    TransactionDetailsDialogComponent
-  ]
+    TransactionDetailsDialogComponent,
+  ],
 })
-export class WalletModule { }
+export class WalletModule {}

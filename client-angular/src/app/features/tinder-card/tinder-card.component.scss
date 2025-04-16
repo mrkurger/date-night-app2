@@ -14,8 +14,9 @@
   overflow: hidden;
   background-color: var(--neutral-100);
   box-shadow: var(--shadow-lg);
-  transition: transform var(--transition-normal) var(--transition-timing-default),
-              opacity var(--transition-normal) var(--transition-timing-default);
+  transition:
+    transform var(--transition-normal) var(--transition-timing-default),
+    opacity var(--transition-normal) var(--transition-timing-default);
   transform-origin: center center;
   cursor: grab;
   display: flex;
@@ -135,7 +136,9 @@
   align-items: center;
   opacity: 0;
   visibility: hidden; /* Hide completely when not active */
-  transition: all var(--transition-normal) var(--transition-timing-default), visibility var(--transition-normal) var(--transition-timing-default);
+  transition:
+    all var(--transition-normal) var(--transition-timing-default),
+    visibility var(--transition-normal) var(--transition-timing-default);
   z-index: 10;
 }
 

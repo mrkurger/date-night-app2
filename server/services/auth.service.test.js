@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for auth service functionality
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_USER_DATA: Test user data for auth service tests
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
@@ -31,8 +30,8 @@ describe('AuthService', () => {
       _id: 'user123',
       username: 'testuser',
       email: 'test@example.com',
-      name: 'Test User'
-    })
+      name: 'Test User',
+    }),
   };
 
   beforeEach(() => {
@@ -65,9 +64,10 @@ describe('AuthService', () => {
       User.findOne.mockResolvedValue(null);
 
       // Call and verify
-      await expect(AuthService.authenticate('wronguser', 'password123'))
-        .rejects.toThrow('User not found');
-      
+      await expect(AuthService.authenticate('wronguser', 'password123')).rejects.toThrow(
+        'User not found'
+      );
+
       expect(User.findOne).toHaveBeenCalledWith({ username: 'wronguser' });
       expect(bcrypt.compare).not.toHaveBeenCalled();
     });
@@ -78,9 +78,10 @@ describe('AuthService', () => {
       bcrypt.compare.mockResolvedValue(false);
 
       // Call and verify
-      await expect(AuthService.authenticate('testuser', 'wrongpassword'))
-        .rejects.toThrow('Invalid password');
-      
+      await expect(AuthService.authenticate('testuser', 'wrongpassword')).rejects.toThrow(
+        'Invalid password'
+      );
+
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
       expect(bcrypt.compare).toHaveBeenCalledWith('wrongpassword', mockUser.password);
       expect(jwt.sign).not.toHaveBeenCalled();
@@ -93,13 +94,13 @@ describe('AuthService', () => {
       email: 'new@example.com',
       password: 'Password123!',
       firstName: 'New',
-      lastName: 'User'
+      lastName: 'User',
     };
 
     it('should register a new user successfully', async () => {
       // Setup mocks
       User.findOne.mockResolvedValue(null); // No existing user
-      
+
       const mockNewUser = {
         ...registerData,
         _id: 'new-user-123',
@@ -109,13 +110,13 @@ describe('AuthService', () => {
           _id: 'new-user-123',
           username: registerData.username,
           email: registerData.email,
-          name: 'New User'
-        })
+          name: 'New User',
+        }),
       };
-      
+
       // Mock the User constructor
       User.mockImplementation(() => mockNewUser);
-      
+
       // Mock JWT sign to return tokens
       jwt.sign.mockReturnValue('mock-refresh-token');
 
@@ -133,30 +134,28 @@ describe('AuthService', () => {
 
     it('should throw error if username already exists', async () => {
       // Setup mocks - use a simpler approach that works consistently
-      User.findOne.mockResolvedValue({ 
+      User.findOne.mockResolvedValue({
         username: registerData.username,
-        email: 'different@example.com'
+        email: 'different@example.com',
       });
-      
+
       // Call and verify
-      await expect(AuthService.register(registerData))
-        .rejects.toThrow('Username already taken');
-      
+      await expect(AuthService.register(registerData)).rejects.toThrow('Username already taken');
+
       expect(User.findOne).toHaveBeenCalled();
       expect(bcrypt.hash).not.toHaveBeenCalled();
     });
 
     it('should throw error if email already exists', async () => {
       // Setup mocks - use a simpler approach that works consistently
-      User.findOne.mockResolvedValue({ 
+      User.findOne.mockResolvedValue({
         username: 'differentuser',
-        email: registerData.email
+        email: registerData.email,
       });
-      
+
       // Call and verify
-      await expect(AuthService.register(registerData))
-        .rejects.toThrow('Email already in use');
-      
+      await expect(AuthService.register(registerData)).rejects.toThrow('Email already in use');
+
       expect(User.findOne).toHaveBeenCalled();
       expect(bcrypt.hash).not.toHaveBeenCalled();
     });
@@ -188,9 +187,10 @@ describe('AuthService', () => {
       });
 
       // Call and verify - use the correct method name
-      await expect(AuthService.refreshAccessToken('invalid-token'))
-        .rejects.toThrow('Invalid refresh token');
-      
+      await expect(AuthService.refreshAccessToken('invalid-token')).rejects.toThrow(
+        'Invalid refresh token'
+      );
+
       expect(jwt.verify).toHaveBeenCalledWith('invalid-token', expect.any(String));
       expect(User.findById).not.toHaveBeenCalled();
       expect(jwt.sign).not.toHaveBeenCalled();
@@ -203,9 +203,10 @@ describe('AuthService', () => {
       User.findById.mockResolvedValue(null);
 
       // Call and verify - use the correct method name
-      await expect(AuthService.refreshAccessToken('valid-token-wrong-user'))
-        .rejects.toThrow('User not found');
-      
+      await expect(AuthService.refreshAccessToken('valid-token-wrong-user')).rejects.toThrow(
+        'User not found'
+      );
+
       expect(jwt.verify).toHaveBeenCalledWith('valid-token-wrong-user', expect.any(String));
       expect(User.findById).toHaveBeenCalledWith('nonexistent-id');
       expect(jwt.sign).not.toHaveBeenCalled();

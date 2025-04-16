@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
  * Emerald InfoPanel Component
- * 
+ *
  * A wrapper for the Emerald.js InfoPanel component.
  * This component displays information in a structured panel format.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/InfoPanel
  */
 
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for the InfoPanel component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - variant: Visual style of the panel (default: 'default')
 //   Valid values: 'default', 'bordered', 'shadowed'
@@ -31,24 +31,24 @@ import { CommonModule } from '@angular/common';
   templateUrl: './info-panel.component.html',
   styleUrls: ['./info-panel.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
-export class InfoPanelComponent {
-  @Input() title: string = '';
+export class InfoPanelComponent implements OnInit {
+  @Input() title = '';
   @Input() subtitle?: string;
   @Input() items: InfoPanelItem[] = [];
   @Input() variant: 'default' | 'bordered' | 'shadowed' = 'default';
-  @Input() collapsible: boolean = false;
-  @Input() initiallyCollapsed: boolean = false;
-  
+  @Input() collapsible = false;
+  @Input() initiallyCollapsed = false;
+
   isCollapsed = false;
-  
-  constructor() { }
-  
+
+  constructor() {}
+
   ngOnInit(): void {
     this.isCollapsed = this.initiallyCollapsed;
   }
-  
+
   /**
    * Toggle the panel's collapsed state
    */

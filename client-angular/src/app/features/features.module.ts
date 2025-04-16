@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for features.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -28,10 +27,8 @@ import { TinderComponent } from './tinder/tinder.component';
     ChatComponent,
     ProfileComponent,
     GalleryComponent,
-    TinderComponent
+    TinderComponent,
   ],
-  declarations: [
-    AdDetailsComponent
-  ]
+  declarations: [AdDetailsComponent],
 })
-export class FeaturesModule { }
+export class FeaturesModule {}

@@ -10,24 +10,24 @@ $danger: $error;
 .emerald-toggle-container {
   display: flex;
   align-items: center;
-  
+
   // Label Positions
   &--label-left {
     flex-direction: row;
-    
+
     .emerald-toggle__label {
       margin-right: 12px;
     }
   }
-  
+
   &--label-right {
     flex-direction: row;
-    
+
     .emerald-toggle__label {
       margin-left: 12px;
     }
   }
-  
+
   &--disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -37,93 +37,93 @@ $danger: $error;
 .emerald-toggle {
   position: relative;
   display: inline-block;
-  
+
   // Toggle Sizes
   &--small {
     width: 36px;
     height: 20px;
-    
+
     .emerald-toggle__thumb {
       width: 16px;
       height: 16px;
     }
-    
+
     &.emerald-toggle--checked .emerald-toggle__thumb {
       transform: translateX(16px);
     }
   }
-  
+
   &--medium {
     width: 48px;
     height: 24px;
-    
+
     .emerald-toggle__thumb {
       width: 20px;
       height: 20px;
     }
-    
+
     &.emerald-toggle--checked .emerald-toggle__thumb {
       transform: translateX(24px);
     }
   }
-  
+
   &--large {
     width: 60px;
     height: 30px;
-    
+
     .emerald-toggle__thumb {
       width: 26px;
       height: 26px;
     }
-    
+
     &.emerald-toggle--checked .emerald-toggle__thumb {
       transform: translateX(30px);
     }
   }
-  
+
   // Toggle Colors
   &--primary {
     &.emerald-toggle--checked .emerald-toggle__track {
       background-color: $primary;
     }
   }
-  
+
   &--success {
     &.emerald-toggle--checked .emerald-toggle__track {
       background-color: $success;
     }
   }
-  
+
   &--warning {
     &.emerald-toggle--checked .emerald-toggle__track {
       background-color: $warning;
     }
   }
-  
+
   &--danger {
     &.emerald-toggle--checked .emerald-toggle__track {
       background-color: $danger;
     }
   }
-  
+
   &--info {
     &.emerald-toggle--checked .emerald-toggle__track {
       background-color: $info;
     }
   }
-  
+
   // Toggle Input
   &__input {
     opacity: 0;
     width: 0;
     height: 0;
     position: absolute;
-    
+
     &:focus + .emerald-toggle__track {
       box-shadow: 0 0 0 2px rgba($primary, 0.3);
     }
   }
-  
+
   // Toggle Track
   &__track {
     position: absolute;
@@ -138,12 +138,12 @@ $danger: $error;
     display: flex;
     align-items: center;
     padding: 2px;
-    
+
     .emerald-toggle--disabled & {
       cursor: not-allowed;
     }
   }
-  
+
   // Toggle Thumb
   &__thumb {
     background-color: $neutral-100;
@@ -158,7 +158,7 @@ $danger: $error;
   font-size: $font-size-sm;
   color: $neutral-800;
   cursor: pointer;
-  
+
   .emerald-toggle-container--disabled & {
     cursor: not-allowed;
   }

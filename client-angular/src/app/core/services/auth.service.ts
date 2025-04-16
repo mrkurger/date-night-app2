@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (auth.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -17,7 +16,7 @@ import { User, LoginDTO, RegisterDTO, AuthResponse } from '../models/user.interf
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
@@ -40,7 +39,7 @@ export class AuthService {
     // With HttpOnly cookies, we need to validate with the server
     // We don't have access to the token expiration time client-side
     this.validateToken().subscribe({
-      next: (user) => {
+      next: user => {
         // Set auto refresh token timer (every 12 hours)
         this.setAutoRefresh(12 * 60 * 60 * 1000);
       },
@@ -50,9 +49,9 @@ export class AuthService {
           error: () => {
             // Clear user state if refresh fails
             this.currentUserSubject.next(null);
-          }
+          },
         });
-      }
+      },
     });
   }
 
@@ -60,7 +59,8 @@ export class AuthService {
    * Login with email and password
    */
   login(credentials: LoginDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
 
@@ -68,7 +68,8 @@ export class AuthService {
    * Register new user
    */
   register(userData: RegisterDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
 
@@ -77,23 +78,22 @@ export class AuthService {
    */
   logout(): void {
     // Send logout request to server to clear cookies
-    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
-      .subscribe({
-        next: () => {
-          if (this.tokenExpirationTimer) {
-            clearTimeout(this.tokenExpirationTimer);
-          }
-
-          this.currentUserSubject.next(null);
-          this.router.navigate(['/auth/login']);
-        },
-        error: (err) => {
-          console.error('Logout error:', err);
-          // Still clear local state even if server request fails
-          this.currentUserSubject.next(null);
-          this.router.navigate(['/auth/login']);
+    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
+      next: () => {
+        if (this.tokenExpirationTimer) {
+          clearTimeout(this.tokenExpirationTimer);
         }
-      });
+
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/auth/login']);
+      },
+      error: err => {
+        console.error('Logout error:', err);
+        // Still clear local state even if server request fails
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/auth/login']);
+      },
+    });
   }
 
   /**
@@ -110,7 +110,8 @@ export class AuthService {
    * Refresh the access token
    */
   refreshToken(): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
         tap(response => this.handleAuthResponse(response)),
         catchError(error => {
@@ -150,25 +151,24 @@ export class AuthService {
    * Validate the current token
    */
   private validateToken(): Observable<User> {
-    return this.http.get<any>(`${this.apiUrl}/validate`, { withCredentials: true })
-      .pipe(
-        tap(response => {
-          if (response && response.user) {
-            const user = response.user;
-            // Add id property as alias to _id for compatibility
-            if (user && user._id) {
-              user.id = user._id;
-            }
-            this.currentUserSubject.next(user);
-            return user;
+    return this.http.get<any>(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(
+      tap(response => {
+        if (response && response.user) {
+          const user = response.user;
+          // Add id property as alias to _id for compatibility
+          if (user && user._id) {
+            user.id = user._id;
           }
-          return response;
-        }),
-        catchError(error => {
-          // Don't call logout here to avoid infinite loop
-          return throwError(() => error);
-        })
-      );
+          this.currentUserSubject.next(user);
+          return user;
+        }
+        return response;
+      }),
+      catchError(error =>
+        // Don't call logout here to avoid infinite loop
+        throwError(() => error)
+      )
+    );
   }
 
   /**
@@ -186,7 +186,9 @@ export class AuthService {
       this.currentUserSubject.next(response.user);
 
       // Set auto refresh timer
-      const expirationDuration = response.expiresIn ? response.expiresIn * 1000 : 24 * 60 * 60 * 1000; // Default to 24 hours
+      const expirationDuration = response.expiresIn
+        ? response.expiresIn * 1000
+        : 24 * 60 * 60 * 1000; // Default to 24 hours
       this.setAutoRefresh(expirationDuration * 0.8); // Refresh at 80% of token lifetime
     }
   }
@@ -205,7 +207,7 @@ export class AuthService {
         error: () => {
           // If refresh fails, clear user state
           this.currentUserSubject.next(null);
-        }
+        },
       });
     }, refreshDuration);
   }
@@ -215,7 +217,8 @@ export class AuthService {
    * @param profileData User profile data to update
    */
   updateProfile(profileData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
+    return this.http
+      .put<any>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
       .pipe(
         tap(response => {
           // Update the current user with new profile data
@@ -244,7 +247,10 @@ export class AuthService {
    * @param notificationSettings Notification preferences
    */
   updateNotificationSettings(notificationSettings: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/notification-settings`, notificationSettings, { withCredentials: true })
+    return this.http
+      .put<any>(`${this.apiUrl}/notification-settings`, notificationSettings, {
+        withCredentials: true,
+      })
       .pipe(
         tap(response => {
           // Update the current user with new notification settings
@@ -253,7 +259,7 @@ export class AuthService {
             if (currentUser) {
               const updatedUser = {
                 ...currentUser,
-                notificationSettings: response.user.notificationSettings || notificationSettings
+                notificationSettings: response.user.notificationSettings || notificationSettings,
               };
               this.currentUserSubject.next(updatedUser);
             }
@@ -268,7 +274,8 @@ export class AuthService {
    * @param privacySettings Privacy preferences
    */
   updatePrivacySettings(privacySettings: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
+    return this.http
+      .put<any>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
       .pipe(
         tap(response => {
           // Update the current user with new privacy settings
@@ -277,7 +284,7 @@ export class AuthService {
             if (currentUser) {
               const updatedUser = {
                 ...currentUser,
-                privacySettings: response.user.privacySettings || privacySettings
+                privacySettings: response.user.privacySettings || privacySettings,
               };
               this.currentUserSubject.next(updatedUser);
             }
@@ -291,15 +298,14 @@ export class AuthService {
    * Delete user account
    */
   deleteAccount(): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/account`, { withCredentials: true })
-      .pipe(
-        tap(() => {
-          // Clear user state after successful deletion
-          this.currentUserSubject.next(null);
-          if (this.tokenExpirationTimer) {
-            clearTimeout(this.tokenExpirationTimer);
-          }
-        })
-      );
+    return this.http.delete<any>(`${this.apiUrl}/account`, { withCredentials: true }).pipe(
+      tap(() => {
+        // Clear user state after successful deletion
+        this.currentUserSubject.next(null);
+        if (this.tokenExpirationTimer) {
+          clearTimeout(this.tokenExpirationTimer);
+        }
+      })
+    );
   }
 }

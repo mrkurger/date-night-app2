@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (touring.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -22,25 +21,41 @@ import { RouterModule } from '@angular/router';
   templateUrl: './touring.component.html',
   styleUrls: ['./touring.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
 })
 export class TouringComponent implements OnInit {
   touringAds: TouringAd[] = [];
   upcomingTours: TouringAd[] = [];
   loading = false;
   filterForm: FormGroup;
-  
+
   // Norwegian counties for filter
   counties = [
-    'Agder', 'Innlandet', 'Møre og Romsdal', 'Nordland', 'Oslo', 
-    'Rogaland', 'Troms og Finnmark', 'Trøndelag', 'Vestfold og Telemark', 
-    'Vestland', 'Viken'
+    'Agder',
+    'Innlandet',
+    'Møre og Romsdal',
+    'Nordland',
+    'Oslo',
+    'Rogaland',
+    'Troms og Finnmark',
+    'Trøndelag',
+    'Vestfold og Telemark',
+    'Vestland',
+    'Viken',
   ];
-  
+
   // Major cities for filter
   cities = [
-    'Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Drammen', 
-    'Fredrikstad', 'Kristiansand', 'Sandnes', 'Tromsø', 'Ålesund'
+    'Oslo',
+    'Bergen',
+    'Trondheim',
+    'Stavanger',
+    'Drammen',
+    'Fredrikstad',
+    'Kristiansand',
+    'Sandnes',
+    'Tromsø',
+    'Ålesund',
   ];
 
   constructor(
@@ -51,14 +66,14 @@ export class TouringComponent implements OnInit {
     this.filterForm = this.fb.group({
       county: [''],
       city: [''],
-      days: [30]
+      days: [30],
     });
   }
 
   ngOnInit(): void {
     this.loadTouringAdvertisers();
     this.loadUpcomingTours();
-    
+
     // Subscribe to filter changes
     this.filterForm.valueChanges.subscribe(() => {
       this.loadUpcomingTours();
@@ -67,8 +82,9 @@ export class TouringComponent implements OnInit {
 
   loadTouringAdvertisers(): void {
     this.loading = true;
-    
-    this.travelService.getTouringAdvertisers()
+
+    this.travelService
+      .getTouringAdvertisers()
       .pipe(
         catchError(error => {
           this.notificationService.error('Failed to load touring advertisers');
@@ -88,10 +104,11 @@ export class TouringComponent implements OnInit {
 
   loadUpcomingTours(): void {
     const { county, city, days } = this.filterForm.value;
-    
+
     this.loading = true;
-    
-    this.travelService.getUpcomingTours(city, county, days)
+
+    this.travelService
+      .getUpcomingTours(city, county, days)
       .pipe(
         catchError(error => {
           this.notificationService.error('Failed to load upcoming tours');
@@ -113,7 +130,7 @@ export class TouringComponent implements OnInit {
     this.filterForm.reset({
       county: '',
       city: '',
-      days: 30
+      days: 30,
     });
   }
 

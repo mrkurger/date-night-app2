@@ -5,22 +5,28 @@
   </div>
 
   <!-- Current Subscription Info -->
-  <div class="current-subscription" *ngIf="currentSubscription && currentSubscription.tier !== 'free'">
+  <div
+    class="current-subscription"
+    *ngIf="currentSubscription && currentSubscription.tier !== 'free'"
+  >
     <div class="card">
       <div class="card-header">
         <h2>Current Subscription</h2>
       </div>
       <div class="card-body">
         <p><strong>Plan:</strong> {{ currentSubscription.tier | titlecase }}</p>
-        <p><strong>Expires:</strong> {{ currentSubscription.expires | date:'medium' }}</p>
+        <p><strong>Expires:</strong> {{ currentSubscription.expires | date: 'medium' }}</p>
         <p *ngIf="currentSubscription.cancelAtPeriodEnd" class="text-warning">
           Your subscription will not renew after the expiration date.
         </p>
-        <button 
-          class="btn btn-danger" 
-          (click)="cancelSubscription()" 
-          [disabled]="loading || currentSubscription.cancelAtPeriodEnd">
-          {{ currentSubscription.cancelAtPeriodEnd ? 'Subscription Cancelled' : 'Cancel Subscription' }}
+        <button
+          class="btn btn-danger"
+          (click)="cancelSubscription()"
+          [disabled]="loading || currentSubscription.cancelAtPeriodEnd"
+        >
+          {{
+            currentSubscription.cancelAtPeriodEnd ? 'Subscription Cancelled' : 'Cancel Subscription'
+          }}
         </button>
       </div>
     </div>
@@ -46,7 +52,11 @@
               <li>No ad boosting</li>
               <li>Standard support</li>
             </ul>
-            <button class="btn btn-outline-primary" (click)="selectPrice(null)" [disabled]="currentSubscription?.tier === 'free'">
+            <button
+              class="btn btn-outline-primary"
+              (click)="selectPrice(null)"
+              [disabled]="currentSubscription?.tier === 'free'"
+            >
               {{ currentSubscription?.tier === 'free' ? 'Current Plan' : 'Select' }}
             </button>
           </div>
@@ -64,11 +74,16 @@
               <span class="amount">{{ formatPrice(price) }}</span>
             </div>
             <p class="description">{{ price.description }}</p>
-            <button 
-              class="btn btn-primary" 
-              (click)="selectPrice(price)" 
-              [disabled]="currentSubscription?.tier === price.productName.toLowerCase()">
-              {{ currentSubscription?.tier === price.productName.toLowerCase() ? 'Current Plan' : 'Select' }}
+            <button
+              class="btn btn-primary"
+              (click)="selectPrice(price)"
+              [disabled]="currentSubscription?.tier === price.productName.toLowerCase()"
+            >
+              {{
+                currentSubscription?.tier === price.productName.toLowerCase()
+                  ? 'Current Plan'
+                  : 'Select'
+              }}
             </button>
           </div>
         </div>
@@ -86,28 +101,38 @@
         <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="name">Name on Card</label>
-            <input 
-              type="text" 
-              id="name" 
-              formControlName="name" 
-              class="form-control" 
-              [class.is-invalid]="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched"
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              [class.is-invalid]="
+                paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched
+              "
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched"
             >
-            <div class="invalid-feedback" *ngIf="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched">
               Name is required
             </div>
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              formControlName="email" 
-              class="form-control" 
-              [class.is-invalid]="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched"
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+              [class.is-invalid]="
+                paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched
+              "
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched"
             >
-            <div class="invalid-feedback" *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched">
               Valid email is required
             </div>
           </div>
@@ -119,10 +144,11 @@
           </div>
 
           <div class="form-group">
-            <button 
-              type="submit" 
-              class="btn btn-success btn-block" 
-              [disabled]="paymentForm.invalid || loading">
+            <button
+              type="submit"
+              class="btn btn-success btn-block"
+              [disabled]="paymentForm.invalid || loading"
+            >
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
               Subscribe Now
             </button>
@@ -130,7 +156,9 @@
 
           <div class="payment-details">
             <p>You will be charged {{ formatPrice(selectedPrice) }}</p>
-            <p class="text-muted">Your subscription will automatically renew. You can cancel anytime.</p>
+            <p class="text-muted">
+              Your subscription will automatically renew. You can cancel anytime.
+            </p>
           </div>
         </form>
       </div>

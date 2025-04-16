@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (SCHEMA_REFACTOR_NEEDED)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -18,11 +17,11 @@ const adSchema = new mongoose.Schema({
   datePosted: { type: Date, default: Date.now },
   coordinates: {
     type: { type: String, default: 'Point' },
-    coordinates: [Number]
+    coordinates: [Number],
   },
   advertiser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   profileImage: { type: String, default: '/assets/images/default-profile.jpg' },
-  county: String // <-- new field for county
+  county: String, // <-- new field for county
 });
 
 const userSchema = new mongoose.Schema({
@@ -36,9 +35,9 @@ const userSchema = new mongoose.Schema({
     github: { id: String },
     google: { id: String },
     reddit: { id: String },
-    apple: { id: String }
+    apple: { id: String },
   },
-  travelPlan: { type: [String], default: [] } // <-- new field for advertisers' travel plans
+  travelPlan: { type: [String], default: [] }, // <-- new field for advertisers' travel plans
 });
 
 const chatMessageSchema = new mongoose.Schema({
@@ -46,7 +45,7 @@ const chatMessageSchema = new mongoose.Schema({
   recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   message: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
-  read: { type: Boolean, default: false }
+  read: { type: Boolean, default: false },
 });
 
 adSchema.index({ coordinates: '2dsphere' });
@@ -59,5 +58,5 @@ const getModel = (name, schema) => {
 module.exports = {
   Ad: getModel('Ad', adSchema),
   User: getModel('User', userSchema),
-  ChatMessage: getModel('ChatMessage', chatMessageSchema)
+  ChatMessage: getModel('ChatMessage', chatMessageSchema),
 };

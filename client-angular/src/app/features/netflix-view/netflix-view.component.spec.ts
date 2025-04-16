@@ -13,14 +13,14 @@ import { AuthService } from '../../core/services/auth.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 // Import Emerald components
-import { 
-  AppCardComponent, 
-  CardGridComponent, 
+import {
+  AppCardComponent,
+  CardGridComponent,
   PageHeaderComponent,
   SkeletonLoaderComponent,
   LabelComponent,
   FloatingActionButtonComponent,
-  ToggleComponent
+  ToggleComponent,
 } from '../../shared/emerald';
 
 // Mock data
@@ -37,7 +37,7 @@ const mockAds = [
     images: ['/assets/images/test-image-1.jpg'],
     tags: ['Tag1', 'Tag2', 'Tag3'],
     createdAt: new Date().toISOString(),
-    isTouring: false
+    isTouring: false,
   },
   {
     _id: '2',
@@ -50,8 +50,8 @@ const mockAds = [
     images: ['/assets/images/test-image-2.jpg'],
     tags: ['Tag4', 'Tag5'],
     createdAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-    isTouring: true
-  }
+    isTouring: true,
+  },
 ];
 
 // Mock services
@@ -59,15 +59,15 @@ class MockAdService {
   getFeaturedAds() {
     return of(mockAds.slice(0, 1));
   }
-  
+
   getTrendingAds() {
     return of(mockAds);
   }
-  
+
   getAds() {
     return of(mockAds);
   }
-  
+
   recordSwipe(adId: string, direction: string) {
     return of({ success: true });
   }
@@ -79,7 +79,7 @@ class MockNotificationService {
   info(message: string) {}
   warning(message: string) {}
   removeToast(id: string) {}
-  
+
   // Mock observables
   toasts$ = of([]);
   unreadCount$ = of(0);
@@ -111,21 +111,21 @@ describe('NetflixViewComponent', () => {
         ReactiveFormsModule,
         NetflixViewComponent,
         // Import Emerald components
-        AppCardComponent, 
-        CardGridComponent, 
+        AppCardComponent,
+        CardGridComponent,
         PageHeaderComponent,
         SkeletonLoaderComponent,
         LabelComponent,
         FloatingActionButtonComponent,
-        ToggleComponent
+        ToggleComponent,
       ],
       providers: [
         { provide: AdService, useClass: MockAdService },
         { provide: NotificationService, useClass: MockNotificationService },
         { provide: ChatService, useClass: MockChatService },
-        { provide: AuthService, useClass: MockAuthService }
+        { provide: AuthService, useClass: MockAuthService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add this to handle custom elements
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle custom elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetflixViewComponent);
@@ -135,7 +135,7 @@ describe('NetflixViewComponent', () => {
     chatService = TestBed.inject(ChatService);
     authService = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
-    
+
     // Spy on router navigation
     spyOn(router, 'navigateByUrl').and.stub();
   });
@@ -149,10 +149,10 @@ describe('NetflixViewComponent', () => {
       spyOn(adService, 'getFeaturedAds').and.callThrough();
       spyOn(adService, 'getTrendingAds').and.callThrough();
       spyOn(adService, 'getAds').and.callThrough();
-      
+
       component.ngOnInit();
       tick();
-      
+
       expect(adService.getFeaturedAds).toHaveBeenCalled();
       expect(adService.getTrendingAds).toHaveBeenCalled();
       expect(adService.getAds).toHaveBeenCalled();
@@ -168,23 +168,25 @@ describe('NetflixViewComponent', () => {
 
     it('should check authentication status on init', fakeAsync(() => {
       spyOn(authService.currentUser$, 'subscribe').and.callThrough();
-      
+
       component.ngOnInit();
       tick();
-      
+
       expect(authService.currentUser$.subscribe).toHaveBeenCalled();
       expect(component.isAuthenticated).toBeTrue();
     }));
 
     it('should handle error when loading featured ads fails', fakeAsync(() => {
-      spyOn(adService, 'getFeaturedAds').and.returnValue(throwError(() => new Error('Failed to load featured ads')));
+      spyOn(adService, 'getFeaturedAds').and.returnValue(
+        throwError(() => new Error('Failed to load featured ads'))
+      );
       spyOn(adService, 'getTrendingAds').and.callThrough();
       spyOn(adService, 'getAds').and.callThrough();
       spyOn(console, 'error').and.callThrough();
-      
+
       component.ngOnInit();
       tick();
-      
+
       expect(adService.getFeaturedAds).toHaveBeenCalled();
       expect(console.error).toHaveBeenCalledWith('Error loading featured ads:', jasmine.any(Error));
       expect(adService.getTrendingAds).toHaveBeenCalled();
@@ -200,7 +202,7 @@ describe('NetflixViewComponent', () => {
 
     it('should navigate to ad details when viewAdDetails is called', () => {
       component.viewAdDetails('1');
-      
+
       // Check that router.navigateByUrl was called with the correct URL
       expect(router.navigateByUrl).toHaveBeenCalledWith('/ad-details/1');
     });
@@ -208,9 +210,9 @@ describe('NetflixViewComponent', () => {
     it('should like an ad when likeAd is called', () => {
       spyOn(adService, 'recordSwipe').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.likeAd('1');
-      
+
       expect(adService.recordSwipe).toHaveBeenCalledWith('1', 'right');
       expect(notificationService.success).toHaveBeenCalledWith('Added to your favorites');
     });
@@ -218,17 +220,17 @@ describe('NetflixViewComponent', () => {
     it('should show error notification when liking ad without authentication', () => {
       component.isAuthenticated = false;
       spyOn(notificationService, 'error').and.callThrough();
-      
+
       component.likeAd('1');
-      
+
       expect(notificationService.error).toHaveBeenCalledWith('Please log in to like ads');
     });
 
     it('should start chat when startChat is called', () => {
       spyOn(chatService, 'createAdRoom').and.callThrough();
-      
+
       component.startChat('1');
-      
+
       expect(chatService.createAdRoom).toHaveBeenCalledWith('1');
       expect(router.navigateByUrl).toHaveBeenCalledWith('/chat/chat-room-1');
     });
@@ -236,9 +238,9 @@ describe('NetflixViewComponent', () => {
     it('should show error notification when starting chat without authentication', () => {
       component.isAuthenticated = false;
       spyOn(notificationService, 'error').and.callThrough();
-      
+
       component.startChat('1');
-      
+
       expect(notificationService.error).toHaveBeenCalledWith('Please log in to start a chat');
     });
 
@@ -246,13 +248,13 @@ describe('NetflixViewComponent', () => {
       spyOn(component, 'viewAdDetails').and.callThrough();
       spyOn(component, 'likeAd').and.callThrough();
       spyOn(component, 'startChat').and.callThrough();
-      
+
       component.onHeroAction({ id: 'view' }, '1');
       expect(component.viewAdDetails).toHaveBeenCalledWith('1');
-      
+
       component.onHeroAction({ id: 'favorite' }, '1');
       expect(component.likeAd).toHaveBeenCalledWith('1');
-      
+
       component.onHeroAction({ id: 'chat' }, '1');
       expect(component.startChat).toHaveBeenCalledWith('1');
     });
@@ -261,20 +263,20 @@ describe('NetflixViewComponent', () => {
       spyOn(component, 'viewAdDetails').and.callThrough();
       spyOn(component, 'likeAd').and.callThrough();
       spyOn(component, 'startChat').and.callThrough();
-      
+
       component.onCardAction({ id: 'view' }, '1');
       expect(component.viewAdDetails).toHaveBeenCalledWith('1');
-      
+
       component.onCardAction({ id: 'favorite' }, '1');
       expect(component.likeAd).toHaveBeenCalledWith('1');
-      
+
       component.onCardAction({ id: 'chat' }, '1');
       expect(component.startChat).toHaveBeenCalledWith('1');
     });
 
     it('should use itemId from event if available', () => {
       spyOn(component, 'viewAdDetails').and.callThrough();
-      
+
       component.onCardAction({ id: 'view', itemId: '2' }, '1');
       expect(component.viewAdDetails).toHaveBeenCalledWith('2');
     });
@@ -289,9 +291,9 @@ describe('NetflixViewComponent', () => {
     it('should apply filters when applyFilters is called', () => {
       spyOn(component, 'loadAds').and.callThrough();
       spyOn(notificationService, 'success').and.callThrough();
-      
+
       component.applyFilters();
-      
+
       expect(component.loadAds).toHaveBeenCalled();
       expect(notificationService.success).toHaveBeenCalledWith('Filters applied');
     });
@@ -300,17 +302,17 @@ describe('NetflixViewComponent', () => {
       component.filterForm.setValue({
         category: 'Escort',
         location: 'Oslo',
-        touringOnly: true
+        touringOnly: true,
       });
-      
+
       spyOn(component, 'applyFilters').and.callThrough();
-      
+
       component.resetFilters();
-      
+
       expect(component.filterForm.value).toEqual({
         category: '',
         location: '',
-        touringOnly: false
+        touringOnly: false,
       });
       expect(component.applyFilters).toHaveBeenCalled();
     });
@@ -338,17 +340,17 @@ describe('NetflixViewComponent', () => {
         clickCount: 0,
         inquiryCount: 0,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
-      
+
       expect(component.getMediaUrl(mockAd)).toBe('/assets/images/test-image-1.jpg');
-      
+
       // Create a mock Ad without images
       const mockAdWithoutImages: any = {
         ...mockAd,
-        images: []
+        images: [],
       };
-      
+
       expect(component.getMediaUrl(mockAdWithoutImages)).toBe('/assets/images/default-profile.jpg');
     });
 
@@ -357,14 +359,14 @@ describe('NetflixViewComponent', () => {
       // We'll just check that the array length remains the same and contains the same elements
       const original = [1, 2, 3, 4, 5];
       const shuffled = component['shuffleArray'](original);
-      
+
       expect(shuffled.length).toBe(original.length);
-      
+
       // Check that all elements from original are in shuffled
       original.forEach(item => {
         expect(shuffled).toContain(item);
       });
-      
+
       // Check that all elements from shuffled are in original
       shuffled.forEach(item => {
         expect(original).toContain(item);

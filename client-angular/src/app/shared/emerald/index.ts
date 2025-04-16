@@ -1,8 +1,8 @@
 /**
  * Emerald.js Components Index
- * 
+ *
  * This file exports all Emerald.js component wrappers for easy importing.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/
  */
 

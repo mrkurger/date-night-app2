@@ -4,28 +4,43 @@
 <div class="emerald-skeleton-container">
   <ng-container *ngFor="let item of [].constructor(count); let i = index">
     <!-- Text Skeleton -->
-    <div *ngIf="type === 'text'" 
-         class="emerald-skeleton emerald-skeleton--text" 
-         [ngClass]="{'emerald-skeleton--animated': animated}"
-         [ngStyle]="{'width': width || '100%', 'height': height || '16px', 'border-radius': borderRadius || '4px'}">
-    </div>
-    
+    <div
+      *ngIf="type === 'text'"
+      class="emerald-skeleton emerald-skeleton--text"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+      [ngStyle]="{
+        width: width || '100%',
+        height: height || '16px',
+        'border-radius': borderRadius || '4px',
+      }"
+    ></div>
+
     <!-- Circle Skeleton -->
-    <div *ngIf="type === 'circle'" 
-         class="emerald-skeleton emerald-skeleton--circle" 
-         [ngClass]="{'emerald-skeleton--animated': animated}"
-         [ngStyle]="{'width': width || '48px', 'height': height || '48px', 'border-radius': '50%'}">
-    </div>
-    
+    <div
+      *ngIf="type === 'circle'"
+      class="emerald-skeleton emerald-skeleton--circle"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+      [ngStyle]="{ width: width || '48px', height: height || '48px', 'border-radius': '50%' }"
+    ></div>
+
     <!-- Rectangle Skeleton -->
-    <div *ngIf="type === 'rectangle'" 
-         class="emerald-skeleton emerald-skeleton--rectangle" 
-         [ngClass]="{'emerald-skeleton--animated': animated}"
-         [ngStyle]="{'width': width || '100%', 'height': height || '200px', 'border-radius': borderRadius || '8px'}">
-    </div>
-    
+    <div
+      *ngIf="type === 'rectangle'"
+      class="emerald-skeleton emerald-skeleton--rectangle"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+      [ngStyle]="{
+        width: width || '100%',
+        height: height || '200px',
+        'border-radius': borderRadius || '8px',
+      }"
+    ></div>
+
     <!-- Card Skeleton -->
-    <div *ngIf="type === 'card'" class="emerald-skeleton-card" [ngClass]="{'emerald-skeleton--animated': animated}">
+    <div
+      *ngIf="type === 'card'"
+      class="emerald-skeleton-card"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+    >
       <div class="emerald-skeleton emerald-skeleton--rectangle emerald-skeleton-card__media"></div>
       <div class="emerald-skeleton-card__content">
         <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__title"></div>
@@ -34,37 +49,51 @@
         <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__text"></div>
       </div>
     </div>
-    
+
     <!-- Profile Skeleton -->
-    <div *ngIf="type === 'profile'" class="emerald-skeleton-profile" [ngClass]="{'emerald-skeleton--animated': animated}">
+    <div
+      *ngIf="type === 'profile'"
+      class="emerald-skeleton-profile"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+    >
       <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-profile__avatar"></div>
       <div class="emerald-skeleton-profile__content">
         <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-profile__name"></div>
         <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-profile__info"></div>
       </div>
     </div>
-    
+
     <!-- List Skeleton -->
-    <div *ngIf="type === 'list'" class="emerald-skeleton-list" [ngClass]="{'emerald-skeleton--animated': animated}">
+    <div
+      *ngIf="type === 'list'"
+      class="emerald-skeleton-list"
+      [ngClass]="{ 'emerald-skeleton--animated': animated }"
+    >
       <div class="emerald-skeleton-list__item">
         <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
         <div class="emerald-skeleton-list__content">
           <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"></div>
+          <div
+            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
+          ></div>
         </div>
       </div>
       <div class="emerald-skeleton-list__item">
         <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
         <div class="emerald-skeleton-list__content">
           <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"></div>
+          <div
+            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
+          ></div>
         </div>
       </div>
       <div class="emerald-skeleton-list__item">
         <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
         <div class="emerald-skeleton-list__content">
           <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"></div>
+          <div
+            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
+          ></div>
         </div>
       </div>
     </div>

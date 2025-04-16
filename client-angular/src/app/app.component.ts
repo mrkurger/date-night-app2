@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (app.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -28,7 +27,15 @@ import { NgIf } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, NotificationComponent, DebugInfoComponent, NgIf]
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    NotificationComponent,
+    DebugInfoComponent,
+    NgIf,
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
@@ -55,12 +62,20 @@ export class AppComponent implements OnInit, OnDestroy {
     // Set default meta tags for SEO
     this.titleService.setTitle('Date Night App - Find Your Perfect Match');
     this.metaService.addTags([
-      { name: 'description', content: 'Date Night App helps you find your perfect match for a memorable date night experience.' },
+      {
+        name: 'description',
+        content:
+          'Date Night App helps you find your perfect match for a memorable date night experience.',
+      },
       { name: 'keywords', content: 'dating, date night, match, social, relationships' },
       { name: 'robots', content: 'index, follow' },
       { property: 'og:title', content: 'Date Night App - Find Your Perfect Match' },
-      { property: 'og:description', content: 'Date Night App helps you find your perfect match for a memorable date night experience.' },
-      { property: 'og:type', content: 'website' }
+      {
+        property: 'og:description',
+        content:
+          'Date Night App helps you find your perfect match for a memorable date night experience.',
+      },
+      { property: 'og:type', content: 'website' },
     ]);
   }
 

@@ -1,14 +1,17 @@
 <!-- Emerald Pager Component -->
 <!-- Documentation: https://docs-emerald.condorlabs.io/Pager -->
 
-<div class="emerald-pager" 
-     [ngClass]="{'emerald-pager--simple': style === 'simple', 
-                'emerald-pager--compact': style === 'compact',
-                'emerald-pager--small': size === 'small',
-                'emerald-pager--large': size === 'large',
-                'emerald-pager--left': align === 'left',
-                'emerald-pager--right': align === 'right'}">
-  
+<div
+  class="emerald-pager"
+  [ngClass]="{
+    'emerald-pager--simple': style === 'simple',
+    'emerald-pager--compact': style === 'compact',
+    'emerald-pager--small': size === 'small',
+    'emerald-pager--large': size === 'large',
+    'emerald-pager--left': align === 'left',
+    'emerald-pager--right': align === 'right',
+  }"
+>
   <!-- Page Size Selector -->
   <div class="emerald-pager__size-selector" *ngIf="showPageSize">
     <label for="pageSize">Items per page:</label>
@@ -16,57 +19,67 @@
       <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
     </select>
   </div>
-  
+
   <!-- Pagination Controls -->
   <div class="emerald-pager__controls">
     <!-- First Page Button -->
-    <button *ngIf="showFirstLast && style !== 'simple'" 
-            class="emerald-pager__button emerald-pager__button--first" 
-            [disabled]="currentPage === 1"
-            (click)="goToFirstPage()"
-            aria-label="Go to first page">
+    <button
+      *ngIf="showFirstLast && style !== 'simple'"
+      class="emerald-pager__button emerald-pager__button--first"
+      [disabled]="currentPage === 1"
+      (click)="goToFirstPage()"
+      aria-label="Go to first page"
+    >
       <i class="fas fa-angle-double-left"></i>
     </button>
-    
+
     <!-- Previous Page Button -->
-    <button *ngIf="showPrevNext" 
-            class="emerald-pager__button emerald-pager__button--prev" 
-            [disabled]="currentPage === 1"
-            (click)="goToPreviousPage()"
-            aria-label="Go to previous page">
+    <button
+      *ngIf="showPrevNext"
+      class="emerald-pager__button emerald-pager__button--prev"
+      [disabled]="currentPage === 1"
+      (click)="goToPreviousPage()"
+      aria-label="Go to previous page"
+    >
       <i class="fas fa-angle-left"></i>
     </button>
-    
+
     <!-- Page Numbers (Default and Compact Styles) -->
     <div *ngIf="style !== 'simple'" class="emerald-pager__pages">
-      <button *ngFor="let page of visiblePages" 
-              class="emerald-pager__button emerald-pager__button--page" 
-              [ngClass]="{'emerald-pager__button--active': page === currentPage}"
-              (click)="goToPage(page)">
+      <button
+        *ngFor="let page of visiblePages"
+        class="emerald-pager__button emerald-pager__button--page"
+        [ngClass]="{ 'emerald-pager__button--active': page === currentPage }"
+        (click)="goToPage(page)"
+      >
         {{ page }}
       </button>
     </div>
-    
+
     <!-- Current Page Indicator (Simple Style) -->
     <div *ngIf="style === 'simple'" class="emerald-pager__current">
       <span>{{ currentPage }} / {{ totalPages }}</span>
     </div>
-    
+
     <!-- Next Page Button -->
-    <button *ngIf="showPrevNext" 
-            class="emerald-pager__button emerald-pager__button--next" 
-            [disabled]="currentPage === totalPages"
-            (click)="goToNextPage()"
-            aria-label="Go to next page">
+    <button
+      *ngIf="showPrevNext"
+      class="emerald-pager__button emerald-pager__button--next"
+      [disabled]="currentPage === totalPages"
+      (click)="goToNextPage()"
+      aria-label="Go to next page"
+    >
       <i class="fas fa-angle-right"></i>
     </button>
-    
+
     <!-- Last Page Button -->
-    <button *ngIf="showFirstLast && style !== 'simple'" 
-            class="emerald-pager__button emerald-pager__button--last" 
-            [disabled]="currentPage === totalPages"
-            (click)="goToLastPage()"
-            aria-label="Go to last page">
+    <button
+      *ngIf="showFirstLast && style !== 'simple'"
+      class="emerald-pager__button emerald-pager__button--last"
+      [disabled]="currentPage === totalPages"
+      (click)="goToLastPage()"
+      aria-label="Go to last page"
+    >
       <i class="fas fa-angle-double-right"></i>
     </button>
   </div>

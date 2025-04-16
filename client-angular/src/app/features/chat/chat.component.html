@@ -30,43 +30,74 @@
     <div class="chat-search">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Search conversations..." [(ngModel)]="searchTerm">
-        <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+        <input matInput placeholder="Search conversations..." [(ngModel)]="searchTerm" />
+        <button
+          *ngIf="searchTerm"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchTerm = ''"
+        >
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      
+
       <!-- Conversation Filters -->
       <div class="conversation-filters">
-        <button mat-button [class.active]="currentFilter === 'all'" (click)="filterConversations('all')">All</button>
-        <button mat-button [class.active]="currentFilter === 'unread'" (click)="filterConversations('unread')">Unread</button>
-        <button mat-button [class.active]="currentFilter === 'archived'" (click)="filterConversations('archived')">Archived</button>
+        <button
+          mat-button
+          [class.active]="currentFilter === 'all'"
+          (click)="filterConversations('all')"
+        >
+          All
+        </button>
+        <button
+          mat-button
+          [class.active]="currentFilter === 'unread'"
+          (click)="filterConversations('unread')"
+        >
+          Unread
+        </button>
+        <button
+          mat-button
+          [class.active]="currentFilter === 'archived'"
+          (click)="filterConversations('archived')"
+        >
+          Archived
+        </button>
       </div>
     </div>
 
     <div class="chat-contacts">
       <!-- Loading State -->
       <div *ngIf="loadingContacts" class="contacts-loading">
-        <emerald-skeleton-loader type="list" [count]="3" [animated]="true"></emerald-skeleton-loader>
+        <emerald-skeleton-loader
+          type="list"
+          [count]="3"
+          [animated]="true"
+        ></emerald-skeleton-loader>
       </div>
-      
+
       <!-- Contact List -->
-      <div *ngFor="let contact of filteredContacts"
-           class="contact-item"
-           [class.active]="selectedContactId === contact.id"
-           [class.unread]="contact.unreadCount > 0"
-           (click)="selectContact(contact.id)">
+      <div
+        *ngFor="let contact of filteredContacts"
+        class="contact-item"
+        [class.active]="selectedContactId === contact.id"
+        [class.unread]="contact.unreadCount > 0"
+        (click)="selectContact(contact.id)"
+      >
         <emerald-avatar
           [imageUrl]="contact.imageUrl"
           [name]="contact.name"
           [isOnline]="contact.online"
-          size="medium">
+          size="medium"
+        >
         </emerald-avatar>
-        
+
         <div class="contact-info">
           <div class="contact-name-row">
             <div class="contact-name">{{ contact.name }}</div>
-            <div class="contact-time">{{ contact.lastMessageTime | date:'shortTime' }}</div>
+            <div class="contact-time">{{ contact.lastMessageTime | date: 'shortTime' }}</div>
           </div>
           <div class="contact-preview-row">
             <div class="contact-preview">
@@ -100,26 +131,36 @@
       <!-- Conversation Header -->
       <div class="chat-main-header">
         <div class="header-left">
-          <button mat-icon-button class="back-button" (click)="deselectContact()" matTooltip="Back to conversations">
+          <button
+            mat-icon-button
+            class="back-button"
+            (click)="deselectContact()"
+            matTooltip="Back to conversations"
+          >
             <mat-icon>arrow_back</mat-icon>
           </button>
-          
+
           <emerald-avatar
             [imageUrl]="getSelectedContact()?.imageUrl"
             [name]="getSelectedContact()?.name"
             [isOnline]="getSelectedContact()?.online"
             size="medium"
-            (avatarClick)="viewContactProfile()">
+            (avatarClick)="viewContactProfile()"
+          >
           </emerald-avatar>
-          
+
           <div class="chat-recipient">
             <div class="recipient-name">{{ getSelectedContact()?.name }}</div>
             <div class="recipient-status" [class.online]="getSelectedContact()?.online">
-              {{ getSelectedContact()?.online ? 'Online' : 'Last seen ' + (getSelectedContact()?.lastSeen | date:'shortTime') }}
+              {{
+                getSelectedContact()?.online
+                  ? 'Online'
+                  : 'Last seen ' + (getSelectedContact()?.lastSeen | date: 'shortTime')
+              }}
             </div>
           </div>
         </div>
-        
+
         <div class="header-actions">
           <button mat-icon-button matTooltip="Media Gallery" (click)="openMediaGallery()">
             <mat-icon>photo_library</mat-icon>
@@ -152,40 +193,54 @@
         <!-- Date Separator -->
         <div *ngFor="let group of messageGroups" class="message-group">
           <div class="date-separator">
-            <span>{{ group.date | date:'mediumDate' }}</span>
+            <span>{{ group.date | date: 'mediumDate' }}</span>
           </div>
-          
+
           <!-- Messages -->
-          <div *ngFor="let message of group.messages"
-               class="message"
-               [class.sent]="message.sender.id === currentUserId"
-               [class.received]="message.sender.id !== currentUserId">
-            
+          <div
+            *ngFor="let message of group.messages"
+            class="message"
+            [class.sent]="message.sender.id === currentUserId"
+            [class.received]="message.sender.id !== currentUserId"
+          >
             <!-- Sender Avatar (only for received messages) -->
             <emerald-avatar
               *ngIf="message.sender.id !== currentUserId"
               [imageUrl]="getContactById(message.sender.id)?.imageUrl"
               [name]="message.sender.username"
               size="small"
-              class="message-avatar">
+              class="message-avatar"
+            >
             </emerald-avatar>
-            
+
             <!-- Message Content -->
             <div class="message-bubble">
               <!-- Message Text -->
-              <div class="message-content" [innerHTML]="formatMessageContent(message.message)"></div>
-              
+              <div
+                class="message-content"
+                [innerHTML]="formatMessageContent(message.message)"
+              ></div>
+
               <!-- Message Attachments -->
-              <div *ngIf="message.attachments && message.attachments.length > 0" class="message-attachments">
+              <div
+                *ngIf="message.attachments && message.attachments.length > 0"
+                class="message-attachments"
+              >
                 <!-- Image Attachment -->
                 <div *ngFor="let attachment of message.attachments" class="attachment">
-                  <img *ngIf="isImageAttachment(attachment)" 
-                       [src]="attachment.url" 
-                       [alt]="attachment.name"
-                       (click)="openImagePreview(attachment)">
-                  
+                  <img
+                    *ngIf="isImageAttachment(attachment)"
+                    [src]="attachment.url"
+                    [alt]="attachment.name"
+                    (click)="openImagePreview(attachment)"
+                  />
+
                   <!-- File Attachment -->
-                  <div *ngIf="!isImageAttachment(attachment)" class="file-attachment" (click)="downloadAttachment(attachment)">
+                  <div
+                    *ngIf="!isImageAttachment(attachment)"
+                    class="file-attachment"
+                    (click)="downloadAttachment(attachment)"
+                  >
                     <mat-icon>{{ getFileIcon(attachment) }}</mat-icon>
                     <div class="file-info">
                       <div class="file-name">{{ attachment.name }}</div>
@@ -197,16 +252,20 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Message Metadata -->
               <div class="message-meta">
-                <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
-                <span *ngIf="message.sender.id === currentUserId" class="message-status" [class.read]="message.read">
+                <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
+                <span
+                  *ngIf="message.sender.id === currentUserId"
+                  class="message-status"
+                  [class.read]="message.read"
+                >
                   <mat-icon class="status-icon">{{ message.read ? 'done_all' : 'done' }}</mat-icon>
                 </span>
               </div>
             </div>
-            
+
             <!-- Message Actions -->
             <div class="message-actions">
               <button mat-icon-button [matMenuTriggerFor]="messageMenu">
@@ -233,13 +292,14 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Typing Indicator -->
         <div *ngIf="isContactTyping" class="typing-indicator-container">
           <emerald-avatar
             [imageUrl]="getSelectedContact()?.imageUrl"
             [name]="getSelectedContact()?.name"
-            size="small">
+            size="small"
+          >
           </emerald-avatar>
           <div class="typing-bubble">
             <div class="typing-dots">
@@ -275,50 +335,67 @@
       <!-- Message Input Area -->
       <div class="message-input-container">
         <!-- Attachment Button -->
-        <button mat-icon-button matTooltip="Add Attachment" (click)="openAttachmentMenu()" class="attachment-button">
+        <button
+          mat-icon-button
+          matTooltip="Add Attachment"
+          (click)="openAttachmentMenu()"
+          class="attachment-button"
+        >
           <mat-icon>attach_file</mat-icon>
         </button>
-        
+
         <!-- Text Input -->
         <div class="message-input">
-          <textarea 
+          <textarea
             [(ngModel)]="newMessage"
             (keyup.enter)="handleEnterKey($event)"
             (input)="onTyping()"
             placeholder="Type a message..."
             rows="1"
-            #messageInput>
+            #messageInput
+          >
           </textarea>
-          
+
           <!-- Emoji Picker -->
-          <button mat-icon-button matTooltip="Add Emoji" (click)="toggleEmojiPicker()" class="emoji-button">
+          <button
+            mat-icon-button
+            matTooltip="Add Emoji"
+            (click)="toggleEmojiPicker()"
+            class="emoji-button"
+          >
             <mat-icon>sentiment_satisfied_alt</mat-icon>
           </button>
         </div>
-        
+
         <!-- Send Button -->
-        <button 
-          mat-fab 
-          color="primary" 
-          class="send-button" 
-          (click)="sendMessage()" 
-          [disabled]="!canSendMessage()">
+        <button
+          mat-fab
+          color="primary"
+          class="send-button"
+          (click)="sendMessage()"
+          [disabled]="!canSendMessage()"
+        >
           <mat-icon>send</mat-icon>
         </button>
       </div>
-      
+
       <!-- Emoji Picker (hidden by default) -->
       <div *ngIf="showEmojiPicker" class="emoji-picker">
         <div class="emoji-categories">
-          <button mat-icon-button *ngFor="let category of emojiCategories" (click)="selectEmojiCategory(category)">
+          <button
+            mat-icon-button
+            *ngFor="let category of emojiCategories"
+            (click)="selectEmojiCategory(category)"
+          >
             <mat-icon>{{ category.icon }}</mat-icon>
           </button>
         </div>
         <div class="emoji-list">
-          <button 
-            *ngFor="let emoji of currentCategoryEmojis" 
-            class="emoji-item" 
-            (click)="addEmoji(emoji)">
+          <button
+            *ngFor="let emoji of currentCategoryEmojis"
+            class="emoji-item"
+            (click)="addEmoji(emoji)"
+          >
             {{ emoji }}
           </button>
         </div>
@@ -346,23 +423,26 @@
   <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Search contacts</mat-label>
-      <input matInput [(ngModel)]="newMessageSearch" placeholder="Type a name...">
+      <input matInput [(ngModel)]="newMessageSearch" placeholder="Type a name..." />
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
-    
+
     <div class="contact-list">
-      <div *ngFor="let contact of filteredNewMessageContacts" 
-           class="contact-option"
-           (click)="selectNewMessageContact(contact)">
+      <div
+        *ngFor="let contact of filteredNewMessageContacts"
+        class="contact-option"
+        (click)="selectNewMessageContact(contact)"
+      >
         <emerald-avatar
           [imageUrl]="contact.imageUrl"
           [name]="contact.name"
           [isOnline]="contact.online"
-          size="small">
+          size="small"
+        >
         </emerald-avatar>
         <div class="contact-name">{{ contact.name }}</div>
       </div>
-      
+
       <div *ngIf="filteredNewMessageContacts.length === 0" class="no-contacts">
         <p>No contacts found</p>
       </div>
@@ -379,9 +459,9 @@
     <button mat-icon-button class="close-button" mat-dialog-close>
       <mat-icon>close</mat-icon>
     </button>
-    
-    <img [src]="previewImage?.url" [alt]="previewImage?.name" class="preview-image">
-    
+
+    <img [src]="previewImage?.url" [alt]="previewImage?.name" class="preview-image" />
+
     <div class="image-preview-actions">
       <button mat-icon-button matTooltip="Download" (click)="downloadImage()">
         <mat-icon>download</mat-icon>
@@ -399,19 +479,21 @@
   <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Search messages</mat-label>
-      <input matInput [(ngModel)]="chatSearchQuery" placeholder="Type to search...">
+      <input matInput [(ngModel)]="chatSearchQuery" placeholder="Type to search..." />
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
-    
+
     <div class="search-results">
-      <div *ngFor="let result of chatSearchResults" 
-           class="search-result-item"
-           (click)="scrollToMessage(result)">
+      <div
+        *ngFor="let result of chatSearchResults"
+        class="search-result-item"
+        (click)="scrollToMessage(result)"
+      >
         <div class="result-sender">{{ result.sender.username }}</div>
         <div class="result-message" [innerHTML]="highlightSearchText(result.message)"></div>
-        <div class="result-time">{{ result.timestamp | date:'short' }}</div>
+        <div class="result-time">{{ result.timestamp | date: 'short' }}</div>
       </div>
-      
+
       <div *ngIf="chatSearchResults.length === 0 && chatSearchQuery" class="no-results">
         <p>No messages found</p>
       </div>
@@ -427,43 +509,57 @@
   <h2 mat-dialog-title>Media Gallery</h2>
   <mat-dialog-content>
     <div class="gallery-tabs">
-      <button mat-button [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">Images</button>
-      <button mat-button [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">Files</button>
-      <button mat-button [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">Links</button>
+      <button mat-button [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">
+        Images
+      </button>
+      <button mat-button [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">
+        Files
+      </button>
+      <button mat-button [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">
+        Links
+      </button>
     </div>
-    
+
     <!-- Images Tab -->
     <div *ngIf="galleryTab === 'images'" class="gallery-images">
-      <div *ngFor="let image of galleryImages" class="gallery-image" (click)="openImagePreview(image)">
-        <img [src]="image.url" [alt]="image.name">
+      <div
+        *ngFor="let image of galleryImages"
+        class="gallery-image"
+        (click)="openImagePreview(image)"
+      >
+        <img [src]="image.url" [alt]="image.name" />
       </div>
-      
+
       <div *ngIf="galleryImages.length === 0" class="no-media">
         <p>No images shared in this conversation</p>
       </div>
     </div>
-    
+
     <!-- Files Tab -->
     <div *ngIf="galleryTab === 'files'" class="gallery-files">
-      <div *ngFor="let file of galleryFiles" class="gallery-file" (click)="downloadAttachment(file)">
+      <div
+        *ngFor="let file of galleryFiles"
+        class="gallery-file"
+        (click)="downloadAttachment(file)"
+      >
         <mat-icon>{{ getFileIcon(file) }}</mat-icon>
         <div class="file-info">
           <div class="file-name">{{ file.name }}</div>
           <div class="file-meta">
             <span class="file-size">{{ formatFileSize(file.size) }}</span>
-            <span class="file-date">{{ file.timestamp | date:'shortDate' }}</span>
+            <span class="file-date">{{ file.timestamp | date: 'shortDate' }}</span>
           </div>
         </div>
         <button mat-icon-button>
           <mat-icon>download</mat-icon>
         </button>
       </div>
-      
+
       <div *ngIf="galleryFiles.length === 0" class="no-media">
         <p>No files shared in this conversation</p>
       </div>
     </div>
-    
+
     <!-- Links Tab -->
     <div *ngIf="galleryTab === 'links'" class="gallery-links">
       <div *ngFor="let link of galleryLinks" class="gallery-link" (click)="openLink(link.url)">
@@ -472,9 +568,9 @@
           <div class="link-title">{{ link.title || link.url }}</div>
           <div class="link-url">{{ link.url }}</div>
         </div>
-        <div class="link-date">{{ link.timestamp | date:'shortDate' }}</div>
+        <div class="link-date">{{ link.timestamp | date: 'shortDate' }}</div>
       </div>
-      
+
       <div *ngIf="galleryLinks.length === 0" class="no-media">
         <p>No links shared in this conversation</p>
       </div>

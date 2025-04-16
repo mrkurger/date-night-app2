@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for wallet.routes settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -32,10 +32,16 @@ router.get('/payment-methods', asyncHandler(walletController.getWalletPaymentMet
 router.post('/payment-methods', asyncHandler(walletController.addPaymentMethod));
 
 // Remove payment method
-router.delete('/payment-methods/:paymentMethodId', asyncHandler(walletController.removePaymentMethod));
+router.delete(
+  '/payment-methods/:paymentMethodId',
+  asyncHandler(walletController.removePaymentMethod)
+);
 
 // Set default payment method
-router.patch('/payment-methods/:paymentMethodId/default', asyncHandler(walletController.setDefaultPaymentMethod));
+router.patch(
+  '/payment-methods/:paymentMethodId/default',
+  asyncHandler(walletController.setDefaultPaymentMethod)
+);
 
 // Deposit funds with Stripe
 router.post('/deposit/stripe', asyncHandler(walletController.depositFundsWithStripe));
@@ -59,8 +65,9 @@ router.patch('/settings', asyncHandler(walletController.updateWalletSettings));
 router.get('/exchange-rates', asyncHandler(walletController.getExchangeRates));
 
 // Crypto webhook (no authentication required)
-router.post('/webhook/crypto', 
-  express.raw({ type: 'application/json' }), 
+router.post(
+  '/webhook/crypto',
+  express.raw({ type: 'application/json' }),
   asyncHandler(walletController.handleCryptoWebhook)
 );
 

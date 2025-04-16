@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad.controller)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -50,7 +49,7 @@ class AdController {
       if (req.query.search) {
         filter.$or = [
           { title: { $regex: req.query.search, $options: 'i' } },
-          { description: { $regex: req.query.search, $options: 'i' } }
+          { description: { $regex: req.query.search, $options: 'i' } },
         ];
       }
 
@@ -71,18 +70,12 @@ class AdController {
         filter,
         sort: sortOptions,
         skip,
-        limit
+        limit,
       });
 
       // Create paginated response
       const baseUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
-      const paginatedResponse = createPaginatedResponse(
-        ads,
-        totalCount,
-        page,
-        limit,
-        baseUrl
-      );
+      const paginatedResponse = createPaginatedResponse(ads, totalCount, page, limit, baseUrl);
 
       // Set cache headers for GET requests
       res.set('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
@@ -93,7 +86,7 @@ class AdController {
       res.status(500).json({
         success: false,
         error: 'Failed to fetch ads',
-        message: error.message
+        message: error.message,
       });
     }
   }
@@ -129,14 +122,14 @@ class AdController {
 
       res.json({
         success: true,
-        data: ads
+        data: ads,
       });
     } catch (error) {
       console.error('Error fetching swipe ads:', error);
       res.status(500).json({
         success: false,
         error: 'Failed to fetch swipe ads',
-        message: error.message
+        message: error.message,
       });
     }
   }

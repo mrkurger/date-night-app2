@@ -79,7 +79,7 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  
+
   .loading-text {
     margin-top: $spacing-4;
     color: $neutral-600;
@@ -96,20 +96,20 @@
   min-height: 400px;
   text-align: center;
   padding: $spacing-8;
-  
+
   .error-icon {
     font-size: $font-size-4xl;
     color: $danger;
     margin-bottom: $spacing-4;
   }
-  
+
   .error-text {
     font-size: $font-size-lg;
     font-weight: $font-weight-medium;
     color: $neutral-900;
     margin-bottom: $spacing-6;
   }
-  
+
   .retry-button {
     padding: $spacing-2 $spacing-6;
     background-color: $primary;
@@ -119,11 +119,11 @@
     font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
     &:hover {
       background-color: darken($primary, 10%);
     }
-    
+
     i {
       margin-right: $spacing-2;
     }
@@ -139,20 +139,20 @@
   min-height: 400px;
   text-align: center;
   padding: $spacing-8;
-  
+
   .empty-icon {
     font-size: $font-size-4xl;
     color: $neutral-500;
     margin-bottom: $spacing-4;
   }
-  
+
   .empty-text {
     font-size: $font-size-lg;
     font-weight: $font-weight-medium;
     color: $neutral-900;
     margin-bottom: $spacing-2;
   }
-  
+
   .empty-subtext {
     color: $neutral-600;
   }
@@ -187,11 +187,11 @@
 
 .modal-header {
   border-bottom: 1px solid rgba($neutral-900, 0.05);
-  
+
   .modal-title {
     font-weight: $font-weight-semibold;
     color: $neutral-900;
-    
+
     i {
       margin-right: $spacing-2;
       color: $primary;
@@ -208,7 +208,7 @@
   .swipe-area {
     height: 500px;
   }
-  
+
   .tinder-title {
     font-size: $font-size-2xl;
   }
@@ -218,7 +218,7 @@
   .swipe-area {
     height: 450px;
   }
-  
+
   .tinder-container {
     padding: $spacing-2;
   }

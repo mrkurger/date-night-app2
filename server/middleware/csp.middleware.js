@@ -1,6 +1,6 @@
 /**
  * Content Security Policy (CSP) Middleware
- * 
+ *
  * This middleware configures and applies Content Security Policy headers
  * to protect against XSS and other code injection attacks.
  */
@@ -9,7 +9,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for csp.middleware settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -37,14 +37,14 @@ const handleCspViolation = (req, res) => {
 const cspMiddleware = () => {
   // Log configuration on first use
   logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
-  
+
   // Return middleware function that can be used with app.use()
   return (req, res, next) => {
     // Apply CSP headers based on configuration
-    const headerName = cspConfig.reportOnly ? 
-      'Content-Security-Policy-Report-Only' : 
-      'Content-Security-Policy';
-    
+    const headerName = cspConfig.reportOnly
+      ? 'Content-Security-Policy-Report-Only'
+      : 'Content-Security-Policy';
+
     // Build CSP header value from directives
     const headerValue = Object.entries(cspConfig.directives)
       .map(([key, value]) => {
@@ -54,20 +54,20 @@ const cspMiddleware = () => {
         return `${key} ${value}`;
       })
       .join('; ');
-    
+
     // Set the header
     res.setHeader(headerName, headerValue);
-    
+
     next();
   };
 };
 
 // Add endpoint handler for CSP violation reports
-const setupCspReportEndpoint = (app) => {
+const setupCspReportEndpoint = app => {
   app.post('/api/v1/csp-report', handleCspViolation);
 };
 
 module.exports = {
   middleware: cspMiddleware,
-  setupReportEndpoint: setupCspReportEndpoint
+  setupReportEndpoint: setupCspReportEndpoint,
 };

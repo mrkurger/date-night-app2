@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (wallet.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -140,36 +140,35 @@ export interface ExchangeRate {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WalletService {
   private apiUrl = `${environment.apiUrl}/wallet`;
   private walletSubject = new BehaviorSubject<Wallet | null>(null);
   private balancesSubject = new BehaviorSubject<WalletBalance[]>([]);
-  
+
   wallet$ = this.walletSubject.asObservable();
   balances$ = this.balancesSubject.asObservable();
-  
+
   // Supported currencies
   readonly SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP'];
   readonly SUPPORTED_CRYPTOCURRENCIES = ['BTC', 'ETH', 'USDT', 'USDC'];
-  
+
   constructor(private http: HttpClient) {}
-  
+
   /**
    * Get wallet
    */
   getWallet(): Observable<Wallet> {
-    return this.http.get<{ status: string; data: { wallet: Wallet } }>(`${this.apiUrl}`)
-      .pipe(
-        map(response => response.data.wallet),
-        tap(wallet => {
-          this.walletSubject.next(wallet);
-          this.balancesSubject.next(wallet.balances);
-        })
-      );
+    return this.http.get<{ status: string; data: { wallet: Wallet } }>(`${this.apiUrl}`).pipe(
+      map(response => response.data.wallet),
+      tap(wallet => {
+        this.walletSubject.next(wallet);
+        this.balancesSubject.next(wallet.balances);
+      })
+    );
   }
-  
+
   /**
    * Get wallet balance
    * @param currency Optional currency filter
@@ -179,8 +178,9 @@ export class WalletService {
     if (currency) {
       url += `?currency=${currency}`;
     }
-    
-    return this.http.get<{ status: string; data: { balance: WalletBalance | WalletBalance[] } }>(url)
+
+    return this.http
+      .get<{ status: string; data: { balance: WalletBalance | WalletBalance[] } }>(url)
       .pipe(
         map(response => response.data.balance),
         tap(balance => {
@@ -190,7 +190,7 @@ export class WalletService {
         })
       );
   }
-  
+
   /**
    * Get wallet transactions
    * @param filters Optional filters
@@ -199,11 +199,11 @@ export class WalletService {
    */
   getWalletTransactions(
     filters?: TransactionFilters,
-    page: number = 1,
-    limit: number = 20
+    page = 1,
+    limit = 20
   ): Observable<TransactionResponse> {
     let url = `${this.apiUrl}/transactions?page=${page}&limit=${limit}`;
-    
+
     if (filters) {
       if (filters.type) url += `&type=${filters.type}`;
       if (filters.status) url += `&status=${filters.status}`;
@@ -211,64 +211,69 @@ export class WalletService {
       if (filters.startDate) url += `&startDate=${filters.startDate}`;
       if (filters.endDate) url += `&endDate=${filters.endDate}`;
     }
-    
-    return this.http.get<{ status: string; data: TransactionResponse }>(url)
-      .pipe(
-        map(response => response.data)
-      );
+
+    return this.http
+      .get<{ status: string; data: TransactionResponse }>(url)
+      .pipe(map(response => response.data));
   }
-  
+
   /**
    * Get wallet payment methods
    */
   getWalletPaymentMethods(): Observable<PaymentMethod[]> {
-    return this.http.get<{ status: string; data: { paymentMethods: PaymentMethod[] } }>(`${this.apiUrl}/payment-methods`)
-      .pipe(
-        map(response => response.data.paymentMethods)
-      );
+    return this.http
+      .get<{
+        status: string;
+        data: { paymentMethods: PaymentMethod[] };
+      }>(`${this.apiUrl}/payment-methods`)
+      .pipe(map(response => response.data.paymentMethods));
   }
-  
+
   /**
    * Add payment method
    * @param paymentMethodData Payment method data
    */
   addPaymentMethod(paymentMethodData: Partial<PaymentMethod>): Observable<PaymentMethod> {
-    return this.http.post<{ status: string; data: { paymentMethod: PaymentMethod } }>(
-      `${this.apiUrl}/payment-methods`,
-      paymentMethodData
-    ).pipe(
-      map(response => response.data.paymentMethod),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .post<{
+        status: string;
+        data: { paymentMethod: PaymentMethod };
+      }>(`${this.apiUrl}/payment-methods`, paymentMethodData)
+      .pipe(
+        map(response => response.data.paymentMethod),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Remove payment method
    * @param paymentMethodId Payment method ID
    */
   removePaymentMethod(paymentMethodId: string): Observable<void> {
-    return this.http.delete<{ status: string; data: null }>(
-      `${this.apiUrl}/payment-methods/${paymentMethodId}`
-    ).pipe(
-      map(() => undefined),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .delete<{ status: string; data: null }>(`${this.apiUrl}/payment-methods/${paymentMethodId}`)
+      .pipe(
+        map(() => undefined),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Set default payment method
    * @param paymentMethodId Payment method ID
    */
   setDefaultPaymentMethod(paymentMethodId: string): Observable<PaymentMethod> {
-    return this.http.patch<{ status: string; data: { paymentMethod: PaymentMethod } }>(
-      `${this.apiUrl}/payment-methods/${paymentMethodId}/default`,
-      {}
-    ).pipe(
-      map(response => response.data.paymentMethod),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .patch<{
+        status: string;
+        data: { paymentMethod: PaymentMethod };
+      }>(`${this.apiUrl}/payment-methods/${paymentMethodId}/default`, {})
+      .pipe(
+        map(response => response.data.paymentMethod),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Deposit funds with Stripe
    * @param amount Amount in smallest currency unit (e.g., cents)
@@ -282,27 +287,30 @@ export class WalletService {
     paymentMethodId: string,
     description?: string
   ): Observable<{ transaction: WalletTransaction; clientSecret: string }> {
-    return this.http.post<{ status: string; data: { transaction: WalletTransaction; clientSecret: string } }>(
-      `${this.apiUrl}/deposit/stripe`,
-      { amount, currency, paymentMethodId, description }
-    ).pipe(
-      map(response => response.data),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .post<{
+        status: string;
+        data: { transaction: WalletTransaction; clientSecret: string };
+      }>(`${this.apiUrl}/deposit/stripe`, { amount, currency, paymentMethodId, description })
+      .pipe(
+        map(response => response.data),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Get crypto deposit address
    * @param currency Cryptocurrency code
    */
   getCryptoDepositAddress(currency: string): Observable<CryptoDepositAddress> {
-    return this.http.get<{ status: string; data: CryptoDepositAddress }>(
-      `${this.apiUrl}/deposit/crypto/${currency}`
-    ).pipe(
-      map(response => response.data)
-    );
+    return this.http
+      .get<{
+        status: string;
+        data: CryptoDepositAddress;
+      }>(`${this.apiUrl}/deposit/crypto/${currency}`)
+      .pipe(map(response => response.data));
   }
-  
+
   /**
    * Withdraw funds
    * @param amount Amount in smallest currency unit (e.g., cents)
@@ -316,15 +324,17 @@ export class WalletService {
     paymentMethodId: string,
     description?: string
   ): Observable<WalletTransaction> {
-    return this.http.post<{ status: string; data: { transaction: WalletTransaction } }>(
-      `${this.apiUrl}/withdraw`,
-      { amount, currency, paymentMethodId, description }
-    ).pipe(
-      map(response => response.data.transaction),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .post<{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }>(`${this.apiUrl}/withdraw`, { amount, currency, paymentMethodId, description })
+      .pipe(
+        map(response => response.data.transaction),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Withdraw cryptocurrency
    * @param amount Amount in smallest currency unit
@@ -342,15 +352,24 @@ export class WalletService {
     memo?: string,
     description?: string
   ): Observable<WalletTransaction> {
-    return this.http.post<{ status: string; data: { transaction: WalletTransaction } }>(
-      `${this.apiUrl}/withdraw/crypto`,
-      { amount, currency, address, network, memo, description }
-    ).pipe(
-      map(response => response.data.transaction),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .post<{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }>(`${this.apiUrl}/withdraw/crypto`, {
+        amount,
+        currency,
+        address,
+        network,
+        memo,
+        description,
+      })
+      .pipe(
+        map(response => response.data.transaction),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Transfer funds to another user
    * @param recipientUserId Recipient user ID
@@ -364,42 +383,47 @@ export class WalletService {
     currency: string,
     description?: string
   ): Observable<WalletTransaction> {
-    return this.http.post<{ status: string; data: { transaction: WalletTransaction } }>(
-      `${this.apiUrl}/transfer`,
-      { recipientUserId, amount, currency, description }
-    ).pipe(
-      map(response => response.data.transaction),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .post<{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }>(`${this.apiUrl}/transfer`, { recipientUserId, amount, currency, description })
+      .pipe(
+        map(response => response.data.transaction),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Update wallet settings
    * @param settings Wallet settings
    */
   updateWalletSettings(settings: Partial<WalletSettings>): Observable<WalletSettings> {
-    return this.http.patch<{ status: string; data: { settings: WalletSettings } }>(
-      `${this.apiUrl}/settings`,
-      settings
-    ).pipe(
-      map(response => response.data.settings),
-      tap(() => this.refreshWallet())
-    );
+    return this.http
+      .patch<{
+        status: string;
+        data: { settings: WalletSettings };
+      }>(`${this.apiUrl}/settings`, settings)
+      .pipe(
+        map(response => response.data.settings),
+        tap(() => this.refreshWallet())
+      );
   }
-  
+
   /**
    * Get exchange rates
    * @param fromCurrency From currency code
    * @param toCurrency To currency code
    */
   getExchangeRates(fromCurrency: string, toCurrency: string): Observable<ExchangeRate> {
-    return this.http.get<{ status: string; data: ExchangeRate }>(
-      `${this.apiUrl}/exchange-rates?fromCurrency=${fromCurrency}&toCurrency=${toCurrency}`
-    ).pipe(
-      map(response => response.data)
-    );
+    return this.http
+      .get<{
+        status: string;
+        data: ExchangeRate;
+      }>(`${this.apiUrl}/exchange-rates?fromCurrency=${fromCurrency}&toCurrency=${toCurrency}`)
+      .pipe(map(response => response.data));
   }
-  
+
   /**
    * Format currency amount for display
    * @param amount Amount in smallest currency unit (e.g., cents)
@@ -424,16 +448,16 @@ export class WalletService {
           return `${(amount / 100).toFixed(2)} ${currency}`;
       }
     }
-    
+
     // For fiat currencies, use Intl.NumberFormat
     return new Intl.NumberFormat('no-NO', {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(amount / 100);
   }
-  
+
   /**
    * Refresh wallet data
    */

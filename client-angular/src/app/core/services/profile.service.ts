@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Profile, ProfileUpdateDTO } from '../models/profile.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
   private apiUrl = `${environment.apiUrl}/profile`;

@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the notification component
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_NOTIFICATION_SERVICE: Mock notification service configuration
 //   Related to: client-angular/src/app/core/services/notification.service.ts
@@ -10,7 +10,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, of } from 'rxjs';
-import { NotificationComponent, NotificationType, ToastNotification } from './notification.component';
+import {
+  NotificationComponent,
+  NotificationType,
+  ToastNotification,
+} from './notification.component';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,24 +27,20 @@ describe('NotificationComponent', () => {
   beforeEach(async () => {
     // Create a subject to control the toasts observable
     toastsSubject = new BehaviorSubject<ToastNotification[]>([]);
-    
+
     // Create mock notification service
-    mockNotificationService = jasmine.createSpyObj('NotificationService', 
+    mockNotificationService = jasmine.createSpyObj(
+      'NotificationService',
       ['success', 'error', 'info', 'warning', 'removeToast'],
       {
         // Mock the toasts$ observable
-        toasts$: toastsSubject.asObservable()
+        toasts$: toastsSubject.asObservable(),
       }
     );
 
     await TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        NotificationComponent
-      ],
-      providers: [
-        { provide: NotificationService, useValue: mockNotificationService }
-      ]
+      imports: [NoopAnimationsModule, NotificationComponent],
+      providers: [{ provide: NotificationService, useValue: mockNotificationService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotificationComponent);
@@ -61,14 +61,14 @@ describe('NotificationComponent', () => {
         type: NotificationType.SUCCESS,
         timestamp: new Date(),
         autoClose: true,
-        duration: 3000
-      }
+        duration: 3000,
+      },
     ];
-    
+
     // Act
     toastsSubject.next(testNotifications);
     fixture.detectChanges();
-    
+
     // Assert
     const notificationElements = fixture.nativeElement.querySelectorAll('.notification');
     expect(notificationElements.length).toBe(1);
@@ -85,18 +85,18 @@ describe('NotificationComponent', () => {
         type: NotificationType.SUCCESS,
         timestamp: new Date(),
         autoClose: true,
-        duration: 3000
-      }
+        duration: 3000,
+      },
     ];
-    
+
     toastsSubject.next(testNotifications);
     fixture.detectChanges();
-    
+
     // Act
     const closeButton = fixture.nativeElement.querySelector('.notification-close');
     closeButton.click();
     fixture.detectChanges();
-    
+
     // Assert
     expect(mockNotificationService.removeToast).toHaveBeenCalledWith('test-id-1');
     expect(component.activeNotifications.length).toBe(0);
@@ -111,7 +111,7 @@ describe('NotificationComponent', () => {
         type: NotificationType.SUCCESS,
         timestamp: new Date(),
         autoClose: true,
-        duration: 3000
+        duration: 3000,
       },
       {
         id: 'test-id-2',
@@ -119,14 +119,14 @@ describe('NotificationComponent', () => {
         type: NotificationType.ERROR,
         timestamp: new Date(),
         autoClose: true,
-        duration: 3000
-      }
+        duration: 3000,
+      },
     ];
-    
+
     // Act
     toastsSubject.next(testNotifications);
     fixture.detectChanges();
-    
+
     // Assert
     const notificationElements = fixture.nativeElement.querySelectorAll('.notification');
     expect(notificationElements.length).toBe(2);
@@ -144,34 +144,34 @@ describe('NotificationComponent', () => {
       type: NotificationType.SUCCESS,
       timestamp: new Date(),
       autoClose: true,
-      duration: 3000
+      duration: 3000,
     };
-    
+
     // Add initial notification
     toastsSubject.next([initialNotification]);
     fixture.detectChanges();
-    
+
     // Act - add the same notification again plus a new one
     const duplicateNotification: ToastNotification = {
       ...initialNotification,
-      message: 'Updated message' // Message changed but ID is the same
+      message: 'Updated message', // Message changed but ID is the same
     };
-    
+
     const newNotification: ToastNotification = {
       id: 'test-id-2',
       message: 'New notification',
       type: NotificationType.INFO,
       timestamp: new Date(),
       autoClose: true,
-      duration: 3000
+      duration: 3000,
     };
-    
+
     toastsSubject.next([duplicateNotification, newNotification]);
     fixture.detectChanges();
-    
+
     // Assert - should only have the initial notification and the new one
     expect(component.activeNotifications.length).toBe(2);
-    
+
     const notificationElements = fixture.nativeElement.querySelectorAll('.notification');
     expect(notificationElements.length).toBe(2);
     // The first notification should still have the initial message
@@ -188,19 +188,19 @@ describe('NotificationComponent', () => {
         type: NotificationType.SUCCESS,
         timestamp: new Date(),
         autoClose: true,
-        duration: 3000
-      }
+        duration: 3000,
+      },
     ];
-    
+
     toastsSubject.next(testNotifications);
     fixture.detectChanges();
-    
+
     // Spy on clearTimeout
     spyOn(window, 'clearTimeout');
-    
+
     // Act
     component.ngOnDestroy();
-    
+
     // Assert
     expect(window.clearTimeout).toHaveBeenCalled();
   });

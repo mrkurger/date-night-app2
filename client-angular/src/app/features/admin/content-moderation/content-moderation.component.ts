@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (content-moderation.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -11,7 +10,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { Media, PendingMedia, ModerationRequest } from '../../../core/models/media.interface';
 import { NgbModal, NgbModalRef, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, throwError, of } from 'rxjs';
@@ -29,7 +34,13 @@ import { ModerationModalComponent } from './moderation-modal/moderation-modal.co
   templateUrl: './content-moderation.component.html',
   styleUrls: ['./content-moderation.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModalModule, ModerationModalComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModalModule,
+    ModerationModalComponent,
+  ],
 })
 export class ContentModerationComponent implements OnInit, OnDestroy {
   // Data
@@ -65,7 +76,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   ) {
     this.moderationForm = this.fb.group({
       status: ['approved', [Validators.required]],
-      notes: ['', [Validators.maxLength(500), Validators.required]]
+      notes: ['', [Validators.maxLength(500), Validators.required]],
     });
   }
 
@@ -76,7 +87,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadPendingMedia();
   }
-  
+
   /**
    * Loads all pending media items that need moderation
    */
@@ -85,40 +96,45 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.resetFilters();
 
-    this.mediaService.getPendingModerationMedia().pipe(
-      retry(2), // Retry failed requests up to 2 times
-      catchError(err => {
-        const errorMsg = err.status === 403
-          ? 'You do not have permission to access moderation features'
-          : 'Failed to load pending media';
-        this.error = errorMsg;
-        this.notificationService.error(errorMsg);
-        console.error('Error loading pending media:', err);
-        // For testing purposes, we'll return an empty array instead of re-throwing
-        // This allows tests to continue without failing due to uncaught errors
-        return of([]);
-      }),
-      finalize(() => {
-        this.loading = false;
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe({
-      next: (data) => {
-        this.pendingMedia = data || [];
+    this.mediaService
+      .getPendingModerationMedia()
+      .pipe(
+        retry(2), // Retry failed requests up to 2 times
+        catchError(err => {
+          const errorMsg =
+            err.status === 403
+              ? 'You do not have permission to access moderation features'
+              : 'Failed to load pending media';
+          this.error = errorMsg;
+          this.notificationService.error(errorMsg);
+          console.error('Error loading pending media:', err);
+          // For testing purposes, we'll return an empty array instead of re-throwing
+          // This allows tests to continue without failing due to uncaught errors
+          return of([]);
+        }),
+        finalize(() => {
+          this.loading = false;
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: data => {
+          this.pendingMedia = data || [];
 
-        // Process media items to ensure dates are Date objects
-        this.pendingMedia = this.pendingMedia.map(media => ({
-          ...media,
-          createdAt: media.createdAt instanceof Date ? media.createdAt : new Date(media.createdAt)
-        }));
+          // Process media items to ensure dates are Date objects
+          this.pendingMedia = this.pendingMedia.map(media => ({
+            ...media,
+            createdAt:
+              media.createdAt instanceof Date ? media.createdAt : new Date(media.createdAt),
+          }));
 
-        this.applyFilters();
+          this.applyFilters();
 
-        if (this.pendingMedia.length === 0) {
-          console.log('No pending media items found');
-        }
-      }
-    });
+          if (this.pendingMedia.length === 0) {
+            console.log('No pending media items found');
+          }
+        },
+      });
   }
 
   /**
@@ -136,9 +152,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     // Apply search term filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase().trim();
-      result = result.filter(media =>
-        media.adTitle.toLowerCase().includes(searchLower)
-      );
+      result = result.filter(media => media.adTitle.toLowerCase().includes(searchLower));
     }
 
     // Apply sorting
@@ -162,17 +176,15 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   private sortMedia(media: PendingMedia[], sortOrder: string): PendingMedia[] {
     switch (sortOrder) {
       case 'newest':
-        return [...media].sort((a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        return [...media].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       case 'oldest':
-        return [...media].sort((a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        return [...media].sort(
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
       case 'title':
-        return [...media].sort((a, b) =>
-          a.adTitle.localeCompare(b.adTitle)
-        );
+        return [...media].sort((a, b) => a.adTitle.localeCompare(b.adTitle));
       default:
         return media;
     }
@@ -271,16 +283,16 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     this.selectedMedia = media;
     this.moderationForm.reset({
       status: 'approved',
-      notes: ''
+      notes: '',
     });
 
     this.modalService.open(modal, {
       ariaLabelledBy: 'modal-basic-title',
       backdrop: 'static',
-      size: 'lg'
+      size: 'lg',
     });
   }
-  
+
   /**
    * Submits the moderation decision for the selected media
    */
@@ -301,36 +313,35 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     this.error = '';
     this.loading = true;
 
-    this.mediaService.moderateMedia(
-      this.selectedMedia.adId,
-      this.selectedMedia._id,
-      request.status,
-      request.notes
-    ).pipe(
-      retry(1), // Retry once if the request fails
-      catchError(err => {
-        const errorMsg = err.status === 403
-          ? 'You do not have permission to moderate content'
-          : 'Failed to moderate media';
-        this.error = errorMsg;
-        this.notificationService.error(errorMsg);
-        console.error('Error moderating media:', err);
-        // For testing purposes, we'll return an empty observable instead of re-throwing
-        // This allows tests to continue without failing due to uncaught errors
-        return of(void 0);
-      }),
-      finalize(() => {
-        this.loading = false;
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe({
-      next: () => {
-        const actionText = request.status === 'approved' ? 'approved' : 'rejected';
-        this.notificationService.success(`Media ${actionText} successfully`);
-        this.loadPendingMedia();
-        this.modalService.dismissAll();
-      }
-    });
+    this.mediaService
+      .moderateMedia(this.selectedMedia.adId, this.selectedMedia._id, request.status, request.notes)
+      .pipe(
+        retry(1), // Retry once if the request fails
+        catchError(err => {
+          const errorMsg =
+            err.status === 403
+              ? 'You do not have permission to moderate content'
+              : 'Failed to moderate media';
+          this.error = errorMsg;
+          this.notificationService.error(errorMsg);
+          console.error('Error moderating media:', err);
+          // For testing purposes, we'll return an empty observable instead of re-throwing
+          // This allows tests to continue without failing due to uncaught errors
+          return of(void 0);
+        }),
+        finalize(() => {
+          this.loading = false;
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: () => {
+          const actionText = request.status === 'approved' ? 'approved' : 'rejected';
+          this.notificationService.success(`Media ${actionText} successfully`);
+          this.loadPendingMedia();
+          this.modalService.dismissAll();
+        },
+      });
   }
 
   /**

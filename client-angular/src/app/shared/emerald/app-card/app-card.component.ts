@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (app-card.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -14,7 +13,7 @@ import { LabelComponent } from '../components/label/label.component';
 
 /**
  * App Card Component
- * 
+ *
  * A versatile card component that can be used to display content in different layouts.
  * Supports various layouts including default, netflix, and tinder styles.
  */
@@ -23,64 +22,64 @@ import { LabelComponent } from '../components/label/label.component';
   templateUrl: '../components/app-card/app-card.component.html',
   styleUrls: ['../components/app-card/app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, LabelComponent]
+  imports: [CommonModule, LabelComponent],
 })
 export class AppCardComponent {
   /**
    * The title of the card
    */
-  @Input() title: string = '';
-  
+  @Input() title = '';
+
   /**
    * The subtitle of the card
    */
-  @Input() subtitle: string = '';
-  
+  @Input() subtitle = '';
+
   /**
    * The description of the card
    */
-  @Input() description: string = '';
-  
+  @Input() description = '';
+
   /**
    * The URL of the image to display
    */
-  @Input() imageUrl: string = '';
-  
+  @Input() imageUrl = '';
+
   /**
    * The URL of the avatar image
    */
-  @Input() avatarUrl: string = '';
-  
+  @Input() avatarUrl = '';
+
   /**
    * The name associated with the avatar
    */
-  @Input() avatarName: string = '';
-  
+  @Input() avatarName = '';
+
   /**
    * Whether the avatar is online
    */
-  @Input() isOnline: boolean = false;
-  
+  @Input() isOnline = false;
+
   /**
    * The layout style of the card
    */
   @Input() layout: 'default' | 'netflix' | 'tinder' = 'default';
-  
+
   /**
    * The tags to display on the card
    */
   @Input() tags: string[] = [];
-  
+
   /**
    * The maximum number of tags to display
    */
-  @Input() maxTags: number = 3;
-  
+  @Input() maxTags = 3;
+
   /**
    * The ID of the item represented by the card
    */
-  @Input() itemId: string = '';
-  
+  @Input() itemId = '';
+
   /**
    * The actions available on the card
    */
@@ -89,12 +88,12 @@ export class AppCardComponent {
     icon: string;
     tooltip: string;
   }> = [];
-  
+
   /**
    * Event emitted when the card is clicked
    */
   @Output() click = new EventEmitter<string>();
-  
+
   /**
    * Event emitted when an action button is clicked
    */
@@ -102,14 +101,14 @@ export class AppCardComponent {
     id: string;
     itemId: string;
   }>();
-  
+
   /**
    * Handles the click event on the card
    */
   handleClick(): void {
     this.click.emit(this.itemId);
   }
-  
+
   /**
    * Handles the click event on an action button
    * @param event The click event
@@ -119,10 +118,10 @@ export class AppCardComponent {
     event.stopPropagation();
     this.actionClick.emit({
       id: actionId,
-      itemId: this.itemId
+      itemId: this.itemId,
     });
   }
-  
+
   /**
    * Gets the visible tags based on the maxTags limit
    */

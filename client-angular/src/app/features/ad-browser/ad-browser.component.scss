@@ -37,12 +37,14 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .ad-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .ad-image {
@@ -78,7 +80,7 @@
   .filter-item {
     min-width: 100%;
   }
-  
+
   .ads-grid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }

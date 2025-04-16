@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-browser.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -19,7 +18,7 @@ import { MaterialModule } from '../../shared/material.module';
   templateUrl: './ad-browser.component.html',
   styleUrls: ['./ad-browser.component.scss'],
   standalone: true,
-  imports: [CommonModule, MaterialModule]
+  imports: [CommonModule, MaterialModule],
 })
 export class AdBrowserComponent implements OnInit {
   ads: any[] = [];
@@ -28,7 +27,10 @@ export class AdBrowserComponent implements OnInit {
   error: string | null = null;
   favorites: any[] = [];
 
-  constructor(private adService: AdService, private router: Router) {}
+  constructor(
+    private adService: AdService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadAds();
@@ -41,8 +43,14 @@ export class AdBrowserComponent implements OnInit {
   loadAds(): void {
     this.loading = true;
     this.adService.getAds().subscribe({
-      next: data => { this.ads = data; this.loading = false; },
-      error: err => { this.error = 'Failed to load ads'; this.loading = false; }
+      next: data => {
+        this.ads = data;
+        this.loading = false;
+      },
+      error: err => {
+        this.error = 'Failed to load ads';
+        this.loading = false;
+      },
     });
   }
 
@@ -82,17 +90,26 @@ export class AdBrowserComponent implements OnInit {
       this.error = 'Geolocation not supported';
       return;
     }
-    navigator.geolocation.getCurrentPosition(position => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      this.loading = true;
-      this.adService.searchNearby(lon, lat, 10000).subscribe({
-        next: data => { this.ads = data; this.loading = false; },
-        error: err => { this.error = 'Failed to find nearby ads'; this.loading = false; }
-      });
-    }, error => {
-      this.error = 'Unable to retrieve your location';
-    });
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        this.loading = true;
+        this.adService.searchNearby(lon, lat, 10000).subscribe({
+          next: data => {
+            this.ads = data;
+            this.loading = false;
+          },
+          error: err => {
+            this.error = 'Failed to find nearby ads';
+            this.loading = false;
+          },
+        });
+      },
+      error => {
+        this.error = 'Unable to retrieve your location';
+      }
+    );
   }
 
   viewAdDetails(adId: string): void {

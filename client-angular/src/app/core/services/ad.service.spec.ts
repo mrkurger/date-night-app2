@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the ad service
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ADS: Mock ad data for testing
 //   Related to: client-angular/src/app/core/models/ad.interface.ts
@@ -41,7 +41,7 @@ describe('AdService', () => {
       inquiryCount: 10,
       createdAt: '2023-01-01T00:00:00.000Z',
       updatedAt: '2023-01-01T00:00:00.000Z',
-      tags: ['Escort', 'Oslo']
+      tags: ['Escort', 'Oslo'],
     },
     {
       _id: '2',
@@ -63,7 +63,7 @@ describe('AdService', () => {
       inquiryCount: 20,
       createdAt: '2023-01-02T00:00:00.000Z',
       updatedAt: '2023-01-02T00:00:00.000Z',
-      tags: ['Massage', 'Bergen', 'Featured']
+      tags: ['Massage', 'Bergen', 'Featured'],
     },
     {
       _id: '3',
@@ -85,14 +85,14 @@ describe('AdService', () => {
       inquiryCount: 15,
       createdAt: '2023-01-03T00:00:00.000Z',
       updatedAt: '2023-01-03T00:00:00.000Z',
-      tags: ['Striptease', 'Trondheim', 'Touring']
-    }
+      tags: ['Striptease', 'Trondheim', 'Touring'],
+    },
   ];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AdService]
+      providers: [AdService],
     });
 
     service = TestBed.inject(AdService);
@@ -120,7 +120,7 @@ describe('AdService', () => {
 
     it('should fetch ads with filters', () => {
       const filters = { category: 'Escort', location: 'Oslo' };
-      
+
       service.getAds(filters).subscribe(ads => {
         expect(ads).toEqual([mockAds[0]]);
       });
@@ -142,7 +142,7 @@ describe('AdService', () => {
 
     it('should fetch ad by id', () => {
       const mockAd = mockAds[0];
-      
+
       service.getAdById('1').subscribe(ad => {
         expect(ad).toEqual(mockAd);
       });
@@ -159,9 +159,9 @@ describe('AdService', () => {
         category: 'Escort',
         price: 1200,
         location: 'Oslo',
-        isActive: true
+        isActive: true,
       };
-      
+
       service.createAd(newAd).subscribe(ad => {
         expect(ad._id).toBeDefined();
         expect(ad.title).toBe(newAd.title);
@@ -170,7 +170,7 @@ describe('AdService', () => {
       const req = httpMock.expectOne(`${environment.apiUrl}/ads`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(newAd);
-      
+
       req.flush({
         ...newAd,
         _id: '4',
@@ -186,7 +186,7 @@ describe('AdService', () => {
         inquiryCount: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        tags: ['Escort', 'Oslo']
+        tags: ['Escort', 'Oslo'],
       });
     });
 
@@ -195,11 +195,11 @@ describe('AdService', () => {
       formData.append('title', 'New Ad With Images');
       formData.append('description', 'New description');
       formData.append('category', 'Escort');
-      
+
       // Mock file
       const file = new File(['dummy content'], 'example.jpg', { type: 'image/jpeg' });
       formData.append('images', file);
-      
+
       service.createAdWithImages(formData).subscribe(ad => {
         expect(ad._id).toBeDefined();
         expect(ad.title).toBe('New Ad With Images');
@@ -209,7 +209,7 @@ describe('AdService', () => {
       const req = httpMock.expectOne(`${environment.apiUrl}/ads/with-images`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(formData);
-      
+
       req.flush({
         _id: '5',
         title: 'New Ad With Images',
@@ -227,16 +227,16 @@ describe('AdService', () => {
         inquiryCount: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        tags: ['Escort']
+        tags: ['Escort'],
       });
     });
 
     it('should update an existing ad', () => {
       const updateData = {
         title: 'Updated Title',
-        price: 1500
+        price: 1500,
       };
-      
+
       service.updateAd('1', updateData).subscribe(ad => {
         expect(ad.title).toBe(updateData.title);
         expect(ad.price).toBe(updateData.price);
@@ -245,23 +245,23 @@ describe('AdService', () => {
       const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(updateData);
-      
+
       const updatedAd = {
         ...mockAds[0],
         ...updateData,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
-      
+
       req.flush(updatedAd);
     });
 
     it('should update ad images', () => {
       const formData = new FormData();
-      
+
       // Mock file
       const file = new File(['dummy content'], 'new-image.jpg', { type: 'image/jpeg' });
       formData.append('images', file);
-      
+
       service.updateAdImages('1', formData).subscribe(ad => {
         expect(ad._id).toBe('1');
         expect(ad.images).toContain('/uploads/new-image.jpg');
@@ -270,14 +270,14 @@ describe('AdService', () => {
       const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/images`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(formData);
-      
+
       const updatedAd = {
         ...mockAds[0],
         images: [...mockAds[0].images, '/uploads/new-image.jpg'],
         media: [...mockAds[0].media, { type: 'image', url: '/uploads/new-image.jpg' }],
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
-      
+
       req.flush(updatedAd);
     });
 
@@ -315,17 +315,19 @@ describe('AdService', () => {
     });
 
     it('should fetch swipe ads with filters', () => {
-      const filters = { 
-        category: 'Escort', 
+      const filters = {
+        category: 'Escort',
         location: 'Oslo',
-        touringOnly: true
+        touringOnly: true,
       };
-      
+
       service.getSwipeAds(filters).subscribe(ads => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/swipe?category=Escort&location=Oslo&touringOnly=true`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/ads/swipe?category=Escort&location=Oslo&touringOnly=true`
+      );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
     });
@@ -343,7 +345,7 @@ describe('AdService', () => {
 
     it('should fetch categories', () => {
       const categories = ['Escort', 'Massage', 'Striptease'];
-      
+
       service.getCategories().subscribe(result => {
         expect(result).toEqual(categories);
       });
@@ -367,12 +369,14 @@ describe('AdService', () => {
       const longitude = 10.7522;
       const latitude = 59.9139;
       const radius = 10000;
-      
+
       service.searchNearby(longitude, latitude, radius).subscribe(ads => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/nearby?longitude=10.7522&latitude=59.9139&radius=10000`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/ads/nearby?longitude=10.7522&latitude=59.9139&radius=10000`
+      );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
     });
@@ -434,7 +438,7 @@ describe('AdService', () => {
     it('should return mock ads when API fails', () => {
       // Spy on console.error to prevent it from cluttering the test output
       spyOn(console, 'error');
-      
+
       service.getAds().subscribe(ads => {
         // Should return mock ads from the service
         expect(ads.length).toBeGreaterThan(0);
@@ -450,7 +454,7 @@ describe('AdService', () => {
         next: () => fail('Should have failed with 404'),
         error: error => {
           expect(error.status).toBe(404);
-        }
+        },
       });
 
       const req = httpMock.expectOne(`${environment.apiUrl}/ads/999`);

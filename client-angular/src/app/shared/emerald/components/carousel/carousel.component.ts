@@ -1,22 +1,21 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (carousel.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
  * Emerald Carousel Component
- * 
+ *
  * A wrapper for the Emerald.js Carousel component.
  * This component displays a carousel of images or other content.
- * 
+ *
  * Documentation: https://docs-emerald.condorlabs.io/Carousel
  */
 @Component({
@@ -24,65 +23,65 @@ import { CommonModule } from '@angular/common';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
   @Input() items: CarouselItem[] = [];
-  @Input() showDots: boolean = true;
-  @Input() showArrows: boolean = true;
-  @Input() autoPlay: boolean = false;
-  @Input() autoPlayInterval: number = 5000; // in milliseconds
+  @Input() showDots = true;
+  @Input() showArrows = true;
+  @Input() autoPlay = false;
+  @Input() autoPlayInterval = 5000; // in milliseconds
   @Input() aspectRatio: '1:1' | '4:3' | '16:9' | '21:9' = '16:9';
-  @Input() thumbnails: boolean = false;
-  
+  @Input() thumbnails = false;
+
   @Output() itemChange = new EventEmitter<number>();
-  
+
   currentIndex = 0;
   autoPlayTimer: any;
-  
+
   ngOnInit(): void {
     if (this.autoPlay && this.items.length > 1) {
       this.startAutoPlay();
     }
   }
-  
+
   ngOnDestroy(): void {
     this.stopAutoPlay();
   }
-  
+
   /**
    * Navigate to the next item
    */
   next(event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     this.currentIndex = (this.currentIndex + 1) % this.items.length;
     this.itemChange.emit(this.currentIndex);
     this.resetAutoPlay();
   }
-  
+
   /**
    * Navigate to the previous item
    */
   prev(event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
     this.itemChange.emit(this.currentIndex);
     this.resetAutoPlay();
   }
-  
+
   /**
    * Navigate to a specific item
    */
   goTo(index: number, event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     this.currentIndex = index;
     this.itemChange.emit(this.currentIndex);
     this.resetAutoPlay();
   }
-  
+
   /**
    * Start auto play
    */
@@ -91,7 +90,7 @@ export class CarouselComponent implements OnInit {
       this.next();
     }, this.autoPlayInterval);
   }
-  
+
   /**
    * Stop auto play
    */
@@ -100,7 +99,7 @@ export class CarouselComponent implements OnInit {
       clearInterval(this.autoPlayTimer);
     }
   }
-  
+
   /**
    * Reset auto play timer
    */
@@ -110,7 +109,7 @@ export class CarouselComponent implements OnInit {
       this.startAutoPlay();
     }
   }
-  
+
   /**
    * Handle image loading error
    */

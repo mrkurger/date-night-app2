@@ -1,15 +1,21 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (register.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { finalize } from 'rxjs/operators';
@@ -40,8 +46,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+  ],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -55,14 +61,17 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) {
-    this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      role: ['user', Validators.required],
-      termsAccepted: [false, Validators.requiredTrue]
-    }, { validators: this.passwordMatchValidator });
+    this.registerForm = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        role: ['user', Validators.required],
+        termsAccepted: [false, Validators.requiredTrue],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
   ngOnInit(): void {
@@ -80,7 +89,7 @@ export class RegisterComponent implements OnInit {
       confirmPassword.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
     }
-    
+
     return null;
   }
 
@@ -94,15 +103,16 @@ export class RegisterComponent implements OnInit {
 
     const { username, email, password, role } = this.registerForm.value;
 
-    this.userService.register({ username, email, password, role })
-      .pipe(finalize(() => this.isLoading = false))
+    this.userService
+      .register({ username, email, password, role })
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
         },
-        error: (error) => {
+        error: error => {
           this.errorMessage = error.message || 'Registration failed. Please try again.';
-        }
+        },
       });
   }
 }

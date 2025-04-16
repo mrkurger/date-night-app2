@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/auth';
@@ -21,9 +21,9 @@ export class AuthService {
           observer.next(response);
           observer.complete();
         },
-        error: (error) => {
+        error: error => {
           observer.error(error);
-        }
+        },
       });
     });
   }
@@ -31,16 +31,16 @@ export class AuthService {
   logout(): Observable<any> {
     return new Observable(observer => {
       this.http.post(`${this.apiUrl}/logout`, {}).subscribe({
-        next: (response) => {
+        next: response => {
           // Clear token and user from localStorage
           localStorage.removeItem('token');
           localStorage.removeItem('currentUser');
           observer.next(response);
           observer.complete();
         },
-        error: (error) => {
+        error: error => {
           observer.error(error);
-        }
+        },
       });
     });
   }

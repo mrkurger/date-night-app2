@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (payment.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -32,7 +31,7 @@ class PaymentService {
         metadata,
         payment_method_types: ['card'],
       });
-      
+
       return paymentIntent;
     } catch (error) {
       console.error('Error creating payment intent:', error);
@@ -50,70 +49,70 @@ class PaymentService {
   async createSubscription(userId, priceId, paymentMethodId) {
     try {
       const user = await User.findById(userId);
-      
+
       if (!user) {
         throw new AppError('User not found', 404);
       }
-      
+
       // Check if user already has a Stripe customer ID
       let customerId = user.stripeCustomerId;
-      
+
       // If not, create a new customer
       if (!customerId) {
         const customer = await stripe.customers.create({
           email: user.email,
           name: user.username,
           metadata: {
-            userId: user._id.toString()
-          }
+            userId: user._id.toString(),
+          },
         });
-        
+
         customerId = customer.id;
-        
+
         // Save customer ID to user
         user.stripeCustomerId = customerId;
         await user.save();
       }
-      
+
       // Attach payment method to customer
       await stripe.paymentMethods.attach(paymentMethodId, {
         customer: customerId,
       });
-      
+
       // Set as default payment method
       await stripe.customers.update(customerId, {
         invoice_settings: {
           default_payment_method: paymentMethodId,
         },
       });
-      
+
       // Create subscription
       const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: priceId }],
         expand: ['latest_invoice.payment_intent'],
       });
-      
+
       // Update user subscription details
       const subscriptionTiers = {
-        'price_premium': 'premium',
-        'price_vip': 'vip'
+        price_premium: 'premium',
+        price_vip: 'vip',
       };
-      
+
       user.subscriptionTier = subscriptionTiers[priceId] || 'free';
       user.stripeSubscriptionId = subscription.id;
-      
+
       // Set subscription expiration date
       const currentPeriodEnd = new Date(subscription.current_period_end * 1000);
       user.subscriptionExpires = currentPeriodEnd;
-      
+
       await user.save();
-      
+
       return {
         subscriptionId: subscription.id,
         clientSecret: subscription.latest_invoice.payment_intent.client_secret,
         subscriptionStatus: subscription.status,
-        currentPeriodEnd
+        currentPeriodEnd,
       };
     } catch (error) {
       console.error('Error creating subscription:', error);
@@ -129,24 +128,24 @@ class PaymentService {
   async cancelSubscription(userId) {
     try {
       const user = await User.findById(userId);
-      
+
       if (!user) {
         throw new AppError('User not found', 404);
       }
-      
+
       if (!user.stripeSubscriptionId) {
         throw new AppError('No active subscription found', 400);
       }
-      
+
       // Cancel at period end to allow user to use the subscription until it expires
       const subscription = await stripe.subscriptions.update(user.stripeSubscriptionId, {
-        cancel_at_period_end: true
+        cancel_at_period_end: true,
       });
-      
+
       return {
         subscriptionId: subscription.id,
         cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000)
+        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
       };
     } catch (error) {
       console.error('Error canceling subscription:', error);
@@ -166,49 +165,49 @@ class PaymentService {
     try {
       const ad = await Ad.findById(adId);
       const user = await User.findById(userId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       if (!user) {
         throw new AppError('User not found', 404);
       }
-      
+
       // Check if user owns the ad
       if (ad.advertiser.toString() !== userId) {
         throw new AppError('You can only boost your own ads', 403);
       }
-      
+
       // Calculate amount based on days (e.g., 100 NOK per day)
       const amount = days * 10000; // 100 NOK in øre
-      
+
       // Create payment intent
       const paymentIntent = await this.createPaymentIntent(amount, 'nok', {
         adId,
         userId,
         type: 'ad_boost',
-        days
+        days,
       });
-      
+
       // Confirm payment with payment method
       await stripe.paymentIntents.confirm(paymentIntent.id, {
-        payment_method: paymentMethodId
+        payment_method: paymentMethodId,
       });
-      
+
       // Update ad with boost information
       const boostExpires = new Date();
       boostExpires.setDate(boostExpires.getDate() + days);
-      
+
       ad.boosted = true;
       ad.boostExpires = boostExpires;
       await ad.save();
-      
+
       return {
         adId,
         boosted: true,
         boostExpires,
-        paymentIntentId: paymentIntent.id
+        paymentIntentId: paymentIntent.id,
       };
     } catch (error) {
       console.error('Error boosting ad:', error);
@@ -227,43 +226,43 @@ class PaymentService {
     try {
       const ad = await Ad.findById(adId);
       const user = await User.findById(userId);
-      
+
       if (!ad) {
         throw new AppError('Ad not found', 404);
       }
-      
+
       if (!user) {
         throw new AppError('User not found', 404);
       }
-      
+
       // Check if user owns the ad
       if (ad.advertiser.toString() !== userId) {
         throw new AppError('You can only feature your own ads', 403);
       }
-      
+
       // Fixed price for featuring an ad (e.g., 500 NOK)
       const amount = 50000; // 500 NOK in øre
-      
+
       // Create payment intent
       const paymentIntent = await this.createPaymentIntent(amount, 'nok', {
         adId,
         userId,
-        type: 'ad_feature'
+        type: 'ad_feature',
       });
-      
+
       // Confirm payment with payment method
       await stripe.paymentIntents.confirm(paymentIntent.id, {
-        payment_method: paymentMethodId
+        payment_method: paymentMethodId,
       });
-      
+
       // Update ad with featured flag
       ad.featured = true;
       await ad.save();
-      
+
       return {
         adId,
         featured: true,
-        paymentIntentId: paymentIntent.id
+        paymentIntentId: paymentIntent.id,
       };
     } catch (error) {
       console.error('Error featuring ad:', error);
@@ -281,17 +280,17 @@ class PaymentService {
       switch (event.type) {
         case 'payment_intent.succeeded':
           return await this.handlePaymentIntentSucceeded(event.data.object);
-          
+
         case 'payment_intent.payment_failed':
           return await this.handlePaymentIntentFailed(event.data.object);
-          
+
         case 'customer.subscription.created':
         case 'customer.subscription.updated':
           return await this.handleSubscriptionUpdated(event.data.object);
-          
+
         case 'customer.subscription.deleted':
           return await this.handleSubscriptionDeleted(event.data.object);
-          
+
         default:
           console.log(`Unhandled event type: ${event.type}`);
           return { received: true };
@@ -309,23 +308,23 @@ class PaymentService {
    */
   async handlePaymentIntentSucceeded(paymentIntent) {
     const { metadata } = paymentIntent;
-    
+
     // Handle different payment types based on metadata
     if (metadata && metadata.type) {
       switch (metadata.type) {
         case 'ad_boost':
           // Ad boost payment succeeded, already handled in boostAd method
           return { received: true, processed: true, type: 'ad_boost' };
-          
+
         case 'ad_feature':
           // Ad feature payment succeeded, already handled in featureAd method
           return { received: true, processed: true, type: 'ad_feature' };
-          
+
         default:
           return { received: true, processed: false };
       }
     }
-    
+
     return { received: true };
   }
 
@@ -336,7 +335,7 @@ class PaymentService {
    */
   async handlePaymentIntentFailed(paymentIntent) {
     const { metadata } = paymentIntent;
-    
+
     // Handle different payment types based on metadata
     if (metadata && metadata.type) {
       switch (metadata.type) {
@@ -351,7 +350,7 @@ class PaymentService {
             }
           }
           return { received: true, processed: true, type: 'ad_boost_reverted' };
-          
+
         case 'ad_feature':
           // Revert ad feature if payment failed
           if (metadata.adId) {
@@ -362,12 +361,12 @@ class PaymentService {
             }
           }
           return { received: true, processed: true, type: 'ad_feature_reverted' };
-          
+
         default:
           return { received: true, processed: false };
       }
     }
-    
+
     return { received: true };
   }
 
@@ -378,46 +377,46 @@ class PaymentService {
    */
   async handleSubscriptionUpdated(subscription) {
     const { customer, status, current_period_end, items } = subscription;
-    
+
     // Find user by Stripe customer ID
     const user = await User.findOne({ stripeCustomerId: customer });
-    
+
     if (!user) {
       return { received: true, processed: false, error: 'User not found' };
     }
-    
+
     // Update subscription status
     user.stripeSubscriptionId = subscription.id;
-    
+
     // Update subscription tier based on price ID
     if (items && items.data && items.data.length > 0) {
       const priceId = items.data[0].price.id;
       const subscriptionTiers = {
-        'price_premium': 'premium',
-        'price_vip': 'vip'
+        price_premium: 'premium',
+        price_vip: 'vip',
       };
-      
+
       user.subscriptionTier = subscriptionTiers[priceId] || 'free';
     }
-    
+
     // Update subscription expiration date
     if (current_period_end) {
       user.subscriptionExpires = new Date(current_period_end * 1000);
     }
-    
+
     // If subscription is canceled or unpaid, downgrade to free tier
     if (status === 'canceled' || status === 'unpaid') {
       user.subscriptionTier = 'free';
     }
-    
+
     await user.save();
-    
-    return { 
-      received: true, 
-      processed: true, 
+
+    return {
+      received: true,
+      processed: true,
       userId: user._id,
       subscriptionTier: user.subscriptionTier,
-      subscriptionExpires: user.subscriptionExpires
+      subscriptionExpires: user.subscriptionExpires,
     };
   }
 
@@ -428,25 +427,25 @@ class PaymentService {
    */
   async handleSubscriptionDeleted(subscription) {
     const { customer } = subscription;
-    
+
     // Find user by Stripe customer ID
     const user = await User.findOne({ stripeCustomerId: customer });
-    
+
     if (!user) {
       return { received: true, processed: false, error: 'User not found' };
     }
-    
+
     // Reset subscription information
     user.subscriptionTier = 'free';
     user.stripeSubscriptionId = null;
-    
+
     await user.save();
-    
-    return { 
-      received: true, 
-      processed: true, 
+
+    return {
+      received: true,
+      processed: true,
       userId: user._id,
-      subscriptionTier: 'free'
+      subscriptionTier: 'free',
     };
   }
 
@@ -460,9 +459,9 @@ class PaymentService {
         active: true,
         type: 'recurring',
         limit: 10,
-        expand: ['data.product']
+        expand: ['data.product'],
       });
-      
+
       return prices.data.map(price => ({
         id: price.id,
         productId: price.product.id,
@@ -471,7 +470,7 @@ class PaymentService {
         unitAmount: price.unit_amount,
         currency: price.currency,
         interval: price.recurring.interval,
-        intervalCount: price.recurring.interval_count
+        intervalCount: price.recurring.interval_count,
       }));
     } catch (error) {
       console.error('Error fetching subscription prices:', error);

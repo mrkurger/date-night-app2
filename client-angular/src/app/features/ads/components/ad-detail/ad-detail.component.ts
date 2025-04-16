@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (ad-detail.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -19,35 +18,37 @@ import { ChatService } from '../../../../core/services/chat.service';
 @Component({
   selector: 'app-ad-detail',
   templateUrl: './ad-detail.component.html',
-  styles: [`
-    .ad-detail-container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .mat-card {
-      margin-bottom: 20px;
-    }
-    .ad-images {
-      max-width: 100%;
-      margin-bottom: 15px;
-    }
-    .ad-title {
-      font-size: 24px;
-      margin-bottom: 15px;
-    }
-    .ad-description {
-      margin-bottom: 20px;
-    }
-    .ad-info {
-      margin: 20px 0;
-    }
-    .action-buttons {
-      margin-top: 20px;
-    }
-  `],
+  styles: [
+    `
+      .ad-detail-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .mat-card {
+        margin-bottom: 20px;
+      }
+      .ad-images {
+        max-width: 100%;
+        margin-bottom: 15px;
+      }
+      .ad-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      .ad-description {
+        margin-bottom: 20px;
+      }
+      .ad-info {
+        margin: 20px 0;
+      }
+      .action-buttons {
+        margin-top: 20px;
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule, MaterialModule]
+  imports: [CommonModule, MaterialModule],
 })
 export class AdDetailComponent implements OnInit {
   ad: any;
@@ -77,54 +78,54 @@ export class AdDetailComponent implements OnInit {
 
   private loadAd(adId: string): void {
     this.adService.getAdById(adId).subscribe({
-      next: (ad) => {
+      next: ad => {
         this.ad = ad;
         this.loading = false;
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to load ad details';
         this.loading = false;
         console.error(err);
-      }
+      },
     });
   }
 
   private checkFavoriteStatus(adId: string): void {
     this.userService.checkFavorite(adId).subscribe({
-      next: (isFavorited) => this.isFavorited = isFavorited,
-      error: (err) => console.error('Error checking favorite status:', err)
+      next: isFavorited => (this.isFavorited = isFavorited),
+      error: err => console.error('Error checking favorite status:', err),
     });
   }
 
   startChat(): void {
     if (!this.userService.isAuthenticated()) {
       this.router.navigate(['/auth/login'], {
-        queryParams: { returnUrl: this.router.url }
+        queryParams: { returnUrl: this.router.url },
       });
       return;
     }
 
     this.chatService.createOrGetChatRoom(this.ad.advertiser).subscribe({
-      next: (roomId) => this.router.navigate(['/chat', roomId]),
-      error: (err) => {
+      next: roomId => this.router.navigate(['/chat', roomId]),
+      error: err => {
         console.error('Error starting chat:', err);
         this.error = 'Failed to start chat';
-      }
+      },
     });
   }
 
   toggleFavorite(): void {
     if (!this.userService.isAuthenticated()) {
       this.router.navigate(['/auth/login'], {
-        queryParams: { returnUrl: this.router.url }
+        queryParams: { returnUrl: this.router.url },
       });
       return;
     }
 
     const method = this.isFavorited ? 'removeFavorite' : 'addFavorite';
     this.userService[method](this.ad._id).subscribe({
-      next: () => this.isFavorited = !this.isFavorited,
-      error: (err) => console.error('Error toggling favorite:', err)
+      next: () => (this.isFavorited = !this.isFavorited),
+      error: err => console.error('Error toggling favorite:', err),
     });
   }
 

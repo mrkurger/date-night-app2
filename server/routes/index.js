@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for index settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -34,7 +33,7 @@ const {
   adCreationLimiter,
   mediaUploadLimiter,
   searchLimiter,
-  profileUpdateLimiter
+  profileUpdateLimiter,
 } = require('../middleware/rateLimiter');
 
 // Apply security headers
@@ -84,7 +83,7 @@ router.get('/health', (req, res) => {
     status: 'success',
     message: 'API is running',
     timestamp: new Date(),
-    version: process.env.API_VERSION || '1.0.0'
+    version: process.env.API_VERSION || '1.0.0',
   });
 });
 
@@ -95,8 +94,8 @@ router.get('/docs', (req, res) => {
     message: 'API documentation',
     docs: {
       swagger: '/api-docs',
-      postman: '/postman-collection'
-    }
+      postman: '/postman-collection',
+    },
   });
 });
 

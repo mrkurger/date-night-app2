@@ -6,7 +6,7 @@ import { CachingService } from './caching.service';
 import { PendingMedia, ModerationRequest } from '../models/media.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MediaService {
   private apiUrl = `${environment.apiUrl}/media`;
@@ -28,7 +28,7 @@ export class MediaService {
 
     return this.http.post<HttpEvent<any>>(`${this.apiUrl}/${adId}/upload`, formData, {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
     });
   }
 
@@ -77,7 +77,12 @@ export class MediaService {
    * @param notes Optional moderation notes
    * @returns Observable of the response
    */
-  moderateMedia(adId: string, mediaId: string, status: 'approved' | 'rejected', notes: string = ''): Observable<void> {
+  moderateMedia(
+    adId: string,
+    mediaId: string,
+    status: 'approved' | 'rejected',
+    notes = ''
+  ): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${adId}/moderate/${mediaId}`, { status, notes });
   }
 }

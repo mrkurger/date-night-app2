@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (auth.controller)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -30,7 +29,7 @@ exports.register = async (req, res) => {
     const user = new User({
       username,
       password: hashedPassword,
-      role: ['user', 'advertiser'].includes(role) ? role : 'user'
+      role: ['user', 'advertiser'].includes(role) ? role : 'user',
     });
 
     await user.save();
@@ -57,9 +56,9 @@ exports.register = async (req, res) => {
       user: {
         _id: user._id,
         username: user.username,
-        role: user.role
+        role: user.role,
       },
-      expiresIn: 86400 // 1 day in seconds
+      expiresIn: 86400, // 1 day in seconds
     });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -99,9 +98,9 @@ exports.login = async (req, res) => {
         user: {
           _id: user._id,
           username: user.username,
-          role: user.role
+          role: user.role,
         },
-        expiresIn: 86400 // 1 day in seconds
+        expiresIn: 86400, // 1 day in seconds
       });
     })(req, res);
   } catch (err) {
@@ -115,7 +114,7 @@ exports.logout = async (req, res) => {
     if (req.user) {
       await User.findByIdAndUpdate(req.user._id, {
         online: false,
-        lastActive: new Date()
+        lastActive: new Date(),
       });
 
       // Blacklist the current token
@@ -126,13 +125,7 @@ exports.logout = async (req, res) => {
         const expiresAt = new Date(req.tokenDecoded.exp * 1000);
 
         // Add token to blacklist
-        await TokenBlacklist.blacklist(
-          req.token,
-          'access',
-          req.user._id,
-          'logout',
-          expiresAt
-        );
+        await TokenBlacklist.blacklist(req.token, 'access', req.user._id, 'logout', expiresAt);
 
         // Also blacklist refresh token if it exists
         if (req.cookies && req.cookies.refresh_token) {
@@ -204,7 +197,7 @@ exports.refreshToken = async (req, res) => {
     if (!refreshToken) {
       return res.status(401).json({
         success: false,
-        message: 'Refresh token not found'
+        message: 'Refresh token not found',
       });
     }
 
@@ -220,7 +213,7 @@ exports.refreshToken = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'User not found'
+        message: 'User not found',
       });
     }
 
@@ -246,23 +239,23 @@ exports.refreshToken = async (req, res) => {
       user: {
         _id: user._id,
         username: user.username,
-        role: user.role
+        role: user.role,
       },
-      expiresIn: 86400 // 1 day in seconds
+      expiresIn: 86400, // 1 day in seconds
     });
   } catch (err) {
     if (err.name === 'TokenExpiredError') {
       clearTokenCookies(res);
       return res.status(401).json({
         success: false,
-        message: 'Refresh token expired'
+        message: 'Refresh token expired',
       });
     }
 
     res.status(500).json({
       success: false,
       message: 'Failed to refresh token',
-      error: err.message
+      error: err.message,
     });
   }
 };
@@ -274,7 +267,7 @@ const setTokenCookies = (res, token, refreshToken) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
 
   // Set refresh token in HttpOnly cookie
@@ -282,23 +275,23 @@ const setTokenCookies = (res, token, refreshToken) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
 
 // Helper function to clear token cookies
-const clearTokenCookies = (res) => {
+const clearTokenCookies = res => {
   res.cookie('access_token', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 0
+    maxAge: 0,
   });
 
   res.cookie('refresh_token', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 0
+    maxAge: 0,
   });
 };

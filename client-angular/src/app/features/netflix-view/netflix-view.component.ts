@@ -1,16 +1,23 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (netflix-view.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - HERO_SECTION_HEIGHT: Height of the hero section (default: 70vh)
 //   Related to: netflix-view.component.scss:$hero-section-height
 // - CARD_ANIMATION_DURATION: Duration of card hover animations (default: 300ms)
 //   Related to: netflix-view.component.scss:$card-animation-duration
 // ===================================================
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren, QueryList, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  ViewChildren,
+  QueryList,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -36,9 +43,9 @@ import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.c
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    ReactiveFormsModule, 
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
     MainLayoutComponent,
     // Add Emerald components
     AppCardComponent,
@@ -47,17 +54,17 @@ import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.c
     SkeletonLoaderComponent,
     LabelComponent,
     FloatingActionButtonComponent,
-    ToggleComponent
+    ToggleComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add schema for custom elements
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add schema for custom elements
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
-  
+
   // Store ads by category
   adsByCategory: { [key: string]: Ad[] } = {};
-  
+
   // Component state
   loading = true;
   error: string | null = null;
@@ -66,19 +73,19 @@ export class NetflixViewComponent implements OnInit {
 
   // For hero section
   featuredAd: Ad | null = null;
-  
+
   // CardGrid configuration
   cardGridConfig = {
     layout: 'netflix',
     gap: 16,
     animated: true,
     itemsPerRow: {
-      xs: 2,  // Extra small devices (phones)
-      sm: 3,  // Small devices (tablets)
-      md: 4,  // Medium devices (small laptops)
-      lg: 5,  // Large devices (desktops)
-      xl: 6   // Extra large devices (large desktops)
-    }
+      xs: 2, // Extra small devices (phones)
+      sm: 3, // Small devices (tablets)
+      md: 4, // Medium devices (small laptops)
+      lg: 5, // Large devices (desktops)
+      xl: 6, // Extra large devices (large desktops)
+    },
   };
 
   constructor(
@@ -92,7 +99,7 @@ export class NetflixViewComponent implements OnInit {
     this.filterForm = this.fb.group({
       category: [''],
       location: [''],
-      touringOnly: [false]
+      touringOnly: [false],
     });
   }
 
@@ -104,7 +111,7 @@ export class NetflixViewComponent implements OnInit {
   ngOnInit(): void {
     // Load ads for all categories
     this.loadAds();
-    
+
     // Subscribe to authentication state
     this.authService.currentUser$.subscribe(user => {
       this.isAuthenticated = !!user;
@@ -117,7 +124,7 @@ export class NetflixViewComponent implements OnInit {
 
     // First, try to get featured ads
     this.adService.getFeaturedAds().subscribe({
-      next: (featuredAds) => {
+      next: featuredAds => {
         if (featuredAds && featuredAds.length > 0) {
           this.adsByCategory['Featured'] = featuredAds;
           // Set a featured ad for the hero section
@@ -128,12 +135,12 @@ export class NetflixViewComponent implements OnInit {
 
         // Then get trending ads
         this.adService.getTrendingAds().subscribe({
-          next: (trendingAds) => {
+          next: trendingAds => {
             this.adsByCategory['Most Popular'] = trendingAds;
 
             // Get all ads for other categories
             this.adService.getAds().subscribe({
-              next: (allAds) => {
+              next: allAds => {
                 if (allAds && allAds.length > 0) {
                   // If we don't have a featured ad yet, set one from all ads
                   if (!this.featuredAd && allAds.length > 0) {
@@ -141,11 +148,13 @@ export class NetflixViewComponent implements OnInit {
                   }
 
                   // Set New Arrivals (sort by creation date)
-                  const newArrivals = [...allAds].sort((a, b) => {
-                    const dateA = new Date(a.createdAt || 0);
-                    const dateB = new Date(b.createdAt || 0);
-                    return dateB.getTime() - dateA.getTime();
-                  }).slice(0, 10);
+                  const newArrivals = [...allAds]
+                    .sort((a, b) => {
+                      const dateA = new Date(a.createdAt || 0);
+                      const dateB = new Date(b.createdAt || 0);
+                      return dateB.getTime() - dateA.getTime();
+                    })
+                    .slice(0, 10);
                   this.adsByCategory['New Arrivals'] = newArrivals;
 
                   // Set Nearby (for now, just random selection)
@@ -153,8 +162,10 @@ export class NetflixViewComponent implements OnInit {
 
                   // Set Touring (filter by isTouring flag)
                   const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
-                  this.adsByCategory['Touring'] = touringAds.length > 0 ?
-                    touringAds : this.shuffleArray([...allAds]).slice(0, 10);
+                  this.adsByCategory['Touring'] =
+                    touringAds.length > 0
+                      ? touringAds
+                      : this.shuffleArray([...allAds]).slice(0, 10);
                 } else {
                   // If no ads found, set empty arrays for remaining categories
                   this.categories.forEach(category => {
@@ -166,42 +177,42 @@ export class NetflixViewComponent implements OnInit {
 
                 this.loading = false;
               },
-              error: (err) => {
+              error: err => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
                 console.error('Error loading all ads:', err);
-              }
+              },
             });
           },
-          error: (err) => {
+          error: err => {
             console.error('Error loading trending ads:', err);
             // Continue loading other categories even if trending fails
             this.adsByCategory['Most Popular'] = [];
             // Pass an empty array since allAds is not defined in this scope
             this.loadRemainingCategories([]);
-          }
+          },
         });
       },
-      error: (err) => {
+      error: err => {
         console.error('Error loading featured ads:', err);
         // Continue loading other categories even if featured fails
         this.adsByCategory['Featured'] = [];
         this.loadTrendingAndRemainingAds();
-      }
+      },
     });
   }
 
   private loadTrendingAndRemainingAds(): void {
     this.adService.getTrendingAds().subscribe({
-      next: (trendingAds) => {
+      next: trendingAds => {
         this.adsByCategory['Most Popular'] = trendingAds;
         this.loadRemainingCategories();
       },
-      error: (err) => {
+      error: err => {
         console.error('Error loading trending ads:', err);
         this.adsByCategory['Most Popular'] = [];
         this.loadRemainingCategories();
-      }
+      },
     });
   }
 
@@ -210,14 +221,14 @@ export class NetflixViewComponent implements OnInit {
       this.processAllAds(existingAds);
     } else {
       this.adService.getAds().subscribe({
-        next: (allAds) => {
+        next: allAds => {
           this.processAllAds(allAds);
         },
-        error: (err) => {
+        error: err => {
           this.error = 'Failed to load ads. Please try again.';
           this.loading = false;
           console.error('Error loading all ads:', err);
-        }
+        },
       });
     }
   }
@@ -230,11 +241,13 @@ export class NetflixViewComponent implements OnInit {
       }
 
       // Set New Arrivals (sort by creation date)
-      const newArrivals = [...allAds].sort((a, b) => {
-        const dateA = new Date(a.createdAt || 0);
-        const dateB = new Date(b.createdAt || 0);
-        return dateB.getTime() - dateA.getTime();
-      }).slice(0, 10);
+      const newArrivals = [...allAds]
+        .sort((a, b) => {
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || 0);
+          return dateB.getTime() - dateA.getTime();
+        })
+        .slice(0, 10);
       this.adsByCategory['New Arrivals'] = newArrivals;
 
       // Set Nearby (for now, just random selection)
@@ -242,8 +255,8 @@ export class NetflixViewComponent implements OnInit {
 
       // Set Touring (filter by isTouring flag)
       const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
-      this.adsByCategory['Touring'] = touringAds.length > 0 ?
-        touringAds : this.shuffleArray([...allAds]).slice(0, 10);
+      this.adsByCategory['Touring'] =
+        touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10);
     } else {
       // If no ads found, set empty arrays for remaining categories
       this.categories.forEach(category => {
@@ -298,10 +311,10 @@ export class NetflixViewComponent implements OnInit {
       next: () => {
         this.notificationService.success('Added to your favorites');
       },
-      error: (err) => {
+      error: err => {
         this.notificationService.error('Failed to like ad');
         console.error('Error liking ad:', err);
-      }
+      },
     });
   }
 
@@ -321,13 +334,13 @@ export class NetflixViewComponent implements OnInit {
 
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
-      next: (room) => {
+      next: room => {
         this.router.navigateByUrl(`/chat/${room._id}`);
       },
-      error: (err) => {
+      error: err => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
-      }
+      },
     });
   }
 
@@ -351,16 +364,16 @@ export class NetflixViewComponent implements OnInit {
         console.warn('Unknown action:', action.id);
     }
   }
-  
+
   /**
    * Handle actions from card components
    * @param event The action event from the AppCard component
    * @param adId The ID of the ad
    */
-  onCardAction(event: {id: string, itemId?: string}, adId: string): void {
+  onCardAction(event: { id: string; itemId?: string }, adId: string): void {
     // Use the itemId from the event if available, otherwise use the provided adId
     const targetAdId = event.itemId || adId;
-    
+
     switch (event.id) {
       case 'view':
         this.viewAdDetails(targetAdId);
@@ -385,7 +398,7 @@ export class NetflixViewComponent implements OnInit {
     if (!ad) {
       return '/assets/images/default-profile.jpg';
     }
-    
+
     if (ad.images && ad.images.length > 0) {
       return ad.images[0];
     }
@@ -399,7 +412,7 @@ export class NetflixViewComponent implements OnInit {
     // TODO: Implement filter logic based on filterForm values
     // For now, just reload all ads
     this.loadAds();
-    
+
     // Show success notification
     this.notificationService.success('Filters applied');
   }
@@ -474,7 +487,7 @@ export class NetflixViewComponent implements OnInit {
       }
     }
   }
-  
+
   /**
    * Reset filters to default values
    */
@@ -482,9 +495,9 @@ export class NetflixViewComponent implements OnInit {
     this.filterForm.reset({
       category: '',
       location: '',
-      touringOnly: false
+      touringOnly: false,
     });
-    
+
     // Apply the reset filters
     this.applyFilters();
   }

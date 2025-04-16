@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (login.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -36,14 +35,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+  ],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
   errorMessage = '';
-  returnUrl: string = '/dashboard';
+  returnUrl = '/dashboard';
   hidePassword = true;
 
   constructor(
@@ -54,14 +53,14 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   ngOnInit(): void {
     // Get return url from route parameters or default to '/dashboard'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
-    
+
     // Redirect if already logged in
     if (this.userService.isAuthenticated()) {
       this.router.navigate([this.returnUrl]);
@@ -78,15 +77,16 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.userService.login({ email, password })
-      .pipe(finalize(() => this.isLoading = false))
+    this.userService
+      .login({ email, password })
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: () => {
           this.router.navigate([this.returnUrl]);
         },
-        error: (error) => {
+        error: error => {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
-        }
+        },
       });
   }
 }

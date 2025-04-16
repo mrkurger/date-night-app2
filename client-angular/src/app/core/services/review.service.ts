@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReviewService {
   private apiUrl = `${environment.apiUrl}/reviews`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Create a new review
@@ -28,9 +28,9 @@ export class ReviewService {
    */
   getAdvertiserReviews(
     advertiserId: string,
-    page: number = 1,
-    limit: number = 10,
-    sort: string = 'newest'
+    page = 1,
+    limit = 10,
+    sort = 'newest'
   ): Observable<any> {
     return this.http.get(
       `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`
@@ -93,7 +93,7 @@ export class ReviewService {
    * @param limit Number of advertisers to return
    * @param minReviews Minimum number of reviews required
    */
-  getTopRatedAdvertisers(limit: number = 10, minReviews: number = 3): Observable<any> {
+  getTopRatedAdvertisers(limit = 10, minReviews = 3): Observable<any> {
     return this.http.get(
       `${this.apiUrl}/top-rated/advertisers?limit=${limit}&minReviews=${minReviews}`
     );
@@ -104,7 +104,7 @@ export class ReviewService {
    * @param page Page number
    * @param limit Items per page
    */
-  getPendingReviews(page: number = 1, limit: number = 20): Observable<any> {
+  getPendingReviews(page = 1, limit = 20): Observable<any> {
     return this.http.get(`${this.apiUrl}/admin/pending?page=${page}&limit=${limit}`);
   }
 

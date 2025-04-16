@@ -98,31 +98,38 @@
 }
 
 // Typography Classes
-h1, .h1 {
+h1,
+.h1 {
   @include heading-1;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   @include heading-2;
 }
 
-h3, .h3 {
+h3,
+.h3 {
   @include heading-3;
 }
 
-h4, .h4 {
+h4,
+.h4 {
   @include heading-4;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   @include heading-5;
 }
 
-h6, .h6 {
+h6,
+.h6 {
   @include heading-6;
 }
 
-p, .body {
+p,
+.body {
   @include body-text;
   margin-bottom: $spacing-4;
 }

@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (chat.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -29,12 +28,7 @@ class ChatService {
    */
   async getMessages(roomId, options = {}) {
     try {
-      const {
-        limit = 50,
-        before = null,
-        after = null,
-        includeSystem = true
-      } = options;
+      const { limit = 50, before = null, after = null, includeSystem = true } = options;
 
       // Build query
       const query = { roomId };
@@ -87,7 +81,7 @@ class ChatService {
         type = 'text',
         metadata = {},
         isEncrypted = false,
-        encryptionData = null
+        encryptionData = null,
       } = options;
 
       // Get chat room
@@ -98,9 +92,7 @@ class ChatService {
       }
 
       // Check if sender is a participant
-      const isParticipant = room.participants.some(p =>
-        p.user.toString() === senderId
-      );
+      const isParticipant = room.participants.some(p => p.user.toString() === senderId);
 
       if (!isParticipant) {
         throw new AppError('You are not a participant in this chat room', 403);
@@ -124,7 +116,7 @@ class ChatService {
         metadata,
         isEncrypted,
         encryptionData,
-        expiresAt
+        expiresAt,
       });
 
       await chatMessage.save();
@@ -145,7 +137,7 @@ class ChatService {
         sender: {
           id: populatedMessage.sender._id,
           username: populatedMessage.sender.username,
-          profileImage: populatedMessage.sender.profileImage
+          profileImage: populatedMessage.sender.profileImage,
         },
         message: populatedMessage.message,
         type: populatedMessage.type,
@@ -153,7 +145,7 @@ class ChatService {
         isEncrypted: populatedMessage.isEncrypted,
         encryptionData: populatedMessage.encryptionData,
         createdAt: populatedMessage.createdAt,
-        expiresAt: populatedMessage.expiresAt
+        expiresAt: populatedMessage.expiresAt,
       };
 
       // Notify room participants via WebSocket
@@ -172,8 +164,8 @@ class ChatService {
               roomId,
               messageId: populatedMessage._id,
               senderId: populatedMessage.sender._id,
-              senderName: populatedMessage.sender.username
-            }
+              senderName: populatedMessage.sender.username,
+            },
           });
         }
       }
@@ -194,10 +186,7 @@ class ChatService {
   async createDirectRoom(user1Id, user2Id) {
     try {
       // Check if users exist
-      const [user1, user2] = await Promise.all([
-        User.findById(user1Id),
-        User.findById(user2Id)
-      ]);
+      const [user1, user2] = await Promise.all([User.findById(user1Id), User.findById(user2Id)]);
 
       if (!user1 || !user2) {
         throw new AppError('One or both users not found', 404);
@@ -229,7 +218,7 @@ class ChatService {
       // Check if user and ad exist
       const [user, ad] = await Promise.all([
         User.findById(userId),
-        Ad.findById(adId).populate('advertiser')
+        Ad.findById(adId).populate('advertiser'),
       ]);
 
       if (!user) {
@@ -246,11 +235,7 @@ class ChatService {
       }
 
       // Find or create ad room
-      const room = await ChatRoom.findOrCreateAdRoom(
-        userId,
-        adId,
-        ad.advertiser._id
-      );
+      const room = await ChatRoom.findOrCreateAdRoom(userId, adId, ad.advertiser._id);
 
       // Get populated room
       const populatedRoom = await ChatRoom.findById(room._id)
@@ -288,7 +273,7 @@ class ChatService {
 
       // Check if all participants exist
       const participants = await User.find({
-        _id: { $in: participantIds }
+        _id: { $in: participantIds },
       });
 
       if (participants.length !== participantIds.length) {
@@ -301,9 +286,9 @@ class ChatService {
         type: 'group',
         participants: participantIds.map(id => ({
           user: id,
-          role: id === creatorId ? 'admin' : 'member'
+          role: id === creatorId ? 'admin' : 'member',
         })),
-        createdBy: creatorId
+        createdBy: creatorId,
       });
 
       await room.save();
@@ -322,8 +307,8 @@ class ChatService {
           type: 'system',
           metadata: {
             event: 'group_created',
-            createdBy: creatorId
-          }
+            createdBy: creatorId,
+          },
         }
       );
 
@@ -353,7 +338,7 @@ class ChatService {
 
       // Get unread counts for each room
       const roomsWithUnreadCounts = await Promise.all(
-        rooms.map(async (room) => {
+        rooms.map(async room => {
           const unreadCount = await ChatMessage.getUnreadCountByRoom(userId, room._id);
 
           // Format room data
@@ -365,7 +350,7 @@ class ChatService {
           // Format participants
           roomData.participants = roomData.participants.map(p => ({
             ...p,
-            isCurrentUser: p.user._id.toString() === userId
+            isCurrentUser: p.user._id.toString() === userId,
           }));
 
           // Get other participant for direct chats
@@ -405,9 +390,7 @@ class ChatService {
       }
 
       // Check if user is a participant
-      const isParticipant = room.participants.some(p =>
-        p.user._id.toString() === userId
-      );
+      const isParticipant = room.participants.some(p => p.user._id.toString() === userId);
 
       if (!isParticipant) {
         throw new AppError('You are not a participant in this chat room', 403);
@@ -423,7 +406,7 @@ class ChatService {
       // Format participants
       roomData.participants = roomData.participants.map(p => ({
         ...p,
-        isCurrentUser: p.user._id.toString() === userId
+        isCurrentUser: p.user._id.toString() === userId,
       }));
 
       // Get other participant for direct chats
@@ -462,19 +445,19 @@ class ChatService {
         {
           roomId,
           recipient: userId,
-          read: false
+          read: false,
         },
         {
           $set: {
             read: true,
-            readAt: new Date()
-          }
+            readAt: new Date(),
+          },
         }
       );
 
       return {
         success: true,
-        count: result.modifiedCount
+        count: result.modifiedCount,
       };
     } catch (error) {
       console.error('Error marking messages as read:', error);
@@ -495,16 +478,16 @@ class ChatService {
       // Get rooms with unread messages
       const rooms = await ChatRoom.find({
         'participants.user': userId,
-        isActive: true
+        isActive: true,
       });
 
       // Get unread counts by room
       const roomCounts = await Promise.all(
-        rooms.map(async (room) => {
+        rooms.map(async room => {
           const count = await ChatMessage.getUnreadCountByRoom(userId, room._id);
           return {
             roomId: room._id,
-            count
+            count,
           };
         })
       );
@@ -514,7 +497,7 @@ class ChatService {
 
       return {
         total: totalUnread,
-        rooms: roomsWithUnread
+        rooms: roomsWithUnread,
       };
     } catch (error) {
       console.error('Error getting unread counts:', error);
@@ -564,7 +547,7 @@ class ChatService {
           socketService.sendToUser(user._id.toString(), 'chat:keys', {
             type: 'private_key',
             roomId: room._id,
-            privateKey: keyPair.privateKey
+            privateKey: keyPair.privateKey,
           });
         } else {
           // User already has a public key
@@ -583,7 +566,7 @@ class ChatService {
 
       return {
         success: true,
-        message: 'Room encryption set up successfully'
+        message: 'Room encryption set up successfully',
       };
     } catch (error) {
       console.error('Error setting up room encryption:', error);
@@ -608,8 +591,8 @@ class ChatService {
       }
 
       // Check if user is an admin
-      const participant = room.participants.find(p =>
-        p.user.toString() === userId && p.role === 'admin'
+      const participant = room.participants.find(
+        p => p.user.toString() === userId && p.role === 'admin'
       );
 
       if (!participant) {
@@ -635,8 +618,8 @@ class ChatService {
           metadata: {
             event: 'message_expiry_updated',
             enabled,
-            expiryTime
-          }
+            expiryTime,
+          },
         }
       );
 
@@ -667,9 +650,7 @@ class ChatService {
       }
 
       // Find participant
-      const participant = room.participants.find(p =>
-        p.user.toString() === userId
-      );
+      const participant = room.participants.find(p => p.user.toString() === userId);
 
       if (!participant || !participant.encryptedRoomKey) {
         throw new AppError('You do not have encryption keys for this room', 403);
@@ -679,7 +660,7 @@ class ChatService {
       // This is just a placeholder for the server-side implementation
       return {
         success: true,
-        message: 'Message encryption should be handled by the client'
+        message: 'Message encryption should be handled by the client',
       };
     } catch (error) {
       console.error('Error encrypting message:', error);
@@ -707,9 +688,7 @@ class ChatService {
       }
 
       // Check if user is a participant
-      const isParticipant = room.participants.some(p =>
-        p.user.toString() === userId
-      );
+      const isParticipant = room.participants.some(p => p.user.toString() === userId);
 
       if (!isParticipant) {
         throw new AppError('You are not a participant in this chat room', 403);
@@ -722,22 +701,17 @@ class ChatService {
       await room.removeParticipant(userId);
 
       // Send system message
-      await this.sendMessage(
-        roomId,
-        userId,
-        `${user.username} left the group`,
-        {
-          type: 'system',
-          metadata: {
-            event: 'user_left',
-            userId
-          }
-        }
-      );
+      await this.sendMessage(roomId, userId, `${user.username} left the group`, {
+        type: 'system',
+        metadata: {
+          event: 'user_left',
+          userId,
+        },
+      });
 
       return {
         success: true,
-        message: 'You have left the group chat'
+        message: 'You have left the group chat',
       };
     } catch (error) {
       console.error('Error leaving room:', error);

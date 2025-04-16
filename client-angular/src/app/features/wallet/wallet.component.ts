@@ -1,16 +1,21 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (wallet.component)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +40,14 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { WalletService, Wallet, WalletBalance, WalletTransaction, PaymentMethod, TransactionFilters } from '../../core/services/wallet.service';
+import {
+  WalletService,
+  Wallet,
+  WalletBalance,
+  WalletTransaction,
+  PaymentMethod,
+  TransactionFilters,
+} from '../../core/services/wallet.service';
 import { PaymentService } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -94,32 +106,32 @@ import { TransactionDetailsDialogComponent } from './dialogs/transaction-details
     CardGridComponent,
     PagerComponent,
     AppCardComponent,
-    FloatingActionButtonComponent
-  ]
+    FloatingActionButtonComponent,
+  ],
 })
 export class WalletComponent implements OnInit {
   wallet: Wallet | null = null;
   balances: WalletBalance[] = [];
   transactions: WalletTransaction[] = [];
   paymentMethods: PaymentMethod[] = [];
-  
+
   // Transaction filters
   transactionFilters: TransactionFilters = {};
   currentPage = 1;
   pageSize = 10;
   totalTransactions = 0;
   totalPages = 1;
-  
+
   // Loading states
   loading = {
     wallet: true,
     transactions: false,
-    paymentMethods: false
+    paymentMethods: false,
   };
-  
+
   // Selected currency for operations
   selectedCurrency = 'NOK';
-  
+
   // Transaction types for filtering
   transactionTypes = [
     { value: '', label: 'All Types' },
@@ -128,24 +140,24 @@ export class WalletComponent implements OnInit {
     { value: 'transfer', label: 'Transfers' },
     { value: 'payment', label: 'Payments' },
     { value: 'refund', label: 'Refunds' },
-    { value: 'fee', label: 'Fees' }
+    { value: 'fee', label: 'Fees' },
   ];
-  
+
   // Transaction statuses for filtering
   transactionStatuses = [
     { value: '', label: 'All Statuses' },
     { value: 'pending', label: 'Pending' },
     { value: 'completed', label: 'Completed' },
     { value: 'failed', label: 'Failed' },
-    { value: 'cancelled', label: 'Cancelled' }
+    { value: 'cancelled', label: 'Cancelled' },
   ];
-  
+
   // Settings form
   settingsForm: FormGroup;
-  
+
   // Display columns for transactions table
   displayedColumns: string[] = ['date', 'type', 'amount', 'status', 'actions'];
-  
+
   constructor(
     private walletService: WalletService,
     private paymentService: PaymentService,
@@ -161,100 +173,98 @@ export class WalletComponent implements OnInit {
       autoWithdrawal: this.fb.group({
         enabled: [false],
         threshold: [100000, [Validators.required, Validators.min(10000)]],
-        paymentMethodId: ['']
+        paymentMethodId: [''],
       }),
       notificationPreferences: this.fb.group({
         email: this.fb.group({
           deposit: [true],
           withdrawal: [true],
-          payment: [true]
+          payment: [true],
         }),
         push: this.fb.group({
           deposit: [true],
           withdrawal: [true],
-          payment: [true]
-        })
-      })
+          payment: [true],
+        }),
+      }),
     });
   }
-  
+
   ngOnInit(): void {
     this.loadWallet();
   }
-  
+
   /**
    * Load wallet data
    */
   loadWallet(): void {
     this.loading.wallet = true;
-    
+
     this.walletService.getWallet().subscribe({
-      next: (wallet) => {
+      next: wallet => {
         this.wallet = wallet;
         this.balances = wallet.balances;
         this.selectedCurrency = wallet.settings.defaultCurrency;
-        
+
         // Update settings form
         this.settingsForm.patchValue(wallet.settings);
-        
+
         this.loading.wallet = false;
-        
+
         // Load transactions and payment methods
         this.loadTransactions();
         this.loadPaymentMethods();
       },
-      error: (error) => {
+      error: error => {
         console.error('Error loading wallet:', error);
         this.notificationService.error('Failed to load wallet data');
         this.loading.wallet = false;
-      }
+      },
     });
   }
-  
+
   /**
    * Load transactions with current filters
    */
   loadTransactions(): void {
     this.loading.transactions = true;
-    
-    this.walletService.getWalletTransactions(
-      this.transactionFilters,
-      this.currentPage,
-      this.pageSize
-    ).subscribe({
-      next: (response) => {
-        this.transactions = response.transactions;
-        this.totalTransactions = response.pagination.total;
-        this.totalPages = response.pagination.pages;
-        this.loading.transactions = false;
-      },
-      error: (error) => {
-        console.error('Error loading transactions:', error);
-        this.notificationService.error('Failed to load transactions');
-        this.loading.transactions = false;
-      }
-    });
+
+    this.walletService
+      .getWalletTransactions(this.transactionFilters, this.currentPage, this.pageSize)
+      .subscribe({
+        next: response => {
+          this.transactions = response.transactions;
+          this.totalTransactions = response.pagination.total;
+          this.totalPages = response.pagination.pages;
+          this.loading.transactions = false;
+        },
+        error: error => {
+          console.error('Error loading transactions:', error);
+          this.notificationService.error('Failed to load transactions');
+          this.loading.transactions = false;
+        },
+      });
   }
-  
+
   /**
    * Load payment methods
    */
   loadPaymentMethods(): void {
     this.loading.paymentMethods = true;
-    
+
     this.walletService.getWalletPaymentMethods().subscribe({
-      next: (paymentMethods) => {
+      next: paymentMethods => {
         this.paymentMethods = paymentMethods;
         this.loading.paymentMethods = false;
       },
-      error: (error) => {
+      error: error => {
         console.error('Error loading payment methods:', error);
         this.notificationService.error('Failed to load payment methods');
         this.loading.paymentMethods = false;
-      }
+      },
     });
   }
-  
+
   /**
    * Apply transaction filters
    */
@@ -262,7 +272,7 @@ export class WalletComponent implements OnInit {
     this.currentPage = 1;
     this.loadTransactions();
   }
-  
+
   /**
    * Reset transaction filters
    */
@@ -271,7 +281,7 @@ export class WalletComponent implements OnInit {
     this.currentPage = 1;
     this.loadTransactions();
   }
-  
+
   /**
    * Handle page change
    * @param page New page number
@@ -280,7 +290,7 @@ export class WalletComponent implements OnInit {
     this.currentPage = page;
     this.loadTransactions();
   }
-  
+
   /**
    * Handle page size change
    * @param size New page size
@@ -290,7 +300,7 @@ export class WalletComponent implements OnInit {
     this.currentPage = 1;
     this.loadTransactions();
   }
-  
+
   /**
    * Open deposit dialog
    */
@@ -298,19 +308,21 @@ export class WalletComponent implements OnInit {
     const dialogRef = this.dialog.open(DepositDialogComponent, {
       width: '500px',
       data: {
-        currencies: this.walletService.SUPPORTED_CURRENCIES.concat(this.walletService.SUPPORTED_CRYPTOCURRENCIES),
+        currencies: this.walletService.SUPPORTED_CURRENCIES.concat(
+          this.walletService.SUPPORTED_CRYPTOCURRENCIES
+        ),
         paymentMethods: this.paymentMethods,
-        selectedCurrency: this.selectedCurrency
-      }
+        selectedCurrency: this.selectedCurrency,
+      },
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadWallet();
       }
     });
   }
-  
+
   /**
    * Open withdraw dialog
    */
@@ -320,17 +332,17 @@ export class WalletComponent implements OnInit {
       data: {
         balances: this.balances,
         paymentMethods: this.paymentMethods,
-        selectedCurrency: this.selectedCurrency
-      }
+        selectedCurrency: this.selectedCurrency,
+      },
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadWallet();
       }
     });
   }
-  
+
   /**
    * Open transfer dialog
    */
@@ -339,17 +351,17 @@ export class WalletComponent implements OnInit {
       width: '500px',
       data: {
         balances: this.balances,
-        selectedCurrency: this.selectedCurrency
-      }
+        selectedCurrency: this.selectedCurrency,
+      },
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadWallet();
       }
     });
   }
-  
+
   /**
    * Open add payment method dialog
    */
@@ -358,17 +370,17 @@ export class WalletComponent implements OnInit {
       width: '500px',
       data: {
         currencies: this.walletService.SUPPORTED_CURRENCIES,
-        cryptocurrencies: this.walletService.SUPPORTED_CRYPTOCURRENCIES
-      }
+        cryptocurrencies: this.walletService.SUPPORTED_CRYPTOCURRENCIES,
+      },
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadPaymentMethods();
       }
     });
   }
-  
+
   /**
    * Open transaction details dialog
    * @param transaction Transaction to view
@@ -376,10 +388,10 @@ export class WalletComponent implements OnInit {
   openTransactionDetailsDialog(transaction: WalletTransaction): void {
     this.dialog.open(TransactionDetailsDialogComponent, {
       width: '600px',
-      data: { transaction }
+      data: { transaction },
     });
   }
-  
+
   /**
    * Remove payment method
    * @param paymentMethodId Payment method ID
@@ -391,14 +403,14 @@ export class WalletComponent implements OnInit {
           this.notificationService.success('Payment method removed');
           this.loadPaymentMethods();
         },
-        error: (error) => {
+        error: error => {
           console.error('Error removing payment method:', error);
           this.notificationService.error('Failed to remove payment method');
-        }
+        },
       });
     }
   }
-  
+
   /**
    * Set default payment method
    * @param paymentMethodId Payment method ID
@@ -409,13 +421,13 @@ export class WalletComponent implements OnInit {
         this.notificationService.success('Default payment method updated');
         this.loadPaymentMethods();
       },
-      error: (error) => {
+      error: error => {
         console.error('Error setting default payment method:', error);
         this.notificationService.error('Failed to update default payment method');
-      }
+      },
     });
   }
-  
+
   /**
    * Save wallet settings
    */
@@ -423,25 +435,25 @@ export class WalletComponent implements OnInit {
     if (this.settingsForm.invalid) {
       return;
     }
-    
+
     const settings = this.settingsForm.value;
-    
+
     this.walletService.updateWalletSettings(settings).subscribe({
-      next: (updatedSettings) => {
+      next: updatedSettings => {
         this.notificationService.success('Wallet settings updated');
-        
+
         // Update local wallet settings
         if (this.wallet) {
           this.wallet.settings = updatedSettings;
         }
       },
-      error: (error) => {
+      error: error => {
         console.error('Error updating wallet settings:', error);
         this.notificationService.error('Failed to update wallet settings');
-      }
+      },
     });
   }
-  
+
   /**
    * Get CSS class for transaction type
    * @param type Transaction type
@@ -464,7 +476,7 @@ export class WalletComponent implements OnInit {
         return '';
     }
   }
-  
+
   /**
    * Get CSS class for transaction status
    * @param status Transaction status
@@ -483,7 +495,7 @@ export class WalletComponent implements OnInit {
         return '';
     }
   }
-  
+
   /**
    * Format transaction amount with sign
    * @param transaction Transaction
@@ -492,7 +504,7 @@ export class WalletComponent implements OnInit {
     const sign = transaction.amount >= 0 ? '+' : '';
     return `${sign}${this.walletService.formatCurrency(transaction.amount, transaction.currency)}`;
   }
-  
+
   /**
    * Get payment method display name
    * @param paymentMethod Payment method
@@ -504,24 +516,24 @@ export class WalletComponent implements OnInit {
           return `${paymentMethod.cardDetails.brand} •••• ${paymentMethod.cardDetails.lastFour}`;
         }
         return 'Card';
-        
+
       case 'bank_account':
         if (paymentMethod.bankDetails) {
           return `${paymentMethod.bankDetails.bankName} •••• ${paymentMethod.bankDetails.lastFour}`;
         }
         return 'Bank Account';
-        
+
       case 'crypto_address':
         if (paymentMethod.cryptoDetails) {
           return `${paymentMethod.cryptoDetails.currency} Address`;
         }
         return 'Crypto Address';
-        
+
       default:
         return 'Unknown Payment Method';
     }
   }
-  
+
   /**
    * Get payment method icon
    * @param paymentMethod Payment method
@@ -542,10 +554,10 @@ export class WalletComponent implements OnInit {
           }
         }
         return 'credit_card';
-        
+
       case 'bank_account':
         return 'account_balance';
-        
+
       case 'crypto_address':
         if (paymentMethod.cryptoDetails) {
           switch (paymentMethod.cryptoDetails.currency) {
@@ -558,12 +570,12 @@ export class WalletComponent implements OnInit {
           }
         }
         return 'currency_exchange';
-        
+
       default:
         return 'payment';
     }
   }
-  
+
   /**
    * Get total balance in default currency
    */
@@ -571,25 +583,25 @@ export class WalletComponent implements OnInit {
     if (!this.balances.length) {
       return this.walletService.formatCurrency(0, this.selectedCurrency);
     }
-    
+
     // Find balance in default currency
     const defaultBalance = this.balances.find(b => b.currency === this.selectedCurrency);
-    
+
     if (defaultBalance) {
       return this.walletService.formatCurrency(defaultBalance.available, this.selectedCurrency);
     }
-    
+
     // If no balance in default currency, return 0
     return this.walletService.formatCurrency(0, this.selectedCurrency);
   }
-  
+
   /**
    * Check if user has any payment methods
    */
   hasPaymentMethods(): boolean {
     return this.paymentMethods.length > 0;
   }
-  
+
   /**
    * Check if user has any transactions
    */

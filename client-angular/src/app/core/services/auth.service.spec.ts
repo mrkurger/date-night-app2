@@ -2,7 +2,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the auth service
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - MOCK_USER_DATA: Test user data for auth service tests
 // - API_ENDPOINTS: API endpoint configuration for tests
@@ -29,7 +29,7 @@ describe('AuthService', () => {
     email: 'test@example.com',
     role: 'user',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   };
 
   // Mock auth response that matches the AuthResponse interface
@@ -37,26 +37,22 @@ describe('AuthService', () => {
     token: 'mock-token',
     refreshToken: 'mock-refresh-token',
     expiresIn: 86400, // 24 hours in seconds
-    user: mockUser
+    user: mockUser,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      providers: [AuthService]
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [AuthService],
     });
-    
+
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
-    
+
     // Prevent the initial validateToken call from interfering with tests
-    httpMock.expectOne(`${apiUrl}/validate`).flush(
-      { success: false },
-      { status: 401, statusText: 'Unauthorized' }
-    );
+    httpMock
+      .expectOne(`${apiUrl}/validate`)
+      .flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
   });
 
   afterEach(() => {
@@ -67,7 +63,7 @@ describe('AuthService', () => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
     }
-    
+
     // Verify that there are no outstanding requests
     httpMock.verify();
   });
@@ -78,9 +74,9 @@ describe('AuthService', () => {
 
   describe('login', () => {
     it('should send login request and update user state', () => {
-      const mockCredentials: LoginDTO = { 
-        email: 'test@example.com', 
-        password: 'password123' 
+      const mockCredentials: LoginDTO = {
+        email: 'test@example.com',
+        password: 'password123',
       };
 
       service.login(mockCredentials).subscribe(response => {
@@ -93,7 +89,7 @@ describe('AuthService', () => {
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(mockCredentials);
       expect(req.request.withCredentials).toBeTrue(); // Should send with credentials for cookies
-      
+
       req.flush(mockAuthResponse);
     });
   });
@@ -106,7 +102,7 @@ describe('AuthService', () => {
         password: 'password123',
         confirmPassword: 'password123',
         role: 'user',
-        acceptTerms: true
+        acceptTerms: true,
       };
 
       service.register(mockUserData).subscribe(response => {
@@ -119,7 +115,7 @@ describe('AuthService', () => {
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(mockUserData);
       expect(req.request.withCredentials).toBeTrue();
-      
+
       req.flush(mockAuthResponse);
     });
   });
@@ -128,24 +124,24 @@ describe('AuthService', () => {
     it('should send logout request and clear user state', () => {
       // First login to set the user state
       service.login({ email: 'test@example.com', password: 'password123' }).subscribe();
-      
+
       const loginReq = httpMock.expectOne(`${apiUrl}/login`);
       loginReq.flush(mockAuthResponse);
-      
+
       // Verify user is authenticated
       expect(service.isAuthenticated()).toBeTrue();
-      
+
       // Call logout
       service.logout();
-      
+
       // Verify logout request was sent
       const logoutReq = httpMock.expectOne(`${apiUrl}/logout`);
       expect(logoutReq.request.method).toBe('POST');
       expect(logoutReq.request.withCredentials).toBeTrue();
-      
+
       // Simulate successful logout response
       logoutReq.flush({ success: true });
-      
+
       // Verify user is no longer authenticated
       expect(service.isAuthenticated()).toBeFalse();
       expect(service.getCurrentUser()).toBeNull();
@@ -162,9 +158,9 @@ describe('AuthService', () => {
       const req = httpMock.expectOne(`${apiUrl}/validate`);
       expect(req.request.method).toBe('GET');
       expect(req.request.withCredentials).toBeTrue();
-      
+
       req.flush({ success: true, user: mockUser });
-      
+
       // The service returns the response object, not just the user
       expect(userResult).toEqual({ success: true, user: mockUser });
       expect(service.isAuthenticated()).toBeTrue();
@@ -178,7 +174,7 @@ describe('AuthService', () => {
       pendingRequests.forEach(req => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
-      
+
       service.refreshToken().subscribe(response => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
@@ -187,7 +183,7 @@ describe('AuthService', () => {
       const req = httpMock.expectOne(`${apiUrl}/refresh-token`);
       expect(req.request.method).toBe('POST');
       expect(req.request.withCredentials).toBeTrue();
-      
+
       req.flush(mockAuthResponse);
     });
   });
@@ -200,10 +196,10 @@ describe('AuthService', () => {
     it('should return true when user is set', () => {
       // Login to set the user state
       service.login({ email: 'test@example.com', password: 'password123' }).subscribe();
-      
+
       const req = httpMock.expectOne(`${apiUrl}/login`);
       req.flush(mockAuthResponse);
-      
+
       expect(service.isAuthenticated()).toBeTrue();
     });
   });
@@ -212,42 +208,42 @@ describe('AuthService', () => {
     it('should update user profile and update user state', () => {
       const profileData = {
         name: 'Updated Name',
-        bio: 'New bio information'
+        bio: 'New bio information',
       };
-      
+
       const updatedUser = {
         ...mockUser,
         name: 'Updated Name',
-        bio: 'New bio information'
+        bio: 'New bio information',
       };
-      
+
       service.updateProfile(profileData).subscribe(response => {
         expect(response.user).toEqual(updatedUser);
         expect(service.getCurrentUser()).toEqual(updatedUser);
       });
-      
+
       const req = httpMock.expectOne(`${apiUrl}/profile`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(profileData);
       expect(req.request.withCredentials).toBeTrue();
-      
+
       req.flush({ success: true, user: updatedUser });
     });
   });
 
   describe('error handling', () => {
     it('should handle network errors during login', () => {
-      const mockCredentials: LoginDTO = { 
-        email: 'test@example.com', 
-        password: 'password123' 
+      const mockCredentials: LoginDTO = {
+        email: 'test@example.com',
+        password: 'password123',
       };
-      
+
       service.login(mockCredentials).subscribe({
         next: () => fail('Should have failed with network error'),
-        error: (error) => {
+        error: error => {
           expect(error.status).toBe(500);
           expect(service.isAuthenticated()).toBeFalse();
-        }
+        },
       });
 
       const req = httpMock.expectOne(`${apiUrl}/login`);
@@ -260,16 +256,16 @@ describe('AuthService', () => {
       pendingRequests.forEach(req => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
-      
+
       // Reset the mock to ensure we're starting fresh
       httpMock.verify();
-      
+
       service.refreshToken().subscribe({
         next: () => fail('Should have failed with token error'),
-        error: (error) => {
+        error: error => {
           expect(error.status).toBe(401);
           expect(service.isAuthenticated()).toBeFalse();
-        }
+        },
       });
 
       const req = httpMock.expectOne(`${apiUrl}/refresh-token`);

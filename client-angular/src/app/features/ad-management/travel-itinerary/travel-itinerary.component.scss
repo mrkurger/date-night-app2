@@ -53,12 +53,12 @@ label {
   border: 1px solid #ddd;
   padding: 8px 12px;
   transition: border-color 0.15s ease-in-out;
-  
+
   &:focus {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
-  
+
   &.is-invalid {
     border-color: #dc3545;
   }
@@ -90,47 +90,47 @@ label {
   border-radius: 4px;
   font-weight: 500;
   transition: all 0.2s ease;
-  
+
   &.btn-primary {
     background-color: #007bff;
     border-color: #007bff;
-    
+
     &:hover:not(:disabled) {
       background-color: #0069d9;
       border-color: #0062cc;
     }
   }
-  
+
   &.btn-secondary {
     background-color: #6c757d;
     border-color: #6c757d;
-    
+
     &:hover:not(:disabled) {
       background-color: #5a6268;
       border-color: #545b62;
     }
   }
-  
+
   &.btn-danger {
     background-color: #dc3545;
     border-color: #dc3545;
-    
+
     &:hover:not(:disabled) {
       background-color: #c82333;
       border-color: #bd2130;
     }
   }
-  
+
   &.btn-info {
     background-color: #17a2b8;
     border-color: #17a2b8;
-    
+
     &:hover:not(:disabled) {
       background-color: #138496;
       border-color: #117a8b;
     }
   }
-  
+
   &:disabled {
     opacity: 0.65;
     cursor: not-allowed;
@@ -141,19 +141,20 @@ label {
   width: 100%;
   margin-bottom: 1rem;
   color: #212529;
-  
-  th, td {
+
+  th,
+  td {
     padding: 0.75rem;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
   }
-  
+
   thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
     background-color: #f8f9fa;
   }
-  
+
   tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.03);
   }
@@ -169,27 +170,27 @@ label {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.25rem;
-  
+
   &.badge-info {
     color: #fff;
     background-color: #17a2b8;
   }
-  
+
   &.badge-success {
     color: #fff;
     background-color: #28a745;
   }
-  
+
   &.badge-secondary {
     color: #fff;
     background-color: #6c757d;
   }
-  
+
   &.badge-danger {
     color: #fff;
     background-color: #dc3545;
   }
-  
+
   &.badge-light {
     color: #212529;
     background-color: #f8f9fa;
@@ -208,7 +209,9 @@ label {
 }
 
 @keyframes spinner-border {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ml-2 {

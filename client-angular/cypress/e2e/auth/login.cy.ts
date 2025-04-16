@@ -1,6 +1,6 @@
 /**
  * End-to-end tests for the login functionality
- * 
+ *
  * These tests verify that:
  * - Users can log in with valid credentials
  * - Users see appropriate error messages for invalid credentials
@@ -23,7 +23,7 @@ describe('Login Page', () => {
     cy.get('[data-cy=email-input]').type('invalid@example.com');
     cy.get('[data-cy=password-input]').type('wrongpassword');
     cy.get('[data-cy=login-button]').click();
-    
+
     // Check for error message
     cy.get('[data-cy=login-error]').should('be.visible');
     cy.get('[data-cy=login-error]').should('contain.text', 'Invalid email or password');
@@ -48,22 +48,22 @@ describe('Login Page', () => {
           id: '123',
           email: 'test@example.com',
           username: 'testuser',
-          role: 'user'
+          role: 'user',
         },
-        token: 'fake-jwt-token'
-      }
+        token: 'fake-jwt-token',
+      },
     }).as('loginRequest');
 
     cy.get('[data-cy=email-input]').type('test@example.com');
     cy.get('[data-cy=password-input]').type('password123');
     cy.get('[data-cy=login-button]').click();
-    
+
     // Wait for the login request to complete
     cy.wait('@loginRequest');
-    
+
     // Should redirect to home page
     cy.url().should('not.include', '/auth/login');
-    
+
     // Should display user info in the header
     cy.get('[data-cy=user-menu]').should('contain.text', 'testuser');
   });
@@ -73,12 +73,12 @@ describe('Login Page', () => {
     cy.get('[data-cy=login-button]').click();
     cy.get('[data-cy=email-error]').should('be.visible');
     cy.get('[data-cy=password-error]').should('be.visible');
-    
+
     // Try with invalid email format
     cy.get('[data-cy=email-input]').type('invalid-email');
     cy.get('[data-cy=login-button]').click();
     cy.get('[data-cy=email-error]').should('be.visible');
-    
+
     // Try with valid email but short password
     cy.get('[data-cy=email-input]').clear().type('valid@example.com');
     cy.get('[data-cy=password-input]').type('short');

@@ -136,8 +136,13 @@ This document serves as a central reference for all customizable settings in the
   - [auth.middleware.test.js](#auth-middleware-test-js)
   - [security.test.js](#security-test-js)
   - [ad.model.test.js](#ad-model-test-js)
+  - [chat-message.model.test.js](#chat-message-model-test-js)
+  - [chat-room.model.test.js](#chat-room-model-test-js)
+  - [paymentMethod.model.test.js](#paymentmethod-model-test-js)
   - [user.model.test.js](#user-model-test-js)
+  - [wallet.model.test.js](#wallet-model-test-js)
   - [auth.service.test.js](#auth-service-test-js)
+  - [wallet.service.test.js](#wallet-service-test-js)
   - [authHelpers.js](#authhelpers-js)
   - [cryptoHelpers.js](#cryptohelpers-js)
   - [logger.js](#logger-js)
@@ -1256,6 +1261,30 @@ This document serves as a central reference for all customizable settings in the
 |---------|-------------|---------------|------------|
 | TEST_AD_DATA | Test ad data | imported from helpers | Test |
 
+### chat-message.model.test.js
+
+**File**: [server/tests/unit/models/chat-message.model.test.js](/Users/oivindlund/date-night-app/server/tests/unit/models/chat-message.model.test.js)
+
+| Setting | Description | Default Value | Environment |
+|---------|-------------|---------------|------------|
+| TEST_MESSAGE_DATA | Test message data | imported from helpers | Test |
+
+### chat-room.model.test.js
+
+**File**: [server/tests/unit/models/chat-room.model.test.js](/Users/oivindlund/date-night-app/server/tests/unit/models/chat-room.model.test.js)
+
+| Setting | Description | Default Value | Environment |
+|---------|-------------|---------------|------------|
+| TEST_USER_DATA | Test user data | imported from helpers | Test |
+
+### paymentMethod.model.test.js
+
+**File**: [server/tests/unit/models/paymentMethod.model.test.js](/Users/oivindlund/date-night-app/server/tests/unit/models/paymentMethod.model.test.js)
+
+| Setting | Description | Default Value | Environment |
+|---------|-------------|---------------|------------|
+| TEST_PAYMENT_METHOD_DATA | Test payment method data | defined in this file | Test |
+
 ### user.model.test.js
 
 **File**: [server/tests/unit/models/user.model.test.js](/Users/oivindlund/date-night-app/server/tests/unit/models/user.model.test.js)
@@ -1263,6 +1292,14 @@ This document serves as a central reference for all customizable settings in the
 | Setting | Description | Default Value | Environment |
 |---------|-------------|---------------|------------|
 | TEST_USER_DATA | Test user data | imported from helpers | Test |
+
+### wallet.model.test.js
+
+**File**: [server/tests/unit/models/wallet.model.test.js](/Users/oivindlund/date-night-app/server/tests/unit/models/wallet.model.test.js)
+
+| Setting | Description | Default Value | Environment |
+|---------|-------------|---------------|------------|
+| TEST_WALLET_DATA | Test wallet data | defined in this file | Test |
 
 ### auth.service.test.js
 
@@ -1272,6 +1309,15 @@ This document serves as a central reference for all customizable settings in the
 |---------|-------------|---------------|------------|
 | MOCK_USER_DATA | Test user data for auth service tests | N/A | Test |
 | MOCK_TOKEN_GENERATION | Settings for token generation in tests | N/A | Test |
+
+### wallet.service.test.js
+
+**File**: [server/tests/unit/services/wallet.service.test.js](/Users/oivindlund/date-night-app/server/tests/unit/services/wallet.service.test.js)
+
+| Setting | Description | Default Value | Environment |
+|---------|-------------|---------------|------------|
+| MOCK_WALLET_DATA | Test wallet data for wallet service tests | N/A | Test |
+| MOCK_PAYMENT_METHOD_DATA | Test payment method data for wallet service tests | N/A | Test |
 
 ### authHelpers.js
 
@@ -1779,4 +1825,4 @@ This document serves as a central reference for all customizable settings in the
 
 ---
 
-*This index was automatically generated on 2025-04-16 07:57:47. Do not edit manually.*
+*This index was automatically generated on 2025-04-16 08:50:02. Do not edit manually.*

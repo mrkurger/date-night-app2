@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for server settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - PORT: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -68,60 +67,64 @@ logger.info(`Application starting in ${process.env.NODE_ENV} mode`);
 // Set security HTTP headers with improved CSP
 // Allow unsafe-eval in development mode for Angular
 const isDevelopment = process.env.NODE_ENV === 'development';
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      // Use nonce-based CSP and allow unsafe-eval in development
-      scriptSrc: [
-        '\'self\'',
-        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-        ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
-        (req, res) => `'nonce-${res.locals.cspNonce}'`,
-        ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : [])
-      ],
-      styleSrc: [
-        '\'self\'',
-        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-        "\'unsafe-inline\'",
-        (req, res) => `'nonce-${res.locals.cspNonce}'`,
-        "'unsafe-inline'", // Angular needs this
-        "https://fonts.googleapis.com"
-      ],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "blob:", "https://*.googleapis.com"],
-      connectSrc: [
-        '\'self\'',
-        "wss:",
-        "ws:",
-        "https://api.stripe.com",
-        ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : []),
-        "wss:",
-        "ws:",
-        "https://api.stripe.com",
-        ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : [])
-      ],
-      // Add additional security directives
-      objectSrc: ["'none'"],
-      baseUri: ["'self'"],
-      formAction: ["'self'"],
-      frameAncestors: ["'self'"]
-    }
-  },
-  // Additional security headers
-  crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-  xssFilter: true,
-  noSniff: true
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        // Use nonce-based CSP and allow unsafe-eval in development
+        scriptSrc: [
+          "'self'",
+          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+          ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
+          (req, res) => `'nonce-${res.locals.cspNonce}'`,
+          ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
+        ],
+        styleSrc: [
+          "'self'",
+          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+          "\'unsafe-inline\'",
+          (req, res) => `'nonce-${res.locals.cspNonce}'`,
+          "'unsafe-inline'", // Angular needs this
+          'https://fonts.googleapis.com',
+        ],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'blob:', 'https://*.googleapis.com'],
+        connectSrc: [
+          "'self'",
+          'wss:',
+          'ws:',
+          'https://api.stripe.com',
+          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
+          'wss:',
+          'ws:',
+          'https://api.stripe.com',
+          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
+        ],
+        // Add additional security directives
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+        frameAncestors: ["'self'"],
+      },
+    },
+    // Additional security headers
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    xssFilter: true,
+    noSniff: true,
+  })
+);
 
 // Enable CORS
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:4200',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
-}));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:4200',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  })
+);
 
 // Rate limiting
 const limiter = rateLimit({
@@ -146,16 +149,11 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(hpp({
-  whitelist: [
-    'category',
-    'county',
-    'city',
-    'featured',
-    'verified',
-    'sort'
-  ]
-}));
+app.use(
+  hpp({
+    whitelist: ['category', 'county', 'city', 'featured', 'verified', 'sort'],
+  })
+);
 
 // Compression middleware
 app.use(compression());
@@ -177,7 +175,7 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
         serverSelectionTimeoutMS: 10000,
         connectTimeoutMS: 10000,
         socketTimeoutMS: 45000,
-        family: 4 // Use IPv4, skip trying IPv6
+        family: 4, // Use IPv4, skip trying IPv6
       });
 
       console.log('MongoDB connected successfully');
@@ -191,20 +189,20 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
         console.log('MongoDB reconnected');
       });
 
-      mongoose.connection.on('error', (err) => {
+      mongoose.connection.on('error', err => {
         console.error('MongoDB connection error:', err);
       });
 
       break;
     } catch (err) {
-      console.error(`MongoDB connection attempt ${i+1}/${retries} failed:`, err.message);
+      console.error(`MongoDB connection attempt ${i + 1}/${retries} failed:`, err.message);
 
       if (i === retries - 1) {
         console.error('MongoDB connection failed after all retries. Error details:', err);
         process.exit(1);
       }
 
-      console.log(`Retrying connection in ${delay/1000} seconds...`);
+      console.log(`Retrying connection in ${delay / 1000} seconds...`);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
   }
@@ -228,7 +226,7 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 // Graceful shutdown handling
-const shutdown = async (signal) => {
+const shutdown = async signal => {
   console.log(`${signal} received. Starting graceful shutdown...`);
 
   // Close database connection
@@ -257,7 +255,7 @@ process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT', () => shutdown('SIGINT'));
 
 // Handle uncaught exceptions and unhandled rejections
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', error => {
   console.error('UNCAUGHT EXCEPTION:', error);
   shutdown('UNCAUGHT EXCEPTION');
 });
@@ -271,21 +269,23 @@ process.on('unhandledRejection', (reason, promise) => {
 const PORT = process.env.PORT || 3000;
 let server; // Declare server variable in global scope
 
-connectWithRetry().then(() => {
-  server = app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+connectWithRetry()
+  .then(() => {
+    server = app.listen(PORT, () => {
+      console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    });
+
+    // Initialize Socket.IO
+    const socketService = require('./services/socket.service');
+    socketService.initialize(server);
+
+    // Initialize message cleanup scheduler
+    const messageCleanup = require('./utils/messageCleanup');
+    messageCleanup.init();
+  })
+  .catch(err => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
   });
-
-  // Initialize Socket.IO
-  const socketService = require('./services/socket.service');
-  socketService.initialize(server);
-
-  // Initialize message cleanup scheduler
-  const messageCleanup = require('./utils/messageCleanup');
-  messageCleanup.init();
-}).catch(err => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
 
 module.exports = { app };

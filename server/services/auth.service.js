@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for service configuration (auth.service)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -27,24 +26,22 @@ class AuthService {
       {
         id: user._id,
         role: user.role,
-        username: user.username
+        username: user.username,
       },
       process.env.JWT_SECRET,
       { expiresIn: `${expiresIn}s` }
     );
 
     // Refresh token expires in 7 days
-    const refreshToken = jwt.sign(
-      { id: user._id },
-      process.env.JWT_REFRESH_SECRET,
-      { expiresIn: '7d' }
-    );
+    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, {
+      expiresIn: '7d',
+    });
 
     return {
       token: accessToken,
       refreshToken,
       expiresIn,
-      user: this.sanitizeUser(user)
+      user: this.sanitizeUser(user),
     };
   }
 
@@ -83,9 +80,7 @@ class AuthService {
     // Check if identifier is email or username
     const isEmail = identifier.includes('@');
 
-    const query = isEmail
-      ? { email: identifier }
-      : { username: identifier };
+    const query = isEmail ? { email: identifier } : { username: identifier };
 
     const user = await User.findOne(query);
 
@@ -114,10 +109,7 @@ class AuthService {
   async register(userData) {
     // Check if user already exists
     const existingUser = await User.findOne({
-      $or: [
-        { email: userData.email },
-        { username: userData.username }
-      ]
+      $or: [{ email: userData.email }, { username: userData.username }],
     });
 
     if (existingUser) {
@@ -133,7 +125,7 @@ class AuthService {
       username: userData.username,
       email: userData.email,
       password: userData.password, // Will be hashed by pre-save hook
-      role: userData.role || 'user'
+      role: userData.role || 'user',
     });
 
     await user.save();
@@ -206,8 +198,8 @@ class AuthService {
         email: profile.email || `${profile.id}@${provider}.auth`,
         password: crypto.randomBytes(16).toString('hex'), // Random password
         socialProfiles: {
-          [provider]: { id: profile.id }
-        }
+          [provider]: { id: profile.id },
+        },
       });
 
       await user.save();

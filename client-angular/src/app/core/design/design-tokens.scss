@@ -7,54 +7,54 @@
 
 // Color Palette
 // Primary colors - Main brand colors
-$primary-100: #F2E6FF; // Lightest
-$primary-200: #D9B3FF;
-$primary-300: #BF80FF;
-$primary-400: #A64DFF;
-$primary-500: #8C1AFF; // Base primary
-$primary-600: #7000E6;
-$primary-700: #5500B3;
-$primary-800: #3A0080;
-$primary-900: #1F004D; // Darkest
+$primary-100: #f2e6ff; // Lightest
+$primary-200: #d9b3ff;
+$primary-300: #bf80ff;
+$primary-400: #a64dff;
+$primary-500: #8c1aff; // Base primary
+$primary-600: #7000e6;
+$primary-700: #5500b3;
+$primary-800: #3a0080;
+$primary-900: #1f004d; // Darkest
 
 // Secondary colors - Complementary to primary
-$secondary-100: #E6FFF2;
-$secondary-200: #B3FFD9;
-$secondary-300: #80FFBF;
-$secondary-400: #4DFFA6;
-$secondary-500: #1AFF8C; // Base secondary
-$secondary-600: #00E670;
-$secondary-700: #00B355;
-$secondary-800: #00803A;
-$secondary-900: #004D1F;
+$secondary-100: #e6fff2;
+$secondary-200: #b3ffd9;
+$secondary-300: #80ffbf;
+$secondary-400: #4dffa6;
+$secondary-500: #1aff8c; // Base secondary
+$secondary-600: #00e670;
+$secondary-700: #00b355;
+$secondary-800: #00803a;
+$secondary-900: #004d1f;
 
 // Neutral colors - For text, backgrounds, etc.
-$neutral-100: #FFFFFF; // White
-$neutral-200: #F5F5F5;
-$neutral-300: #E0E0E0;
-$neutral-400: #BDBDBD;
-$neutral-500: #9E9E9E; // Base neutral
+$neutral-100: #ffffff; // White
+$neutral-200: #f5f5f5;
+$neutral-300: #e0e0e0;
+$neutral-400: #bdbdbd;
+$neutral-500: #9e9e9e; // Base neutral
 $neutral-600: #757575;
 $neutral-700: #616161;
 $neutral-800: #424242;
 $neutral-900: #212121; // Almost black
 
 // Semantic colors - For status, alerts, etc.
-$success: #4CAF50;
-$success-light: #A5D6A7;
-$success-dark: #2E7D32;
+$success: #4caf50;
+$success-light: #a5d6a7;
+$success-dark: #2e7d32;
 
-$warning: #FFC107;
-$warning-light: #FFE082;
-$warning-dark: #FFA000;
+$warning: #ffc107;
+$warning-light: #ffe082;
+$warning-dark: #ffa000;
 
-$error: #F44336;
-$error-light: #EF9A9A;
-$error-dark: #C62828;
+$error: #f44336;
+$error-light: #ef9a9a;
+$error-dark: #c62828;
 
-$info: #2196F3;
-$info-light: #90CAF9;
-$info-dark: #1565C0;
+$info: #2196f3;
+$info-light: #90caf9;
+$info-dark: #1565c0;
 
 // Typography
 // Font families
@@ -63,15 +63,15 @@ $font-secondary: 'Roboto', sans-serif;
 $font-monospace: 'Roboto Mono', monospace;
 
 // Font sizes
-$font-size-xs: 0.75rem;    // 12px
-$font-size-sm: 0.875rem;   // 14px
-$font-size-base: 1rem;     // 16px
-$font-size-md: 1.125rem;   // 18px
-$font-size-lg: 1.25rem;    // 20px
-$font-size-xl: 1.5rem;     // 24px
-$font-size-2xl: 1.875rem;  // 30px
-$font-size-3xl: 2.25rem;   // 36px
-$font-size-4xl: 3rem;      // 48px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-md: 1.125rem; // 18px
+$font-size-lg: 1.25rem; // 20px
+$font-size-xl: 1.5rem; // 24px
+$font-size-2xl: 1.875rem; // 30px
+$font-size-3xl: 2.25rem; // 36px
+$font-size-4xl: 3rem; // 48px
 
 // Font weights
 $font-weight-light: 300;
@@ -96,36 +96,44 @@ $letter-spacing-widest: 0.1em;
 
 // Spacing
 $spacing-0: 0;
-$spacing-1: 0.25rem;  // 4px
-$spacing-2: 0.5rem;   // 8px
-$spacing-3: 0.75rem;  // 12px
-$spacing-4: 1rem;     // 16px
-$spacing-5: 1.25rem;  // 20px
-$spacing-6: 1.5rem;   // 24px
-$spacing-8: 2rem;     // 32px
-$spacing-10: 2.5rem;  // 40px
-$spacing-12: 3rem;    // 48px
-$spacing-16: 4rem;    // 64px
-$spacing-20: 5rem;    // 80px
-$spacing-24: 6rem;    // 96px
-$spacing-32: 8rem;    // 128px
+$spacing-1: 0.25rem; // 4px
+$spacing-2: 0.5rem; // 8px
+$spacing-3: 0.75rem; // 12px
+$spacing-4: 1rem; // 16px
+$spacing-5: 1.25rem; // 20px
+$spacing-6: 1.5rem; // 24px
+$spacing-8: 2rem; // 32px
+$spacing-10: 2.5rem; // 40px
+$spacing-12: 3rem; // 48px
+$spacing-16: 4rem; // 64px
+$spacing-20: 5rem; // 80px
+$spacing-24: 6rem; // 96px
+$spacing-32: 8rem; // 128px
 
 // Border radius
 $border-radius-none: 0;
-$border-radius-sm: 0.125rem;  // 2px
-$border-radius-md: 0.25rem;   // 4px
-$border-radius-lg: 0.5rem;    // 8px
-$border-radius-xl: 0.75rem;   // 12px
-$border-radius-2xl: 1rem;     // 16px
-$border-radius-full: 9999px;  // Fully rounded
+$border-radius-sm: 0.125rem; // 2px
+$border-radius-md: 0.25rem; // 4px
+$border-radius-lg: 0.5rem; // 8px
+$border-radius-xl: 0.75rem; // 12px
+$border-radius-2xl: 1rem; // 16px
+$border-radius-full: 9999px; // Fully rounded
 
 // Shadows
 $shadow-none: none;
 $shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-sm:
+  0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
 $shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 $shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 

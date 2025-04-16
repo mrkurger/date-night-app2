@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for upload settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -48,14 +47,14 @@ const diskStorage = multer.diskStorage({
     const sanitizedExt = ['.jpg', '.jpeg', '.png', '.webp'].includes(fileExt) ? fileExt : '.jpg';
 
     cb(null, `${randomName}${sanitizedExt}`);
-  }
+  },
 });
 
 // Allowed MIME types and their corresponding file signatures
 const allowedTypes = {
   'image/jpeg': ['jpg', 'jpeg'],
   'image/png': ['png'],
-  'image/webp': ['webp']
+  'image/webp': ['webp'],
 };
 
 // File filter with magic number validation
@@ -79,18 +78,18 @@ const memoryUpload = multer({
   fileFilter: fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
-    files: 5 // Maximum 5 files
-  }
+    files: 5, // Maximum 5 files
+  },
 });
 
 // Middleware to validate file type using magic numbers and save to disk if valid
-const validateAndSave = (fieldName) => {
+const validateAndSave = fieldName => {
   return (req, res, next) => {
-    memoryUpload.array(fieldName, 5)(req, res, async (err) => {
+    memoryUpload.array(fieldName, 5)(req, res, async err => {
       if (err) {
         return res.status(400).json({
           success: false,
-          message: err.message
+          message: err.message,
         });
       }
 
@@ -109,7 +108,7 @@ const validateAndSave = (fieldName) => {
           if (!fileType || !allowedTypes[file.mimetype].includes(fileType.ext)) {
             return res.status(400).json({
               success: false,
-              message: `Invalid file type detected for ${file.originalname}. Only JPEG, PNG and WebP images are allowed.`
+              message: `Invalid file type detected for ${file.originalname}. Only JPEG, PNG and WebP images are allowed.`,
             });
           }
 
@@ -130,7 +129,7 @@ const validateAndSave = (fieldName) => {
             filename: filename,
             path: filepath,
             size: file.size,
-            mimetype: fileType.mime
+            mimetype: fileType.mime,
           });
         }
 
@@ -141,7 +140,7 @@ const validateAndSave = (fieldName) => {
         console.error('File validation error:', error);
         res.status(500).json({
           success: false,
-          message: 'Error processing uploaded files'
+          message: 'Error processing uploaded files',
         });
       }
     });
@@ -149,7 +148,7 @@ const validateAndSave = (fieldName) => {
 };
 
 // Create middleware for single file upload
-const uploadSingle = (fieldName) => validateAndSave(fieldName);
+const uploadSingle = fieldName => validateAndSave(fieldName);
 
 // Create middleware for multiple file upload
 const uploadMultiple = (fieldName, maxCount = 5) => validateAndSave(fieldName);
@@ -157,5 +156,5 @@ const uploadMultiple = (fieldName, maxCount = 5) => validateAndSave(fieldName);
 module.exports = {
   uploadSingle,
   uploadMultiple,
-  validateAndSave
+  validateAndSave,
 };

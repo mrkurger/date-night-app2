@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unknown error occurred';
-        
+
         if (error.error instanceof ErrorEvent) {
           // Client-side error
           errorMessage = `Error: ${error.error.message}`;
@@ -42,11 +42,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               errorMessage = `Error ${error.status}: ${error.error?.message || error.statusText}`;
           }
         }
-        
+
         // Log the error
         console.error('HTTP Error:', error);
         console.error('Error Message:', errorMessage);
-        
+
         // Return the error for further handling
         return throwError(() => new Error(errorMessage));
       })

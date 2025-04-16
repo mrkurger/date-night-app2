@@ -1,9 +1,8 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for material.module settings
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
@@ -52,25 +51,20 @@ const materialModules = [
   MatDialogModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatChipsModule
+  MatChipsModule,
 ];
 
-const commonModules = [
-  CommonModule,
-  ReactiveFormsModule,
-  FormsModule,
-  RouterModule
-];
+const commonModules = [CommonModule, ReactiveFormsModule, FormsModule, RouterModule];
 
 @NgModule({
   imports: [...materialModules, ...commonModules],
-  exports: [...materialModules, ...commonModules]
+  exports: [...materialModules, ...commonModules],
 })
-export class MaterialModule { }
+export class MaterialModule {}
 
 // Export a SharedModule for backward compatibility
 @NgModule({
   imports: [MaterialModule],
-  exports: [MaterialModule]
+  exports: [MaterialModule],
 })
-export class SharedModule { }
+export class SharedModule {}

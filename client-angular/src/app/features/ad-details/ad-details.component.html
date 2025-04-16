@@ -8,7 +8,7 @@
   <div *ngIf="ad && !loading" class="ad-details-content">
     <div class="ad-details-main">
       <div class="ad-gallery" *ngIf="ad.media && ad.media.length">
-        <img [src]="currentImage" alt="{{ ad.title }}">
+        <img [src]="currentImage" alt="{{ ad.title }}" />
         <div class="gallery-nav" *ngIf="ad.media.length > 1">
           <button (click)="prevImage()">❮</button>
           <button (click)="nextImage()">❯</button>
@@ -19,15 +19,11 @@
         <h1 class="ad-title">{{ ad.title }}</h1>
 
         <div class="ad-meta">
-          <span class="meta-item">
-            <i class="icon-location"></i> {{ ad.location }}
-          </span>
+          <span class="meta-item"> <i class="icon-location"></i> {{ ad.location }} </span>
           <span class="meta-item">
             <i class="icon-calendar"></i> Posted {{ ad.createdAt | date }}
           </span>
-          <span class="meta-item">
-            <i class="icon-eye"></i> {{ ad.viewCount }} views
-          </span>
+          <span class="meta-item"> <i class="icon-eye"></i> {{ ad.viewCount }} views </span>
         </div>
 
         <div class="ad-tags" *ngIf="ad.tags && ad.tags.length">
@@ -85,7 +81,7 @@
         </div>
         <div>
           <div class="advertiser-name">{{ ad.advertiser }}</div>
-          <div class="advertiser-since">Member since {{ ad.createdAt | date:'MMM yyyy' }}</div>
+          <div class="advertiser-since">Member since {{ ad.createdAt | date: 'MMM yyyy' }}</div>
         </div>
       </div>
 

@@ -3,7 +3,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (index)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -22,9 +22,9 @@ module.exports = {
   User,
   Ad,
   ChatMessage,
-  
+
   // Feature components
   ads: require('./ads'),
   users: require('./users'),
-  chat: require('./chat')
+  chat: require('./chat'),
 };

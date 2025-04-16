@@ -3,7 +3,11 @@
 
 <!-- Loading State -->
 <div *ngIf="loading" class="emerald-card-grid" [ngStyle]="getGridStyle()">
-  <div *ngFor="let i of getSkeletonArray()" class="emerald-card-grid__item" [ngClass]="{'emerald-card-grid__item--animated': animated}">
+  <div
+    *ngFor="let i of getSkeletonArray()"
+    class="emerald-card-grid__item"
+    [ngClass]="{ 'emerald-card-grid__item--animated': animated }"
+  >
     <emerald-skeleton-loader type="card" [animated]="true"></emerald-skeleton-loader>
   </div>
 </div>
@@ -12,16 +16,21 @@
 <div *ngIf="!loading && layout === 'netflix'" class="emerald-card-grid emerald-card-grid--netflix">
   <div class="emerald-card-grid__netflix-row">
     <div class="emerald-card-grid__netflix-items">
-      <div *ngFor="let item of items" 
-           class="emerald-card-grid__item emerald-card-grid__item--netflix"
-           [ngClass]="{'emerald-card-grid__item--animated': animated}"
-           [style.margin-right.px]="gap"
-           (click)="onItemClick(item)">
+      <div
+        *ngFor="let item of items"
+        class="emerald-card-grid__item emerald-card-grid__item--netflix"
+        [ngClass]="{ 'emerald-card-grid__item--animated': animated }"
+        [style.margin-right.px]="gap"
+        (click)="onItemClick(item)"
+      >
         <ng-container *ngIf="itemTemplate; else defaultTemplate">
-          <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"
+          ></ng-container>
         </ng-container>
         <ng-template #defaultTemplate>
-          <emerald-app-card *ngIf="item.title" 
+          <emerald-app-card
+            *ngIf="item.title"
             [title]="item.title"
             [subtitle]="item.subtitle"
             [description]="item.description"
@@ -34,7 +43,8 @@
             [itemId]="item.id"
             [layout]="cardLayout"
             (click)="handleCardClick(item.id)"
-            (actionClick)="handleActionClick($event)"></emerald-app-card>
+            (actionClick)="handleActionClick($event)"
+          ></emerald-app-card>
           <div *ngIf="!item.title" class="emerald-card-grid__default-item">
             {{ item.name || item.label || 'Item' }}
           </div>
@@ -45,19 +55,27 @@
 </div>
 
 <!-- Grid or Masonry Layout -->
-<div *ngIf="!loading && layout !== 'netflix'" 
-     class="emerald-card-grid"
-     [ngClass]="{'emerald-card-grid--masonry': layout === 'masonry'}"
-     [ngStyle]="getGridStyle()">
-  <div *ngFor="let item of items" 
-       class="emerald-card-grid__item"
-       [ngClass]="{'emerald-card-grid__item--animated': animated, 'emerald-card-grid__item--masonry': layout === 'masonry'}"
-       (click)="onItemClick(item)">
+<div
+  *ngIf="!loading && layout !== 'netflix'"
+  class="emerald-card-grid"
+  [ngClass]="{ 'emerald-card-grid--masonry': layout === 'masonry' }"
+  [ngStyle]="getGridStyle()"
+>
+  <div
+    *ngFor="let item of items"
+    class="emerald-card-grid__item"
+    [ngClass]="{
+      'emerald-card-grid__item--animated': animated,
+      'emerald-card-grid__item--masonry': layout === 'masonry',
+    }"
+    (click)="onItemClick(item)"
+  >
     <ng-container *ngIf="itemTemplate; else defaultTemplate">
       <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
     </ng-container>
     <ng-template #defaultTemplate>
-      <emerald-app-card *ngIf="item.title" 
+      <emerald-app-card
+        *ngIf="item.title"
         [title]="item.title"
         [subtitle]="item.subtitle"
         [description]="item.description"
@@ -70,7 +88,8 @@
         [itemId]="item.id"
         [layout]="cardLayout"
         (click)="handleCardClick(item.id)"
-        (actionClick)="handleActionClick($event)"></emerald-app-card>
+        (actionClick)="handleActionClick($event)"
+      ></emerald-app-card>
       <div *ngIf="!item.title" class="emerald-card-grid__default-item">
         {{ item.name || item.label || 'Item' }}
       </div>

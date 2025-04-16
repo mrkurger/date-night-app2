@@ -6,13 +6,13 @@ import { environment } from '../../../environments/environment';
  * Handles responsive image loading, lazy loading, and CDN integration
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageOptimizationService {
   private readonly cdnUrl = environment.cdnUrl || '';
   private readonly defaultQuality = 80;
   private readonly defaultFormat = 'webp';
-  
+
   constructor() {}
 
   /**
@@ -57,16 +57,16 @@ export class ImageOptimizationService {
   ): string {
     // Remove leading slash if present
     const cleanUrl = originalUrl.startsWith('/') ? originalUrl.substring(1) : originalUrl;
-    
+
     // Construct CDN URL with optimization parameters
     let cdnUrl = `${this.cdnUrl}/${cleanUrl}?w=${width}`;
-    
+
     if (height) {
       cdnUrl += `&h=${height}`;
     }
-    
+
     cdnUrl += `&q=${quality}&fm=${format}&fit=crop`;
-    
+
     return cdnUrl;
   }
 
@@ -83,7 +83,10 @@ export class ImageOptimizationService {
     format: string = this.defaultFormat
   ): string {
     return widths
-      .map(width => `${this.getOptimizedUrl(originalUrl, width, undefined, this.defaultQuality, format)} ${width}w`)
+      .map(
+        width =>
+          `${this.getOptimizedUrl(originalUrl, width, undefined, this.defaultQuality, format)} ${width}w`
+      )
       .join(', ');
   }
 

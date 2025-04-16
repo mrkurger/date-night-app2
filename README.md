@@ -200,7 +200,7 @@ For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md
 
 ## Development Roadmap
 
-See our detailed implementation plan in [docs/completion-plan-2024.md](docs/completion-plan-2024.md) for a comprehensive roadmap of upcoming features and enhancements.
+See our detailed implementation plan in [docs/completion-plan-2024.md](/docs/completion-plan-2024.md) for a comprehensive roadmap of upcoming features and enhancements.
 
 ## OAuth Setup Instructions
 
@@ -541,15 +541,18 @@ This section provides links to all documentation files in the project, organized
 
 ### Project Documentation
 
-- [ChangeLog.md](docs/ChangeLog.md) - History of changes to the project
-- [Requirements.md](docs/requirements.md) - Project requirements and specifications
-- [Task List](docs/task-list.md) - Current tasks and their status
-- [Completion Plan 2024](docs/completion-plan-2024.md) - Plan for completing the project in 2024
-- [Migration Completion Plan](docs/migration-completion-plan.md) - Plan for completing the Angular migration
-- [Implementation Plan](docs/implementation-plan.md) - General implementation plan
-- [Deprecated Code](docs/DEPRECATED.md) - List of deprecated code that should be avoided
-- [Code Duplication](docs/DUPLICATES.md) - List of code duplication that should be refactored
-- [Documentation Improvements](docs/documentation-improvements.md) - Summary of documentation improvements
+- [ChangeLog.md](/docs/ChangeLog.md) - History of changes to the project
+- [Requirements.md](/docs/requirements.md) - Project requirements and specifications
+- [Task List](/docs/task-list.md) - Current tasks and their status
+- [Completion Plan 2024](/docs/completion-plan-2024.md) - Plan for completing the project in 2024
+- [Migration Completion Plan](/docs/migration-completion-plan.md) - Plan for completing the Angular migration
+- [Implementation Plan](/docs/implementation-plan.md) - General implementation plan
+- [Architecture](docs/ARCHITECTURE.md) - System architecture documentation
+- [Deprecated Code](/docs/DEPRECATED.md) - List of deprecated code that should be avoided
+- [Code Duplication](/docs/DUPLICATES.md) - List of code duplication that should be refactored
+- [Documentation Improvements](/docs/documentation-improvements.md) - Summary of documentation improvements
+- [Documentation Index](/docs/DOCUMENTATION_INDEX.md) - Comprehensive index of all documentation
+- [Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.md) - Guidelines for writing documentation
 
 ### Development Guides
 
@@ -560,42 +563,42 @@ This section provides links to all documentation files in the project, organized
 
 ### Testing Documentation
 
-- [Testing Guide](docs/TESTING_GUIDE.md) - General testing strategy and guidelines
-- [Angular Testing Lessons](docs/ANGULAR_TESTING_LESSONS.md) - Lessons learned from Angular testing
-- [Unit Testing Lessons](docs/UnitTestLessons.md) - Lessons learned from unit testing
-- [Unit Testing Strategy](docs/UnitStrat.md) - Strategy for unit testing
-- [Example Unit Strategy](docs/Example_UnitStrat.md) - Example of a unit testing strategy
+- [Testing Guide](/docs/TESTING_GUIDE.md) - General testing strategy and guidelines
+- [Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.md) - Lessons learned from Angular testing
+- [Unit Testing Lessons](/docs/UnitTestLessons.md) - Lessons learned from unit testing
+- [Unit Testing Strategy](/docs/UnitStrat.md) - Strategy for unit testing
+- [Example Unit Strategy](/docs/Example_UnitStrat.md) - Example of a unit testing strategy
 - [Frontend Testing Review](FRONTEND_TESTING_REVIEW.md) - Review of frontend testing
 - [Testing Improvements](TESTING_IMPROVEMENTS.md) - Improvements to testing
 
 ### UI/UX Documentation
 
-- [UI/UX Roadmap](docs/ui-ux-roadmap.md) - Roadmap for UI/UX improvements
-- [UI/UX Implementation](docs/ui-ux-implementation.md) - Implementation details for UI/UX
-- [UI/UX Improvement Summary](docs/ui-ux-improvement-summary.md) - Summary of UI/UX improvements
-- [UI/UX Completion Report](docs/ui-ux-completion-report.md) - Report on UI/UX completion
-- [UI Components Technical](docs/ui-components-technical.md) - Technical details of UI components
-- [Styling Guide](docs/styling-guide.md) - Guide for styling components
+- [UI/UX Roadmap](/docs/ui-ux-roadmap.md) - Roadmap for UI/UX improvements
+- [UI/UX Implementation](/docs/ui-ux-implementation.md) - Implementation details for UI/UX
+- [UI/UX Improvement Summary](/docs/ui-ux-improvement-summary.md) - Summary of UI/UX improvements
+- [UI/UX Completion Report](/docs/ui-ux-completion-report.md) - Report on UI/UX completion
+- [UI Components Technical](/docs/ui-components-technical.md) - Technical details of UI components
+- [Styling Guide](/docs/styling-guide.md) - Guide for styling components
 
 ### Customization Documentation
 
-- [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Guide for using the customization system
-- [Configuration Index](docs/CONFIG_INDEX.md) - Index of all customizable settings
-- [CSP Configuration](docs/csp-configuration.md) - Guide for configuring Content Security Policy
+- [Customization Guide](/docs/CUSTOMIZATION_GUIDE.md) - Guide for using the customization system
+- [Configuration Index](/docs/CONFIG_INDEX.md) - Index of all customizable settings
+- [CSP Configuration](/docs/csp-configuration.md) - Guide for configuring Content Security Policy
 
 ### Emerald Component Documentation
 
-- [Emerald Components](docs/emerald-components.md) - Documentation for Emerald UI components
-- [Emerald Components Changelog](docs/emerald-components-changelog.md) - Changelog for Emerald components
-- [Emerald Implementation Plan](docs/emerald-implementation-plan.md) - Plan for implementing Emerald components
-- [Emerald Implementation Report](docs/emerald-implementation-report.md) - Report on Emerald implementation
-- [Emerald Implementation Summary](docs/emerald-implementation-summary.md) - Summary of Emerald implementation
-- [Emerald Testing Guide](docs/emerald-testing-guide.md) - Guide for testing Emerald components
+- [Emerald Components](/docs/emerald-components.md) - Documentation for Emerald UI components
+- [Emerald Components Changelog](/docs/emerald-components-changelog.md) - Changelog for Emerald components
+- [Emerald Implementation Plan](/docs/emerald-implementation-plan.md) - Plan for implementing Emerald components
+- [Emerald Implementation Report](/docs/emerald-implementation-report.md) - Report on Emerald implementation
+- [Emerald Implementation Summary](/docs/emerald-implementation-summary.md) - Summary of Emerald implementation
+- [Emerald Testing Guide](/docs/emerald-testing-guide.md) - Guide for testing Emerald components
 
 ### Lessons Learned
 
-- [AI Lessons](docs/AILessons.md) - Lessons learned by the AI while working on the project
-- [Unit Testing Lessons](docs/UnitTestingLessons.md) - Comprehensive lessons learned from unit testing
+- [AI Lessons](/docs/AILessons.md) - Lessons learned by the AI while working on the project
+- [Unit Testing Lessons](/docs/UnitTestingLessons.md) - Comprehensive lessons learned from unit testing
 
 ## Progress Tracking
 

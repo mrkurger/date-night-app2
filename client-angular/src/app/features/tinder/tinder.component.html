@@ -11,11 +11,7 @@
 
     <!-- Loading State with Emerald SkeletonLoader -->
     <div class="loading-container" *ngIf="loading">
-      <emerald-skeleton-loader
-        type="card"
-        [count]="1"
-        [animated]="true"
-        [layout]="'tinder'">
+      <emerald-skeleton-loader type="card" [count]="1" [animated]="true" [layout]="'tinder'">
       </emerald-skeleton-loader>
       <p class="loading-text">Finding matches for you...</p>
     </div>
@@ -55,7 +51,8 @@
         [swipeable]="true"
         (swipe)="onSwipe($event)"
         (actionClick)="onCardAction($event)"
-        (mediaChange)="onMediaChange($event)">
+        (mediaChange)="onMediaChange($event)"
+      >
       </emerald-tinder-card>
     </div>
 
@@ -69,7 +66,8 @@
         [tags]="nextAd.tags"
         [itemId]="nextAd._id"
         [age]="nextAd.age"
-        [swipeable]="false">
+        [swipeable]="false"
+      >
       </emerald-tinder-card>
     </div>
   </div>
@@ -82,25 +80,35 @@
     position="bottom-right"
     [showTooltip]="true"
     tooltipText="Filter Profiles"
-    (buttonClick)="openFilters()">
+    (buttonClick)="openFilters()"
+  >
   </emerald-floating-action-button>
 
   <!-- Filters Modal -->
-  <div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="filtersModal"
+    tabindex="-1"
+    aria-labelledby="filtersModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="filtersModalLabel">
             <i class="fas fa-filter"></i> Filter Profiles
           </h5>
-          <button type="button" class="btn-close" (click)="closeFilters()" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeFilters()"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="filterForm">
             <div class="mb-3">
-              <label for="category" class="form-label">
-                <i class="fas fa-tag"></i> Category
-              </label>
+              <label for="category" class="form-label"> <i class="fas fa-tag"></i> Category </label>
               <select class="form-select" id="category" formControlName="category">
                 <option value="">All Categories</option>
                 <option value="Escort">Escort</option>
@@ -131,7 +139,8 @@
                 labelPosition="right"
                 color="primary"
                 [value]="filterForm.get('touringOnly')?.value"
-                (change)="filterForm.get('touringOnly')?.setValue($event)">
+                (change)="filterForm.get('touringOnly')?.setValue($event)"
+              >
               </emerald-toggle>
             </div>
           </form>
