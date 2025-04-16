@@ -1,16 +1,16 @@
 # Dependencies
 node_modules/
-client/node_modules/
-server/node_modules/
-client-angular/node_modules/
+**/node_modules/
 
 # Build output
 dist/
-client/dist/
-server/dist/
+**/dist/
+build/
+**/build/
 
 # Environment and config files
 .env
+**/.env
 *.env
 
 # Database files and directories
@@ -21,27 +21,38 @@ data/
 logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+mongodb.log
 coverage/
+**/coverage/
 tmp/
+**/tmp/
+test-results/
+
+# Angular specific
+**/.angular/cache
+.sass-cache/
+connect.lock/
+libpeerconnection.log
+
+# User uploads (keep directories but ignore content)
+server/uploads/*
+!server/uploads/.gitkeep
+server/uploads/thumbnails/*
+!server/uploads/thumbnails/.gitkeep
+
+# Generated files
+*.min.js
+*.min.css
+*.map
 
 # OS and editor files
 .DS_Store
+Thumbs.db
 .idea/
 .vscode/
-
-data/db/*
-data/db/WiredTiger.turtle
-data/db/WiredTiger.wt
-data/db/WiredTiger.turtle
-data/db/WiredTiger.wt
-data/db/_mdb_catalog.wt
-data/db/collection-4-6965801790087775312.wt
-data/db/index-5-6965801790087775312.wt
-data/db/index-6-6965801790087775312.wt
-data/db/sizeStorer.wt
-data/db/WiredTiger.turtle
-data/db/WiredTiger.wt
-data/db/WiredTiger.turtle
-data/db/WiredTiger.wt
-data/db/index-5-6965801790087775312.wt
-data/db/collection-4-6965801790087775312.wt
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json

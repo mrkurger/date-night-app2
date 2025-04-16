@@ -9,6 +9,7 @@
 # Node
 /node_modules
 npm-debug.log
+yarn-debug.log*
 yarn-error.log
 
 # IDEs and editors
@@ -36,6 +37,11 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+
+# Generated files
+*.min.js
+*.min.css
+*.map
 
 # System files
 .DS_Store
