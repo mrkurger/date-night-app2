@@ -6,15 +6,16 @@
 // COMMON CUSTOMIZATIONS:
 // - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
 // - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
-// - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: false)
+// - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: true)
 // ===================================================
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, from } from 'rxjs';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
+import { EncryptionService, EncryptedData } from './encryption.service';
 
 // Constants
 export const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
@@ -95,7 +96,10 @@ export class ChatService {
   private typingUsersSubject = new BehaviorSubject<{ [key: string]: boolean }>({});
   public typingUsers$ = this.typingUsersSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private encryptionService: EncryptionService
+  ) {
     this.socket = io(environment.apiUrl, {
       autoConnect: false,
       withCredentials: true,
@@ -103,6 +107,20 @@ export class ChatService {
 
     // Set up socket event listeners
     this.setupSocketListeners();
+
+    // Initialize encryption service
+    this.initializeEncryption();
+  }
+
+  /**
+   * Initialize the encryption service
+   */
+  private async initializeEncryption(): Promise<void> {
+    try {
+      await this.encryptionService.initialize();
+    } catch (error) {
+      console.error('Error initializing encryption:', error);
+    }
   }
 
   /**
@@ -142,7 +160,15 @@ export class ChatService {
    * Create or get a direct chat room with another user
    */
   createOrGetChatRoom(userId: string): Observable<ChatRoom> {
-    return this.http.post<ChatRoom>(`${this.apiUrl}/rooms/direct`, { userId });
+    return this.http.post<ChatRoom>(`${this.apiUrl}/rooms/direct`, { userId }).pipe(
+      switchMap(room => {
+        // Setup encryption for the room if available
+        if (this.encryptionService.isEncryptionAvailable()) {
+          return this.encryptionService.setupRoomEncryption(room._id).pipe(map(() => room));
+        }
+        return of(room);
+      })
+    );
   }
 
   /**
@@ -188,9 +214,45 @@ export class ChatService {
    * Send a message to a chat room
    */
   sendMessage(roomId: string, content: string, replyToId?: string): Observable<ChatMessage> {
+    // Check if encryption is available
+    if (this.encryptionService.isEncryptionAvailable()) {
+      return from(this.encryptionService.encryptMessage(roomId, content)).pipe(
+        switchMap(encryptedData => {
+          if (!encryptedData) {
+            // Fall back to unencrypted message if encryption fails
+            return this.sendUnencryptedMessage(roomId, content, replyToId);
+          }
+
+          // Send encrypted message
+          return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, {
+            message: encryptedData.ciphertext,
+            replyTo: replyToId,
+            isEncrypted: true,
+            encryptionData: {
+              iv: encryptedData.iv,
+              authTag: encryptedData.authTag,
+            },
+          });
+        })
+      );
+    } else {
+      // Send unencrypted message
+      return this.sendUnencryptedMessage(roomId, content, replyToId);
+    }
+  }
+
+  /**
+   * Send an unencrypted message to a chat room
+   */
+  private sendUnencryptedMessage(
+    roomId: string,
+    content: string,
+    replyToId?: string
+  ): Observable<ChatMessage> {
     return this.http.post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages`, {
       message: content,
       replyTo: replyToId,
+      isEncrypted: false,
     });
   }
 

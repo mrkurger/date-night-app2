@@ -1,0 +1,78 @@
+<div class="chat-settings">
+  <h3 class="chat-settings__title">Chat Settings</h3>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" class="chat-settings__form">
+    <!-- Message Auto-Deletion -->
+    <div class="form-group">
+      <div class="form-group__header">
+        <h4 class="form-group__title">Message Auto-Deletion</h4>
+        <div class="form-group__toggle">
+          <label class="toggle">
+            <input type="checkbox" formControlName="messageExpiryEnabled" />
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group__description">
+        When enabled, messages will be automatically deleted after the specified time.
+      </div>
+
+      <div class="form-group__content" *ngIf="settingsForm.get('messageExpiryEnabled')?.value">
+        <label for="messageExpiryTime" class="form-label">Delete messages after:</label>
+        <select id="messageExpiryTime" formControlName="messageExpiryTime" class="form-select">
+          <option *ngFor="let option of expiryTimeOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- End-to-End Encryption -->
+    <div class="form-group">
+      <div class="form-group__header">
+        <h4 class="form-group__title">End-to-End Encryption</h4>
+        <div class="form-group__toggle">
+          <label class="toggle">
+            <input type="checkbox" formControlName="encryptionEnabled" />
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group__description">
+        When enabled, messages are encrypted and can only be read by participants in this chat.
+      </div>
+
+      <div class="form-group__content" *ngIf="settingsForm.get('encryptionEnabled')?.value">
+        <div class="encryption-info">
+          <div class="encryption-info__icon">
+            <i class="icon-lock" aria-hidden="true"></i>
+          </div>
+          <div class="encryption-info__text">
+            Your messages are encrypted end-to-end. This means that only you and the recipient can
+            read them.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn btn--secondary" (click)="resetForm()">Cancel</button>
+      <button type="submit" class="btn btn--primary" [disabled]="settingsForm.invalid || isSaving">
+        <span *ngIf="!isSaving">Save Settings</span>
+        <span *ngIf="isSaving">Saving...</span>
+      </button>
+    </div>
+
+    <!-- Status Messages -->
+    <div class="status-message status-message--success" *ngIf="saveSuccess">
+      Settings saved successfully!
+    </div>
+
+    <div class="status-message status-message--error" *ngIf="saveError">
+      Failed to save settings. Please try again.
+    </div>
+  </form>
+</div>
