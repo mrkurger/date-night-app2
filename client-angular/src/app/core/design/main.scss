@@ -1,12 +1,23 @@
-/**
- * DateNight.io Main Styles
- * 
- * This file contains global styles and imports all design system files.
- * It should be imported in the main styles.scss file.
- */
+// ===================================================
+// CORE DESIGN SYSTEM
+// ===================================================
+// This file contains global styles and imports all design system files.
+// It is forwarded by the main design system entry point.
+//
+// IMPORT HIERARCHY:
+// 1. This file imports design-tokens.scss and components.scss
+// 2. It is forwarded by /styles/design-system/index.scss
+// 3. Application code should import from /styles/design-system/index.scss
+//
+// IMPORTANT:
+// - DO NOT import design-tokens.scss directly in application code
+// - Always use @forward instead of @import when creating entry points
+// - Use @use for importing in component styles
+// ===================================================
 
-@import 'design-tokens';
-@import 'components';
+// Import design tokens - this is the ONLY place that should directly import design-tokens.scss
+@use 'design-tokens' as *;
+@forward 'components';
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap');

@@ -12,6 +12,10 @@ This document contains lessons learned from unit testing the Date Night App proj
   - [Defensive Programming](#defensive-programming)
 - [Backend Testing Tips](#backend-testing-tips)
 - [General Testing Tips](#general-testing-tips)
+- [Common Issues](#common-issues)
+- [Test Setup Best Practices](#test-setup-best-practices)
+- [Mocking Components and Services](#mocking-components-and-services)
+- [Testing Asynchronous Code](#testing-asynchronous-code)
 
 ## Angular Component Testing
 
@@ -33,6 +37,7 @@ await TestBed.configureTestingModule({
 ```
 
 2. **Component Dependencies**: Make sure all dependencies used in the component's template are properly imported in both:
+
    - The component's `@Component.imports` array
    - The TestBed's `imports` array
 
@@ -43,7 +48,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 await TestBed.configureTestingModule({
   // ...
-  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 });
 ```
 
@@ -54,7 +59,7 @@ await TestBed.configureTestingModule({
 @Component({
   selector: 'app-root',
   template: '<div>Mock App Component</div>', // Simple template without problematic bindings
-  standalone: true
+  standalone: true,
 })
 class TestAppComponent extends AppComponent {
   // Inherit all functionality but use a simplified template
@@ -81,7 +86,7 @@ component = fixture.componentInstance;
 @Component({
   selector: 'app-mock-component',
   template: '<div>Mock Component</div>',
-  standalone: true
+  standalone: true,
 })
 class MockComponent {}
 
@@ -89,7 +94,7 @@ await TestBed.configureTestingModule({
   imports: [
     RouterTestingModule.withRoutes([
       { path: 'browse', component: MockComponent },
-      { path: 'login', component: MockComponent }
+      { path: 'login', component: MockComponent },
     ]),
     // Other imports...
   ],
@@ -111,13 +116,13 @@ expect(router.navigate).toHaveBeenCalledWith(['/some-route']);
 providers: [
   { provide: AuthService, useValue: mockAuthService },
   // No Router provider here as RouterTestingModule provides it
-]
+];
 
 // INCORRECT - will cause "Cannot read properties of undefined (reading 'root')" error
 providers: [
   { provide: AuthService, useValue: mockAuthService },
-  { provide: Router, useValue: mockRouter } // Don't do this!
-]
+  { provide: Router, useValue: mockRouter }, // Don't do this!
+];
 ```
 
 7. **Handling window.location.href in Tests**: When testing components that use direct window.location.href navigation, use Angular Router instead to make testing easier:
@@ -167,12 +172,13 @@ When testing components with SCSS:
 
 ```typescript
 // Mock NotificationService with both methods and observable properties
-const notificationServiceSpy = jasmine.createSpyObj('NotificationService', 
+const notificationServiceSpy = jasmine.createSpyObj(
+  'NotificationService',
   ['success', 'error', 'info', 'warning', 'removeToast'],
   {
     // Mock the observable properties
     toasts$: of([]),
-    unreadCount$: of(0)
+    unreadCount$: of(0),
   }
 );
 ```
@@ -183,18 +189,18 @@ const notificationServiceSpy = jasmine.createSpyObj('NotificationService',
 // CORRECT - Don't fail the test if the 'next' callback is called
 service.uploadMedia(mockAdId, mockFile).subscribe({
   next: () => {}, // Don't use fail() here if the implementation might call next
-  error: (error) => {
+  error: error => {
     errorSpy(error);
-  }
+  },
 });
 
 // INCORRECT - This might cause false failures
 service.uploadMedia(mockAdId, mockFile).subscribe({
   next: () => fail('Expected error, not success'), // This might fail unexpectedly
-  error: (error) => {
+  error: error => {
     errorSpy(error);
   },
-  complete: () => fail('Expected error, not complete') // This might fail unexpectedly
+  complete: () => fail('Expected error, not complete'), // This might fail unexpectedly
 });
 ```
 
@@ -284,6 +290,7 @@ ngOnInit(): void {
 2. **Error Analysis**: Pay close attention to error messages and stack traces to identify the root cause of test failures.
 
 3. **Test Coverage**: Aim for comprehensive test coverage, including:
+
    - Happy path scenarios
    - Edge cases
    - Error handling
@@ -292,3 +299,177 @@ ngOnInit(): void {
 4. **Test Independence**: Each test should be independent and not rely on the state from other tests.
 
 5. **Test Readability**: Write clear, descriptive test names and organize tests logically.
+
+## Common Issues
+
+### SASS Compilation Errors
+
+- **Issue**: Duplicate imports of design tokens can cause SASS compilation errors.
+- **Solution**: Use the design system's main entry point and avoid direct imports of design tokens.
+- **Example**: Use `@use '~/styles/design-system'` instead of directly importing design tokens.
+
+### Standalone Component Testing
+
+- **Issue**: Standalone components cannot be declared in test modules.
+- **Solution**: Use imports instead of declarations for standalone components.
+- **Example**:
+  ```typescript
+  TestBed.configureTestingModule({
+    imports: [CommonTestModule, MyStandaloneComponent],
+    // NOT declarations: [MyStandaloneComponent]
+  });
+  ```
+
+### Template Errors
+
+- **Issue**: Components with `@ContentChild` or `@ViewChild` may fail if templates are not properly initialized.
+- **Solution**: Ensure the component's template is properly initialized in tests.
+- **Example**: Call `detectChanges()` after component creation to initialize ViewChild references.
+
+## Test Setup Best Practices
+
+### Use Common Test Module
+
+The application provides a `CommonTestModule` that includes frequently used test components and utilities:
+
+```typescript
+import { CommonTestModule } from '../../testing/common-test.module';
+
+TestBed.configureTestingModule({
+  imports: [CommonTestModule, ComponentUnderTest],
+});
+```
+
+### Use Test Utilities
+
+The application provides test utilities for creating mock components and services:
+
+```typescript
+import { createMockComponent, createMockService } from '../../testing/test-utils';
+
+const MockHeaderComponent = createMockComponent('app-header', ['title', 'showMenu']);
+const MockAuthService = createMockService({
+  login: () => of({ success: true }),
+  logout: () => of(null),
+});
+```
+
+### Override Component Imports
+
+When testing components that import other components, override the imports to use mock components:
+
+```typescript
+TestBed.configureTestingModule({
+  imports: [ComponentUnderTest],
+}).overrideComponent(ComponentUnderTest, {
+  set: {
+    imports: [CommonModule, MockChildComponent],
+  },
+});
+```
+
+## Mocking Components and Services
+
+### Mock Components
+
+Create mock components using the `createMockComponent` utility:
+
+```typescript
+const MockCardComponent = createMockComponent(
+  'app-card',
+  ['title', 'description', 'imageUrl'],
+  '<div>{{title}}</div>'
+);
+```
+
+For more complex mocks, create a standalone component:
+
+```typescript
+@Component({
+  selector: 'app-complex-component',
+  template: '<div>Mock Complex Component</div>',
+  standalone: true,
+  imports: [CommonModule],
+})
+class MockComplexComponent {
+  @Input() data: any;
+  @Output() action = new EventEmitter<any>();
+
+  // Add any methods that are called in tests
+  performAction() {
+    this.action.emit({ type: 'mock' });
+  }
+}
+```
+
+### Mock Services
+
+Create mock services using the `createMockService` utility:
+
+```typescript
+const MockUserService = createMockService({
+  getCurrentUser: () => of({ id: '1', name: 'Test User' }),
+  updateProfile: data => of({ success: true }),
+  isAuthenticated: () => true,
+});
+```
+
+For more complex services, create a class:
+
+```typescript
+class MockAuthService {
+  currentUser$ = new BehaviorSubject({ id: '1', name: 'Test User' });
+
+  login(credentials: any) {
+    return of({ success: true, token: 'mock-token' });
+  }
+
+  logout() {
+    return of({ success: true });
+  }
+}
+```
+
+## Testing Asynchronous Code
+
+### Testing Observables
+
+Use `fakeAsync` and `tick()` to test code with observables:
+
+```typescript
+it('should load data on init', fakeAsync(() => {
+  spyOn(dataService, 'getData').and.returnValue(of(['item1', 'item2']));
+
+  component.ngOnInit();
+  tick(); // Process the observable
+
+  expect(component.items).toEqual(['item1', 'item2']);
+}));
+```
+
+### Testing Promises
+
+Use `async/await` or `fakeAsync` with `tick()` for promises:
+
+```typescript
+it('should load data asynchronously', async () => {
+  spyOn(dataService, 'getDataPromise').and.returnValue(Promise.resolve(['item1', 'item2']));
+
+  await component.loadDataAsync();
+
+  expect(component.items).toEqual(['item1', 'item2']);
+});
+```
+
+Or with `fakeAsync`:
+
+```typescript
+it('should load data asynchronously', fakeAsync(() => {
+  spyOn(dataService, 'getDataPromise').and.returnValue(Promise.resolve(['item1', 'item2']));
+
+  component.loadDataAsync();
+  tick(); // Process the promise
+
+  expect(component.items).toEqual(['item1', 'item2']);
+}));
+```

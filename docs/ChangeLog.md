@@ -1,6 +1,6 @@
 # Change Log
 
-## 2025-04-16: Linting, Test Fixes, and MongoDB Warnings
+## 2025-04-16: Angular Testing Improvements, Design System Fixes, and Documentation Updates
 
 ### Fixed
 
@@ -16,8 +16,26 @@
 - Fixed wallet service tests:
   - Properly mocked the `id` method on the `paymentMethods` array to fix "is not a function" errors
   - Structured mock objects to match the actual implementation
+- Fixed Angular standalone component testing issues:
+  - Updated UserSettingsComponent test to use imports instead of declarations for MockMainLayoutComponent
+  - Fixed SASS compilation errors by removing duplicate imports of design tokens
+  - Updated CardGridComponent test to use proper schemas and remove problematic template binding
 
 ### Added
+
+- Added comprehensive testing utilities:
+  - Created CommonTestModule with frequently used mock components
+  - Added test-utils.ts with utilities for creating mock components and services
+  - Added NO_ERRORS_SCHEMA and CUSTOM_ELEMENTS_SCHEMA to test modules to handle unknown elements
+- Added improved design system documentation:
+  - Updated design system entry point with clear import hierarchy documentation
+  - Added warnings about duplicate imports and proper usage patterns
+  - Fixed SASS import structure to prevent duplicate variable definitions
+- Added detailed unit testing documentation:
+
+  - Updated UnitTestingLessons.md with best practices for standalone components
+  - Added sections on common issues, test setup, mocking, and asynchronous testing
+  - Documented proper patterns for testing Angular components with dependencies
 
 - Added documentation in AILessons.md about common linting and formatting issues, including:
   - HTML file handling in ESLint

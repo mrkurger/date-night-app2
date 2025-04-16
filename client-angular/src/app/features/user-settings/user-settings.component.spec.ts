@@ -9,23 +9,15 @@
 // ===================================================
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { UserSettingsComponent } from './user-settings.component';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-
-// Mock MainLayoutComponent
-@Component({
-  selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',
-})
-class MockMainLayoutComponent {
-  @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
-}
+import { CommonTestModule, MockMainLayoutComponent } from '../../testing/common-test.module';
+import { createMockService } from '../../testing/test-utils';
 
 describe('UserSettingsComponent', () => {
   let component: UserSettingsComponent;
@@ -87,8 +79,12 @@ describe('UserSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, UserSettingsComponent],
-      declarations: [MockMainLayoutComponent],
+      imports: [
+        CommonTestModule,
+        RouterTestingModule,
+        UserSettingsComponent,
+        MockMainLayoutComponent,
+      ],
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         { provide: NotificationService, useClass: MockNotificationService },

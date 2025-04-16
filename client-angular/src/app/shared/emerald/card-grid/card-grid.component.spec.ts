@@ -11,40 +11,13 @@ import { By } from '@angular/platform-browser';
 import {
   DebugElement,
   Component,
-  TemplateRef,
-  ViewChild,
   NO_ERRORS_SCHEMA,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
+  CUSTOM_ELEMENTS_SCHEMA,
+}
 
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
-
-// Mock AppCardComponent for testing
-@Component({
-  selector: 'emerald-app-card',
-  template: '<div>Mock App Card</div>',
-  standalone: true,
-})
-export class MockAppCardComponent {
-  @Input() title = '';
-  @Input() subtitle = '';
-  @Input() description = '';
-  @Input() imageUrl = '';
-  @Input() avatarUrl = '';
-  @Input() avatarName = '';
-  @Input() isOnline = false;
-  @Input() tags: string[] = [];
-  @Input() actions: any[] = [];
-  @Input() itemId = '';
-  @Input() layout = 'default';
-
-  @Output() click = new EventEmitter<string>();
-  @Output() actionClick = new EventEmitter<any>();
-}
+import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
 
 // Test host component to test CardGridComponent in a realistic scenario
 @Component({
@@ -59,10 +32,13 @@ export class MockAppCardComponent {
       (cardClick)="onCardClick($event)"
       (actionClick)="onActionClick($event)"
     >
+      <ng-template #itemTemplate let-item>
+        <div class="custom-item">{{ item.title }}</div>
+      </ng-template>
     </emerald-card-grid>
   `,
   standalone: true,
-  imports: [CardGridComponent],
+  imports: [CardGridComponent, CommonTestModule],
 })
 class TestHostComponent {
   items = MOCK_ITEMS;
@@ -72,6 +48,8 @@ class TestHostComponent {
   gap = 16;
   animated = true;
   isLoading = false;
+
+  @ViewChild('itemTemplate') itemTemplate!: TemplateRef<any>;
 
   onCardClick(itemId: string): void {}
   onActionClick(event: { id: string; itemId: string }): void {}
@@ -119,9 +97,25 @@ describe('CardGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CardGridComponent, MockAppCardComponent, TestHostComponent],
+      imports: [
+        CommonTestModule,
+        CardGridComponent,
+        MockAppCardComponent,
+        TestHostComponent
+      ],
       schemas: [NO_ERRORS_SCHEMA], // Add this to ignore unknown properties
-    }).compileComponents();
+    })
+    .overrideComponent(CardGridComponent, {
+      set: {
+        imports: [CommonTestModule, MockAppCardComponent, SkeletonLoaderComponent],
+      }
+    })
+    .compileComponents();
+
+    // Create the host component first
+    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostComponent = hostFixture.componentInstance;
+    hostFixture.detectChanges(); // This is needed to initialize the ViewChild
 
     // Create the component directly
     fixture = TestBed.createComponent(CardGridComponent);
@@ -131,22 +125,8 @@ describe('CardGridComponent', () => {
     // Set default input values
     component.items = MOCK_ITEMS;
 
-    // Spy on component methods to avoid template rendering issues
-    spyOn(component, 'getGridStyle').and.returnValue({
-      display: 'grid',
-      'grid-template-columns': 'repeat(4, 1fr)',
-      gap: '16px',
-    });
-
-    // Skip actual rendering by spying on detectChanges
-    spyOn(fixture, 'detectChanges').and.callFake(() => {});
-
-    // Create the host component
-    hostFixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = hostFixture.componentInstance;
-
-    // Skip actual rendering for host component too
-    spyOn(hostFixture, 'detectChanges').and.callFake(() => {});
+    // Allow actual rendering
+    fixture.detectChanges();
   });
 
   describe('Component Initialization', () => {
