@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FavoriteService } from '../../../core/services/favorite.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { DialogService } from '../../../core/services/dialog.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -72,6 +73,7 @@ import { Router } from '@angular/router';
 })
 export class FavoriteButtonComponent implements OnInit, OnDestroy {
   @Input() adId = '';
+  @Input() adTitle = '';
   @Input() small = false;
   @Input() large = false;
 
@@ -85,6 +87,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
     private favoriteService: FavoriteService,
     private authService: AuthService,
     private notificationService: NotificationService,
+    private dialogService: DialogService,
     private router: Router
   ) {}
 
@@ -135,19 +138,52 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
         },
       });
     } else {
-      this.favoriteService.addFavorite(this.adId).subscribe({
-        next: () => {
-          this.isFavorite = true;
-          this.favoriteChanged.emit(true);
-          this.notificationService.success('Added to favorites');
-          this.loading = false;
-        },
-        error: error => {
-          console.error('Error adding favorite:', error);
-          this.notificationService.error('Failed to add to favorites');
-          this.loading = false;
-        },
-      });
+      // If we have the ad title, open the dialog to add details
+      if (this.adTitle) {
+        this.dialogService.addToFavorites(this.adId, this.adTitle).subscribe(result => {
+          if (result) {
+            this.favoriteService
+              .addFavorite(
+                this.adId,
+                result.notes,
+                result.notificationsEnabled,
+                result.tags,
+                result.priority
+              )
+              .subscribe({
+                next: () => {
+                  this.isFavorite = true;
+                  this.favoriteChanged.emit(true);
+                  this.notificationService.success('Added to favorites');
+                  this.loading = false;
+                },
+                error: error => {
+                  console.error('Error adding favorite:', error);
+                  this.notificationService.error('Failed to add to favorites');
+                  this.loading = false;
+                },
+              });
+          } else {
+            // User canceled the dialog
+            this.loading = false;
+          }
+        });
+      } else {
+        // Simple add without dialog (fallback for backward compatibility)
+        this.favoriteService.addFavorite(this.adId).subscribe({
+          next: () => {
+            this.isFavorite = true;
+            this.favoriteChanged.emit(true);
+            this.notificationService.success('Added to favorites');
+            this.loading = false;
+          },
+          error: error => {
+            console.error('Error adding favorite:', error);
+            this.notificationService.error('Failed to add to favorites');
+            this.loading = false;
+          },
+        });
+      }
     }
   }
 

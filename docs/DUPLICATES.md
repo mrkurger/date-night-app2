@@ -28,14 +28,14 @@ This document tracks code duplication in the Date Night App project. Duplicated 
 
 ### Service Duplications
 
-| Duplicated Code                 | Locations                                                         | Refactoring Strategy                | Status                                                                                    |
-| ------------------------------- | ----------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------- |
-| HTTP Error Handling             | Multiple services                                                 | Extract to HTTP interceptor         | Completed - See [Error Handling and Telemetry Documentation](./ErrorHandlingTelemetry.md) |
-| Safety Controller Methods       | `server/controllers/safety.controller.js`                         | Extract to shared utility functions | Pending                                                                                   |
-| Verification Controller Methods | `server/controllers/verification.controller.js`                   | Extract to shared utility functions | Pending                                                                                   |
-| Local Storage Access            | Multiple services                                                 | Create shared storage service       | Pending                                                                                   |
-| Date Formatting                 | Multiple components and services                                  | Create shared date utility          | Completed                                                                                 |
-| Batch Operation Patterns        | `server/controllers/favorite.controller.js` and other controllers | Extract to shared utility functions | In Progress                                                                               |
+| Duplicated Code                 | Locations                                                                                                                              | Refactoring Strategy                | Status                                                                                    |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------- |
+| HTTP Error Handling             | Multiple services                                                                                                                      | Extract to HTTP interceptor         | Completed - See [Error Handling and Telemetry Documentation](./ErrorHandlingTelemetry.md) |
+| Safety Controller Methods       | `server/controllers/safety.controller.js`                                                                                              | Extract to shared utility functions | Pending                                                                                   |
+| Verification Controller Methods | `server/controllers/verification.controller.js`                                                                                        | Extract to shared utility functions | Pending                                                                                   |
+| Local Storage Access            | Multiple services                                                                                                                      | Create shared storage service       | Pending                                                                                   |
+| Date Formatting                 | Multiple components and services                                                                                                       | Create shared date utility          | Completed                                                                                 |
+| Batch Operation Patterns        | `server/controllers/favorite.controller.js` and `client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts` | Extract to shared utility functions | In Progress - Identified additional duplication in client-side batch operations           |
 
 ### Utility Duplications
 

@@ -22,6 +22,10 @@ import {
   NotesDialogComponent,
   NotesDialogData,
 } from '../../shared/components/notes-dialog/notes-dialog.component';
+import {
+  TagsDialogComponent,
+  TagsDialogData,
+} from '../../shared/components/tags-dialog/tags-dialog.component';
 
 /**
  * Service for managing dialog interactions throughout the application
@@ -105,6 +109,22 @@ export class DialogService {
    */
   openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
     const dialogRef = this.dialog.open(NotesDialogComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      disableClose: false,
+      data,
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  /**
+   * Opens a dialog for managing tags
+   * @param data Tags dialog configuration data
+   * @returns Observable that resolves with the tags array or undefined if canceled
+   */
+  openTagsDialog(data: TagsDialogData): Observable<string[] | undefined> {
+    const dialogRef = this.dialog.open(TagsDialogComponent, {
       width: '500px',
       maxWidth: '95vw',
       disableClose: false,

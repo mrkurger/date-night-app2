@@ -1,0 +1,235 @@
+name: Sync Workflow Error Logs
+
+on:
+  workflow_run:
+    workflows: ['*']
+    types:
+      - completed
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync-error-logs:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    permissions:
+      contents: write
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies
+        run: npm install @octokit/rest@20.0.2 @octokit/plugin-throttling@9.0.3 fs-extra@11.2.0
+
+      - name: Fetch workflow run logs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name || github.repository.name }}
+        run: |
+          cat > fetch-workflow-logs.js << 'EOF'
+          const { Octokit } = require('@octokit/rest');
+          const { throttling } = require('@octokit/plugin-throttling');
+          const fs = require('fs-extra');
+          const path = require('path');
+
+          const ThrottledOctokit = Octokit.plugin(throttling);
+
+          async function main() {
+            const owner = process.env.REPO_OWNER;
+            const repo = process.env.REPO_NAME;
+            const logsDir = path.join('workflow-error-logs');
+            
+            console.log(`Fetching workflow logs for ${owner}/${repo}`);
+            
+            // Create logs directory if it doesn't exist
+            await fs.ensureDir(logsDir);
+            
+            const octokit = new ThrottledOctokit({
+              auth: process.env.GITHUB_TOKEN,
+              throttle: {
+                onRateLimit: (retryAfter, options) => {
+                  console.warn(`Rate limit exceeded for ${options.method} ${options.url}`);
+                  if (options.request.retryCount < 2) {
+                    console.log(`Retrying after ${retryAfter} seconds!`);
+                    return true;
+                  }
+                },
+                onSecondaryRateLimit: (retryAfter, options) => {
+                  console.warn(`Secondary rate limit exceeded for ${options.method} ${options.url}`);
+                  if (options.request.retryCount < 2) {
+                    console.log(`Retrying after ${retryAfter} seconds!`);
+                    return true;
+                  }
+                },
+              },
+            });
+            
+            // Get all workflows
+            const { data: workflows } = await octokit.actions.listRepoWorkflows({
+              owner,
+              repo,
+            });
+            
+            // Get recent workflow runs (last 30 days)
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            
+            for (const workflow of workflows.workflows) {
+              console.log(`Processing workflow: ${workflow.name} (${workflow.id})`);
+              
+              const { data: runs } = await octokit.actions.listWorkflowRuns({
+                owner,
+                repo,
+                workflow_id: workflow.id,
+                created: `>=${thirtyDaysAgo.toISOString().split('T')[0]}`,
+              });
+              
+              // Process failed runs
+              const failedRuns = runs.workflow_runs.filter(run => 
+                run.conclusion === 'failure' || run.conclusion === 'cancelled' || run.conclusion === 'timed_out'
+              );
+              
+              console.log(`Found ${failedRuns.length} failed runs for ${workflow.name}`);
+              
+              for (const run of failedRuns) {
+                const runDate = new Date(run.created_at).toISOString().split('T')[0];
+                const workflowDir = path.join(logsDir, workflow.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
+                const runDir = path.join(workflowDir, `${runDate}_${run.id}`);
+                
+                await fs.ensureDir(runDir);
+                
+                // Save run metadata
+                await fs.writeJson(path.join(runDir, 'metadata.json'), run, { spaces: 2 });
+                
+                try {
+                  // Get jobs for this run
+                  const { data: jobs } = await octokit.actions.listJobsForWorkflowRun({
+                    owner,
+                    repo,
+                    run_id: run.id,
+                  });
+                  
+                  // Save jobs metadata
+                  await fs.writeJson(path.join(runDir, 'jobs.json'), jobs, { spaces: 2 });
+                  
+                  // Process each job
+                  for (const job of jobs.jobs) {
+                    if (job.conclusion === 'failure' || job.conclusion === 'cancelled' || job.conclusion === 'timed_out') {
+                      const jobDir = path.join(runDir, job.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
+                      await fs.ensureDir(jobDir);
+                      
+                      // Save job metadata
+                      await fs.writeJson(path.join(jobDir, 'job-metadata.json'), job, { spaces: 2 });
+                      
+                      try {
+                        // Get job logs
+                        const logs = await octokit.actions.downloadJobLogsForWorkflowRun({
+                          owner,
+                          repo,
+                          job_id: job.id,
+                        });
+                        
+                        // Save logs
+                        await fs.writeFile(path.join(jobDir, 'logs.txt'), logs.data);
+                        console.log(`Saved logs for job ${job.name} (${job.id})`);
+                      } catch (error) {
+                        console.error(`Error fetching logs for job ${job.id}: ${error.message}`);
+                        await fs.writeFile(path.join(jobDir, 'error.txt'), `Error fetching logs: ${error.message}`);
+                      }
+                    }
+                  }
+                } catch (error) {
+                  console.error(`Error processing run ${run.id}: ${error.message}`);
+                  await fs.writeFile(path.join(runDir, 'error.txt'), `Error processing run: ${error.message}`);
+                }
+              }
+            }
+            
+            // Create summary file
+            const summary = {
+              timestamp: new Date().toISOString(),
+              totalWorkflows: workflows.workflows.length,
+              workflowSummary: workflows.workflows.map(w => ({
+                name: w.name,
+                id: w.id,
+                path: w.path,
+              })),
+            };
+            
+            await fs.writeJson(path.join(logsDir, 'summary.json'), summary, { spaces: 2 });
+            console.log('Workflow error logs sync completed');
+          }
+
+          main().catch(error => {
+            console.error('Error in main process:', error);
+            process.exit(1);
+          });
+          EOF
+
+          node fetch-workflow-logs.js
+
+      - name: Create README for logs
+        run: |
+          cat > workflow-error-logs/README.md << 'EOF'
+          # Workflow Error Logs
+
+          This directory contains logs from failed GitHub Actions workflow runs. These logs are automatically collected by the "Sync Workflow Error Logs" workflow.
+
+          ## Directory Structure
+
+          ```
+          workflow-error-logs/
+          ├── {workflow-name}/
+          │   ├── {date}_{run-id}/
+          │   │   ├── metadata.json       # Run metadata
+          │   │   ├── jobs.json           # Jobs metadata
+          │   │   ├── {job-name}/
+          │   │   │   ├── job-metadata.json  # Job metadata
+          │   │   │   └── logs.txt           # Job logs
+          │   │   └── ...
+          │   └── ...
+          └── ...
+          ```
+
+          ## Using These Logs
+
+          These logs can be used to diagnose and fix issues with GitHub Actions workflows. Look for error messages, failed steps, and other indicators of problems.
+
+          ## Automatic Collection
+
+          Logs are collected:
+          - After any workflow completes
+          - Every 6 hours via scheduled run
+          - Manually via workflow dispatch
+
+          ## Retention
+
+          Only logs from the past 30 days are collected.
+          EOF
+
+      - name: Commit and push logs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add workflow-error-logs
+
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update workflow error logs [skip ci]"
+            git push
+          fi

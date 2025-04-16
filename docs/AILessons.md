@@ -1488,7 +1488,7 @@ updateTagsBatch(tags: string[]): void {
   let failed = 0;
 
   this.selectedItems.forEach(itemId => {
-    this.itemService.updateTags(itemId, tags).subscribe({
+    this.favoriteService.updateTags(itemId, tags).subscribe({
       next: () => {
         completed++;
 
@@ -1611,6 +1611,11 @@ buildFilters({ category, county, city, search }) {
       { 'ad.title': { $regex: search, $options: 'i' } },
       { 'ad.description': { $regex: search, $options: 'i' } },
       { 'notes': { $regex: search, $options: 'i' } }
+      },
+      error => {
+        console.error('Error loading favorites:', error);
+        this.notificationService.error('Failed to load favorites. Please try again.');
+      }
     ];
   }
 

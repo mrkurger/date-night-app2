@@ -31,6 +31,7 @@ import { FavoriteButtonComponent } from '../../../shared/components/favorite-but
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 /**
  * Enhanced favorites page component with filtering, sorting, and batch operations
@@ -742,14 +743,87 @@ export class FavoritesPageComponent implements OnInit {
    * Open dialog to edit tags for a single favorite
    */
   openTagsDialogForSingle(favorite: Favorite): void {
-    // Implementation will be added
+    // Get all user tags for suggestions
+    this.favoriteService.getUserTags().subscribe(tags => {
+      const suggestedTags = tags.map(tag => tag.tag).filter(tag => !favorite.tags.includes(tag));
+
+      this.dialogService
+        .openTagsDialog({
+          title: 'Edit Tags',
+          tags: favorite.tags || [],
+          suggestedTags,
+          maxTags: 10,
+        })
+        .subscribe(updatedTags => {
+          if (updatedTags) {
+            this.favoriteService.updateTags(favorite.ad._id, updatedTags).subscribe(
+              () => {
+                // Update local state
+                favorite.tags = updatedTags;
+                this.notificationService.success('Tags updated successfully');
+              },
+              error => {
+                console.error('Error updating tags:', error);
+                this.notificationService.error('Failed to update tags');
+              }
+            );
+          }
+        });
+    });
   }
 
   /**
    * Open dialog to add tags to multiple favorites
    */
   openTagsDialog(): void {
-    // Implementation will be added
+    if (this.selectedFavorites.length === 0) return;
+
+    // Get all user tags for suggestions
+    this.favoriteService.getUserTags().subscribe(tags => {
+      const suggestedTags = tags.map(tag => tag.tag);
+
+      this.dialogService
+        .openTagsDialog({
+          title: `Add Tags to ${this.selectedFavorites.length} Favorites`,
+          tags: [],
+          suggestedTags,
+          maxTags: 10,
+        })
+        .subscribe(newTags => {
+          if (newTags && newTags.length > 0) {
+            // For each selected favorite, add the new tags
+            const updatePromises = this.selectedFavorites.map(adId => {
+              const favorite = this.favorites.find(f => f.ad._id === adId);
+              if (!favorite) return null;
+
+              // Combine existing tags with new tags, removing duplicates
+              const existingTags = favorite.tags || [];
+              const combinedTags = [...new Set([...existingTags, ...newTags])];
+
+              return firstValueFrom(this.favoriteService.updateTags(adId, combinedTags));
+            });
+
+            // Wait for all updates to complete
+            Promise.all(updatePromises)
+              .then(() => {
+                // Update local state
+                this.favorites.forEach(favorite => {
+                  if (this.selectedFavorites.includes(favorite.ad._id)) {
+                    const existingTags = favorite.tags || [];
+                    favorite.tags = [...new Set([...existingTags, ...newTags])];
+                  }
+                });
+                this.notificationService.success(
+                  `Tags added to ${this.selectedFavorites.length} favorites`
+                );
+              })
+              .catch(error => {
+                console.error('Error updating tags batch:', error);
+                this.notificationService.error('Failed to update tags for some favorites');
+              });
+          }
+        });
+    });
   }
 
   /**
@@ -773,7 +847,28 @@ export class FavoritesPageComponent implements OnInit {
    * Set priority for multiple favorites in a batch operation
    */
   setPriorityBatch(priority: 'low' | 'normal' | 'high'): void {
-    // Implementation will be added
+    if (this.selectedFavorites.length === 0) return;
+
+    const updatePromises = this.selectedFavorites.map(adId =>
+      firstValueFrom(this.favoriteService.updatePriority(adId, priority))
+    );
+
+    Promise.all(updatePromises)
+      .then(() => {
+        // Update local state
+        this.favorites.forEach(favorite => {
+          if (this.selectedFavorites.includes(favorite.ad._id)) {
+            favorite.priority = priority;
+          }
+        });
+        this.notificationService.success(
+          `Priority set to ${priority} for ${this.selectedFavorites.length} favorites`
+        );
+      })
+      .catch(error => {
+        console.error('Error updating priority batch:', error);
+        this.notificationService.error('Failed to update priority for some favorites');
+      });
   }
 
   /**

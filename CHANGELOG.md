@@ -1,5 +1,15 @@
 # Change Log
 
+## 2024-05-28
+
+### Improved
+
+- **Favorites System**
+  - Fixed batch operations in favorites page component to use firstValueFrom instead of deprecated toPromise
+  - Ensured proper imports for RxJS operators
+  - Improved code organization and readability
+  - Enhanced error handling for batch operations
+
 ## 2024-05-27
 
 ### Added

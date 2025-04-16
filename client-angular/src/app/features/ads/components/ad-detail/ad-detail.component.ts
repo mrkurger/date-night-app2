@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../../shared/material.module';
 import { UserService } from '../../../../core/services/user.service';
 import { ChatService } from '../../../../core/services/chat.service';
+import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button.component';
 
 @Component({
   selector: 'app-ad-detail',
@@ -45,10 +46,18 @@ import { ChatService } from '../../../../core/services/chat.service';
       .action-buttons {
         margin-top: 20px;
       }
+      .favorite-action {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+      }
+      .favorite-label {
+        margin-left: 8px;
+      }
     `,
   ],
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, FavoriteButtonComponent],
 })
 export class AdDetailComponent implements OnInit {
   ad: any;
@@ -114,6 +123,18 @@ export class AdDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Handle favorite status change from the favorite button component
+   * @param isFavorite New favorite status
+   */
+  onFavoriteChanged(isFavorite: boolean): void {
+    this.isFavorited = isFavorite;
+  }
+
+  /**
+   * Legacy method - kept for backward compatibility
+   * @deprecated Use the favorite button component instead
+   */
   toggleFavorite(): void {
     if (!this.userService.isAuthenticated()) {
       this.router.navigate(['/auth/login'], {
