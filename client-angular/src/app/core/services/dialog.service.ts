@@ -13,6 +13,15 @@ import {
   ResponseDialogComponent,
   ResponseDialogData,
 } from '../../shared/components/response-dialog/response-dialog.component';
+import {
+  FavoriteDialogComponent,
+  FavoriteDialogData,
+  FavoriteDialogResult,
+} from '../../shared/components/favorite-dialog/favorite-dialog.component';
+import {
+  NotesDialogComponent,
+  NotesDialogData,
+} from '../../shared/components/notes-dialog/notes-dialog.component';
 
 /**
  * Service for managing dialog interactions throughout the application
@@ -74,6 +83,38 @@ export class DialogService {
   }
 
   /**
+   * Opens a dialog for adding or editing a favorite
+   * @param data Favorite dialog configuration data
+   * @returns Observable that resolves with the favorite details or undefined if canceled
+   */
+  openFavoriteDialog(data: FavoriteDialogData): Observable<FavoriteDialogResult | undefined> {
+    const dialogRef = this.dialog.open(FavoriteDialogComponent, {
+      width: '600px',
+      maxWidth: '95vw',
+      disableClose: false,
+      data,
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  /**
+   * Opens a dialog for editing notes
+   * @param data Notes dialog configuration data
+   * @returns Observable that resolves with the notes text or undefined if canceled
+   */
+  openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
+    const dialogRef = this.dialog.open(NotesDialogComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      disableClose: false,
+      data,
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  /**
    * Opens a dialog for responding to a review with the review details
    * @param reviewId ID of the review to respond to
    * @param reviewTitle Title of the review
@@ -101,6 +142,47 @@ export class DialogService {
     return this.openReportDialog({
       title: 'Report Review',
       contentType: 'review',
+    });
+  }
+
+  /**
+   * Opens a dialog for adding an ad to favorites
+   * @param adId ID of the ad to favorite
+   * @param adTitle Title of the ad
+   * @returns Observable that resolves with the favorite details or undefined if canceled
+   */
+  addToFavorites(adId: string, adTitle: string): Observable<FavoriteDialogResult | undefined> {
+    return this.openFavoriteDialog({
+      adId,
+      adTitle,
+    });
+  }
+
+  /**
+   * Opens a dialog for editing a favorite
+   * @param adId ID of the ad
+   * @param adTitle Title of the ad
+   * @param notes Existing notes
+   * @param tags Existing tags
+   * @param priority Existing priority
+   * @param notificationsEnabled Whether notifications are enabled
+   * @returns Observable that resolves with the updated favorite details or undefined if canceled
+   */
+  editFavorite(
+    adId: string,
+    adTitle: string,
+    notes?: string,
+    tags?: string[],
+    priority?: 'low' | 'normal' | 'high',
+    notificationsEnabled?: boolean
+  ): Observable<FavoriteDialogResult | undefined> {
+    return this.openFavoriteDialog({
+      adId,
+      adTitle,
+      existingNotes: notes,
+      existingTags: tags,
+      existingPriority: priority,
+      existingNotificationsEnabled: notificationsEnabled,
     });
   }
 }

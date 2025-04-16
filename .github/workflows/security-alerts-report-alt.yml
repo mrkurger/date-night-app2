@@ -1,0 +1,132 @@
+name: Security Alerts Report (Alternative)
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Run weekly on Monday
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: |
+          npm install -g npm-audit-html
+          npm install -g npm-check
+
+      - name: Check Client Dependencies
+        id: check-client
+        continue-on-error: true
+        run: |
+          if [ -d "client-angular" ]; then
+            cd client-angular
+            echo "## Client Dependencies" > ../client-deps-report.md
+            echo "" >> ../client-deps-report.md
+            npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
+            npm audit --json | npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
+            cd ..
+          else
+            echo "Client directory not found, skipping"
+          fi
+
+      - name: Check Server Dependencies
+        id: check-server
+        continue-on-error: true
+        run: |
+          if [ -d "server" ]; then
+            cd server
+            echo "## Server Dependencies" > ../server-deps-report.md
+            echo "" >> ../server-deps-report.md
+            npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
+            npm audit --json | npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
+            cd ..
+          else
+            echo "Server directory not found, skipping"
+          fi
+
+      - name: Generate Combined Report
+        run: |
+          mkdir -p docs
+
+          # Create report header
+          cat > docs/security-alerts.md << EOL
+          # Security Alerts and Dependency Report
+
+          *Generated on: $(date +%Y-%m-%d)*
+
+          This report provides an overview of dependencies and potential security issues in the project.
+
+          EOL
+
+          # Add client dependencies report if it exists
+          if [ -f "client-deps-report.md" ]; then
+            cat client-deps-report.md >> docs/security-alerts.md
+            echo "" >> docs/security-alerts.md
+          fi
+
+          # Add server dependencies report if it exists
+          if [ -f "server-deps-report.md" ]; then
+            cat server-deps-report.md >> docs/security-alerts.md
+            echo "" >> docs/security-alerts.md
+          fi
+
+          # Create security audit section
+          cat >> docs/security-alerts.md << EOL
+
+          ## Security Audit Results
+
+          Detailed HTML reports have been generated for:
+
+          EOL
+
+          # Add links to HTML reports if they exist
+          if [ -f "client-audit.html" ]; then
+            mkdir -p docs/security-reports
+            cp client-audit.html docs/security-reports/
+            echo "- [Client Security Audit](./security-reports/client-audit.html)" >> docs/security-alerts.md
+          fi
+
+          if [ -f "server-audit.html" ]; then
+            mkdir -p docs/security-reports
+            cp server-audit.html docs/security-reports/
+            echo "- [Server Security Audit](./security-reports/server-audit.html)" >> docs/security-alerts.md
+          fi
+
+          # Add manual check instructions
+          cat >> docs/security-alerts.md << EOL
+
+          ## Manual Security Checks
+
+          For a complete security assessment, please also check:
+
+          1. GitHub Security tab for Dependabot alerts
+          2. npm audit reports for each package
+          3. Known vulnerabilities in third-party libraries
+
+          EOL
+
+      - name: Commit Report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/security-alerts.md
+          git add docs/security-reports/ || true
+          git commit -m "docs: update security alerts report [skip ci]" || echo "No changes to commit"
+
+          # Use PAT for push if available, otherwise use GITHUB_TOKEN
+          if [ -n "$WORKFLOW_TOKEN" ]; then
+            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          fi
+          git push
+        env:
+          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}

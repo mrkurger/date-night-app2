@@ -613,6 +613,8 @@ This section provides links to all documentation files in the project, organized
 - [GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.md) - Comprehensive strategy for GitHub integration
 - [GitHub Setup Guide](/docs/GITHUB_SETUP.md) - Instructions for setting up GitHub repository
 - [GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.md) - Guide to resolving workflow permission issues
+- [Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.md) - Guide to security alerts generation workflows
+- [GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.md) - Guide to GitHub insights generation workflows
 - [AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.md) - AI-powered GitHub Actions for the project
 - [GitHub Insights](/docs/github-insights/README.md) - Reports and data from GitHub Actions workflows
 

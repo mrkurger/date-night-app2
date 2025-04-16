@@ -1,0 +1,139 @@
+name: Sync GitHub Insights (Alternative)
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync-insights:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Generate Basic Repository Info
+        run: |
+          mkdir -p docs/github-insights
+
+          # Get current date
+          DATE=$(date +%Y-%m-%d)
+
+          # Create report header
+          cat > docs/github-insights/insights-report.md << EOL
+          # GitHub Insights Report
+
+          *Generated on: $DATE*
+
+          This report provides insights into the repository's activity and status.
+
+          ## Repository Information
+
+          - **Name**: date-night-app2
+          - **Owner**: mrkurger
+          - **URL**: https://github.com/mrkurger/date-night-app2
+
+          EOL
+
+          # Add workflow information
+          echo "## Recent Workflows" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo "To view recent workflow runs, visit:" >> docs/github-insights/insights-report.md
+          echo "- [All Workflows](https://github.com/mrkurger/date-night-app2/actions)" >> docs/github-insights/insights-report.md
+          echo "- [Sync Test Reports](https://github.com/mrkurger/date-night-app2/actions/workflows/sync-test-reports.yml)" >> docs/github-insights/insights-report.md
+          echo "- [Security Alerts Report](https://github.com/mrkurger/date-night-app2/actions/workflows/security-alerts-report.yml)" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+
+          # Add security information
+          echo "## Security Information" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo "To view security alerts and dependency information:" >> docs/github-insights/insights-report.md
+          echo "- [Security Overview](https://github.com/mrkurger/date-night-app2/security)" >> docs/github-insights/insights-report.md
+          echo "- [Dependabot Alerts](https://github.com/mrkurger/date-night-app2/security/dependabot)" >> docs/github-insights/insights-report.md
+          echo "- [Code Scanning](https://github.com/mrkurger/date-night-app2/security/code-scanning)" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+
+          # Add repository activity
+          echo "## Repository Activity" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo "To view recent repository activity:" >> docs/github-insights/insights-report.md
+          echo "- [Pull Requests](https://github.com/mrkurger/date-night-app2/pulls)" >> docs/github-insights/insights-report.md
+          echo "- [Issues](https://github.com/mrkurger/date-night-app2/issues)" >> docs/github-insights/insights-report.md
+          echo "- [Commits](https://github.com/mrkurger/date-night-app2/commits)" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+
+          # Add local repository information
+          echo "## Local Repository Information" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo "### Recent Commits" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo '```' >> docs/github-insights/insights-report.md
+          git log --pretty=format:"%h - %an, %ar : %s" -n 10 >> docs/github-insights/insights-report.md
+          echo '```' >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+
+          echo "### Branch Information" >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+          echo '```' >> docs/github-insights/insights-report.md
+          git branch -a >> docs/github-insights/insights-report.md
+          echo '```' >> docs/github-insights/insights-report.md
+          echo "" >> docs/github-insights/insights-report.md
+
+          # Create AI analysis data
+          cat > docs/github-insights/ai-analysis-data.md << EOL
+          # GitHub Insights for AI Analysis
+
+          *Generated on: $DATE*
+
+          This file contains structured data from the repository that can be analyzed by AI assistants to provide insights and recommendations for the project.
+
+          ## Repository Information
+
+          - Name: date-night-app2
+          - Owner: mrkurger
+          - URL: https://github.com/mrkurger/date-night-app2
+
+          ## Recent Activity
+
+          EOL
+
+          echo "### Recent Commits" >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+          git log --pretty=format:"- %h: %s (%ar)" -n 20 >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+
+          echo "### File Statistics" >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+          echo "#### File Types" >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+          find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | grep -E '\.[a-zA-Z0-9]+$' | sed 's/.*\.//' | sort | uniq -c | sort -nr >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+
+          echo "#### Directory Structure" >> docs/github-insights/ai-analysis-data.md
+          echo "" >> docs/github-insights/ai-analysis-data.md
+          echo '```' >> docs/github-insights/ai-analysis-data.md
+          find . -type d -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/dist/*" -maxdepth 3 | sort >> docs/github-insights/ai-analysis-data.md
+          echo '```' >> docs/github-insights/ai-analysis-data.md
+
+      - name: Commit Report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/github-insights/
+          git commit -m "docs: update GitHub insights report [skip ci]" || echo "No changes to commit"
+
+          # Use PAT for push if available, otherwise use GITHUB_TOKEN
+          if [ -n "$WORKFLOW_TOKEN" ]; then
+            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          fi
+          git push
+        env:
+          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}

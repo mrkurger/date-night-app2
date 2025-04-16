@@ -6,7 +6,7 @@ This document explains how to resolve common permission issues with GitHub Actio
 
 ### 1. "Resource not accessible by integration" Error
 
-This error typically occurs when a workflow tries to access artifacts from another workflow. By default, GitHub Actions workflows have limited permissions to access resources from other workflows.
+This error typically occurs when a workflow tries to access artifacts from another workflow or when accessing APIs that require special permissions, such as the Dependabot API. By default, GitHub Actions workflows have limited permissions to access these resources.
 
 **Example error message:**
 
@@ -14,7 +14,39 @@ This error typically occurs when a workflow tries to access artifacts from anoth
 ##[error]Resource not accessible by integration
 ```
 
-### 2. Push Permission Issues
+### 2. GitHub API Access Issues
+
+Several GitHub APIs have stricter permission requirements. Even with a PAT, you might encounter permission issues when trying to access certain APIs.
+
+#### Dependabot API Issues
+
+**Example error message:**
+
+```
+RequestError [HttpError]: Resource not accessible by integration
+status: 403,
+response: {
+  url: 'https://api.github.com/repos/username/repo/dependabot/alerts?state=open&per_page=100',
+  status: 403,
+  ...
+}
+```
+
+#### Repository API Issues
+
+**Example error message:**
+
+```
+RequestError [HttpError]: Not Found - https://docs.github.com/rest/repos/repos#get-a-repository
+status: 404,
+response: {
+  url: 'https://api.github.com/repos/username/repo',
+  status: 404,
+  ...
+}
+```
+
+### 3. Push Permission Issues
 
 Sometimes workflows may fail when trying to push changes to the repository, especially when triggered by other workflows.
 
@@ -90,6 +122,55 @@ jobs:
 ```
 
 However, this approach may not be sufficient for all cross-workflow interactions, which is why using a PAT is recommended.
+
+### Option 3: Alternative Approaches for GitHub API Access
+
+If you continue to experience issues accessing GitHub APIs even with a PAT, consider these alternative approaches:
+
+#### For Dependabot Alerts:
+
+1. **Use npm audit directly**:
+
+   ```yaml
+   - name: Run npm audit
+     run: |
+       cd your-package-directory
+       npm audit --json > audit-results.json
+   ```
+
+2. **Use third-party security scanning tools** that don't require special GitHub permissions:
+   - Snyk (`snyk test`)
+   - OWASP Dependency Check
+   - npm-audit-html for generating reports
+
+#### For Repository Information:
+
+1. **Use git commands directly**:
+
+   ```yaml
+   - name: Get repository information
+     run: |
+       # Get recent commits
+       git log --pretty=format:"%h - %an, %ar : %s" -n 10 > recent-commits.txt
+
+       # Get branch information
+       git branch -a > branches.txt
+
+       # Get file statistics
+       find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | grep -E '\.[a-zA-Z0-9]+$' | sed 's/.*\.//' | sort | uniq -c | sort -nr > file-stats.txt
+   ```
+
+2. **Create static reports with links** to GitHub web interface:
+
+   ```yaml
+   - name: Create static report
+     run: |
+       echo "# Repository Report" > report.md
+       echo "" >> report.md
+       echo "- [Pull Requests](https://github.com/username/repo/pulls)" >> report.md
+       echo "- [Issues](https://github.com/username/repo/issues)" >> report.md
+       echo "- [Actions](https://github.com/username/repo/actions)" >> report.md
+   ```
 
 ## Troubleshooting
 
