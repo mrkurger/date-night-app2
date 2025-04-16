@@ -1288,9 +1288,16 @@ GitHub Actions can introduce security risks if not properly configured:
    - Implement proper permissions for artifact access
 
 3. **Secrets Management**:
+
    - Use GitHub Secrets for sensitive information
    - Limit secret access to only the workflows that need them
    - Regularly rotate secrets and tokens
+
+4. **CI Environment Configuration**:
+   - Set `CI=true` environment variable in all workflow jobs
+   - Modify scripts to handle CI environments differently when needed
+   - Skip development-only tools like git hooks (husky) in CI environments
+   - Use conditional logic in npm scripts: `[ -n "$CI" ] || command`
 
 ### Package Overrides
 

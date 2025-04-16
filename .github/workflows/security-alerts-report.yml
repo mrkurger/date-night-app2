@@ -8,6 +8,8 @@ on:
 jobs:
   generate-report:
     runs-on: ubuntu-latest
+    env:
+      CI: true
     permissions:
       security-events: read
       contents: write

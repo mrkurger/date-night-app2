@@ -39,7 +39,7 @@
     "analyze:security": "npm audit && cd server && npm audit && cd ../client-angular && npm audit",
     "analyze:performance": "npm run test:server:performance",
     "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html",
-    "prepare": "husky",
+    "prepare": "[ -n \"$CI\" ] || husky",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "cd server && npm run lint || true",
     "lint:client": "cd client-angular && npm run lint || true",

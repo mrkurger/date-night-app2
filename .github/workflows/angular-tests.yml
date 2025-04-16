@@ -13,6 +13,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      CI: true
 
     strategy:
       matrix:
@@ -45,6 +47,8 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    env:
+      CI: true
 
     strategy:
       matrix:
@@ -72,7 +76,7 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:4200'
           browser: chrome
-          # Cypress runs in headless mode by default, no need to specify
+          headless: true
 
       - name: Upload Cypress screenshots
         uses: actions/upload-artifact@v4
@@ -83,6 +87,8 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    env:
+      CI: true
 
     strategy:
       matrix:

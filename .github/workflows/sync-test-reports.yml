@@ -10,6 +10,8 @@ on:
 jobs:
   sync-reports:
     runs-on: ubuntu-latest
+    env:
+      CI: true
     permissions:
       contents: write
       actions: read # Add permission to read actions/artifacts

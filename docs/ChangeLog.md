@@ -17,6 +17,12 @@
 ### Workflow Improvements
 
 - **Angular Tests**: Added `--no-progress` flag to unit test command to improve CI output and potentially fix failing tests
+- **GitHub Actions**: Added `CI=true` environment variable to all workflow jobs to fix husky installation issues
+- **Package Scripts**: Updated `prepare` script in root package.json to skip husky installation in CI environments
+
+### Known Issues
+
+- **vite**: There are still moderate severity vulnerabilities in the nested vite dependency within @angular/build. This will require a future update of the Angular build tools to fully resolve.
 
 ## 2025-04-16: Angular Testing Improvements, Design System Fixes, and Documentation Updates
 
