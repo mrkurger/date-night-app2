@@ -224,4 +224,11 @@ jobs:
           git config --local user.name "GitHub Action"
           git add docs/github-insights/
           git commit -m "docs: update GitHub insights report [skip ci]" || echo "No changes to commit"
+
+          # Use PAT for push if available, otherwise use GITHUB_TOKEN
+          if [ -n "$WORKFLOW_TOKEN" ]; then
+            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          fi
           git push
+        env:
+          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
