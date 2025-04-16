@@ -14,7 +14,6 @@
     "install-missing": "node scripts/install-missing-deps.js",
     "fix-csp": "node scripts/fix-csp-issues.js",
     "fix-csp:restart": "node scripts/fix-csp-issues.js --restart",
-    
     "test": "jest",
     "test:server": "jest --selectProjects server-unit server-integration",
     "test:server:unit": "jest --selectProjects server-unit",
@@ -26,7 +25,6 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
-    
     "seed": "node scripts/seed.js",
     "mongodb": "node scripts/ensure-mongodb.js",
     "fix-mongodb": "node scripts/fix-mongodb-issues.js",
@@ -38,26 +36,26 @@
     "fix-all": "bash ./fix-project.sh",
     "check-node": "node scripts/check-node-version.js",
     "update-packages": "node scripts/update-packages.js",
-    
     "analyze:security": "npm audit && cd server && npm audit && cd ../client-angular && npm audit",
     "analyze:performance": "npm run test:server:performance",
     "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "angular-mocks": "^1.8.3",
     "concurrently": "^8.2.2",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "@testing-library/jest-dom": "^6.4.2",
-    "angular-mocks": "^1.8.3"
+    "jest-environment-jsdom": "^29.7.0"
   },
   "dependencies": {
+    "@popperjs/core": "2.11.8",
+    "child_process": "^1.0.2",
     "dotenv": "^16.3.1",
+    "fs-extra": "^11.2.0",
     "helmet": "^8.1.0",
     "mongoose": "^8.2.3",
-    "semver": "^7.7.1",
-    "child_process": "^1.0.2",
-    "fs-extra": "^11.2.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "semver": "^7.7.1"
   },
   "overrides": {
     "semver": "^7.7.1",

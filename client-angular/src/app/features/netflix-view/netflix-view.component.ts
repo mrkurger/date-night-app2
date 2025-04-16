@@ -22,15 +22,13 @@ import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 // Import Emerald components
-import { 
-  AppCardComponent, 
-  CardGridComponent, 
-  PageHeaderComponent,
-  SkeletonLoaderComponent,
-  LabelComponent,
-  FloatingActionButtonComponent,
-  ToggleComponent
-} from '../../shared/emerald';
+import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
+import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
+import { PageHeaderComponent } from '../../shared/emerald/components/page-header/page-header.component';
+import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
+import { LabelComponent } from '../../shared/emerald/components/label/label.component';
+import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
+import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.component';
 
 @Component({
   selector: 'app-netflix-view',

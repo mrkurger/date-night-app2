@@ -8,9 +8,10 @@
 //   Related to: client-angular/src/app/core/services/*.ts
 // ===================================================
 
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { of, Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
@@ -21,8 +22,22 @@ import { PwaService } from './core/services/pwa.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
+import { By } from '@angular/platform-browser';
 
+/**
+ * Test suite for the AppComponent
+ * 
+ * Tests cover:
+ * - Component creation
+ * - Authentication state handling
+ * - Initialization of services
+ * - Logout functionality
+ * - Meta tag and title setting
+ * - User role handling
+ */
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let mockNotificationService: jasmine.SpyObj<NotificationService>;
   let mockChatService: jasmine.SpyObj<ChatService>;
@@ -31,24 +46,32 @@ describe('AppComponent', () => {
   let mockPwaService: jasmine.SpyObj<PwaService>;
   let mockTitleService: jasmine.SpyObj<Title>;
   let mockMetaService: jasmine.SpyObj<Meta>;
+  let mockRouter: jasmine.SpyObj<Router>;
+  let userSubject: Subject<any>;
 
   beforeEach(async () => {
+    // Create a subject to control the user observable
+    userSubject = new Subject<any>();
+    
     // Create mock services
     mockAuthService = jasmine.createSpyObj('AuthService', ['logout'], {
-      currentUser$: of(null)
+      currentUser$: userSubject.asObservable()
     });
-    mockNotificationService = jasmine.createSpyObj('NotificationService', ['success']);
-    mockChatService = jasmine.createSpyObj('ChatService', ['getRooms']);
+    mockNotificationService = jasmine.createSpyObj('NotificationService', ['success', 'error', 'info', 'warning']);
+    mockChatService = jasmine.createSpyObj('ChatService', ['getRooms', 'getUnreadCounts']);
     mockCsrfService = jasmine.createSpyObj('CsrfService', ['initializeCsrf']);
-    mockPlatformService = jasmine.createSpyObj('PlatformService', ['runInBrowser']);
-    mockPwaService = jasmine.createSpyObj('PwaService', ['checkForUpdate']);
+    mockPlatformService = jasmine.createSpyObj('PlatformService', ['runInBrowser', 'isBrowser']);
+    mockPwaService = jasmine.createSpyObj('PwaService', ['checkForUpdate', 'installPwa']);
     mockTitleService = jasmine.createSpyObj('Title', ['setTitle']);
-    mockMetaService = jasmine.createSpyObj('Meta', ['addTags']);
+    mockMetaService = jasmine.createSpyObj('Meta', ['addTags', 'updateTag']);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     // Configure mock behavior
     mockCsrfService.initializeCsrf.and.returnValue(of({}));
     mockChatService.getRooms.and.returnValue(of([]));
+    mockChatService.getUnreadCounts.and.returnValue(of(5));
     mockPlatformService.runInBrowser.and.callFake((callback) => callback());
+    mockPlatformService.isBrowser.and.returnValue(true);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -65,36 +88,131 @@ describe('AppComponent', () => {
         { provide: PlatformService, useValue: mockPlatformService },
         { provide: PwaService, useValue: mockPwaService },
         { provide: Title, useValue: mockTitleService },
-        { provide: Meta, useValue: mockMetaService }
+        { provide: Meta, useValue: mockMetaService },
+        { provide: Router, useValue: mockRouter }
       ]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('should set page title and meta tags on initialization', () => {
-    TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
     expect(mockTitleService.setTitle).toHaveBeenCalledWith('Date Night App - Find Your Perfect Match');
     expect(mockMetaService.addTags).toHaveBeenCalled();
+    
+    // Verify specific meta tags
+    const metaTags = mockMetaService.addTags.calls.first().args[0];
+    expect(metaTags).toContain(jasmine.objectContaining({ 
+      name: 'description', 
+      content: 'Date Night App helps you find your perfect match for a memorable date night experience.' 
+    }));
+    expect(metaTags).toContain(jasmine.objectContaining({ 
+      property: 'og:title', 
+      content: 'Date Night App - Find Your Perfect Match' 
+    }));
+  });
+
+  it('should initialize CSRF protection on init', () => {
+    fixture.detectChanges();
+    expect(mockCsrfService.initializeCsrf).toHaveBeenCalled();
+  });
+
+  it('should update authentication state when user changes', () => {
+    fixture.detectChanges();
+    
+    // Initially not authenticated
+    expect(component.isAuthenticated).toBeFalse();
+    expect(component.isAdvertiser).toBeFalse();
+    
+    // Emit a user with advertiser role
+    const mockUser = { 
+      username: 'testuser', 
+      role: 'advertiser',
+      id: '123'
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
+    
+    // Should update authentication state
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeTrue();
+    expect(component.username).toBe('testuser');
+    
+    // Should initialize chat
+    expect(mockChatService.getRooms).toHaveBeenCalled();
+  });
+
+  it('should handle user with non-advertiser role correctly', () => {
+    fixture.detectChanges();
+    
+    // Emit a user with regular role
+    const mockUser = { 
+      username: 'regularuser', 
+      role: 'user',
+      id: '456'
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
+    
+    // Should update authentication state
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeFalse();
+    expect(component.username).toBe('regularuser');
+  });
+
+  it('should handle admin role as advertiser', () => {
+    fixture.detectChanges();
+    
+    // Emit a user with admin role
+    const mockUser = { 
+      username: 'adminuser', 
+      role: 'admin',
+      id: '789'
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
+    
+    // Admin should be treated as advertiser
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeTrue();
   });
 
   it('should handle logout correctly', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
+    // Setup authenticated state first
+    userSubject.next({ username: 'testuser', role: 'user' });
+    fixture.detectChanges();
     
     // Call logout method
-    app.logout();
+    component.logout();
     
     // Verify service calls
     expect(mockAuthService.logout).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/auth/login']);
     expect(mockNotificationService.success).toHaveBeenCalledWith('You have been logged out successfully');
     
     // Verify counters are reset
-    expect(app.unreadMessages).toBe(0);
-    expect(app.notificationCount).toBe(0);
+    expect(component.unreadMessages).toBe(0);
+    expect(component.notificationCount).toBe(0);
+  });
+
+  it('should unsubscribe from all subscriptions on destroy', () => {
+    // Setup spies on subscription unsubscribe methods
+    const authSpy = spyOn(component['authSubscription'], 'unsubscribe');
+    const chatSpy = spyOn(component['chatSubscription'], 'unsubscribe');
+    const notificationSpy = spyOn(component['notificationSubscription'], 'unsubscribe');
+    
+    // Trigger ngOnDestroy
+    component.ngOnDestroy();
+    
+    // Verify all unsubscribe methods were called
+    expect(authSpy).toHaveBeenCalled();
+    expect(chatSpy).toHaveBeenCalled();
+    expect(notificationSpy).toHaveBeenCalled();
   });
 });

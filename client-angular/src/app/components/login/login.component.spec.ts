@@ -30,7 +30,9 @@ describe('LoginComponent', () => {
     id: 'user123',
     username: 'testuser',
     email: 'test@example.com',
-    role: 'user'
+    role: 'user',
+    createdAt: new Date(),
+    updatedAt: new Date()
   };
 
   const mockAuthResponse: AuthResponse = {
@@ -130,7 +132,7 @@ describe('LoginComponent', () => {
     component.onSubmit();
     
     // Verify error is displayed
-    expect(component.error).toBe('Invalid credentials');
+    expect(component.errorMessage).toBe('Invalid credentials');
     
     fixture.detectChanges();
     
@@ -158,7 +160,7 @@ describe('LoginComponent', () => {
     component.onSubmit();
     
     // Verify loading state
-    expect(component.loading).toBe(true);
+    expect(component.isLoading).toBe(true);
     
     fixture.detectChanges();
     

@@ -1,4 +1,23 @@
-@use '../../../../styles/design-system/index.scss' as ds;
+@import '../../../core/design/design-tokens';
+
+// Define CSS variables for use in the component
+:host {
+  --sidebar-bg: #{$neutral-100};
+  --sidebar-border-color: #{$neutral-300};
+  --body-bg: #{$neutral-200};
+  --primary: #{$primary-500};
+  --primary-dark: #{$primary-600};
+  --neutral-100: #{$neutral-100};
+  --neutral-200: #{$neutral-200};
+  --neutral-300: #{$neutral-300};
+  --neutral-600: #{$neutral-600};
+  --neutral-700: #{$neutral-700};
+  --neutral-800: #{$neutral-800};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --transition-normal: #{$transition-normal};
+  --transition-timing-default: #{$transition-ease};
+}
 
 .main-layout {
   display: flex;

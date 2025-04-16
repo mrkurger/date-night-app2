@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LabelComponent } from '../label/label.component';
+import { LabelComponent } from '../components/label/label.component';
 
 /**
  * Interface for media items in the Tinder card

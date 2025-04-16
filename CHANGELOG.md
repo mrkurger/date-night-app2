@@ -1,5 +1,53 @@
 # Change Log
 
+## 2024-05-12
+
+### Added
+- Created missing Karma configuration file for Angular testing
+  - Added `karma.conf.js` with appropriate configuration
+  - Set a random port for the Karma server as per project requirements
+  - Configured coverage reporting
+
+### Improved
+- Enhanced CSP interceptor test coverage
+  - Updated test to check for all CSP directives
+  - Added test for trusted domains in the CSP policy
+  - Improved test documentation with clear descriptions
+  - Added direct testing of the getCSPPolicy method
+
+### Documentation
+- Created comprehensive frontend testing review document
+  - Added `FRONTEND_TESTING_REVIEW.md` with detailed analysis
+  - Documented issues with RxJS type compatibility
+  - Provided recommendations for improving test coverage
+  - Outlined next steps for fixing testing issues
+
+## 2024-05-11
+
+### Fixed
+- Fixed issues with Emerald shared module components
+  - Updated index.ts file to reference correct component paths
+  - Fixed import paths in tinder-card component
+  - Resolved SCSS import issues in multiple components
+  - Added missing $danger variable definition in app-card component
+  - Fixed property name mismatches in login component tests (loading → isLoading, error → errorMessage)
+  - Updated netflix-view component to import Emerald components from correct paths
+  - Fixed RxJS version conflicts by ensuring consistent imports
+
+### Improved
+- Enhanced code organization and maintainability
+  - Updated component imports to use direct paths instead of barrel files where needed
+  - Fixed SCSS import paths to ensure proper styling
+  - Added missing variable definitions to prevent SCSS compilation errors
+  - Improved test reliability by aligning property names with implementation
+
+### Documentation
+- Updated CHANGELOG.md with detailed information about fixes
+  - Added clear descriptions of issues resolved
+  - Documented component path corrections
+  - Added information about SCSS import fixes
+  - Documented property name standardization
+
 ## 2024-05-10
 
 ### Security & Dependencies

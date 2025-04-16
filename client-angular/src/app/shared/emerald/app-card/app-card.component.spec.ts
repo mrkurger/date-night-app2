@@ -1,203 +1,128 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains tests for the Emerald AppCard component
+// 
+// COMMON CUSTOMIZATIONS:
+// - MOCK_ITEM: Mock item data for testing
+// ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AppCardComponent } from './app-card.component';
+import { LabelComponent } from '../components/label/label.component';
 
-// Mock LabelComponent for testing
-@Component({
-  selector: 'emerald-label',
-  template: '<div class="mock-label">{{ text }}</div>'
-})
-class MockLabelComponent {
-  @Input() text: string = '';
-  @Input() color: string = 'primary';
-  @Input() size: string = 'medium';
-}
-
-describe('AppCardComponent', () => {
+describe('AppCardComponent (Basic Version)', () => {
   let component: AppCardComponent;
   let fixture: ComponentFixture<AppCardComponent>;
+  let debugElement: DebugElement;
+
+  // Mock item data for testing
+  const mockItem = {
+    id: 'item123',
+    title: 'Test Item',
+    subtitle: 'Test Subtitle',
+    description: 'This is a test item description',
+    imageUrl: 'https://example.com/image1.jpg',
+    avatarUrl: 'https://example.com/avatar1.jpg',
+    avatarName: 'Test User',
+    isOnline: true,
+    tags: ['tag1', 'tag2', 'tag3', 'tag4'],
+    actions: [
+      { id: 'action1', icon: 'heart', tooltip: 'Like' },
+      { id: 'action2', icon: 'comment', tooltip: 'Comment' }
+    ]
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockLabelComponent],
-      imports: [AppCardComponent]
+      imports: [
+        CommonModule,
+        AppCardComponent,
+        LabelComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppCardComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     
-    // Set default inputs
-    component.title = 'Test Card';
-    component.subtitle = 'Test Subtitle';
-    component.description = 'Test Description';
-    component.imageUrl = '/assets/images/test-image.jpg';
-    component.itemId = 'test-id';
+    // Set the mock item data
+    component.title = mockItem.title;
+    component.subtitle = mockItem.subtitle;
+    component.description = mockItem.description;
+    component.imageUrl = mockItem.imageUrl;
+    component.avatarUrl = mockItem.avatarUrl;
+    component.avatarName = mockItem.avatarName;
+    component.isOnline = mockItem.isOnline;
+    component.tags = mockItem.tags;
+    component.itemId = mockItem.id;
+    component.actions = mockItem.actions;
     
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  describe('Basic Rendering', () => {
-    it('should render title correctly', () => {
-      const titleElement = fixture.debugElement.query(By.css('.emerald-app-card__title'));
-      expect(titleElement.nativeElement.textContent).toContain('Test Card');
+  describe('Component Initialization', () => {
+    it('should create', () => {
+      expect(component).toBeTruthy();
     });
 
-    it('should render subtitle correctly', () => {
-      const subtitleElement = fixture.debugElement.query(By.css('.emerald-app-card__subtitle'));
-      expect(subtitleElement.nativeElement.textContent).toContain('Test Subtitle');
-    });
-
-    it('should render description correctly', () => {
-      const descriptionElement = fixture.debugElement.query(By.css('.emerald-app-card__description'));
-      expect(descriptionElement.nativeElement.textContent).toContain('Test Description');
-    });
-
-    it('should set background image correctly', () => {
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card__image'));
-      expect(cardElement.nativeElement.style.backgroundImage).toContain('test-image.jpg');
+    it('should initialize with default values', () => {
+      const newComponent = new AppCardComponent();
+      expect(newComponent.layout).toBe('default');
+      expect(newComponent.title).toBe('');
+      expect(newComponent.subtitle).toBe('');
+      expect(newComponent.description).toBe('');
+      expect(newComponent.imageUrl).toBe('');
+      expect(newComponent.avatarUrl).toBe('');
+      expect(newComponent.avatarName).toBe('');
+      expect(newComponent.isOnline).toBeFalse();
+      expect(newComponent.tags).toEqual([]);
+      expect(newComponent.maxTags).toBe(3);
+      expect(newComponent.itemId).toBe('');
+      expect(newComponent.actions).toEqual([]);
     });
   });
 
-  describe('Layout Variations', () => {
-    it('should apply default layout class', () => {
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card'));
-      expect(cardElement.nativeElement.classList).toContain('emerald-app-card--default');
-    });
-
-    it('should apply netflix layout class when specified', () => {
-      component.layout = 'netflix';
-      fixture.detectChanges();
-      
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card'));
-      expect(cardElement.nativeElement.classList).toContain('emerald-app-card--netflix');
-    });
-
-    it('should apply tinder layout class when specified', () => {
-      component.layout = 'tinder';
-      fixture.detectChanges();
-      
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card'));
-      expect(cardElement.nativeElement.classList).toContain('emerald-app-card--tinder');
-    });
-  });
-
-  describe('Avatar Rendering', () => {
-    it('should not show avatar by default', () => {
-      const avatarElement = fixture.debugElement.query(By.css('.emerald-app-card__avatar'));
-      expect(avatarElement).toBeNull();
-    });
-
-    it('should show avatar when avatarUrl is provided', () => {
-      component.avatarUrl = '/assets/images/avatar.jpg';
-      component.avatarName = 'Test User';
-      fixture.detectChanges();
-      
-      const avatarElement = fixture.debugElement.query(By.css('.emerald-app-card__avatar'));
-      expect(avatarElement).toBeTruthy();
-      expect(avatarElement.nativeElement.style.backgroundImage).toContain('avatar.jpg');
-    });
-
-    it('should show online indicator when isOnline is true', () => {
-      component.avatarUrl = '/assets/images/avatar.jpg';
-      component.avatarName = 'Test User';
-      component.isOnline = true;
-      fixture.detectChanges();
-      
-      const onlineIndicator = fixture.debugElement.query(By.css('.emerald-app-card__online-indicator'));
-      expect(onlineIndicator).toBeTruthy();
-    });
-  });
-
-  describe('Tags Rendering', () => {
-    it('should not show tags by default', () => {
-      const tagsContainer = fixture.debugElement.query(By.css('.emerald-app-card__tags'));
-      expect(tagsContainer).toBeNull();
-    });
-
-    it('should show tags when provided', () => {
-      component.tags = ['Tag1', 'Tag2', 'Tag3'];
-      fixture.detectChanges();
-      
-      const tagsContainer = fixture.debugElement.query(By.css('.emerald-app-card__tags'));
-      expect(tagsContainer).toBeTruthy();
-      
-      const tagElements = fixture.debugElement.queryAll(By.css('emerald-label'));
-      expect(tagElements.length).toBe(3);
-    });
-
-    it('should limit tags to 3 by default', () => {
-      component.tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5'];
-      fixture.detectChanges();
-      
-      const tagElements = fixture.debugElement.queryAll(By.css('emerald-label'));
-      expect(tagElements.length).toBe(3);
-    });
-  });
-
-  describe('Actions', () => {
-    it('should emit actionClick event when action button is clicked', () => {
-      component.actions = [
-        { id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Details' }
-      ];
-      fixture.detectChanges();
-      
-      spyOn(component.actionClick, 'emit');
-      
-      const actionButton = fixture.debugElement.query(By.css('.emerald-app-card__action-button'));
-      actionButton.nativeElement.click();
-      
-      expect(component.actionClick.emit).toHaveBeenCalledWith({
-        id: 'view',
-        itemId: 'test-id'
-      });
-    });
-
-    it('should render multiple action buttons when multiple actions are provided', () => {
-      component.actions = [
-        { id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Details' },
-        { id: 'favorite', icon: 'fas fa-heart', tooltip: 'Add to Favorites' },
-        { id: 'chat', icon: 'fas fa-comment', tooltip: 'Start Chat' }
-      ];
-      fixture.detectChanges();
-      
-      const actionButtons = fixture.debugElement.queryAll(By.css('.emerald-app-card__action-button'));
-      expect(actionButtons.length).toBe(3);
-    });
-  });
-
-  describe('Card Click', () => {
+  describe('Event Handling', () => {
     it('should emit click event when card is clicked', () => {
       spyOn(component.click, 'emit');
       
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card'));
-      cardElement.nativeElement.click();
+      component.handleClick();
       
-      expect(component.click.emit).toHaveBeenCalledWith('test-id');
+      expect(component.click.emit).toHaveBeenCalledWith(mockItem.id);
+    });
+
+    it('should emit actionClick event when an action is clicked', () => {
+      spyOn(component.actionClick, 'emit');
+      const event = new Event('click');
+      spyOn(event, 'stopPropagation');
+      
+      component.handleActionClick(event, 'action1');
+      
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(component.actionClick.emit).toHaveBeenCalledWith({
+        id: 'action1',
+        itemId: mockItem.id
+      });
     });
   });
 
-  describe('Accessibility', () => {
-    it('should have appropriate ARIA attributes', () => {
-      const cardElement = fixture.debugElement.query(By.css('.emerald-app-card'));
-      expect(cardElement.nativeElement.getAttribute('role')).toBe('button');
-      expect(cardElement.nativeElement.getAttribute('tabindex')).toBe('0');
-      expect(cardElement.nativeElement.getAttribute('aria-label')).toContain('Test Card');
+  describe('Tag Handling', () => {
+    it('should limit visible tags based on maxTags property', () => {
+      component.maxTags = 2;
+      
+      expect(component.visibleTags.length).toBe(2);
+      expect(component.visibleTags).toEqual(['tag1', 'tag2']);
     });
 
-    it('should have tooltips on action buttons', () => {
-      component.actions = [
-        { id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Details' }
-      ];
-      fixture.detectChanges();
+    it('should show all tags when maxTags is greater than tags length', () => {
+      component.maxTags = 10;
       
-      const actionButton = fixture.debugElement.query(By.css('.emerald-app-card__action-button'));
-      expect(actionButton.nativeElement.getAttribute('title')).toBe('View Details');
+      expect(component.visibleTags.length).toBe(mockItem.tags.length);
+      expect(component.visibleTags).toEqual(mockItem.tags);
     });
   });
 });

@@ -1,5 +1,22 @@
 @import '../../../../core/design/design-tokens';
 
+// Define missing variables
+$success-100: lighten($success, 40%);
+$success-300: lighten($success, 20%);
+$success-700: darken($success, 10%);
+
+$warning-100: lighten($warning, 40%);
+$warning-300: lighten($warning, 20%);
+$warning-700: darken($warning, 10%);
+
+$danger-100: lighten($error, 40%);
+$danger-300: lighten($error, 20%);
+$danger-700: darken($error, 10%);
+
+$info-100: lighten($info, 40%);
+$info-300: lighten($info, 20%);
+$info-700: darken($info, 10%);
+
 // Emerald Label Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Label
 

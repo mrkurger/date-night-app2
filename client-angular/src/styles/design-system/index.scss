@@ -3,7 +3,7 @@
 
 // Import new design system
 @forward '../../app/core/design/design-tokens';
-@forward '../../app/core/design/components';
+// @forward '../../app/core/design/components';
 @forward '../../app/core/design/main';
 
 // Legacy imports - to be removed after migration
@@ -16,4 +16,3 @@
 
 // Export mixins and variables for use in components
 @use '../../app/core/design/design-tokens' as *;
-@use '../../app/core/design/components' as *;

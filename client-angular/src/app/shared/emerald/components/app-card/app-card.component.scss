@@ -1,7 +1,13 @@
-@import '../../../../core/design/design-tokens';
+@import '../../../../../app/core/design/design-tokens';
 
 // Emerald AppCard Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/AppCard
+
+// Define missing variables
+$primary: $primary-500;
+$danger: $error;
+$danger-light: $error-light;
+$danger-dark: $error-dark;
 
 .emerald-app-card {
   position: relative;

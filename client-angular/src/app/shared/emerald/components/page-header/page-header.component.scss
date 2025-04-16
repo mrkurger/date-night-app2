@@ -1,5 +1,12 @@
 @import '../../../../core/design/design-tokens';
 
+// Define missing variables
+$primary: $primary-500;
+$danger: $error;
+
+// Define primary color for use in the component
+$primary-700: darken($primary-500, 10%);
+
 // Emerald PageHeader Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/PageHeader
 

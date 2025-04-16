@@ -176,11 +176,17 @@ describe('NetflixViewComponent', () => {
     });
 
     it('should navigate to ad details when viewAdDetails is called', () => {
-      spyOn(window.location, 'href', 'set');
+      // Create a spy object for window.location
+      const locationSpy = jasmine.createSpyObj('location', [], {
+        href: ''
+      });
+      
+      // Replace window.location with the spy
+      spyOnProperty(window, 'location', 'get').and.returnValue(locationSpy);
       
       component.viewAdDetails('1');
       
-      expect(window.location.href).toBe('/ad-details/1');
+      expect(locationSpy.href).toBe('/ad-details/1');
     });
 
     it('should like an ad when likeAd is called', () => {
@@ -204,12 +210,19 @@ describe('NetflixViewComponent', () => {
 
     it('should start chat when startChat is called', () => {
       spyOn(chatService, 'createAdRoom').and.callThrough();
-      spyOn(window.location, 'href', 'set');
+      
+      // Create a spy object for window.location
+      const locationSpy = jasmine.createSpyObj('location', [], {
+        href: ''
+      });
+      
+      // Replace window.location with the spy
+      spyOnProperty(window, 'location', 'get').and.returnValue(locationSpy);
       
       component.startChat('1');
       
       expect(chatService.createAdRoom).toHaveBeenCalledWith('1');
-      expect(window.location.href).toBe('/chat/chat-room-1');
+      expect(locationSpy.href).toBe('/chat/chat-room-1');
     });
 
     it('should show error notification when starting chat without authentication', () => {
@@ -297,11 +310,38 @@ describe('NetflixViewComponent', () => {
 
   describe('Helper Methods', () => {
     it('should return correct media URL', () => {
-      const ad = mockAds[0];
-      expect(component.getMediaUrl(ad)).toBe('/assets/images/test-image-1.jpg');
+      // Create a mock Ad object with the required properties
+      const mockAd: any = {
+        _id: '1',
+        title: 'Test Ad 1',
+        description: 'This is a test ad description',
+        category: 'Test Category',
+        price: 100,
+        location: 'Oslo',
+        images: ['/assets/images/test-image-1.jpg'],
+        media: [{ type: 'image', url: '/assets/images/test-image-1.jpg' }],
+        advertiser: 'Test Advertiser',
+        userId: 'user1',
+        isActive: true,
+        isFeatured: false,
+        isTrending: false,
+        isTouring: false,
+        viewCount: 0,
+        clickCount: 0,
+        inquiryCount: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
       
-      const adWithoutImages = { ...ad, images: [] };
-      expect(component.getMediaUrl(adWithoutImages)).toBe('/assets/images/default-profile.jpg');
+      expect(component.getMediaUrl(mockAd)).toBe('/assets/images/test-image-1.jpg');
+      
+      // Create a mock Ad without images
+      const mockAdWithoutImages: any = {
+        ...mockAd,
+        images: []
+      };
+      
+      expect(component.getMediaUrl(mockAdWithoutImages)).toBe('/assets/images/default-profile.jpg');
     });
 
     it('should shuffle array correctly', () => {
