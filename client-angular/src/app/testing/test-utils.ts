@@ -23,7 +23,7 @@ import { Component, Input, Type } from '@angular/core';
 export function createMockComponent(
   selector: string,
   inputs: string[] = [],
-  template: string = '<ng-content></ng-content>'
+  template = '<ng-content></ng-content>'
 ): Type<any> {
   @Component({
     selector,

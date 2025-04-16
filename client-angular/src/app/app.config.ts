@@ -31,8 +31,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000',
+      enabled: true, // Enable PWA in all environments
+      registrationStrategy: 'registerImmediately',
     }),
     routingProviders,
     importProvidersFrom(CoreModule, SharedModule, SocketIoModule.forRoot(socketConfig)),

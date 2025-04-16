@@ -138,7 +138,7 @@ export class ProfileComponent implements OnInit {
         if (parentObj !== null && parentObj !== undefined) {
           // If we already have a JSON string for this parent, parse it
           const existingJson = formData.get(parent);
-          let parentData = existingJson ? JSON.parse(existingJson as string) : {};
+          const parentData = existingJson ? JSON.parse(existingJson as string) : {};
 
           // Add/update the child property
           parentData[child] = formValues[key];

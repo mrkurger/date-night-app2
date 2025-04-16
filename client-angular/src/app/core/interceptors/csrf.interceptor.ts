@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { CsrfService } from '../services/csrf.service';
 
 /**
  * CSRF Interceptor
  *
  * This interceptor adds CSRF token to modifying requests (POST, PUT, DELETE, PATCH)
- * It extracts the token from cookies rather than injecting the CsrfService
- * to avoid circular dependencies.
+ * It uses the CsrfService to get the token from cookies.
  */
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
+  constructor(private csrfService: CsrfService) {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Only add CSRF token for API requests that modify data
     if (request.url.includes(environment.apiUrl) && this.isModifyingRequest(request)) {
-      const csrfToken = this.getCsrfToken();
+      const csrfToken = this.csrfService.getCsrfToken();
 
       if (csrfToken) {
         request = request.clone({
@@ -27,20 +29,6 @@ export class CsrfInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request);
-  }
-
-  /**
-   * Get CSRF token from cookie
-   */
-  private getCsrfToken(): string | null {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'XSRF-TOKEN') {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
   }
 
   /**

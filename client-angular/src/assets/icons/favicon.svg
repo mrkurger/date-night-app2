@@ -1,17 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 96" width="128" height="192">
+<svg_content = '''<svg width="200" height="400" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
   <!-- Head -->
-  <ellipse cx="32" cy="14" rx="7" ry="8" fill="black"/>
-  <!-- Neck -->
-  <rect x="28" y="22" width="8" height="8" rx="4" fill="black"/>
-  <!-- Torso -->
-  <ellipse cx="32" cy="40" rx="16" ry="24" fill="black"/>
-  <!-- Waist -->
-  <ellipse cx="32" cy="60" rx="10" ry="8" fill="black"/>
-  <!-- Hips -->
-  <ellipse cx="32" cy="74" rx="18" ry="12" fill="black"/>
+  <ellipse cx="100" cy="60" rx="30" ry="40" fill="#f9d5b3" />
+  <!-- Body -->
+  <path d="M70 100 Q60 200 100 350 Q140 200 130 100 Z" fill="#f9d5b3" />
   <!-- Left arm -->
-  <ellipse cx="12" cy="38" rx="4" ry="16" fill="black" transform="rotate(-20 12 38)"/>
+  <path d="M70 120 Q40 180 80 220" stroke="#f9d5b3" stroke-width="18" fill="none" />
   <!-- Right arm -->
-  <ellipse cx="52" cy="38" rx="4" ry="16" fill="black" transform="rotate(20 52 38)"/>
-</svg>
+  <path d="M130 120 Q160 180 120 220" stroke="#f9d5b3" stroke-width="18" fill="none" />
+  <!-- Dress -->
+  <path d="M70 150 Q100 250 130 150 Q100 350 70 150 Z" fill="#e75480" opacity="0.7" />
+  <!-- Left leg -->
+  <path d="M100 350 Q90 390 100 400" stroke="#f9d5b3" stroke-width="16" fill="none" />
+  <!-- Right leg -->
+  <path d="M100 350 Q110 390 100 400" stroke="#f9d5b3" stroke-width="16" fill="none" />
+</svg>'''
+
+with open('favicon.svg', 'w') as f:
+    f.write(svg_content)
 

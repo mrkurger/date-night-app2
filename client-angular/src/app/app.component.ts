@@ -43,6 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
   username = '';
   unreadMessages = 0;
   notificationCount = 0;
+  deferredPrompt: any;
+  showInstallPrompt = false;
 
   private authSubscription: Subscription = new Subscription();
   private chatSubscription: Subscription = new Subscription();
@@ -77,6 +79,18 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       { property: 'og:type', content: 'website' },
     ]);
+
+    // Listen for beforeinstallprompt event to enable PWA installation
+    this.platformService.runInBrowser(() => {
+      window.addEventListener('beforeinstallprompt', e => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        this.deferredPrompt = e;
+        // Show the install button
+        this.showInstallPrompt = true;
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -84,6 +98,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.platformService.runInBrowser(() => {
       // Initialize CSRF protection
       this.csrfService.initializeCsrf().subscribe();
+
+      // Check for PWA updates
+      this.pwaService.checkForUpdates().then(hasUpdate => {
+        if (hasUpdate) {
+          console.log('New version available');
+        }
+      });
 
       this.authSubscription = this.authService.currentUser$.subscribe((user: any) => {
         this.isAuthenticated = !!user;
@@ -139,5 +160,33 @@ export class AppComponent implements OnInit, OnDestroy {
     // Reset counters
     this.unreadMessages = 0;
     this.notificationCount = 0;
+  }
+
+  /**
+   * Install PWA app
+   * Shows the installation prompt
+   */
+  installPwa(): void {
+    if (!this.deferredPrompt) {
+      console.log('Installation prompt not available');
+      return;
+    }
+
+    // Show the prompt
+    this.deferredPrompt.prompt();
+
+    // Wait for the user to respond to the prompt
+    this.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+        this.notificationService.success('App installation started!');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+
+      // Clear the deferred prompt variable
+      this.deferredPrompt = null;
+      this.showInstallPrompt = false;
+    });
   }
 }
