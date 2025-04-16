@@ -1294,10 +1294,18 @@ GitHub Actions can introduce security risks if not properly configured:
    - Regularly rotate secrets and tokens
 
 4. **CI Environment Configuration**:
+
    - Set `CI=true` environment variable in all workflow jobs
    - Modify scripts to handle CI environments differently when needed
    - Skip development-only tools like git hooks (husky) in CI environments
    - Use conditional logic in npm scripts: `[ -n "$CI" ] || command`
+
+5. **Workflow Error Monitoring**:
+   - Implement automated collection of workflow error logs
+   - Use the `workflow_run` event to trigger log collection after workflow completion
+   - Store logs in a structured format for easy analysis
+   - Create analysis tools to identify common error patterns
+   - Provide specific recommendations for fixing issues
 
 ### Package Overrides
 

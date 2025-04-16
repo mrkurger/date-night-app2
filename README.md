@@ -24,6 +24,7 @@
   - [Customization Documentation](#customization-documentation)
   - [Security Documentation](#security-documentation)
   - [GitHub Integration](#github-integration)
+  - [Workflow Error Monitoring](#workflow-error-monitoring)
   - [Lessons Learned](#lessons-learned)
 
 ## Description
@@ -617,6 +618,12 @@ This section provides links to all documentation files in the project, organized
 - [GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.md) - Guide to GitHub insights generation workflows
 - [AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.md) - AI-powered GitHub Actions for the project
 - [GitHub Insights](/docs/github-insights/README.md) - Reports and data from GitHub Actions workflows
+
+### Workflow Error Monitoring
+
+- [Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.md) - Documentation for the workflow error monitoring system
+- [Workflow Error Logs](/workflow-error-logs/README.md) - Directory containing logs from failed GitHub Actions workflows
+- [Workflow Error Analysis Tool](/scripts/analyze-workflow-errors.js) - Script for analyzing workflow error logs
 
 ### Development Guides
 
