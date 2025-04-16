@@ -46,7 +46,7 @@
         [media]="getCardMedia(currentAd)"
         [tags]="currentAd.tags"
         [itemId]="currentAd._id"
-        [age]="currentAd.age"
+        [age]="currentAd.age.toString()"
         [state]="cardState"
         [swipeable]="true"
         (swipe)="onSwipe($event)"
@@ -65,7 +65,7 @@
         [media]="getCardMedia(nextAd)"
         [tags]="nextAd.tags"
         [itemId]="nextAd._id"
-        [age]="nextAd.age"
+        [age]="nextAd.age.toString()"
         [swipeable]="false"
       >
       </emerald-tinder-card>
@@ -138,8 +138,7 @@
                 label="Show only touring profiles"
                 labelPosition="right"
                 color="primary"
-                [value]="filterForm.get('touringOnly')?.value"
-                (change)="filterForm.get('touringOnly')?.setValue($event)"
+                [formControl]="filterForm.get('touringOnly')"
               >
               </emerald-toggle>
             </div>

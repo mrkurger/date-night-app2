@@ -49,10 +49,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
  */
 @NgModule({
   declarations: [
-    // These components are also standalone, but we include them here
-    // for backwards compatibility with non-standalone components
-    CardGridComponent,
-    FloatingActionButtonComponent,
+    // No declarations needed for standalone components
   ],
   imports: [
     CommonModule,

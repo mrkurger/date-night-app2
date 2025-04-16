@@ -41,23 +41,31 @@ interface UserSearchResult {
   selector: 'app-transfer-dialog',
   template: `
     <h2 mat-dialog-title>Transfer Funds</h2>
-    
+
     <mat-dialog-content>
       <form [formGroup]="transferForm" class="transfer-form">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Currency</mat-label>
           <mat-select formControlName="currency" (selectionChange)="updateMaxAmount()">
             <mat-option *ngFor="let balance of balances" [value]="balance.currency">
-              {{ balance.currency }} ({{ walletService.formatCurrency(balance.available, balance.currency) }} available)
+              {{ balance.currency }} ({{
+                walletService.formatCurrency(balance.available, balance.currency)
+              }}
+              available)
             </mat-option>
           </mat-select>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Amount</mat-label>
-          <input matInput type="number" formControlName="amount" min="1" [max]="maxAmount">
+          <input matInput type="number" formControlName="amount" min="1" [max]="maxAmount" />
           <span matTextSuffix>{{ transferForm.get('currency')?.value }}</span>
-          <mat-hint>Available: {{ walletService.formatCurrency(maxAmount, transferForm.get('currency')?.value) }}</mat-hint>
+          <mat-hint
+            >Available:
+            {{
+              walletService.formatCurrency(maxAmount, transferForm.get('currency')?.value)
+            }}</mat-hint
+          >
           <mat-error *ngIf="transferForm.get('amount')?.hasError('required')">
             Amount is required
           </mat-error>
@@ -68,25 +76,27 @@ interface UserSearchResult {
             Amount exceeds available balance
           </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Recipient Username</mat-label>
-          <input 
-            matInput 
-            formControlName="recipientUsername" 
+          <input
+            matInput
+            formControlName="recipientUsername"
             [matAutocomplete]="auto"
-            placeholder="Enter username or email">
+            placeholder="Enter username or email"
+          />
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUsername">
             <mat-option *ngFor="let user of filteredUsers" [value]="user">
               <div class="user-option">
-                <img 
-                  *ngIf="user.profileImage" 
-                  [src]="user.profileImage" 
+                <img
+                  *ngIf="user.profileImage"
+                  [src]="user.profileImage"
                   class="user-avatar"
-                  alt="{{ user.displayName || user.username }}">
+                  alt="{{ user.displayName || user.username }}"
+                />
                 <div class="user-info">
                   <span class="user-display-name">{{ user.displayName || user.username }}</span>
-                  <span class="user-username">@{{ user.username }}</span>
+                  <span class="user-username">{{ '@' + user.username }}</span>
                 </div>
               </div>
             </mat-option>
@@ -98,31 +108,34 @@ interface UserSearchResult {
             User not found
           </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description (Optional)</mat-label>
-          <input matInput formControlName="description" maxlength="100">
-          <mat-hint align="end">{{ transferForm.get('description')?.value?.length || 0 }}/100</mat-hint>
+          <input matInput formControlName="description" maxlength="100" />
+          <mat-hint align="end"
+            >{{ transferForm.get('description')?.value?.length || 0 }}/100</mat-hint
+          >
         </mat-form-field>
-        
+
         <div *ngIf="balances.length === 0" class="no-balances">
           <p>You don't have any available balances to transfer.</p>
         </div>
-        
+
         <div *ngIf="processingTransfer" class="processing-container">
           <mat-spinner diameter="30"></mat-spinner>
           <p>Processing your transfer...</p>
         </div>
       </form>
     </mat-dialog-content>
-    
+
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancel</button>
-      <button 
-        mat-raised-button 
-        color="primary" 
-        [disabled]="transferForm.invalid || processingTransfer || balances.length === 0" 
-        (click)="transferFunds()">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="transferForm.invalid || processingTransfer || balances.length === 0"
+        (click)="transferFunds()"
+      >
         Transfer
       </button>
     </mat-dialog-actions>

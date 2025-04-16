@@ -64,7 +64,7 @@ export class TinderComponent implements OnInit {
   /**
    * Current state of the card ('', 'like', 'dislike')
    */
-  cardState = '';
+  cardState: '' | 'like' | 'dislike' = '';
 
   /**
    * Loading state

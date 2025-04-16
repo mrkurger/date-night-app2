@@ -33,7 +33,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { WalletComponent } from './wallet.component';
@@ -85,7 +85,7 @@ const routes: Routes = [
     MatBadgeModule,
     MatMenuModule,
     MatSlideToggleModule,
-    QRCodeModule,
+    QRCodeComponent,
     ClipboardModule,
     EmeraldModule,
     WalletComponent,
