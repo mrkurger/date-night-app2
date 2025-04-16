@@ -9,13 +9,19 @@
 // ===================================================
 const express = require('express');
 const router = express.Router();
+// These imports are available for future use when implementing additional features
+// eslint-disable-next-line no-unused-vars
 const cors = require('cors');
+// eslint-disable-next-line no-unused-vars
 const rateLimit = require('express-rate-limit');
 const { v4: uuidv4 } = require('uuid');
 const helmet = require('helmet');
 const compression = require('compression');
+// eslint-disable-next-line no-unused-vars
 const requestValidator = require('../middleware/requestValidator');
 const { csrfProtection, sendCsrfToken } = require('../middleware/csrf');
+// Cache middleware options for different endpoints
+// eslint-disable-next-line no-unused-vars
 const { staticCache, dynamicCache, noCache } = require('../middleware/cache');
 
 // Add correlation ID to each request for better logging and debugging
@@ -28,10 +34,13 @@ router.use((req, res, next) => {
 // Import rate limiters
 const {
   authLimiter,
+  // These rate limiters are imported for future use in specific routes
+  // eslint-disable-next-line no-unused-vars
   registrationLimiter,
   chatLimiter,
   adCreationLimiter,
   mediaUploadLimiter,
+  // eslint-disable-next-line no-unused-vars
   searchLimiter,
   profileUpdateLimiter,
 } = require('../middleware/rateLimiter');

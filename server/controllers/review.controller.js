@@ -1,7 +1,6 @@
 const Review = require('../models/review.model');
 const User = require('../models/user.model');
 const Ad = require('../models/ad.model');
-const mongoose = require('mongoose');
 
 // Create a new review
 exports.createReview = async (req, res) => {

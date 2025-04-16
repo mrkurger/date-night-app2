@@ -9,7 +9,6 @@
 // ===================================================
 const SafetyCheckin = require('../models/safety-checkin.model');
 const User = require('../models/user.model');
-const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 // Create a new safety check-in

@@ -19,8 +19,12 @@ const crypto = require('crypto');
 /**
  * Middleware to serve files securely
  * Checks if user has permission to access the file
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @param {Function} _next - Express next function (not used as this handler sends response directly)
  */
-const secureFileServing = (req, res, next) => {
+// eslint-disable-next-line no-unused-vars
+const secureFileServing = (req, res, _next) => {
   try {
     const filePath = req.params[0]; // Get the file path from the URL
 

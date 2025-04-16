@@ -22,5 +22,5 @@ try {
   });
 } catch (error) {
   console.error('Error starting Angular client:', error.message);
-  process.exit(1);
+  throw error;
 }

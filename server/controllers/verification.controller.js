@@ -9,7 +9,6 @@
 // ===================================================
 const Verification = require('../models/verification.model');
 const User = require('../models/user.model');
-const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

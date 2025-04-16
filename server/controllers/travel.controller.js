@@ -1,5 +1,8 @@
 const travelService = require('../services/travel.service');
 const { asyncHandler } = require('../middleware/asyncHandler');
+// AppError is imported but not used directly in this controller
+// It may be needed for future error handling enhancements
+// eslint-disable-next-line no-unused-vars
 const { AppError } = require('../middleware/errorHandler');
 const logger = require('../utils/logger').logger;
 
@@ -69,7 +72,8 @@ exports.cancelItinerary = asyncHandler(async (req, res) => {
   const { adId, itineraryId } = req.params;
   const userId = req.user.id;
 
-  const ad = await travelService.cancelItinerary(adId, itineraryId, userId);
+  // Call service to cancel the itinerary
+  await travelService.cancelItinerary(adId, itineraryId, userId);
 
   logger.info(`Travel itinerary ${itineraryId} cancelled for ad ${adId} by user ${userId}`);
 

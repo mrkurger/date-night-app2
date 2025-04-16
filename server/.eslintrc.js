@@ -24,4 +24,14 @@ module.exports = {
     'no-undef': 'error',
   },
   ignorePatterns: ['node_modules/', 'coverage/', 'dist/', 'build/', 'logs/', 'uploads/'],
+  overrides: [
+    {
+      // Allow more warnings in test files
+      files: ['tests/**/*.js', '**/*.test.js'],
+      rules: {
+        'no-unused-vars': 'off',
+        'node/no-missing-require': 'off',
+      },
+    },
+  ],
 };

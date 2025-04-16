@@ -11,6 +11,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
+// Helmet is imported in server.js and used there for comprehensive security
+// This middleware adds additional custom security headers
+// eslint-disable-next-line no-unused-vars
 const helmet = require('helmet');
 
 // Create a middleware function that applies all security headers

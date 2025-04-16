@@ -45,12 +45,14 @@ const createLimiter = (windowMs, max, message = 'Too many requests, please try a
 /**
  * Create a user-based rate limiter
  * Uses user ID for authenticated users and IP for unauthenticated users
+ * This function is defined for future use but not currently used in the application
  * @param {number} windowMs - Time window in milliseconds
  * @param {number} maxAnonymous - Maximum requests for anonymous users
  * @param {number} maxAuthenticated - Maximum requests for authenticated users
  * @param {string} message - Error message to return
  * @returns {Function} Express middleware
  */
+// eslint-disable-next-line no-unused-vars
 const createUserLimiter = (
   windowMs,
   maxAnonymous,

@@ -8,7 +8,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 const environment = require('./environment');
-const database = require('./database');
 
 // Export environment directly to maintain compatibility with existing code
+// Database configuration is imported directly where needed
 module.exports = environment;

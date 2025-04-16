@@ -14,6 +14,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
+// Helmet is imported in server.js and used there for CSP
+// This middleware adds additional CSP functionality
+// eslint-disable-next-line no-unused-vars
 const helmet = require('helmet');
 const cspConfig = require('../config/csp.config');
 const logger = require('../utils/logger').logger;

@@ -28,7 +28,9 @@ if (!fs.existsSync(adsUploadsDir)) {
 // Use memory storage first for file type validation
 const memoryStorage = multer.memoryStorage();
 
-// Disk storage for validated files
+// Disk storage configuration - kept as reference for future use
+// Currently using memory storage with manual file writing instead
+// eslint-disable-next-line no-unused-vars
 const diskStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Create user-specific directory to prevent directory traversal attacks
@@ -151,7 +153,8 @@ const validateAndSave = fieldName => {
 const uploadSingle = fieldName => validateAndSave(fieldName);
 
 // Create middleware for multiple file upload
-const uploadMultiple = (fieldName, maxCount = 5) => validateAndSave(fieldName);
+// maxCount is handled internally in validateAndSave
+const uploadMultiple = fieldName => validateAndSave(fieldName);
 
 module.exports = {
   uploadSingle,

@@ -42,7 +42,7 @@ exports.validateItineraryData = [
     .withMessage('Arrival date is required')
     .isISO8601()
     .withMessage('Arrival date must be a valid date')
-    .custom((value, { req }) => {
+    .custom(value => {
       const arrivalDate = new Date(value);
       return arrivalDate >= new Date();
     })

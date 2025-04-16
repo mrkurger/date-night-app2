@@ -77,9 +77,18 @@ class AdService {
     }
   }
 
+  /**
+   * Record a user's swipe action on an ad
+   * This is a stub implementation for future feature development
+   * @param {Object} swipeData - Data about the swipe action
+   * @returns {boolean} Success indicator
+   */
   async recordSwipe(swipeData) {
     try {
+      // These parameters will be used in the full implementation
+      // eslint-disable-next-line no-unused-vars
       const { adId, direction, userId } = swipeData;
+      // TODO: Implement swipe recording logic
       return true;
     } catch (error) {
       throw new Error('Error recording swipe: ' + error.message);

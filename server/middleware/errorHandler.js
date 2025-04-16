@@ -134,8 +134,13 @@ const sendErrorProd = (err, req, res) => {
 
 /**
  * Global error handling middleware
+ * @param {Error} err - The error object
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @param {Function} _next - Express next function (not used as this is the final handler)
  */
-module.exports = (err, req, res, next) => {
+// eslint-disable-next-line no-unused-vars
+module.exports = (err, req, res, _next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 

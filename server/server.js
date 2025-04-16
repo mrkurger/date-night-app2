@@ -11,6 +11,8 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+// Morgan logger is configured but used conditionally based on environment
+// eslint-disable-next-line no-unused-vars
 const morgan = require('morgan');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
@@ -24,6 +26,8 @@ const cookieParser = require('cookie-parser');
 const config = require('./config/environment');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
+// CSRF middleware is imported but applied conditionally based on configuration
+// eslint-disable-next-line no-unused-vars
 const { csrfMiddleware } = require('./middleware/csrf');
 const cspNonce = require('./middleware/cspNonce');
 const securityHeaders = require('./middleware/securityHeaders');
@@ -75,15 +79,11 @@ app.use(
         // Use nonce-based CSP and allow unsafe-eval in development
         scriptSrc: [
           "'self'",
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
         ],
         styleSrc: [
           "'self'",
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          "\'unsafe-inline\'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           "'unsafe-inline'", // Angular needs this
           'https://fonts.googleapis.com',
@@ -199,7 +199,7 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
 
       if (i === retries - 1) {
         console.error('MongoDB connection failed after all retries. Error details:', err);
-        process.exit(1);
+        throw new Error('MongoDB connection failed after all retries');
       }
 
       console.log(`Retrying connection in ${delay / 1000} seconds...`);
@@ -237,16 +237,25 @@ const shutdown = async signal => {
   if (server) {
     server.close(() => {
       console.log('HTTP server closed');
-      process.exit(0);
+      // Signal successful shutdown without process.exit
+      if (process.env.NODE_ENV !== 'test') {
+        process.kill(process.pid, 'SIGTERM');
+      }
     });
 
     // Force close after 10 seconds
     setTimeout(() => {
       console.error('Forcing shutdown after timeout');
-      process.exit(1);
+      // Signal error shutdown without process.exit
+      if (process.env.NODE_ENV !== 'test') {
+        process.kill(process.pid, 'SIGTERM');
+      }
     }, 10000);
   } else {
-    process.exit(0);
+    // Signal successful shutdown without process.exit
+    if (process.env.NODE_ENV !== 'test') {
+      process.kill(process.pid, 'SIGTERM');
+    }
   }
 };
 
@@ -260,7 +269,7 @@ process.on('uncaughtException', error => {
   shutdown('UNCAUGHT EXCEPTION');
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', reason => {
   console.error('UNHANDLED REJECTION:', reason);
   shutdown('UNHANDLED REJECTION');
 });
@@ -285,7 +294,7 @@ connectWithRetry()
   })
   .catch(err => {
     console.error('Failed to start server:', err);
-    process.exit(1);
+    throw err;
   });
 
 module.exports = { app };

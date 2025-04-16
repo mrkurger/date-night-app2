@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { User } = require('../models');
+const User = require('../models/user.model');
 
 async function normalizeProfile(profile, provider) {
   let username, email;

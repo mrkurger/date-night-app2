@@ -555,6 +555,8 @@ class WalletService {
       // Calculate fee
       const feePercentage = WITHDRAWAL_FEE_PERCENTAGE;
       const feeAmount = Math.round(amount * (feePercentage / 100));
+      // Net amount will be used in future implementation for receipt generation
+      // eslint-disable-next-line no-unused-vars
       const netAmount = amount - feeAmount;
 
       // Create a transaction record

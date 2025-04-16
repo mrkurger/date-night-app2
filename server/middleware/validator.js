@@ -307,7 +307,7 @@ const travelPlanValidation = [
   body('arrivalDate')
     .isISO8601()
     .withMessage('Arrival date must be a valid date')
-    .custom((value, { req }) => {
+    .custom(value => {
       const arrivalDate = new Date(value);
       const now = new Date();
       if (arrivalDate < now) {

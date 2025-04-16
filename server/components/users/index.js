@@ -1,4 +1,4 @@
-// Export the User model for easier imports
+// Export user component parts for easier imports
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,9 +8,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const User = require('../../models/user.model');
 
 module.exports = {
   routes: require('./user.routes'),
   controller: require('./user.controller'),
+  model: require('../../models/user.model'), // Export the model directly if needed
 };
