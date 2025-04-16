@@ -76,9 +76,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     PageHeaderComponent,
     SkeletonLoaderComponent,
     ToggleComponent,
-    CardGridComponent,
     PagerComponent,
-    FloatingActionButtonComponent,
   ],
 })
 export class EmeraldModule {}

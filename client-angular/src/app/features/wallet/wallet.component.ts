@@ -159,7 +159,7 @@ export class WalletComponent implements OnInit {
   displayedColumns: string[] = ['date', 'type', 'amount', 'status', 'actions'];
 
   constructor(
-    private walletService: WalletService,
+    public walletService: WalletService,
     private paymentService: PaymentService,
     private notificationService: NotificationService,
     private authService: AuthService,

@@ -9,7 +9,15 @@
 // - GRID_COLUMNS: Number of columns in the grid (default: responsive)
 //   Related to: card-grid.component.scss
 // ===================================================
-import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ContentChild,
+  TemplateRef,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../../../core/models/ad.interface';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
@@ -29,6 +37,7 @@ import { AppCardComponent } from '../app-card/app-card.component';
   styleUrls: ['./card-grid.component.scss'],
   standalone: true,
   imports: [CommonModule, SkeletonLoaderComponent, AppCardComponent],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class CardGridComponent {
   /**
@@ -128,8 +137,8 @@ export class CardGridComponent {
   /**
    * Card layout for emerald-app-card
    */
-  get cardLayout(): string {
-    return this.layout === 'netflix' ? 'netflix' : 'default';
+  get cardLayout(): 'netflix' | 'tinder' | 'list' {
+    return this.layout === 'netflix' ? 'netflix' : 'list';
   }
 
   /**

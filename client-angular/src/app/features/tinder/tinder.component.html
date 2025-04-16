@@ -138,7 +138,7 @@
                 label="Show only touring profiles"
                 labelPosition="right"
                 color="primary"
-                [formControl]="filterForm.get('touringOnly')"
+                [formControl]="filterForm.get('touringOnly') as any"
               >
               </emerald-toggle>
             </div>

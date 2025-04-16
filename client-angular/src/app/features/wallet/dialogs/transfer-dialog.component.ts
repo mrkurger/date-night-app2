@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable, of, debounceTime, switchMap, catchError } from 'rxjs';
+import { Observable, of, debounceTime, switchMap, catchError, map } from 'rxjs';
 
 import { WalletService, WalletBalance } from '../../../core/services/wallet.service';
 import { UserService } from '../../../core/services/user.service';
@@ -300,6 +300,25 @@ export class TransferDialogComponent implements OnInit {
    */
   searchUsers(query: string): Observable<UserSearchResult[]> {
     return this.userService.searchUsers(query).pipe(
+      map(results => {
+        // Ensure the results are of type UserSearchResult[]
+        if (Array.isArray(results)) {
+          return results.map(user => {
+            if ('displayName' in user) {
+              return user as UserSearchResult;
+            } else {
+              // Convert User to UserSearchResult if needed
+              return {
+                id: user.id,
+                username: user.username,
+                displayName: `${user.firstName} ${user.lastName}`.trim() || user.username,
+                avatarUrl: user.avatarUrl,
+              } as UserSearchResult;
+            }
+          });
+        }
+        return [] as UserSearchResult[];
+      }),
       catchError(error => {
         console.error('Error searching users:', error);
         return of([]);
