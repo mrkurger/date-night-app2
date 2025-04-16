@@ -79,6 +79,12 @@
               <span>Favorites</span>
             </a>
           </li>
+          <li class="nav-item" *ngIf="isAuthenticated">
+            <a class="nav-link" routerLink="/location-matching" routerLinkActive="active">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+              <span>Location Matching</span>
+            </a>
+          </li>
         </ul>
 
         <!-- User Account Navigation -->

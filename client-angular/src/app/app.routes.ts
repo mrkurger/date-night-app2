@@ -31,6 +31,14 @@ export const routes: Routes = [
       import('./features/ad-details/ad-details.module').then(m => m.AdDetailsModule),
   },
   {
+    path: 'reviews/:id',
+    loadComponent: () =>
+      import('./features/reviews/reviews-page/reviews-page.component').then(
+        m => m.ReviewsPageComponent
+      ),
+    data: { title: 'Reviews' },
+  },
+  {
     path: 'advertiser/:id',
     loadComponent: () =>
       import('./features/advertiser-profile/advertiser-profile.component').then(
@@ -66,6 +74,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/gallery/gallery.component').then(m => m.GalleryComponent),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'location-matching',
+    loadComponent: () =>
+      import('./features/location-matching/location-matching.component').then(
+        m => m.LocationMatchingComponent
+      ),
+    canActivate: [AuthGuard],
+    data: { title: 'Location-Based Matching' },
   },
 
   // View-specific routes

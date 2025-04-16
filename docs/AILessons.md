@@ -29,6 +29,7 @@ This document contains lessons learned by the AI while working on the Date Night
 - [Security Best Practices](#security-best-practices)
   - [Dependency Management](#dependency-management)
   - [GitHub Actions Security](#github-actions-security)
+  - [CI/CD and Git Hooks](#cicd-and-git-hooks)
   - [Package Overrides](#package-overrides)
 - [Error Handling and Telemetry](#error-handling-and-telemetry)
   - [HTTP Error Interceptor Pattern](#http-error-interceptor-pattern)
