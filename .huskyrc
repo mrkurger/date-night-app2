@@ -1,0 +1,5 @@
+#!/bin/sh
+# Skip husky hooks in CI environments
+if [ -n "$CI" ]; then
+  exit 0
+fi

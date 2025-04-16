@@ -18,6 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download Angular Test Artifacts
         uses: dawidd6/action-download-artifact@v6
@@ -68,18 +71,60 @@ jobs:
             echo "# Latest Test Results\n\nNo test results available yet." > docs/latest-test-results.md
           fi
 
-      - name: Commit Reports
+      - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
+      - name: Fetch latest changes
+        run: |
+          # Fetch the latest changes from the remote repository
+          git fetch origin main
+
+      - name: Check for conflicts
+        id: check_conflicts
+        run: |
+          # Check if there are any conflicts between local and remote
+          if git merge-tree $(git merge-base HEAD origin/main) HEAD origin/main | grep -e "^<<<<<<< ";
+          then
+            echo "has_conflicts=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_conflicts=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Handle non-conflicting changes
+        if: steps.check_conflicts.outputs.has_conflicts == 'false'
+        run: |
+          # Pull the latest changes with rebase strategy
+          git pull --rebase origin main
+
+          git add docs/test-reports || true
+          git add docs/latest-test-results.md || true
+          git commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Handle conflicting changes
+        if: steps.check_conflicts.outputs.has_conflicts == 'true'
+        run: |
+          # Create a new branch for our changes
+          BRANCH_NAME="test-reports-update-$(date +%Y%m%d%H%M%S)"
+          git checkout -b $BRANCH_NAME
+
           git add docs/test-reports || true
           git add docs/latest-test-results.md || true
           git commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"
 
-          # Use PAT for push if available, otherwise use GITHUB_TOKEN
-          if [ -n "$WORKFLOW_TOKEN" ]; then
-            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          # Only push if there were changes to commit
+          if [ $? -eq 0 ]; then
+            git push --set-upstream origin $BRANCH_NAME
+            
+            # Create a pull request
+            gh pr create --title "Update test reports" \
+                         --body "This PR contains updated test reports that had conflicts with the main branch." \
+                         --base main \
+                         --head $BRANCH_NAME
           fi
-          git push
         env:
-          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
