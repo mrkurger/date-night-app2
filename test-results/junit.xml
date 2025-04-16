@@ -1,320 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="268" failures="0" errors="0" time="8.789">
-  <testsuite name="API Performance Tests" errors="0" failures="0" skipped="1" timestamp="2025-04-16T13:37:23" time="1.256" tests="5">
-    <testcase classname="API Performance Tests Authentication Performance should login within performance threshold" name="API Performance Tests Authentication Performance should login within performance threshold" time="0.02">
-    </testcase>
-    <testcase classname="API Performance Tests Authentication Performance should handle sequential login requests efficiently" name="API Performance Tests Authentication Performance should handle sequential login requests efficiently" time="0.044">
-    </testcase>
-    <testcase classname="API Performance Tests User Profile Performance should fetch user profile within performance threshold" name="API Performance Tests User Profile Performance should fetch user profile within performance threshold" time="0.005">
-    </testcase>
-    <testcase classname="API Performance Tests Search Performance should perform search within performance threshold" name="API Performance Tests Search Performance should perform search within performance threshold" time="0.004">
-    </testcase>
-    <testcase classname="API Performance Tests Load Testing should handle concurrent requests efficiently" name="API Performance Tests Load Testing should handle concurrent requests efficiently" time="0">
-      <skipped/>
-    </testcase>
-  </testsuite>
-  <testsuite name="Ad Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="2.645" tests="19">
-    <testcase classname="Ad Model Basic Ad Creation should create a new ad successfully" name="Ad Model Basic Ad Creation should create a new ad successfully" time="0.066">
-    </testcase>
-    <testcase classname="Ad Model Basic Ad Creation should require title, description, advertiser, category, county, city, location, and profileImage" name="Ad Model Basic Ad Creation should require title, description, advertiser, category, county, city, location, and profileImage" time="0.062">
-    </testcase>
-    <testcase classname="Ad Model Basic Ad Creation should validate category enum values" name="Ad Model Basic Ad Creation should validate category enum values" time="0.074">
-    </testcase>
-    <testcase classname="Ad Model Basic Ad Creation should set expiresAt to 30 days from creation if not provided" name="Ad Model Basic Ad Creation should set expiresAt to 30 days from creation if not provided" time="0.084">
-    </testcase>
-    <testcase classname="Ad Model Ad Methods should check if ad is expired" name="Ad Model Ad Methods should check if ad is expired" time="0.081">
-    </testcase>
-    <testcase classname="Ad Model Ad Methods should check if ad is boosted" name="Ad Model Ad Methods should check if ad is boosted" time="0.075">
-    </testcase>
-    <testcase classname="Ad Model Ad Methods should increment view count" name="Ad Model Ad Methods should increment view count" time="0.069">
-    </testcase>
-    <testcase classname="Ad Model Ad Methods should increment click count" name="Ad Model Ad Methods should increment click count" time="0.066">
-    </testcase>
-    <testcase classname="Ad Model Ad Methods should toggle like" name="Ad Model Ad Methods should toggle like" time="0.064">
-    </testcase>
-    <testcase classname="Ad Model Ad Static Methods should find active ads" name="Ad Model Ad Static Methods should find active ads" time="0.102">
-    </testcase>
-    <testcase classname="Ad Model Ad Static Methods should find featured ads" name="Ad Model Ad Static Methods should find featured ads" time="0.074">
-    </testcase>
-    <testcase classname="Ad Model Ad Static Methods should find touring ads" name="Ad Model Ad Static Methods should find touring ads" time="0.084">
-    </testcase>
-    <testcase classname="Ad Model Ad Static Methods should find upcoming tours" name="Ad Model Ad Static Methods should find upcoming tours" time="0.074">
-    </testcase>
-    <testcase classname="Ad Model Ad Static Methods should find upcoming tours for a specific city" name="Ad Model Ad Static Methods should find upcoming tours for a specific city" time="0.082">
-    </testcase>
-    <testcase classname="Ad Model Travel Itinerary Methods should add a travel itinerary" name="Ad Model Travel Itinerary Methods should add a travel itinerary" time="0.064">
-    </testcase>
-    <testcase classname="Ad Model Travel Itinerary Methods should update a travel itinerary" name="Ad Model Travel Itinerary Methods should update a travel itinerary" time="0.068">
-    </testcase>
-    <testcase classname="Ad Model Travel Itinerary Methods should cancel a travel itinerary" name="Ad Model Travel Itinerary Methods should cancel a travel itinerary" time="0.065">
-    </testcase>
-    <testcase classname="Ad Model Travel Itinerary Methods should throw an error when updating a non-existent itinerary" name="Ad Model Travel Itinerary Methods should throw an error when updating a non-existent itinerary" time="0.076">
-    </testcase>
-    <testcase classname="Ad Model Travel Itinerary Methods should throw an error when cancelling a non-existent itinerary" name="Ad Model Travel Itinerary Methods should throw an error when cancelling a non-existent itinerary" time="0.065">
-    </testcase>
-  </testsuite>
-  <testsuite name="Wallet Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:25" time="1.556" tests="18">
-    <testcase classname="Wallet Model Basic Wallet Creation should create a new wallet successfully" name="Wallet Model Basic Wallet Creation should create a new wallet successfully" time="0.082">
-    </testcase>
-    <testcase classname="Wallet Model Basic Wallet Creation should require userId" name="Wallet Model Basic Wallet Creation should require userId" time="0.064">
-    </testcase>
-    <testcase classname="Wallet Model Basic Wallet Creation should enforce unique userId" name="Wallet Model Basic Wallet Creation should enforce unique userId" time="0.076">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should get balance for a specific currency" name="Wallet Model Balance Methods should get balance for a specific currency" time="0.058">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should return zero balance for non-existent currency" name="Wallet Model Balance Methods should return zero balance for non-existent currency" time="0.068">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should update available balance" name="Wallet Model Balance Methods should update available balance" time="0.068">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should update pending balance" name="Wallet Model Balance Methods should update pending balance" time="0.067">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should update reserved balance" name="Wallet Model Balance Methods should update reserved balance" time="0.063">
-    </testcase>
-    <testcase classname="Wallet Model Balance Methods should create new balance for non-existent currency" name="Wallet Model Balance Methods should create new balance for non-existent currency" time="0.069">
-    </testcase>
-    <testcase classname="Wallet Model Transaction Methods should add a transaction" name="Wallet Model Transaction Methods should add a transaction" time="0.066">
-    </testcase>
-    <testcase classname="Wallet Model Transaction Methods should add multiple transactions" name="Wallet Model Transaction Methods should add multiple transactions" time="0.064">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should add a payment method" name="Wallet Model Payment Method Methods should add a payment method" time="0.064">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should add multiple payment methods" name="Wallet Model Payment Method Methods should add multiple payment methods" time="0.067">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should handle default payment methods of the same type" name="Wallet Model Payment Method Methods should handle default payment methods of the same type" time="0.071">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should remove a payment method" name="Wallet Model Payment Method Methods should remove a payment method" time="0.073">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should get default payment method for a specific type" name="Wallet Model Payment Method Methods should get default payment method for a specific type" time="0.072">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should set a payment method as default" name="Wallet Model Payment Method Methods should set a payment method as default" time="0.07">
-    </testcase>
-    <testcase classname="Wallet Model Payment Method Methods should throw error when setting non-existent payment method as default" name="Wallet Model Payment Method Methods should throw error when setting non-existent payment method as default" time="0.06">
-    </testcase>
-  </testsuite>
-  <testsuite name="Auth Controller" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="3.186" tests="29">
-    <testcase classname="Auth Controller POST /api/v1/auth/register should register a new user successfully" name="Auth Controller POST /api/v1/auth/register should register a new user successfully" time="0.074">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" time="0.063">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" time="0.081">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" name="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" time="0.068">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" name="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" name="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" time="0.064">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" name="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" time="0.069">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" name="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" time="0.069">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" time="0.063">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" name="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" time="0.067">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" name="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should validate token successfully" name="Auth Controller GET /api/v1/auth/validate should validate token successfully" time="0.055">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" time="0.067">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" name="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" time="0.069">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" name="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" time="0.065">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" name="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" time="0.059">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" name="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" time="0.065">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" name="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" time="0.059">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" name="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" time="0.064">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should change password successfully" name="Auth Controller PUT /api/v1/auth/change-password should change password successfully" time="0.077">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" time="0.078">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" name="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" time="0.088">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" time="0.066">
-    </testcase>
-  </testsuite>
-  <testsuite name="Auth Controller" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="3.191" tests="29">
-    <testcase classname="Auth Controller POST /api/v1/auth/register should register a new user successfully" name="Auth Controller POST /api/v1/auth/register should register a new user successfully" time="0.084">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" time="0.074">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" time="0.096">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" time="0.063">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" name="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" name="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" time="0.064">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" name="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" name="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" time="0.071">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" name="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" time="0.071">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" time="0.064">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" name="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" name="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" time="0.062">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should validate token successfully" name="Auth Controller GET /api/v1/auth/validate should validate token successfully" time="0.059">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" time="0.062">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" name="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" name="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" time="0.063">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" name="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" name="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" time="0.057">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" name="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" time="0.06">
-    </testcase>
-    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" name="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" time="0.061">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should change password successfully" name="Auth Controller PUT /api/v1/auth/change-password should change password successfully" time="0.077">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" time="0.068">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" name="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" time="0.058">
-    </testcase>
-    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" time="0.059">
-    </testcase>
-  </testsuite>
-  <testsuite name="Wallet Service" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:26" time="0.514" tests="38">
-    <testcase classname="Wallet Service getOrCreateWallet should return an existing wallet" name="Wallet Service getOrCreateWallet should return an existing wallet" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getOrCreateWallet should create a new wallet if one does not exist" name="Wallet Service getOrCreateWallet should create a new wallet if one does not exist" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getOrCreateWallet should throw an error if user is not found" name="Wallet Service getOrCreateWallet should throw an error if user is not found" time="0.033">
-    </testcase>
-    <testcase classname="Wallet Service getWalletBalance should return all balances if no currency is specified" name="Wallet Service getWalletBalance should return all balances if no currency is specified" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getWalletBalance should return balance for a specific currency" name="Wallet Service getWalletBalance should return balance for a specific currency" time="0">
-    </testcase>
-    <testcase classname="Wallet Service getWalletBalance should return zero balance for a non-existent currency" name="Wallet Service getWalletBalance should return zero balance for a non-existent currency" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should return all transactions with pagination" name="Wallet Service getWalletTransactions should return all transactions with pagination" time="0.003">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should filter transactions by type" name="Wallet Service getWalletTransactions should filter transactions by type" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should filter transactions by status" name="Wallet Service getWalletTransactions should filter transactions by status" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should filter transactions by currency" name="Wallet Service getWalletTransactions should filter transactions by currency" time="0">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should filter transactions by date range" name="Wallet Service getWalletTransactions should filter transactions by date range" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service getWalletTransactions should handle pagination correctly" name="Wallet Service getWalletTransactions should handle pagination correctly" time="0.002">
-    </testcase>
-    <testcase classname="Wallet Service getWalletPaymentMethods should return all payment methods" name="Wallet Service getWalletPaymentMethods should return all payment methods" time="0">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should add a card payment method" name="Wallet Service addPaymentMethod should add a card payment method" time="0">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should add a bank account payment method" name="Wallet Service addPaymentMethod should add a bank account payment method" time="0">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should add a crypto address payment method" name="Wallet Service addPaymentMethod should add a crypto address payment method" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method type is missing" name="Wallet Service addPaymentMethod should throw an error if payment method type is missing" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method provider is missing" name="Wallet Service addPaymentMethod should throw an error if payment method provider is missing" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if card details are missing for card payment method" name="Wallet Service addPaymentMethod should throw an error if card details are missing for card payment method" time="0.002">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if bank details are missing for bank account payment method" name="Wallet Service addPaymentMethod should throw an error if bank details are missing for bank account payment method" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if crypto details are missing for crypto address payment method" name="Wallet Service addPaymentMethod should throw an error if crypto details are missing for crypto address payment method" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if cryptocurrency is not supported" name="Wallet Service addPaymentMethod should throw an error if cryptocurrency is not supported" time="0.002">
-    </testcase>
-    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method type is not supported" name="Wallet Service addPaymentMethod should throw an error if payment method type is not supported" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service removePaymentMethod should remove a payment method" name="Wallet Service removePaymentMethod should remove a payment method" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service removePaymentMethod should throw an error if payment method is not found" name="Wallet Service removePaymentMethod should throw an error if payment method is not found" time="0.016">
-    </testcase>
-    <testcase classname="Wallet Service setDefaultPaymentMethod should set a payment method as default" name="Wallet Service setDefaultPaymentMethod should set a payment method as default" time="0">
-    </testcase>
-    <testcase classname="Wallet Service setDefaultPaymentMethod should throw an error if payment method is not found" name="Wallet Service setDefaultPaymentMethod should throw an error if payment method is not found" time="0.013">
-    </testcase>
-    <testcase classname="Wallet Service depositFundsWithStripe should deposit funds with Stripe" name="Wallet Service depositFundsWithStripe should deposit funds with Stripe" time="0.007">
-    </testcase>
-    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if amount is invalid" name="Wallet Service depositFundsWithStripe should throw an error if amount is invalid" time="0.003">
-    </testcase>
-    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if currency is not supported" name="Wallet Service depositFundsWithStripe should throw an error if currency is not supported" time="0.005">
-    </testcase>
-    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if payment method ID is missing" name="Wallet Service depositFundsWithStripe should throw an error if payment method ID is missing" time="0.004">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should withdraw funds from wallet" name="Wallet Service withdrawFunds should withdraw funds from wallet" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if amount is invalid" name="Wallet Service withdrawFunds should throw an error if amount is invalid" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if amount is below minimum withdrawal" name="Wallet Service withdrawFunds should throw an error if amount is below minimum withdrawal" time="0.002">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if currency is not supported" name="Wallet Service withdrawFunds should throw an error if currency is not supported" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if payment method ID is missing" name="Wallet Service withdrawFunds should throw an error if payment method ID is missing" time="0">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if payment method is not found" name="Wallet Service withdrawFunds should throw an error if payment method is not found" time="0.001">
-    </testcase>
-    <testcase classname="Wallet Service withdrawFunds should throw an error if wallet has insufficient balance" name="Wallet Service withdrawFunds should throw an error if wallet has insufficient balance" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="AuthService" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:27" time="0.158" tests="9">
-    <testcase classname="AuthService authenticate should generate tokens for valid credentials" name="AuthService authenticate should generate tokens for valid credentials" time="0.003">
-    </testcase>
-    <testcase classname="AuthService authenticate should throw error for invalid username" name="AuthService authenticate should throw error for invalid username" time="0.012">
-    </testcase>
-    <testcase classname="AuthService authenticate should throw error for invalid password" name="AuthService authenticate should throw error for invalid password" time="0">
-    </testcase>
-    <testcase classname="AuthService register should register a new user successfully" name="AuthService register should register a new user successfully" time="0.001">
-    </testcase>
-    <testcase classname="AuthService register should throw error if username already exists" name="AuthService register should throw error if username already exists" time="0">
-    </testcase>
-    <testcase classname="AuthService register should throw error if email already exists" name="AuthService register should throw error if email already exists" time="0.006">
-    </testcase>
-    <testcase classname="AuthService refreshToken should generate new access token with valid refresh token" name="AuthService refreshToken should generate new access token with valid refresh token" time="0.002">
-    </testcase>
-    <testcase classname="AuthService refreshToken should throw error with invalid refresh token" name="AuthService refreshToken should throw error with invalid refresh token" time="0.001">
-    </testcase>
-    <testcase classname="AuthService refreshToken should throw error if user not found" name="AuthService refreshToken should throw error if user not found" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="API Performance Tests" errors="0" failures="0" skipped="1" timestamp="2025-04-16T13:37:26" time="0.321" tests="5">
-    <testcase classname="API Performance Tests Authentication Performance should login within performance threshold" name="API Performance Tests Authentication Performance should login within performance threshold" time="0.008">
+<testsuites name="jest tests" tests="268" failures="0" errors="0" time="8.626">
+  <testsuite name="API Performance Tests" errors="0" failures="0" skipped="1" timestamp="2025-04-16T13:49:58" time="1.252" tests="5">
+    <testcase classname="API Performance Tests Authentication Performance should login within performance threshold" name="API Performance Tests Authentication Performance should login within performance threshold" time="0.027">
     </testcase>
     <testcase classname="API Performance Tests Authentication Performance should handle sequential login requests efficiently" name="API Performance Tests Authentication Performance should handle sequential login requests efficiently" time="0.019">
     </testcase>
-    <testcase classname="API Performance Tests User Profile Performance should fetch user profile within performance threshold" name="API Performance Tests User Profile Performance should fetch user profile within performance threshold" time="0.004">
+    <testcase classname="API Performance Tests User Profile Performance should fetch user profile within performance threshold" name="API Performance Tests User Profile Performance should fetch user profile within performance threshold" time="0.002">
     </testcase>
     <testcase classname="API Performance Tests Search Performance should perform search within performance threshold" name="API Performance Tests Search Performance should perform search within performance threshold" time="0.005">
     </testcase>
@@ -322,80 +13,323 @@
       <skipped/>
     </testcase>
   </testsuite>
-  <testsuite name="Auth Middleware" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:26" time="0.417" tests="18">
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if no token is provided" name="Auth Middleware authenticate middleware should return 401 if no token is provided" time="0.001">
+  <testsuite name="Ad Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="2.668" tests="19">
+    <testcase classname="Ad Model Basic Ad Creation should create a new ad successfully" name="Ad Model Basic Ad Creation should create a new ad successfully" time="0.083">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should authenticate user with token in Authorization header" name="Auth Middleware authenticate middleware should authenticate user with token in Authorization header" time="0.002">
+    <testcase classname="Ad Model Basic Ad Creation should require title, description, advertiser, category, county, city, location, and profileImage" name="Ad Model Basic Ad Creation should require title, description, advertiser, category, county, city, location, and profileImage" time="0.068">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should authenticate user with token in cookie" name="Auth Middleware authenticate middleware should authenticate user with token in cookie" time="0.001">
+    <testcase classname="Ad Model Basic Ad Creation should validate category enum values" name="Ad Model Basic Ad Creation should validate category enum values" time="0.069">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is blacklisted" name="Auth Middleware authenticate middleware should return 401 if token is blacklisted" time="0.002">
+    <testcase classname="Ad Model Basic Ad Creation should set expiresAt to 30 days from creation if not provided" name="Ad Model Basic Ad Creation should set expiresAt to 30 days from creation if not provided" time="0.066">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if user is not found" name="Auth Middleware authenticate middleware should return 401 if user is not found" time="0.008">
+    <testcase classname="Ad Model Ad Methods should check if ad is expired" name="Ad Model Ad Methods should check if ad is expired" time="0.079">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if user account is locked" name="Auth Middleware authenticate middleware should return 401 if user account is locked" time="0.017">
+    <testcase classname="Ad Model Ad Methods should check if ad is boosted" name="Ad Model Ad Methods should check if ad is boosted" time="0.069">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if password was changed after token issuance" name="Auth Middleware authenticate middleware should return 401 if password was changed after token issuance" time="0.001">
+    <testcase classname="Ad Model Ad Methods should increment view count" name="Ad Model Ad Methods should increment view count" time="0.072">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is expired" name="Auth Middleware authenticate middleware should return 401 if token is expired" time="0.001">
+    <testcase classname="Ad Model Ad Methods should increment click count" name="Ad Model Ad Methods should increment click count" time="0.062">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is invalid" name="Auth Middleware authenticate middleware should return 401 if token is invalid" time="0.001">
+    <testcase classname="Ad Model Ad Methods should toggle like" name="Ad Model Ad Methods should toggle like" time="0.062">
     </testcase>
-    <testcase classname="Auth Middleware authenticate middleware should return 500 for other errors" name="Auth Middleware authenticate middleware should return 500 for other errors" time="0.001">
+    <testcase classname="Ad Model Ad Static Methods should find active ads" name="Ad Model Ad Static Methods should find active ads" time="0.084">
     </testcase>
-    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if no token is provided" name="Auth Middleware optionalAuth middleware should continue without authentication if no token is provided" time="0.001">
+    <testcase classname="Ad Model Ad Static Methods should find featured ads" name="Ad Model Ad Static Methods should find featured ads" time="0.081">
     </testcase>
-    <testcase classname="Auth Middleware optionalAuth middleware should authenticate user if valid token is provided" name="Auth Middleware optionalAuth middleware should authenticate user if valid token is provided" time="0">
+    <testcase classname="Ad Model Ad Static Methods should find touring ads" name="Ad Model Ad Static Methods should find touring ads" time="0.079">
     </testcase>
-    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if token is blacklisted" name="Auth Middleware optionalAuth middleware should continue without authentication if token is blacklisted" time="0.001">
+    <testcase classname="Ad Model Ad Static Methods should find upcoming tours" name="Ad Model Ad Static Methods should find upcoming tours" time="0.074">
     </testcase>
-    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if token verification fails" name="Auth Middleware optionalAuth middleware should continue without authentication if token verification fails" time="0">
+    <testcase classname="Ad Model Ad Static Methods should find upcoming tours for a specific city" name="Ad Model Ad Static Methods should find upcoming tours for a specific city" time="0.076">
     </testcase>
-    <testcase classname="Auth Middleware restrictTo middleware should return 401 if user is not authenticated" name="Auth Middleware restrictTo middleware should return 401 if user is not authenticated" time="0">
+    <testcase classname="Ad Model Travel Itinerary Methods should add a travel itinerary" name="Ad Model Travel Itinerary Methods should add a travel itinerary" time="0.068">
     </testcase>
-    <testcase classname="Auth Middleware restrictTo middleware should return 403 if user does not have required role" name="Auth Middleware restrictTo middleware should return 403 if user does not have required role" time="0">
+    <testcase classname="Ad Model Travel Itinerary Methods should update a travel itinerary" name="Ad Model Travel Itinerary Methods should update a travel itinerary" time="0.07">
     </testcase>
-    <testcase classname="Auth Middleware restrictTo middleware should call next if user has required role" name="Auth Middleware restrictTo middleware should call next if user has required role" time="0.001">
+    <testcase classname="Ad Model Travel Itinerary Methods should cancel a travel itinerary" name="Ad Model Travel Itinerary Methods should cancel a travel itinerary" time="0.074">
     </testcase>
-    <testcase classname="Auth Middleware restrictTo middleware should call next if user has one of multiple required roles" name="Auth Middleware restrictTo middleware should call next if user has one of multiple required roles" time="0">
+    <testcase classname="Ad Model Travel Itinerary Methods should throw an error when updating a non-existent itinerary" name="Ad Model Travel Itinerary Methods should throw an error when updating a non-existent itinerary" time="0.082">
     </testcase>
-  </testsuite>
-  <testsuite name="Security Middleware" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:27" time="0.122" tests="3">
-    <testcase classname="Security Middleware Security Headers Middleware should set security headers correctly" name="Security Middleware Security Headers Middleware should set security headers correctly" time="0.005">
-    </testcase>
-    <testcase classname="Security Middleware CSP Middleware should set Content-Security-Policy header in development mode" name="Security Middleware CSP Middleware should set Content-Security-Policy header in development mode" time="0.005">
-    </testcase>
-    <testcase classname="Security Middleware CSP Middleware should set Content-Security-Policy header in production mode" name="Security Middleware CSP Middleware should set Content-Security-Policy header in production mode" time="0.005">
+    <testcase classname="Ad Model Travel Itinerary Methods should throw an error when cancelling a non-existent itinerary" name="Ad Model Travel Itinerary Methods should throw an error when cancelling a non-existent itinerary" time="0.063">
     </testcase>
   </testsuite>
-  <testsuite name="Auth Service" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:27" time="0.217" tests="22">
-    <testcase classname="Auth Service generateTokens should generate access and refresh tokens" name="Auth Service generateTokens should generate access and refresh tokens" time="0">
+  <testsuite name="Wallet Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:59" time="1.615" tests="18">
+    <testcase classname="Wallet Model Basic Wallet Creation should create a new wallet successfully" name="Wallet Model Basic Wallet Creation should create a new wallet successfully" time="0.075">
+    </testcase>
+    <testcase classname="Wallet Model Basic Wallet Creation should require userId" name="Wallet Model Basic Wallet Creation should require userId" time="0.065">
+    </testcase>
+    <testcase classname="Wallet Model Basic Wallet Creation should enforce unique userId" name="Wallet Model Basic Wallet Creation should enforce unique userId" time="0.074">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should get balance for a specific currency" name="Wallet Model Balance Methods should get balance for a specific currency" time="0.065">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should return zero balance for non-existent currency" name="Wallet Model Balance Methods should return zero balance for non-existent currency" time="0.067">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should update available balance" name="Wallet Model Balance Methods should update available balance" time="0.069">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should update pending balance" name="Wallet Model Balance Methods should update pending balance" time="0.067">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should update reserved balance" name="Wallet Model Balance Methods should update reserved balance" time="0.066">
+    </testcase>
+    <testcase classname="Wallet Model Balance Methods should create new balance for non-existent currency" name="Wallet Model Balance Methods should create new balance for non-existent currency" time="0.073">
+    </testcase>
+    <testcase classname="Wallet Model Transaction Methods should add a transaction" name="Wallet Model Transaction Methods should add a transaction" time="0.065">
+    </testcase>
+    <testcase classname="Wallet Model Transaction Methods should add multiple transactions" name="Wallet Model Transaction Methods should add multiple transactions" time="0.064">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should add a payment method" name="Wallet Model Payment Method Methods should add a payment method" time="0.065">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should add multiple payment methods" name="Wallet Model Payment Method Methods should add multiple payment methods" time="0.068">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should handle default payment methods of the same type" name="Wallet Model Payment Method Methods should handle default payment methods of the same type" time="0.063">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should remove a payment method" name="Wallet Model Payment Method Methods should remove a payment method" time="0.072">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should get default payment method for a specific type" name="Wallet Model Payment Method Methods should get default payment method for a specific type" time="0.067">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should set a payment method as default" name="Wallet Model Payment Method Methods should set a payment method as default" time="0.064">
+    </testcase>
+    <testcase classname="Wallet Model Payment Method Methods should throw error when setting non-existent payment method as default" name="Wallet Model Payment Method Methods should throw error when setting non-existent payment method as default" time="0.062">
+    </testcase>
+  </testsuite>
+  <testsuite name="Auth Controller" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="3.205" tests="29">
+    <testcase classname="Auth Controller POST /api/v1/auth/register should register a new user successfully" name="Auth Controller POST /api/v1/auth/register should register a new user successfully" time="0.092">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" time="0.078">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" time="0.065">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" time="0.074">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" name="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" time="0.064">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" name="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" time="0.065">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" name="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" time="0.059">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" time="0.065">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" name="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" name="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" time="0.071">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" time="0.061">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" time="0.064">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" time="0.067">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" name="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" name="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" time="0.057">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should validate token successfully" name="Auth Controller GET /api/v1/auth/validate should validate token successfully" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" time="0.058">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" name="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" name="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" time="0.066">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" name="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" name="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" name="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" name="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" time="0.067">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should change password successfully" name="Auth Controller PUT /api/v1/auth/change-password should change password successfully" time="0.068">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" time="0.059">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" name="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" time="0.058">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" time="0.065">
+    </testcase>
+  </testsuite>
+  <testsuite name="Auth Controller" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="3.21" tests="29">
+    <testcase classname="Auth Controller POST /api/v1/auth/register should register a new user successfully" name="Auth Controller POST /api/v1/auth/register should register a new user successfully" time="0.116">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/register should return 400 if required fields are missing" time="0.077">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if username already exists" time="0.069">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" name="Auth Controller POST /api/v1/auth/register should return 409 if email already exists" time="0.07">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" name="Auth Controller POST /api/v1/auth/login should login successfully with correct credentials" time="0.064">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" name="Auth Controller POST /api/v1/auth/login should return 401 with incorrect password" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" name="Auth Controller POST /api/v1/auth/login should return 404 with non-existent email" time="0.058">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" name="Auth Controller POST /api/v1/auth/login should return 400 if required fields are missing" time="0.065">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" name="Auth Controller POST /api/v1/auth/refresh-token should refresh token successfully with valid refresh token" time="0.067">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" name="Auth Controller POST /api/v1/auth/refresh-token should return 400 if refresh token is missing" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is invalid" time="0.061">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is expired" time="0.057">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" name="Auth Controller POST /api/v1/auth/refresh-token should return 401 if refresh token is blacklisted" time="0.061">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" name="Auth Controller POST /api/v1/auth/logout should logout successfully with valid token" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" name="Auth Controller POST /api/v1/auth/logout should return 401 if token is missing" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should validate token successfully" name="Auth Controller GET /api/v1/auth/validate should validate token successfully" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is missing" time="0.059">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is invalid" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" name="Auth Controller GET /api/v1/auth/validate should return 401 if token is expired" time="0.068">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" name="Auth Controller POST /api/v1/auth/forgot-password should send password reset email successfully" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" name="Auth Controller POST /api/v1/auth/forgot-password should return 400 if email is missing" time="0.059">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" name="Auth Controller POST /api/v1/auth/forgot-password should return 404 if user is not found" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" name="Auth Controller POST /api/v1/auth/reset-password should reset password successfully" time="0.06">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" name="Auth Controller POST /api/v1/auth/reset-password should return 400 if token or password is missing" time="0.063">
+    </testcase>
+    <testcase classname="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" name="Auth Controller POST /api/v1/auth/reset-password should return 401 if token is invalid" time="0.062">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should change password successfully" name="Auth Controller PUT /api/v1/auth/change-password should change password successfully" time="0.07">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if not authenticated" time="0.064">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" name="Auth Controller PUT /api/v1/auth/change-password should return 400 if current password or new password is missing" time="0.057">
+    </testcase>
+    <testcase classname="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" name="Auth Controller PUT /api/v1/auth/change-password should return 401 if current password is incorrect" time="0.066">
+    </testcase>
+  </testsuite>
+  <testsuite name="Wallet Service" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:00" time="0.496" tests="38">
+    <testcase classname="Wallet Service getOrCreateWallet should return an existing wallet" name="Wallet Service getOrCreateWallet should return an existing wallet" time="0.002">
+    </testcase>
+    <testcase classname="Wallet Service getOrCreateWallet should create a new wallet if one does not exist" name="Wallet Service getOrCreateWallet should create a new wallet if one does not exist" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service getOrCreateWallet should throw an error if user is not found" name="Wallet Service getOrCreateWallet should throw an error if user is not found" time="0.036">
+    </testcase>
+    <testcase classname="Wallet Service getWalletBalance should return all balances if no currency is specified" name="Wallet Service getWalletBalance should return all balances if no currency is specified" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service getWalletBalance should return balance for a specific currency" name="Wallet Service getWalletBalance should return balance for a specific currency" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service getWalletBalance should return zero balance for a non-existent currency" name="Wallet Service getWalletBalance should return zero balance for a non-existent currency" time="0">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should return all transactions with pagination" name="Wallet Service getWalletTransactions should return all transactions with pagination" time="0.006">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should filter transactions by type" name="Wallet Service getWalletTransactions should filter transactions by type" time="0">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should filter transactions by status" name="Wallet Service getWalletTransactions should filter transactions by status" time="0">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should filter transactions by currency" name="Wallet Service getWalletTransactions should filter transactions by currency" time="0.004">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should filter transactions by date range" name="Wallet Service getWalletTransactions should filter transactions by date range" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service getWalletTransactions should handle pagination correctly" name="Wallet Service getWalletTransactions should handle pagination correctly" time="0">
+    </testcase>
+    <testcase classname="Wallet Service getWalletPaymentMethods should return all payment methods" name="Wallet Service getWalletPaymentMethods should return all payment methods" time="0">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should add a card payment method" name="Wallet Service addPaymentMethod should add a card payment method" time="0">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should add a bank account payment method" name="Wallet Service addPaymentMethod should add a bank account payment method" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should add a crypto address payment method" name="Wallet Service addPaymentMethod should add a crypto address payment method" time="0">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method type is missing" name="Wallet Service addPaymentMethod should throw an error if payment method type is missing" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method provider is missing" name="Wallet Service addPaymentMethod should throw an error if payment method provider is missing" time="0">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if card details are missing for card payment method" name="Wallet Service addPaymentMethod should throw an error if card details are missing for card payment method" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if bank details are missing for bank account payment method" name="Wallet Service addPaymentMethod should throw an error if bank details are missing for bank account payment method" time="0.002">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if crypto details are missing for crypto address payment method" name="Wallet Service addPaymentMethod should throw an error if crypto details are missing for crypto address payment method" time="0.002">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if cryptocurrency is not supported" name="Wallet Service addPaymentMethod should throw an error if cryptocurrency is not supported" time="0.002">
+    </testcase>
+    <testcase classname="Wallet Service addPaymentMethod should throw an error if payment method type is not supported" name="Wallet Service addPaymentMethod should throw an error if payment method type is not supported" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service removePaymentMethod should remove a payment method" name="Wallet Service removePaymentMethod should remove a payment method" time="0">
+    </testcase>
+    <testcase classname="Wallet Service removePaymentMethod should throw an error if payment method is not found" name="Wallet Service removePaymentMethod should throw an error if payment method is not found" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service setDefaultPaymentMethod should set a payment method as default" name="Wallet Service setDefaultPaymentMethod should set a payment method as default" time="0">
+    </testcase>
+    <testcase classname="Wallet Service setDefaultPaymentMethod should throw an error if payment method is not found" name="Wallet Service setDefaultPaymentMethod should throw an error if payment method is not found" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service depositFundsWithStripe should deposit funds with Stripe" name="Wallet Service depositFundsWithStripe should deposit funds with Stripe" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if amount is invalid" name="Wallet Service depositFundsWithStripe should throw an error if amount is invalid" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if currency is not supported" name="Wallet Service depositFundsWithStripe should throw an error if currency is not supported" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service depositFundsWithStripe should throw an error if payment method ID is missing" name="Wallet Service depositFundsWithStripe should throw an error if payment method ID is missing" time="0.003">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should withdraw funds from wallet" name="Wallet Service withdrawFunds should withdraw funds from wallet" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if amount is invalid" name="Wallet Service withdrawFunds should throw an error if amount is invalid" time="0.004">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if amount is below minimum withdrawal" name="Wallet Service withdrawFunds should throw an error if amount is below minimum withdrawal" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if currency is not supported" name="Wallet Service withdrawFunds should throw an error if currency is not supported" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if payment method ID is missing" name="Wallet Service withdrawFunds should throw an error if payment method ID is missing" time="0">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if payment method is not found" name="Wallet Service withdrawFunds should throw an error if payment method is not found" time="0.001">
+    </testcase>
+    <testcase classname="Wallet Service withdrawFunds should throw an error if wallet has insufficient balance" name="Wallet Service withdrawFunds should throw an error if wallet has insufficient balance" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="API Performance Tests" errors="0" failures="0" skipped="1" timestamp="2025-04-16T13:50:01" time="0.37" tests="5">
+    <testcase classname="API Performance Tests Authentication Performance should login within performance threshold" name="API Performance Tests Authentication Performance should login within performance threshold" time="0.006">
+    </testcase>
+    <testcase classname="API Performance Tests Authentication Performance should handle sequential login requests efficiently" name="API Performance Tests Authentication Performance should handle sequential login requests efficiently" time="0.013">
+    </testcase>
+    <testcase classname="API Performance Tests User Profile Performance should fetch user profile within performance threshold" name="API Performance Tests User Profile Performance should fetch user profile within performance threshold" time="0.002">
+    </testcase>
+    <testcase classname="API Performance Tests Search Performance should perform search within performance threshold" name="API Performance Tests Search Performance should perform search within performance threshold" time="0.005">
+    </testcase>
+    <testcase classname="API Performance Tests Load Testing should handle concurrent requests efficiently" name="API Performance Tests Load Testing should handle concurrent requests efficiently" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="Auth Service" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:01" time="0.22" tests="22">
+    <testcase classname="Auth Service generateTokens should generate access and refresh tokens" name="Auth Service generateTokens should generate access and refresh tokens" time="0.001">
     </testcase>
     <testcase classname="Auth Service generateTokens should sanitize the user object" name="Auth Service generateTokens should sanitize the user object" time="0">
     </testcase>
     <testcase classname="Auth Service validateRefreshToken should validate a refresh token and return the user" name="Auth Service validateRefreshToken should validate a refresh token and return the user" time="0.001">
     </testcase>
-    <testcase classname="Auth Service validateRefreshToken should throw an error if user is not found" name="Auth Service validateRefreshToken should throw an error if user is not found" time="0.005">
+    <testcase classname="Auth Service validateRefreshToken should throw an error if user is not found" name="Auth Service validateRefreshToken should throw an error if user is not found" time="0.016">
     </testcase>
     <testcase classname="Auth Service validateRefreshToken should throw an error if token is invalid" name="Auth Service validateRefreshToken should throw an error if token is invalid" time="0.001">
     </testcase>
-    <testcase classname="Auth Service authenticate should authenticate a user with email and password" name="Auth Service authenticate should authenticate a user with email and password" time="0.001">
+    <testcase classname="Auth Service authenticate should authenticate a user with email and password" name="Auth Service authenticate should authenticate a user with email and password" time="0">
     </testcase>
-    <testcase classname="Auth Service authenticate should authenticate a user with username and password" name="Auth Service authenticate should authenticate a user with username and password" time="0">
+    <testcase classname="Auth Service authenticate should authenticate a user with username and password" name="Auth Service authenticate should authenticate a user with username and password" time="0.005">
     </testcase>
     <testcase classname="Auth Service authenticate should throw an error if user is not found" name="Auth Service authenticate should throw an error if user is not found" time="0">
     </testcase>
     <testcase classname="Auth Service authenticate should throw an error if password is invalid" name="Auth Service authenticate should throw an error if password is invalid" time="0">
     </testcase>
-    <testcase classname="Auth Service register should register a new user" name="Auth Service register should register a new user" time="0.001">
+    <testcase classname="Auth Service register should register a new user" name="Auth Service register should register a new user" time="0">
     </testcase>
     <testcase classname="Auth Service register should throw an error if email is already in use" name="Auth Service register should throw an error if email is already in use" time="0">
     </testcase>
     <testcase classname="Auth Service register should throw an error if username is already taken" name="Auth Service register should throw an error if username is already taken" time="0">
     </testcase>
-    <testcase classname="Auth Service refreshAccessToken should refresh an access token" name="Auth Service refreshAccessToken should refresh an access token" time="0.005">
+    <testcase classname="Auth Service refreshAccessToken should refresh an access token" name="Auth Service refreshAccessToken should refresh an access token" time="0.001">
     </testcase>
-    <testcase classname="Auth Service refreshAccessToken should throw an error if refresh token is invalid" name="Auth Service refreshAccessToken should throw an error if refresh token is invalid" time="0.002">
+    <testcase classname="Auth Service refreshAccessToken should throw an error if refresh token is invalid" name="Auth Service refreshAccessToken should throw an error if refresh token is invalid" time="0">
     </testcase>
     <testcase classname="Auth Service validateAccessToken should validate an access token and return the user" name="Auth Service validateAccessToken should validate an access token and return the user" time="0.001">
     </testcase>
@@ -405,47 +339,113 @@
     </testcase>
     <testcase classname="Auth Service handleOAuth should find an existing user by OAuth provider ID" name="Auth Service handleOAuth should find an existing user by OAuth provider ID" time="0.001">
     </testcase>
-    <testcase classname="Auth Service handleOAuth should link OAuth account to existing user by email" name="Auth Service handleOAuth should link OAuth account to existing user by email" time="0">
+    <testcase classname="Auth Service handleOAuth should link OAuth account to existing user by email" name="Auth Service handleOAuth should link OAuth account to existing user by email" time="0.001">
     </testcase>
-    <testcase classname="Auth Service handleOAuth should create a new user if no existing user is found" name="Auth Service handleOAuth should create a new user if no existing user is found" time="0.001">
+    <testcase classname="Auth Service handleOAuth should create a new user if no existing user is found" name="Auth Service handleOAuth should create a new user if no existing user is found" time="0.002">
     </testcase>
-    <testcase classname="Auth Service sanitizeUser should remove sensitive information from user object" name="Auth Service sanitizeUser should remove sensitive information from user object" time="0">
+    <testcase classname="Auth Service sanitizeUser should remove sensitive information from user object" name="Auth Service sanitizeUser should remove sensitive information from user object" time="0.001">
     </testcase>
     <testcase classname="Auth Service sanitizeUser should handle non-mongoose objects" name="Auth Service sanitizeUser should handle non-mongoose objects" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="PaymentMethod Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:26" time="1.076" tests="10">
-    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a card payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a card payment method successfully" time="0.094">
+  <testsuite name="Auth Middleware" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:01" time="0.42" tests="18">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if no token is provided" name="Auth Middleware authenticate middleware should return 401 if no token is provided" time="0.001">
     </testcase>
-    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a bank account payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a bank account payment method successfully" time="0.073">
+    <testcase classname="Auth Middleware authenticate middleware should authenticate user with token in Authorization header" name="Auth Middleware authenticate middleware should authenticate user with token in Authorization header" time="0.002">
     </testcase>
-    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a crypto address payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a crypto address payment method successfully" time="0.058">
+    <testcase classname="Auth Middleware authenticate middleware should authenticate user with token in cookie" name="Auth Middleware authenticate middleware should authenticate user with token in cookie" time="0.001">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Validation should require userId, walletId, type, and provider" name="PaymentMethod Model PaymentMethod Validation should require userId, walletId, type, and provider" time="0.07">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is blacklisted" name="Auth Middleware authenticate middleware should return 401 if token is blacklisted" time="0">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Validation should validate type enum values" name="PaymentMethod Model PaymentMethod Validation should validate type enum values" time="0.068">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if user is not found" name="Auth Middleware authenticate middleware should return 401 if user is not found" time="0.001">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Default Status should allow setting a payment method as default" name="PaymentMethod Model PaymentMethod Default Status should allow setting a payment method as default" time="0.083">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if user account is locked" name="Auth Middleware authenticate middleware should return 401 if user account is locked" time="0">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Default Status should allow multiple payment methods for the same user" name="PaymentMethod Model PaymentMethod Default Status should allow multiple payment methods for the same user" time="0.072">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if password was changed after token issuance" name="Auth Middleware authenticate middleware should return 401 if password was changed after token issuance" time="0.001">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Queries should find all payment methods for a user" name="PaymentMethod Model PaymentMethod Queries should find all payment methods for a user" time="0.069">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is expired" name="Auth Middleware authenticate middleware should return 401 if token is expired" time="0.001">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Queries should find payment methods by type" name="PaymentMethod Model PaymentMethod Queries should find payment methods by type" time="0.194">
+    <testcase classname="Auth Middleware authenticate middleware should return 401 if token is invalid" name="Auth Middleware authenticate middleware should return 401 if token is invalid" time="0">
     </testcase>
-    <testcase classname="PaymentMethod Model PaymentMethod Queries should find default payment method" name="PaymentMethod Model PaymentMethod Queries should find default payment method" time="0.063">
+    <testcase classname="Auth Middleware authenticate middleware should return 500 for other errors" name="Auth Middleware authenticate middleware should return 500 for other errors" time="0.001">
+    </testcase>
+    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if no token is provided" name="Auth Middleware optionalAuth middleware should continue without authentication if no token is provided" time="0">
+    </testcase>
+    <testcase classname="Auth Middleware optionalAuth middleware should authenticate user if valid token is provided" name="Auth Middleware optionalAuth middleware should authenticate user if valid token is provided" time="0.001">
+    </testcase>
+    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if token is blacklisted" name="Auth Middleware optionalAuth middleware should continue without authentication if token is blacklisted" time="0.001">
+    </testcase>
+    <testcase classname="Auth Middleware optionalAuth middleware should continue without authentication if token verification fails" name="Auth Middleware optionalAuth middleware should continue without authentication if token verification fails" time="0.001">
+    </testcase>
+    <testcase classname="Auth Middleware restrictTo middleware should return 401 if user is not authenticated" name="Auth Middleware restrictTo middleware should return 401 if user is not authenticated" time="0">
+    </testcase>
+    <testcase classname="Auth Middleware restrictTo middleware should return 403 if user does not have required role" name="Auth Middleware restrictTo middleware should return 403 if user does not have required role" time="0.001">
+    </testcase>
+    <testcase classname="Auth Middleware restrictTo middleware should call next if user has required role" name="Auth Middleware restrictTo middleware should call next if user has required role" time="0">
+    </testcase>
+    <testcase classname="Auth Middleware restrictTo middleware should call next if user has one of multiple required roles" name="Auth Middleware restrictTo middleware should call next if user has one of multiple required roles" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="User Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="5.275" tests="27">
-    <testcase classname="User Model Basic Validation should create a new user successfully" name="User Model Basic Validation should create a new user successfully" time="0.235">
+  <testsuite name="Security Middleware" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:01" time="0.092" tests="3">
+    <testcase classname="Security Middleware Security Headers Middleware should set security headers correctly" name="Security Middleware Security Headers Middleware should set security headers correctly" time="0.002">
     </testcase>
-    <testcase classname="User Model Basic Validation should require username, email, and password" name="User Model Basic Validation should require username, email, and password" time="0.005">
+    <testcase classname="Security Middleware CSP Middleware should set Content-Security-Policy header in development mode" name="Security Middleware CSP Middleware should set Content-Security-Policy header in development mode" time="0.004">
     </testcase>
-    <testcase classname="User Model Basic Validation should not allow duplicate usernames" name="User Model Basic Validation should not allow duplicate usernames" time="0.355">
+    <testcase classname="Security Middleware CSP Middleware should set Content-Security-Policy header in production mode" name="Security Middleware CSP Middleware should set Content-Security-Policy header in production mode" time="0.001">
     </testcase>
-    <testcase classname="User Model Basic Validation should not allow duplicate emails" name="User Model Basic Validation should not allow duplicate emails" time="0.302">
+  </testsuite>
+  <testsuite name="PaymentMethod Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:00" time="1.038" tests="10">
+    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a card payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a card payment method successfully" time="0.101">
     </testcase>
-    <testcase classname="User Model Basic Validation should validate email format" name="User Model Basic Validation should validate email format" time="0.004">
+    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a bank account payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a bank account payment method successfully" time="0.079">
+    </testcase>
+    <testcase classname="PaymentMethod Model Basic PaymentMethod Creation should create a crypto address payment method successfully" name="PaymentMethod Model Basic PaymentMethod Creation should create a crypto address payment method successfully" time="0.068">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Validation should require userId, walletId, type, and provider" name="PaymentMethod Model PaymentMethod Validation should require userId, walletId, type, and provider" time="0.081">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Validation should validate type enum values" name="PaymentMethod Model PaymentMethod Validation should validate type enum values" time="0.066">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Default Status should allow setting a payment method as default" name="PaymentMethod Model PaymentMethod Default Status should allow setting a payment method as default" time="0.086">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Default Status should allow multiple payment methods for the same user" name="PaymentMethod Model PaymentMethod Default Status should allow multiple payment methods for the same user" time="0.083">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Queries should find all payment methods for a user" name="PaymentMethod Model PaymentMethod Queries should find all payment methods for a user" time="0.073">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Queries should find payment methods by type" name="PaymentMethod Model PaymentMethod Queries should find payment methods by type" time="0.07">
+    </testcase>
+    <testcase classname="PaymentMethod Model PaymentMethod Queries should find default payment method" name="PaymentMethod Model PaymentMethod Queries should find default payment method" time="0.072">
+    </testcase>
+  </testsuite>
+  <testsuite name="AuthService" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:50:01" time="0.19" tests="9">
+    <testcase classname="AuthService authenticate should generate tokens for valid credentials" name="AuthService authenticate should generate tokens for valid credentials" time="0.001">
+    </testcase>
+    <testcase classname="AuthService authenticate should throw error for invalid username" name="AuthService authenticate should throw error for invalid username" time="0.005">
+    </testcase>
+    <testcase classname="AuthService authenticate should throw error for invalid password" name="AuthService authenticate should throw error for invalid password" time="0.001">
+    </testcase>
+    <testcase classname="AuthService register should register a new user successfully" name="AuthService register should register a new user successfully" time="0">
+    </testcase>
+    <testcase classname="AuthService register should throw error if username already exists" name="AuthService register should throw error if username already exists" time="0.001">
+    </testcase>
+    <testcase classname="AuthService register should throw error if email already exists" name="AuthService register should throw error if email already exists" time="0.002">
+    </testcase>
+    <testcase classname="AuthService refreshToken should generate new access token with valid refresh token" name="AuthService refreshToken should generate new access token with valid refresh token" time="0.001">
+    </testcase>
+    <testcase classname="AuthService refreshToken should throw error with invalid refresh token" name="AuthService refreshToken should throw error with invalid refresh token" time="0.001">
+    </testcase>
+    <testcase classname="AuthService refreshToken should throw error if user not found" name="AuthService refreshToken should throw error if user not found" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="User Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="5.321" tests="27">
+    <testcase classname="User Model Basic Validation should create a new user successfully" name="User Model Basic Validation should create a new user successfully" time="0.19">
+    </testcase>
+    <testcase classname="User Model Basic Validation should require username, email, and password" name="User Model Basic Validation should require username, email, and password" time="0.009">
+    </testcase>
+    <testcase classname="User Model Basic Validation should not allow duplicate usernames" name="User Model Basic Validation should not allow duplicate usernames" time="0.4">
+    </testcase>
+    <testcase classname="User Model Basic Validation should not allow duplicate emails" name="User Model Basic Validation should not allow duplicate emails" time="0.287">
+    </testcase>
+    <testcase classname="User Model Basic Validation should validate email format" name="User Model Basic Validation should validate email format" time="0.003">
     </testcase>
     <testcase classname="User Model Basic Validation should enforce minimum username length" name="User Model Basic Validation should enforce minimum username length" time="0.002">
     </testcase>
@@ -453,119 +453,119 @@
     </testcase>
     <testcase classname="User Model Basic Validation should enforce minimum password length" name="User Model Basic Validation should enforce minimum password length" time="0.003">
     </testcase>
-    <testcase classname="User Model Basic Validation should trim whitespace from username and email" name="User Model Basic Validation should trim whitespace from username and email" time="0.167">
+    <testcase classname="User Model Basic Validation should trim whitespace from username and email" name="User Model Basic Validation should trim whitespace from username and email" time="0.204">
     </testcase>
-    <testcase classname="User Model Basic Validation should convert email to lowercase" name="User Model Basic Validation should convert email to lowercase" time="0.185">
+    <testcase classname="User Model Basic Validation should convert email to lowercase" name="User Model Basic Validation should convert email to lowercase" time="0.151">
     </testcase>
-    <testcase classname="User Model Password Handling should hash password before saving" name="User Model Password Handling should hash password before saving" time="0.157">
+    <testcase classname="User Model Password Handling should hash password before saving" name="User Model Password Handling should hash password before saving" time="0.15">
     </testcase>
-    <testcase classname="User Model Password Handling should set passwordChangedAt when password is changed" name="User Model Password Handling should set passwordChangedAt when password is changed" time="0.42">
+    <testcase classname="User Model Password Handling should set passwordChangedAt when password is changed" name="User Model Password Handling should set passwordChangedAt when password is changed" time="0.418">
     </testcase>
-    <testcase classname="User Model Password Handling should not rehash password if not modified" name="User Model Password Handling should not rehash password if not modified" time="0.182">
+    <testcase classname="User Model Password Handling should not rehash password if not modified" name="User Model Password Handling should not rehash password if not modified" time="0.172">
     </testcase>
-    <testcase classname="User Model Password Handling should correctly compare valid password with comparePassword method" name="User Model Password Handling should correctly compare valid password with comparePassword method" time="0.331">
+    <testcase classname="User Model Password Handling should correctly compare valid password with comparePassword method" name="User Model Password Handling should correctly compare valid password with comparePassword method" time="0.348">
     </testcase>
-    <testcase classname="User Model Password Handling should correctly compare invalid password with comparePassword method" name="User Model Password Handling should correctly compare invalid password with comparePassword method" time="0.28">
+    <testcase classname="User Model Password Handling should correctly compare invalid password with comparePassword method" name="User Model Password Handling should correctly compare invalid password with comparePassword method" time="0.308">
     </testcase>
     <testcase classname="User Model Password Handling should handle bcrypt hashed passwords in comparePassword method" name="User Model Password Handling should handle bcrypt hashed passwords in comparePassword method" time="0.101">
     </testcase>
     <testcase classname="User Model Role Methods should correctly identify an advertiser with isAdvertiser method" name="User Model Role Methods should correctly identify an advertiser with isAdvertiser method" time="0.117">
     </testcase>
-    <testcase classname="User Model Role Methods should correctly identify an admin with isAdmin method" name="User Model Role Methods should correctly identify an admin with isAdmin method" time="0.117">
+    <testcase classname="User Model Role Methods should correctly identify an admin with isAdmin method" name="User Model Role Methods should correctly identify an admin with isAdmin method" time="0.119">
     </testcase>
     <testcase classname="User Model Role Methods should correctly identify a regular user with role methods" name="User Model Role Methods should correctly identify a regular user with role methods" time="0.117">
     </testcase>
-    <testcase classname="User Model Travel Plan Methods should correctly identify active travel plans" name="User Model Travel Plan Methods should correctly identify active travel plans" time="0.119">
+    <testcase classname="User Model Travel Plan Methods should correctly identify active travel plans" name="User Model Travel Plan Methods should correctly identify active travel plans" time="0.121">
     </testcase>
-    <testcase classname="User Model Travel Plan Methods should correctly identify upcoming travel plans" name="User Model Travel Plan Methods should correctly identify upcoming travel plans" time="0.118">
+    <testcase classname="User Model Travel Plan Methods should correctly identify upcoming travel plans" name="User Model Travel Plan Methods should correctly identify upcoming travel plans" time="0.12">
     </testcase>
-    <testcase classname="User Model Virtual Properties should generate correct profile URL" name="User Model Virtual Properties should generate correct profile URL" time="0.117">
+    <testcase classname="User Model Virtual Properties should generate correct profile URL" name="User Model Virtual Properties should generate correct profile URL" time="0.119">
     </testcase>
-    <testcase classname="User Model Timestamps should update updatedAt timestamp on save" name="User Model Timestamps should update updatedAt timestamp on save" time="0.218">
+    <testcase classname="User Model Timestamps should update updatedAt timestamp on save" name="User Model Timestamps should update updatedAt timestamp on save" time="0.219">
     </testcase>
-    <testcase classname="User Model Preferences and Settings should have default notification preferences" name="User Model Preferences and Settings should have default notification preferences" time="0.116">
+    <testcase classname="User Model Preferences and Settings should have default notification preferences" name="User Model Preferences and Settings should have default notification preferences" time="0.117">
     </testcase>
-    <testcase classname="User Model Preferences and Settings should have default privacy settings" name="User Model Preferences and Settings should have default privacy settings" time="0.12">
+    <testcase classname="User Model Preferences and Settings should have default privacy settings" name="User Model Preferences and Settings should have default privacy settings" time="0.118">
     </testcase>
-    <testcase classname="User Model Preferences and Settings should have default verification level and badges" name="User Model Preferences and Settings should have default verification level and badges" time="0.134">
+    <testcase classname="User Model Preferences and Settings should have default verification level and badges" name="User Model Preferences and Settings should have default verification level and badges" time="0.118">
     </testcase>
-    <testcase classname="User Model Preferences and Settings should have default subscription tier" name="User Model Preferences and Settings should have default subscription tier" time="0.125">
-    </testcase>
-  </testsuite>
-  <testsuite name="ChatMessage Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="6.032" tests="17">
-    <testcase classname="ChatMessage Model Basic Validation should create a new chat message successfully" name="ChatMessage Model Basic Validation should create a new chat message successfully" time="0.388">
-    </testcase>
-    <testcase classname="ChatMessage Model Basic Validation should require sender, roomId, and message" name="ChatMessage Model Basic Validation should require sender, roomId, and message" time="0.357">
-    </testcase>
-    <testcase classname="ChatMessage Model Basic Validation should enforce maximum message length" name="ChatMessage Model Basic Validation should enforce maximum message length" time="0.292">
-    </testcase>
-    <testcase classname="ChatMessage Model Basic Validation should trim whitespace from message" name="ChatMessage Model Basic Validation should trim whitespace from message" time="0.376">
-    </testcase>
-    <testcase classname="ChatMessage Model Attachments should support adding attachments" name="ChatMessage Model Attachments should support adding attachments" time="0.314">
-    </testcase>
-    <testcase classname="ChatMessage Model Attachments should validate attachment types" name="ChatMessage Model Attachments should validate attachment types" time="0.335">
-    </testcase>
-    <testcase classname="ChatMessage Model Encryption should support encrypted messages" name="ChatMessage Model Encryption should support encrypted messages" time="0.394">
-    </testcase>
-    <testcase classname="ChatMessage Model Encryption should support encrypted attachments" name="ChatMessage Model Encryption should support encrypted attachments" time="0.275">
-    </testcase>
-    <testcase classname="ChatMessage Model Virtual Properties should correctly identify system messages" name="ChatMessage Model Virtual Properties should correctly identify system messages" time="0.236">
-    </testcase>
-    <testcase classname="ChatMessage Model Virtual Properties should correctly identify non-system messages" name="ChatMessage Model Virtual Properties should correctly identify non-system messages" time="0.234">
-    </testcase>
-    <testcase classname="ChatMessage Model Virtual Properties should correctly identify messages with attachments" name="ChatMessage Model Virtual Properties should correctly identify messages with attachments" time="0.235">
-    </testcase>
-    <testcase classname="ChatMessage Model Virtual Properties should correctly identify messages without attachments" name="ChatMessage Model Virtual Properties should correctly identify messages without attachments" time="0.228">
-    </testcase>
-    <testcase classname="ChatMessage Model Instance Methods should mark message as read" name="ChatMessage Model Instance Methods should mark message as read" time="0.246">
-    </testcase>
-    <testcase classname="ChatMessage Model Instance Methods should not update readAt if message is already read" name="ChatMessage Model Instance Methods should not update readAt if message is already read" time="0.255">
-    </testcase>
-    <testcase classname="ChatMessage Model Static Methods should get unread count for a user" name="ChatMessage Model Static Methods should get unread count for a user" time="0.244">
-    </testcase>
-    <testcase classname="ChatMessage Model Static Methods should get unread count by room" name="ChatMessage Model Static Methods should get unread count by room" time="0.238">
-    </testcase>
-    <testcase classname="ChatMessage Model Static Methods should get recent conversations" name="ChatMessage Model Static Methods should get recent conversations" time="0.255">
+    <testcase classname="User Model Preferences and Settings should have default subscription tier" name="User Model Preferences and Settings should have default subscription tier" time="0.118">
     </testcase>
   </testsuite>
-  <testsuite name="ChatRoom Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:37:23" time="8.646" tests="19">
-    <testcase classname="ChatRoom Model Basic Validation should create a new direct chat room successfully" name="ChatRoom Model Basic Validation should create a new direct chat room successfully" time="0.594">
+  <testsuite name="ChatMessage Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="5.964" tests="17">
+    <testcase classname="ChatMessage Model Basic Validation should create a new chat message successfully" name="ChatMessage Model Basic Validation should create a new chat message successfully" time="0.392">
     </testcase>
-    <testcase classname="ChatRoom Model Basic Validation should create a new group chat room successfully" name="ChatRoom Model Basic Validation should create a new group chat room successfully" time="0.442">
+    <testcase classname="ChatMessage Model Basic Validation should require sender, roomId, and message" name="ChatMessage Model Basic Validation should require sender, roomId, and message" time="0.362">
     </testcase>
-    <testcase classname="ChatRoom Model Basic Validation should create room with empty participants array" name="ChatRoom Model Basic Validation should create room with empty participants array" time="0.434">
+    <testcase classname="ChatMessage Model Basic Validation should enforce maximum message length" name="ChatMessage Model Basic Validation should enforce maximum message length" time="0.34">
     </testcase>
-    <testcase classname="ChatRoom Model Basic Validation should validate room type" name="ChatRoom Model Basic Validation should validate room type" time="0.495">
+    <testcase classname="ChatMessage Model Basic Validation should trim whitespace from message" name="ChatMessage Model Basic Validation should trim whitespace from message" time="0.311">
     </testcase>
-    <testcase classname="ChatRoom Model Basic Validation should validate participant role" name="ChatRoom Model Basic Validation should validate participant role" time="0.562">
+    <testcase classname="ChatMessage Model Attachments should support adding attachments" name="ChatMessage Model Attachments should support adding attachments" time="0.298">
     </testcase>
-    <testcase classname="ChatRoom Model Virtual Properties should correctly identify direct message rooms" name="ChatRoom Model Virtual Properties should correctly identify direct message rooms" time="0.365">
+    <testcase classname="ChatMessage Model Attachments should validate attachment types" name="ChatMessage Model Attachments should validate attachment types" time="0.359">
     </testcase>
-    <testcase classname="ChatRoom Model Virtual Properties should correctly identify group chat rooms" name="ChatRoom Model Virtual Properties should correctly identify group chat rooms" time="0.35">
+    <testcase classname="ChatMessage Model Encryption should support encrypted messages" name="ChatMessage Model Encryption should support encrypted messages" time="0.323">
     </testcase>
-    <testcase classname="ChatRoom Model Virtual Properties should correctly identify ad chat rooms" name="ChatRoom Model Virtual Properties should correctly identify ad chat rooms" time="0.349">
+    <testcase classname="ChatMessage Model Encryption should support encrypted attachments" name="ChatMessage Model Encryption should support encrypted attachments" time="0.327">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should add a participant to the room" name="ChatRoom Model Instance Methods should add a participant to the room" time="0.359">
+    <testcase classname="ChatMessage Model Virtual Properties should correctly identify system messages" name="ChatMessage Model Virtual Properties should correctly identify system messages" time="0.234">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should not add a participant if already in the room" name="ChatRoom Model Instance Methods should not add a participant if already in the room" time="0.367">
+    <testcase classname="ChatMessage Model Virtual Properties should correctly identify non-system messages" name="ChatMessage Model Virtual Properties should correctly identify non-system messages" time="0.238">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should add a participant with specified role" name="ChatRoom Model Instance Methods should add a participant with specified role" time="0.352">
+    <testcase classname="ChatMessage Model Virtual Properties should correctly identify messages with attachments" name="ChatMessage Model Virtual Properties should correctly identify messages with attachments" time="0.237">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should remove a participant from the room" name="ChatRoom Model Instance Methods should remove a participant from the room" time="0.349">
+    <testcase classname="ChatMessage Model Virtual Properties should correctly identify messages without attachments" name="ChatMessage Model Virtual Properties should correctly identify messages without attachments" time="0.232">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should update last read timestamp for a participant" name="ChatRoom Model Instance Methods should update last read timestamp for a participant" time="0.36">
+    <testcase classname="ChatMessage Model Instance Methods should mark message as read" name="ChatMessage Model Instance Methods should mark message as read" time="0.232">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should update last activity timestamp" name="ChatRoom Model Instance Methods should update last activity timestamp" time="0.543">
+    <testcase classname="ChatMessage Model Instance Methods should not update readAt if message is already read" name="ChatMessage Model Instance Methods should not update readAt if message is already read" time="0.235">
     </testcase>
-    <testcase classname="ChatRoom Model Instance Methods should update last message" name="ChatRoom Model Instance Methods should update last message" time="0.32">
+    <testcase classname="ChatMessage Model Static Methods should get unread count for a user" name="ChatMessage Model Static Methods should get unread count for a user" time="0.231">
     </testcase>
-    <testcase classname="ChatRoom Model Static Methods should find or create a direct room between two users" name="ChatRoom Model Static Methods should find or create a direct room between two users" time="0.319">
+    <testcase classname="ChatMessage Model Static Methods should get unread count by room" name="ChatMessage Model Static Methods should get unread count by room" time="0.227">
     </testcase>
-    <testcase classname="ChatRoom Model Static Methods should find or create an ad room" name="ChatRoom Model Static Methods should find or create an ad room" time="0.318">
+    <testcase classname="ChatMessage Model Static Methods should get recent conversations" name="ChatMessage Model Static Methods should get recent conversations" time="0.24">
     </testcase>
-    <testcase classname="ChatRoom Model Static Methods should get rooms for a user" name="ChatRoom Model Static Methods should get rooms for a user" time="0.326">
+  </testsuite>
+  <testsuite name="ChatRoom Model" errors="0" failures="0" skipped="0" timestamp="2025-04-16T13:49:58" time="8.512" tests="19">
+    <testcase classname="ChatRoom Model Basic Validation should create a new direct chat room successfully" name="ChatRoom Model Basic Validation should create a new direct chat room successfully" time="0.571">
     </testcase>
-    <testcase classname="ChatRoom Model Static Methods should not return inactive rooms" name="ChatRoom Model Static Methods should not return inactive rooms" time="0.313">
+    <testcase classname="ChatRoom Model Basic Validation should create a new group chat room successfully" name="ChatRoom Model Basic Validation should create a new group chat room successfully" time="0.527">
+    </testcase>
+    <testcase classname="ChatRoom Model Basic Validation should create room with empty participants array" name="ChatRoom Model Basic Validation should create room with empty participants array" time="0.451">
+    </testcase>
+    <testcase classname="ChatRoom Model Basic Validation should validate room type" name="ChatRoom Model Basic Validation should validate room type" time="0.519">
+    </testcase>
+    <testcase classname="ChatRoom Model Basic Validation should validate participant role" name="ChatRoom Model Basic Validation should validate participant role" time="0.552">
+    </testcase>
+    <testcase classname="ChatRoom Model Virtual Properties should correctly identify direct message rooms" name="ChatRoom Model Virtual Properties should correctly identify direct message rooms" time="0.353">
+    </testcase>
+    <testcase classname="ChatRoom Model Virtual Properties should correctly identify group chat rooms" name="ChatRoom Model Virtual Properties should correctly identify group chat rooms" time="0.357">
+    </testcase>
+    <testcase classname="ChatRoom Model Virtual Properties should correctly identify ad chat rooms" name="ChatRoom Model Virtual Properties should correctly identify ad chat rooms" time="0.35">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should add a participant to the room" name="ChatRoom Model Instance Methods should add a participant to the room" time="0.352">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should not add a participant if already in the room" name="ChatRoom Model Instance Methods should not add a participant if already in the room" time="0.34">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should add a participant with specified role" name="ChatRoom Model Instance Methods should add a participant with specified role" time="0.335">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should remove a participant from the room" name="ChatRoom Model Instance Methods should remove a participant from the room" time="0.321">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should update last read timestamp for a participant" name="ChatRoom Model Instance Methods should update last read timestamp for a participant" time="0.311">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should update last activity timestamp" name="ChatRoom Model Instance Methods should update last activity timestamp" time="0.413">
+    </testcase>
+    <testcase classname="ChatRoom Model Instance Methods should update last message" name="ChatRoom Model Instance Methods should update last message" time="0.323">
+    </testcase>
+    <testcase classname="ChatRoom Model Static Methods should find or create a direct room between two users" name="ChatRoom Model Static Methods should find or create a direct room between two users" time="0.32">
+    </testcase>
+    <testcase classname="ChatRoom Model Static Methods should find or create an ad room" name="ChatRoom Model Static Methods should find or create an ad room" time="0.317">
+    </testcase>
+    <testcase classname="ChatRoom Model Static Methods should get rooms for a user" name="ChatRoom Model Static Methods should get rooms for a user" time="0.327">
+    </testcase>
+    <testcase classname="ChatRoom Model Static Methods should not return inactive rooms" name="ChatRoom Model Static Methods should not return inactive rooms" time="0.319">
     </testcase>
   </testsuite>
 </testsuites>
