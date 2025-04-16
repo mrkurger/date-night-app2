@@ -113,14 +113,51 @@ export class ChatService {
   }
 
   /**
-   * Initialize the encryption service
+   * Initialize the encryption service and perform key management tasks
    */
   private async initializeEncryption(): Promise<void> {
     try {
-      await this.encryptionService.initialize();
+      // Initialize the encryption service
+      const initialized = await this.encryptionService.initialize();
+
+      if (initialized) {
+        // Check if any room keys need rotation
+        this.encryptionService.checkAndPerformKeyRotations();
+
+        // Set up socket listener for encryption events
+        this.setupEncryptionSocketListeners();
+
+        console.log('Encryption initialized successfully');
+      } else {
+        console.warn('Encryption initialization failed or is disabled');
+      }
     } catch (error) {
       console.error('Error initializing encryption:', error);
     }
+  }
+
+  /**
+   * Set up socket listeners for encryption-related events
+   */
+  private setupEncryptionSocketListeners(): void {
+    // Listen for key rotation requests
+    this.socket.on('encryption:rotate-key', (data: { roomId: string }) => {
+      console.log(`Received key rotation request for room ${data.roomId}`);
+      this.encryptionService.rotateRoomKey(data.roomId).subscribe();
+    });
+
+    // Listen for new encryption keys
+    this.socket.on('encryption:new-key', async (data: { roomId: string; encryptedKey: string }) => {
+      console.log(`Received new encryption key for room ${data.roomId}`);
+
+      try {
+        // Get the room key using the new encrypted key
+        await this.encryptionService.getRoomKey(data.roomId);
+        console.log(`Successfully processed new encryption key for room ${data.roomId}`);
+      } catch (error) {
+        console.error(`Error processing new encryption key for room ${data.roomId}:`, error);
+      }
+    });
   }
 
   /**
@@ -201,13 +238,68 @@ export class ChatService {
 
   /**
    * Get messages for a specific chat room
+   * This method automatically decrypts any encrypted messages
    */
   getMessages(roomId: string, limit = 50, before?: string): Observable<ChatMessage[]> {
     let url = `${this.apiUrl}/rooms/${roomId}/messages?limit=${limit}`;
     if (before) {
       url += `&before=${before}`;
     }
-    return this.http.get<ChatMessage[]>(url);
+
+    return this.http.get<ChatMessage[]>(url).pipe(
+      switchMap(async messages => {
+        // Check if encryption is available
+        if (!this.encryptionService.isEncryptionAvailable()) {
+          return messages;
+        }
+
+        // Process each message to decrypt if needed
+        const processedMessages = await Promise.all(
+          messages.map(async message => {
+            // Skip if not encrypted
+            if (!message.isEncrypted || !message.encryptionData) {
+              return message;
+            }
+
+            try {
+              // Prepare encrypted data object
+              const encryptedData: EncryptedData = {
+                ciphertext: message.message || '',
+                iv: message.encryptionData.iv,
+                authTag: message.encryptionData.authTag,
+              };
+
+              // Decrypt the message
+              const decryptedContent = await this.encryptionService.decryptMessage(
+                message.roomId,
+                encryptedData
+              );
+
+              if (decryptedContent) {
+                // Create a new message object with decrypted content
+                return {
+                  ...message,
+                  message: decryptedContent,
+                  content: decryptedContent, // For compatibility
+                  // Keep isEncrypted true to indicate it was originally encrypted
+                };
+              }
+            } catch (error) {
+              console.error(`Error decrypting message ${message._id}:`, error);
+            }
+
+            // If decryption fails, return original with indication
+            return {
+              ...message,
+              message: '[Encrypted message - unable to decrypt]',
+              content: '[Encrypted message - unable to decrypt]',
+            };
+          })
+        );
+
+        return processedMessages;
+      })
+    );
   }
 
   /**
@@ -332,9 +424,60 @@ export class ChatService {
 
   /**
    * Listen for new messages
+   * This method automatically decrypts incoming encrypted messages
    */
   onNewMessage(callback: (message: ChatMessage) => void): void {
-    this.socket.on('new-message', callback);
+    this.socket.on('new-message', async (message: ChatMessage) => {
+      // Check if message is encrypted and encryption is available
+      if (
+        message.isEncrypted &&
+        message.encryptionData &&
+        this.encryptionService.isEncryptionAvailable()
+      ) {
+        try {
+          // Prepare encrypted data object
+          const encryptedData: EncryptedData = {
+            ciphertext: message.message || '',
+            iv: message.encryptionData.iv,
+            authTag: message.encryptionData.authTag,
+          };
+
+          // Decrypt the message
+          const decryptedContent = await this.encryptionService.decryptMessage(
+            message.roomId,
+            encryptedData
+          );
+
+          if (decryptedContent) {
+            // Create a new message object with decrypted content
+            const decryptedMessage = {
+              ...message,
+              message: decryptedContent,
+              content: decryptedContent, // For compatibility
+              // Keep isEncrypted true to indicate it was originally encrypted
+            };
+
+            // Call the callback with the decrypted message
+            callback(decryptedMessage);
+            return;
+          }
+        } catch (error) {
+          console.error('Error decrypting incoming message:', error);
+        }
+
+        // If decryption fails, modify the message to indicate that
+        const failedMessage = {
+          ...message,
+          message: '[Encrypted message - unable to decrypt]',
+          content: '[Encrypted message - unable to decrypt]',
+        };
+
+        callback(failedMessage);
+      } else {
+        // Not encrypted or encryption not available, pass through
+        callback(message);
+      }
+    });
   }
 
   /**

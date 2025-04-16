@@ -1,5 +1,9 @@
 # DateNight.io - Advertisement Platform
 
+[![Angular Tests](https://github.com/mrkurger/date-night-app2/actions/workflows/angular-tests.yml/badge.svg)](https://github.com/mrkurger/date-night-app2/actions/workflows/angular-tests.yml)
+[![Server Tests](https://github.com/mrkurger/date-night-app2/actions/workflows/server-tests.yml/badge.svg)](https://github.com/mrkurger/date-night-app2/actions/workflows/server-tests.yml)
+[![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg)](https://github.com/mrkurger/date-night-app2/blob/main/.github/dependabot.yml)
+
 ## Table of Contents
 
 - [Description](#description)
@@ -18,6 +22,8 @@
   - [Testing Documentation](#testing-documentation)
   - [UI/UX Documentation](#uiux-documentation)
   - [Customization Documentation](#customization-documentation)
+  - [Security Documentation](#security-documentation)
+  - [GitHub Integration](#github-integration)
   - [Lessons Learned](#lessons-learned)
 
 ## Description
@@ -28,7 +34,7 @@ DateNight.io is a platform offering classified advertisements primarily focused 
 
 - **Advertisement Platform**: Create, manage, and browse ads for escort and stripper services
 - **Travel Itinerary**: Track advertisers' locations when they are actively seeking clientele
-- **Real-time Chat**: Direct messaging between users and advertisers with end-to-end encryption
+- **Real-time Chat**: Direct messaging between users and advertisers with end-to-end encryption (AES-256 and RSA-2048)
 - **Multiple Browsing Interfaces**: Traditional list/grid view, Tinder-style swipe interface, Netflix-style gallery
 - **User Profiles**: Comprehensive profiles for both advertisers and users
 - **Monetization**: Premium ad placements, subscription model, camshow integration
@@ -71,70 +77,76 @@ The project uses a modern Angular frontend with an Express.js backend:
 
 ## Technology Stack
 
-* **Frontend:**
-  * Angular 19.2
-  * RxJS
-  * Socket.IO Client
-  * Bootstrap 5
-  * Angular Material
-  * NgRx for state management
-* **Backend:**
-  * Node.js & Express
-  * MongoDB & Mongoose
-  * Socket.IO
-  * JWT Authentication
-  * Passport.js
-  * WebRTC (for streaming features)
+- **Frontend:**
+  - Angular 19.2
+  - RxJS
+  - Socket.IO Client
+  - Bootstrap 5
+  - Angular Material
+  - NgRx for state management
+- **Backend:**
+  - Node.js & Express
+  - MongoDB & Mongoose
+  - Socket.IO
+  - JWT Authentication
+  - Passport.js
+  - WebRTC (for streaming features)
 
 ## Setup and Installation
 
 **Prerequisites:**
 
-* Node.js v22.14.0 and npm v10.9.2 installed
-* MongoDB installed and running (`mongod`)
-* Angular CLI installed globally (`npm install -g @angular/cli`)
+- Node.js v22.14.0 and npm v10.9.2 installed
+- MongoDB installed and running (`mongod`)
+- Angular CLI installed globally (`npm install -g @angular/cli`)
 
 **Steps:**
 
 1. **Clone the repository:**
+
    ```bash
    git clone <repository-url>
    cd date-night-app
    ```
 
 2. **Configure Environment:**
-   * Copy the `.env.example` file to `.env`:
+
+   - Copy the `.env.example` file to `.env`:
      ```bash
      cp .env.example .env
      ```
-   * Edit the `.env` file with your specific credentials (MongoDB URI, JWT Secret, OAuth Client IDs/Secrets)
+   - Edit the `.env` file with your specific credentials (MongoDB URI, JWT Secret, OAuth Client IDs/Secrets)
 
 3. **Install Dependencies:**
+
    ```bash
    npm run install-all
    ```
 
 4. **Run Setup Script:**
-   * Verifies environment variables and basic DB connection:
+
+   - Verifies environment variables and basic DB connection:
      ```bash
      node scripts/setup.js
      ```
 
 5. **Seed Database (Optional):**
-   * Ensure your MongoDB server is running
-   * Populate the database with sample data:
+
+   - Ensure your MongoDB server is running
+   - Populate the database with sample data:
      ```bash
      node scripts/seed.js
      ```
 
 6. **Run the Application:**
+
    ```bash
    npm run dev
    ```
 
 7. **Access the Application:**
-   * Open your browser and navigate to `http://localhost:4200`
-   * The API is available at `http://localhost:3000/api/v1`
+   - Open your browser and navigate to `http://localhost:4200`
+   - The API is available at `http://localhost:3000/api/v1`
 
 ## Customization System
 
@@ -174,6 +186,7 @@ For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md
 ## Feature Roadmap & Status
 
 ### Completed ✅
+
 - Angular migration from AngularJS
 - Core authentication system with OAuth integration
 - Basic chat functionality
@@ -183,6 +196,7 @@ For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md
 - User profile management
 
 ### In Progress 🔄
+
 - Enhanced chat with end-to-end encryption
 - Travel itinerary system with location-based matching
   - ✅ Norwegian counties and cities database with coordinates
@@ -191,6 +205,7 @@ For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md
 - Advanced search and filtering options
 
 ### Planned 📅
+
 - Premium ad features (featured listings, enhanced visibility)
 - Camshow integration with WebRTC
 - Subscription model for content creators
@@ -248,6 +263,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ## Client-Side TODOs
 
 ### Core Architecture
+
 - [ ] **Module Organization**
   - Update Angular module structure to match current best practices
   - Ensure proper lazy loading configuration for all feature modules
@@ -256,6 +272,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ### Features
 
 #### Gallery View (`/client-angular/src/app/features/gallery/`)
+
 - [ ] Complete Netflix-style layout calculations in GalleryLayoutService
 - [ ] Add image lazy loading for performance optimization
 - [ ] Implement category filtering with proper UI controls
@@ -263,8 +280,9 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement infinite scroll for gallery browsing
 
 #### Chat System (`/client-angular/src/app/features/chat/`)
+
 - [ ] Add socket reconnection logic to handle network interruptions
-- [ ] Implement message encryption for private communications
+- [x] Implement end-to-end encryption for private communications
 - [ ] Add typing indicator debouncing to prevent excessive events
 - [ ] Add message delivery status indicators (sent, delivered, read)
 - [ ] Add file attachment support with preview functionality
@@ -272,6 +290,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement offline message queue for disconnected users
 
 #### Ad Management (`/client-angular/src/app/features/ad-management/`)
+
 - [ ] Add image upload with preview and cropping functionality
 - [ ] Add drag-and-drop support for image reordering
 - [ ] Implement county selection map for Norway
@@ -280,6 +299,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement ad boosting and featuring options
 
 #### Authentication (`/client-angular/src/app/features/auth/`)
+
 - [ ] Complete OAuth provider integrations (Google, GitHub, Reddit, Apple)
 - [ ] Add session refresh logic to handle token expiration
 - [ ] Add "Remember Me" functionality with secure storage
@@ -287,6 +307,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add account recovery workflows
 
 #### Travel Itinerary (`/client-angular/src/app/features/touring/`)
+
 - [ ] Implement map visualization for travel routes
 - [ ] Add calendar integration for scheduling
 - [ ] Implement notification system for travel updates
@@ -296,6 +317,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ### Services
 
 #### ChatService (`/client-angular/src/app/core/services/chat.service.ts`)
+
 - [ ] Add offline message queue with persistence
 - [ ] Implement retry logic for failed message delivery
 - [ ] Add presence detection with online/offline indicators
@@ -303,6 +325,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement message encryption/decryption
 
 #### AdService (`/client-angular/src/app/core/services/ad.service.ts`)
+
 - [ ] Add caching layer for frequently accessed ads
 - [ ] Implement infinite scroll with efficient data loading
 - [ ] Add search optimization with filters and sorting
@@ -310,6 +333,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement ad recommendation algorithm
 
 #### ImageService (`/client-angular/src/app/core/services/media.service.ts`)
+
 - [ ] Add image compression before upload
 - [ ] Implement CDN integration for faster delivery
 - [ ] Add image validation for size, dimensions, and content
@@ -317,12 +341,14 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add image optimization pipeline
 
 #### TravelService (`/client-angular/src/app/core/services/travel.service.ts`)
+
 - [ ] Add geolocation services integration
 - [ ] Implement travel history tracking
 - [ ] Add notification scheduling for travel updates
 - [ ] Implement location verification
 
 ### UI Components
+
 - [ ] Create loading spinner directive with customizable appearance
 - [ ] Add error message component with retry functionality
 - [ ] Implement toast notifications system
@@ -330,6 +356,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Create responsive navigation components
 
 ### Testing & Quality
+
 - [ ] Add unit tests for all services with high coverage
 - [ ] Create component test suite for UI validation
 - [ ] Add E2E test scenarios for critical user flows
@@ -337,6 +364,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add visual regression testing
 
 ### Performance
+
 - [ ] Add lazy loading for all feature modules
 - [ ] Implement service worker for offline capabilities
 - [ ] Add client-side caching strategies
@@ -344,6 +372,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement virtual scrolling for large lists
 
 ### Security
+
 - [ ] Complete Content Security Policy configuration
 - [ ] Add input sanitization for all user inputs
 - [ ] Implement XSS protection measures
@@ -353,6 +382,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ## Server-Side TODOs
 
 ### Architecture & Structure
+
 - [ ] Split monolithic controllers into feature modules
 - [ ] Implement proper dependency injection pattern
 - [ ] Add service layer abstractions for business logic
@@ -360,6 +390,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Refactor schema definitions in `SCHEMA_REFACTOR_NEEDED.js`
 
 ### API & Routes
+
 - [ ] Add API versioning (`/api/v1/...`)
 - [ ] Implement proper route documentation
 - [ ] Add OpenAPI/Swagger specs for API documentation
@@ -369,6 +400,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ### Controllers
 
 #### Ad Controller (`/server/components/ads/ad.controller.js`)
+
 - [ ] Add request validation middleware
 - [ ] Add rate limiting for ad creation
 - [ ] Add image processing and optimization
@@ -378,6 +410,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add proper error logging
 
 #### Chat Controller (`/server/components/chat/chat.controller.js`)
+
 - [ ] Add message encryption for privacy
 - [ ] Implement file upload functionality
 - [ ] Add message persistence for offline users
@@ -385,12 +418,14 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement group chat functionality
 
 #### Travel Controller (`/server/controllers/travel.controller.js`)
+
 - [ ] Add validation for travel itinerary data
 - [ ] Implement location verification
 - [ ] Add notification system for travel updates
 - [ ] Implement geofencing for location tracking
 
 ### Models
+
 - [ ] Add comprehensive validation schemas
 - [ ] Implement lifecycle hooks for data processing
 - [ ] Add indexing strategies for performance
@@ -400,12 +435,14 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ### Middleware
 
 #### Request Validator (`/server/middleware/requestValidator.js`)
+
 - [ ] Add schema validation
 - [ ] Add sanitization
 - [ ] Add custom validators
 - [ ] Add validation error handling
 
 #### Security Middleware
+
 - [ ] Add rate limiting for API endpoints
 - [ ] Implement CORS properly with appropriate restrictions
 - [ ] Add request validation for all inputs
@@ -415,6 +452,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ### Services
 
 #### Ad Service (`/server/services/ad.service.js`)
+
 - [ ] Add caching layer for performance
 - [ ] Implement search functionality with filters
 - [ ] Add recommendation engine based on user preferences
@@ -422,19 +460,22 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement ad moderation workflow
 
 #### Chat Service (`/server/services/chat.service.js`)
+
 - [ ] Add message queue for reliable delivery
 - [ ] Implement presence detection system
 - [ ] Add offline support with message storage
 - [ ] Add group chat support with roles
-- [ ] Implement end-to-end encryption
+- [x] Implement end-to-end encryption
 
 #### Travel Service (`/server/services/travel.service.js`)
+
 - [ ] Implement geolocation verification
 - [ ] Add travel history tracking
 - [ ] Implement notification system for travel updates
 - [ ] Add location-based matching algorithm
 
 ### Testing
+
 - [ ] Add controller unit tests
 - [ ] Add service unit tests
 - [ ] Add model unit tests
@@ -445,6 +486,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add security testing for vulnerability detection
 
 ### Performance
+
 - [ ] Add response compression
 - [ ] Implement caching strategies for frequent requests
 - [ ] Add database query optimization
@@ -452,6 +494,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement request batching where appropriate
 
 ### Security
+
 - [ ] Add input sanitization for all user inputs
 - [ ] Implement rate limiting for authentication attempts
 - [ ] Add security headers (HSTS, X-Content-Type-Options, etc.)
@@ -460,6 +503,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add IP blocking for suspicious activity
 
 ### Monitoring
+
 - [ ] Add performance metrics collection
 - [ ] Implement error tracking and alerting
 - [ ] Add usage analytics for feature adoption
@@ -467,6 +511,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement logging infrastructure
 
 ### Documentation
+
 - [ ] Add OpenAPI specifications
 - [ ] Create comprehensive API reference
 - [ ] Add code documentation with JSDoc
@@ -476,12 +521,14 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ## DevOps TODOs
 
 ### CI/CD
+
 - [ ] Set up continuous integration pipeline
 - [ ] Implement automated testing in CI
 - [ ] Add deployment automation
 - [ ] Implement environment-specific configurations
 
 ### Infrastructure
+
 - [ ] Add database migration scripts
 - [ ] Add production build optimization
 - [ ] Add Docker configuration for containerization
@@ -489,6 +536,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Set up monitoring and alerting
 
 ### Backup & Recovery
+
 - [ ] Implement automated database backups
 - [ ] Add disaster recovery procedures
 - [ ] Implement data retention policies
@@ -496,6 +544,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ## Feature TODOs
 
 ### Chat System
+
 - [ ] Add real-time notifications for new messages
 - [ ] Add message history with search functionality
 - [ ] Add file sharing with preview
@@ -503,6 +552,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement group chat with moderation
 
 ### Ad Management
+
 - [ ] Add image upload/optimization pipeline
 - [ ] Add location services for geographic targeting
 - [ ] Add category management with filtering
@@ -510,6 +560,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement ad analytics dashboard
 
 ### Travel Itinerary
+
 - [ ] Implement location verification system
 - [ ] Add notification system for travel updates
 - [ ] Add calendar integration
@@ -517,6 +568,7 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Add map visualization for travel routes
 
 ### Monetization
+
 - [ ] Implement ad boosting and featuring options
 - [ ] Add subscription management for premium features
 - [ ] Implement payment processing integration
@@ -524,11 +576,13 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 - [ ] Implement referral system
 
 ## Progress Tracking
+
 - Current Status: Early Development/Refactoring
 - Next Milestone: Complete Core Infrastructure
 - Priority: Security & Authentication
 
 ## Areas for Improvement
+
 - Refactor monolithic controllers into feature-specific modules
 - Clean up and properly populate the custom Express middleware
 - Split and modularize Angular components for better maintainability
@@ -553,6 +607,13 @@ This section provides links to all documentation files in the project, organized
 - [Documentation Improvements](/docs/documentation-improvements.md) - Summary of documentation improvements
 - [Documentation Index](/docs/DOCUMENTATION_INDEX.md) - Comprehensive index of all documentation
 - [Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.md) - Guidelines for writing documentation
+
+### GitHub Integration
+
+- [GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.md) - Comprehensive strategy for GitHub integration
+- [GitHub Setup Guide](/docs/GITHUB_SETUP.md) - Instructions for setting up GitHub repository
+- [AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.md) - AI-powered GitHub Actions for the project
+- [GitHub Insights](/docs/github-insights/README.md) - Reports and data from GitHub Actions workflows
 
 ### Development Guides
 
@@ -585,6 +646,13 @@ This section provides links to all documentation files in the project, organized
 - [Customization Guide](/docs/CUSTOMIZATION_GUIDE.md) - Guide for using the customization system
 - [Configuration Index](/docs/CONFIG_INDEX.md) - Index of all customizable settings
 - [CSP Configuration](/docs/csp-configuration.md) - Guide for configuring Content Security Policy
+
+### Security Documentation
+
+- [End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.md) - Implementation details of the E2EE chat system
+- [Security Best Practices](/docs/SECURITY_BEST_PRACTICES.md) - Security best practices for the application
+- [Authentication Flow](/docs/AUTHENTICATION_FLOW.md) - Details of the authentication system
+- [Data Protection](/docs/DATA_PROTECTION.md) - How user data is protected in the application
 
 ### Emerald Component Documentation
 

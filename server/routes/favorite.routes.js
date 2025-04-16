@@ -18,10 +18,19 @@ const { authenticate } = require('../middleware/auth');
  */
 
 // Get all favorites for the current user
+// Supports query parameters for filtering and sorting:
+// - sort: newest, oldest, price-asc, price-desc, title-asc, title-desc, priority-high, priority-low
+// - category: filter by ad category
+// - county: filter by county
+// - city: filter by city
+// - search: search in title, description, and notes
 router.get('/', authenticate, favoriteController.getFavorites);
 
 // Get favorite ad IDs for the current user (for efficient checking on the client)
 router.get('/ids', authenticate, favoriteController.getFavoriteIds);
+
+// Get all tags used by the current user
+router.get('/tags', authenticate, favoriteController.getUserTags);
 
 // Check if an ad is favorited by the current user
 router.get('/check/:adId', authenticate, favoriteController.checkFavorite);
@@ -29,11 +38,23 @@ router.get('/check/:adId', authenticate, favoriteController.checkFavorite);
 // Add an ad to favorites
 router.post('/:adId', authenticate, favoriteController.addFavorite);
 
+// Add multiple ads to favorites in a batch operation
+router.post('/batch', authenticate, favoriteController.addFavoritesBatch);
+
 // Remove an ad from favorites
 router.delete('/:adId', authenticate, favoriteController.removeFavorite);
 
+// Remove multiple ads from favorites in a batch operation
+router.delete('/batch', authenticate, favoriteController.removeFavoritesBatch);
+
 // Update favorite notes
 router.patch('/:adId/notes', authenticate, favoriteController.updateFavoriteNotes);
+
+// Update favorite tags
+router.patch('/:adId/tags', authenticate, favoriteController.updateFavoriteTags);
+
+// Update favorite priority
+router.patch('/:adId/priority', authenticate, favoriteController.updateFavoritePriority);
 
 // Toggle notifications for a favorite
 router.patch('/:adId/notifications', authenticate, favoriteController.toggleNotifications);

@@ -61,6 +61,49 @@ if (mongoose.models.ChatRoom) {
         type: Number,
         default: 1,
       },
+      encryption: {
+        enabled: {
+          type: Boolean,
+          default: false,
+        },
+        enabledBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+        enabledAt: {
+          type: Date,
+        },
+        disabledBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+        disabledAt: {
+          type: Date,
+        },
+      },
+      encryptedKeys: [
+        {
+          participantId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+          },
+          encryptedKey: {
+            type: String,
+          },
+          createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+          },
+          createdAt: {
+            type: Date,
+            default: Date.now,
+          },
+          updatedAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+      ],
       // For message auto-deletion
       messageExpiryEnabled: {
         type: Boolean,

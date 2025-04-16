@@ -107,6 +107,9 @@
               <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
             </a>
           </li>
+          <li class="nav-item" *ngIf="isAuthenticated && isAdmin">
+            <app-alert-notifications></app-alert-notifications>
+          </li>
           <li class="nav-item" *ngIf="!isAuthenticated">
             <a class="nav-link btn-outline-login" routerLink="/auth/login" routerLinkActive="active"
               >Login</a

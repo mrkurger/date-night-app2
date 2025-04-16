@@ -19,6 +19,7 @@ import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
+import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
@@ -34,12 +35,14 @@ import { NgIf } from '@angular/common';
     RouterLinkActive,
     NotificationComponent,
     DebugInfoComponent,
+    AlertNotificationsComponent,
     NgIf,
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   isAdvertiser = false;
+  isAdmin = false;
   username = '';
   unreadMessages = 0;
   notificationCount = 0;
@@ -112,6 +115,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (user) {
           this.username = user.username;
           this.isAdvertiser = user.role === 'advertiser' || user.role === 'admin';
+          this.isAdmin = user.role === 'admin';
 
           // Initialize chat service if authenticated
           this.initializeChat();

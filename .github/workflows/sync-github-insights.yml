@@ -1,0 +1,227 @@
+name: Sync GitHub Insights
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync-insights:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      security-events: read
+      pull-requests: read
+      issues: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install @octokit/rest
+
+      - name: Generate GitHub Insights Report
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const date = new Date().toISOString().split('T')[0];
+
+            let report = `# GitHub Insights Report\n\n`;
+            report += `*Generated on: ${date}*\n\n`;
+
+            // Get repository info
+            const repoInfo = await octokit.repos.get({
+              owner,
+              repo
+            });
+
+            report += `## Repository Information\n\n`;
+            report += `- **Name**: ${repoInfo.data.name}\n`;
+            report += `- **Description**: ${repoInfo.data.description || 'No description'}\n`;
+            report += `- **Stars**: ${repoInfo.data.stargazers_count}\n`;
+            report += `- **Forks**: ${repoInfo.data.forks_count}\n`;
+            report += `- **Open Issues**: ${repoInfo.data.open_issues_count}\n`;
+            report += `- **Default Branch**: ${repoInfo.data.default_branch}\n\n`;
+
+            // Get workflow runs
+            const workflowRuns = await octokit.actions.listWorkflowRunsForRepo({
+              owner,
+              repo,
+              per_page: 10
+            });
+
+            report += `## Recent Workflow Runs\n\n`;
+            report += `| Workflow | Status | Started | Duration |\n`;
+            report += `|----------|--------|---------|----------|\n`;
+
+            for (const run of workflowRuns.data.workflow_runs.slice(0, 5)) {
+              const startTime = new Date(run.created_at);
+              const endTime = run.updated_at ? new Date(run.updated_at) : new Date();
+              const durationMs = endTime - startTime;
+              const durationMin = Math.floor(durationMs / 60000);
+              const durationSec = Math.floor((durationMs % 60000) / 1000);
+              
+              report += `| ${run.name} | ${run.conclusion || run.status} | ${startTime.toISOString().split('T')[0]} | ${durationMin}m ${durationSec}s |\n`;
+            }
+
+            report += `\n`;
+
+            // Get Dependabot alerts
+            try {
+              const alerts = await octokit.dependabot.listAlertsForRepo({
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              });
+              
+              report += `## Dependabot Security Alerts\n\n`;
+              
+              if (alerts.data.length === 0) {
+                report += `✅ No open security alerts found.\n\n`;
+              } else {
+                report += `### Open Alerts (${alerts.data.length})\n\n`;
+                
+                const severityOrder = ['critical', 'high', 'medium', 'low'];
+                const alertsBySeverity = {};
+                
+                severityOrder.forEach(severity => {
+                  alertsBySeverity[severity] = [];
+                });
+                
+                alerts.data.forEach(alert => {
+                  const severity = alert.security_advisory.severity.toLowerCase();
+                  if (alertsBySeverity[severity]) {
+                    alertsBySeverity[severity].push(alert);
+                  }
+                });
+                
+                severityOrder.forEach(severity => {
+                  const severityAlerts = alertsBySeverity[severity];
+                  if (severityAlerts.length > 0) {
+                    report += `#### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
+                    
+                    severityAlerts.forEach(alert => {
+                      report += `- **${alert.security_advisory.summary}** in \`${alert.dependency.package.name}\`\n`;
+                    });
+                    
+                    report += `\n`;
+                  }
+                });
+              }
+            } catch (error) {
+              report += `## Dependabot Security Alerts\n\n`;
+              report += `⚠️ Unable to fetch security alerts: ${error.message}\n\n`;
+            }
+
+            // Get recent pull requests
+            const pullRequests = await octokit.pulls.list({
+              owner,
+              repo,
+              state: 'all',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 5
+            });
+
+            report += `## Recent Pull Requests\n\n`;
+
+            if (pullRequests.data.length === 0) {
+              report += `No recent pull requests found.\n\n`;
+            } else {
+              report += `| Title | Status | Author | Updated |\n`;
+              report += `|-------|--------|--------|--------|\n`;
+              
+              pullRequests.data.forEach(pr => {
+                const status = pr.state === 'open' ? '🔄 Open' : (pr.merged_at ? '✅ Merged' : '❌ Closed');
+                report += `| [#${pr.number}: ${pr.title}](${pr.html_url}) | ${status} | ${pr.user.login} | ${new Date(pr.updated_at).toISOString().split('T')[0]} |\n`;
+              });
+              
+              report += `\n`;
+            }
+
+            // Get recent issues
+            const issues = await octokit.issues.listForRepo({
+              owner,
+              repo,
+              state: 'all',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 5
+            });
+
+            const issuesOnly = issues.data.filter(issue => !issue.pull_request);
+
+            report += `## Recent Issues\n\n`;
+
+            if (issuesOnly.length === 0) {
+              report += `No recent issues found.\n\n`;
+            } else {
+              report += `| Title | Status | Author | Updated |\n`;
+              report += `|-------|--------|--------|--------|\n`;
+              
+              issuesOnly.forEach(issue => {
+                const status = issue.state === 'open' ? '🔄 Open' : '✅ Closed';
+                report += `| [#${issue.number}: ${issue.title}](${issue.html_url}) | ${status} | ${issue.user.login} | ${new Date(issue.updated_at).toISOString().split('T')[0]} |\n`;
+              });
+              
+              report += `\n`;
+            }
+
+            // Create directory if it doesn't exist
+            try {
+              fs.mkdirSync('docs/github-insights', { recursive: true });
+            } catch (error) {
+              console.log('Directory already exists');
+            }
+
+            // Write report to file
+            fs.writeFileSync('docs/github-insights/insights-report.md', report);
+
+            // Create a summary file for AI analysis
+            const aiSummary = `# GitHub Insights for AI Analysis\n\n` +
+              `*Generated on: ${date}*\n\n` +
+              `This file contains structured data from GitHub that can be analyzed by AI assistants to provide insights and recommendations for the project.\n\n` +
+              `## Repository Stats\n\n` +
+              `- Stars: ${repoInfo.data.stargazers_count}\n` +
+              `- Forks: ${repoInfo.data.forks_count}\n` +
+              `- Open Issues: ${repoInfo.data.open_issues_count}\n` +
+              `- Watchers: ${repoInfo.data.subscribers_count || 0}\n\n` +
+              `## Workflow Status\n\n` +
+              workflowRuns.data.workflow_runs.slice(0, 10).map(run => 
+                `- ${run.name}: ${run.conclusion || run.status}`
+              ).join('\n') + 
+              `\n\n## Security Alerts\n\n` +
+              (alerts?.data ? 
+                `Total Open Alerts: ${alerts.data.length}\n` +
+                severityOrder.map(severity => 
+                  `- ${severity}: ${alertsBySeverity[severity]?.length || 0}`
+                ).join('\n')
+                : 'Unable to fetch security alerts') +
+              `\n\n## Recent Activity\n\n` +
+              `- Pull Requests: ${pullRequests.data.length} recent updates\n` +
+              `- Issues: ${issuesOnly.length} recent updates\n`;
+
+            fs.writeFileSync('docs/github-insights/ai-analysis-data.md', aiSummary);
+
+            console.log('GitHub insights report generated successfully');
+
+      - name: Commit Report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/github-insights/
+          git commit -m "docs: update GitHub insights report [skip ci]" || echo "No changes to commit"
+          git push

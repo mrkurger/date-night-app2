@@ -7,13 +7,19 @@
 // - ENABLE_REAL_TIME_FEATURES: Enable real-time chat features (default: true)
 // - ENABLE_MEDIA_SHARING: Enable media sharing in chat (default: true)
 // - ENABLE_EMOJI_PICKER: Enable emoji picker in chat (default: true)
+// - ENABLE_END_TO_END_ENCRYPTION: Enable end-to-end encryption (default: true)
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
-import { ChatComponent } from './chat.component';
+
+// Chat Components
+import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { ChatMessageComponent } from '../../shared/components/chat-message/chat-message.component';
+import { ChatSettingsComponent } from '../../shared/components/chat-settings/chat-settings.component';
 
 // Material Modules
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,14 +31,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 
-// Emerald Components
-import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
+// Pipes
+import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
+import { FileSizePipe } from '../../shared/pipes/file-size.pipe';
+import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 
-const routes: Routes = [
-  { path: '', component: ChatComponent },
-  { path: ':userId', component: ChatComponent },
-];
+// Routes
+import { CHAT_ROUTES } from './chat.routes';
 
 @NgModule({
   imports: [
@@ -40,7 +45,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(CHAT_ROUTES),
 
     // Material Modules
     MatDialogModule,
@@ -52,12 +57,16 @@ const routes: Routes = [
     MatTooltipModule,
     MatTabsModule,
 
-    // Emerald Components
-    AvatarComponent,
-    SkeletonLoaderComponent,
+    // Components
+    ChatListComponent,
+    ChatRoomComponent,
+    ChatMessageComponent,
+    ChatSettingsComponent,
 
-    // Standalone Component
-    ChatComponent,
+    // Pipes
+    TimeAgoPipe,
+    FileSizePipe,
+    LinkifyPipe,
   ],
 })
 export class ChatModule {}

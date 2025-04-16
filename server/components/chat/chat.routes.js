@@ -10,6 +10,7 @@
 const express = require('express');
 const router = express.Router();
 const chatController = require('./chat.controller');
+const encryptionRoutes = require('./encryption.routes');
 const { protect } = require('../../middleware/auth');
 
 // Apply authentication middleware to all chat routes
@@ -50,5 +51,8 @@ router.post('/rooms/:roomId/encryption', chatController.setupRoomEncryption);
 
 // Update message expiry settings
 router.post('/rooms/:roomId/expiry', chatController.updateMessageExpiry);
+
+// Mount encryption routes
+router.use('/encryption', encryptionRoutes);
 
 module.exports = router;

@@ -76,29 +76,85 @@ export class EncryptionService {
         return false;
       }
 
+      // Load user's key pair
       const storedKeys = this.getKeysFromStorage(userId);
       if (storedKeys) {
         // Import the stored keys
         this.keyPair = await this.importKeyPair(storedKeys);
-        this.isInitialized = true;
-        return true;
+      } else {
+        // Generate new keys if none exist
+        console.log('Generating new encryption keys for user');
+        this.keyPair = await this.generateKeyPair();
+
+        // Export and store the keys
+        const exportedKeys = await this.exportKeyPair(this.keyPair);
+        this.storeKeys(userId, exportedKeys);
+
+        // Register public key with the server
+        await this.registerPublicKey(exportedKeys.publicKey);
       }
 
-      // Generate new keys if none exist
-      this.keyPair = await this.generateKeyPair();
-
-      // Export and store the keys
-      const exportedKeys = await this.exportKeyPair(this.keyPair);
-      this.storeKeys(userId, exportedKeys);
-
-      // Register public key with the server
-      await this.registerPublicKey(exportedKeys.publicKey);
+      // Load room keys from localStorage
+      await this.loadStoredRoomKeys();
 
       this.isInitialized = true;
+      console.log('Encryption service initialized successfully');
       return true;
     } catch (error) {
       console.error('Error initializing encryption service:', error);
       return false;
+    }
+  }
+
+  /**
+   * Load all stored room keys from localStorage into memory
+   */
+  private async loadStoredRoomKeys(): Promise<void> {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      return;
+    }
+
+    try {
+      const roomKeysKey = `${KEY_STORAGE_PREFIX}${userId}_rooms`;
+      const storedKeys = localStorage.getItem(roomKeysKey);
+      if (!storedKeys) {
+        return;
+      }
+
+      const roomKeysMap = JSON.parse(storedKeys);
+      const roomIds = Object.keys(roomKeysMap);
+
+      console.log(`Loading ${roomIds.length} stored room keys`);
+
+      for (const roomId of roomIds) {
+        try {
+          const keyBase64 = roomKeysMap[roomId];
+          if (!keyBase64) continue;
+
+          // Import the symmetric key
+          const symmetricKey = await window.crypto.subtle.importKey(
+            'raw',
+            this.base64ToArrayBuffer(keyBase64),
+            {
+              name: SYMMETRIC_ALGORITHM,
+              length: 256,
+            },
+            true,
+            ['encrypt', 'decrypt']
+          );
+
+          // Store in memory
+          this.roomKeys.set(roomId, symmetricKey);
+        } catch (importError) {
+          console.error(`Error importing stored key for room ${roomId}:`, importError);
+          // Continue with other keys
+        }
+      }
+
+      console.log(`Successfully loaded ${this.roomKeys.size} room keys`);
+    } catch (error) {
+      console.error('Error loading stored room keys:', error);
     }
   }
 
@@ -208,38 +264,148 @@ export class EncryptionService {
 
   /**
    * Setup encryption for a chat room
+   * This method handles both creating new room encryption and joining existing encrypted rooms
    */
   setupRoomEncryption(roomId: string): Observable<boolean> {
     if (!this.isEncryptionAvailable()) {
+      console.warn('Encryption is not available, skipping room encryption setup');
       return of(false);
     }
 
-    return this.http
-      .post<{ success: boolean; encryptedKey: string }>(`${this.apiUrl}/setup-room`, { roomId })
-      .pipe(
-        switchMap(async response => {
-          if (!response.success) {
-            return false;
-          }
+    if (!this.keyPair) {
+      console.error('Key pair not available for room encryption setup');
+      return of(false);
+    }
 
-          try {
+    // First check if we already have a key for this room
+    if (this.roomKeys.has(roomId)) {
+      console.log(`Room key already exists for room ${roomId}`);
+      return of(true);
+    }
+
+    // Export our public key for the server
+    return from(this.exportKeyPair(this.keyPair)).pipe(
+      switchMap(keys => {
+        return this.http.post<{
+          success: boolean;
+          encryptedKey?: string;
+          isNewSetup?: boolean;
+          roomKeyId?: string;
+        }>(`${this.apiUrl}/setup-room`, {
+          roomId,
+          publicKey: keys.publicKey,
+        });
+      }),
+      switchMap(async response => {
+        if (!response.success) {
+          console.error('Server reported failure in room encryption setup');
+          return false;
+        }
+
+        try {
+          if (response.isNewSetup) {
+            // We're the first to set up encryption for this room
             // Generate a symmetric key for the room
             const symmetricKey = await this.generateSymmetricKey();
+
+            // Export the key to raw format for sending to server
+            const exportedKey = await window.crypto.subtle.exportKey('raw', symmetricKey);
+            const keyBase64 = this.arrayBufferToBase64(exportedKey);
+
+            // Send the symmetric key to the server (encrypted for each participant)
+            await this.http
+              .post(`${this.apiUrl}/room-key/${roomId}`, {
+                symmetricKey: keyBase64,
+                keyId: response.roomKeyId,
+              })
+              .toPromise();
 
             // Store the key in memory
             this.roomKeys.set(roomId, symmetricKey);
 
+            // Also store in localStorage for persistence
+            this.storeRoomKey(roomId, keyBase64);
+
+            console.log(`Created new encryption for room ${roomId}`);
             return true;
-          } catch (error) {
-            console.error('Error setting up room encryption:', error);
+          } else if (response.encryptedKey) {
+            // We're joining an existing encrypted room
+            // Decrypt the room key with our private key
+            const encryptedKeyBuffer = this.base64ToArrayBuffer(response.encryptedKey);
+
+            if (!this.keyPair.privateKey) {
+              console.error('Private key not available for decryption');
+              return false;
+            }
+
+            try {
+              const decryptedKeyBuffer = await window.crypto.subtle.decrypt(
+                { name: KEY_PAIR_ALGORITHM },
+                this.keyPair.privateKey,
+                encryptedKeyBuffer
+              );
+
+              // Import the symmetric key
+              const symmetricKey = await window.crypto.subtle.importKey(
+                'raw',
+                decryptedKeyBuffer,
+                { name: SYMMETRIC_ALGORITHM, length: 256 },
+                true,
+                ['encrypt', 'decrypt']
+              );
+
+              // Store the key in memory
+              this.roomKeys.set(roomId, symmetricKey);
+
+              // Also store in localStorage for persistence
+              this.storeRoomKey(roomId, this.arrayBufferToBase64(decryptedKeyBuffer));
+
+              console.log(`Joined existing encrypted room ${roomId}`);
+              return true;
+            } catch (decryptError) {
+              console.error('Error decrypting room key:', decryptError);
+              return false;
+            }
+          } else {
+            console.error('No encrypted key provided for existing room');
             return false;
           }
-        }),
-        catchError(error => {
+        } catch (error) {
           console.error('Error setting up room encryption:', error);
-          return of(false);
-        })
-      );
+          return false;
+        }
+      }),
+      catchError(error => {
+        console.error('Error in room encryption setup process:', error);
+        return of(false);
+      })
+    );
+  }
+
+  /**
+   * Store a room key in localStorage for persistence
+   */
+  private storeRoomKey(roomId: string, keyBase64: string): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      console.error('User ID not available for storing room key');
+      return;
+    }
+
+    try {
+      // Get existing room keys or initialize empty object
+      const roomKeysKey = `${KEY_STORAGE_PREFIX}${userId}_rooms`;
+      const existingKeys = localStorage.getItem(roomKeysKey);
+      const roomKeysMap = existingKeys ? JSON.parse(existingKeys) : {};
+
+      // Add or update this room's key
+      roomKeysMap[roomId] = keyBase64;
+
+      // Store back to localStorage
+      localStorage.setItem(roomKeysKey, JSON.stringify(roomKeysMap));
+    } catch (error) {
+      console.error('Error storing room key:', error);
+    }
   }
 
   /**
@@ -258,6 +424,10 @@ export class EncryptionService {
 
   /**
    * Get the room key for a specific room
+   * This method tries multiple sources to get the key:
+   * 1. In-memory cache
+   * 2. Local storage
+   * 3. Server (which will encrypt it with our public key)
    */
   async getRoomKey(roomId: string): Promise<CryptoKey | null> {
     // Check if we already have the key in memory
@@ -266,12 +436,40 @@ export class EncryptionService {
     }
 
     try {
-      // Get the encrypted room key from the server
+      // Try to get the key from localStorage
+      const storedKey = this.getStoredRoomKey(roomId);
+      if (storedKey) {
+        try {
+          // Import the symmetric key from the stored raw format
+          const symmetricKey = await window.crypto.subtle.importKey(
+            'raw',
+            this.base64ToArrayBuffer(storedKey),
+            {
+              name: SYMMETRIC_ALGORITHM,
+              length: 256,
+            },
+            true,
+            ['encrypt', 'decrypt']
+          );
+
+          // Store in memory for future use
+          this.roomKeys.set(roomId, symmetricKey);
+          console.log(`Loaded room key for ${roomId} from local storage`);
+          return symmetricKey;
+        } catch (importError) {
+          console.error('Error importing stored room key:', importError);
+          // Continue to try getting from server
+        }
+      }
+
+      // If not in localStorage, get from server
+      console.log(`Requesting room key for ${roomId} from server`);
       const response = await this.http
-        .get<{ encryptedKey: string }>(`${this.apiUrl}/room-key/${roomId}`)
+        .get<{ encryptedKey: string; success: boolean }>(`${this.apiUrl}/room-key/${roomId}`)
         .toPromise();
 
-      if (!response || !response.encryptedKey) {
+      if (!response || !response.success || !response.encryptedKey) {
+        console.error('Failed to get room key from server');
         return null;
       }
 
@@ -279,7 +477,7 @@ export class EncryptionService {
       const encryptedKeyBuffer = this.base64ToArrayBuffer(response.encryptedKey);
 
       if (!this.keyPair || !this.keyPair.privateKey) {
-        console.error('Private key not available');
+        console.error('Private key not available for room key decryption');
         return null;
       }
 
@@ -306,9 +504,37 @@ export class EncryptionService {
       // Store the key in memory
       this.roomKeys.set(roomId, symmetricKey);
 
+      // Also store in localStorage for persistence
+      this.storeRoomKey(roomId, this.arrayBufferToBase64(decryptedKeyBuffer));
+
+      console.log(`Retrieved and stored room key for ${roomId} from server`);
       return symmetricKey;
     } catch (error) {
       console.error('Error getting room key:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get a stored room key from localStorage
+   */
+  private getStoredRoomKey(roomId: string): string | null {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      return null;
+    }
+
+    try {
+      const roomKeysKey = `${KEY_STORAGE_PREFIX}${userId}_rooms`;
+      const storedKeys = localStorage.getItem(roomKeysKey);
+      if (!storedKeys) {
+        return null;
+      }
+
+      const roomKeysMap = JSON.parse(storedKeys);
+      return roomKeysMap[roomId] || null;
+    } catch (error) {
+      console.error('Error retrieving stored room key:', error);
       return null;
     }
   }
@@ -416,6 +642,151 @@ export class EncryptionService {
       binary += String.fromCharCode(bytes[i]);
     }
     return btoa(binary);
+  }
+
+  /**
+   * Rotate the encryption key for a room
+   * This enhances security by periodically changing the encryption key
+   * @param roomId The ID of the room to rotate keys for
+   * @returns Observable<boolean> Success status
+   */
+  rotateRoomKey(roomId: string): Observable<boolean> {
+    if (!this.isEncryptionAvailable() || !this.keyPair) {
+      console.warn('Encryption not available for key rotation');
+      return of(false);
+    }
+
+    return from(this.exportKeyPair(this.keyPair)).pipe(
+      switchMap(keys => {
+        return this.http.post<{
+          success: boolean;
+          roomKeyId?: string;
+        }>(`${this.apiUrl}/rotate-key/${roomId}`, {
+          publicKey: keys.publicKey,
+        });
+      }),
+      switchMap(async response => {
+        if (!response.success) {
+          console.error('Server reported failure in key rotation');
+          return false;
+        }
+
+        try {
+          // Generate a new symmetric key for the room
+          const newSymmetricKey = await this.generateSymmetricKey();
+
+          // Export the key to raw format for sending to server
+          const exportedKey = await window.crypto.subtle.exportKey('raw', newSymmetricKey);
+          const keyBase64 = this.arrayBufferToBase64(exportedKey);
+
+          // Send the new symmetric key to the server
+          await this.http
+            .post(`${this.apiUrl}/room-key/${roomId}`, {
+              symmetricKey: keyBase64,
+              keyId: response.roomKeyId,
+              isRotation: true,
+            })
+            .toPromise();
+
+          // Update the key in memory
+          this.roomKeys.set(roomId, newSymmetricKey);
+
+          // Update in localStorage
+          this.storeRoomKey(roomId, keyBase64);
+
+          console.log(`Successfully rotated encryption key for room ${roomId}`);
+          return true;
+        } catch (error) {
+          console.error('Error rotating room key:', error);
+          return false;
+        }
+      }),
+      catchError(error => {
+        console.error('Error in key rotation process:', error);
+        return of(false);
+      })
+    );
+  }
+
+  /**
+   * Schedule automatic key rotation for a room
+   * @param roomId The ID of the room to schedule key rotation for
+   * @param intervalDays Number of days between rotations (default: 30)
+   */
+  scheduleKeyRotation(roomId: string, intervalDays = 30): void {
+    if (!this.isEncryptionAvailable()) {
+      return;
+    }
+
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      return;
+    }
+
+    try {
+      // Store the last rotation time and interval
+      const rotationKey = `${KEY_STORAGE_PREFIX}${userId}_rotation`;
+      const rotationData = localStorage.getItem(rotationKey);
+      const rotations = rotationData ? JSON.parse(rotationData) : {};
+
+      // Set the last rotation time to now
+      rotations[roomId] = {
+        lastRotation: Date.now(),
+        intervalDays: intervalDays,
+      };
+
+      localStorage.setItem(rotationKey, JSON.stringify(rotations));
+
+      console.log(`Scheduled key rotation for room ${roomId} every ${intervalDays} days`);
+    } catch (error) {
+      console.error('Error scheduling key rotation:', error);
+    }
+  }
+
+  /**
+   * Check if any room keys need rotation and perform rotation if needed
+   * This should be called periodically, e.g., when the app starts
+   */
+  checkAndPerformKeyRotations(): void {
+    if (!this.isEncryptionAvailable()) {
+      return;
+    }
+
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      return;
+    }
+
+    try {
+      const rotationKey = `${KEY_STORAGE_PREFIX}${userId}_rotation`;
+      const rotationData = localStorage.getItem(rotationKey);
+      if (!rotationData) {
+        return;
+      }
+
+      const rotations = JSON.parse(rotationData);
+      const now = Date.now();
+
+      Object.entries(rotations).forEach(([roomId, data]: [string, any]) => {
+        const { lastRotation, intervalDays } = data;
+        const rotationInterval = intervalDays * 24 * 60 * 60 * 1000; // Convert days to ms
+
+        if (now - lastRotation >= rotationInterval) {
+          console.log(`Key rotation needed for room ${roomId}`);
+
+          // Perform key rotation
+          this.rotateRoomKey(roomId).subscribe(success => {
+            if (success) {
+              // Update last rotation time
+              rotations[roomId].lastRotation = now;
+              localStorage.setItem(rotationKey, JSON.stringify(rotations));
+            }
+          });
+        }
+      });
+    } catch (error) {
+      console.error('Error checking for key rotations:', error);
+    }
   }
 
   /**

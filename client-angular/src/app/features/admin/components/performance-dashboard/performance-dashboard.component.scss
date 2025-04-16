@@ -1,0 +1,104 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-card {
+  height: 400px;
+}
+
+.chart-container {
+  height: 320px;
+}
+
+.endpoints-list-card {
+  margin-bottom: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.url-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 320px;
+}
+
+// HTTP method chip styles
+.method-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.method-get {
+  background-color: #4caf50;
+  color: white;
+}
+
+.method-post {
+  background-color: #2196f3;
+  color: white;
+}
+
+.method-put {
+  background-color: #ff9800;
+  color: white;
+}
+
+.method-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.method-patch {
+  background-color: #9c27b0;
+  color: white;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

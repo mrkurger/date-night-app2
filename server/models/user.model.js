@@ -120,8 +120,17 @@ if (mongoose.models.User) {
         maxlength: 500,
       },
       // For end-to-end encryption
-      publicKey: {
-        type: String,
+      encryption: {
+        publicKey: {
+          type: String,
+        },
+        keyRegisteredAt: {
+          type: Date,
+        },
+        encryptionEnabled: {
+          type: Boolean,
+          default: true,
+        },
       },
       preferences: {
         notifications: {

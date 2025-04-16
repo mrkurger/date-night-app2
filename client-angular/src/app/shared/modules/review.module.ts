@@ -1,0 +1,47 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+
+// Import all review-related components
+import { ReviewFormComponent } from '../components/review-form/review-form.component';
+import { ReviewListComponent } from '../components/review-list/review-list.component';
+import { ReviewSummaryComponent } from '../components/review-summary/review-summary.component';
+import { ReviewDialogComponent } from '../components/review-dialog/review-dialog.component';
+import { ResponseDialogComponent } from '../components/response-dialog/response-dialog.component';
+import { ReportDialogComponent } from '../components/report-dialog/report-dialog.component';
+import { StarRatingComponent } from '../components/star-rating/star-rating.component';
+
+/**
+ * Review Module
+ *
+ * This module bundles all review-related components for easier importing
+ * in feature modules. It includes components for displaying, creating,
+ * and interacting with reviews.
+ */
+@NgModule({
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    // Import all standalone components
+    ReviewFormComponent,
+    ReviewListComponent,
+    ReviewSummaryComponent,
+    ReviewDialogComponent,
+    ResponseDialogComponent,
+    ReportDialogComponent,
+    StarRatingComponent,
+  ],
+  exports: [
+    // Export all components for use in other modules
+    ReviewFormComponent,
+    ReviewListComponent,
+    ReviewSummaryComponent,
+    ReviewDialogComponent,
+    ResponseDialogComponent,
+    ReportDialogComponent,
+    StarRatingComponent,
+  ],
+})
+export class ReviewModule {}

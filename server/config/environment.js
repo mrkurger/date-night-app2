@@ -25,6 +25,7 @@ const config = {
     jwtSecret: process.env.JWT_SECRET || 'dev_jwt_secret',
     sessionSecret: process.env.SESSION_SECRET || 'dev_session_secret',
     clientUrl: process.env.CLIENT_URL || 'http://localhost:4200', // Updated default Angular port
+    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3000/api', // Base URL for internal API calls
   },
   test: {
     port: process.env.PORT || 3001,
@@ -32,6 +33,7 @@ const config = {
     jwtSecret: process.env.JWT_SECRET || 'test_jwt_secret',
     sessionSecret: process.env.SESSION_SECRET || 'test_session_secret',
     clientUrl: process.env.CLIENT_URL || 'http://localhost:4200',
+    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001/api', // Base URL for internal API calls
   },
   production: {
     port: process.env.PORT,
@@ -39,6 +41,7 @@ const config = {
     jwtSecret: process.env.JWT_SECRET,
     sessionSecret: process.env.SESSION_SECRET,
     clientUrl: process.env.CLIENT_URL,
+    apiBaseUrl: process.env.API_BASE_URL || '/api', // Default to relative path in production
   },
 };
 

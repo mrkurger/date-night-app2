@@ -25,7 +25,17 @@ class FavoriteController {
   async getFavorites(req, res, next) {
     try {
       const userId = req.user._id;
-      const favorites = await Favorite.findByUser(userId);
+
+      // Extract query parameters for filtering and sorting
+      const { sort, category, county, city, search } = req.query;
+
+      // Build query options
+      const options = {
+        sort: this.parseSortOption(sort),
+        filters: this.buildFilters({ category, county, city, search }),
+      };
+
+      const favorites = await Favorite.findByUser(userId, options);
 
       res.status(200).json(favorites);
     } catch (error) {
@@ -100,6 +110,8 @@ class FavoriteController {
         ad: adId,
         notes: req.body.notes || '',
         notificationsEnabled: req.body.notificationsEnabled !== false,
+        tags: req.body.tags || [],
+        priority: req.body.priority || 'normal',
       });
 
       await favorite.save();
@@ -108,6 +120,63 @@ class FavoriteController {
     } catch (error) {
       logger.error('Error adding favorite:', error);
       next(new AppError('Failed to add favorite', 500));
+    }
+  }
+
+  /**
+   * Add multiple ads to favorites in a batch operation
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  async addFavoritesBatch(req, res, next) {
+    try {
+      const userId = req.user._id;
+      const { adIds, notes, notificationsEnabled, tags, priority } = req.body;
+
+      if (!adIds || !Array.isArray(adIds) || adIds.length === 0) {
+        return next(new AppError('No ad IDs provided', 400));
+      }
+
+      // Validate that all ads exist
+      const ads = await Ad.find({ _id: { $in: adIds } });
+      if (ads.length !== adIds.length) {
+        const foundIds = ads.map(ad => ad._id.toString());
+        const missingIds = adIds.filter(id => !foundIds.includes(id));
+        return next(new AppError(`Some ads were not found: ${missingIds.join(', ')}`, 404));
+      }
+
+      // Find existing favorites to avoid duplicates
+      const existingFavorites = await Favorite.find({
+        user: userId,
+        ad: { $in: adIds },
+      });
+
+      const existingAdIds = existingFavorites.map(fav => fav.ad.toString());
+      const newAdIds = adIds.filter(id => !existingAdIds.includes(id));
+
+      // Create new favorites
+      if (newAdIds.length > 0) {
+        const favoritesToCreate = newAdIds.map(adId => ({
+          user: userId,
+          ad: adId,
+          notes: notes || '',
+          notificationsEnabled: notificationsEnabled !== false,
+          tags: tags || [],
+          priority: priority || 'normal',
+        }));
+
+        await Favorite.insertMany(favoritesToCreate);
+      }
+
+      res.status(201).json({
+        message: 'Batch favorite operation completed',
+        added: newAdIds.length,
+        alreadyFavorited: existingAdIds.length,
+      });
+    } catch (error) {
+      logger.error('Error adding favorites batch:', error);
+      next(new AppError('Failed to add favorites batch', 500));
     }
   }
 
@@ -132,6 +201,36 @@ class FavoriteController {
     } catch (error) {
       logger.error('Error removing favorite:', error);
       next(new AppError('Failed to remove favorite', 500));
+    }
+  }
+
+  /**
+   * Remove multiple ads from favorites in a batch operation
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  async removeFavoritesBatch(req, res, next) {
+    try {
+      const userId = req.user._id;
+      const { adIds } = req.body;
+
+      if (!adIds || !Array.isArray(adIds) || adIds.length === 0) {
+        return next(new AppError('No ad IDs provided', 400));
+      }
+
+      const result = await Favorite.deleteMany({
+        user: userId,
+        ad: { $in: adIds },
+      });
+
+      res.status(200).json({
+        message: 'Batch removal completed',
+        removed: result.deletedCount,
+      });
+    } catch (error) {
+      logger.error('Error removing favorites batch:', error);
+      next(new AppError('Failed to remove favorites batch', 500));
     }
   }
 
@@ -191,6 +290,158 @@ class FavoriteController {
       logger.error('Error toggling favorite notifications:', error);
       next(new AppError('Failed to toggle notifications', 500));
     }
+  }
+
+  /**
+   * Update favorite tags
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  async updateFavoriteTags(req, res, next) {
+    try {
+      const userId = req.user._id;
+      const adId = req.params.adId;
+      const { tags } = req.body;
+
+      if (!Array.isArray(tags)) {
+        return next(new AppError('Tags must be an array', 400));
+      }
+
+      const favorite = await Favorite.findOne({ user: userId, ad: adId });
+
+      if (!favorite) {
+        return next(new AppError('Favorite not found', 404));
+      }
+
+      favorite.tags = tags;
+      await favorite.save();
+
+      res.status(200).json({
+        message: 'Favorite tags updated',
+        tags: favorite.tags,
+      });
+    } catch (error) {
+      logger.error('Error updating favorite tags:', error);
+      next(new AppError('Failed to update favorite tags', 500));
+    }
+  }
+
+  /**
+   * Update favorite priority
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  async updateFavoritePriority(req, res, next) {
+    try {
+      const userId = req.user._id;
+      const adId = req.params.adId;
+      const { priority } = req.body;
+
+      const validPriorities = ['low', 'normal', 'high'];
+      if (!validPriorities.includes(priority)) {
+        return next(new AppError('Invalid priority value. Must be low, normal, or high', 400));
+      }
+
+      const favorite = await Favorite.findOne({ user: userId, ad: adId });
+
+      if (!favorite) {
+        return next(new AppError('Favorite not found', 404));
+      }
+
+      favorite.priority = priority;
+      await favorite.save();
+
+      res.status(200).json({
+        message: 'Favorite priority updated',
+        priority: favorite.priority,
+      });
+    } catch (error) {
+      logger.error('Error updating favorite priority:', error);
+      next(new AppError('Failed to update favorite priority', 500));
+    }
+  }
+
+  /**
+   * Get all tags used by the current user
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  async getUserTags(req, res, next) {
+    try {
+      const userId = req.user._id;
+
+      // Aggregate to get unique tags and their counts
+      const tagStats = await Favorite.aggregate([
+        { $match: { user: userId } },
+        { $unwind: '$tags' },
+        { $group: { _id: '$tags', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { tag: '$_id', count: 1, _id: 0 } },
+      ]);
+
+      res.status(200).json(tagStats);
+    } catch (error) {
+      logger.error('Error getting user tags:', error);
+      next(new AppError('Failed to get user tags', 500));
+    }
+  }
+
+  /**
+   * Parse sort option from query parameter
+   * @param {string} sortOption - Sort option from query
+   * @returns {Object} MongoDB sort object
+   * @private
+   */
+  parseSortOption(sortOption) {
+    if (!sortOption) return { createdAt: -1 }; // Default sort by creation date (newest first)
+
+    const sortMap = {
+      newest: { createdAt: -1 },
+      oldest: { createdAt: 1 },
+      'price-asc': { 'ad.price': 1 },
+      'price-desc': { 'ad.price': -1 },
+      'title-asc': { 'ad.title': 1 },
+      'title-desc': { 'ad.title': -1 },
+      'priority-high': { priority: -1 }, // High priority first
+      'priority-low': { priority: 1 }, // Low priority first
+    };
+
+    return sortMap[sortOption] || { createdAt: -1 };
+  }
+
+  /**
+   * Build filter object for database query
+   * @param {Object} filterOptions - Filter options
+   * @returns {Object} MongoDB filter object
+   * @private
+   */
+  buildFilters({ category, county, city, search }) {
+    const filters = {};
+
+    if (category) {
+      filters['ad.category'] = category;
+    }
+
+    if (county) {
+      filters['ad.location.county'] = county;
+    }
+
+    if (city) {
+      filters['ad.location.city'] = city;
+    }
+
+    if (search) {
+      filters['$or'] = [
+        { 'ad.title': { $regex: search, $options: 'i' } },
+        { 'ad.description': { $regex: search, $options: 'i' } },
+        { notes: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    return filters;
   }
 }
 

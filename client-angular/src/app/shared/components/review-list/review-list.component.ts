@@ -13,6 +13,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { DialogService } from '../../../core/services/dialog.service';
 
 @Component({
   selector: 'app-review-list',
@@ -266,7 +267,8 @@ export class ReviewListComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -347,20 +349,19 @@ export class ReviewListComponent implements OnInit {
   }
 
   openReportDialog(reviewId: string): void {
-    // This would typically open a dialog to get the report reason
-    // For now, we'll just use a simple prompt
-    const reason = prompt('Please provide a reason for reporting this review:');
-    if (reason) {
-      this.reportReview(reviewId, reason);
-    }
-  }
-
-  reportReview(reviewId: string, reason: string): void {
     if (!this.isAuthenticated) {
       this.notificationService.info('Please log in to report reviews');
       return;
     }
 
+    this.dialogService.reportReview(reviewId).subscribe(reason => {
+      if (reason) {
+        this.reportReview(reviewId, reason);
+      }
+    });
+  }
+
+  reportReview(reviewId: string, reason: string): void {
     this.reviewService.reportReview(reviewId, reason).subscribe({
       next: () => {
         // Add to local storage to prevent multiple reports
@@ -377,12 +378,16 @@ export class ReviewListComponent implements OnInit {
   }
 
   openResponseDialog(reviewId: string): void {
-    // This would typically open a dialog to get the response
-    // For now, we'll just use a simple prompt
-    const response = prompt('Enter your response to this review:');
-    if (response) {
-      this.respondToReview(reviewId, response);
-    }
+    const review = this.reviews.find(r => r._id === reviewId);
+    if (!review) return;
+
+    this.dialogService
+      .respondToReview(reviewId, review.title, review.content)
+      .subscribe(response => {
+        if (response) {
+          this.respondToReview(reviewId, response);
+        }
+      });
   }
 
   respondToReview(reviewId: string, response: string): void {

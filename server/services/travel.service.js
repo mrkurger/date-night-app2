@@ -11,9 +11,10 @@ const Ad = require('../models/ad.model');
 const User = require('../models/user.model');
 const { AppError } = require('../middleware/errorHandler');
 const socketService = require('./socket.service');
-const geocodingService = require('./geocoding.service');
 const logger = require('../utils/logger').logger;
 const NodeCache = require('node-cache');
+const axios = require('axios');
+const config = require('../config');
 
 // Initialize cache with 5 minute TTL and check period of 10 minutes
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });
@@ -467,12 +468,97 @@ class TravelService {
    */
   async geocodeLocation(city, county, country) {
     try {
-      // Use the dedicated geocoding service
-      return await geocodingService.geocodeLocation(city, county, country);
+      // Use the geocoding API endpoint instead of directly calling the service
+      const apiUrl = `${config.apiBaseUrl}/geocoding/forward`;
+      const response = await axios.get(apiUrl, {
+        params: {
+          city,
+          county,
+          country,
+        },
+        // Use a short timeout to ensure quick fallback
+        timeout: 5000,
+      });
+
+      if (response.data && response.data.coordinates) {
+        return response.data;
+      }
+
+      // If API call succeeds but returns no data, try a fallback approach
+      logger.warn(
+        `Geocoding API returned no data for ${city}, ${county}, ${country}. Using fallback.`
+      );
+      return this.geocodeLocationFallback(city, county, country);
     } catch (error) {
       logger.error(`Error geocoding location (${city}, ${county}, ${country}):`, error);
-      // Return null if geocoding fails, the model will handle this
-      return null;
+      // If API call fails, try a fallback approach
+      return this.geocodeLocationFallback(city, county, country);
+    }
+  }
+
+  /**
+   * Fallback method for geocoding when the API fails
+   * @param {string} city - City name
+   * @param {string} county - County name
+   * @param {string} country - Country name
+   * @returns {Promise<Object|null>} Location object with coordinates or null
+   */
+  async geocodeLocationFallback(city, county, country) {
+    try {
+      logger.info(`Using fallback geocoding for ${city}, ${county}, ${country}`);
+
+      // Try to use a cached location first
+      const cacheKey = `geocode:${city}:${county}:${country}`.toLowerCase();
+      const cachedLocation = cache.get(cacheKey);
+
+      if (cachedLocation) {
+        logger.debug(`Using cached location for ${city}, ${county}, ${country}`);
+        return cachedLocation;
+      }
+
+      // Try Nominatim API directly as a last resort
+      const nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      const queryString = encodeURIComponent(`${city}, ${county}, ${country}`);
+
+      const response = await axios.get(`${nominatimUrl}?q=${queryString}&format=json&limit=1`, {
+        headers: {
+          'User-Agent': 'DateNightApp/1.0',
+          'Accept-Language': 'en-US,en;q=0.9',
+        },
+        timeout: 5000,
+      });
+
+      if (response.data && response.data.length > 0) {
+        const result = response.data[0];
+        const location = {
+          type: 'Point',
+          coordinates: [parseFloat(result.lon), parseFloat(result.lat)],
+          source: 'nominatim_fallback',
+        };
+
+        // Cache the result for future use
+        cache.set(cacheKey, location, 86400); // 1 day TTL
+
+        return location;
+      }
+
+      // If all else fails, return default coordinates (Oslo, Norway)
+      logger.warn(
+        `All geocoding methods failed for ${city}, ${county}, ${country}. Using default coordinates.`
+      );
+      return {
+        type: 'Point',
+        coordinates: [10.7522, 59.9139], // Oslo coordinates
+        source: 'default',
+      };
+    } catch (error) {
+      logger.error(`Fallback geocoding failed for ${city}, ${county}, ${country}:`, error);
+      // Return default coordinates as a last resort
+      return {
+        type: 'Point',
+        coordinates: [10.7522, 59.9139], // Oslo coordinates
+        source: 'default',
+      };
     }
   }
 

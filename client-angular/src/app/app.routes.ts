@@ -118,6 +118,19 @@ export const routes: Routes = [
     path: 'touring',
     loadChildren: () => import('./features/touring/touring.module').then(m => m.TouringModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'], title: 'Admin Dashboard' },
+  },
+  {
+    path: 'telemetry',
+    loadChildren: () =>
+      import('./features/telemetry/telemetry.routes').then(m => m.TELEMETRY_ROUTES),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'], title: 'Telemetry Dashboard' },
+  },
 
   // Fallback route
   {

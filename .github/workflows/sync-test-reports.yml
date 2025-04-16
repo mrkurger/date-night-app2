@@ -1,0 +1,73 @@
+name: Sync Test Reports
+
+on:
+  workflow_run:
+    workflows: ['Angular Tests', 'Server Tests']
+    types:
+      - completed
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync-reports:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Angular Test Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: angular-tests.yml
+          workflow_conclusion: completed
+          name: test-results
+          path: downloaded-reports/angular
+          if_no_artifact_found: warn
+
+      - name: Download Server Test Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: server-tests.yml
+          workflow_conclusion: completed
+          name: server-test-results
+          path: downloaded-reports/server
+          if_no_artifact_found: warn
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Process Reports
+        run: |
+          # Create directories
+          mkdir -p docs/test-reports
+
+          # Copy downloaded reports
+          if [ -d "downloaded-reports/angular" ]; then
+            cp -r downloaded-reports/angular/* docs/test-reports/ || true
+          fi
+
+          if [ -d "downloaded-reports/server" ]; then
+            cp -r downloaded-reports/server/* docs/test-reports/ || true
+          fi
+
+          # Create combined report if both exist
+          if [ -f "docs/test-reports/angular-test-results.md" ] && [ -f "docs/test-reports/server-test-results.md" ]; then
+            node scripts/combine-test-reports.js
+          fi
+
+          # Create placeholder if no reports exist
+          if [ ! -f "docs/latest-test-results.md" ]; then
+            echo "# Latest Test Results\n\nNo test results available yet." > docs/latest-test-results.md
+          fi
+
+      - name: Commit Reports
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/test-reports || true
+          git add docs/latest-test-results.md || true
+          git commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"
+          git push

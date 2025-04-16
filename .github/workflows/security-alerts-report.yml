@@ -1,0 +1,90 @@
+name: Security Alerts Report
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Run weekly on Monday
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: read
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Dependabot Alerts
+        id: get-alerts
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const alerts = await github.rest.dependabot.listAlertsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            const fs = require('fs');
+
+            let report = '# Dependabot Security Alerts\n\n';
+            report += `*Generated on: ${new Date().toISOString().split('T')[0]}*\n\n`;
+
+            if (alerts.data.length === 0) {
+              report += '✅ No open security alerts found.\n';
+            } else {
+              report += `## Open Alerts (${alerts.data.length})\n\n`;
+              
+              const severityOrder = ['critical', 'high', 'medium', 'low'];
+              const alertsBySeverity = {};
+              
+              severityOrder.forEach(severity => {
+                alertsBySeverity[severity] = [];
+              });
+              
+              alerts.data.forEach(alert => {
+                const severity = alert.security_advisory.severity.toLowerCase();
+                if (alertsBySeverity[severity]) {
+                  alertsBySeverity[severity].push(alert);
+                }
+              });
+              
+              severityOrder.forEach(severity => {
+                const severityAlerts = alertsBySeverity[severity];
+                if (severityAlerts.length > 0) {
+                  report += `### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
+                  
+                  severityAlerts.forEach(alert => {
+                    report += `#### ${alert.security_advisory.summary}\n\n`;
+                    report += `- **Package**: ${alert.dependency.package.name}\n`;
+                    report += `- **Current Version**: ${alert.dependency.manifest_path}\n`;
+                    report += `- **Vulnerable Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.vulnerable_version_range).join(', ')}\n`;
+                    report += `- **Patched Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.patched_version_range || 'None').join(', ')}\n`;
+                    report += `- **CVSS Score**: ${alert.security_advisory.cvss.score} (${alert.security_advisory.cvss.vector_string})\n`;
+                    report += `- **Details**: [${alert.security_advisory.ghsa_id}](${alert.security_advisory.html_url})\n\n`;
+                  });
+                }
+              });
+            }
+
+            // Create docs directory if it doesn't exist
+            try {
+              fs.mkdirSync('docs', { recursive: true });
+            } catch (error) {
+              console.log('Docs directory already exists');
+            }
+
+            fs.writeFileSync('docs/security-alerts.md', report);
+
+            return { alertCount: alerts.data.length };
+
+      - name: Commit Report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/security-alerts.md
+          git commit -m "docs: update security alerts report [skip ci]" || echo "No changes to commit"
+          git push

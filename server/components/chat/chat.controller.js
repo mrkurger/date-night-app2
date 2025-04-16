@@ -175,7 +175,8 @@ class ChatController {
   setupRoomEncryption(req, res) {
     return asyncHandler(async (req, res) => {
       const { roomId } = req.params;
-      const result = await ChatService.setupRoomEncryption(roomId);
+      const userId = req.user.id;
+      const result = await ChatService.setupRoomEncryption(roomId, userId);
       res.status(200).json(result);
     })(req, res);
   }
