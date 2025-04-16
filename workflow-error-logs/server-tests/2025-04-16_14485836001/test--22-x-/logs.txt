@@ -1,0 +1,1178 @@
+2025-04-16T06:04:23.3992566Z Current runner version: '2.323.0'
+2025-04-16T06:04:23.4025595Z ##[group]Operating System
+2025-04-16T06:04:23.4027240Z Ubuntu
+2025-04-16T06:04:23.4028313Z 24.04.2
+2025-04-16T06:04:23.4029105Z LTS
+2025-04-16T06:04:23.4029910Z ##[endgroup]
+2025-04-16T06:04:23.4030928Z ##[group]Runner Image
+2025-04-16T06:04:23.4031921Z Image: ubuntu-24.04
+2025-04-16T06:04:23.4032817Z Version: 20250406.1.0
+2025-04-16T06:04:23.4034695Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T06:04:23.4037519Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T06:04:23.4039051Z ##[endgroup]
+2025-04-16T06:04:23.4039967Z ##[group]Runner Image Provisioner
+2025-04-16T06:04:23.4041044Z 2.0.422.1
+2025-04-16T06:04:23.4041767Z ##[endgroup]
+2025-04-16T06:04:23.4043689Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T06:04:23.4046346Z Contents: read
+2025-04-16T06:04:23.4047435Z Metadata: read
+2025-04-16T06:04:23.4048694Z Packages: read
+2025-04-16T06:04:23.4049623Z ##[endgroup]
+2025-04-16T06:04:23.4052775Z Secret source: Actions
+2025-04-16T06:04:23.4054069Z Prepare workflow directory
+2025-04-16T06:04:23.4735087Z Prepare all required actions
+2025-04-16T06:04:23.4792164Z Getting action download info
+2025-04-16T06:04:24.0953459Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T06:04:24.0954423Z Version: 4.2.2
+2025-04-16T06:04:24.0955358Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T06:04:24.0956593Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T06:04:24.0957680Z ##[endgroup]
+2025-04-16T06:04:24.6870004Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T06:04:24.6871177Z Version: 4.4.0
+2025-04-16T06:04:24.6872372Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T06:04:24.6873919Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T06:04:24.6875077Z ##[endgroup]
+2025-04-16T06:04:24.9887005Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T06:04:24.9888895Z Version: 4.6.2
+2025-04-16T06:04:24.9890517Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T06:04:24.9892867Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T06:04:24.9894411Z ##[endgroup]
+2025-04-16T06:04:25.3137198Z Complete job name: test (22.x)
+2025-04-16T06:04:25.3591689Z ##[group]Checking docker version
+2025-04-16T06:04:25.3607237Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-04-16T06:04:26.7398957Z '1.45'
+2025-04-16T06:04:26.7413688Z Docker daemon API version: '1.45'
+2025-04-16T06:04:26.7414264Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-04-16T06:04:26.7563761Z '1.45'
+2025-04-16T06:04:26.7574698Z Docker client API version: '1.45'
+2025-04-16T06:04:26.7579470Z ##[endgroup]
+2025-04-16T06:04:26.7582106Z ##[group]Clean up resources from previous jobs
+2025-04-16T06:04:26.7587789Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=e8ab42"
+2025-04-16T06:04:26.7887469Z ##[command]/usr/bin/docker network prune --force --filter "label=e8ab42"
+2025-04-16T06:04:26.8057778Z ##[endgroup]
+2025-04-16T06:04:26.8058270Z ##[group]Create local container network
+2025-04-16T06:04:26.8067871Z ##[command]/usr/bin/docker network create --label e8ab42 github_network_4e176cfa085f4f888c586cc446ae73ba
+2025-04-16T06:04:26.8856985Z 8e89508c76900ef6d03df414ebfb6d48571fed2dc53829592072439941094202
+2025-04-16T06:04:26.8874560Z ##[endgroup]
+2025-04-16T06:04:26.8898378Z ##[group]Starting mongodb service container
+2025-04-16T06:04:26.8917667Z ##[command]/usr/bin/docker pull mongo:6
+2025-04-16T06:04:27.9643613Z 6: Pulling from library/mongo
+2025-04-16T06:04:28.2340612Z 30a9c22ae099: Pulling fs layer
+2025-04-16T06:04:28.2341114Z abd374245ca5: Pulling fs layer
+2025-04-16T06:04:28.2341628Z dfcc52b2e041: Pulling fs layer
+2025-04-16T06:04:28.2342117Z b058d84e1082: Pulling fs layer
+2025-04-16T06:04:28.2343286Z e12a18eb1ecf: Pulling fs layer
+2025-04-16T06:04:28.2343709Z 546622740404: Pulling fs layer
+2025-04-16T06:04:28.2344121Z 80a51fc6e5dc: Pulling fs layer
+2025-04-16T06:04:28.2344531Z f7d23c7569c8: Pulling fs layer
+2025-04-16T06:04:28.2344922Z e12a18eb1ecf: Waiting
+2025-04-16T06:04:28.2345256Z 546622740404: Waiting
+2025-04-16T06:04:28.2345567Z 80a51fc6e5dc: Waiting
+2025-04-16T06:04:28.2345903Z f7d23c7569c8: Waiting
+2025-04-16T06:04:28.2346190Z b058d84e1082: Waiting
+2025-04-16T06:04:28.5006544Z abd374245ca5: Verifying Checksum
+2025-04-16T06:04:28.5007948Z abd374245ca5: Download complete
+2025-04-16T06:04:28.5371870Z dfcc52b2e041: Verifying Checksum
+2025-04-16T06:04:28.5382893Z dfcc52b2e041: Download complete
+2025-04-16T06:04:28.6109817Z 30a9c22ae099: Verifying Checksum
+2025-04-16T06:04:28.6113060Z 30a9c22ae099: Download complete
+2025-04-16T06:04:28.8083635Z e12a18eb1ecf: Verifying Checksum
+2025-04-16T06:04:28.8090614Z e12a18eb1ecf: Download complete
+2025-04-16T06:04:28.8743173Z b058d84e1082: Verifying Checksum
+2025-04-16T06:04:28.8747269Z b058d84e1082: Download complete
+2025-04-16T06:04:28.8972919Z 546622740404: Verifying Checksum
+2025-04-16T06:04:28.8973513Z 546622740404: Download complete
+2025-04-16T06:04:29.1535133Z f7d23c7569c8: Verifying Checksum
+2025-04-16T06:04:29.1535652Z f7d23c7569c8: Download complete
+2025-04-16T06:04:29.8331455Z 30a9c22ae099: Pull complete
+2025-04-16T06:04:29.8685516Z abd374245ca5: Pull complete
+2025-04-16T06:04:30.5331961Z 80a51fc6e5dc: Verifying Checksum
+2025-04-16T06:04:30.5332577Z 80a51fc6e5dc: Download complete
+2025-04-16T06:04:31.2432053Z dfcc52b2e041: Pull complete
+2025-04-16T06:04:31.2863943Z b058d84e1082: Pull complete
+2025-04-16T06:04:31.3015732Z e12a18eb1ecf: Pull complete
+2025-04-16T06:04:31.3178273Z 546622740404: Pull complete
+2025-04-16T06:04:37.9697224Z 80a51fc6e5dc: Pull complete
+2025-04-16T06:04:37.9857875Z f7d23c7569c8: Pull complete
+2025-04-16T06:04:37.9899859Z Digest: sha256:3d3f53bf2171f73fd725412f93a7bba10eee9c898b1381e7d7680a19dcb937d7
+2025-04-16T06:04:37.9916464Z Status: Downloaded newer image for mongo:6
+2025-04-16T06:04:37.9938157Z docker.io/library/mongo:6
+2025-04-16T06:04:37.9965361Z ##[command]/usr/bin/docker create --name 5d961a659f3f40dabf245350a7937b25_mongo6_61e14f --label e8ab42 --network github_network_4e176cfa085f4f888c586cc446ae73ba --network-alias mongodb -p 27017:27017  -e GITHUB_ACTIONS=true -e CI=true mongo:6
+2025-04-16T06:04:38.0425048Z 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:04:38.0447370Z ##[command]/usr/bin/docker start 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:04:39.2628421Z 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:04:39.2672412Z ##[command]/usr/bin/docker ps --all --filter id=8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-04-16T06:04:39.2837454Z 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a Up Less than a second
+2025-04-16T06:04:39.2866615Z ##[command]/usr/bin/docker port 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:04:39.3027245Z 27017/tcp -> 0.0.0.0:27017
+2025-04-16T06:04:39.3028166Z 27017/tcp -> [::]:27017
+2025-04-16T06:04:39.3098416Z ##[endgroup]
+2025-04-16T06:04:39.3114240Z ##[group]Waiting for all services to be ready
+2025-04-16T06:04:39.3132541Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:04:39.3354189Z mongodb service is healthy.
+2025-04-16T06:04:39.3354921Z ##[endgroup]
+2025-04-16T06:04:39.3675294Z ##[group]Run actions/checkout@v4
+2025-04-16T06:04:39.3676068Z with:
+2025-04-16T06:04:39.3676440Z   repository: mrkurger/date-night-app2
+2025-04-16T06:04:39.3677541Z   token: ***
+2025-04-16T06:04:39.3677887Z   ssh-strict: true
+2025-04-16T06:04:39.3678227Z   ssh-user: git
+2025-04-16T06:04:39.3678597Z   persist-credentials: true
+2025-04-16T06:04:39.3679269Z   clean: true
+2025-04-16T06:04:39.3679632Z   sparse-checkout-cone-mode: true
+2025-04-16T06:04:39.3680079Z   fetch-depth: 1
+2025-04-16T06:04:39.3680413Z   fetch-tags: false
+2025-04-16T06:04:39.3680769Z   show-progress: true
+2025-04-16T06:04:39.3681121Z   lfs: false
+2025-04-16T06:04:39.3681440Z   submodules: false
+2025-04-16T06:04:39.3681796Z   set-safe-directory: true
+2025-04-16T06:04:39.3682548Z ##[endgroup]
+2025-04-16T06:04:41.6948667Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T06:04:41.6949874Z ##[group]Getting Git version info
+2025-04-16T06:04:41.6950426Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T06:04:41.6950994Z [command]/usr/bin/git version
+2025-04-16T06:04:41.8591272Z git version 2.49.0
+2025-04-16T06:04:41.8682644Z ##[endgroup]
+2025-04-16T06:04:41.8699784Z Temporarily overriding HOME='/home/runner/work/_temp/c9e47281-f0d9-421f-a914-d111b53596fb' before making global git config changes
+2025-04-16T06:04:41.8703047Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T06:04:41.8716092Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T06:04:41.8815871Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T06:04:41.8820628Z ##[group]Initializing the repository
+2025-04-16T06:04:41.8825928Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T06:04:41.9327357Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T06:04:41.9331123Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T06:04:41.9332227Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T06:04:41.9332687Z hint:
+2025-04-16T06:04:41.9333034Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T06:04:41.9333396Z hint:
+2025-04-16T06:04:41.9333734Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T06:04:41.9334337Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T06:04:41.9334808Z hint:
+2025-04-16T06:04:41.9334993Z hint: 	git branch -m <name>
+2025-04-16T06:04:41.9459578Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T06:04:41.9473799Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T06:04:41.9575316Z ##[endgroup]
+2025-04-16T06:04:41.9683414Z ##[group]Disabling automatic garbage collection
+2025-04-16T06:04:41.9687710Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T06:04:41.9698159Z ##[endgroup]
+2025-04-16T06:04:41.9700339Z ##[group]Setting up auth
+2025-04-16T06:04:41.9703040Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T06:04:41.9705925Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T06:04:42.1634883Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T06:04:42.1668505Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T06:04:42.1910563Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T06:04:42.1950200Z ##[endgroup]
+2025-04-16T06:04:42.1951205Z ##[group]Fetching the repository
+2025-04-16T06:04:42.1961216Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ac714081475a3d74e72ccd9d68627260d8654667:refs/remotes/origin/main
+2025-04-16T06:04:45.1816055Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T06:04:45.1817022Z  * [new ref]         ac714081475a3d74e72ccd9d68627260d8654667 -> origin/main
+2025-04-16T06:04:45.1917385Z ##[endgroup]
+2025-04-16T06:04:45.1918257Z ##[group]Determining the checkout info
+2025-04-16T06:04:45.1920597Z ##[endgroup]
+2025-04-16T06:04:45.1926638Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T06:04:45.2039148Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T06:04:45.2070526Z ##[group]Checking out the ref
+2025-04-16T06:04:45.2073630Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T06:04:45.6422246Z Switched to a new branch 'main'
+2025-04-16T06:04:45.6433528Z branch 'main' set up to track 'origin/main'.
+2025-04-16T06:04:45.6451533Z ##[endgroup]
+2025-04-16T06:04:45.6491677Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T06:04:45.6515646Z ac714081475a3d74e72ccd9d68627260d8654667
+2025-04-16T06:04:45.6789785Z ##[group]Run actions/setup-node@v4
+2025-04-16T06:04:45.6790036Z with:
+2025-04-16T06:04:45.6790206Z   node-version: 22.x
+2025-04-16T06:04:45.6790393Z   cache: npm
+2025-04-16T06:04:45.6790611Z   cache-dependency-path: server/package-lock.json
+2025-04-16T06:04:45.6790873Z   always-auth: false
+2025-04-16T06:04:45.6791055Z   check-latest: false
+2025-04-16T06:04:45.6791351Z   token: ***
+2025-04-16T06:04:45.6791524Z ##[endgroup]
+2025-04-16T06:04:45.8541030Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T06:04:45.8552688Z ##[group]Environment details
+2025-04-16T06:04:49.3905689Z node: v22.14.0
+2025-04-16T06:04:49.3906533Z npm: 10.9.2
+2025-04-16T06:04:49.3908754Z yarn: 1.22.22
+2025-04-16T06:04:49.3910185Z ##[endgroup]
+2025-04-16T06:04:49.3945669Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T06:04:49.7431525Z /home/runner/.npm
+2025-04-16T06:04:50.1413312Z npm cache is not found
+2025-04-16T06:04:50.1582039Z ##[group]Run npm ci
+2025-04-16T06:04:50.1582292Z [36;1mnpm ci[0m
+2025-04-16T06:04:50.1634225Z shell: /usr/bin/bash -e {0}
+2025-04-16T06:04:50.1634461Z ##[endgroup]
+2025-04-16T06:04:53.9187854Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-16T06:04:54.3009533Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T06:04:54.3972822Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-16T06:04:54.5516250Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-16T06:04:54.9794315Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T06:04:55.1680323Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T06:04:55.3538175Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-16T06:04:55.4272899Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-16T06:04:55.5614678Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-16T06:05:01.0412161Z 
+2025-04-16T06:05:01.0415934Z added 609 packages, and audited 611 packages in 11s
+2025-04-16T06:05:01.0425524Z 
+2025-04-16T06:05:01.0447339Z 67 packages are looking for funding
+2025-04-16T06:05:01.0456138Z   run `npm fund` for details
+2025-04-16T06:05:01.0459004Z 
+2025-04-16T06:05:01.0460374Z found 0 vulnerabilities
+2025-04-16T06:05:01.1045122Z ##[group]Run npm test
+2025-04-16T06:05:01.1045369Z [36;1mnpm test[0m
+2025-04-16T06:05:01.1092187Z shell: /usr/bin/bash -e {0}
+2025-04-16T06:05:01.1092409Z env:
+2025-04-16T06:05:01.1092558Z   NODE_ENV: test
+2025-04-16T06:05:01.1092825Z   MONGODB_URI: mongodb://localhost:27017/date-night-test
+2025-04-16T06:05:01.1093124Z ##[endgroup]
+2025-04-16T06:05:01.2388090Z 
+2025-04-16T06:05:01.2388856Z > date-night-server@1.0.0 test
+2025-04-16T06:05:01.2389327Z > jest
+2025-04-16T06:05:01.2389480Z 
+2025-04-16T06:05:02.9327401Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:02.9329097Z (Use `node --trace-warnings ...` to show where the warning was created)
+2025-04-16T06:05:02.9331100Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:04.5881100Z FAIL tests/unit/models/ad.model.test.js
+2025-04-16T06:05:04.5950271Z   ● Console
+2025-04-16T06:05:04.5950733Z 
+2025-04-16T06:05:04.5952252Z     console.log
+2025-04-16T06:05:04.5955152Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:52769/
+2025-04-16T06:05:04.5955616Z 
+2025-04-16T06:05:04.5955831Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:04.5956130Z 
+2025-04-16T06:05:04.5956257Z     console.log
+2025-04-16T06:05:04.5956577Z       Database cleared
+2025-04-16T06:05:04.5957011Z 
+2025-04-16T06:05:04.5957207Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5957483Z 
+2025-04-16T06:05:04.5957609Z     console.log
+2025-04-16T06:05:04.5957927Z       Database cleared
+2025-04-16T06:05:04.5958139Z 
+2025-04-16T06:05:04.5958338Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5958631Z 
+2025-04-16T06:05:04.5958763Z     console.log
+2025-04-16T06:05:04.5959152Z       Database cleared
+2025-04-16T06:05:04.5959364Z 
+2025-04-16T06:05:04.5959592Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5959880Z 
+2025-04-16T06:05:04.5960024Z     console.log
+2025-04-16T06:05:04.5960363Z       Database cleared
+2025-04-16T06:05:04.5960585Z 
+2025-04-16T06:05:04.5960787Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5961087Z 
+2025-04-16T06:05:04.5961223Z     console.log
+2025-04-16T06:05:04.5961528Z       Database cleared
+2025-04-16T06:05:04.5961750Z 
+2025-04-16T06:05:04.5961947Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5962230Z 
+2025-04-16T06:05:04.5962365Z     console.log
+2025-04-16T06:05:04.5962672Z       Database cleared
+2025-04-16T06:05:04.5962884Z 
+2025-04-16T06:05:04.5963997Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5964522Z 
+2025-04-16T06:05:04.5964814Z     console.log
+2025-04-16T06:05:04.5965507Z       Database cleared
+2025-04-16T06:05:04.5965929Z 
+2025-04-16T06:05:04.5966451Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5966950Z 
+2025-04-16T06:05:04.5967119Z     console.log
+2025-04-16T06:05:04.5967432Z       Database cleared
+2025-04-16T06:05:04.5967633Z 
+2025-04-16T06:05:04.5967824Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5968083Z 
+2025-04-16T06:05:04.5968211Z     console.log
+2025-04-16T06:05:04.5968495Z       Database cleared
+2025-04-16T06:05:04.5968695Z 
+2025-04-16T06:05:04.5968875Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5969125Z 
+2025-04-16T06:05:04.5969246Z     console.log
+2025-04-16T06:05:04.5969575Z       Database cleared
+2025-04-16T06:05:04.5969798Z 
+2025-04-16T06:05:04.5969969Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5970221Z 
+2025-04-16T06:05:04.5970336Z     console.log
+2025-04-16T06:05:04.5970609Z       Database cleared
+2025-04-16T06:05:04.5970806Z 
+2025-04-16T06:05:04.5970977Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5971222Z 
+2025-04-16T06:05:04.5971346Z     console.log
+2025-04-16T06:05:04.5971621Z       Database cleared
+2025-04-16T06:05:04.5971809Z 
+2025-04-16T06:05:04.5972380Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5972667Z 
+2025-04-16T06:05:04.5972813Z     console.log
+2025-04-16T06:05:04.5973336Z       Database cleared
+2025-04-16T06:05:04.5973535Z 
+2025-04-16T06:05:04.5973712Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5973962Z 
+2025-04-16T06:05:04.5974081Z     console.log
+2025-04-16T06:05:04.5974366Z       Database cleared
+2025-04-16T06:05:04.5974570Z 
+2025-04-16T06:05:04.5974752Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5975005Z 
+2025-04-16T06:05:04.5975128Z     console.log
+2025-04-16T06:05:04.5975422Z       Database cleared
+2025-04-16T06:05:04.5975634Z 
+2025-04-16T06:05:04.5975816Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5976081Z 
+2025-04-16T06:05:04.5976213Z     console.log
+2025-04-16T06:05:04.5976502Z       Database cleared
+2025-04-16T06:05:04.5976713Z 
+2025-04-16T06:05:04.5977113Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5977401Z 
+2025-04-16T06:05:04.5977536Z     console.log
+2025-04-16T06:05:04.5977847Z       Database cleared
+2025-04-16T06:05:04.5978064Z 
+2025-04-16T06:05:04.5978267Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5978557Z 
+2025-04-16T06:05:04.5978676Z     console.log
+2025-04-16T06:05:04.5978987Z       Database cleared
+2025-04-16T06:05:04.5979191Z 
+2025-04-16T06:05:04.5979393Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5979680Z 
+2025-04-16T06:05:04.5979814Z     console.log
+2025-04-16T06:05:04.5980135Z       Database cleared
+2025-04-16T06:05:04.5980338Z 
+2025-04-16T06:05:04.5980697Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:04.5980967Z 
+2025-04-16T06:05:04.5981084Z     console.log
+2025-04-16T06:05:04.5981460Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:04.5981765Z 
+2025-04-16T06:05:04.5981963Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:04.5982229Z 
+2025-04-16T06:05:04.5982761Z   ● Ad Model › Ad Static Methods › should find active ads
+2025-04-16T06:05:04.5983130Z 
+2025-04-16T06:05:04.5983372Z     expect(received).toBeGreaterThan(expected)
+2025-04-16T06:05:04.5983728Z 
+2025-04-16T06:05:04.5984033Z     Matcher error: received value must be a number or bigint
+2025-04-16T06:05:04.5984421Z 
+2025-04-16T06:05:04.5984574Z     Received has type:  date
+2025-04-16T06:05:04.5985028Z     Received has value: 2025-05-01T06:05:03.689Z
+2025-04-16T06:05:04.5985353Z 
+2025-04-16T06:05:04.5985887Z     [0m [90m 373 |[39m       [36mfor[39m ([36mconst[39m ad [36mof[39m activeAds) {
+2025-04-16T06:05:04.5987950Z      [90m 374 |[39m         expect(ad[33m.[39mactive)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+2025-04-16T06:05:04.5989386Z     [31m[1m>[22m[39m[90m 375 |[39m         expect(ad[33m.[39mexpiresAt)[33m.[39mtoBeGreaterThan([36mnew[39m [33mDate[39m())[33m;[39m
+2025-04-16T06:05:04.5990492Z      [90m     |[39m                              [31m[1m^[22m[39m
+2025-04-16T06:05:04.5991027Z      [90m 376 |[39m       }
+2025-04-16T06:05:04.5991502Z      [90m 377 |[39m     })[33m;[39m
+2025-04-16T06:05:04.5991955Z      [90m 378 |[39m[0m
+2025-04-16T06:05:04.5992182Z 
+2025-04-16T06:05:04.5992593Z       at Object.toBeGreaterThan (tests/unit/models/ad.model.test.js:375:30)
+2025-04-16T06:05:04.5993076Z 
+2025-04-16T06:05:04.5993460Z   ● Ad Model › Ad Static Methods › should find featured ads
+2025-04-16T06:05:04.5993839Z 
+2025-04-16T06:05:04.5994074Z     expect(received).toBeGreaterThan(expected)
+2025-04-16T06:05:04.5994407Z 
+2025-04-16T06:05:04.5994712Z     Matcher error: received value must be a number or bigint
+2025-04-16T06:05:04.5995103Z 
+2025-04-16T06:05:04.5995254Z     Received has type:  date
+2025-04-16T06:05:04.5995755Z     Received has value: 2025-05-06T06:05:03.795Z
+2025-04-16T06:05:04.5996078Z 
+2025-04-16T06:05:04.5996710Z     [0m [90m 387 |[39m         expect(ad[33m.[39mactive)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+2025-04-16T06:05:04.5998015Z      [90m 388 |[39m         expect(ad[33m.[39mfeatured)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+2025-04-16T06:05:04.5999641Z     [31m[1m>[22m[39m[90m 389 |[39m         expect(ad[33m.[39mexpiresAt)[33m.[39mtoBeGreaterThan([36mnew[39m [33mDate[39m())[33m;[39m
+2025-04-16T06:05:04.6000992Z      [90m     |[39m                              [31m[1m^[22m[39m
+2025-04-16T06:05:04.6001540Z      [90m 390 |[39m       }
+2025-04-16T06:05:04.6002028Z      [90m 391 |[39m     })[33m;[39m
+2025-04-16T06:05:04.6002519Z      [90m 392 |[39m[0m
+2025-04-16T06:05:04.6002749Z 
+2025-04-16T06:05:04.6003144Z       at Object.toBeGreaterThan (tests/unit/models/ad.model.test.js:389:30)
+2025-04-16T06:05:04.6003624Z 
+2025-04-16T06:05:04.6004052Z   ● Ad Model › Ad Static Methods › should find touring ads
+2025-04-16T06:05:04.6004432Z 
+2025-04-16T06:05:04.6004677Z     expect(received).toBeGreaterThan(expected)
+2025-04-16T06:05:04.6005022Z 
+2025-04-16T06:05:04.6005355Z     Matcher error: received value must be a number or bigint
+2025-04-16T06:05:04.6005772Z 
+2025-04-16T06:05:04.6005935Z     Received has type:  date
+2025-04-16T06:05:04.6006428Z     Received has value: 2025-05-11T06:05:03.882Z
+2025-04-16T06:05:04.6006957Z 
+2025-04-16T06:05:04.6007633Z     [0m [90m 401 |[39m         expect(ad[33m.[39mactive)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+2025-04-16T06:05:04.6008853Z      [90m 402 |[39m         expect(ad[33m.[39misTouring)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+2025-04-16T06:05:04.6010343Z     [31m[1m>[22m[39m[90m 403 |[39m         expect(ad[33m.[39mexpiresAt)[33m.[39mtoBeGreaterThan([36mnew[39m [33mDate[39m())[33m;[39m
+2025-04-16T06:05:04.6011489Z      [90m     |[39m                              [31m[1m^[22m[39m
+2025-04-16T06:05:04.6012096Z      [90m 404 |[39m       }
+2025-04-16T06:05:04.6012615Z      [90m 405 |[39m     })[33m;[39m
+2025-04-16T06:05:04.6013118Z      [90m 406 |[39m[0m
+2025-04-16T06:05:04.6013354Z 
+2025-04-16T06:05:04.6013781Z       at Object.toBeGreaterThan (tests/unit/models/ad.model.test.js:403:30)
+2025-04-16T06:05:04.6014277Z 
+2025-04-16T06:05:05.0575826Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:05.0585050Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:07.1167742Z PASS tests/integration/controllers/auth.controller.test.js
+2025-04-16T06:05:07.1224043Z   ● Console
+2025-04-16T06:05:07.1228363Z 
+2025-04-16T06:05:07.1232345Z     console.log
+2025-04-16T06:05:07.1235302Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:29725/
+2025-04-16T06:05:07.1237129Z 
+2025-04-16T06:05:07.1237531Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:07.1238167Z 
+2025-04-16T06:05:07.1239480Z     console.log
+2025-04-16T06:05:07.1239812Z       Database cleared
+2025-04-16T06:05:07.1240043Z 
+2025-04-16T06:05:07.1240226Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1240501Z 
+2025-04-16T06:05:07.1240619Z     console.log
+2025-04-16T06:05:07.1240959Z       Database cleared
+2025-04-16T06:05:07.1241164Z 
+2025-04-16T06:05:07.1241359Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1241627Z 
+2025-04-16T06:05:07.1241745Z     console.log
+2025-04-16T06:05:07.1242027Z       Database cleared
+2025-04-16T06:05:07.1242197Z 
+2025-04-16T06:05:07.1242354Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1242585Z 
+2025-04-16T06:05:07.1242692Z     console.log
+2025-04-16T06:05:07.1242970Z       Database cleared
+2025-04-16T06:05:07.1243148Z 
+2025-04-16T06:05:07.1243312Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1243556Z 
+2025-04-16T06:05:07.1243666Z     console.log
+2025-04-16T06:05:07.1243951Z       Database cleared
+2025-04-16T06:05:07.1244125Z 
+2025-04-16T06:05:07.1244297Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1244551Z 
+2025-04-16T06:05:07.1244665Z     console.log
+2025-04-16T06:05:07.1244957Z       Database cleared
+2025-04-16T06:05:07.1245155Z 
+2025-04-16T06:05:07.1245330Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1245903Z 
+2025-04-16T06:05:07.1246109Z     console.log
+2025-04-16T06:05:07.1246619Z       Database cleared
+2025-04-16T06:05:07.1247098Z 
+2025-04-16T06:05:07.1247289Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1247553Z 
+2025-04-16T06:05:07.1247677Z     console.log
+2025-04-16T06:05:07.1248038Z       Database cleared
+2025-04-16T06:05:07.1248239Z 
+2025-04-16T06:05:07.1248415Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1248667Z 
+2025-04-16T06:05:07.1248794Z     console.log
+2025-04-16T06:05:07.1249074Z       Database cleared
+2025-04-16T06:05:07.1249273Z 
+2025-04-16T06:05:07.1249441Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1249688Z 
+2025-04-16T06:05:07.1249809Z     console.log
+2025-04-16T06:05:07.1250084Z       Database cleared
+2025-04-16T06:05:07.1250271Z 
+2025-04-16T06:05:07.1250438Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1250694Z 
+2025-04-16T06:05:07.1250822Z     console.log
+2025-04-16T06:05:07.1251121Z       Database cleared
+2025-04-16T06:05:07.1251343Z 
+2025-04-16T06:05:07.1251542Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1251816Z 
+2025-04-16T06:05:07.1251944Z     console.log
+2025-04-16T06:05:07.1252241Z       Database cleared
+2025-04-16T06:05:07.1252446Z 
+2025-04-16T06:05:07.1252631Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1252893Z 
+2025-04-16T06:05:07.1253025Z     console.log
+2025-04-16T06:05:07.1253345Z       Database cleared
+2025-04-16T06:05:07.1253566Z 
+2025-04-16T06:05:07.1253757Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1254031Z 
+2025-04-16T06:05:07.1254167Z     console.log
+2025-04-16T06:05:07.1254473Z       Database cleared
+2025-04-16T06:05:07.1254683Z 
+2025-04-16T06:05:07.1254929Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1255200Z 
+2025-04-16T06:05:07.1255336Z     console.log
+2025-04-16T06:05:07.1255644Z       Database cleared
+2025-04-16T06:05:07.1255859Z 
+2025-04-16T06:05:07.1256052Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1256318Z 
+2025-04-16T06:05:07.1256467Z     console.log
+2025-04-16T06:05:07.1271025Z       Database cleared
+2025-04-16T06:05:07.1271331Z 
+2025-04-16T06:05:07.1271551Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1271839Z 
+2025-04-16T06:05:07.1271971Z     console.log
+2025-04-16T06:05:07.1272305Z       Database cleared
+2025-04-16T06:05:07.1272516Z 
+2025-04-16T06:05:07.1272706Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1272974Z 
+2025-04-16T06:05:07.1273100Z     console.log
+2025-04-16T06:05:07.1273396Z       Database cleared
+2025-04-16T06:05:07.1273601Z 
+2025-04-16T06:05:07.1273781Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1274041Z 
+2025-04-16T06:05:07.1274167Z     console.log
+2025-04-16T06:05:07.1274458Z       Database cleared
+2025-04-16T06:05:07.1274658Z 
+2025-04-16T06:05:07.1274835Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1275088Z 
+2025-04-16T06:05:07.1275211Z     console.log
+2025-04-16T06:05:07.1275508Z       Database cleared
+2025-04-16T06:05:07.1275719Z 
+2025-04-16T06:05:07.1275904Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1276160Z 
+2025-04-16T06:05:07.1276296Z     console.log
+2025-04-16T06:05:07.1276594Z       Database cleared
+2025-04-16T06:05:07.1277013Z 
+2025-04-16T06:05:07.1277213Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1277498Z 
+2025-04-16T06:05:07.1277614Z     console.log
+2025-04-16T06:05:07.1277918Z       Database cleared
+2025-04-16T06:05:07.1278124Z 
+2025-04-16T06:05:07.1278312Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1278581Z 
+2025-04-16T06:05:07.1278696Z     console.log
+2025-04-16T06:05:07.1279016Z       Database cleared
+2025-04-16T06:05:07.1279209Z 
+2025-04-16T06:05:07.1279393Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1279655Z 
+2025-04-16T06:05:07.1279774Z     console.log
+2025-04-16T06:05:07.1280079Z       Database cleared
+2025-04-16T06:05:07.1280287Z 
+2025-04-16T06:05:07.1280479Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1280748Z 
+2025-04-16T06:05:07.1280859Z     console.log
+2025-04-16T06:05:07.1281407Z       Database cleared
+2025-04-16T06:05:07.1281634Z 
+2025-04-16T06:05:07.1281827Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1282291Z 
+2025-04-16T06:05:07.1282415Z     console.log
+2025-04-16T06:05:07.1282733Z       Database cleared
+2025-04-16T06:05:07.1282939Z 
+2025-04-16T06:05:07.1283134Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1283415Z 
+2025-04-16T06:05:07.1283531Z     console.log
+2025-04-16T06:05:07.1283832Z       Database cleared
+2025-04-16T06:05:07.1284033Z 
+2025-04-16T06:05:07.1284212Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1284495Z 
+2025-04-16T06:05:07.1284631Z     console.log
+2025-04-16T06:05:07.1284934Z       Database cleared
+2025-04-16T06:05:07.1285132Z 
+2025-04-16T06:05:07.1285326Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1285617Z 
+2025-04-16T06:05:07.1285752Z     console.log
+2025-04-16T06:05:07.1286077Z       Database cleared
+2025-04-16T06:05:07.1286291Z 
+2025-04-16T06:05:07.1286483Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:07.1286964Z 
+2025-04-16T06:05:07.1287082Z     console.log
+2025-04-16T06:05:07.1287480Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:07.1287818Z 
+2025-04-16T06:05:07.1288009Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:07.1288290Z 
+2025-04-16T06:05:07.3956592Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:07.3959780Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:10.7788222Z PASS tests/unit/models/user.model.test.js
+2025-04-16T06:05:10.7856249Z   ● Console
+2025-04-16T06:05:10.7856452Z 
+2025-04-16T06:05:10.7856578Z     console.log
+2025-04-16T06:05:10.7857354Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:20404/
+2025-04-16T06:05:10.7857825Z 
+2025-04-16T06:05:10.7858079Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:10.7858368Z 
+2025-04-16T06:05:10.7858515Z     console.log
+2025-04-16T06:05:10.7858853Z       Database cleared
+2025-04-16T06:05:10.7859081Z 
+2025-04-16T06:05:10.7859291Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7859570Z 
+2025-04-16T06:05:10.7859695Z     console.log
+2025-04-16T06:05:10.7860003Z       Database cleared
+2025-04-16T06:05:10.7860211Z 
+2025-04-16T06:05:10.7860411Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7860684Z 
+2025-04-16T06:05:10.7860811Z     console.log
+2025-04-16T06:05:10.7861111Z       Database cleared
+2025-04-16T06:05:10.7861312Z 
+2025-04-16T06:05:10.7861513Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7861780Z 
+2025-04-16T06:05:10.7861892Z     console.log
+2025-04-16T06:05:10.7862176Z       Database cleared
+2025-04-16T06:05:10.7862374Z 
+2025-04-16T06:05:10.7862557Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7862830Z 
+2025-04-16T06:05:10.7862955Z     console.log
+2025-04-16T06:05:10.7863289Z       Database cleared
+2025-04-16T06:05:10.7863491Z 
+2025-04-16T06:05:10.7863682Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7863955Z 
+2025-04-16T06:05:10.7864074Z     console.log
+2025-04-16T06:05:10.7864393Z       Database cleared
+2025-04-16T06:05:10.7864601Z 
+2025-04-16T06:05:10.7865075Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7865528Z 
+2025-04-16T06:05:10.7865829Z     console.log
+2025-04-16T06:05:10.7866165Z       Database cleared
+2025-04-16T06:05:10.7866513Z 
+2025-04-16T06:05:10.7866965Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7867258Z 
+2025-04-16T06:05:10.7867381Z     console.log
+2025-04-16T06:05:10.7867705Z       Database cleared
+2025-04-16T06:05:10.7867921Z 
+2025-04-16T06:05:10.7868118Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7868396Z 
+2025-04-16T06:05:10.7868526Z     console.log
+2025-04-16T06:05:10.7868850Z       Database cleared
+2025-04-16T06:05:10.7869056Z 
+2025-04-16T06:05:10.7869485Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7869769Z 
+2025-04-16T06:05:10.7869887Z     console.log
+2025-04-16T06:05:10.7870459Z       Database cleared
+2025-04-16T06:05:10.7870665Z 
+2025-04-16T06:05:10.7870850Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7871121Z 
+2025-04-16T06:05:10.7871235Z     console.log
+2025-04-16T06:05:10.7871524Z       Database cleared
+2025-04-16T06:05:10.7871717Z 
+2025-04-16T06:05:10.7871888Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7872147Z 
+2025-04-16T06:05:10.7872258Z     console.log
+2025-04-16T06:05:10.7872544Z       Database cleared
+2025-04-16T06:05:10.7872730Z 
+2025-04-16T06:05:10.7872901Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7873153Z 
+2025-04-16T06:05:10.7873261Z     console.log
+2025-04-16T06:05:10.7873543Z       Database cleared
+2025-04-16T06:05:10.7873732Z 
+2025-04-16T06:05:10.7873900Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7874153Z 
+2025-04-16T06:05:10.7874556Z     console.log
+2025-04-16T06:05:10.7874854Z       Database cleared
+2025-04-16T06:05:10.7875067Z 
+2025-04-16T06:05:10.7875241Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7875508Z 
+2025-04-16T06:05:10.7875620Z     console.log
+2025-04-16T06:05:10.7875896Z       Database cleared
+2025-04-16T06:05:10.7876091Z 
+2025-04-16T06:05:10.7876257Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7876510Z 
+2025-04-16T06:05:10.7876625Z     console.log
+2025-04-16T06:05:10.7877055Z       Database cleared
+2025-04-16T06:05:10.7877253Z 
+2025-04-16T06:05:10.7877427Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7877685Z 
+2025-04-16T06:05:10.7877806Z     console.log
+2025-04-16T06:05:10.7878093Z       Database cleared
+2025-04-16T06:05:10.7878299Z 
+2025-04-16T06:05:10.7878485Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7878751Z 
+2025-04-16T06:05:10.7878881Z     console.log
+2025-04-16T06:05:10.7879183Z       Database cleared
+2025-04-16T06:05:10.7879390Z 
+2025-04-16T06:05:10.7879560Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7879816Z 
+2025-04-16T06:05:10.7879952Z     console.log
+2025-04-16T06:05:10.7880257Z       Database cleared
+2025-04-16T06:05:10.7880482Z 
+2025-04-16T06:05:10.7880667Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7880931Z 
+2025-04-16T06:05:10.7881059Z     console.log
+2025-04-16T06:05:10.7881344Z       Database cleared
+2025-04-16T06:05:10.7881540Z 
+2025-04-16T06:05:10.7881717Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7881975Z 
+2025-04-16T06:05:10.7882094Z     console.log
+2025-04-16T06:05:10.7882382Z       Database cleared
+2025-04-16T06:05:10.7882583Z 
+2025-04-16T06:05:10.7882770Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7883035Z 
+2025-04-16T06:05:10.7883155Z     console.log
+2025-04-16T06:05:10.7883446Z       Database cleared
+2025-04-16T06:05:10.7883645Z 
+2025-04-16T06:05:10.7883825Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7884088Z 
+2025-04-16T06:05:10.7884203Z     console.log
+2025-04-16T06:05:10.7884497Z       Database cleared
+2025-04-16T06:05:10.7884691Z 
+2025-04-16T06:05:10.7884878Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7885137Z 
+2025-04-16T06:05:10.7885254Z     console.log
+2025-04-16T06:05:10.7885545Z       Database cleared
+2025-04-16T06:05:10.7885738Z 
+2025-04-16T06:05:10.7885916Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7886172Z 
+2025-04-16T06:05:10.7886283Z     console.log
+2025-04-16T06:05:10.7886575Z       Database cleared
+2025-04-16T06:05:10.7887077Z 
+2025-04-16T06:05:10.7887273Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7887505Z 
+2025-04-16T06:05:10.7887609Z     console.log
+2025-04-16T06:05:10.7887866Z       Database cleared
+2025-04-16T06:05:10.7888042Z 
+2025-04-16T06:05:10.7888202Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7888431Z 
+2025-04-16T06:05:10.7888537Z     console.log
+2025-04-16T06:05:10.7888809Z       Database cleared
+2025-04-16T06:05:10.7888992Z 
+2025-04-16T06:05:10.7889165Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:10.7889396Z 
+2025-04-16T06:05:10.7889503Z     console.log
+2025-04-16T06:05:10.7890076Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:10.7890408Z 
+2025-04-16T06:05:10.7891051Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:10.7891326Z 
+2025-04-16T06:05:11.1072553Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:11.1075143Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:18.7073390Z FAIL tests/unit/models/chat-room.model.test.js (7.916 s)
+2025-04-16T06:05:18.7151983Z   ● Console
+2025-04-16T06:05:18.7153247Z 
+2025-04-16T06:05:18.7155157Z     console.log
+2025-04-16T06:05:18.7157152Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:55565/
+2025-04-16T06:05:18.7199094Z 
+2025-04-16T06:05:18.7199339Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:18.7199694Z 
+2025-04-16T06:05:18.7199823Z     console.log
+2025-04-16T06:05:18.7200154Z       Database cleared
+2025-04-16T06:05:18.7200391Z 
+2025-04-16T06:05:18.7200584Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7200864Z 
+2025-04-16T06:05:18.7200995Z     console.log
+2025-04-16T06:05:18.7201295Z       Database cleared
+2025-04-16T06:05:18.7201501Z 
+2025-04-16T06:05:18.7201675Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7201946Z 
+2025-04-16T06:05:18.7202077Z     console.log
+2025-04-16T06:05:18.7202373Z       Database cleared
+2025-04-16T06:05:18.7202588Z 
+2025-04-16T06:05:18.7202767Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7203031Z 
+2025-04-16T06:05:18.7203152Z     console.log
+2025-04-16T06:05:18.7203437Z       Database cleared
+2025-04-16T06:05:18.7203635Z 
+2025-04-16T06:05:18.7203806Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7204058Z 
+2025-04-16T06:05:18.7204177Z     console.log
+2025-04-16T06:05:18.7204460Z       Database cleared
+2025-04-16T06:05:18.7204664Z 
+2025-04-16T06:05:18.7204847Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7227037Z 
+2025-04-16T06:05:18.7227224Z     console.log
+2025-04-16T06:05:18.7227574Z       Database cleared
+2025-04-16T06:05:18.7227803Z 
+2025-04-16T06:05:18.7227994Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7228266Z 
+2025-04-16T06:05:18.7228391Z     console.log
+2025-04-16T06:05:18.7228681Z       Database cleared
+2025-04-16T06:05:18.7228875Z 
+2025-04-16T06:05:18.7229060Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7229327Z 
+2025-04-16T06:05:18.7229450Z     console.log
+2025-04-16T06:05:18.7229760Z       Database cleared
+2025-04-16T06:05:18.7229967Z 
+2025-04-16T06:05:18.7230169Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7230437Z 
+2025-04-16T06:05:18.7230564Z     console.log
+2025-04-16T06:05:18.7230876Z       Database cleared
+2025-04-16T06:05:18.7231079Z 
+2025-04-16T06:05:18.7231269Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7231539Z 
+2025-04-16T06:05:18.7231674Z     console.log
+2025-04-16T06:05:18.7231980Z       Database cleared
+2025-04-16T06:05:18.7232180Z 
+2025-04-16T06:05:18.7232388Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7232659Z 
+2025-04-16T06:05:18.7232779Z     console.log
+2025-04-16T06:05:18.7233094Z       Database cleared
+2025-04-16T06:05:18.7233297Z 
+2025-04-16T06:05:18.7233489Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7233759Z 
+2025-04-16T06:05:18.7233875Z     console.log
+2025-04-16T06:05:18.7234186Z       Database cleared
+2025-04-16T06:05:18.7234393Z 
+2025-04-16T06:05:18.7234592Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7234863Z 
+2025-04-16T06:05:18.7234985Z     console.log
+2025-04-16T06:05:18.7235290Z       Database cleared
+2025-04-16T06:05:18.7235493Z 
+2025-04-16T06:05:18.7235685Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7235947Z 
+2025-04-16T06:05:18.7236069Z     console.log
+2025-04-16T06:05:18.7236388Z       Database cleared
+2025-04-16T06:05:18.7236595Z 
+2025-04-16T06:05:18.7237313Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7237638Z 
+2025-04-16T06:05:18.7237766Z     console.log
+2025-04-16T06:05:18.7238298Z       Database cleared
+2025-04-16T06:05:18.7238504Z 
+2025-04-16T06:05:18.7238699Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7238985Z 
+2025-04-16T06:05:18.7239105Z     console.log
+2025-04-16T06:05:18.7239406Z       Database cleared
+2025-04-16T06:05:18.7239605Z 
+2025-04-16T06:05:18.7239790Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7240072Z 
+2025-04-16T06:05:18.7240194Z     console.log
+2025-04-16T06:05:18.7240509Z       Database cleared
+2025-04-16T06:05:18.7240718Z 
+2025-04-16T06:05:18.7240900Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7241173Z 
+2025-04-16T06:05:18.7241298Z     console.log
+2025-04-16T06:05:18.7241595Z       Database cleared
+2025-04-16T06:05:18.7241794Z 
+2025-04-16T06:05:18.7241981Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7242258Z 
+2025-04-16T06:05:18.7242381Z     console.log
+2025-04-16T06:05:18.7242719Z       Database cleared
+2025-04-16T06:05:18.7242919Z 
+2025-04-16T06:05:18.7243092Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:18.7243363Z 
+2025-04-16T06:05:18.7243486Z     console.log
+2025-04-16T06:05:18.7243871Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:18.7244142Z 
+2025-04-16T06:05:18.7244312Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:18.7290253Z 
+2025-04-16T06:05:18.7291101Z   ● ChatRoom Model › Basic Validation › should require participants with valid user references
+2025-04-16T06:05:18.7291732Z 
+2025-04-16T06:05:18.7291972Z     expect(received).rejects.toThrow()
+2025-04-16T06:05:18.7292289Z 
+2025-04-16T06:05:18.7292552Z     Received promise resolved instead of rejected
+2025-04-16T06:05:18.7295215Z     Resolved to value: {"__v": 0, "_id": "67ff48980c481fb27b8ce058", "createdAt": 2025-04-16T06:05:12.269Z, "createdBy": "67ff48970c481fb27b8ce052", "encryptionEnabled": true, "encryptionVersion": 1, "isActive": true, "lastActivity": 2025-04-16T06:05:12.269Z, "messageExpiryEnabled": false, "messageExpiryTime": 24, "participants": [], "type": "direct", "updatedAt": 2025-04-16T06:05:12.269Z}
+2025-04-16T06:05:18.7331314Z 
+2025-04-16T06:05:18.7331608Z     [0m [90m 122 |[39m
+2025-04-16T06:05:18.7332272Z      [90m 123 |[39m       [90m// Expect validation to fail[39m
+2025-04-16T06:05:18.7333707Z     [31m[1m>[22m[39m[90m 124 |[39m       [36mawait[39m expect(roomWithoutParticipants[33m.[39msave())[33m.[39mrejects[33m.[39mtoThrow()[33m;[39m
+2025-04-16T06:05:18.7334853Z      [90m     |[39m             [31m[1m^[22m[39m
+2025-04-16T06:05:18.7335383Z      [90m 125 |[39m     })[33m;[39m
+2025-04-16T06:05:18.7335891Z      [90m 126 |[39m
+2025-04-16T06:05:18.7337079Z      [90m 127 |[39m     it([32m'should validate room type'[39m[33m,[39m [36masync[39m () [33m=>[39m {[0m
+2025-04-16T06:05:18.7337662Z 
+2025-04-16T06:05:18.7337985Z       at expect (../node_modules/expect/build/index.js:113:15)
+2025-04-16T06:05:18.7338793Z       at Object.expect (tests/unit/models/chat-room.model.test.js:124:13)
+2025-04-16T06:05:18.7339265Z 
+2025-04-16T06:05:18.7339829Z   ● ChatRoom Model › Static Methods › should not return inactive rooms
+2025-04-16T06:05:18.7340310Z 
+2025-04-16T06:05:18.7340696Z     expect(received).toBe(expected) // Object.is equality
+2025-04-16T06:05:18.7341097Z 
+2025-04-16T06:05:18.7341252Z     - Expected  - 1
+2025-04-16T06:05:18.7341596Z     + Received  + 6
+2025-04-16T06:05:18.7341792Z 
+2025-04-16T06:05:18.7341965Z     - 67ff489e0c481fb27b8ce150
+2025-04-16T06:05:18.7342339Z     + {
+2025-04-16T06:05:18.7342759Z     +   _id: new ObjectId('67ff489e0c481fb27b8ce150'),
+2025-04-16T06:05:18.7343241Z     +   username: 'user2',
+2025-04-16T06:05:18.7343612Z     +   online: false,
+2025-04-16T06:05:18.7344038Z     +   lastActive: 2025-04-16T06:05:18.404Z
+2025-04-16T06:05:18.7344469Z     + }
+2025-04-16T06:05:18.7344627Z 
+2025-04-16T06:05:18.7345114Z     [0m [90m 450 |[39m       [90m// Should have only 1 active room[39m
+2025-04-16T06:05:18.7346435Z      [90m 451 |[39m       expect(user1Rooms[33m.[39mlength)[33m.[39mtoBe([35m1[39m)[33m;[39m
+2025-04-16T06:05:18.7368907Z     [31m[1m>[22m[39m[90m 452 |[39m       expect(user1Rooms[[35m0[39m][33m.[39mparticipants[[35m1[39m][33m.[39muser[33m.[39mtoString())[33m.[39mtoBe(user2[33m.[39m_id[33m.[39mtoString())[33m;[39m
+2025-04-16T06:05:18.7370439Z      [90m     |[39m                                                             [31m[1m^[22m[39m
+2025-04-16T06:05:18.7371106Z      [90m 453 |[39m     })[33m;[39m
+2025-04-16T06:05:18.7371648Z      [90m 454 |[39m   })[33m;[39m
+2025-04-16T06:05:18.7372201Z      [90m 455 |[39m })[33m;[39m[0m
+2025-04-16T06:05:18.7372487Z 
+2025-04-16T06:05:18.7372870Z       at Object.toBe (tests/unit/models/chat-room.model.test.js:452:61)
+2025-04-16T06:05:18.7373311Z 
+2025-04-16T06:05:19.0323500Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:19.0329353Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:23.0742440Z PASS tests/unit/models/chat-message.model.test.js
+2025-04-16T06:05:23.0795872Z   ● Console
+2025-04-16T06:05:23.0807289Z 
+2025-04-16T06:05:23.0807778Z     console.log
+2025-04-16T06:05:23.0808533Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:39343/
+2025-04-16T06:05:23.0808965Z 
+2025-04-16T06:05:23.0809164Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:23.0809433Z 
+2025-04-16T06:05:23.0809553Z     console.log
+2025-04-16T06:05:23.0809862Z       Database cleared
+2025-04-16T06:05:23.0810060Z 
+2025-04-16T06:05:23.0810243Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0810502Z 
+2025-04-16T06:05:23.0810617Z     console.log
+2025-04-16T06:05:23.0810913Z       Database cleared
+2025-04-16T06:05:23.0811108Z 
+2025-04-16T06:05:23.0811326Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0811586Z 
+2025-04-16T06:05:23.0811715Z     console.log
+2025-04-16T06:05:23.0812002Z       Database cleared
+2025-04-16T06:05:23.0812192Z 
+2025-04-16T06:05:23.0812371Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0812623Z 
+2025-04-16T06:05:23.0812735Z     console.log
+2025-04-16T06:05:23.0813023Z       Database cleared
+2025-04-16T06:05:23.0813211Z 
+2025-04-16T06:05:23.0813385Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0813653Z 
+2025-04-16T06:05:23.0813771Z     console.log
+2025-04-16T06:05:23.0814076Z       Database cleared
+2025-04-16T06:05:23.0814273Z 
+2025-04-16T06:05:23.0814450Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0814713Z 
+2025-04-16T06:05:23.0814828Z     console.log
+2025-04-16T06:05:23.0815153Z       Database cleared
+2025-04-16T06:05:23.0815356Z 
+2025-04-16T06:05:23.0815543Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0815804Z 
+2025-04-16T06:05:23.0815919Z     console.log
+2025-04-16T06:05:23.0816221Z       Database cleared
+2025-04-16T06:05:23.0816411Z 
+2025-04-16T06:05:23.0816592Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0817038Z 
+2025-04-16T06:05:23.0817158Z     console.log
+2025-04-16T06:05:23.0817452Z       Database cleared
+2025-04-16T06:05:23.0817639Z 
+2025-04-16T06:05:23.0817806Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0818070Z 
+2025-04-16T06:05:23.0818187Z     console.log
+2025-04-16T06:05:23.0818472Z       Database cleared
+2025-04-16T06:05:23.0818665Z 
+2025-04-16T06:05:23.0818840Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0819104Z 
+2025-04-16T06:05:23.0819222Z     console.log
+2025-04-16T06:05:23.0819541Z       Database cleared
+2025-04-16T06:05:23.0819743Z 
+2025-04-16T06:05:23.0819922Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0820200Z 
+2025-04-16T06:05:23.0820313Z     console.log
+2025-04-16T06:05:23.0820602Z       Database cleared
+2025-04-16T06:05:23.0820797Z 
+2025-04-16T06:05:23.0820978Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0821556Z 
+2025-04-16T06:05:23.0821684Z     console.log
+2025-04-16T06:05:23.0822177Z       Database cleared
+2025-04-16T06:05:23.0822373Z 
+2025-04-16T06:05:23.0822549Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0822816Z 
+2025-04-16T06:05:23.0822930Z     console.log
+2025-04-16T06:05:23.0823229Z       Database cleared
+2025-04-16T06:05:23.0823425Z 
+2025-04-16T06:05:23.0823599Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0823862Z 
+2025-04-16T06:05:23.0823978Z     console.log
+2025-04-16T06:05:23.0824262Z       Database cleared
+2025-04-16T06:05:23.0824469Z 
+2025-04-16T06:05:23.0824643Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0824916Z 
+2025-04-16T06:05:23.0825034Z     console.log
+2025-04-16T06:05:23.0825328Z       Database cleared
+2025-04-16T06:05:23.0825535Z 
+2025-04-16T06:05:23.0825711Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0825978Z 
+2025-04-16T06:05:23.0826107Z     console.log
+2025-04-16T06:05:23.0826409Z       Database cleared
+2025-04-16T06:05:23.0826632Z 
+2025-04-16T06:05:23.0827087Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0827508Z 
+2025-04-16T06:05:23.0827646Z     console.log
+2025-04-16T06:05:23.0827959Z       Database cleared
+2025-04-16T06:05:23.0828178Z 
+2025-04-16T06:05:23.0828370Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:23.0828642Z 
+2025-04-16T06:05:23.0828772Z     console.log
+2025-04-16T06:05:23.0829161Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:23.0829483Z 
+2025-04-16T06:05:23.0829679Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:23.0829955Z 
+2025-04-16T06:05:23.5379215Z PASS tests/unit/services/auth.service.test.js
+2025-04-16T06:05:24.1200633Z FAIL tests/unit/middleware/auth.middleware.test.js
+2025-04-16T06:05:24.1203344Z   ● Auth Middleware › optionalAuth middleware › should authenticate user if valid token is provided
+2025-04-16T06:05:24.1205191Z 
+2025-04-16T06:05:24.1206534Z     expect(received).toEqual(expected) // deep equality
+2025-04-16T06:05:24.1208216Z 
+2025-04-16T06:05:24.1211443Z     Expected: {"_id": "67ff48a47c0b6f053d647357", "dateOfBirth": 1990-01-01T00:00:00.000Z, "email": "test@example.com", "firstName": "Test", "gender": "other", "lastActive": 2025-04-16T06:05:24.047Z, "lastName": "User", "location": {"city": "Oslo", "country": "Norway"}, "password": "Password123!", "phoneNumber": "+4712345678", "role": "user", "save": [Function mockConstructor], "username": "testuser"}
+2025-04-16T06:05:24.1214829Z     Received: undefined
+2025-04-16T06:05:24.1216172Z 
+2025-04-16T06:05:24.1218047Z     [0m [90m 247 |[39m       [36mawait[39m optionalAuth(req[33m,[39m res[33m,[39m next)[33m;[39m
+2025-04-16T06:05:24.1219024Z      [90m 248 |[39m       
+2025-04-16T06:05:24.1229069Z     [31m[1m>[22m[39m[90m 249 |[39m       expect(req[33m.[39muser)[33m.[39mtoEqual(mockUser)[33m;[39m
+2025-04-16T06:05:24.1229912Z      [90m     |[39m                        [31m[1m^[22m[39m
+2025-04-16T06:05:24.1230647Z      [90m 250 |[39m       expect(next)[33m.[39mtoHaveBeenCalled()[33m;[39m
+2025-04-16T06:05:24.1231239Z      [90m 251 |[39m     })[33m;[39m
+2025-04-16T06:05:24.1231661Z      [90m 252 |[39m     [0m
+2025-04-16T06:05:24.1231860Z 
+2025-04-16T06:05:24.1232219Z       at Object.toEqual (tests/unit/middleware/auth.middleware.test.js:249:24)
+2025-04-16T06:05:24.1232659Z 
+2025-04-16T06:05:24.3380825Z FAIL services/auth.service.test.js
+2025-04-16T06:05:24.3382021Z   ● AuthService › refreshToken › should generate new access token with valid refresh token
+2025-04-16T06:05:24.3382604Z 
+2025-04-16T06:05:24.3382896Z     expect(jest.fn()).toHaveBeenCalledWith(...expected)
+2025-04-16T06:05:24.3383261Z 
+2025-04-16T06:05:24.3383528Z     Expected: "valid-refresh-token", Any<String>
+2025-04-16T06:05:24.3384102Z     Received: "valid-refresh-token", undefined
+2025-04-16T06:05:24.3384432Z 
+2025-04-16T06:05:24.3384566Z     Number of calls: 1
+2025-04-16T06:05:24.3384775Z 
+2025-04-16T06:05:24.3384994Z     [0m [90m 174 |[39m
+2025-04-16T06:05:24.3385964Z      [90m 175 |[39m       [90m// Verify results[39m
+2025-04-16T06:05:24.3387776Z     [31m[1m>[22m[39m[90m 176 |[39m       expect(jwt[33m.[39mverify)[33m.[39mtoHaveBeenCalledWith([32m'valid-refresh-token'[39m[33m,[39m expect[33m.[39many([33mString[39m))[33m;[39m
+2025-04-16T06:05:24.3389424Z      [90m     |[39m                          [31m[1m^[22m[39m
+2025-04-16T06:05:24.3390812Z      [90m 177 |[39m       expect([33mUser[39m[33m.[39mfindById)[33m.[39mtoHaveBeenCalledWith(mockUser[33m.[39m_id)[33m;[39m
+2025-04-16T06:05:24.3392510Z      [90m 178 |[39m       expect(jwt[33m.[39msign)[33m.[39mtoHaveBeenCalledTimes([35m2[39m)[33m;[39m [90m// Both access and refresh tokens[39m
+2025-04-16T06:05:24.3394182Z      [90m 179 |[39m       expect(result)[33m.[39mtoHaveProperty([32m'token'[39m[33m,[39m [32m'new-access-token'[39m)[33m;[39m[0m
+2025-04-16T06:05:24.3394853Z 
+2025-04-16T06:05:24.3395292Z       at Object.toHaveBeenCalledWith (services/auth.service.test.js:176:26)
+2025-04-16T06:05:24.3395765Z 
+2025-04-16T06:05:24.3396368Z   ● AuthService › refreshToken › should throw error with invalid refresh token
+2025-04-16T06:05:24.3417236Z 
+2025-04-16T06:05:24.3417572Z     expect(jest.fn()).toHaveBeenCalledWith(...expected)
+2025-04-16T06:05:24.3417958Z 
+2025-04-16T06:05:24.3418193Z     Expected: "invalid-token", Any<String>
+2025-04-16T06:05:24.3418721Z     Received: "invalid-token", undefined
+2025-04-16T06:05:24.3419038Z 
+2025-04-16T06:05:24.3419184Z     Number of calls: 1
+2025-04-16T06:05:24.3419400Z 
+2025-04-16T06:05:24.3420158Z     [0m [90m 192 |[39m         [33m.[39mrejects[33m.[39mtoThrow([32m'Invalid refresh token'[39m)[33m;[39m
+2025-04-16T06:05:24.3420973Z      [90m 193 |[39m       
+2025-04-16T06:05:24.3422458Z     [31m[1m>[22m[39m[90m 194 |[39m       expect(jwt[33m.[39mverify)[33m.[39mtoHaveBeenCalledWith([32m'invalid-token'[39m[33m,[39m expect[33m.[39many([33mString[39m))[33m;[39m
+2025-04-16T06:05:24.3423841Z      [90m     |[39m                          [31m[1m^[22m[39m
+2025-04-16T06:05:24.3424942Z      [90m 195 |[39m       expect([33mUser[39m[33m.[39mfindById)[33m.[39mnot[33m.[39mtoHaveBeenCalled()[33m;[39m
+2025-04-16T06:05:24.3426278Z      [90m 196 |[39m       expect(jwt[33m.[39msign)[33m.[39mnot[33m.[39mtoHaveBeenCalled()[33m;[39m
+2025-04-16T06:05:24.3427328Z      [90m 197 |[39m     })[33m;[39m[0m
+2025-04-16T06:05:24.3427630Z 
+2025-04-16T06:05:24.3428057Z       at Object.toHaveBeenCalledWith (services/auth.service.test.js:194:26)
+2025-04-16T06:05:24.3428579Z 
+2025-04-16T06:05:24.3429121Z   ● AuthService › refreshToken › should throw error if user not found
+2025-04-16T06:05:24.3429598Z 
+2025-04-16T06:05:24.3429899Z     expect(jest.fn()).toHaveBeenCalledWith(...expected)
+2025-04-16T06:05:24.3430285Z 
+2025-04-16T06:05:24.3430566Z     Expected: "valid-token-wrong-user", Any<String>
+2025-04-16T06:05:24.3431193Z     Received: "valid-token-wrong-user", undefined
+2025-04-16T06:05:24.3431565Z 
+2025-04-16T06:05:24.3431731Z     Number of calls: 1
+2025-04-16T06:05:24.3431951Z 
+2025-04-16T06:05:24.3432643Z     [0m [90m 207 |[39m         [33m.[39mrejects[33m.[39mtoThrow([32m'User not found'[39m)[33m;[39m
+2025-04-16T06:05:24.3433424Z      [90m 208 |[39m       
+2025-04-16T06:05:24.3434990Z     [31m[1m>[22m[39m[90m 209 |[39m       expect(jwt[33m.[39mverify)[33m.[39mtoHaveBeenCalledWith([32m'valid-token-wrong-user'[39m[33m,[39m expect[33m.[39many([33mString[39m))[33m;[39m
+2025-04-16T06:05:24.3436481Z      [90m     |[39m                          [31m[1m^[22m[39m
+2025-04-16T06:05:24.3458109Z      [90m 210 |[39m       expect([33mUser[39m[33m.[39mfindById)[33m.[39mtoHaveBeenCalledWith([32m'nonexistent-id'[39m)[33m;[39m
+2025-04-16T06:05:24.3459553Z      [90m 211 |[39m       expect(jwt[33m.[39msign)[33m.[39mnot[33m.[39mtoHaveBeenCalled()[33m;[39m
+2025-04-16T06:05:24.3460459Z      [90m 212 |[39m     })[33m;[39m[0m
+2025-04-16T06:05:24.3460761Z 
+2025-04-16T06:05:24.3461469Z       at Object.toHaveBeenCalledWith (services/auth.service.test.js:209:26)
+2025-04-16T06:05:24.3462030Z 
+2025-04-16T06:05:24.5559429Z (node:2132) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:24.5569504Z (node:2132) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-04-16T06:05:24.6358497Z PASS tests/performance/api.performance.test.js
+2025-04-16T06:05:24.6383146Z   ● Console
+2025-04-16T06:05:24.6383474Z 
+2025-04-16T06:05:24.6383622Z     console.log
+2025-04-16T06:05:24.6385531Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:61788/
+2025-04-16T06:05:24.6385988Z 
+2025-04-16T06:05:24.6386190Z       at log (tests/setup.js:35:11)
+2025-04-16T06:05:24.6386468Z 
+2025-04-16T06:05:24.6386606Z     console.log
+2025-04-16T06:05:24.6387205Z       Database cleared
+2025-04-16T06:05:24.6387443Z 
+2025-04-16T06:05:24.6387639Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:24.6387955Z 
+2025-04-16T06:05:24.6388092Z     console.log
+2025-04-16T06:05:24.6388412Z       Database cleared
+2025-04-16T06:05:24.6388619Z 
+2025-04-16T06:05:24.6388810Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:24.6389082Z 
+2025-04-16T06:05:24.6389202Z     console.log
+2025-04-16T06:05:24.6389502Z       Database cleared
+2025-04-16T06:05:24.6389712Z 
+2025-04-16T06:05:24.6389913Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:24.6390173Z 
+2025-04-16T06:05:24.6390294Z     console.log
+2025-04-16T06:05:24.6390594Z       Database cleared
+2025-04-16T06:05:24.6390798Z 
+2025-04-16T06:05:24.6390987Z       at log (tests/setup.js:61:11)
+2025-04-16T06:05:24.6391252Z 
+2025-04-16T06:05:24.6391366Z     console.log
+2025-04-16T06:05:24.6391742Z       Disconnected from in-memory MongoDB
+2025-04-16T06:05:24.6392055Z 
+2025-04-16T06:05:24.6392239Z       at log (tests/setup.js:46:11)
+2025-04-16T06:05:24.6392518Z 
+2025-04-16T06:05:24.9449453Z PASS tests/unit/middleware/security.test.js
+2025-04-16T06:05:24.9471233Z   ● Console
+2025-04-16T06:05:24.9471758Z 
+2025-04-16T06:05:24.9473289Z     console.log
+2025-04-16T06:05:24.9475011Z       2025-04-16 06:05:24 [[32minfo[39m]: CSP configured in report-only mode {
+2025-04-16T06:05:24.9475960Z         "service": "date-night-api"
+2025-04-16T06:05:24.9477971Z       }
+2025-04-16T06:05:24.9479188Z 
+2025-04-16T06:05:24.9479713Z       at Console.log (../node_modules/winston/lib/winston/transports/console.js:87:23)
+2025-04-16T06:05:24.9480263Z 
+2025-04-16T06:05:24.9480403Z     console.log
+2025-04-16T06:05:24.9481143Z       2025-04-16 06:05:24 [[32minfo[39m]: CSP configured in enforce mode {
+2025-04-16T06:05:24.9481778Z         "service": "date-night-api"
+2025-04-16T06:05:24.9482191Z       }
+2025-04-16T06:05:24.9482364Z 
+2025-04-16T06:05:24.9482823Z       at Console.log (../node_modules/winston/lib/winston/transports/console.js:87:23)
+2025-04-16T06:05:24.9483364Z 
+2025-04-16T06:05:24.9487502Z 
+2025-04-16T06:05:24.9495850Z Test Suites: 4 failed, 6 passed, 10 total
+2025-04-16T06:05:24.9502863Z Tests:       9 failed, 1 skipped, 158 passed, 168 total
+2025-04-16T06:05:24.9503414Z Snapshots:   0 total
+2025-04-16T06:05:24.9503791Z Time:        23.319 s
+2025-04-16T06:05:24.9504149Z Ran all test suites.
+2025-04-16T06:05:25.0832175Z npm error Lifecycle script `test` failed with error:
+2025-04-16T06:05:25.0834044Z npm error code 1
+2025-04-16T06:05:25.0835210Z npm error path /home/runner/work/date-night-app2/date-night-app2/server
+2025-04-16T06:05:25.0836012Z npm error workspace date-night-server@1.0.0
+2025-04-16T06:05:25.0837055Z npm error location /home/runner/work/date-night-app2/date-night-app2/server
+2025-04-16T06:05:25.0837734Z npm error command failed
+2025-04-16T06:05:25.0838599Z npm error command sh -c jest
+2025-04-16T06:05:25.0924891Z ##[error]Process completed with exit code 1.
+2025-04-16T06:05:25.0986576Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T06:05:25.0987225Z with:
+2025-04-16T06:05:25.0987430Z   name: server-test-results
+2025-04-16T06:05:25.0987867Z   path: ./server/coverage
+2025-04-16T06:05:25.0988079Z   if-no-files-found: warn
+2025-04-16T06:05:25.0988275Z   compression-level: 6
+2025-04-16T06:05:25.0988471Z   overwrite: false
+2025-04-16T06:05:25.0988664Z   include-hidden-files: false
+2025-04-16T06:05:25.0988865Z ##[endgroup]
+2025-04-16T06:05:25.3195827Z ##[warning]No files were found with the provided path: ./server/coverage. No artifacts will be uploaded.
+2025-04-16T06:05:25.3318436Z Post job cleanup.
+2025-04-16T06:05:25.4280122Z [command]/usr/bin/git version
+2025-04-16T06:05:25.4320988Z git version 2.49.0
+2025-04-16T06:05:25.4368749Z Temporarily overriding HOME='/home/runner/work/_temp/7c3e0931-044a-4f94-abe9-b2a03cbefef9' before making global git config changes
+2025-04-16T06:05:25.4370212Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T06:05:25.4376640Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T06:05:25.4419584Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T06:05:25.4460434Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T06:05:25.4760917Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T06:05:25.4785749Z http.https://github.com/.extraheader
+2025-04-16T06:05:25.4800673Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T06:05:25.4836082Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T06:05:25.5165488Z Print service container logs: 5d961a659f3f40dabf245350a7937b25_mongo6_61e14f
+2025-04-16T06:05:25.5170412Z ##[command]/usr/bin/docker logs --details 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:05:25.5495587Z  {"t":{"$date":"2025-04-16T06:04:39.304+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"-","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+2025-04-16T06:05:25.5500063Z  {"t":{"$date":"2025-04-16T06:04:39.307+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T06:05:25.5504364Z  {"t":{"$date":"2025-04-16T06:04:39.307+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+2025-04-16T06:05:25.5506962Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationDonorService","namespace":"config.tenantMigrationDonors"}}
+2025-04-16T06:05:25.5509452Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationRecipientService","namespace":"config.tenantMigrationRecipients"}}
+2025-04-16T06:05:25.5511812Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"ShardSplitDonorService","namespace":"config.tenantSplitDonors"}}
+2025-04-16T06:05:25.5514159Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+2025-04-16T06:05:25.5515583Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"8909b91f3bd6"}}
+2025-04-16T06:05:25.5518623Z  {"t":{"$date":"2025-04-16T06:04:39.309+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"6.0.22","gitVersion":"ee527360b84c6798535ee0895de3c7186b3522f9","openSSLVersion":"OpenSSL 3.0.2 15 Mar 2022","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu2204","distarch":"x86_64","target_arch":"x86_64"}}}}
+2025-04-16T06:05:25.5520138Z  {"t":{"$date":"2025-04-16T06:04:39.310+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"22.04"}}}
+2025-04-16T06:05:25.5520957Z  {"t":{"$date":"2025-04-16T06:04:39.310+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"}}}}
+2025-04-16T06:05:25.5522133Z  {"t":{"$date":"2025-04-16T06:04:39.310+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+2025-04-16T06:05:25.5525070Z  {"t":{"$date":"2025-04-16T06:04:39.311+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=3457M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,remove=true,path=journal,compressor=snappy),builtin_extension_config=(zstd=(compression_level=6)),file_manager=(close_idle_time=600,close_scan_interval=10,close_handle_minimum=2000),statistics_log=(wait=0),json_output=(error,message),verbose=[recovery_progress:1,checkpoint_progress:1,compact_progress:1,backup:0,checkpoint:0,compact:0,evict:0,history_store:0,recovery:0,rts:0,salvage:0,tiered:0,timestamp:0,transaction:0,verify:0,log:0],"}}
+2025-04-16T06:05:25.5528448Z  {"t":{"$date":"2025-04-16T06:04:39.479+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744783479,"ts_usec":479829,"thread":"1:0x7fa01f015cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery log replay has successfully finished and ran for 0 milliseconds"}}}
+2025-04-16T06:05:25.5530449Z  {"t":{"$date":"2025-04-16T06:04:39.479+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744783479,"ts_usec":479917,"thread":"1:0x7fa01f015cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global recovery timestamp: (0, 0)"}}}
+2025-04-16T06:05:25.5532321Z  {"t":{"$date":"2025-04-16T06:04:39.479+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744783479,"ts_usec":479939,"thread":"1:0x7fa01f015cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global oldest timestamp: (0, 0)"}}}
+2025-04-16T06:05:25.5534525Z  {"t":{"$date":"2025-04-16T06:04:39.479+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744783479,"ts_usec":479972,"thread":"1:0x7fa01f015cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery was completed successfully and took 0ms, including 0ms for the log replay, 0ms for the rollback to stable, and 0ms for the checkpoint."}}}
+2025-04-16T06:05:25.5536129Z  {"t":{"$date":"2025-04-16T06:04:39.484+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":173}}
+2025-04-16T06:05:25.5537415Z  {"t":{"$date":"2025-04-16T06:04:39.484+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+2025-04-16T06:05:25.5538491Z  {"t":{"$date":"2025-04-16T06:04:39.492+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+2025-04-16T06:05:25.5539703Z  {"t":{"$date":"2025-04-16T06:04:39.493+00:00"},"s":"W",  "c":"CONTROL",  "id":22178,   "ctx":"initandlisten","msg":"/sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never' in this binary version","tags":["startupWarnings"]}
+2025-04-16T06:05:25.5540884Z  {"t":{"$date":"2025-04-16T06:04:39.493+00:00"},"s":"W",  "c":"CONTROL",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":262144,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+2025-04-16T06:05:25.5542280Z  {"t":{"$date":"2025-04-16T06:04:39.493+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"admin.system.version","uuidDisposition":"provided","uuid":{"uuid":{"$uuid":"e27e5d56-0225-483c-a78f-85238d6181f5"}},"options":{"uuid":{"$uuid":"e27e5d56-0225-483c-a78f-85238d6181f5"}}}}
+2025-04-16T06:05:25.5544247Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"e27e5d56-0225-483c-a78f-85238d6181f5"}},"namespace":"admin.system.version","index":"_id_","ident":"index-1-5045315656729340484","collectionIdent":"collection-0-5045315656729340484","commitTimestamp":null}}
+2025-04-16T06:05:25.5545636Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"REPL",     "id":20459,   "ctx":"initandlisten","msg":"Setting featureCompatibilityVersion","attr":{"newVersion":"6.0"}}
+2025-04-16T06:05:25.5546552Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"setFCV"}}
+2025-04-16T06:05:25.5549053Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T06:05:25.5552478Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T06:05:25.5554644Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"startup"}}
+2025-04-16T06:05:25.5555477Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+2025-04-16T06:05:25.5556245Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+2025-04-16T06:05:25.5557299Z  {"t":{"$date":"2025-04-16T06:04:39.498+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+2025-04-16T06:05:25.5558536Z  {"t":{"$date":"2025-04-16T06:04:39.500+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"local.startup_log","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"aa8965fe-16b6-4476-950c-7f84a22aca6c"}},"options":{"capped":true,"size":10485760}}}
+2025-04-16T06:05:25.5560293Z  {"t":{"$date":"2025-04-16T06:04:39.510+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"aa8965fe-16b6-4476-950c-7f84a22aca6c"}},"namespace":"local.startup_log","index":"_id_","ident":"index-3-5045315656729340484","collectionIdent":"collection-2-5045315656729340484","commitTimestamp":null}}
+2025-04-16T06:05:25.5561849Z  {"t":{"$date":"2025-04-16T06:04:39.510+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+2025-04-16T06:05:25.5562702Z  {"t":{"$date":"2025-04-16T06:04:39.510+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+2025-04-16T06:05:25.5563887Z  {"t":{"$date":"2025-04-16T06:04:39.511+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"LogicalSessionCacheRefresh","msg":"createCollection","attr":{"namespace":"config.system.sessions","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"885ecf2a-daf9-4e4a-a38d-7ae329034fca"}},"options":{}}}
+2025-04-16T06:05:25.5564997Z  {"t":{"$date":"2025-04-16T06:04:39.511+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+2025-04-16T06:05:25.5565672Z  {"t":{"$date":"2025-04-16T06:04:39.512+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+2025-04-16T06:05:25.5566335Z  {"t":{"$date":"2025-04-16T06:04:39.512+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+2025-04-16T06:05:25.5567511Z  {"t":{"$date":"2025-04-16T06:04:39.511+00:00"},"s":"I",  "c":"CONTROL",  "id":20712,   "ctx":"LogicalSessionCacheReap","msg":"Sessions collection is not set up; waiting until next sessions reap interval","attr":{"error":"NamespaceNotFound: config.system.sessions does not exist"}}
+2025-04-16T06:05:25.5571846Z  {"t":{"$date":"2025-04-16T06:04:39.512+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Get metadata describing storage engine":"0 ms","Create storage engine":"0 ms","Create storage engine":"180 ms","Write current PID to file":"0 ms","Write current PID to file":"0 ms","Write a new metadata for storage engine":"0 ms","Write a new metadata for storage engine":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Rebuild indexes for collections":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Start up the replication coordinator":"0 ms","Start transport layer":"1 ms","_initAndListen total elapsed time":"203 ms"}}}}
+2025-04-16T06:05:25.5576985Z  {"t":{"$date":"2025-04-16T06:04:39.520+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"885ecf2a-daf9-4e4a-a38d-7ae329034fca"}},"namespace":"config.system.sessions","index":"_id_","ident":"index-5-5045315656729340484","collectionIdent":"collection-4-5045315656729340484","commitTimestamp":null}}
+2025-04-16T06:05:25.5579212Z  {"t":{"$date":"2025-04-16T06:04:39.520+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"885ecf2a-daf9-4e4a-a38d-7ae329034fca"}},"namespace":"config.system.sessions","index":"lsidTTLIndex","ident":"index-6-5045315656729340484","collectionIdent":"collection-4-5045315656729340484","commitTimestamp":null}}
+2025-04-16T06:05:25.5585808Z Stop and remove container: 5d961a659f3f40dabf245350a7937b25_mongo6_61e14f
+2025-04-16T06:05:25.5590757Z ##[command]/usr/bin/docker rm --force 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:05:26.1117007Z 8909b91f3bd61fc57ecdb88defc4806b08232433e0a9100398f9fbb48bb15b1a
+2025-04-16T06:05:26.1143394Z Remove container network: github_network_4e176cfa085f4f888c586cc446ae73ba
+2025-04-16T06:05:26.1148497Z ##[command]/usr/bin/docker network rm github_network_4e176cfa085f4f888c586cc446ae73ba
+2025-04-16T06:05:26.1967094Z github_network_4e176cfa085f4f888c586cc446ae73ba
+2025-04-16T06:05:26.2027476Z Cleaning up orphan processes

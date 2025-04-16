@@ -1,0 +1,124 @@
+{
+  "id": 40648936051,
+  "run_id": 14491544609,
+  "workflow_name": "Server Tests",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14491544609",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJdt2Kcw",
+  "head_sha": "46264212a39d07df9d402cbfa36b3f310ed15bba",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40648936051",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14491544609/job/40648936051",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-16T11:24:51Z",
+  "started_at": "2025-04-16T11:24:54Z",
+  "completed_at": "2025-04-16T11:25:32Z",
+  "name": "test (22.x)",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-16T11:24:55Z",
+      "completed_at": "2025-04-16T11:24:56Z"
+    },
+    {
+      "name": "Initialize containers",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-16T11:24:56Z",
+      "completed_at": "2025-04-16T11:25:09Z"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2025-04-16T11:25:09Z",
+      "completed_at": "2025-04-16T11:25:12Z"
+    },
+    {
+      "name": "Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2025-04-16T11:25:12Z",
+      "completed_at": "2025-04-16T11:25:16Z"
+    },
+    {
+      "name": "Install dependencies",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 5,
+      "started_at": "2025-04-16T11:25:16Z",
+      "completed_at": "2025-04-16T11:25:26Z"
+    },
+    {
+      "name": "Run unit tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 6,
+      "started_at": "2025-04-16T11:25:26Z",
+      "completed_at": "2025-04-16T11:25:26Z"
+    },
+    {
+      "name": "Run integration tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 7,
+      "started_at": "2025-04-16T11:25:26Z",
+      "completed_at": "2025-04-16T11:25:26Z"
+    },
+    {
+      "name": "Upload test results",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2025-04-16T11:25:26Z",
+      "completed_at": "2025-04-16T11:25:27Z"
+    },
+    {
+      "name": "Post Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 14,
+      "started_at": "2025-04-16T11:25:27Z",
+      "completed_at": "2025-04-16T11:25:27Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2025-04-16T11:25:27Z",
+      "completed_at": "2025-04-16T11:25:27Z"
+    },
+    {
+      "name": "Stop containers",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2025-04-16T11:25:27Z",
+      "completed_at": "2025-04-16T11:25:29Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2025-04-16T11:25:29Z",
+      "completed_at": "2025-04-16T11:25:29Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40648936051",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000110,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

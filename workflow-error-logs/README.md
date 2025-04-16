@@ -22,24 +22,9 @@ workflow-error-logs/
 
 These logs can be used to diagnose and fix issues with GitHub Actions workflows. Look for error messages, failed steps, and other indicators of problems.
 
-## Automatic Analysis
-
-You can analyze the logs using the provided script:
-
-```bash
-node scripts/analyze-workflow-errors.js
-```
-
-This will generate a report at `workflow-error-report.md` with:
-
-- Common error patterns detected
-- Recommendations for fixing the issues
-- Context around each error
-
 ## Automatic Collection
 
 Logs are collected:
-
 - After any workflow completes
 - Every 6 hours via scheduled run
 - Manually via workflow dispatch

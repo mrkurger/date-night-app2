@@ -1,0 +1,952 @@
+2025-04-16T04:40:03.9976857Z Current runner version: '2.323.0'
+2025-04-16T04:40:04.0056189Z ##[group]Operating System
+2025-04-16T04:40:04.0057332Z Ubuntu
+2025-04-16T04:40:04.0058166Z 24.04.2
+2025-04-16T04:40:04.0058970Z LTS
+2025-04-16T04:40:04.0059795Z ##[endgroup]
+2025-04-16T04:40:04.0060661Z ##[group]Runner Image
+2025-04-16T04:40:04.0061792Z Image: ubuntu-24.04
+2025-04-16T04:40:04.0062745Z Version: 20250406.1.0
+2025-04-16T04:40:04.0064442Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T04:40:04.0066875Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T04:40:04.0068478Z ##[endgroup]
+2025-04-16T04:40:04.0069313Z ##[group]Runner Image Provisioner
+2025-04-16T04:40:04.0070272Z 2.0.422.1
+2025-04-16T04:40:04.0070998Z ##[endgroup]
+2025-04-16T04:40:04.0073041Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T04:40:04.0075718Z Contents: read
+2025-04-16T04:40:04.0076514Z Metadata: read
+2025-04-16T04:40:04.0077578Z Packages: read
+2025-04-16T04:40:04.0078535Z ##[endgroup]
+2025-04-16T04:40:04.0082021Z Secret source: Actions
+2025-04-16T04:40:04.0083055Z Prepare workflow directory
+2025-04-16T04:40:04.1100737Z Prepare all required actions
+2025-04-16T04:40:04.1209617Z Getting action download info
+2025-04-16T04:40:04.5324864Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T04:40:04.5326632Z Version: 4.2.2
+2025-04-16T04:40:04.5328030Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T04:40:04.5329486Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T04:40:04.5330230Z ##[endgroup]
+2025-04-16T04:40:04.6461023Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T04:40:04.6462193Z Version: 4.4.0
+2025-04-16T04:40:04.6462940Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T04:40:04.6463904Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T04:40:04.6464614Z ##[endgroup]
+2025-04-16T04:40:04.8454015Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T04:40:04.8454814Z Version: 4.6.2
+2025-04-16T04:40:04.8455679Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T04:40:04.8456622Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T04:40:04.8457292Z ##[endgroup]
+2025-04-16T04:40:05.0720135Z Complete job name: test (22.x)
+2025-04-16T04:40:05.1331649Z ##[group]Run actions/checkout@v4
+2025-04-16T04:40:05.1332551Z with:
+2025-04-16T04:40:05.1332957Z   repository: mrkurger/date-night-app2
+2025-04-16T04:40:05.1333649Z   token: ***
+2025-04-16T04:40:05.1334017Z   ssh-strict: true
+2025-04-16T04:40:05.1334389Z   ssh-user: git
+2025-04-16T04:40:05.1334791Z   persist-credentials: true
+2025-04-16T04:40:05.1335239Z   clean: true
+2025-04-16T04:40:05.1335631Z   sparse-checkout-cone-mode: true
+2025-04-16T04:40:05.1336098Z   fetch-depth: 1
+2025-04-16T04:40:05.1336477Z   fetch-tags: false
+2025-04-16T04:40:05.1336899Z   show-progress: true
+2025-04-16T04:40:05.1337291Z   lfs: false
+2025-04-16T04:40:05.1337660Z   submodules: false
+2025-04-16T04:40:05.1338052Z   set-safe-directory: true
+2025-04-16T04:40:05.1338696Z ##[endgroup]
+2025-04-16T04:40:05.4115205Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T04:40:05.4119342Z ##[group]Getting Git version info
+2025-04-16T04:40:05.4121115Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T04:40:05.4124515Z [command]/usr/bin/git version
+2025-04-16T04:40:05.4221142Z git version 2.49.0
+2025-04-16T04:40:05.4255693Z ##[endgroup]
+2025-04-16T04:40:05.4274186Z Temporarily overriding HOME='/home/runner/work/_temp/3c1c2e87-d802-41fd-9610-10cbe7864443' before making global git config changes
+2025-04-16T04:40:05.4279192Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T04:40:05.4294436Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:40:05.4337418Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T04:40:05.4344734Z ##[group]Initializing the repository
+2025-04-16T04:40:05.4348824Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:40:05.4463416Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T04:40:05.4465432Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T04:40:05.4466464Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T04:40:05.4467659Z hint:
+2025-04-16T04:40:05.4468592Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T04:40:05.4469708Z hint:
+2025-04-16T04:40:05.4470706Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T04:40:05.4472578Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T04:40:05.4474045Z hint:
+2025-04-16T04:40:05.4474931Z hint: 	git branch -m <name>
+2025-04-16T04:40:05.4478484Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T04:40:05.4488809Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T04:40:05.4532928Z ##[endgroup]
+2025-04-16T04:40:05.4534618Z ##[group]Disabling automatic garbage collection
+2025-04-16T04:40:05.4536748Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T04:40:05.4574475Z ##[endgroup]
+2025-04-16T04:40:05.4575810Z ##[group]Setting up auth
+2025-04-16T04:40:05.4581675Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T04:40:05.4617198Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T04:40:05.4999787Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T04:40:05.5036924Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T04:40:05.5285693Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T04:40:05.5333879Z ##[endgroup]
+2025-04-16T04:40:05.5335977Z ##[group]Fetching the repository
+2025-04-16T04:40:05.5344552Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b8b37164f7f40ca46488549131976e58c3d400a5:refs/remotes/origin/main
+2025-04-16T04:40:08.2557692Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T04:40:08.2559184Z  * [new ref]         b8b37164f7f40ca46488549131976e58c3d400a5 -> origin/main
+2025-04-16T04:40:08.2598846Z ##[endgroup]
+2025-04-16T04:40:08.2603302Z ##[group]Determining the checkout info
+2025-04-16T04:40:08.2604080Z ##[endgroup]
+2025-04-16T04:40:08.2606711Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T04:40:08.2659292Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T04:40:08.2693701Z ##[group]Checking out the ref
+2025-04-16T04:40:08.2697640Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T04:40:08.7030444Z Switched to a new branch 'main'
+2025-04-16T04:40:08.7042469Z branch 'main' set up to track 'origin/main'.
+2025-04-16T04:40:08.7066151Z ##[endgroup]
+2025-04-16T04:40:08.7116064Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T04:40:08.7154371Z b8b37164f7f40ca46488549131976e58c3d400a5
+2025-04-16T04:40:08.7437373Z ##[group]Run actions/setup-node@v4
+2025-04-16T04:40:08.7437689Z with:
+2025-04-16T04:40:08.7437861Z   node-version: 22.x
+2025-04-16T04:40:08.7438049Z   cache: npm
+2025-04-16T04:40:08.7438304Z   cache-dependency-path: client-angular/package-lock.json
+2025-04-16T04:40:08.7438610Z   always-auth: false
+2025-04-16T04:40:08.7438804Z   check-latest: false
+2025-04-16T04:40:08.7439386Z   token: ***
+2025-04-16T04:40:08.7439566Z ##[endgroup]
+2025-04-16T04:40:08.9251849Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T04:40:08.9260264Z ##[group]Environment details
+2025-04-16T04:40:09.4249554Z node: v22.14.0
+2025-04-16T04:40:09.4264026Z npm: 10.9.2
+2025-04-16T04:40:09.4264336Z yarn: 1.22.22
+2025-04-16T04:40:09.4265553Z ##[endgroup]
+2025-04-16T04:40:09.4301897Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T04:40:09.5837968Z /home/runner/.npm
+2025-04-16T04:40:09.7007285Z Cache hit for: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T04:40:10.1939344Z Received 69351304 of 69351304 (100.0%), 148.0 MBs/sec
+2025-04-16T04:40:10.1946471Z Cache Size: ~66 MB (69351304 B)
+2025-04-16T04:40:10.1973696Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d8919836-09d9-4f39-8a4d-b2314d544282/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T04:40:10.5097937Z Cache restored successfully
+2025-04-16T04:40:10.5251931Z Cache restored from key: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T04:40:10.5422011Z ##[group]Run npm ci
+2025-04-16T04:40:10.5422317Z [36;1mnpm ci[0m
+2025-04-16T04:40:10.5475293Z shell: /usr/bin/bash -e {0}
+2025-04-16T04:40:10.5475562Z ##[endgroup]
+2025-04-16T04:40:16.8963729Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T04:40:17.2246593Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T04:40:17.2499323Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T04:40:17.4100915Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T04:40:17.5642822Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T04:40:33.0882519Z 
+2025-04-16T04:40:33.0883985Z added 1237 packages, and audited 1239 packages in 22s
+2025-04-16T04:40:33.0948624Z 
+2025-04-16T04:40:33.0949475Z 189 packages are looking for funding
+2025-04-16T04:40:33.0972095Z   run `npm fund` for details
+2025-04-16T04:40:33.1039132Z 
+2025-04-16T04:40:33.1040021Z 3 moderate severity vulnerabilities
+2025-04-16T04:40:33.1042141Z 
+2025-04-16T04:40:33.1042663Z To address all issues (including breaking changes), run:
+2025-04-16T04:40:33.1043301Z   npm audit fix --force
+2025-04-16T04:40:33.1043766Z 
+2025-04-16T04:40:33.1044008Z Run `npm audit` for details.
+2025-04-16T04:40:33.2240942Z ##[group]Run npm test -- --watch=false --browsers=ChromeHeadless
+2025-04-16T04:40:33.2250166Z [36;1mnpm test -- --watch=false --browsers=ChromeHeadless[0m
+2025-04-16T04:40:33.2298848Z shell: /usr/bin/bash -e {0}
+2025-04-16T04:40:33.2299115Z ##[endgroup]
+2025-04-16T04:40:33.3689480Z 
+2025-04-16T04:40:33.3690352Z > client-angular@0.0.0 test
+2025-04-16T04:40:33.3692120Z > ng test client-angular --watch=false --browsers=ChromeHeadless
+2025-04-16T04:40:33.3693079Z 
+2025-04-16T04:40:35.4550090Z - Generating browser application bundles (phase: setup)...
+2025-04-16T04:41:01.4383011Z ✔ Browser application bundle generation complete.
+2025-04-16T04:41:01.8422827Z [32m16 04 2025 04:41:01.838:INFO [karma-server]: [39mKarma v6.4.4 server started at http://localhost:9876/
+2025-04-16T04:41:01.8483469Z [32m16 04 2025 04:41:01.845:INFO [launcher]: [39mLaunching browsers ChromeHeadless with concurrency unlimited
+2025-04-16T04:41:01.8525671Z [32m16 04 2025 04:41:01.852:INFO [launcher]: [39mStarting browser ChromeHeadless
+2025-04-16T04:41:03.2323399Z [32m16 04 2025 04:41:03.231:INFO [Chrome Headless 135.0.0.0 (Linux x86_64)]: [39mConnected on socket AtmGPd0dLn6mkiDrAAAB with id 32570706
+2025-04-16T04:41:05.6597351Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 0 of 287 SUCCESS (0 secs / 0 secs)
+2025-04-16T04:41:06.0033064Z [33m16 04 2025 04:41:06.002:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.0266479Z [33m16 04 2025 04:41:06.026:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.0512410Z [33m16 04 2025 04:41:06.050:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.0712948Z [33m16 04 2025 04:41:06.070:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.0918341Z [33m16 04 2025 04:41:06.089:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.1215476Z [33m16 04 2025 04:41:06.121:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.1552552Z [33m16 04 2025 04:41:06.154:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.1714808Z [1A[2KERROR: 'Error moderating media:', Error: Test error
+2025-04-16T04:41:06.1719391Z Error: Test error
+2025-04-16T04:41:06.1724800Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:511:70)
+2025-04-16T04:41:06.1730327Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.1736008Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.1741761Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.1746357Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.1760083Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.1761915Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.1763444Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.1764938Z     at init (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13)
+2025-04-16T04:41:06.1766582Z     at OperatorSubscriber.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
+2025-04-16T04:41:06.1767966Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 0 of 287 SUCCESS (0 secs / 0 secs)
+2025-04-16T04:41:06.1769117Z ERROR: 'Error moderating media:', Error: Test error
+2025-04-16T04:41:06.1769608Z Error: Test error
+2025-04-16T04:41:06.1770680Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:511:70)
+2025-04-16T04:41:06.1772564Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.1774126Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.1775516Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.1776894Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.1778340Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.1779785Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.1781207Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.1783171Z     at init (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13)
+2025-04-16T04:41:06.1784658Z     at OperatorSubscriber.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
+2025-04-16T04:41:06.1787377Z [33m16 04 2025 04:41:06.177:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.1867963Z [1A[2KERROR: 'Error moderating media:', Object{status: 403, message: 'Forbidden'}
+2025-04-16T04:41:06.1869360Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 0 of 287 SUCCESS (0 secs / 0 secs)
+2025-04-16T04:41:06.1870564Z ERROR: 'Error moderating media:', Object{status: 403, message: 'Forbidden'}
+2025-04-16T04:41:06.1986571Z [33m16 04 2025 04:41:06.197:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.2142887Z [33m16 04 2025 04:41:06.213:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.2348142Z [33m16 04 2025 04:41:06.234:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.2637632Z [33m16 04 2025 04:41:06.263:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.2824889Z [33m16 04 2025 04:41:06.282:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.2969754Z [33m16 04 2025 04:41:06.294:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.3125536Z [33m16 04 2025 04:41:06.312:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.3272855Z [33m16 04 2025 04:41:06.326:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.3416821Z [33m16 04 2025 04:41:06.341:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.3464735Z [1A[2KERROR: 'Error loading pending media:', Object{status: 403, message: 'Forbidden'}
+2025-04-16T04:41:06.3465863Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 0 of 287 SUCCESS (0 secs / 0 secs)
+2025-04-16T04:41:06.3473039Z ERROR: 'Error loading pending media:', Object{status: 403, message: 'Forbidden'}
+2025-04-16T04:41:06.3481198Z [1A[2KLOG: 'No pending media items found'
+2025-04-16T04:41:06.3483733Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 0 of 287 SUCCESS (0 secs / 0 secs)
+2025-04-16T04:41:06.3509245Z LOG: 'No pending media items found'
+2025-04-16T04:41:06.3523343Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 1 of 287 SUCCESS (0 secs / 0.016 secs)
+2025-04-16T04:41:06.3524902Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 2 of 287 SUCCESS (0 secs / 0.019 secs)
+2025-04-16T04:41:06.3526525Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 3 of 287 SUCCESS (0 secs / 0.022 secs)
+2025-04-16T04:41:06.3538155Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 4 of 287 SUCCESS (0 secs / 0.024 secs)
+2025-04-16T04:41:06.3544299Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 5 of 287 SUCCESS (0 secs / 0.026 secs)
+2025-04-16T04:41:06.3548902Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 6 of 287 SUCCESS (0 secs / 0.03 secs)
+2025-04-16T04:41:06.3566395Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 7 of 287 SUCCESS (0 secs / 0.033 secs)
+2025-04-16T04:41:06.3582926Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should render masonry layout correctly FAILED
+2025-04-16T04:41:06.3584524Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3586387Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3588207Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3589619Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3590800Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3591872Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3593014Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3594065Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3595718Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3596494Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3597337Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3598247Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3599170Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3600203Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3634194Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3635324Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 8 of 287 (1 FAILED) (0 secs / 0.149 secs)
+2025-04-16T04:41:06.3636778Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should render grid layout correctly FAILED
+2025-04-16T04:41:06.3638281Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3640101Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3663200Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3664625Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3665422Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3666248Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3667295Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3668337Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3669445Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3670462Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3676858Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3677827Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3678808Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3679915Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3686420Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3687577Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 9 of 287 (2 FAILED) (0 secs / 0.155 secs)
+2025-04-16T04:41:06.3688993Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should handle empty items array FAILED
+2025-04-16T04:41:06.3690772Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3692831Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3694600Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3696228Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3697044Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3697923Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3699054Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3700154Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3701250Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3719887Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3721802Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3722843Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3723707Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3724624Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3725628Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3726631Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 10 of 287 (3 FAILED) (0 secs / 0.159 secs)
+2025-04-16T04:41:06.3727990Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should render netflix layout correctly FAILED
+2025-04-16T04:41:06.3729430Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3731128Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3733134Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3738546Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3739278Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3740060Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3741009Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3743477Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3744900Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3745634Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3746340Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3747188Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3748061Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3750282Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3751660Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3753786Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 11 of 287 (4 FAILED) (0 secs / 0.162 secs)
+2025-04-16T04:41:06.3755273Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should initialize with default values FAILED
+2025-04-16T04:41:06.3756847Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3758558Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3760792Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3763428Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3764244Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3765051Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3766055Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3767012Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3768047Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3768795Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3769570Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3770465Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3771654Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3772785Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3773864Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3774996Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 12 of 287 (5 FAILED) (0 secs / 0.165 secs)
+2025-04-16T04:41:06.3776216Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should create FAILED
+2025-04-16T04:41:06.3777560Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3779360Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3781167Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3782777Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3783603Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3784432Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3785500Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3786991Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3788265Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3788980Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3789737Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3790624Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3791991Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3793107Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3794205Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3795325Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 13 of 287 (6 FAILED) (0 secs / 0.168 secs)
+2025-04-16T04:41:06.3796686Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should display loading skeletons FAILED
+2025-04-16T04:41:06.3798057Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3800010Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3801915Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3803239Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3803997Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3804772Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3805826Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3806852Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3807912Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3808629Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3809385Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3810210Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3811079Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3812260Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3813274Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3814389Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 14 of 287 (7 FAILED) (0 secs / 0.171 secs)
+2025-04-16T04:41:06.3815795Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should use custom item template FAILED
+2025-04-16T04:41:06.3817322Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3819169Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3820965Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3822578Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3823401Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3824544Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3825706Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3826769Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3827883Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3828597Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3829359Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3830215Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3831080Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3832215Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3832815Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3833440Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 15 of 287 (8 FAILED) (0 secs / 0.174 secs)
+2025-04-16T04:41:06.3834222Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) CardGridComponent should handle item click event FAILED
+2025-04-16T04:41:06.3835037Z 	Error: NG0303: Can't bind to 'itemTemplate' since it isn't a known property of 'emerald-card-grid' (used in the 'TestHostComponent' component template).
+2025-04-16T04:41:06.3836281Z 	1. If 'emerald-card-grid' is an Angular component and it has the 'itemTemplate' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:06.3837251Z 	2. If 'emerald-card-grid' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:06.3838008Z 	3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.
+2025-04-16T04:41:06.3838449Z 	error properties: Object({ code: 303 })
+2025-04-16T04:41:06.3838913Z 	    at reportUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11225:15)
+2025-04-16T04:41:06.3839492Z 	    at handleUnknownPropertyError (node_modules/@angular/core/fesm2022/core.mjs:11221:5)
+2025-04-16T04:41:06.3840046Z 	    at elementPropertyInternal (node_modules/@angular/core/fesm2022/core.mjs:12479:17)
+2025-04-16T04:41:06.3840629Z 	    at ɵɵproperty (node_modules/@angular/core/fesm2022/core.mjs:26066:9)
+2025-04-16T04:41:06.3841042Z 	    at templateFn (ng:///TestHostComponent.js:42:47)
+2025-04-16T04:41:06.3841717Z 	    at executeTemplate (node_modules/@angular/core/fesm2022/core.mjs:12338:9)
+2025-04-16T04:41:06.3842197Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14023:13)
+2025-04-16T04:41:06.3842678Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:06.3843235Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:06.3843810Z 	    at detectChangesInComponent (node_modules/@angular/core/fesm2022/core.mjs:14191:5)
+2025-04-16T04:41:06.3844419Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 16 of 287 (9 FAILED) (0 secs / 0.177 secs)
+2025-04-16T04:41:06.3845120Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 17 of 287 (9 FAILED) (0 secs / 0.27 secs)
+2025-04-16T04:41:06.3845814Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 18 of 287 (9 FAILED) (0 secs / 0.28 secs)
+2025-04-16T04:41:06.3846497Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 19 of 287 (9 FAILED) (0 secs / 0.291 secs)
+2025-04-16T04:41:06.3847189Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 20 of 287 (9 FAILED) (0 secs / 0.302 secs)
+2025-04-16T04:41:06.3847866Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 21 of 287 (9 FAILED) (0 secs / 0.311 secs)
+2025-04-16T04:41:06.3848541Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 22 of 287 (9 FAILED) (0 secs / 0.319 secs)
+2025-04-16T04:41:06.3849372Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 23 of 287 (9 FAILED) (0 secs / 0.328 secs)
+2025-04-16T04:41:06.3850059Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 24 of 287 (9 FAILED) (0 secs / 0.337 secs)
+2025-04-16T04:41:06.3850735Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 25 of 287 (9 FAILED) (0 secs / 0.347 secs)
+2025-04-16T04:41:06.3851544Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 26 of 287 (9 FAILED) (0 secs / 0.365 secs)
+2025-04-16T04:41:06.3852232Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 27 of 287 (9 FAILED) (0 secs / 0.374 secs)
+2025-04-16T04:41:06.3852908Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 28 of 287 (9 FAILED) (0 secs / 0.387 secs)
+2025-04-16T04:41:06.3853580Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 29 of 287 (9 FAILED) (0 secs / 0.394 secs)
+2025-04-16T04:41:06.3854252Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 30 of 287 (9 FAILED) (0 secs / 0.402 secs)
+2025-04-16T04:41:06.3855193Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) ContentModerationComponent Modal Interaction should handle error when submitting moderation FAILED
+2025-04-16T04:41:06.3855815Z 	Expected '' to be 'Failed to moderate media'.
+2025-04-16T04:41:06.3856083Z 	    at <Jasmine>
+2025-04-16T04:41:06.3856758Z 	    at UserContext.apply (src/app/features/admin/content-moderation/content-moderation.component.spec.ts:527:31)
+2025-04-16T04:41:06.3857398Z 	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1703:26)
+2025-04-16T04:41:06.3857886Z 	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+2025-04-16T04:41:06.3858436Z 	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+2025-04-16T04:41:06.3859039Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 31 of 287 (10 FAILED) (0 secs / 0.415 secs)
+2025-04-16T04:41:06.3859737Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 32 of 287 (10 FAILED) (0 secs / 0.422 secs)
+2025-04-16T04:41:06.3860435Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 33 of 287 (10 FAILED) (0 secs / 0.43 secs)
+2025-04-16T04:41:06.3861122Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 34 of 287 (10 FAILED) (0 secs / 0.438 secs)
+2025-04-16T04:41:06.3861925Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 35 of 287 (10 FAILED) (0 secs / 0.445 secs)
+2025-04-16T04:41:06.3862606Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 36 of 287 (10 FAILED) (0 secs / 0.451 secs)
+2025-04-16T04:41:06.3863290Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 37 of 287 (10 FAILED) (0 secs / 0.462 secs)
+2025-04-16T04:41:06.3863966Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 38 of 287 (10 FAILED) (0 secs / 0.48 secs)
+2025-04-16T04:41:06.3864649Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 39 of 287 (10 FAILED) (0 secs / 0.487 secs)
+2025-04-16T04:41:06.3865332Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 40 of 287 (10 FAILED) (0 secs / 0.496 secs)
+2025-04-16T04:41:06.3866014Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 41 of 287 (10 FAILED) (0 secs / 0.504 secs)
+2025-04-16T04:41:06.3866692Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 42 of 287 (10 FAILED) (0 secs / 0.51 secs)
+2025-04-16T04:41:06.3867389Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 43 of 287 (10 FAILED) (0 secs / 0.515 secs)
+2025-04-16T04:41:06.3868068Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 44 of 287 (10 FAILED) (0 secs / 0.523 secs)
+2025-04-16T04:41:06.3868755Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 45 of 287 (10 FAILED) (0 secs / 0.529 secs)
+2025-04-16T04:41:06.3869438Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 46 of 287 (10 FAILED) (0 secs / 0.535 secs)
+2025-04-16T04:41:06.3870118Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 47 of 287 (10 FAILED) (0 secs / 0.54 secs)
+2025-04-16T04:41:06.3870937Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 48 of 287 (10 FAILED) (0 secs / 0.547 secs)
+2025-04-16T04:41:06.3871735Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 49 of 287 (10 FAILED) (0 secs / 0.552 secs)
+2025-04-16T04:41:06.3872423Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 50 of 287 (10 FAILED) (0 secs / 0.56 secs)
+2025-04-16T04:41:06.3873014Z [1A[2KERROR: 'Error loading pending media:', Error: Test error
+2025-04-16T04:41:06.3873324Z Error: Test error
+2025-04-16T04:41:06.3873993Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:160:82)
+2025-04-16T04:41:06.3875005Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.3875906Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.3876692Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.3877461Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.3878304Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.3879307Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.3880173Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3881028Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3881923Z     at http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13
+2025-04-16T04:41:06.3882623Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 50 of 287 (10 FAILED) (0 secs / 0.56 secs)
+2025-04-16T04:41:06.3883109Z ERROR: 'Error loading pending media:', Error: Test error
+2025-04-16T04:41:06.3883403Z Error: Test error
+2025-04-16T04:41:06.3884047Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:160:82)
+2025-04-16T04:41:06.3885050Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.3885966Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.3886752Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.3887527Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.3888366Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.3889214Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.3890493Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3892313Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3893749Z     at http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13
+2025-04-16T04:41:06.3894798Z [1A[2KLOG: 'No pending media items found'
+2025-04-16T04:41:06.3895888Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 50 of 287 (10 FAILED) (0 secs / 0.56 secs)
+2025-04-16T04:41:06.3896655Z LOG: 'No pending media items found'
+2025-04-16T04:41:06.3897552Z [33m16 04 2025 04:41:06.365:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:06.3898591Z [1A[2KERROR: 'Error loading pending media:', Error: Network error
+2025-04-16T04:41:06.3899203Z Error: Network error
+2025-04-16T04:41:06.3902844Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:198:26)
+2025-04-16T04:41:06.3904517Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.3906030Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.3907545Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.3908955Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.3910522Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.3912743Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.3914436Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3916106Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3917602Z     at http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13
+2025-04-16T04:41:06.3918896Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 50 of 287 (10 FAILED) (0 secs / 0.56 secs)
+2025-04-16T04:41:06.3919859Z ERROR: 'Error loading pending media:', Error: Network error
+2025-04-16T04:41:06.3920425Z Error: Network error
+2025-04-16T04:41:06.3921854Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/admin/content-moderation/content-moderation.component.spec.ts:198:26)
+2025-04-16T04:41:06.3923824Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:06.3925629Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:06.3927167Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:06.3928611Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:06.3930284Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:06.3932163Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:24:35)
+2025-04-16T04:41:06.3933896Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3935614Z     at subscribeForRetry (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:62:21)
+2025-04-16T04:41:06.3937188Z     at http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/retry.js:65:13
+2025-04-16T04:41:06.3939398Z [1A[2KLOG: 'No pending media items found'
+2025-04-16T04:41:06.3941039Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 50 of 287 (10 FAILED) (0 secs / 0.56 secs)
+2025-04-16T04:41:06.3942340Z LOG: 'No pending media items found'
+2025-04-16T04:41:06.6456463Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 51 of 287 (10 FAILED) (0 secs / 0.571 secs)
+2025-04-16T04:41:06.6460263Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 52 of 287 (10 FAILED) (0 secs / 0.582 secs)
+2025-04-16T04:41:06.6463829Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 53 of 287 (10 FAILED) (0 secs / 0.585 secs)
+2025-04-16T04:41:06.6483149Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 54 of 287 (10 FAILED) (0 secs / 0.593 secs)
+2025-04-16T04:41:06.6484827Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 55 of 287 (10 FAILED) (0 secs / 0.595 secs)
+2025-04-16T04:41:06.6486426Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 56 of 287 (10 FAILED) (0 secs / 0.596 secs)
+2025-04-16T04:41:06.6488130Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 57 of 287 (10 FAILED) (0 secs / 0.597 secs)
+2025-04-16T04:41:06.6489740Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 58 of 287 (10 FAILED) (0 secs / 0.599 secs)
+2025-04-16T04:41:06.6498046Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 59 of 287 (10 FAILED) (0 secs / 0.6 secs)
+2025-04-16T04:41:06.6499518Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 60 of 287 (10 FAILED) (0 secs / 0.602 secs)
+2025-04-16T04:41:06.6501880Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 61 of 287 (10 FAILED) (0 secs / 0.603 secs)
+2025-04-16T04:41:06.6503154Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 62 of 287 (10 FAILED) (0 secs / 0.604 secs)
+2025-04-16T04:41:06.6504501Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 63 of 287 (10 FAILED) (0 secs / 0.605 secs)
+2025-04-16T04:41:06.6505755Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 64 of 287 (10 FAILED) (0 secs / 0.606 secs)
+2025-04-16T04:41:06.6506999Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 65 of 287 (10 FAILED) (0 secs / 0.608 secs)
+2025-04-16T04:41:06.6508273Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 66 of 287 (10 FAILED) (0 secs / 0.609 secs)
+2025-04-16T04:41:06.6509530Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 67 of 287 (10 FAILED) (0 secs / 0.611 secs)
+2025-04-16T04:41:06.6510832Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 68 of 287 (10 FAILED) (0 secs / 0.614 secs)
+2025-04-16T04:41:06.6512373Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 69 of 287 (10 FAILED) (0 secs / 0.615 secs)
+2025-04-16T04:41:06.6513689Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 70 of 287 (10 FAILED) (0 secs / 0.616 secs)
+2025-04-16T04:41:06.6515004Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 71 of 287 (10 FAILED) (0 secs / 0.713 secs)
+2025-04-16T04:41:06.6554980Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 72 of 287 (10 FAILED) (0 secs / 0.717 secs)
+2025-04-16T04:41:06.6556449Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 73 of 287 (10 FAILED) (0 secs / 0.72 secs)
+2025-04-16T04:41:06.6557861Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 74 of 287 (10 FAILED) (0 secs / 0.722 secs)
+2025-04-16T04:41:06.6559192Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 75 of 287 (10 FAILED) (0 secs / 0.725 secs)
+2025-04-16T04:41:06.6560574Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 76 of 287 (10 FAILED) (0 secs / 0.727 secs)
+2025-04-16T04:41:06.6562049Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 77 of 287 (10 FAILED) (0 secs / 0.73 secs)
+2025-04-16T04:41:06.6563277Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 78 of 287 (10 FAILED) (0 secs / 0.733 secs)
+2025-04-16T04:41:06.6564648Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 79 of 287 (10 FAILED) (0 secs / 0.736 secs)
+2025-04-16T04:41:06.6566036Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 80 of 287 (10 FAILED) (0 secs / 0.739 secs)
+2025-04-16T04:41:06.6567832Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 81 of 287 (10 FAILED) (0 secs / 0.742 secs)
+2025-04-16T04:41:06.6569249Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 82 of 287 (10 FAILED) (0 secs / 0.746 secs)
+2025-04-16T04:41:06.6570669Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 83 of 287 (10 FAILED) (0 secs / 0.749 secs)
+2025-04-16T04:41:06.6578656Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 84 of 287 (10 FAILED) (0 secs / 0.752 secs)
+2025-04-16T04:41:06.6580032Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 85 of 287 (10 FAILED) (0 secs / 0.755 secs)
+2025-04-16T04:41:06.6581566Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 86 of 287 (10 FAILED) (0 secs / 0.76 secs)
+2025-04-16T04:41:06.6582917Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 87 of 287 (10 FAILED) (0 secs / 0.765 secs)
+2025-04-16T04:41:06.6584258Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 88 of 287 (10 FAILED) (0 secs / 0.769 secs)
+2025-04-16T04:41:06.6585604Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 89 of 287 (10 FAILED) (0 secs / 0.774 secs)
+2025-04-16T04:41:06.6586963Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 90 of 287 (10 FAILED) (0 secs / 0.779 secs)
+2025-04-16T04:41:06.6588299Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 91 of 287 (10 FAILED) (0 secs / 0.783 secs)
+2025-04-16T04:41:06.6589949Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 92 of 287 (10 FAILED) (0 secs / 0.787 secs)
+2025-04-16T04:41:06.6591236Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 93 of 287 (10 FAILED) (0 secs / 0.79 secs)
+2025-04-16T04:41:06.6592783Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 94 of 287 (10 FAILED) (0 secs / 0.793 secs)
+2025-04-16T04:41:06.6594135Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 95 of 287 (10 FAILED) (0 secs / 0.795 secs)
+2025-04-16T04:41:06.6597640Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 96 of 287 (10 FAILED) (0 secs / 0.798 secs)
+2025-04-16T04:41:06.6599020Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 97 of 287 (10 FAILED) (0 secs / 0.8 secs)
+2025-04-16T04:41:06.6600404Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 98 of 287 (10 FAILED) (0 secs / 0.803 secs)
+2025-04-16T04:41:06.6601994Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 99 of 287 (10 FAILED) (0 secs / 0.807 secs)
+2025-04-16T04:41:06.6603371Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 100 of 287 (10 FAILED) (0 secs / 0.81 secs)
+2025-04-16T04:41:06.7734889Z [1A[2KERROR: 'Error sanitizing URL:', Error: Test error
+2025-04-16T04:41:06.7738097Z Error: Test error
+2025-04-16T04:41:06.7740090Z     at SpyStrategy.throwError (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:9361:45)
+2025-04-16T04:41:06.7742877Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/core/services/content-sanitizer.service.spec.ts:75:47)
+2025-04-16T04:41:06.7744501Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:369:28)
+2025-04-16T04:41:06.7746141Z     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+2025-04-16T04:41:06.7747745Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:34)
+2025-04-16T04:41:06.7749158Z     at ZoneImpl.run (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:111:43)
+2025-04-16T04:41:06.7750620Z     at runInTestZone (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+2025-04-16T04:41:06.7752442Z     at UserContext.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+2025-04-16T04:41:06.7755359Z     at ZoneQueueRunner.attempt (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7632:40)
+2025-04-16T04:41:06.7758851Z     at ZoneQueueRunner.QueueRunner.run (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7670:27)
+2025-04-16T04:41:06.7761440Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 100 of 287 (10 FAILED) (0 secs / 0.81 secs)
+2025-04-16T04:41:06.7766433Z ERROR: 'Error sanitizing URL:', Error: Test error
+2025-04-16T04:41:06.7766947Z Error: Test error
+2025-04-16T04:41:06.7768677Z     at SpyStrategy.throwError (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:9361:45)
+2025-04-16T04:41:06.7771016Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/core/services/content-sanitizer.service.spec.ts:75:47)
+2025-04-16T04:41:06.7772702Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:369:28)
+2025-04-16T04:41:06.7774476Z     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+2025-04-16T04:41:06.7775928Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:34)
+2025-04-16T04:41:06.7777219Z     at ZoneImpl.run (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:111:43)
+2025-04-16T04:41:06.7778534Z     at runInTestZone (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+2025-04-16T04:41:06.7780001Z     at UserContext.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+2025-04-16T04:41:06.7784097Z     at ZoneQueueRunner.attempt (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7632:40)
+2025-04-16T04:41:06.7787465Z     at ZoneQueueRunner.QueueRunner.run (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7670:27)
+2025-04-16T04:41:06.7877666Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 101 of 287 (10 FAILED) (0 secs / 0.814 secs)
+2025-04-16T04:41:06.7880676Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 102 of 287 (10 FAILED) (0 secs / 0.817 secs)
+2025-04-16T04:41:06.7882291Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 103 of 287 (10 FAILED) (0 secs / 0.82 secs)
+2025-04-16T04:41:06.7883731Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 104 of 287 (10 FAILED) (0 secs / 0.823 secs)
+2025-04-16T04:41:06.7885122Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 105 of 287 (10 FAILED) (0 secs / 0.826 secs)
+2025-04-16T04:41:06.7886497Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 106 of 287 (10 FAILED) (0 secs / 0.828 secs)
+2025-04-16T04:41:06.7887894Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 107 of 287 (10 FAILED) (0 secs / 0.831 secs)
+2025-04-16T04:41:06.7889266Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 108 of 287 (10 FAILED) (0 secs / 0.832 secs)
+2025-04-16T04:41:06.7890559Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 109 of 287 (10 FAILED) (0 secs / 0.833 secs)
+2025-04-16T04:41:06.7892118Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 110 of 287 (10 FAILED) (0 secs / 0.834 secs)
+2025-04-16T04:41:06.7912610Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 111 of 287 (10 FAILED) (0 secs / 0.835 secs)
+2025-04-16T04:41:06.7914773Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 112 of 287 (10 FAILED) (0 secs / 0.836 secs)
+2025-04-16T04:41:06.7919534Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 113 of 287 (10 FAILED) (0 secs / 0.838 secs)
+2025-04-16T04:41:06.7920990Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 114 of 287 (10 FAILED) (0 secs / 0.839 secs)
+2025-04-16T04:41:06.7922615Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 115 of 287 (10 FAILED) (0 secs / 0.84 secs)
+2025-04-16T04:41:06.7924003Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 116 of 287 (10 FAILED) (0 secs / 0.841 secs)
+2025-04-16T04:41:06.7925399Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 117 of 287 (10 FAILED) (0 secs / 0.842 secs)
+2025-04-16T04:41:06.7926786Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 118 of 287 (10 FAILED) (0 secs / 0.843 secs)
+2025-04-16T04:41:06.7928447Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 119 of 287 (10 FAILED) (0 secs / 0.845 secs)
+2025-04-16T04:41:06.7929862Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 120 of 287 (10 FAILED) (0 secs / 0.846 secs)
+2025-04-16T04:41:06.7931264Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 121 of 287 (10 FAILED) (0 secs / 0.847 secs)
+2025-04-16T04:41:06.7933233Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 122 of 287 (10 FAILED) (0 secs / 0.849 secs)
+2025-04-16T04:41:06.7934605Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 123 of 287 (10 FAILED) (0 secs / 0.85 secs)
+2025-04-16T04:41:06.7935957Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 124 of 287 (10 FAILED) (0 secs / 0.851 secs)
+2025-04-16T04:41:06.7937346Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 125 of 287 (10 FAILED) (0 secs / 0.853 secs)
+2025-04-16T04:41:06.7938747Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 126 of 287 (10 FAILED) (0 secs / 0.856 secs)
+2025-04-16T04:41:06.7940147Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 127 of 287 (10 FAILED) (0 secs / 0.858 secs)
+2025-04-16T04:41:06.7941738Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 128 of 287 (10 FAILED) (0 secs / 0.86 secs)
+2025-04-16T04:41:06.7943159Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 129 of 287 (10 FAILED) (0 secs / 0.862 secs)
+2025-04-16T04:41:06.7944576Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 130 of 287 (10 FAILED) (0 secs / 0.864 secs)
+2025-04-16T04:41:06.7945937Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 131 of 287 (10 FAILED) (0 secs / 0.866 secs)
+2025-04-16T04:41:06.7947313Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 132 of 287 (10 FAILED) (0 secs / 0.869 secs)
+2025-04-16T04:41:06.7948692Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 133 of 287 (10 FAILED) (0 secs / 0.871 secs)
+2025-04-16T04:41:06.7950070Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 134 of 287 (10 FAILED) (0 secs / 0.888 secs)
+2025-04-16T04:41:06.7951620Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 135 of 287 (10 FAILED) (0 secs / 0.891 secs)
+2025-04-16T04:41:06.7953030Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 136 of 287 (10 FAILED) (0 secs / 0.893 secs)
+2025-04-16T04:41:06.7954444Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 137 of 287 (10 FAILED) (0 secs / 0.897 secs)
+2025-04-16T04:41:06.7955858Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 138 of 287 (10 FAILED) (0 secs / 0.899 secs)
+2025-04-16T04:41:06.7957217Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 139 of 287 (10 FAILED) (0 secs / 0.901 secs)
+2025-04-16T04:41:06.7958602Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 140 of 287 (10 FAILED) (0 secs / 0.903 secs)
+2025-04-16T04:41:06.7960007Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 141 of 287 (10 FAILED) (0 secs / 0.904 secs)
+2025-04-16T04:41:06.8032214Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 142 of 287 (10 FAILED) (0 secs / 0.905 secs)
+2025-04-16T04:41:06.8033853Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 143 of 287 (10 FAILED) (0 secs / 0.906 secs)
+2025-04-16T04:41:06.8035117Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 144 of 287 (10 FAILED) (0 secs / 0.907 secs)
+2025-04-16T04:41:06.8036354Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 145 of 287 (10 FAILED) (0 secs / 0.908 secs)
+2025-04-16T04:41:06.8037632Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 146 of 287 (10 FAILED) (0 secs / 0.909 secs)
+2025-04-16T04:41:06.8038863Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 147 of 287 (10 FAILED) (0 secs / 0.91 secs)
+2025-04-16T04:41:06.8040121Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 148 of 287 (10 FAILED) (0 secs / 0.911 secs)
+2025-04-16T04:41:06.8041570Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 149 of 287 (10 FAILED) (0 secs / 0.912 secs)
+2025-04-16T04:41:06.8042851Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 150 of 287 (10 FAILED) (0 secs / 0.913 secs)
+2025-04-16T04:41:06.8043837Z [1A[2KERROR: 'Error sanitizing resource URL:', Error: Test error
+2025-04-16T04:41:06.8044361Z Error: Test error
+2025-04-16T04:41:06.8063622Z     at SpyStrategy.throwError (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:9361:45)
+2025-04-16T04:41:06.8066521Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/core/services/content-sanitizer.service.spec.ts:135:55)
+2025-04-16T04:41:06.8068114Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:369:28)
+2025-04-16T04:41:06.8103603Z     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+2025-04-16T04:41:06.8105329Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:34)
+2025-04-16T04:41:06.8106725Z     at ZoneImpl.run (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:111:43)
+2025-04-16T04:41:06.8108132Z     at runInTestZone (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+2025-04-16T04:41:06.8109651Z     at UserContext.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+2025-04-16T04:41:06.8112346Z     at ZoneQueueRunner.attempt (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7632:40)
+2025-04-16T04:41:06.8115754Z     at ZoneQueueRunner.QueueRunner.run (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7670:27)
+2025-04-16T04:41:06.8118009Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 150 of 287 (10 FAILED) (0 secs / 0.913 secs)
+2025-04-16T04:41:06.8119006Z ERROR: 'Error sanitizing resource URL:', Error: Test error
+2025-04-16T04:41:06.8119588Z Error: Test error
+2025-04-16T04:41:06.8148890Z     at SpyStrategy.throwError (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:9361:45)
+2025-04-16T04:41:06.8151822Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/core/services/content-sanitizer.service.spec.ts:135:55)
+2025-04-16T04:41:06.8153440Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:369:28)
+2025-04-16T04:41:06.8155422Z     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+2025-04-16T04:41:06.8156988Z     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:34)
+2025-04-16T04:41:06.8158391Z     at ZoneImpl.run (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:111:43)
+2025-04-16T04:41:06.8159786Z     at runInTestZone (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+2025-04-16T04:41:06.8161484Z     at UserContext.<anonymous> (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+2025-04-16T04:41:06.8163671Z     at ZoneQueueRunner.attempt (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7632:40)
+2025-04-16T04:41:06.8166866Z     at ZoneQueueRunner.QueueRunner.run (http://localhost:9876/absolute/home/runner/work/date-night-app2/date-night-app2/node_modules/karma-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?86d98e11f43f2c8cfac9fb4806ed6c0aced74cbe:7670:27)
+2025-04-16T04:41:07.2043326Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 151 of 287 (10 FAILED) (0 secs / 0.916 secs)
+2025-04-16T04:41:07.2064443Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 152 of 287 (10 FAILED) (0 secs / 0.917 secs)
+2025-04-16T04:41:07.2069743Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 153 of 287 (10 FAILED) (0 secs / 0.918 secs)
+2025-04-16T04:41:07.2075001Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 154 of 287 (10 FAILED) (0 secs / 0.919 secs)
+2025-04-16T04:41:07.2076402Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 155 of 287 (10 FAILED) (0 secs / 0.92 secs)
+2025-04-16T04:41:07.2077664Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 156 of 287 (10 FAILED) (0 secs / 0.921 secs)
+2025-04-16T04:41:07.2079064Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 157 of 287 (10 FAILED) (0 secs / 0.922 secs)
+2025-04-16T04:41:07.2080484Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 158 of 287 (10 FAILED) (0 secs / 0.923 secs)
+2025-04-16T04:41:07.2082161Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 159 of 287 (10 FAILED) (0 secs / 0.924 secs)
+2025-04-16T04:41:07.2083861Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 160 of 287 (10 FAILED) (0 secs / 0.925 secs)
+2025-04-16T04:41:07.2085458Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 161 of 287 (10 FAILED) (0 secs / 0.943 secs)
+2025-04-16T04:41:07.2087052Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 162 of 287 (10 FAILED) (0 secs / 0.946 secs)
+2025-04-16T04:41:07.2088610Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 163 of 287 (10 FAILED) (0 secs / 0.948 secs)
+2025-04-16T04:41:07.2090147Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 164 of 287 (10 FAILED) (0 secs / 0.951 secs)
+2025-04-16T04:41:07.2122122Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 165 of 287 (10 FAILED) (0 secs / 0.954 secs)
+2025-04-16T04:41:07.2123665Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 166 of 287 (10 FAILED) (0 secs / 0.957 secs)
+2025-04-16T04:41:07.2127229Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 167 of 287 (10 FAILED) (0 secs / 0.96 secs)
+2025-04-16T04:41:07.2128690Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 168 of 287 (10 FAILED) (0 secs / 0.963 secs)
+2025-04-16T04:41:07.2136044Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 169 of 287 (10 FAILED) (0 secs / 0.966 secs)
+2025-04-16T04:41:07.2137268Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 170 of 287 (10 FAILED) (0 secs / 0.97 secs)
+2025-04-16T04:41:07.2138533Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 171 of 287 (10 FAILED) (0 secs / 0.974 secs)
+2025-04-16T04:41:07.2140043Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 172 of 287 (10 FAILED) (0 secs / 1.056 secs)
+2025-04-16T04:41:07.2141207Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 173 of 287 (10 FAILED) (0 secs / 1.071 secs)
+2025-04-16T04:41:07.2142589Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 174 of 287 (10 FAILED) (0 secs / 1.085 secs)
+2025-04-16T04:41:07.2143723Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 175 of 287 (10 FAILED) (0 secs / 1.103 secs)
+2025-04-16T04:41:07.2145459Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 176 of 287 (10 FAILED) (0 secs / 1.115 secs)
+2025-04-16T04:41:07.2146632Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 177 of 287 (10 FAILED) (0 secs / 1.128 secs)
+2025-04-16T04:41:07.2147993Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 178 of 287 (10 FAILED) (0 secs / 1.14 secs)
+2025-04-16T04:41:07.2149233Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 179 of 287 (10 FAILED) (0 secs / 1.172 secs)
+2025-04-16T04:41:07.2150493Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 180 of 287 (10 FAILED) (0 secs / 1.175 secs)
+2025-04-16T04:41:07.2151882Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 181 of 287 (10 FAILED) (0 secs / 1.178 secs)
+2025-04-16T04:41:07.2153124Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 182 of 287 (10 FAILED) (0 secs / 1.181 secs)
+2025-04-16T04:41:07.2154653Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 183 of 287 (10 FAILED) (0 secs / 1.183 secs)
+2025-04-16T04:41:07.2155887Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 184 of 287 (10 FAILED) (0 secs / 1.185 secs)
+2025-04-16T04:41:07.2157133Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 185 of 287 (10 FAILED) (0 secs / 1.21 secs)
+2025-04-16T04:41:07.2158367Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 186 of 287 (10 FAILED) (0 secs / 1.212 secs)
+2025-04-16T04:41:07.2159626Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 187 of 287 (10 FAILED) (0 secs / 1.214 secs)
+2025-04-16T04:41:07.2160788Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 188 of 287 (10 FAILED) (0 secs / 1.215 secs)
+2025-04-16T04:41:07.2162312Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 189 of 287 (10 FAILED) (0 secs / 1.217 secs)
+2025-04-16T04:41:07.2163613Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 190 of 287 (10 FAILED) (0 secs / 1.218 secs)
+2025-04-16T04:41:07.2164901Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 191 of 287 (10 FAILED) (0 secs / 1.22 secs)
+2025-04-16T04:41:07.2166169Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 192 of 287 (10 FAILED) (0 secs / 1.222 secs)
+2025-04-16T04:41:07.2168556Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 193 of 287 (10 FAILED) (0 secs / 1.223 secs)
+2025-04-16T04:41:07.2169845Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 194 of 287 (10 FAILED) (0 secs / 1.224 secs)
+2025-04-16T04:41:07.2171118Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 195 of 287 (10 FAILED) (0 secs / 1.225 secs)
+2025-04-16T04:41:07.2172742Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 196 of 287 (10 FAILED) (0 secs / 1.226 secs)
+2025-04-16T04:41:07.2173956Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 197 of 287 (10 FAILED) (0 secs / 1.227 secs)
+2025-04-16T04:41:07.2175184Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 198 of 287 (10 FAILED) (0 secs / 1.229 secs)
+2025-04-16T04:41:07.2176388Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 199 of 287 (10 FAILED) (0 secs / 1.232 secs)
+2025-04-16T04:41:07.2177644Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 200 of 287 (10 FAILED) (0 secs / 1.261 secs)
+2025-04-16T04:41:07.5230496Z [1A[2KERROR: 'Error loading featured ads:', Error: Failed to load featured ads
+2025-04-16T04:41:07.5231446Z Error: Failed to load featured ads
+2025-04-16T04:41:07.5232498Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.spec.ts:174:75)
+2025-04-16T04:41:07.5234617Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:07.5236329Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:07.5237820Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:07.5239239Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:07.5240783Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:07.5242645Z     at NetflixViewComponent.loadAds (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.ts:118:37)
+2025-04-16T04:41:07.5244511Z     at NetflixViewComponent.ngOnInit (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.ts:105:10)
+2025-04-16T04:41:07.5246339Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.spec.ts:179:17)
+2025-04-16T04:41:07.5248496Z     at UserContext.fakeAsyncFn (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:1703:26)
+2025-04-16T04:41:07.5250102Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 200 of 287 (10 FAILED) (0 secs / 1.261 secs)
+2025-04-16T04:41:07.5251119Z ERROR: 'Error loading featured ads:', Error: Failed to load featured ads
+2025-04-16T04:41:07.5270722Z Error: Failed to load featured ads
+2025-04-16T04:41:07.5284607Z     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.spec.ts:174:75)
+2025-04-16T04:41:07.5286455Z     at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+2025-04-16T04:41:07.5288210Z     at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+2025-04-16T04:41:07.5289701Z     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+2025-04-16T04:41:07.5291179Z     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+2025-04-16T04:41:07.5292908Z     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+2025-04-16T04:41:07.5294654Z     at NetflixViewComponent.loadAds (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.ts:118:37)
+2025-04-16T04:41:07.5296591Z     at NetflixViewComponent.ngOnInit (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.ts:105:10)
+2025-04-16T04:41:07.5298443Z     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/features/netflix-view/netflix-view.component.spec.ts:179:17)
+2025-04-16T04:41:07.5300571Z     at UserContext.fakeAsyncFn (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:1703:26)
+2025-04-16T04:41:07.5395596Z [33m16 04 2025 04:41:07.538:WARN [web-server]: [39m404: /_karma_webpack_/assets/images/default-profile.jpg
+2025-04-16T04:41:07.5627451Z [33m16 04 2025 04:41:07.562:WARN [web-server]: [39m404: /_karma_webpack_/assets/images/default-profile.jpg
+2025-04-16T04:41:07.5861133Z [33m16 04 2025 04:41:07.585:WARN [web-server]: [39m404: /_karma_webpack_/assets/images/default-profile.jpg
+2025-04-16T04:41:07.6104054Z [33m16 04 2025 04:41:07.609:WARN [web-server]: [39m404: /_karma_webpack_/assets/images/default-profile.jpg
+2025-04-16T04:41:07.6535300Z [33m16 04 2025 04:41:07.651:WARN [web-server]: [39m404: /_karma_webpack_/assets/images/default-profile.jpg
+2025-04-16T04:41:07.7234294Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 201 of 287 (10 FAILED) (0 secs / 1.266 secs)
+2025-04-16T04:41:07.7236244Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 202 of 287 (10 FAILED) (0 secs / 1.269 secs)
+2025-04-16T04:41:07.7237906Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 203 of 287 (10 FAILED) (0 secs / 1.272 secs)
+2025-04-16T04:41:07.7239613Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 204 of 287 (10 FAILED) (0 secs / 1.275 secs)
+2025-04-16T04:41:07.7241161Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 205 of 287 (10 FAILED) (0 secs / 1.277 secs)
+2025-04-16T04:41:07.7243039Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 206 of 287 (10 FAILED) (0 secs / 1.28 secs)
+2025-04-16T04:41:07.7244669Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 207 of 287 (10 FAILED) (0 secs / 1.283 secs)
+2025-04-16T04:41:07.7247321Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 208 of 287 (10 FAILED) (0 secs / 1.325 secs)
+2025-04-16T04:41:07.7248617Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 209 of 287 (10 FAILED) (0 secs / 1.341 secs)
+2025-04-16T04:41:07.7249918Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 210 of 287 (10 FAILED) (0 secs / 1.362 secs)
+2025-04-16T04:41:07.7251881Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 211 of 287 (10 FAILED) (0 secs / 1.383 secs)
+2025-04-16T04:41:07.7253594Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 212 of 287 (10 FAILED) (0 secs / 1.398 secs)
+2025-04-16T04:41:07.7314411Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 213 of 287 (10 FAILED) (0 secs / 1.413 secs)
+2025-04-16T04:41:07.7315816Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 214 of 287 (10 FAILED) (0 secs / 1.427 secs)
+2025-04-16T04:41:07.7317142Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 215 of 287 (10 FAILED) (0 secs / 1.447 secs)
+2025-04-16T04:41:07.7319575Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 216 of 287 (10 FAILED) (0 secs / 1.533 secs)
+2025-04-16T04:41:07.7321014Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 217 of 287 (10 FAILED) (0 secs / 1.541 secs)
+2025-04-16T04:41:07.7343648Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 218 of 287 (10 FAILED) (0 secs / 1.548 secs)
+2025-04-16T04:41:07.7345263Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should handle hero actions correctly FAILED
+2025-04-16T04:41:07.7346450Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7350358Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7352126Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7353307Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7354173Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7355012Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7355935Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7356893Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7357810Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7358881Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7360010Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7361159Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 219 of 287 (11 FAILED) (0 secs / 1.561 secs)
+2025-04-16T04:41:07.7392072Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should start chat when startChat is called FAILED
+2025-04-16T04:41:07.7393353Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7394560Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7401744Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7402929Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7403793Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7404551Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7405404Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7406354Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7407344Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7408455Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7409539Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7411041Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 220 of 287 (12 FAILED) (0 secs / 1.572 secs)
+2025-04-16T04:41:07.7433087Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should use itemId from event if available FAILED
+2025-04-16T04:41:07.7434316Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7435513Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7437005Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7438205Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7439115Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7439958Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7440924Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7442104Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7443057Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7444078Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7445224Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7446427Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 221 of 287 (13 FAILED) (0 secs / 1.581 secs)
+2025-04-16T04:41:07.7448438Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should show error notification when starting chat without authentication FAILED
+2025-04-16T04:41:07.7449853Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7451060Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7477995Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7479219Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7480123Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7480955Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7482090Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7483365Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7484349Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7485517Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7486691Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7487893Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 222 of 287 (14 FAILED) (0 secs / 1.593 secs)
+2025-04-16T04:41:07.7493526Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should like an ad when likeAd is called FAILED
+2025-04-16T04:41:07.7494744Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7499891Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7501716Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7502924Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7514394Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7515618Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7516569Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7517540Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7518446Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7519506Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7520603Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7521991Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 223 of 287 (15 FAILED) (0 secs / 1.602 secs)
+2025-04-16T04:41:07.7523958Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should show error notification when liking ad without authentication FAILED
+2025-04-16T04:41:07.7525330Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7526576Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7528074Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7529255Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7530114Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7530904Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7552206Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7553165Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7554038Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7555040Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7556119Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7557233Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 224 of 287 (16 FAILED) (0 secs / 1.613 secs)
+2025-04-16T04:41:07.7558809Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should handle card actions correctly FAILED
+2025-04-16T04:41:07.7602512Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7603683Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7605574Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7606794Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7607663Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7608480Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7609386Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7610313Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7611221Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7618153Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7619314Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7620543Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 225 of 287 (17 FAILED) (0 secs / 1.622 secs)
+2025-04-16T04:41:07.7628141Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent User Interactions should navigate to ad details when viewAdDetails is called FAILED
+2025-04-16T04:41:07.7629801Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7630945Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7632616Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7633742Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7634597Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7635387Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7636323Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7637225Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7638111Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7639141Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7640251Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7641631Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 226 of 287 (18 FAILED) (0 secs / 1.633 secs)
+2025-04-16T04:41:07.7643057Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 227 of 287 (18 FAILED) (0 secs / 1.639 secs)
+2025-04-16T04:41:07.7644389Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 228 of 287 (18 FAILED) (0 secs / 1.646 secs)
+2025-04-16T04:41:07.7645731Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 229 of 287 (18 FAILED) (0 secs / 1.651 secs)
+2025-04-16T04:41:07.7647376Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent Filter Functionality should reset filters when resetFilters is called FAILED
+2025-04-16T04:41:07.7648559Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7649642Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7650999Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7652344Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7653226Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7654033Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7655113Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7655969Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7656780Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7657683Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7658687Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7659758Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 230 of 287 (19 FAILED) (0 secs / 1.66 secs)
+2025-04-16T04:41:07.7661614Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64) NetflixViewComponent Filter Functionality should apply filters when applyFilters is called FAILED
+2025-04-16T04:41:07.7662790Z 	TypeError: Cannot read properties of undefined (reading 'images')
+2025-04-16T04:41:07.7663969Z 	    at AppCardComponent.getPrimaryImage (src/app/shared/emerald/components/app-card/app-card.component.ts:59:17)
+2025-04-16T04:41:07.7665326Z 	    at AppCardComponent.call [as ngOnInit] (src/app/shared/emerald/components/app-card/app-card.component.ts:52:36)
+2025-04-16T04:41:07.7666429Z 	    at callHookInternal (node_modules/@angular/core/fesm2022/core.mjs:4207:14)
+2025-04-16T04:41:07.7667480Z 	    at callHook (node_modules/@angular/core/fesm2022/core.mjs:4234:13)
+2025-04-16T04:41:07.7668229Z 	    at callHooks (node_modules/@angular/core/fesm2022/core.mjs:4188:17)
+2025-04-16T04:41:07.7669098Z 	    at executeInitAndCheckHooks (node_modules/@angular/core/fesm2022/core.mjs:4138:9)
+2025-04-16T04:41:07.7669981Z 	    at refreshView (node_modules/@angular/core/fesm2022/core.mjs:14038:21)
+2025-04-16T04:41:07.7670826Z 	    at detectChangesInView (node_modules/@angular/core/fesm2022/core.mjs:14243:9)
+2025-04-16T04:41:07.7672195Z 	    at detectChangesInViewIfAttached (node_modules/@angular/core/fesm2022/core.mjs:14203:5)
+2025-04-16T04:41:07.7673204Z 	    at detectChangesInEmbeddedViews (node_modules/@angular/core/fesm2022/core.mjs:14160:13)
+2025-04-16T04:41:07.7674235Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 231 of 287 (20 FAILED) (0 secs / 1.672 secs)
+2025-04-16T04:41:07.7675478Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 232 of 287 (20 FAILED) (0 secs / 1.674 secs)
+2025-04-16T04:41:07.7679098Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 233 of 287 (20 FAILED) (0 secs / 1.675 secs)
+2025-04-16T04:41:07.7680178Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 234 of 287 (20 FAILED) (0 secs / 1.676 secs)
+2025-04-16T04:41:07.7680932Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 235 of 287 (20 FAILED) (0 secs / 1.678 secs)
+2025-04-16T04:41:07.7681911Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 236 of 287 (20 FAILED) (0 secs / 1.68 secs)
+2025-04-16T04:41:07.7682624Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 237 of 287 (20 FAILED) (0 secs / 1.683 secs)
+2025-04-16T04:41:07.7683338Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 238 of 287 (20 FAILED) (0 secs / 1.685 secs)
+2025-04-16T04:41:07.7684030Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 239 of 287 (20 FAILED) (0 secs / 1.687 secs)
+2025-04-16T04:41:07.7684817Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 240 of 287 (20 FAILED) (0 secs / 1.688 secs)
+2025-04-16T04:41:07.7685546Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 241 of 287 (20 FAILED) (0 secs / 1.689 secs)
+2025-04-16T04:41:07.7686248Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 242 of 287 (20 FAILED) (0 secs / 1.691 secs)
+2025-04-16T04:41:07.7686938Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 243 of 287 (20 FAILED) (0 secs / 1.692 secs)
+2025-04-16T04:41:07.7687626Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 244 of 287 (20 FAILED) (0 secs / 1.693 secs)
+2025-04-16T04:41:07.7688308Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 245 of 287 (20 FAILED) (0 secs / 1.694 secs)
+2025-04-16T04:41:07.7689171Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 246 of 287 (20 FAILED) (0 secs / 1.696 secs)
+2025-04-16T04:41:07.7689878Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 247 of 287 (20 FAILED) (0 secs / 1.697 secs)
+2025-04-16T04:41:07.7690577Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 248 of 287 (20 FAILED) (0 secs / 1.699 secs)
+2025-04-16T04:41:07.7691405Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 249 of 287 (20 FAILED) (0 secs / 1.7 secs)
+2025-04-16T04:41:07.7692108Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 250 of 287 (20 FAILED) (0 secs / 1.706 secs)
+2025-04-16T04:41:07.7692740Z [33m16 04 2025 04:41:07.742:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:07.8051904Z [33m16 04 2025 04:41:07.804:WARN [web-server]: [39m404: /_karma_webpack_/safe-url
+2025-04-16T04:41:07.8733558Z [1A[2KERROR: 'Invalid media URL:', 'https://example.com/image1.jpg'
+2025-04-16T04:41:07.8734994Z Chrome Headless 135.0.0.0 (Linux x86_64): Executed 250 of 287 (20 FAILED) (0 secs / 1.706 secs)
+2025-04-16T04:41:07.8736180Z ERROR: 'Invalid media URL:', 'https://example.com/image1.jpg'
+2025-04-16T04:41:07.9343401Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 251 of 287 (20 FAILED) (0 secs / 1.711 secs)
+2025-04-16T04:41:07.9345958Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 252 of 287 (20 FAILED) (0 secs / 1.717 secs)
+2025-04-16T04:41:07.9347631Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 253 of 287 (20 FAILED) (0 secs / 1.723 secs)
+2025-04-16T04:41:07.9349178Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 254 of 287 (20 FAILED) (0 secs / 1.728 secs)
+2025-04-16T04:41:07.9350700Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 255 of 287 (20 FAILED) (0 secs / 1.735 secs)
+2025-04-16T04:41:07.9352429Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 256 of 287 (20 FAILED) (0 secs / 1.744 secs)
+2025-04-16T04:41:07.9382893Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 257 of 287 (20 FAILED) (0 secs / 1.749 secs)
+2025-04-16T04:41:07.9384459Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 258 of 287 (20 FAILED) (0 secs / 1.753 secs)
+2025-04-16T04:41:07.9385829Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 259 of 287 (20 FAILED) (0 secs / 1.758 secs)
+2025-04-16T04:41:07.9387166Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 260 of 287 (20 FAILED) (0 secs / 1.763 secs)
+2025-04-16T04:41:07.9388518Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 261 of 287 (20 FAILED) (0 secs / 1.767 secs)
+2025-04-16T04:41:07.9389870Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 262 of 287 (20 FAILED) (0 secs / 1.77 secs)
+2025-04-16T04:41:07.9391217Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 263 of 287 (20 FAILED) (0 secs / 1.773 secs)
+2025-04-16T04:41:07.9416429Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 264 of 287 (20 FAILED) (0 secs / 1.776 secs)
+2025-04-16T04:41:07.9418450Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 265 of 287 (20 FAILED) (0 secs / 1.779 secs)
+2025-04-16T04:41:07.9420796Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 266 of 287 (20 FAILED) (0 secs / 1.782 secs)
+2025-04-16T04:41:07.9422360Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 267 of 287 (20 FAILED) (0 secs / 1.785 secs)
+2025-04-16T04:41:07.9423727Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 268 of 287 (20 FAILED) (0 secs / 1.788 secs)
+2025-04-16T04:41:07.9425040Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 269 of 287 (20 FAILED) (0 secs / 1.79 secs)
+2025-04-16T04:41:07.9426361Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 270 of 287 (20 FAILED) (0 secs / 1.793 secs)
+2025-04-16T04:41:07.9432030Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 271 of 287 (20 FAILED) (0 secs / 1.796 secs)
+2025-04-16T04:41:07.9433423Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 272 of 287 (20 FAILED) (0 secs / 1.8 secs)
+2025-04-16T04:41:07.9435131Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 273 of 287 (20 FAILED) (0 secs / 1.803 secs)
+2025-04-16T04:41:07.9436570Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 274 of 287 (20 FAILED) (0 secs / 1.808 secs)
+2025-04-16T04:41:07.9437794Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 275 of 287 (20 FAILED) (0 secs / 1.811 secs)
+2025-04-16T04:41:07.9439013Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 276 of 287 (20 FAILED) (0 secs / 1.813 secs)
+2025-04-16T04:41:07.9440229Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 277 of 287 (20 FAILED) (0 secs / 1.814 secs)
+2025-04-16T04:41:07.9441627Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 278 of 287 (20 FAILED) (0 secs / 1.815 secs)
+2025-04-16T04:41:07.9442853Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 279 of 287 (20 FAILED) (0 secs / 1.816 secs)
+2025-04-16T04:41:07.9444015Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 280 of 287 (20 FAILED) (0 secs / 1.817 secs)
+2025-04-16T04:41:07.9445500Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 281 of 287 (20 FAILED) (0 secs / 1.818 secs)
+2025-04-16T04:41:07.9446909Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 282 of 287 (20 FAILED) (0 secs / 1.82 secs)
+2025-04-16T04:41:07.9448481Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 283 of 287 (20 FAILED) (0 secs / 1.821 secs)
+2025-04-16T04:41:07.9449777Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 284 of 287 (20 FAILED) (0 secs / 1.822 secs)
+2025-04-16T04:41:07.9451100Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 285 of 287 (20 FAILED) (0 secs / 1.823 secs)
+2025-04-16T04:41:07.9579017Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 286 of 287 (20 FAILED) (0 secs / 1.825 secs)
+2025-04-16T04:41:07.9580524Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 287 of 287 (20 FAILED) (0 secs / 1.826 secs)
+2025-04-16T04:41:07.9582106Z [1A[2KChrome Headless 135.0.0.0 (Linux x86_64): Executed 287 of 287 (20 FAILED) (2.283 secs / 1.826 secs)
+2025-04-16T04:41:07.9583236Z TOTAL: 20 FAILED, 267 SUCCESS
+2025-04-16T04:41:07.9657600Z ✔ Browser application bundle generation complete.
+2025-04-16T04:41:08.1139776Z ✔ Browser application bundle generation complete.
+2025-04-16T04:41:08.4863272Z npm error Lifecycle script `test` failed with error:
+2025-04-16T04:41:08.4865189Z npm error code 1
+2025-04-16T04:41:08.4867229Z npm error path /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T04:41:08.4869412Z npm error workspace client-angular@0.0.0
+2025-04-16T04:41:08.4871781Z npm error location /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T04:41:08.4877636Z npm error command failed
+2025-04-16T04:41:08.4879664Z npm error command sh -c ng test client-angular --watch=false --browsers=ChromeHeadless
+2025-04-16T04:41:08.4950523Z ##[error]Process completed with exit code 1.
+2025-04-16T04:41:08.5023940Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T04:41:08.5024223Z with:
+2025-04-16T04:41:08.5024390Z   name: test-results
+2025-04-16T04:41:08.5024596Z   path: ./client-angular/coverage
+2025-04-16T04:41:08.5024825Z   if-no-files-found: warn
+2025-04-16T04:41:08.5025029Z   compression-level: 6
+2025-04-16T04:41:08.5025222Z   overwrite: false
+2025-04-16T04:41:08.5025424Z   include-hidden-files: false
+2025-04-16T04:41:08.5025637Z ##[endgroup]
+2025-04-16T04:41:08.7394097Z ##[warning]No files were found with the provided path: ./client-angular/coverage. No artifacts will be uploaded.
+2025-04-16T04:41:08.7590858Z Post job cleanup.
+2025-04-16T04:41:08.8578811Z [command]/usr/bin/git version
+2025-04-16T04:41:08.8621708Z git version 2.49.0
+2025-04-16T04:41:08.8672518Z Temporarily overriding HOME='/home/runner/work/_temp/2282ad74-6b56-4b7a-8244-82d0656568c6' before making global git config changes
+2025-04-16T04:41:08.8676109Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T04:41:08.8680559Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:41:08.8730040Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T04:41:08.8771164Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T04:41:08.9032206Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T04:41:08.9060249Z http.https://github.com/.extraheader
+2025-04-16T04:41:08.9080540Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T04:41:08.9119977Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T04:41:08.9497937Z Cleaning up orphan processes

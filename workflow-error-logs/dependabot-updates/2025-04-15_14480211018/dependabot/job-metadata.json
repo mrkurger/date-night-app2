@@ -1,0 +1,68 @@
+{
+  "id": 40615377452,
+  "run_id": 14480211018,
+  "workflow_name": "npm_and_yarn in  for semver, nodemon - Update #999251470",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14480211018",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJdN16LA",
+  "head_sha": "373d8a4c09df9c75f5c67a7b08faa24e82ce96a2",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40615377452",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14480211018/job/40615377452",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-15T22:02:00Z",
+  "started_at": "2025-04-15T22:02:04Z",
+  "completed_at": "2025-04-15T22:03:41Z",
+  "name": "Dependabot",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-15T22:02:05Z",
+      "completed_at": "2025-04-15T22:02:06Z"
+    },
+    {
+      "name": "Create job directory",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-15T22:02:06Z",
+      "completed_at": "2025-04-15T22:02:07Z"
+    },
+    {
+      "name": "Run Dependabot",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 3,
+      "started_at": "2025-04-15T22:02:07Z",
+      "completed_at": "2025-04-15T22:03:39Z"
+    },
+    {
+      "name": "Post Run Dependabot",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2025-04-15T22:03:39Z",
+      "completed_at": "2025-04-15T22:03:39Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2025-04-15T22:03:39Z",
+      "completed_at": "2025-04-15T22:03:39Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40615377452",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000057,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

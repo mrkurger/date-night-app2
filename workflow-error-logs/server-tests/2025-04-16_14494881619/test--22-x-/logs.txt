@@ -1,0 +1,314 @@
+2025-04-16T14:12:06.9999003Z Current runner version: '2.323.0'
+2025-04-16T14:12:07.0033351Z ##[group]Operating System
+2025-04-16T14:12:07.0034439Z Ubuntu
+2025-04-16T14:12:07.0035288Z 24.04.2
+2025-04-16T14:12:07.0036067Z LTS
+2025-04-16T14:12:07.0036839Z ##[endgroup]
+2025-04-16T14:12:07.0037589Z ##[group]Runner Image
+2025-04-16T14:12:07.0038717Z Image: ubuntu-24.04
+2025-04-16T14:12:07.0039599Z Version: 20250413.1.0
+2025-04-16T14:12:07.0041309Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T14:12:07.0044225Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-16T14:12:07.0045732Z ##[endgroup]
+2025-04-16T14:12:07.0046541Z ##[group]Runner Image Provisioner
+2025-04-16T14:12:07.0047718Z 2.0.422.1
+2025-04-16T14:12:07.0048491Z ##[endgroup]
+2025-04-16T14:12:07.0053273Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T14:12:07.0056017Z Actions: write
+2025-04-16T14:12:07.0057061Z Attestations: write
+2025-04-16T14:12:07.0058089Z Checks: write
+2025-04-16T14:12:07.0058866Z Contents: write
+2025-04-16T14:12:07.0059764Z Deployments: write
+2025-04-16T14:12:07.0060572Z Discussions: write
+2025-04-16T14:12:07.0061595Z Issues: write
+2025-04-16T14:12:07.0062431Z Metadata: read
+2025-04-16T14:12:07.0063175Z Models: read
+2025-04-16T14:12:07.0063981Z Packages: write
+2025-04-16T14:12:07.0064840Z Pages: write
+2025-04-16T14:12:07.0065592Z PullRequests: write
+2025-04-16T14:12:07.0066387Z RepositoryProjects: write
+2025-04-16T14:12:07.0067438Z SecurityEvents: write
+2025-04-16T14:12:07.0068224Z Statuses: write
+2025-04-16T14:12:07.0068979Z ##[endgroup]
+2025-04-16T14:12:07.0072341Z Secret source: Actions
+2025-04-16T14:12:07.0073585Z Prepare workflow directory
+2025-04-16T14:12:07.0717573Z Prepare all required actions
+2025-04-16T14:12:07.0774829Z Getting action download info
+2025-04-16T14:12:07.5779425Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T14:12:07.5780415Z Version: 4.2.2
+2025-04-16T14:12:07.5781645Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T14:12:07.5782884Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T14:12:07.5783562Z ##[endgroup]
+2025-04-16T14:12:07.6660666Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T14:12:07.6661807Z Version: 4.4.0
+2025-04-16T14:12:07.6662614Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T14:12:07.6663547Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T14:12:07.6664267Z ##[endgroup]
+2025-04-16T14:12:07.9413517Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T14:12:07.9486173Z Version: 4.6.2
+2025-04-16T14:12:07.9487189Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T14:12:07.9488595Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T14:12:07.9489486Z ##[endgroup]
+2025-04-16T14:12:08.1601286Z Complete job name: test (22.x)
+2025-04-16T14:12:08.2018796Z ##[group]Checking docker version
+2025-04-16T14:12:08.2032246Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-04-16T14:12:08.2507661Z '1.45'
+2025-04-16T14:12:08.2515899Z Docker daemon API version: '1.45'
+2025-04-16T14:12:08.2516619Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-04-16T14:12:08.2673874Z '1.45'
+2025-04-16T14:12:08.2693244Z Docker client API version: '1.45'
+2025-04-16T14:12:08.2699971Z ##[endgroup]
+2025-04-16T14:12:08.2704162Z ##[group]Clean up resources from previous jobs
+2025-04-16T14:12:08.2708927Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=df2d2e"
+2025-04-16T14:12:08.2855141Z ##[command]/usr/bin/docker network prune --force --filter "label=df2d2e"
+2025-04-16T14:12:08.2982663Z ##[endgroup]
+2025-04-16T14:12:08.2983149Z ##[group]Create local container network
+2025-04-16T14:12:08.2995431Z ##[command]/usr/bin/docker network create --label df2d2e github_network_8175a0df15c54ebcbbbf63c77e7a96ea
+2025-04-16T14:12:08.3844296Z def179b229a78cb75b8aa493c4ddb63d1368ca2bc4571c9296c0115c30716c85
+2025-04-16T14:12:08.3866442Z ##[endgroup]
+2025-04-16T14:12:08.3889704Z ##[group]Starting mongodb service container
+2025-04-16T14:12:08.3908865Z ##[command]/usr/bin/docker pull mongo:6
+2025-04-16T14:12:08.7253695Z 6: Pulling from library/mongo
+2025-04-16T14:12:08.8118640Z 30a9c22ae099: Pulling fs layer
+2025-04-16T14:12:08.8119603Z abd374245ca5: Pulling fs layer
+2025-04-16T14:12:08.8120395Z dfcc52b2e041: Pulling fs layer
+2025-04-16T14:12:08.8121185Z b058d84e1082: Pulling fs layer
+2025-04-16T14:12:08.8122182Z e12a18eb1ecf: Pulling fs layer
+2025-04-16T14:12:08.8123037Z 546622740404: Pulling fs layer
+2025-04-16T14:12:08.8123837Z 80a51fc6e5dc: Pulling fs layer
+2025-04-16T14:12:08.8124622Z f7d23c7569c8: Pulling fs layer
+2025-04-16T14:12:08.8125389Z e12a18eb1ecf: Waiting
+2025-04-16T14:12:08.8126073Z 546622740404: Waiting
+2025-04-16T14:12:08.8126757Z 80a51fc6e5dc: Waiting
+2025-04-16T14:12:08.8127421Z f7d23c7569c8: Waiting
+2025-04-16T14:12:08.8128100Z b058d84e1082: Waiting
+2025-04-16T14:12:08.9174593Z dfcc52b2e041: Download complete
+2025-04-16T14:12:08.9647384Z abd374245ca5: Verifying Checksum
+2025-04-16T14:12:08.9737317Z abd374245ca5: Download complete
+2025-04-16T14:12:09.1605171Z e12a18eb1ecf: Verifying Checksum
+2025-04-16T14:12:09.1607082Z e12a18eb1ecf: Download complete
+2025-04-16T14:12:09.1608464Z b058d84e1082: Download complete
+2025-04-16T14:12:09.2130005Z 546622740404: Verifying Checksum
+2025-04-16T14:12:09.2133602Z 546622740404: Download complete
+2025-04-16T14:12:09.2830187Z 30a9c22ae099: Download complete
+2025-04-16T14:12:09.3172231Z f7d23c7569c8: Verifying Checksum
+2025-04-16T14:12:09.3175463Z f7d23c7569c8: Download complete
+2025-04-16T14:12:10.7398015Z 30a9c22ae099: Pull complete
+2025-04-16T14:12:11.4335654Z 80a51fc6e5dc: Verifying Checksum
+2025-04-16T14:12:11.4337051Z 80a51fc6e5dc: Download complete
+2025-04-16T14:12:12.0854330Z abd374245ca5: Pull complete
+2025-04-16T14:12:12.2355046Z dfcc52b2e041: Pull complete
+2025-04-16T14:12:12.2822118Z b058d84e1082: Pull complete
+2025-04-16T14:12:12.2949203Z e12a18eb1ecf: Pull complete
+2025-04-16T14:12:12.3050802Z 546622740404: Pull complete
+2025-04-16T14:12:19.2158775Z 80a51fc6e5dc: Pull complete
+2025-04-16T14:12:19.2335949Z f7d23c7569c8: Pull complete
+2025-04-16T14:12:19.2377132Z Digest: sha256:3d3f53bf2171f73fd725412f93a7bba10eee9c898b1381e7d7680a19dcb937d7
+2025-04-16T14:12:19.2397625Z Status: Downloaded newer image for mongo:6
+2025-04-16T14:12:19.2412463Z docker.io/library/mongo:6
+2025-04-16T14:12:19.2464026Z ##[command]/usr/bin/docker create --name e736ee7c1b704834a8811cff5fdcad1e_mongo6_b64851 --label df2d2e --network github_network_8175a0df15c54ebcbbbf63c77e7a96ea --network-alias mongodb -p 27017:27017  -e GITHUB_ACTIONS=true -e CI=true mongo:6
+2025-04-16T14:12:19.2815093Z cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:19.2838695Z ##[command]/usr/bin/docker start cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:19.5858387Z cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:19.5888809Z ##[command]/usr/bin/docker ps --all --filter id=cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-04-16T14:12:19.6063050Z cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83 Up Less than a second
+2025-04-16T14:12:19.6095251Z ##[command]/usr/bin/docker port cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:19.6280414Z 27017/tcp -> 0.0.0.0:27017
+2025-04-16T14:12:19.6283881Z 27017/tcp -> [::]:27017
+2025-04-16T14:12:19.6362260Z ##[endgroup]
+2025-04-16T14:12:19.6373936Z ##[group]Waiting for all services to be ready
+2025-04-16T14:12:19.6392679Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:19.6684389Z mongodb service is healthy.
+2025-04-16T14:12:19.6685759Z ##[endgroup]
+2025-04-16T14:12:19.7025533Z ##[group]Run actions/checkout@v4
+2025-04-16T14:12:19.7026380Z with:
+2025-04-16T14:12:19.7026757Z   repository: mrkurger/date-night-app2
+2025-04-16T14:12:19.7027552Z   token: ***
+2025-04-16T14:12:19.7027896Z   ssh-strict: true
+2025-04-16T14:12:19.7028241Z   ssh-user: git
+2025-04-16T14:12:19.7028603Z   persist-credentials: true
+2025-04-16T14:12:19.7029032Z   clean: true
+2025-04-16T14:12:19.7029447Z   sparse-checkout-cone-mode: true
+2025-04-16T14:12:19.7029898Z   fetch-depth: 1
+2025-04-16T14:12:19.7030245Z   fetch-tags: false
+2025-04-16T14:12:19.7030596Z   show-progress: true
+2025-04-16T14:12:19.7030967Z   lfs: false
+2025-04-16T14:12:19.7031282Z   submodules: false
+2025-04-16T14:12:19.7031877Z   set-safe-directory: true
+2025-04-16T14:12:19.7032594Z ##[endgroup]
+2025-04-16T14:12:19.9347016Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T14:12:19.9348836Z ##[group]Getting Git version info
+2025-04-16T14:12:19.9349551Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T14:12:19.9350441Z [command]/usr/bin/git version
+2025-04-16T14:12:19.9414856Z git version 2.49.0
+2025-04-16T14:12:19.9447526Z ##[endgroup]
+2025-04-16T14:12:19.9463493Z Temporarily overriding HOME='/home/runner/work/_temp/8c5b7e73-95ea-4221-bbdd-0ad9d5d4fe4f' before making global git config changes
+2025-04-16T14:12:19.9464807Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T14:12:19.9482033Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:12:19.9519330Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T14:12:19.9524547Z ##[group]Initializing the repository
+2025-04-16T14:12:19.9530139Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:12:19.9595202Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T14:12:19.9597411Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T14:12:19.9598487Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T14:12:19.9600432Z hint:
+2025-04-16T14:12:19.9601747Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T14:12:19.9602745Z hint:
+2025-04-16T14:12:19.9609780Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T14:12:19.9610609Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T14:12:19.9611238Z hint:
+2025-04-16T14:12:19.9611871Z hint: 	git branch -m <name>
+2025-04-16T14:12:19.9612575Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T14:12:19.9624280Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T14:12:19.9663144Z ##[endgroup]
+2025-04-16T14:12:19.9664180Z ##[group]Disabling automatic garbage collection
+2025-04-16T14:12:19.9667996Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T14:12:19.9702223Z ##[endgroup]
+2025-04-16T14:12:19.9703347Z ##[group]Setting up auth
+2025-04-16T14:12:19.9711176Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T14:12:19.9748177Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T14:12:20.0089585Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T14:12:20.0125658Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T14:12:20.0371015Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T14:12:20.0421592Z ##[endgroup]
+2025-04-16T14:12:20.0422950Z ##[group]Fetching the repository
+2025-04-16T14:12:20.0433982Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +16184beb43681fe4fe99c4fe9078df8efff02cf6:refs/remotes/origin/main
+2025-04-16T14:12:21.4409522Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T14:12:21.4410510Z  * [new ref]         16184beb43681fe4fe99c4fe9078df8efff02cf6 -> origin/main
+2025-04-16T14:12:21.4439502Z ##[endgroup]
+2025-04-16T14:12:21.4440422Z ##[group]Determining the checkout info
+2025-04-16T14:12:21.4441784Z ##[endgroup]
+2025-04-16T14:12:21.4449171Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T14:12:21.4493096Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T14:12:21.4529824Z ##[group]Checking out the ref
+2025-04-16T14:12:21.4530726Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T14:12:21.8981246Z Switched to a new branch 'main'
+2025-04-16T14:12:21.8984062Z branch 'main' set up to track 'origin/main'.
+2025-04-16T14:12:21.9007508Z ##[endgroup]
+2025-04-16T14:12:21.9054049Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T14:12:21.9078359Z 16184beb43681fe4fe99c4fe9078df8efff02cf6
+2025-04-16T14:12:21.9306586Z ##[group]Run actions/setup-node@v4
+2025-04-16T14:12:21.9306867Z with:
+2025-04-16T14:12:21.9307034Z   node-version: 22.x
+2025-04-16T14:12:21.9307219Z   cache: npm
+2025-04-16T14:12:21.9307439Z   cache-dependency-path: server/package-lock.json
+2025-04-16T14:12:21.9307711Z   always-auth: false
+2025-04-16T14:12:21.9307898Z   check-latest: false
+2025-04-16T14:12:21.9308206Z   token: ***
+2025-04-16T14:12:21.9308376Z ##[endgroup]
+2025-04-16T14:12:22.1103389Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T14:12:22.1108012Z ##[group]Environment details
+2025-04-16T14:12:24.0654993Z node: v22.14.0
+2025-04-16T14:12:24.0657004Z npm: 10.9.2
+2025-04-16T14:12:24.0663657Z yarn: 1.22.22
+2025-04-16T14:12:24.0665033Z ##[endgroup]
+2025-04-16T14:12:24.0687498Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T14:12:24.2999568Z /home/runner/.npm
+2025-04-16T14:12:24.4046692Z Cache hit for: node-cache-Linux-x64-npm-eb74dc554d17640d6b2005eb2c3c9590e65262bd6e2b7add98bfd17307b4cd7c
+2025-04-16T14:12:24.8202162Z Received 35603115 of 35603115 (100.0%), 94.1 MBs/sec
+2025-04-16T14:12:24.8205060Z Cache Size: ~34 MB (35603115 B)
+2025-04-16T14:12:24.8239329Z [command]/usr/bin/tar -xf /home/runner/work/_temp/af8f023d-55f0-4834-bafc-f40cbb16df4c/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T14:12:25.0962551Z Cache restored successfully
+2025-04-16T14:12:25.1043662Z Cache restored from key: node-cache-Linux-x64-npm-eb74dc554d17640d6b2005eb2c3c9590e65262bd6e2b7add98bfd17307b4cd7c
+2025-04-16T14:12:25.1223143Z ##[group]Run npm ci
+2025-04-16T14:12:25.1223419Z [36;1mnpm ci[0m
+2025-04-16T14:12:25.1278058Z shell: /usr/bin/bash -e {0}
+2025-04-16T14:12:25.1278339Z ##[endgroup]
+2025-04-16T14:12:29.4330897Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T14:12:29.4984109Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-16T14:12:29.6421260Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-16T14:12:29.6554685Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-16T14:12:29.7275595Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T14:12:29.8847454Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-16T14:12:29.9008615Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T14:12:30.3607649Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-16T14:12:30.5635148Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T14:12:30.5767786Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T14:12:30.8167365Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-16T14:12:31.8112149Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T14:12:36.4313350Z 
+2025-04-16T14:12:36.4314092Z > date-night-app@1.0.0 prepare
+2025-04-16T14:12:36.4314581Z > husky
+2025-04-16T14:12:36.4314749Z 
+2025-04-16T14:12:36.4444093Z sh: 1: husky: not found
+2025-04-16T14:12:36.4504436Z npm error code 127
+2025-04-16T14:12:36.4505594Z npm error path /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:12:36.4506473Z npm error command failed
+2025-04-16T14:12:36.4507452Z npm error command sh -c husky
+2025-04-16T14:12:36.4517474Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-04-16T14_12_25_194Z-debug-0.log
+2025-04-16T14:12:36.5460046Z ##[error]Process completed with exit code 127.
+2025-04-16T14:12:36.5560872Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T14:12:36.5561305Z with:
+2025-04-16T14:12:36.5561780Z   name: server-test-results
+2025-04-16T14:12:36.5562136Z   path: ./server/coverage
+2025-04-16T14:12:36.5562480Z   if-no-files-found: warn
+2025-04-16T14:12:36.5562819Z   compression-level: 6
+2025-04-16T14:12:36.5563136Z   overwrite: false
+2025-04-16T14:12:36.5563464Z   include-hidden-files: false
+2025-04-16T14:12:36.5563819Z ##[endgroup]
+2025-04-16T14:12:36.9186505Z ##[warning]No files were found with the provided path: ./server/coverage. No artifacts will be uploaded.
+2025-04-16T14:12:36.9425036Z Post job cleanup.
+2025-04-16T14:12:37.0882283Z [command]/usr/bin/git version
+2025-04-16T14:12:37.0895701Z git version 2.49.0
+2025-04-16T14:12:37.0958278Z Temporarily overriding HOME='/home/runner/work/_temp/0bf2de26-5004-461f-b69b-a132fdc877a0' before making global git config changes
+2025-04-16T14:12:37.0961195Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T14:12:37.0967859Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:12:37.1093502Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T14:12:37.1122941Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T14:12:37.1494179Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T14:12:37.1543022Z http.https://github.com/.extraheader
+2025-04-16T14:12:37.1553636Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T14:12:37.1603518Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T14:12:37.2059858Z Print service container logs: e736ee7c1b704834a8811cff5fdcad1e_mongo6_b64851
+2025-04-16T14:12:37.2066060Z ##[command]/usr/bin/docker logs --details cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:37.2323152Z  {"t":{"$date":"2025-04-16T14:12:19.628+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+2025-04-16T14:12:37.2331306Z  {"t":{"$date":"2025-04-16T14:12:19.630+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T14:12:37.2334363Z  {"t":{"$date":"2025-04-16T14:12:19.631+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+2025-04-16T14:12:37.2336523Z  {"t":{"$date":"2025-04-16T14:12:19.632+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationDonorService","namespace":"config.tenantMigrationDonors"}}
+2025-04-16T14:12:37.2338761Z  {"t":{"$date":"2025-04-16T14:12:19.632+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationRecipientService","namespace":"config.tenantMigrationRecipients"}}
+2025-04-16T14:12:37.2340935Z  {"t":{"$date":"2025-04-16T14:12:19.632+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"ShardSplitDonorService","namespace":"config.tenantSplitDonors"}}
+2025-04-16T14:12:37.2342669Z  {"t":{"$date":"2025-04-16T14:12:19.632+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+2025-04-16T14:12:37.2345467Z  {"t":{"$date":"2025-04-16T14:12:19.633+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"cc867732adc9"}}
+2025-04-16T14:12:37.2348114Z  {"t":{"$date":"2025-04-16T14:12:19.633+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"6.0.22","gitVersion":"ee527360b84c6798535ee0895de3c7186b3522f9","openSSLVersion":"OpenSSL 3.0.2 15 Mar 2022","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu2204","distarch":"x86_64","target_arch":"x86_64"}}}}
+2025-04-16T14:12:37.2350495Z  {"t":{"$date":"2025-04-16T14:12:19.633+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"22.04"}}}
+2025-04-16T14:12:37.2352157Z  {"t":{"$date":"2025-04-16T14:12:19.633+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"}}}}
+2025-04-16T14:12:37.2354216Z  {"t":{"$date":"2025-04-16T14:12:19.634+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+2025-04-16T14:12:37.2359431Z  {"t":{"$date":"2025-04-16T14:12:19.634+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=3457M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,remove=true,path=journal,compressor=snappy),builtin_extension_config=(zstd=(compression_level=6)),file_manager=(close_idle_time=600,close_scan_interval=10,close_handle_minimum=2000),statistics_log=(wait=0),json_output=(error,message),verbose=[recovery_progress:1,checkpoint_progress:1,compact_progress:1,backup:0,checkpoint:0,compact:0,evict:0,history_store:0,recovery:0,rts:0,salvage:0,tiered:0,timestamp:0,transaction:0,verify:0,log:0],"}}
+2025-04-16T14:12:37.2364947Z  {"t":{"$date":"2025-04-16T14:12:19.849+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744812739,"ts_usec":849606,"thread":"1:0x7f3187c21cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery log replay has successfully finished and ran for 0 milliseconds"}}}
+2025-04-16T14:12:37.2368762Z  {"t":{"$date":"2025-04-16T14:12:19.849+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744812739,"ts_usec":849782,"thread":"1:0x7f3187c21cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global recovery timestamp: (0, 0)"}}}
+2025-04-16T14:12:37.2372289Z  {"t":{"$date":"2025-04-16T14:12:19.849+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744812739,"ts_usec":849858,"thread":"1:0x7f3187c21cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global oldest timestamp: (0, 0)"}}}
+2025-04-16T14:12:37.2376167Z  {"t":{"$date":"2025-04-16T14:12:19.849+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744812739,"ts_usec":849930,"thread":"1:0x7f3187c21cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery was completed successfully and took 0ms, including 0ms for the log replay, 0ms for the rollback to stable, and 0ms for the checkpoint."}}}
+2025-04-16T14:12:37.2379311Z  {"t":{"$date":"2025-04-16T14:12:19.856+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":222}}
+2025-04-16T14:12:37.2380786Z  {"t":{"$date":"2025-04-16T14:12:19.856+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+2025-04-16T14:12:37.2382876Z  {"t":{"$date":"2025-04-16T14:12:19.864+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+2025-04-16T14:12:37.2385097Z  {"t":{"$date":"2025-04-16T14:12:19.865+00:00"},"s":"W",  "c":"CONTROL",  "id":22178,   "ctx":"initandlisten","msg":"/sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never' in this binary version","tags":["startupWarnings"]}
+2025-04-16T14:12:37.2387236Z  {"t":{"$date":"2025-04-16T14:12:19.865+00:00"},"s":"W",  "c":"CONTROL",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":262144,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+2025-04-16T14:12:37.2389737Z  {"t":{"$date":"2025-04-16T14:12:19.865+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"admin.system.version","uuidDisposition":"provided","uuid":{"uuid":{"$uuid":"3b5e09f3-04e2-4399-8046-d61e7effa6b3"}},"options":{"uuid":{"$uuid":"3b5e09f3-04e2-4399-8046-d61e7effa6b3"}}}}
+2025-04-16T14:12:37.2393511Z  {"t":{"$date":"2025-04-16T14:12:19.871+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"3b5e09f3-04e2-4399-8046-d61e7effa6b3"}},"namespace":"admin.system.version","index":"_id_","ident":"index-1-1749452205434910163","collectionIdent":"collection-0-1749452205434910163","commitTimestamp":null}}
+2025-04-16T14:12:37.2396068Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"REPL",     "id":20459,   "ctx":"initandlisten","msg":"Setting featureCompatibilityVersion","attr":{"newVersion":"6.0"}}
+2025-04-16T14:12:37.2397738Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"setFCV"}}
+2025-04-16T14:12:37.2401978Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T14:12:37.2407995Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-16T14:12:37.2412103Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"startup"}}
+2025-04-16T14:12:37.2413604Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+2025-04-16T14:12:37.2414721Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+2025-04-16T14:12:37.2416184Z  {"t":{"$date":"2025-04-16T14:12:19.872+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+2025-04-16T14:12:37.2418401Z  {"t":{"$date":"2025-04-16T14:12:19.874+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"local.startup_log","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"b6f02d1f-7c68-4341-a6a6-d040813db297"}},"options":{"capped":true,"size":10485760}}}
+2025-04-16T14:12:37.2421752Z  {"t":{"$date":"2025-04-16T14:12:19.880+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"b6f02d1f-7c68-4341-a6a6-d040813db297"}},"namespace":"local.startup_log","index":"_id_","ident":"index-3-1749452205434910163","collectionIdent":"collection-2-1749452205434910163","commitTimestamp":null}}
+2025-04-16T14:12:37.2424480Z  {"t":{"$date":"2025-04-16T14:12:19.880+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+2025-04-16T14:12:37.2425954Z  {"t":{"$date":"2025-04-16T14:12:19.880+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+2025-04-16T14:12:37.2428004Z  {"t":{"$date":"2025-04-16T14:12:19.882+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"LogicalSessionCacheRefresh","msg":"createCollection","attr":{"namespace":"config.system.sessions","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"351f0f02-15c9-4b9d-a359-9e591e6b4759"}},"options":{}}}
+2025-04-16T14:12:37.2430796Z  {"t":{"$date":"2025-04-16T14:12:19.883+00:00"},"s":"I",  "c":"CONTROL",  "id":20712,   "ctx":"LogicalSessionCacheReap","msg":"Sessions collection is not set up; waiting until next sessions reap interval","attr":{"error":"NamespaceNotFound: config.system.sessions does not exist"}}
+2025-04-16T14:12:37.2434355Z  {"t":{"$date":"2025-04-16T14:12:19.883+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+2025-04-16T14:12:37.2435531Z  {"t":{"$date":"2025-04-16T14:12:19.883+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+2025-04-16T14:12:37.2436692Z  {"t":{"$date":"2025-04-16T14:12:19.883+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+2025-04-16T14:12:37.2444011Z  {"t":{"$date":"2025-04-16T14:12:19.883+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Get metadata describing storage engine":"0 ms","Create storage engine":"0 ms","Create storage engine":"229 ms","Write current PID to file":"0 ms","Write current PID to file":"0 ms","Write a new metadata for storage engine":"0 ms","Write a new metadata for storage engine":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Rebuild indexes for collections":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Start up the replication coordinator":"0 ms","Start transport layer":"0 ms","_initAndListen total elapsed time":"250 ms"}}}}
+2025-04-16T14:12:37.2452996Z  {"t":{"$date":"2025-04-16T14:12:19.905+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"351f0f02-15c9-4b9d-a359-9e591e6b4759"}},"namespace":"config.system.sessions","index":"_id_","ident":"index-5-1749452205434910163","collectionIdent":"collection-4-1749452205434910163","commitTimestamp":null}}
+2025-04-16T14:12:37.2457020Z  {"t":{"$date":"2025-04-16T14:12:19.905+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"351f0f02-15c9-4b9d-a359-9e591e6b4759"}},"namespace":"config.system.sessions","index":"lsidTTLIndex","ident":"index-6-1749452205434910163","collectionIdent":"collection-4-1749452205434910163","commitTimestamp":null}}
+2025-04-16T14:12:37.2467558Z Stop and remove container: e736ee7c1b704834a8811cff5fdcad1e_mongo6_b64851
+2025-04-16T14:12:37.2474555Z ##[command]/usr/bin/docker rm --force cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:38.9113416Z cc867732adc961654c8860d90b47769d42d81c02fe28cfa6eefadcf657e31e83
+2025-04-16T14:12:38.9143547Z Remove container network: github_network_8175a0df15c54ebcbbbf63c77e7a96ea
+2025-04-16T14:12:38.9151137Z ##[command]/usr/bin/docker network rm github_network_8175a0df15c54ebcbbbf63c77e7a96ea
+2025-04-16T14:12:39.0169975Z github_network_8175a0df15c54ebcbbbf63c77e7a96ea
+2025-04-16T14:12:39.0252282Z Cleaning up orphan processes

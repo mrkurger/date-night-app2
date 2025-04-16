@@ -1,0 +1,1262 @@
+2025-04-16T07:38:39.0195129Z Current runner version: '2.323.0'
+2025-04-16T07:38:39.0292492Z ##[group]Operating System
+2025-04-16T07:38:39.0293677Z Ubuntu
+2025-04-16T07:38:39.0294629Z 24.04.2
+2025-04-16T07:38:39.0295450Z LTS
+2025-04-16T07:38:39.0296291Z ##[endgroup]
+2025-04-16T07:38:39.0297374Z ##[group]Runner Image
+2025-04-16T07:38:39.0298333Z Image: ubuntu-24.04
+2025-04-16T07:38:39.0299420Z Version: 20250406.1.0
+2025-04-16T07:38:39.0301461Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T07:38:39.0304112Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T07:38:39.0305698Z ##[endgroup]
+2025-04-16T07:38:39.0306748Z ##[group]Runner Image Provisioner
+2025-04-16T07:38:39.0307726Z 2.0.422.1
+2025-04-16T07:38:39.0308575Z ##[endgroup]
+2025-04-16T07:38:39.0331008Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T07:38:39.0333861Z Contents: read
+2025-04-16T07:38:39.0334934Z Metadata: read
+2025-04-16T07:38:39.0336160Z Packages: read
+2025-04-16T07:38:39.0337292Z ##[endgroup]
+2025-04-16T07:38:39.0340905Z Secret source: None
+2025-04-16T07:38:39.0342269Z Prepare workflow directory
+2025-04-16T07:38:39.1161148Z Prepare all required actions
+2025-04-16T07:38:39.1289848Z Getting action download info
+2025-04-16T07:38:39.6047430Z Download action repository 'github/dependabot-action@main' (SHA:664562a17c239ac3cdc9a641ab7f057830854084)
+2025-04-16T07:38:40.3803587Z Complete job name: Dependabot
+2025-04-16T07:38:40.4503222Z ##[group]Run mkdir -p  ./dependabot-job-999489038-1744789112
+2025-04-16T07:38:40.4504041Z [36;1mmkdir -p  ./dependabot-job-999489038-1744789112[0m
+2025-04-16T07:38:40.4555462Z shell: /usr/bin/bash -e {0}
+2025-04-16T07:38:40.4556286Z ##[endgroup]
+2025-04-16T07:38:40.4843675Z ##[group]Run github/dependabot-action@main
+2025-04-16T07:38:40.4844278Z env:
+2025-04-16T07:38:40.4844660Z   DEPENDABOT_DISABLE_CLEANUP: 1
+2025-04-16T07:38:40.4845165Z   DEPENDABOT_ENABLE_CONNECTIVITY_CHECK: 0
+2025-04-16T07:38:40.4845914Z   GITHUB_TOKEN: ***
+2025-04-16T07:38:40.4846689Z   GITHUB_DEPENDABOT_JOB_TOKEN: ***
+2025-04-16T07:38:40.4847537Z   GITHUB_DEPENDABOT_CRED_TOKEN: ***
+2025-04-16T07:38:40.4848032Z ##[endgroup]
+2025-04-16T07:38:40.8145124Z 🤖 ~ starting update ~
+2025-04-16T07:38:40.8170774Z Fetching job details
+2025-04-16T07:38:41.3487264Z ##[group]Pulling updater images
+2025-04-16T07:38:41.3544332Z Pulling image ghcr.io/dependabot/dependabot-updater-npm:eb47df545f0fac62e8addc09d41784dd2edfd7df (attempt 1)...
+2025-04-16T07:38:41.4945462Z Successfully sent metric (dependabot.action.ghcr_image_pull) to remote API endpoint
+2025-04-16T07:39:12.6782173Z Pulled image ghcr.io/dependabot/dependabot-updater-npm:eb47df545f0fac62e8addc09d41784dd2edfd7df
+2025-04-16T07:39:12.6796500Z Pulling image ghcr.io/github/dependabot-update-job-proxy/dependabot-update-job-proxy:v2.0.20250404141843@sha256:488b412514454c4761bb7f61c7f632ba7c393d3d000c280682914dd6257bd37b (attempt 1)...
+2025-04-16T07:39:12.8379625Z Successfully sent metric (dependabot.action.ghcr_image_pull) to remote API endpoint
+2025-04-16T07:39:13.7154739Z Pulled image ghcr.io/github/dependabot-update-job-proxy/dependabot-update-job-proxy:v2.0.20250404141843@sha256:488b412514454c4761bb7f61c7f632ba7c393d3d000c280682914dd6257bd37b
+2025-04-16T07:39:13.7170584Z ##[endgroup]
+2025-04-16T07:39:13.7171261Z Starting update process
+2025-04-16T07:39:14.1822818Z Created proxy container: 6fae5be73406d0e36d267273097652aeba797cb72394b7c0a529236954401382
+2025-04-16T07:39:14.5179391Z Created container: 25ed0b375a70d02bb46c163197c5e877689a3c9c0eb9be6f2dfa7e8f56092147
+2025-04-16T07:39:14.6285841Z   proxy | 2025/04/16 07:39:14 proxy starting, commit: 0460fa31a2e2abea6b590de770e705dea33dabf6
+2025-04-16T07:39:14.6341720Z   proxy | 2025/04/16 07:39:14 Listening (:1080)
+2025-04-16T07:39:14.7266947Z updater | Updating certificates in /etc/ssl/certs...
+2025-04-16T07:39:15.4917328Z updater | rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+2025-04-16T07:39:15.5064966Z updater | 1 added, 0 removed; done.
+2025-04-16T07:39:15.5070088Z updater | Running hooks in /etc/ca-certificates/update.d...
+2025-04-16T07:39:15.5078317Z updater | done.
+2025-04-16T07:39:17.3550725Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Starting job processing
+2025-04-16T07:39:17.3568153Z 2025/04/16 07:39:17 INFO <job_999489038> Job definition: {"job":{"allowed-updates":[{"dependency-type":"direct","update-type":"all"}],"commit-message-options":{"prefix":null,"prefix-development":null,"include-scope":null},"credentials-metadata":[{"type":"git_source","host":"github.com"}],"debug":null,"dependencies":["semver","nodemon"],"dependency-groups":[],"dependency-group-to-refresh":null,"existing-pull-requests":[[{"dependency-name":"bootstrap","dependency-version":"5.0.0","directory":"/"}],[{"dependency-name":"nodemon","dependency-version":"3.1.9","directory":"/server"},{"dependency-name":"semver","dependency-version":"7.7.1","directory":"/server"}]],"existing-group-pull-requests":[],"experiments":{"record-ecosystem-versions":true,"record-update-job-unknown-error":true,"proxy-cached":true,"move-job-token":true,"dependency-change-validation":true,"nuget-install-dotnet-sdks":true,"nuget-native-analysis":true,"nuget-use-direct-discovery":true,"enable-file-parser-python-local":true,"npm-fallback-version-above-v6":true,"lead-security-dependency":true,"enable-record-ecosystem-meta":true,"enable-shared-helpers-command-timeout":true,"enable-dependabot-setting-up-cronjob":true,"enable-engine-version-detection":true,"avoid-duplicate-updates-package-json":true,"allow-refresh-for-existing-pr-dependencies":true,"exclude-local-composer-packages":true,"enable-enhanced-error-details-for-updater":true,"enable-cooldown-for-python":true,"enable-cooldown-for-uv":true,"enable-cooldown-for-npm-and-yarn":true,"enable-cooldown-for-bun":true,"enable-cooldown-for-bundler":true,"enable-cooldown-for-cargo":true},"ignore-conditions":[],"lockfile-only":false,"max-updater-run-time":2700,"package-manager":"npm_and_yarn","proxy-log-response-body-on-auth-failure":true,"requirements-update-strategy":null,"reject-external-code":false,"security-advisories":[{"dependency-name":"semver","patched-versions":[],"unaffected-versions":[],"affected-versions":[">= 7.0.0 < 7.5.2",">= 6.0.0 < 6.3.1","< 5.7.2"]},{"dependency-name":"semver","patched-versions":[],"unaffected-versions":[],"affected-versions":["< 4.3.2"]}],"security-updates-only":true,"source":{"provider":"github","repo":"mrkurger/date-night-app2","branch":null,"api-endpoint":"https://api.github.com/","hostname":"github.com","directories":["/server"]},"updating-a-pull-request":true,"update-subdependencies":false,"vendor-dependencies":false,"enable-beta-ecosystems":false,"repo-private":true}}
+2025-04-16T07:39:17.4124154Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1070 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:17.4200764Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1070 completed with status: pid 1070 exit 0
+2025-04-16T07:39:17.4207112Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:17.4233711Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1077 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:17.4284197Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1077 completed with status: pid 1077 exit 0
+2025-04-16T07:39:17.4287584Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:17.4301664Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1083 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:17.4443141Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1083 completed with status: pid 1083 exit 0
+2025-04-16T07:39:17.4445152Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.02 seconds
+2025-04-16T07:39:17.4471349Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1089 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:17.4507566Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1089 completed with status: pid 1089 exit 0
+2025-04-16T07:39:17.4509792Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:17.4550698Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1095 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:17.4574933Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1095 completed with status: pid 1095 exit 0
+2025-04-16T07:39:17.4577757Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:17.4593467Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1101 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:17.4646996Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Process PID: 1101 completed with status: pid 1101 exit 0
+2025-04-16T07:39:17.4649441Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:17.4666590Z updater | 2025/04/16 07:39:17 INFO <job_999489038> Started process PID: 1107 with command: {} git clone --no-tags --depth 1 --recurse-submodules --shallow-submodules https://github.com/mrkurger/date-night-app2 /home/dependabot/dependabot-updater/repo {}
+2025-04-16T07:39:17.8531683Z   proxy | 2025/04/16 07:39:17 [002] GET https://github.com:443/mrkurger/date-night-app2/info/refs?service=git-upload-pack
+2025-04-16T07:39:17.8533279Z 2025/04/16 07:39:17 [002] * authenticating git server request (host: github.com)
+2025-04-16T07:39:18.0694903Z   proxy | 2025/04/16 07:39:18 [002] 200 https://github.com:443/mrkurger/date-night-app2/info/refs?service=git-upload-pack
+2025-04-16T07:39:18.1261411Z   proxy | 2025/04/16 07:39:18 [004] POST https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T07:39:18.1267577Z   proxy | 2025/04/16 07:39:18 [004] * authenticating git server request (host: github.com)
+2025-04-16T07:39:18.2208815Z   proxy | 2025/04/16 07:39:18 [004] 200 https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T07:39:18.2851587Z   proxy | 2025/04/16 07:39:18 [006] POST https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T07:39:18.2858033Z   proxy | 2025/04/16 07:39:18 [006] * authenticating git server request (host: github.com)
+2025-04-16T07:39:18.6230344Z   proxy | 2025/04/16 07:39:18 [006] 200 https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T07:39:21.8933282Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1107 completed with status: pid 1107 exit 0
+2025-04-16T07:39:21.8940163Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 4.43 seconds
+2025-04-16T07:39:21.8971931Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1150 with command: {} git -C /home/dependabot/dependabot-updater/repo ls-files --stage {}
+2025-04-16T07:39:21.9031835Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1150 completed with status: pid 1150 exit 0
+2025-04-16T07:39:21.9036577Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9104165Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1163 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:21.9161775Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1163 completed with status: pid 1163 exit 0
+2025-04-16T07:39:21.9165453Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9217021Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1170 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:21.9237263Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1170 completed with status: pid 1170 exit 0
+2025-04-16T07:39:21.9238205Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9253510Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1176 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:21.9290324Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1176 completed with status: pid 1176 exit 0
+2025-04-16T07:39:21.9296709Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9321722Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1182 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:21.9357140Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1182 completed with status: pid 1182 exit 0
+2025-04-16T07:39:21.9358793Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9400204Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1188 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:21.9424906Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1188 completed with status: pid 1188 exit 0
+2025-04-16T07:39:21.9427808Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9490251Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1194 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:21.9543594Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Process PID: 1194 completed with status: pid 1194 exit 0
+2025-04-16T07:39:21.9545315Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:21.9612125Z updater | 2025/04/16 07:39:21 INFO <job_999489038> Started process PID: 1201 with command: {} git lfs pull --include .yarn,./yarn/cache {}
+2025-04-16T07:39:22.0062332Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1201 completed with status: pid 1201 exit 0
+2025-04-16T07:39:22.0065721Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.05 seconds
+2025-04-16T07:39:22.0147509Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1234 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:22.0355285Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1234 completed with status: pid 1234 exit 0
+2025-04-16T07:39:22.0360984Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.02 seconds
+2025-04-16T07:39:22.0373872Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1241 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:22.0425558Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1241 completed with status: pid 1241 exit 0
+2025-04-16T07:39:22.0431892Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0436613Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1247 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:22.0492041Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1247 completed with status: pid 1247 exit 0
+2025-04-16T07:39:22.0493601Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0520117Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1253 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:22.0558741Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1253 completed with status: pid 1253 exit 0
+2025-04-16T07:39:22.0559922Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0569550Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1259 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:22.0621380Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1259 completed with status: pid 1259 exit 0
+2025-04-16T07:39:22.0623663Z 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0650602Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1265 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:22.0678633Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1265 completed with status: pid 1265 exit 0
+2025-04-16T07:39:22.0681676Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0710210Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1271 with command: {} git rev-parse HEAD {}
+2025-04-16T07:39:22.0741642Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1271 completed with status: pid 1271 exit 0
+2025-04-16T07:39:22.0743753Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0792679Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1284 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:22.0849810Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1284 completed with status: pid 1284 exit 0
+2025-04-16T07:39:22.0852028Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0889604Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1291 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:22.0916220Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1291 completed with status: pid 1291 exit 0
+2025-04-16T07:39:22.0919615Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.0951064Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1297 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:22.0980802Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1297 completed with status: pid 1297 exit 0
+2025-04-16T07:39:22.0982815Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1000245Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1303 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:22.1045108Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1303 completed with status: pid 1303 exit 0
+2025-04-16T07:39:22.1046349Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1071809Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1309 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:22.1104477Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1309 completed with status: pid 1309 exit 0
+2025-04-16T07:39:22.1105440Z 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1130764Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1315 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:22.1166131Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1315 completed with status: pid 1315 exit 0
+2025-04-16T07:39:22.1167080Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1187485Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1321 with command: {} git rev-parse HEAD {}
+2025-04-16T07:39:22.1229450Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1321 completed with status: pid 1321 exit 0
+2025-04-16T07:39:22.1231704Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1406481Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1334 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:22.1437903Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1334 completed with status: pid 1334 exit 0
+2025-04-16T07:39:22.1445346Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1471534Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1341 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:22.1514857Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1341 completed with status: pid 1341 exit 0
+2025-04-16T07:39:22.1515802Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1540387Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1347 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:22.1573657Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1347 completed with status: pid 1347 exit 0
+2025-04-16T07:39:22.1577693Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1602608Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1353 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:22.1640396Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1353 completed with status: pid 1353 exit 0
+2025-04-16T07:39:22.1641943Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1673397Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1359 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:22.1695589Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1359 completed with status: pid 1359 exit 0
+2025-04-16T07:39:22.1700640Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1715417Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1365 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:22.1761600Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1365 completed with status: pid 1365 exit 0
+2025-04-16T07:39:22.1765770Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1840939Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1378 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T07:39:22.1867788Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1378 completed with status: pid 1378 exit 0
+2025-04-16T07:39:22.1869955Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1905471Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1385 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:39:22.1934462Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1385 completed with status: pid 1385 exit 0
+2025-04-16T07:39:22.1951372Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.1953673Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1391 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:39:22.1990278Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1391 completed with status: pid 1391 exit 0
+2025-04-16T07:39:22.1993874Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.2022490Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1397 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:39:22.2056111Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1397 completed with status: pid 1397 exit 0
+2025-04-16T07:39:22.2058709Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.2080562Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1403 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:39:22.2115353Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1403 completed with status: pid 1403 exit 0
+2025-04-16T07:39:22.2117882Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.2140180Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1409 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:39:22.2179960Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1409 completed with status: pid 1409 exit 0
+2025-04-16T07:39:22.2184199Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:22.2212377Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1415 with command: {} git lfs pull --include .yarn,./yarn/cache {}
+2025-04-16T07:39:22.2699905Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1415 completed with status: pid 1415 exit 0
+2025-04-16T07:39:22.2702366Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.05 seconds
+2025-04-16T07:39:22.2826309Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:22.2828490Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:22.2856740Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:22.2864740Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Fetching version for package manager: npm
+2025-04-16T07:39:22.2890233Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1440 with command: {} corepack npm -v {}
+2025-04-16T07:39:22.7522379Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Process PID: 1440 completed with status: pid 1440 exit 0
+2025-04-16T07:39:22.7546746Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Total execution time: 0.46 seconds
+2025-04-16T07:39:22.7548272Z 2025/04/16 07:39:22 INFO <job_999489038> Installed version of npm: 9.6.5
+2025-04-16T07:39:22.7550944Z 2025/04/16 07:39:22 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:22.7551712Z 2025/04/16 07:39:22 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:22.7552534Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:22.7553386Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:22.7554172Z 2025/04/16 07:39:22 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:22.7554883Z 2025/04/16 07:39:22 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:22.7555711Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:22.7557352Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:22.7558706Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:22.7560395Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:22.7562940Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:22.7578091Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:22.7587658Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Installing "npm@10.9.2"
+2025-04-16T07:39:22.7610563Z updater | 2025/04/16 07:39:22 INFO <job_999489038> Started process PID: 1452 with command: {} corepack install npm@10.9.2 --global --cache-only {}
+2025-04-16T07:39:23.5551347Z   proxy | 2025/04/16 07:39:23 [008] GET https://registry.npmjs.org:443/npm/-/npm-10.9.2.tgz
+2025-04-16T07:39:23.6501407Z   proxy | 2025/04/16 07:39:23 [008] 200 https://registry.npmjs.org:443/npm/-/npm-10.9.2.tgz
+2025-04-16T07:39:25.6656846Z   proxy | 2025/04/16 07:39:25 [010] GET https://registry.npmjs.org:443/npm/10.9.2
+2025-04-16T07:39:25.6973593Z   proxy | 2025/04/16 07:39:25 [010] 200 https://registry.npmjs.org:443/npm/10.9.2
+2025-04-16T07:39:25.7242980Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Process PID: 1452 completed with status: pid 1452 exit 0
+2025-04-16T07:39:25.7246550Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Total execution time: 2.96 seconds
+2025-04-16T07:39:25.7253275Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7255807Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7258125Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7266701Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7270634Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7280147Z 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7284149Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7285076Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7286001Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7286800Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7287640Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7288450Z 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7310832Z 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7311671Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7312475Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7313208Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7314308Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7315138Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7315918Z 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7316647Z 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7317396Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7318180Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7326464Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7327264Z 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7327998Z 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7328733Z 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7329677Z 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7330394Z 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7385842Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7396067Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7396887Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7409950Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7422134Z 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7428830Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7435448Z 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7436240Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7436987Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7437768Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7438547Z 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7439507Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7440303Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7441104Z 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7441843Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7442570Z 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7443350Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7444167Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7444919Z 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7445708Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7446528Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.7447272Z 2025/04/16 07:39:25 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:25.7448010Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:25.7448816Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:25.7449823Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:25.7452797Z updater | 2025/04/16 07:39:25 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:25.7454142Z 2025/04/16 07:39:25 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:25.7455320Z 2025/04/16 07:39:25 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:25.9010105Z   proxy | 2025/04/16 07:39:25 [012] POST /update_jobs/999489038/record_ecosystem_versions
+2025-04-16T07:39:26.0360534Z   proxy | 2025/04/16 07:39:26 [012] 204 /update_jobs/999489038/record_ecosystem_versions
+2025-04-16T07:39:26.0387904Z updater | 2025/04/16 07:39:26 INFO <job_999489038> Base commit SHA: 21a50d3809e270be8a00aa5ded519d16e53dbe03
+2025-04-16T07:39:26.0407924Z updater | 2025/04/16 07:39:26 INFO <job_999489038> Finished job processing
+2025-04-16T07:39:27.9602975Z updater | 2025/04/16 07:39:27 INFO <job_999489038> Starting job processing
+2025-04-16T07:39:28.0215653Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Detected package manager: npm
+2025-04-16T07:39:28.0228240Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Resolving package manager for: npm
+2025-04-16T07:39:28.0277512Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Returned (engines) info "npm" : "10.9.2"
+2025-04-16T07:39:28.0292444Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Fetching version for package manager: npm
+2025-04-16T07:39:28.0320767Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Started process PID: 1470 with command: {} corepack npm -v {}
+2025-04-16T07:39:28.4563928Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Process PID: 1470 completed with status: pid 1470 exit 0
+2025-04-16T07:39:28.4568073Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Total execution time: 0.43 seconds
+2025-04-16T07:39:28.4577069Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Installed version of npm: 9.6.5
+2025-04-16T07:39:28.4577833Z 2025/04/16 07:39:28 INFO <job_999489038> Installed version for npm: 9.6.5
+2025-04-16T07:39:28.4582586Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Processing engine constraints for npm
+2025-04-16T07:39:28.4592118Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Parsed constraints for npm: =10.9.2
+2025-04-16T07:39:28.4592969Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Version requirement for npm: = 10.9.2
+2025-04-16T07:39:28.4593747Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Running node command: node -v
+2025-04-16T07:39:28.4612322Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Started process PID: 1482 with command: {} node -v {}
+2025-04-16T07:39:28.4641524Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Process PID: 1482 completed with status: pid 1482 exit 0
+2025-04-16T07:39:28.4649315Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:39:28.4650182Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Command executed successfully: node -v
+2025-04-16T07:39:28.4650987Z 2025/04/16 07:39:28 INFO <job_999489038> Processing engine constraints for node
+2025-04-16T07:39:28.4651763Z 2025/04/16 07:39:28 INFO <job_999489038> Parsed constraints for node: =22.14.0
+2025-04-16T07:39:28.6922906Z   proxy | 2025/04/16 07:39:28 [015] POST /update_jobs/999489038/update_dependency_list
+2025-04-16T07:39:28.8055534Z   proxy | 2025/04/16 07:39:28 [015] 204 /update_jobs/999489038/update_dependency_list
+2025-04-16T07:39:28.8607731Z   proxy | 2025/04/16 07:39:28 [017] POST /update_jobs/999489038/increment_metric
+2025-04-16T07:39:28.9304922Z   proxy | 2025/04/16 07:39:28 [017] 204 /update_jobs/999489038/increment_metric
+2025-04-16T07:39:28.9343512Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Starting update job for mrkurger/date-night-app2
+2025-04-16T07:39:28.9345609Z 2025/04/16 07:39:28 INFO <job_999489038> Checking and updating security pull requests...
+2025-04-16T07:39:28.9483764Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Security advisory dependency: semver
+2025-04-16T07:39:28.9485513Z First dependency in list: semver
+2025-04-16T07:39:28.9528822Z updater | 2025/04/16 07:39:28 INFO <job_999489038> Checking if semver 5.7.2 needs updating
+2025-04-16T07:39:29.0743109Z   proxy | 2025/04/16 07:39:29 [019] GET https://registry.npmjs.org:443/semver
+2025-04-16T07:39:29.1086601Z   proxy | 2025/04/16 07:39:29 [019] 200 https://registry.npmjs.org:443/semver
+2025-04-16T07:39:29.2837540Z   proxy | 2025/04/16 07:39:29 [023] HEAD https://registry.npmjs.org:443/semver/-/semver-7.7.1.tgz
+2025-04-16T07:39:29.3148363Z   proxy | 2025/04/16 07:39:29 [023] 200 https://registry.npmjs.org:443/semver/-/semver-7.7.1.tgz
+2025-04-16T07:39:29.3187960Z updater | 2025/04/16 07:39:29 INFO <job_999489038> Latest version is 7.7.1
+2025-04-16T07:39:29.4182197Z   proxy | 2025/04/16 07:39:29 [025] GET https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:29.7975691Z   proxy | 2025/04/16 07:39:29 [025] 404 https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:29.8231035Z updater | 2025/04/16 07:39:29 INFO <job_999489038> VulnerabilityAuditor: starting audit
+2025-04-16T07:39:29.8304614Z updater | 2025/04/16 07:39:29 INFO <job_999489038> Started process PID: 1491 with command: node /opt/npm_and_yarn/run.js
+2025-04-16T07:39:30.8233734Z   proxy | 2025/04/16 07:39:30 [027] GET https://registry.npmjs.org:443/semver
+2025-04-16T07:39:30.8522869Z   proxy | 2025/04/16 07:39:30 [027] 200 https://registry.npmjs.org:443/semver
+2025-04-16T07:39:30.9257580Z   proxy | 2025/04/16 07:39:30 [029] GET https://registry.npmjs.org:443/simple-update-notifier
+2025-04-16T07:39:30.9581319Z   proxy | 2025/04/16 07:39:30 [029] 200 https://registry.npmjs.org:443/simple-update-notifier
+2025-04-16T07:39:30.9988676Z   proxy | 2025/04/16 07:39:30 [031] GET https://registry.npmjs.org:443/nodemon
+2025-04-16T07:39:31.0323570Z   proxy | 2025/04/16 07:39:31 [031] 200 https://registry.npmjs.org:443/nodemon
+2025-04-16T07:39:31.2003387Z   proxy | 2025/04/16 07:39:31 [033] GET https://registry.npmjs.org:443/argon2
+2025-04-16T07:39:31.2575683Z   proxy | 2025/04/16 07:39:31 [033] 200 https://registry.npmjs.org:443/argon2
+2025-04-16T07:39:31.2870253Z   proxy | 2025/04/16 07:39:31 [035] GET https://registry.npmjs.org:443/axios
+2025-04-16T07:39:31.3175810Z   proxy | 2025/04/16 07:39:31 [035] 200 https://registry.npmjs.org:443/axios
+2025-04-16T07:39:31.3598002Z   proxy | 2025/04/16 07:39:31 [037] GET https://registry.npmjs.org:443/cookie-parser
+2025-04-16T07:39:31.3922390Z   proxy | 2025/04/16 07:39:31 [037] 200 https://registry.npmjs.org:443/cookie-parser
+2025-04-16T07:39:31.4103118Z   proxy | 2025/04/16 07:39:31 [039] GET https://registry.npmjs.org:443/csrf-csrf
+2025-04-16T07:39:31.4690995Z   proxy | 2025/04/16 07:39:31 [039] 200 https://registry.npmjs.org:443/csrf-csrf
+2025-04-16T07:39:31.4889348Z   proxy | 2025/04/16 07:39:31 [041] GET https://registry.npmjs.org:443/express-rate-limit
+2025-04-16T07:39:31.5211533Z   proxy | 2025/04/16 07:39:31 [041] 200 https://registry.npmjs.org:443/express-rate-limit
+2025-04-16T07:39:31.5492750Z   proxy | 2025/04/16 07:39:31 [043] GET https://registry.npmjs.org:443/express
+2025-04-16T07:39:31.5783112Z   proxy | 2025/04/16 07:39:31 [043] 200 https://registry.npmjs.org:443/express
+2025-04-16T07:39:31.6338158Z   proxy | 2025/04/16 07:39:31 [045] GET https://registry.npmjs.org:443/express-validator
+2025-04-16T07:39:31.6663981Z   proxy | 2025/04/16 07:39:31 [045] 200 https://registry.npmjs.org:443/express-validator
+2025-04-16T07:39:31.6948224Z   proxy | 2025/04/16 07:39:31 [047] GET https://registry.npmjs.org:443/mongoose
+2025-04-16T07:39:31.7575881Z   proxy | 2025/04/16 07:39:31 [047] 200 https://registry.npmjs.org:443/mongoose
+2025-04-16T07:39:31.9284538Z   proxy | 2025/04/16 07:39:31 [049] GET https://registry.npmjs.org:443/node-cache
+2025-04-16T07:39:31.9572828Z   proxy | 2025/04/16 07:39:31 [049] 200 https://registry.npmjs.org:443/node-cache
+2025-04-16T07:39:31.9771269Z   proxy | 2025/04/16 07:39:31 [051] GET https://registry.npmjs.org:443/passport
+2025-04-16T07:39:32.0081283Z   proxy | 2025/04/16 07:39:32 [051] 200 https://registry.npmjs.org:443/passport
+2025-04-16T07:39:32.0267560Z   proxy | 2025/04/16 07:39:32 [053] GET https://registry.npmjs.org:443/sharp
+2025-04-16T07:39:32.0595267Z   proxy | 2025/04/16 07:39:32 [053] 200 https://registry.npmjs.org:443/sharp
+2025-04-16T07:39:32.1050321Z   proxy | 2025/04/16 07:39:32 [055] GET https://registry.npmjs.org:443/winston
+2025-04-16T07:39:32.1420270Z   proxy | 2025/04/16 07:39:32 [055] 200 https://registry.npmjs.org:443/winston
+2025-04-16T07:39:32.1663497Z   proxy | 2025/04/16 07:39:32 [057] GET https://registry.npmjs.org:443/winston-daily-rotate-file
+2025-04-16T07:39:32.1982138Z   proxy | 2025/04/16 07:39:32 [057] 200 https://registry.npmjs.org:443/winston-daily-rotate-file
+2025-04-16T07:39:32.2253617Z   proxy | 2025/04/16 07:39:32 [059] GET https://registry.npmjs.org:443/@eslint%2fjs
+2025-04-16T07:39:32.2738771Z   proxy | 2025/04/16 07:39:32 [059] 200 https://registry.npmjs.org:443/@eslint%2fjs
+2025-04-16T07:39:32.2927476Z   proxy | 2025/04/16 07:39:32 [061] GET https://registry.npmjs.org:443/eslint
+2025-04-16T07:39:32.3231716Z   proxy | 2025/04/16 07:39:32 [061] 200 https://registry.npmjs.org:443/eslint
+2025-04-16T07:39:32.4145996Z   proxy | 2025/04/16 07:39:32 [063] GET https://registry.npmjs.org:443/eslint-config-prettier
+2025-04-16T07:39:32.4466760Z   proxy | 2025/04/16 07:39:32 [063] 200 https://registry.npmjs.org:443/eslint-config-prettier
+2025-04-16T07:39:32.4731263Z   proxy | 2025/04/16 07:39:32 [065] GET https://registry.npmjs.org:443/eslint-plugin-node
+2025-04-16T07:39:32.5024232Z   proxy | 2025/04/16 07:39:32 [065] 200 https://registry.npmjs.org:443/eslint-plugin-node
+2025-04-16T07:39:32.5291755Z   proxy | 2025/04/16 07:39:32 [067] GET https://registry.npmjs.org:443/eslint-plugin-prettier
+2025-04-16T07:39:32.5711249Z   proxy | 2025/04/16 07:39:32 [067] 200 https://registry.npmjs.org:443/eslint-plugin-prettier
+2025-04-16T07:39:32.5902446Z   proxy | 2025/04/16 07:39:32 [069] GET https://registry.npmjs.org:443/@types%2feslint
+2025-04-16T07:39:32.6300429Z   proxy | 2025/04/16 07:39:32 [069] 200 https://registry.npmjs.org:443/@types%2feslint
+2025-04-16T07:39:32.6532884Z   proxy | 2025/04/16 07:39:32 [071] GET https://registry.npmjs.org:443/prettier
+2025-04-16T07:39:32.6881404Z   proxy | 2025/04/16 07:39:32 [071] 200 https://registry.npmjs.org:443/prettier
+2025-04-16T07:39:32.7218724Z   proxy | 2025/04/16 07:39:32 [073] GET https://registry.npmjs.org:443/jest
+2025-04-16T07:39:32.7539845Z   proxy | 2025/04/16 07:39:32 [073] 200 https://registry.npmjs.org:443/jest
+2025-04-16T07:39:32.7943384Z   proxy | 2025/04/16 07:39:32 [075] GET https://registry.npmjs.org:443/node-notifier
+2025-04-16T07:39:32.8322036Z   proxy | 2025/04/16 07:39:32 [075] 200 https://registry.npmjs.org:443/node-notifier
+2025-04-16T07:39:32.8602015Z   proxy | 2025/04/16 07:39:32 [077] GET https://registry.npmjs.org:443/jest-extended
+2025-04-16T07:39:32.8938828Z   proxy | 2025/04/16 07:39:32 [077] 200 https://registry.npmjs.org:443/jest-extended
+2025-04-16T07:39:32.9224065Z   proxy | 2025/04/16 07:39:32 [079] GET https://registry.npmjs.org:443/jest-junit
+2025-04-16T07:39:32.9538710Z   proxy | 2025/04/16 07:39:32 [079] 200 https://registry.npmjs.org:443/jest-junit
+2025-04-16T07:39:33.0387018Z   proxy | 2025/04/16 07:39:33 [081] GET https://registry.npmjs.org:443/mongodb-memory-server
+2025-04-16T07:39:33.0692264Z   proxy | 2025/04/16 07:39:33 [081] 200 https://registry.npmjs.org:443/mongodb-memory-server
+2025-04-16T07:39:33.1174634Z   proxy | 2025/04/16 07:39:33 [083] GET https://registry.npmjs.org:443/nodemon
+2025-04-16T07:39:33.1489572Z   proxy | 2025/04/16 07:39:33 [083] 200 https://registry.npmjs.org:443/nodemon
+2025-04-16T07:39:33.1814454Z   proxy | 2025/04/16 07:39:33 [085] GET https://registry.npmjs.org:443/supertest
+2025-04-16T07:39:33.2179513Z   proxy | 2025/04/16 07:39:33 [085] 200 https://registry.npmjs.org:443/supertest
+2025-04-16T07:39:33.2887309Z   proxy | 2025/04/16 07:39:33 [087] GET https://registry.npmjs.org:443/@phc%2fformat
+2025-04-16T07:39:33.3294263Z   proxy | 2025/04/16 07:39:33 [087] 200 https://registry.npmjs.org:443/@phc%2fformat
+2025-04-16T07:39:33.3456248Z   proxy | 2025/04/16 07:39:33 [089] GET https://registry.npmjs.org:443/node-addon-api
+2025-04-16T07:39:33.3792033Z   proxy | 2025/04/16 07:39:33 [089] 200 https://registry.npmjs.org:443/node-addon-api
+2025-04-16T07:39:33.4036492Z   proxy | 2025/04/16 07:39:33 [091] GET https://registry.npmjs.org:443/node-gyp-build
+2025-04-16T07:39:33.4328422Z   proxy | 2025/04/16 07:39:33 [091] 200 https://registry.npmjs.org:443/node-gyp-build
+2025-04-16T07:39:33.4514189Z   proxy | 2025/04/16 07:39:33 [093] GET https://registry.npmjs.org:443/form-data
+2025-04-16T07:39:33.4826303Z   proxy | 2025/04/16 07:39:33 [093] 200 https://registry.npmjs.org:443/form-data
+2025-04-16T07:39:33.5052016Z   proxy | 2025/04/16 07:39:33 [095] GET https://registry.npmjs.org:443/proxy-from-env
+2025-04-16T07:39:33.5447085Z   proxy | 2025/04/16 07:39:33 [095] 200 https://registry.npmjs.org:443/proxy-from-env
+2025-04-16T07:39:33.5586397Z   proxy | 2025/04/16 07:39:33 [097] GET https://registry.npmjs.org:443/follow-redirects
+2025-04-16T07:39:33.5910841Z   proxy | 2025/04/16 07:39:33 [097] 200 https://registry.npmjs.org:443/follow-redirects
+2025-04-16T07:39:33.6086659Z   proxy | 2025/04/16 07:39:33 [099] GET https://registry.npmjs.org:443/cookie
+2025-04-16T07:39:33.6427026Z   proxy | 2025/04/16 07:39:33 [099] 200 https://registry.npmjs.org:443/cookie
+2025-04-16T07:39:33.6569303Z   proxy | 2025/04/16 07:39:33 [101] GET https://registry.npmjs.org:443/ajv
+2025-04-16T07:39:33.6884831Z   proxy | 2025/04/16 07:39:33 [101] 200 https://registry.npmjs.org:443/ajv
+2025-04-16T07:39:33.7398835Z   proxy | 2025/04/16 07:39:33 [103] GET https://registry.npmjs.org:443/levn
+2025-04-16T07:39:33.7751026Z   proxy | 2025/04/16 07:39:33 [103] 200 https://registry.npmjs.org:443/levn
+2025-04-16T07:39:33.7885489Z   proxy | 2025/04/16 07:39:33 [105] GET https://registry.npmjs.org:443/chalk
+2025-04-16T07:39:33.8206530Z   proxy | 2025/04/16 07:39:33 [105] 200 https://registry.npmjs.org:443/chalk
+2025-04-16T07:39:33.8407324Z   proxy | 2025/04/16 07:39:33 [107] GET https://registry.npmjs.org:443/debug
+2025-04-16T07:39:33.8709188Z   proxy | 2025/04/16 07:39:33 [107] 200 https://registry.npmjs.org:443/debug
+2025-04-16T07:39:33.8995626Z   proxy | 2025/04/16 07:39:33 [109] GET https://registry.npmjs.org:443/espree
+2025-04-16T07:39:33.9292457Z   proxy | 2025/04/16 07:39:33 [109] 200 https://registry.npmjs.org:443/espree
+2025-04-16T07:39:33.9530726Z   proxy | 2025/04/16 07:39:33 [111] GET https://registry.npmjs.org:443/ignore
+2025-04-16T07:39:33.9808597Z   proxy | 2025/04/16 07:39:33 [111] 200 https://registry.npmjs.org:443/ignore
+2025-04-16T07:39:34.0088309Z   proxy | 2025/04/16 07:39:34 [113] GET https://registry.npmjs.org:443/esquery
+2025-04-16T07:39:34.0418077Z   proxy | 2025/04/16 07:39:34 [113] 200 https://registry.npmjs.org:443/esquery
+2025-04-16T07:39:34.0579875Z   proxy | 2025/04/16 07:39:34 [115] GET https://registry.npmjs.org:443/esutils
+2025-04-16T07:39:34.0996626Z   proxy | 2025/04/16 07:39:34 [115] 200 https://registry.npmjs.org:443/esutils
+2025-04-16T07:39:34.1153170Z   proxy | 2025/04/16 07:39:34 [117] GET https://registry.npmjs.org:443/find-up
+2025-04-16T07:39:34.1468423Z   proxy | 2025/04/16 07:39:34 [117] 200 https://registry.npmjs.org:443/find-up
+2025-04-16T07:39:34.1668690Z   proxy | 2025/04/16 07:39:34 [119] GET https://registry.npmjs.org:443/globals
+2025-04-16T07:39:34.1975363Z   proxy | 2025/04/16 07:39:34 [119] 200 https://registry.npmjs.org:443/globals
+2025-04-16T07:39:34.2211672Z   proxy | 2025/04/16 07:39:34 [121] GET https://registry.npmjs.org:443/js-yaml
+2025-04-16T07:39:34.2772727Z   proxy | 2025/04/16 07:39:34 [121] 200 https://registry.npmjs.org:443/js-yaml
+2025-04-16T07:39:34.3001449Z   proxy | 2025/04/16 07:39:34 [123] GET https://registry.npmjs.org:443/doctrine
+2025-04-16T07:39:34.3304506Z   proxy | 2025/04/16 07:39:34 [123] 200 https://registry.npmjs.org:443/doctrine
+2025-04-16T07:39:34.3464003Z   proxy | 2025/04/16 07:39:34 [125] GET https://registry.npmjs.org:443/graphemer
+2025-04-16T07:39:34.3872555Z   proxy | 2025/04/16 07:39:34 [125] 200 https://registry.npmjs.org:443/graphemer
+2025-04-16T07:39:34.4062283Z   proxy | 2025/04/16 07:39:34 [127] GET https://registry.npmjs.org:443/optionator
+2025-04-16T07:39:34.4385837Z   proxy | 2025/04/16 07:39:34 [127] 200 https://registry.npmjs.org:443/optionator
+2025-04-16T07:39:34.4541672Z   proxy | 2025/04/16 07:39:34 [129] GET https://registry.npmjs.org:443/text-table
+2025-04-16T07:39:34.4873191Z   proxy | 2025/04/16 07:39:34 [129] 200 https://registry.npmjs.org:443/text-table
+2025-04-16T07:39:34.5020969Z   proxy | 2025/04/16 07:39:34 [131] GET https://registry.npmjs.org:443/cross-spawn
+2025-04-16T07:39:34.5320003Z   proxy | 2025/04/16 07:39:34 [131] 200 https://registry.npmjs.org:443/cross-spawn
+2025-04-16T07:39:34.5492265Z   proxy | 2025/04/16 07:39:34 [133] GET https://registry.npmjs.org:443/glob-parent
+2025-04-16T07:39:34.5797592Z   proxy | 2025/04/16 07:39:34 [133] 200 https://registry.npmjs.org:443/glob-parent
+2025-04-16T07:39:34.5952342Z   proxy | 2025/04/16 07:39:34 [135] GET https://registry.npmjs.org:443/imurmurhash
+2025-04-16T07:39:34.6279254Z   proxy | 2025/04/16 07:39:34 [135] 200 https://registry.npmjs.org:443/imurmurhash
+2025-04-16T07:39:34.6442504Z   proxy | 2025/04/16 07:39:34 [137] GET https://registry.npmjs.org:443/eslint-scope
+2025-04-16T07:39:34.6738478Z   proxy | 2025/04/16 07:39:34 [137] 200 https://registry.npmjs.org:443/eslint-scope
+2025-04-16T07:39:34.6954459Z   proxy | 2025/04/16 07:39:34 [139] GET https://registry.npmjs.org:443/lodash.merge
+2025-04-16T07:39:34.7269285Z   proxy | 2025/04/16 07:39:34 [139] 200 https://registry.npmjs.org:443/lodash.merge
+2025-04-16T07:39:34.7491759Z   proxy | 2025/04/16 07:39:34 [141] GET https://registry.npmjs.org:443/is-path-inside
+2025-04-16T07:39:34.7811397Z   proxy | 2025/04/16 07:39:34 [141] 200 https://registry.npmjs.org:443/is-path-inside
+2025-04-16T07:39:34.8036692Z   proxy | 2025/04/16 07:39:34 [143] GET https://registry.npmjs.org:443/fast-deep-equal
+2025-04-16T07:39:34.8366455Z   proxy | 2025/04/16 07:39:34 [143] 200 https://registry.npmjs.org:443/fast-deep-equal
+2025-04-16T07:39:34.8523866Z   proxy | 2025/04/16 07:39:34 [145] GET https://registry.npmjs.org:443/natural-compare
+2025-04-16T07:39:34.8849704Z   proxy | 2025/04/16 07:39:34 [145] 200 https://registry.npmjs.org:443/natural-compare
+2025-04-16T07:39:34.8962333Z   proxy | 2025/04/16 07:39:34 [147] GET https://registry.npmjs.org:443/@eslint%2feslintrc
+2025-04-16T07:39:34.9424648Z   proxy | 2025/04/16 07:39:34 [147] 200 https://registry.npmjs.org:443/@eslint%2feslintrc
+2025-04-16T07:39:34.9663747Z   proxy | 2025/04/16 07:39:34 [149] GET https://registry.npmjs.org:443/@nodelib%2ffs.walk
+2025-04-16T07:39:35.0136979Z   proxy | 2025/04/16 07:39:35 [149] 200 https://registry.npmjs.org:443/@nodelib%2ffs.walk
+2025-04-16T07:39:35.0310839Z   proxy | 2025/04/16 07:39:35 [151] GET https://registry.npmjs.org:443/file-entry-cache
+2025-04-16T07:39:35.0638082Z   proxy | 2025/04/16 07:39:35 [151] 200 https://registry.npmjs.org:443/file-entry-cache
+2025-04-16T07:39:35.0809789Z   proxy | 2025/04/16 07:39:35 [153] GET https://registry.npmjs.org:443/eslint-visitor-keys
+2025-04-16T07:39:35.1128525Z   proxy | 2025/04/16 07:39:35 [153] 200 https://registry.npmjs.org:443/eslint-visitor-keys
+2025-04-16T07:39:35.1266869Z   proxy | 2025/04/16 07:39:35 [155] GET https://registry.npmjs.org:443/escape-string-regexp
+2025-04-16T07:39:35.1552900Z   proxy | 2025/04/16 07:39:35 [155] 200 https://registry.npmjs.org:443/escape-string-regexp
+2025-04-16T07:39:35.1686420Z   proxy | 2025/04/16 07:39:35 [157] GET https://registry.npmjs.org:443/@ungap%2fstructured-clone
+2025-04-16T07:39:35.2116353Z   proxy | 2025/04/16 07:39:35 [157] 200 https://registry.npmjs.org:443/@ungap%2fstructured-clone
+2025-04-16T07:39:35.2281042Z   proxy | 2025/04/16 07:39:35 [159] GET https://registry.npmjs.org:443/@eslint-community%2fregexpp
+2025-04-16T07:39:35.2706621Z   proxy | 2025/04/16 07:39:35 [159] 200 https://registry.npmjs.org:443/@eslint-community%2fregexpp
+2025-04-16T07:39:35.2870168Z   proxy | 2025/04/16 07:39:35 [161] GET https://registry.npmjs.org:443/@humanwhocodes%2fconfig-array
+2025-04-16T07:39:35.3358824Z   proxy | 2025/04/16 07:39:35 [161] 200 https://registry.npmjs.org:443/@humanwhocodes%2fconfig-array
+2025-04-16T07:39:35.3586599Z   proxy | 2025/04/16 07:39:35 [163] GET https://registry.npmjs.org:443/@eslint-community%2feslint-utils
+2025-04-16T07:39:35.4046426Z   proxy | 2025/04/16 07:39:35 [163] 200 https://registry.npmjs.org:443/@eslint-community%2feslint-utils
+2025-04-16T07:39:35.4271965Z   proxy | 2025/04/16 07:39:35 [165] GET https://registry.npmjs.org:443/@humanwhocodes%2fmodule-importer
+2025-04-16T07:39:35.4732849Z   proxy | 2025/04/16 07:39:35 [165] 200 https://registry.npmjs.org:443/@humanwhocodes%2fmodule-importer
+2025-04-16T07:39:35.4898717Z   proxy | 2025/04/16 07:39:35 [167] GET https://registry.npmjs.org:443/json-stable-stringify-without-jsonify
+2025-04-16T07:39:35.5212711Z   proxy | 2025/04/16 07:39:35 [167] 200 https://registry.npmjs.org:443/json-stable-stringify-without-jsonify
+2025-04-16T07:39:35.5433224Z   proxy | 2025/04/16 07:39:35 [169] GET https://registry.npmjs.org:443/eslint-plugin-es
+2025-04-16T07:39:35.5711411Z   proxy | 2025/04/16 07:39:35 [169] 200 https://registry.npmjs.org:443/eslint-plugin-es
+2025-04-16T07:39:35.5913070Z   proxy | 2025/04/16 07:39:35 [171] GET https://registry.npmjs.org:443/eslint-utils
+2025-04-16T07:39:35.6218775Z   proxy | 2025/04/16 07:39:35 [171] 200 https://registry.npmjs.org:443/eslint-utils
+2025-04-16T07:39:35.6494656Z   proxy | 2025/04/16 07:39:35 [173] GET https://registry.npmjs.org:443/resolve
+2025-04-16T07:39:35.6822817Z   proxy | 2025/04/16 07:39:35 [173] 200 https://registry.npmjs.org:443/resolve
+2025-04-16T07:39:35.7045166Z   proxy | 2025/04/16 07:39:35 [175] GET https://registry.npmjs.org:443/prettier-linter-helpers
+2025-04-16T07:39:35.7354915Z   proxy | 2025/04/16 07:39:35 [175] 200 https://registry.npmjs.org:443/prettier-linter-helpers
+2025-04-16T07:39:35.7492350Z   proxy | 2025/04/16 07:39:35 [177] GET https://registry.npmjs.org:443/synckit
+2025-04-16T07:39:35.7964754Z   proxy | 2025/04/16 07:39:35 [177] 200 https://registry.npmjs.org:443/synckit
+2025-04-16T07:39:35.8099776Z   proxy | 2025/04/16 07:39:35 [179] GET https://registry.npmjs.org:443/validator
+2025-04-16T07:39:35.8390009Z   proxy | 2025/04/16 07:39:35 [179] 200 https://registry.npmjs.org:443/validator
+2025-04-16T07:39:35.8675720Z   proxy | 2025/04/16 07:39:35 [181] GET https://registry.npmjs.org:443/jest-cli
+2025-04-16T07:39:35.9032465Z   proxy | 2025/04/16 07:39:35 [181] 200 https://registry.npmjs.org:443/jest-cli
+2025-04-16T07:39:35.9623695Z   proxy | 2025/04/16 07:39:35 [183] GET https://registry.npmjs.org:443/@jest%2fcore
+2025-04-16T07:39:36.0054740Z   proxy | 2025/04/16 07:39:36 [183] 200 https://registry.npmjs.org:443/@jest%2fcore
+2025-04-16T07:39:36.0470034Z   proxy | 2025/04/16 07:39:36 [185] GET https://registry.npmjs.org:443/@jest%2ftypes
+2025-04-16T07:39:36.0954929Z   proxy | 2025/04/16 07:39:36 [185] 200 https://registry.npmjs.org:443/@jest%2ftypes
+2025-04-16T07:39:36.1169407Z   proxy | 2025/04/16 07:39:36 [187] GET https://registry.npmjs.org:443/import-local
+2025-04-16T07:39:36.1478800Z   proxy | 2025/04/16 07:39:36 [187] 200 https://registry.npmjs.org:443/import-local
+2025-04-16T07:39:36.1675617Z   proxy | 2025/04/16 07:39:36 [189] GET https://registry.npmjs.org:443/jest-diff
+2025-04-16T07:39:36.1988349Z   proxy | 2025/04/16 07:39:36 [189] 200 https://registry.npmjs.org:443/jest-diff
+2025-04-16T07:39:36.2264884Z   proxy | 2025/04/16 07:39:36 [191] GET https://registry.npmjs.org:443/jest-get-type
+2025-04-16T07:39:36.2563461Z   proxy | 2025/04/16 07:39:36 [191] 200 https://registry.npmjs.org:443/jest-get-type
+2025-04-16T07:39:36.2764265Z   proxy | 2025/04/16 07:39:36 [193] GET https://registry.npmjs.org:443/mkdirp
+2025-04-16T07:39:36.3077327Z   proxy | 2025/04/16 07:39:36 [193] 200 https://registry.npmjs.org:443/mkdirp
+2025-04-16T07:39:36.3256248Z   proxy | 2025/04/16 07:39:36 [195] GET https://registry.npmjs.org:443/uuid
+2025-04-16T07:39:36.3560676Z   proxy | 2025/04/16 07:39:36 [195] 200 https://registry.npmjs.org:443/uuid
+2025-04-16T07:39:36.3878583Z   proxy | 2025/04/16 07:39:36 [197] GET https://registry.npmjs.org:443/xml
+2025-04-16T07:39:36.4161935Z   proxy | 2025/04/16 07:39:36 [197] 200 https://registry.npmjs.org:443/xml
+2025-04-16T07:39:36.4303243Z   proxy | 2025/04/16 07:39:36 [199] GET https://registry.npmjs.org:443/tslib
+2025-04-16T07:39:36.4617401Z   proxy | 2025/04/16 07:39:36 [199] 200 https://registry.npmjs.org:443/tslib
+2025-04-16T07:39:36.4786827Z   proxy | 2025/04/16 07:39:36 [201] GET https://registry.npmjs.org:443/mongodb-memory-server-core
+2025-04-16T07:39:36.5287866Z   proxy | 2025/04/16 07:39:36 [201] 200 https://registry.npmjs.org:443/mongodb-memory-server-core
+2025-04-16T07:39:36.5851357Z   proxy | 2025/04/16 07:39:36 [203] GET https://registry.npmjs.org:443/bson
+2025-04-16T07:39:36.6155230Z   proxy | 2025/04/16 07:39:36 [203] 200 https://registry.npmjs.org:443/bson
+2025-04-16T07:39:36.6437988Z   proxy | 2025/04/16 07:39:36 [205] GET https://registry.npmjs.org:443/kareem
+2025-04-16T07:39:36.6743514Z   proxy | 2025/04/16 07:39:36 [205] 200 https://registry.npmjs.org:443/kareem
+2025-04-16T07:39:36.7015827Z   proxy | 2025/04/16 07:39:36 [207] GET https://registry.npmjs.org:443/mongodb
+2025-04-16T07:39:36.7353749Z   proxy | 2025/04/16 07:39:36 [207] 200 https://registry.npmjs.org:443/mongodb
+2025-04-16T07:39:36.8540414Z   proxy | 2025/04/16 07:39:36 [209] GET https://registry.npmjs.org:443/sift
+2025-04-16T07:39:36.8830863Z   proxy | 2025/04/16 07:39:36 [209] 200 https://registry.npmjs.org:443/sift
+2025-04-16T07:39:36.9090317Z   proxy | 2025/04/16 07:39:36 [211] GET https://registry.npmjs.org:443/clone
+2025-04-16T07:39:36.9403887Z   proxy | 2025/04/16 07:39:36 [211] 200 https://registry.npmjs.org:443/clone
+2025-04-16T07:39:36.9709598Z   proxy | 2025/04/16 07:39:36 [213] GET https://registry.npmjs.org:443/simple-update-notifier
+2025-04-16T07:39:37.0018725Z   proxy | 2025/04/16 07:39:37 [213] 200 https://registry.npmjs.org:443/simple-update-notifier
+2025-04-16T07:39:37.0166887Z   proxy | 2025/04/16 07:39:37 [215] GET https://registry.npmjs.org:443/color
+2025-04-16T07:39:37.0523909Z   proxy | 2025/04/16 07:39:37 [215] 200 https://registry.npmjs.org:443/color
+2025-04-16T07:39:37.0706399Z   proxy | 2025/04/16 07:39:37 [217] GET https://registry.npmjs.org:443/@img%2fsharp-wasm32
+2025-04-16T07:39:37.1183574Z   proxy | 2025/04/16 07:39:37 [217] 200 https://registry.npmjs.org:443/@img%2fsharp-wasm32
+2025-04-16T07:39:37.1336582Z   proxy | 2025/04/16 07:39:37 [219] GET https://registry.npmjs.org:443/@img%2fsharp-linux-arm
+2025-04-16T07:39:37.1960566Z   proxy | 2025/04/16 07:39:37 [219] 200 https://registry.npmjs.org:443/@img%2fsharp-linux-arm
+2025-04-16T07:39:37.2097821Z   proxy | 2025/04/16 07:39:37 [221] GET https://registry.npmjs.org:443/@img%2fsharp-linux-x64
+2025-04-16T07:39:37.2719458Z   proxy | 2025/04/16 07:39:37 [221] 200 https://registry.npmjs.org:443/@img%2fsharp-linux-x64
+2025-04-16T07:39:37.2870450Z   proxy | 2025/04/16 07:39:37 [223] GET https://registry.npmjs.org:443/@img%2fsharp-win32-x64
+2025-04-16T07:39:37.3323365Z   proxy | 2025/04/16 07:39:37 [223] 200 https://registry.npmjs.org:443/@img%2fsharp-win32-x64
+2025-04-16T07:39:37.3520121Z   proxy | 2025/04/16 07:39:37 [225] GET https://registry.npmjs.org:443/@img%2fsharp-darwin-x64
+2025-04-16T07:39:37.3937721Z   proxy | 2025/04/16 07:39:37 [225] 200 https://registry.npmjs.org:443/@img%2fsharp-darwin-x64
+2025-04-16T07:39:37.4102548Z   proxy | 2025/04/16 07:39:37 [227] GET https://registry.npmjs.org:443/@img%2fsharp-win32-ia32
+2025-04-16T07:39:37.4565063Z   proxy | 2025/04/16 07:39:37 [227] 200 https://registry.npmjs.org:443/@img%2fsharp-win32-ia32
+2025-04-16T07:39:37.4710785Z   proxy | 2025/04/16 07:39:37 [229] GET https://registry.npmjs.org:443/@img%2fsharp-linux-arm64
+2025-04-16T07:39:37.5148530Z   proxy | 2025/04/16 07:39:37 [229] 200 https://registry.npmjs.org:443/@img%2fsharp-linux-arm64
+2025-04-16T07:39:37.5280840Z   proxy | 2025/04/16 07:39:37 [231] GET https://registry.npmjs.org:443/@img%2fsharp-linux-s390x
+2025-04-16T07:39:37.5946849Z   proxy | 2025/04/16 07:39:37 [231] 200 https://registry.npmjs.org:443/@img%2fsharp-linux-s390x
+2025-04-16T07:39:37.6072516Z   proxy | 2025/04/16 07:39:37 [233] GET https://registry.npmjs.org:443/@img%2fsharp-darwin-arm64
+2025-04-16T07:39:37.6486066Z   proxy | 2025/04/16 07:39:37 [233] 200 https://registry.npmjs.org:443/@img%2fsharp-darwin-arm64
+2025-04-16T07:39:37.6639336Z   proxy | 2025/04/16 07:39:37 [235] GET https://registry.npmjs.org:443/@img%2fsharp-linuxmusl-x64
+2025-04-16T07:39:37.7057889Z   proxy | 2025/04/16 07:39:37 [235] 200 https://registry.npmjs.org:443/@img%2fsharp-linuxmusl-x64
+2025-04-16T07:39:37.7222658Z   proxy | 2025/04/16 07:39:37 [237] GET https://registry.npmjs.org:443/@img%2fsharp-linuxmusl-arm64
+2025-04-16T07:39:37.7657362Z   proxy | 2025/04/16 07:39:37 [237] 200 https://registry.npmjs.org:443/@img%2fsharp-linuxmusl-arm64
+2025-04-16T07:39:37.7907869Z   proxy | 2025/04/16 07:39:37 [239] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-arm
+2025-04-16T07:39:37.8310153Z   proxy | 2025/04/16 07:39:37 [239] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-arm
+2025-04-16T07:39:37.8432235Z   proxy | 2025/04/16 07:39:37 [241] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-x64
+2025-04-16T07:39:37.8877897Z   proxy | 2025/04/16 07:39:37 [241] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-x64
+2025-04-16T07:39:37.9017882Z   proxy | 2025/04/16 07:39:37 [243] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-darwin-x64
+2025-04-16T07:39:37.9485510Z   proxy | 2025/04/16 07:39:37 [243] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-darwin-x64
+2025-04-16T07:39:37.9627852Z   proxy | 2025/04/16 07:39:37 [245] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-arm64
+2025-04-16T07:39:38.0100780Z   proxy | 2025/04/16 07:39:38 [245] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-arm64
+2025-04-16T07:39:38.0259053Z   proxy | 2025/04/16 07:39:38 [247] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-s390x
+2025-04-16T07:39:38.0763239Z   proxy | 2025/04/16 07:39:38 [247] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linux-s390x
+2025-04-16T07:39:38.0913341Z   proxy | 2025/04/16 07:39:38 [249] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-darwin-arm64
+2025-04-16T07:39:38.1395116Z   proxy | 2025/04/16 07:39:38 [249] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-darwin-arm64
+2025-04-16T07:39:38.1577951Z   proxy | 2025/04/16 07:39:38 [251] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linuxmusl-x64
+2025-04-16T07:39:38.2032932Z   proxy | 2025/04/16 07:39:38 [251] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linuxmusl-x64
+2025-04-16T07:39:38.2177496Z   proxy | 2025/04/16 07:39:38 [253] GET https://registry.npmjs.org:443/@img%2fsharp-libvips-linuxmusl-arm64
+2025-04-16T07:39:38.2686524Z   proxy | 2025/04/16 07:39:38 [253] 200 https://registry.npmjs.org:443/@img%2fsharp-libvips-linuxmusl-arm64
+2025-04-16T07:39:38.2836660Z   proxy | 2025/04/16 07:39:38 [255] GET https://registry.npmjs.org:443/superagent
+2025-04-16T07:39:38.3193228Z   proxy | 2025/04/16 07:39:38 [255] 200 https://registry.npmjs.org:443/superagent
+2025-04-16T07:39:38.3630923Z   proxy | 2025/04/16 07:39:38 [257] GET https://registry.npmjs.org:443/@dabh%2fdiagnostics
+2025-04-16T07:39:38.4135409Z   proxy | 2025/04/16 07:39:38 [257] 200 https://registry.npmjs.org:443/@dabh%2fdiagnostics
+2025-04-16T07:39:38.4316826Z   proxy | 2025/04/16 07:39:38 [259] GET https://registry.npmjs.org:443/@colors%2fcolors
+2025-04-16T07:39:38.4727943Z   proxy | 2025/04/16 07:39:38 [259] 200 https://registry.npmjs.org:443/@colors%2fcolors
+2025-04-16T07:39:38.4861386Z   proxy | 2025/04/16 07:39:38 [261] GET https://registry.npmjs.org:443/async
+2025-04-16T07:39:38.5197104Z   proxy | 2025/04/16 07:39:38 [261] 200 https://registry.npmjs.org:443/async
+2025-04-16T07:39:38.5443266Z   proxy | 2025/04/16 07:39:38 [263] GET https://registry.npmjs.org:443/is-stream
+2025-04-16T07:39:38.5764931Z   proxy | 2025/04/16 07:39:38 [263] 200 https://registry.npmjs.org:443/is-stream
+2025-04-16T07:39:38.5883082Z   proxy | 2025/04/16 07:39:38 [265] GET https://registry.npmjs.org:443/logform
+2025-04-16T07:39:38.6183177Z   proxy | 2025/04/16 07:39:38 [265] 200 https://registry.npmjs.org:443/logform
+2025-04-16T07:39:38.6382540Z   proxy | 2025/04/16 07:39:38 [267] GET https://registry.npmjs.org:443/one-time
+2025-04-16T07:39:38.6705353Z   proxy | 2025/04/16 07:39:38 [267] 200 https://registry.npmjs.org:443/one-time
+2025-04-16T07:39:38.6912143Z   proxy | 2025/04/16 07:39:38 [269] GET https://registry.npmjs.org:443/readable-stream
+2025-04-16T07:39:38.7182178Z   proxy | 2025/04/16 07:39:38 [269] 200 https://registry.npmjs.org:443/readable-stream
+2025-04-16T07:39:38.7494789Z   proxy | 2025/04/16 07:39:38 [271] GET https://registry.npmjs.org:443/safe-stable-stringify
+2025-04-16T07:39:38.7782260Z   proxy | 2025/04/16 07:39:38 [271] 200 https://registry.npmjs.org:443/safe-stable-stringify
+2025-04-16T07:39:38.7946116Z   proxy | 2025/04/16 07:39:38 [273] GET https://registry.npmjs.org:443/stack-trace
+2025-04-16T07:39:38.8262012Z   proxy | 2025/04/16 07:39:38 [273] 200 https://registry.npmjs.org:443/stack-trace
+2025-04-16T07:39:38.8421417Z   proxy | 2025/04/16 07:39:38 [275] GET https://registry.npmjs.org:443/triple-beam
+2025-04-16T07:39:38.8721596Z   proxy | 2025/04/16 07:39:38 [275] 200 https://registry.npmjs.org:443/triple-beam
+2025-04-16T07:39:38.8862650Z   proxy | 2025/04/16 07:39:38 [277] GET https://registry.npmjs.org:443/winston-transport
+2025-04-16T07:39:38.9186356Z   proxy | 2025/04/16 07:39:38 [277] 200 https://registry.npmjs.org:443/winston-transport
+2025-04-16T07:39:38.9434036Z   proxy | 2025/04/16 07:39:38 [279] GET https://registry.npmjs.org:443/file-stream-rotator
+2025-04-16T07:39:38.9717027Z   proxy | 2025/04/16 07:39:38 [279] 200 https://registry.npmjs.org:443/file-stream-rotator
+2025-04-16T07:39:38.9877407Z   proxy | 2025/04/16 07:39:38 [281] GET https://registry.npmjs.org:443/object-hash
+2025-04-16T07:39:39.0223120Z   proxy | 2025/04/16 07:39:39 [281] 200 https://registry.npmjs.org:443/object-hash
+2025-04-16T07:39:39.0621644Z   proxy | 2025/04/16 07:39:39 [283] GET https://registry.npmjs.org:443/asynckit
+2025-04-16T07:39:39.1014843Z   proxy | 2025/04/16 07:39:39 [283] 200 https://registry.npmjs.org:443/asynckit
+2025-04-16T07:39:39.1209102Z   proxy | 2025/04/16 07:39:39 [285] GET https://registry.npmjs.org:443/combined-stream
+2025-04-16T07:39:39.1502497Z   proxy | 2025/04/16 07:39:39 [285] 200 https://registry.npmjs.org:443/combined-stream
+2025-04-16T07:39:39.1657620Z   proxy | 2025/04/16 07:39:39 [287] GET https://registry.npmjs.org:443/es-set-tostringtag
+2025-04-16T07:39:39.1999503Z   proxy | 2025/04/16 07:39:39 [287] 200 https://registry.npmjs.org:443/es-set-tostringtag
+2025-04-16T07:39:39.2817678Z   proxy | 2025/04/16 07:39:39 [289] GET https://registry.npmjs.org:443/jiti
+2025-04-16T07:39:39.3145599Z   proxy | 2025/04/16 07:39:39 [289] 200 https://registry.npmjs.org:443/jiti
+2025-04-16T07:39:39.4055835Z   proxy | 2025/04/16 07:39:39 [291] GET https://registry.npmjs.org:443/import-fresh
+2025-04-16T07:39:39.4352525Z   proxy | 2025/04/16 07:39:39 [291] 200 https://registry.npmjs.org:443/import-fresh
+2025-04-16T07:39:39.4493244Z   proxy | 2025/04/16 07:39:39 [293] GET https://registry.npmjs.org:443/strip-json-comments
+2025-04-16T07:39:39.4791821Z   proxy | 2025/04/16 07:39:39 [293] 200 https://registry.npmjs.org:443/strip-json-comments
+2025-04-16T07:39:39.4974294Z   proxy | 2025/04/16 07:39:39 [295] GET https://registry.npmjs.org:443/@humanwhocodes%2fobject-schema
+2025-04-16T07:39:39.5551332Z   proxy | 2025/04/16 07:39:39 [295] 200 https://registry.npmjs.org:443/@humanwhocodes%2fobject-schema
+2025-04-16T07:39:39.5763609Z   proxy | 2025/04/16 07:39:39 [297] GET https://registry.npmjs.org:443/fastq
+2025-04-16T07:39:39.6037461Z   proxy | 2025/04/16 07:39:39 [297] 200 https://registry.npmjs.org:443/fastq
+2025-04-16T07:39:39.6195414Z   proxy | 2025/04/16 07:39:39 [299] GET https://registry.npmjs.org:443/@nodelib%2ffs.scandir
+2025-04-16T07:39:39.6622085Z   proxy | 2025/04/16 07:39:39 [299] 200 https://registry.npmjs.org:443/@nodelib%2ffs.scandir
+2025-04-16T07:39:39.6767292Z   proxy | 2025/04/16 07:39:39 [301] GET https://registry.npmjs.org:443/uri-js
+2025-04-16T07:39:39.7070177Z   proxy | 2025/04/16 07:39:39 [301] 200 https://registry.npmjs.org:443/uri-js
+2025-04-16T07:39:39.7245047Z   proxy | 2025/04/16 07:39:39 [303] GET https://registry.npmjs.org:443/json-schema-traverse
+2025-04-16T07:39:39.7561790Z   proxy | 2025/04/16 07:39:39 [303] 200 https://registry.npmjs.org:443/json-schema-traverse
+2025-04-16T07:39:39.7719716Z   proxy | 2025/04/16 07:39:39 [305] GET https://registry.npmjs.org:443/fast-json-stable-stringify
+2025-04-16T07:39:39.8035200Z   proxy | 2025/04/16 07:39:39 [305] 200 https://registry.npmjs.org:443/fast-json-stable-stringify
+2025-04-16T07:39:39.8144842Z   proxy | 2025/04/16 07:39:39 [307] GET https://registry.npmjs.org:443/ansi-styles
+2025-04-16T07:39:39.8461688Z   proxy | 2025/04/16 07:39:39 [307] 200 https://registry.npmjs.org:443/ansi-styles
+2025-04-16T07:39:39.8597310Z   proxy | 2025/04/16 07:39:39 [309] GET https://registry.npmjs.org:443/supports-color
+2025-04-16T07:39:39.8887798Z   proxy | 2025/04/16 07:39:39 [309] 200 https://registry.npmjs.org:443/supports-color
+2025-04-16T07:39:39.9066414Z   proxy | 2025/04/16 07:39:39 [311] GET https://registry.npmjs.org:443/which
+2025-04-16T07:39:39.9364110Z   proxy | 2025/04/16 07:39:39 [311] 200 https://registry.npmjs.org:443/which
+2025-04-16T07:39:39.9531122Z   proxy | 2025/04/16 07:39:39 [313] GET https://registry.npmjs.org:443/path-key
+2025-04-16T07:39:39.9844436Z   proxy | 2025/04/16 07:39:39 [313] 200 https://registry.npmjs.org:443/path-key
+2025-04-16T07:39:40.0060217Z   proxy | 2025/04/16 07:39:40 [315] GET https://registry.npmjs.org:443/shebang-command
+2025-04-16T07:39:40.0374830Z   proxy | 2025/04/16 07:39:40 [315] 200 https://registry.npmjs.org:443/shebang-command
+2025-04-16T07:39:40.0499673Z   proxy | 2025/04/16 07:39:40 [317] GET https://registry.npmjs.org:443/esrecurse
+2025-04-16T07:39:40.0775624Z   proxy | 2025/04/16 07:39:40 [317] 200 https://registry.npmjs.org:443/esrecurse
+2025-04-16T07:39:40.0920806Z   proxy | 2025/04/16 07:39:40 [319] GET https://registry.npmjs.org:443/estraverse
+2025-04-16T07:39:40.1196018Z   proxy | 2025/04/16 07:39:40 [319] 200 https://registry.npmjs.org:443/estraverse
+2025-04-16T07:39:40.1350085Z   proxy | 2025/04/16 07:39:40 [321] GET https://registry.npmjs.org:443/acorn
+2025-04-16T07:39:40.1651862Z   proxy | 2025/04/16 07:39:40 [321] 200 https://registry.npmjs.org:443/acorn
+2025-04-16T07:39:40.1909367Z   proxy | 2025/04/16 07:39:40 [323] GET https://registry.npmjs.org:443/acorn-jsx
+2025-04-16T07:39:40.2224789Z   proxy | 2025/04/16 07:39:40 [323] 200 https://registry.npmjs.org:443/acorn-jsx
+2025-04-16T07:39:40.2427801Z   proxy | 2025/04/16 07:39:40 [325] GET https://registry.npmjs.org:443/flat-cache
+2025-04-16T07:39:40.2746329Z   proxy | 2025/04/16 07:39:40 [325] 200 https://registry.npmjs.org:443/flat-cache
+2025-04-16T07:39:40.2913866Z   proxy | 2025/04/16 07:39:40 [327] GET https://registry.npmjs.org:443/locate-path
+2025-04-16T07:39:40.3230191Z   proxy | 2025/04/16 07:39:40 [327] 200 https://registry.npmjs.org:443/locate-path
+2025-04-16T07:39:40.3380306Z   proxy | 2025/04/16 07:39:40 [329] GET https://registry.npmjs.org:443/path-exists
+2025-04-16T07:39:40.3681156Z   proxy | 2025/04/16 07:39:40 [329] 200 https://registry.npmjs.org:443/path-exists
+2025-04-16T07:39:40.3825362Z   proxy | 2025/04/16 07:39:40 [331] GET https://registry.npmjs.org:443/type-fest
+2025-04-16T07:39:40.4315432Z   proxy | 2025/04/16 07:39:40 [331] 200 https://registry.npmjs.org:443/type-fest
+2025-04-16T07:39:40.4611468Z   proxy | 2025/04/16 07:39:40 [333] GET https://registry.npmjs.org:443/argparse
+2025-04-16T07:39:40.4907943Z   proxy | 2025/04/16 07:39:40 [333] 200 https://registry.npmjs.org:443/argparse
+2025-04-16T07:39:40.5106502Z   proxy | 2025/04/16 07:39:40 [335] GET https://registry.npmjs.org:443/prelude-ls
+2025-04-16T07:39:40.5391773Z   proxy | 2025/04/16 07:39:40 [335] 200 https://registry.npmjs.org:443/prelude-ls
+2025-04-16T07:39:40.5535301Z   proxy | 2025/04/16 07:39:40 [337] GET https://registry.npmjs.org:443/type-check
+2025-04-16T07:39:40.5840594Z   proxy | 2025/04/16 07:39:40 [337] 200 https://registry.npmjs.org:443/type-check
+2025-04-16T07:39:40.5979340Z   proxy | 2025/04/16 07:39:40 [339] GET https://registry.npmjs.org:443/deep-is
+2025-04-16T07:39:40.6282133Z   proxy | 2025/04/16 07:39:40 [339] 200 https://registry.npmjs.org:443/deep-is
+2025-04-16T07:39:40.6549668Z   proxy | 2025/04/16 07:39:40 [341] GET https://registry.npmjs.org:443/word-wrap
+2025-04-16T07:39:40.6869921Z   proxy | 2025/04/16 07:39:40 [341] 200 https://registry.npmjs.org:443/word-wrap
+2025-04-16T07:39:40.7084170Z   proxy | 2025/04/16 07:39:40 [343] GET https://registry.npmjs.org:443/fast-levenshtein
+2025-04-16T07:39:40.7367645Z   proxy | 2025/04/16 07:39:40 [343] 200 https://registry.npmjs.org:443/fast-levenshtein
+2025-04-16T07:39:40.7596365Z   proxy | 2025/04/16 07:39:40 [345] GET https://registry.npmjs.org:443/parent-module
+2025-04-16T07:39:40.7916551Z   proxy | 2025/04/16 07:39:40 [345] 200 https://registry.npmjs.org:443/parent-module
+2025-04-16T07:39:40.8069170Z   proxy | 2025/04/16 07:39:40 [347] GET https://registry.npmjs.org:443/resolve-from
+2025-04-16T07:39:40.8370922Z   proxy | 2025/04/16 07:39:40 [347] 200 https://registry.npmjs.org:443/resolve-from
+2025-04-16T07:39:40.8609870Z   proxy | 2025/04/16 07:39:40 [349] GET https://registry.npmjs.org:443/run-parallel
+2025-04-16T07:39:40.8970440Z   proxy | 2025/04/16 07:39:40 [349] 200 https://registry.npmjs.org:443/run-parallel
+2025-04-16T07:39:40.9124197Z   proxy | 2025/04/16 07:39:40 [351] GET https://registry.npmjs.org:443/@nodelib%2ffs.stat
+2025-04-16T07:39:40.9525091Z   proxy | 2025/04/16 07:39:40 [351] 200 https://registry.npmjs.org:443/@nodelib%2ffs.stat
+2025-04-16T07:39:40.9668817Z   proxy | 2025/04/16 07:39:40 [353] GET https://registry.npmjs.org:443/reusify
+2025-04-16T07:39:40.9943965Z   proxy | 2025/04/16 07:39:40 [353] 200 https://registry.npmjs.org:443/reusify
+2025-04-16T07:39:41.0175401Z   proxy | 2025/04/16 07:39:41 [355] GET https://registry.npmjs.org:443/queue-microtask
+2025-04-16T07:39:41.0473774Z   proxy | 2025/04/16 07:39:41 [355] 200 https://registry.npmjs.org:443/queue-microtask
+2025-04-16T07:39:41.0659085Z   proxy | 2025/04/16 07:39:41 [357] GET https://registry.npmjs.org:443/punycode
+2025-04-16T07:39:41.0992060Z   proxy | 2025/04/16 07:39:41 [357] 200 https://registry.npmjs.org:443/punycode
+2025-04-16T07:39:41.1180115Z   proxy | 2025/04/16 07:39:41 [359] GET https://registry.npmjs.org:443/color-convert
+2025-04-16T07:39:41.1490818Z   proxy | 2025/04/16 07:39:41 [359] 200 https://registry.npmjs.org:443/color-convert
+2025-04-16T07:39:41.1641001Z   proxy | 2025/04/16 07:39:41 [361] GET https://registry.npmjs.org:443/has-flag
+2025-04-16T07:39:41.1954760Z   proxy | 2025/04/16 07:39:41 [361] 200 https://registry.npmjs.org:443/has-flag
+2025-04-16T07:39:41.2108700Z   proxy | 2025/04/16 07:39:41 [363] GET https://registry.npmjs.org:443/color-name
+2025-04-16T07:39:41.2410950Z   proxy | 2025/04/16 07:39:41 [363] 200 https://registry.npmjs.org:443/color-name
+2025-04-16T07:39:41.2778703Z   proxy | 2025/04/16 07:39:41 [365] GET https://registry.npmjs.org:443/shebang-regex
+2025-04-16T07:39:41.3154609Z   proxy | 2025/04/16 07:39:41 [365] 200 https://registry.npmjs.org:443/shebang-regex
+2025-04-16T07:39:41.3293608Z   proxy | 2025/04/16 07:39:41 [367] GET https://registry.npmjs.org:443/isexe
+2025-04-16T07:39:41.3615931Z   proxy | 2025/04/16 07:39:41 [367] 200 https://registry.npmjs.org:443/isexe
+2025-04-16T07:39:41.4090745Z   proxy | 2025/04/16 07:39:41 [369] GET https://registry.npmjs.org:443/regexpp
+2025-04-16T07:39:41.4457371Z   proxy | 2025/04/16 07:39:41 [369] 200 https://registry.npmjs.org:443/regexpp
+2025-04-16T07:39:41.4650333Z   proxy | 2025/04/16 07:39:41 [371] GET https://registry.npmjs.org:443/is-core-module
+2025-04-16T07:39:41.4938287Z   proxy | 2025/04/16 07:39:41 [371] 200 https://registry.npmjs.org:443/is-core-module
+2025-04-16T07:39:41.5103284Z   proxy | 2025/04/16 07:39:41 [373] GET https://registry.npmjs.org:443/path-parse
+2025-04-16T07:39:41.5385624Z   proxy | 2025/04/16 07:39:41 [373] 200 https://registry.npmjs.org:443/path-parse
+2025-04-16T07:39:41.5524523Z   proxy | 2025/04/16 07:39:41 [375] GET https://registry.npmjs.org:443/supports-preserve-symlinks-flag
+2025-04-16T07:39:41.5862938Z   proxy | 2025/04/16 07:39:41 [375] 200 https://registry.npmjs.org:443/supports-preserve-symlinks-flag
+2025-04-16T07:39:41.6132932Z   proxy | 2025/04/16 07:39:41 [377] GET https://registry.npmjs.org:443/fast-diff
+2025-04-16T07:39:41.6552281Z   proxy | 2025/04/16 07:39:41 [377] 200 https://registry.npmjs.org:443/fast-diff
+2025-04-16T07:39:41.6689832Z   proxy | 2025/04/16 07:39:41 [379] GET https://registry.npmjs.org:443/@pkgr%2fcore
+2025-04-16T07:39:41.7129062Z   proxy | 2025/04/16 07:39:41 [379] 200 https://registry.npmjs.org:443/@pkgr%2fcore
+2025-04-16T07:39:41.7434928Z   proxy | 2025/04/16 07:39:41 [381] GET https://registry.npmjs.org:443/keyv
+2025-04-16T07:39:41.7712082Z   proxy | 2025/04/16 07:39:41 [381] 200 https://registry.npmjs.org:443/keyv
+2025-04-16T07:39:41.8199097Z   proxy | 2025/04/16 07:39:41 [383] GET https://registry.npmjs.org:443/flatted
+2025-04-16T07:39:41.8567061Z   proxy | 2025/04/16 07:39:41 [383] 200 https://registry.npmjs.org:443/flatted
+2025-04-16T07:39:41.8782850Z   proxy | 2025/04/16 07:39:41 [385] GET https://registry.npmjs.org:443/p-locate
+2025-04-16T07:39:41.9141076Z   proxy | 2025/04/16 07:39:41 [385] 200 https://registry.npmjs.org:443/p-locate
+2025-04-16T07:39:41.9302181Z   proxy | 2025/04/16 07:39:41 [387] GET https://registry.npmjs.org:443/json-buffer
+2025-04-16T07:39:41.9608015Z   proxy | 2025/04/16 07:39:41 [387] 200 https://registry.npmjs.org:443/json-buffer
+2025-04-16T07:39:41.9813950Z   proxy | 2025/04/16 07:39:41 [389] GET https://registry.npmjs.org:443/delayed-stream
+2025-04-16T07:39:42.0127929Z   proxy | 2025/04/16 07:39:42 [389] 200 https://registry.npmjs.org:443/delayed-stream
+2025-04-16T07:39:42.0258274Z   proxy | 2025/04/16 07:39:42 [391] GET https://registry.npmjs.org:443/has-tostringtag
+2025-04-16T07:39:42.0670586Z   proxy | 2025/04/16 07:39:42 [391] 200 https://registry.npmjs.org:443/has-tostringtag
+2025-04-16T07:39:42.0953087Z   proxy | 2025/04/16 07:39:42 [393] GET https://registry.npmjs.org:443/callsites
+2025-04-16T07:39:42.1269870Z   proxy | 2025/04/16 07:39:42 [393] 200 https://registry.npmjs.org:443/callsites
+2025-04-16T07:39:42.1517219Z   proxy | 2025/04/16 07:39:42 [395] GET https://registry.npmjs.org:443/exit
+2025-04-16T07:39:42.1833232Z   proxy | 2025/04/16 07:39:42 [395] 200 https://registry.npmjs.org:443/exit
+2025-04-16T07:39:42.1974223Z   proxy | 2025/04/16 07:39:42 [397] GET https://registry.npmjs.org:443/slash
+2025-04-16T07:39:42.2319826Z   proxy | 2025/04/16 07:39:42 [397] 200 https://registry.npmjs.org:443/slash
+2025-04-16T07:39:42.2440519Z   proxy | 2025/04/16 07:39:42 [399] GET https://registry.npmjs.org:443/ci-info
+2025-04-16T07:39:42.2742966Z   proxy | 2025/04/16 07:39:42 [399] 200 https://registry.npmjs.org:443/ci-info
+2025-04-16T07:39:42.2893325Z   proxy | 2025/04/16 07:39:42 [401] GET https://registry.npmjs.org:443/jest-util
+2025-04-16T07:39:42.3210732Z   proxy | 2025/04/16 07:39:42 [401] 200 https://registry.npmjs.org:443/jest-util
+2025-04-16T07:39:42.3491348Z   proxy | 2025/04/16 07:39:42 [403] GET https://registry.npmjs.org:443/micromatch
+2025-04-16T07:39:42.3807425Z   proxy | 2025/04/16 07:39:42 [403] 200 https://registry.npmjs.org:443/micromatch
+2025-04-16T07:39:42.4034698Z   proxy | 2025/04/16 07:39:42 [405] GET https://registry.npmjs.org:443/graceful-fs
+2025-04-16T07:39:42.4403048Z   proxy | 2025/04/16 07:39:42 [405] 200 https://registry.npmjs.org:443/graceful-fs
+2025-04-16T07:39:42.4688187Z   proxy | 2025/04/16 07:39:42 [407] GET https://registry.npmjs.org:443/jest-config
+2025-04-16T07:39:42.4994952Z   proxy | 2025/04/16 07:39:42 [407] 200 https://registry.npmjs.org:443/jest-config
+2025-04-16T07:39:42.5487214Z   proxy | 2025/04/16 07:39:42 [409] GET https://registry.npmjs.org:443/jest-runner
+2025-04-16T07:39:42.5830123Z   proxy | 2025/04/16 07:39:42 [409] 200 https://registry.npmjs.org:443/jest-runner
+2025-04-16T07:39:42.6153332Z   proxy | 2025/04/16 07:39:42 [411] GET https://registry.npmjs.org:443/ansi-escapes
+2025-04-16T07:39:42.6445108Z   proxy | 2025/04/16 07:39:42 [411] 200 https://registry.npmjs.org:443/ansi-escapes
+2025-04-16T07:39:42.6641920Z   proxy | 2025/04/16 07:39:42 [413] GET https://registry.npmjs.org:443/jest-resolve
+2025-04-16T07:39:42.6938855Z   proxy | 2025/04/16 07:39:42 [413] 200 https://registry.npmjs.org:443/jest-resolve
+2025-04-16T07:39:42.7268708Z   proxy | 2025/04/16 07:39:42 [415] GET https://registry.npmjs.org:443/jest-runtime
+2025-04-16T07:39:42.7568257Z   proxy | 2025/04/16 07:39:42 [415] 200 https://registry.npmjs.org:443/jest-runtime
+2025-04-16T07:39:42.7976710Z   proxy | 2025/04/16 07:39:42 [417] GET https://registry.npmjs.org:443/jest-watcher
+2025-04-16T07:39:42.8360798Z   proxy | 2025/04/16 07:39:42 [417] 200 https://registry.npmjs.org:443/jest-watcher
+2025-04-16T07:39:42.8580868Z   proxy | 2025/04/16 07:39:42 [419] GET https://registry.npmjs.org:443/@jest%2fconsole
+2025-04-16T07:39:42.9090331Z   proxy | 2025/04/16 07:39:42 [419] 200 https://registry.npmjs.org:443/@jest%2fconsole
+2025-04-16T07:39:42.9296853Z   proxy | 2025/04/16 07:39:42 [421] GET https://registry.npmjs.org:443/jest-snapshot
+2025-04-16T07:39:42.9704037Z   proxy | 2025/04/16 07:39:42 [421] 200 https://registry.npmjs.org:443/jest-snapshot
+2025-04-16T07:39:43.0152000Z   proxy | 2025/04/16 07:39:43 [423] GET https://registry.npmjs.org:443/jest-validate
+2025-04-16T07:39:43.0531994Z   proxy | 2025/04/16 07:39:43 [423] 200 https://registry.npmjs.org:443/jest-validate
+2025-04-16T07:39:43.0891062Z   proxy | 2025/04/16 07:39:43 [425] GET https://registry.npmjs.org:443/pretty-format
+2025-04-16T07:39:43.1197855Z   proxy | 2025/04/16 07:39:43 [425] 200 https://registry.npmjs.org:443/pretty-format
+2025-04-16T07:39:43.1501820Z   proxy | 2025/04/16 07:39:43 [427] GET https://registry.npmjs.org:443/jest-haste-map
+2025-04-16T07:39:43.1822128Z   proxy | 2025/04/16 07:39:43 [427] 200 https://registry.npmjs.org:443/jest-haste-map
+2025-04-16T07:39:43.2119219Z   proxy | 2025/04/16 07:39:43 [429] GET https://registry.npmjs.org:443/@jest%2freporters
+2025-04-16T07:39:43.2561933Z   proxy | 2025/04/16 07:39:43 [429] 200 https://registry.npmjs.org:443/@jest%2freporters
+2025-04-16T07:39:43.2859245Z   proxy | 2025/04/16 07:39:43 [431] GET https://registry.npmjs.org:443/@jest%2ftransform
+2025-04-16T07:39:43.3241759Z   proxy | 2025/04/16 07:39:43 [431] 200 https://registry.npmjs.org:443/@jest%2ftransform
+2025-04-16T07:39:43.3544791Z   proxy | 2025/04/16 07:39:43 [433] GET https://registry.npmjs.org:443/jest-regex-util
+2025-04-16T07:39:43.3847159Z   proxy | 2025/04/16 07:39:43 [433] 200 https://registry.npmjs.org:443/jest-regex-util
+2025-04-16T07:39:43.4043930Z   proxy | 2025/04/16 07:39:43 [435] GET https://registry.npmjs.org:443/@jest%2ftest-result
+2025-04-16T07:39:43.4474674Z   proxy | 2025/04/16 07:39:43 [435] 200 https://registry.npmjs.org:443/@jest%2ftest-result
+2025-04-16T07:39:43.4722696Z   proxy | 2025/04/16 07:39:43 [437] GET https://registry.npmjs.org:443/jest-message-util
+2025-04-16T07:39:43.5010577Z   proxy | 2025/04/16 07:39:43 [437] 200 https://registry.npmjs.org:443/jest-message-util
+2025-04-16T07:39:43.5257566Z   proxy | 2025/04/16 07:39:43 [439] GET https://registry.npmjs.org:443/jest-changed-files
+2025-04-16T07:39:43.5560222Z   proxy | 2025/04/16 07:39:43 [439] 200 https://registry.npmjs.org:443/jest-changed-files
+2025-04-16T07:39:43.5765315Z   proxy | 2025/04/16 07:39:43 [441] GET https://registry.npmjs.org:443/jest-resolve-dependencies
+2025-04-16T07:39:43.6073956Z   proxy | 2025/04/16 07:39:43 [441] 200 https://registry.npmjs.org:443/jest-resolve-dependencies
+2025-04-16T07:39:43.6457799Z   proxy | 2025/04/16 07:39:43 [443] GET https://registry.npmjs.org:443/@types%2fyargs
+2025-04-16T07:39:43.6870726Z   proxy | 2025/04/16 07:39:43 [443] 200 https://registry.npmjs.org:443/@types%2fyargs
+2025-04-16T07:39:43.7203965Z   proxy | 2025/04/16 07:39:43 [445] GET https://registry.npmjs.org:443/@jest%2fschemas
+2025-04-16T07:39:43.7686973Z   proxy | 2025/04/16 07:39:43 [445] 200 https://registry.npmjs.org:443/@jest%2fschemas
+2025-04-16T07:39:43.8126606Z   proxy | 2025/04/16 07:39:43 [447] GET https://registry.npmjs.org:443/@types%2fistanbul-reports
+2025-04-16T07:39:43.8491113Z   proxy | 2025/04/16 07:39:43 [447] 200 https://registry.npmjs.org:443/@types%2fistanbul-reports
+2025-04-16T07:39:43.8743893Z   proxy | 2025/04/16 07:39:43 [449] GET https://registry.npmjs.org:443/@types%2fistanbul-lib-coverage
+2025-04-16T07:39:43.9127649Z   proxy | 2025/04/16 07:39:43 [449] 200 https://registry.npmjs.org:443/@types%2fistanbul-lib-coverage
+2025-04-16T07:39:43.9388297Z   proxy | 2025/04/16 07:39:43 [451] GET https://registry.npmjs.org:443/pkg-dir
+2025-04-16T07:39:43.9677280Z   proxy | 2025/04/16 07:39:43 [451] 200 https://registry.npmjs.org:443/pkg-dir
+2025-04-16T07:39:43.9797285Z   proxy | 2025/04/16 07:39:43 [453] GET https://registry.npmjs.org:443/resolve-cwd
+2025-04-16T07:39:44.0120188Z   proxy | 2025/04/16 07:39:44 [453] 200 https://registry.npmjs.org:443/resolve-cwd
+2025-04-16T07:39:44.0247386Z   proxy | 2025/04/16 07:39:44 [455] GET https://registry.npmjs.org:443/yargs
+2025-04-16T07:39:44.0533308Z   proxy | 2025/04/16 07:39:44 [455] 200 https://registry.npmjs.org:443/yargs
+2025-04-16T07:39:44.0885864Z   proxy | 2025/04/16 07:39:44 [457] GET https://registry.npmjs.org:443/create-jest
+2025-04-16T07:39:44.1199420Z   proxy | 2025/04/16 07:39:44 [457] 200 https://registry.npmjs.org:443/create-jest
+2025-04-16T07:39:44.1367314Z   proxy | 2025/04/16 07:39:44 [459] GET https://registry.npmjs.org:443/@types%2fnode
+2025-04-16T07:39:44.1720223Z   proxy | 2025/04/16 07:39:44 [459] 200 https://registry.npmjs.org:443/@types%2fnode
+2025-04-16T07:39:44.4786473Z   proxy | 2025/04/16 07:39:44 [461] GET https://registry.npmjs.org:443/ts-node
+2025-04-16T07:39:44.5095939Z   proxy | 2025/04/16 07:39:44 [461] 200 https://registry.npmjs.org:443/ts-node
+2025-04-16T07:39:44.5385094Z   proxy | 2025/04/16 07:39:44 [463] GET https://registry.npmjs.org:443/@swc%2fcore
+2025-04-16T07:39:44.5809603Z   proxy | 2025/04/16 07:39:44 [463] 200 https://registry.npmjs.org:443/@swc%2fcore
+2025-04-16T07:39:44.6987252Z   proxy | 2025/04/16 07:39:44 [465] GET https://registry.npmjs.org:443/@swc%2fhelpers
+2025-04-16T07:39:44.7467986Z   proxy | 2025/04/16 07:39:44 [465] 200 https://registry.npmjs.org:443/@swc%2fhelpers
+2025-04-16T07:39:44.7789177Z   proxy | 2025/04/16 07:39:44 [467] GET https://registry.npmjs.org:443/@swc%2fwasm
+2025-04-16T07:39:44.8235098Z   proxy | 2025/04/16 07:39:44 [467] 200 https://registry.npmjs.org:443/@swc%2fwasm
+2025-04-16T07:39:44.8757367Z   proxy | 2025/04/16 07:39:44 [469] GET https://registry.npmjs.org:443/typescript
+2025-04-16T07:39:44.9096591Z   proxy | 2025/04/16 07:39:44 [469] 200 https://registry.npmjs.org:443/typescript
+2025-04-16T07:39:45.4227486Z   proxy | 2025/04/16 07:39:45 [471] GET https://registry.npmjs.org:443/jest-worker
+2025-04-16T07:39:45.4542567Z   proxy | 2025/04/16 07:39:45 [471] 200 https://registry.npmjs.org:443/jest-worker
+2025-04-16T07:39:45.4792770Z   proxy | 2025/04/16 07:39:45 [473] GET https://registry.npmjs.org:443/string-length
+2025-04-16T07:39:45.5203252Z   proxy | 2025/04/16 07:39:45 [473] 200 https://registry.npmjs.org:443/string-length
+2025-04-16T07:39:45.5356711Z   proxy | 2025/04/16 07:39:45 [475] GET https://registry.npmjs.org:443/v8-to-istanbul
+2025-04-16T07:39:45.5654078Z   proxy | 2025/04/16 07:39:45 [475] 200 https://registry.npmjs.org:443/v8-to-istanbul
+2025-04-16T07:39:45.5828807Z   proxy | 2025/04/16 07:39:45 [477] GET https://registry.npmjs.org:443/istanbul-reports
+2025-04-16T07:39:45.6175994Z   proxy | 2025/04/16 07:39:45 [477] 200 https://registry.npmjs.org:443/istanbul-reports
+2025-04-16T07:39:45.6349281Z   proxy | 2025/04/16 07:39:45 [479] GET https://registry.npmjs.org:443/@bcoe%2fv8-coverage
+2025-04-16T07:39:45.6840999Z   proxy | 2025/04/16 07:39:45 [479] 200 https://registry.npmjs.org:443/@bcoe%2fv8-coverage
+2025-04-16T07:39:45.7015584Z   proxy | 2025/04/16 07:39:45 [481] GET https://registry.npmjs.org:443/collect-v8-coverage
+2025-04-16T07:39:45.7377780Z   proxy | 2025/04/16 07:39:45 [481] 200 https://registry.npmjs.org:443/collect-v8-coverage
+2025-04-16T07:39:45.7521606Z   proxy | 2025/04/16 07:39:45 [483] GET https://registry.npmjs.org:443/istanbul-lib-report
+2025-04-16T07:39:45.7833719Z   proxy | 2025/04/16 07:39:45 [483] 200 https://registry.npmjs.org:443/istanbul-lib-report
+2025-04-16T07:39:45.7988004Z   proxy | 2025/04/16 07:39:45 [485] GET https://registry.npmjs.org:443/istanbul-lib-coverage
+2025-04-16T07:39:45.8293660Z   proxy | 2025/04/16 07:39:45 [485] 200 https://registry.npmjs.org:443/istanbul-lib-coverage
+2025-04-16T07:39:45.8437480Z   proxy | 2025/04/16 07:39:45 [487] GET https://registry.npmjs.org:443/istanbul-lib-instrument
+2025-04-16T07:39:45.8730389Z   proxy | 2025/04/16 07:39:45 [487] 200 https://registry.npmjs.org:443/istanbul-lib-instrument
+2025-04-16T07:39:45.8941757Z   proxy | 2025/04/16 07:39:45 [489] GET https://registry.npmjs.org:443/istanbul-lib-source-maps
+2025-04-16T07:39:45.9296503Z   proxy | 2025/04/16 07:39:45 [489] 200 https://registry.npmjs.org:443/istanbul-lib-source-maps
+2025-04-16T07:39:45.9435247Z   proxy | 2025/04/16 07:39:45 [491] GET https://registry.npmjs.org:443/@jridgewell%2ftrace-mapping
+2025-04-16T07:39:45.9865186Z   proxy | 2025/04/16 07:39:45 [491] 200 https://registry.npmjs.org:443/@jridgewell%2ftrace-mapping
+2025-04-16T07:39:46.0042724Z   proxy | 2025/04/16 07:39:46 [493] GET https://registry.npmjs.org:443/pirates
+2025-04-16T07:39:46.0370721Z   proxy | 2025/04/16 07:39:46 [493] 200 https://registry.npmjs.org:443/pirates
+2025-04-16T07:39:46.0514515Z   proxy | 2025/04/16 07:39:46 [495] GET https://registry.npmjs.org:443/@babel%2fcore
+2025-04-16T07:39:46.0903380Z   proxy | 2025/04/16 07:39:46 [495] 200 https://registry.npmjs.org:443/@babel%2fcore
+2025-04-16T07:39:46.1249706Z   proxy | 2025/04/16 07:39:46 [497] GET https://registry.npmjs.org:443/write-file-atomic
+2025-04-16T07:39:46.1543026Z   proxy | 2025/04/16 07:39:46 [497] 200 https://registry.npmjs.org:443/write-file-atomic
+2025-04-16T07:39:46.1702638Z   proxy | 2025/04/16 07:39:46 [499] GET https://registry.npmjs.org:443/convert-source-map
+2025-04-16T07:39:46.2017034Z   proxy | 2025/04/16 07:39:46 [499] 200 https://registry.npmjs.org:443/convert-source-map
+2025-04-16T07:39:46.2213446Z   proxy | 2025/04/16 07:39:46 [501] GET https://registry.npmjs.org:443/babel-plugin-istanbul
+2025-04-16T07:39:46.2553815Z   proxy | 2025/04/16 07:39:46 [501] 200 https://registry.npmjs.org:443/babel-plugin-istanbul
+2025-04-16T07:39:46.2841538Z   proxy | 2025/04/16 07:39:46 [503] GET https://registry.npmjs.org:443/execa
+2025-04-16T07:39:46.3144657Z   proxy | 2025/04/16 07:39:46 [503] 200 https://registry.npmjs.org:443/execa
+2025-04-16T07:39:46.3331507Z   proxy | 2025/04/16 07:39:46 [505] GET https://registry.npmjs.org:443/p-limit
+2025-04-16T07:39:46.3648642Z   proxy | 2025/04/16 07:39:46 [505] 200 https://registry.npmjs.org:443/p-limit
+2025-04-16T07:39:46.3854353Z   proxy | 2025/04/16 07:39:46 [507] GET https://registry.npmjs.org:443/deepmerge
+2025-04-16T07:39:46.4193806Z   proxy | 2025/04/16 07:39:46 [507] 200 https://registry.npmjs.org:443/deepmerge
+2025-04-16T07:39:46.4405841Z   proxy | 2025/04/16 07:39:46 [509] GET https://registry.npmjs.org:443/babel-jest
+2025-04-16T07:39:46.4723008Z   proxy | 2025/04/16 07:39:46 [509] 200 https://registry.npmjs.org:443/babel-jest
+2025-04-16T07:39:46.5064941Z   proxy | 2025/04/16 07:39:46 [511] GET https://registry.npmjs.org:443/parse-json
+2025-04-16T07:39:46.5416524Z   proxy | 2025/04/16 07:39:46 [511] 200 https://registry.npmjs.org:443/parse-json
+2025-04-16T07:39:46.5558217Z   proxy | 2025/04/16 07:39:46 [513] GET https://registry.npmjs.org:443/jest-circus
+2025-04-16T07:39:46.5949189Z   proxy | 2025/04/16 07:39:46 [513] 200 https://registry.npmjs.org:443/jest-circus
+2025-04-16T07:39:46.6417338Z   proxy | 2025/04/16 07:39:46 [515] GET https://registry.npmjs.org:443/@jest%2ftest-sequencer
+2025-04-16T07:39:46.6882106Z   proxy | 2025/04/16 07:39:46 [515] 200 https://registry.npmjs.org:443/@jest%2ftest-sequencer
+2025-04-16T07:39:46.7562964Z   proxy | 2025/04/16 07:39:46 [517] GET https://registry.npmjs.org:443/jest-environment-node
+2025-04-16T07:39:46.7947337Z   proxy | 2025/04/16 07:39:46 [517] 200 https://registry.npmjs.org:443/jest-environment-node
+2025-04-16T07:39:46.8257985Z   proxy | 2025/04/16 07:39:46 [519] GET https://registry.npmjs.org:443/walker
+2025-04-16T07:39:46.8664254Z   proxy | 2025/04/16 07:39:46 [519] 200 https://registry.npmjs.org:443/walker
+2025-04-16T07:39:46.8795721Z   proxy | 2025/04/16 07:39:46 [521] GET https://registry.npmjs.org:443/fb-watchman
+2025-04-16T07:39:46.9112529Z   proxy | 2025/04/16 07:39:46 [521] 200 https://registry.npmjs.org:443/fb-watchman
+2025-04-16T07:39:46.9241949Z   proxy | 2025/04/16 07:39:46 [523] GET https://registry.npmjs.org:443/@types%2fgraceful-fs
+2025-04-16T07:39:46.9666787Z   proxy | 2025/04/16 07:39:46 [523] 200 https://registry.npmjs.org:443/@types%2fgraceful-fs
+2025-04-16T07:39:46.9836910Z   proxy | 2025/04/16 07:39:46 [525] GET https://registry.npmjs.org:443/stack-utils
+2025-04-16T07:39:47.0226355Z   proxy | 2025/04/16 07:39:47 [525] 200 https://registry.npmjs.org:443/stack-utils
+2025-04-16T07:39:47.0367104Z   proxy | 2025/04/16 07:39:47 [527] GET https://registry.npmjs.org:443/@babel%2fcode-frame
+2025-04-16T07:39:47.0791527Z   proxy | 2025/04/16 07:39:47 [527] 200 https://registry.npmjs.org:443/@babel%2fcode-frame
+2025-04-16T07:39:47.1053594Z   proxy | 2025/04/16 07:39:47 [529] GET https://registry.npmjs.org:443/@types%2fstack-utils
+2025-04-16T07:39:47.1431453Z   proxy | 2025/04/16 07:39:47 [529] 200 https://registry.npmjs.org:443/@types%2fstack-utils
+2025-04-16T07:39:47.1608224Z   proxy | 2025/04/16 07:39:47 [531] GET https://registry.npmjs.org:443/resolve.exports
+2025-04-16T07:39:47.1921259Z   proxy | 2025/04/16 07:39:47 [531] 200 https://registry.npmjs.org:443/resolve.exports
+2025-04-16T07:39:47.2062149Z   proxy | 2025/04/16 07:39:47 [533] GET https://registry.npmjs.org:443/jest-pnp-resolver
+2025-04-16T07:39:47.2352440Z   proxy | 2025/04/16 07:39:47 [533] 200 https://registry.npmjs.org:443/jest-pnp-resolver
+2025-04-16T07:39:47.2475440Z   proxy | 2025/04/16 07:39:47 [535] GET https://registry.npmjs.org:443/emittery
+2025-04-16T07:39:47.2788245Z   proxy | 2025/04/16 07:39:47 [535] 200 https://registry.npmjs.org:443/emittery
+2025-04-16T07:39:47.3113451Z   proxy | 2025/04/16 07:39:47 [537] GET https://registry.npmjs.org:443/jest-docblock
+2025-04-16T07:39:47.3467561Z   proxy | 2025/04/16 07:39:47 [537] 200 https://registry.npmjs.org:443/jest-docblock
+2025-04-16T07:39:47.3793479Z   proxy | 2025/04/16 07:39:47 [539] GET https://registry.npmjs.org:443/@jest%2fenvironment
+2025-04-16T07:39:47.4242573Z   proxy | 2025/04/16 07:39:47 [539] 200 https://registry.npmjs.org:443/@jest%2fenvironment
+2025-04-16T07:39:47.4467244Z   proxy | 2025/04/16 07:39:47 [541] GET https://registry.npmjs.org:443/jest-leak-detector
+2025-04-16T07:39:47.4873601Z   proxy | 2025/04/16 07:39:47 [541] 200 https://registry.npmjs.org:443/jest-leak-detector
+2025-04-16T07:39:47.5091247Z   proxy | 2025/04/16 07:39:47 [543] GET https://registry.npmjs.org:443/source-map-support
+2025-04-16T07:39:47.5472298Z   proxy | 2025/04/16 07:39:47 [543] 200 https://registry.npmjs.org:443/source-map-support
+2025-04-16T07:39:47.5652377Z   proxy | 2025/04/16 07:39:47 [545] GET https://registry.npmjs.org:443/jest-mock
+2025-04-16T07:39:47.5955606Z   proxy | 2025/04/16 07:39:47 [545] 200 https://registry.npmjs.org:443/jest-mock
+2025-04-16T07:39:47.6196389Z   proxy | 2025/04/16 07:39:47 [547] GET https://registry.npmjs.org:443/strip-bom
+2025-04-16T07:39:47.6500603Z   proxy | 2025/04/16 07:39:47 [547] 200 https://registry.npmjs.org:443/strip-bom
+2025-04-16T07:39:47.6617947Z   proxy | 2025/04/16 07:39:47 [549] GET https://registry.npmjs.org:443/@jest%2fglobals
+2025-04-16T07:39:47.7030985Z   proxy | 2025/04/16 07:39:47 [549] 200 https://registry.npmjs.org:443/@jest%2fglobals
+2025-04-16T07:39:47.7220029Z   proxy | 2025/04/16 07:39:47 [551] GET https://registry.npmjs.org:443/@jest%2fsource-map
+2025-04-16T07:39:47.7649969Z   proxy | 2025/04/16 07:39:47 [551] 200 https://registry.npmjs.org:443/@jest%2fsource-map
+2025-04-16T07:39:47.7791328Z   proxy | 2025/04/16 07:39:47 [553] GET https://registry.npmjs.org:443/cjs-module-lexer
+2025-04-16T07:39:47.8104527Z   proxy | 2025/04/16 07:39:47 [553] 200 https://registry.npmjs.org:443/cjs-module-lexer
+2025-04-16T07:39:47.8293738Z   proxy | 2025/04/16 07:39:47 [555] GET https://registry.npmjs.org:443/@jest%2ffake-timers
+2025-04-16T07:39:47.8817704Z   proxy | 2025/04/16 07:39:47 [555] 200 https://registry.npmjs.org:443/@jest%2ffake-timers
+2025-04-16T07:39:47.9045178Z   proxy | 2025/04/16 07:39:47 [557] GET https://registry.npmjs.org:443/expect
+2025-04-16T07:39:47.9329307Z   proxy | 2025/04/16 07:39:47 [557] 200 https://registry.npmjs.org:443/expect
+2025-04-16T07:39:47.9716050Z   proxy | 2025/04/16 07:39:47 [559] GET https://registry.npmjs.org:443/@babel%2ftypes
+2025-04-16T07:39:48.0168409Z   proxy | 2025/04/16 07:39:48 [559] 200 https://registry.npmjs.org:443/@babel%2ftypes
+2025-04-16T07:39:48.0470371Z   proxy | 2025/04/16 07:39:48 [561] GET https://registry.npmjs.org:443/@babel%2fgenerator
+2025-04-16T07:39:48.0851316Z   proxy | 2025/04/16 07:39:48 [561] 200 https://registry.npmjs.org:443/@babel%2fgenerator
+2025-04-16T07:39:48.1144343Z   proxy | 2025/04/16 07:39:48 [563] GET https://registry.npmjs.org:443/@jest%2fexpect-utils
+2025-04-16T07:39:48.1620177Z   proxy | 2025/04/16 07:39:48 [563] 200 https://registry.npmjs.org:443/@jest%2fexpect-utils
+2025-04-16T07:39:48.1772085Z   proxy | 2025/04/16 07:39:48 [565] GET https://registry.npmjs.org:443/jest-matcher-utils
+2025-04-16T07:39:48.2079882Z   proxy | 2025/04/16 07:39:48 [565] 200 https://registry.npmjs.org:443/jest-matcher-utils
+2025-04-16T07:39:48.2350802Z   proxy | 2025/04/16 07:39:48 [567] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-jsx
+2025-04-16T07:39:48.2789064Z   proxy | 2025/04/16 07:39:48 [567] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-jsx
+2025-04-16T07:39:48.2980894Z   proxy | 2025/04/16 07:39:48 [569] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-typescript
+2025-04-16T07:39:48.3356596Z   proxy | 2025/04/16 07:39:48 [569] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-typescript
+2025-04-16T07:39:48.3590802Z   proxy | 2025/04/16 07:39:48 [571] GET https://registry.npmjs.org:443/babel-preset-current-node-syntax
+2025-04-16T07:39:48.3953261Z   proxy | 2025/04/16 07:39:48 [571] 200 https://registry.npmjs.org:443/babel-preset-current-node-syntax
+2025-04-16T07:39:48.4075005Z   proxy | 2025/04/16 07:39:48 [573] GET https://registry.npmjs.org:443/leven
+2025-04-16T07:39:48.4387036Z   proxy | 2025/04/16 07:39:48 [573] 200 https://registry.npmjs.org:443/leven
+2025-04-16T07:39:48.4523265Z   proxy | 2025/04/16 07:39:48 [575] GET https://registry.npmjs.org:443/camelcase
+2025-04-16T07:39:48.4822501Z   proxy | 2025/04/16 07:39:48 [575] 200 https://registry.npmjs.org:443/camelcase
+2025-04-16T07:39:48.4977880Z   proxy | 2025/04/16 07:39:48 [577] GET https://registry.npmjs.org:443/react-is
+2025-04-16T07:39:48.5296183Z   proxy | 2025/04/16 07:39:48 [577] 200 https://registry.npmjs.org:443/react-is
+2025-04-16T07:39:48.7412830Z   proxy | 2025/04/16 07:39:48 [579] GET https://registry.npmjs.org:443/@jridgewell%2fresolve-uri
+2025-04-16T07:39:48.7871366Z   proxy | 2025/04/16 07:39:48 [579] 200 https://registry.npmjs.org:443/@jridgewell%2fresolve-uri
+2025-04-16T07:39:48.8058772Z   proxy | 2025/04/16 07:39:48 [581] GET https://registry.npmjs.org:443/@jridgewell%2fsourcemap-codec
+2025-04-16T07:39:48.8563824Z   proxy | 2025/04/16 07:39:48 [581] 200 https://registry.npmjs.org:443/@jridgewell%2fsourcemap-codec
+2025-04-16T07:39:48.8808015Z   proxy | 2025/04/16 07:39:48 [583] GET https://registry.npmjs.org:443/@babel%2fparser
+2025-04-16T07:39:48.9155961Z   proxy | 2025/04/16 07:39:48 [583] 200 https://registry.npmjs.org:443/@babel%2fparser
+2025-04-16T07:39:48.9516804Z   proxy | 2025/04/16 07:39:48 [585] GET https://registry.npmjs.org:443/@istanbuljs%2fschema
+2025-04-16T07:39:49.0029693Z   proxy | 2025/04/16 07:39:49 [585] 200 https://registry.npmjs.org:443/@istanbuljs%2fschema
+2025-04-16T07:39:49.0161556Z   proxy | 2025/04/16 07:39:49 [587] GET https://registry.npmjs.org:443/make-dir
+2025-04-16T07:39:49.0463997Z   proxy | 2025/04/16 07:39:49 [587] 200 https://registry.npmjs.org:443/make-dir
+2025-04-16T07:39:49.0673815Z   proxy | 2025/04/16 07:39:49 [589] GET https://registry.npmjs.org:443/source-map
+2025-04-16T07:39:49.0987436Z   proxy | 2025/04/16 07:39:49 [589] 200 https://registry.npmjs.org:443/source-map
+2025-04-16T07:39:49.1239820Z   proxy | 2025/04/16 07:39:49 [591] GET https://registry.npmjs.org:443/html-escaper
+2025-04-16T07:39:49.1559691Z   proxy | 2025/04/16 07:39:49 [591] 200 https://registry.npmjs.org:443/html-escaper
+2025-04-16T07:39:49.1698250Z   proxy | 2025/04/16 07:39:49 [593] GET https://registry.npmjs.org:443/merge-stream
+2025-04-16T07:39:49.2021699Z   proxy | 2025/04/16 07:39:49 [593] 200 https://registry.npmjs.org:443/merge-stream
+2025-04-16T07:39:49.2198447Z   proxy | 2025/04/16 07:39:49 [595] GET https://registry.npmjs.org:443/char-regex
+2025-04-16T07:39:49.2484627Z   proxy | 2025/04/16 07:39:49 [595] 200 https://registry.npmjs.org:443/char-regex
+2025-04-16T07:39:49.2748835Z   proxy | 2025/04/16 07:39:49 [597] GET https://registry.npmjs.org:443/json5
+2025-04-16T07:39:49.3113371Z   proxy | 2025/04/16 07:39:49 [597] 200 https://registry.npmjs.org:443/json5
+2025-04-16T07:39:49.3275972Z   proxy | 2025/04/16 07:39:49 [599] GET https://registry.npmjs.org:443/gensync
+2025-04-16T07:39:49.3662954Z   proxy | 2025/04/16 07:39:49 [599] 200 https://registry.npmjs.org:443/gensync
+2025-04-16T07:39:49.4045204Z   proxy | 2025/04/16 07:39:49 [601] GET https://registry.npmjs.org:443/@babel%2fhelpers
+2025-04-16T07:39:49.4461655Z   proxy | 2025/04/16 07:39:49 [601] 200 https://registry.npmjs.org:443/@babel%2fhelpers
+2025-04-16T07:39:49.4704550Z   proxy | 2025/04/16 07:39:49 [603] GET https://registry.npmjs.org:443/@babel%2ftemplate
+2025-04-16T07:39:49.5108729Z   proxy | 2025/04/16 07:39:49 [603] 200 https://registry.npmjs.org:443/@babel%2ftemplate
+2025-04-16T07:39:49.5311130Z   proxy | 2025/04/16 07:39:49 [605] GET https://registry.npmjs.org:443/@babel%2ftraverse
+2025-04-16T07:39:49.5715556Z   proxy | 2025/04/16 07:39:49 [605] 200 https://registry.npmjs.org:443/@babel%2ftraverse
+2025-04-16T07:39:49.6131322Z   proxy | 2025/04/16 07:39:49 [607] GET https://registry.npmjs.org:443/@ampproject%2fremapping
+2025-04-16T07:39:49.6631744Z   proxy | 2025/04/16 07:39:49 [607] 200 https://registry.npmjs.org:443/@ampproject%2fremapping
+2025-04-16T07:39:49.6802316Z   proxy | 2025/04/16 07:39:49 [609] GET https://registry.npmjs.org:443/@babel%2fhelper-module-transforms
+2025-04-16T07:39:49.7233231Z   proxy | 2025/04/16 07:39:49 [609] 200 https://registry.npmjs.org:443/@babel%2fhelper-module-transforms
+2025-04-16T07:39:49.7495931Z   proxy | 2025/04/16 07:39:49 [611] GET https://registry.npmjs.org:443/@babel%2fhelper-compilation-targets
+2025-04-16T07:39:49.7931057Z   proxy | 2025/04/16 07:39:49 [611] 200 https://registry.npmjs.org:443/@babel%2fhelper-compilation-targets
+2025-04-16T07:39:49.8143467Z   proxy | 2025/04/16 07:39:49 [613] GET https://registry.npmjs.org:443/test-exclude
+2025-04-16T07:39:49.8454016Z   proxy | 2025/04/16 07:39:49 [613] 200 https://registry.npmjs.org:443/test-exclude
+2025-04-16T07:39:49.8700914Z   proxy | 2025/04/16 07:39:49 [615] GET https://registry.npmjs.org:443/@babel%2fhelper-plugin-utils
+2025-04-16T07:39:49.9069688Z   proxy | 2025/04/16 07:39:49 [615] 200 https://registry.npmjs.org:443/@babel%2fhelper-plugin-utils
+2025-04-16T07:39:49.9374688Z   proxy | 2025/04/16 07:39:49 [617] GET https://registry.npmjs.org:443/@istanbuljs%2fload-nyc-config
+2025-04-16T07:39:49.9862835Z   proxy | 2025/04/16 07:39:49 [617] 200 https://registry.npmjs.org:443/@istanbuljs%2fload-nyc-config
+2025-04-16T07:39:50.0336975Z   proxy | 2025/04/16 07:39:50 [619] GET https://registry.npmjs.org:443/@jridgewell%2fgen-mapping
+2025-04-16T07:39:50.0774959Z   proxy | 2025/04/16 07:39:50 [619] 200 https://registry.npmjs.org:443/@jridgewell%2fgen-mapping
+2025-04-16T07:39:50.0920750Z   proxy | 2025/04/16 07:39:50 [621] GET https://registry.npmjs.org:443/js-tokens
+2025-04-16T07:39:50.1228815Z   proxy | 2025/04/16 07:39:50 [621] 200 https://registry.npmjs.org:443/js-tokens
+2025-04-16T07:39:50.1375849Z   proxy | 2025/04/16 07:39:50 [623] GET https://registry.npmjs.org:443/picocolors
+2025-04-16T07:39:50.1685289Z   proxy | 2025/04/16 07:39:50 [623] 200 https://registry.npmjs.org:443/picocolors
+2025-04-16T07:39:50.1834026Z   proxy | 2025/04/16 07:39:50 [625] GET https://registry.npmjs.org:443/@babel%2fhelper-validator-identifier
+2025-04-16T07:39:50.2217306Z   proxy | 2025/04/16 07:39:50 [625] 200 https://registry.npmjs.org:443/@babel%2fhelper-validator-identifier
+2025-04-16T07:39:50.2391500Z   proxy | 2025/04/16 07:39:50 [627] GET https://registry.npmjs.org:443/jsesc
+2025-04-16T07:39:50.2709758Z   proxy | 2025/04/16 07:39:50 [627] 200 https://registry.npmjs.org:443/jsesc
+2025-04-16T07:39:50.2860449Z   proxy | 2025/04/16 07:39:50 [629] GET https://registry.npmjs.org:443/@babel%2fcompat-data
+2025-04-16T07:39:50.3304940Z   proxy | 2025/04/16 07:39:50 [629] 200 https://registry.npmjs.org:443/@babel%2fcompat-data
+2025-04-16T07:39:50.3549763Z   proxy | 2025/04/16 07:39:50 [631] GET https://registry.npmjs.org:443/@babel%2fhelper-validator-option
+2025-04-16T07:39:50.3965669Z   proxy | 2025/04/16 07:39:50 [631] 200 https://registry.npmjs.org:443/@babel%2fhelper-validator-option
+2025-04-16T07:39:50.4120861Z   proxy | 2025/04/16 07:39:50 [633] GET https://registry.npmjs.org:443/browserslist
+2025-04-16T07:39:50.4427677Z   proxy | 2025/04/16 07:39:50 [633] 200 https://registry.npmjs.org:443/browserslist
+2025-04-16T07:39:50.4812055Z   proxy | 2025/04/16 07:39:50 [635] GET https://registry.npmjs.org:443/lru-cache
+2025-04-16T07:39:50.5109975Z   proxy | 2025/04/16 07:39:50 [635] 200 https://registry.npmjs.org:443/lru-cache
+2025-04-16T07:39:50.5559768Z   proxy | 2025/04/16 07:39:50 [637] GET https://registry.npmjs.org:443/@babel%2fhelper-module-imports
+2025-04-16T07:39:50.5941722Z   proxy | 2025/04/16 07:39:50 [637] 200 https://registry.npmjs.org:443/@babel%2fhelper-module-imports
+2025-04-16T07:39:50.6240894Z   proxy | 2025/04/16 07:39:50 [639] GET https://registry.npmjs.org:443/@babel%2fhelper-string-parser
+2025-04-16T07:39:50.6617521Z   proxy | 2025/04/16 07:39:50 [639] 200 https://registry.npmjs.org:443/@babel%2fhelper-string-parser
+2025-04-16T07:39:50.6798753Z   proxy | 2025/04/16 07:39:50 [641] GET https://registry.npmjs.org:443/@jridgewell%2fset-array
+2025-04-16T07:39:50.7197688Z   proxy | 2025/04/16 07:39:50 [641] 200 https://registry.npmjs.org:443/@jridgewell%2fset-array
+2025-04-16T07:39:50.7496191Z   proxy | 2025/04/16 07:39:50 [643] GET https://registry.npmjs.org:443/caniuse-lite
+2025-04-16T07:39:50.7810871Z   proxy | 2025/04/16 07:39:50 [643] 200 https://registry.npmjs.org:443/caniuse-lite
+2025-04-16T07:39:50.9163115Z   proxy | 2025/04/16 07:39:50 [645] GET https://registry.npmjs.org:443/electron-to-chromium
+2025-04-16T07:39:50.9525941Z   proxy | 2025/04/16 07:39:50 [645] 200 https://registry.npmjs.org:443/electron-to-chromium
+2025-04-16T07:39:51.0849387Z   proxy | 2025/04/16 07:39:51 [647] GET https://registry.npmjs.org:443/node-releases
+2025-04-16T07:39:51.1192374Z   proxy | 2025/04/16 07:39:51 [647] 200 https://registry.npmjs.org:443/node-releases
+2025-04-16T07:39:51.1407075Z   proxy | 2025/04/16 07:39:51 [649] GET https://registry.npmjs.org:443/update-browserslist-db
+2025-04-16T07:39:51.1700729Z   proxy | 2025/04/16 07:39:51 [649] 200 https://registry.npmjs.org:443/update-browserslist-db
+2025-04-16T07:39:51.1848498Z   proxy | 2025/04/16 07:39:51 [651] GET https://registry.npmjs.org:443/yallist
+2025-04-16T07:39:51.2132778Z   proxy | 2025/04/16 07:39:51 [651] 200 https://registry.npmjs.org:443/yallist
+2025-04-16T07:39:51.2536763Z   proxy | 2025/04/16 07:39:51 [653] GET https://registry.npmjs.org:443/@sinclair%2ftypebox
+2025-04-16T07:39:51.2957710Z   proxy | 2025/04/16 07:39:51 [653] 200 https://registry.npmjs.org:443/@sinclair%2ftypebox
+2025-04-16T07:39:51.3409681Z   proxy | 2025/04/16 07:39:51 [655] GET https://registry.npmjs.org:443/@types%2fistanbul-lib-report
+2025-04-16T07:39:51.3803203Z   proxy | 2025/04/16 07:39:51 [655] 200 https://registry.npmjs.org:443/@types%2fistanbul-lib-report
+2025-04-16T07:39:51.4003387Z   proxy | 2025/04/16 07:39:51 [657] GET https://registry.npmjs.org:443/@types%2fyargs-parser
+2025-04-16T07:39:51.4410037Z   proxy | 2025/04/16 07:39:51 [657] 200 https://registry.npmjs.org:443/@types%2fyargs-parser
+2025-04-16T07:39:51.4876724Z   proxy | 2025/04/16 07:39:51 [659] GET https://registry.npmjs.org:443/get-package-type
+2025-04-16T07:39:51.5183551Z   proxy | 2025/04/16 07:39:51 [659] 200 https://registry.npmjs.org:443/get-package-type
+2025-04-16T07:39:51.5587575Z   proxy | 2025/04/16 07:39:51 [661] GET https://registry.npmjs.org:443/esprima
+2025-04-16T07:39:51.5887946Z   proxy | 2025/04/16 07:39:51 [661] 200 https://registry.npmjs.org:443/esprima
+2025-04-16T07:39:51.6250899Z   proxy | 2025/04/16 07:39:51 [663] GET https://registry.npmjs.org:443/escalade
+2025-04-16T07:39:51.6551133Z   proxy | 2025/04/16 07:39:51 [663] 200 https://registry.npmjs.org:443/escalade
+2025-04-16T07:39:51.6999919Z   proxy | 2025/04/16 07:39:51 [665] GET https://registry.npmjs.org:443/onetime
+2025-04-16T07:39:51.7298419Z   proxy | 2025/04/16 07:39:51 [665] 200 https://registry.npmjs.org:443/onetime
+2025-04-16T07:39:51.7435177Z   proxy | 2025/04/16 07:39:51 [667] GET https://registry.npmjs.org:443/get-stream
+2025-04-16T07:39:51.7756743Z   proxy | 2025/04/16 07:39:51 [667] 200 https://registry.npmjs.org:443/get-stream
+2025-04-16T07:39:51.7938756Z   proxy | 2025/04/16 07:39:51 [669] GET https://registry.npmjs.org:443/npm-run-path
+2025-04-16T07:39:51.8252796Z   proxy | 2025/04/16 07:39:51 [669] 200 https://registry.npmjs.org:443/npm-run-path
+2025-04-16T07:39:51.8372614Z   proxy | 2025/04/16 07:39:51 [671] GET https://registry.npmjs.org:443/human-signals
+2025-04-16T07:39:51.8763845Z   proxy | 2025/04/16 07:39:51 [671] 200 https://registry.npmjs.org:443/human-signals
+2025-04-16T07:39:51.8909403Z   proxy | 2025/04/16 07:39:51 [673] GET https://registry.npmjs.org:443/strip-final-newline
+2025-04-16T07:39:51.9230513Z   proxy | 2025/04/16 07:39:51 [673] 200 https://registry.npmjs.org:443/strip-final-newline
+2025-04-16T07:39:51.9365170Z   proxy | 2025/04/16 07:39:51 [675] GET https://registry.npmjs.org:443/yocto-queue
+2025-04-16T07:39:51.9654984Z   proxy | 2025/04/16 07:39:51 [675] 200 https://registry.npmjs.org:443/yocto-queue
+2025-04-16T07:39:51.9957671Z   proxy | 2025/04/16 07:39:51 [677] GET https://registry.npmjs.org:443/mimic-fn
+2025-04-16T07:39:52.0276759Z   proxy | 2025/04/16 07:39:52 [677] 200 https://registry.npmjs.org:443/mimic-fn
+2025-04-16T07:39:52.0458107Z   proxy | 2025/04/16 07:39:52 [679] GET https://registry.npmjs.org:443/prompts
+2025-04-16T07:39:52.0810886Z   proxy | 2025/04/16 07:39:52 [679] 200 https://registry.npmjs.org:443/prompts
+2025-04-16T07:39:52.1008627Z   proxy | 2025/04/16 07:39:52 [681] GET https://registry.npmjs.org:443/y18n
+2025-04-16T07:39:52.1330643Z   proxy | 2025/04/16 07:39:52 [681] 200 https://registry.npmjs.org:443/y18n
+2025-04-16T07:39:52.1496211Z   proxy | 2025/04/16 07:39:52 [683] GET https://registry.npmjs.org:443/cliui
+2025-04-16T07:39:52.1868618Z   proxy | 2025/04/16 07:39:52 [683] 200 https://registry.npmjs.org:443/cliui
+2025-04-16T07:39:52.2056635Z   proxy | 2025/04/16 07:39:52 [685] GET https://registry.npmjs.org:443/yargs-parser
+2025-04-16T07:39:52.2368705Z   proxy | 2025/04/16 07:39:52 [685] 200 https://registry.npmjs.org:443/yargs-parser
+2025-04-16T07:39:52.2831223Z   proxy | 2025/04/16 07:39:52 [687] GET https://registry.npmjs.org:443/get-caller-file
+2025-04-16T07:39:52.3150243Z   proxy | 2025/04/16 07:39:52 [687] 200 https://registry.npmjs.org:443/get-caller-file
+2025-04-16T07:39:52.3274703Z   proxy | 2025/04/16 07:39:52 [689] GET https://registry.npmjs.org:443/require-directory
+2025-04-16T07:39:52.3612958Z   proxy | 2025/04/16 07:39:52 [689] 200 https://registry.npmjs.org:443/require-directory
+2025-04-16T07:39:52.3787356Z   proxy | 2025/04/16 07:39:52 [691] GET https://registry.npmjs.org:443/kleur
+2025-04-16T07:39:52.4135037Z   proxy | 2025/04/16 07:39:52 [691] 200 https://registry.npmjs.org:443/kleur
+2025-04-16T07:39:52.4319572Z   proxy | 2025/04/16 07:39:52 [693] GET https://registry.npmjs.org:443/sisteransi
+2025-04-16T07:39:52.4621610Z   proxy | 2025/04/16 07:39:52 [693] 200 https://registry.npmjs.org:443/sisteransi
+2025-04-16T07:39:52.4892396Z   proxy | 2025/04/16 07:39:52 [695] GET https://registry.npmjs.org:443/babel-preset-jest
+2025-04-16T07:39:52.5225144Z   proxy | 2025/04/16 07:39:52 [695] 200 https://registry.npmjs.org:443/babel-preset-jest
+2025-04-16T07:39:52.5565001Z   proxy | 2025/04/16 07:39:52 [697] GET https://registry.npmjs.org:443/@types%2fbabel__core
+2025-04-16T07:39:52.5945654Z   proxy | 2025/04/16 07:39:52 [697] 200 https://registry.npmjs.org:443/@types%2fbabel__core
+2025-04-16T07:39:52.6126723Z   proxy | 2025/04/16 07:39:52 [699] GET https://registry.npmjs.org:443/co
+2025-04-16T07:39:52.6409927Z   proxy | 2025/04/16 07:39:52 [699] 200 https://registry.npmjs.org:443/co
+2025-04-16T07:39:52.6577442Z   proxy | 2025/04/16 07:39:52 [701] GET https://registry.npmjs.org:443/dedent
+2025-04-16T07:39:52.6893899Z   proxy | 2025/04/16 07:39:52 [701] 200 https://registry.npmjs.org:443/dedent
+2025-04-16T07:39:52.7030412Z   proxy | 2025/04/16 07:39:52 [703] GET https://registry.npmjs.org:443/jest-each
+2025-04-16T07:39:52.7370668Z   proxy | 2025/04/16 07:39:52 [703] 200 https://registry.npmjs.org:443/jest-each
+2025-04-16T07:39:52.7603146Z   proxy | 2025/04/16 07:39:52 [705] GET https://registry.npmjs.org:443/pure-rand
+2025-04-16T07:39:52.7929987Z   proxy | 2025/04/16 07:39:52 [705] 200 https://registry.npmjs.org:443/pure-rand
+2025-04-16T07:39:52.8121019Z   proxy | 2025/04/16 07:39:52 [707] GET https://registry.npmjs.org:443/@jest%2fexpect
+2025-04-16T07:39:52.8582774Z   proxy | 2025/04/16 07:39:52 [707] 200 https://registry.npmjs.org:443/@jest%2fexpect
+2025-04-16T07:39:52.8790535Z   proxy | 2025/04/16 07:39:52 [709] GET https://registry.npmjs.org:443/is-generator-fn
+2025-04-16T07:39:52.9103145Z   proxy | 2025/04/16 07:39:52 [709] 200 https://registry.npmjs.org:443/is-generator-fn
+2025-04-16T07:39:52.9209491Z   proxy | 2025/04/16 07:39:52 [711] GET https://registry.npmjs.org:443/error-ex
+2025-04-16T07:39:52.9512614Z   proxy | 2025/04/16 07:39:52 [711] 200 https://registry.npmjs.org:443/error-ex
+2025-04-16T07:39:52.9639036Z   proxy | 2025/04/16 07:39:52 [713] GET https://registry.npmjs.org:443/lines-and-columns
+2025-04-16T07:39:53.0002664Z   proxy | 2025/04/16 07:39:52 [713] 200 https://registry.npmjs.org:443/lines-and-columns
+2025-04-16T07:39:53.0148046Z   proxy | 2025/04/16 07:39:53 [715] GET https://registry.npmjs.org:443/json-parse-even-better-errors
+2025-04-16T07:39:53.0490809Z   proxy | 2025/04/16 07:39:53 [715] 200 https://registry.npmjs.org:443/json-parse-even-better-errors
+2025-04-16T07:39:53.0654828Z   proxy | 2025/04/16 07:39:53 [717] GET https://registry.npmjs.org:443/@types%2fbabel__template
+2025-04-16T07:39:53.1064204Z   proxy | 2025/04/16 07:39:53 [717] 200 https://registry.npmjs.org:443/@types%2fbabel__template
+2025-04-16T07:39:53.1208088Z   proxy | 2025/04/16 07:39:53 [719] GET https://registry.npmjs.org:443/@types%2fbabel__traverse
+2025-04-16T07:39:53.1575776Z   proxy | 2025/04/16 07:39:53 [719] 200 https://registry.npmjs.org:443/@types%2fbabel__traverse
+2025-04-16T07:39:53.1823192Z   proxy | 2025/04/16 07:39:53 [721] GET https://registry.npmjs.org:443/@types%2fbabel__generator
+2025-04-16T07:39:53.2263027Z   proxy | 2025/04/16 07:39:53 [721] 200 https://registry.npmjs.org:443/@types%2fbabel__generator
+2025-04-16T07:39:53.2419137Z   proxy | 2025/04/16 07:39:53 [723] GET https://registry.npmjs.org:443/babel-plugin-jest-hoist
+2025-04-16T07:39:53.2836661Z   proxy | 2025/04/16 07:39:53 [723] 200 https://registry.npmjs.org:443/babel-plugin-jest-hoist
+2025-04-16T07:39:53.3189406Z   proxy | 2025/04/16 07:39:53 [725] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-async-generators
+2025-04-16T07:39:53.3575932Z   proxy | 2025/04/16 07:39:53 [725] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-async-generators
+2025-04-16T07:39:53.3736743Z   proxy | 2025/04/16 07:39:53 [727] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-bigint
+2025-04-16T07:39:53.4155312Z   proxy | 2025/04/16 07:39:53 [727] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-bigint
+2025-04-16T07:39:53.4297793Z   proxy | 2025/04/16 07:39:53 [729] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-class-properties
+2025-04-16T07:39:53.4727516Z   proxy | 2025/04/16 07:39:53 [729] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-class-properties
+2025-04-16T07:39:53.4899436Z   proxy | 2025/04/16 07:39:53 [731] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-class-static-block
+2025-04-16T07:39:53.5300892Z   proxy | 2025/04/16 07:39:53 [731] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-class-static-block
+2025-04-16T07:39:53.5410671Z   proxy | 2025/04/16 07:39:53 [733] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-import-attributes
+2025-04-16T07:39:53.5806448Z   proxy | 2025/04/16 07:39:53 [733] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-import-attributes
+2025-04-16T07:39:53.6043824Z   proxy | 2025/04/16 07:39:53 [735] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-import-meta
+2025-04-16T07:39:53.6466373Z   proxy | 2025/04/16 07:39:53 [735] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-import-meta
+2025-04-16T07:39:53.6616610Z   proxy | 2025/04/16 07:39:53 [737] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-json-strings
+2025-04-16T07:39:53.7274453Z   proxy | 2025/04/16 07:39:53 [737] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-json-strings
+2025-04-16T07:39:53.7413735Z   proxy | 2025/04/16 07:39:53 [739] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-logical-assignment-operators
+2025-04-16T07:39:53.7842505Z   proxy | 2025/04/16 07:39:53 [739] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-logical-assignment-operators
+2025-04-16T07:39:53.7964569Z   proxy | 2025/04/16 07:39:53 [741] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-nullish-coalescing-operator
+2025-04-16T07:39:53.8351153Z   proxy | 2025/04/16 07:39:53 [741] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-nullish-coalescing-operator
+2025-04-16T07:39:53.8496958Z   proxy | 2025/04/16 07:39:53 [743] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-numeric-separator
+2025-04-16T07:39:53.8914025Z   proxy | 2025/04/16 07:39:53 [743] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-numeric-separator
+2025-04-16T07:39:53.9078419Z   proxy | 2025/04/16 07:39:53 [745] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-object-rest-spread
+2025-04-16T07:39:53.9451232Z   proxy | 2025/04/16 07:39:53 [745] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-object-rest-spread
+2025-04-16T07:39:53.9610878Z   proxy | 2025/04/16 07:39:53 [747] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-optional-catch-binding
+2025-04-16T07:39:54.0062438Z   proxy | 2025/04/16 07:39:54 [747] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-optional-catch-binding
+2025-04-16T07:39:54.0214490Z   proxy | 2025/04/16 07:39:54 [749] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-optional-chaining
+2025-04-16T07:39:54.0613053Z   proxy | 2025/04/16 07:39:54 [749] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-optional-chaining
+2025-04-16T07:39:54.0782270Z   proxy | 2025/04/16 07:39:54 [751] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-private-property-in-object
+2025-04-16T07:39:54.1155689Z   proxy | 2025/04/16 07:39:54 [751] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-private-property-in-object
+2025-04-16T07:39:54.1292409Z   proxy | 2025/04/16 07:39:54 [753] GET https://registry.npmjs.org:443/@babel%2fplugin-syntax-top-level-await
+2025-04-16T07:39:54.1757419Z   proxy | 2025/04/16 07:39:54 [753] 200 https://registry.npmjs.org:443/@babel%2fplugin-syntax-top-level-await
+2025-04-16T07:39:54.2318676Z   proxy | 2025/04/16 07:39:54 [755] GET https://registry.npmjs.org:443/babel-plugin-macros
+2025-04-16T07:39:54.2652025Z   proxy | 2025/04/16 07:39:54 [755] 200 https://registry.npmjs.org:443/babel-plugin-macros
+2025-04-16T07:39:54.3052055Z   proxy | 2025/04/16 07:39:54 [757] GET https://registry.npmjs.org:443/@sinonjs%2ffake-timers
+2025-04-16T07:39:54.3624064Z   proxy | 2025/04/16 07:39:54 [757] 200 https://registry.npmjs.org:443/@sinonjs%2ffake-timers
+2025-04-16T07:39:54.3891317Z   proxy | 2025/04/16 07:39:54 [759] GET https://registry.npmjs.org:443/@sinonjs%2fcommons
+2025-04-16T07:39:54.4339835Z   proxy | 2025/04/16 07:39:54 [759] 200 https://registry.npmjs.org:443/@sinonjs%2fcommons
+2025-04-16T07:39:54.4587559Z   proxy | 2025/04/16 07:39:54 [761] GET https://registry.npmjs.org:443/type-detect
+2025-04-16T07:39:54.4927174Z   proxy | 2025/04/16 07:39:54 [761] 200 https://registry.npmjs.org:443/type-detect
+2025-04-16T07:39:54.5122550Z   proxy | 2025/04/16 07:39:54 [763] GET https://registry.npmjs.org:443/diff-sequences
+2025-04-16T07:39:54.5429907Z   proxy | 2025/04/16 07:39:54 [763] 200 https://registry.npmjs.org:443/diff-sequences
+2025-04-16T07:39:54.5755845Z   proxy | 2025/04/16 07:39:54 [765] GET https://registry.npmjs.org:443/bser
+2025-04-16T07:39:54.6031787Z   proxy | 2025/04/16 07:39:54 [765] 200 https://registry.npmjs.org:443/bser
+2025-04-16T07:39:54.6173732Z   proxy | 2025/04/16 07:39:54 [767] GET https://registry.npmjs.org:443/makeerror
+2025-04-16T07:39:54.6484762Z   proxy | 2025/04/16 07:39:54 [767] 200 https://registry.npmjs.org:443/makeerror
+2025-04-16T07:39:54.6610043Z   proxy | 2025/04/16 07:39:54 [769] GET https://registry.npmjs.org:443/node-int64
+2025-04-16T07:39:54.6887380Z   proxy | 2025/04/16 07:39:54 [769] 200 https://registry.npmjs.org:443/node-int64
+2025-04-16T07:39:54.7305610Z   proxy | 2025/04/16 07:39:54 [771] GET https://registry.npmjs.org:443/detect-newline
+2025-04-16T07:39:54.7632192Z   proxy | 2025/04/16 07:39:54 [771] 200 https://registry.npmjs.org:443/detect-newline
+2025-04-16T07:39:54.8050729Z   proxy | 2025/04/16 07:39:54 [773] GET https://registry.npmjs.org:443/semver
+2025-04-16T07:39:54.8365287Z   proxy | 2025/04/16 07:39:54 [773] 200 https://registry.npmjs.org:443/semver
+2025-04-16T07:39:54.8734781Z   proxy | 2025/04/16 07:39:54 [775] GET https://registry.npmjs.org:443/yauzl
+2025-04-16T07:39:54.9132795Z   proxy | 2025/04/16 07:39:54 [775] 200 https://registry.npmjs.org:443/yauzl
+2025-04-16T07:39:54.9901605Z   proxy | 2025/04/16 07:39:54 [777] GET https://registry.npmjs.org:443/tar-stream
+2025-04-16T07:39:55.0218679Z   proxy | 2025/04/16 07:39:55 [777] 200 https://registry.npmjs.org:443/tar-stream
+2025-04-16T07:39:55.0407651Z   proxy | 2025/04/16 07:39:55 [779] GET https://registry.npmjs.org:443/async-mutex
+2025-04-16T07:39:55.0762132Z   proxy | 2025/04/16 07:39:55 [779] 200 https://registry.npmjs.org:443/async-mutex
+2025-04-16T07:39:55.0925450Z   proxy | 2025/04/16 07:39:55 [781] GET https://registry.npmjs.org:443/find-cache-dir
+2025-04-16T07:39:55.1231774Z   proxy | 2025/04/16 07:39:55 [781] 200 https://registry.npmjs.org:443/find-cache-dir
+2025-04-16T07:39:55.1392839Z   proxy | 2025/04/16 07:39:55 [783] GET https://registry.npmjs.org:443/https-proxy-agent
+2025-04-16T07:39:55.1710548Z   proxy | 2025/04/16 07:39:55 [783] 200 https://registry.npmjs.org:443/https-proxy-agent
+2025-04-16T07:39:55.1868269Z   proxy | 2025/04/16 07:39:55 [785] GET https://registry.npmjs.org:443/new-find-package-json
+2025-04-16T07:39:55.2779458Z   proxy | 2025/04/16 07:39:55 [785] 200 https://registry.npmjs.org:443/new-find-package-json
+2025-04-16T07:39:55.3010431Z   proxy | 2025/04/16 07:39:55 [787] GET https://registry.npmjs.org:443/@aws-sdk%2fcredential-providers
+2025-04-16T07:39:55.3457244Z   proxy | 2025/04/16 07:39:55 [787] 200 https://registry.npmjs.org:443/@aws-sdk%2fcredential-providers
+2025-04-16T07:39:55.4167214Z   proxy | 2025/04/16 07:39:55 [789] GET https://registry.npmjs.org:443/@mongodb-js%2fzstd
+2025-04-16T07:39:55.4645034Z   proxy | 2025/04/16 07:39:55 [789] 200 https://registry.npmjs.org:443/@mongodb-js%2fzstd
+2025-04-16T07:39:55.4800303Z   proxy | 2025/04/16 07:39:55 [791] GET https://registry.npmjs.org:443/kerberos
+2025-04-16T07:39:55.5166521Z   proxy | 2025/04/16 07:39:55 [791] 200 https://registry.npmjs.org:443/kerberos
+2025-04-16T07:39:55.5340975Z   proxy | 2025/04/16 07:39:55 [793] GET https://registry.npmjs.org:443/mongodb-client-encryption
+2025-04-16T07:39:55.5650970Z   proxy | 2025/04/16 07:39:55 [793] 200 https://registry.npmjs.org:443/mongodb-client-encryption
+2025-04-16T07:39:55.5897343Z   proxy | 2025/04/16 07:39:55 [795] GET https://registry.npmjs.org:443/gcp-metadata
+2025-04-16T07:39:55.6344260Z   proxy | 2025/04/16 07:39:55 [795] 200 https://registry.npmjs.org:443/gcp-metadata
+2025-04-16T07:39:55.6549639Z   proxy | 2025/04/16 07:39:55 [797] GET https://registry.npmjs.org:443/snappy
+2025-04-16T07:39:55.6902567Z   proxy | 2025/04/16 07:39:55 [797] 200 https://registry.npmjs.org:443/snappy
+2025-04-16T07:39:55.7305755Z   proxy | 2025/04/16 07:39:55 [799] GET https://registry.npmjs.org:443/commondir
+2025-04-16T07:39:55.7629637Z   proxy | 2025/04/16 07:39:55 [799] 200 https://registry.npmjs.org:443/commondir
+2025-04-16T07:39:55.7777177Z   proxy | 2025/04/16 07:39:55 [801] GET https://registry.npmjs.org:443/agent-base
+2025-04-16T07:39:55.8073942Z   proxy | 2025/04/16 07:39:55 [801] 200 https://registry.npmjs.org:443/agent-base
+2025-04-16T07:39:55.8345910Z   proxy | 2025/04/16 07:39:55 [803] GET https://registry.npmjs.org:443/socks
+2025-04-16T07:39:55.8646808Z   proxy | 2025/04/16 07:39:55 [803] 200 https://registry.npmjs.org:443/socks
+2025-04-16T07:39:55.8822213Z   proxy | 2025/04/16 07:39:55 [805] GET https://registry.npmjs.org:443/mongodb-connection-string-url
+2025-04-16T07:39:55.9160744Z   proxy | 2025/04/16 07:39:55 [805] 200 https://registry.npmjs.org:443/mongodb-connection-string-url
+2025-04-16T07:39:55.9576701Z   proxy | 2025/04/16 07:39:55 [807] GET https://registry.npmjs.org:443/@mongodb-js%2fsaslprep
+2025-04-16T07:39:56.0061510Z   proxy | 2025/04/16 07:39:56 [807] 200 https://registry.npmjs.org:443/@mongodb-js%2fsaslprep
+2025-04-16T07:39:56.0230125Z   proxy | 2025/04/16 07:39:56 [809] GET https://registry.npmjs.org:443/b4a
+2025-04-16T07:39:56.0532292Z   proxy | 2025/04/16 07:39:56 [809] 200 https://registry.npmjs.org:443/b4a
+2025-04-16T07:39:56.0822661Z   proxy | 2025/04/16 07:39:56 [811] GET https://registry.npmjs.org:443/fast-fifo
+2025-04-16T07:39:56.1133989Z   proxy | 2025/04/16 07:39:56 [811] 200 https://registry.npmjs.org:443/fast-fifo
+2025-04-16T07:39:56.1281973Z   proxy | 2025/04/16 07:39:56 [813] GET https://registry.npmjs.org:443/streamx
+2025-04-16T07:39:56.1586487Z   proxy | 2025/04/16 07:39:56 [813] 200 https://registry.npmjs.org:443/streamx
+2025-04-16T07:39:56.1767450Z   proxy | 2025/04/16 07:39:56 [815] GET https://registry.npmjs.org:443/buffer-crc32
+2025-04-16T07:39:56.2074187Z   proxy | 2025/04/16 07:39:56 [815] 200 https://registry.npmjs.org:443/buffer-crc32
+2025-04-16T07:39:56.2223008Z   proxy | 2025/04/16 07:39:56 [817] GET https://registry.npmjs.org:443/pend
+2025-04-16T07:39:56.2551795Z   proxy | 2025/04/16 07:39:56 [817] 200 https://registry.npmjs.org:443/pend
+2025-04-16T07:39:56.2773342Z   proxy | 2025/04/16 07:39:56 [819] GET https://registry.npmjs.org:443/sparse-bitfield
+2025-04-16T07:39:56.3095465Z   proxy | 2025/04/16 07:39:56 [819] 200 https://registry.npmjs.org:443/sparse-bitfield
+2025-04-16T07:39:56.3233186Z   proxy | 2025/04/16 07:39:56 [821] GET https://registry.npmjs.org:443/whatwg-url
+2025-04-16T07:39:56.3531004Z   proxy | 2025/04/16 07:39:56 [821] 200 https://registry.npmjs.org:443/whatwg-url
+2025-04-16T07:39:56.3722686Z   proxy | 2025/04/16 07:39:56 [823] GET https://registry.npmjs.org:443/@types%2fwhatwg-url
+2025-04-16T07:39:56.4099988Z   proxy | 2025/04/16 07:39:56 [823] 200 https://registry.npmjs.org:443/@types%2fwhatwg-url
+2025-04-16T07:39:56.4271366Z   proxy | 2025/04/16 07:39:56 [825] GET https://registry.npmjs.org:443/ip-address
+2025-04-16T07:39:56.4601367Z   proxy | 2025/04/16 07:39:56 [825] 200 https://registry.npmjs.org:443/ip-address
+2025-04-16T07:39:56.4786746Z   proxy | 2025/04/16 07:39:56 [827] GET https://registry.npmjs.org:443/smart-buffer
+2025-04-16T07:39:56.5129747Z   proxy | 2025/04/16 07:39:56 [827] 200 https://registry.npmjs.org:443/smart-buffer
+2025-04-16T07:39:56.5328054Z   proxy | 2025/04/16 07:39:56 [829] GET https://registry.npmjs.org:443/memory-pager
+2025-04-16T07:39:56.5641286Z   proxy | 2025/04/16 07:39:56 [829] 200 https://registry.npmjs.org:443/memory-pager
+2025-04-16T07:39:56.5814181Z   proxy | 2025/04/16 07:39:56 [831] GET https://registry.npmjs.org:443/@types%2fwebidl-conversions
+2025-04-16T07:39:56.6198670Z   proxy | 2025/04/16 07:39:56 [831] 200 https://registry.npmjs.org:443/@types%2fwebidl-conversions
+2025-04-16T07:39:56.6347538Z   proxy | 2025/04/16 07:39:56 [833] GET https://registry.npmjs.org:443/tr46
+2025-04-16T07:39:56.6636133Z   proxy | 2025/04/16 07:39:56 [833] 200 https://registry.npmjs.org:443/tr46
+2025-04-16T07:39:56.6787268Z   proxy | 2025/04/16 07:39:56 [835] GET https://registry.npmjs.org:443/webidl-conversions
+2025-04-16T07:39:56.7140663Z   proxy | 2025/04/16 07:39:56 [835] 200 https://registry.npmjs.org:443/webidl-conversions
+2025-04-16T07:39:56.7761845Z   proxy | 2025/04/16 07:39:56 [837] GET https://registry.npmjs.org:443/is-arrayish
+2025-04-16T07:39:56.8054429Z   proxy | 2025/04/16 07:39:56 [837] 200 https://registry.npmjs.org:443/is-arrayish
+2025-04-16T07:39:56.8668475Z   proxy | 2025/04/16 07:39:56 [839] GET https://registry.npmjs.org:443/@emnapi%2fruntime
+2025-04-16T07:39:56.9167474Z   proxy | 2025/04/16 07:39:56 [839] 200 https://registry.npmjs.org:443/@emnapi%2fruntime
+2025-04-16T07:39:56.9465164Z   proxy | 2025/04/16 07:39:56 [841] GET https://registry.npmjs.org:443/color-string
+2025-04-16T07:39:56.9793063Z   proxy | 2025/04/16 07:39:56 [841] 200 https://registry.npmjs.org:443/color-string
+2025-04-16T07:39:57.0064997Z   proxy | 2025/04/16 07:39:57 [843] GET https://registry.npmjs.org:443/simple-swizzle
+2025-04-16T07:39:57.0367710Z   proxy | 2025/04/16 07:39:57 [843] 200 https://registry.npmjs.org:443/simple-swizzle
+2025-04-16T07:39:57.0620908Z   proxy | 2025/04/16 07:39:57 [845] GET https://registry.npmjs.org:443/jsbn
+2025-04-16T07:39:57.0927870Z   proxy | 2025/04/16 07:39:57 [845] 200 https://registry.npmjs.org:443/jsbn
+2025-04-16T07:39:57.1120761Z   proxy | 2025/04/16 07:39:57 [847] GET https://registry.npmjs.org:443/sprintf-js
+2025-04-16T07:39:57.1464839Z   proxy | 2025/04/16 07:39:57 [847] 200 https://registry.npmjs.org:443/sprintf-js
+2025-04-16T07:39:57.1716904Z   proxy | 2025/04/16 07:39:57 [849] GET https://registry.npmjs.org:443/mime
+2025-04-16T07:39:57.2064529Z   proxy | 2025/04/16 07:39:57 [849] 200 https://registry.npmjs.org:443/mime
+2025-04-16T07:39:57.2218374Z   proxy | 2025/04/16 07:39:57 [851] GET https://registry.npmjs.org:443/cookiejar
+2025-04-16T07:39:57.2495952Z   proxy | 2025/04/16 07:39:57 [851] 200 https://registry.npmjs.org:443/cookiejar
+2025-04-16T07:39:57.2650797Z   proxy | 2025/04/16 07:39:57 [853] GET https://registry.npmjs.org:443/formidable
+2025-04-16T07:39:57.2944449Z   proxy | 2025/04/16 07:39:57 [853] 200 https://registry.npmjs.org:443/formidable
+2025-04-16T07:39:57.3173488Z   proxy | 2025/04/16 07:39:57 [855] GET https://registry.npmjs.org:443/component-emitter
+2025-04-16T07:39:57.3471209Z   proxy | 2025/04/16 07:39:57 [855] 200 https://registry.npmjs.org:443/component-emitter
+2025-04-16T07:39:57.3620572Z   proxy | 2025/04/16 07:39:57 [857] GET https://registry.npmjs.org:443/fast-safe-stringify
+2025-04-16T07:39:57.3982969Z   proxy | 2025/04/16 07:39:57 [857] 200 https://registry.npmjs.org:443/fast-safe-stringify
+2025-04-16T07:39:57.4247985Z   proxy | 2025/04/16 07:39:57 [859] GET https://registry.npmjs.org:443/hexoid
+2025-04-16T07:39:57.4575136Z   proxy | 2025/04/16 07:39:57 [859] 200 https://registry.npmjs.org:443/hexoid
+2025-04-16T07:39:57.4788849Z   proxy | 2025/04/16 07:39:57 [861] GET https://registry.npmjs.org:443/dezalgo
+2025-04-16T07:39:57.5091469Z   proxy | 2025/04/16 07:39:57 [861] 200 https://registry.npmjs.org:443/dezalgo
+2025-04-16T07:39:57.5337417Z   proxy | 2025/04/16 07:39:57 [863] GET https://registry.npmjs.org:443/asap
+2025-04-16T07:39:57.5652377Z   proxy | 2025/04/16 07:39:57 [863] 200 https://registry.npmjs.org:443/asap
+2025-04-16T07:39:57.5879195Z   proxy | 2025/04/16 07:39:57 [865] GET https://registry.npmjs.org:443/text-decoder
+2025-04-16T07:39:57.6217955Z   proxy | 2025/04/16 07:39:57 [865] 200 https://registry.npmjs.org:443/text-decoder
+2025-04-16T07:39:57.6367311Z   proxy | 2025/04/16 07:39:57 [867] GET https://registry.npmjs.org:443/bare-events
+2025-04-16T07:39:57.7001497Z   proxy | 2025/04/16 07:39:57 [867] 200 https://registry.npmjs.org:443/bare-events
+2025-04-16T07:39:57.7201918Z   proxy | 2025/04/16 07:39:57 [869] GET https://registry.npmjs.org:443/tmpl
+2025-04-16T07:39:57.7518800Z   proxy | 2025/04/16 07:39:57 [869] 200 https://registry.npmjs.org:443/tmpl
+2025-04-16T07:39:57.8195779Z   proxy | 2025/04/16 07:39:57 [871] GET https://registry.npmjs.org:443/colorspace
+2025-04-16T07:39:57.8533269Z   proxy | 2025/04/16 07:39:57 [871] 200 https://registry.npmjs.org:443/colorspace
+2025-04-16T07:39:57.8747918Z   proxy | 2025/04/16 07:39:57 [873] GET https://registry.npmjs.org:443/enabled
+2025-04-16T07:39:57.9060098Z   proxy | 2025/04/16 07:39:57 [873] 200 https://registry.npmjs.org:443/enabled
+2025-04-16T07:39:57.9193087Z   proxy | 2025/04/16 07:39:57 [875] GET https://registry.npmjs.org:443/kuler
+2025-04-16T07:39:57.9530754Z   proxy | 2025/04/16 07:39:57 [875] 200 https://registry.npmjs.org:443/kuler
+2025-04-16T07:39:57.9660833Z   proxy | 2025/04/16 07:39:57 [877] GET https://registry.npmjs.org:443/@types%2ftriple-beam
+2025-04-16T07:39:58.0041070Z   proxy | 2025/04/16 07:39:58 [877] 200 https://registry.npmjs.org:443/@types%2ftriple-beam
+2025-04-16T07:39:58.0200347Z   proxy | 2025/04/16 07:39:58 [879] GET https://registry.npmjs.org:443/fecha
+2025-04-16T07:39:58.0580902Z   proxy | 2025/04/16 07:39:58 [879] 200 https://registry.npmjs.org:443/fecha
+2025-04-16T07:39:58.0814083Z   proxy | 2025/04/16 07:39:58 [881] GET https://registry.npmjs.org:443/fn.name
+2025-04-16T07:39:58.1104333Z   proxy | 2025/04/16 07:39:58 [881] 200 https://registry.npmjs.org:443/fn.name
+2025-04-16T07:39:58.1532185Z   proxy | 2025/04/16 07:39:58 [883] GET https://registry.npmjs.org:443/text-hex
+2025-04-16T07:39:58.1825199Z   proxy | 2025/04/16 07:39:58 [883] 200 https://registry.npmjs.org:443/text-hex
+2025-04-16T07:39:58.2093217Z   proxy | 2025/04/16 07:39:58 [885] GET https://registry.npmjs.org:443/moment
+2025-04-16T07:39:58.2414651Z   proxy | 2025/04/16 07:39:58 [885] 200 https://registry.npmjs.org:443/moment
+2025-04-16T07:39:58.2872128Z   proxy | 2025/04/16 07:39:58 [887] GET https://registry.npmjs.org:443/wrap-ansi
+2025-04-16T07:39:58.3184584Z   proxy | 2025/04/16 07:39:58 [887] 200 https://registry.npmjs.org:443/wrap-ansi
+2025-04-16T07:39:58.3699431Z   proxy | 2025/04/16 07:39:58 [889] GET https://registry.npmjs.org:443/p-try
+2025-04-16T07:39:58.3997234Z   proxy | 2025/04/16 07:39:58 [889] 200 https://registry.npmjs.org:443/p-try
+2025-04-16T07:39:58.7027200Z updater | 2025/04/16 07:39:58 INFO <job_999489038> Process PID: 1491 completed with status: pid 1491 exit 0
+2025-04-16T07:39:58.7041780Z updater | 2025/04/16 07:39:58 INFO <job_999489038> Total execution time: 28.87 seconds
+2025-04-16T07:39:58.7080591Z updater | 2025/04/16 07:39:58 INFO <job_999489038> VulnerabilityAuditor: audit result viable
+2025-04-16T07:39:58.8096617Z   proxy | 2025/04/16 07:39:58 [891] HEAD https://registry.npmjs.org:443/semver/-/semver-6.3.1.tgz
+2025-04-16T07:39:58.8425923Z   proxy | 2025/04/16 07:39:58 [891] 200 https://registry.npmjs.org:443/semver/-/semver-6.3.1.tgz
+2025-04-16T07:39:58.8510839Z updater | 2025/04/16 07:39:58 INFO <job_999489038> Started process PID: 1517 with command: node /opt/npm_and_yarn/run.js
+2025-04-16T07:39:59.5146529Z updater | 2025/04/16 07:39:59 INFO <job_999489038> Process PID: 1517 completed with status: pid 1517 exit 0
+2025-04-16T07:39:59.5147985Z 2025/04/16 07:39:59 INFO <job_999489038> Total execution time: 0.67 seconds
+2025-04-16T07:39:59.5168147Z updater | 2025/04/16 07:39:59 INFO <job_999489038> Requirements to unlock all
+2025-04-16T07:39:59.6138710Z   proxy | 2025/04/16 07:39:59 [893] GET https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.6140830Z   proxy | 2025/04/16 07:39:59 [893] 404 https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.6160612Z updater | 2025/04/16 07:39:59 INFO <job_999489038> Requirements update strategy bump_versions
+2025-04-16T07:39:59.8318331Z   proxy | 2025/04/16 07:39:59 [895] GET https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.8320380Z 2025/04/16 07:39:59 [895] 404 https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.9331161Z   proxy | 2025/04/16 07:39:59 [897] GET https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.9333228Z   proxy | 2025/04/16 07:39:59 [897] 404 https://registry.npmjs.org:443/date-night-server
+2025-04-16T07:39:59.9363008Z updater | 2025/04/16 07:39:59 INFO <job_999489038> Updating semver, nodemon
+2025-04-16T07:40:00.0983602Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1542 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/tmp/20250416-1466-y6fb93/dependabot_20250416-1466-120qcp/git.store' {}
+2025-04-16T07:40:00.1006653Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1542 completed with status: pid 1542 exit 0
+2025-04-16T07:40:00.1010660Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1020018Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1549 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T07:40:00.1073053Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1549 completed with status: pid 1549 exit 0
+2025-04-16T07:40:00.1074463Z 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1100465Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1555 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T07:40:00.1138023Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1555 completed with status: pid 1555 exit 0
+2025-04-16T07:40:00.1142006Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1152543Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1561 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T07:40:00.1200697Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1561 completed with status: pid 1561 exit 0
+2025-04-16T07:40:00.1201818Z 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1218645Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1567 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T07:40:00.1268726Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1567 completed with status: pid 1567 exit 0
+2025-04-16T07:40:00.1271572Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1280755Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1573 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T07:40:00.1329221Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Process PID: 1573 completed with status: pid 1573 exit 0
+2025-04-16T07:40:00.1331157Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Total execution time: 0.01 seconds
+2025-04-16T07:40:00.1371208Z updater | 2025/04/16 07:40:00 INFO <job_999489038> Started process PID: 1579 with command: {} npm install nodemon@3.1.9 --force --dry-run false --ignore-scripts --package-lock-only {}
+2025-04-16T07:40:06.0362736Z updater | 2025/04/16 07:40:06 INFO <job_999489038> Process PID: 1579 completed with status: pid 1579 exit 1
+2025-04-16T07:40:06.0370407Z updater | 2025/04/16 07:40:06 INFO <job_999489038> Total execution time: 5.9 seconds
+2025-04-16T07:40:06.0391059Z updater | 2025/04/16 07:40:06 WARN <job_999489038> NPM : npm warn using --force Recommended protections disabled.
+2025-04-16T07:40:06.0391913Z npm error code EBADENGINE
+2025-04-16T07:40:06.0394691Z npm error engine Unsupported engine
+2025-04-16T07:40:06.0395621Z npm error engine Not compatible with your version of node/npm: date-night-server@1.0.0
+2025-04-16T07:40:06.0396838Z npm error notsup Not compatible with your version of node/npm: date-night-server@1.0.0
+2025-04-16T07:40:06.0398459Z npm error notsup Required: {"node":"22.14.0","npm":"10.9.2"}
+2025-04-16T07:40:06.0399911Z npm error notsup Actual:   {"npm":"10.8.2","node":"v20.19.0"}
+2025-04-16T07:40:06.0400829Z npm error A complete log of this run can be found in: /home/dependabot/.npm/_logs/2025-04-16T07_40_00_292Z-debug-0.log
+2025-04-16T07:40:06.2306081Z   proxy | 2025/04/16 07:40:06 [899] POST /update_jobs/999489038/record_update_job_error
+2025-04-16T07:40:06.3156681Z   proxy | 2025/04/16 07:40:06 [899] 204 /update_jobs/999489038/record_update_job_error
+2025-04-16T07:40:06.3169798Z updater | 2025/04/16 07:40:06 INFO <job_999489038> Handled error whilst updating semver: dependency_file_not_resolvable {:message=>"Dependabot uses Node.js v20.19.0 and NPM 10.8.2. Due to the engine-strict setting, the update will not succeed."}
+2025-04-16T07:40:06.3644710Z   proxy | 2025/04/16 07:40:06 [901] POST /update_jobs/999489038/record_ecosystem_meta
+2025-04-16T07:40:06.4415805Z   proxy | 2025/04/16 07:40:06 [901] 204 /update_jobs/999489038/record_ecosystem_meta
+2025-04-16T07:40:06.4894713Z   proxy | 2025/04/16 07:40:06 [903] PATCH /update_jobs/999489038/mark_as_processed
+2025-04-16T07:40:06.6448246Z   proxy | 2025/04/16 07:40:06 [903] 204 /update_jobs/999489038/mark_as_processed
+2025-04-16T07:40:06.6457406Z updater | 2025/04/16 07:40:06 INFO <job_999489038> Finished job processing
+2025-04-16T07:40:06.6491323Z updater | 2025/04/16 07:40:06 INFO Results:
+2025-04-16T07:40:06.6492063Z Dependabot encountered '1' error(s) during execution, please check the logs for more details.
+2025-04-16T07:40:06.6493111Z +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2025-04-16T07:40:06.6494269Z |                                                                        Dependencies failed to update                                                                         |
+2025-04-16T07:40:06.6495431Z +------------+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+2025-04-16T07:40:06.6496514Z | Dependency | Error Type                     | Error Details                                                                                                                  |
+2025-04-16T07:40:06.6501803Z +------------+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+2025-04-16T07:40:06.6502819Z | semver     | dependency_file_not_resolvable | {                                                                                                                              |
+2025-04-16T07:40:06.6503894Z |            |                                |   "message": "Dependabot uses Node.js v20.19.0 and NPM 10.8.2. Due to the engine-strict setting, the update will not succeed." |
+2025-04-16T07:40:06.6504794Z |            |                                | }                                                                                                                              |
+2025-04-16T07:40:06.6505575Z +------------+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+2025-04-16T07:40:06.8941757Z Failure running container 25ed0b375a70d02bb46c163197c5e877689a3c9c0eb9be6f2dfa7e8f56092147
+2025-04-16T07:40:07.1165367Z Cleaned up container 25ed0b375a70d02bb46c163197c5e877689a3c9c0eb9be6f2dfa7e8f56092147
+2025-04-16T07:40:07.1320468Z   proxy | 2025/04/16 07:40:07 3/450 calls cached (0%)
+2025-04-16T07:40:07.1321230Z 2025/04/16 07:40:07 Posting metrics to remote API endpoint
+2025-04-16T07:40:07.7432141Z ##[error]Dependabot encountered an error performing the update
+
+Error: The updater encountered one or more errors.
+
+For more information see: https://github.com/mrkurger/date-night-app2/network/updates/999489038 (write access to the repository is required to view the log)
+2025-04-16T07:40:07.7442300Z 🤖 ~ finished: error reported to Dependabot ~
+2025-04-16T07:40:07.7523552Z Post job cleanup.
+2025-04-16T07:40:07.9144725Z Cleaning up orphan processes
