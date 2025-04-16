@@ -26,11 +26,7 @@ module.exports.setupTestDB = async () => {
   const mongoUri = mongoServer.getUri();
 
   // Connect to the in-memory database
-  await mongoose.connect(mongoUri, {
-    // These options are no longer needed in Mongoose 6+, but kept for clarity
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(mongoUri);
 
   console.log(`Connected to in-memory MongoDB at ${mongoUri}`);
 };

@@ -343,3 +343,8 @@ For projects with many warnings that need to be addressed over time:
 3. **HTML Parsing**: ESLint may have issues parsing HTML files in Angular projects. Always exclude HTML files from ESLint processing.
 
 4. **TypeScript Type Safety**: Angular projects often have TypeScript type safety warnings. Consider addressing these incrementally rather than all at once.
+
+5. **MongoDB Driver Warnings**: When using MongoDB with Node.js:
+   - Remove deprecated options like `useNewUrlParser` and `useUnifiedTopology` as they're no longer needed in MongoDB driver v4.0.0+
+   - Avoid duplicate indexes in Mongoose schemas - don't use both `index: true` and `unique: true` on the same field, as `unique: true` already creates an index
+   - Don't call `schema.index()` on fields that already have `index: true` in their definition

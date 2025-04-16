@@ -19,7 +19,7 @@ const tokenBlacklistSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    index: true,
+    // index: true, // Removed duplicate index - unique already creates an index
   },
   tokenType: {
     type: String,
@@ -30,6 +30,7 @@ const tokenBlacklistSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+    // We'll keep this index as it's needed for performance
     index: true,
   },
   reason: {

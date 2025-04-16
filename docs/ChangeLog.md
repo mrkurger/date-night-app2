@@ -1,11 +1,14 @@
 # Change Log
 
-## 2025-04-16: Linting and Test Fixes
+## 2025-04-16: Linting, Test Fixes, and MongoDB Warnings
 
 ### Fixed
 
 - Fixed variable naming conflict in wallet service test where `paymentMethods` was renamed to `paymentMethodsArray` to avoid conflict with array methods like `find()`.
 - Fixed auth middleware test by properly mocking JWT verification and user lookup in the optionalAuth test.
+- Fixed MongoDB driver warnings:
+  - Removed deprecated options `useNewUrlParser` and `useUnifiedTopology` from test setup
+  - Fixed duplicate index in token-blacklist model by removing redundant `index: true` on fields with `unique: true`
 
 ### Added
 
@@ -14,6 +17,7 @@
   - Cypress test configuration
   - NPM script patterns for handling warnings vs errors
   - Variable naming best practices to avoid conflicts with array methods
+  - MongoDB driver best practices to avoid warnings
 
 ## 2025-04-19: Documentation Improvements
 
