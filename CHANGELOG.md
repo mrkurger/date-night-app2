@@ -1,5 +1,47 @@
 # Change Log
 
+## 2024-05-13
+
+### Added
+- Fixed RxJS dependency issues
+  - Added RxJS override in package.json to ensure consistent version
+  - Ran npm dedupe to remove duplicate packages
+  - Resolved type compatibility issues between different versions
+
+- Enhanced test coverage for Angular components and services
+  - Updated AppComponent test with comprehensive test cases
+  - Created LocationService test with complete API coverage
+  - Added tests for private methods and edge cases
+  - Improved test documentation with clear descriptions
+
+- Implemented end-to-end testing with Cypress
+  - Created Cypress configuration with random port assignment
+  - Implemented custom commands for common operations
+  - Added end-to-end tests for critical user flows:
+    - Authentication flow
+    - Profile viewing
+    - Tinder-style matching interface
+  - Added comprehensive test assertions for UI elements and API interactions
+
+- Set up continuous integration with GitHub Actions
+  - Created workflow for Angular tests (unit, e2e, lint)
+  - Created workflow for server tests (unit, integration, lint)
+  - Configured test artifacts upload for coverage reports
+  - Added automatic testing on pull requests and main branch
+
+### Improved
+- Enhanced test reliability and maintainability
+  - Added detailed comments explaining test scenarios
+  - Implemented proper test setup and teardown
+  - Created reusable test utilities and custom commands
+  - Improved mock data to better represent real-world scenarios
+
+### Documentation
+- Updated package.json with Cypress test scripts
+- Added comprehensive JSDoc comments to test files
+- Created detailed test scenarios with clear descriptions
+- Added cross-references between related components and services
+
 ## 2024-05-12
 
 ### Added

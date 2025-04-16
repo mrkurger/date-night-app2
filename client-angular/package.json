@@ -7,7 +7,11 @@
     "build": "ng build client-angular",
     "watch": "ng build client-angular --watch --configuration development",
     "test": "ng test client-angular",
-    "update-csp": "node src/csp-config.js"
+    "update-csp": "node src/csp-config.js",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e": "ng serve client-angular --port 0 & cypress run",
+    "e2e:open": "ng serve client-angular --port 0 & cypress open"
   },
   "private": true,
   "dependencies": {
