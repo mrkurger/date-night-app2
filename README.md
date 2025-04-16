@@ -624,7 +624,7 @@ This section provides links to all documentation files in the project, organized
 - [Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.md) - Documentation for the workflow error monitoring system
 - [Workflow Error Logs](/workflow-error-logs/README.md) - Directory containing logs from failed GitHub Actions workflows
 - [Workflow Error Analysis Tool](/scripts/analyze-workflow-errors.js) - Script for analyzing workflow error logs
-- [Fixed Workflow File](/.github/workflows/sync-workflow-errors-fixed.yml) - Updated workflow file that fixes compatibility issues
+- [Robust Workflow File](/.github/workflows/sync-workflow-errors-robust.yml) - Advanced workflow with conflict resolution
 
 ### Development Guides
 

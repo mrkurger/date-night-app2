@@ -27,12 +27,35 @@ class FavoriteController {
       const userId = req.user._id;
 
       // Extract query parameters for filtering and sorting
-      const { sort, category, county, city, search } = req.query;
+      const {
+        sort,
+        category,
+        county,
+        city,
+        search,
+        priority,
+        priceMin,
+        priceMax,
+        dateFrom,
+        dateTo,
+        tags,
+      } = req.query;
 
       // Build query options
       const options = {
         sort: this.parseSortOption(sort),
-        filters: this.buildFilters({ category, county, city, search }),
+        filters: this.buildFilters({
+          category,
+          county,
+          city,
+          search,
+          priority,
+          priceMin,
+          priceMax,
+          dateFrom,
+          dateTo,
+          tags,
+        }),
       };
 
       const favorites = await Favorite.findByUser(userId, options);
@@ -418,7 +441,18 @@ class FavoriteController {
    * @returns {Object} MongoDB filter object
    * @private
    */
-  buildFilters({ category, county, city, search }) {
+  buildFilters({
+    category,
+    county,
+    city,
+    search,
+    priority,
+    priceMin,
+    priceMax,
+    dateFrom,
+    dateTo,
+    tags,
+  }) {
     const filters = {};
 
     if (category) {
@@ -431,6 +465,48 @@ class FavoriteController {
 
     if (city) {
       filters['ad.location.city'] = city;
+    }
+
+    if (priority) {
+      filters['priority'] = priority;
+    }
+
+    // Handle price range
+    if (priceMin || priceMax) {
+      filters['ad.price'] = {};
+
+      if (priceMin) {
+        filters['ad.price'].$gte = Number(priceMin);
+      }
+
+      if (priceMax) {
+        filters['ad.price'].$lte = Number(priceMax);
+      }
+    }
+
+    // Handle date range
+    if (dateFrom || dateTo) {
+      filters['createdAt'] = {};
+
+      if (dateFrom) {
+        filters['createdAt'].$gte = new Date(dateFrom);
+      }
+
+      if (dateTo) {
+        // Add one day to include the end date
+        const endDate = new Date(dateTo);
+        endDate.setDate(endDate.getDate() + 1);
+        filters['createdAt'].$lte = endDate;
+      }
+    }
+
+    // Handle tags (which can be an array or a single value)
+    if (tags) {
+      if (Array.isArray(tags)) {
+        filters['tags'] = { $all: tags };
+      } else {
+        filters['tags'] = tags;
+      }
     }
 
     if (search) {

@@ -24,6 +24,12 @@ const { authenticate } = require('../middleware/auth');
 // - county: filter by county
 // - city: filter by city
 // - search: search in title, description, and notes
+// - priority: filter by priority level (low, normal, high)
+// - priceMin: filter by minimum price
+// - priceMax: filter by maximum price
+// - dateFrom: filter by date added (from)
+// - dateTo: filter by date added (to)
+// - tags: filter by tags (can be specified multiple times for AND filtering)
 router.get('/', authenticate, favoriteController.getFavorites);
 
 // Get favorite ad IDs for the current user (for efficient checking on the client)

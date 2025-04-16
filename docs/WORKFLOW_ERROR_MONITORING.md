@@ -10,7 +10,7 @@ The workflow error monitoring system automatically collects logs from failed Git
 
 ### 1. Log Collection Workflow
 
-The `sync-workflow-errors-fixed.yml` workflow is responsible for collecting logs from failed workflows:
+The `sync-workflow-errors-robust.yml` workflow is responsible for collecting logs from failed workflows:
 
 - **Trigger**: Runs after any workflow completes, on a schedule (every 6 hours), or manually
 - **Permissions**: Requires `contents: write` and `actions: read` permissions
@@ -19,6 +19,7 @@ The `sync-workflow-errors-fixed.yml` workflow is responsible for collecting logs
   - Identifies failed, cancelled, or timed-out workflow runs from the past 30 days
   - Downloads logs for all failed jobs
   - Stores logs in a structured format in the `workflow-error-logs` directory
+  - Handles git conflicts by creating pull requests when necessary
   - Commits and pushes the logs to the repository
 
 ### 2. Error Analysis Tool
@@ -92,9 +93,24 @@ This will create a report at `workflow-error-report.md` with:
 You can manually trigger the log collection workflow:
 
 1. Go to the "Actions" tab in the GitHub repository
-2. Select the "Sync Workflow Error Logs" workflow (using the fixed version)
+2. Select the "Sync Workflow Error Logs (Robust)" workflow
 3. Click "Run workflow"
 4. Select the branch and click "Run workflow"
+
+### Conflict Resolution
+
+The workflow includes an advanced conflict resolution mechanism:
+
+1. When conflicts are detected between local changes and the remote repository:
+
+   - A new branch is created with a timestamp-based name
+   - Changes are committed to this branch
+   - A pull request is automatically created
+   - The PR can be reviewed and merged manually
+
+2. When no conflicts are detected:
+   - Changes are committed directly to the main branch
+   - The workflow completes without manual intervention
 
 ## Extending the System
 

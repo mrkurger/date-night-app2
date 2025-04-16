@@ -34,6 +34,17 @@ import { Subject } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 
 /**
+ * Interface for saved filter presets
+ */
+interface FilterPreset {
+  name: string;
+  filters: FavoriteFilterOptions;
+  dateFrom: Date | null;
+  dateTo: Date | null;
+  selectedTagFilters: string[];
+}
+
+/**
  * Enhanced favorites page component with filtering, sorting, and batch operations
  */
 @Component({
@@ -103,46 +114,243 @@ import { firstValueFrom } from 'rxjs';
       </div>
 
       <div class="filters-container" *ngIf="favorites && favorites.length > 0">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Search favorites</mat-label>
-          <input
-            matInput
-            [(ngModel)]="filterOptions.search"
-            (input)="onSearchChange($event)"
-            placeholder="Search by title, description, or notes"
-          />
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+        <div class="filters-header">
+          <h3>Filters</h3>
+          <button mat-button color="primary" (click)="toggleAdvancedFilters()">
+            {{ showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters' }}
+            <mat-icon>{{ showAdvancedFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </button>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sort by</mat-label>
-          <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
-            <mat-option value="newest">Newest first</mat-option>
-            <mat-option value="oldest">Oldest first</mat-option>
-            <mat-option value="price-asc">Price: Low to High</mat-option>
-            <mat-option value="price-desc">Price: High to Low</mat-option>
-            <mat-option value="title-asc">Title: A to Z</mat-option>
-            <mat-option value="title-desc">Title: Z to A</mat-option>
-            <mat-option value="priority-high">Priority: High to Low</mat-option>
-            <mat-option value="priority-low">Priority: Low to High</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="basic-filters">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Search favorites</mat-label>
+            <input
+              matInput
+              [(ngModel)]="filterOptions.search"
+              (input)="onSearchChange($event)"
+              placeholder="Search by title, description, or notes"
+            />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
 
-        <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
-          <div class="tags-label">Filter by tag:</div>
-          <div class="tags-chips">
-            <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-              <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
-                {{ tag.tag }} ({{ tag.count }})
-              </mat-chip-option>
-            </mat-chip-listbox>
+          <mat-form-field appearance="outline">
+            <mat-label>Sort by</mat-label>
+            <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
+              <mat-option value="newest">Newest first</mat-option>
+              <mat-option value="oldest">Oldest first</mat-option>
+              <mat-option value="price-asc">Price: Low to High</mat-option>
+              <mat-option value="price-desc">Price: High to Low</mat-option>
+              <mat-option value="title-asc">Title: A to Z</mat-option>
+              <mat-option value="title-desc">Title: Z to A</mat-option>
+              <mat-option value="priority-high">Priority: High to Low</mat-option>
+              <mat-option value="priority-low">Priority: Low to High</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
+            <div class="tags-label">Filter by tag:</div>
+            <div class="tags-chips">
+              <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
+                <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
+                  {{ tag.tag }} ({{ tag.count }})
+                </mat-chip-option>
+              </mat-chip-listbox>
+            </div>
           </div>
         </div>
 
-        <button mat-button color="primary" (click)="resetFilters()" *ngIf="isFiltered">
-          <mat-icon>clear</mat-icon>
-          Clear Filters
-        </button>
+        <div class="advanced-filters" *ngIf="showAdvancedFilters">
+          <div class="filter-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Priority</mat-label>
+              <mat-select [(ngModel)]="filterOptions.priority" (selectionChange)="applyFilters()">
+                <mat-option [value]="undefined">Any</mat-option>
+                <mat-option value="high">High</mat-option>
+                <mat-option value="normal">Normal</mat-option>
+                <mat-option value="low">Low</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Category</mat-label>
+              <mat-select [(ngModel)]="filterOptions.category" (selectionChange)="applyFilters()">
+                <mat-option [value]="undefined">Any</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.value">
+                  {{ category.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="filter-row">
+            <mat-form-field appearance="outline">
+              <mat-label>County</mat-label>
+              <mat-select [(ngModel)]="filterOptions.county" (selectionChange)="onCountyChange()">
+                <mat-option [value]="undefined">Any</mat-option>
+                <mat-option *ngFor="let county of counties" [value]="county">
+                  {{ county }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <mat-select [(ngModel)]="filterOptions.city" (selectionChange)="applyFilters()">
+                <mat-option [value]="undefined">Any</mat-option>
+                <mat-option *ngFor="let city of cities" [value]="city">
+                  {{ city }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="filter-row">
+            <div class="price-range">
+              <span class="range-label">Price Range:</span>
+              <div class="price-inputs">
+                <mat-form-field appearance="outline">
+                  <mat-label>Min</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="filterOptions.priceMin"
+                    (change)="applyFilters()"
+                    min="0"
+                  />
+                </mat-form-field>
+                <span class="range-separator">to</span>
+                <mat-form-field appearance="outline">
+                  <mat-label>Max</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="filterOptions.priceMax"
+                    (change)="applyFilters()"
+                    min="0"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="date-range">
+              <span class="range-label">Date Added:</span>
+              <div class="date-inputs">
+                <mat-form-field appearance="outline">
+                  <mat-label>From</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="fromPicker"
+                    [(ngModel)]="dateFrom"
+                    (dateChange)="onDateChange()"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #fromPicker></mat-datepicker>
+                </mat-form-field>
+                <span class="range-separator">to</span>
+                <mat-form-field appearance="outline">
+                  <mat-label>To</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="toPicker"
+                    [(ngModel)]="dateTo"
+                    (dateChange)="onDateChange()"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #toPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button mat-button color="primary" (click)="saveFilterPreset()">
+              <mat-icon>save</mat-icon>
+              Save Filter Preset
+            </button>
+            <button mat-button [matMenuTriggerFor]="presetMenu" *ngIf="filterPresets.length > 0">
+              <mat-icon>filter_list</mat-icon>
+              Load Preset
+            </button>
+            <mat-menu #presetMenu="matMenu">
+              <button
+                mat-menu-item
+                *ngFor="let preset of filterPresets"
+                (click)="loadFilterPreset(preset)"
+              >
+                {{ preset.name }}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="filter-summary" *ngIf="isFiltered">
+          <div class="active-filters">
+            <span class="filter-label">Active filters:</span>
+            <mat-chip-set>
+              <mat-chip *ngIf="filterOptions.search" (removed)="clearSearchFilter()">
+                Search: {{ filterOptions.search }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip *ngIf="filterOptions.priority" (removed)="clearPriorityFilter()">
+                Priority: {{ filterOptions.priority | titlecase }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip *ngIf="filterOptions.category" (removed)="clearCategoryFilter()">
+                Category: {{ getCategoryLabel(filterOptions.category) }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip *ngIf="filterOptions.county" (removed)="clearCountyFilter()">
+                County: {{ filterOptions.county }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip *ngIf="filterOptions.city" (removed)="clearCityFilter()">
+                City: {{ filterOptions.city }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip
+                *ngIf="filterOptions.priceMin !== undefined || filterOptions.priceMax !== undefined"
+                (removed)="clearPriceFilter()"
+              >
+                Price: {{ getPriceRangeLabel() }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip
+                *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
+                (removed)="clearDateFilter()"
+              >
+                Date: {{ getDateRangeLabel() }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <mat-chip *ngFor="let tag of selectedTagFilters" (removed)="removeTagFilter(tag)">
+                Tag: {{ tag }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+          <button mat-button color="primary" (click)="resetFilters()">
+            <mat-icon>clear</mat-icon>
+            Clear All Filters
+          </button>
+        </div>
       </div>
 
       <div class="loading-container" *ngIf="loading">
@@ -339,11 +547,108 @@ import { firstValueFrom } from 'rxjs';
       }
 
       .filters-container {
+        margin-bottom: 24px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #f9f9f9;
+      }
+
+      .filters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .filters-header h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+      }
+
+      .basic-filters {
         display: flex;
         flex-wrap: wrap;
         gap: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
+        align-items: flex-start;
+      }
+
+      .advanced-filters {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .filter-row mat-form-field {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .price-range,
+      .date-range {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .range-label {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 8px;
+      }
+
+      .price-inputs,
+      .date-inputs {
+        display: flex;
         align-items: center;
+        gap: 8px;
+      }
+
+      .price-inputs mat-form-field,
+      .date-inputs mat-form-field {
+        flex: 1;
+      }
+
+      .range-separator {
+        color: #666;
+        margin: 0 8px;
+      }
+
+      .filter-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .filter-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .active-filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .filter-label {
+        font-weight: 500;
+        color: #666;
       }
 
       .search-field {
@@ -560,6 +865,19 @@ export class FavoritesPageComponent implements OnInit {
     sort: 'newest',
   };
   selectedTagFilters: string[] = [];
+  showAdvancedFilters = false;
+  dateFrom: Date | null = null;
+  dateTo: Date | null = null;
+  counties: string[] = [];
+  cities: string[] = [];
+  filterPresets: FilterPreset[] = [];
+  categories = [
+    { value: 'escort', label: 'Escort' },
+    { value: 'massage', label: 'Massage' },
+    { value: 'companion', label: 'Companion' },
+    { value: 'dancer', label: 'Dancer' },
+    { value: 'other', label: 'Other' },
+  ];
   private searchSubject = new Subject<string>();
 
   constructor(
@@ -572,6 +890,8 @@ export class FavoritesPageComponent implements OnInit {
   ngOnInit(): void {
     this.loadFavorites();
     this.loadUserTags();
+    this.loadLocationData();
+    this.loadFilterPresets();
 
     // Set up search debounce
     this.searchSubject
@@ -647,7 +967,244 @@ export class FavoritesPageComponent implements OnInit {
       sort: 'newest',
     };
     this.selectedTagFilters = [];
+    this.dateFrom = null;
+    this.dateTo = null;
     this.loadFavorites();
+  }
+
+  /**
+   * Toggle advanced filters visibility
+   */
+  toggleAdvancedFilters(): void {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
+
+  /**
+   * Load location data for filtering
+   */
+  loadLocationData(): void {
+    // In a real application, this would come from an API
+    this.counties = ['Los Angeles', 'New York', 'Miami-Dade', 'Cook', 'Harris'];
+    this.cities = [];
+  }
+
+  /**
+   * Handle county selection change
+   */
+  onCountyChange(): void {
+    if (this.filterOptions.county) {
+      // In a real application, this would be an API call to get cities for the selected county
+      switch (this.filterOptions.county) {
+        case 'Los Angeles':
+          this.cities = ['Los Angeles', 'Long Beach', 'Pasadena', 'Santa Monica'];
+          break;
+        case 'New York':
+          this.cities = ['New York City', 'Buffalo', 'Rochester', 'Yonkers'];
+          break;
+        case 'Miami-Dade':
+          this.cities = ['Miami', 'Miami Beach', 'Coral Gables', 'Hialeah'];
+          break;
+        case 'Cook':
+          this.cities = ['Chicago', 'Evanston', 'Oak Park', 'Schaumburg'];
+          break;
+        case 'Harris':
+          this.cities = ['Houston', 'Pasadena', 'Spring', 'Baytown'];
+          break;
+        default:
+          this.cities = [];
+      }
+    } else {
+      this.cities = [];
+      this.filterOptions.city = undefined;
+    }
+    this.applyFilters();
+  }
+
+  /**
+   * Handle date range change
+   */
+  onDateChange(): void {
+    if (this.dateFrom) {
+      this.filterOptions.dateFrom = this.dateFrom;
+    } else {
+      delete this.filterOptions.dateFrom;
+    }
+
+    if (this.dateTo) {
+      this.filterOptions.dateTo = this.dateTo;
+    } else {
+      delete this.filterOptions.dateTo;
+    }
+
+    this.applyFilters();
+  }
+
+  /**
+   * Save current filter settings as a preset
+   */
+  saveFilterPreset(): void {
+    this.dialogService
+      .openNotesDialog({
+        title: 'Save Filter Preset',
+        placeholder: 'Enter a name for this filter preset',
+        existingNotes: '',
+      })
+      .subscribe(name => {
+        if (name) {
+          const preset: FilterPreset = {
+            name,
+            filters: { ...this.filterOptions },
+            dateFrom: this.dateFrom,
+            dateTo: this.dateTo,
+            selectedTagFilters: [...this.selectedTagFilters],
+          };
+
+          // In a real application, this would be saved to the server
+          this.filterPresets = [...this.filterPresets, preset];
+          localStorage.setItem('favoriteFilterPresets', JSON.stringify(this.filterPresets));
+          this.notificationService.success(`Filter preset "${name}" saved`);
+        }
+      });
+  }
+
+  /**
+   * Load saved filter presets
+   */
+  loadFilterPresets(): void {
+    const savedPresets = localStorage.getItem('favoriteFilterPresets');
+    if (savedPresets) {
+      try {
+        this.filterPresets = JSON.parse(savedPresets);
+      } catch (error) {
+        console.error('Error parsing filter presets:', error);
+        this.filterPresets = [];
+      }
+    }
+  }
+
+  /**
+   * Apply a saved filter preset
+   */
+  loadFilterPreset(preset: FilterPreset): void {
+    this.filterOptions = { ...preset.filters };
+    this.selectedTagFilters = [...preset.selectedTagFilters];
+    this.dateFrom = preset.dateFrom ? new Date(preset.dateFrom) : null;
+    this.dateTo = preset.dateTo ? new Date(preset.dateTo) : null;
+    this.applyFilters();
+    this.notificationService.success(`Filter preset "${preset.name}" applied`);
+  }
+
+  /**
+   * Get the label for a category value
+   */
+  getCategoryLabel(value: string): string {
+    const category = this.categories.find(c => c.value === value);
+    return category ? category.label : value;
+  }
+
+  /**
+   * Get a formatted label for the price range
+   */
+  getPriceRangeLabel(): string {
+    if (this.filterOptions.priceMin !== undefined && this.filterOptions.priceMax !== undefined) {
+      return `$${this.filterOptions.priceMin} - $${this.filterOptions.priceMax}`;
+    } else if (this.filterOptions.priceMin !== undefined) {
+      return `$${this.filterOptions.priceMin}+`;
+    } else if (this.filterOptions.priceMax !== undefined) {
+      return `Up to $${this.filterOptions.priceMax}`;
+    }
+    return '';
+  }
+
+  /**
+   * Get a formatted label for the date range
+   */
+  getDateRangeLabel(): string {
+    const formatDate = (date: Date | null): string => {
+      if (!date) return '';
+      return new Date(date).toLocaleDateString();
+    };
+
+    if (this.filterOptions.dateFrom && this.filterOptions.dateTo) {
+      return `${formatDate(this.filterOptions.dateFrom as Date)} - ${formatDate(
+        this.filterOptions.dateTo as Date
+      )}`;
+    } else if (this.filterOptions.dateFrom) {
+      return `After ${formatDate(this.filterOptions.dateFrom as Date)}`;
+    } else if (this.filterOptions.dateTo) {
+      return `Before ${formatDate(this.filterOptions.dateTo as Date)}`;
+    }
+    return '';
+  }
+
+  /**
+   * Clear the search filter
+   */
+  clearSearchFilter(): void {
+    delete this.filterOptions.search;
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the priority filter
+   */
+  clearPriorityFilter(): void {
+    delete this.filterOptions.priority;
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the category filter
+   */
+  clearCategoryFilter(): void {
+    delete this.filterOptions.category;
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the county filter
+   */
+  clearCountyFilter(): void {
+    delete this.filterOptions.county;
+    delete this.filterOptions.city;
+    this.cities = [];
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the city filter
+   */
+  clearCityFilter(): void {
+    delete this.filterOptions.city;
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the price filter
+   */
+  clearPriceFilter(): void {
+    delete this.filterOptions.priceMin;
+    delete this.filterOptions.priceMax;
+    this.applyFilters();
+  }
+
+  /**
+   * Clear the date filter
+   */
+  clearDateFilter(): void {
+    delete this.filterOptions.dateFrom;
+    delete this.filterOptions.dateTo;
+    this.dateFrom = null;
+    this.dateTo = null;
+    this.applyFilters();
+  }
+
+  /**
+   * Remove a specific tag filter
+   */
+  removeTagFilter(tag: string): void {
+    this.selectedTagFilters = this.selectedTagFilters.filter(t => t !== tag);
+    this.applyFilters();
   }
 
   /**
@@ -659,6 +1216,11 @@ export class FavoritesPageComponent implements OnInit {
       !!this.filterOptions.category ||
       !!this.filterOptions.county ||
       !!this.filterOptions.city ||
+      !!this.filterOptions.priority ||
+      this.filterOptions.priceMin !== undefined ||
+      this.filterOptions.priceMax !== undefined ||
+      !!this.filterOptions.dateFrom ||
+      !!this.filterOptions.dateTo ||
       this.selectedTagFilters.length > 0 ||
       this.filterOptions.sort !== 'newest'
     );

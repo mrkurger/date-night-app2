@@ -1301,11 +1301,19 @@ GitHub Actions can introduce security risks if not properly configured:
    - Use conditional logic in npm scripts: `[ -n "$CI" ] || command`
 
 5. **Workflow Error Monitoring**:
+
    - Implement automated collection of workflow error logs
    - Use the `workflow_run` event to trigger log collection after workflow completion
    - Store logs in a structured format for easy analysis
    - Create analysis tools to identify common error patterns
    - Provide specific recommendations for fixing issues
+
+6. **Git Conflict Handling in Workflows**:
+   - Check for potential conflicts before pushing changes
+   - Use `git merge-tree` to detect conflicts without modifying the working tree
+   - Create feature branches for changes when conflicts are detected
+   - Automatically create pull requests for manual resolution
+   - Use the GitHub CLI (`gh`) for PR creation from workflows
 
 ### Package Overrides
 

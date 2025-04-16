@@ -98,6 +98,27 @@ export class FavoriteService {
       if (options.search) {
         params = params.set('search', options.search);
       }
+      if (options.priority) {
+        params = params.set('priority', options.priority);
+      }
+      if (options.priceMin !== undefined) {
+        params = params.set('priceMin', options.priceMin.toString());
+      }
+      if (options.priceMax !== undefined) {
+        params = params.set('priceMax', options.priceMax.toString());
+      }
+      if (options.dateFrom) {
+        params = params.set('dateFrom', new Date(options.dateFrom).toISOString());
+      }
+      if (options.dateTo) {
+        params = params.set('dateTo', new Date(options.dateTo).toISOString());
+      }
+      if (options.tags && options.tags.length > 0) {
+        // For multiple tags, we need to handle them specially
+        options.tags.forEach(tag => {
+          params = params.append('tags', tag);
+        });
+      }
     }
 
     return this.http.get<Favorite[]>(this.apiUrl, { params });
