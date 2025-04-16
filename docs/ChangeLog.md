@@ -9,6 +9,13 @@
 - Fixed MongoDB driver warnings:
   - Removed deprecated options `useNewUrlParser` and `useUnifiedTopology` from test setup
   - Fixed duplicate index in token-blacklist model by removing redundant `index: true` on fields with `unique: true`
+  - Fixed duplicate index in wallet model by removing redundant `walletSchema.index({ userId: 1 }, { unique: true })` since `userId` already has `unique: true` in the schema definition
+- Fixed auth service tests:
+  - Added proper environment variables setup in the beforeEach block
+  - Updated JWT verification expectations to use the actual refresh token secret
+- Fixed wallet service tests:
+  - Properly mocked the `id` method on the `paymentMethods` array to fix "is not a function" errors
+  - Structured mock objects to match the actual implementation
 
 ### Added
 
@@ -18,6 +25,7 @@
   - NPM script patterns for handling warnings vs errors
   - Variable naming best practices to avoid conflicts with array methods
   - MongoDB driver best practices to avoid warnings
+  - Environment variables handling in tests
 
 ## 2025-04-19: Documentation Improvements
 

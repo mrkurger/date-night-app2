@@ -345,6 +345,20 @@ For projects with many warnings that need to be addressed over time:
 4. **TypeScript Type Safety**: Angular projects often have TypeScript type safety warnings. Consider addressing these incrementally rather than all at once.
 
 5. **MongoDB Driver Warnings**: When using MongoDB with Node.js:
+
    - Remove deprecated options like `useNewUrlParser` and `useUnifiedTopology` as they're no longer needed in MongoDB driver v4.0.0+
    - Avoid duplicate indexes in Mongoose schemas - don't use both `index: true` and `unique: true` on the same field, as `unique: true` already creates an index
    - Don't call `schema.index()` on fields that already have `index: true` in their definition
+
+6. **Environment Variables in Tests**: When testing code that uses environment variables:
+
+   - Always set up required environment variables in the test setup (e.g., in `beforeEach` or `beforeAll` blocks)
+   - Use consistent environment variable values across related tests
+   - When mocking functions that use environment variables (like JWT verification), ensure the test expectations match the actual implementation
+   - Consider creating a separate test environment configuration file
+
+7. **Mocking Mongoose Subdocument Methods**: When testing code that uses Mongoose subdocument methods:
+   - Remember that Mongoose adds special methods to subdocument arrays like `id()` that aren't available on regular arrays
+   - When mocking these arrays, you need to explicitly add these methods to your mock objects
+   - Structure your mock objects to match the actual implementation, including array-like properties (indexes, length)
+   - Use Jest's `mockImplementation` to create proper behavior for methods like `id()`, `find()`, etc.

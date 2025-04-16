@@ -188,7 +188,7 @@ const walletSchema = new mongoose.Schema(
 );
 
 // Add indexes for better query performance
-walletSchema.index({ userId: 1 }, { unique: true });
+// Note: userId already has a unique index from the schema definition
 walletSchema.index({ 'transactions.status': 1 });
 walletSchema.index({ 'transactions.createdAt': 1 });
 walletSchema.index({ 'transactions.metadata.paymentIntentId': 1 });

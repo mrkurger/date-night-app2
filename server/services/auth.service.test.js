@@ -36,6 +36,10 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Set up environment variables for testing
+    process.env.JWT_SECRET = 'test-jwt-secret';
+    process.env.JWT_REFRESH_SECRET = 'test-jwt-refresh-secret';
   });
 
   describe('authenticate', () => {
@@ -172,7 +176,7 @@ describe('AuthService', () => {
       const result = await AuthService.refreshAccessToken('valid-refresh-token');
 
       // Verify results
-      expect(jwt.verify).toHaveBeenCalledWith('valid-refresh-token', expect.any(String));
+      expect(jwt.verify).toHaveBeenCalledWith('valid-refresh-token', 'test-jwt-refresh-secret');
       expect(User.findById).toHaveBeenCalledWith(mockUser._id);
       expect(jwt.sign).toHaveBeenCalledTimes(2); // Both access and refresh tokens
       expect(result).toHaveProperty('token', 'new-access-token');
@@ -191,7 +195,7 @@ describe('AuthService', () => {
         'Invalid refresh token'
       );
 
-      expect(jwt.verify).toHaveBeenCalledWith('invalid-token', expect.any(String));
+      expect(jwt.verify).toHaveBeenCalledWith('invalid-token', 'test-jwt-refresh-secret');
       expect(User.findById).not.toHaveBeenCalled();
       expect(jwt.sign).not.toHaveBeenCalled();
     });
@@ -207,7 +211,7 @@ describe('AuthService', () => {
         'User not found'
       );
 
-      expect(jwt.verify).toHaveBeenCalledWith('valid-token-wrong-user', expect.any(String));
+      expect(jwt.verify).toHaveBeenCalledWith('valid-token-wrong-user', 'test-jwt-refresh-secret');
       expect(User.findById).toHaveBeenCalledWith('nonexistent-id');
       expect(jwt.sign).not.toHaveBeenCalled();
     });

@@ -107,7 +107,6 @@ describe('Wallet Service', () => {
         },
       ],
       transactions: [mockTransaction],
-      paymentMethods: [mockPaymentMethod],
       settings: {
         defaultCurrency: 'NOK',
         autoWithdrawal: {
@@ -127,8 +126,10 @@ describe('Wallet Service', () => {
           },
         },
       },
-      // Mock the id method for subdocuments
-      paymentMethodsArray: {
+      // Create paymentMethods as an array with methods
+      paymentMethods: {
+        0: mockPaymentMethod,
+        length: 1,
         id: jest.fn().mockImplementation(id => {
           return mockPaymentMethod._id.toString() === id.toString() ? mockPaymentMethod : null;
         }),
