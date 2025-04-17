@@ -40,6 +40,7 @@
     "analyze:security": "npm audit && cd server && npm audit && cd ../client-angular && npm audit",
     "analyze:performance": "npm run test:server:performance",
     "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html",
+    "fix:workflow-issues": "node scripts/fix-workflow-issues.js",
     "prepare": "[ -n \"$CI\" ] || husky",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "cd server && npm run lint || true",
@@ -83,7 +84,17 @@
     "word-wrap": "^1.2.5",
     "vite": "^6.2.7",
     "cookie": "^0.7.2",
-    "got": "^12.1.0"
+    "got": "^12.1.0",
+    "http-proxy-middleware": "^3.0.5",
+    "inflight": "^2.0.0",
+    "rimraf": "^5.0.5",
+    "abab": "^2.0.6",
+    "glob": "^10.3.10",
+    "domexception": "^4.0.0",
+    "@humanwhocodes/config-array": "^0.11.14",
+    "@humanwhocodes/object-schema": "^2.0.3",
+    "@eslint/config-array": "^0.1.2",
+    "@eslint/object-schema": "^0.1.1"
   },
   "engines": {
     "node": "22.14.0",

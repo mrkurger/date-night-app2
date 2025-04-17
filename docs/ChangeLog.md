@@ -1,5 +1,36 @@
 # Change Log
 
+## 2025-04-17: Security and Performance Fixes
+
+### Security Fixes
+
+- **http-proxy-middleware**: Updated from vulnerable version 3.0.3 to 3.0.5 via package overrides to fix security vulnerabilities
+- **ESLint**: Kept at version 8.56.0 for compatibility with TypeScript ESLint packages
+- **TypeScript ESLint**: Kept @typescript-eslint packages at v5.62.0 for compatibility with ESLint 8.56.0
+
+### Performance Improvements
+
+- **Angular Tests**: Increased Node.js heap memory limit for Angular tests to 4GB to prevent "JavaScript heap out of memory" errors
+- **Test Script**: Modified the test script in client-angular/package.json to use `node --max_old_space_size=4096`
+
+### Deprecated Package Fixes
+
+- **inflight**: Updated to v2.0.0+ to fix memory leak issues
+- **rimraf**: Updated to v5.0.5+ to use the latest version
+- **abab**: Kept at v2.0.6 (latest version) to address deprecation warnings
+- **glob**: Updated to v10.3.10+ to use the latest version
+- **domexception**: Updated to v4.0.0+ to address deprecation warnings
+- **@humanwhocodes/config-array**: Replaced with @eslint/config-array
+- **@humanwhocodes/object-schema**: Replaced with @eslint/object-schema
+
+### Added
+
+- **scripts/update-deprecated-packages.js**: Script to add overrides for deprecated packages
+- **scripts/increase-node-memory.js**: Script to increase Node.js heap memory for Angular tests
+- **scripts/fix-workflow-issues.js**: Main script that runs all fixes and reinstalls dependencies
+- **fix:workflow-issues**: Added new npm script to run all fixes in one command
+- **Documentation**: Updated WORKFLOW_FIXES.md with details about the latest fixes
+
 ## 2025-05-20: User Preferences Implementation
 
 ### Added

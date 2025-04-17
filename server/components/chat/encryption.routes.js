@@ -7,7 +7,7 @@
 const express = require('express');
 const router = express.Router();
 const encryptionController = require('./encryption.controller');
-const { authenticate } = require('../../middleware/auth');
+const { protect } = require('../../middleware/auth');
 const { validateRequest } = require('../../middleware/validation');
 const { body, param } = require('express-validator');
 
@@ -18,7 +18,7 @@ const { body, param } = require('express-validator');
  */
 router.post(
   '/register-key',
-  authenticate,
+  protect,
   [
     body('publicKey')
       .notEmpty()
@@ -37,7 +37,7 @@ router.post(
  */
 router.post(
   '/setup-room',
-  authenticate,
+  protect,
   [
     body('roomId')
       .notEmpty()
@@ -56,7 +56,7 @@ router.post(
  */
 router.delete(
   '/room/:roomId',
-  authenticate,
+  protect,
   [
     param('roomId')
       .notEmpty()
@@ -75,7 +75,7 @@ router.delete(
  */
 router.post(
   '/store-key',
-  authenticate,
+  protect,
   [
     body('roomId')
       .notEmpty()
@@ -104,7 +104,7 @@ router.post(
  */
 router.get(
   '/room-key/:roomId',
-  authenticate,
+  protect,
   [
     param('roomId')
       .notEmpty()
@@ -123,7 +123,7 @@ router.get(
  */
 router.get(
   '/participant-keys/:roomId',
-  authenticate,
+  protect,
   [
     param('roomId')
       .notEmpty()
@@ -142,7 +142,7 @@ router.get(
  */
 router.get(
   '/status/:roomId',
-  authenticate,
+  protect,
   [
     param('roomId')
       .notEmpty()

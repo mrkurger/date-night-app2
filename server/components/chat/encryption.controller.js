@@ -68,7 +68,11 @@ exports.setupRoomEncryption = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
