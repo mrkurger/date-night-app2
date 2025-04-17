@@ -213,9 +213,16 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
+          # Handle any unstaged changes by stashing them
+          git stash -u || true
+
           # Pull the latest changes with rebase strategy to avoid merge commits
           git pull --rebase origin main
 
+          # Pop the stash if we stashed anything
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+
+          # Add only the workflow-error-logs directory
           git add workflow-error-logs
 
           # Only commit if there are changes
