@@ -1,0 +1,1140 @@
+2025-04-16T15:12:48.8322071Z Current runner version: '2.323.0'
+2025-04-16T15:12:48.8357211Z ##[group]Operating System
+2025-04-16T15:12:48.8358621Z Ubuntu
+2025-04-16T15:12:48.8359298Z 24.04.2
+2025-04-16T15:12:48.8360106Z LTS
+2025-04-16T15:12:48.8360867Z ##[endgroup]
+2025-04-16T15:12:48.8361666Z ##[group]Runner Image
+2025-04-16T15:12:48.8362472Z Image: ubuntu-24.04
+2025-04-16T15:12:48.8363457Z Version: 20250413.1.0
+2025-04-16T15:12:48.8365123Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T15:12:48.8367574Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-16T15:12:48.8369595Z ##[endgroup]
+2025-04-16T15:12:48.8370387Z ##[group]Runner Image Provisioner
+2025-04-16T15:12:48.8371374Z 2.0.422.1
+2025-04-16T15:12:48.8372085Z ##[endgroup]
+2025-04-16T15:12:48.8376256Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T15:12:48.8379761Z Actions: write
+2025-04-16T15:12:48.8380801Z Attestations: write
+2025-04-16T15:12:48.8381803Z Checks: write
+2025-04-16T15:12:48.8382614Z Contents: write
+2025-04-16T15:12:48.8383447Z Deployments: write
+2025-04-16T15:12:48.8384293Z Discussions: write
+2025-04-16T15:12:48.8385034Z Issues: write
+2025-04-16T15:12:48.8385876Z Metadata: read
+2025-04-16T15:12:48.8386612Z Models: read
+2025-04-16T15:12:48.8387354Z Packages: write
+2025-04-16T15:12:48.8388509Z Pages: write
+2025-04-16T15:12:48.8389341Z PullRequests: write
+2025-04-16T15:12:48.8390118Z RepositoryProjects: write
+2025-04-16T15:12:48.8391075Z SecurityEvents: write
+2025-04-16T15:12:48.8391911Z Statuses: write
+2025-04-16T15:12:48.8392778Z ##[endgroup]
+2025-04-16T15:12:48.8395801Z Secret source: Actions
+2025-04-16T15:12:48.8396933Z Prepare workflow directory
+2025-04-16T15:12:48.8953828Z Prepare all required actions
+2025-04-16T15:12:48.9009638Z Getting action download info
+2025-04-16T15:12:49.3298589Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T15:12:49.3299677Z Version: 4.2.2
+2025-04-16T15:12:49.3300671Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T15:12:49.3301916Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T15:12:49.3302611Z ##[endgroup]
+2025-04-16T15:12:49.4621268Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T15:12:49.4622117Z Version: 4.4.0
+2025-04-16T15:12:49.4622903Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T15:12:49.4623811Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T15:12:49.4624538Z ##[endgroup]
+2025-04-16T15:12:49.7203827Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T15:12:49.7204685Z Version: 4.6.2
+2025-04-16T15:12:49.7205443Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T15:12:49.7206372Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T15:12:49.7207080Z ##[endgroup]
+2025-04-16T15:12:50.1062664Z Complete job name: test (22.x)
+2025-04-16T15:12:50.1659024Z ##[group]Run actions/checkout@v4
+2025-04-16T15:12:50.1659946Z with:
+2025-04-16T15:12:50.1660390Z   repository: mrkurger/date-night-app2
+2025-04-16T15:12:50.1661140Z   token: ***
+2025-04-16T15:12:50.1661547Z   ssh-strict: true
+2025-04-16T15:12:50.1661971Z   ssh-user: git
+2025-04-16T15:12:50.1662404Z   persist-credentials: true
+2025-04-16T15:12:50.1662875Z   clean: true
+2025-04-16T15:12:50.1663331Z   sparse-checkout-cone-mode: true
+2025-04-16T15:12:50.1663841Z   fetch-depth: 1
+2025-04-16T15:12:50.1664265Z   fetch-tags: false
+2025-04-16T15:12:50.1664702Z   show-progress: true
+2025-04-16T15:12:50.1665140Z   lfs: false
+2025-04-16T15:12:50.1665547Z   submodules: false
+2025-04-16T15:12:50.1665986Z   set-safe-directory: true
+2025-04-16T15:12:50.1666656Z env:
+2025-04-16T15:12:50.1667053Z   CI: true
+2025-04-16T15:12:50.1667442Z ##[endgroup]
+2025-04-16T15:12:50.3970396Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T15:12:50.3972151Z ##[group]Getting Git version info
+2025-04-16T15:12:50.3973301Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T15:12:50.3974339Z [command]/usr/bin/git version
+2025-04-16T15:12:50.5051589Z git version 2.49.0
+2025-04-16T15:12:50.5085243Z ##[endgroup]
+2025-04-16T15:12:50.5102180Z Temporarily overriding HOME='/home/runner/work/_temp/fbc6cbbc-956e-4a09-9833-6bd30db6bc70' before making global git config changes
+2025-04-16T15:12:50.5105708Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T15:12:50.5110256Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:12:50.5200395Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T15:12:50.5205040Z ##[group]Initializing the repository
+2025-04-16T15:12:50.5210854Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:12:50.5766705Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T15:12:50.5768386Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T15:12:50.5769913Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T15:12:50.5770943Z hint:
+2025-04-16T15:12:50.5771939Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T15:12:50.5772874Z hint:
+2025-04-16T15:12:50.5773897Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T15:12:50.5775296Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T15:12:50.5776268Z hint:
+2025-04-16T15:12:50.5777110Z hint: 	git branch -m <name>
+2025-04-16T15:12:50.5855173Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T15:12:50.5869604Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T15:12:50.5954597Z ##[endgroup]
+2025-04-16T15:12:50.5956804Z ##[group]Disabling automatic garbage collection
+2025-04-16T15:12:50.5958900Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T15:12:50.5992346Z ##[endgroup]
+2025-04-16T15:12:50.5995059Z ##[group]Setting up auth
+2025-04-16T15:12:50.5999464Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T15:12:50.6033911Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T15:12:50.7644336Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T15:12:50.7681231Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T15:12:50.7918484Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T15:12:50.8071192Z ##[endgroup]
+2025-04-16T15:12:50.8072953Z ##[group]Fetching the repository
+2025-04-16T15:12:50.8075845Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6e8155f4f39e20ba807eafef1ed085b51244ba46:refs/remotes/origin/main
+2025-04-16T15:12:53.5765954Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T15:12:53.5771896Z  * [new ref]         6e8155f4f39e20ba807eafef1ed085b51244ba46 -> origin/main
+2025-04-16T15:12:53.5844119Z ##[endgroup]
+2025-04-16T15:12:53.5845024Z ##[group]Determining the checkout info
+2025-04-16T15:12:53.5857603Z ##[endgroup]
+2025-04-16T15:12:53.5861719Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T15:12:53.5966833Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T15:12:53.6020845Z ##[group]Checking out the ref
+2025-04-16T15:12:53.6033831Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T15:12:54.0860787Z Switched to a new branch 'main'
+2025-04-16T15:12:54.0865327Z branch 'main' set up to track 'origin/main'.
+2025-04-16T15:12:54.0877179Z ##[endgroup]
+2025-04-16T15:12:54.0920048Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T15:12:54.0943394Z 6e8155f4f39e20ba807eafef1ed085b51244ba46
+2025-04-16T15:12:54.1164087Z ##[group]Run actions/setup-node@v4
+2025-04-16T15:12:54.1164396Z with:
+2025-04-16T15:12:54.1164580Z   node-version: 22.x
+2025-04-16T15:12:54.1164763Z   cache: npm
+2025-04-16T15:12:54.1165018Z   cache-dependency-path: client-angular/package-lock.json
+2025-04-16T15:12:54.1165323Z   always-auth: false
+2025-04-16T15:12:54.1165525Z   check-latest: false
+2025-04-16T15:12:54.1165831Z   token: ***
+2025-04-16T15:12:54.1166007Z env:
+2025-04-16T15:12:54.1166168Z   CI: true
+2025-04-16T15:12:54.1166332Z ##[endgroup]
+2025-04-16T15:12:54.2875291Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T15:12:54.2890367Z ##[group]Environment details
+2025-04-16T15:12:56.2207421Z node: v22.14.0
+2025-04-16T15:12:56.2212548Z npm: 10.9.2
+2025-04-16T15:12:56.2217337Z yarn: 1.22.22
+2025-04-16T15:12:56.2227159Z ##[endgroup]
+2025-04-16T15:12:56.2268898Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T15:12:56.4905882Z /home/runner/.npm
+2025-04-16T15:12:56.6423643Z Cache hit for: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T15:12:57.2093756Z Received 69351304 of 69351304 (100.0%), 130.5 MBs/sec
+2025-04-16T15:12:57.2096264Z Cache Size: ~66 MB (69351304 B)
+2025-04-16T15:12:57.2123940Z [command]/usr/bin/tar -xf /home/runner/work/_temp/9c41fe6c-68ca-47b5-8740-84c8d49f749e/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T15:12:57.5322942Z Cache restored successfully
+2025-04-16T15:12:57.5495836Z Cache restored from key: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T15:12:57.5668353Z ##[group]Run npm ci
+2025-04-16T15:12:57.5668652Z [36;1mnpm ci[0m
+2025-04-16T15:12:57.5721508Z shell: /usr/bin/bash -e {0}
+2025-04-16T15:12:57.5721751Z env:
+2025-04-16T15:12:57.5721914Z   CI: true
+2025-04-16T15:12:57.5722079Z ##[endgroup]
+2025-04-16T15:13:03.8846148Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T15:13:04.1976727Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T15:13:04.2265312Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T15:13:04.4034551Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T15:13:04.5908932Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T15:13:05.5937183Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T15:13:05.6162044Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T15:13:10.0312954Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T15:13:25.0319403Z 
+2025-04-16T15:13:25.0320088Z > date-night-app@1.0.0 preinstall
+2025-04-16T15:13:25.0320710Z > node scripts/disable-husky-in-ci.js
+2025-04-16T15:13:25.0321019Z 
+2025-04-16T15:13:25.0674116Z .huskyrc file created to disable husky in CI environments
+2025-04-16T15:13:25.0676781Z .huskyrc file made executable
+2025-04-16T15:13:25.0732438Z 
+2025-04-16T15:13:25.0733046Z > date-night-app@1.0.0 prepare
+2025-04-16T15:13:25.0733740Z > [ -n "$CI" ] || husky
+2025-04-16T15:13:25.0735245Z 
+2025-04-16T15:13:25.1097643Z 
+2025-04-16T15:13:25.1102678Z added 1463 packages, and audited 1465 packages in 27s
+2025-04-16T15:13:25.1105507Z 
+2025-04-16T15:13:25.1106984Z 294 packages are looking for funding
+2025-04-16T15:13:25.1109777Z   run `npm fund` for details
+2025-04-16T15:13:25.1209382Z 
+2025-04-16T15:13:25.1211325Z 3 moderate severity vulnerabilities
+2025-04-16T15:13:25.1211682Z 
+2025-04-16T15:13:25.1212069Z To address all issues (including breaking changes), run:
+2025-04-16T15:13:25.1212646Z   npm audit fix --force
+2025-04-16T15:13:25.1212881Z 
+2025-04-16T15:13:25.1213067Z Run `npm audit` for details.
+2025-04-16T15:13:25.2171956Z ##[group]Run npm test -- --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T15:13:25.2172518Z [36;1mnpm test -- --watch=false --browsers=ChromeHeadless --no-progress[0m
+2025-04-16T15:13:25.2228334Z shell: /usr/bin/bash -e {0}
+2025-04-16T15:13:25.2228561Z env:
+2025-04-16T15:13:25.2228728Z   CI: true
+2025-04-16T15:13:25.2228896Z ##[endgroup]
+2025-04-16T15:13:25.3918358Z 
+2025-04-16T15:13:25.3919367Z > client-angular@0.0.0 test
+2025-04-16T15:13:25.3920500Z > ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T15:13:25.3922096Z 
+2025-04-16T15:13:59.8594561Z [1m[31m
+2025-04-16T15:13:59.8600804Z ./src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:20:0-48 - Error: Module not found: Error: Can't resolve 'chart.js' in '/home/runner/work/date-night-app2/date-night-app2/client-angular/src/app/admin/telemetry-dashboard'
+2025-04-16T15:13:59.8605537Z 
+2025-04-16T15:13:59.8608502Z ./src/app/shared/components/map/map.component.ts - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+2025-04-16T15:13:59.8623583Z SyntaxError: /home/runner/work/date-night-app2/date-night-app2/client-angular/src/app/shared/components/map/map.component.ts: Identifier 'MapComponent' has already been declared. (630:4)
+2025-04-16T15:13:59.8624899Z 
+2025-04-16T15:13:59.8625533Z [0m [90m 628 |[31m ][33m,[31m [33mMapComponent[31m)[33m;[31m
+2025-04-16T15:13:59.8626473Z  [90m 629 |[31m [36mexport[31m { [33mMapComponent[31m }[33m;[31m
+2025-04-16T15:13:59.8628134Z [31m[1m>[22m[1m[31m[90m 630 |[31m [36mlet[31m [33mMapComponent[31m [33m=[31m [36mclass[31m [33mMapComponent[31m {
+2025-04-16T15:13:59.8629310Z  [90m     |[31m     [31m[1m^[22m[1m[31m
+2025-04-16T15:13:59.8630052Z  [90m 631 |[31m     geocodingService[33m;[31m
+2025-04-16T15:13:59.8630884Z  [90m 632 |[31m     height [33m=[31m [32m'400px'[31m[33m;[31m
+2025-04-16T15:13:59.8631880Z  [90m 633 |[31m     initialLatitude [33m=[31m [35m59.9139[31m[33m;[31m[0m
+2025-04-16T15:13:59.8632366Z 
+2025-04-16T15:13:59.8633731Z ./src/app/shared/emerald/card-grid/card-grid.component.spec.ts - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+2025-04-16T15:13:59.8636219Z SyntaxError: /home/runner/work/date-night-app2/date-night-app2/client-angular/src/app/shared/emerald/card-grid/card-grid.component.spec.ts: Unexpected token (11:45)
+2025-04-16T15:13:59.8637295Z 
+2025-04-16T15:13:59.8660143Z [0m [90m  9 |[31m [90m// ===================================================[31m
+2025-04-16T15:13:59.8661445Z  [90m 10 |[31m [36mimport[31m { [33mTestBed[31m } [36mfrom[31m [32m'@angular/core/testing'[31m[33m;[31m
+2025-04-16T15:13:59.8663177Z [31m[1m>[22m[1m[31m[90m 11 |[31m [36mimport[31m { [33mComponent[31m[33m,[31m [33mNO_ERRORS_SCHEMA[31m[33m,[31m } [36mfrom[31m [33m;[31m
+2025-04-16T15:13:59.8664350Z  [90m    |[31m                                              [31m[1m^[22m[1m[31m
+2025-04-16T15:13:59.8665519Z  [90m 12 |[31m [36mimport[31m { [33mCardGridComponent[31m } [36mfrom[31m [32m'./card-grid.component'[31m[33m;[31m
+2025-04-16T15:13:59.8667349Z  [90m 13 |[31m [36mimport[31m { [33mSkeletonLoaderComponent[31m } [36mfrom[31m [32m'../components/skeleton-loader/skeleton-loader.component'[31m[33m;[31m
+2025-04-16T15:13:59.8669439Z  [90m 14 |[31m [36mimport[31m { [33mCommonTestModule[31m } [36mfrom[31m [32m'../../../testing/common-test.module'[31m[33m;[31m[0m
+2025-04-16T15:13:59.8670242Z 
+2025-04-16T15:13:59.8672554Z Error: [96msrc/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts[0m:[93m18[0m:[93m38[0m - [91merror[0m[90m TS2307: [0mCannot find module 'chart.js' or its corresponding type declarations.
+2025-04-16T15:13:59.8673852Z 
+2025-04-16T15:13:59.8674398Z [7m18[0m import { Chart, registerables } from 'chart.js';
+2025-04-16T15:13:59.8675649Z [7m  [0m [91m                                     ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8676049Z 
+2025-04-16T15:13:59.8676059Z 
+2025-04-16T15:13:59.8677487Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m180[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'AlertTimeWindow'.
+2025-04-16T15:13:59.8712021Z 
+2025-04-16T15:13:59.8712406Z [7m180[0m         timeWindow,
+2025-04-16T15:13:59.8713000Z [7m   [0m [91m        ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8713313Z 
+2025-04-16T15:13:59.8713820Z   [96msrc/app/core/models/alert.model.ts[0m:[93m52[0m:[93m3[0m
+2025-04-16T15:13:59.8714629Z     [7m52[0m   timeWindow: AlertTimeWindow;
+2025-04-16T15:13:59.8715227Z     [7m  [0m [96m  ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8716133Z     The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
+2025-04-16T15:13:59.8716804Z 
+2025-04-16T15:13:59.8716814Z 
+2025-04-16T15:13:59.8718467Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m185[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"ui"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8719391Z 
+2025-04-16T15:13:59.8719750Z [7m185[0m           channel: 'ui',
+2025-04-16T15:13:59.8720352Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8720658Z 
+2025-04-16T15:13:59.8721157Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8721924Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8722481Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8723329Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8723990Z 
+2025-04-16T15:13:59.8724000Z 
+2025-04-16T15:13:59.8725311Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m188[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"email"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8726213Z 
+2025-04-16T15:13:59.8726533Z [7m188[0m           channel: 'email',
+2025-04-16T15:13:59.8727112Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8727386Z 
+2025-04-16T15:13:59.8729142Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8729942Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8730463Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8731478Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8732154Z 
+2025-04-16T15:13:59.8732165Z 
+2025-04-16T15:13:59.8733619Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m219[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'AlertTimeWindow'.
+2025-04-16T15:13:59.8734611Z 
+2025-04-16T15:13:59.8734957Z [7m219[0m         timeWindow,
+2025-04-16T15:13:59.8735530Z [7m   [0m [91m        ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8735823Z 
+2025-04-16T15:13:59.8736311Z   [96msrc/app/core/models/alert.model.ts[0m:[93m52[0m:[93m3[0m
+2025-04-16T15:13:59.8737085Z     [7m52[0m   timeWindow: AlertTimeWindow;
+2025-04-16T15:13:59.8737679Z     [7m  [0m [96m  ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8738745Z     The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
+2025-04-16T15:13:59.8739398Z 
+2025-04-16T15:13:59.8739408Z 
+2025-04-16T15:13:59.8740767Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m223[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"ui"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8741712Z 
+2025-04-16T15:13:59.8742039Z [7m223[0m           channel: 'ui',
+2025-04-16T15:13:59.8742984Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8743291Z 
+2025-04-16T15:13:59.8743777Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8744539Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8745090Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8746213Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8746882Z 
+2025-04-16T15:13:59.8746893Z 
+2025-04-16T15:13:59.8748491Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m226[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"email"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8749440Z 
+2025-04-16T15:13:59.8749804Z [7m226[0m           channel: 'email',
+2025-04-16T15:13:59.8750400Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8750694Z 
+2025-04-16T15:13:59.8751175Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8751891Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8752412Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8753250Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8753954Z 
+2025-04-16T15:13:59.8753964Z 
+2025-04-16T15:13:59.8755294Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m259[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'AlertTimeWindow'.
+2025-04-16T15:13:59.8756258Z 
+2025-04-16T15:13:59.8756546Z [7m259[0m         timeWindow,
+2025-04-16T15:13:59.8757095Z [7m   [0m [91m        ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8757380Z 
+2025-04-16T15:13:59.8758066Z   [96msrc/app/core/models/alert.model.ts[0m:[93m52[0m:[93m3[0m
+2025-04-16T15:13:59.8758871Z     [7m52[0m   timeWindow: AlertTimeWindow;
+2025-04-16T15:13:59.8759461Z     [7m  [0m [96m  ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8760378Z     The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
+2025-04-16T15:13:59.8761037Z 
+2025-04-16T15:13:59.8761046Z 
+2025-04-16T15:13:59.8762375Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m264[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"ui"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8763276Z 
+2025-04-16T15:13:59.8763570Z [7m264[0m           channel: 'ui',
+2025-04-16T15:13:59.8764137Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8764412Z 
+2025-04-16T15:13:59.8764880Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8765581Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8766093Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8766916Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8767537Z 
+2025-04-16T15:13:59.8767545Z 
+2025-04-16T15:13:59.8770661Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m267[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"slack"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8771621Z 
+2025-04-16T15:13:59.8771974Z [7m267[0m           channel: 'slack',
+2025-04-16T15:13:59.8772557Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8772834Z 
+2025-04-16T15:13:59.8773293Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8773993Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8774504Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8775304Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8775911Z 
+2025-04-16T15:13:59.8775920Z 
+2025-04-16T15:13:59.8777239Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m300[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'AlertTimeWindow'.
+2025-04-16T15:13:59.8778335Z 
+2025-04-16T15:13:59.8778624Z [7m300[0m         timeWindow,
+2025-04-16T15:13:59.8779454Z [7m   [0m [91m        ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8779750Z 
+2025-04-16T15:13:59.8780230Z   [96msrc/app/core/models/alert.model.ts[0m:[93m52[0m:[93m3[0m
+2025-04-16T15:13:59.8780982Z     [7m52[0m   timeWindow: AlertTimeWindow;
+2025-04-16T15:13:59.8781536Z     [7m  [0m [96m  ~~~~~~~~~~[0m
+2025-04-16T15:13:59.8782580Z     The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
+2025-04-16T15:13:59.8783301Z 
+2025-04-16T15:13:59.8783311Z 
+2025-04-16T15:13:59.8784611Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m305[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"ui"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8785529Z 
+2025-04-16T15:13:59.8785842Z [7m305[0m           channel: 'ui',
+2025-04-16T15:13:59.8786398Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8786687Z 
+2025-04-16T15:13:59.8787147Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8808017Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8808742Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8809603Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8810247Z 
+2025-04-16T15:13:59.8810258Z 
+2025-04-16T15:13:59.8811571Z Error: [96msrc/app/core/services/alert.service.ts[0m:[93m308[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType '"email"' is not assignable to type 'AlertChannel'.
+2025-04-16T15:13:59.8812487Z 
+2025-04-16T15:13:59.8812794Z [7m308[0m           channel: 'email',
+2025-04-16T15:13:59.8813362Z [7m   [0m [91m          ~~~~~~~[0m
+2025-04-16T15:13:59.8813639Z 
+2025-04-16T15:13:59.8814107Z   [96msrc/app/core/models/alert.model.ts[0m:[93m66[0m:[93m3[0m
+2025-04-16T15:13:59.8814806Z     [7m66[0m   channel: AlertChannel;
+2025-04-16T15:13:59.8815313Z     [7m  [0m [96m  ~~~~~~~[0m
+2025-04-16T15:13:59.8816114Z     The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
+2025-04-16T15:13:59.8816747Z 
+2025-04-16T15:13:59.8816755Z 
+2025-04-16T15:13:59.8818786Z Error: [96msrc/app/core/services/encryption.service.spec.ts[0m:[93m77[0m:[93m22[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'SpyObj<AuthService>'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8820090Z 
+2025-04-16T15:13:59.8820716Z [7m77[0m       authServiceSpy.getCurrentUserId.and.returnValue('');
+2025-04-16T15:13:59.8821581Z [7m  [0m [91m                     ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8821920Z 
+2025-04-16T15:13:59.8822452Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8823221Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8823807Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8824304Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8824619Z 
+2025-04-16T15:13:59.8824635Z 
+2025-04-16T15:13:59.8826337Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m73[0m:[93m39[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8827542Z 
+2025-04-16T15:13:59.8828381Z [7m73[0m       const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8829287Z [7m  [0m [91m                                      ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8829645Z 
+2025-04-16T15:13:59.8830154Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8830945Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8831541Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8832027Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8832334Z 
+2025-04-16T15:13:59.8832343Z 
+2025-04-16T15:13:59.8834123Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m113[0m:[93m37[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8835621Z 
+2025-04-16T15:13:59.8836197Z [7m113[0m     const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8837061Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8837413Z 
+2025-04-16T15:13:59.8838335Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8839168Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8839763Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8840241Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8840539Z 
+2025-04-16T15:13:59.8840548Z 
+2025-04-16T15:13:59.8842290Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m389[0m:[93m37[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8843409Z 
+2025-04-16T15:13:59.8843983Z [7m389[0m     const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8844885Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8845243Z 
+2025-04-16T15:13:59.8845778Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8846572Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8847225Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8847938Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8848274Z 
+2025-04-16T15:13:59.8848284Z 
+2025-04-16T15:13:59.8850083Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m522[0m:[93m37[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8851326Z 
+2025-04-16T15:13:59.8851906Z [7m522[0m     const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8852828Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8853192Z 
+2025-04-16T15:13:59.8853736Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8854487Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8855033Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8855520Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8855830Z 
+2025-04-16T15:13:59.8855851Z 
+2025-04-16T15:13:59.8857662Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m721[0m:[93m37[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8859094Z 
+2025-04-16T15:13:59.8859672Z [7m721[0m     const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8860600Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8860957Z 
+2025-04-16T15:13:59.8861485Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8862338Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8862970Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8863497Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8863815Z 
+2025-04-16T15:13:59.8863826Z 
+2025-04-16T15:13:59.8865653Z Error: [96msrc/app/core/services/encryption.service.ts[0m:[93m755[0m:[93m37[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.8875399Z 
+2025-04-16T15:13:59.8875990Z [7m755[0m     const userId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.8876845Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8877185Z 
+2025-04-16T15:13:59.8877666Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.8878631Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.8879231Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8889789Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.8890128Z 
+2025-04-16T15:13:59.8890139Z 
+2025-04-16T15:13:59.8892815Z Error: [96msrc/app/core/services/favorite.service.spec.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ _id: string; ad: { _id: string; title: string; }; }[]' is not assignable to parameter of type 'Expected<ArrayLike<Favorite>> | ArrayContaining<Favorite>'.
+2025-04-16T15:13:59.8895376Z   Type '{ _id: string; ad: { _id: string; title: string; }; }[]' is not assignable to type '{ [x: number]: ExpectedRecursive<Favorite>; length: ExpectedRecursive<number>; }'.
+2025-04-16T15:13:59.8896558Z     'number' index signatures are incompatible.
+2025-04-16T15:13:59.8897545Z       Type '{ _id: string; ad: { _id: string; title: string; }; }' is not assignable to type 'ExpectedRecursive<Favorite>'.
+2025-04-16T15:13:59.8900257Z         Type '{ _id: string; ad: { _id: string; title: string; }; }' is missing the following properties from type '{ _id: Any | ExpectedRecursive<string>; user: Any | ExpectedRecursive<string>; ad: Any | ExpectedRecursive<Ad>; ... 5 more ...; updatedAt: Any | ExpectedRecursive<...>; }': user, notes, notificationsEnabled, tags, and 3 more.
+2025-04-16T15:13:59.8902093Z 
+2025-04-16T15:13:59.8902643Z [7m58[0m         expect(favorites).toEqual(mockFavorites);
+2025-04-16T15:13:59.8903538Z [7m  [0m [91m                                  ~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.8903903Z 
+2025-04-16T15:13:59.8903921Z 
+2025-04-16T15:13:59.8905437Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m101[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'priority' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8906518Z 
+2025-04-16T15:13:59.8906921Z [7m101[0m       if (options.priority) {
+2025-04-16T15:13:59.8907628Z [7m   [0m [91m                  ~~~~~~~~[0m
+2025-04-16T15:13:59.8928222Z 
+2025-04-16T15:13:59.8928235Z 
+2025-04-16T15:13:59.8929837Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m102[0m:[93m49[0m - [91merror[0m[90m TS2339: [0mProperty 'priority' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8930933Z 
+2025-04-16T15:13:59.8931478Z [7m102[0m         params = params.set('priority', options.priority);
+2025-04-16T15:13:59.8932387Z [7m   [0m [91m                                                ~~~~~~~~[0m
+2025-04-16T15:13:59.8932754Z 
+2025-04-16T15:13:59.8932763Z 
+2025-04-16T15:13:59.8934283Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m104[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'priceMin' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8935317Z 
+2025-04-16T15:13:59.8935802Z [7m104[0m       if (options.priceMin !== undefined) {
+2025-04-16T15:13:59.8936546Z [7m   [0m [91m                  ~~~~~~~~[0m
+2025-04-16T15:13:59.8936874Z 
+2025-04-16T15:13:59.8936883Z 
+2025-04-16T15:13:59.8938743Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m105[0m:[93m49[0m - [91merror[0m[90m TS2339: [0mProperty 'priceMin' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8978186Z 
+2025-04-16T15:13:59.8978894Z [7m105[0m         params = params.set('priceMin', options.priceMin.toString());
+2025-04-16T15:13:59.8979859Z [7m   [0m [91m                                                ~~~~~~~~[0m
+2025-04-16T15:13:59.8980231Z 
+2025-04-16T15:13:59.8980256Z 
+2025-04-16T15:13:59.8981765Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m107[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'priceMax' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8982874Z 
+2025-04-16T15:13:59.8983290Z [7m107[0m       if (options.priceMax !== undefined) {
+2025-04-16T15:13:59.8983948Z [7m   [0m [91m                  ~~~~~~~~[0m
+2025-04-16T15:13:59.8984243Z 
+2025-04-16T15:13:59.8984252Z 
+2025-04-16T15:13:59.8985707Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m108[0m:[93m49[0m - [91merror[0m[90m TS2339: [0mProperty 'priceMax' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8987011Z 
+2025-04-16T15:13:59.8987613Z [7m108[0m         params = params.set('priceMax', options.priceMax.toString());
+2025-04-16T15:13:59.8988770Z [7m   [0m [91m                                                ~~~~~~~~[0m
+2025-04-16T15:13:59.8989108Z 
+2025-04-16T15:13:59.8989117Z 
+2025-04-16T15:13:59.8990740Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m110[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'dateFrom' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8991778Z 
+2025-04-16T15:13:59.8992120Z [7m110[0m       if (options.dateFrom) {
+2025-04-16T15:13:59.8992746Z [7m   [0m [91m                  ~~~~~~~~[0m
+2025-04-16T15:13:59.8993041Z 
+2025-04-16T15:13:59.8993057Z 
+2025-04-16T15:13:59.8994492Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m111[0m:[93m58[0m - [91merror[0m[90m TS2339: [0mProperty 'dateFrom' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.8995521Z 
+2025-04-16T15:13:59.8996219Z [7m111[0m         params = params.set('dateFrom', new Date(options.dateFrom).toISOString());
+2025-04-16T15:13:59.8997244Z [7m   [0m [91m                                                         ~~~~~~~~[0m
+2025-04-16T15:13:59.8997608Z 
+2025-04-16T15:13:59.8997617Z 
+2025-04-16T15:13:59.8999521Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m113[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'dateTo' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.9000539Z 
+2025-04-16T15:13:59.9000887Z [7m113[0m       if (options.dateTo) {
+2025-04-16T15:13:59.9001504Z [7m   [0m [91m                  ~~~~~~[0m
+2025-04-16T15:13:59.9001804Z 
+2025-04-16T15:13:59.9001813Z 
+2025-04-16T15:13:59.9003258Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m114[0m:[93m56[0m - [91merror[0m[90m TS2339: [0mProperty 'dateTo' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.9004261Z 
+2025-04-16T15:13:59.9004926Z [7m114[0m         params = params.set('dateTo', new Date(options.dateTo).toISOString());
+2025-04-16T15:13:59.9005895Z [7m   [0m [91m                                                       ~~~~~~[0m
+2025-04-16T15:13:59.9006294Z 
+2025-04-16T15:13:59.9006303Z 
+2025-04-16T15:13:59.9027993Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m116[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'tags' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.9029113Z 
+2025-04-16T15:13:59.9029669Z [7m116[0m       if (options.tags && options.tags.length > 0) {
+2025-04-16T15:13:59.9030385Z [7m   [0m [91m                  ~~~~[0m
+2025-04-16T15:13:59.9030684Z 
+2025-04-16T15:13:59.9030693Z 
+2025-04-16T15:13:59.9032122Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m116[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'tags' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.9033121Z 
+2025-04-16T15:13:59.9033613Z [7m116[0m       if (options.tags && options.tags.length > 0) {
+2025-04-16T15:13:59.9034386Z [7m   [0m [91m                                  ~~~~[0m
+2025-04-16T15:13:59.9034724Z 
+2025-04-16T15:13:59.9034734Z 
+2025-04-16T15:13:59.9036191Z Error: [96msrc/app/core/services/favorite.service.ts[0m:[93m118[0m:[93m17[0m - [91merror[0m[90m TS2339: [0mProperty 'tags' does not exist on type 'FavoriteFilterOptions'.
+2025-04-16T15:13:59.9037241Z 
+2025-04-16T15:13:59.9037663Z [7m118[0m         options.tags.forEach(tag => {
+2025-04-16T15:13:59.9038945Z [7m   [0m [91m                ~~~~[0m
+2025-04-16T15:13:59.9039266Z 
+2025-04-16T15:13:59.9039286Z 
+2025-04-16T15:13:59.9041395Z Error: [96msrc/app/core/services/geocoding.service.ts[0m:[93m62[0m:[93m5[0m - [91merror[0m[90m TS2322: [0mType 'Observable<GeocodingResult | { type: string; coordinates: [number, number]; }>' is not assignable to type 'Observable<GeocodingResult>'.
+2025-04-16T15:13:59.9043565Z   Type 'GeocodingResult | { type: string; coordinates: [number, number]; }' is not assignable to type 'GeocodingResult'.
+2025-04-16T15:13:59.9045191Z     Type '{ type: string; coordinates: [number, number]; }' is not assignable to type 'GeocodingResult'.
+2025-04-16T15:13:59.9046093Z       Types of property 'type' are incompatible.
+2025-04-16T15:13:59.9047146Z         Type 'string' is not assignable to type '"Point"'.
+2025-04-16T15:13:59.9047600Z 
+2025-04-16T15:13:59.9060156Z [7m62[0m     return this.locationService.getCityCoordinates(city).pipe(
+2025-04-16T15:13:59.9060913Z [7m  [0m [91m    ~~~~~~[0m
+2025-04-16T15:13:59.9061157Z 
+2025-04-16T15:13:59.9061166Z 
+2025-04-16T15:13:59.9062961Z Error: [96msrc/app/core/services/geocoding.service.ts[0m:[93m155[0m:[93m5[0m - [91merror[0m[90m TS2322: [0mType 'Observable<{ type: string; coordinates: number[]; }>' is not assignable to type 'Observable<GeocodingResult>'.
+2025-04-16T15:13:59.9064658Z   Type '{ type: string; coordinates: number[]; }' is not assignable to type 'GeocodingResult'.
+2025-04-16T15:13:59.9065448Z     Types of property 'type' are incompatible.
+2025-04-16T15:13:59.9066027Z       Type 'string' is not assignable to type '"Point"'.
+2025-04-16T15:13:59.9066378Z 
+2025-04-16T15:13:59.9067009Z [7m155[0m     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
+2025-04-16T15:13:59.9067959Z [7m   [0m [91m    ~~~~~~[0m
+2025-04-16T15:13:59.9068217Z 
+2025-04-16T15:13:59.9068227Z 
+2025-04-16T15:13:59.9071953Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m98[0m:[93m53[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Observable<{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]>' is not assignable to parameter of type 'Observable<Favorite[]>'.
+2025-04-16T15:13:59.9075865Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type 'Favorite[]'.
+2025-04-16T15:13:59.9079242Z     Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9080893Z 
+2025-04-16T15:13:59.9081568Z [7m98[0m     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
+2025-04-16T15:13:59.9082579Z [7m  [0m [91m                                                    ~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9082975Z 
+2025-04-16T15:13:59.9082983Z 
+2025-04-16T15:13:59.9086950Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m103[0m:[93m41[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to parameter of type 'Expected<ArrayLike<Favorite>> | ArrayContaining<Favorite>'.
+2025-04-16T15:13:59.9091639Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type '{ [x: number]: ExpectedRecursive<Favorite>; length: ExpectedRecursive<number>; }'.
+2025-04-16T15:13:59.9093573Z     'number' index signatures are incompatible.
+2025-04-16T15:13:59.9095468Z       Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is not assignable to type 'ExpectedRecursive<Favorite>'.
+2025-04-16T15:13:59.9100509Z         Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is not assignable to type 'Favorite | { _id: Any | ExpectedRecursive<string>; user: Any | ExpectedRecursive<string>; ad: Any | ExpectedRecursive<Ad>; ... 5 more ...; updatedAt: Any | ExpectedRecursive<...>; }'.
+2025-04-16T15:13:59.9105522Z           Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type '{ _id: Any | ExpectedRecursive<string>; user: Any | ExpectedRecursive<string>; ad: Any | ExpectedRecursive<Ad>; ... 5 more ...; updatedAt: Any | ExpectedRecursive<...>; }': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9108077Z 
+2025-04-16T15:13:59.9108657Z [7m103[0m     expect(component.favorites).toEqual(mockFavorites);
+2025-04-16T15:13:59.9109575Z [7m   [0m [91m                                        ~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9109950Z 
+2025-04-16T15:13:59.9109960Z 
+2025-04-16T15:13:59.9113788Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m117[0m:[93m53[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Observable<{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]>' is not assignable to parameter of type 'Observable<Favorite[]>'.
+2025-04-16T15:13:59.9118243Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type 'Favorite[]'.
+2025-04-16T15:13:59.9121464Z     Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9123091Z 
+2025-04-16T15:13:59.9123830Z [7m117[0m     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
+2025-04-16T15:13:59.9124906Z [7m   [0m [91m                                                    ~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9125284Z 
+2025-04-16T15:13:59.9125306Z 
+2025-04-16T15:13:59.9129349Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m130[0m:[93m53[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Observable<{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]>' is not assignable to parameter of type 'Observable<Favorite[]>'.
+2025-04-16T15:13:59.9133501Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type 'Favorite[]'.
+2025-04-16T15:13:59.9136760Z     Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9138853Z 
+2025-04-16T15:13:59.9139558Z [7m130[0m     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
+2025-04-16T15:13:59.9140728Z [7m   [0m [91m                                                    ~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9141072Z 
+2025-04-16T15:13:59.9141087Z 
+2025-04-16T15:13:59.9144559Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m134[0m:[93m35[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is not assignable to parameter of type 'Favorite'.
+2025-04-16T15:13:59.9148874Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9150566Z 
+2025-04-16T15:13:59.9151096Z [7m134[0m     component.toggleNotifications(mockFavorites[0]);
+2025-04-16T15:13:59.9151956Z [7m   [0m [91m                                  ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9152304Z 
+2025-04-16T15:13:59.9152312Z 
+2025-04-16T15:13:59.9156058Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m144[0m:[93m53[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Observable<{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]>' is not assignable to parameter of type 'Observable<Favorite[]>'.
+2025-04-16T15:13:59.9160187Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type 'Favorite[]'.
+2025-04-16T15:13:59.9163422Z     Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9165090Z 
+2025-04-16T15:13:59.9165785Z [7m144[0m     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
+2025-04-16T15:13:59.9166834Z [7m   [0m [91m                                                    ~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9167195Z 
+2025-04-16T15:13:59.9167204Z 
+2025-04-16T15:13:59.9170957Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m148[0m:[93m27[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is not assignable to parameter of type 'Favorite'.
+2025-04-16T15:13:59.9175070Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9176735Z 
+2025-04-16T15:13:59.9177282Z [7m148[0m     component.updateNotes(mockFavorites[0], 'New notes');
+2025-04-16T15:13:59.9178475Z [7m   [0m [91m                          ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9178800Z 
+2025-04-16T15:13:59.9178809Z 
+2025-04-16T15:13:59.9182790Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m156[0m:[93m53[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Observable<{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]>' is not assignable to parameter of type 'Observable<Favorite[]>'.
+2025-04-16T15:13:59.9186799Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }[]' is not assignable to type 'Favorite[]'.
+2025-04-16T15:13:59.9190225Z     Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9191861Z 
+2025-04-16T15:13:59.9192572Z [7m156[0m     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
+2025-04-16T15:13:59.9193592Z [7m   [0m [91m                                                    ~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9193937Z 
+2025-04-16T15:13:59.9193946Z 
+2025-04-16T15:13:59.9197460Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.spec.ts[0m:[93m165[0m:[93m31[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is not assignable to parameter of type 'Favorite'.
+2025-04-16T15:13:59.9201793Z   Type '{ _id: string; ad: { _id: string; title: string; price: number; location: { city: string; county: string; }; images: { url: string; }[]; advertiser: { _id: string; }; }; notes: string; notificationsEnabled: boolean; createdAt: string; }' is missing the following properties from type 'Favorite': user, tags, priority, updatedAt
+2025-04-16T15:13:59.9203468Z 
+2025-04-16T15:13:59.9203931Z [7m165[0m     component.openNotesDialog(mockFavorites[0]);
+2025-04-16T15:13:59.9204700Z [7m   [0m [91m                              ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9205031Z 
+2025-04-16T15:13:59.9205040Z 
+2025-04-16T15:13:59.9206597Z Error: [96msrc/app/features/favorites/favorites-list/favorites-list.component.ts[0m:[93m875[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'selected' does not exist on type 'Favorite'.
+2025-04-16T15:13:59.9208015Z 
+2025-04-16T15:13:59.9208471Z [7m875[0m       .filter(favorite => favorite.selected)
+2025-04-16T15:13:59.9209222Z [7m   [0m [91m                                   ~~~~~~~~[0m
+2025-04-16T15:13:59.9209553Z 
+2025-04-16T15:13:59.9209562Z 
+2025-04-16T15:13:59.9211475Z Error: [96msrc/app/shared/components/chat-message/chat-message.component.ts[0m:[93m40[0m:[93m44[0m - [91merror[0m[90m TS2551: [0mProperty 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'?
+2025-04-16T15:13:59.9212791Z 
+2025-04-16T15:13:59.9213360Z [7m40[0m     const currentUserId = this.authService.getCurrentUserId();
+2025-04-16T15:13:59.9214247Z [7m  [0m [91m                                           ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9214585Z 
+2025-04-16T15:13:59.9215068Z   [96msrc/app/core/services/auth.service.ts[0m:[93m135[0m:[93m3[0m
+2025-04-16T15:13:59.9215823Z     [7m135[0m   getCurrentUser(): User | null {
+2025-04-16T15:13:59.9216395Z     [7m   [0m [96m  ~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9217250Z     'getCurrentUser' is declared here.
+2025-04-16T15:13:59.9217551Z 
+2025-04-16T15:13:59.9217559Z 
+2025-04-16T15:13:59.9219333Z Error: [96msrc/app/shared/components/chat-message/chat-message.component.ts[0m:[93m109[0m:[93m60[0m - [91merror[0m[90m TS2339: [0mProperty 'createdAt' does not exist on type 'ChatMessage'.
+2025-04-16T15:13:59.9220660Z 
+2025-04-16T15:13:59.9221440Z [7m109[0m     return new Date(this.message.timestamp || this.message.createdAt || Date.now());
+2025-04-16T15:13:59.9222504Z [7m   [0m [91m                                                           ~~~~~~~~~[0m
+2025-04-16T15:13:59.9222877Z 
+2025-04-16T15:13:59.9222888Z 
+2025-04-16T15:13:59.9224085Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m8[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9224928Z 
+2025-04-16T15:13:59.9225252Z [7m8[0m jest.mock('leaflet', () => {
+2025-04-16T15:13:59.9225770Z [7m [0m [91m~~~~[0m
+2025-04-16T15:13:59.9225981Z 
+2025-04-16T15:13:59.9225989Z 
+2025-04-16T15:13:59.9227152Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m9[0m:[93m26[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9228264Z 
+2025-04-16T15:13:59.9228796Z [7m9[0m   const originalModule = jest.requireActual('leaflet');
+2025-04-16T15:13:59.9229537Z [7m [0m [91m                         ~~~~[0m
+2025-04-16T15:13:59.9229846Z 
+2025-04-16T15:13:59.9229855Z 
+2025-04-16T15:13:59.9231025Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m13[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9231872Z 
+2025-04-16T15:13:59.9232245Z [7m13[0m     setView: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9232852Z [7m  [0m [91m             ~~~~[0m
+2025-04-16T15:13:59.9233111Z 
+2025-04-16T15:13:59.9233119Z 
+2025-04-16T15:13:59.9234338Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m14[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9235217Z 
+2025-04-16T15:13:59.9235538Z [7m14[0m     remove: jest.fn(),
+2025-04-16T15:13:59.9236055Z [7m  [0m [91m            ~~~~[0m
+2025-04-16T15:13:59.9236333Z 
+2025-04-16T15:13:59.9236342Z 
+2025-04-16T15:13:59.9237569Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m15[0m:[93m9[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9238644Z 
+2025-04-16T15:13:59.9239072Z [7m15[0m     on: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9239711Z [7m  [0m [91m        ~~~~[0m
+2025-04-16T15:13:59.9239985Z 
+2025-04-16T15:13:59.9239994Z 
+2025-04-16T15:13:59.9241212Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m16[0m:[93m10[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9242072Z 
+2025-04-16T15:13:59.9242384Z [7m16[0m     off: jest.fn(),
+2025-04-16T15:13:59.9242944Z [7m  [0m [91m         ~~~~[0m
+2025-04-16T15:13:59.9243217Z 
+2025-04-16T15:13:59.9243227Z 
+2025-04-16T15:13:59.9244426Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m17[0m:[93m21[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9245294Z 
+2025-04-16T15:13:59.9245646Z [7m17[0m     invalidateSize: jest.fn(),
+2025-04-16T15:13:59.9246300Z [7m  [0m [91m                    ~~~~[0m
+2025-04-16T15:13:59.9246604Z 
+2025-04-16T15:13:59.9246622Z 
+2025-04-16T15:13:59.9248080Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m18[0m:[93m15[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9248960Z 
+2025-04-16T15:13:59.9249309Z [7m18[0m     addLayer: jest.fn(),
+2025-04-16T15:13:59.9249896Z [7m  [0m [91m              ~~~~[0m
+2025-04-16T15:13:59.9250187Z 
+2025-04-16T15:13:59.9250195Z 
+2025-04-16T15:13:59.9251394Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m19[0m:[93m18[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9252487Z 
+2025-04-16T15:13:59.9252828Z [7m19[0m     removeLayer: jest.fn(),
+2025-04-16T15:13:59.9253437Z [7m  [0m [91m                 ~~~~[0m
+2025-04-16T15:13:59.9253733Z 
+2025-04-16T15:13:59.9253743Z 
+2025-04-16T15:13:59.9255123Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m20[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9255979Z 
+2025-04-16T15:13:59.9256426Z [7m20[0m     getZoom: jest.fn().mockReturnValue(10),
+2025-04-16T15:13:59.9257079Z [7m  [0m [91m             ~~~~[0m
+2025-04-16T15:13:59.9257353Z 
+2025-04-16T15:13:59.9257361Z 
+2025-04-16T15:13:59.9258741Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m21[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9259594Z 
+2025-04-16T15:13:59.9259937Z [7m21[0m     setZoom: jest.fn(),
+2025-04-16T15:13:59.9260532Z [7m  [0m [91m             ~~~~[0m
+2025-04-16T15:13:59.9260814Z 
+2025-04-16T15:13:59.9260823Z 
+2025-04-16T15:13:59.9262012Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m22[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9262876Z 
+2025-04-16T15:13:59.9263443Z [7m22[0m     getCenter: jest.fn().mockReturnValue({ lat: 0, lng: 0 }),
+2025-04-16T15:13:59.9264159Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9264442Z 
+2025-04-16T15:13:59.9264451Z 
+2025-04-16T15:13:59.9265627Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m23[0m:[93m12[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9266476Z 
+2025-04-16T15:13:59.9266765Z [7m23[0m     flyTo: jest.fn(),
+2025-04-16T15:13:59.9267310Z [7m  [0m [91m           ~~~~[0m
+2025-04-16T15:13:59.9267591Z 
+2025-04-16T15:13:59.9267601Z 
+2025-04-16T15:13:59.9269080Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m28[0m:[93m12[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9269956Z 
+2025-04-16T15:13:59.9270335Z [7m28[0m     addTo: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9270932Z [7m  [0m [91m           ~~~~[0m
+2025-04-16T15:13:59.9271197Z 
+2025-04-16T15:13:59.9271206Z 
+2025-04-16T15:13:59.9272413Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m29[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9273257Z 
+2025-04-16T15:13:59.9273693Z [7m29[0m     setLatLng: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9274324Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9274608Z 
+2025-04-16T15:13:59.9274616Z 
+2025-04-16T15:13:59.9275805Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m30[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9276675Z 
+2025-04-16T15:13:59.9277108Z [7m30[0m     bindPopup: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9277963Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9278250Z 
+2025-04-16T15:13:59.9278259Z 
+2025-04-16T15:13:59.9279447Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m31[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9280304Z 
+2025-04-16T15:13:59.9280615Z [7m31[0m     openPopup: jest.fn(),
+2025-04-16T15:13:59.9281160Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9281438Z 
+2025-04-16T15:13:59.9281447Z 
+2025-04-16T15:13:59.9282658Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m32[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9283607Z 
+2025-04-16T15:13:59.9283943Z [7m32[0m     remove: jest.fn(),
+2025-04-16T15:13:59.9284491Z [7m  [0m [91m            ~~~~[0m
+2025-04-16T15:13:59.9284768Z 
+2025-04-16T15:13:59.9284777Z 
+2025-04-16T15:13:59.9285947Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m33[0m:[93m9[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9287116Z 
+2025-04-16T15:13:59.9287535Z [7m33[0m     on: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9288451Z [7m  [0m [91m        ~~~~[0m
+2025-04-16T15:13:59.9288728Z 
+2025-04-16T15:13:59.9288736Z 
+2025-04-16T15:13:59.9293867Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m38[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9294834Z 
+2025-04-16T15:13:59.9295286Z [7m38[0m     setLatLng: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9296133Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9296436Z 
+2025-04-16T15:13:59.9296445Z 
+2025-04-16T15:13:59.9297685Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m39[0m:[93m17[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9298768Z 
+2025-04-16T15:13:59.9299199Z [7m39[0m     setContent: jest.fn().mockReturnThis(),
+2025-04-16T15:13:59.9299911Z [7m  [0m [91m                ~~~~[0m
+2025-04-16T15:13:59.9300228Z 
+2025-04-16T15:13:59.9300238Z 
+2025-04-16T15:13:59.9301484Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9302374Z 
+2025-04-16T15:13:59.9302669Z [7m40[0m     openOn: jest.fn(),
+2025-04-16T15:13:59.9303234Z [7m  [0m [91m            ~~~~[0m
+2025-04-16T15:13:59.9303517Z 
+2025-04-16T15:13:59.9303526Z 
+2025-04-16T15:13:59.9304730Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m50[0m:[93m10[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9305581Z 
+2025-04-16T15:13:59.9306001Z [7m50[0m     map: jest.fn().mockReturnValue(mockMap),
+2025-04-16T15:13:59.9306667Z [7m  [0m [91m         ~~~~[0m
+2025-04-16T15:13:59.9306945Z 
+2025-04-16T15:13:59.9306954Z 
+2025-04-16T15:13:59.9308384Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m51[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9309257Z 
+2025-04-16T15:13:59.9309752Z [7m51[0m     marker: jest.fn().mockReturnValue(mockMarker),
+2025-04-16T15:13:59.9310428Z [7m  [0m [91m            ~~~~[0m
+2025-04-16T15:13:59.9310696Z 
+2025-04-16T15:13:59.9310705Z 
+2025-04-16T15:13:59.9311887Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m52[0m:[93m12[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9312726Z 
+2025-04-16T15:13:59.9313199Z [7m52[0m     popup: jest.fn().mockReturnValue(mockPopup),
+2025-04-16T15:13:59.9313870Z [7m  [0m [91m           ~~~~[0m
+2025-04-16T15:13:59.9314145Z 
+2025-04-16T15:13:59.9314154Z 
+2025-04-16T15:13:59.9315349Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m53[0m:[93m11[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9316226Z 
+2025-04-16T15:13:59.9316669Z [7m53[0m     icon: jest.fn().mockReturnValue(mockIcon),
+2025-04-16T15:13:59.9317304Z [7m  [0m [91m          ~~~~[0m
+2025-04-16T15:13:59.9317567Z 
+2025-04-16T15:13:59.9317583Z 
+2025-04-16T15:13:59.9319077Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m54[0m:[93m16[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9319942Z 
+2025-04-16T15:13:59.9320393Z [7m54[0m     tileLayer: jest.fn().mockReturnValue({
+2025-04-16T15:13:59.9321057Z [7m  [0m [91m               ~~~~[0m
+2025-04-16T15:13:59.9321333Z 
+2025-04-16T15:13:59.9321341Z 
+2025-04-16T15:13:59.9322521Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m55[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9323407Z 
+2025-04-16T15:13:59.9323730Z [7m55[0m       addTo: jest.fn(),
+2025-04-16T15:13:59.9324290Z [7m  [0m [91m             ~~~~[0m
+2025-04-16T15:13:59.9324567Z 
+2025-04-16T15:13:59.9324784Z 
+2025-04-16T15:13:59.9325985Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m57[0m:[93m14[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9326841Z 
+2025-04-16T15:13:59.9327280Z [7m57[0m     divIcon: jest.fn().mockReturnValue({}),
+2025-04-16T15:13:59.9328161Z [7m  [0m [91m             ~~~~[0m
+2025-04-16T15:13:59.9328438Z 
+2025-04-16T15:13:59.9328645Z 
+2025-04-16T15:13:59.9330309Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m143[0m:[93m22[0m - [91merror[0m[90m TS2341: [0mProperty 'map' is private and only accessible within class 'MapComponent'.
+2025-04-16T15:13:59.9331429Z 
+2025-04-16T15:13:59.9331842Z [7m143[0m     expect(component.map).toBeNull();
+2025-04-16T15:13:59.9332510Z [7m   [0m [91m                     ~~~[0m
+2025-04-16T15:13:59.9332822Z 
+2025-04-16T15:13:59.9332830Z 
+2025-04-16T15:13:59.9334516Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m169[0m:[93m15[0m - [91merror[0m[90m TS2551: [0mProperty 'onMapClick' does not exist on type 'MapComponent'. Did you mean 'mapClick'?
+2025-04-16T15:13:59.9335689Z 
+2025-04-16T15:13:59.9336136Z [7m169[0m     component.onMapClick(mockEvent as any);
+2025-04-16T15:13:59.9336873Z [7m   [0m [91m              ~~~~~~~~~~[0m
+2025-04-16T15:13:59.9337176Z 
+2025-04-16T15:13:59.9338104Z   [96msrc/app/shared/components/map/map.component.ts[0m:[93m126[0m:[93m13[0m
+2025-04-16T15:13:59.9339333Z     [7m126[0m   @Output() mapClick = new EventEmitter<{ latitude: number; longitude: number }>();
+2025-04-16T15:13:59.9340242Z     [7m   [0m [96m            ~~~~~~~~[0m
+2025-04-16T15:13:59.9340746Z     'mapClick' is declared here.
+2025-04-16T15:13:59.9341027Z 
+2025-04-16T15:13:59.9341036Z 
+2025-04-16T15:13:59.9342654Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m184[0m:[93m22[0m - [91merror[0m[90m TS2341: [0mProperty 'map' is private and only accessible within class 'MapComponent'.
+2025-04-16T15:13:59.9343780Z 
+2025-04-16T15:13:59.9344451Z [7m184[0m     expect(component.map?.flyTo).toHaveBeenCalledWith([60.0, 11.0], 12);
+2025-04-16T15:13:59.9345302Z [7m   [0m [91m                     ~~~[0m
+2025-04-16T15:13:59.9345597Z 
+2025-04-16T15:13:59.9345606Z 
+2025-04-16T15:13:59.9347226Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m200[0m:[93m22[0m - [91merror[0m[90m TS2341: [0mProperty 'map' is private and only accessible within class 'MapComponent'.
+2025-04-16T15:13:59.9348564Z 
+2025-04-16T15:13:59.9349137Z [7m200[0m     expect(component.map?.invalidateSize).toHaveBeenCalled();
+2025-04-16T15:13:59.9349914Z [7m   [0m [91m                     ~~~[0m
+2025-04-16T15:13:59.9350212Z 
+2025-04-16T15:13:59.9350221Z 
+2025-04-16T15:13:59.9351955Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m214[0m:[93m15[0m - [91merror[0m[90m TS2551: [0mProperty 'onMarkerClick' does not exist on type 'MapComponent'. Did you mean 'markerClick'?
+2025-04-16T15:13:59.9353180Z 
+2025-04-16T15:13:59.9353614Z [7m214[0m     component.onMarkerClick(testMarker);
+2025-04-16T15:13:59.9354304Z [7m   [0m [91m              ~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9354606Z 
+2025-04-16T15:13:59.9355191Z   [96msrc/app/shared/components/map/map.component.ts[0m:[93m120[0m:[93m13[0m
+2025-04-16T15:13:59.9356221Z     [7m120[0m   @Output() markerClick = new EventEmitter<MapMarker>();
+2025-04-16T15:13:59.9356901Z     [7m   [0m [96m            ~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9357399Z     'markerClick' is declared here.
+2025-04-16T15:13:59.9357692Z 
+2025-04-16T15:13:59.9357877Z 
+2025-04-16T15:13:59.9359123Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m227[0m:[93m27[0m - [91merror[0m[90m TS2304: [0mCannot find name 'jest'.
+2025-04-16T15:13:59.9359985Z 
+2025-04-16T15:13:59.9360607Z [7m227[0m       getCurrentPosition: jest.fn().mockImplementation(success => {
+2025-04-16T15:13:59.9361440Z [7m   [0m [91m                          ~~~~[0m
+2025-04-16T15:13:59.9362016Z 
+2025-04-16T15:13:59.9362024Z 
+2025-04-16T15:13:59.9363245Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m238[0m:[93m27[0m - [91merror[0m[90m TS2304: [0mCannot find name 'global'.
+2025-04-16T15:13:59.9364109Z 
+2025-04-16T15:13:59.9364674Z [7m238[0m     Object.defineProperty(global.navigator, 'geolocation', {
+2025-04-16T15:13:59.9365658Z [7m   [0m [91m                          ~~~~~~[0m
+2025-04-16T15:13:59.9365988Z 
+2025-04-16T15:13:59.9366000Z 
+2025-04-16T15:13:59.9368244Z Error: [96msrc/app/shared/components/map/map.component.spec.ts[0m:[93m244[0m:[93m15[0m - [91merror[0m[90m TS2551: [0mProperty 'showCurrentPosition' does not exist on type 'MapComponent'. Did you mean 'showCurrentLocation'?
+2025-04-16T15:13:59.9369581Z 
+2025-04-16T15:13:59.9370011Z [7m244[0m     component.showCurrentPosition();
+2025-04-16T15:13:59.9370797Z [7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9371128Z 
+2025-04-16T15:13:59.9371752Z   [96msrc/app/shared/components/map/map.component.ts[0m:[93m114[0m:[93m12[0m
+2025-04-16T15:13:59.9372645Z     [7m114[0m   @Input() showCurrentLocation = false;
+2025-04-16T15:13:59.9373333Z     [7m   [0m [96m           ~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9373858Z     'showCurrentLocation' is declared here.
+2025-04-16T15:13:59.9374177Z 
+2025-04-16T15:13:59.9374186Z 
+2025-04-16T15:13:59.9375385Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m2[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Component'.
+2025-04-16T15:13:59.9376257Z 
+2025-04-16T15:13:59.9376489Z [7m2[0m   Component,
+2025-04-16T15:13:59.9376980Z [7m [0m [91m  ~~~~~~~~~[0m
+2025-04-16T15:13:59.9377249Z 
+2025-04-16T15:13:59.9377259Z 
+2025-04-16T15:13:59.9378679Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m3[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'OnInit'.
+2025-04-16T15:13:59.9379574Z 
+2025-04-16T15:13:59.9379836Z [7m3[0m   OnInit,
+2025-04-16T15:13:59.9380298Z [7m [0m [91m  ~~~~~~[0m
+2025-04-16T15:13:59.9380540Z 
+2025-04-16T15:13:59.9380549Z 
+2025-04-16T15:13:59.9381719Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m4[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Input'.
+2025-04-16T15:13:59.9382544Z 
+2025-04-16T15:13:59.9382822Z [7m4[0m   Input,
+2025-04-16T15:13:59.9383274Z [7m [0m [91m  ~~~~~[0m
+2025-04-16T15:13:59.9383528Z 
+2025-04-16T15:13:59.9383538Z 
+2025-04-16T15:13:59.9384738Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m5[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Output'.
+2025-04-16T15:13:59.9385610Z 
+2025-04-16T15:13:59.9385828Z [7m5[0m   Output,
+2025-04-16T15:13:59.9386226Z [7m [0m [91m  ~~~~~~[0m
+2025-04-16T15:13:59.9386453Z 
+2025-04-16T15:13:59.9386461Z 
+2025-04-16T15:13:59.9387682Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m6[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'EventEmitter'.
+2025-04-16T15:13:59.9388909Z 
+2025-04-16T15:13:59.9389178Z [7m6[0m   EventEmitter,
+2025-04-16T15:13:59.9389687Z [7m [0m [91m  ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9389963Z 
+2025-04-16T15:13:59.9389972Z 
+2025-04-16T15:13:59.9391192Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m7[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AfterViewInit'.
+2025-04-16T15:13:59.9392063Z 
+2025-04-16T15:13:59.9392288Z [7m7[0m   AfterViewInit,
+2025-04-16T15:13:59.9392804Z [7m [0m [91m  ~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9393085Z 
+2025-04-16T15:13:59.9393093Z 
+2025-04-16T15:13:59.9394374Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m8[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'OnDestroy'.
+2025-04-16T15:13:59.9395280Z 
+2025-04-16T15:13:59.9395537Z [7m8[0m   OnDestroy,
+2025-04-16T15:13:59.9396043Z [7m [0m [91m  ~~~~~~~~~[0m
+2025-04-16T15:13:59.9396320Z 
+2025-04-16T15:13:59.9396330Z 
+2025-04-16T15:13:59.9398091Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m15[0m:[93m10[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'CommonModule'.
+2025-04-16T15:13:59.9399024Z 
+2025-04-16T15:13:59.9399538Z [7m15[0m import { CommonModule } from '@angular/common';
+2025-04-16T15:13:59.9400228Z [7m  [0m [91m         ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9400721Z 
+2025-04-16T15:13:59.9400733Z 
+2025-04-16T15:13:59.9401893Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m16[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'L'.
+2025-04-16T15:13:59.9402752Z 
+2025-04-16T15:13:59.9403121Z [7m16[0m import * as L from 'leaflet';
+2025-04-16T15:13:59.9403724Z [7m  [0m [91m            ~[0m
+2025-04-16T15:13:59.9404002Z 
+2025-04-16T15:13:59.9404011Z 
+2025-04-16T15:13:59.9405307Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m17[0m:[93m10[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'GeocodingService'.
+2025-04-16T15:13:59.9406235Z 
+2025-04-16T15:13:59.9406951Z [7m17[0m import { GeocodingService } from '../../../core/services/geocoding.service';
+2025-04-16T15:13:59.9408192Z [7m  [0m [91m         ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9408504Z 
+2025-04-16T15:13:59.9408522Z 
+2025-04-16T15:13:59.9409791Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m71[0m:[93m14[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'MapComponent'.
+2025-04-16T15:13:59.9410674Z 
+2025-04-16T15:13:59.9411420Z [7m71[0m export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+2025-04-16T15:13:59.9412377Z [7m  [0m [91m             ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9412676Z 
+2025-04-16T15:13:59.9412685Z 
+2025-04-16T15:13:59.9414692Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m345[0m:[93m15[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'address' does not exist in type '{ latitude: number; longitude: number; }'.
+2025-04-16T15:13:59.9416102Z 
+2025-04-16T15:13:59.9416546Z [7m345[0m               address: result.address,
+2025-04-16T15:13:59.9417268Z [7m   [0m [91m              ~~~~~~~[0m
+2025-04-16T15:13:59.9417576Z 
+2025-04-16T15:13:59.9417585Z 
+2025-04-16T15:13:59.9418991Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m410[0m:[93m36[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+2025-04-16T15:13:59.9420158Z   The last overload gave the following error.
+2025-04-16T15:13:59.9421145Z     Argument of type '(e: KeyboardEvent) => void' is not assignable to parameter of type 'LeafletEventHandlerFn'.
+2025-04-16T15:13:59.9422145Z       Types of parameters 'e' and 'event' are incompatible.
+2025-04-16T15:13:59.9423368Z         Type 'LeafletEvent' is missing the following properties from type 'KeyboardEvent': altKey, charCode, code, ctrlKey, and 37 more.
+2025-04-16T15:13:59.9424227Z 
+2025-04-16T15:13:59.9424830Z [7m410[0m       leafletMarker.on('keypress', (e: KeyboardEvent) => {
+2025-04-16T15:13:59.9425776Z [7m   [0m [91m                                   ~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9426146Z 
+2025-04-16T15:13:59.9426716Z   [96m../node_modules/@types/leaflet/index.d.ts[0m:[93m1075[0m:[93m5[0m
+2025-04-16T15:13:59.9427990Z     [7m1075[0m     on(type: string, fn: LeafletEventHandlerFn, context?: any): this;
+2025-04-16T15:13:59.9428798Z     [7m    [0m [96m    ~~[0m
+2025-04-16T15:13:59.9429289Z     The last overload is declared here.
+2025-04-16T15:13:59.9429616Z 
+2025-04-16T15:13:59.9429625Z 
+2025-04-16T15:13:59.9431276Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m505[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'trackPerformance' does not exist on type 'MapMonitoringService'.
+2025-04-16T15:13:59.9432394Z 
+2025-04-16T15:13:59.9433191Z [7m505[0m           this.mapMonitoringService.trackPerformance('geolocation', geolocateTime);
+2025-04-16T15:13:59.9434233Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9434818Z 
+2025-04-16T15:13:59.9434827Z 
+2025-04-16T15:13:59.9436453Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m684[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'trackPerformance' does not exist on type 'MapMonitoringService'.
+2025-04-16T15:13:59.9437453Z 
+2025-04-16T15:13:59.9439068Z [7m684[0m     this.mapMonitoringService.trackPerformance('update_markers', updateTime, {
+2025-04-16T15:13:59.9440203Z [7m   [0m [91m                              ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9440635Z 
+2025-04-16T15:13:59.9440643Z 
+2025-04-16T15:13:59.9442229Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m777[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'trackPerformance' does not exist on type 'MapMonitoringService'.
+2025-04-16T15:13:59.9443362Z 
+2025-04-16T15:13:59.9444127Z [7m777[0m       this.mapMonitoringService.trackPerformance('refresh_map', refreshTime);
+2025-04-16T15:13:59.9445211Z [7m   [0m [91m                                ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9445564Z 
+2025-04-16T15:13:59.9445572Z 
+2025-04-16T15:13:59.9446787Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m782[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Component'.
+2025-04-16T15:13:59.9447648Z 
+2025-04-16T15:13:59.9451510Z [7m782[0m   Component,
+2025-04-16T15:13:59.9452073Z [7m   [0m [91m  ~~~~~~~~~[0m
+2025-04-16T15:13:59.9452337Z 
+2025-04-16T15:13:59.9452346Z 
+2025-04-16T15:13:59.9453580Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m783[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'OnInit'.
+2025-04-16T15:13:59.9454459Z 
+2025-04-16T15:13:59.9454711Z [7m783[0m   OnInit,
+2025-04-16T15:13:59.9455151Z [7m   [0m [91m  ~~~~~~[0m
+2025-04-16T15:13:59.9455423Z 
+2025-04-16T15:13:59.9455432Z 
+2025-04-16T15:13:59.9456637Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m784[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Input'.
+2025-04-16T15:13:59.9457558Z 
+2025-04-16T15:13:59.9458018Z [7m784[0m   Input,
+2025-04-16T15:13:59.9458488Z [7m   [0m [91m  ~~~~~[0m
+2025-04-16T15:13:59.9458744Z 
+2025-04-16T15:13:59.9458753Z 
+2025-04-16T15:13:59.9460016Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m785[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'Output'.
+2025-04-16T15:13:59.9460886Z 
+2025-04-16T15:13:59.9461113Z [7m785[0m   Output,
+2025-04-16T15:13:59.9461541Z [7m   [0m [91m  ~~~~~~[0m
+2025-04-16T15:13:59.9461788Z 
+2025-04-16T15:13:59.9461798Z 
+2025-04-16T15:13:59.9463016Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m786[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'EventEmitter'.
+2025-04-16T15:13:59.9463926Z 
+2025-04-16T15:13:59.9464194Z [7m786[0m   EventEmitter,
+2025-04-16T15:13:59.9464754Z [7m   [0m [91m  ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9465035Z 
+2025-04-16T15:13:59.9465056Z 
+2025-04-16T15:13:59.9466349Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m787[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AfterViewInit'.
+2025-04-16T15:13:59.9467241Z 
+2025-04-16T15:13:59.9467497Z [7m787[0m   AfterViewInit,
+2025-04-16T15:13:59.9468357Z [7m   [0m [91m  ~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9468652Z 
+2025-04-16T15:13:59.9468675Z 
+2025-04-16T15:13:59.9469983Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m788[0m:[93m3[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'OnDestroy'.
+2025-04-16T15:13:59.9470927Z 
+2025-04-16T15:13:59.9471188Z [7m788[0m   OnDestroy,
+2025-04-16T15:13:59.9471722Z [7m   [0m [91m  ~~~~~~~~~[0m
+2025-04-16T15:13:59.9471996Z 
+2025-04-16T15:13:59.9472006Z 
+2025-04-16T15:13:59.9473316Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m790[0m:[93m10[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'CommonModule'.
+2025-04-16T15:13:59.9474251Z 
+2025-04-16T15:13:59.9475011Z [7m790[0m import { CommonModule } from '@angular/common';
+2025-04-16T15:13:59.9475788Z [7m   [0m [91m         ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9476114Z 
+2025-04-16T15:13:59.9476123Z 
+2025-04-16T15:13:59.9477360Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m791[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'L'.
+2025-04-16T15:13:59.9478672Z 
+2025-04-16T15:13:59.9479907Z [7m791[0m import * as L from 'leaflet';
+2025-04-16T15:13:59.9480605Z [7m   [0m [91m            ~[0m
+2025-04-16T15:13:59.9480895Z 
+2025-04-16T15:13:59.9480904Z 
+2025-04-16T15:13:59.9482204Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m792[0m:[93m10[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'GeocodingService'.
+2025-04-16T15:13:59.9483227Z 
+2025-04-16T15:13:59.9484001Z [7m792[0m import { GeocodingService } from '../../../core/services/geocoding.service';
+2025-04-16T15:13:59.9484908Z [7m   [0m [91m         ~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9485255Z 
+2025-04-16T15:13:59.9485264Z 
+2025-04-16T15:13:59.9486598Z Error: [96msrc/app/shared/components/map/map.component.ts[0m:[93m811[0m:[93m14[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'MapComponent'.
+2025-04-16T15:13:59.9487573Z 
+2025-04-16T15:13:59.9488628Z [7m811[0m export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+2025-04-16T15:13:59.9489607Z [7m   [0m [91m             ~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9489936Z 
+2025-04-16T15:13:59.9489944Z 
+2025-04-16T15:13:59.9491226Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m18[0m:[93m1[0m - [91merror[0m[90m TS1005: [0m'from' expected.
+2025-04-16T15:13:59.9492149Z 
+2025-04-16T15:13:59.9492766Z [7m18[0m import { CardGridComponent } from './card-grid.component';
+2025-04-16T15:13:59.9493503Z [7m  [0m [91m~~~~~~[0m
+2025-04-16T15:13:59.9493774Z 
+2025-04-16T15:13:59.9493784Z 
+2025-04-16T15:13:59.9495264Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m20[0m:[93m73[0m - [91merror[0m[90m TS2304: [0mCannot find name 'MockAppCardComponent'.
+2025-04-16T15:13:59.9496325Z 
+2025-04-16T15:13:59.9497636Z [7m20[0m import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
+2025-04-16T15:13:59.9499445Z [7m  [0m [91m                                                                        ~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9499851Z 
+2025-04-16T15:13:59.9499869Z 
+2025-04-16T15:13:59.9501285Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m20[0m:[93m94[0m - [91merror[0m[90m TS1128: [0mDeclaration or statement expected.
+2025-04-16T15:13:59.9502268Z 
+2025-04-16T15:13:59.9503563Z [7m20[0m import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
+2025-04-16T15:13:59.9505171Z [7m  [0m [91m                                                                                             ~[0m
+2025-04-16T15:13:59.9505589Z 
+2025-04-16T15:13:59.9505599Z 
+2025-04-16T15:13:59.9507047Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m20[0m:[93m96[0m - [91merror[0m[90m TS1434: [0mUnexpected keyword or identifier.
+2025-04-16T15:13:59.9508380Z 
+2025-04-16T15:13:59.9509704Z [7m20[0m import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
+2025-04-16T15:13:59.9511251Z [7m  [0m [91m                                                                                               ~~~~[0m
+2025-04-16T15:13:59.9511657Z 
+2025-04-16T15:13:59.9511667Z 
+2025-04-16T15:13:59.9513012Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m20[0m:[93m96[0m - [91merror[0m[90m TS2304: [0mCannot find name 'from'.
+2025-04-16T15:13:59.9513995Z 
+2025-04-16T15:13:59.9515261Z [7m20[0m import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
+2025-04-16T15:13:59.9517065Z [7m  [0m [91m                                                                                               ~~~~[0m
+2025-04-16T15:13:59.9517446Z 
+2025-04-16T15:13:59.9517456Z 
+2025-04-16T15:13:59.9519217Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m52[0m:[93m4[0m - [91merror[0m[90m TS2304: [0mCannot find name 'ViewChild'.
+2025-04-16T15:13:59.9520050Z 
+2025-04-16T15:13:59.9520641Z [7m52[0m   @ViewChild('itemTemplate') itemTemplate!: TemplateRef<any>;
+2025-04-16T15:13:59.9521311Z [7m  [0m [91m   ~~~~~~~~~[0m
+2025-04-16T15:13:59.9521549Z 
+2025-04-16T15:13:59.9521558Z 
+2025-04-16T15:13:59.9522703Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m52[0m:[93m45[0m - [91merror[0m[90m TS2304: [0mCannot find name 'TemplateRef'.
+2025-04-16T15:13:59.9523705Z 
+2025-04-16T15:13:59.9524316Z [7m52[0m   @ViewChild('itemTemplate') itemTemplate!: TemplateRef<any>;
+2025-04-16T15:13:59.9525283Z [7m  [0m [91m                                            ~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9525640Z 
+2025-04-16T15:13:59.9525649Z 
+2025-04-16T15:13:59.9527071Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m103[0m:[93m9[0m - [91merror[0m[90m TS2304: [0mCannot find name 'MockAppCardComponent'.
+2025-04-16T15:13:59.9528274Z 
+2025-04-16T15:13:59.9528668Z [7m103[0m         MockAppCardComponent,
+2025-04-16T15:13:59.9529291Z [7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9529582Z 
+2025-04-16T15:13:59.9529591Z 
+2025-04-16T15:13:59.9530965Z Error: [96msrc/app/shared/emerald/card-grid/card-grid.component.spec.ts[0m:[93m110[0m:[93m37[0m - [91merror[0m[90m TS2304: [0mCannot find name 'MockAppCardComponent'.
+2025-04-16T15:13:59.9531987Z 
+2025-04-16T15:13:59.9532740Z [7m110[0m         imports: [CommonTestModule, MockAppCardComponent, SkeletonLoaderComponent],
+2025-04-16T15:13:59.9533640Z [7m   [0m [91m                                    ~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T15:13:59.9533941Z 
+2025-04-16T15:13:59.9533949Z 
+2025-04-16T15:13:59.9534727Z Error: Can't resolve 'node_modules/leaflet/dist/leaflet.css' in '/home/runner/work/date-night-app2/date-night-app2/client-angular'
+2025-04-16T15:13:59.9535418Z 
+2025-04-16T15:13:59.9535563Z [39m[22m
+2025-04-16T15:13:59.9536524Z [32m16 04 2025 15:13:59.884:INFO [karma-server]: [39mKarma v6.4.4 server started at http://localhost:9876/
+2025-04-16T15:13:59.9538261Z [32m16 04 2025 15:13:59.886:INFO [launcher]: [39mLaunching browsers ChromeHeadless with concurrency unlimited
+2025-04-16T15:13:59.9539973Z [91m16 04 2025 15:13:59.887:ERROR [karma-server]: [39mError: Found 1 load error
+2025-04-16T15:13:59.9542084Z     at Server.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/node_modules/karma/lib/server.js:243:26)
+2025-04-16T15:13:59.9543654Z     at Object.onceWrapper (node:events:632:28)
+2025-04-16T15:13:59.9544355Z     at Server.emit (node:events:530:35)
+2025-04-16T15:13:59.9544997Z     at emitListeningNT (node:net:1980:10)
+2025-04-16T15:13:59.9545901Z     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+2025-04-16T15:14:00.4421359Z npm error Lifecycle script `test` failed with error:
+2025-04-16T15:14:00.4422619Z npm error code 1
+2025-04-16T15:14:00.4458459Z npm error path /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T15:14:00.4459340Z npm error workspace client-angular@0.0.0
+2025-04-16T15:14:00.4460183Z npm error location /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T15:14:00.4460924Z npm error command failed
+2025-04-16T15:14:00.4461816Z npm error command sh -c ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T15:14:00.4491699Z ##[error]Process completed with exit code 1.
+2025-04-16T15:14:00.4560351Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T15:14:00.4560802Z with:
+2025-04-16T15:14:00.4560976Z   name: test-results
+2025-04-16T15:14:00.4561185Z   path: ./client-angular/coverage
+2025-04-16T15:14:00.4561428Z   if-no-files-found: warn
+2025-04-16T15:14:00.4561645Z   compression-level: 6
+2025-04-16T15:14:00.4561841Z   overwrite: false
+2025-04-16T15:14:00.4562035Z   include-hidden-files: false
+2025-04-16T15:14:00.4562238Z env:
+2025-04-16T15:14:00.4562393Z   CI: true
+2025-04-16T15:14:00.4562554Z ##[endgroup]
+2025-04-16T15:14:00.6803912Z ##[warning]No files were found with the provided path: ./client-angular/coverage. No artifacts will be uploaded.
+2025-04-16T15:14:00.6922188Z Post job cleanup.
+2025-04-16T15:14:00.7866701Z [command]/usr/bin/git version
+2025-04-16T15:14:00.7908555Z git version 2.49.0
+2025-04-16T15:14:00.7956249Z Temporarily overriding HOME='/home/runner/work/_temp/ed85da29-099f-4bcb-9987-92a2c50b74ac' before making global git config changes
+2025-04-16T15:14:00.7958718Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T15:14:00.7963449Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:14:00.8008357Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T15:14:00.8045542Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T15:14:00.8360551Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T15:14:00.8389463Z http.https://github.com/.extraheader
+2025-04-16T15:14:00.8403512Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T15:14:00.8439963Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T15:14:00.8806603Z Cleaning up orphan processes

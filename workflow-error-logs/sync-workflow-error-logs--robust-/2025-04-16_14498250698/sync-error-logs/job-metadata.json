@@ -1,0 +1,140 @@
+{
+  "id": 40671412670,
+  "run_id": 14498250698,
+  "workflow_name": "Sync Workflow Error Logs (Robust)",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14498250698",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJeDSBvg",
+  "head_sha": "66574f2a6599e39447ddaa683e40a7580cf7917d",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40671412670",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14498250698/job/40671412670",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-16T16:57:41Z",
+  "started_at": "2025-04-16T16:57:45Z",
+  "completed_at": "2025-04-16T16:59:57Z",
+  "name": "sync-error-logs",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-16T16:57:46Z",
+      "completed_at": "2025-04-16T16:57:48Z"
+    },
+    {
+      "name": "Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-16T16:57:48Z",
+      "completed_at": "2025-04-16T16:57:57Z"
+    },
+    {
+      "name": "Set up Node.js",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2025-04-16T16:57:57Z",
+      "completed_at": "2025-04-16T16:57:58Z"
+    },
+    {
+      "name": "Install dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2025-04-16T16:57:58Z",
+      "completed_at": "2025-04-16T16:58:42Z"
+    },
+    {
+      "name": "Fetch workflow run logs",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2025-04-16T16:58:42Z",
+      "completed_at": "2025-04-16T16:59:53Z"
+    },
+    {
+      "name": "Create README for logs",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2025-04-16T16:59:53Z",
+      "completed_at": "2025-04-16T16:59:53Z"
+    },
+    {
+      "name": "Configure Git",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2025-04-16T16:59:53Z",
+      "completed_at": "2025-04-16T16:59:53Z"
+    },
+    {
+      "name": "Fetch latest changes",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2025-04-16T16:59:53Z",
+      "completed_at": "2025-04-16T16:59:53Z"
+    },
+    {
+      "name": "Check for conflicts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2025-04-16T16:59:53Z",
+      "completed_at": "2025-04-16T16:59:53Z"
+    },
+    {
+      "name": "Handle non-conflicting changes",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 10,
+      "started_at": "2025-04-16T16:59:53Z",
+      "completed_at": "2025-04-16T16:59:54Z"
+    },
+    {
+      "name": "Handle conflicting changes",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 11,
+      "started_at": "2025-04-16T16:59:54Z",
+      "completed_at": "2025-04-16T16:59:54Z"
+    },
+    {
+      "name": "Post Set up Node.js",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 21,
+      "started_at": "2025-04-16T16:59:54Z",
+      "completed_at": "2025-04-16T16:59:54Z"
+    },
+    {
+      "name": "Post Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2025-04-16T16:59:54Z",
+      "completed_at": "2025-04-16T16:59:54Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 23,
+      "started_at": "2025-04-16T16:59:54Z",
+      "completed_at": "2025-04-16T16:59:54Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40671412670",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000260,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

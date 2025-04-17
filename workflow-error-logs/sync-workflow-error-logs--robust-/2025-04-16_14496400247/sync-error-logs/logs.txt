@@ -1,0 +1,366 @@
+2025-04-16T15:22:08.6170855Z Current runner version: '2.323.0'
+2025-04-16T15:22:08.6207487Z ##[group]Operating System
+2025-04-16T15:22:08.6208655Z Ubuntu
+2025-04-16T15:22:08.6209518Z 24.04.2
+2025-04-16T15:22:08.6210293Z LTS
+2025-04-16T15:22:08.6211103Z ##[endgroup]
+2025-04-16T15:22:08.6211891Z ##[group]Runner Image
+2025-04-16T15:22:08.6213068Z Image: ubuntu-24.04
+2025-04-16T15:22:08.6213906Z Version: 20250413.1.0
+2025-04-16T15:22:08.6215638Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T15:22:08.6218504Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-16T15:22:08.6220001Z ##[endgroup]
+2025-04-16T15:22:08.6220771Z ##[group]Runner Image Provisioner
+2025-04-16T15:22:08.6222238Z 2.0.422.1
+2025-04-16T15:22:08.6223061Z ##[endgroup]
+2025-04-16T15:22:08.6225016Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T15:22:08.6228190Z Actions: read
+2025-04-16T15:22:08.6229002Z Contents: write
+2025-04-16T15:22:08.6230266Z Metadata: read
+2025-04-16T15:22:08.6231188Z ##[endgroup]
+2025-04-16T15:22:08.6234669Z Secret source: Actions
+2025-04-16T15:22:08.6236126Z Prepare workflow directory
+2025-04-16T15:22:08.7023359Z Prepare all required actions
+2025-04-16T15:22:08.7079547Z Getting action download info
+2025-04-16T15:22:09.4313987Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T15:22:09.4315199Z Version: 4.2.2
+2025-04-16T15:22:09.4316292Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T15:22:09.4318294Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T15:22:09.4319182Z ##[endgroup]
+2025-04-16T15:22:09.5210173Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T15:22:09.5211106Z Version: 4.4.0
+2025-04-16T15:22:09.5212074Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T15:22:09.5213231Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T15:22:09.5214033Z ##[endgroup]
+2025-04-16T15:22:09.9427565Z Complete job name: sync-error-logs
+2025-04-16T15:22:10.0123552Z ##[group]Run actions/checkout@v4
+2025-04-16T15:22:10.0124534Z with:
+2025-04-16T15:22:10.0125013Z   fetch-depth: 0
+2025-04-16T15:22:10.0125793Z   token: ***
+2025-04-16T15:22:10.0126323Z   repository: mrkurger/date-night-app2
+2025-04-16T15:22:10.0126947Z   ssh-strict: true
+2025-04-16T15:22:10.0127723Z   ssh-user: git
+2025-04-16T15:22:10.0128182Z   persist-credentials: true
+2025-04-16T15:22:10.0128692Z   clean: true
+2025-04-16T15:22:10.0129143Z   sparse-checkout-cone-mode: true
+2025-04-16T15:22:10.0129685Z   fetch-tags: false
+2025-04-16T15:22:10.0130132Z   show-progress: true
+2025-04-16T15:22:10.0130589Z   lfs: false
+2025-04-16T15:22:10.0130994Z   submodules: false
+2025-04-16T15:22:10.0131463Z   set-safe-directory: true
+2025-04-16T15:22:10.0132253Z env:
+2025-04-16T15:22:10.0132658Z   CI: true
+2025-04-16T15:22:10.0133067Z ##[endgroup]
+2025-04-16T15:22:10.2268275Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T15:22:10.2277678Z ##[group]Getting Git version info
+2025-04-16T15:22:10.2281393Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T15:22:10.2283652Z [command]/usr/bin/git version
+2025-04-16T15:22:10.2322235Z git version 2.49.0
+2025-04-16T15:22:10.2352555Z ##[endgroup]
+2025-04-16T15:22:10.2380729Z Temporarily overriding HOME='/home/runner/work/_temp/3d63337a-f218-4f28-abc9-0e010e9a6778' before making global git config changes
+2025-04-16T15:22:10.2389288Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T15:22:10.2391722Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:22:10.2427999Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T15:22:10.2432493Z ##[group]Initializing the repository
+2025-04-16T15:22:10.2438172Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:22:10.2499891Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T15:22:10.2505906Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T15:22:10.2508148Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T15:22:10.2510686Z hint:
+2025-04-16T15:22:10.2511647Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T15:22:10.2513306Z hint:
+2025-04-16T15:22:10.2514334Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T15:22:10.2515956Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T15:22:10.2517775Z hint:
+2025-04-16T15:22:10.2518530Z hint: 	git branch -m <name>
+2025-04-16T15:22:10.2520013Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T15:22:10.2523806Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T15:22:10.2561357Z ##[endgroup]
+2025-04-16T15:22:10.2562656Z ##[group]Disabling automatic garbage collection
+2025-04-16T15:22:10.2565856Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T15:22:10.2598385Z ##[endgroup]
+2025-04-16T15:22:10.2599658Z ##[group]Setting up auth
+2025-04-16T15:22:10.2605488Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T15:22:10.2639698Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T15:22:10.2942846Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T15:22:10.2977640Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T15:22:10.3221522Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T15:22:10.3281453Z ##[endgroup]
+2025-04-16T15:22:10.3283186Z ##[group]Fetching the repository
+2025-04-16T15:22:10.3291370Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-04-16T15:22:20.2266269Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T15:22:20.2268507Z  * [new branch]      dependabot/github_actions/dawidd6/action-download-artifact-9 -> origin/dependabot/github_actions/dawidd6/action-download-artifact-9
+2025-04-16T15:22:20.2270762Z  * [new branch]      dependabot/npm_and_yarn/server/multi-94fa72f662 -> origin/dependabot/npm_and_yarn/server/multi-94fa72f662
+2025-04-16T15:22:20.2272802Z  * [new branch]      main       -> origin/main
+2025-04-16T15:22:20.2310080Z [command]/usr/bin/git branch --list --remote origin/main
+2025-04-16T15:22:20.2335435Z   origin/main
+2025-04-16T15:22:20.2349283Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-04-16T15:22:20.2372414Z eb698adacbd9ea5eee3d3f6f2b6d03026a1233b2
+2025-04-16T15:22:20.2381358Z ##[endgroup]
+2025-04-16T15:22:20.2382775Z ##[group]Determining the checkout info
+2025-04-16T15:22:20.2383944Z ##[endgroup]
+2025-04-16T15:22:20.2388104Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T15:22:20.2430276Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T15:22:20.2459306Z ##[group]Checking out the ref
+2025-04-16T15:22:20.2464833Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T15:22:20.6122179Z Switched to a new branch 'main'
+2025-04-16T15:22:20.6125941Z branch 'main' set up to track 'origin/main'.
+2025-04-16T15:22:20.6152148Z ##[endgroup]
+2025-04-16T15:22:20.6232452Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T15:22:20.6272826Z eb698adacbd9ea5eee3d3f6f2b6d03026a1233b2
+2025-04-16T15:22:20.6523738Z ##[group]Run actions/setup-node@v4
+2025-04-16T15:22:20.6524023Z with:
+2025-04-16T15:22:20.6524568Z   node-version: 22.x
+2025-04-16T15:22:20.6524768Z   always-auth: false
+2025-04-16T15:22:20.6524968Z   check-latest: false
+2025-04-16T15:22:20.6525307Z   token: ***
+2025-04-16T15:22:20.6525480Z env:
+2025-04-16T15:22:20.6525653Z   CI: true
+2025-04-16T15:22:20.6525815Z ##[endgroup]
+2025-04-16T15:22:20.8249565Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T15:22:20.8255758Z ##[group]Environment details
+2025-04-16T15:22:21.3268624Z node: v22.14.0
+2025-04-16T15:22:21.3305822Z npm: 10.9.2
+2025-04-16T15:22:21.3306166Z yarn: 1.22.22
+2025-04-16T15:22:21.3308574Z ##[endgroup]
+2025-04-16T15:22:21.3383231Z ##[group]Run npm install @octokit/rest@19.0.13 fs-extra@11.2.0
+2025-04-16T15:22:21.3383687Z [36;1mnpm install @octokit/rest@19.0.13 fs-extra@11.2.0[0m
+2025-04-16T15:22:21.3437743Z shell: /usr/bin/bash -e {0}
+2025-04-16T15:22:21.3437992Z env:
+2025-04-16T15:22:21.3438155Z   CI: true
+2025-04-16T15:22:21.3438336Z ##[endgroup]
+2025-04-16T15:22:26.3350971Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-16T15:22:28.1866354Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T15:22:28.7481739Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-16T15:22:29.2432189Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-16T15:22:30.1765654Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-16T15:22:30.7238300Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T15:22:31.0515012Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T15:22:31.5602985Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-16T15:22:31.9490319Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T15:22:32.8551313Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-16T15:22:32.9128074Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T15:22:34.0596360Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T15:22:34.0835503Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T15:22:41.3077295Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T15:22:41.3342244Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T15:23:04.5754074Z 
+2025-04-16T15:23:04.5757439Z added 1914 packages, and audited 1917 packages in 43s
+2025-04-16T15:23:04.5765650Z 
+2025-04-16T15:23:04.5766001Z 354 packages are looking for funding
+2025-04-16T15:23:04.5766496Z   run `npm fund` for details
+2025-04-16T15:23:04.5955921Z 
+2025-04-16T15:23:04.5956527Z 9 moderate severity vulnerabilities
+2025-04-16T15:23:04.5957993Z 
+2025-04-16T15:23:04.5958419Z To address issues that do not require attention, run:
+2025-04-16T15:23:04.5959062Z   npm audit fix
+2025-04-16T15:23:04.5959284Z 
+2025-04-16T15:23:04.5959671Z To address all issues (including breaking changes), run:
+2025-04-16T15:23:04.5960247Z   npm audit fix --force
+2025-04-16T15:23:04.5961109Z 
+2025-04-16T15:23:04.5961339Z Run `npm audit` for details.
+2025-04-16T15:23:04.6785888Z ##[group]Run cat > fetch-workflow-logs.js << 'EOF'
+2025-04-16T15:23:04.6786661Z [36;1mcat > fetch-workflow-logs.js << 'EOF'[0m
+2025-04-16T15:23:04.6787178Z [36;1mconst { Octokit } = require('@octokit/rest');[0m
+2025-04-16T15:23:04.6787517Z [36;1mconst fs = require('fs-extra');[0m
+2025-04-16T15:23:04.6787785Z [36;1mconst path = require('path');[0m
+2025-04-16T15:23:04.6788045Z [36;1m[0m
+2025-04-16T15:23:04.6788228Z [36;1masync function main() {[0m
+2025-04-16T15:23:04.6788484Z [36;1m  const owner = process.env.REPO_OWNER;[0m
+2025-04-16T15:23:04.6788784Z [36;1m  const repo = process.env.REPO_NAME;[0m
+2025-04-16T15:23:04.6789109Z [36;1m  const logsDir = path.join('workflow-error-logs');[0m
+2025-04-16T15:23:04.6789405Z [36;1m  [0m
+2025-04-16T15:23:04.6789667Z [36;1m  console.log(`Fetching workflow logs for ${owner}/${repo}`);[0m
+2025-04-16T15:23:04.6789978Z [36;1m  [0m
+2025-04-16T15:23:04.6790216Z [36;1m  // Create logs directory if it doesn't exist[0m
+2025-04-16T15:23:04.6790536Z [36;1m  await fs.ensureDir(logsDir);[0m
+2025-04-16T15:23:04.6790772Z [36;1m  [0m
+2025-04-16T15:23:04.6790964Z [36;1m  const octokit = new Octokit({[0m
+2025-04-16T15:23:04.6791236Z [36;1m    auth: process.env.GITHUB_TOKEN,[0m
+2025-04-16T15:23:04.6791486Z [36;1m    request: {[0m
+2025-04-16T15:23:04.6791690Z [36;1m      retries: 3,[0m
+2025-04-16T15:23:04.6791895Z [36;1m      retryAfter: 1[0m
+2025-04-16T15:23:04.6792098Z [36;1m    }[0m
+2025-04-16T15:23:04.6792261Z [36;1m  });[0m
+2025-04-16T15:23:04.6792427Z [36;1m  [0m
+2025-04-16T15:23:04.6792598Z [36;1m  // Get all workflows[0m
+2025-04-16T15:23:04.6792940Z [36;1m  const { data: workflows } = await octokit.actions.listRepoWorkflows({[0m
+2025-04-16T15:23:04.6793314Z [36;1m    owner,[0m
+2025-04-16T15:23:04.6793495Z [36;1m    repo,[0m
+2025-04-16T15:23:04.6793671Z [36;1m  });[0m
+2025-04-16T15:23:04.6793829Z [36;1m  [0m
+2025-04-16T15:23:04.6794034Z [36;1m  // Get recent workflow runs (last 30 days)[0m
+2025-04-16T15:23:04.6794317Z [36;1m  const thirtyDaysAgo = new Date();[0m
+2025-04-16T15:23:04.6794646Z [36;1m  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);[0m
+2025-04-16T15:23:04.6794936Z [36;1m  [0m
+2025-04-16T15:23:04.6795153Z [36;1m  for (const workflow of workflows.workflows) {[0m
+2025-04-16T15:23:04.6795545Z [36;1m    console.log(`Processing workflow: ${workflow.name} (${workflow.id})`);[0m
+2025-04-16T15:23:04.6795886Z [36;1m    [0m
+2025-04-16T15:23:04.6796057Z [36;1m    try {[0m
+2025-04-16T15:23:04.6796325Z [36;1m      const { data: runs } = await octokit.actions.listWorkflowRuns({[0m
+2025-04-16T15:23:04.6796650Z [36;1m        owner,[0m
+2025-04-16T15:23:04.6796837Z [36;1m        repo,[0m
+2025-04-16T15:23:04.6797319Z [36;1m        workflow_id: workflow.id,[0m
+2025-04-16T15:23:04.6797640Z [36;1m        created: `>=${thirtyDaysAgo.toISOString().split('T')[0]}`,[0m
+2025-04-16T15:23:04.6797948Z [36;1m      });[0m
+2025-04-16T15:23:04.6798124Z [36;1m      [0m
+2025-04-16T15:23:04.6798309Z [36;1m      // Process failed runs[0m
+2025-04-16T15:23:04.6798608Z [36;1m      const failedRuns = runs.workflow_runs.filter(run => [0m
+2025-04-16T15:23:04.6799068Z [36;1m        run.conclusion === 'failure' || run.conclusion === 'cancelled' || run.conclusion === 'timed_out'[0m
+2025-04-16T15:23:04.6799465Z [36;1m      );[0m
+2025-04-16T15:23:04.6799632Z [36;1m      [0m
+2025-04-16T15:23:04.6799942Z [36;1m      console.log(`Found ${failedRuns.length} failed runs for ${workflow.name}`);[0m
+2025-04-16T15:23:04.6800300Z [36;1m      [0m
+2025-04-16T15:23:04.6800489Z [36;1m      for (const run of failedRuns) {[0m
+2025-04-16T15:23:04.6800852Z [36;1m        const runDate = new Date(run.created_at).toISOString().split('T')[0];[0m
+2025-04-16T15:23:04.6801385Z [36;1m        const workflowDir = path.join(logsDir, workflow.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());[0m
+2025-04-16T15:23:04.6801907Z [36;1m        const runDir = path.join(workflowDir, `${runDate}_${run.id}`);[0m
+2025-04-16T15:23:04.6802561Z [36;1m        [0m
+2025-04-16T15:23:04.6802770Z [36;1m        await fs.ensureDir(runDir);[0m
+2025-04-16T15:23:04.6803024Z [36;1m        [0m
+2025-04-16T15:23:04.6803213Z [36;1m        // Save run metadata[0m
+2025-04-16T15:23:04.6803560Z [36;1m        await fs.writeJson(path.join(runDir, 'metadata.json'), run, { spaces: 2 });[0m
+2025-04-16T15:23:04.6803912Z [36;1m        [0m
+2025-04-16T15:23:04.6804078Z [36;1m        try {[0m
+2025-04-16T15:23:04.6804289Z [36;1m          // Get jobs for this run[0m
+2025-04-16T15:23:04.6804634Z [36;1m          const { data: jobs } = await octokit.actions.listJobsForWorkflowRun({[0m
+2025-04-16T15:23:04.6804994Z [36;1m            owner,[0m
+2025-04-16T15:23:04.6805235Z [36;1m            repo,[0m
+2025-04-16T15:23:04.6805439Z [36;1m            run_id: run.id,[0m
+2025-04-16T15:23:04.6805657Z [36;1m          });[0m
+2025-04-16T15:23:04.6805836Z [36;1m          [0m
+2025-04-16T15:23:04.6806034Z [36;1m          // Save jobs metadata[0m
+2025-04-16T15:23:04.6806387Z [36;1m          await fs.writeJson(path.join(runDir, 'jobs.json'), jobs, { spaces: 2 });[0m
+2025-04-16T15:23:04.6806720Z [36;1m          [0m
+2025-04-16T15:23:04.6806911Z [36;1m          // Process each job[0m
+2025-04-16T15:23:04.6807401Z [36;1m          for (const job of jobs.jobs) {[0m
+2025-04-16T15:23:04.6807832Z [36;1m            if (job.conclusion === 'failure' || job.conclusion === 'cancelled' || job.conclusion === 'timed_out') {[0m
+2025-04-16T15:23:04.6808392Z [36;1m              const jobDir = path.join(runDir, job.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());[0m
+2025-04-16T15:23:04.6808799Z [36;1m              await fs.ensureDir(jobDir);[0m
+2025-04-16T15:23:04.6809052Z [36;1m              [0m
+2025-04-16T15:23:04.6809254Z [36;1m              // Save job metadata[0m
+2025-04-16T15:23:04.6809639Z [36;1m              await fs.writeJson(path.join(jobDir, 'job-metadata.json'), job, { spaces: 2 });[0m
+2025-04-16T15:23:04.6810003Z [36;1m              [0m
+2025-04-16T15:23:04.6810201Z [36;1m              try {[0m
+2025-04-16T15:23:04.6810412Z [36;1m                // Get job logs[0m
+2025-04-16T15:23:04.6810755Z [36;1m                const logs = await octokit.actions.downloadJobLogsForWorkflowRun({[0m
+2025-04-16T15:23:04.6811106Z [36;1m                  owner,[0m
+2025-04-16T15:23:04.6811321Z [36;1m                  repo,[0m
+2025-04-16T15:23:04.6811544Z [36;1m                  job_id: job.id,[0m
+2025-04-16T15:23:04.6811768Z [36;1m                });[0m
+2025-04-16T15:23:04.6811965Z [36;1m                [0m
+2025-04-16T15:23:04.6812170Z [36;1m                // Save logs[0m
+2025-04-16T15:23:04.6812477Z [36;1m                await fs.writeFile(path.join(jobDir, 'logs.txt'), logs.data);[0m
+2025-04-16T15:23:04.6812888Z [36;1m                console.log(`Saved logs for job ${job.name} (${job.id})`);[0m
+2025-04-16T15:23:04.6813199Z [36;1m              } catch (error) {[0m
+2025-04-16T15:23:04.6813560Z [36;1m                console.error(`Error fetching logs for job ${job.id}: ${error.message}`);[0m
+2025-04-16T15:23:04.6814086Z [36;1m                await fs.writeFile(path.join(jobDir, 'error.txt'), `Error fetching logs: ${error.message}`);[0m
+2025-04-16T15:23:04.6814477Z [36;1m              }[0m
+2025-04-16T15:23:04.6814667Z [36;1m            }[0m
+2025-04-16T15:23:04.6814846Z [36;1m          }[0m
+2025-04-16T15:23:04.6815037Z [36;1m        } catch (error) {[0m
+2025-04-16T15:23:04.6815357Z [36;1m          console.error(`Error processing run ${run.id}: ${error.message}`);[0m
+2025-04-16T15:23:04.6815862Z [36;1m          await fs.writeFile(path.join(runDir, 'error.txt'), `Error processing run: ${error.message}`);[0m
+2025-04-16T15:23:04.6816251Z [36;1m        }[0m
+2025-04-16T15:23:04.6816420Z [36;1m      }[0m
+2025-04-16T15:23:04.6816623Z [36;1m    } catch (error) {[0m
+2025-04-16T15:23:04.6817118Z [36;1m      console.error(`Error processing workflow ${workflow.id}: ${error.message}`);[0m
+2025-04-16T15:23:04.6817655Z [36;1m    }[0m
+2025-04-16T15:23:04.6817959Z [36;1m  }[0m
+2025-04-16T15:23:04.6818139Z [36;1m  [0m
+2025-04-16T15:23:04.6818308Z [36;1m  // Create summary file[0m
+2025-04-16T15:23:04.6818540Z [36;1m  const summary = {[0m
+2025-04-16T15:23:04.6818783Z [36;1m    timestamp: new Date().toISOString(),[0m
+2025-04-16T15:23:04.6819089Z [36;1m    totalWorkflows: workflows.workflows.length,[0m
+2025-04-16T15:23:04.6819433Z [36;1m    workflowSummary: workflows.workflows.map(w => ({[0m
+2025-04-16T15:23:04.6819718Z [36;1m      name: w.name,[0m
+2025-04-16T15:23:04.6819920Z [36;1m      id: w.id,[0m
+2025-04-16T15:23:04.6820113Z [36;1m      path: w.path,[0m
+2025-04-16T15:23:04.6820310Z [36;1m    })),[0m
+2025-04-16T15:23:04.6820472Z [36;1m  };[0m
+2025-04-16T15:23:04.6820641Z [36;1m  [0m
+2025-04-16T15:23:04.6820943Z [36;1m  await fs.writeJson(path.join(logsDir, 'summary.json'), summary, { spaces: 2 });[0m
+2025-04-16T15:23:04.6821360Z [36;1m  console.log('Workflow error logs sync completed');[0m
+2025-04-16T15:23:04.6821646Z [36;1m}[0m
+2025-04-16T15:23:04.6821799Z [36;1m[0m
+2025-04-16T15:23:04.6821967Z [36;1mmain().catch(error => {[0m
+2025-04-16T15:23:04.6822230Z [36;1m  console.error('Error in main process:', error);[0m
+2025-04-16T15:23:04.6822509Z [36;1m  process.exit(1);[0m
+2025-04-16T15:23:04.6822703Z [36;1m});[0m
+2025-04-16T15:23:04.6822867Z [36;1mEOF[0m
+2025-04-16T15:23:04.6823028Z [36;1m[0m
+2025-04-16T15:23:04.6823204Z [36;1mnode fetch-workflow-logs.js[0m
+2025-04-16T15:23:04.6869381Z shell: /usr/bin/bash -e {0}
+2025-04-16T15:23:04.6869611Z env:
+2025-04-16T15:23:04.6869774Z   CI: true
+2025-04-16T15:23:04.6870174Z   GITHUB_TOKEN: ***
+2025-04-16T15:23:04.6870374Z   REPO_OWNER: mrkurger
+2025-04-16T15:23:04.6870584Z   REPO_NAME: date-night-app2
+2025-04-16T15:23:04.6870803Z ##[endgroup]
+2025-04-16T15:23:04.7716305Z Fetching workflow logs for mrkurger/date-night-app2
+2025-04-16T15:23:04.9999424Z Error in main process: RequestError [HttpError]: API rate limit exceeded for installation. If you reach out to GitHub Support for help, please include the request ID D0C0:33D1F1:31D9B5:332BC6:67FFCB58 and timestamp 2025-04-16 15:23:04 UTC.
+2025-04-16T15:23:05.0002070Z     at /home/runner/work/date-night-app2/date-night-app2/node_modules/@octokit/request/dist-node/index.js:122:21
+2025-04-16T15:23:05.0008432Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-16T15:23:05.0009557Z     at async main (/home/runner/work/date-night-app2/date-night-app2/fetch-workflow-logs.js:24:31) {
+2025-04-16T15:23:05.0010228Z   status: 403,
+2025-04-16T15:23:05.0010596Z   response: {
+2025-04-16T15:23:05.0011235Z     url: 'https://api.github.com/repos/mrkurger/date-night-app2/actions/workflows',
+2025-04-16T15:23:05.0011861Z     status: 403,
+2025-04-16T15:23:05.0012166Z     headers: {
+2025-04-16T15:23:05.0012570Z       'access-control-allow-origin': '*',
+2025-04-16T15:23:05.0014891Z       'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+2025-04-16T15:23:05.0017297Z       'content-encoding': 'gzip',
+2025-04-16T15:23:05.0017910Z       'content-security-policy': "default-src 'none'",
+2025-04-16T15:23:05.0018579Z       'content-type': 'application/json; charset=utf-8',
+2025-04-16T15:23:05.0019156Z       date: 'Wed, 16 Apr 2025 15:23:04 GMT',
+2025-04-16T15:23:05.0019961Z       'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+2025-04-16T15:23:05.0020666Z       server: 'github.com',
+2025-04-16T15:23:05.0021369Z       'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+2025-04-16T15:23:05.0022137Z       'transfer-encoding': 'chunked',
+2025-04-16T15:23:05.0022733Z       vary: 'Accept-Encoding, Accept, X-Requested-With',
+2025-04-16T15:23:05.0023795Z       'x-content-type-options': 'nosniff',
+2025-04-16T15:23:05.0024627Z       'x-frame-options': 'deny',
+2025-04-16T15:23:05.0025237Z       'x-github-media-type': 'github.v3; format=json',
+2025-04-16T15:23:05.0025948Z       'x-github-request-id': 'D0C0:33D1F1:31D9B5:332BC6:67FFCB58',
+2025-04-16T15:23:05.0026585Z       'x-ratelimit-limit': '5000',
+2025-04-16T15:23:05.0027376Z       'x-ratelimit-remaining': '0',
+2025-04-16T15:23:05.0027897Z       'x-ratelimit-reset': '1744818804',
+2025-04-16T15:23:05.0028409Z       'x-ratelimit-resource': 'core',
+2025-04-16T15:23:05.0028879Z       'x-ratelimit-used': '5002',
+2025-04-16T15:23:05.0029300Z       'x-xss-protection': '0'
+2025-04-16T15:23:05.0029676Z     },
+2025-04-16T15:23:05.0029943Z     data: {
+2025-04-16T15:23:05.0031283Z       message: 'API rate limit exceeded for installation. If you reach out to GitHub Support for help, please include the request ID D0C0:33D1F1:31D9B5:332BC6:67FFCB58 and timestamp 2025-04-16 15:23:04 UTC.',
+2025-04-16T15:23:05.0032939Z       documentation_url: 'https://docs.github.com/rest/overview/rate-limits-for-the-rest-api',
+2025-04-16T15:23:05.0033659Z       status: '403'
+2025-04-16T15:23:05.0033960Z     }
+2025-04-16T15:23:05.0034215Z   },
+2025-04-16T15:23:05.0034482Z   request: {
+2025-04-16T15:23:05.0034780Z     method: 'GET',
+2025-04-16T15:23:05.0035427Z     url: 'https://api.github.com/repos/mrkurger/date-night-app2/actions/workflows',
+2025-04-16T15:23:05.0036081Z     headers: {
+2025-04-16T15:23:05.0036485Z       accept: 'application/vnd.github.v3+json',
+2025-04-16T15:23:05.0037360Z       'user-agent': 'octokit-rest.js/19.0.13 octokit-core.js/4.2.4 Node.js/22',
+2025-04-16T15:23:05.0038026Z       authorization: 'token [REDACTED]'
+2025-04-16T15:23:05.0038426Z     },
+2025-04-16T15:23:05.0038700Z     request: {
+2025-04-16T15:23:05.0038998Z       retries: 3,
+2025-04-16T15:23:05.0039301Z       retryAfter: 1,
+2025-04-16T15:23:05.0039704Z       hook: [Function: bound bound register]
+2025-04-16T15:23:05.0040115Z     }
+2025-04-16T15:23:05.0040376Z   }
+2025-04-16T15:23:05.0040630Z }
+2025-04-16T15:23:05.0531583Z ##[error]Process completed with exit code 1.
+2025-04-16T15:23:05.0644969Z Post job cleanup.
+2025-04-16T15:23:05.1634099Z [command]/usr/bin/git version
+2025-04-16T15:23:05.1675477Z git version 2.49.0
+2025-04-16T15:23:05.1722688Z Temporarily overriding HOME='/home/runner/work/_temp/993520dc-6c58-4a30-9493-79bb1a39972a' before making global git config changes
+2025-04-16T15:23:05.1724665Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T15:23:05.1739937Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T15:23:05.1789065Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T15:23:05.1827738Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T15:23:05.2081781Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T15:23:05.2107496Z http.https://github.com/.extraheader
+2025-04-16T15:23:05.2123209Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T15:23:05.2159801Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T15:23:05.2515845Z Cleaning up orphan processes

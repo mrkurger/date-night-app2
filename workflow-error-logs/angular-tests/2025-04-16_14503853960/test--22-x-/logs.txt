@@ -1,0 +1,246 @@
+2025-04-16T22:31:43.5887444Z Current runner version: '2.323.0'
+2025-04-16T22:31:43.5947932Z ##[group]Operating System
+2025-04-16T22:31:43.5949135Z Ubuntu
+2025-04-16T22:31:43.5949945Z 24.04.2
+2025-04-16T22:31:43.5950672Z LTS
+2025-04-16T22:31:43.5964284Z ##[endgroup]
+2025-04-16T22:31:43.5965169Z ##[group]Runner Image
+2025-04-16T22:31:43.5966270Z Image: ubuntu-24.04
+2025-04-16T22:31:43.5967226Z Version: 20250413.1.0
+2025-04-16T22:31:43.5968827Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T22:31:43.5971228Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-16T22:31:43.5994948Z ##[endgroup]
+2025-04-16T22:31:43.5995938Z ##[group]Runner Image Provisioner
+2025-04-16T22:31:43.5996932Z 2.0.422.1
+2025-04-16T22:31:43.5998200Z ##[endgroup]
+2025-04-16T22:31:43.6002976Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T22:31:43.6005921Z Actions: write
+2025-04-16T22:31:43.6007184Z Attestations: write
+2025-04-16T22:31:43.6008794Z Checks: write
+2025-04-16T22:31:43.6009572Z Contents: write
+2025-04-16T22:31:43.6010532Z Deployments: write
+2025-04-16T22:31:43.6011437Z Discussions: write
+2025-04-16T22:31:43.6012253Z Issues: write
+2025-04-16T22:31:43.6013171Z Metadata: read
+2025-04-16T22:31:43.6044413Z Models: read
+2025-04-16T22:31:43.6045580Z Packages: write
+2025-04-16T22:31:43.6046415Z Pages: write
+2025-04-16T22:31:43.6047182Z PullRequests: write
+2025-04-16T22:31:43.6048160Z RepositoryProjects: write
+2025-04-16T22:31:43.6049185Z SecurityEvents: write
+2025-04-16T22:31:43.6050048Z Statuses: write
+2025-04-16T22:31:43.6051051Z ##[endgroup]
+2025-04-16T22:31:43.6054156Z Secret source: Actions
+2025-04-16T22:31:43.6055459Z Prepare workflow directory
+2025-04-16T22:31:43.7224105Z Prepare all required actions
+2025-04-16T22:31:43.7316579Z Getting action download info
+2025-04-16T22:31:44.1739444Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T22:31:44.1740922Z Version: 4.2.2
+2025-04-16T22:31:44.1742051Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T22:31:44.1743306Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T22:31:44.1744124Z ##[endgroup]
+2025-04-16T22:31:44.2735826Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T22:31:44.2736569Z Version: 4.4.0
+2025-04-16T22:31:44.2737287Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T22:31:44.2738250Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T22:31:44.2738949Z ##[endgroup]
+2025-04-16T22:31:44.5218780Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T22:31:44.5219582Z Version: 4.6.2
+2025-04-16T22:31:44.5220340Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T22:31:44.5221314Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T22:31:44.5221993Z ##[endgroup]
+2025-04-16T22:31:44.7399636Z Complete job name: test (22.x)
+2025-04-16T22:31:44.7986074Z ##[group]Run actions/checkout@v4
+2025-04-16T22:31:44.7986948Z with:
+2025-04-16T22:31:44.7987380Z   repository: mrkurger/date-night-app2
+2025-04-16T22:31:44.7988094Z   token: ***
+2025-04-16T22:31:44.7988508Z   ssh-strict: true
+2025-04-16T22:31:44.7988928Z   ssh-user: git
+2025-04-16T22:31:44.7989358Z   persist-credentials: true
+2025-04-16T22:31:44.7989840Z   clean: true
+2025-04-16T22:31:44.7990282Z   sparse-checkout-cone-mode: true
+2025-04-16T22:31:44.7990786Z   fetch-depth: 1
+2025-04-16T22:31:44.7991198Z   fetch-tags: false
+2025-04-16T22:31:44.7991637Z   show-progress: true
+2025-04-16T22:31:44.7992075Z   lfs: false
+2025-04-16T22:31:44.7992482Z   submodules: false
+2025-04-16T22:31:44.7992917Z   set-safe-directory: true
+2025-04-16T22:31:44.7993570Z env:
+2025-04-16T22:31:44.7994120Z   CI: true
+2025-04-16T22:31:44.7994515Z ##[endgroup]
+2025-04-16T22:31:44.9861259Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T22:31:44.9864101Z ##[group]Getting Git version info
+2025-04-16T22:31:44.9865888Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T22:31:44.9868863Z [command]/usr/bin/git version
+2025-04-16T22:31:44.9917582Z git version 2.49.0
+2025-04-16T22:31:44.9953453Z ##[endgroup]
+2025-04-16T22:31:44.9975597Z Temporarily overriding HOME='/home/runner/work/_temp/ed9a550e-5dfb-4a17-9118-562c612b577c' before making global git config changes
+2025-04-16T22:31:44.9991816Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T22:31:44.9995838Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T22:31:45.0033169Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T22:31:45.0038324Z ##[group]Initializing the repository
+2025-04-16T22:31:45.0044138Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T22:31:45.0146784Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T22:31:45.0148667Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T22:31:45.0150489Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T22:31:45.0152007Z hint:
+2025-04-16T22:31:45.0154361Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T22:31:45.0156764Z hint:
+2025-04-16T22:31:45.0157752Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T22:31:45.0159413Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T22:31:45.0160719Z hint:
+2025-04-16T22:31:45.0161398Z hint: 	git branch -m <name>
+2025-04-16T22:31:45.0163629Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T22:31:45.0170947Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T22:31:45.0217961Z ##[endgroup]
+2025-04-16T22:31:45.0221731Z ##[group]Disabling automatic garbage collection
+2025-04-16T22:31:45.0226440Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T22:31:45.0272761Z ##[endgroup]
+2025-04-16T22:31:45.0274218Z ##[group]Setting up auth
+2025-04-16T22:31:45.0280788Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T22:31:45.0310198Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T22:31:45.0635362Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T22:31:45.0669500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T22:31:45.0911025Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T22:31:45.0959021Z ##[endgroup]
+2025-04-16T22:31:45.0961696Z ##[group]Fetching the repository
+2025-04-16T22:31:45.0970110Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +45e70035cec1178500ba734e085b87ba464d618c:refs/remotes/origin/main
+2025-04-16T22:31:47.5691631Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T22:31:47.5693108Z  * [new ref]         45e70035cec1178500ba734e085b87ba464d618c -> origin/main
+2025-04-16T22:31:47.5721887Z ##[endgroup]
+2025-04-16T22:31:47.5722932Z ##[group]Determining the checkout info
+2025-04-16T22:31:47.5726587Z ##[endgroup]
+2025-04-16T22:31:47.5732534Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T22:31:47.5774773Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T22:31:47.5805367Z ##[group]Checking out the ref
+2025-04-16T22:31:47.5809691Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T22:31:48.0636764Z Switched to a new branch 'main'
+2025-04-16T22:31:48.0643183Z branch 'main' set up to track 'origin/main'.
+2025-04-16T22:31:48.0664757Z ##[endgroup]
+2025-04-16T22:31:48.0704301Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T22:31:48.0727986Z 45e70035cec1178500ba734e085b87ba464d618c
+2025-04-16T22:31:48.0951356Z ##[group]Run actions/setup-node@v4
+2025-04-16T22:31:48.0951660Z with:
+2025-04-16T22:31:48.0951849Z   node-version: 22.x
+2025-04-16T22:31:48.0952034Z   cache: npm
+2025-04-16T22:31:48.0952291Z   cache-dependency-path: client-angular/package-lock.json
+2025-04-16T22:31:48.0952594Z   always-auth: false
+2025-04-16T22:31:48.0952791Z   check-latest: false
+2025-04-16T22:31:48.0953094Z   token: ***
+2025-04-16T22:31:48.0953269Z env:
+2025-04-16T22:31:48.0953421Z   CI: true
+2025-04-16T22:31:48.0953583Z ##[endgroup]
+2025-04-16T22:31:48.2679107Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T22:31:48.2682007Z ##[group]Environment details
+2025-04-16T22:31:48.8040439Z node: v22.14.0
+2025-04-16T22:31:48.8041316Z npm: 10.9.2
+2025-04-16T22:31:48.8042427Z yarn: 1.22.22
+2025-04-16T22:31:48.8043643Z ##[endgroup]
+2025-04-16T22:31:48.8066327Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T22:31:48.9177640Z /home/runner/.npm
+2025-04-16T22:31:49.0989004Z Cache hit for: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T22:31:49.9699359Z Received 69351304 of 69351304 (100.0%), 93.5 MBs/sec
+2025-04-16T22:31:49.9700854Z Cache Size: ~66 MB (69351304 B)
+2025-04-16T22:31:49.9750494Z [command]/usr/bin/tar -xf /home/runner/work/_temp/f91632c4-0cde-49ae-b5ed-e2e49b14eedd/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T22:31:50.2871937Z Cache restored successfully
+2025-04-16T22:31:50.3021348Z Cache restored from key: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T22:31:50.3181593Z ##[group]Run npm ci
+2025-04-16T22:31:50.3181868Z [36;1mnpm ci[0m
+2025-04-16T22:31:50.3236685Z shell: /usr/bin/bash -e {0}
+2025-04-16T22:31:50.3236920Z env:
+2025-04-16T22:31:50.3237087Z   CI: true
+2025-04-16T22:31:50.3237257Z ##[endgroup]
+2025-04-16T22:31:57.2773621Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T22:31:57.6181888Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T22:31:57.6605393Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T22:31:57.8498579Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T22:31:58.0212188Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T22:31:59.0615872Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T22:31:59.0845323Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T22:32:02.0825739Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T22:32:16.7128488Z 
+2025-04-16T22:32:16.7146001Z > date-night-app@1.0.0 preinstall
+2025-04-16T22:32:16.7146923Z > node scripts/disable-husky-in-ci.js
+2025-04-16T22:32:16.7147457Z 
+2025-04-16T22:32:16.7468495Z .huskyrc file created to disable husky in CI environments
+2025-04-16T22:32:16.7478119Z .huskyrc file made executable
+2025-04-16T22:32:16.7523156Z 
+2025-04-16T22:32:16.7530237Z > date-night-app@1.0.0 prepare
+2025-04-16T22:32:16.7542532Z > [ -n "$CI" ] || husky
+2025-04-16T22:32:16.7543572Z 
+2025-04-16T22:32:16.7887187Z 
+2025-04-16T22:32:16.7888603Z added 1470 packages, and audited 1472 packages in 26s
+2025-04-16T22:32:16.7890440Z 
+2025-04-16T22:32:16.7892027Z 294 packages are looking for funding
+2025-04-16T22:32:16.7895056Z   run `npm fund` for details
+2025-04-16T22:32:16.7907100Z 
+2025-04-16T22:32:16.7907957Z found 0 vulnerabilities
+2025-04-16T22:32:16.8840004Z ##[group]Run npm test -- --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T22:32:16.8840547Z [36;1mnpm test -- --watch=false --browsers=ChromeHeadless --no-progress[0m
+2025-04-16T22:32:16.8887399Z shell: /usr/bin/bash -e {0}
+2025-04-16T22:32:16.8887628Z env:
+2025-04-16T22:32:16.8887788Z   CI: true
+2025-04-16T22:32:16.8887957Z ##[endgroup]
+2025-04-16T22:32:17.0118032Z 
+2025-04-16T22:32:17.0119429Z > client-angular@0.0.0 test
+2025-04-16T22:32:17.0121202Z > ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T22:32:17.0121733Z 
+2025-04-16T22:32:39.3124805Z 
+2025-04-16T22:32:39.3125292Z <--- Last few GCs --->
+2025-04-16T22:32:39.3125575Z 
+2025-04-16T22:32:39.3126863Z [1853:0x142e6000]    21992 ms: Mark-Compact 1822.0 (2092.3) -> 1807.9 (2095.1) MB, pooled: 9 MB, 259.31 / 0.00 ms  (average mu = 0.263, current mu = 0.074) allocation failure; scavenge might not succeed
+2025-04-16T22:32:39.3129087Z [1853:0x142e6000]    22288 ms: Mark-Compact 1823.6 (2095.1) -> 1810.0 (2098.3) MB, pooled: 8 MB, 274.32 / 0.00 ms  (average mu = 0.176, current mu = 0.072) allocation failure; scavenge might not succeed
+2025-04-16T22:32:39.3136322Z 
+2025-04-16T22:32:39.3136349Z 
+2025-04-16T22:32:39.3136634Z <--- JS stacktrace --->
+2025-04-16T22:32:39.3136879Z 
+2025-04-16T22:32:39.3137467Z FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+2025-04-16T22:32:39.3138207Z ----- Native stack trace -----
+2025-04-16T22:32:39.3138479Z 
+2025-04-16T22:32:39.3139438Z  1: 0xe36196 node::OOMErrorHandler(char const*, v8::OOMDetails const&) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3164460Z  2: 0x123f4a0 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3166709Z  3: 0x123f777 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3168602Z  4: 0x146d1a5  [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3170720Z  5: 0x1486a19 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3174641Z  6: 0x145b0e8 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3178271Z  7: 0x145c015 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3181074Z  8: 0x143440e v8::internal::Factory::AllocateRaw(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3203671Z  9: 0x1423504 v8::internal::FactoryBase<v8::internal::Factory>::AllocateRawWithImmortalMap(int, v8::internal::AllocationType, v8::internal::Tagged<v8::internal::Map>, v8::internal::AllocationAlignment) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3207609Z 10: 0x14249ce v8::internal::FactoryBase<v8::internal::Factory>::NewRawOneByteString(int, v8::internal::AllocationType) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3210224Z 11: 0x1779c6d v8::internal::String::SlowFlatten(v8::internal::Isolate*, v8::internal::Handle<v8::internal::ConsString>, v8::internal::AllocationType) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3212193Z 12: 0x18b1125 v8::internal::Runtime_RegExpReplaceRT(int, unsigned long*, v8::internal::Isolate*) [ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress]
+2025-04-16T22:32:39.3213002Z 13: 0x7fd5e06ac476 
+2025-04-16T22:32:53.2261854Z Aborted (core dumped)
+2025-04-16T22:32:53.2385197Z npm error Lifecycle script `test` failed with error:
+2025-04-16T22:32:53.2386324Z npm error code 134
+2025-04-16T22:32:53.2387495Z npm error path /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T22:32:53.2389387Z npm error workspace client-angular@0.0.0
+2025-04-16T22:32:53.2397019Z npm error location /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T22:32:53.2398016Z npm error command failed
+2025-04-16T22:32:53.2419545Z npm error command sh -c ng test client-angular --watch=false --browsers=ChromeHeadless --no-progress
+2025-04-16T22:32:53.2491442Z ##[error]Process completed with exit code 134.
+2025-04-16T22:32:53.2578219Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T22:32:53.2578505Z with:
+2025-04-16T22:32:53.2578676Z   name: test-results
+2025-04-16T22:32:53.2578892Z   path: ./client-angular/coverage
+2025-04-16T22:32:53.2579135Z   if-no-files-found: warn
+2025-04-16T22:32:53.2579343Z   compression-level: 6
+2025-04-16T22:32:53.2579552Z   overwrite: false
+2025-04-16T22:32:53.2579764Z   include-hidden-files: false
+2025-04-16T22:32:53.2580017Z env:
+2025-04-16T22:32:53.2580177Z   CI: true
+2025-04-16T22:32:53.2580348Z ##[endgroup]
+2025-04-16T22:32:53.5075510Z ##[warning]No files were found with the provided path: ./client-angular/coverage. No artifacts will be uploaded.
+2025-04-16T22:32:53.5246937Z Post job cleanup.
+2025-04-16T22:32:53.6316573Z [command]/usr/bin/git version
+2025-04-16T22:32:53.6359136Z git version 2.49.0
+2025-04-16T22:32:53.6407897Z Temporarily overriding HOME='/home/runner/work/_temp/ef794743-c409-4717-8757-28e739d9fa1e' before making global git config changes
+2025-04-16T22:32:53.6409763Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T22:32:53.6425044Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T22:32:53.6460906Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T22:32:53.6498943Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T22:32:53.6759871Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T22:32:53.6793778Z http.https://github.com/.extraheader
+2025-04-16T22:32:53.6808867Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T22:32:53.6846206Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T22:32:53.7218855Z Cleaning up orphan processes

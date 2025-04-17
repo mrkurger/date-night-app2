@@ -1,0 +1,794 @@
+2025-04-16T14:53:00.9908225Z Current runner version: '2.323.0'
+2025-04-16T14:53:00.9945401Z ##[group]Operating System
+2025-04-16T14:53:00.9947159Z Ubuntu
+2025-04-16T14:53:00.9947923Z 24.04.2
+2025-04-16T14:53:00.9948696Z LTS
+2025-04-16T14:53:00.9949508Z ##[endgroup]
+2025-04-16T14:53:00.9950395Z ##[group]Runner Image
+2025-04-16T14:53:00.9951348Z Image: ubuntu-24.04
+2025-04-16T14:53:00.9952504Z Version: 20250413.1.0
+2025-04-16T14:53:00.9954345Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T14:53:00.9956789Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-16T14:53:00.9958424Z ##[endgroup]
+2025-04-16T14:53:00.9959254Z ##[group]Runner Image Provisioner
+2025-04-16T14:53:00.9960260Z 2.0.422.1
+2025-04-16T14:53:00.9961138Z ##[endgroup]
+2025-04-16T14:53:00.9963139Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T14:53:00.9965773Z Actions: read
+2025-04-16T14:53:00.9966711Z Contents: write
+2025-04-16T14:53:00.9967851Z Metadata: read
+2025-04-16T14:53:00.9968719Z ##[endgroup]
+2025-04-16T14:53:00.9971572Z Secret source: Actions
+2025-04-16T14:53:00.9973083Z Prepare workflow directory
+2025-04-16T14:53:01.0525560Z Prepare all required actions
+2025-04-16T14:53:01.0579902Z Getting action download info
+2025-04-16T14:53:01.4697205Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T14:53:01.4699310Z Version: 4.2.2
+2025-04-16T14:53:01.4701130Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T14:53:01.4704391Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T14:53:01.4705946Z ##[endgroup]
+2025-04-16T14:53:01.9676366Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T14:53:01.9677273Z Version: 4.4.0
+2025-04-16T14:53:01.9678134Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T14:53:01.9679322Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T14:53:01.9680124Z ##[endgroup]
+2025-04-16T14:53:02.3122338Z Complete job name: sync-error-logs
+2025-04-16T14:53:02.3802261Z ##[group]Run actions/checkout@v4
+2025-04-16T14:53:02.3803274Z with:
+2025-04-16T14:53:02.3803701Z   fetch-depth: 0
+2025-04-16T14:53:02.3804201Z   repository: mrkurger/date-night-app2
+2025-04-16T14:53:02.3804939Z   token: ***
+2025-04-16T14:53:02.3805388Z   ssh-strict: true
+2025-04-16T14:53:02.3805836Z   ssh-user: git
+2025-04-16T14:53:02.3806305Z   persist-credentials: true
+2025-04-16T14:53:02.3806822Z   clean: true
+2025-04-16T14:53:02.3807276Z   sparse-checkout-cone-mode: true
+2025-04-16T14:53:02.3807813Z   fetch-tags: false
+2025-04-16T14:53:02.3808267Z   show-progress: true
+2025-04-16T14:53:02.3808722Z   lfs: false
+2025-04-16T14:53:02.3809146Z   submodules: false
+2025-04-16T14:53:02.3809619Z   set-safe-directory: true
+2025-04-16T14:53:02.3810318Z env:
+2025-04-16T14:53:02.3810737Z   CI: true
+2025-04-16T14:53:02.3811148Z ##[endgroup]
+2025-04-16T14:53:09.2843928Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T14:53:09.2845405Z ##[group]Getting Git version info
+2025-04-16T14:53:09.2845999Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T14:53:09.2846674Z [command]/usr/bin/git version
+2025-04-16T14:53:09.8125834Z git version 2.49.0
+2025-04-16T14:53:09.8207776Z ##[endgroup]
+2025-04-16T14:53:09.8237770Z Temporarily overriding HOME='/home/runner/work/_temp/a49632cc-0632-44c1-a09a-f11c78555cef' before making global git config changes
+2025-04-16T14:53:09.8241297Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T14:53:09.8246085Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:53:09.8502224Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T14:53:09.8506944Z ##[group]Initializing the repository
+2025-04-16T14:53:09.8513064Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:53:10.0161821Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T14:53:10.0164262Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T14:53:10.0165218Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T14:53:10.0165895Z hint:
+2025-04-16T14:53:10.0166382Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T14:53:10.0166931Z hint:
+2025-04-16T14:53:10.0167471Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T14:53:10.0168392Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T14:53:10.0169125Z hint:
+2025-04-16T14:53:10.0169483Z hint: 	git branch -m <name>
+2025-04-16T14:53:10.0732314Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T14:53:10.0757097Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T14:53:10.1078074Z ##[endgroup]
+2025-04-16T14:53:10.1078886Z ##[group]Disabling automatic garbage collection
+2025-04-16T14:53:10.1084205Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T14:53:10.1121062Z ##[endgroup]
+2025-04-16T14:53:10.1122347Z ##[group]Setting up auth
+2025-04-16T14:53:10.1127949Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T14:53:10.1162850Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T14:53:10.7494038Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T14:53:10.7534646Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T14:53:10.7786362Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T14:53:10.7863635Z ##[endgroup]
+2025-04-16T14:53:10.7864461Z ##[group]Fetching the repository
+2025-04-16T14:53:10.7878019Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-04-16T14:53:19.5453152Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T14:53:19.5475035Z  * [new branch]      dependabot/github_actions/dawidd6/action-download-artifact-9 -> origin/dependabot/github_actions/dawidd6/action-download-artifact-9
+2025-04-16T14:53:19.5476701Z  * [new branch]      dependabot/npm_and_yarn/server/multi-94fa72f662 -> origin/dependabot/npm_and_yarn/server/multi-94fa72f662
+2025-04-16T14:53:19.5477678Z  * [new branch]      main       -> origin/main
+2025-04-16T14:53:19.5563334Z [command]/usr/bin/git branch --list --remote origin/main
+2025-04-16T14:53:19.5600458Z   origin/main
+2025-04-16T14:53:19.5623439Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-04-16T14:53:19.5644739Z 0d3a79f35c3af2cd2a02470b7e43ff1ef5b4d62c
+2025-04-16T14:53:19.5652714Z ##[endgroup]
+2025-04-16T14:53:19.5653844Z ##[group]Determining the checkout info
+2025-04-16T14:53:19.5654999Z ##[endgroup]
+2025-04-16T14:53:19.5661241Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T14:53:19.6072989Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T14:53:19.6102607Z ##[group]Checking out the ref
+2025-04-16T14:53:19.6109051Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T14:53:19.9635948Z Switched to a new branch 'main'
+2025-04-16T14:53:19.9640496Z branch 'main' set up to track 'origin/main'.
+2025-04-16T14:53:19.9674013Z ##[endgroup]
+2025-04-16T14:53:19.9734590Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T14:53:19.9758661Z 0d3a79f35c3af2cd2a02470b7e43ff1ef5b4d62c
+2025-04-16T14:53:19.9981533Z ##[group]Run actions/setup-node@v4
+2025-04-16T14:53:19.9981793Z with:
+2025-04-16T14:53:19.9982322Z   node-version: 22.x
+2025-04-16T14:53:19.9982516Z   always-auth: false
+2025-04-16T14:53:19.9982711Z   check-latest: false
+2025-04-16T14:53:19.9983012Z   token: ***
+2025-04-16T14:53:19.9983181Z env:
+2025-04-16T14:53:19.9983340Z   CI: true
+2025-04-16T14:53:19.9983497Z ##[endgroup]
+2025-04-16T14:53:20.1730468Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T14:53:20.1736934Z ##[group]Environment details
+2025-04-16T14:53:22.7765566Z node: v22.14.0
+2025-04-16T14:53:22.7766382Z npm: 10.9.2
+2025-04-16T14:53:22.7767469Z yarn: 1.22.22
+2025-04-16T14:53:22.7768989Z ##[endgroup]
+2025-04-16T14:53:22.7886744Z ##[group]Run npm install @octokit/rest@19.0.13 fs-extra@11.2.0
+2025-04-16T14:53:22.7887224Z [36;1mnpm install @octokit/rest@19.0.13 fs-extra@11.2.0[0m
+2025-04-16T14:53:22.7942375Z shell: /usr/bin/bash -e {0}
+2025-04-16T14:53:22.7942624Z env:
+2025-04-16T14:53:22.7942795Z   CI: true
+2025-04-16T14:53:22.7942975Z ##[endgroup]
+2025-04-16T14:53:30.2915570Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-16T14:53:31.8203110Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T14:53:32.3118171Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-16T14:53:32.7590249Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-16T14:53:33.4085281Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-16T14:53:33.7233884Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T14:53:34.0820316Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T14:53:34.4028755Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-16T14:53:34.8473960Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T14:53:35.7210618Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-16T14:53:35.8310106Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T14:53:37.0011637Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T14:53:37.0017695Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T14:53:44.4377354Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T14:53:44.4997337Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T14:54:07.7168764Z 
+2025-04-16T14:54:07.7170021Z added 1914 packages, and audited 1917 packages in 45s
+2025-04-16T14:54:07.7170997Z 
+2025-04-16T14:54:07.7172740Z 354 packages are looking for funding
+2025-04-16T14:54:07.7173245Z   run `npm fund` for details
+2025-04-16T14:54:07.7346273Z 
+2025-04-16T14:54:07.7348214Z 9 moderate severity vulnerabilities
+2025-04-16T14:54:07.7348590Z 
+2025-04-16T14:54:07.7348958Z To address issues that do not require attention, run:
+2025-04-16T14:54:07.7349529Z   npm audit fix
+2025-04-16T14:54:07.7349742Z 
+2025-04-16T14:54:07.7350128Z To address all issues (including breaking changes), run:
+2025-04-16T14:54:07.7350691Z   npm audit fix --force
+2025-04-16T14:54:07.7351389Z 
+2025-04-16T14:54:07.7351597Z Run `npm audit` for details.
+2025-04-16T14:54:07.8189724Z ##[group]Run cat > fetch-workflow-logs.js << 'EOF'
+2025-04-16T14:54:07.8190669Z [36;1mcat > fetch-workflow-logs.js << 'EOF'[0m
+2025-04-16T14:54:07.8191202Z [36;1mconst { Octokit } = require('@octokit/rest');[0m
+2025-04-16T14:54:07.8191718Z [36;1mconst fs = require('fs-extra');[0m
+2025-04-16T14:54:07.8192402Z [36;1mconst path = require('path');[0m
+2025-04-16T14:54:07.8192837Z [36;1m[0m
+2025-04-16T14:54:07.8193149Z [36;1masync function main() {[0m
+2025-04-16T14:54:07.8193595Z [36;1m  const owner = process.env.REPO_OWNER;[0m
+2025-04-16T14:54:07.8194106Z [36;1m  const repo = process.env.REPO_NAME;[0m
+2025-04-16T14:54:07.8194808Z [36;1m  const logsDir = path.join('workflow-error-logs');[0m
+2025-04-16T14:54:07.8195125Z [36;1m  [0m
+2025-04-16T14:54:07.8195388Z [36;1m  console.log(`Fetching workflow logs for ${owner}/${repo}`);[0m
+2025-04-16T14:54:07.8195695Z [36;1m  [0m
+2025-04-16T14:54:07.8195932Z [36;1m  // Create logs directory if it doesn't exist[0m
+2025-04-16T14:54:07.8196249Z [36;1m  await fs.ensureDir(logsDir);[0m
+2025-04-16T14:54:07.8196486Z [36;1m  [0m
+2025-04-16T14:54:07.8196678Z [36;1m  const octokit = new Octokit({[0m
+2025-04-16T14:54:07.8196954Z [36;1m    auth: process.env.GITHUB_TOKEN,[0m
+2025-04-16T14:54:07.8197211Z [36;1m    request: {[0m
+2025-04-16T14:54:07.8197410Z [36;1m      retries: 3,[0m
+2025-04-16T14:54:07.8197613Z [36;1m      retryAfter: 1[0m
+2025-04-16T14:54:07.8197812Z [36;1m    }[0m
+2025-04-16T14:54:07.8197977Z [36;1m  });[0m
+2025-04-16T14:54:07.8198143Z [36;1m  [0m
+2025-04-16T14:54:07.8198315Z [36;1m  // Get all workflows[0m
+2025-04-16T14:54:07.8198659Z [36;1m  const { data: workflows } = await octokit.actions.listRepoWorkflows({[0m
+2025-04-16T14:54:07.8199009Z [36;1m    owner,[0m
+2025-04-16T14:54:07.8199188Z [36;1m    repo,[0m
+2025-04-16T14:54:07.8199367Z [36;1m  });[0m
+2025-04-16T14:54:07.8199529Z [36;1m  [0m
+2025-04-16T14:54:07.8199740Z [36;1m  // Get recent workflow runs (last 30 days)[0m
+2025-04-16T14:54:07.8200028Z [36;1m  const thirtyDaysAgo = new Date();[0m
+2025-04-16T14:54:07.8200361Z [36;1m  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);[0m
+2025-04-16T14:54:07.8200772Z [36;1m  [0m
+2025-04-16T14:54:07.8201025Z [36;1m  for (const workflow of workflows.workflows) {[0m
+2025-04-16T14:54:07.8201431Z [36;1m    console.log(`Processing workflow: ${workflow.name} (${workflow.id})`);[0m
+2025-04-16T14:54:07.8201770Z [36;1m    [0m
+2025-04-16T14:54:07.8202141Z [36;1m    try {[0m
+2025-04-16T14:54:07.8202436Z [36;1m      const { data: runs } = await octokit.actions.listWorkflowRuns({[0m
+2025-04-16T14:54:07.8202763Z [36;1m        owner,[0m
+2025-04-16T14:54:07.8202958Z [36;1m        repo,[0m
+2025-04-16T14:54:07.8203164Z [36;1m        workflow_id: workflow.id,[0m
+2025-04-16T14:54:07.8203484Z [36;1m        created: `>=${thirtyDaysAgo.toISOString().split('T')[0]}`,[0m
+2025-04-16T14:54:07.8203781Z [36;1m      });[0m
+2025-04-16T14:54:07.8203973Z [36;1m      [0m
+2025-04-16T14:54:07.8204165Z [36;1m      // Process failed runs[0m
+2025-04-16T14:54:07.8204472Z [36;1m      const failedRuns = runs.workflow_runs.filter(run => [0m
+2025-04-16T14:54:07.8204948Z [36;1m        run.conclusion === 'failure' || run.conclusion === 'cancelled' || run.conclusion === 'timed_out'[0m
+2025-04-16T14:54:07.8205357Z [36;1m      );[0m
+2025-04-16T14:54:07.8205535Z [36;1m      [0m
+2025-04-16T14:54:07.8205845Z [36;1m      console.log(`Found ${failedRuns.length} failed runs for ${workflow.name}`);[0m
+2025-04-16T14:54:07.8206206Z [36;1m      [0m
+2025-04-16T14:54:07.8206399Z [36;1m      for (const run of failedRuns) {[0m
+2025-04-16T14:54:07.8206755Z [36;1m        const runDate = new Date(run.created_at).toISOString().split('T')[0];[0m
+2025-04-16T14:54:07.8207304Z [36;1m        const workflowDir = path.join(logsDir, workflow.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());[0m
+2025-04-16T14:54:07.8207828Z [36;1m        const runDir = path.join(workflowDir, `${runDate}_${run.id}`);[0m
+2025-04-16T14:54:07.8208492Z [36;1m        [0m
+2025-04-16T14:54:07.8208698Z [36;1m        await fs.ensureDir(runDir);[0m
+2025-04-16T14:54:07.8208940Z [36;1m        [0m
+2025-04-16T14:54:07.8209121Z [36;1m        // Save run metadata[0m
+2025-04-16T14:54:07.8209481Z [36;1m        await fs.writeJson(path.join(runDir, 'metadata.json'), run, { spaces: 2 });[0m
+2025-04-16T14:54:07.8209830Z [36;1m        [0m
+2025-04-16T14:54:07.8210000Z [36;1m        try {[0m
+2025-04-16T14:54:07.8210212Z [36;1m          // Get jobs for this run[0m
+2025-04-16T14:54:07.8210566Z [36;1m          const { data: jobs } = await octokit.actions.listJobsForWorkflowRun({[0m
+2025-04-16T14:54:07.8210912Z [36;1m            owner,[0m
+2025-04-16T14:54:07.8211114Z [36;1m            repo,[0m
+2025-04-16T14:54:07.8211324Z [36;1m            run_id: run.id,[0m
+2025-04-16T14:54:07.8211544Z [36;1m          });[0m
+2025-04-16T14:54:07.8211731Z [36;1m          [0m
+2025-04-16T14:54:07.8212124Z [36;1m          // Save jobs metadata[0m
+2025-04-16T14:54:07.8212547Z [36;1m          await fs.writeJson(path.join(runDir, 'jobs.json'), jobs, { spaces: 2 });[0m
+2025-04-16T14:54:07.8212893Z [36;1m          [0m
+2025-04-16T14:54:07.8213081Z [36;1m          // Process each job[0m
+2025-04-16T14:54:07.8213335Z [36;1m          for (const job of jobs.jobs) {[0m
+2025-04-16T14:54:07.8213762Z [36;1m            if (job.conclusion === 'failure' || job.conclusion === 'cancelled' || job.conclusion === 'timed_out') {[0m
+2025-04-16T14:54:07.8214343Z [36;1m              const jobDir = path.join(runDir, job.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());[0m
+2025-04-16T14:54:07.8214761Z [36;1m              await fs.ensureDir(jobDir);[0m
+2025-04-16T14:54:07.8215008Z [36;1m              [0m
+2025-04-16T14:54:07.8215218Z [36;1m              // Save job metadata[0m
+2025-04-16T14:54:07.8215591Z [36;1m              await fs.writeJson(path.join(jobDir, 'job-metadata.json'), job, { spaces: 2 });[0m
+2025-04-16T14:54:07.8215967Z [36;1m              [0m
+2025-04-16T14:54:07.8216169Z [36;1m              try {[0m
+2025-04-16T14:54:07.8216377Z [36;1m                // Get job logs[0m
+2025-04-16T14:54:07.8216734Z [36;1m                const logs = await octokit.actions.downloadJobLogsForWorkflowRun({[0m
+2025-04-16T14:54:07.8217087Z [36;1m                  owner,[0m
+2025-04-16T14:54:07.8217302Z [36;1m                  repo,[0m
+2025-04-16T14:54:07.8217529Z [36;1m                  job_id: job.id,[0m
+2025-04-16T14:54:07.8217758Z [36;1m                });[0m
+2025-04-16T14:54:07.8217956Z [36;1m                [0m
+2025-04-16T14:54:07.8218157Z [36;1m                // Save logs[0m
+2025-04-16T14:54:07.8218466Z [36;1m                await fs.writeFile(path.join(jobDir, 'logs.txt'), logs.data);[0m
+2025-04-16T14:54:07.8218866Z [36;1m                console.log(`Saved logs for job ${job.name} (${job.id})`);[0m
+2025-04-16T14:54:07.8219181Z [36;1m              } catch (error) {[0m
+2025-04-16T14:54:07.8219546Z [36;1m                console.error(`Error fetching logs for job ${job.id}: ${error.message}`);[0m
+2025-04-16T14:54:07.8220077Z [36;1m                await fs.writeFile(path.join(jobDir, 'error.txt'), `Error fetching logs: ${error.message}`);[0m
+2025-04-16T14:54:07.8220482Z [36;1m              }[0m
+2025-04-16T14:54:07.8220686Z [36;1m            }[0m
+2025-04-16T14:54:07.8220872Z [36;1m          }[0m
+2025-04-16T14:54:07.8221055Z [36;1m        } catch (error) {[0m
+2025-04-16T14:54:07.8221386Z [36;1m          console.error(`Error processing run ${run.id}: ${error.message}`);[0m
+2025-04-16T14:54:07.8221896Z [36;1m          await fs.writeFile(path.join(runDir, 'error.txt'), `Error processing run: ${error.message}`);[0m
+2025-04-16T14:54:07.8222501Z [36;1m        }[0m
+2025-04-16T14:54:07.8222673Z [36;1m      }[0m
+2025-04-16T14:54:07.8222856Z [36;1m    } catch (error) {[0m
+2025-04-16T14:54:07.8223209Z [36;1m      console.error(`Error processing workflow ${workflow.id}: ${error.message}`);[0m
+2025-04-16T14:54:07.8223706Z [36;1m    }[0m
+2025-04-16T14:54:07.8223990Z [36;1m  }[0m
+2025-04-16T14:54:07.8224150Z [36;1m  [0m
+2025-04-16T14:54:07.8224326Z [36;1m  // Create summary file[0m
+2025-04-16T14:54:07.8224547Z [36;1m  const summary = {[0m
+2025-04-16T14:54:07.8224784Z [36;1m    timestamp: new Date().toISOString(),[0m
+2025-04-16T14:54:07.8225089Z [36;1m    totalWorkflows: workflows.workflows.length,[0m
+2025-04-16T14:54:07.8225440Z [36;1m    workflowSummary: workflows.workflows.map(w => ({[0m
+2025-04-16T14:54:07.8225732Z [36;1m      name: w.name,[0m
+2025-04-16T14:54:07.8225929Z [36;1m      id: w.id,[0m
+2025-04-16T14:54:07.8226128Z [36;1m      path: w.path,[0m
+2025-04-16T14:54:07.8226358Z [36;1m    })),[0m
+2025-04-16T14:54:07.8226529Z [36;1m  };[0m
+2025-04-16T14:54:07.8226689Z [36;1m  [0m
+2025-04-16T14:54:07.8226990Z [36;1m  await fs.writeJson(path.join(logsDir, 'summary.json'), summary, { spaces: 2 });[0m
+2025-04-16T14:54:07.8227412Z [36;1m  console.log('Workflow error logs sync completed');[0m
+2025-04-16T14:54:07.8227702Z [36;1m}[0m
+2025-04-16T14:54:07.8227863Z [36;1m[0m
+2025-04-16T14:54:07.8228029Z [36;1mmain().catch(error => {[0m
+2025-04-16T14:54:07.8228305Z [36;1m  console.error('Error in main process:', error);[0m
+2025-04-16T14:54:07.8228585Z [36;1m  process.exit(1);[0m
+2025-04-16T14:54:07.8228790Z [36;1m});[0m
+2025-04-16T14:54:07.8228947Z [36;1mEOF[0m
+2025-04-16T14:54:07.8229107Z [36;1m[0m
+2025-04-16T14:54:07.8229282Z [36;1mnode fetch-workflow-logs.js[0m
+2025-04-16T14:54:07.8275912Z shell: /usr/bin/bash -e {0}
+2025-04-16T14:54:07.8276138Z env:
+2025-04-16T14:54:07.8276295Z   CI: true
+2025-04-16T14:54:07.8276650Z   GITHUB_TOKEN: ***
+2025-04-16T14:54:07.8276855Z   REPO_OWNER: mrkurger
+2025-04-16T14:54:07.8277063Z   REPO_NAME: date-night-app2
+2025-04-16T14:54:07.8277280Z ##[endgroup]
+2025-04-16T14:54:07.9097016Z Fetching workflow logs for mrkurger/date-night-app2
+2025-04-16T14:54:08.0624868Z Processing workflow: Angular Tests (156396503)
+2025-04-16T14:54:08.8810003Z Found 22 failed runs for Angular Tests
+2025-04-16T14:54:09.2327829Z Saved logs for job e2e (22.x) (40662876861)
+2025-04-16T14:54:09.3442167Z Saved logs for job test (22.x) (40662876876)
+2025-04-16T14:54:09.6285474Z Saved logs for job e2e (22.x) (40662340818)
+2025-04-16T14:54:09.7223354Z Saved logs for job test (22.x) (40662340822)
+2025-04-16T14:54:10.0633627Z Saved logs for job test (22.x) (40660813802)
+2025-04-16T14:54:10.2254470Z Saved logs for job e2e (22.x) (40660813807)
+2025-04-16T14:54:10.6169350Z Saved logs for job e2e (22.x) (40659963795)
+2025-04-16T14:54:10.7259573Z Saved logs for job test (22.x) (40659963797)
+2025-04-16T14:54:10.8451161Z Saved logs for job lint (22.x) (40659963816)
+2025-04-16T14:54:11.1800590Z Saved logs for job e2e (22.x) (40658470007)
+2025-04-16T14:54:11.3772345Z Saved logs for job lint (22.x) (40658470023)
+2025-04-16T14:54:11.5283589Z Saved logs for job test (22.x) (40658470025)
+2025-04-16T14:54:11.8600537Z Saved logs for job test (22.x) (40656595432)
+2025-04-16T14:54:12.0069528Z Saved logs for job e2e (22.x) (40656595450)
+2025-04-16T14:54:12.1265349Z Saved logs for job lint (22.x) (40656595451)
+2025-04-16T14:54:12.4481155Z Saved logs for job lint (22.x) (40648995689)
+2025-04-16T14:54:12.5591243Z Saved logs for job e2e (22.x) (40648995690)
+2025-04-16T14:54:12.6869977Z Saved logs for job test (22.x) (40648995699)
+2025-04-16T14:54:13.0950804Z Saved logs for job test (22.x) (40648936041)
+2025-04-16T14:54:13.2190253Z Saved logs for job lint (22.x) (40648936049)
+2025-04-16T14:54:13.3519769Z Saved logs for job e2e (22.x) (40648936088)
+2025-04-16T14:54:13.7469448Z Saved logs for job test (22.x) (40645363558)
+2025-04-16T14:54:13.8483396Z Saved logs for job e2e (22.x) (40645363568)
+2025-04-16T14:54:13.9724852Z Saved logs for job lint (22.x) (40645363582)
+2025-04-16T14:54:14.2631907Z Saved logs for job test (22.x) (40642315715)
+2025-04-16T14:54:14.3739828Z Saved logs for job e2e (22.x) (40642315733)
+2025-04-16T14:54:14.5007341Z Saved logs for job lint (22.x) (40642315744)
+2025-04-16T14:54:14.7923791Z Saved logs for job test (22.x) (40640408484)
+2025-04-16T14:54:14.8851545Z Saved logs for job e2e (22.x) (40640408487)
+2025-04-16T14:54:15.0175911Z Saved logs for job lint (22.x) (40640408495)
+2025-04-16T14:54:15.3414133Z Saved logs for job test (22.x) (40639200761)
+2025-04-16T14:54:15.5119550Z Saved logs for job e2e (22.x) (40639200762)
+2025-04-16T14:54:15.6306798Z Saved logs for job lint (22.x) (40639200772)
+2025-04-16T14:54:16.1070721Z Saved logs for job test (22.x) (40638434179)
+2025-04-16T14:54:16.2163467Z Saved logs for job lint (22.x) (40638434180)
+2025-04-16T14:54:16.3950511Z Saved logs for job e2e (22.x) (40638434197)
+2025-04-16T14:54:16.7232368Z Saved logs for job test (22.x) (40638117917)
+2025-04-16T14:54:16.8914577Z Saved logs for job e2e (22.x) (40638117918)
+2025-04-16T14:54:17.0307859Z Saved logs for job lint (22.x) (40638117931)
+2025-04-16T14:54:17.4733491Z Saved logs for job test (22.x) (40637222574)
+2025-04-16T14:54:17.5805144Z Saved logs for job e2e (22.x) (40637222590)
+2025-04-16T14:54:17.7021792Z Saved logs for job lint (22.x) (40637222627)
+2025-04-16T14:54:18.0937412Z Saved logs for job e2e (22.x) (40636317713)
+2025-04-16T14:54:18.2350185Z Saved logs for job test (22.x) (40636317717)
+2025-04-16T14:54:18.3706342Z Saved logs for job lint (22.x) (40636317718)
+2025-04-16T14:54:18.7020532Z Saved logs for job test (22.x) (40635520017)
+2025-04-16T14:54:18.7940507Z Saved logs for job e2e (22.x) (40635520024)
+2025-04-16T14:54:18.8852869Z Saved logs for job lint (22.x) (40635520025)
+2025-04-16T14:54:19.2474055Z Saved logs for job e2e (22.x) (40631138588)
+2025-04-16T14:54:19.3631287Z Saved logs for job test (22.x) (40631138593)
+2025-04-16T14:54:19.7131900Z Saved logs for job test (22.x) (40628452555)
+2025-04-16T14:54:19.8721204Z Saved logs for job e2e (22.x) (40628452573)
+2025-04-16T14:54:20.3169933Z Saved logs for job test (22.x) (40625114143)
+2025-04-16T14:54:20.4259960Z Saved logs for job e2e (22.x) (40625114153)
+2025-04-16T14:54:20.7938809Z Saved logs for job e2e (22.x) (40623556700)
+2025-04-16T14:54:20.9065169Z Saved logs for job test (22.x) (40623556710)
+2025-04-16T14:54:21.3291251Z Saved logs for job e2e (22.x) (40623232672)
+2025-04-16T14:54:21.4663914Z Saved logs for job test (22.x) (40623232677)
+2025-04-16T14:54:21.4666029Z Processing workflow: Security Alerts Report (Alternative) (156517337)
+2025-04-16T14:54:21.6367513Z Found 0 failed runs for Security Alerts Report (Alternative)
+2025-04-16T14:54:21.6368318Z Processing workflow: Security Alerts Report (156511788)
+2025-04-16T14:54:21.8199008Z Found 1 failed runs for Security Alerts Report
+2025-04-16T14:54:22.1379018Z Saved logs for job generate-report (40657820058)
+2025-04-16T14:54:22.1380352Z Processing workflow: Server Tests (156396504)
+2025-04-16T14:54:22.4177632Z Found 6 failed runs for Server Tests
+2025-04-16T14:54:22.8239542Z Saved logs for job test (22.x) (40659963757)
+2025-04-16T14:54:22.9400776Z Saved logs for job lint (22.x) (40659963777)
+2025-04-16T14:54:23.2211656Z Saved logs for job lint (22.x) (40656595380)
+2025-04-16T14:54:23.3411173Z Saved logs for job test (22.x) (40656595382)
+2025-04-16T14:54:23.6870209Z Saved logs for job test (22.x) (40648936051)
+2025-04-16T14:54:23.7814942Z Saved logs for job lint (22.x) (40648936076)
+2025-04-16T14:54:24.1174879Z Saved logs for job lint (22.x) (40636317715)
+2025-04-16T14:54:24.2319704Z Saved logs for job test (22.x) (40636317724)
+2025-04-16T14:54:24.5453903Z Saved logs for job lint (22.x) (40636157199)
+2025-04-16T14:54:24.7008730Z Saved logs for job test (22.x) (40636157200)
+2025-04-16T14:54:25.0265835Z Saved logs for job test (22.x) (40631138589)
+2025-04-16T14:54:25.0267177Z Processing workflow: Sync GitHub Insights (Alternative) (156517338)
+2025-04-16T14:54:25.1292532Z Found 0 failed runs for Sync GitHub Insights (Alternative)
+2025-04-16T14:54:25.1293895Z Processing workflow: Sync GitHub Insights (Fixed) (156518590)
+2025-04-16T14:54:25.3007727Z Found 0 failed runs for Sync GitHub Insights (Fixed)
+2025-04-16T14:54:25.3009156Z Processing workflow: Sync GitHub Insights (156511789)
+2025-04-16T14:54:25.4761834Z Found 3 failed runs for Sync GitHub Insights
+2025-04-16T14:54:25.7184281Z Saved logs for job sync-insights (40658529730)
+2025-04-16T14:54:26.0633783Z Saved logs for job sync-insights (40657800158)
+2025-04-16T14:54:26.3424180Z Saved logs for job sync-insights (40656793753)
+2025-04-16T14:54:26.3425458Z Processing workflow: Sync Test Reports (156511790)
+2025-04-16T14:54:26.6841776Z Found 2 failed runs for Sync Test Reports
+2025-04-16T14:54:26.9735450Z Saved logs for job sync-reports (40656664593)
+2025-04-16T14:54:27.2451490Z Saved logs for job sync-reports (40656644372)
+2025-04-16T14:54:27.2452679Z Processing workflow: Sync Workflow Error Logs (156531139)
+2025-04-16T14:54:27.4447494Z Found 0 failed runs for Sync Workflow Error Logs
+2025-04-16T14:54:27.4448873Z Processing workflow: Sync Workflow Error Logs (156529457)
+2025-04-16T14:54:27.7039167Z Found 4 failed runs for Sync Workflow Error Logs
+2025-04-16T14:54:27.9675654Z Saved logs for job sync-error-logs (40663029928)
+2025-04-16T14:54:28.2302147Z Saved logs for job sync-error-logs (40662993597)
+2025-04-16T14:54:28.4781367Z Saved logs for job sync-error-logs (40662475242)
+2025-04-16T14:54:28.7747503Z Saved logs for job sync-error-logs (40662446363)
+2025-04-16T14:54:28.7749896Z Processing workflow: Dependabot Updates (153911032)
+2025-04-16T14:54:29.5116064Z Found 15 failed runs for Dependabot Updates
+2025-04-16T14:54:29.7988275Z Saved logs for job Dependabot (40657560162)
+2025-04-16T14:54:30.0644246Z Saved logs for job Dependabot (40657559762)
+2025-04-16T14:54:30.3824429Z Saved logs for job Dependabot (40657410431)
+2025-04-16T14:54:30.7057112Z Saved logs for job Dependabot (40657409984)
+2025-04-16T14:54:30.9543703Z Saved logs for job Dependabot (40656602439)
+2025-04-16T14:54:31.2433702Z Saved logs for job Dependabot (40656599224)
+2025-04-16T14:54:31.6129263Z Saved logs for job Dependabot (40656599232)
+2025-04-16T14:54:31.9157837Z Saved logs for job Dependabot (40648953960)
+2025-04-16T14:54:32.1365977Z Saved logs for job Dependabot (40636173412)
+2025-04-16T14:54:32.4271498Z Saved logs for job Dependabot (40635535253)
+2025-04-16T14:54:32.6925621Z Saved logs for job Dependabot (40620670121)
+2025-04-16T14:54:33.0951879Z Saved logs for job Dependabot (40620661666)
+2025-04-16T14:54:33.4225739Z Saved logs for job Dependabot (40615377452)
+2025-04-16T14:54:33.7644513Z Saved logs for job Dependabot (40615364053)
+2025-04-16T14:54:34.0103637Z Saved logs for job Dependabot (40405591413)
+2025-04-16T14:54:34.0106304Z Workflow error logs sync completed
+2025-04-16T14:54:34.0230710Z ##[group]Run cat > workflow-error-logs/README.md << 'EOF'
+2025-04-16T14:54:34.0231413Z [36;1mcat > workflow-error-logs/README.md << 'EOF'[0m
+2025-04-16T14:54:34.0232122Z [36;1m# Workflow Error Logs[0m
+2025-04-16T14:54:34.0232518Z [36;1m[0m
+2025-04-16T14:54:34.0233457Z [36;1mThis directory contains logs from failed GitHub Actions workflow runs. These logs are automatically collected by the "Sync Workflow Error Logs" workflow.[0m
+2025-04-16T14:54:34.0234601Z [36;1m[0m
+2025-04-16T14:54:34.0234942Z [36;1m## Directory Structure[0m
+2025-04-16T14:54:34.0235392Z [36;1m[0m
+2025-04-16T14:54:34.0235647Z [36;1m```[0m
+2025-04-16T14:54:34.0235972Z [36;1mworkflow-error-logs/[0m
+2025-04-16T14:54:34.0236430Z [36;1m├── {workflow-name}/[0m
+2025-04-16T14:54:34.0236846Z [36;1m│   ├── {date}_{run-id}/[0m
+2025-04-16T14:54:34.0237353Z [36;1m│   │   ├── metadata.json       # Run metadata[0m
+2025-04-16T14:54:34.0237892Z [36;1m│   │   ├── jobs.json           # Jobs metadata[0m
+2025-04-16T14:54:34.0238426Z [36;1m│   │   ├── {job-name}/[0m
+2025-04-16T14:54:34.0239000Z [36;1m│   │   │   ├── job-metadata.json  # Job metadata[0m
+2025-04-16T14:54:34.0239552Z [36;1m│   │   │   └── logs.txt           # Job logs[0m
+2025-04-16T14:54:34.0240022Z [36;1m│   │   └── ...[0m
+2025-04-16T14:54:34.0240406Z [36;1m│   └── ...[0m
+2025-04-16T14:54:34.0240747Z [36;1m└── ...[0m
+2025-04-16T14:54:34.0241066Z [36;1m```[0m
+2025-04-16T14:54:34.0241369Z [36;1m[0m
+2025-04-16T14:54:34.0242175Z [36;1m## Using These Logs[0m
+2025-04-16T14:54:34.0242554Z [36;1m[0m
+2025-04-16T14:54:34.0243497Z [36;1mThese logs can be used to diagnose and fix issues with GitHub Actions workflows. Look for error messages, failed steps, and other indicators of problems.[0m
+2025-04-16T14:54:34.0244584Z [36;1m[0m
+2025-04-16T14:54:34.0244896Z [36;1m## Automatic Collection[0m
+2025-04-16T14:54:34.0245303Z [36;1m[0m
+2025-04-16T14:54:34.0245618Z [36;1mLogs are collected:[0m
+2025-04-16T14:54:34.0246066Z [36;1m- After any workflow completes[0m
+2025-04-16T14:54:34.0246557Z [36;1m- Every 6 hours via scheduled run[0m
+2025-04-16T14:54:34.0247029Z [36;1m- Manually via workflow dispatch[0m
+2025-04-16T14:54:34.0247463Z [36;1m[0m
+2025-04-16T14:54:34.0247761Z [36;1m## Retention[0m
+2025-04-16T14:54:34.0248106Z [36;1m[0m
+2025-04-16T14:54:34.0248494Z [36;1mOnly logs from the past 30 days are collected.[0m
+2025-04-16T14:54:34.0249010Z [36;1mEOF[0m
+2025-04-16T14:54:34.0316012Z shell: /usr/bin/bash -e {0}
+2025-04-16T14:54:34.0316408Z env:
+2025-04-16T14:54:34.0316693Z   CI: true
+2025-04-16T14:54:34.0316982Z ##[endgroup]
+2025-04-16T14:54:34.0463981Z ##[group]Run git config --local user.email "action@github.com"
+2025-04-16T14:54:34.0464775Z [36;1mgit config --local user.email "action@github.com"[0m
+2025-04-16T14:54:34.0465418Z [36;1mgit config --local user.name "GitHub Action"[0m
+2025-04-16T14:54:34.0465950Z [36;1m[0m
+2025-04-16T14:54:34.0466297Z [36;1mgit add workflow-error-logs[0m
+2025-04-16T14:54:34.0466732Z [36;1m[0m
+2025-04-16T14:54:34.0467066Z [36;1m# Only commit if there are changes[0m
+2025-04-16T14:54:34.0467572Z [36;1mif git diff --staged --quiet; then[0m
+2025-04-16T14:54:34.0468056Z [36;1m  echo "No changes to commit"[0m
+2025-04-16T14:54:34.0468492Z [36;1melse[0m
+2025-04-16T14:54:34.0468932Z [36;1m  git commit -m "Update workflow error logs [skip ci]"[0m
+2025-04-16T14:54:34.0469487Z [36;1m  git push[0m
+2025-04-16T14:54:34.0469817Z [36;1mfi[0m
+2025-04-16T14:54:34.0531516Z shell: /usr/bin/bash -e {0}
+2025-04-16T14:54:34.0532131Z env:
+2025-04-16T14:54:34.0532430Z   CI: true
+2025-04-16T14:54:34.0532791Z ##[endgroup]
+2025-04-16T14:54:34.7420363Z [main c8c6443] Update workflow error logs [skip ci]
+2025-04-16T14:54:34.7436548Z  296 files changed, 96555 insertions(+), 15 deletions(-)
+2025-04-16T14:54:34.7437591Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7438837Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7439926Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/jobs.json
+2025-04-16T14:54:34.7441047Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/metadata.json
+2025-04-16T14:54:34.7441918Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7442834Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14482934212/test--22-x-/logs.txt
+2025-04-16T14:54:34.7443551Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7444214Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7444803Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/jobs.json
+2025-04-16T14:54:34.7445366Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/metadata.json
+2025-04-16T14:54:34.7446030Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7446692Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483056251/test--22-x-/logs.txt
+2025-04-16T14:54:34.7447367Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7448037Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7448890Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/jobs.json
+2025-04-16T14:54:34.7449467Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/metadata.json
+2025-04-16T14:54:34.7450117Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7450774Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14483628053/test--22-x-/logs.txt
+2025-04-16T14:54:34.7451427Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7452344Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7452997Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/jobs.json
+2025-04-16T14:54:34.7453571Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/metadata.json
+2025-04-16T14:54:34.7454412Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7455102Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14484838491/test--22-x-/logs.txt
+2025-04-16T14:54:34.7455758Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7456407Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7456978Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/jobs.json
+2025-04-16T14:54:34.7457550Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/metadata.json
+2025-04-16T14:54:34.7458185Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7458832Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14485836014/test--22-x-/logs.txt
+2025-04-16T14:54:34.7459490Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7460128Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7460697Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/jobs.json
+2025-04-16T14:54:34.7461319Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7462223Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7462855Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/metadata.json
+2025-04-16T14:54:34.7463496Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7464153Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487328371/test--22-x-/logs.txt
+2025-04-16T14:54:34.7464808Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7465453Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7466034Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/jobs.json
+2025-04-16T14:54:34.7466654Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7467306Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7467905Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/metadata.json
+2025-04-16T14:54:34.7468546Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7469191Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487584048/test--22-x-/logs.txt
+2025-04-16T14:54:34.7470001Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7470647Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7471222Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/jobs.json
+2025-04-16T14:54:34.7471842Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7472878Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7473473Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/metadata.json
+2025-04-16T14:54:34.7474108Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7474757Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14487862937/test--22-x-/logs.txt
+2025-04-16T14:54:34.7475550Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7476202Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7476793Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/jobs.json
+2025-04-16T14:54:34.7477412Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7478063Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7478681Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/metadata.json
+2025-04-16T14:54:34.7479337Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7479993Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488138321/test--22-x-/logs.txt
+2025-04-16T14:54:34.7480655Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7481306Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7481885Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/jobs.json
+2025-04-16T14:54:34.7482739Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7483401Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7484010Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/metadata.json
+2025-04-16T14:54:34.7484657Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7485315Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488237430/test--22-x-/logs.txt
+2025-04-16T14:54:34.7485971Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7486612Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7487196Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/jobs.json
+2025-04-16T14:54:34.7487820Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7488465Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7489068Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/metadata.json
+2025-04-16T14:54:34.7489709Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7490353Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488479923/test--22-x-/logs.txt
+2025-04-16T14:54:34.7491135Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7491782Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7492524Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/jobs.json
+2025-04-16T14:54:34.7493148Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7493803Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7494393Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/metadata.json
+2025-04-16T14:54:34.7495027Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7495678Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14488849586/test--22-x-/logs.txt
+2025-04-16T14:54:34.7496450Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7497108Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7497687Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/jobs.json
+2025-04-16T14:54:34.7498313Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7498955Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7499550Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/metadata.json
+2025-04-16T14:54:34.7500187Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7500831Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14489457633/test--22-x-/logs.txt
+2025-04-16T14:54:34.7501486Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7502357Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7502945Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/jobs.json
+2025-04-16T14:54:34.7503566Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7504217Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7504811Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/metadata.json
+2025-04-16T14:54:34.7505444Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7506096Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14490404236/test--22-x-/logs.txt
+2025-04-16T14:54:34.7506747Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7507385Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7507961Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/jobs.json
+2025-04-16T14:54:34.7508592Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7509235Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7509834Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/metadata.json
+2025-04-16T14:54:34.7510466Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7511107Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491544593/test--22-x-/logs.txt
+2025-04-16T14:54:34.7511908Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7512750Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7513338Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/jobs.json
+2025-04-16T14:54:34.7513967Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7514626Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7515221Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/metadata.json
+2025-04-16T14:54:34.7515866Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7516520Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14491563458/test--22-x-/logs.txt
+2025-04-16T14:54:34.7517316Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7517977Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7518556Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/jobs.json
+2025-04-16T14:54:34.7519179Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7519825Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7520429Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/metadata.json
+2025-04-16T14:54:34.7521065Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7521707Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14493901639/test--22-x-/logs.txt
+2025-04-16T14:54:34.7522553Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7523227Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7523808Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/jobs.json
+2025-04-16T14:54:34.7524433Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7525079Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7525677Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/metadata.json
+2025-04-16T14:54:34.7526315Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7526959Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494454456/test--22-x-/logs.txt
+2025-04-16T14:54:34.7527815Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7546713Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7547381Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/jobs.json
+2025-04-16T14:54:34.7548042Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7548713Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7549323Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/metadata.json
+2025-04-16T14:54:34.7549968Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7550612Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14494881575/test--22-x-/logs.txt
+2025-04-16T14:54:34.7551456Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7552350Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7552953Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/jobs.json
+2025-04-16T14:54:34.7553525Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/metadata.json
+2025-04-16T14:54:34.7554166Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7554822Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495131635/test--22-x-/logs.txt
+2025-04-16T14:54:34.7555479Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7556125Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7556701Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/jobs.json
+2025-04-16T14:54:34.7557397Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/metadata.json
+2025-04-16T14:54:34.7558052Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7558717Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495580435/test--22-x-/logs.txt
+2025-04-16T14:54:34.7559374Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/e2e--22-x-/job-metadata.json
+2025-04-16T14:54:34.7560028Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/e2e--22-x-/logs.txt
+2025-04-16T14:54:34.7560608Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/jobs.json
+2025-04-16T14:54:34.7561167Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/metadata.json
+2025-04-16T14:54:34.7561809Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7562664Z  create mode 100644 workflow-error-logs/angular-tests/2025-04-16_14495733951/test--22-x-/logs.txt
+2025-04-16T14:54:34.7563357Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-11_14406928734/dependabot/job-metadata.json
+2025-04-16T14:54:34.7564054Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-11_14406928734/dependabot/logs.txt
+2025-04-16T14:54:34.7564686Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-11_14406928734/jobs.json
+2025-04-16T14:54:34.7565302Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-11_14406928734/metadata.json
+2025-04-16T14:54:34.7565979Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480207800/dependabot/job-metadata.json
+2025-04-16T14:54:34.7566674Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480207800/dependabot/logs.txt
+2025-04-16T14:54:34.7567303Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480207800/jobs.json
+2025-04-16T14:54:34.7567903Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480207800/metadata.json
+2025-04-16T14:54:34.7568577Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480211018/dependabot/job-metadata.json
+2025-04-16T14:54:34.7569268Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480211018/dependabot/logs.txt
+2025-04-16T14:54:34.7569881Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480211018/jobs.json
+2025-04-16T14:54:34.7570480Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-15_14480211018/metadata.json
+2025-04-16T14:54:34.7571151Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481993874/dependabot/job-metadata.json
+2025-04-16T14:54:34.7571841Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481993874/dependabot/logs.txt
+2025-04-16T14:54:34.7572792Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481993874/jobs.json
+2025-04-16T14:54:34.7573418Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481993874/metadata.json
+2025-04-16T14:54:34.7574111Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481996730/dependabot/job-metadata.json
+2025-04-16T14:54:34.7574813Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481996730/dependabot/logs.txt
+2025-04-16T14:54:34.7575453Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481996730/jobs.json
+2025-04-16T14:54:34.7576071Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14481996730/metadata.json
+2025-04-16T14:54:34.7576758Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487333125/dependabot/job-metadata.json
+2025-04-16T14:54:34.7577462Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487333125/dependabot/logs.txt
+2025-04-16T14:54:34.7578212Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487333125/jobs.json
+2025-04-16T14:54:34.7578827Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487333125/metadata.json
+2025-04-16T14:54:34.7579512Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487537956/dependabot/job-metadata.json
+2025-04-16T14:54:34.7580209Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487537956/dependabot/logs.txt
+2025-04-16T14:54:34.7580834Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487537956/jobs.json
+2025-04-16T14:54:34.7581439Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14487537956/metadata.json
+2025-04-16T14:54:34.7582351Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14491549806/dependabot/job-metadata.json
+2025-04-16T14:54:34.7583077Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14491549806/dependabot/logs.txt
+2025-04-16T14:54:34.7583710Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14491549806/jobs.json
+2025-04-16T14:54:34.7584322Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14491549806/metadata.json
+2025-04-16T14:54:34.7585005Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902595/dependabot/job-metadata.json
+2025-04-16T14:54:34.7585698Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902595/dependabot/logs.txt
+2025-04-16T14:54:34.7586318Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902595/jobs.json
+2025-04-16T14:54:34.7586922Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902595/metadata.json
+2025-04-16T14:54:34.7587611Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902598/dependabot/job-metadata.json
+2025-04-16T14:54:34.7588310Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902598/dependabot/logs.txt
+2025-04-16T14:54:34.7588941Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902598/jobs.json
+2025-04-16T14:54:34.7589547Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493902598/metadata.json
+2025-04-16T14:54:34.7590227Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493903598/dependabot/job-metadata.json
+2025-04-16T14:54:34.7590978Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493903598/dependabot/logs.txt
+2025-04-16T14:54:34.7591775Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493903598/jobs.json
+2025-04-16T14:54:34.7592573Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14493903598/metadata.json
+2025-04-16T14:54:34.7593257Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494144849/dependabot/job-metadata.json
+2025-04-16T14:54:34.7593951Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494144849/dependabot/logs.txt
+2025-04-16T14:54:34.7594720Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494144849/jobs.json
+2025-04-16T14:54:34.7595326Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494144849/metadata.json
+2025-04-16T14:54:34.7596008Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494145040/dependabot/job-metadata.json
+2025-04-16T14:54:34.7596702Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494145040/dependabot/logs.txt
+2025-04-16T14:54:34.7597324Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494145040/jobs.json
+2025-04-16T14:54:34.7597934Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494145040/metadata.json
+2025-04-16T14:54:34.7598602Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189299/dependabot/job-metadata.json
+2025-04-16T14:54:34.7599312Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189299/dependabot/logs.txt
+2025-04-16T14:54:34.7600080Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189299/jobs.json
+2025-04-16T14:54:34.7600701Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189299/metadata.json
+2025-04-16T14:54:34.7601378Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189650/dependabot/job-metadata.json
+2025-04-16T14:54:34.7602184Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189650/dependabot/logs.txt
+2025-04-16T14:54:34.7602809Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189650/jobs.json
+2025-04-16T14:54:34.7603412Z  create mode 100644 workflow-error-logs/dependabot-updates/2025-04-16_14494189650/metadata.json
+2025-04-16T14:54:34.7604139Z  create mode 100644 workflow-error-logs/security-alerts-report/2025-04-16_14494265282/generate-report/job-metadata.json
+2025-04-16T14:54:34.7604912Z  create mode 100644 workflow-error-logs/security-alerts-report/2025-04-16_14494265282/generate-report/logs.txt
+2025-04-16T14:54:34.7605596Z  create mode 100644 workflow-error-logs/security-alerts-report/2025-04-16_14494265282/jobs.json
+2025-04-16T14:54:34.7606235Z  create mode 100644 workflow-error-logs/security-alerts-report/2025-04-16_14494265282/metadata.json
+2025-04-16T14:54:34.7606840Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14485836001/jobs.json
+2025-04-16T14:54:34.7607398Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14485836001/metadata.json
+2025-04-16T14:54:34.7608025Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14485836001/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7608677Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14485836001/test--22-x-/logs.txt
+2025-04-16T14:54:34.7609254Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/jobs.json
+2025-04-16T14:54:34.7609924Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7610578Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7611172Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/metadata.json
+2025-04-16T14:54:34.7611797Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7612537Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487532942/test--22-x-/logs.txt
+2025-04-16T14:54:34.7613113Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/jobs.json
+2025-04-16T14:54:34.7613724Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7614365Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7614954Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/metadata.json
+2025-04-16T14:54:34.7615739Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7616383Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14487584061/test--22-x-/logs.txt
+2025-04-16T14:54:34.7616960Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/jobs.json
+2025-04-16T14:54:34.7617569Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7618217Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7618805Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/metadata.json
+2025-04-16T14:54:34.7619431Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7620075Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14491544609/test--22-x-/logs.txt
+2025-04-16T14:54:34.7620759Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/jobs.json
+2025-04-16T14:54:34.7621374Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7622107Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7622697Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/metadata.json
+2025-04-16T14:54:34.7623320Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7623953Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14493901628/test--22-x-/logs.txt
+2025-04-16T14:54:34.7624523Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/jobs.json
+2025-04-16T14:54:34.7625137Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/lint--22-x-/job-metadata.json
+2025-04-16T14:54:34.7625782Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/lint--22-x-/logs.txt
+2025-04-16T14:54:34.7626370Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/metadata.json
+2025-04-16T14:54:34.7626999Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/test--22-x-/job-metadata.json
+2025-04-16T14:54:34.7627630Z  create mode 100644 workflow-error-logs/server-tests/2025-04-16_14494881619/test--22-x-/logs.txt
+2025-04-16T14:54:34.7628103Z  create mode 100644 workflow-error-logs/summary.json
+2025-04-16T14:54:34.7628597Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14493961666/jobs.json
+2025-04-16T14:54:34.7629221Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14493961666/metadata.json
+2025-04-16T14:54:34.7629935Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14493961666/sync-insights/job-metadata.json
+2025-04-16T14:54:34.7630677Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14493961666/sync-insights/logs.txt
+2025-04-16T14:54:34.7631338Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494259768/jobs.json
+2025-04-16T14:54:34.7632068Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494259768/metadata.json
+2025-04-16T14:54:34.7632777Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494259768/sync-insights/job-metadata.json
+2025-04-16T14:54:34.7633509Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494259768/sync-insights/logs.txt
+2025-04-16T14:54:34.7634153Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494470565/jobs.json
+2025-04-16T14:54:34.7634773Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494470565/metadata.json
+2025-04-16T14:54:34.7635473Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494470565/sync-insights/job-metadata.json
+2025-04-16T14:54:34.7636324Z  create mode 100644 workflow-error-logs/sync-github-insights/2025-04-16_14494470565/sync-insights/logs.txt
+2025-04-16T14:54:34.7636973Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493916276/jobs.json
+2025-04-16T14:54:34.7637580Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493916276/metadata.json
+2025-04-16T14:54:34.7638255Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493916276/sync-reports/job-metadata.json
+2025-04-16T14:54:34.7638959Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493916276/sync-reports/logs.txt
+2025-04-16T14:54:34.7639586Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493922204/jobs.json
+2025-04-16T14:54:34.7640177Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493922204/metadata.json
+2025-04-16T14:54:34.7640888Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493922204/sync-reports/job-metadata.json
+2025-04-16T14:54:34.7641701Z  create mode 100644 workflow-error-logs/sync-test-reports/2025-04-16_14493922204/sync-reports/logs.txt
+2025-04-16T14:54:34.7642460Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495610844/jobs.json
+2025-04-16T14:54:34.7643110Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495610844/metadata.json
+2025-04-16T14:54:34.7643846Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495610844/sync-error-logs/job-metadata.json
+2025-04-16T14:54:34.7644625Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495610844/sync-error-logs/logs.txt
+2025-04-16T14:54:34.7645303Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495619567/jobs.json
+2025-04-16T14:54:34.7645960Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495619567/metadata.json
+2025-04-16T14:54:34.7646695Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495619567/sync-error-logs/job-metadata.json
+2025-04-16T14:54:34.7647471Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495619567/sync-error-logs/logs.txt
+2025-04-16T14:54:34.7648149Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495767136/jobs.json
+2025-04-16T14:54:34.7648795Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495767136/metadata.json
+2025-04-16T14:54:34.7649528Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495767136/sync-error-logs/job-metadata.json
+2025-04-16T14:54:34.7650283Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495767136/sync-error-logs/logs.txt
+2025-04-16T14:54:34.7650963Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495778006/jobs.json
+2025-04-16T14:54:34.7651608Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495778006/metadata.json
+2025-04-16T14:54:34.7652441Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495778006/sync-error-logs/job-metadata.json
+2025-04-16T14:54:34.7653203Z  create mode 100644 workflow-error-logs/sync-workflow-error-logs/2025-04-16_14495778006/sync-error-logs/logs.txt
+2025-04-16T14:54:34.8959061Z To https://github.com/mrkurger/date-night-app2
+2025-04-16T14:54:34.8960577Z  ! [rejected]        main -> main (fetch first)
+2025-04-16T14:54:34.8961518Z error: failed to push some refs to 'https://github.com/mrkurger/date-night-app2'
+2025-04-16T14:54:34.8973392Z hint: Updates were rejected because the remote contains work that you do not
+2025-04-16T14:54:34.8974696Z hint: have locally. This is usually caused by another repository pushing to
+2025-04-16T14:54:34.8977152Z hint: the same ref. If you want to integrate the remote changes, use
+2025-04-16T14:54:34.8977842Z hint: 'git pull' before pushing again.
+2025-04-16T14:54:34.8978582Z hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2025-04-16T14:54:34.8994428Z ##[error]Process completed with exit code 1.
+2025-04-16T14:54:34.9085266Z Post job cleanup.
+2025-04-16T14:54:35.0028436Z [command]/usr/bin/git version
+2025-04-16T14:54:35.0069327Z git version 2.49.0
+2025-04-16T14:54:35.0117048Z Temporarily overriding HOME='/home/runner/work/_temp/92abade1-6e7a-4db8-b197-e30ea88e64c9' before making global git config changes
+2025-04-16T14:54:35.0119090Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T14:54:35.0134423Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T14:54:35.0173119Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T14:54:35.0209291Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T14:54:35.0519213Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T14:54:35.0543874Z http.https://github.com/.extraheader
+2025-04-16T14:54:35.0559979Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T14:54:35.0595336Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T14:54:35.0938831Z Cleaning up orphan processes
