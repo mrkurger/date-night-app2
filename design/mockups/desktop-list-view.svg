@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Definitions for reusable elements -->
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    
+    <!-- Button styles -->
+    <linearGradient id="primaryButtonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d13654;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Avatar placeholder -->
+    <circle id="avatarCircle" cx="20" cy="20" r="20" fill="#ccc"/>
+    <clipPath id="avatarClip">
+      <use xlink:href="#avatarCircle"/>
+    </clipPath>
+    
+    <!-- Star rating -->
+    <symbol id="star" viewBox="0 0 24 24">
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#ffc107"/>
+    </symbol>
+    
+    <!-- Card action buttons -->
+    <symbol id="likeButton" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="20" fill="#e94560"/>
+      <path d="M20 30l-1.45-1.32C13.4 23.36 10 20.28 10 16.5 10 13.42 12.42 11 15.5 11c1.74 0 3.41.81 4.5 2.09C21.09 11.81 22.76 11 24.5 11 27.58 11 30 13.42 30 16.5c0 3.78-3.4 6.86-8.55 11.54L20 30z" fill="#ffffff"/>
+    </symbol>
+    
+    <symbol id="chatButton" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="20" fill="#0f3460"/>
+      <path d="M30 14c0-1.1-.9-2-2-2H12c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V14zm-8 7h-8v-2h8v2zm4-4H14v-2h12v2z" fill="#ffffff"/>
+    </symbol>
+    
+    <symbol id="infoButton" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="20" fill="#2d4263"/>
+      <path d="M21 27h-2v-8h2v8zm0-12h-2v-2h2v2zm-1-5C14.48 10 10 14.48 10 20s4.48 10 10 10 10-4.48 10-10S25.52 10 20 10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#ffffff"/>
+    </symbol>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1024" height="768" fill="url(#backgroundGradient)"/>
+  
+  <!-- Left sidebar -->
+  <g id="leftSidebar">
+    <rect x="0" y="0" width="220" height="768" fill="#0f3460" />
+    
+    <!-- Logo -->
+    <text x="20" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff">DateNight.io</text>
+    
+    <!-- Navigation items -->
+    <g id="navItems" fill="#ffffff">
+      <!-- Netflix View -->
+      <g transform="translate(20, 100)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 5h18v14H3V5zm9 12h8v-4H12v4zm0-6h8V7h-8v4zm-8 6h6V7H4v10z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Netflix View</text>
+      </g>
+      
+      <!-- Tinder View -->
+      <g transform="translate(20, 150)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Tinder View</text>
+      </g>
+      
+      <!-- List View -->
+      <g transform="translate(20, 200)">
+        <rect x="0" y="0" width="180" height="40" rx="4" fill="#e94560" opacity="0.8"/>
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">List View</text>
+      </g>
+      
+      <!-- Messages -->
+      <g transform="translate(20, 250)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Messages</text>
+      </g>
+      
+      <!-- Favorites -->
+      <g transform="translate(20, 300)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Favorites</text>
+      </g>
+      
+      <!-- Settings -->
+      <g transform="translate(20, 350)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Settings</text>
+      </g>
+      
+      <!-- Preferences Demo -->
+      <g transform="translate(20, 400)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Preferences</text>
+      </g>
+    </g>
+    
+    <!-- Theme toggle at bottom -->
+    <g transform="translate(20, 700)">
+      <rect x="0" y="0" width="180" height="40" rx="20" fill="#2d4263" />
+      <circle cx="40" cy="20" r="16" fill="#e94560" />
+      <text x="70" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Dark Mode</text>
+    </g>
+  </g>
+  
+  <!-- Top header -->
+  <g id="topHeader">
+    <rect x="220" y="0" width="804" height="60" fill="#0f3460" />
+    
+    <!-- View type selector -->
+    <g transform="translate(240, 15)">
+      <rect x="0" y="0" width="300" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+      
+      <!-- Netflix option -->
+      <rect x="0" y="0" width="100" height="30" rx="0" fill="#ffffff" opacity="0.0" />
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7" text-anchor="middle">Netflix</text>
+      
+      <!-- Tinder option -->
+      <rect x="100" y="0" width="100" height="30" rx="0" fill="#ffffff" opacity="0.0" />
+      <text x="150" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7" text-anchor="middle">Tinder</text>
+      
+      <!-- List option (selected) -->
+      <rect x="200" y="0" width="100" height="30" rx="0" fill="#e94560" />
+      <text x="250" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">List</text>
+    </g>
+    
+    <!-- Filter button -->
+    <g transform="translate(560, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+      <svg x="10" y="3" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" fill="#ffffff"/>
+      </svg>
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Filter</text>
+    </g>
+    
+    <!-- Search bar -->
+    <rect x="650" y="15" width="200" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+    <svg x="660" y="18" width="24" height="24" viewBox="0 0 24 24">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#ffffff"/>
+    </svg>
+    <text x="690" y="35" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">Search...</text>
+    
+    <!-- User profile -->
+    <g transform="translate(950, 15)">
+      <circle cx="15" cy="15" r="15" fill="#e94560" />
+      <text x="15" y="20" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">OL</text>
+    </g>
+  </g>
+  
+  <!-- Main content area -->
+  <g id="mainContent">
+    <!-- List header -->
+    <g transform="translate(240, 80)">
+      <rect x="0" y="0" width="764" height="50" rx="8" fill="#0f3460" />
+      
+      <!-- Column headers -->
+      <text x="20" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Profile</text>
+      <text x="300" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Location</text>
+      <text x="450" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Rating</text>
+      <text x="550" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Price</text>
+      <text x="650" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Actions</text>
+    </g>
+    
+    <!-- List rows -->
+    <!-- Row 1 -->
+    <g transform="translate(240, 140)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzMzMzMzIi8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPk1UPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="transparent" stroke="#e94560" stroke-width="2" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Professional Massage</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Massage Therapy</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Oslo, Norway</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" opacity="0.3" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(24)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">1500 NOK</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Row 2 -->
+    <g transform="translate(240, 230)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzMzMzY2Ii8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkVFPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Elegant Escort</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Escort Services</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Stockholm, Sweden</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" opacity="0.5" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(18)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">2500 SEK</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Row 3 -->
+    <g transform="translate(240, 320)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzM2Njk5Ii8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkVEPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Exotic Dance</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Dance Performance</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Copenhagen, Denmark</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(32)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">2000 DKK</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Row 4 -->
+    <g transform="translate(240, 410)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjNjYzMzY2Ii8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkVQPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Event Planner</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Event Services</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Miami, FL</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" opacity="0.7" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(27)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">$300</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Row 5 -->
+    <g transform="translate(240, 500)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjNjY5OTMzIi8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPlBIPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Photographer</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Photography Services</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">New York, NY</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" opacity="0.4" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(21)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">$250</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Row 6 -->
+    <g transform="translate(240, 590)">
+      <rect x="0" y="0" width="764" height="80" rx="8" fill="#1a1a2e" filter="url(#cardShadow)" />
+      
+      <!-- Profile info -->
+      <rect x="20" y="15" width="50" height="50" rx="8" fill="#333" />
+      <image x="20" y="15" width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjOTkzMzY2Ii8+PHRleHQgeD0iMjUiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPk1BPC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      
+      <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Makeup Artist</text>
+      <text x="80" y="50" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">Beauty Services</text>
+      
+      <!-- Location -->
+      <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Los Angeles, CA</text>
+      
+      <!-- Rating -->
+      <g transform="translate(450, 35)">
+        <use xlink:href="#star" x="0" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="18" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="36" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="54" y="0" width="16" height="16" />
+        <use xlink:href="#star" x="72" y="0" width="16" height="16" opacity="0.3" />
+        <text x="95" y="12" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">(19)</text>
+      </g>
+      
+      <!-- Price -->
+      <text x="550" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e94560">$200</text>
+      
+      <!-- Actions -->
+      <g transform="translate(650, 25)">
+        <use xlink:href="#likeButton" x="0" y="0" width="30" height="30" />
+        <use xlink:href="#chatButton" x="40" y="0" width="30" height="30" />
+        <use xlink:href="#infoButton" x="80" y="0" width="30" height="30" />
+      </g>
+    </g>
+    
+    <!-- Pagination -->
+    <g transform="translate(622, 690)">
+      <rect x="-100" y="0" width="200" height="40" rx="20" fill="#0f3460" />
+      <text x="-70" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">« Previous</text>
+      <text x="0" y="25" font-family="Arial, sans-serif" font-size="14" fill="#e94560" text-anchor="middle">1</text>
+      <text x="20" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">2</text>
+      <text x="40" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">3</text>
+      <text x="70" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Next »</text>
+    </g>
+  </g>
+</svg>
