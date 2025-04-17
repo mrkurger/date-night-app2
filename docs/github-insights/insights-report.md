@@ -1,52 +1,48 @@
 # GitHub Insights Report
 
-*Generated on: 2025-04-16*
+*Generated on: 2025-04-17*
+
+This report provides insights into the repository's activity and status.
 
 ## Repository Information
 
 - **Name**: date-night-app2
-- **Description**: No description
-- **Stars**: 0
-- **Forks**: 0
-- **Open Issues**: 3
-- **Default Branch**: main
+- **Owner**: mrkurger
+- **URL**: https://github.com/mrkurger/date-night-app2
 
-## Recent Workflow Runs
+## Recent Workflows
 
-| Workflow | Status | Started | Duration |
-|----------|--------|---------|----------|
-| Sync GitHub Insights (Fixed) | in_progress | 2025-04-16 | 0m 4s |
-| Security Alerts Report | success | 2025-04-16 | 0m 11s |
-| Sync Test Reports | success | 2025-04-16 | 0m 14s |
-| Sync GitHub Insights | failure | 2025-04-16 | 0m 56s |
-| Angular Tests | failure | 2025-04-16 | 0m 50s |
+To view recent workflow runs, visit:
+- [All Workflows](https://github.com/mrkurger/date-night-app2/actions)
+- [Sync Test Reports](https://github.com/mrkurger/date-night-app2/actions/workflows/sync-test-reports.yml)
+- [Security Alerts Report](https://github.com/mrkurger/date-night-app2/actions/workflows/security-alerts-report.yml)
 
-## Dependabot Security Alerts
+## Security Information
 
-### Open Alerts (6)
+To view security alerts and dependency information:
+- [Security Overview](https://github.com/mrkurger/date-night-app2/security)
+- [Dependabot Alerts](https://github.com/mrkurger/date-night-app2/security/dependabot)
+- [Code Scanning](https://github.com/mrkurger/date-night-app2/security/code-scanning)
 
-#### High Severity (2)
+## Repository Activity
 
-- **Artifact poisoning vulnerability in action-download-artifact v5 and earlier** in `dawidd6/action-download-artifact`
-- **semver vulnerable to Regular Expression Denial of Service** in `semver`
+To view recent repository activity:
+- [Pull Requests](https://github.com/mrkurger/date-night-app2/pulls)
+- [Issues](https://github.com/mrkurger/date-night-app2/issues)
+- [Commits](https://github.com/mrkurger/date-night-app2/commits)
 
-#### Medium Severity (4)
+## Local Repository Information
 
-- **Got allows a redirect to a UNIX socket** in `got`
-- **Vite has an `server.fs.deny` bypass with an invalid `request-target`** in `vite`
-- **Vite has an `server.fs.deny` bypass with an invalid `request-target`** in `vite`
-- **Vite allows server.fs.deny to be bypassed with .svg or relative paths** in `vite`
+### Recent Commits
 
-## Recent Pull Requests
+```
+45e7003 - mrkurger, 2 hours ago : UI```
 
-| Title | Status | Author | Updated |
-|-------|--------|--------|--------|
-| [#4: Bump dawidd6/action-download-artifact from 2 to 6 in /.github/workflows](https://github.com/mrkurger/date-night-app2/pull/4) | 🔄 Open | dependabot[bot] | 2025-04-16 |
-| [#3: ci(deps): bump dawidd6/action-download-artifact from 2 to 9](https://github.com/mrkurger/date-night-app2/pull/3) | 🔄 Open | dependabot[bot] | 2025-04-16 |
-| [#2: Bump semver and nodemon in /server](https://github.com/mrkurger/date-night-app2/pull/2) | 🔄 Open | dependabot[bot] | 2025-04-16 |
-| [#1: Bump bootstrap from 4.6.2 to 5.0.0](https://github.com/mrkurger/date-night-app2/pull/1) | ❌ Closed | dependabot[bot] | 2025-04-04 |
+### Branch Information
 
-## Recent Issues
-
-No recent issues found.
+```
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+```
 
