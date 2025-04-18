@@ -31,6 +31,7 @@ const errorHandler = require('./middleware/errorHandler');
 const { csrfMiddleware } = require('./middleware/csrf');
 const cspNonce = require('./middleware/cspNonce');
 const securityHeaders = require('./middleware/securityHeaders');
+const { middleware: cspMiddleware, setupReportEndpoint } = require('./middleware/csp.middleware');
 const { conditionalCache, etagCache } = require('./middleware/cache');
 
 // Initialize express
@@ -39,8 +40,14 @@ const app = express();
 // Generate CSP nonce for each request
 app.use(cspNonce);
 
+// Apply CSP middleware
+app.use(cspMiddleware());
+
 // Apply additional security headers
 app.use(securityHeaders);
+
+// Setup CSP report endpoint
+setupReportEndpoint(app);
 
 // Apply caching middleware
 app.use(conditionalCache());
@@ -81,6 +88,8 @@ app.use(
         '\'self\'',
         (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
         ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
+          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+          ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
         ],
@@ -88,6 +97,8 @@ app.use(
         '\'self\'',
         (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
         "\'unsafe-inline\'",
+          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
+          "\'unsafe-inline\'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           "'unsafe-inline'", // Angular needs this
           'https://fonts.googleapis.com',
@@ -100,6 +111,10 @@ app.use(
         "ws:",
         "https://api.stripe.com",
         ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : []),
+          'wss:',
+          'ws:',
+          'https://api.stripe.com',
+          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
           'wss:',
           'ws:',
           'https://api.stripe.com',

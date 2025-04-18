@@ -4,6 +4,22 @@
  * This script processes the JSON output from Snyk scans and creates a markdown file
  * with a prioritized list of issues to address, organized by severity and impact.
  * It also provides detailed information about vulnerable dependencies and remediation strategies.
+ *
+ * Input files:
+ * - snyk-root-results.json: Snyk scan results for the root project
+ * - snyk-server-results.json: Snyk scan results for the server project
+ * - snyk-client-results.json: Snyk scan results for the client project
+ * - npm-root-deps-tree.json: npm dependency tree for the root project
+ * - npm-server-deps-tree.json: npm dependency tree for the server project
+ * - npm-client-deps-tree.json: npm dependency tree for the client project
+ * - snyk-root-upgrade-paths.json: Upgrade paths for the root project
+ * - snyk-server-upgrade-paths.json: Upgrade paths for the server project
+ * - snyk-client-upgrade-paths.json: Upgrade paths for the client project
+ *
+ * Output files:
+ * - docs/snyk-reports/prioritized-issues.md: Detailed list of issues with remediation steps
+ * - docs/snyk-reports/issues-summary.md: Summary of issues by severity and type
+ * - docs/snyk-reports/vulnerable-dependencies.md: Analysis of vulnerable dependencies
  */
 
 const fs = require('fs');
@@ -25,128 +41,241 @@ const ISSUE_TYPES = {
   code: 'Code Quality Issue',
 };
 
-// Function to read and parse Snyk results
+/**
+ * Reads and parses Snyk results from a JSON file
+ * Handles both regular and gzipped JSON files
+ *
+ * @param {string} filePath - Path to the Snyk results JSON file
+ * @returns {Object|null} - Parsed JSON data or null if file doesn't exist or is invalid
+ */
 function readSnykResults(filePath) {
   try {
+    // Check for regular JSON file
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(data);
+      try {
+        return JSON.parse(data);
+      } catch (parseError) {
+        console.error(`Error parsing JSON in ${filePath}: ${parseError.message}`);
+        return null;
+      }
     }
-    return null;
+    // Check for gzipped JSON file
+    else if (fs.existsSync(`${filePath}.gz`)) {
+      try {
+        // We can't directly read gzipped files in this script
+        // Log a warning and suggest decompressing the file
+        console.warn(`Found gzipped file ${filePath}.gz. Please decompress it first.`);
+        return null;
+      } catch (gzipError) {
+        console.error(`Error reading gzipped file ${filePath}.gz: ${gzipError.message}`);
+        return null;
+      }
+    } else {
+      console.warn(`File not found: ${filePath} or ${filePath}.gz`);
+      return null;
+    }
   } catch (error) {
     console.error(`Error reading ${filePath}: ${error.message}`);
     return null;
   }
 }
 
-// Function to extract issues from Snyk results
+/**
+ * Extracts vulnerability issues from Snyk results
+ *
+ * @param {Object} results - Parsed Snyk results
+ * @param {string} projectName - Name of the project (e.g., "Root", "Server", "Client")
+ * @returns {Array} - Array of extracted and normalized vulnerability issues
+ */
 function extractIssues(results, projectName) {
   if (!results || !results.vulnerabilities) {
+    console.warn(`No vulnerabilities found in ${projectName} results`);
     return [];
   }
 
   return results.vulnerabilities.map(vuln => {
+    // Safely access properties with optional chaining and nullish coalescing
+    const packageName = vuln?.packageName || 'unknown-package';
+
     // Determine issue type
     let type = 'vuln';
-    if (vuln.license) type = 'license';
-    else if (vuln.configuration) type = 'configuration';
-    else if (vuln.code) type = 'code';
+    if (vuln?.license) type = 'license';
+    else if (vuln?.configuration) type = 'configuration';
+    else if (vuln?.code) type = 'code';
 
     // Extract upgrade paths if available
     let upgradePaths = [];
-    if (vuln.upgradePath && vuln.upgradePath.length > 0) {
+    if (vuln?.upgradePath && Array.isArray(vuln.upgradePath) && vuln.upgradePath.length > 0) {
       upgradePaths = vuln.upgradePath.filter(Boolean);
     }
 
     // Extract remediation advice
     let remediationAdvice = '';
-    if (vuln.remediation && vuln.remediation.advice) {
+    if (vuln?.remediation?.advice) {
       remediationAdvice = vuln.remediation.advice;
     }
 
     // Extract upgrade commands if available
     let upgradeCommands = [];
-    if (vuln.remediation && vuln.remediation.pin) {
-      const pins = Object.entries(vuln.remediation.pin);
-      pins.forEach(([pkg, version]) => {
-        upgradeCommands.push(`npm install ${pkg}@${version}`);
-      });
+    if (vuln?.remediation?.pin && typeof vuln.remediation.pin === 'object') {
+      try {
+        const pins = Object.entries(vuln.remediation.pin);
+        pins.forEach(([pkg, version]) => {
+          if (pkg && version) {
+            upgradeCommands.push(`npm install ${pkg}@${version}`);
+          }
+        });
+      } catch (error) {
+        console.warn(`Error extracting upgrade commands for ${packageName}: ${error.message}`);
+      }
     }
 
+    // Safely extract CWE identifiers
+    let cweIdentifiers = [];
+    try {
+      cweIdentifiers = vuln?.identifiers?.CWE || [];
+      // Ensure it's an array
+      if (!Array.isArray(cweIdentifiers)) {
+        cweIdentifiers = [String(cweIdentifiers)];
+      }
+    } catch (error) {
+      console.warn(`Error extracting CWE identifiers for ${packageName}: ${error.message}`);
+    }
+
+    // Determine if it's a transitive dependency
+    const isTransitive = vuln?.from && Array.isArray(vuln.from) && vuln.from.length > 2;
+
     return {
-      id: vuln.id,
-      title: vuln.title || `Issue in ${vuln.packageName}`,
-      severity: vuln.severity || 'medium',
-      packageName: vuln.packageName,
-      version: vuln.version,
-      fixedIn: vuln.fixedIn || [],
-      description: vuln.description || 'No description available',
+      id: vuln?.id || `unknown-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      title: vuln?.title || `Issue in ${packageName}`,
+      severity: vuln?.severity || 'medium',
+      packageName,
+      version: vuln?.version || 'unknown',
+      fixedIn: vuln?.fixedIn || [],
+      description: vuln?.description || 'No description available',
       type,
       projectName,
-      path: vuln.from ? vuln.from.join(' > ') : '',
-      cwe: vuln.identifiers?.CWE || [],
-      cvssScore: vuln.cvssScore || 0,
-      isPatchable: !!vuln.isPatchable,
-      isUpgradable: !!vuln.isUpgradable,
+      path: vuln?.from && Array.isArray(vuln.from) ? vuln.from.join(' > ') : '',
+      cwe: cweIdentifiers,
+      cvssScore: vuln?.cvssScore || 0,
+      isPatchable: !!vuln?.isPatchable,
+      isUpgradable: !!vuln?.isUpgradable,
       upgradePaths,
       upgradeCommands,
-      remediation: vuln.remediation || '',
+      remediation: vuln?.remediation || '',
       remediationAdvice,
-      language: vuln.language || 'javascript',
-      packageManager: vuln.packageManager || 'npm',
-      publicationTime: vuln.publicationTime,
-      disclosureTime: vuln.disclosureTime,
-      exploit: vuln.exploit || 'Not Known',
-      isMalicious: !!vuln.malicious,
-      isTransitive: vuln.from && vuln.from.length > 2,
+      language: vuln?.language || 'javascript',
+      packageManager: vuln?.packageManager || 'npm',
+      publicationTime: vuln?.publicationTime,
+      disclosureTime: vuln?.disclosureTime,
+      exploit: vuln?.exploit || 'Not Known',
+      isMalicious: !!vuln?.malicious,
+      isTransitive,
     };
   });
 }
 
-// Function to extract dependency information from npm ls output
+/**
+ * Extracts dependency information from npm ls output JSON
+ * Handles both regular and gzipped JSON files
+ *
+ * @param {string} filePath - Path to the npm ls JSON file
+ * @returns {Object|null} - Normalized dependency information or null if file doesn't exist or is invalid
+ */
 function extractDependencyInfo(filePath) {
   try {
+    // Check for regular JSON file
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf8');
-      const depsData = JSON.parse(data);
-      return {
-        name: depsData.name,
-        version: depsData.version,
-        dependencies: depsData.dependencies || {},
-      };
+      try {
+        const depsData = JSON.parse(data);
+        return {
+          name: depsData?.name || 'unknown',
+          version: depsData?.version || 'unknown',
+          dependencies: depsData?.dependencies || {},
+        };
+      } catch (parseError) {
+        console.error(`Error parsing JSON in ${filePath}: ${parseError.message}`);
+        return null;
+      }
     }
-    return null;
+    // Check for gzipped JSON file
+    else if (fs.existsSync(`${filePath}.gz`)) {
+      console.warn(`Found gzipped file ${filePath}.gz. Using simplified dependency info.`);
+      // Return a simplified dependency object since we can't read the gzipped file directly
+      return {
+        name: 'unknown (gzipped file)',
+        version: 'unknown',
+        dependencies: {},
+      };
+    } else {
+      console.warn(`Dependency info file not found: ${filePath} or ${filePath}.gz`);
+      return null;
+    }
   } catch (error) {
     console.error(`Error reading dependency info from ${filePath}: ${error.message}`);
     return null;
   }
 }
 
-// Function to extract upgrade paths from Snyk results
+/**
+ * Extracts upgrade paths from Snyk results
+ * Handles both regular and gzipped JSON files
+ *
+ * @param {string} filePath - Path to the Snyk upgrade paths JSON file
+ * @returns {Object} - Map of package names to upgrade path information
+ */
 function extractUpgradePaths(filePath) {
   try {
+    // Check for regular JSON file
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf8');
-      const results = JSON.parse(data);
+      try {
+        const results = JSON.parse(data);
 
-      if (!results.vulnerabilities) {
+        if (!results?.vulnerabilities) {
+          console.warn(`No vulnerabilities found in upgrade paths file: ${filePath}`);
+          return {};
+        }
+
+        const upgradePaths = {};
+        results.vulnerabilities.forEach(vuln => {
+          if (vuln?.packageName && vuln?.upgradePath) {
+            // Ensure upgradePath is an array before filtering
+            const upgradePath = Array.isArray(vuln.upgradePath)
+              ? vuln.upgradePath.filter(Boolean)
+              : [];
+
+            // Ensure fixedIn is an array
+            const fixedIn = Array.isArray(vuln.fixedIn)
+              ? vuln.fixedIn
+              : vuln.fixedIn
+                ? [vuln.fixedIn]
+                : [];
+
+            upgradePaths[vuln.packageName] = {
+              currentVersion: vuln.version || 'unknown',
+              upgradePath,
+              fixedIn,
+            };
+          }
+        });
+
+        return upgradePaths;
+      } catch (parseError) {
+        console.error(`Error parsing JSON in ${filePath}: ${parseError.message}`);
         return {};
       }
-
-      const upgradePaths = {};
-      results.vulnerabilities.forEach(vuln => {
-        if (vuln.packageName && vuln.upgradePath) {
-          upgradePaths[vuln.packageName] = {
-            currentVersion: vuln.version,
-            upgradePath: vuln.upgradePath.filter(Boolean),
-            fixedIn: vuln.fixedIn || [],
-          };
-        }
-      });
-
-      return upgradePaths;
     }
-    return {};
+    // Check for gzipped JSON file
+    else if (fs.existsSync(`${filePath}.gz`)) {
+      console.warn(`Found gzipped file ${filePath}.gz. Unable to extract upgrade paths.`);
+      return {};
+    } else {
+      console.warn(`Upgrade paths file not found: ${filePath} or ${filePath}.gz`);
+      return {};
+    }
   } catch (error) {
     console.error(`Error reading upgrade paths from ${filePath}: ${error.message}`);
     return {};
@@ -560,64 +689,115 @@ function generateDependencyReport(issues, dependencyInfo) {
   return report;
 }
 
-// Main function
+/**
+ * Main function that orchestrates the Snyk report generation process
+ *
+ * @returns {boolean} - True if the reports were successfully generated, false otherwise
+ */
 function main() {
-  // Read Snyk results
-  const rootResults = readSnykResults('snyk-root-results.json');
-  const serverResults = readSnykResults('snyk-server-results.json');
-  const clientResults = readSnykResults('snyk-client-results.json');
+  try {
+    console.log('Starting Snyk report generation process...');
 
-  // Read dependency information
-  const rootDepsInfo = extractDependencyInfo('npm-root-deps-tree.json');
-  const serverDepsInfo = extractDependencyInfo('npm-server-deps-tree.json');
-  const clientDepsInfo = extractDependencyInfo('npm-client-deps-tree.json');
+    // Read Snyk results (handles both regular and gzipped files)
+    const rootResults = readSnykResults('snyk-root-results.json');
+    const serverResults = readSnykResults('snyk-server-results.json');
+    const clientResults = readSnykResults('snyk-client-results.json');
 
-  // Read upgrade paths
-  const rootUpgradePaths = extractUpgradePaths('snyk-root-upgrade-paths.json');
-  const serverUpgradePaths = extractUpgradePaths('snyk-server-upgrade-paths.json');
-  const clientUpgradePaths = extractUpgradePaths('snyk-client-upgrade-paths.json');
+    // Check if we have at least one valid result
+    if (!rootResults && !serverResults && !clientResults) {
+      console.error('No valid Snyk results found. Please run Snyk scans first.');
+      return false;
+    }
 
-  // Combine dependency info and upgrade paths
-  const dependencyInfo = {
-    root: rootDepsInfo,
-    server: serverDepsInfo,
-    client: clientDepsInfo,
-  };
+    // Read dependency information (handles both regular and gzipped files)
+    const rootDepsInfo = extractDependencyInfo('npm-root-deps-tree.json');
+    const serverDepsInfo = extractDependencyInfo('npm-server-deps-tree.json');
+    const clientDepsInfo = extractDependencyInfo('npm-client-deps-tree.json');
 
-  const upgradePaths = {
-    ...rootUpgradePaths,
-    ...serverUpgradePaths,
-    ...clientUpgradePaths,
-  };
+    // Read upgrade paths (handles both regular and gzipped files)
+    const rootUpgradePaths = extractUpgradePaths('snyk-root-upgrade-paths.json');
+    const serverUpgradePaths = extractUpgradePaths('snyk-server-upgrade-paths.json');
+    const clientUpgradePaths = extractUpgradePaths('snyk-client-upgrade-paths.json');
 
-  // Extract issues
-  const rootIssues = rootResults ? extractIssues(rootResults, 'Root Project') : [];
-  const serverIssues = serverResults ? extractIssues(serverResults, 'Server') : [];
-  const clientIssues = clientResults ? extractIssues(clientResults, 'Client Angular') : [];
+    // Combine dependency info and upgrade paths
+    const dependencyInfo = {
+      root: rootDepsInfo,
+      server: serverDepsInfo,
+      client: clientDepsInfo,
+    };
 
-  // Combine all issues
-  const allIssues = [...rootIssues, ...serverIssues, ...clientIssues];
+    const upgradePaths = {
+      ...rootUpgradePaths,
+      ...serverUpgradePaths,
+      ...clientUpgradePaths,
+    };
 
-  // Prioritize issues
-  const prioritizedIssues = prioritizeIssues(allIssues);
+    // Extract issues
+    const rootIssues = rootResults ? extractIssues(rootResults, 'Root Project') : [];
+    const serverIssues = serverResults ? extractIssues(serverResults, 'Server') : [];
+    const clientIssues = clientResults ? extractIssues(clientResults, 'Client Angular') : [];
 
-  // Create output directory
-  const outputDir = path.join('docs', 'snyk-reports');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+    // Combine all issues
+    const allIssues = [...rootIssues, ...serverIssues, ...clientIssues];
+
+    console.log(`Found ${allIssues.length} total issues across all projects`);
+
+    // Prioritize issues
+    const prioritizedIssues = prioritizeIssues(allIssues);
+
+    // Create output directory
+    const outputDir = path.join('docs', 'snyk-reports');
+    try {
+      if (!fs.existsSync(outputDir)) {
+        console.log(`Creating output directory: ${outputDir}`);
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+    } catch (dirError) {
+      console.error(`Failed to create output directory ${outputDir}:`, dirError);
+      return false;
+    }
+
+    // Generate and write reports
+    let success = true;
+
+    try {
+      const markdown = generateMarkdown(prioritizedIssues, dependencyInfo, upgradePaths);
+      fs.writeFileSync(path.join(outputDir, 'prioritized-issues.md'), markdown);
+      console.log(`Generated prioritized issues report`);
+    } catch (error) {
+      console.error('Failed to generate prioritized issues report:', error);
+      success = false;
+    }
+
+    try {
+      const summary = generateSummary(prioritizedIssues);
+      fs.writeFileSync(path.join(outputDir, 'issues-summary.md'), summary);
+      console.log(`Generated issues summary report`);
+    } catch (error) {
+      console.error('Failed to generate issues summary report:', error);
+      success = false;
+    }
+
+    try {
+      const dependencyReport = generateDependencyReport(prioritizedIssues, dependencyInfo);
+      fs.writeFileSync(path.join(outputDir, 'vulnerable-dependencies.md'), dependencyReport);
+      console.log(`Generated vulnerable dependencies report`);
+    } catch (error) {
+      console.error('Failed to generate vulnerable dependencies report:', error);
+      success = false;
+    }
+
+    if (success) {
+      console.log(`Successfully generated all Snyk reports in docs/snyk-reports/`);
+      return true;
+    } else {
+      console.error(`Some reports failed to generate. Check the logs for details.`);
+      return false;
+    }
+  } catch (error) {
+    console.error('Fatal error during Snyk report generation:', error);
+    return false;
   }
-
-  // Generate and write reports
-  const markdown = generateMarkdown(prioritizedIssues, dependencyInfo, upgradePaths);
-  fs.writeFileSync(path.join(outputDir, 'prioritized-issues.md'), markdown);
-
-  const summary = generateSummary(prioritizedIssues);
-  fs.writeFileSync(path.join(outputDir, 'issues-summary.md'), summary);
-
-  const dependencyReport = generateDependencyReport(prioritizedIssues, dependencyInfo);
-  fs.writeFileSync(path.join(outputDir, 'vulnerable-dependencies.md'), dependencyReport);
-
-  console.log(`Generated Snyk reports in docs/snyk-reports/`);
 }
 
 // Function to generate a summary file
@@ -697,5 +877,14 @@ function generateSummary(issues) {
   return summary;
 }
 
-// Run the main function
-main();
+// Execute the main function and handle the result
+try {
+  const success = main();
+  if (!success) {
+    console.error('Snyk report generation failed');
+    process.exit(1);
+  }
+} catch (error) {
+  console.error('Fatal error executing Snyk report generation:', error);
+  process.exit(1);
+}

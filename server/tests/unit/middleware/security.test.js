@@ -25,60 +25,61 @@ describe('Security Middleware', () => {
     app = express();
     app.use(express.json());
 
-    // Manually set headers for testing
-    app.use((req, res, next) => {
-      res.setHeader('x-content-type-options', 'nosniff');
-      res.setHeader('x-frame-options', 'DENY');
-      res.setHeader('x-xss-protection', '1; mode=block');
-      res.setHeader(
-        'permissions-policy',
-        'camera=self, microphone=self, geolocation=self, payment=self'
-      );
-      next();
-    });
-
     app.get('/test', (req, res) => {
       res.status(200).json({ message: 'Test endpoint' });
     });
   });
 
   describe('Security Headers Middleware', () => {
+    let testApp;
+
     beforeEach(() => {
-      // Apply the security headers middleware
-      app.use(securityHeaders);
+      // Create a fresh app for this test
+      testApp = express();
+      testApp.use(express.json());
+
+      // Apply the security headers middleware BEFORE defining routes
+      testApp.use(securityHeaders);
+
+      // Define routes after middleware
+      testApp.get('/test', (req, res) => {
+        res.status(200).json({ message: 'Test endpoint' });
+      });
     });
 
     it('should set security headers correctly', async () => {
-      const res = await request(app).get('/test');
+      const res = await request(testApp).get('/test');
 
       expect(res.statusCode).toBe(200);
 
-      // Check that headers exist - we already set them manually in the beforeEach
-      // so we're just verifying they're present
-      expect(res.headers['x-content-type-options']).toBe('nosniff');
-      expect(res.headers['x-frame-options']).toBe('DENY');
-      expect(res.headers['x-xss-protection']).toBe('1; mode=block');
-      expect(res.headers['permissions-policy']).toBeTruthy();
+      // Check that headers exist
+      expect(res.headers).toHaveProperty('x-content-type-options', 'nosniff');
+      expect(res.headers).toHaveProperty('x-frame-options', 'DENY');
+      expect(res.headers).toHaveProperty('x-xss-protection', '1; mode=block');
+      expect(res.headers).toHaveProperty('permissions-policy');
+      expect(res.headers).toHaveProperty('referrer-policy', 'strict-origin-when-cross-origin');
 
       // HSTS header is only set in production
       if (process.env.NODE_ENV === 'production') {
-        expect(res.headers['strict-transport-security']).toBeTruthy();
+        expect(res.headers).toHaveProperty('strict-transport-security');
         expect(res.headers['strict-transport-security']).toContain('max-age=');
       }
     });
   });
 
   describe('CSP Middleware', () => {
+    let originalNodeEnv;
+
     beforeEach(() => {
+      // Save original environment
+      originalNodeEnv = process.env.NODE_ENV;
       // Mock environment for testing
       process.env.NODE_ENV = 'development';
-      // Override reportOnly setting for testing
-      cspConfig.reportOnly = true;
     });
 
     afterEach(() => {
-      // Reset environment
-      delete process.env.NODE_ENV;
+      // Restore original environment
+      process.env.NODE_ENV = originalNodeEnv;
     });
 
     it('should set Content-Security-Policy header in development mode', async () => {
@@ -86,9 +87,9 @@ describe('Security Middleware', () => {
       const devApp = express();
       devApp.use(express.json());
 
-      // Apply the actual CSP middleware
-      cspConfig.reportOnly = true;
-      devApp.use(cspMiddleware());
+      // Force report-only mode for development test
+      const middleware = cspMiddleware();
+      devApp.use(middleware);
 
       devApp.get('/test', (req, res) => {
         res.status(200).json({ message: 'Test endpoint' });
@@ -97,7 +98,7 @@ describe('Security Middleware', () => {
       const res = await request(devApp).get('/test');
 
       expect(res.statusCode).toBe(200);
-      expect(res.headers['content-security-policy-report-only']).toBeTruthy();
+      expect(res.headers).toHaveProperty('content-security-policy-report-only');
 
       const cspHeader = res.headers['content-security-policy-report-only'];
 
@@ -113,23 +114,32 @@ describe('Security Middleware', () => {
       const prodApp = express();
       prodApp.use(express.json());
 
-      // Apply the actual CSP middleware
+      // Override reportOnly to false for production test
+      const originalReportOnly = cspConfig.reportOnly;
       cspConfig.reportOnly = false;
-      prodApp.use(cspMiddleware());
 
-      prodApp.get('/test', (req, res) => {
-        res.status(200).json({ message: 'Test endpoint' });
-      });
+      try {
+        // Apply the actual CSP middleware
+        const middleware = cspMiddleware();
+        prodApp.use(middleware);
 
-      const res = await request(prodApp).get('/test');
+        prodApp.get('/test', (req, res) => {
+          res.status(200).json({ message: 'Test endpoint' });
+        });
 
-      expect(res.statusCode).toBe(200);
-      expect(res.headers['content-security-policy']).toBeTruthy();
+        const res = await request(prodApp).get('/test');
 
-      const cspHeader = res.headers['content-security-policy'];
+        expect(res.statusCode).toBe(200);
+        expect(res.headers).toHaveProperty('content-security-policy');
 
-      // Check for essential CSP directives
-      expect(cspHeader).toContain('default-src');
+        const cspHeader = res.headers['content-security-policy'];
+
+        // Check for essential CSP directives
+        expect(cspHeader).toContain('default-src');
+      } finally {
+        // Restore original reportOnly setting
+        cspConfig.reportOnly = originalReportOnly;
+      }
     });
   });
 });

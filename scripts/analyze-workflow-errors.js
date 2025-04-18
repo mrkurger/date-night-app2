@@ -85,6 +85,12 @@ const ERROR_PATTERNS = [
 // Function to recursively find all log files
 function findLogFiles(dir) {
   let results = [];
+
+  // Check if directory exists
+  if (!fs.existsSync(dir)) {
+    return results;
+  }
+
   const list = fs.readdirSync(dir);
 
   for (const file of list) {
@@ -94,6 +100,11 @@ function findLogFiles(dir) {
     if (stat.isDirectory()) {
       results = results.concat(findLogFiles(filePath));
     } else if (file === 'logs.txt') {
+      // Always include the main logs.txt file
+      results.push(filePath);
+    } else if (file.endsWith('.txt') && file !== 'error.txt' && file !== 'extract-error.txt') {
+      // Also include other text files that might have been extracted from zip archives
+      // but exclude error files
       results.push(filePath);
     }
   }
@@ -137,9 +148,21 @@ function analyzeLogFile(filePath) {
 
   // Get workflow and job info from the file path
   const pathParts = filePath.split(path.sep);
-  const workflowName = pathParts[pathParts.length - 4];
-  const runId = pathParts[pathParts.length - 3].split('_')[1];
-  const jobName = pathParts[pathParts.length - 2];
+
+  // Handle both standard logs.txt and extracted files from zip archives
+  let workflowName, runId, jobName;
+
+  if (pathParts[pathParts.length - 1] === 'logs.txt') {
+    // Standard logs.txt file
+    workflowName = pathParts[pathParts.length - 4];
+    runId = pathParts[pathParts.length - 3].split('_')[1];
+    jobName = pathParts[pathParts.length - 2];
+  } else {
+    // Extracted file from zip archive
+    workflowName = pathParts[pathParts.length - 5];
+    runId = pathParts[pathParts.length - 4].split('_')[1];
+    jobName = pathParts[pathParts.length - 3] + ' (' + pathParts[pathParts.length - 1] + ')';
+  }
 
   return {
     workflowName,

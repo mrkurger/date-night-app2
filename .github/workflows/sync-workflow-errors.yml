@@ -30,144 +30,14 @@ jobs:
           node-version: '22.x'
 
       - name: Install dependencies
-        run: npm install @octokit/rest@19.0.13 fs-extra@11.2.0
+        run: npm install @octokit/rest@19.0.13 fs-extra@11.2.0 adm-zip@0.5.10
 
       - name: Fetch workflow run logs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name || github.repository.name }}
-        run: |
-          cat > fetch-workflow-logs.js << 'EOF'
-          const { Octokit } = require('@octokit/rest');
-          const fs = require('fs-extra');
-          const path = require('path');
-
-          async function main() {
-            const owner = process.env.REPO_OWNER;
-            const repo = process.env.REPO_NAME;
-            const logsDir = path.join('workflow-error-logs');
-            
-            console.log(`Fetching workflow logs for ${owner}/${repo}`);
-            
-            // Create logs directory if it doesn't exist
-            await fs.ensureDir(logsDir);
-            
-            const octokit = new Octokit({
-              auth: process.env.GITHUB_TOKEN,
-              request: {
-                retries: 3,
-                retryAfter: 1
-              }
-            });
-            
-            // Get all workflows
-            const { data: workflows } = await octokit.actions.listRepoWorkflows({
-              owner,
-              repo,
-            });
-            
-            // Get recent workflow runs (last 30 days)
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-            
-            for (const workflow of workflows.workflows) {
-              console.log(`Processing workflow: ${workflow.name} (${workflow.id})`);
-              
-              try {
-                const { data: runs } = await octokit.actions.listWorkflowRuns({
-                  owner,
-                  repo,
-                  workflow_id: workflow.id,
-                  created: `>=${thirtyDaysAgo.toISOString().split('T')[0]}`,
-                });
-                
-                // Process failed runs
-                const failedRuns = runs.workflow_runs.filter(run => 
-                  run.conclusion === 'failure' || run.conclusion === 'cancelled' || run.conclusion === 'timed_out'
-                );
-                
-                console.log(`Found ${failedRuns.length} failed runs for ${workflow.name}`);
-                
-                for (const run of failedRuns) {
-                  const runDate = new Date(run.created_at).toISOString().split('T')[0];
-                  const workflowDir = path.join(logsDir, workflow.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
-                  const runDir = path.join(workflowDir, `${runDate}_${run.id}`);
-                  
-                  await fs.ensureDir(runDir);
-                  
-                  // Save run metadata
-                  await fs.writeJson(path.join(runDir, 'metadata.json'), run, { spaces: 2 });
-                  
-                  try {
-                    // Get jobs for this run
-                    const { data: jobs } = await octokit.actions.listJobsForWorkflowRun({
-                      owner,
-                      repo,
-                      run_id: run.id,
-                    });
-                    
-                    // Save jobs metadata
-                    await fs.writeJson(path.join(runDir, 'jobs.json'), jobs, { spaces: 2 });
-                    
-                    // Process each job
-                    for (const job of jobs.jobs) {
-                      if (job.conclusion === 'failure' || job.conclusion === 'cancelled' || job.conclusion === 'timed_out') {
-                        const jobDir = path.join(runDir, job.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
-                        await fs.ensureDir(jobDir);
-                        
-                        // Save job metadata
-                        await fs.writeJson(path.join(jobDir, 'job-metadata.json'), job, { spaces: 2 });
-                        
-                        try {
-                          // Get job logs
-                          const logs = await octokit.actions.downloadJobLogsForWorkflowRun({
-                            owner,
-                            repo,
-                            job_id: job.id,
-                          });
-                          
-                          // Save logs
-                          await fs.writeFile(path.join(jobDir, 'logs.txt'), logs.data);
-                          console.log(`Saved logs for job ${job.name} (${job.id})`);
-                        } catch (error) {
-                          console.error(`Error fetching logs for job ${job.id}: ${error.message}`);
-                          await fs.writeFile(path.join(jobDir, 'error.txt'), `Error fetching logs: ${error.message}`);
-                        }
-                      }
-                    }
-                  } catch (error) {
-                    console.error(`Error processing run ${run.id}: ${error.message}`);
-                    await fs.writeFile(path.join(runDir, 'error.txt'), `Error processing run: ${error.message}`);
-                  }
-                }
-              } catch (error) {
-                console.error(`Error processing workflow ${workflow.id}: ${error.message}`);
-              }
-            }
-            
-            // Create summary file
-            const summary = {
-              timestamp: new Date().toISOString(),
-              totalWorkflows: workflows.workflows.length,
-              workflowSummary: workflows.workflows.map(w => ({
-                name: w.name,
-                id: w.id,
-                path: w.path,
-              })),
-            };
-            
-            await fs.writeJson(path.join(logsDir, 'summary.json'), summary, { spaces: 2 });
-            console.log('Workflow error logs sync completed');
-          }
-
-          main().catch(error => {
-            console.error('Error in main process:', error);
-            process.exit(1);
-          });
-          EOF
-
-          node fetch-workflow-logs.js
+        run: node scripts/fetch-workflow-logs.js
 
       - name: Create README for logs
         run: |
@@ -186,7 +56,8 @@ jobs:
           │   │   ├── jobs.json           # Jobs metadata
           │   │   ├── {job-name}/
           │   │   │   ├── job-metadata.json  # Job metadata
-          │   │   │   └── logs.txt           # Job logs
+          │   │   │   └── logs.txt           # Job logs (extracted from zip if necessary)
+          │   │   │   └── [other extracted files] # Additional files from zip archives
           │   │   └── ...
           │   └── ...
           └── ...
@@ -206,6 +77,10 @@ jobs:
           ## Retention
 
           Only logs from the past 30 days are collected.
+
+          ## Implementation Details
+
+          The logs are fetched using the GitHub API and processed with the `adm-zip` library to extract text content from zip files when necessary. This ensures that all logs are stored in a readable text format.
           EOF
 
       - name: Commit and push logs

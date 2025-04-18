@@ -9,6 +9,7 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Package Overrides](#package-overrides)
 - [Backend Testing](#backend-testing)
   - [Mongoose Schema Testing](#mongoose-schema-testing)
+  - [Test File Organization](#test-file-organization)
   - [Content Security Policy (CSP)](#content-security-policy-csp)
 - [Angular Testing](#angular-testing)
   - [Component Dependencies](#component-dependencies)
@@ -842,6 +843,31 @@ const alert: Alert = {
    - Using compound indexes when appropriate
 
 3. **Test Data Consistency**: Ensure test data in helper files matches the model schema. Check files like `helpers.js` that define test data constants.
+
+### Test File Organization
+
+1. **Directory Structure**: Test files should mirror the application structure to make them easy to find and maintain.
+
+   - For server-side tests: `/server/tests/unit/[module-type]/[file-name].test.js`
+   - Example: Tests for `server/services/auth.service.js` should be in `server/tests/unit/services/auth.service.test.js`
+
+2. **Import Paths**: When test files are in the proper directory structure, use relative paths that reflect the directory depth:
+
+   - Example: `require('../../../services/auth.service')` instead of `./auth.service`
+
+3. **Common Issues**: Placing test files in the wrong location can cause Jest to fail with "Your test suite must contain at least one test" error.
+
+   - Tests should not be placed alongside implementation files
+   - Tests should be in the appropriate test directory structure
+
+4. **Test File Naming**: Use consistent naming conventions for test files:
+
+   - Use `.test.js` suffix for test files
+   - Name test files after the module they test: `[module-name].test.js`
+
+5. **Test Organization**: Organize tests within files using describe blocks:
+   - Outer describe block for the module: `describe('Auth Service', ...)`
+   - Nested describe blocks for methods/features: `describe('authenticate', ...)`
 
 ### Content Security Policy (CSP)
 

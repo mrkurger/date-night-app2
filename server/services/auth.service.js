@@ -91,7 +91,7 @@ class AuthService {
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-      throw new Error('Invalid password');
+      throw new Error('Invalid credentials');
     }
 
     // Update last active timestamp
@@ -107,17 +107,16 @@ class AuthService {
    * @returns {Promise<Object>} Authentication response with tokens
    */
   async register(userData) {
-    // Check if user already exists
-    const existingUser = await User.findOne({
-      $or: [{ email: userData.email }, { username: userData.username }],
-    });
+    // Check if username already exists
+    const existingUsername = await User.findOne({ username: userData.username });
+    if (existingUsername) {
+      throw new Error('Username already taken');
+    }
 
-    if (existingUser) {
-      if (existingUser.email === userData.email) {
-        throw new Error('Email already in use');
-      } else {
-        throw new Error('Username already taken');
-      }
+    // Check if email already exists
+    const existingEmail = await User.findOne({ email: userData.email });
+    if (existingEmail) {
+      throw new Error('Email already in use');
     }
 
     // Create new user
@@ -141,6 +140,15 @@ class AuthService {
   async refreshAccessToken(refreshToken) {
     const user = await this.validateRefreshToken(refreshToken);
     return this.generateTokens(user);
+  }
+
+  /**
+   * Alias for refreshAccessToken to maintain backward compatibility
+   * @param {string} refreshToken - Refresh token
+   * @returns {Promise<Object>} New authentication response with tokens
+   */
+  async refreshToken(refreshToken) {
+    return this.refreshAccessToken(refreshToken);
   }
 
   /**

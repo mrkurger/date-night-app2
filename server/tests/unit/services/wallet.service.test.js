@@ -223,6 +223,9 @@ describe('Wallet Service', () => {
 
   describe('getOrCreateWallet', () => {
     it('should return an existing wallet', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const result = await walletService.getOrCreateWallet(mockUser._id);
 
       expect(User.findById).toHaveBeenCalledWith(mockUser._id);
@@ -231,6 +234,9 @@ describe('Wallet Service', () => {
     });
 
     it('should create a new wallet if one does not exist', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       // Mock Wallet.findOne to return null
       Wallet.findOne.mockResolvedValue(null);
 
@@ -473,6 +479,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if payment method type is missing', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         provider: 'stripe',
         isDefault: true,
@@ -491,6 +500,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if payment method provider is missing', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'card',
         isDefault: true,
@@ -509,6 +521,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if card details are missing for card payment method', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'card',
         provider: 'stripe',
@@ -521,6 +536,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if bank details are missing for bank account payment method', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'bank_account',
         provider: 'stripe',
@@ -533,6 +551,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if crypto details are missing for crypto address payment method', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'crypto_address',
         provider: 'coinbase',
@@ -545,6 +566,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if cryptocurrency is not supported', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'crypto_address',
         provider: 'coinbase',
@@ -562,6 +586,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if payment method type is not supported', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const paymentMethodData = {
         type: 'unsupported',
         provider: 'stripe',
@@ -576,6 +603,9 @@ describe('Wallet Service', () => {
 
   describe('removePaymentMethod', () => {
     it('should remove a payment method', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const result = await walletService.removePaymentMethod(mockUser._id, mockPaymentMethod._id);
 
       expect(mockWallet.removePaymentMethod).toHaveBeenCalledWith(mockPaymentMethod._id);
@@ -583,6 +613,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if payment method is not found', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       // Mock wallet.paymentMethods.id to return null
       mockWallet.paymentMethods.id = jest.fn().mockReturnValue(null);
 
@@ -594,6 +627,9 @@ describe('Wallet Service', () => {
 
   describe('setDefaultPaymentMethod', () => {
     it('should set a payment method as default', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       const result = await walletService.setDefaultPaymentMethod(
         mockUser._id,
         mockPaymentMethod._id
@@ -604,6 +640,9 @@ describe('Wallet Service', () => {
     });
 
     it('should throw an error if payment method is not found', async () => {
+      // Ensure User.findById returns a valid user
+      User.findById.mockResolvedValue(mockUser);
+
       // Mock wallet.paymentMethods.id to return null
       mockWallet.paymentMethods.id = jest.fn().mockReturnValue(null);
 

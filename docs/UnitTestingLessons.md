@@ -281,6 +281,7 @@ ngOnInit(): void {
 3. **Mock Implementation**: When mocking database models or external services, ensure the mock implementation returns objects with the same structure and methods as the real implementation.
 
 4. **Testing MongoDB Models**: When testing MongoDB models:
+
    - Use `mongodb-memory-server` for in-memory database testing to avoid affecting production data
    - Create separate test data constants for each model type to ensure test clarity
    - Test both successful creation and validation failures
@@ -293,6 +294,18 @@ ngOnInit(): void {
    - For methods that throw errors, use try/catch blocks in tests rather than expect().rejects.toThrow() for more reliable testing
    - Test nested schema structures (e.g., balances, transactions, payment methods in a wallet) thoroughly
    - Verify that unique constraints are enforced at the database level
+
+5. **Test File Location**:
+
+   - Place test files in the appropriate test directory structure, not alongside the implementation files
+   - For server-side tests, use the pattern: `/server/tests/unit/[module-type]/[file-name].test.js`
+   - Example: Tests for `server/services/auth.service.js` should be in `server/tests/unit/services/auth.service.test.js`
+   - Incorrect file locations can cause Jest to fail with "Your test suite must contain at least one test" error
+
+6. **Import Paths in Tests**:
+   - When moving test files, ensure import paths are updated correctly
+   - For tests in the proper directory structure, use relative paths like `../../../services/auth.service` instead of `./auth.service`
+   - Incorrect import paths are a common source of test failures
 
 ## General Testing Tips
 

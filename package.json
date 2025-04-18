@@ -41,6 +41,8 @@
     "analyze:performance": "npm run test:server:performance",
     "analyze:coverage": "npm run test:coverage && open coverage/lcov-report/index.html",
     "fix:workflow-issues": "node scripts/fix-workflow-issues.js",
+    "fetch:workflow-logs": "node scripts/fetch-workflow-logs.js",
+    "test:workflow-logs": "node scripts/test-workflow-logs.js",
     "prepare": "[ -n \"$CI\" ] || husky",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "cd server && npm run lint || true",
@@ -69,8 +71,9 @@
     "xml2js": "0.6.2"
   },
   "dependencies": {
-    "@octokit/rest": "19.0.13",
+    "@octokit/rest": "21.1.1",
     "@popperjs/core": "2.11.8",
+    "adm-zip": "^0.5.10",
     "child_process": "^1.0.2",
     "dotenv": "^16.3.1",
     "fs-extra": "11.2.0",

@@ -147,14 +147,22 @@ describe('Auth Service', () => {
 
       await expect(
         authService.authenticate('test@example.com', 'WrongPassword123!')
-      ).rejects.toThrow('Invalid password');
+      ).rejects.toThrow('Invalid credentials');
     });
   });
 
   describe('register', () => {
     it('should register a new user', async () => {
+      const userData = {
+        username: 'newuser',
+        email: 'newuser@example.com',
+        password: 'Password123!',
+      };
+
       // Mock User.findOne to return null (no existing user)
-      User.findOne.mockResolvedValue(null);
+      User.findOne.mockImplementation(query => {
+        return Promise.resolve(null);
+      });
 
       // Mock User constructor
       User.mockImplementation(() => ({
@@ -162,17 +170,12 @@ describe('Auth Service', () => {
         save: jest.fn().mockResolvedValue(true),
       }));
 
-      const userData = {
-        username: 'newuser',
-        email: 'newuser@example.com',
-        password: 'Password123!',
-      };
-
       const result = await authService.register(userData);
 
-      expect(User.findOne).toHaveBeenCalledWith({
-        $or: [{ email: userData.email }, { username: userData.username }],
-      });
+      // Verify username and email checks were performed separately
+      expect(User.findOne).toHaveBeenCalledWith({ username: userData.username });
+      expect(User.findOne).toHaveBeenCalledWith({ email: userData.email });
+
       expect(User).toHaveBeenCalledWith({
         username: userData.username,
         email: userData.email,
@@ -184,34 +187,48 @@ describe('Auth Service', () => {
     });
 
     it('should throw an error if email is already in use', async () => {
-      // Mock User.findOne to return a user with the same email
-      User.findOne.mockResolvedValue({
-        ...mockUser,
-        email: 'existing@example.com',
-      });
-
       const userData = {
         username: 'newuser',
         email: 'existing@example.com',
         password: 'Password123!',
       };
 
+      // Mock User.findOne to return null for username check, but a user for email check
+      User.findOne.mockImplementation(query => {
+        if (query.username) {
+          return Promise.resolve(null); // No username match
+        } else if (query.email) {
+          return Promise.resolve({
+            // Email match
+            ...mockUser,
+            username: 'differentuser',
+            email: 'existing@example.com',
+          });
+        }
+        return Promise.resolve(null);
+      });
+
       await expect(authService.register(userData)).rejects.toThrow('Email already in use');
     });
 
     it('should throw an error if username is already taken', async () => {
-      // Mock User.findOne to return a user with the same username
-      User.findOne.mockResolvedValue({
-        ...mockUser,
-        username: 'existinguser',
-        email: 'different@example.com',
-      });
-
       const userData = {
         username: 'existinguser',
         email: 'newuser@example.com',
         password: 'Password123!',
       };
+
+      // Mock User.findOne to return a user with the same username
+      User.findOne.mockImplementation(query => {
+        if (query.username) {
+          return Promise.resolve({
+            ...mockUser,
+            username: 'existinguser',
+            email: 'different@example.com',
+          });
+        }
+        return Promise.resolve(null);
+      });
 
       await expect(authService.register(userData)).rejects.toThrow('Username already taken');
     });
