@@ -19,31 +19,18 @@ import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 // Import Emerald components
+import { EmeraldModule } from '../../shared/emerald/emerald.module';
 import {
-  TinderCardComponent,
   TinderCardMedia,
-  FloatingActionButtonComponent,
-  SkeletonLoaderComponent,
-  ToggleComponent,
-  LabelComponent,
-} from '../../shared/emerald';
+  TinderCardAction,
+} from '../../shared/emerald/tinder-card/tinder-card.component';
 
 @Component({
   selector: 'app-tinder',
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
-    TinderCardComponent,
-    FloatingActionButtonComponent,
-    SkeletonLoaderComponent,
-    ToggleComponent,
-    LabelComponent,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, EmeraldModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class TinderComponent implements OnInit {

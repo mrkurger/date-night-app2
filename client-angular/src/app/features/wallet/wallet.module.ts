@@ -33,7 +33,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { QRCodeComponent } from 'angularx-qrcode';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { WalletComponent } from './wallet.component';
@@ -44,6 +43,7 @@ import { AddPaymentMethodDialogComponent } from './dialogs/add-payment-method-di
 import { TransactionDetailsDialogComponent } from './dialogs/transaction-details-dialog.component';
 
 import { EmeraldModule } from '../../shared/emerald/emerald.module';
+import { QRCodeModule } from '../../shared/qrcode/qrcode.module';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
@@ -85,9 +85,10 @@ const routes: Routes = [
     MatBadgeModule,
     MatMenuModule,
     MatSlideToggleModule,
-    QRCodeComponent,
     ClipboardModule,
     EmeraldModule,
+    QRCodeModule,
+    // Standalone components
     WalletComponent,
     DepositDialogComponent,
     WithdrawDialogComponent,

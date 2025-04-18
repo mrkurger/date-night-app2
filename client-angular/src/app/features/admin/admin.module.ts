@@ -21,11 +21,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+/**
+ * Admin Module
+ *
+ * Note: All components in this module are standalone components.
+ * They are imported in the module's imports array rather than being declared
+ * in the declarations array. This is the recommended approach for Angular 19+.
+ */
 @NgModule({
-  declarations: [],
+  declarations: [], // No declarations as all components are standalone
   imports: [
     CommonModule,
     AdminRoutingModule,
+    // Material modules and other shared modules
     MatTabsModule,
     MatCardModule,
     MatButtonModule,
@@ -42,6 +50,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatIconModule,
     ReactiveFormsModule,
     NgxChartsModule,
+    // Standalone components
     TelemetryDashboardComponent,
     ErrorDashboardComponent,
     PerformanceDashboardComponent,

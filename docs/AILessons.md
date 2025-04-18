@@ -1,4 +1,4 @@
-whats next?# AI Lessons Learned
+# AI Lessons Learned
 
 This document contains lessons learned by the AI while working on the Date Night App project.
 
@@ -17,6 +17,10 @@ This document contains lessons learned by the AI while working on the Date Night
   - [SCSS Variables](#scss-variables)
 - [Angular Router Testing](#angular-router-testing)
 - [HTTP Service Testing](#http-service-testing)
+- [Angular Build Optimization](#angular-build-optimization)
+  - [Memory Allocation](#memory-allocation)
+  - [Clean Build Process](#clean-build-process)
+  - [Node.js Version Compatibility](#nodejs-version-compatibility)
 - [Map Integration Patterns](#map-integration-patterns)
   - [Reusable Map Component](#reusable-map-component)
   - [Accessibility Considerations](#accessibility-considerations)
@@ -1041,6 +1045,33 @@ When working with SCSS in Angular components:
 
 2. **Common Variables**: Common variables like colors, spacing, typography, etc. should be defined in a shared file and imported, or defined locally if needed for testing.
 
+3. **Semantic Color Variables**: Create semantic color variations for better maintainability and consistency:
+
+```scss
+// Base semantic colors
+$color-error: #ff4757;
+$color-success: #38d9a9;
+$color-warning: #ffab2e;
+$color-info: #54a0ff;
+
+// Semantic color variations
+$error-100: rgba($color-error, 0.1);
+$error-200: rgba($color-error, 0.2);
+$error-300: rgba($color-error, 0.3);
+$error-400: rgba($color-error, 0.4);
+$error-500: $color-error;
+$error-600: darken($color-error, 10%);
+$error-700: darken($color-error, 20%);
+```
+
+4. **Variable Organization**: Organize variables hierarchically from base colors to semantic variables to component-specific variables.
+
+5. **Error Handling**: When encountering undefined variable errors in CI builds, check for:
+   - Missing imports in component SCSS files
+   - Variables defined in one theme but not another
+   - Case sensitivity issues in variable names
+   - Circular dependencies in SCSS imports
+
 ## Angular Router Testing
 
 When testing components that use the Angular Router:
@@ -1154,6 +1185,77 @@ req.flush(mockResponse); // For success
 // OR
 req.error(new ErrorEvent('Network error'), { status: 500 }); // For error
 ```
+
+## Angular Build Optimization
+
+When working with large Angular applications, build performance and memory usage become critical concerns. We discovered several important patterns for optimizing the build process:
+
+### Memory Allocation
+
+1. **Node.js Memory Limits**: Angular CLI builds can consume significant memory, especially for large applications with many components and dependencies.
+
+2. **Increasing Memory Allocation**: The most effective approach is to increase Node.js memory allocation using the `NODE_OPTIONS` environment variable:
+
+```json
+"scripts": {
+  "start": "NODE_OPTIONS=--max_old_space_size=8192 ng serve",
+  "build": "NODE_OPTIONS=--max_old_space_size=8192 ng build"
+}
+```
+
+3. **Optimal Memory Settings**:
+
+   - 4GB (`--max_old_space_size=4096`) is sufficient for medium-sized applications
+   - 8GB (`--max_old_space_size=8192`) works well for large applications
+   - 12GB or more may be needed for very large applications with many dependencies
+
+4. **Platform Considerations**:
+   - On Windows, use `set NODE_OPTIONS=--max_old_space_size=8192 &&` or install the `cross-env` package
+   - On Unix-based systems (Linux/macOS), use `export NODE_OPTIONS=--max_old_space_size=8192 &&`
+   - For CI/CD environments, ensure build containers have sufficient memory allocation
+
+### Clean Build Process
+
+1. **Cache Corruption**: Angular's `.angular/cache` directory can become corrupted, leading to build failures.
+
+2. **Node Modules Issues**: Incomplete or corrupted `node_modules` can cause unexpected build errors.
+
+3. **Clean Build Scripts**: Implementing dedicated clean scripts simplifies the troubleshooting process:
+
+```json
+"scripts": {
+  "clean": "rm -rf node_modules && rm -f package-lock.json && rm -rf .angular/cache && rm -rf dist",
+  "clean:install": "npm run clean && npm install",
+  "clean:build": "npm run clean:install && npm run build"
+}
+```
+
+4. **Incremental Cleaning**: Sometimes a full clean isn't necessary:
+   - Just clearing `.angular/cache` can resolve many issues
+   - Removing and reinstalling specific problematic packages can be faster than a full reinstall
+
+### Node.js Version Compatibility
+
+1. **Version Sensitivity**: Angular CLI and its dependencies (especially esbuild) are sensitive to the Node.js version.
+
+2. **Version Matching**: Each Angular version has specific Node.js version compatibility:
+
+   - Angular 19.x works best with Node.js 18.x, 20.x, or 22.x LTS versions
+   - Using incompatible Node.js versions can lead to unexpected build failures
+
+3. **Version Management**: Use Node Version Manager (nvm) to easily switch between Node.js versions:
+
+   ```bash
+   nvm install 22
+   nvm use 22
+   ```
+
+4. **Documentation**: Document the compatible Node.js version in:
+   - README.md for developer onboarding
+   - package.json "engines" field for automated checks
+   - CI/CD configuration to ensure consistent builds
+
+For more detailed information on Angular build optimization, see [ANGULAR_BUILD_OPTIMIZATION.md](./ANGULAR_BUILD_OPTIMIZATION.md).
 
 ## Map Integration Patterns
 
@@ -1713,6 +1815,44 @@ GitHub Actions can introduce security risks if not properly configured:
    - Set `CI=true` environment variable in all workflow jobs
    - Modify scripts to handle CI environments differently when needed
    - Skip development-only tools like git hooks (husky) in CI environments
+   - Create a `.huskyrc` file to disable husky in CI environments:
+     ```bash
+     # .huskyrc
+     export HUSKY=0
+     ```
+   - Update the `prepare` script in package.json to skip husky in CI environments:
+     ```json
+     {
+       "scripts": {
+         "prepare": "[ -n \"$CI\" ] || husky"
+       }
+     }
+     ```
+   - Create a script to automatically disable husky in CI environments:
+
+     ```javascript
+     // scripts/disable-husky-in-ci.js
+     const fs = require('fs');
+     const path = require('path');
+
+     const huskyrcPath = path.join(__dirname, '..', '.huskyrc');
+     const huskyrcContent = `#!/bin/sh
+     # Skip husky hooks in CI environments
+     export HUSKY=0
+     `;
+
+     // Create .huskyrc file
+     fs.writeFileSync(huskyrcPath, huskyrcContent, 'utf8');
+     console.log('.huskyrc file created to disable husky in CI environments');
+
+     // Make it executable
+     try {
+       fs.chmodSync(huskyrcPath, '755');
+       console.log('.huskyrc file made executable');
+     } catch (error) {
+       console.warn('Could not make .huskyrc executable:', error.message);
+     }
+     ```
 
 5. **Git Operations in Workflows**:
 

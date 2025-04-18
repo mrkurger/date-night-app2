@@ -54,14 +54,51 @@ if [ -f "$SERVER_DIR/package.json" ]; then
 fi
 check_success "Updating package.json files"
 
-# Step 3: Install missing dependencies
-echo -e "${MAGENTA}Step 3: Installing missing dependencies...${RESET}"
+# Step 3: Fix husky issues
+echo -e "${MAGENTA}Step 3: Fixing husky issues...${RESET}"
+cd $PROJECT_ROOT
+
+# Create .huskyrc file to disable husky in CI environments
+echo -e "${BLUE}Creating .huskyrc file...${RESET}"
+echo 'export HUSKY=0' > .huskyrc
+chmod +x .huskyrc
+
+# Run the disable-husky-in-ci.js script
+echo -e "${BLUE}Running disable-husky-in-ci.js script...${RESET}"
+node scripts/disable-husky-in-ci.js
+
+# Fix client-angular husky issues
+echo -e "${BLUE}Fixing client-angular husky issues...${RESET}"
+cd $CLIENT_DIR
+if [ -f "fix-husky.sh" ]; then
+  bash ./fix-husky.sh
+fi
+cd $PROJECT_ROOT
+
+# Fix package.json prepare script
+echo -e "${BLUE}Fixing package.json prepare script...${RESET}"
+node -e "
+const fs = require('fs');
+const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+packageJson.scripts.prepare = '[ -n \"\$CI\" ] || husky';
+fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2), 'utf8');
+"
+check_success "Fixing husky issues"
+
+# Step 4: Install missing dependencies
+echo -e "${MAGENTA}Step 4: Installing missing dependencies...${RESET}"
 cd $PROJECT_ROOT
 node scripts/install-missing-deps.js
+
+# Install angularx-qrcode
+echo -e "${BLUE}Installing angularx-qrcode...${RESET}"
+cd $CLIENT_DIR
+npm install angularx-qrcode --save --legacy-peer-deps
+cd $PROJECT_ROOT
 check_success "Installing missing dependencies"
 
-# Step 4: Fix npm audit issues
-echo -e "${MAGENTA}Step 4: Fixing npm audit issues...${RESET}"
+# Step 5: Fix npm audit issues
+echo -e "${MAGENTA}Step 5: Fixing npm audit issues...${RESET}"
 cd $PROJECT_ROOT
 npm audit fix --force
 cd $SERVER_DIR
@@ -71,26 +108,26 @@ npm audit fix --force
 cd $PROJECT_ROOT
 check_success "Fixing npm audit issues"
 
-# Step 5: Fix CSP issues
-echo -e "${MAGENTA}Step 5: Fixing CSP issues...${RESET}"
+# Step 6: Fix CSP issues
+echo -e "${MAGENTA}Step 6: Fixing CSP issues...${RESET}"
 cd $PROJECT_ROOT
 node scripts/fix-csp-issues.js
 check_success "Fixing CSP issues"
 
-# Step 6: Check MongoDB setup
-echo -e "${MAGENTA}Step 6: Checking MongoDB setup...${RESET}"
+# Step 7: Check MongoDB setup
+echo -e "${MAGENTA}Step 7: Checking MongoDB setup...${RESET}"
 cd $PROJECT_ROOT
 node scripts/ensure-mongodb.js
 check_success "Checking MongoDB setup"
 
-# Step 7: Updating packages
-echo -e "${MAGENTA}Step 7: Updating packages...${RESET}"
+# Step 8: Updating packages
+echo -e "${MAGENTA}Step 8: Updating packages...${RESET}"
 cd $PROJECT_ROOT
 npm run update-packages
 check_success "Updating packages"
 
-# Step 8: Verify server/scripts directory
-echo -e "${MAGENTA}Step 8: Verifying server/scripts directory...${RESET}"
+# Step 9: Verify server/scripts directory
+echo -e "${MAGENTA}Step 9: Verifying server/scripts directory...${RESET}"
 if [ ! -d "$SERVER_DIR/scripts" ]; then
   echo -e "${YELLOW}Creating server/scripts directory...${RESET}"
   mkdir -p "$SERVER_DIR/scripts"

@@ -146,7 +146,25 @@ The project uses a modern Angular frontend with an Express.js backend:
    npm run dev
    ```
 
-7. **Access the Application:**
+7. **Build the Angular Application:**
+
+   ```bash
+   # Navigate to the Angular client directory
+   cd client-angular
+
+   # For development build
+   npm run build
+
+   # For production build
+   npm run build:prod
+
+   # If you encounter memory issues during build
+   npm run clean:build
+   ```
+
+   > **Note:** If you encounter JavaScript heap out of memory errors during build, see [docs/ANGULAR_BUILD_OPTIMIZATION.md](/docs/ANGULAR_BUILD_OPTIMIZATION.md) for detailed solutions.
+
+8. **Access the Application:**
    - Open your browser and navigate to `http://localhost:4200`
    - The API is available at `http://localhost:3000/api/v1`
 

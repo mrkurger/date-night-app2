@@ -39,6 +39,7 @@ This document serves as a central reference for all documentation in the Date Ni
 | Node.js Installation Guide          | Guide for installing Node.js                      | [/nodejs-installation-guide.md](/nodejs-installation-guide.md)                                     |
 | Specific Version Installation Guide | Guide for installing specific versions of Node.js | [/specific-version-installation-guide.md](/specific-version-installation-guide.md)                 |
 | MongoDB Troubleshooting             | Guide for troubleshooting MongoDB issues          | [/MONGODB_TROUBLESHOOTING.md](/MONGODB_TROUBLESHOOTING.md)                                         |
+| Angular Build Optimization          | Guide for optimizing Angular builds               | [/docs/ANGULAR_BUILD_OPTIMIZATION.md](/docs/ANGULAR_BUILD_OPTIMIZATION.md)                         |
 | Angular Migration Guide             | Guide for migrating from AngularJS to Angular     | [/client-angular/MIGRATION_GUIDE.md](/client-angular/MIGRATION_GUIDE.md)                           |
 | Angular README                      | Documentation for the Angular client              | [/client-angular/README.md](/client-angular/README.md)                                             |
 | Angular Cleanup Instructions        | Instructions for cleaning up the Angular codebase | [/client-angular/src/app/CLEANUP_INSTRUCTIONS.md](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md) |

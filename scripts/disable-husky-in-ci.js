@@ -2,7 +2,10 @@
 
 /**
  * This script disables husky in CI environments by creating a .huskyrc file
- * that exits early when CI environment variable is set.
+ * that sets the HUSKY environment variable to 0.
+ *
+ * It's used in the preinstall script in package.json to ensure Husky doesn't
+ * run in CI environments, which can cause issues with Git hooks.
  */
 
 const fs = require('fs');
@@ -11,9 +14,7 @@ const path = require('path');
 const huskyrcPath = path.join(__dirname, '..', '.huskyrc');
 const huskyrcContent = `#!/bin/sh
 # Skip husky hooks in CI environments
-if [ -n "$CI" ]; then
-  exit 0
-fi
+export HUSKY=0
 `;
 
 // Create .huskyrc file
@@ -36,4 +37,11 @@ if (!packageJson.scripts.preinstall) {
   packageJson.scripts.preinstall = 'node scripts/disable-husky-in-ci.js';
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
   console.log('Added preinstall script to package.json');
+}
+
+// Update prepare script to skip husky in CI environments
+if (!packageJson.scripts.prepare || !packageJson.scripts.prepare.includes('[ -n "$CI" ]')) {
+  packageJson.scripts.prepare = '[ -n "$CI" ] || husky';
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+  console.log('Updated prepare script to skip husky in CI environments');
 }

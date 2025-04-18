@@ -52,8 +52,8 @@ import { PaymentService } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
 
-import { QRCodeComponent } from 'angularx-qrcode';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { QRCodeModule } from '../../shared/qrcode/qrcode.module';
 
 // Import Emerald components
 import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
@@ -100,7 +100,7 @@ import { TransactionDetailsDialogComponent } from './dialogs/transaction-details
     MatBadgeModule,
     MatMenuModule,
     MatSlideToggleModule,
-    QRCodeComponent,
+    QRCodeModule,
     ClipboardModule,
     // Emerald components
     CardGridComponent,

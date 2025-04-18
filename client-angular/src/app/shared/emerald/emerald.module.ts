@@ -25,6 +25,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { CardGridComponent } from './components/card-grid/card-grid.component';
 import { PagerComponent } from './components/pager/pager.component';
 import { FloatingActionButtonComponent } from './components/floating-action-button/floating-action-button.component';
+import { TinderCardComponent } from './tinder-card/tinder-card.component';
 
 /**
  * Emerald.js Integration Module
@@ -46,6 +47,7 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
  * - CardGrid: Grid layout for displaying multiple cards
  * - Pager: Pagination component for navigating through results
  * - FloatingActionButton: Floating action button for primary actions
+ * - TinderCard: Card component for Tinder-style swiping interfaces
  */
 @NgModule({
   declarations: [
@@ -65,6 +67,9 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     PagerComponent,
     SkeletonLoaderComponent,
     ToggleComponent,
+    CardGridComponent,
+    FloatingActionButtonComponent,
+    TinderCardComponent,
   ],
   exports: [
     // Export all components for use in other modules
@@ -77,6 +82,9 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
     SkeletonLoaderComponent,
     ToggleComponent,
     PagerComponent,
+    CardGridComponent,
+    FloatingActionButtonComponent,
+    TinderCardComponent,
   ],
 })
 export class EmeraldModule {}

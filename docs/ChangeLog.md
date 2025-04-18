@@ -1,5 +1,86 @@
 # Change Log
 
+## 2025-05-23: Angular Build and CI Environment Fixes
+
+### Fixed
+
+- **Husky Git Hooks Issues**: Fixed husky Git hooks causing errors in CI environments
+
+  - Created a `.huskyrc` file to disable Husky in CI environments
+  - Updated the `prepare` script in package.json to skip Husky in CI environments
+  - Created a `fix-husky.sh` script for the client-angular project
+  - Updated the `disable-husky-in-ci.js` script to properly disable Husky
+
+- **SASS Variables**: Fixed missing SASS variables causing build failures
+
+  - Added semantic color variations to the design system variables file
+  - Created a comprehensive set of color variations for error, success, warning, and info colors
+  - Ensured proper color inheritance and consistency across the application
+
+- **QR Code Module**: Fixed issues with the `angularx-qrcode` module
+
+  - Updated the QR code module to use the correct import syntax
+  - Changed from importing the component directly to importing the module
+  - Added the module to the package.json dependencies
+  - Ensured proper installation with `--legacy-peer-deps` flag
+
+- **ESLint Dependency Conflicts**: Fixed conflicts between ESLint versions
+  - Created a `fix-eslint-dependencies.js` script to update ESLint-related packages in package.json files
+  - Updated ESLint to version ^9.0.0 in dependencies and devDependencies
+  - Updated @typescript-eslint/parser and @typescript-eslint/eslint-plugin to ^8.0.0
+  - Added overrides for ESLint and TypeScript ESLint packages to ensure consistent versions
+  - Used --legacy-peer-deps flag to install dependencies with the updated versions
+  - Ensured all packages use compatible versions to resolve dependency conflicts
+
+### Added
+
+- **fix-project.sh**: Created comprehensive script to fix common issues
+
+  - Automated fixing of husky issues
+  - Automated installation of missing dependencies
+  - Automated fixing of npm audit issues
+  - Automated fixing of CSP issues
+  - Automated checking of MongoDB setup
+  - Automated fixing of ESLint dependency conflicts
+  - Automated updating of packages
+  - Automated verification of server/scripts directory
+
+- **fix-eslint-dependencies.js**: Created script to fix ESLint dependency conflicts
+
+  - Updates ESLint to version ^9.0.0 in dependencies and devDependencies
+  - Updates @typescript-eslint/parser and @typescript-eslint/eslint-plugin to ^8.0.0
+  - Adds overrides for ESLint and TypeScript ESLint packages
+  - Ensures all packages use compatible versions
+  - Resolves conflicts with @typescript-eslint/utils and @angular-eslint packages
+
+- **Documentation**: Added comprehensive documentation for fixes
+  - Created `docs/FIXES.md` with detailed explanation of all fixes
+  - Updated changelog with details about the fixes
+  - Added troubleshooting section to help with common issues
+
+## 2025-05-22: Angular Build Optimization
+
+### Fixed
+
+- **Angular Build Memory Issues**: Fixed JavaScript heap out of memory errors during Angular builds
+  - Added `NODE_OPTIONS=--max_old_space_size=8192` to build and serve scripts in client-angular/package.json
+  - Created clean build scripts to easily reset the environment when needed
+  - Added comprehensive documentation in docs/ANGULAR_BUILD_OPTIMIZATION.md
+
+### Added
+
+- **Build Scripts**: Added new npm scripts to client-angular/package.json:
+  - `build:prod`: Production build with increased memory allocation
+  - `clean`: Script to remove node_modules, package-lock.json, .angular/cache, and dist
+  - `clean:install`: Script to clean and reinstall dependencies
+  - `clean:build`: Script to clean, reinstall, and build
+
+### Documentation
+
+- **ANGULAR_BUILD_OPTIMIZATION.md**: Created comprehensive guide for resolving build memory issues
+- **AILessons.md**: Added section on Angular Build Optimization with best practices
+- **README.md**: Updated setup instructions with build optimization information
+
 ## 2025-04-18: ESLint Dependency Fixes
 
 ### Fixed

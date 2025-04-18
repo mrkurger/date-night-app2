@@ -26,8 +26,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { QRCodeComponent } from 'angularx-qrcode';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { QRCodeModule } from '../../../shared/qrcode/qrcode.module';
 
 import {
   WalletService,
@@ -305,7 +305,7 @@ import { NotificationService } from '../../../core/services/notification.service
     MatTabsModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    QRCodeComponent,
+    QRCodeModule,
     ClipboardModule,
   ],
 })
