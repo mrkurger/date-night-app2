@@ -95,3 +95,6 @@ If you still encounter memory issues, try the following steps in order:
 - **2024-05-XX**: Added memory optimization settings to package.json scripts
   - Increased Node.js memory limit to 8GB
   - Added clean build scripts for easier environment reset
+
+
+<!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) -->

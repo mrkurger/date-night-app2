@@ -1,3 +1,7 @@
+### HISTORICAL DOCUMENT ###
+This document describes a plan or state that is no longer current. It is kept for historical reference.
+##########################
+
 # DateNight.io Completion Plan 2024
 
 ## Executive Summary

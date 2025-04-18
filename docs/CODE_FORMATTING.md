@@ -123,3 +123,5 @@ If you need to customize the formatting rules:
 2. Edit the `.prettierrc` files for formatting rules
 3. Update the `.lintstagedrc.json` file for pre-commit behavior
 4. Modify the `.vscode/settings.json` file for editor integration
+
+<!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) -->

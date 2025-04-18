@@ -316,3 +316,6 @@ The detailed findings from Phase 1 are available in the `/phase1-assessment` dir
 8. **Rollback Plan**: Prepare detailed rollback procedures for each change
 
 By following this phased approach, we can systematically eliminate code duplication while minimizing the risk of introducing bugs or regressions. The detailed implementation plans for each phase are available in the `/phase1-assessment` directory.
+
+
+<!-- TODO: Manually update status based on refactoring progress. (as per DOCS_IMPROVEMENT_PLAN.md) -->

@@ -668,3 +668,5 @@ This document complements the following guides:
 - [TESTING_GUIDE.md](./TESTING_GUIDE.md) - General testing strategy
 - [CUSTOMIZATION_GUIDE.md](./CUSTOMIZATION_GUIDE.md) - How to customize components
 - [emerald-testing-guide.md](./emerald-testing-guide.md) - Testing Emerald components
+
+<!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. -->

@@ -1,3 +1,7 @@
+### HISTORICAL DOCUMENT ###
+This document describes a plan or state that is no longer current. It is kept for historical reference.
+##########################
+
 # DateNight.io UI/UX Comprehensive Implementation Plan
 
 This document outlines a detailed plan for implementing UI/UX improvements in the DateNight.io application, addressing identified weaknesses and ensuring a sleek, modern, minimalistic yet luxurious feel with carefully restrained effects.

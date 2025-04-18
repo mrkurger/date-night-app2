@@ -608,3 +608,5 @@ To ensure your implementation is accessible:
    - Use lazy loading for large lists
 
 For more help, refer to the Emerald.js documentation at https://docs-emerald.condorlabs.io/
+
+<!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) -->

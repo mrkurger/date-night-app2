@@ -1,3 +1,11 @@
+# THEMING GUIDE (Manual Merge Required)
+
+<!-- TODO: Manually merge content from the following source files into this document, then remove this comment. -->
+<!-- Source: docs/styling-guide.md -->
+
+
+## Content from docs/styling-guide.md
+
 # DateNight.io UI/UX Style Guide
 
 This comprehensive style guide defines the visual language, interaction patterns, and design principles for the DateNight.io Progressive Web App. Following these guidelines will ensure a sleek, modern, minimalistic yet luxurious feel with carefully restrained effects.
@@ -694,3 +702,6 @@ styles/
 ---
 
 Last Updated: 2025-05-15
+
+
+<!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) -->

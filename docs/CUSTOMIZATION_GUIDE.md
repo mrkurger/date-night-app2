@@ -532,3 +532,5 @@ If you encounter issues with the customization system:
    - Use lazy loading for large lists
 
 For additional help, consult the project's main documentation or contact the development team.
+
+<!-- TODO: Manually review process accuracy. (as per DOCS_IMPROVEMENT_PLAN.md) -->

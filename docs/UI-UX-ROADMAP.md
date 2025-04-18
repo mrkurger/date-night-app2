@@ -1,3 +1,7 @@
+### HISTORICAL DOCUMENT ###
+This document describes a plan or state that is no longer current. It is kept for historical reference.
+##########################
+
 # UI/UX Development Roadmap
 
 > **IMPORTANT NOTE**: This document has been superseded by the comprehensive [UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/ui-ux-implementation-plan.md) which includes a more detailed approach to UI/UX improvements with specific timelines and success metrics.

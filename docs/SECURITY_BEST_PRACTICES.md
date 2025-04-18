@@ -185,3 +185,6 @@ For detailed information about the end-to-end encryption implementation, see [EN
 - CCPA compliance for California residents
 - Regular privacy impact assessments
 - Data processing agreements with third parties
+
+
+<!-- TODO: Manually merge relevant content from deleted SNYK_WORKFLOW.md, SECURITY_REMEDIATION_GUIDE.md into this file. -->

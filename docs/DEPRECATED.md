@@ -126,3 +126,6 @@ If you find code that should be deprecated but is not listed in this document, p
 1. Adding a comment with `@deprecated` tag in the code
 2. Adding an entry to this document
 3. Creating an issue in the project's issue tracker
+
+
+<!-- TODO: Manually review timelines, ensure dependency info moved. (as per DOCS_IMPROVEMENT_PLAN.md) -->

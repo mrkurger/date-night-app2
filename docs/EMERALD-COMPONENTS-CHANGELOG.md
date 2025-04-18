@@ -36,3 +36,5 @@ This document tracks changes to the Emerald.js component library implementation 
 - Enhance accessibility features
 - Create component showcase/storybook for easy reference
 - Implement comprehensive test coverage for all components
+
+<!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) -->

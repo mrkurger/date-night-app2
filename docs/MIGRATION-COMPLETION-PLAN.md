@@ -1,3 +1,7 @@
+### HISTORICAL DOCUMENT ###
+This document describes a plan or state that is no longer current. It is kept for historical reference.
+##########################
+
 # Migration Status - COMPLETED
 
 The migration from AngularJS to Angular has been completed. This document is maintained for historical reference.

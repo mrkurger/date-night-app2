@@ -348,3 +348,5 @@ function example(param1: string, param2: number): boolean {
 ## Conclusion
 
 Following these guidelines ensures consistency across all documentation in the Date Night App project. Consistent documentation is easier to read, understand, and maintain, which benefits both developers and users of the application.
+
+<!-- TODO: Manually ensure consistency, add uppercase filename rule. (as per DOCS_IMPROVEMENT_PLAN.md) -->

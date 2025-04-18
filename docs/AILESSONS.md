@@ -45,6 +45,7 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Dependency Management](#dependency-management)
   - [GitHub Actions Security](#github-actions-security)
   - [CI/CD and Git Hooks](#cicd-and-git-hooks)
+  - [CI/CD Caching Best Practices](#cicd-caching-best-practices)
   - [Package Overrides](#package-overrides)
 - [Error Handling and Telemetry](#error-handling-and-telemetry)
   - [HTTP Error Interceptor Pattern](#http-error-interceptor-pattern)
@@ -301,40 +302,53 @@ This categorization enables:
 - Improved error reporting and visualization
 - More targeted user feedback
 
+#### RxJS Type Compatibility in Operators
+
+When creating custom RxJS operators in Angular applications, it's important to ensure proper type compatibility, especially when multiple versions of RxJS might be present in the project (e.g., in the root node_modules and in client-angular/node_modules).
+
+To avoid TypeScript errors related to incompatible Observable types, use generic type parameters in custom operators:
+
+```typescript
+/**
+ * Creates a retry operator with exponential backoff and jitter
+ * @param request The original HTTP request
+ * @returns A function that applies retry logic to an observable
+ */
+private retryWithBackoff(request: HttpRequest<any>) {
+  // Return a function that takes an observable and returns a new observable with the same type
+  // Using generic type parameter to ensure type compatibility across different RxJS versions
+  return <T>(source: Observable<T>): Observable<T> => {
+    if (!this.config.retryFailedRequests) {
+      return source;
+    }
+
+    return source.pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          concatMap((error, index) => {
+            // Retry logic implementation
+            // ...
+            return timer(totalDelay);
+          })
+        )
+      )
+    );
+  };
+}
+```
+
+Key improvements in this pattern:
+
+1. **Generic Type Parameter**: Using `<T>` allows the operator to work with any Observable type
+2. **Type Consistency**: Ensures the return type matches the input type
+3. **Type Safety**: Prevents TypeScript errors when different RxJS versions are present
+4. **Improved Readability**: Makes the operator's purpose and behavior clearer
+
+This approach ensures that custom operators work correctly regardless of the specific RxJS implementation being used, which is particularly important in Angular applications where multiple versions of RxJS might be present in different node_modules directories.
+
 #### Retry Logic with Exponential Backoff
 
 The interceptor implements retry logic with exponential backoff and jitter:
-
-```typescript
-private retryWithBackoff(request: HttpRequest<unknown>) {
-  return (source: Observable<HttpEvent<unknown>>) =>
-    this.config.retryFailedRequests
-      ? source.pipe(
-          retryWhen(errors =>
-            errors.pipe(
-              concatMap((error, index) => {
-                const attemptNumber = index + 1;
-
-                // Check if we should retry this error
-                if (!this.isRetryable(error) || attemptNumber > this.config.maxRetryAttempts) {
-                  return throwError(() => error);
-                }
-
-                // Calculate delay with exponential backoff and jitter
-                const backoffDelay = this.getRetryDelay(attemptNumber);
-                const jitter = Math.floor(Math.random() * this.config.retryJitter);
-                const totalDelay = backoffDelay + jitter;
-
-                // ... logging and telemetry ...
-
-                return timer(totalDelay);
-              })
-            )
-          )
-        )
-      : source;
-}
-```
 
 Benefits of this approach:
 
@@ -2081,6 +2095,55 @@ When working with Git hooks like Husky in CI/CD environments, several patterns h
    - Automatically create pull requests for manual resolution
    - Use the GitHub CLI (`gh`) for PR creation from workflows
 
+### CI/CD Caching Best Practices
+
+When working with CI/CD pipelines, proper caching strategies can significantly improve build times and reliability:
+
+1. **Package Lock Files**:
+
+   - Ensure package-lock.json files exist for all workspaces in a monorepo
+   - Generate package-lock.json files with `npm install --package-lock-only` if missing
+   - Commit package-lock.json files to version control
+   - Verify package-lock.json files are up-to-date with dependencies
+
+2. **Cache Configuration**:
+
+   - Use the correct cache-dependency-path in GitHub Actions:
+     ```yaml
+     - uses: actions/setup-node@v4
+       with:
+         node-version: '22.x'
+         cache: 'npm'
+         cache-dependency-path: client-angular/package-lock.json
+     ```
+   - Ensure the path points to an existing package-lock.json file
+   - Use separate cache configurations for different workspaces
+
+3. **Cache Invalidation**:
+
+   - Understand when caches are invalidated (changes to package-lock.json)
+   - Use cache versioning for intentional cache busting
+   - Implement fallback mechanisms when cache misses occur
+
+4. **Workspace-Specific Caching**:
+
+   - Configure separate caching for each workspace in a monorepo
+   - Use workspace-specific package-lock.json files for granular caching
+   - Ensure consistent Node.js and npm versions across all jobs
+
+5. **Troubleshooting Cache Issues**:
+
+   - Look for error messages like "Some specified paths were not resolved, unable to cache dependencies"
+   - Verify that all referenced paths exist in the repository
+   - Check for typos in cache-dependency-path configurations
+   - Ensure package-lock.json files are generated before caching is attempted
+
+6. **Cache Optimization**:
+   - Cache only what's necessary to improve cache hit rates
+   - Use .npmrc configuration to control what gets cached
+   - Consider using compression for large caches
+   - Monitor cache size and hit rates to optimize caching strategy
+
 ### Package Overrides
 
 Package overrides provide a powerful mechanism for addressing security vulnerabilities:
@@ -2833,3 +2896,6 @@ This approach of creating dedicated demo components can be applied to other comp
 
 // CORRECT: Acknowledging existing implementation
 "The geocoding service is well-implemented with multiple fallback strategies"
+
+
+<!-- TODO: Manually review and curate this file. Extract stable patterns, archive obsolete sections (as per DOCS_IMPROVEMENT_PLAN.md) -->

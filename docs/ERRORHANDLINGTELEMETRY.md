@@ -498,3 +498,6 @@ The alert lifecycle includes:
     - Offline error collection and batched sending
     - Battery and bandwidth optimizations
     - Mobile-specific metrics (app version, OS version, etc.)
+
+
+<!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. -->

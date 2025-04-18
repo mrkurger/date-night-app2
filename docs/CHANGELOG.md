@@ -1,5 +1,21 @@
 # Change Log
 
+## 2025-05-25: ES Module and Design Token Fixes
+
+### Fixed
+
+- **ES Module Exports**: Fixed ES module exports in server files
+  - Updated server/middleware/cache.js to use ES module exports
+  - Updated server/config/environment.js to use ES module exports
+  - Fixed dynamic import for fileAccess.js in server.js to use proper dynamic import pattern
+  - Removed duplicate Leaflet CSS import from main.scss (already in angular.json)
+  - Added missing $transition-ease variable to design-tokens.scss
+
+### Changed
+
+- **Import Statements**: Updated import statements to use ES modules consistently
+- **Error Handling**: Improved error handling in server startup
+
 ## 2025-05-24: ESLint Configuration Fixes
 
 ### Fixed

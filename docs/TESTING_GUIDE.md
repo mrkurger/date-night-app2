@@ -205,3 +205,5 @@ Common issues and solutions:
 ## Conclusion
 
 A comprehensive testing strategy is essential for maintaining code quality, performance, and security in the Date Night App. By following this guide, developers can ensure that their code meets the project's standards and provides a reliable experience for users.
+
+<!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. -->
