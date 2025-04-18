@@ -14,10 +14,9 @@
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:sonarjs/recommended",
         "prettier"
       ],
-      "plugins": ["prettier", "sonarjs"],
+      "plugins": ["prettier"],
       "rules": {
         "prettier/prettier": "error",
         "@typescript-eslint/explicit-member-accessibility": [

@@ -6,13 +6,8 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:node/recommended',
-    'plugin:sonarjs/recommended',
-    'prettier',
-  ],
-  plugins: ['prettier', 'sonarjs'],
+  extends: ['eslint:recommended', 'plugin:node/recommended', 'prettier'],
+  plugins: ['prettier'],
   parserOptions: {
     ecmaVersion: 2021,
   },
