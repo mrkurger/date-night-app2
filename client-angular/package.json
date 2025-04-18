@@ -1,6 +1,7 @@
 {
   "name": "client-angular",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "NODE_OPTIONS=--max_old_space_size=8192 ng serve client-angular",
@@ -58,6 +59,8 @@
     "@angular-eslint/template-parser": "19.3.0",
     "@angular/cli": "19.2.7",
     "@angular/compiler-cli": "19.2.7",
+    "@eslint/eslintrc": "^3.0.0",
+    "@eslint/js": "^9.0.0",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",

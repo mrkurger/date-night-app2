@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for Date Night App",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "npx nodemon -r dotenv/config server.js",
@@ -55,6 +56,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-node": "11.1.0",
