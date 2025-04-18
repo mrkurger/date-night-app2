@@ -12,7 +12,8 @@ workflow-error-logs/
 │   │   ├── jobs.json           # Jobs metadata
 │   │   ├── {job-name}/
 │   │   │   ├── job-metadata.json  # Job metadata
-│   │   │   └── logs.txt           # Job logs
+│   │   │   └── logs.txt           # Job logs (extracted from zip if necessary)
+│   │   │   └── [other extracted files] # Additional files from zip archives
 │   │   └── ...
 │   └── ...
 └── ...
@@ -32,3 +33,7 @@ Logs are collected:
 ## Retention
 
 Only logs from the past 30 days are collected.
+
+## Implementation Details
+
+The logs are fetched using the GitHub API and processed with the `adm-zip` library to extract text content from zip files when necessary. This ensures that all logs are stored in a readable text format.
