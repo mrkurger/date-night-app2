@@ -1,0 +1,316 @@
+2025-04-18T17:25:24.3488296Z Current runner version: '2.323.0'
+2025-04-18T17:25:24.3525968Z ##[group]Operating System
+2025-04-18T17:25:24.3527132Z Ubuntu
+2025-04-18T17:25:24.3528134Z 24.04.2
+2025-04-18T17:25:24.3528927Z LTS
+2025-04-18T17:25:24.3529773Z ##[endgroup]
+2025-04-18T17:25:24.3530800Z ##[group]Runner Image
+2025-04-18T17:25:24.3531777Z Image: ubuntu-24.04
+2025-04-18T17:25:24.3532703Z Version: 20250413.1.0
+2025-04-18T17:25:24.3534531Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-18T17:25:24.3537359Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-18T17:25:24.3539012Z ##[endgroup]
+2025-04-18T17:25:24.3540030Z ##[group]Runner Image Provisioner
+2025-04-18T17:25:24.3541090Z 2.0.422.1
+2025-04-18T17:25:24.3541854Z ##[endgroup]
+2025-04-18T17:25:24.3543875Z ##[group]GITHUB_TOKEN Permissions
+2025-04-18T17:25:24.3546828Z Contents: write
+2025-04-18T17:25:24.3547784Z Metadata: read
+2025-04-18T17:25:24.3548980Z SecurityEvents: read
+2025-04-18T17:25:24.3550135Z ##[endgroup]
+2025-04-18T17:25:24.3553160Z Secret source: Actions
+2025-04-18T17:25:24.3554259Z Prepare workflow directory
+2025-04-18T17:25:24.3918707Z Prepare all required actions
+2025-04-18T17:25:24.3961598Z Getting action download info
+2025-04-18T17:25:24.9199889Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-18T17:25:24.9200920Z Version: 4.2.2
+2025-04-18T17:25:24.9201980Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-18T17:25:24.9203353Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-18T17:25:24.9204133Z ##[endgroup]
+2025-04-18T17:25:25.0154479Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-18T17:25:25.0155227Z Version: 4.4.0
+2025-04-18T17:25:25.0156334Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-18T17:25:25.0157382Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-18T17:25:25.0158050Z ##[endgroup]
+2025-04-18T17:25:25.4767479Z Complete job name: sync-snyk-issues
+2025-04-18T17:25:25.5433724Z ##[group]Run actions/checkout@v4
+2025-04-18T17:25:25.5434543Z with:
+2025-04-18T17:25:25.5434907Z   fetch-depth: 0
+2025-04-18T17:25:25.5435643Z   token: ***
+2025-04-18T17:25:25.5436046Z   repository: mrkurger/date-night-app2
+2025-04-18T17:25:25.5436549Z   ssh-strict: true
+2025-04-18T17:25:25.5436924Z   ssh-user: git
+2025-04-18T17:25:25.5437318Z   persist-credentials: true
+2025-04-18T17:25:25.5437750Z   clean: true
+2025-04-18T17:25:25.5438133Z   sparse-checkout-cone-mode: true
+2025-04-18T17:25:25.5438587Z   fetch-tags: false
+2025-04-18T17:25:25.5438966Z   show-progress: true
+2025-04-18T17:25:25.5439349Z   lfs: false
+2025-04-18T17:25:25.5439703Z   submodules: false
+2025-04-18T17:25:25.5440090Z   set-safe-directory: true
+2025-04-18T17:25:25.5440913Z ##[endgroup]
+2025-04-18T17:25:25.7373632Z Syncing repository: mrkurger/date-night-app2
+2025-04-18T17:25:25.7377587Z ##[group]Getting Git version info
+2025-04-18T17:25:25.7378906Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T17:25:25.7380631Z [command]/usr/bin/git version
+2025-04-18T17:25:25.7421173Z git version 2.49.0
+2025-04-18T17:25:25.7450536Z ##[endgroup]
+2025-04-18T17:25:25.7466063Z Temporarily overriding HOME='/home/runner/work/_temp/f8300bc0-2074-4550-8790-20d4b60dd8cf' before making global git config changes
+2025-04-18T17:25:25.7469544Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T17:25:25.7483654Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T17:25:25.7519478Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T17:25:25.7524046Z ##[group]Initializing the repository
+2025-04-18T17:25:25.7529752Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T17:25:25.7599310Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-18T17:25:25.7601493Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-18T17:25:25.7602871Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-18T17:25:25.7605572Z hint:
+2025-04-18T17:25:25.7606372Z hint: 	git config --global init.defaultBranch <name>
+2025-04-18T17:25:25.7607305Z hint:
+2025-04-18T17:25:25.7609034Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-18T17:25:25.7610699Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-18T17:25:25.7611995Z hint:
+2025-04-18T17:25:25.7612742Z hint: 	git branch -m <name>
+2025-04-18T17:25:25.7614539Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-18T17:25:25.7621711Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-18T17:25:25.7657821Z ##[endgroup]
+2025-04-18T17:25:25.7661231Z ##[group]Disabling automatic garbage collection
+2025-04-18T17:25:25.7662627Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-18T17:25:25.7695986Z ##[endgroup]
+2025-04-18T17:25:25.7698465Z ##[group]Setting up auth
+2025-04-18T17:25:25.7702895Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T17:25:25.7737220Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T17:25:25.8026122Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T17:25:25.8058585Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T17:25:25.8293476Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-18T17:25:25.8370028Z ##[endgroup]
+2025-04-18T17:25:25.8373572Z ##[group]Fetching the repository
+2025-04-18T17:25:25.8380742Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-04-18T17:25:34.5666751Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T17:25:34.5672452Z  * [new branch]      main       -> origin/main
+2025-04-18T17:25:34.5706284Z [command]/usr/bin/git branch --list --remote origin/main
+2025-04-18T17:25:34.5729632Z   origin/main
+2025-04-18T17:25:34.5744022Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-04-18T17:25:34.5767669Z 150748888673233ffbfd6fdd5f13eeea6e77a4c9
+2025-04-18T17:25:34.5777594Z ##[endgroup]
+2025-04-18T17:25:34.5779410Z ##[group]Determining the checkout info
+2025-04-18T17:25:34.5781379Z ##[endgroup]
+2025-04-18T17:25:34.5786531Z [command]/usr/bin/git sparse-checkout disable
+2025-04-18T17:25:34.5826988Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-18T17:25:34.5860335Z ##[group]Checking out the ref
+2025-04-18T17:25:34.5862493Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-18T17:25:35.0680283Z Switched to a new branch 'main'
+2025-04-18T17:25:35.0703127Z branch 'main' set up to track 'origin/main'.
+2025-04-18T17:25:35.0716584Z ##[endgroup]
+2025-04-18T17:25:35.0780549Z [command]/usr/bin/git log -1 --format=%H
+2025-04-18T17:25:35.0811426Z 150748888673233ffbfd6fdd5f13eeea6e77a4c9
+2025-04-18T17:25:35.1036256Z ##[group]Run actions/setup-node@v4
+2025-04-18T17:25:35.1036563Z with:
+2025-04-18T17:25:35.1036746Z   node-version: 22
+2025-04-18T17:25:35.1036949Z   always-auth: false
+2025-04-18T17:25:35.1037152Z   check-latest: false
+2025-04-18T17:25:35.1037475Z   token: ***
+2025-04-18T17:25:35.1037657Z ##[endgroup]
+2025-04-18T17:25:35.2752293Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-18T17:25:35.2753280Z ##[group]Environment details
+2025-04-18T17:25:35.6554970Z node: v22.14.0
+2025-04-18T17:25:35.6558033Z npm: 10.9.2
+2025-04-18T17:25:35.6561113Z yarn: 1.22.22
+2025-04-18T17:25:35.6563853Z ##[endgroup]
+2025-04-18T17:25:35.6673153Z ##[group]Run npm install
+2025-04-18T17:25:35.6673469Z [36;1mnpm install[0m
+2025-04-18T17:25:35.6673705Z [36;1mcd server && npm install[0m
+2025-04-18T17:25:35.6673983Z [36;1mcd ../client-angular && npm install[0m
+2025-04-18T17:25:35.6674339Z [36;1m# Install Snyk as a dev dependency instead of globally[0m
+2025-04-18T17:25:35.6674665Z [36;1mnpm install --save-dev snyk[0m
+2025-04-18T17:25:35.6729748Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:25:35.6730014Z ##[endgroup]
+2025-04-18T17:25:39.0828096Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-18T17:25:40.3633401Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-18T17:25:40.6146096Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-18T17:25:40.8848893Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-18T17:25:41.9592212Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-18T17:25:42.2881552Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-18T17:25:43.2954928Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-18T17:25:43.4104354Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-18T17:26:14.5132343Z 
+2025-04-18T17:26:14.5137805Z > date-night-app@1.0.0 preinstall
+2025-04-18T17:26:14.5138688Z > node scripts/disable-husky-in-ci.js
+2025-04-18T17:26:14.5139022Z 
+2025-04-18T17:26:14.5417194Z .huskyrc file created to disable husky in CI environments
+2025-04-18T17:26:14.5427620Z .huskyrc file made executable
+2025-04-18T17:26:14.5471423Z 
+2025-04-18T17:26:14.5477720Z > date-night-app@1.0.0 prepare
+2025-04-18T17:26:14.5494748Z > [ -n "$CI" ] || husky
+2025-04-18T17:26:14.5498642Z 
+2025-04-18T17:26:14.5760216Z 
+2025-04-18T17:26:14.5760738Z added 1645 packages, and audited 1648 packages in 39s
+2025-04-18T17:26:14.5763666Z 
+2025-04-18T17:26:14.5765611Z 253 packages are looking for funding
+2025-04-18T17:26:14.5766905Z   run `npm fund` for details
+2025-04-18T17:26:14.5786442Z 
+2025-04-18T17:26:14.5790754Z 1 moderate severity vulnerability
+2025-04-18T17:26:14.5795047Z 
+2025-04-18T17:26:14.5800360Z To address all issues, run:
+2025-04-18T17:26:14.5803882Z   npm audit fix
+2025-04-18T17:26:14.5806015Z 
+2025-04-18T17:26:14.5833863Z Run `npm audit` for details.
+2025-04-18T17:26:17.2650823Z 
+2025-04-18T17:26:17.2653220Z > date-night-app@1.0.0 preinstall
+2025-04-18T17:26:17.2666238Z > node scripts/disable-husky-in-ci.js
+2025-04-18T17:26:17.2666941Z 
+2025-04-18T17:26:17.2969343Z .huskyrc file created to disable husky in CI environments
+2025-04-18T17:26:17.2973984Z .huskyrc file made executable
+2025-04-18T17:26:17.3021362Z 
+2025-04-18T17:26:17.3025468Z > date-night-app@1.0.0 prepare
+2025-04-18T17:26:17.3027484Z > [ -n "$CI" ] || husky
+2025-04-18T17:26:17.3029620Z 
+2025-04-18T17:26:17.3121076Z 
+2025-04-18T17:26:17.3122379Z up to date, audited 1648 packages in 3s
+2025-04-18T17:26:17.3135669Z 
+2025-04-18T17:26:17.3136273Z 253 packages are looking for funding
+2025-04-18T17:26:17.3137004Z   run `npm fund` for details
+2025-04-18T17:26:17.3147128Z 
+2025-04-18T17:26:17.3151364Z found 0 vulnerabilities
+2025-04-18T17:26:19.8586101Z 
+2025-04-18T17:26:19.8587257Z > date-night-app@1.0.0 preinstall
+2025-04-18T17:26:19.8588698Z > node scripts/disable-husky-in-ci.js
+2025-04-18T17:26:19.8589539Z 
+2025-04-18T17:26:20.1057802Z .huskyrc file created to disable husky in CI environments
+2025-04-18T17:26:20.1060198Z .huskyrc file made executable
+2025-04-18T17:26:20.1106775Z 
+2025-04-18T17:26:20.1127595Z > date-night-app@1.0.0 prepare
+2025-04-18T17:26:20.1128342Z > [ -n "$CI" ] || husky
+2025-04-18T17:26:20.1128753Z 
+2025-04-18T17:26:20.1223578Z 
+2025-04-18T17:26:20.1227682Z up to date, audited 1648 packages in 3s
+2025-04-18T17:26:20.1231917Z 
+2025-04-18T17:26:20.1236324Z 253 packages are looking for funding
+2025-04-18T17:26:20.1240767Z   run `npm fund` for details
+2025-04-18T17:26:20.1245034Z 
+2025-04-18T17:26:20.1249264Z found 0 vulnerabilities
+2025-04-18T17:26:23.3353099Z npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-18T17:26:26.5237593Z 
+2025-04-18T17:26:26.5238263Z added 23 packages, and audited 1671 packages in 6s
+2025-04-18T17:26:26.5238673Z 
+2025-04-18T17:26:26.5238923Z 259 packages are looking for funding
+2025-04-18T17:26:26.5239427Z   run `npm fund` for details
+2025-04-18T17:26:26.5252758Z 
+2025-04-18T17:26:26.5255514Z found 0 vulnerabilities
+2025-04-18T17:26:26.5483033Z ##[group]Run npx snyk auth ***
+2025-04-18T17:26:26.5483416Z [36;1mnpx snyk auth ***[0m
+2025-04-18T17:26:26.5532325Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:26.5532554Z env:
+2025-04-18T17:26:26.5532818Z   SNYK_TOKEN: ***
+2025-04-18T17:26:26.5533011Z ##[endgroup]
+2025-04-18T17:26:28.2599439Z 
+2025-04-18T17:26:28.2601550Z Your account has been authenticated. Snyk is now ready to be used.
+2025-04-18T17:26:28.2604329Z 
+2025-04-18T17:26:28.8440022Z ##[group]Run npx snyk test --json > snyk-root-results.json || true
+2025-04-18T17:26:28.8440486Z [36;1mnpx snyk test --json > snyk-root-results.json || true[0m
+2025-04-18T17:26:28.8489668Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:28.8489906Z ##[endgroup]
+2025-04-18T17:26:32.1899570Z ##[group]Run cd server && npx snyk test --json > ../snyk-server-results.json || true
+2025-04-18T17:26:32.1900123Z [36;1mcd server && npx snyk test --json > ../snyk-server-results.json || true[0m
+2025-04-18T17:26:32.1948425Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:32.1948665Z ##[endgroup]
+2025-04-18T17:26:35.3668759Z ##[group]Run cd client-angular && npx snyk test --json > ../snyk-client-results.json || true
+2025-04-18T17:26:35.3669747Z [36;1mcd client-angular && npx snyk test --json > ../snyk-client-results.json || true[0m
+2025-04-18T17:26:35.3742470Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:35.3742866Z ##[endgroup]
+2025-04-18T17:26:38.1724159Z ##[group]Run npm ls --json --depth=2 > npm-root-deps-tree.json || true
+2025-04-18T17:26:38.1724933Z [36;1mnpm ls --json --depth=2 > npm-root-deps-tree.json || true[0m
+2025-04-18T17:26:38.1792046Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:38.1792444Z ##[endgroup]
+2025-04-18T17:26:39.2360916Z npm error code ELSPROBLEMS
+2025-04-18T17:26:39.2366287Z npm error missing: @angular/localize@^19.0.0, required by @ng-bootstrap/ng-bootstrap@18.0.0
+2025-04-18T17:26:39.2371212Z npm error missing: @popperjs/core@^2.11.8, required by @ng-bootstrap/ng-bootstrap@18.0.0
+2025-04-18T17:26:39.2375917Z npm error missing: @popperjs/core@^2.11.8, required by bootstrap@5.3.5
+2025-04-18T17:26:39.2414502Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-04-18T17_26_38_239Z-debug-0.log
+2025-04-18T17:26:39.2544078Z ##[group]Run cd server && npm ls --json --depth=2 > ../npm-server-deps-tree.json || true
+2025-04-18T17:26:39.2544626Z [36;1mcd server && npm ls --json --depth=2 > ../npm-server-deps-tree.json || true[0m
+2025-04-18T17:26:39.2590778Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:39.2591005Z ##[endgroup]
+2025-04-18T17:26:40.1954578Z ##[group]Run cd client-angular && npm ls --json --depth=2 > ../npm-client-deps-tree.json || true
+2025-04-18T17:26:40.1955872Z [36;1mcd client-angular && npm ls --json --depth=2 > ../npm-client-deps-tree.json || true[0m
+2025-04-18T17:26:40.2018721Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:40.2019420Z ##[endgroup]
+2025-04-18T17:26:41.1979785Z npm error code ELSPROBLEMS
+2025-04-18T17:26:41.1983015Z npm error missing: @angular/localize@^19.0.0, required by @ng-bootstrap/ng-bootstrap@18.0.0
+2025-04-18T17:26:41.1984228Z npm error missing: @popperjs/core@^2.11.8, required by @ng-bootstrap/ng-bootstrap@18.0.0
+2025-04-18T17:26:41.1985484Z npm error missing: @popperjs/core@^2.11.8, required by bootstrap@5.3.5
+2025-04-18T17:26:41.2043693Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-04-18T17_26_40_259Z-debug-0.log
+2025-04-18T17:26:41.2221511Z ##[group]Run npx snyk test --json --dev --severity-threshold=low --print-deps > snyk-root-upgrade-paths.json || true
+2025-04-18T17:26:41.2222777Z [36;1mnpx snyk test --json --dev --severity-threshold=low --print-deps > snyk-root-upgrade-paths.json || true[0m
+2025-04-18T17:26:41.2288949Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:41.2289342Z ##[endgroup]
+2025-04-18T17:26:43.3045745Z --print-deps --json option not yet supported for large projects. Displaying graph json output instead
+2025-04-18T17:26:45.4544454Z ##[group]Run cd server && npx snyk test --json --dev --severity-threshold=low --print-deps > ../snyk-server-upgrade-paths.json || true
+2025-04-18T17:26:45.4546704Z [36;1mcd server && npx snyk test --json --dev --severity-threshold=low --print-deps > ../snyk-server-upgrade-paths.json || true[0m
+2025-04-18T17:26:45.4593320Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:45.4593552Z ##[endgroup]
+2025-04-18T17:26:48.3242489Z ##[group]Run cd client-angular && npx snyk test --json --dev --severity-threshold=low --print-deps > ../snyk-client-upgrade-paths.json || true
+2025-04-18T17:26:48.3244081Z [36;1mcd client-angular && npx snyk test --json --dev --severity-threshold=low --print-deps > ../snyk-client-upgrade-paths.json || true[0m
+2025-04-18T17:26:48.3313726Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:48.3314120Z ##[endgroup]
+2025-04-18T17:26:51.1397932Z ##[group]Run mkdir -p downloaded-reports/snyk
+2025-04-18T17:26:51.1398531Z [36;1mmkdir -p downloaded-reports/snyk[0m
+2025-04-18T17:26:51.1399104Z [36;1mnode .github/scripts/generate-snyk-task-list.js[0m
+2025-04-18T17:26:51.1462307Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:51.1462553Z ##[endgroup]
+2025-04-18T17:26:51.1749588Z Starting Snyk report generation process...
+2025-04-18T17:26:51.1830850Z Error parsing JSON in snyk-root-upgrade-paths.json: Unexpected non-whitespace character after JSON at position 215808 (line 10454 column 1)
+2025-04-18T17:26:51.1836455Z Error parsing JSON in snyk-server-upgrade-paths.json: Unexpected non-whitespace character after JSON at position 49608 (line 1073 column 1)
+2025-04-18T17:26:51.1839716Z Error parsing JSON in snyk-client-upgrade-paths.json: Unexpected non-whitespace character after JSON at position 21638 (line 553 column 1)
+2025-04-18T17:26:51.1841248Z Found 3 total issues across all projects
+2025-04-18T17:26:51.1935180Z Generated prioritized issues report
+2025-04-18T17:26:51.1938485Z Generated issues summary report
+2025-04-18T17:26:51.1945171Z Generated vulnerable dependencies report
+2025-04-18T17:26:51.1948065Z Successfully generated all Snyk reports in downloaded-reports/snyk/
+2025-04-18T17:26:51.2018983Z ##[group]Run # Keep only the most recent JSON files
+2025-04-18T17:26:51.2019643Z [36;1m# Keep only the most recent JSON files[0m
+2025-04-18T17:26:51.2020293Z [36;1mfind . -name "npm-*-deps-tree.json" -type f -size +1M -delete || true[0m
+2025-04-18T17:26:51.2020930Z [36;1m# Compress remaining large files[0m
+2025-04-18T17:26:51.2021515Z [36;1mfind . -name "*.json" -type f -size +1M -exec gzip -9 {} \; || true[0m
+2025-04-18T17:26:51.2087705Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:51.2088086Z ##[endgroup]
+2025-04-18T17:26:51.6072933Z ##[group]Run git config --local user.email "action@github.com"
+2025-04-18T17:26:51.6073658Z [36;1mgit config --local user.email "action@github.com"[0m
+2025-04-18T17:26:51.6074258Z [36;1mgit config --local user.name "GitHub Action"[0m
+2025-04-18T17:26:51.6140877Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:51.6141548Z ##[endgroup]
+2025-04-18T17:26:51.6317678Z ##[group]Run git add downloaded-reports/snyk/
+2025-04-18T17:26:51.6318248Z [36;1mgit add downloaded-reports/snyk/[0m
+2025-04-18T17:26:51.6318996Z [36;1mgit commit -m "docs: update Snyk issues task list [skip ci]" || echo "No changes to commit"[0m
+2025-04-18T17:26:51.6319704Z [36;1mgit push[0m
+2025-04-18T17:26:51.6379416Z shell: /usr/bin/bash -e {0}
+2025-04-18T17:26:51.6379791Z env:
+2025-04-18T17:26:51.6380551Z   GITHUB_TOKEN: ***
+2025-04-18T17:26:51.6380876Z ##[endgroup]
+2025-04-18T17:26:51.7230529Z [main 9fd0ee0] docs: update Snyk issues task list [skip ci]
+2025-04-18T17:26:51.7231166Z  3 files changed, 474 insertions(+)
+2025-04-18T17:26:51.7231776Z  create mode 100644 downloaded-reports/snyk/issues-summary.md
+2025-04-18T17:26:51.7232542Z  create mode 100644 downloaded-reports/snyk/prioritized-issues.md
+2025-04-18T17:26:51.7233357Z  create mode 100644 downloaded-reports/snyk/vulnerable-dependencies.md
+2025-04-18T17:26:51.9458028Z To https://github.com/mrkurger/date-night-app2
+2025-04-18T17:26:51.9459371Z  ! [rejected]        main -> main (fetch first)
+2025-04-18T17:26:51.9462262Z error: failed to push some refs to 'https://github.com/mrkurger/date-night-app2'
+2025-04-18T17:26:51.9475720Z hint: Updates were rejected because the remote contains work that you do not
+2025-04-18T17:26:51.9480209Z hint: have locally. This is usually caused by another repository pushing to
+2025-04-18T17:26:51.9484279Z hint: the same ref. If you want to integrate the remote changes, use
+2025-04-18T17:26:51.9488616Z hint: 'git pull' before pushing again.
+2025-04-18T17:26:51.9492501Z hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2025-04-18T17:26:51.9515106Z ##[error]Process completed with exit code 1.
+2025-04-18T17:26:51.9603514Z Post job cleanup.
+2025-04-18T17:26:52.0532617Z [command]/usr/bin/git version
+2025-04-18T17:26:52.0572378Z git version 2.49.0
+2025-04-18T17:26:52.0618459Z Temporarily overriding HOME='/home/runner/work/_temp/67167c88-7724-426a-9582-84070c3040e9' before making global git config changes
+2025-04-18T17:26:52.0620462Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T17:26:52.0625951Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T17:26:52.0668719Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T17:26:52.0706012Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T17:26:52.0952372Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T17:26:52.0976827Z http.https://github.com/.extraheader
+2025-04-18T17:26:52.0991951Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-18T17:26:52.1027015Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T17:26:52.1373068Z Cleaning up orphan processes

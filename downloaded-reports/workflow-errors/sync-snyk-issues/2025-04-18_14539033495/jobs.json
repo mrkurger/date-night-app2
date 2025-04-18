@@ -1,0 +1,201 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 40793178388,
+      "run_id": 14539033495,
+      "workflow_name": "Sync Snyk Issues",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14539033495",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOOTqpm88AAAAJf3aBFA",
+      "head_sha": "150748888673233ffbfd6fdd5f13eeea6e77a4c9",
+      "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40793178388",
+      "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14539033495/job/40793178388",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2025-04-18T17:25:21Z",
+      "started_at": "2025-04-18T17:25:24Z",
+      "completed_at": "2025-04-18T17:26:54Z",
+      "name": "sync-snyk-issues",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2025-04-18T17:25:24Z",
+          "completed_at": "2025-04-18T17:25:25Z"
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2025-04-18T17:25:25Z",
+          "completed_at": "2025-04-18T17:25:35Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2025-04-18T17:25:35Z",
+          "completed_at": "2025-04-18T17:25:35Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2025-04-18T17:25:35Z",
+          "completed_at": "2025-04-18T17:26:26Z"
+        },
+        {
+          "name": "Authenticate with Snyk",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2025-04-18T17:26:26Z",
+          "completed_at": "2025-04-18T17:26:29Z"
+        },
+        {
+          "name": "Scan root project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2025-04-18T17:26:29Z",
+          "completed_at": "2025-04-18T17:26:32Z"
+        },
+        {
+          "name": "Scan server project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2025-04-18T17:26:32Z",
+          "completed_at": "2025-04-18T17:26:35Z"
+        },
+        {
+          "name": "Scan client project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2025-04-18T17:26:35Z",
+          "completed_at": "2025-04-18T17:26:38Z"
+        },
+        {
+          "name": "Generate dependency tree for root",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2025-04-18T17:26:38Z",
+          "completed_at": "2025-04-18T17:26:39Z"
+        },
+        {
+          "name": "Generate dependency tree for server",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2025-04-18T17:26:39Z",
+          "completed_at": "2025-04-18T17:26:40Z"
+        },
+        {
+          "name": "Generate dependency tree for client",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2025-04-18T17:26:40Z",
+          "completed_at": "2025-04-18T17:26:41Z"
+        },
+        {
+          "name": "Get upgrade recommendations for root",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2025-04-18T17:26:41Z",
+          "completed_at": "2025-04-18T17:26:45Z"
+        },
+        {
+          "name": "Get upgrade recommendations for server",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2025-04-18T17:26:45Z",
+          "completed_at": "2025-04-18T17:26:48Z"
+        },
+        {
+          "name": "Get upgrade recommendations for client",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2025-04-18T17:26:48Z",
+          "completed_at": "2025-04-18T17:26:51Z"
+        },
+        {
+          "name": "Generate prioritized task list",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2025-04-18T17:26:51Z",
+          "completed_at": "2025-04-18T17:26:51Z"
+        },
+        {
+          "name": "Clean up large JSON files",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2025-04-18T17:26:51Z",
+          "completed_at": "2025-04-18T17:26:51Z"
+        },
+        {
+          "name": "Configure Git",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2025-04-18T17:26:51Z",
+          "completed_at": "2025-04-18T17:26:51Z"
+        },
+        {
+          "name": "Commit and push changes",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 18,
+          "started_at": "2025-04-18T17:26:51Z",
+          "completed_at": "2025-04-18T17:26:52Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2025-04-18T17:26:52Z",
+          "completed_at": "2025-04-18T17:26:52Z"
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2025-04-18T17:26:52Z",
+          "completed_at": "2025-04-18T17:26:52Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2025-04-18T17:26:52Z",
+          "completed_at": "2025-04-18T17:26:52Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40793178388",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000454,
+      "runner_name": "GitHub Actions",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    }
+  ]
+}
