@@ -1,0 +1,73 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 40788127252,
+      "run_id": 14537289944,
+      "workflow_name": "npm_and_yarn in  for @octokit/request-error - Update #1000932375",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14537289944",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOOTqpm88AAAAJfyluFA",
+      "head_sha": "19b83b77541673145bfc18b2d313be2b0171d002",
+      "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40788127252",
+      "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14537289944/job/40788127252",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2025-04-18T15:13:21Z",
+      "started_at": "2025-04-18T15:13:25Z",
+      "completed_at": "2025-04-18T15:14:24Z",
+      "name": "Dependabot",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2025-04-18T15:13:26Z",
+          "completed_at": "2025-04-18T15:13:27Z"
+        },
+        {
+          "name": "Create job directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2025-04-18T15:13:27Z",
+          "completed_at": "2025-04-18T15:13:28Z"
+        },
+        {
+          "name": "Run Dependabot",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 3,
+          "started_at": "2025-04-18T15:13:28Z",
+          "completed_at": "2025-04-18T15:14:21Z"
+        },
+        {
+          "name": "Post Run Dependabot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2025-04-18T15:14:21Z",
+          "completed_at": "2025-04-18T15:14:21Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2025-04-18T15:14:21Z",
+          "completed_at": "2025-04-18T15:14:21Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40788127252",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000442,
+      "runner_name": "GitHub Actions",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    }
+  ]
+}
