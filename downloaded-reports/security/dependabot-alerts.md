@@ -230,8 +230,8 @@ Use npm-check -u for interactive update.
 
 Detailed HTML reports have been generated for:
 
-- [Client Security Audit](./security-reports/client-audit.html)
-- [Server Security Audit](./security-reports/server-audit.html)
+- [Client Security Audit](./html-reports/client-audit.html)
+- [Server Security Audit](./html-reports/server-audit.html)
 
 ## Manual Security Checks
 
