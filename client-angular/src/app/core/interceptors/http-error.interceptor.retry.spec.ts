@@ -300,7 +300,7 @@ describe('HttpErrorInterceptor - Retry Functionality', () => {
 
   it('should use exponential backoff for retry delays', fakeAsync(() => {
     // Spy on the getRetryDelay method
-    // @ts-ignore - accessing private method for testing
+    // @ts-expect-error - accessing private method for testing
     const getRetryDelaySpy = spyOn<any>(interceptor, 'getRetryDelay').and.callThrough();
 
     httpClient.get('/api/test').subscribe({

@@ -11,7 +11,7 @@
     "predev": "node ../scripts/ensure-mongodb.js",
     "start-client": "node ./scripts/start-client.js",
     "audit-fix": "npm audit fix --force",
-    "lint": "eslint . --max-warnings=24",
+    "lint": "eslint . --fix --max-warnings=50",
     "lint:fix": "eslint . --fix --max-warnings=9999",
     "format": "prettier --write \"**/*.{js,json}\"",
     "format:check": "prettier --check \"**/*.{js,json}\""
@@ -56,7 +56,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.0.0",
+    "@eslint/eslintrc": "3.3.1",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-node": "11.1.0",

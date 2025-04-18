@@ -275,9 +275,9 @@ export class TinderComponent implements OnInit {
     if (modal) {
       try {
         // Try to use Bootstrap's modal API if available
-        // @ts-ignore
+        // @ts-expect-error - Bootstrap is loaded globally and not via import
         if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-ignore
+          // @ts-expect-error - Bootstrap is loaded globally and not via import
           const bsModal = new bootstrap.Modal(modal);
           bsModal.show();
         } else {
@@ -310,9 +310,9 @@ export class TinderComponent implements OnInit {
     if (modal) {
       try {
         // Try to use Bootstrap's modal API if available
-        // @ts-ignore
+        // @ts-expect-error - Bootstrap is loaded globally and not via import
         if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-ignore
+          // @ts-expect-error - Bootstrap is loaded globally and not via import
           const bsModal = bootstrap.Modal.getInstance(modal);
           if (bsModal) {
             bsModal.hide();

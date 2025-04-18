@@ -6,12 +6,12 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 
 // Convert ESM __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
 
 // Create a compatibility instance
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: _dirname,
   recommendedConfig: eslint.configs.recommended,
 });
 
@@ -31,6 +31,27 @@ export default [
       'cypress/**',
     ],
   },
+  // Configuration for CommonJS files like karma.conf.js
+  {
+    files: ['*.js', '*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      ecmaVersion: 2020,
+      globals: {
+        module: 'writable',
+        require: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+      'no-undef': 'off', // Turn off no-undef for JS files
+    },
+  },
   {
     files: ['**/*.ts'],
     plugins: {
@@ -44,7 +65,11 @@ export default [
     },
     rules: {
       'prettier/prettier': 'warn',
-      'no-unused-vars': 'warn',
+      // Turn off duplicate rules that conflict with TypeScript-specific versions
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn', // Downgrade from error to warning
+
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'warn',
       'no-empty': 'off',

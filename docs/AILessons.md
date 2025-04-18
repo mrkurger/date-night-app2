@@ -1526,6 +1526,78 @@ Cypress tests may use namespaces which can trigger ESLint errors. To fix this, e
    ```
 2. Or create a specific override for Cypress files in the `.eslintrc.js` file.
 
+#### CommonJS Files in TypeScript Projects
+
+When using ESLint with TypeScript projects that include CommonJS files (like karma.conf.js), you need to configure ESLint to handle these files properly:
+
+```javascript
+{
+  files: ['*.js', '*.cjs'],
+  languageOptions: {
+    sourceType: 'commonjs',
+    ecmaVersion: 2020,
+    globals: {
+      module: 'writable',
+      require: 'readonly',
+      process: 'readonly',
+      console: 'readonly',
+      __dirname: 'readonly',
+      __filename: 'readonly',
+    },
+  },
+  rules: {
+    '@typescript-eslint/no-require-imports': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-undef': 'off', // Turn off no-undef for JS files
+  },
+}
+```
+
+#### TypeScript 'any' Type Handling
+
+For TypeScript projects with many 'any' types that need to be addressed over time:
+
+1. Downgrade the severity of the `@typescript-eslint/no-explicit-any` rule from error to warning:
+
+```javascript
+'@typescript-eslint/no-explicit-any': 'warn', // Downgrade from error to warning
+```
+
+2. Turn off duplicate rules that conflict with TypeScript-specific versions:
+
+```javascript
+// Turn off duplicate rules that conflict with TypeScript-specific versions
+'no-unused-vars': 'off',
+'@typescript-eslint/no-unused-vars': 'warn',
+```
+
+#### Node.js and Testing Globals
+
+For Node.js projects with testing frameworks like Jest, add the necessary globals to avoid 'undefined' errors:
+
+```javascript
+globals: {
+  // Node.js globals
+  process: 'readonly',
+  console: 'readonly',
+  setTimeout: 'readonly',
+  clearTimeout: 'readonly',
+  setInterval: 'readonly',
+  clearInterval: 'readonly',
+
+  // Jest globals
+  describe: 'readonly',
+  it: 'readonly',
+  test: 'readonly',
+  expect: 'readonly',
+  beforeEach: 'readonly',
+  afterEach: 'readonly',
+  beforeAll: 'readonly',
+  afterAll: 'readonly',
+  jest: 'readonly',
+},
+```
+
 ### NPM Scripts
 
 #### Handling Warnings vs Errors

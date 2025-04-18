@@ -13,11 +13,13 @@ import {
   Component,
   NO_ERRORS_SCHEMA,
   CUSTOM_ELEMENTS_SCHEMA,
-}
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
 
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
-import { CommonTestModule } from '../../../testing/common-test.module'; MockAppCardComponent } from '../../../testing/common-test.module';
+import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-test.module';
 
 // Test host component to test CardGridComponent in a realistic scenario
 @Component({
@@ -97,20 +99,15 @@ describe('CardGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonTestModule,
-        CardGridComponent,
-        MockAppCardComponent,
-        TestHostComponent
-      ],
+      imports: [CommonTestModule, CardGridComponent, MockAppCardComponent, TestHostComponent],
       schemas: [NO_ERRORS_SCHEMA], // Add this to ignore unknown properties
     })
-    .overrideComponent(CardGridComponent, {
-      set: {
-        imports: [CommonTestModule, MockAppCardComponent, SkeletonLoaderComponent],
-      }
-    })
-    .compileComponents();
+      .overrideComponent(CardGridComponent, {
+        set: {
+          imports: [CommonTestModule, MockAppCardComponent, SkeletonLoaderComponent],
+        },
+      })
+      .compileComponents();
 
     // Create the host component first
     hostFixture = TestBed.createComponent(TestHostComponent);
