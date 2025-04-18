@@ -218,13 +218,13 @@ jobs:
 
             // Create directory if it doesn't exist
             try {
-              fs.mkdirSync('docs/github-insights', { recursive: true });
+              fs.mkdirSync('downloaded-reports/github-insights', { recursive: true });
             } catch (error) {
               console.log('Directory already exists');
             }
 
             // Write report to file
-            fs.writeFileSync('docs/github-insights/insights-report.md', report);
+            fs.writeFileSync('downloaded-reports/github-insights/insights-report.md', report);
 
             // Create a summary file for AI analysis
             const aiSummary = `# GitHub Insights for AI Analysis\n\n` +
@@ -255,7 +255,7 @@ jobs:
               `- Pull Requests: ${pullRequests?.data?.length || 'Unknown'} recent updates\n` +
               `- Issues: ${issues?.data?.filter(issue => !issue.pull_request)?.length || 'Unknown'} recent updates\n`;
 
-            fs.writeFileSync('docs/github-insights/ai-analysis-data.md', aiSummary);
+            fs.writeFileSync('downloaded-reports/github-insights/ai-analysis-data.md', aiSummary);
 
             console.log('GitHub insights report generated successfully');
 
@@ -274,7 +274,7 @@ jobs:
           git stash list | grep -q "stash@{0}" && git stash pop || true
 
           # Add only the insights directory
-          git add docs/github-insights/
+          git add downloaded-reports/github-insights/
 
           # Only commit if there are changes
           if git diff --staged --quiet; then

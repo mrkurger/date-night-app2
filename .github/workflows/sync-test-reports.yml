@@ -50,25 +50,16 @@ jobs:
       - name: Process Reports
         run: |
           # Create directories
-          mkdir -p docs/test-reports
-
-          # Copy downloaded reports
-          if [ -d "downloaded-reports/angular" ]; then
-            cp -r downloaded-reports/angular/* docs/test-reports/ || true
-          fi
-
-          if [ -d "downloaded-reports/server" ]; then
-            cp -r downloaded-reports/server/* docs/test-reports/ || true
-          fi
+          mkdir -p downloaded-reports/testing
 
           # Create combined report if both exist
-          if [ -f "docs/test-reports/angular-test-results.md" ] && [ -f "docs/test-reports/server-test-results.md" ]; then
+          if [ -f "downloaded-reports/angular/angular-test-results.md" ] && [ -f "downloaded-reports/server/server-test-results.md" ]; then
             node scripts/combine-test-reports.js
           fi
 
           # Create placeholder if no reports exist
-          if [ ! -f "docs/latest-test-results.md" ]; then
-            echo "# Latest Test Results\n\nNo test results available yet." > docs/latest-test-results.md
+          if [ ! -f "downloaded-reports/testing/coverage-summary.md" ]; then
+            echo "# Latest Test Results\n\nNo test results available yet." > downloaded-reports/testing/coverage-summary.md
           fi
 
       - name: Configure Git
@@ -98,8 +89,7 @@ jobs:
           # Pull the latest changes with rebase strategy
           git pull --rebase origin main
 
-          git add docs/test-reports || true
-          git add docs/latest-test-results.md || true
+          git add downloaded-reports/testing/coverage-summary.md || true
           git commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"
           git push
         env:
@@ -112,8 +102,7 @@ jobs:
           BRANCH_NAME="test-reports-update-$(date +%Y%m%d%H%M%S)"
           git checkout -b $BRANCH_NAME
 
-          git add docs/test-reports || true
-          git add docs/latest-test-results.md || true
+          git add downloaded-reports/testing/coverage-summary.md || true
           git commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"
 
           # Only push if there were changes to commit

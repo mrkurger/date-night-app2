@@ -15,7 +15,7 @@ const AdmZip = require('adm-zip');
 async function main() {
   const owner = process.env.REPO_OWNER;
   const repo = process.env.REPO_NAME;
-  const logsDir = path.join('workflow-error-logs');
+  const logsDir = path.join('downloaded-reports', 'workflow-errors');
 
   console.log(`Fetching workflow logs for ${owner}/${repo}`);
 

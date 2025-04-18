@@ -70,7 +70,7 @@ jobs:
       # Generate reports
       - name: Generate prioritized task list
         run: |
-          mkdir -p docs/snyk-reports
+          mkdir -p downloaded-reports/snyk
           node .github/scripts/generate-snyk-task-list.js
 
       # Clean up large JSON files to avoid bloating the repository
@@ -88,7 +88,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add docs/snyk-reports/
+          git add downloaded-reports/snyk/
           git commit -m "docs: update Snyk issues task list [skip ci]" || echo "No changes to commit"
           git push
         env:

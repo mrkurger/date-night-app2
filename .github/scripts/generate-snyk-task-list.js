@@ -17,9 +17,9 @@
  * - snyk-client-upgrade-paths.json: Upgrade paths for the client project
  *
  * Output files:
- * - docs/snyk-reports/prioritized-issues.md: Detailed list of issues with remediation steps
- * - docs/snyk-reports/issues-summary.md: Summary of issues by severity and type
- * - docs/snyk-reports/vulnerable-dependencies.md: Analysis of vulnerable dependencies
+ * - downloaded-reports/snyk/prioritized-issues.md: Detailed list of issues with remediation steps
+ * - downloaded-reports/snyk/issues-summary.md: Summary of issues by severity and type
+ * - downloaded-reports/snyk/vulnerable-dependencies.md: Analysis of vulnerable dependencies
  */
 
 const fs = require('fs');
@@ -746,7 +746,7 @@ function main() {
     const prioritizedIssues = prioritizeIssues(allIssues);
 
     // Create output directory
-    const outputDir = path.join('docs', 'snyk-reports');
+    const outputDir = path.join('downloaded-reports', 'snyk');
     try {
       if (!fs.existsSync(outputDir)) {
         console.log(`Creating output directory: ${outputDir}`);
@@ -788,7 +788,7 @@ function main() {
     }
 
     if (success) {
-      console.log(`Successfully generated all Snyk reports in docs/snyk-reports/`);
+      console.log(`Successfully generated all Snyk reports in downloaded-reports/snyk/`);
       return true;
     } else {
       console.error(`Some reports failed to generate. Check the logs for details.`);

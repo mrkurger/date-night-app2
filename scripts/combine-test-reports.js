@@ -30,8 +30,8 @@ const path = require('path');
 // --- Configuration ---
 const angularCoveragePath = path.join('downloaded-reports', 'angular', 'coverage-summary.json');
 const serverCoveragePath = path.join('downloaded-reports', 'server', 'coverage-summary.json');
-const outputDir = path.join('docs');
-const outputFile = path.join(outputDir, 'latest-test-results.md');
+const outputDir = path.join('downloaded-reports', 'testing');
+const outputFile = path.join(outputDir, 'coverage-summary.md');
 // Choose which coverage metric to display (lines, statements, functions, branches)
 const coverageMetric = 'statements'; // 'lines', 'statements', 'functions', or 'branches'
 // --- End Configuration ---

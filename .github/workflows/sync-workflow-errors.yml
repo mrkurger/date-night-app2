@@ -41,7 +41,7 @@ jobs:
 
       - name: Create README for logs
         run: |
-          cat > workflow-error-logs/README.md << 'EOF'
+          cat > downloaded-reports/workflow-errors/README.md << 'EOF'
           # Workflow Error Logs
 
           This directory contains logs from failed GitHub Actions workflow runs. These logs are automatically collected by the "Sync Workflow Error Logs" workflow.
@@ -49,7 +49,7 @@ jobs:
           ## Directory Structure
 
           ```
-          workflow-error-logs/
+          workflow-errors/
           ├── {workflow-name}/
           │   ├── {date}_{run-id}/
           │   │   ├── metadata.json       # Run metadata
@@ -97,8 +97,8 @@ jobs:
           # Pop the stash if we stashed anything
           git stash list | grep -q "stash@{0}" && git stash pop || true
 
-          # Add only the workflow-error-logs directory
-          git add workflow-error-logs
+          # Add only the workflow-errors directory
+          git add downloaded-reports/workflow-errors
 
           # Only commit if there are changes
           if git diff --staged --quiet; then

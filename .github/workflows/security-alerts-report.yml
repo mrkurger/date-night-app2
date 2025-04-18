@@ -56,10 +56,10 @@ jobs:
 
       - name: Generate Combined Report
         run: |
-          mkdir -p docs
+          mkdir -p downloaded-reports/security downloaded-reports/security/html-reports
 
           # Create report header
-          cat > docs/security-alerts.md << EOL
+          cat > downloaded-reports/security/dependabot-alerts.md << EOL
           # Security Alerts and Dependency Report
 
           *Generated on: $(date +%Y-%m-%d)*
@@ -70,18 +70,18 @@ jobs:
 
           # Add client dependencies report if it exists
           if [ -f "client-deps-report.md" ]; then
-            cat client-deps-report.md >> docs/security-alerts.md
-            echo "" >> docs/security-alerts.md
+            cat client-deps-report.md >> downloaded-reports/security/dependabot-alerts.md
+            echo "" >> downloaded-reports/security/dependabot-alerts.md
           fi
 
           # Add server dependencies report if it exists
           if [ -f "server-deps-report.md" ]; then
-            cat server-deps-report.md >> docs/security-alerts.md
-            echo "" >> docs/security-alerts.md
+            cat server-deps-report.md >> downloaded-reports/security/dependabot-alerts.md
+            echo "" >> downloaded-reports/security/dependabot-alerts.md
           fi
 
           # Create security audit section
-          cat >> docs/security-alerts.md << EOL
+          cat >> downloaded-reports/security/dependabot-alerts.md << EOL
 
           ## Security Audit Results
 
@@ -91,19 +91,17 @@ jobs:
 
           # Add links to HTML reports if they exist
           if [ -f "client-audit.html" ]; then
-            mkdir -p docs/security-reports
-            cp client-audit.html docs/security-reports/
-            echo "- [Client Security Audit](./security-reports/client-audit.html)" >> docs/security-alerts.md
+            cp client-audit.html downloaded-reports/security/html-reports/
+            echo "- [Client Security Audit](./html-reports/client-audit.html)" >> downloaded-reports/security/dependabot-alerts.md
           fi
 
           if [ -f "server-audit.html" ]; then
-            mkdir -p docs/security-reports
-            cp server-audit.html docs/security-reports/
-            echo "- [Server Security Audit](./security-reports/server-audit.html)" >> docs/security-alerts.md
+            cp server-audit.html downloaded-reports/security/html-reports/
+            echo "- [Server Security Audit](./html-reports/server-audit.html)" >> downloaded-reports/security/dependabot-alerts.md
           fi
 
           # Add manual check instructions
-          cat >> docs/security-alerts.md << EOL
+          cat >> downloaded-reports/security/dependabot-alerts.md << EOL
 
           ## Manual Security Checks
 
@@ -119,8 +117,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add docs/security-alerts.md
-          git add docs/security-reports/ || true
+          git add downloaded-reports/security/dependabot-alerts.md
+          git add downloaded-reports/security/html-reports/ || true
           git commit -m "docs: update security alerts report [skip ci]" || echo "No changes to commit"
 
           # Use PAT for push if available, otherwise use GITHUB_TOKEN
