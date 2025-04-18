@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { MainLayoutComponent } from '../../shared/layouts/main-layout/main-layout.component';
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';

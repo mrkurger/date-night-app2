@@ -32,9 +32,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} };
 
 @NgModule({
-  declarations: [
-    // AppComponent is now a standalone component and should not be declared here
-  ],
+  declarations: [],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
