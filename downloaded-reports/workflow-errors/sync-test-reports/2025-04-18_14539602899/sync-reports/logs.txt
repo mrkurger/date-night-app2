@@ -1,0 +1,268 @@
+2025-04-18T18:09:27.9544893Z Current runner version: '2.323.0'
+2025-04-18T18:09:27.9616336Z ##[group]Operating System
+2025-04-18T18:09:27.9617704Z Ubuntu
+2025-04-18T18:09:27.9618570Z 24.04.2
+2025-04-18T18:09:27.9619437Z LTS
+2025-04-18T18:09:27.9620455Z ##[endgroup]
+2025-04-18T18:09:27.9621350Z ##[group]Runner Image
+2025-04-18T18:09:27.9622421Z Image: ubuntu-24.04
+2025-04-18T18:09:27.9623451Z Version: 20250413.1.0
+2025-04-18T18:09:27.9625626Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-18T18:09:27.9628262Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-18T18:09:27.9630054Z ##[endgroup]
+2025-04-18T18:09:27.9631002Z ##[group]Runner Image Provisioner
+2025-04-18T18:09:27.9632083Z 2.0.422.1
+2025-04-18T18:09:27.9633013Z ##[endgroup]
+2025-04-18T18:09:27.9655398Z ##[group]GITHUB_TOKEN Permissions
+2025-04-18T18:09:27.9658738Z Actions: read
+2025-04-18T18:09:27.9659669Z Contents: write
+2025-04-18T18:09:27.9660748Z Metadata: read
+2025-04-18T18:09:27.9661758Z ##[endgroup]
+2025-04-18T18:09:27.9665463Z Secret source: Actions
+2025-04-18T18:09:27.9666958Z Prepare workflow directory
+2025-04-18T18:09:28.0245124Z Prepare all required actions
+2025-04-18T18:09:28.0300503Z Getting action download info
+2025-04-18T18:09:28.4748902Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-18T18:09:28.4749994Z Version: 4.2.2
+2025-04-18T18:09:28.4751044Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-18T18:09:28.4752333Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-18T18:09:28.4753057Z ##[endgroup]
+2025-04-18T18:09:28.5665569Z Download action repository 'dawidd6/action-download-artifact@v9' (SHA:07ab29fd4a977ae4d2b275087cf67563dfdf0295)
+2025-04-18T18:09:30.9499070Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-18T18:09:30.9499577Z Version: 4.4.0
+2025-04-18T18:09:30.9500066Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-18T18:09:30.9500704Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-18T18:09:30.9501137Z ##[endgroup]
+2025-04-18T18:09:31.2286756Z Complete job name: sync-reports
+2025-04-18T18:09:31.2914369Z ##[group]Run actions/checkout@v4
+2025-04-18T18:09:31.2915051Z with:
+2025-04-18T18:09:31.2915303Z   fetch-depth: 0
+2025-04-18T18:09:31.2915742Z   token: ***
+2025-04-18T18:09:31.2915983Z   repository: mrkurger/date-night-app2
+2025-04-18T18:09:31.2916285Z   ssh-strict: true
+2025-04-18T18:09:31.2916509Z   ssh-user: git
+2025-04-18T18:09:31.2916746Z   persist-credentials: true
+2025-04-18T18:09:31.2917013Z   clean: true
+2025-04-18T18:09:31.2917241Z   sparse-checkout-cone-mode: true
+2025-04-18T18:09:31.2917518Z   fetch-tags: false
+2025-04-18T18:09:31.2917741Z   show-progress: true
+2025-04-18T18:09:31.2917974Z   lfs: false
+2025-04-18T18:09:31.2918189Z   submodules: false
+2025-04-18T18:09:31.2918413Z   set-safe-directory: true
+2025-04-18T18:09:31.2918866Z env:
+2025-04-18T18:09:31.2919103Z   CI: true
+2025-04-18T18:09:31.2919312Z ##[endgroup]
+2025-04-18T18:09:31.4763692Z Syncing repository: mrkurger/date-night-app2
+2025-04-18T18:09:31.4765873Z ##[group]Getting Git version info
+2025-04-18T18:09:31.4766686Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T18:09:31.4767646Z [command]/usr/bin/git version
+2025-04-18T18:09:31.4835369Z git version 2.49.0
+2025-04-18T18:09:31.4865245Z ##[endgroup]
+2025-04-18T18:09:31.4895254Z Temporarily overriding HOME='/home/runner/work/_temp/61e9592d-2bae-4652-ae2e-e1adb9e97896' before making global git config changes
+2025-04-18T18:09:31.4897770Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T18:09:31.4902658Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T18:09:31.4939770Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T18:09:31.4944263Z ##[group]Initializing the repository
+2025-04-18T18:09:31.4949672Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T18:09:31.5011422Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-18T18:09:31.5013553Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-18T18:09:31.5014432Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-18T18:09:31.5015112Z hint:
+2025-04-18T18:09:31.5015594Z hint: 	git config --global init.defaultBranch <name>
+2025-04-18T18:09:31.5016162Z hint:
+2025-04-18T18:09:31.5016690Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-18T18:09:31.5017539Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-18T18:09:31.5018191Z hint:
+2025-04-18T18:09:31.5018542Z hint: 	git branch -m <name>
+2025-04-18T18:09:31.5020990Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-18T18:09:31.5032415Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-18T18:09:31.5068481Z ##[endgroup]
+2025-04-18T18:09:31.5070219Z ##[group]Disabling automatic garbage collection
+2025-04-18T18:09:31.5072830Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-18T18:09:31.5105931Z ##[endgroup]
+2025-04-18T18:09:31.5107732Z ##[group]Setting up auth
+2025-04-18T18:09:31.5113133Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T18:09:31.5146448Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T18:09:31.5440240Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T18:09:31.5474791Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T18:09:31.5720525Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-18T18:09:31.5775995Z ##[endgroup]
+2025-04-18T18:09:31.5777921Z ##[group]Fetching the repository
+2025-04-18T18:09:31.5783044Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-04-18T18:09:40.2439655Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T18:09:40.2446676Z  * [new branch]      main       -> origin/main
+2025-04-18T18:09:40.2477343Z [command]/usr/bin/git branch --list --remote origin/main
+2025-04-18T18:09:40.2501872Z   origin/main
+2025-04-18T18:09:40.2515499Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-04-18T18:09:40.2537576Z 41e3db72a8c0663cf6f2f0f479d3d4db033e0ab9
+2025-04-18T18:09:40.2553374Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +f4ca16117a0e3d376b96c2c4cf0215f55294f85a:refs/remotes/origin/main
+2025-04-18T18:09:40.4540690Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T18:09:40.4541577Z  + 41e3db7...f4ca161 f4ca16117a0e3d376b96c2c4cf0215f55294f85a -> origin/main  (forced update)
+2025-04-18T18:09:40.4602412Z ##[endgroup]
+2025-04-18T18:09:40.4602968Z ##[group]Determining the checkout info
+2025-04-18T18:09:40.4609478Z ##[endgroup]
+2025-04-18T18:09:40.4614502Z [command]/usr/bin/git sparse-checkout disable
+2025-04-18T18:09:40.4657249Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-18T18:09:40.4690012Z ##[group]Checking out the ref
+2025-04-18T18:09:40.4704876Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-18T18:09:40.9299277Z Switched to a new branch 'main'
+2025-04-18T18:09:40.9320992Z branch 'main' set up to track 'origin/main'.
+2025-04-18T18:09:40.9337165Z ##[endgroup]
+2025-04-18T18:09:40.9399607Z [command]/usr/bin/git log -1 --format=%H
+2025-04-18T18:09:40.9433792Z f4ca16117a0e3d376b96c2c4cf0215f55294f85a
+2025-04-18T18:09:40.9694484Z ##[group]Run dawidd6/action-download-artifact@v9
+2025-04-18T18:09:40.9694822Z with:
+2025-04-18T18:09:40.9695025Z   workflow: angular-tests.yml
+2025-04-18T18:09:40.9695276Z   workflow_conclusion: completed
+2025-04-18T18:09:40.9695506Z   name: test-results
+2025-04-18T18:09:40.9695727Z   path: downloaded-reports/angular
+2025-04-18T18:09:40.9695969Z   if_no_artifact_found: warn
+2025-04-18T18:09:40.9696392Z   github_token: ***
+2025-04-18T18:09:40.9696620Z   workflow_search: false
+2025-04-18T18:09:40.9696885Z   repo: mrkurger/date-night-app2
+2025-04-18T18:09:40.9697124Z   name_is_regexp: false
+2025-04-18T18:09:40.9697322Z   allow_forks: false
+2025-04-18T18:09:40.9697514Z   check_artifacts: false
+2025-04-18T18:09:40.9697720Z   search_artifacts: false
+2025-04-18T18:09:40.9697923Z   skip_unpack: false
+2025-04-18T18:09:40.9698113Z   use_unzip: false
+2025-04-18T18:09:40.9698314Z   merge_multiple: false
+2025-04-18T18:09:40.9698513Z env:
+2025-04-18T18:09:40.9698672Z   CI: true
+2025-04-18T18:09:40.9698872Z ##[endgroup]
+2025-04-18T18:09:41.3607987Z ==> Repository: mrkurger/date-night-app2
+2025-04-18T18:09:41.3621304Z ==> Artifact name: test-results
+2025-04-18T18:09:41.3621810Z ==> Local path: downloaded-reports/angular
+2025-04-18T18:09:41.3622301Z ==> Workflow name: angular-tests.yml
+2025-04-18T18:09:41.3622755Z ==> Workflow conclusion: completed
+2025-04-18T18:09:41.3623200Z ==> Allow forks: false
+2025-04-18T18:09:42.2358901Z ==> (found) Run ID: 14539598650
+2025-04-18T18:09:42.2359373Z ==> (found) Run date: 2025-04-18T18:09:09Z
+2025-04-18T18:09:42.3099478Z ==> (not found) Artifact: test-results
+2025-04-18T18:09:42.3101142Z ==> Found the following artifacts instead:
+2025-04-18T18:09:42.3135817Z ##[warning]no artifacts found
+2025-04-18T18:09:42.3284798Z ##[group]Run dawidd6/action-download-artifact@v9
+2025-04-18T18:09:42.3285116Z with:
+2025-04-18T18:09:42.3285307Z   workflow: server-tests.yml
+2025-04-18T18:09:42.3285562Z   workflow_conclusion: completed
+2025-04-18T18:09:42.3285810Z   name: server-test-results
+2025-04-18T18:09:42.3286049Z   path: downloaded-reports/server
+2025-04-18T18:09:42.3286293Z   if_no_artifact_found: warn
+2025-04-18T18:09:42.3286694Z   github_token: ***
+2025-04-18T18:09:42.3286902Z   workflow_search: false
+2025-04-18T18:09:42.3287129Z   repo: mrkurger/date-night-app2
+2025-04-18T18:09:42.3287374Z   name_is_regexp: false
+2025-04-18T18:09:42.3287572Z   allow_forks: false
+2025-04-18T18:09:42.3287772Z   check_artifacts: false
+2025-04-18T18:09:42.3287986Z   search_artifacts: false
+2025-04-18T18:09:42.3288191Z   skip_unpack: false
+2025-04-18T18:09:42.3288385Z   use_unzip: false
+2025-04-18T18:09:42.3288571Z   merge_multiple: false
+2025-04-18T18:09:42.3288772Z env:
+2025-04-18T18:09:42.3288935Z   CI: true
+2025-04-18T18:09:42.3289128Z ##[endgroup]
+2025-04-18T18:09:42.7012058Z ==> Repository: mrkurger/date-night-app2
+2025-04-18T18:09:42.7014164Z ==> Artifact name: server-test-results
+2025-04-18T18:09:42.7015878Z ==> Local path: downloaded-reports/server
+2025-04-18T18:09:42.7016415Z ==> Workflow name: server-tests.yml
+2025-04-18T18:09:42.7016879Z ==> Workflow conclusion: completed
+2025-04-18T18:09:42.7017293Z ==> Allow forks: false
+2025-04-18T18:09:43.3204646Z ==> (found) Run ID: 14539598643
+2025-04-18T18:09:43.3205567Z ==> (found) Run date: 2025-04-18T18:09:09Z
+2025-04-18T18:09:43.3997803Z ==> (not found) Artifact: server-test-results
+2025-04-18T18:09:43.3998386Z ==> Found the following artifacts instead:
+2025-04-18T18:09:43.4010871Z ##[warning]no artifacts found
+2025-04-18T18:09:43.4144738Z ##[group]Run actions/setup-node@v4
+2025-04-18T18:09:43.4145020Z with:
+2025-04-18T18:09:43.4145204Z   node-version: 22
+2025-04-18T18:09:43.4145393Z   always-auth: false
+2025-04-18T18:09:43.4145588Z   check-latest: false
+2025-04-18T18:09:43.4145880Z   token: ***
+2025-04-18T18:09:43.4146057Z env:
+2025-04-18T18:09:43.4146216Z   CI: true
+2025-04-18T18:09:43.4146378Z ##[endgroup]
+2025-04-18T18:09:43.6055151Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-18T18:09:43.6056336Z ##[group]Environment details
+2025-04-18T18:09:44.0298522Z node: v22.14.0
+2025-04-18T18:09:44.0299257Z npm: 10.9.2
+2025-04-18T18:09:44.0299884Z yarn: 1.22.22
+2025-04-18T18:09:44.0301318Z ##[endgroup]
+2025-04-18T18:09:44.0420725Z ##[group]Run # Create directories
+2025-04-18T18:09:44.0421108Z [36;1m# Create directories[0m
+2025-04-18T18:09:44.0421396Z [36;1mmkdir -p downloaded-reports/testing[0m
+2025-04-18T18:09:44.0421672Z [36;1m[0m
+2025-04-18T18:09:44.0421885Z [36;1m# Create combined report if both exist[0m
+2025-04-18T18:09:44.0422502Z [36;1mif [ -f "downloaded-reports/angular/angular-test-results.md" ] && [ -f "downloaded-reports/server/server-test-results.md" ]; then[0m
+2025-04-18T18:09:44.0423108Z [36;1m  node scripts/combine-test-reports.js[0m
+2025-04-18T18:09:44.0423387Z [36;1mfi[0m
+2025-04-18T18:09:44.0423551Z [36;1m[0m
+2025-04-18T18:09:44.0423758Z [36;1m# Create placeholder if no reports exist[0m
+2025-04-18T18:09:44.0424467Z [36;1mif [ ! -f "downloaded-reports/testing/coverage-summary.md" ]; then[0m
+2025-04-18T18:09:44.0425053Z [36;1m  echo "# Latest Test Results\n\nNo test results available yet." > downloaded-reports/testing/coverage-summary.md[0m
+2025-04-18T18:09:44.0425558Z [36;1mfi[0m
+2025-04-18T18:09:44.0477139Z shell: /usr/bin/bash -e {0}
+2025-04-18T18:09:44.0477414Z env:
+2025-04-18T18:09:44.0477605Z   CI: true
+2025-04-18T18:09:44.0477806Z ##[endgroup]
+2025-04-18T18:09:44.0605065Z ##[group]Run git config --local user.email "action@github.com"
+2025-04-18T18:09:44.0605509Z [36;1mgit config --local user.email "action@github.com"[0m
+2025-04-18T18:09:44.0605866Z [36;1mgit config --local user.name "GitHub Action"[0m
+2025-04-18T18:09:44.0647409Z shell: /usr/bin/bash -e {0}
+2025-04-18T18:09:44.0647643Z env:
+2025-04-18T18:09:44.0647815Z   CI: true
+2025-04-18T18:09:44.0647988Z ##[endgroup]
+2025-04-18T18:09:44.0767867Z ##[group]Run # Fetch the latest changes from the remote repository
+2025-04-18T18:09:44.0768321Z [36;1m# Fetch the latest changes from the remote repository[0m
+2025-04-18T18:09:44.0768648Z [36;1mgit fetch origin main[0m
+2025-04-18T18:09:44.0810972Z shell: /usr/bin/bash -e {0}
+2025-04-18T18:09:44.0811201Z env:
+2025-04-18T18:09:44.0811379Z   CI: true
+2025-04-18T18:09:44.0811555Z ##[endgroup]
+2025-04-18T18:09:44.3465337Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T18:09:44.3466052Z  * branch            main       -> FETCH_HEAD
+2025-04-18T18:09:44.3466619Z    f4ca161..5c5e590  main       -> origin/main
+2025-04-18T18:09:44.3506041Z ##[group]Run # Check if there are any conflicts between local and remote
+2025-04-18T18:09:44.3506521Z [36;1m# Check if there are any conflicts between local and remote[0m
+2025-04-18T18:09:44.3507018Z [36;1mif git merge-tree $(git merge-base HEAD origin/main) HEAD origin/main | grep -e "^<<<<<<< ";[0m
+2025-04-18T18:09:44.3507440Z [36;1mthen[0m
+2025-04-18T18:09:44.3507667Z [36;1m  echo "has_conflicts=true" >> $GITHUB_OUTPUT[0m
+2025-04-18T18:09:44.3507943Z [36;1melse[0m
+2025-04-18T18:09:44.3508168Z [36;1m  echo "has_conflicts=false" >> $GITHUB_OUTPUT[0m
+2025-04-18T18:09:44.3508435Z [36;1mfi[0m
+2025-04-18T18:09:44.3554955Z shell: /usr/bin/bash -e {0}
+2025-04-18T18:09:44.3555219Z env:
+2025-04-18T18:09:44.3555406Z   CI: true
+2025-04-18T18:09:44.3555605Z ##[endgroup]
+2025-04-18T18:09:44.3728882Z ##[group]Run # Pull the latest changes with rebase strategy
+2025-04-18T18:09:44.3742715Z [36;1m# Pull the latest changes with rebase strategy[0m
+2025-04-18T18:09:44.3743260Z [36;1mgit pull --rebase origin main[0m
+2025-04-18T18:09:44.3743661Z [36;1m[0m
+2025-04-18T18:09:44.3744530Z [36;1mgit add downloaded-reports/testing/coverage-summary.md || true[0m
+2025-04-18T18:09:44.3745111Z [36;1mgit commit -m "docs: update test reports [skip ci]" || echo "No changes to commit"[0m
+2025-04-18T18:09:44.3745532Z [36;1mgit push[0m
+2025-04-18T18:09:44.3789369Z shell: /usr/bin/bash -e {0}
+2025-04-18T18:09:44.3789632Z env:
+2025-04-18T18:09:44.3789825Z   CI: true
+2025-04-18T18:09:44.3790393Z   GITHUB_TOKEN: ***
+2025-04-18T18:09:44.3790620Z ##[endgroup]
+2025-04-18T18:09:45.3631819Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T18:09:45.3632722Z  * branch            main       -> FETCH_HEAD
+2025-04-18T18:09:45.3800168Z error: The following untracked working tree files would be overwritten by merge:
+2025-04-18T18:09:45.3801372Z 	downloaded-reports/testing/coverage-summary.md
+2025-04-18T18:09:45.3802364Z Please move or remove them before you merge.
+2025-04-18T18:09:45.3803119Z Aborting
+2025-04-18T18:09:45.3803536Z Updating f4ca161..5c5e590
+2025-04-18T18:09:45.3819794Z ##[error]Process completed with exit code 1.
+2025-04-18T18:09:45.3885679Z Post job cleanup.
+2025-04-18T18:09:45.4891125Z [command]/usr/bin/git version
+2025-04-18T18:09:45.4933300Z git version 2.49.0
+2025-04-18T18:09:45.4980889Z Temporarily overriding HOME='/home/runner/work/_temp/1f7a5735-6636-4704-bf18-949c16077f33' before making global git config changes
+2025-04-18T18:09:45.4983100Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T18:09:45.4999488Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T18:09:45.5040947Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T18:09:45.5080018Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T18:09:45.5335844Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T18:09:45.5362610Z http.https://github.com/.extraheader
+2025-04-18T18:09:45.5378807Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-18T18:09:45.5416249Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T18:09:45.5797023Z Cleaning up orphan processes
