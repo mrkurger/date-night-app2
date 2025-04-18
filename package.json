@@ -69,10 +69,11 @@
     "xml2js": "0.6.2"
   },
   "dependencies": {
+    "@octokit/rest": "19.0.13",
     "@popperjs/core": "2.11.8",
     "child_process": "^1.0.2",
     "dotenv": "^16.3.1",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "11.2.0",
     "helmet": "^8.1.0",
     "mongoose": "^8.2.3",
     "path": "^0.12.7",
@@ -86,15 +87,10 @@
     "cookie": "^0.7.2",
     "got": "^12.1.0",
     "http-proxy-middleware": "^3.0.5",
-    "inflight": "^2.0.0",
     "rimraf": "^5.0.5",
-    "abab": "^2.0.6",
     "glob": "^10.3.10",
-    "domexception": "^4.0.0",
-    "@humanwhocodes/config-array": "^0.11.14",
-    "@humanwhocodes/object-schema": "^2.0.3",
     "@eslint/config-array": "^0.20.0",
-    "@eslint/object-schema": "^0.1.1"
+    "@eslint/object-schema": "^2.1.6"
   },
   "engines": {
     "node": "22.14.0",

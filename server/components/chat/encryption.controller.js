@@ -115,7 +115,11 @@ exports.disableRoomEncryption = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
@@ -162,12 +166,22 @@ exports.storeRoomKey = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
     // Check if the target user is a participant in the room
-    if (!chatRoom.participants.includes(participantId)) {
+    const isTargetParticipant = chatRoom.participants.some(
+      p =>
+        p.user &&
+        (p.user.toString() === participantId ||
+          (p.user._id && p.user._id.toString() === participantId))
+    );
+    if (!isTargetParticipant) {
       return errorResponse(res, 'Target user is not a participant in this chat room', 403);
     }
 
@@ -225,7 +239,11 @@ exports.getRoomKey = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
@@ -271,15 +289,17 @@ exports.getRoomParticipantKeys = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
     // Get the public keys of all participants
-    const participants = await User.find(
-      { _id: { $in: chatRoom.participants } },
-      'encryption.publicKey'
-    );
+    const participantIds = chatRoom.participants.map(p => p.user);
+    const participants = await User.find({ _id: { $in: participantIds } }, 'encryption.publicKey');
 
     // Format the response
     const participantKeys = {};
@@ -319,7 +339,11 @@ exports.getRoomEncryptionStatus = async (req, res) => {
     }
 
     // Check if the user is a participant in the room
-    if (!chatRoom.participants.includes(userId)) {
+    const isParticipant = chatRoom.participants.some(
+      p =>
+        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    );
+    if (!isParticipant) {
       return errorResponse(res, 'You are not a participant in this chat room', 403);
     }
 
@@ -327,10 +351,8 @@ exports.getRoomEncryptionStatus = async (req, res) => {
     const encryptionEnabled = chatRoom.encryption && chatRoom.encryption.enabled;
 
     // Check if all participants have public keys
-    const participants = await User.find(
-      { _id: { $in: chatRoom.participants } },
-      'encryption.publicKey'
-    );
+    const participantIds = chatRoom.participants.map(p => p.user);
+    const participants = await User.find({ _id: { $in: participantIds } }, 'encryption.publicKey');
 
     const allParticipantsHaveKeys = participants.every(
       participant => participant.encryption && participant.encryption.publicKey

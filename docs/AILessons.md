@@ -4,6 +4,9 @@ This document contains lessons learned by the AI while working on the Date Night
 
 ## Table of Contents
 
+- [Dependency Management](#dependency-management)
+  - [ESLint Dependencies](#eslint-dependencies)
+  - [Package Overrides](#package-overrides)
 - [Backend Testing](#backend-testing)
   - [Mongoose Schema Testing](#mongoose-schema-testing)
   - [Content Security Policy (CSP)](#content-security-policy-csp)
@@ -18,6 +21,9 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Accessibility Considerations](#accessibility-considerations)
   - [Performance Optimization](#performance-optimization)
 - [Debugging Strategies](#debugging-strategies)
+- [Dependency Management](#dependency-management)
+  - [ESLint Dependencies](#eslint-dependencies)
+  - [Package Overrides](#package-overrides)
 - [Linting and Formatting](#linting-and-formatting)
   - [ESLint Configuration](#eslint-configuration)
   - [NPM Scripts](#npm-scripts)
@@ -1523,23 +1529,85 @@ When implementing features that involve time-based expiration like temporary mes
 
 The Date Night App project has implemented several security best practices to protect against common vulnerabilities and ensure the application remains secure over time.
 
+## Dependency Management
+
+### ESLint Dependencies
+
+When working with ESLint in a monorepo or multi-package project, it's important to ensure that all package.json files have consistent ESLint dependency configurations. This is especially important for packages like `@eslint/config-array` and `@eslint/object-schema` which have replaced older packages like `@humanwhocodes/config-array` and `@humanwhocodes/object-schema`.
+
+**Key Lessons:**
+
+1. **Consistent Overrides**: Ensure that all package.json files in the project (root, server, client) have the same overrides for ESLint-related packages:
+
+   ```json
+   "overrides": {
+     "@eslint/config-array": "^0.20.0",
+     "@eslint/object-schema": "^2.1.6"
+   }
+   ```
+
+2. **CI/CD Failures**: If GitHub Actions or other CI/CD workflows fail with errors like "No matching version found for @eslint/object-schema@^0.1.1", it's likely due to missing overrides in one of the package.json files.
+
+3. **Dependency Resolution**: npm and yarn resolve dependencies differently in workspaces vs. individual packages. The root package.json overrides might not apply to workspaces when they run `npm ci` or `npm install` independently.
+
+### Package Overrides
+
+Package overrides are a powerful feature in npm that allows you to control the versions of nested dependencies. This is particularly useful for security fixes and ensuring consistent versions across the project.
+
+**Key Lessons:**
+
+1. **Propagate Overrides**: Important overrides should be propagated to all package.json files in the project, especially for security-critical packages.
+
+2. **Version Alignment**: Keep versions aligned across all package.json files to prevent unexpected behavior and compatibility issues.
+
+3. **Common Overrides**: Some common overrides to consider:
+
+   - Security-related: `semver`, `tough-cookie`, `word-wrap`
+   - Build tools: `vite`, `webpack`
+   - HTTP-related: `cookie`, `got`, `http-proxy-middleware`
+   - ESLint-related: `@eslint/config-array`, `@eslint/object-schema`
+
+4. **Workspace Limitations**: npm workspaces don't automatically apply all overrides from the root package.json to the individual workspace packages when they're installed independently (e.g., in CI/CD workflows).
+
 ### Dependency Management
 
 Effective dependency management is crucial for maintaining security in modern applications:
 
 1. **Regular Security Audits**:
 
-   - Run `npm audit` regularly to identify vulnerabilities in dependencies
-   - Automate security checks in CI/CD pipelines
-   - Review security alerts from GitHub Dependabot
+   - Run `npm audit` regularly to identify vulnerabilities
+   - Implement automated security scanning in CI/CD pipelines
+   - Address critical vulnerabilities immediately
+   - Document security-related updates in a changelog
 
-2. **Version Pinning**:
+2. **Handling Deprecated Dependencies**:
+
+   - Monitor for deprecation warnings during builds and in logs
+   - Create a systematic approach to updating deprecated packages
+   - Document deprecated dependencies in `docs/DEPRECATED.md`
+   - Use the `overrides` field in package.json to manage dependencies that can't be directly updated
+
+3. **Dependency Update Strategy**:
+
+   - Remove dependencies that are no longer supported and leak memory (e.g., `inflight`)
+   - Replace deprecated packages with their recommended alternatives (e.g., `@humanwhocodes/config-array` → `@eslint/config-array`)
+   - Use native browser APIs when available instead of deprecated packages (e.g., native `atob()` and `btoa()` instead of `abab`)
+   - Update to the latest secure versions of packages with known vulnerabilities
+
+4. **Dependency Documentation**:
+
+   - Maintain a list of all dependencies with their purpose and status
+   - Document any special handling or configuration required
+   - Keep track of dependencies that require overrides
+   - Document the reason for each override to facilitate future updates
+
+5. **Version Pinning**:
 
    - Pin exact versions for critical dependencies to prevent unexpected updates
    - Use caret (^) for minor updates only when confident in backward compatibility
    - Regularly test with newer versions in a controlled environment
 
-3. **Vulnerability Response Process**:
+6. **Vulnerability Response Process**:
    - Prioritize vulnerabilities based on severity (high, medium, low)
    - Establish a clear process for addressing security alerts
    - Document all security-related changes in CHANGELOG.md

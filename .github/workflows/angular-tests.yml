@@ -5,10 +5,12 @@ on:
     branches: [main, develop]
     paths:
       - 'client-angular/**'
+      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
   pull_request:
     branches: [main, develop]
     paths:
       - 'client-angular/**'
+      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
 
 jobs:
   test:
@@ -111,4 +113,4 @@ jobs:
       - name: Run ESLint
         working-directory: ./client-angular
         run: npx ng lint client-angular
-        continue-on-error: true
+        # continue-on-error: true # <-- REMOVED: Lint errors will now fail the workflow

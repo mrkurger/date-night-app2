@@ -5,10 +5,12 @@ on:
     branches: [main, develop]
     paths:
       - 'server/**'
+      - '.github/workflows/server-tests.yml' # Trigger on workflow changes too
   pull_request:
     branches: [main, develop]
     paths:
       - 'server/**'
+      - '.github/workflows/server-tests.yml' # Trigger on workflow changes too
 
 jobs:
   test:
@@ -87,4 +89,4 @@ jobs:
       - name: Run ESLint
         working-directory: ./server
         run: npx eslint .
-        continue-on-error: true
+        # continue-on-error: true # <-- REMOVED: Lint errors will now fail the workflow

@@ -1,6 +1,21 @@
 # Workflow Fixes Documentation
 
-## Latest Fixes (April 17, 2025)
+## Latest Fixes (April 18, 2025)
+
+### ESLint Dependency Issues
+
+- **Issue**: GitHub Actions workflows failing with errors like "No matching version found for @eslint/object-schema@^0.1.1" and "No matching version found for @eslint/config-array@^0.1.2"
+- **Fix**: Added missing overrides for `@eslint/config-array` and `@eslint/object-schema` in server and client-angular package.json files
+- **Details**:
+  - Added `@eslint/config-array: "^0.20.0"` to the overrides section in server/package.json and client-angular/package.json
+  - Added `@eslint/object-schema: "^2.1.6"` to the overrides section in server/package.json and client-angular/package.json
+  - Installed `@octokit/rest@19.0.13` and `fs-extra@11.2.0` in the root package.json
+
+### Root Cause Analysis
+
+The root package.json had the necessary overrides for ESLint dependencies, but these overrides were not propagated to the server and client-angular package.json files. When GitHub Actions workflows run `npm ci` in the server or client-angular directories, they don't inherit the overrides from the root package.json, causing the dependency resolution to fail.
+
+## Previous Fixes (April 17, 2025)
 
 ### Security Vulnerabilities
 

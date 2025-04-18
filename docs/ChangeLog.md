@@ -1,5 +1,21 @@
 # Change Log
 
+## 2025-04-18: ESLint Dependency Fixes
+
+### Fixed
+
+- **ESLint Dependencies**: Added missing overrides for `@eslint/config-array` and `@eslint/object-schema` in server and client-angular package.json files
+  - Added `@eslint/config-array: ^0.20.0` to server/package.json overrides
+  - Added `@eslint/object-schema: ^2.1.6` to server/package.json overrides
+  - Added `@eslint/config-array: ^0.20.0` to client-angular/package.json overrides
+  - Added `@eslint/object-schema: ^2.1.6` to client-angular/package.json overrides
+- **GitHub Workflows**: Fixed failing CI/CD workflows that were encountering "No matching version found for @eslint/object-schema@^0.1.1" and "No matching version found for @eslint/config-array@^0.1.2" errors
+- **Dependencies**: Installed `@octokit/rest@19.0.13` and `fs-extra@11.2.0` in the root package.json
+
+### Documentation
+
+- Updated ChangeLog.md with details about the ESLint dependency fixes
+
 ## 2025-04-17: Security and Performance Fixes
 
 ### Security Fixes
