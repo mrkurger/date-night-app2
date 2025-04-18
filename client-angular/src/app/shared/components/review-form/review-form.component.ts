@@ -235,7 +235,11 @@ export class ReviewFormComponent implements OnInit {
   @Input() advertiserId = '';
   @Input() adId = '';
   @Input() title = 'Write a Review';
+  @Input() advertiserName = '';
+  @Input() existingReview: any = null;
   @Output() reviewSubmitted = new EventEmitter<any>();
+  @Output() submitted = new EventEmitter<any>();
+  @Output() cancelled = new EventEmitter<void>();
 
   reviewForm: FormGroup;
   loading = false;
@@ -305,9 +309,10 @@ export class ReviewFormComponent implements OnInit {
     this.reviewService.createReview(reviewData).subscribe({
       next: review => {
         this.notificationService.success('Review submitted successfully');
-        this.resetForm();
         this.reviewSubmitted.emit(review);
+        this.submitted.emit(review);
         this.loading = false;
+        this.resetForm();
       },
       error: error => {
         console.error('Error submitting review:', error);
@@ -331,5 +336,6 @@ export class ReviewFormComponent implements OnInit {
       isVerifiedMeeting: false,
       meetingDate: null,
     });
+    this.cancelled.emit();
   }
 }

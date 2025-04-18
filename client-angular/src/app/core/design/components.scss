@@ -7,14 +7,17 @@
 
 @use 'emerald-tokens' as *;
 
+// Import variables
+@use 'variables' as vars;
+
 // Button styles
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: $font-primary;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-normal;
+  font-family: vars.$font-primary;
+  font-weight: vars.$font-weight-medium;
+  line-height: vars.$line-height-normal;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;

@@ -138,7 +138,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param next The next handler
    * @returns An observable of the HTTP event
    */
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Skip error handling for specific endpoints if needed
     if (this.shouldSkipErrorHandling(request.url)) {
       return next.handle(request);
@@ -220,8 +220,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param request The original request
    * @returns An RxJS operator for retrying requests
    */
-  private retryWithBackoff(request: HttpRequest<unknown>) {
-    return (source: Observable<HttpEvent<unknown>>) =>
+  private retryWithBackoff(request: HttpRequest<any>) {
+    return (source: Observable<HttpEvent<any>>) =>
       this.config.retryFailedRequests
         ? source.pipe(
             retryWhen(errors =>
@@ -328,7 +328,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param errorDetails The error details
    * @param request The original request
    */
-  private trackError(errorDetails: any, request: HttpRequest<unknown>): void {
+  private trackError(errorDetails: any, request: HttpRequest<any>): void {
     this.telemetryService
       .trackError({
         errorCode: errorDetails.errorCode,
@@ -453,7 +453,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param request The original request
    * @returns Detailed error information
    */
-  private getErrorDetails(error: HttpErrorResponse, request: HttpRequest<unknown>): any {
+  private getErrorDetails(error: HttpErrorResponse, request: HttpRequest<any>): any {
     let errorCode = 'unknown_error';
     let userMessage = 'An unknown error occurred';
     let technicalMessage = error.message || 'Unknown error';

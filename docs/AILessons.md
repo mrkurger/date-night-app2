@@ -41,6 +41,7 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Theme Toggle Implementation](#theme-toggle-implementation)
 - [Documentation Best Practices](#documentation-best-practices)
 - [Security Best Practices](#security-best-practices)
+  - [Handling Security Vulnerabilities](#handling-security-vulnerabilities)
   - [Dependency Management](#dependency-management)
   - [GitHub Actions Security](#github-actions-security)
   - [CI/CD and Git Hooks](#cicd-and-git-hooks)
@@ -952,6 +953,36 @@ expect(reportOnlyHeader).toBeTruthy();
 
 3. **External Resources**: If your application uses external resources (like UI libraries), add their domains to the appropriate CSP directives.
 
+4. **Avoiding Duplicate CSP Directives**: When implementing Content Security Policy (CSP) directives, it's important to avoid duplicates which can cause confusion and potential security issues:
+
+   - **Common Duplication Issues**:
+
+     - Duplicate entries in directive arrays (e.g., multiple identical entries in `scriptSrc`)
+     - Redundant nonce functions that generate the same nonce multiple times
+     - Repeated unsafe-inline or unsafe-eval directives
+
+   - **Best Practices for CSP Implementation**:
+
+     - Keep CSP directives organized and clean
+     - Use arrays with unique entries for each directive
+     - Include each directive source only once
+     - Use spread operators for conditional inclusions:
+
+     ```javascript
+     scriptSrc: [
+       "'self'",
+       (req, res) => `'nonce-${res.locals.cspNonce}'`,
+       ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
+     ];
+     ```
+
+     - Regularly audit CSP directives for duplicates and unnecessary entries
+
+   - **Maintenance Considerations**:
+     - Review CSP directives after merges or when multiple developers work on security features
+     - Use automated tools to detect duplicate or conflicting CSP directives
+     - Document the purpose of each CSP directive to prevent accidental duplication
+
 ## Angular Testing
 
 ### Component Dependencies
@@ -1777,7 +1808,54 @@ When implementing features that involve time-based expiration like temporary mes
 
 The Date Night App project has implemented several security best practices to protect against common vulnerabilities and ensure the application remains secure over time.
 
-## Dependency Management
+### Handling Security Vulnerabilities
+
+When addressing security vulnerabilities in dependencies, we discovered several important patterns:
+
+1. **Regular Expression Denial of Service (ReDoS) Vulnerabilities**:
+
+   - ReDoS vulnerabilities occur when a regular expression can cause excessive CPU usage due to catastrophic backtracking
+   - These vulnerabilities are particularly common in string parsing libraries and can lead to denial of service
+   - Identifying affected packages requires thorough security scanning (e.g., using Snyk)
+   - Fixing typically involves updating to patched versions or using package overrides
+
+2. **Transitive Dependency Vulnerabilities**:
+
+   - Many security issues occur in transitive dependencies (dependencies of dependencies)
+   - Direct fixes may not be possible if the parent package hasn't updated
+   - Use npm's `overrides` field to force specific versions of nested dependencies:
+
+   ```json
+   "overrides": {
+     "@octokit/plugin-paginate-rest": "11.4.2",
+     "@octokit/request": "9.2.1",
+     "@octokit/request-error": "6.0.1"
+   }
+   ```
+
+   - For complex dependency trees, you may need to specify nested overrides:
+
+   ```json
+   "@octokit/rest": {
+     "@octokit/core": "6.1.5",
+     "@octokit/plugin-paginate-rest": "11.4.2"
+   }
+   ```
+
+3. **Consistent Dependency Management**:
+
+   - Apply security fixes consistently across all package.json files in monorepos
+   - Ensure all workspaces use the same override strategy
+   - Document security fixes in CHANGELOG.md with specific version information
+   - Include CVE references or vulnerability descriptions when available
+
+4. **Monitoring and Maintenance**:
+   - Regularly run security audits with `npm audit`
+   - Set up automated security scanning in CI/CD pipelines
+   - Subscribe to security advisories for critical dependencies
+   - Plan for regular dependency updates to incorporate security patches
+
+### Dependency Management
 
 ### ESLint Dependencies
 

@@ -8,7 +8,8 @@
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QRCodeModule as AngularxQRCodeModule } from 'angularx-qrcode';
+// Import QRCodeComponent directly for Angular v19+
+import { QRCodeComponent } from 'angularx-qrcode';
 
 /**
  * QR Code Module
@@ -18,7 +19,7 @@ import { QRCodeModule as AngularxQRCodeModule } from 'angularx-qrcode';
  */
 @NgModule({
   declarations: [],
-  imports: [CommonModule, AngularxQRCodeModule],
-  exports: [AngularxQRCodeModule],
+  imports: [CommonModule, QRCodeComponent],
+  exports: [QRCodeComponent],
 })
 export class QRCodeModule {}

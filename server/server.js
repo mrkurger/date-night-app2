@@ -7,32 +7,33 @@
 // - PORT: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-require('dotenv').config();
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
+import 'dotenv/config';
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
 // Morgan logger is configured but used conditionally based on environment
 // eslint-disable-next-line no-unused-vars
-const morgan = require('morgan');
-const compression = require('compression');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
-const hpp = require('hpp');
-const path = require('path');
-const fs = require('fs');
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-const config = require('./config/environment');
-const routes = require('./routes');
-const errorHandler = require('./middleware/errorHandler');
+import morgan from 'morgan';
+import compression from 'compression';
+import rateLimit from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
+import hpp from 'hpp';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import config from './config/environment.js';
+import routes from './routes/index.js';
+import errorHandler from './middleware/errorHandler.js';
 // CSRF middleware is imported but applied conditionally based on configuration
 // eslint-disable-next-line no-unused-vars
-const { csrfMiddleware } = require('./middleware/csrf');
-const cspNonce = require('./middleware/cspNonce');
-const securityHeaders = require('./middleware/securityHeaders');
-const { middleware: cspMiddleware, setupReportEndpoint } = require('./middleware/csp.middleware');
-const { conditionalCache, etagCache } = require('./middleware/cache');
+import { csrfMiddleware } from './middleware/csrf.js';
+import cspNonce from './middleware/cspNonce.js';
+import securityHeaders from './middleware/securityHeaders.js';
+import { middleware as cspMiddleware, setupReportEndpoint } from './middleware/csp.middleware.js';
+import { conditionalCache, etagCache } from './middleware/cache.js';
 
 // Initialize express
 const app = express();
@@ -53,6 +54,10 @@ setupReportEndpoint(app);
 app.use(conditionalCache());
 app.use(etagCache());
 
+// Get current directory (equivalent to __dirname in CommonJS)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, 'logs');
 if (!fs.existsSync(logsDir)) {
@@ -66,13 +71,15 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Setup request logging with winston
-const { requestLogger, logger } = require('./utils/logger');
+import('./utils/logger.js').then(({ requestLogger, logger }) => {
+  // Use request logger middleware
+  app.use(requestLogger);
 
-// Use request logger middleware
-app.use(requestLogger);
+  // Log application startup
+  logger.info(`Application starting in ${process.env.NODE_ENV} mode`);
+});
 
-// Log application startup
-logger.info(`Application starting in ${process.env.NODE_ENV} mode`);
+// Logger is initialized in the import above
 
 // Security middleware
 // Set security HTTP headers with improved CSP
@@ -85,24 +92,13 @@ app.use(
         defaultSrc: ["'self'"],
         // Use nonce-based CSP and allow unsafe-eval in development
         scriptSrc: [
-        '\'self\'',
-        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-        ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          ...(isDevelopment ? ["\'unsafe-eval\'", "\'unsafe-inline\'"] : []),
+          "'self'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
+          'https://fonts.googleapis.com',
         ],
         styleSrc: [
-        '\'self\'',
-        (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-        "\'unsafe-inline\'",
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          "\'unsafe-inline\'",
-          (req, res) => `\'nonce-${res.locals.cspNonce}\'`,
-          "\'unsafe-inline\'",
+          "'self'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
           "'unsafe-inline'", // Angular needs this
           'https://fonts.googleapis.com',
@@ -110,23 +106,7 @@ app.use(
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'blob:', 'https://*.googleapis.com'],
         connectSrc: [
-        '\'self\'',
-        "wss:",
-        "ws:",
-        "https://api.stripe.com",
-        ...(isDevelopment ? ["http://localhost:*", "ws://localhost:*"] : []),
-          'wss:',
-          'ws:',
-          'https://api.stripe.com',
-          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
-          'wss:',
-          'ws:',
-          'https://api.stripe.com',
-          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
-          'wss:',
-          'ws:',
-          'https://api.stripe.com',
-          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
+          "'self'",
           'wss:',
           'ws:',
           'https://api.stripe.com',
@@ -190,7 +170,7 @@ app.use(
 app.use(compression());
 
 // Secure file serving
-const { secureFileServing } = require('./middleware/fileAccess');
+const { secureFileServing } = await import('./middleware/fileAccess.js');
 app.use('/uploads/*', secureFileServing);
 
 // MongoDB connection with retry logic
@@ -316,16 +296,18 @@ connectWithRetry()
     });
 
     // Initialize Socket.IO
-    const socketService = require('./services/socket.service');
-    socketService.initialize(server);
+    import('./services/socket.service.js').then(socketService => {
+      socketService.initialize(server);
+    });
 
     // Initialize message cleanup scheduler
-    const messageCleanup = require('./utils/messageCleanup');
-    messageCleanup.init();
+    import('./utils/messageCleanup.js').then(messageCleanup => {
+      messageCleanup.init();
+    });
   })
   .catch(err => {
     console.error('Failed to start server:', err);
     throw err;
   });
 
-module.exports = { app };
+export { app };

@@ -1,5 +1,34 @@
 # Change Log
 
+## 2025-04-18
+
+### Security Fixes
+
+- Fixed Regular Expression Denial of Service (ReDoS) vulnerabilities in Octokit dependencies:
+  - Updated `@octokit/plugin-paginate-rest` to version 11.4.2
+  - Updated `@octokit/request` to version 9.2.1
+  - Updated `@octokit/request-error` to version 6.0.1
+  - Updated `@octokit/core` to version 6.1.5
+  - Updated `@octokit/graphql` to version 8.0.1
+  - Updated `@octokit/plugin-request-log` to version 4.0.0
+  - Updated `@octokit/plugin-rest-endpoint-methods` to version 10.0.0
+
+### Bug Fixes
+
+- Fixed merge conflicts in `downloaded-reports/workflow-errors/summary.json`
+- Fixed duplicate CSP directives in `server/server.js`:
+  - Removed redundant `scriptSrc` entries
+  - Removed redundant `styleSrc` entries
+  - Removed redundant `connectSrc` entries
+
+### Build System
+
+- Generated missing package-lock.json files for:
+  - Root project
+  - Server
+  - Client-Angular
+- Added consistent dependency overrides across all package.json files
+
 ## 2024-05-29
 
 ### Added

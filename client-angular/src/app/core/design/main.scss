@@ -17,6 +17,7 @@
 
 // Import design tokens - this is the ONLY place that should directly import design-tokens.scss
 @use 'design-tokens' as *;
+@forward 'variables';
 @forward 'components';
 @forward 'typography-mixins';
 @forward 'spacing-utilities';

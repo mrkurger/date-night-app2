@@ -95,6 +95,14 @@
     "@eslint/object-schema": "^2.1.6",
     "eslint": "^9.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0"
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@octokit/plugin-paginate-rest": "11.4.2",
+    "@octokit/request": "9.2.1",
+    "@octokit/request-error": "6.0.1",
+    "@octokit/plugin-paginate-rest": "11.4.2",
+    "@octokit/request": "9.2.1",
+    "@octokit/request-error": "6.0.1",
+    "@octokit/core": "6.1.5",
+    "@octokit/graphql": "8.0.1"
   }
 }
