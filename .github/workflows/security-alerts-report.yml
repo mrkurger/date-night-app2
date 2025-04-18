@@ -1,4 +1,4 @@
-name: Security Alerts Report
+name: Security Alerts Report (Alternative)
 
 on:
   schedule:
@@ -8,87 +8,119 @@ on:
 jobs:
   generate-report:
     runs-on: ubuntu-latest
-    env:
-      CI: true
     permissions:
-      security-events: read
       contents: write
-      issues: read # Additional permissions for better access
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Dependabot Alerts
-        id: get-alerts
-        uses: actions/github-script@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          github-token: ${{ secrets.WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
-          script: |
-            const alerts = await github.rest.dependabot.listAlertsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              per_page: 100
-            });
+          node-version: '22'
 
-            const fs = require('fs');
+      - name: Install dependencies
+        run: |
+          npm install -g npm-audit-html
+          npm install -g npm-check
 
-            let report = '# Dependabot Security Alerts\n\n';
-            report += `*Generated on: ${new Date().toISOString().split('T')[0]}*\n\n`;
+      - name: Check Client Dependencies
+        id: check-client
+        continue-on-error: true
+        run: |
+          if [ -d "client-angular" ]; then
+            cd client-angular
+            echo "## Client Dependencies" > ../client-deps-report.md
+            echo "" >> ../client-deps-report.md
+            npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
+            npm audit --json | npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
+            cd ..
+          else
+            echo "Client directory not found, skipping"
+          fi
 
-            if (alerts.data.length === 0) {
-              report += '✅ No open security alerts found.\n';
-            } else {
-              report += `## Open Alerts (${alerts.data.length})\n\n`;
-              
-              const severityOrder = ['critical', 'high', 'medium', 'low'];
-              const alertsBySeverity = {};
-              
-              severityOrder.forEach(severity => {
-                alertsBySeverity[severity] = [];
-              });
-              
-              alerts.data.forEach(alert => {
-                const severity = alert.security_advisory.severity.toLowerCase();
-                if (alertsBySeverity[severity]) {
-                  alertsBySeverity[severity].push(alert);
-                }
-              });
-              
-              severityOrder.forEach(severity => {
-                const severityAlerts = alertsBySeverity[severity];
-                if (severityAlerts.length > 0) {
-                  report += `### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
-                  
-                  severityAlerts.forEach(alert => {
-                    report += `#### ${alert.security_advisory.summary}\n\n`;
-                    report += `- **Package**: ${alert.dependency.package.name}\n`;
-                    report += `- **Current Version**: ${alert.dependency.manifest_path}\n`;
-                    report += `- **Vulnerable Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.vulnerable_version_range).join(', ')}\n`;
-                    report += `- **Patched Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.patched_version_range || 'None').join(', ')}\n`;
-                    report += `- **CVSS Score**: ${alert.security_advisory.cvss.score} (${alert.security_advisory.cvss.vector_string})\n`;
-                    report += `- **Details**: [${alert.security_advisory.ghsa_id}](${alert.security_advisory.html_url})\n\n`;
-                  });
-                }
-              });
-            }
+      - name: Check Server Dependencies
+        id: check-server
+        continue-on-error: true
+        run: |
+          if [ -d "server" ]; then
+            cd server
+            echo "## Server Dependencies" > ../server-deps-report.md
+            echo "" >> ../server-deps-report.md
+            npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
+            npm audit --json | npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
+            cd ..
+          else
+            echo "Server directory not found, skipping"
+          fi
 
-            // Create docs directory if it doesn't exist
-            try {
-              fs.mkdirSync('docs', { recursive: true });
-            } catch (error) {
-              console.log('Docs directory already exists');
-            }
+      - name: Generate Combined Report
+        run: |
+          mkdir -p docs
 
-            fs.writeFileSync('docs/security-alerts.md', report);
+          # Create report header
+          cat > docs/security-alerts.md << EOL
+          # Security Alerts and Dependency Report
 
-            return { alertCount: alerts.data.length };
+          *Generated on: $(date +%Y-%m-%d)*
+
+          This report provides an overview of dependencies and potential security issues in the project.
+
+          EOL
+
+          # Add client dependencies report if it exists
+          if [ -f "client-deps-report.md" ]; then
+            cat client-deps-report.md >> docs/security-alerts.md
+            echo "" >> docs/security-alerts.md
+          fi
+
+          # Add server dependencies report if it exists
+          if [ -f "server-deps-report.md" ]; then
+            cat server-deps-report.md >> docs/security-alerts.md
+            echo "" >> docs/security-alerts.md
+          fi
+
+          # Create security audit section
+          cat >> docs/security-alerts.md << EOL
+
+          ## Security Audit Results
+
+          Detailed HTML reports have been generated for:
+
+          EOL
+
+          # Add links to HTML reports if they exist
+          if [ -f "client-audit.html" ]; then
+            mkdir -p docs/security-reports
+            cp client-audit.html docs/security-reports/
+            echo "- [Client Security Audit](./security-reports/client-audit.html)" >> docs/security-alerts.md
+          fi
+
+          if [ -f "server-audit.html" ]; then
+            mkdir -p docs/security-reports
+            cp server-audit.html docs/security-reports/
+            echo "- [Server Security Audit](./security-reports/server-audit.html)" >> docs/security-alerts.md
+          fi
+
+          # Add manual check instructions
+          cat >> docs/security-alerts.md << EOL
+
+          ## Manual Security Checks
+
+          For a complete security assessment, please also check:
+
+          1. GitHub Security tab for Dependabot alerts
+          2. npm audit reports for each package
+          3. Known vulnerabilities in third-party libraries
+
+          EOL
 
       - name: Commit Report
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add docs/security-alerts.md
+          git add docs/security-reports/ || true
           git commit -m "docs: update security alerts report [skip ci]" || echo "No changes to commit"
 
           # Use PAT for push if available, otherwise use GITHUB_TOKEN
