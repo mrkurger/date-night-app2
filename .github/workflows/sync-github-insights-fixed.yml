@@ -23,7 +23,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install @octokit/rest
+        run: npm install @octokit/rest@19.0.13
 
       - name: Generate GitHub Insights Report
         uses: actions/github-script@v7
@@ -263,13 +263,30 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          # Handle any unstaged changes by stashing them
+          git stash -u || true
+          
+          # Pull the latest changes with rebase strategy to avoid merge conflicts
+          git pull --rebase origin main || true
+          
+          # Pop the stash if we stashed anything
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+          
+          # Add only the insights directory
           git add docs/github-insights/
-          git commit -m "docs: update GitHub insights report [skip ci]" || echo "No changes to commit"
-
-          # Use PAT for push if available, otherwise use GITHUB_TOKEN
-          if [ -n "$WORKFLOW_TOKEN" ]; then
-            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update GitHub insights report [skip ci]"
+            
+            # Use PAT for push if available, otherwise use GITHUB_TOKEN
+            if [ -n "$WORKFLOW_TOKEN" ]; then
+              git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+            fi
+            git push
           fi
-          git push
         env:
           WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
