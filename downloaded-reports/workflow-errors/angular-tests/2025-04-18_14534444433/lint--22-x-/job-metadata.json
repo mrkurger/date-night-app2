@@ -1,0 +1,92 @@
+{
+  "id": 40780078494,
+  "run_id": 14534444433,
+  "workflow_name": "Angular Tests",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14534444433",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJfq6dng",
+  "head_sha": "52a6788c219ea519a268290095eb8bdef5a3ba79",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40780078494",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14534444433/job/40780078494",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-18T11:28:21Z",
+  "started_at": "2025-04-18T11:28:25Z",
+  "completed_at": "2025-04-18T11:28:34Z",
+  "name": "lint (22.x)",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-18T11:28:26Z",
+      "completed_at": "2025-04-18T11:28:27Z"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-18T11:28:27Z",
+      "completed_at": "2025-04-18T11:28:31Z"
+    },
+    {
+      "name": "Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 3,
+      "started_at": "2025-04-18T11:28:31Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    },
+    {
+      "name": "Install dependencies",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 4,
+      "started_at": "2025-04-18T11:28:32Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    },
+    {
+      "name": "Run ESLint",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 5,
+      "started_at": "2025-04-18T11:28:32Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    },
+    {
+      "name": "Post Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 9,
+      "started_at": "2025-04-18T11:28:32Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2025-04-18T11:28:32Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2025-04-18T11:28:32Z",
+      "completed_at": "2025-04-18T11:28:32Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40780078494",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000357,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

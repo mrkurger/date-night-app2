@@ -1,0 +1,100 @@
+{
+  "id": 40662340822,
+  "run_id": 14495580435,
+  "workflow_name": "Angular Tests",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14495580435",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJd6oU1g",
+  "head_sha": "9a4a33b25695a5f9f73fb86ecc37118002cbc11d",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40662340822",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14495580435/job/40662340822",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-16T14:43:39Z",
+  "started_at": "2025-04-16T14:43:43Z",
+  "completed_at": "2025-04-16T14:44:52Z",
+  "name": "test (22.x)",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-16T14:43:43Z",
+      "completed_at": "2025-04-16T14:43:44Z"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-16T14:43:44Z",
+      "completed_at": "2025-04-16T14:43:48Z"
+    },
+    {
+      "name": "Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2025-04-16T14:43:48Z",
+      "completed_at": "2025-04-16T14:43:50Z"
+    },
+    {
+      "name": "Install dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2025-04-16T14:43:50Z",
+      "completed_at": "2025-04-16T14:44:16Z"
+    },
+    {
+      "name": "Run unit tests",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 5,
+      "started_at": "2025-04-16T14:44:16Z",
+      "completed_at": "2025-04-16T14:44:50Z"
+    },
+    {
+      "name": "Upload test results",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2025-04-16T14:44:50Z",
+      "completed_at": "2025-04-16T14:44:51Z"
+    },
+    {
+      "name": "Post Use Node.js 22.x",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 11,
+      "started_at": "2025-04-16T14:44:51Z",
+      "completed_at": "2025-04-16T14:44:51Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2025-04-16T14:44:51Z",
+      "completed_at": "2025-04-16T14:44:51Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2025-04-16T14:44:51Z",
+      "completed_at": "2025-04-16T14:44:51Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40662340822",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000171,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

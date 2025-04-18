@@ -1,0 +1,166 @@
+2025-04-17T02:26:04.2614057Z Current runner version: '2.323.0'
+2025-04-17T02:26:04.2641232Z ##[group]Operating System
+2025-04-17T02:26:04.2642059Z Ubuntu
+2025-04-17T02:26:04.2642520Z 24.04.2
+2025-04-17T02:26:04.2643058Z LTS
+2025-04-17T02:26:04.2643504Z ##[endgroup]
+2025-04-17T02:26:04.2644007Z ##[group]Runner Image
+2025-04-17T02:26:04.2644532Z Image: ubuntu-24.04
+2025-04-17T02:26:04.2645128Z Version: 20250413.1.0
+2025-04-17T02:26:04.2646122Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-17T02:26:04.2647533Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-17T02:26:04.2648892Z ##[endgroup]
+2025-04-17T02:26:04.2649519Z ##[group]Runner Image Provisioner
+2025-04-17T02:26:04.2650094Z 2.0.422.1
+2025-04-17T02:26:04.2650649Z ##[endgroup]
+2025-04-17T02:26:04.2653108Z ##[group]GITHUB_TOKEN Permissions
+2025-04-17T02:26:04.2655315Z Actions: write
+2025-04-17T02:26:04.2656055Z Attestations: write
+2025-04-17T02:26:04.2656709Z Checks: write
+2025-04-17T02:26:04.2657156Z Contents: write
+2025-04-17T02:26:04.2657800Z Deployments: write
+2025-04-17T02:26:04.2658760Z Discussions: write
+2025-04-17T02:26:04.2659425Z Issues: write
+2025-04-17T02:26:04.2659927Z Metadata: read
+2025-04-17T02:26:04.2660416Z Models: read
+2025-04-17T02:26:04.2660910Z Packages: write
+2025-04-17T02:26:04.2661375Z Pages: write
+2025-04-17T02:26:04.2661892Z PullRequests: write
+2025-04-17T02:26:04.2662388Z RepositoryProjects: write
+2025-04-17T02:26:04.2662958Z SecurityEvents: write
+2025-04-17T02:26:04.2663422Z Statuses: write
+2025-04-17T02:26:04.2663966Z ##[endgroup]
+2025-04-17T02:26:04.2666270Z Secret source: Actions
+2025-04-17T02:26:04.2667228Z Prepare workflow directory
+2025-04-17T02:26:04.3305170Z Prepare all required actions
+2025-04-17T02:26:04.3360655Z Getting action download info
+2025-04-17T02:26:04.8629101Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-17T02:26:04.8630115Z Version: 4.2.2
+2025-04-17T02:26:04.8631059Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-17T02:26:04.8632629Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-17T02:26:04.8633329Z ##[endgroup]
+2025-04-17T02:26:04.9708570Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-17T02:26:04.9709475Z Version: 4.4.0
+2025-04-17T02:26:04.9710223Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-17T02:26:04.9711130Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-17T02:26:04.9711874Z ##[endgroup]
+2025-04-17T02:26:05.4400271Z Complete job name: lint (22.x)
+2025-04-17T02:26:05.4958615Z ##[group]Run actions/checkout@v4
+2025-04-17T02:26:05.4959459Z with:
+2025-04-17T02:26:05.4959864Z   repository: mrkurger/date-night-app2
+2025-04-17T02:26:05.4960525Z   token: ***
+2025-04-17T02:26:05.4960899Z   ssh-strict: true
+2025-04-17T02:26:05.4961273Z   ssh-user: git
+2025-04-17T02:26:05.4961658Z   persist-credentials: true
+2025-04-17T02:26:05.4962087Z   clean: true
+2025-04-17T02:26:05.4962487Z   sparse-checkout-cone-mode: true
+2025-04-17T02:26:05.4962952Z   fetch-depth: 1
+2025-04-17T02:26:05.4963310Z   fetch-tags: false
+2025-04-17T02:26:05.4963694Z   show-progress: true
+2025-04-17T02:26:05.4964079Z   lfs: false
+2025-04-17T02:26:05.4964433Z   submodules: false
+2025-04-17T02:26:05.4964814Z   set-safe-directory: true
+2025-04-17T02:26:05.4965428Z env:
+2025-04-17T02:26:05.4965763Z   CI: true
+2025-04-17T02:26:05.4966100Z ##[endgroup]
+2025-04-17T02:26:05.7459210Z Syncing repository: mrkurger/date-night-app2
+2025-04-17T02:26:05.7462566Z ##[group]Getting Git version info
+2025-04-17T02:26:05.7465434Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-17T02:26:05.7467396Z [command]/usr/bin/git version
+2025-04-17T02:26:05.7581667Z git version 2.49.0
+2025-04-17T02:26:05.7615284Z ##[endgroup]
+2025-04-17T02:26:05.7631470Z Temporarily overriding HOME='/home/runner/work/_temp/0199d506-4a0d-45ce-8529-005a9c6cd04b' before making global git config changes
+2025-04-17T02:26:05.7636132Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-17T02:26:05.7650606Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-17T02:26:05.7691805Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-17T02:26:05.7696839Z ##[group]Initializing the repository
+2025-04-17T02:26:05.7702351Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-17T02:26:05.7784603Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-17T02:26:05.7786804Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-17T02:26:05.7788535Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-17T02:26:05.7790319Z hint:
+2025-04-17T02:26:05.7792553Z hint: 	git config --global init.defaultBranch <name>
+2025-04-17T02:26:05.7795207Z hint:
+2025-04-17T02:26:05.7796426Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-17T02:26:05.7798504Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-17T02:26:05.7800009Z hint:
+2025-04-17T02:26:05.7800851Z hint: 	git branch -m <name>
+2025-04-17T02:26:05.7803204Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-17T02:26:05.7809766Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-17T02:26:05.7852929Z ##[endgroup]
+2025-04-17T02:26:05.7856492Z ##[group]Disabling automatic garbage collection
+2025-04-17T02:26:05.7857706Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-17T02:26:05.7892126Z ##[endgroup]
+2025-04-17T02:26:05.7893400Z ##[group]Setting up auth
+2025-04-17T02:26:05.7897863Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-17T02:26:05.7934815Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-17T02:26:05.8312622Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-17T02:26:05.8347696Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-17T02:26:05.8589142Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-17T02:26:05.8636594Z ##[endgroup]
+2025-04-17T02:26:05.8640055Z ##[group]Fetching the repository
+2025-04-17T02:26:05.8649313Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1c98908d87dbcddd86a3cb2fabd13768579744bf:refs/remotes/origin/main
+2025-04-17T02:26:08.4281117Z From https://github.com/mrkurger/date-night-app2
+2025-04-17T02:26:08.4285775Z  * [new ref]         1c98908d87dbcddd86a3cb2fabd13768579744bf -> origin/main
+2025-04-17T02:26:08.4321252Z ##[endgroup]
+2025-04-17T02:26:08.4321963Z ##[group]Determining the checkout info
+2025-04-17T02:26:08.4322709Z ##[endgroup]
+2025-04-17T02:26:08.4326314Z [command]/usr/bin/git sparse-checkout disable
+2025-04-17T02:26:08.4371490Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-17T02:26:08.4401167Z ##[group]Checking out the ref
+2025-04-17T02:26:08.4405968Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-17T02:26:08.9622280Z Switched to a new branch 'main'
+2025-04-17T02:26:08.9628756Z branch 'main' set up to track 'origin/main'.
+2025-04-17T02:26:08.9660630Z ##[endgroup]
+2025-04-17T02:26:08.9719409Z [command]/usr/bin/git log -1 --format=%H
+2025-04-17T02:26:08.9739427Z 1c98908d87dbcddd86a3cb2fabd13768579744bf
+2025-04-17T02:26:08.9987592Z ##[group]Run actions/setup-node@v4
+2025-04-17T02:26:08.9987881Z with:
+2025-04-17T02:26:08.9988503Z   node-version: 22.x
+2025-04-17T02:26:08.9988704Z   cache: npm
+2025-04-17T02:26:08.9988955Z   cache-dependency-path: client-angular/package-lock.json
+2025-04-17T02:26:08.9989272Z   always-auth: false
+2025-04-17T02:26:08.9989460Z   check-latest: false
+2025-04-17T02:26:08.9989774Z   token: ***
+2025-04-17T02:26:08.9989956Z env:
+2025-04-17T02:26:08.9990106Z   CI: true
+2025-04-17T02:26:08.9990490Z ##[endgroup]
+2025-04-17T02:26:09.1730953Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-17T02:26:09.1734325Z ##[group]Environment details
+2025-04-17T02:26:12.6418903Z node: v22.14.0
+2025-04-17T02:26:12.6420734Z npm: 10.9.2
+2025-04-17T02:26:12.6423859Z yarn: 1.22.22
+2025-04-17T02:26:12.6425090Z ##[endgroup]
+2025-04-17T02:26:12.6453129Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-17T02:26:12.9814150Z /home/runner/.npm
+2025-04-17T02:26:13.1875126Z Cache hit for: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-17T02:26:14.4025566Z Received 69351304 of 69351304 (100.0%), 64.1 MBs/sec
+2025-04-17T02:26:14.4029153Z Cache Size: ~66 MB (69351304 B)
+2025-04-17T02:26:14.4076366Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5fd49a68-cba5-45bc-b17c-5300846ea039/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-17T02:26:14.7233491Z Cache restored successfully
+2025-04-17T02:26:14.7404252Z Cache restored from key: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-17T02:26:14.7567057Z ##[group]Run npm ci
+2025-04-17T02:26:14.7567336Z [36;1mnpm ci[0m
+2025-04-17T02:26:14.7619695Z shell: /usr/bin/bash -e {0}
+2025-04-17T02:26:14.7619933Z env:
+2025-04-17T02:26:14.7620099Z   CI: true
+2025-04-17T02:26:14.7620266Z ##[endgroup]
+2025-04-17T02:26:18.6203772Z npm error code ETARGET
+2025-04-17T02:26:18.6205474Z npm error notarget No matching version found for @eslint/config-array@^0.1.2.
+2025-04-17T02:26:18.6206998Z npm error notarget In most cases you or one of your dependencies are requesting
+2025-04-17T02:26:18.6208523Z npm error notarget a package version that doesn't exist.
+2025-04-17T02:26:18.6210026Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-04-17T02_26_14_822Z-debug-0.log
+2025-04-17T02:26:18.6658940Z ##[error]Process completed with exit code 1.
+2025-04-17T02:26:18.6840285Z Post job cleanup.
+2025-04-17T02:26:18.7832866Z [command]/usr/bin/git version
+2025-04-17T02:26:18.7875304Z git version 2.49.0
+2025-04-17T02:26:18.7923387Z Temporarily overriding HOME='/home/runner/work/_temp/5fbe93b7-3088-45fd-8a81-9fd9b212adc3' before making global git config changes
+2025-04-17T02:26:18.7925256Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-17T02:26:18.7931569Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-17T02:26:18.7978965Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-17T02:26:18.8016946Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-17T02:26:18.8270959Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-17T02:26:18.8296772Z http.https://github.com/.extraheader
+2025-04-17T02:26:18.8310634Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-17T02:26:18.8344743Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-17T02:26:18.8700557Z Cleaning up orphan processes

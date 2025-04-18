@@ -1,0 +1,370 @@
+2025-04-16T13:52:59.4753920Z Current runner version: '2.323.0'
+2025-04-16T13:52:59.4909156Z ##[group]Operating System
+2025-04-16T13:52:59.4910328Z Ubuntu
+2025-04-16T13:52:59.4911117Z 24.04.2
+2025-04-16T13:52:59.4911874Z LTS
+2025-04-16T13:52:59.4912619Z ##[endgroup]
+2025-04-16T13:52:59.4913389Z ##[group]Runner Image
+2025-04-16T13:52:59.4914396Z Image: ubuntu-24.04
+2025-04-16T13:52:59.4915257Z Version: 20250406.1.0
+2025-04-16T13:52:59.4917207Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T13:52:59.4919675Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T13:52:59.4921302Z ##[endgroup]
+2025-04-16T13:52:59.4922172Z ##[group]Runner Image Provisioner
+2025-04-16T13:52:59.4923076Z 2.0.422.1
+2025-04-16T13:52:59.4923741Z ##[endgroup]
+2025-04-16T13:52:59.4926258Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T13:52:59.4929132Z Contents: write
+2025-04-16T13:52:59.4930025Z Issues: read
+2025-04-16T13:52:59.4931350Z Metadata: read
+2025-04-16T13:52:59.4932557Z PullRequests: read
+2025-04-16T13:52:59.4933427Z SecurityEvents: read
+2025-04-16T13:52:59.4934366Z ##[endgroup]
+2025-04-16T13:52:59.4937399Z Secret source: Actions
+2025-04-16T13:52:59.4938462Z Prepare workflow directory
+2025-04-16T13:52:59.5879257Z Prepare all required actions
+2025-04-16T13:52:59.5998707Z Getting action download info
+2025-04-16T13:53:00.0573311Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T13:53:00.0574409Z Version: 4.2.2
+2025-04-16T13:53:00.0575904Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T13:53:00.0577409Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T13:53:00.0578191Z ##[endgroup]
+2025-04-16T13:53:00.1398072Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T13:53:00.1399063Z Version: 4.4.0
+2025-04-16T13:53:00.1399932Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T13:53:00.1400992Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T13:53:00.1401847Z ##[endgroup]
+2025-04-16T13:53:00.3588758Z ##[group]Download immutable action package 'actions/github-script@v7'
+2025-04-16T13:53:00.3589690Z Version: 7.0.1
+2025-04-16T13:53:00.3590461Z Digest: sha256:bce02966afe3a75123f766b765abe432fac5464b74976015dc06b811ac9054c7
+2025-04-16T13:53:00.3591682Z Source commit SHA: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+2025-04-16T13:53:00.3592473Z ##[endgroup]
+2025-04-16T13:53:00.6244770Z Complete job name: sync-insights
+2025-04-16T13:53:00.6964350Z ##[group]Run actions/checkout@v4
+2025-04-16T13:53:00.6965277Z with:
+2025-04-16T13:53:00.6965909Z   repository: mrkurger/date-night-app2
+2025-04-16T13:53:00.6966665Z   token: ***
+2025-04-16T13:53:00.6967085Z   ssh-strict: true
+2025-04-16T13:53:00.6967509Z   ssh-user: git
+2025-04-16T13:53:00.6967953Z   persist-credentials: true
+2025-04-16T13:53:00.6968450Z   clean: true
+2025-04-16T13:53:00.6968887Z   sparse-checkout-cone-mode: true
+2025-04-16T13:53:00.6969447Z   fetch-depth: 1
+2025-04-16T13:53:00.6969869Z   fetch-tags: false
+2025-04-16T13:53:00.6970312Z   show-progress: true
+2025-04-16T13:53:00.6970756Z   lfs: false
+2025-04-16T13:53:00.6971170Z   submodules: false
+2025-04-16T13:53:00.6971634Z   set-safe-directory: true
+2025-04-16T13:53:00.6972474Z ##[endgroup]
+2025-04-16T13:53:00.8685184Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T13:53:00.8688752Z ##[group]Getting Git version info
+2025-04-16T13:53:00.8690822Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T13:53:00.8693700Z [command]/usr/bin/git version
+2025-04-16T13:53:00.8725254Z git version 2.49.0
+2025-04-16T13:53:00.8752769Z ##[endgroup]
+2025-04-16T13:53:00.8766958Z Temporarily overriding HOME='/home/runner/work/_temp/1e5a9e18-6fb6-4685-8012-169e00e77f7c' before making global git config changes
+2025-04-16T13:53:00.8770725Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T13:53:00.8774866Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:53:00.8821360Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T13:53:00.8826503Z ##[group]Initializing the repository
+2025-04-16T13:53:00.8831289Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:53:00.8890119Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T13:53:00.8892410Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T13:53:00.8894137Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T13:53:00.8896991Z hint:
+2025-04-16T13:53:00.8898786Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T13:53:00.8900399Z hint:
+2025-04-16T13:53:00.8901590Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T13:53:00.8903528Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T13:53:00.8905134Z hint:
+2025-04-16T13:53:00.8906422Z hint: 	git branch -m <name>
+2025-04-16T13:53:00.8908815Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T13:53:00.8913478Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T13:53:00.8950859Z ##[endgroup]
+2025-04-16T13:53:00.8954651Z ##[group]Disabling automatic garbage collection
+2025-04-16T13:53:00.8956445Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T13:53:00.8988119Z ##[endgroup]
+2025-04-16T13:53:00.8989482Z ##[group]Setting up auth
+2025-04-16T13:53:00.8995151Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T13:53:00.9029596Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T13:53:00.9316465Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T13:53:00.9350251Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T13:53:00.9584567Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T13:53:00.9630093Z ##[endgroup]
+2025-04-16T13:53:00.9633854Z ##[group]Fetching the repository
+2025-04-16T13:53:00.9642183Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +51ce93d868bcc1a8c16db52faa31d673aa99eca9:refs/remotes/origin/main
+2025-04-16T13:53:03.2691264Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T13:53:03.2692952Z  * [new ref]         51ce93d868bcc1a8c16db52faa31d673aa99eca9 -> origin/main
+2025-04-16T13:53:03.2729329Z ##[endgroup]
+2025-04-16T13:53:03.2733189Z ##[group]Determining the checkout info
+2025-04-16T13:53:03.2740062Z ##[endgroup]
+2025-04-16T13:53:03.2751541Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T13:53:03.2814283Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T13:53:03.2862897Z ##[group]Checking out the ref
+2025-04-16T13:53:03.2875749Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T13:53:03.7312581Z Switched to a new branch 'main'
+2025-04-16T13:53:03.7320946Z branch 'main' set up to track 'origin/main'.
+2025-04-16T13:53:03.7339392Z ##[endgroup]
+2025-04-16T13:53:03.7387957Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T13:53:03.7425072Z 51ce93d868bcc1a8c16db52faa31d673aa99eca9
+2025-04-16T13:53:03.7681802Z ##[group]Run actions/setup-node@v4
+2025-04-16T13:53:03.7682095Z with:
+2025-04-16T13:53:03.7682282Z   node-version: 22
+2025-04-16T13:53:03.7682482Z   always-auth: false
+2025-04-16T13:53:03.7682687Z   check-latest: false
+2025-04-16T13:53:03.7683242Z   token: ***
+2025-04-16T13:53:03.7683435Z ##[endgroup]
+2025-04-16T13:53:03.9394895Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T13:53:03.9398872Z ##[group]Environment details
+2025-04-16T13:53:06.3748464Z node: v22.14.0
+2025-04-16T13:53:06.3748905Z npm: 10.9.2
+2025-04-16T13:53:06.3766242Z yarn: 1.22.22
+2025-04-16T13:53:06.3776233Z ##[endgroup]
+2025-04-16T13:53:06.3863775Z ##[group]Run npm install @octokit/rest
+2025-04-16T13:53:06.3864118Z [36;1mnpm install @octokit/rest[0m
+2025-04-16T13:53:06.3918032Z shell: /usr/bin/bash -e {0}
+2025-04-16T13:53:06.3918331Z ##[endgroup]
+2025-04-16T13:53:12.1446798Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-16T13:53:13.3174708Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T13:53:13.7529214Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-16T13:53:14.0368769Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-16T13:53:14.3382683Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-16T13:53:14.8588382Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T13:53:15.1138807Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T13:53:15.4448476Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-16T13:53:15.7919259Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T13:53:16.4913296Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-16T13:53:16.5694632Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T13:53:17.5766726Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-16T13:53:17.6092731Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-16T13:53:26.1183894Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T13:53:26.1402946Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-16T13:53:48.2199067Z 
+2025-04-16T13:53:48.2199904Z added 1923 packages, and audited 1926 packages in 42s
+2025-04-16T13:53:48.2200337Z 
+2025-04-16T13:53:48.2200604Z 347 packages are looking for funding
+2025-04-16T13:53:48.2201104Z   run `npm fund` for details
+2025-04-16T13:53:48.2323285Z 
+2025-04-16T13:53:48.2324123Z 8 moderate severity vulnerabilities
+2025-04-16T13:53:48.2324757Z 
+2025-04-16T13:53:48.2325449Z To address all issues (including breaking changes), run:
+2025-04-16T13:53:48.2326406Z   npm audit fix --force
+2025-04-16T13:53:48.2326774Z 
+2025-04-16T13:53:48.2326980Z Run `npm audit` for details.
+2025-04-16T13:53:48.3177890Z ##[group]Run actions/github-script@v7
+2025-04-16T13:53:48.3178165Z with:
+2025-04-16T13:53:48.3178687Z   github-token: ***
+2025-04-16T13:53:48.3193920Z   script: const fs = require('fs');
+const { Octokit } = require('@octokit/rest');
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN || process.env.WORKFLOW_TOKEN });
+
+const owner = context.repo.owner;
+const repo = context.repo.repo;
+const date = new Date().toISOString().split('T')[0];
+
+let report = `# GitHub Insights Report\n\n`;
+report += `*Generated on: ${date}*\n\n`;
+
+// Get repository info
+const repoInfo = await octokit.repos.get({
+  owner,
+  repo
+});
+
+report += `## Repository Information\n\n`;
+report += `- **Name**: ${repoInfo.data.name}\n`;
+report += `- **Description**: ${repoInfo.data.description || 'No description'}\n`;
+report += `- **Stars**: ${repoInfo.data.stargazers_count}\n`;
+report += `- **Forks**: ${repoInfo.data.forks_count}\n`;
+report += `- **Open Issues**: ${repoInfo.data.open_issues_count}\n`;
+report += `- **Default Branch**: ${repoInfo.data.default_branch}\n\n`;
+
+// Get workflow runs
+const workflowRuns = await octokit.actions.listWorkflowRunsForRepo({
+  owner,
+  repo,
+  per_page: 10
+});
+
+report += `## Recent Workflow Runs\n\n`;
+report += `| Workflow | Status | Started | Duration |\n`;
+report += `|----------|--------|---------|----------|\n`;
+
+for (const run of workflowRuns.data.workflow_runs.slice(0, 5)) {
+  const startTime = new Date(run.created_at);
+  const endTime = run.updated_at ? new Date(run.updated_at) : new Date();
+  const durationMs = endTime - startTime;
+  const durationMin = Math.floor(durationMs / 60000);
+  const durationSec = Math.floor((durationMs % 60000) / 1000);
+  
+  report += `| ${run.name} | ${run.conclusion || run.status} | ${startTime.toISOString().split('T')[0]} | ${durationMin}m ${durationSec}s |\n`;
+}
+
+report += `\n`;
+
+// Get Dependabot alerts
+try {
+  const alerts = await octokit.dependabot.listAlertsForRepo({
+    owner,
+    repo,
+    state: 'open',
+    per_page: 100
+  });
+  
+  report += `## Dependabot Security Alerts\n\n`;
+  
+  if (alerts.data.length === 0) {
+    report += `✅ No open security alerts found.\n\n`;
+  } else {
+    report += `### Open Alerts (${alerts.data.length})\n\n`;
+    
+    const severityOrder = ['critical', 'high', 'medium', 'low'];
+    const alertsBySeverity = {};
+    
+    severityOrder.forEach(severity => {
+      alertsBySeverity[severity] = [];
+    });
+    
+    alerts.data.forEach(alert => {
+      const severity = alert.security_advisory.severity.toLowerCase();
+      if (alertsBySeverity[severity]) {
+        alertsBySeverity[severity].push(alert);
+      }
+    });
+    
+    severityOrder.forEach(severity => {
+      const severityAlerts = alertsBySeverity[severity];
+      if (severityAlerts.length > 0) {
+        report += `#### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
+        
+        severityAlerts.forEach(alert => {
+          report += `- **${alert.security_advisory.summary}** in \`${alert.dependency.package.name}\`\n`;
+        });
+        
+        report += `\n`;
+      }
+    });
+  }
+} catch (error) {
+  report += `## Dependabot Security Alerts\n\n`;
+  report += `⚠️ Unable to fetch security alerts: ${error.message}\n\n`;
+}
+
+// Get recent pull requests
+const pullRequests = await octokit.pulls.list({
+  owner,
+  repo,
+  state: 'all',
+  sort: 'updated',
+  direction: 'desc',
+  per_page: 5
+});
+
+report += `## Recent Pull Requests\n\n`;
+
+if (pullRequests.data.length === 0) {
+  report += `No recent pull requests found.\n\n`;
+} else {
+  report += `| Title | Status | Author | Updated |\n`;
+  report += `|-------|--------|--------|--------|\n`;
+  
+  pullRequests.data.forEach(pr => {
+    const status = pr.state === 'open' ? '🔄 Open' : (pr.merged_at ? '✅ Merged' : '❌ Closed');
+    report += `| [#${pr.number}: ${pr.title}](${pr.html_url}) | ${status} | ${pr.user.login} | ${new Date(pr.updated_at).toISOString().split('T')[0]} |\n`;
+  });
+  
+  report += `\n`;
+}
+
+// Get recent issues
+const issues = await octokit.issues.listForRepo({
+  owner,
+  repo,
+  state: 'all',
+  sort: 'updated',
+  direction: 'desc',
+  per_page: 5
+});
+
+const issuesOnly = issues.data.filter(issue => !issue.pull_request);
+
+report += `## Recent Issues\n\n`;
+
+if (issuesOnly.length === 0) {
+  report += `No recent issues found.\n\n`;
+} else {
+  report += `| Title | Status | Author | Updated |\n`;
+  report += `|-------|--------|--------|--------|\n`;
+  
+  issuesOnly.forEach(issue => {
+    const status = issue.state === 'open' ? '🔄 Open' : '✅ Closed';
+    report += `| [#${issue.number}: ${issue.title}](${issue.html_url}) | ${status} | ${issue.user.login} | ${new Date(issue.updated_at).toISOString().split('T')[0]} |\n`;
+  });
+  
+  report += `\n`;
+}
+
+// Create directory if it doesn't exist
+try {
+  fs.mkdirSync('docs/github-insights', { recursive: true });
+} catch (error) {
+  console.log('Directory already exists');
+}
+
+// Write report to file
+fs.writeFileSync('docs/github-insights/insights-report.md', report);
+
+// Create a summary file for AI analysis
+const aiSummary = `# GitHub Insights for AI Analysis\n\n` +
+  `*Generated on: ${date}*\n\n` +
+  `This file contains structured data from GitHub that can be analyzed by AI assistants to provide insights and recommendations for the project.\n\n` +
+  `## Repository Stats\n\n` +
+  `- Stars: ${repoInfo.data.stargazers_count}\n` +
+  `- Forks: ${repoInfo.data.forks_count}\n` +
+  `- Open Issues: ${repoInfo.data.open_issues_count}\n` +
+  `- Watchers: ${repoInfo.data.subscribers_count || 0}\n\n` +
+  `## Workflow Status\n\n` +
+  workflowRuns.data.workflow_runs.slice(0, 10).map(run => 
+    `- ${run.name}: ${run.conclusion || run.status}`
+  ).join('\n') + 
+  `\n\n## Security Alerts\n\n` +
+  (alerts?.data ? 
+    `Total Open Alerts: ${alerts.data.length}\n` +
+    severityOrder.map(severity => 
+      `- ${severity}: ${alertsBySeverity[severity]?.length || 0}`
+    ).join('\n')
+    : 'Unable to fetch security alerts') +
+  `\n\n## Recent Activity\n\n` +
+  `- Pull Requests: ${pullRequests.data.length} recent updates\n` +
+  `- Issues: ${issuesOnly.length} recent updates\n`;
+
+fs.writeFileSync('docs/github-insights/ai-analysis-data.md', aiSummary);
+
+console.log('GitHub insights report generated successfully');
+
+2025-04-16T13:53:48.3209475Z   debug: false
+2025-04-16T13:53:48.3209681Z   user-agent: actions/github-script
+2025-04-16T13:53:48.3209926Z   result-encoding: json
+2025-04-16T13:53:48.3210130Z   retries: 0
+2025-04-16T13:53:48.3210346Z   retry-exempt-status-codes: 400,401,403,404,422
+2025-04-16T13:53:48.3210607Z env:
+2025-04-16T13:53:48.3210925Z   WORKFLOW_TOKEN: ***
+2025-04-16T13:53:48.3211127Z ##[endgroup]
+2025-04-16T13:53:49.4483165Z ReferenceError: alerts is not defined
+2025-04-16T13:53:49.4485001Z     at eval (eval at callAsyncFunction (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:35424:16), <anonymous>:177:4)
+2025-04-16T13:53:49.4496698Z     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-04-16T13:53:49.4498032Z     at async main (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:35522:20)
+2025-04-16T13:53:49.4550975Z ##[error]Unhandled error: ReferenceError: alerts is not defined
+2025-04-16T13:53:49.4683912Z Post job cleanup.
+2025-04-16T13:53:49.5655708Z [command]/usr/bin/git version
+2025-04-16T13:53:49.5696274Z git version 2.49.0
+2025-04-16T13:53:49.5742302Z Temporarily overriding HOME='/home/runner/work/_temp/3d7948e7-6f29-4c62-ab34-35d19477f102' before making global git config changes
+2025-04-16T13:53:49.5745115Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T13:53:49.5751825Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:53:49.5794875Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T13:53:49.5830550Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T13:53:49.6074796Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T13:53:49.6099160Z http.https://github.com/.extraheader
+2025-04-16T13:53:49.6113150Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T13:53:49.6147669Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T13:53:49.6492544Z Cleaning up orphan processes

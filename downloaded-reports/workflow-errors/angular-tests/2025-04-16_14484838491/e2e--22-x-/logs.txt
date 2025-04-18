@@ -1,0 +1,2377 @@
+2025-04-16T04:40:04.2487143Z Current runner version: '2.323.0'
+2025-04-16T04:40:04.2525711Z ##[group]Operating System
+2025-04-16T04:40:04.2526900Z Ubuntu
+2025-04-16T04:40:04.2527603Z 24.04.2
+2025-04-16T04:40:04.2528538Z LTS
+2025-04-16T04:40:04.2529289Z ##[endgroup]
+2025-04-16T04:40:04.2530119Z ##[group]Runner Image
+2025-04-16T04:40:04.2531225Z Image: ubuntu-24.04
+2025-04-16T04:40:04.2532050Z Version: 20250406.1.0
+2025-04-16T04:40:04.2534145Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T04:40:04.2536877Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T04:40:04.2538530Z ##[endgroup]
+2025-04-16T04:40:04.2539451Z ##[group]Runner Image Provisioner
+2025-04-16T04:40:04.2540524Z 2.0.422.1
+2025-04-16T04:40:04.2541290Z ##[endgroup]
+2025-04-16T04:40:04.2543054Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T04:40:04.2546130Z Contents: read
+2025-04-16T04:40:04.2547012Z Metadata: read
+2025-04-16T04:40:04.2548168Z Packages: read
+2025-04-16T04:40:04.2549170Z ##[endgroup]
+2025-04-16T04:40:04.2552536Z Secret source: Actions
+2025-04-16T04:40:04.2554160Z Prepare workflow directory
+2025-04-16T04:40:04.3319828Z Prepare all required actions
+2025-04-16T04:40:04.3397181Z Getting action download info
+2025-04-16T04:40:04.8287990Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T04:40:04.8289008Z Version: 4.2.2
+2025-04-16T04:40:04.8290104Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T04:40:04.8291300Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T04:40:04.8291996Z ##[endgroup]
+2025-04-16T04:40:04.9443311Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-16T04:40:04.9444456Z Version: 4.4.0
+2025-04-16T04:40:04.9445223Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-16T04:40:04.9446149Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-16T04:40:04.9446904Z ##[endgroup]
+2025-04-16T04:40:05.3335434Z Download action repository 'cypress-io/github-action@v6' (SHA:108b8684ae52e735ff7891524cbffbcd4be5b19f)
+2025-04-16T04:40:05.9474532Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-16T04:40:05.9475801Z Version: 4.6.2
+2025-04-16T04:40:05.9476885Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-16T04:40:05.9478554Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-16T04:40:05.9479618Z ##[endgroup]
+2025-04-16T04:40:06.1893735Z Complete job name: e2e (22.x)
+2025-04-16T04:40:06.2579301Z ##[group]Run actions/checkout@v4
+2025-04-16T04:40:06.2580758Z with:
+2025-04-16T04:40:06.2581511Z   repository: mrkurger/date-night-app2
+2025-04-16T04:40:06.2582803Z   token: ***
+2025-04-16T04:40:06.2583667Z   ssh-strict: true
+2025-04-16T04:40:06.2584397Z   ssh-user: git
+2025-04-16T04:40:06.2585167Z   persist-credentials: true
+2025-04-16T04:40:06.2586016Z   clean: true
+2025-04-16T04:40:06.2586806Z   sparse-checkout-cone-mode: true
+2025-04-16T04:40:06.2587757Z   fetch-depth: 1
+2025-04-16T04:40:06.2588489Z   fetch-tags: false
+2025-04-16T04:40:06.2589239Z   show-progress: true
+2025-04-16T04:40:06.2590006Z   lfs: false
+2025-04-16T04:40:06.2590699Z   submodules: false
+2025-04-16T04:40:06.2591476Z   set-safe-directory: true
+2025-04-16T04:40:06.2592584Z ##[endgroup]
+2025-04-16T04:40:06.5626326Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T04:40:06.5629179Z ##[group]Getting Git version info
+2025-04-16T04:40:06.5630572Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T04:40:06.5635422Z [command]/usr/bin/git version
+2025-04-16T04:40:06.5750977Z git version 2.49.0
+2025-04-16T04:40:06.5792444Z ##[endgroup]
+2025-04-16T04:40:06.5804559Z Temporarily overriding HOME='/home/runner/work/_temp/116564c8-f133-49b0-9bf8-ed1e4d3af94e' before making global git config changes
+2025-04-16T04:40:06.5808834Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T04:40:06.5824638Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:40:06.5870118Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T04:40:06.5874455Z ##[group]Initializing the repository
+2025-04-16T04:40:06.5880722Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:40:06.5987761Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T04:40:06.5990201Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T04:40:06.5991202Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T04:40:06.5992025Z hint:
+2025-04-16T04:40:06.5993400Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T04:40:06.5994947Z hint:
+2025-04-16T04:40:06.5996135Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T04:40:06.5997877Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T04:40:06.5999396Z hint:
+2025-04-16T04:40:06.6000538Z hint: 	git branch -m <name>
+2025-04-16T04:40:06.6003982Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T04:40:06.6012323Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T04:40:06.6053181Z ##[endgroup]
+2025-04-16T04:40:06.6055378Z ##[group]Disabling automatic garbage collection
+2025-04-16T04:40:06.6057731Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T04:40:06.6091876Z ##[endgroup]
+2025-04-16T04:40:06.6094027Z ##[group]Setting up auth
+2025-04-16T04:40:06.6099573Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T04:40:06.6134662Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T04:40:06.6522076Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T04:40:06.6558349Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T04:40:06.6804910Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T04:40:06.6857046Z ##[endgroup]
+2025-04-16T04:40:06.6859980Z ##[group]Fetching the repository
+2025-04-16T04:40:06.6868787Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b8b37164f7f40ca46488549131976e58c3d400a5:refs/remotes/origin/main
+2025-04-16T04:40:09.3576289Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T04:40:09.3592813Z  * [new ref]         b8b37164f7f40ca46488549131976e58c3d400a5 -> origin/main
+2025-04-16T04:40:09.3614748Z ##[endgroup]
+2025-04-16T04:40:09.3615619Z ##[group]Determining the checkout info
+2025-04-16T04:40:09.3621517Z ##[endgroup]
+2025-04-16T04:40:09.3632138Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T04:40:09.3682225Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T04:40:09.3720821Z ##[group]Checking out the ref
+2025-04-16T04:40:09.3725613Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T04:40:09.8075202Z Switched to a new branch 'main'
+2025-04-16T04:40:09.8090400Z branch 'main' set up to track 'origin/main'.
+2025-04-16T04:40:09.8112974Z ##[endgroup]
+2025-04-16T04:40:09.8182810Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T04:40:09.8226654Z b8b37164f7f40ca46488549131976e58c3d400a5
+2025-04-16T04:40:09.8494345Z ##[group]Run actions/setup-node@v4
+2025-04-16T04:40:09.8494837Z with:
+2025-04-16T04:40:09.8495081Z   node-version: 22.x
+2025-04-16T04:40:09.8495448Z   cache: npm
+2025-04-16T04:40:09.8495785Z   cache-dependency-path: client-angular/package-lock.json
+2025-04-16T04:40:09.8496475Z   always-auth: false
+2025-04-16T04:40:09.8496825Z   check-latest: false
+2025-04-16T04:40:09.8497227Z   token: ***
+2025-04-16T04:40:09.8497504Z ##[endgroup]
+2025-04-16T04:40:10.0311161Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-16T04:40:10.0320613Z ##[group]Environment details
+2025-04-16T04:40:10.5301690Z node: v22.14.0
+2025-04-16T04:40:10.5305191Z npm: 10.9.2
+2025-04-16T04:40:10.5305501Z yarn: 1.22.22
+2025-04-16T04:40:10.5307741Z ##[endgroup]
+2025-04-16T04:40:10.5331570Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-16T04:40:10.6534363Z /home/runner/.npm
+2025-04-16T04:40:10.8225397Z Cache hit for: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T04:40:11.8438227Z Received 69351304 of 69351304 (100.0%), 76.5 MBs/sec
+2025-04-16T04:40:11.8441267Z Cache Size: ~66 MB (69351304 B)
+2025-04-16T04:40:11.8470052Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5ba87250-a579-4ba9-ace3-16c16b91a1fa/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T04:40:12.1572321Z Cache restored successfully
+2025-04-16T04:40:12.1723175Z Cache restored from key: node-cache-Linux-x64-npm-eed186788acb99c392cc79891935d042040413390720b7932c16d8b7ca478e8b
+2025-04-16T04:40:12.1882388Z ##[group]Run npm ci
+2025-04-16T04:40:12.1882658Z [36;1mnpm ci[0m
+2025-04-16T04:40:12.1936570Z shell: /usr/bin/bash -e {0}
+2025-04-16T04:40:12.1936826Z ##[endgroup]
+2025-04-16T04:40:16.8792732Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T04:40:17.1246243Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T04:40:17.1424493Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T04:40:17.2532350Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T04:40:17.3445400Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T04:40:34.0693863Z 
+2025-04-16T04:40:34.0694820Z added 1237 packages, and audited 1239 packages in 22s
+2025-04-16T04:40:34.0721268Z 
+2025-04-16T04:40:34.0721809Z 189 packages are looking for funding
+2025-04-16T04:40:34.0722468Z   run `npm fund` for details
+2025-04-16T04:40:34.0894252Z 
+2025-04-16T04:40:34.0895720Z 3 moderate severity vulnerabilities
+2025-04-16T04:40:34.0896302Z 
+2025-04-16T04:40:34.0896835Z To address all issues (including breaking changes), run:
+2025-04-16T04:40:34.0897772Z   npm audit fix --force
+2025-04-16T04:40:34.0899369Z 
+2025-04-16T04:40:34.0899770Z Run `npm audit` for details.
+2025-04-16T04:40:34.1873631Z ##[warning]Unexpected input(s) 'headless', valid inputs are ['record', 'auto-cancel-after-failures', 'config', 'config-file', 'env', 'browser', 'command', 'start', 'start-windows', 'build', 'install', 'install-command', 'runTests', 'wait-on', 'wait-on-timeout', 'parallel', 'group', 'tag', 'working-directory', 'headed', 'publish-summary', 'summary-title', 'spec', 'project', 'command-prefix', 'ci-build-id', 'cache-key', 'quiet', 'component']
+2025-04-16T04:40:34.1889602Z ##[group]Run cypress-io/github-action@v6
+2025-04-16T04:40:34.1890031Z with:
+2025-04-16T04:40:34.1890323Z   working-directory: ./client-angular
+2025-04-16T04:40:34.1890723Z   build: npm run build
+2025-04-16T04:40:34.1891049Z   start: npm start
+2025-04-16T04:40:34.1891326Z   wait-on: http://localhost:4200
+2025-04-16T04:40:34.1891564Z   browser: chrome
+2025-04-16T04:40:34.1891745Z   headless: true
+2025-04-16T04:40:34.1891920Z   record: false
+2025-04-16T04:40:34.1892111Z   publish-summary: true
+2025-04-16T04:40:34.1892351Z   component: false
+2025-04-16T04:40:34.1892536Z ##[endgroup]
+2025-04-16T04:40:34.5255556Z Cache hit for: npm-linux-x64-1d233aaccb68d004b711b451817eab777690f3623def55195bf0d740b39cc99b48ca48e70d82b3444ce09ad374c63e3f1e277558b747562d914ab0a8adec8060
+2025-04-16T04:40:34.5496871Z Cache hit for: cypress-linux-x64-1d233aaccb68d004b711b451817eab777690f3623def55195bf0d740b39cc99b48ca48e70d82b3444ce09ad374c63e3f1e277558b747562d914ab0a8adec8060
+2025-04-16T04:40:35.5847416Z Received 69358748 of 69358748 (100.0%), 73.4 MBs/sec
+2025-04-16T04:40:35.5848546Z Cache Size: ~66 MB (69358748 B)
+2025-04-16T04:40:35.6086786Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b262aaa0-6851-47e9-9c00-507465b91c6e/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T04:40:35.7127409Z Received 71303168 of 178373466 (40.0%), 68.0 MBs/sec
+2025-04-16T04:40:36.2315280Z Cache restored successfully
+2025-04-16T04:40:36.5470614Z Received 178373466 of 178373466 (100.0%), 92.8 MBs/sec
+2025-04-16T04:40:36.5472738Z Cache Size: ~170 MB (178373466 B)
+2025-04-16T04:40:36.5615988Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b5198f53-2038-4d64-ad22-618c233a424f/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-16T04:40:39.6289067Z Cache restored successfully
+2025-04-16T04:40:39.6674901Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm ci
+2025-04-16T04:40:45.9244223Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-04-16T04:40:46.1488129Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-16T04:40:46.1650522Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-04-16T04:40:46.2769151Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-04-16T04:40:46.3662586Z npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+2025-04-16T04:40:51.8617132Z 
+2025-04-16T04:40:51.8621737Z added 1237 packages, and audited 1239 packages in 12s
+2025-04-16T04:40:51.8642621Z 
+2025-04-16T04:40:51.8643153Z 189 packages are looking for funding
+2025-04-16T04:40:51.8643804Z   run `npm fund` for details
+2025-04-16T04:40:51.8735723Z 
+2025-04-16T04:40:51.8740031Z 3 moderate severity vulnerabilities
+2025-04-16T04:40:51.8744595Z 
+2025-04-16T04:40:51.8748868Z To address all issues (including breaking changes), run:
+2025-04-16T04:40:51.8752750Z   npm audit fix --force
+2025-04-16T04:40:51.8756426Z 
+2025-04-16T04:40:51.8759867Z Run `npm audit` for details.
+2025-04-16T04:40:51.9327687Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npx cypress cache list
+2025-04-16T04:40:52.3569518Z ┌─────────┬───────────────────┐
+2025-04-16T04:40:52.3570608Z │ version │ last used         │
+2025-04-16T04:40:52.3572834Z ├─────────┼───────────────────┤
+2025-04-16T04:40:52.3573652Z │ 14.3.0  │ a few seconds ago │
+2025-04-16T04:40:52.3574206Z └─────────┴───────────────────┘
+2025-04-16T04:40:52.3728416Z build app command "npm run build"
+2025-04-16T04:40:52.3731181Z current working directory "/home/runner/work/date-night-app2/date-night-app2/client-angular"
+2025-04-16T04:40:52.3750063Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm run build
+2025-04-16T04:40:52.4934264Z 
+2025-04-16T04:40:52.4935539Z > client-angular@0.0.0 build
+2025-04-16T04:40:52.4936220Z > ng build client-angular
+2025-04-16T04:40:52.4936471Z 
+2025-04-16T04:40:53.2058292Z [33m❯[39m Building...
+2025-04-16T04:41:10.1243604Z [32m✔[39m Building...
+2025-04-16T04:41:10.1319199Z Application bundle generation failed. [16.918 seconds]
+2025-04-16T04:41:10.1319637Z 
+2025-04-16T04:41:10.1595937Z [1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m2 repetitive deprecation warnings omitted.
+2025-04-16T04:41:10.1597607Z Run in verbose mode to see all warnings.[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1598212Z 
+2025-04-16T04:41:10.1598398Z   null
+2025-04-16T04:41:10.1598987Z 
+2025-04-16T04:41:10.1599705Z 
+2025-04-16T04:41:10.1600901Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m14 repetitive deprecation warnings omitted.
+2025-04-16T04:41:10.1610295Z Run in verbose mode to see all warnings.[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1610785Z 
+2025-04-16T04:41:10.1611153Z   null
+2025-04-16T04:41:10.1611331Z 
+2025-04-16T04:41:10.1611340Z 
+2025-04-16T04:41:10.1612281Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1618939Z 
+2025-04-16T04:41:10.1619193Z     src/app/core/design/components.scss:8:8:
+2025-04-16T04:41:10.1632155Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.1632682Z         ╵         [32m^[0m
+2025-04-16T04:41:10.1632910Z 
+2025-04-16T04:41:10.1632919Z 
+2025-04-16T04:41:10.1633315Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1646813Z   
+2025-04-16T04:41:10.1648804Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1649308Z 
+2025-04-16T04:41:10.1665307Z 
+2025-04-16T04:41:10.1666314Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1667005Z 
+2025-04-16T04:41:10.1667250Z     src/app/core/design/components.scss:8:8:
+2025-04-16T04:41:10.1676658Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.1678375Z         ╵         [32m^[0m
+2025-04-16T04:41:10.1681449Z 
+2025-04-16T04:41:10.1681462Z 
+2025-04-16T04:41:10.1682876Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1686235Z   
+2025-04-16T04:41:10.1691285Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1713889Z 
+2025-04-16T04:41:10.1713900Z 
+2025-04-16T04:41:10.1714717Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1715243Z 
+2025-04-16T04:41:10.1715490Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.1716233Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.1716792Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1717040Z 
+2025-04-16T04:41:10.1717050Z 
+2025-04-16T04:41:10.1717531Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1718252Z   Use color.adjust instead.
+2025-04-16T04:41:10.1718606Z   
+2025-04-16T04:41:10.1719314Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1719804Z 
+2025-04-16T04:41:10.1719814Z 
+2025-04-16T04:41:10.1720544Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1721081Z 
+2025-04-16T04:41:10.1721345Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.1722449Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.1791531Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1791835Z 
+2025-04-16T04:41:10.1791870Z 
+2025-04-16T04:41:10.1792133Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.1792573Z   
+2025-04-16T04:41:10.1793000Z   color.scale($color, $lightness: -60.9561752988%)
+2025-04-16T04:41:10.1793812Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.1794234Z   
+2025-04-16T04:41:10.1794836Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1795232Z 
+2025-04-16T04:41:10.1795240Z 
+2025-04-16T04:41:10.1795937Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1796434Z 
+2025-04-16T04:41:10.1796681Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.1797371Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.1797925Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1798164Z 
+2025-04-16T04:41:10.1798172Z 
+2025-04-16T04:41:10.1798626Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1799277Z   Use color.adjust instead.
+2025-04-16T04:41:10.1799841Z   
+2025-04-16T04:41:10.1800471Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1800961Z 
+2025-04-16T04:41:10.1800969Z 
+2025-04-16T04:41:10.1818289Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1818824Z 
+2025-04-16T04:41:10.1819063Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.1819822Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.1820383Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1820614Z 
+2025-04-16T04:41:10.1820622Z 
+2025-04-16T04:41:10.1820829Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.1821218Z   
+2025-04-16T04:41:10.1821595Z   color.scale($color, $lightness: -60.9561752988%)
+2025-04-16T04:41:10.1822144Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.1822541Z   
+2025-04-16T04:41:10.1823086Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1823670Z 
+2025-04-16T04:41:10.1823679Z 
+2025-04-16T04:41:10.1824390Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1824919Z 
+2025-04-16T04:41:10.1825155Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.1825968Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.1826602Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.1826847Z 
+2025-04-16T04:41:10.1826855Z 
+2025-04-16T04:41:10.1827252Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1827889Z   Use color.adjust instead.
+2025-04-16T04:41:10.1828230Z   
+2025-04-16T04:41:10.1828910Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1829478Z 
+2025-04-16T04:41:10.1829501Z 
+2025-04-16T04:41:10.1830208Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1830725Z 
+2025-04-16T04:41:10.1830979Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.1831848Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.1832516Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.1832789Z 
+2025-04-16T04:41:10.1832797Z 
+2025-04-16T04:41:10.1833002Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.1833406Z   
+2025-04-16T04:41:10.1884242Z   color.scale($color, $lightness: 78.7644787645%)
+2025-04-16T04:41:10.1884769Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.1885152Z   
+2025-04-16T04:41:10.1885733Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1886122Z 
+2025-04-16T04:41:10.1886131Z 
+2025-04-16T04:41:10.1887083Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1887609Z 
+2025-04-16T04:41:10.1887858Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.1888667Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.1889311Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.1889613Z 
+2025-04-16T04:41:10.1889621Z 
+2025-04-16T04:41:10.1890053Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1890714Z   Use color.adjust instead.
+2025-04-16T04:41:10.1891087Z   
+2025-04-16T04:41:10.1891773Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1892271Z 
+2025-04-16T04:41:10.1892279Z 
+2025-04-16T04:41:10.1892989Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1893684Z 
+2025-04-16T04:41:10.1893918Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.1894648Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.1895256Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.1895725Z 
+2025-04-16T04:41:10.1895732Z 
+2025-04-16T04:41:10.1895913Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.1896270Z   
+2025-04-16T04:41:10.1896607Z   color.scale($color, $lightness: 78.7644787645%)
+2025-04-16T04:41:10.1897075Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.1897421Z   
+2025-04-16T04:41:10.1897909Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1898262Z 
+2025-04-16T04:41:10.1898269Z 
+2025-04-16T04:41:10.1898881Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1899338Z 
+2025-04-16T04:41:10.1899552Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.1900259Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.1900812Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.1901068Z 
+2025-04-16T04:41:10.1901076Z 
+2025-04-16T04:41:10.1902081Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1902716Z   Use color.adjust instead.
+2025-04-16T04:41:10.1903028Z   
+2025-04-16T04:41:10.1903802Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1904276Z 
+2025-04-16T04:41:10.1904284Z 
+2025-04-16T04:41:10.1904986Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1905517Z 
+2025-04-16T04:41:10.1905744Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.1906523Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.1907128Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.1907383Z 
+2025-04-16T04:41:10.1907391Z 
+2025-04-16T04:41:10.1907597Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.1907986Z   
+2025-04-16T04:41:10.1908360Z   color.scale($color, $lightness: 59.0733590734%)
+2025-04-16T04:41:10.1908871Z   color.adjust($color, $lightness: 30%)
+2025-04-16T04:41:10.1909248Z   
+2025-04-16T04:41:10.1909778Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1910169Z 
+2025-04-16T04:41:10.1910176Z 
+2025-04-16T04:41:10.1910832Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1911315Z 
+2025-04-16T04:41:10.1911538Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.1912301Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.1912901Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.1913152Z 
+2025-04-16T04:41:10.1913159Z 
+2025-04-16T04:41:10.1913779Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1914420Z   Use color.adjust instead.
+2025-04-16T04:41:10.1914756Z   
+2025-04-16T04:41:10.1915574Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1916050Z 
+2025-04-16T04:41:10.1916058Z 
+2025-04-16T04:41:10.1916739Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1917257Z 
+2025-04-16T04:41:10.1917493Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.1918241Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.1918848Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.1919117Z 
+2025-04-16T04:41:10.1919124Z 
+2025-04-16T04:41:10.1919318Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.1919710Z   
+2025-04-16T04:41:10.1920072Z   color.scale($color, $lightness: 59.0733590734%)
+2025-04-16T04:41:10.1920575Z   color.adjust($color, $lightness: 30%)
+2025-04-16T04:41:10.1920949Z   
+2025-04-16T04:41:10.1921485Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1921868Z 
+2025-04-16T04:41:10.1921875Z 
+2025-04-16T04:41:10.1922557Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1923066Z 
+2025-04-16T04:41:10.1923300Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.1977226Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.1977813Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1978070Z 
+2025-04-16T04:41:10.1978080Z 
+2025-04-16T04:41:10.1978524Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1979180Z   Use color.adjust instead.
+2025-04-16T04:41:10.1979532Z   
+2025-04-16T04:41:10.1980188Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1980663Z 
+2025-04-16T04:41:10.1980671Z 
+2025-04-16T04:41:10.1981364Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1981874Z 
+2025-04-16T04:41:10.1982111Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.1982834Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.1983389Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1983819Z 
+2025-04-16T04:41:10.1983827Z 
+2025-04-16T04:41:10.1984030Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.1984426Z   
+2025-04-16T04:41:10.1984809Z   color.scale($color, $lightness: -58.3969465649%)
+2025-04-16T04:41:10.1985340Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.1985732Z   
+2025-04-16T04:41:10.1986293Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.1986687Z 
+2025-04-16T04:41:10.1986695Z 
+2025-04-16T04:41:10.1987383Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1987879Z 
+2025-04-16T04:41:10.1988115Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.1988818Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.1989365Z           ╵          [32m^[0m
+2025-04-16T04:41:10.1989604Z 
+2025-04-16T04:41:10.1989625Z 
+2025-04-16T04:41:10.1990057Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.1990708Z   Use color.adjust instead.
+2025-04-16T04:41:10.1991054Z   
+2025-04-16T04:41:10.1991691Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.1992153Z 
+2025-04-16T04:41:10.1992161Z 
+2025-04-16T04:41:10.1992824Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.1993325Z 
+2025-04-16T04:41:10.2008943Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.2009861Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.2010524Z           ╵          [32m^[0m
+2025-04-16T04:41:10.2010798Z 
+2025-04-16T04:41:10.2010807Z 
+2025-04-16T04:41:10.2011044Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2011483Z   
+2025-04-16T04:41:10.2011907Z   color.scale($color, $lightness: -58.3969465649%)
+2025-04-16T04:41:10.2012765Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.2013237Z   
+2025-04-16T04:41:10.2014157Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2014598Z 
+2025-04-16T04:41:10.2014606Z 
+2025-04-16T04:41:10.2015320Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2015834Z 
+2025-04-16T04:41:10.2016067Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2016863Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2017509Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2017777Z 
+2025-04-16T04:41:10.2017786Z 
+2025-04-16T04:41:10.2018220Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2018853Z   Use color.adjust instead.
+2025-04-16T04:41:10.2019184Z   
+2025-04-16T04:41:10.2019827Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2020300Z 
+2025-04-16T04:41:10.2020309Z 
+2025-04-16T04:41:10.2020996Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2021711Z 
+2025-04-16T04:41:10.2021951Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2022768Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2023589Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2023888Z 
+2025-04-16T04:41:10.2023896Z 
+2025-04-16T04:41:10.2024096Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2024489Z   
+2025-04-16T04:41:10.2024857Z   color.scale($color, $lightness: 82.2580645161%)
+2025-04-16T04:41:10.2025352Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2025735Z   
+2025-04-16T04:41:10.2026273Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2026654Z 
+2025-04-16T04:41:10.2026661Z 
+2025-04-16T04:41:10.2027356Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2027861Z 
+2025-04-16T04:41:10.2028086Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2028896Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2029529Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2029790Z 
+2025-04-16T04:41:10.2029804Z 
+2025-04-16T04:41:10.2030221Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2030859Z   Use color.adjust instead.
+2025-04-16T04:41:10.2031182Z   
+2025-04-16T04:41:10.2031858Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2032323Z 
+2025-04-16T04:41:10.2032331Z 
+2025-04-16T04:41:10.2032995Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2033732Z 
+2025-04-16T04:41:10.2033967Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2034800Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2035443Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2035722Z 
+2025-04-16T04:41:10.2035737Z 
+2025-04-16T04:41:10.2035934Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2036317Z   
+2025-04-16T04:41:10.2036676Z   color.scale($color, $lightness: 82.2580645161%)
+2025-04-16T04:41:10.2037188Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2037570Z   
+2025-04-16T04:41:10.2038093Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2038474Z 
+2025-04-16T04:41:10.2038482Z 
+2025-04-16T04:41:10.2039133Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2039726Z 
+2025-04-16T04:41:10.2039920Z     src/app/core/design/main.scss:8:8:
+2025-04-16T04:41:10.2040542Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.2041042Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2041474Z 
+2025-04-16T04:41:10.2041486Z 
+2025-04-16T04:41:10.2041885Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2042462Z   
+2025-04-16T04:41:10.2043093Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2043799Z 
+2025-04-16T04:41:10.2043807Z 
+2025-04-16T04:41:10.2044513Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2045029Z 
+2025-04-16T04:41:10.2045229Z     src/app/core/design/main.scss:8:8:
+2025-04-16T04:41:10.2045856Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.2046351Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2046574Z 
+2025-04-16T04:41:10.2046581Z 
+2025-04-16T04:41:10.2046961Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2047514Z   
+2025-04-16T04:41:10.2048140Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2048606Z 
+2025-04-16T04:41:10.2048614Z 
+2025-04-16T04:41:10.2049288Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2049975Z 
+2025-04-16T04:41:10.2050181Z     src/app/core/design/main.scss:9:8:
+2025-04-16T04:41:10.2050799Z [37m      9 │ @import [32m[37m'components';
+2025-04-16T04:41:10.2051286Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2051512Z 
+2025-04-16T04:41:10.2051520Z 
+2025-04-16T04:41:10.2051891Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2052451Z   
+2025-04-16T04:41:10.2053086Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2063219Z 
+2025-04-16T04:41:10.2063231Z 
+2025-04-16T04:41:10.2064271Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2064876Z 
+2025-04-16T04:41:10.2065110Z     src/app/core/design/main.scss:9:8:
+2025-04-16T04:41:10.2065861Z [37m      9 │ @import [32m[37m'components';
+2025-04-16T04:41:10.2066447Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2066707Z 
+2025-04-16T04:41:10.2066735Z 
+2025-04-16T04:41:10.2067181Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2067803Z   
+2025-04-16T04:41:10.2083922Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2084469Z 
+2025-04-16T04:41:10.2084479Z 
+2025-04-16T04:41:10.2085271Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2085803Z 
+2025-04-16T04:41:10.2086020Z     src/app/core/design/main.scss:190:18:
+2025-04-16T04:41:10.2086833Z [37m      190 │   margin-right: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2087494Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2087770Z 
+2025-04-16T04:41:10.2087778Z 
+2025-04-16T04:41:10.2088283Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2088937Z   
+2025-04-16T04:41:10.2089518Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2090145Z   
+2025-04-16T04:41:10.2090804Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2091303Z 
+2025-04-16T04:41:10.2091312Z 
+2025-04-16T04:41:10.2092001Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2092518Z 
+2025-04-16T04:41:10.2092718Z     src/app/core/design/main.scss:190:18:
+2025-04-16T04:41:10.2093735Z [37m      190 │   margin-right: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2094431Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2094711Z 
+2025-04-16T04:41:10.2094720Z 
+2025-04-16T04:41:10.2095214Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2095857Z   
+2025-04-16T04:41:10.2096649Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2097288Z   
+2025-04-16T04:41:10.2097971Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2098472Z 
+2025-04-16T04:41:10.2098480Z 
+2025-04-16T04:41:10.2099177Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2099682Z 
+2025-04-16T04:41:10.2099879Z     src/app/core/design/main.scss:191:17:
+2025-04-16T04:41:10.2100645Z [37m      191 │   margin-left: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2101259Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2101523Z 
+2025-04-16T04:41:10.2101530Z 
+2025-04-16T04:41:10.2102017Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2102663Z   
+2025-04-16T04:41:10.2103222Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2104020Z   
+2025-04-16T04:41:10.2104718Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2105249Z 
+2025-04-16T04:41:10.2105568Z 
+2025-04-16T04:41:10.2106370Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2106935Z 
+2025-04-16T04:41:10.2107169Z     src/app/core/design/main.scss:191:17:
+2025-04-16T04:41:10.2108004Z [37m      191 │   margin-left: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2108687Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2108976Z 
+2025-04-16T04:41:10.2108984Z 
+2025-04-16T04:41:10.2109493Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2110201Z   
+2025-04-16T04:41:10.2110835Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2111490Z   
+2025-04-16T04:41:10.2112225Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2112755Z 
+2025-04-16T04:41:10.2112766Z 
+2025-04-16T04:41:10.2135482Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2136103Z 
+2025-04-16T04:41:10.2136344Z     src/app/core/design/main.scss:198:18:
+2025-04-16T04:41:10.2137214Z [37m      198 │   padding-right: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2137865Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2138148Z 
+2025-04-16T04:41:10.2138156Z 
+2025-04-16T04:41:10.2138643Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2139297Z   
+2025-04-16T04:41:10.2139875Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2140479Z   
+2025-04-16T04:41:10.2141149Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2141645Z 
+2025-04-16T04:41:10.2141653Z 
+2025-04-16T04:41:10.2142361Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2142878Z 
+2025-04-16T04:41:10.2143093Z     src/app/core/design/main.scss:198:18:
+2025-04-16T04:41:10.2144104Z [37m      198 │   padding-right: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2144824Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2145138Z 
+2025-04-16T04:41:10.2145148Z 
+2025-04-16T04:41:10.2145668Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2146378Z   
+2025-04-16T04:41:10.2147019Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2147688Z   
+2025-04-16T04:41:10.2148436Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2148973Z 
+2025-04-16T04:41:10.2148982Z 
+2025-04-16T04:41:10.2149727Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2174012Z 
+2025-04-16T04:41:10.2174322Z     src/app/core/design/main.scss:199:17:
+2025-04-16T04:41:10.2175217Z [37m      199 │   padding-left: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2175890Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2176167Z 
+2025-04-16T04:41:10.2176176Z 
+2025-04-16T04:41:10.2176658Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2177287Z   
+2025-04-16T04:41:10.2177857Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2178460Z   
+2025-04-16T04:41:10.2179131Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2179613Z 
+2025-04-16T04:41:10.2179621Z 
+2025-04-16T04:41:10.2180307Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2180824Z 
+2025-04-16T04:41:10.2181027Z     src/app/core/design/main.scss:199:17:
+2025-04-16T04:41:10.2181811Z [37m      199 │   padding-left: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2182452Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2182902Z 
+2025-04-16T04:41:10.2182910Z 
+2025-04-16T04:41:10.2183396Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2184235Z   
+2025-04-16T04:41:10.2184817Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2185478Z   
+2025-04-16T04:41:10.2186236Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2186765Z 
+2025-04-16T04:41:10.2186775Z 
+2025-04-16T04:41:10.2187561Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2188124Z 
+2025-04-16T04:41:10.2188371Z     src/app/core/design/main.scss:204:25:
+2025-04-16T04:41:10.2189250Z [37m      204 │     flex: 0 0 percentage([32m[37m$i / $grid-columns);
+2025-04-16T04:41:10.2190023Z           ╵                          [32m^[0m
+2025-04-16T04:41:10.2190355Z 
+2025-04-16T04:41:10.2190367Z 
+2025-04-16T04:41:10.2190906Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2262057Z   
+2025-04-16T04:41:10.2262628Z   Recommendation: math.div($i, $grid-columns) or calc($i / $grid-columns)
+2025-04-16T04:41:10.2263212Z   
+2025-04-16T04:41:10.2264227Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2264726Z 
+2025-04-16T04:41:10.2264735Z 
+2025-04-16T04:41:10.2265452Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2265965Z 
+2025-04-16T04:41:10.2266181Z     src/app/core/design/main.scss:204:25:
+2025-04-16T04:41:10.2315362Z [37m      204 │     flex: 0 0 percentage([32m[37m$i / $grid-columns);
+2025-04-16T04:41:10.2316145Z           ╵                          [32m^[0m
+2025-04-16T04:41:10.2316466Z 
+2025-04-16T04:41:10.2316496Z 
+2025-04-16T04:41:10.2316963Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2317648Z   
+2025-04-16T04:41:10.2318188Z   Recommendation: math.div($i, $grid-columns) or calc($i / $grid-columns)
+2025-04-16T04:41:10.2318743Z   
+2025-04-16T04:41:10.2319451Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2319943Z 
+2025-04-16T04:41:10.2319960Z 
+2025-04-16T04:41:10.2320672Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2321190Z 
+2025-04-16T04:41:10.2321508Z     src/app/features/auth/login/login.component.scss:1:8:
+2025-04-16T04:41:10.2322375Z [37m      1 │ @import [32m[37m'../../../core/design/design-tokens';
+2025-04-16T04:41:10.2322940Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2323175Z 
+2025-04-16T04:41:10.2323183Z 
+2025-04-16T04:41:10.2324854Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2325471Z   
+2025-04-16T04:41:10.2326133Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2326599Z 
+2025-04-16T04:41:10.2326609Z 
+2025-04-16T04:41:10.2327341Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2327869Z 
+2025-04-16T04:41:10.2328202Z     src/app/features/auth/login/login.component.scss:233:11:
+2025-04-16T04:41:10.2329092Z [37m      233 │     color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2329731Z           ╵            [32m^[0m
+2025-04-16T04:41:10.2330010Z 
+2025-04-16T04:41:10.2330033Z 
+2025-04-16T04:41:10.2330492Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2331212Z   Use color.adjust instead.
+2025-04-16T04:41:10.2331659Z   
+2025-04-16T04:41:10.2332390Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2332908Z 
+2025-04-16T04:41:10.2332936Z 
+2025-04-16T04:41:10.2333906Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2334753Z 
+2025-04-16T04:41:10.2335122Z     src/app/features/auth/login/login.component.scss:233:11:
+2025-04-16T04:41:10.2336060Z [37m      233 │     color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2336707Z           ╵            [32m^[0m
+2025-04-16T04:41:10.2336998Z 
+2025-04-16T04:41:10.2337007Z 
+2025-04-16T04:41:10.2337229Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2337677Z   
+2025-04-16T04:41:10.2338109Z   color.scale($color, $lightness: -20.3187250996%)
+2025-04-16T04:41:10.2338723Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2339166Z   
+2025-04-16T04:41:10.2339802Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2340227Z 
+2025-04-16T04:41:10.2340245Z 
+2025-04-16T04:41:10.2340977Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2341484Z 
+2025-04-16T04:41:10.2341749Z     src/app/features/chat/chat.component.scss:1:8:
+2025-04-16T04:41:10.2342573Z [37m      1 │ @import [32m[37m'../../core/design/design-tokens';
+2025-04-16T04:41:10.2343132Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2343368Z 
+2025-04-16T04:41:10.2343376Z 
+2025-04-16T04:41:10.2344164Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2344750Z   
+2025-04-16T04:41:10.2349048Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2349551Z 
+2025-04-16T04:41:10.2349561Z 
+2025-04-16T04:41:10.2350286Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2350795Z 
+2025-04-16T04:41:10.2351118Z     src/app/features/list-view/list-view.component.scss:1:8:
+2025-04-16T04:41:10.2351982Z [37m      1 │ @import [32m[37m'../../core/design/design-tokens';
+2025-04-16T04:41:10.2352548Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2352779Z 
+2025-04-16T04:41:10.2352795Z 
+2025-04-16T04:41:10.2353173Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2353937Z   
+2025-04-16T04:41:10.2354597Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2355076Z 
+2025-04-16T04:41:10.2355084Z 
+2025-04-16T04:41:10.2356373Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: AdCardComponent is not used within the template of ListViewComponent[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2357265Z 
+2025-04-16T04:41:10.2357576Z     src/app/features/list-view/list-view.component.ts:86:4:
+2025-04-16T04:41:10.2358317Z [37m      86 │     [32mAdCardComponent[37m,
+2025-04-16T04:41:10.2358868Z          ╵     [32m~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2359136Z 
+2025-04-16T04:41:10.2359143Z 
+2025-04-16T04:41:10.2360031Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2360543Z 
+2025-04-16T04:41:10.2360924Z     src/app/features/netflix-view/netflix-view.component.scss:1:8:
+2025-04-16T04:41:10.2361819Z [37m      1 │ @import [32m[37m'../../core/design/design-tokens';
+2025-04-16T04:41:10.2362379Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2362604Z 
+2025-04-16T04:41:10.2362621Z 
+2025-04-16T04:41:10.2362996Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2363788Z   
+2025-04-16T04:41:10.2364448Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2364925Z 
+2025-04-16T04:41:10.2364932Z 
+2025-04-16T04:41:10.2365603Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2366113Z 
+2025-04-16T04:41:10.2366381Z     src/app/features/tinder/tinder.component.scss:1:8:
+2025-04-16T04:41:10.2367171Z [37m      1 │ @import [32m[37m'../../../../styles/variables';
+2025-04-16T04:41:10.2367737Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2367958Z 
+2025-04-16T04:41:10.2367966Z 
+2025-04-16T04:41:10.2368350Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2369099Z   
+2025-04-16T04:41:10.2369742Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2370218Z 
+2025-04-16T04:41:10.2370227Z 
+2025-04-16T04:41:10.2370893Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2371396Z 
+2025-04-16T04:41:10.2371670Z     src/app/features/tinder/tinder.component.scss:2:8:
+2025-04-16T04:41:10.2372435Z [37m      2 │ @import [32m[37m'../../../../styles/mixins';
+2025-04-16T04:41:10.2372949Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2373179Z 
+2025-04-16T04:41:10.2373186Z 
+2025-04-16T04:41:10.2373722Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2374272Z   
+2025-04-16T04:41:10.2374903Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2375346Z 
+2025-04-16T04:41:10.2375353Z 
+2025-04-16T04:41:10.2376601Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: LabelComponent is not used within the template of TinderComponent[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2377459Z 
+2025-04-16T04:41:10.2377742Z     src/app/features/tinder/tinder.component.ts:46:4:
+2025-04-16T04:41:10.2378411Z [37m      46 │     [32mLabelComponent[37m
+2025-04-16T04:41:10.2378959Z          ╵     [32m~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2379232Z 
+2025-04-16T04:41:10.2379239Z 
+2025-04-16T04:41:10.2379910Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2380410Z 
+2025-04-16T04:41:10.2380692Z     src/app/features/wallet/wallet.component.scss:1:8:
+2025-04-16T04:41:10.2381593Z [37m      1 │ @import [32m[37m'../../../app/core/design/design-tokens.scss';
+2025-04-16T04:41:10.2382203Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2382438Z 
+2025-04-16T04:41:10.2382446Z 
+2025-04-16T04:41:10.2382824Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2383399Z   
+2025-04-16T04:41:10.2384287Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2384755Z 
+2025-04-16T04:41:10.2384763Z 
+2025-04-16T04:41:10.2385441Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2385934Z 
+2025-04-16T04:41:10.2386296Z     src/app/shared/components/ad-card/ad-card.component.scss:1:8:
+2025-04-16T04:41:10.2399129Z [37m      1 │ @import [32m[37m'../../../core/design/design-tokens';
+2025-04-16T04:41:10.2399712Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2399936Z 
+2025-04-16T04:41:10.2399945Z 
+2025-04-16T04:41:10.2400325Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2400864Z   
+2025-04-16T04:41:10.2401672Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2402155Z 
+2025-04-16T04:41:10.2402169Z 
+2025-04-16T04:41:10.2402841Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2403330Z 
+2025-04-16T04:41:10.2404017Z     src/app/shared/components/main-layout/main-layout.component.scss:1:8:
+2025-04-16T04:41:10.2404959Z [37m      1 │ @import [32m[37m'../../../core/design/design-tokens';
+2025-04-16T04:41:10.2405501Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2405726Z 
+2025-04-16T04:41:10.2405735Z 
+2025-04-16T04:41:10.2406108Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2406644Z   
+2025-04-16T04:41:10.2407265Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2407722Z 
+2025-04-16T04:41:10.2407729Z 
+2025-04-16T04:41:10.2408409Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2408890Z 
+2025-04-16T04:41:10.2409319Z     src/app/shared/emerald/components/app-card/app-card.component.scss:1:8:
+2025-04-16T04:41:10.2410526Z [37m      1 │ @import [32m[37m'../../../../../app/core/design/design-tokens';
+2025-04-16T04:41:10.2411108Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2411344Z 
+2025-04-16T04:41:10.2411352Z 
+2025-04-16T04:41:10.2411712Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2412263Z   
+2025-04-16T04:41:10.2412859Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2413306Z 
+2025-04-16T04:41:10.2413314Z 
+2025-04-16T04:41:10.2414161Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2414677Z 
+2025-04-16T04:41:10.2415114Z     src/app/shared/emerald/components/app-card/app-card.component.scss:231:26:
+2025-04-16T04:41:10.2416103Z [37m      231 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2416793Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2417078Z 
+2025-04-16T04:41:10.2417086Z 
+2025-04-16T04:41:10.2417511Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2418135Z   Use color.adjust instead.
+2025-04-16T04:41:10.2418462Z   
+2025-04-16T04:41:10.2419092Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2419549Z 
+2025-04-16T04:41:10.2419556Z 
+2025-04-16T04:41:10.2420227Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2420713Z 
+2025-04-16T04:41:10.2421155Z     src/app/shared/emerald/components/app-card/app-card.component.scss:231:26:
+2025-04-16T04:41:10.2422138Z [37m      231 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2422772Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2423060Z 
+2025-04-16T04:41:10.2423078Z 
+2025-04-16T04:41:10.2423271Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2423893Z   
+2025-04-16T04:41:10.2424338Z   color.scale($color, $lightness: -17.1140939597%)
+2025-04-16T04:41:10.2424856Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2425254Z   
+2025-04-16T04:41:10.2425797Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2426187Z 
+2025-04-16T04:41:10.2426195Z 
+2025-04-16T04:41:10.2426870Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2427360Z 
+2025-04-16T04:41:10.2427821Z     src/app/shared/emerald/components/app-card/app-card.component.scss:240:26:
+2025-04-16T04:41:10.2428869Z [37m      240 │         background-color: [32m[37mdarken($primary, 10%);
+2025-04-16T04:41:10.2429559Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2429846Z 
+2025-04-16T04:41:10.2429855Z 
+2025-04-16T04:41:10.2430462Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2431109Z   Use color.adjust instead.
+2025-04-16T04:41:10.2431500Z   
+2025-04-16T04:41:10.2432155Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2432624Z 
+2025-04-16T04:41:10.2432631Z 
+2025-04-16T04:41:10.2433310Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2433992Z 
+2025-04-16T04:41:10.2434449Z     src/app/shared/emerald/components/app-card/app-card.component.scss:240:26:
+2025-04-16T04:41:10.2435484Z [37m      240 │         background-color: [32m[37mdarken($primary, 10%);
+2025-04-16T04:41:10.2436149Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2436439Z 
+2025-04-16T04:41:10.2436447Z 
+2025-04-16T04:41:10.2436651Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2437038Z   
+2025-04-16T04:41:10.2437414Z   color.scale($color, $lightness: -18.1494661922%)
+2025-04-16T04:41:10.2437970Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2438368Z   
+2025-04-16T04:41:10.2438910Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2439507Z 
+2025-04-16T04:41:10.2439515Z 
+2025-04-16T04:41:10.2440207Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2440716Z 
+2025-04-16T04:41:10.2441161Z     src/app/shared/emerald/components/app-card/app-card.component.scss:275:26:
+2025-04-16T04:41:10.2442172Z [37m      275 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2442823Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2443104Z 
+2025-04-16T04:41:10.2443112Z 
+2025-04-16T04:41:10.2443711Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2444360Z   Use color.adjust instead.
+2025-04-16T04:41:10.2444705Z   
+2025-04-16T04:41:10.2445354Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2445823Z 
+2025-04-16T04:41:10.2445830Z 
+2025-04-16T04:41:10.2446521Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2447050Z 
+2025-04-16T04:41:10.2447496Z     src/app/shared/emerald/components/app-card/app-card.component.scss:275:26:
+2025-04-16T04:41:10.2448504Z [37m      275 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2449158Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2449437Z 
+2025-04-16T04:41:10.2449445Z 
+2025-04-16T04:41:10.2449652Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2450036Z   
+2025-04-16T04:41:10.2450397Z   color.scale($color, $lightness: -17.1140939597%)
+2025-04-16T04:41:10.2450922Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2451327Z   
+2025-04-16T04:41:10.2451865Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2452249Z 
+2025-04-16T04:41:10.2452257Z 
+2025-04-16T04:41:10.2452934Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2453663Z 
+2025-04-16T04:41:10.2454114Z     src/app/shared/emerald/components/app-card/app-card.component.scss:288:26:
+2025-04-16T04:41:10.2455144Z [37m      288 │         background-color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2455803Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2456083Z 
+2025-04-16T04:41:10.2456090Z 
+2025-04-16T04:41:10.2456529Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2457166Z   Use color.adjust instead.
+2025-04-16T04:41:10.2457494Z   
+2025-04-16T04:41:10.2458140Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2458601Z 
+2025-04-16T04:41:10.2458616Z 
+2025-04-16T04:41:10.2459290Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2459790Z 
+2025-04-16T04:41:10.2460454Z     src/app/shared/emerald/components/app-card/app-card.component.scss:288:26:
+2025-04-16T04:41:10.2461472Z [37m      288 │         background-color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2462142Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2462430Z 
+2025-04-16T04:41:10.2462438Z 
+2025-04-16T04:41:10.2462632Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2463019Z   
+2025-04-16T04:41:10.2463393Z   color.scale($color, $lightness: -20.3187250996%)
+2025-04-16T04:41:10.2464093Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2464485Z   
+2025-04-16T04:41:10.2465028Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2465410Z 
+2025-04-16T04:41:10.2465418Z 
+2025-04-16T04:41:10.2466103Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2466601Z 
+2025-04-16T04:41:10.2467022Z     src/app/shared/emerald/components/avatar/avatar.component.scss:1:8:
+2025-04-16T04:41:10.2467998Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2468757Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2468989Z 
+2025-04-16T04:41:10.2468996Z 
+2025-04-16T04:41:10.2469371Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2469929Z   
+2025-04-16T04:41:10.2470570Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2471036Z 
+2025-04-16T04:41:10.2471044Z 
+2025-04-16T04:41:10.2471722Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2472219Z 
+2025-04-16T04:41:10.2472656Z     src/app/shared/emerald/components/card-grid/card-grid.component.scss:1:8:
+2025-04-16T04:41:10.2473879Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2474480Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2474709Z 
+2025-04-16T04:41:10.2474730Z 
+2025-04-16T04:41:10.2475116Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2475675Z   
+2025-04-16T04:41:10.2476313Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2476779Z 
+2025-04-16T04:41:10.2476787Z 
+2025-04-16T04:41:10.2477455Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2477964Z 
+2025-04-16T04:41:10.2478626Z     src/app/shared/emerald/components/floating-action-button/floating-action-button.component.scss:1:8:
+2025-04-16T04:41:10.2479827Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2480399Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2480621Z 
+2025-04-16T04:41:10.2480628Z 
+2025-04-16T04:41:10.2481016Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2481561Z   
+2025-04-16T04:41:10.2482207Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2482676Z 
+2025-04-16T04:41:10.2482684Z 
+2025-04-16T04:41:10.2483354Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2484036Z 
+2025-04-16T04:41:10.2484436Z     src/app/shared/emerald/components/label/label.component.scss:1:8:
+2025-04-16T04:41:10.2485403Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2485963Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2486192Z 
+2025-04-16T04:41:10.2486200Z 
+2025-04-16T04:41:10.2486576Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2487137Z   
+2025-04-16T04:41:10.2487772Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2488229Z 
+2025-04-16T04:41:10.2488236Z 
+2025-04-16T04:41:10.2488905Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2489589Z 
+2025-04-16T04:41:10.2489999Z     src/app/shared/emerald/components/label/label.component.scss:4:14:
+2025-04-16T04:41:10.2490893Z [37m      4 │ $success-100: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.2491484Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2491740Z 
+2025-04-16T04:41:10.2491747Z 
+2025-04-16T04:41:10.2492177Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2492819Z   Use color.adjust instead.
+2025-04-16T04:41:10.2493155Z   
+2025-04-16T04:41:10.2494015Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2494496Z 
+2025-04-16T04:41:10.2494503Z 
+2025-04-16T04:41:10.2495190Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2495693Z 
+2025-04-16T04:41:10.2496083Z     src/app/shared/emerald/components/label/label.component.scss:4:14:
+2025-04-16T04:41:10.2496977Z [37m      4 │ $success-100: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.2497550Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2497795Z 
+2025-04-16T04:41:10.2497977Z 
+2025-04-16T04:41:10.2498185Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2498586Z   
+2025-04-16T04:41:10.2498955Z   color.scale($color, $lightness: 78.7644787645%)
+2025-04-16T04:41:10.2499467Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2499847Z   
+2025-04-16T04:41:10.2500385Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2500784Z 
+2025-04-16T04:41:10.2500792Z 
+2025-04-16T04:41:10.2501464Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2501972Z 
+2025-04-16T04:41:10.2502364Z     src/app/shared/emerald/components/label/label.component.scss:5:14:
+2025-04-16T04:41:10.2503257Z [37m      5 │ $success-300: [32m[37mlighten($success, 20%);
+2025-04-16T04:41:10.2504001Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2504254Z 
+2025-04-16T04:41:10.2504275Z 
+2025-04-16T04:41:10.2504707Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2505361Z   Use color.adjust instead.
+2025-04-16T04:41:10.2505701Z   
+2025-04-16T04:41:10.2506339Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2506803Z 
+2025-04-16T04:41:10.2506811Z 
+2025-04-16T04:41:10.2507488Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2507989Z 
+2025-04-16T04:41:10.2508374Z     src/app/shared/emerald/components/label/label.component.scss:5:14:
+2025-04-16T04:41:10.2509257Z [37m      5 │ $success-300: [32m[37mlighten($success, 20%);
+2025-04-16T04:41:10.2509829Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2510071Z 
+2025-04-16T04:41:10.2510078Z 
+2025-04-16T04:41:10.2510282Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2510678Z   
+2025-04-16T04:41:10.2511045Z   color.scale($color, $lightness: 39.3822393822%)
+2025-04-16T04:41:10.2511520Z   color.adjust($color, $lightness: 20%)
+2025-04-16T04:41:10.2511878Z   
+2025-04-16T04:41:10.2512413Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2512796Z 
+2025-04-16T04:41:10.2512803Z 
+2025-04-16T04:41:10.2513687Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2514195Z 
+2025-04-16T04:41:10.2514588Z     src/app/shared/emerald/components/label/label.component.scss:6:14:
+2025-04-16T04:41:10.2515460Z [37m      6 │ $success-700: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2516033Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2516268Z 
+2025-04-16T04:41:10.2516275Z 
+2025-04-16T04:41:10.2516699Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2517348Z   Use color.adjust instead.
+2025-04-16T04:41:10.2517689Z   
+2025-04-16T04:41:10.2518555Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2519048Z 
+2025-04-16T04:41:10.2519056Z 
+2025-04-16T04:41:10.2519747Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2520279Z 
+2025-04-16T04:41:10.2520673Z     src/app/shared/emerald/components/label/label.component.scss:6:14:
+2025-04-16T04:41:10.2521570Z [37m      6 │ $success-700: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2522145Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2522399Z 
+2025-04-16T04:41:10.2522407Z 
+2025-04-16T04:41:10.2522602Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2522989Z   
+2025-04-16T04:41:10.2523353Z   color.scale($color, $lightness: -20.3187250996%)
+2025-04-16T04:41:10.2524040Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2524439Z   
+2025-04-16T04:41:10.2524977Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2525355Z 
+2025-04-16T04:41:10.2525363Z 
+2025-04-16T04:41:10.2526040Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2526525Z 
+2025-04-16T04:41:10.2527129Z     src/app/shared/emerald/components/label/label.component.scss:8:14:
+2025-04-16T04:41:10.2528041Z [37m      8 │ $warning-100: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2528629Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2528896Z 
+2025-04-16T04:41:10.2528904Z 
+2025-04-16T04:41:10.2529363Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2530045Z   Use color.adjust instead.
+2025-04-16T04:41:10.2530410Z   
+2025-04-16T04:41:10.2531106Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2531664Z 
+2025-04-16T04:41:10.2531674Z 
+2025-04-16T04:41:10.2532358Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2532844Z 
+2025-04-16T04:41:10.2533215Z     src/app/shared/emerald/components/label/label.component.scss:8:14:
+2025-04-16T04:41:10.2534277Z [37m      8 │ $warning-100: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2534897Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2535167Z 
+2025-04-16T04:41:10.2535175Z 
+2025-04-16T04:41:10.2535383Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2535796Z   
+2025-04-16T04:41:10.2536180Z   color.scale($color, $lightness: 82.2580645161%)
+2025-04-16T04:41:10.2536723Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2537139Z   
+2025-04-16T04:41:10.2537706Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2538120Z 
+2025-04-16T04:41:10.2538128Z 
+2025-04-16T04:41:10.2538837Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2539373Z 
+2025-04-16T04:41:10.2539791Z     src/app/shared/emerald/components/label/label.component.scss:9:14:
+2025-04-16T04:41:10.2540754Z [37m      9 │ $warning-300: [32m[37mlighten($warning, 20%);
+2025-04-16T04:41:10.2541376Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2541640Z 
+2025-04-16T04:41:10.2541647Z 
+2025-04-16T04:41:10.2542110Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2542791Z   Use color.adjust instead.
+2025-04-16T04:41:10.2543149Z   
+2025-04-16T04:41:10.2544099Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2544594Z 
+2025-04-16T04:41:10.2544602Z 
+2025-04-16T04:41:10.2545356Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2545881Z 
+2025-04-16T04:41:10.2546289Z     src/app/shared/emerald/components/label/label.component.scss:9:14:
+2025-04-16T04:41:10.2547228Z [37m      9 │ $warning-300: [32m[37mlighten($warning, 20%);
+2025-04-16T04:41:10.2547857Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2548116Z 
+2025-04-16T04:41:10.2548136Z 
+2025-04-16T04:41:10.2548521Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2548951Z   
+2025-04-16T04:41:10.2549334Z   color.scale($color, $lightness: 41.1290322581%)
+2025-04-16T04:41:10.2549890Z   color.adjust($color, $lightness: 20%)
+2025-04-16T04:41:10.2550297Z   
+2025-04-16T04:41:10.2550874Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2551278Z 
+2025-04-16T04:41:10.2551287Z 
+2025-04-16T04:41:10.2551983Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2552505Z 
+2025-04-16T04:41:10.2552994Z     src/app/shared/emerald/components/page-header/page-header.component.scss:1:8:
+2025-04-16T04:41:10.2554253Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2554848Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2555072Z 
+2025-04-16T04:41:10.2555080Z 
+2025-04-16T04:41:10.2555476Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2556066Z   
+2025-04-16T04:41:10.2556743Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2557225Z 
+2025-04-16T04:41:10.2557425Z 
+2025-04-16T04:41:10.2558153Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2558689Z 
+2025-04-16T04:41:10.2559195Z     src/app/shared/emerald/components/page-header/page-header.component.scss:8:14:
+2025-04-16T04:41:10.2560254Z [37m      8 │ $primary-700: [32m[37mdarken($primary-500, 10%);
+2025-04-16T04:41:10.2560890Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2561147Z 
+2025-04-16T04:41:10.2561155Z 
+2025-04-16T04:41:10.2561606Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2562270Z   Use color.adjust instead.
+2025-04-16T04:41:10.2562622Z   
+2025-04-16T04:41:10.2563297Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2564040Z 
+2025-04-16T04:41:10.2564050Z 
+2025-04-16T04:41:10.2564798Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2565327Z 
+2025-04-16T04:41:10.2565834Z     src/app/shared/emerald/components/page-header/page-header.component.scss:8:14:
+2025-04-16T04:41:10.2566882Z [37m      8 │ $primary-700: [32m[37mdarken($primary-500, 10%);
+2025-04-16T04:41:10.2567513Z         ╵               [32m^[0m
+2025-04-16T04:41:10.2567781Z 
+2025-04-16T04:41:10.2567790Z 
+2025-04-16T04:41:10.2568001Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2568409Z   
+2025-04-16T04:41:10.2568872Z   color.scale($color, $lightness: -18.1494661922%)
+2025-04-16T04:41:10.2569436Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2569857Z   
+2025-04-16T04:41:10.2570431Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2570831Z 
+2025-04-16T04:41:10.2570839Z 
+2025-04-16T04:41:10.2571566Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2572091Z 
+2025-04-16T04:41:10.2572565Z     src/app/shared/emerald/components/page-header/page-header.component.scss:226:26:
+2025-04-16T04:41:10.2573917Z [37m      226 │         background-color: [32m[37mdarken($primary, 10%);
+2025-04-16T04:41:10.2574606Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2574891Z 
+2025-04-16T04:41:10.2574908Z 
+2025-04-16T04:41:10.2575328Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2575974Z   Use color.adjust instead.
+2025-04-16T04:41:10.2576305Z   
+2025-04-16T04:41:10.2576968Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2577474Z 
+2025-04-16T04:41:10.2577483Z 
+2025-04-16T04:41:10.2578213Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2578762Z 
+2025-04-16T04:41:10.2579443Z     src/app/shared/emerald/components/page-header/page-header.component.scss:226:26:
+2025-04-16T04:41:10.2580979Z [37m      226 │         background-color: [32m[37mdarken($primary, 10%);
+2025-04-16T04:41:10.2581897Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2582363Z 
+2025-04-16T04:41:10.2582372Z 
+2025-04-16T04:41:10.2582597Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2583018Z   
+2025-04-16T04:41:10.2583640Z   color.scale($color, $lightness: -18.1494661922%)
+2025-04-16T04:41:10.2584216Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2584630Z   
+2025-04-16T04:41:10.2585229Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2585638Z 
+2025-04-16T04:41:10.2585647Z 
+2025-04-16T04:41:10.2586354Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2586877Z 
+2025-04-16T04:41:10.2587402Z     src/app/shared/emerald/components/page-header/page-header.component.scss:244:26:
+2025-04-16T04:41:10.2588529Z [37m      244 │         background-color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2589230Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2589795Z 
+2025-04-16T04:41:10.2589803Z 
+2025-04-16T04:41:10.2590255Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2590937Z   Use color.adjust instead.
+2025-04-16T04:41:10.2591292Z   
+2025-04-16T04:41:10.2591964Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2592449Z 
+2025-04-16T04:41:10.2592457Z 
+2025-04-16T04:41:10.2593174Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2593871Z 
+2025-04-16T04:41:10.2594385Z     src/app/shared/emerald/components/page-header/page-header.component.scss:244:26:
+2025-04-16T04:41:10.2595498Z [37m      244 │         background-color: [32m[37mdarken($success, 10%);
+2025-04-16T04:41:10.2596189Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2596492Z 
+2025-04-16T04:41:10.2596501Z 
+2025-04-16T04:41:10.2596713Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2597115Z   
+2025-04-16T04:41:10.2597515Z   color.scale($color, $lightness: -20.3187250996%)
+2025-04-16T04:41:10.2598061Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2598468Z   
+2025-04-16T04:41:10.2599036Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2599432Z 
+2025-04-16T04:41:10.2599440Z 
+2025-04-16T04:41:10.2600135Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2600657Z 
+2025-04-16T04:41:10.2601156Z     src/app/shared/emerald/components/page-header/page-header.component.scss:253:26:
+2025-04-16T04:41:10.2602293Z [37m      253 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2603158Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2603662Z 
+2025-04-16T04:41:10.2603671Z 
+2025-04-16T04:41:10.2604144Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2604824Z   Use color.adjust instead.
+2025-04-16T04:41:10.2605178Z   
+2025-04-16T04:41:10.2605863Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2606353Z 
+2025-04-16T04:41:10.2606362Z 
+2025-04-16T04:41:10.2607066Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2607635Z 
+2025-04-16T04:41:10.2608160Z     src/app/shared/emerald/components/page-header/page-header.component.scss:253:26:
+2025-04-16T04:41:10.2609294Z [37m      253 │         background-color: [32m[37mdarken($danger, 10%);
+2025-04-16T04:41:10.2610182Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2610501Z 
+2025-04-16T04:41:10.2610508Z 
+2025-04-16T04:41:10.2610716Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2611136Z   
+2025-04-16T04:41:10.2611523Z   color.scale($color, $lightness: -17.1140939597%)
+2025-04-16T04:41:10.2612244Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2612664Z   
+2025-04-16T04:41:10.2613233Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2613827Z 
+2025-04-16T04:41:10.2613836Z 
+2025-04-16T04:41:10.2614566Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2615085Z 
+2025-04-16T04:41:10.2615604Z     src/app/shared/emerald/components/page-header/page-header.component.scss:262:26:
+2025-04-16T04:41:10.2616704Z [37m      262 │         background-color: [32m[37mdarken($warning, 10%);
+2025-04-16T04:41:10.2617385Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2617683Z 
+2025-04-16T04:41:10.2617691Z 
+2025-04-16T04:41:10.2618136Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2618818Z   Use color.adjust instead.
+2025-04-16T04:41:10.2619167Z   
+2025-04-16T04:41:10.2619841Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2620324Z 
+2025-04-16T04:41:10.2620331Z 
+2025-04-16T04:41:10.2621057Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2621783Z 
+2025-04-16T04:41:10.2622311Z     src/app/shared/emerald/components/page-header/page-header.component.scss:262:26:
+2025-04-16T04:41:10.2624011Z [37m      262 │         background-color: [32m[37mdarken($warning, 10%);
+2025-04-16T04:41:10.2624735Z           ╵                           [32m^[0m
+2025-04-16T04:41:10.2625038Z 
+2025-04-16T04:41:10.2625047Z 
+2025-04-16T04:41:10.2625268Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2625679Z   
+2025-04-16T04:41:10.2626126Z   color.scale($color, $lightness: -19.465648855%)
+2025-04-16T04:41:10.2626891Z   color.adjust($color, $lightness: -10%)
+2025-04-16T04:41:10.2627309Z   
+2025-04-16T04:41:10.2627889Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2628300Z 
+2025-04-16T04:41:10.2628322Z 
+2025-04-16T04:41:10.2629017Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2629557Z 
+2025-04-16T04:41:10.2629940Z     src/app/shared/emerald/components/pager/pager.component.scss:1:8:
+2025-04-16T04:41:10.2630883Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2631551Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2631790Z 
+2025-04-16T04:41:10.2631799Z 
+2025-04-16T04:41:10.2632199Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2632773Z   
+2025-04-16T04:41:10.2633593Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2634093Z 
+2025-04-16T04:41:10.2634101Z 
+2025-04-16T04:41:10.2634810Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2635321Z 
+2025-04-16T04:41:10.2635900Z     src/app/shared/emerald/components/skeleton-loader/skeleton-loader.component.scss:1:8:
+2025-04-16T04:41:10.2637002Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2637584Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2637820Z 
+2025-04-16T04:41:10.2637829Z 
+2025-04-16T04:41:10.2638213Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2638776Z   
+2025-04-16T04:41:10.2639413Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2639880Z 
+2025-04-16T04:41:10.2639888Z 
+2025-04-16T04:41:10.2640595Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2641105Z 
+2025-04-16T04:41:10.2641525Z     src/app/shared/emerald/components/toggle/toggle.component.scss:1:8:
+2025-04-16T04:41:10.2642559Z [37m      1 │ @import [32m[37m'../../../../core/design/design-tokens';
+2025-04-16T04:41:10.2643164Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2643749Z 
+2025-04-16T04:41:10.2643763Z 
+2025-04-16T04:41:10.2644162Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2644920Z   
+2025-04-16T04:41:10.2645626Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2646126Z 
+2025-04-16T04:41:10.2646134Z 
+2025-04-16T04:41:10.2647050Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2647583Z 
+2025-04-16T04:41:10.2647809Z     src/app/core/design/components.scss:8:8:
+2025-04-16T04:41:10.2648522Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.2649058Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2649301Z 
+2025-04-16T04:41:10.2649310Z 
+2025-04-16T04:41:10.2649709Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2650284Z   
+2025-04-16T04:41:10.2650951Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2651447Z 
+2025-04-16T04:41:10.2651734Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2652102Z 
+2025-04-16T04:41:10.2652470Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2653174Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2654067Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2654384Z 
+2025-04-16T04:41:10.2654393Z 
+2025-04-16T04:41:10.2655096Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2655617Z 
+2025-04-16T04:41:10.2655849Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.2656598Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.2657186Z           ╵          [32m^[0m
+2025-04-16T04:41:10.2657422Z 
+2025-04-16T04:41:10.2657429Z 
+2025-04-16T04:41:10.2657881Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2658549Z   Use color.adjust instead.
+2025-04-16T04:41:10.2658922Z   
+2025-04-16T04:41:10.2659623Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2660300Z 
+2025-04-16T04:41:10.2660621Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2660998Z 
+2025-04-16T04:41:10.2661209Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2661938Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2662592Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2662895Z 
+2025-04-16T04:41:10.2662910Z 
+2025-04-16T04:41:10.2663937Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2664481Z 
+2025-04-16T04:41:10.2664732Z     src/app/core/design/components.scss:374:9:
+2025-04-16T04:41:10.2665488Z [37m      374 │   color: [32m[37mdarken($success, 30%);
+2025-04-16T04:41:10.2666058Z           ╵          [32m^[0m
+2025-04-16T04:41:10.2666303Z 
+2025-04-16T04:41:10.2666327Z 
+2025-04-16T04:41:10.2666534Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2666936Z   
+2025-04-16T04:41:10.2667336Z   color.scale($color, $lightness: -60.9561752988%)
+2025-04-16T04:41:10.2667864Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.2668278Z   
+2025-04-16T04:41:10.2668840Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2669238Z 
+2025-04-16T04:41:10.2669528Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2669894Z 
+2025-04-16T04:41:10.2670091Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2670762Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2671378Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2671680Z 
+2025-04-16T04:41:10.2671687Z 
+2025-04-16T04:41:10.2672377Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2672887Z 
+2025-04-16T04:41:10.2673291Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.2674415Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.2675100Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2675389Z 
+2025-04-16T04:41:10.2675396Z 
+2025-04-16T04:41:10.2675830Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2676497Z   Use color.adjust instead.
+2025-04-16T04:41:10.2676846Z   
+2025-04-16T04:41:10.2677518Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2678000Z 
+2025-04-16T04:41:10.2678274Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2678648Z 
+2025-04-16T04:41:10.2678847Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2679535Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2680152Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2680444Z 
+2025-04-16T04:41:10.2680452Z 
+2025-04-16T04:41:10.2681167Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2681883Z 
+2025-04-16T04:41:10.2682125Z     src/app/core/design/components.scss:375:20:
+2025-04-16T04:41:10.2682952Z [37m      375 │   background-color: [32m[37mlighten($success, 40%);
+2025-04-16T04:41:10.2683810Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2684096Z 
+2025-04-16T04:41:10.2684103Z 
+2025-04-16T04:41:10.2684303Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2684724Z   
+2025-04-16T04:41:10.2685091Z   color.scale($color, $lightness: 78.7644787645%)
+2025-04-16T04:41:10.2685628Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2686020Z   
+2025-04-16T04:41:10.2686589Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2686983Z 
+2025-04-16T04:41:10.2687273Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2687635Z 
+2025-04-16T04:41:10.2687846Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2688542Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2689162Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2689469Z 
+2025-04-16T04:41:10.2689477Z 
+2025-04-16T04:41:10.2690192Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2690729Z 
+2025-04-16T04:41:10.2690984Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.2691792Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.2692625Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.2692919Z 
+2025-04-16T04:41:10.2692927Z 
+2025-04-16T04:41:10.2693373Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2694272Z   Use color.adjust instead.
+2025-04-16T04:41:10.2694616Z   
+2025-04-16T04:41:10.2695289Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2695788Z 
+2025-04-16T04:41:10.2696068Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2696432Z 
+2025-04-16T04:41:10.2696643Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2697316Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2697934Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2698225Z 
+2025-04-16T04:41:10.2698239Z 
+2025-04-16T04:41:10.2698930Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2699459Z 
+2025-04-16T04:41:10.2699707Z     src/app/core/design/components.scss:376:16:
+2025-04-16T04:41:10.2700528Z [37m      376 │   border-color: [32m[37mlighten($success, 30%);
+2025-04-16T04:41:10.2701360Z           ╵                 [32m^[0m
+2025-04-16T04:41:10.2701627Z 
+2025-04-16T04:41:10.2701634Z 
+2025-04-16T04:41:10.2701839Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2702231Z   
+2025-04-16T04:41:10.2702767Z   color.scale($color, $lightness: 59.0733590734%)
+2025-04-16T04:41:10.2703298Z   color.adjust($color, $lightness: 30%)
+2025-04-16T04:41:10.2703874Z   
+2025-04-16T04:41:10.2704468Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2704874Z 
+2025-04-16T04:41:10.2705147Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2705518Z 
+2025-04-16T04:41:10.2705713Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2706399Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2707015Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2707388Z 
+2025-04-16T04:41:10.2707397Z 
+2025-04-16T04:41:10.2708130Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2708828Z 
+2025-04-16T04:41:10.2709076Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.2709842Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.2710461Z           ╵          [32m^[0m
+2025-04-16T04:41:10.2710708Z 
+2025-04-16T04:41:10.2710716Z 
+2025-04-16T04:41:10.2711158Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2712221Z   Use color.adjust instead.
+2025-04-16T04:41:10.2712578Z   
+2025-04-16T04:41:10.2713271Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2713936Z 
+2025-04-16T04:41:10.2714227Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2714768Z 
+2025-04-16T04:41:10.2714981Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2715687Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2716301Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2716604Z 
+2025-04-16T04:41:10.2716612Z 
+2025-04-16T04:41:10.2717308Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2717829Z 
+2025-04-16T04:41:10.2718071Z     src/app/core/design/components.scss:380:9:
+2025-04-16T04:41:10.2718809Z [37m      380 │   color: [32m[37mdarken($warning, 30%);
+2025-04-16T04:41:10.2719389Z           ╵          [32m^[0m
+2025-04-16T04:41:10.2719629Z 
+2025-04-16T04:41:10.2719636Z 
+2025-04-16T04:41:10.2719837Z   darken() is deprecated. Suggestions:
+2025-04-16T04:41:10.2720232Z   
+2025-04-16T04:41:10.2720631Z   color.scale($color, $lightness: -58.3969465649%)
+2025-04-16T04:41:10.2721202Z   color.adjust($color, $lightness: -30%)
+2025-04-16T04:41:10.2721617Z   
+2025-04-16T04:41:10.2722376Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2722790Z 
+2025-04-16T04:41:10.2723068Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2723650Z 
+2025-04-16T04:41:10.2723866Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2724577Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2725189Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2725503Z 
+2025-04-16T04:41:10.2725512Z 
+2025-04-16T04:41:10.2726203Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2726730Z 
+2025-04-16T04:41:10.2726967Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2727871Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2728543Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2728820Z 
+2025-04-16T04:41:10.2728828Z 
+2025-04-16T04:41:10.2729270Z   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2729925Z   Use color.adjust instead.
+2025-04-16T04:41:10.2730267Z   
+2025-04-16T04:41:10.2730941Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2731432Z 
+2025-04-16T04:41:10.2731780Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2732144Z 
+2025-04-16T04:41:10.2732515Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2733575Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2734256Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2734562Z 
+2025-04-16T04:41:10.2734577Z 
+2025-04-16T04:41:10.2735274Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2735783Z 
+2025-04-16T04:41:10.2736027Z     src/app/core/design/components.scss:381:20:
+2025-04-16T04:41:10.2736854Z [37m      381 │   background-color: [32m[37mlighten($warning, 40%);
+2025-04-16T04:41:10.2737508Z           ╵                     [32m^[0m
+2025-04-16T04:41:10.2737794Z 
+2025-04-16T04:41:10.2737802Z 
+2025-04-16T04:41:10.2738001Z   lighten() is deprecated. Suggestions:
+2025-04-16T04:41:10.2738405Z   
+2025-04-16T04:41:10.2738787Z   color.scale($color, $lightness: 82.2580645161%)
+2025-04-16T04:41:10.2739307Z   color.adjust($color, $lightness: 40%)
+2025-04-16T04:41:10.2739702Z   
+2025-04-16T04:41:10.2740283Z   More info: [4mhttps://sass-lang.com/d/color-functions[0m
+2025-04-16T04:41:10.2740681Z 
+2025-04-16T04:41:10.2740965Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2741492Z 
+2025-04-16T04:41:10.2741697Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2742441Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2743061Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2743359Z 
+2025-04-16T04:41:10.2743368Z 
+2025-04-16T04:41:10.2744312Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2744835Z 
+2025-04-16T04:41:10.2745044Z     src/app/core/design/main.scss:8:8:
+2025-04-16T04:41:10.2745695Z [37m      8 │ @import [32m[37m'design-tokens';
+2025-04-16T04:41:10.2746195Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2746433Z 
+2025-04-16T04:41:10.2746441Z 
+2025-04-16T04:41:10.2746828Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2747416Z   
+2025-04-16T04:41:10.2748076Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2748573Z 
+2025-04-16T04:41:10.2748854Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2749216Z 
+2025-04-16T04:41:10.2749412Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2750093Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2750701Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2750984Z 
+2025-04-16T04:41:10.2750991Z 
+2025-04-16T04:41:10.2751709Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2752233Z 
+2025-04-16T04:41:10.2752449Z     src/app/core/design/main.scss:9:8:
+2025-04-16T04:41:10.2753348Z [37m      9 │ @import [32m[37m'components';
+2025-04-16T04:41:10.2754030Z         ╵         [32m^[0m
+2025-04-16T04:41:10.2754262Z 
+2025-04-16T04:41:10.2754270Z 
+2025-04-16T04:41:10.2754665Z   Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+2025-04-16T04:41:10.2755234Z   
+2025-04-16T04:41:10.2755889Z   More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+2025-04-16T04:41:10.2756372Z 
+2025-04-16T04:41:10.2756647Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2757016Z 
+2025-04-16T04:41:10.2757204Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2757891Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2758521Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2758813Z 
+2025-04-16T04:41:10.2758821Z 
+2025-04-16T04:41:10.2759727Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2760248Z 
+2025-04-16T04:41:10.2760462Z     src/app/core/design/main.scss:190:18:
+2025-04-16T04:41:10.2761255Z [37m      190 │   margin-right: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2762072Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2762364Z 
+2025-04-16T04:41:10.2762374Z 
+2025-04-16T04:41:10.2762861Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2763787Z   
+2025-04-16T04:41:10.2764383Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2764996Z   
+2025-04-16T04:41:10.2765682Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2766172Z 
+2025-04-16T04:41:10.2766459Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2766818Z 
+2025-04-16T04:41:10.2767021Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2767690Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2768304Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2768598Z 
+2025-04-16T04:41:10.2768607Z 
+2025-04-16T04:41:10.2769302Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2769822Z 
+2025-04-16T04:41:10.2770028Z     src/app/core/design/main.scss:191:17:
+2025-04-16T04:41:10.2770843Z [37m      191 │   margin-left: -([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2771681Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2772149Z 
+2025-04-16T04:41:10.2772158Z 
+2025-04-16T04:41:10.2772651Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2773313Z   
+2025-04-16T04:41:10.2774061Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2774681Z   
+2025-04-16T04:41:10.2775363Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2775857Z 
+2025-04-16T04:41:10.2776128Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2776499Z 
+2025-04-16T04:41:10.2776689Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2777387Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2778000Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2778288Z 
+2025-04-16T04:41:10.2778310Z 
+2025-04-16T04:41:10.2779031Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2779719Z 
+2025-04-16T04:41:10.2779943Z     src/app/core/design/main.scss:198:18:
+2025-04-16T04:41:10.2780773Z [37m      198 │   padding-right: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2781427Z           ╵                   [32m^[0m
+2025-04-16T04:41:10.2781700Z 
+2025-04-16T04:41:10.2781708Z 
+2025-04-16T04:41:10.2782195Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2782843Z   
+2025-04-16T04:41:10.2783636Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2784240Z   
+2025-04-16T04:41:10.2784950Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2785453Z 
+2025-04-16T04:41:10.2785749Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2786141Z 
+2025-04-16T04:41:10.2786354Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2787058Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2787894Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2788202Z 
+2025-04-16T04:41:10.2788210Z 
+2025-04-16T04:41:10.2788909Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2789425Z 
+2025-04-16T04:41:10.2789644Z     src/app/core/design/main.scss:199:17:
+2025-04-16T04:41:10.2790630Z [37m      199 │   padding-left: ([32m[37m$grid-gutter-width / 2);
+2025-04-16T04:41:10.2791314Z           ╵                  [32m^[0m
+2025-04-16T04:41:10.2791604Z 
+2025-04-16T04:41:10.2791612Z 
+2025-04-16T04:41:10.2792097Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2792976Z   
+2025-04-16T04:41:10.2793915Z   Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+2025-04-16T04:41:10.2794580Z   
+2025-04-16T04:41:10.2795279Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2795770Z 
+2025-04-16T04:41:10.2796052Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2796428Z 
+2025-04-16T04:41:10.2796623Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2797311Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2797926Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2798217Z 
+2025-04-16T04:41:10.2798225Z 
+2025-04-16T04:41:10.2798908Z [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2799431Z 
+2025-04-16T04:41:10.2799639Z     src/app/core/design/main.scss:204:25:
+2025-04-16T04:41:10.2800652Z [37m      204 │     flex: 0 0 percentage([32m[37m$i / $grid-columns);
+2025-04-16T04:41:10.2801357Z           ╵                          [32m^[0m
+2025-04-16T04:41:10.2801644Z 
+2025-04-16T04:41:10.2801829Z 
+2025-04-16T04:41:10.2802325Z   Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+2025-04-16T04:41:10.2802977Z   
+2025-04-16T04:41:10.2803724Z   Recommendation: math.div($i, $grid-columns) or calc($i / $grid-columns)
+2025-04-16T04:41:10.2804313Z   
+2025-04-16T04:41:10.2805005Z   More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+2025-04-16T04:41:10.2805492Z 
+2025-04-16T04:41:10.2805778Z   The plugin "angular-sass" was triggered by this import
+2025-04-16T04:41:10.2806144Z 
+2025-04-16T04:41:10.2806336Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.2807026Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.2807744Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2808104Z 
+2025-04-16T04:41:10.2808319Z [39m[22m
+2025-04-16T04:41:10.2809525Z [1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTwo forwarded modules both define a variable named $primary-100.
+2025-04-16T04:41:10.2810297Z     ╷
+2025-04-16T04:41:10.2810842Z 5   │ @forward '../../app/core/design/design-tokens';
+2025-04-16T04:41:10.2811613Z     │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ original @forward
+2025-04-16T04:41:10.2812103Z ... │
+2025-04-16T04:41:10.2812593Z 7   │ @forward '../../app/core/design/main';
+2025-04-16T04:41:10.2813221Z     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ new @forward
+2025-04-16T04:41:10.2814026Z     ╵
+2025-04-16T04:41:10.2814570Z   src/styles/design-system/index.scss 7:1                           @use
+2025-04-16T04:41:10.2816002Z   src/app/features/user-settings/user-settings.component.scss 11:1  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2816984Z 
+2025-04-16T04:41:10.2816994Z 
+2025-04-16T04:41:10.2817754Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCan't find stylesheet to import.
+2025-04-16T04:41:10.2818421Z   ╷
+2025-04-16T04:41:10.2818896Z 1 │ @import '../../../../styles/variables';
+2025-04-16T04:41:10.2819471Z   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-04-16T04:41:10.2820083Z   ╵
+2025-04-16T04:41:10.2821042Z   src/app/features/tinder/tinder.component.scss 1:9  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2821759Z 
+2025-04-16T04:41:10.2821768Z 
+2025-04-16T04:41:10.2822276Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mUndefined variable.
+2025-04-16T04:41:10.2822818Z     ╷
+2025-04-16T04:41:10.2823659Z 227 │       background-color: $error-100;
+2025-04-16T04:41:10.2824430Z     │                         ^^^^^^^^^^
+2025-04-16T04:41:10.2824856Z     ╵
+2025-04-16T04:41:10.2825857Z   src/app/features/list-view/list-view.component.scss 227:25  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2826600Z 
+2025-04-16T04:41:10.2826617Z 
+2025-04-16T04:41:10.2827823Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTwo forwarded modules both define a variable named $primary-100.
+2025-04-16T04:41:10.2828601Z     ╷
+2025-04-16T04:41:10.2829350Z 5   │ @forward '../../app/core/design/design-tokens';
+2025-04-16T04:41:10.2830293Z     │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ original @forward
+2025-04-16T04:41:10.2830777Z ... │
+2025-04-16T04:41:10.2831248Z 7   │ @forward '../../app/core/design/main';
+2025-04-16T04:41:10.2831935Z     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ new @forward
+2025-04-16T04:41:10.2832380Z     ╵
+2025-04-16T04:41:10.2832958Z   src/styles/design-system/index.scss 7:1                                    @use
+2025-04-16T04:41:10.2835104Z   src/app/features/advertiser-profile/advertiser-profile.component.scss 1:1  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2836148Z 
+2025-04-16T04:41:10.2836157Z 
+2025-04-16T04:41:10.2836675Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mUndefined variable.
+2025-04-16T04:41:10.2837206Z    ╷
+2025-04-16T04:41:10.2837672Z 29 │   background-color: $neutral-50;
+2025-04-16T04:41:10.2838245Z    │                     ^^^^^^^^^^^
+2025-04-16T04:41:10.2838802Z    ╵
+2025-04-16T04:41:10.2839729Z   src/app/features/chat/chat.component.scss 29:21  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2840402Z 
+2025-04-16T04:41:10.2840411Z 
+2025-04-16T04:41:10.2840898Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mUndefined variable.
+2025-04-16T04:41:10.2841412Z     ╷
+2025-04-16T04:41:10.2841935Z 124 │           background-color: $success-100;
+2025-04-16T04:41:10.2842546Z     │                             ^^^^^^^^^^^^
+2025-04-16T04:41:10.2842969Z     ╵
+2025-04-16T04:41:10.2844236Z   src/app/features/wallet/wallet.component.scss 124:29  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.2844965Z 
+2025-04-16T04:41:10.2844975Z 
+2025-04-16T04:41:10.2846200Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'aria-label' since it isn't a known property of 'span'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2847188Z 
+2025-04-16T04:41:10.2847423Z     src/app/app.component.html:45:61:
+2025-04-16T04:41:10.2848440Z [37m      45 │ ...readMessages > 0" [32maria-label="{{unreadMessages}} unread messages"[37m>
+2025-04-16T04:41:10.2849444Z          ╵                      [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2850000Z 
+2025-04-16T04:41:10.2850327Z   Error occurs in the template of component AppComponent.
+2025-04-16T04:41:10.2850731Z 
+2025-04-16T04:41:10.2850931Z     src/app/app.component.ts:28:15:
+2025-04-16T04:41:10.2851904Z [37m      28 │   templateUrl: [32m'./app.component.html'[37m,
+2025-04-16T04:41:10.2852812Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2853137Z 
+2025-04-16T04:41:10.2853153Z 
+2025-04-16T04:41:10.2854272Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./features/tinder/tinder.module"[0m
+2025-04-16T04:41:10.2854829Z 
+2025-04-16T04:41:10.2855132Z     src/app/app.routes.ts:85:31:
+2025-04-16T04:41:10.2856655Z [37m      85 │ ...: () => import([32m'./features/tinder/tinder.module'[37m).then(m => m.T...
+2025-04-16T04:41:10.2857865Z          ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2858276Z 
+2025-04-16T04:41:10.2858285Z 
+2025-04-16T04:41:10.2860308Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './features/tinder/tinder.module' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2861568Z 
+2025-04-16T04:41:10.2861873Z     src/app/app.routes.ts:85:31:
+2025-04-16T04:41:10.2862938Z [37m      85 │ ...: () => import([32m'./features/tinder/tinder.module'[37m).then(m => m.T...
+2025-04-16T04:41:10.2864470Z          ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2865092Z 
+2025-04-16T04:41:10.2865101Z 
+2025-04-16T04:41:10.2866256Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../shared/layouts/main-layout/main-layout.component"[0m
+2025-04-16T04:41:10.2867016Z 
+2025-04-16T04:41:10.2867552Z     src/app/features/advertiser-profile/advertiser-profile.component.ts:18:36:
+2025-04-16T04:41:10.2869264Z [37m      18 │ ...nt } from [32m'../../shared/layouts/main-layout/main-layout.compone[37m...
+2025-04-16T04:41:10.2870522Z          ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2870962Z 
+2025-04-16T04:41:10.2870972Z 
+2025-04-16T04:41:10.2872850Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../shared/layouts/main-layout/main-layout.component' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2874463Z 
+2025-04-16T04:41:10.2875159Z     src/app/features/advertiser-profile/advertiser-profile.component.ts:18:36:
+2025-04-16T04:41:10.2876738Z [37m      18 │ ...nt } from [32m'../../shared/layouts/main-layout/main-layout.compone[37m...
+2025-04-16T04:41:10.2877921Z          ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2878421Z 
+2025-04-16T04:41:10.2878429Z 
+2025-04-16T04:41:10.2879433Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+2025-04-16T04:41:10.2880895Z   Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2881584Z 
+2025-04-16T04:41:10.2882136Z     src/app/features/advertiser-profile/advertiser-profile.component.ts:26:61:
+2025-04-16T04:41:10.2883769Z [37m      26 │ ...monModule, RouterModule, ReactiveFormsModule, [32mMainLayoutComponent[37m]
+2025-04-16T04:41:10.2884871Z          ╵                                                  [32m~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2885360Z 
+2025-04-16T04:41:10.2885565Z   Unknown reference.
+2025-04-16T04:41:10.2885860Z 
+2025-04-16T04:41:10.2886396Z     src/app/features/advertiser-profile/advertiser-profile.component.ts:26:61:
+2025-04-16T04:41:10.2887799Z [37m      26 │ ...monModule, RouterModule, ReactiveFormsModule, [32mMainLayoutComponent[37m]
+2025-04-16T04:41:10.2888980Z          ╵                                                  [32m~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2889383Z 
+2025-04-16T04:41:10.2889391Z 
+2025-04-16T04:41:10.2904875Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component LoginComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2906039Z 
+2025-04-16T04:41:10.2906317Z     src/app/features/auth/auth.module.ts:38:4:
+2025-04-16T04:41:10.2907058Z [37m      38 │     [32mLoginComponent[37m,
+2025-04-16T04:41:10.2907646Z          ╵     [32m~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2907936Z 
+2025-04-16T04:41:10.2907944Z 
+2025-04-16T04:41:10.2909611Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component RegisterComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2911246Z 
+2025-04-16T04:41:10.2911502Z     src/app/features/auth/auth.module.ts:39:4:
+2025-04-16T04:41:10.2912203Z [37m      39 │     [32mRegisterComponent[37m
+2025-04-16T04:41:10.2912819Z          ╵     [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2913100Z 
+2025-04-16T04:41:10.2913108Z 
+2025-04-16T04:41:10.2914255Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5: Argument of type 'Event' is not assignable to parameter of type 'KeyboardEvent'.
+2025-04-16T04:41:10.2916944Z   Type 'Event' is missing the following properties from type 'KeyboardEvent': altKey, charCode, code, ctrlKey, and 17 more.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2917898Z 
+2025-04-16T04:41:10.2918184Z     src/app/features/chat/chat.component.html:286:42:
+2025-04-16T04:41:10.2919091Z [37m      286 │             (keyup.enter)="handleEnterKey([32m$event[37m)"
+2025-04-16T04:41:10.2919841Z           ╵                                           [32m~~~~~~[0m
+2025-04-16T04:41:10.2920162Z 
+2025-04-16T04:41:10.2920487Z   Error occurs in the template of component ChatComponent.
+2025-04-16T04:41:10.2920879Z 
+2025-04-16T04:41:10.2921127Z     src/app/features/chat/chat.component.ts:110:15:
+2025-04-16T04:41:10.2922124Z [37m      110 │   templateUrl: [32m'./chat.component.html'[37m,
+2025-04-16T04:41:10.2922805Z           ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2923107Z 
+2025-04-16T04:41:10.2923123Z 
+2025-04-16T04:41:10.2925864Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5: Argument of type 'import("/home/runner/work/date-night-app2/date-night-app2/client-angular/src/app/shared/emerald/components/page-header/page-header.component").HeaderAction' is not assignable to parameter of type 'HeaderAction'.
+2025-04-16T04:41:10.2928594Z   Property 'icon' is optional in type 'HeaderAction' but required in type 'HeaderAction'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2929348Z 
+2025-04-16T04:41:10.2929698Z     src/app/features/list-view/list-view.component.html:8:41:
+2025-04-16T04:41:10.2930618Z [37m      8 │       (actionClick)="onHeaderActionClick([32m$event[37m)">
+2025-04-16T04:41:10.2931345Z         ╵                                          [32m~~~~~~[0m
+2025-04-16T04:41:10.2931718Z 
+2025-04-16T04:41:10.2932041Z   Error occurs in the template of component ListViewComponent.
+2025-04-16T04:41:10.2932459Z 
+2025-04-16T04:41:10.2932778Z     src/app/features/list-view/list-view.component.ts:78:15:
+2025-04-16T04:41:10.2933886Z [37m      78 │   templateUrl: [32m'./list-view.component.html'[37m,
+2025-04-16T04:41:10.2934658Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2934985Z 
+2025-04-16T04:41:10.2934993Z 
+2025-04-16T04:41:10.2937050Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG9: Type 'AbstractControl<any, any>' is missing the following properties from type 'FormControl<any>': defaultValue, registerOnChange, registerOnDisabledChange[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2938430Z 
+2025-04-16T04:41:10.2938801Z     src/app/features/list-view/list-view.component.html:16:27:
+2025-04-16T04:41:10.2939889Z [37m      16 │           <input matInput [[32mformControl[37m]="filterForm.controls['sear...
+2025-04-16T04:41:10.2940714Z          ╵                            [32m~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2941033Z 
+2025-04-16T04:41:10.2941352Z   Error occurs in the template of component ListViewComponent.
+2025-04-16T04:41:10.2941758Z 
+2025-04-16T04:41:10.2942083Z     src/app/features/list-view/list-view.component.ts:78:15:
+2025-04-16T04:41:10.2942992Z [37m      78 │   templateUrl: [32m'./list-view.component.html'[37m,
+2025-04-16T04:41:10.2943919Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2944246Z 
+2025-04-16T04:41:10.2944254Z 
+2025-04-16T04:41:10.2945290Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type '"netflix" | "list" | "compact"' is not assignable to type '"netflix" | "tinder" | "list"'.
+2025-04-16T04:41:10.2946942Z   Type '"compact"' is not assignable to type '"netflix" | "tinder" | "list"'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2947605Z 
+2025-04-16T04:41:10.2947962Z     src/app/features/list-view/list-view.component.html:205:15:
+2025-04-16T04:41:10.2949219Z [37m      205 │               [[32mlayout[37m]="viewMode === 'list' ? 'list' : (viewMode ...
+2025-04-16T04:41:10.2950181Z           ╵                [32m~~~~~~[0m
+2025-04-16T04:41:10.2950463Z 
+2025-04-16T04:41:10.2950787Z   Error occurs in the template of component ListViewComponent.
+2025-04-16T04:41:10.2951203Z 
+2025-04-16T04:41:10.2951515Z     src/app/features/list-view/list-view.component.ts:78:15:
+2025-04-16T04:41:10.2952594Z [37m      78 │   templateUrl: [32m'./list-view.component.html'[37m,
+2025-04-16T04:41:10.2953307Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2953847Z 
+2025-04-16T04:41:10.2953856Z 
+2025-04-16T04:41:10.2955062Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'isAdvertiserOnline' does not exist on type 'Ad'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2955893Z 
+2025-04-16T04:41:10.2956233Z     src/app/features/list-view/list-view.component.ts:233:33:
+2025-04-16T04:41:10.2957529Z [37m      233 │ ...sAdvertiserOnline: ad.[32misAdvertiserOnline[37m || Math.random() > 0....
+2025-04-16T04:41:10.2958401Z           ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2958723Z 
+2025-04-16T04:41:10.2958732Z 
+2025-04-16T04:41:10.2959893Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'isAdvertiserOnline' does not exist on type 'Ad'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2960699Z 
+2025-04-16T04:41:10.2961026Z     src/app/features/list-view/list-view.component.ts:294:41:
+2025-04-16T04:41:10.2962067Z [37m      294 │         if (filters.status.online && !ad.[32misAdvertiserOnline[37m) {
+2025-04-16T04:41:10.2962928Z           ╵                                          [32m~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2963273Z 
+2025-04-16T04:41:10.2963281Z 
+2025-04-16T04:41:10.2964542Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'isVerified' does not exist on type 'Ad'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2965314Z 
+2025-04-16T04:41:10.2965640Z     src/app/features/list-view/list-view.component.ts:302:43:
+2025-04-16T04:41:10.2966625Z [37m      302 │         if (filters.status.verified && !ad.[32misVerified[37m) {
+2025-04-16T04:41:10.2967421Z           ╵                                            [32m~~~~~~~~~~[0m
+2025-04-16T04:41:10.2967742Z 
+2025-04-16T04:41:10.2967758Z 
+2025-04-16T04:41:10.2969059Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'advertiserImage' does not exist on type 'Ad'. Did you mean 'advertiser'?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2969944Z 
+2025-04-16T04:41:10.2970338Z     src/app/features/netflix-view/netflix-view.component.html:9:30:
+2025-04-16T04:41:10.2971344Z [37m      9 │       [avatarUrl]="featuredAd.[32madvertiserImage[37m"
+2025-04-16T04:41:10.2972246Z         ╵                               [32m~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2972598Z 
+2025-04-16T04:41:10.2972945Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.2973387Z 
+2025-04-16T04:41:10.2973996Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.2974941Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.2975633Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2975922Z 
+2025-04-16T04:41:10.2975931Z 
+2025-04-16T04:41:10.2977114Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'advertiserName' does not exist on type 'Ad'. Did you mean 'advertiser'?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2977897Z 
+2025-04-16T04:41:10.2978259Z     src/app/features/netflix-view/netflix-view.component.html:10:31:
+2025-04-16T04:41:10.2979339Z [37m      10 │       [avatarName]="featuredAd.[32madvertiserName[37m"
+2025-04-16T04:41:10.2979991Z          ╵                                [32m~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2980274Z 
+2025-04-16T04:41:10.2980558Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.2980907Z 
+2025-04-16T04:41:10.2981247Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.2982187Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.2982826Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2983110Z 
+2025-04-16T04:41:10.2983117Z 
+2025-04-16T04:41:10.2984333Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG9: Property 'isAdvertiserOnline' does not exist on type 'Ad'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2985121Z 
+2025-04-16T04:41:10.2985500Z     src/app/features/netflix-view/netflix-view.component.html:11:35:
+2025-04-16T04:41:10.2986524Z [37m      11 │       [avatarIsOnline]="featuredAd.[32misAdvertiserOnline[37m"
+2025-04-16T04:41:10.2987306Z          ╵                                    [32m~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2987807Z 
+2025-04-16T04:41:10.2988151Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.2988570Z 
+2025-04-16T04:41:10.2988935Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.2989887Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.2990624Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2990921Z 
+2025-04-16T04:41:10.2990939Z 
+2025-04-16T04:41:10.2992403Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG3: Object literal may only specify known properties, and '"primary"' does not exist in type 'HeaderAction'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.2993388Z 
+2025-04-16T04:41:10.2994017Z     src/app/features/netflix-view/netflix-view.component.html:13:81:
+2025-04-16T04:41:10.2995159Z [37m      13 │ ...label: 'View Profile', icon: 'fas fa-info-circle', primary: [32mtrue[37m},
+2025-04-16T04:41:10.2996031Z          ╵                                                                [32m~~~~[0m
+2025-04-16T04:41:10.2996361Z 
+2025-04-16T04:41:10.2996690Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.2997115Z 
+2025-04-16T04:41:10.2997465Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.2998408Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.2999139Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.2999441Z 
+2025-04-16T04:41:10.2999448Z 
+2025-04-16T04:41:10.3000619Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'string' is not assignable to type '"netflix" | "grid" | "masonry"'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3001399Z 
+2025-04-16T04:41:10.3001788Z     src/app/features/netflix-view/netflix-view.component.html:85:15:
+2025-04-16T04:41:10.3002667Z [37m      85 │               [[32mlayout[37m]="cardGridConfig.layout"
+2025-04-16T04:41:10.3003281Z          ╵                [32m~~~~~~[0m
+2025-04-16T04:41:10.3003722Z 
+2025-04-16T04:41:10.3004059Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.3004473Z 
+2025-04-16T04:41:10.3004833Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.3005774Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.3006513Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3006819Z 
+2025-04-16T04:41:10.3006826Z 
+2025-04-16T04:41:10.3007897Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5: Argument of type 'Event' is not assignable to parameter of type '{ id: string; itemId?: string; }'.
+2025-04-16T04:41:10.3009722Z   Property 'id' is missing in type 'Event' but required in type '{ id: string; itemId?: string; }'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3010466Z 
+2025-04-16T04:41:10.3011088Z     src/app/features/netflix-view/netflix-view.component.html:107:46:
+2025-04-16T04:41:10.3012148Z [37m      107 │                   (actionClick)="onCardAction([32m$event[37m, ad._id)">
+2025-04-16T04:41:10.3012916Z           ╵                                               [32m~~~~~~[0m
+2025-04-16T04:41:10.3013229Z 
+2025-04-16T04:41:10.3013779Z   Error occurs in the template of component NetflixViewComponent.
+2025-04-16T04:41:10.3014204Z 
+2025-04-16T04:41:10.3014570Z     src/app/features/netflix-view/netflix-view.component.ts:35:15:
+2025-04-16T04:41:10.3015534Z [37m      35 │   templateUrl: [32m'./netflix-view.component.html'[37m,
+2025-04-16T04:41:10.3016259Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3016567Z 
+2025-04-16T04:41:10.3016574Z 
+2025-04-16T04:41:10.3017695Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'website' does not exist on type 'UserProfile'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3018461Z 
+2025-04-16T04:41:10.3018791Z     src/app/features/profile/edit-profile.component.ts:139:26:
+2025-04-16T04:41:10.3019905Z [37m      139 │             website: user.[32mwebsite[37m || '',
+2025-04-16T04:41:10.3020537Z           ╵                           [32m~~~~~~~[0m
+2025-04-16T04:41:10.3020827Z 
+2025-04-16T04:41:10.3020835Z 
+2025-04-16T04:41:10.3021398Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mExpected "}" but found "onSubmit"[0m
+2025-04-16T04:41:10.3021841Z 
+2025-04-16T04:41:10.3022118Z     src/app/features/profile/profile.component.ts:12:2:
+2025-04-16T04:41:10.3022811Z [37m      12 │   [32monSubmit[37m(): void {
+2025-04-16T04:41:10.3023336Z          │   [32m~~~~~~~~[37m
+2025-04-16T04:41:10.3023911Z          ╵   [32m}[0m
+2025-04-16T04:41:10.3024105Z 
+2025-04-16T04:41:10.3024114Z 
+2025-04-16T04:41:10.3024883Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3025431Z 
+2025-04-16T04:41:10.3025701Z     src/app/features/profile/profile.component.ts:12:2:
+2025-04-16T04:41:10.3026403Z [37m      12 │   [32monSubmit[37m(): void {
+2025-04-16T04:41:10.3026923Z          ╵   [32m~~~~~~~~[0m
+2025-04-16T04:41:10.3027149Z 
+2025-04-16T04:41:10.3027156Z 
+2025-04-16T04:41:10.3027892Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3028423Z 
+2025-04-16T04:41:10.3028718Z     src/app/features/profile/profile.component.ts:12:10:
+2025-04-16T04:41:10.3029422Z [37m      12 │   onSubmit[32m([37m): void {
+2025-04-16T04:41:10.3029923Z          ╵           [32m^[0m
+2025-04-16T04:41:10.3030160Z 
+2025-04-16T04:41:10.3030167Z 
+2025-04-16T04:41:10.3031014Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1141: String literal expected.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3031684Z 
+2025-04-16T04:41:10.3031983Z     src/app/features/profile/profile.component.ts:12:10:
+2025-04-16T04:41:10.3032697Z [37m      12 │   onSubmit[32m(): void {[37m
+2025-04-16T04:41:10.3033259Z          ╵           [32m~~~~~~~~~~[0m
+2025-04-16T04:41:10.3033755Z 
+2025-04-16T04:41:10.3033763Z 
+2025-04-16T04:41:10.3034528Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: '=>' expected.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3035081Z 
+2025-04-16T04:41:10.3035364Z     src/app/features/profile/profile.component.ts:12:19:
+2025-04-16T04:41:10.3036063Z [37m      12 │   onSubmit(): void [32m{[37m
+2025-04-16T04:41:10.3036603Z          ╵                    [32m^[0m
+2025-04-16T04:41:10.3036865Z 
+2025-04-16T04:41:10.3036873Z 
+2025-04-16T04:41:10.3037815Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1128: Declaration or statement expected.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3038487Z 
+2025-04-16T04:41:10.3038769Z     src/app/features/profile/profile.component.ts:72:0:
+2025-04-16T04:41:10.3039646Z [37m      72 │ [32m}[37m from '@angular/core';
+2025-04-16T04:41:10.3040139Z          ╵ [32m^[0m
+2025-04-16T04:41:10.3040338Z 
+2025-04-16T04:41:10.3040359Z 
+2025-04-16T04:41:10.3041286Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS1434: Unexpected keyword or identifier.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3041951Z 
+2025-04-16T04:41:10.3042217Z     src/app/features/profile/profile.component.ts:72:2:
+2025-04-16T04:41:10.3042996Z [37m      72 │ } [32mfrom[37m '@angular/core';
+2025-04-16T04:41:10.3043660Z          ╵   [32m~~~~[0m
+2025-04-16T04:41:10.3043879Z 
+2025-04-16T04:41:10.3043887Z 
+2025-04-16T04:41:10.3044711Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'from'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3045311Z 
+2025-04-16T04:41:10.3045589Z     src/app/features/profile/profile.component.ts:72:2:
+2025-04-16T04:41:10.3046297Z [37m      72 │ } [32mfrom[37m '@angular/core';
+2025-04-16T04:41:10.3046796Z          ╵   [32m~~~~[0m
+2025-04-16T04:41:10.3047011Z 
+2025-04-16T04:41:10.3047019Z 
+2025-04-16T04:41:10.3047917Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'AuthService'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3048748Z 
+2025-04-16T04:41:10.3049050Z     src/app/features/profile/profile.component.ts:98:25:
+2025-04-16T04:41:10.3049854Z [37m      98 │     private authService: [32mAuthService[37m,
+2025-04-16T04:41:10.3050500Z          ╵                          [32m~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3050796Z 
+2025-04-16T04:41:10.3050803Z 
+2025-04-16T04:41:10.3052331Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'privacy' does not exist on type '{ notifications?: boolean; darkMode?: boolean; language?: string; }'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3053378Z 
+2025-04-16T04:41:10.3053905Z     src/app/features/profile/profile.component.ts:146:59:
+2025-04-16T04:41:10.3055018Z [37m      146 │ ...ences.privacy': this.userProfile.preferences?.[32mprivacy[37m || 'public'
+2025-04-16T04:41:10.3055910Z           ╵                                                  [32m~~~~~~~[0m
+2025-04-16T04:41:10.3056234Z 
+2025-04-16T04:41:10.3056241Z 
+2025-04-16T04:41:10.3057397Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996002: 'ProfileComponent' does not appear to be an NgModule class.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3058199Z 
+2025-04-16T04:41:10.3058466Z     src/app/features/profile/profile.module.ts:28:4:
+2025-04-16T04:41:10.3059172Z [37m      28 │     [32mProfileComponent[37m,
+2025-04-16T04:41:10.3059733Z          ╵     [32m~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3059996Z 
+2025-04-16T04:41:10.3060211Z   Is it missing an @NgModule annotation?
+2025-04-16T04:41:10.3060505Z 
+2025-04-16T04:41:10.3060793Z     src/app/features/profile/profile.component.ts:88:13:
+2025-04-16T04:41:10.3061708Z [37m      88 │ export class [32mProfileComponent[37m implements OnInit {
+2025-04-16T04:41:10.3062427Z          ╵              [32m~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3062716Z 
+2025-04-16T04:41:10.3062724Z 
+2025-04-16T04:41:10.3063871Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'layout' since it isn't a known property of 'emerald-skeleton-loader'.
+2025-04-16T04:41:10.3065595Z 1. If 'emerald-skeleton-loader' is an Angular component and it has 'layout' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:10.3067481Z 2. If 'emerald-skeleton-loader' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:10.3069398Z 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3070160Z 
+2025-04-16T04:41:10.3070437Z     src/app/features/tinder/tinder.component.html:18:8:
+2025-04-16T04:41:10.3071169Z [37m      18 │         [32m[layout]="'tinder'"[37m>
+2025-04-16T04:41:10.3071938Z          ╵         [32m~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3072236Z 
+2025-04-16T04:41:10.3072550Z   Error occurs in the template of component TinderComponent.
+2025-04-16T04:41:10.3072963Z 
+2025-04-16T04:41:10.3073233Z     src/app/features/tinder/tinder.component.ts:34:15:
+2025-04-16T04:41:10.3074300Z [37m      34 │   templateUrl: [32m'./tinder.component.html'[37m,
+2025-04-16T04:41:10.3074990Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3075297Z 
+2025-04-16T04:41:10.3075305Z 
+2025-04-16T04:41:10.3076307Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'number' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3076999Z 
+2025-04-16T04:41:10.3077279Z     src/app/features/tinder/tinder.component.html:53:9:
+2025-04-16T04:41:10.3078016Z [37m      53 │         [[32mage[37m]="currentAd.age"
+2025-04-16T04:41:10.3078559Z          ╵          [32m~~~[0m
+2025-04-16T04:41:10.3078804Z 
+2025-04-16T04:41:10.3079123Z   Error occurs in the template of component TinderComponent.
+2025-04-16T04:41:10.3079522Z 
+2025-04-16T04:41:10.3079787Z     src/app/features/tinder/tinder.component.ts:34:15:
+2025-04-16T04:41:10.3080808Z [37m      34 │   templateUrl: [32m'./tinder.component.html'[37m,
+2025-04-16T04:41:10.3081488Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3081790Z 
+2025-04-16T04:41:10.3081798Z 
+2025-04-16T04:41:10.3082894Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'string' is not assignable to type '"" | "like" | "dislike"'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3083812Z 
+2025-04-16T04:41:10.3084093Z     src/app/features/tinder/tinder.component.html:54:9:
+2025-04-16T04:41:10.3084819Z [37m      54 │         [[32mstate[37m]="cardState"
+2025-04-16T04:41:10.3085374Z          ╵          [32m~~~~~[0m
+2025-04-16T04:41:10.3085627Z 
+2025-04-16T04:41:10.3085929Z   Error occurs in the template of component TinderComponent.
+2025-04-16T04:41:10.3086331Z 
+2025-04-16T04:41:10.3086607Z     src/app/features/tinder/tinder.component.ts:34:15:
+2025-04-16T04:41:10.3087416Z [37m      34 │   templateUrl: [32m'./tinder.component.html'[37m,
+2025-04-16T04:41:10.3088115Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3088418Z 
+2025-04-16T04:41:10.3088425Z 
+2025-04-16T04:41:10.3089413Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'number' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3090110Z 
+2025-04-16T04:41:10.3090382Z     src/app/features/tinder/tinder.component.html:71:9:
+2025-04-16T04:41:10.3091101Z [37m      71 │         [[32mage[37m]="nextAd.age"
+2025-04-16T04:41:10.3091640Z          ╵          [32m~~~[0m
+2025-04-16T04:41:10.3091876Z 
+2025-04-16T04:41:10.3092173Z   Error occurs in the template of component TinderComponent.
+2025-04-16T04:41:10.3092568Z 
+2025-04-16T04:41:10.3092836Z     src/app/features/tinder/tinder.component.ts:34:15:
+2025-04-16T04:41:10.3093884Z [37m      34 │   templateUrl: [32m'./tinder.component.html'[37m,
+2025-04-16T04:41:10.3094585Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3094886Z 
+2025-04-16T04:41:10.3094894Z 
+2025-04-16T04:41:10.3095786Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'value' since it isn't a known property of 'emerald-toggle'.
+2025-04-16T04:41:10.3097356Z 1. If 'emerald-toggle' is an Angular component and it has 'value' input, then verify that it is included in the '@Component.imports' of this component.
+2025-04-16T04:41:10.3099095Z 2. If 'emerald-toggle' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+2025-04-16T04:41:10.3100930Z 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3101690Z 
+2025-04-16T04:41:10.3102171Z     src/app/features/tinder/tinder.component.html:133:16:
+2025-04-16T04:41:10.3103126Z [37m      133 │                 [32m[value]="filterForm.get('touringOnly')?.value"[37m
+2025-04-16T04:41:10.3104262Z           ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3104617Z 
+2025-04-16T04:41:10.3104928Z   Error occurs in the template of component TinderComponent.
+2025-04-16T04:41:10.3105330Z 
+2025-04-16T04:41:10.3105592Z     src/app/features/tinder/tinder.component.ts:34:15:
+2025-04-16T04:41:10.3106434Z [37m      34 │   templateUrl: [32m'./tinder.component.html'[37m,
+2025-04-16T04:41:10.3107117Z          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3107417Z 
+2025-04-16T04:41:10.3107425Z 
+2025-04-16T04:41:10.3108390Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type '{ type: string; url: string; }[]' is not assignable to type 'TinderCardMedia[]'.
+2025-04-16T04:41:10.3109450Z   Type '{ type: string; url: string; }' is not assignable to type 'TinderCardMedia'.
+2025-04-16T04:41:10.3110158Z     Types of property 'type' are incompatible.
+2025-04-16T04:41:10.3111162Z       Type 'string' is not assignable to type '"image" | "video"'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3111937Z 
+2025-04-16T04:41:10.3112208Z     src/app/features/tinder/tinder.component.ts:275:4:
+2025-04-16T04:41:10.3112908Z [37m      275 │     [32mreturn[37m ad.media;
+2025-04-16T04:41:10.3113669Z           ╵     [32m~~~~~~[0m
+2025-04-16T04:41:10.3113923Z 
+2025-04-16T04:41:10.3113931Z 
+2025-04-16T04:41:10.3114537Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "angularx-qrcode"[0m
+2025-04-16T04:41:10.3114992Z 
+2025-04-16T04:41:10.3115395Z     src/app/features/wallet/dialogs/deposit-dialog.component.ts:14:29:
+2025-04-16T04:41:10.3116381Z [37m      14 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3117125Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3117431Z 
+2025-04-16T04:41:10.3118322Z   You can mark the path "angularx-qrcode" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+2025-04-16T04:41:10.3119202Z 
+2025-04-16T04:41:10.3119210Z 
+2025-04-16T04:41:10.3120525Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'angularx-qrcode' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3121426Z 
+2025-04-16T04:41:10.3121828Z     src/app/features/wallet/dialogs/deposit-dialog.component.ts:14:29:
+2025-04-16T04:41:10.3122798Z [37m      14 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3123688Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3124005Z 
+2025-04-16T04:41:10.3124013Z 
+2025-04-16T04:41:10.3124939Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+2025-04-16T04:41:10.3126259Z   Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3126794Z 
+2025-04-16T04:41:10.3127197Z     src/app/features/wallet/dialogs/deposit-dialog.component.ts:272:4:
+2025-04-16T04:41:10.3128012Z [37m      272 │     [32mQRCodeModule[37m,
+2025-04-16T04:41:10.3128547Z           ╵     [32m~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3128802Z 
+2025-04-16T04:41:10.3128929Z   Unknown reference.
+2025-04-16T04:41:10.3129140Z 
+2025-04-16T04:41:10.3129526Z     src/app/features/wallet/dialogs/deposit-dialog.component.ts:272:4:
+2025-04-16T04:41:10.3130312Z [37m      272 │     [32mQRCodeModule[37m,
+2025-04-16T04:41:10.3130832Z           ╵     [32m~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3131087Z 
+2025-04-16T04:41:10.3131095Z 
+2025-04-16T04:41:10.3131947Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block ""[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3132528Z 
+2025-04-16T04:41:10.3132925Z     src/app/features/wallet/dialogs/transfer-dialog.component.ts:74:46:
+2025-04-16T04:41:10.3134478Z [37m      74 │ ...           <span class="user-username">[32m@{[37m{ user.username }}</span>
+2025-04-16T04:41:10.3135298Z          ╵                                           [32m~~[0m
+2025-04-16T04:41:10.3135601Z 
+2025-04-16T04:41:10.3135617Z 
+2025-04-16T04:41:10.3136535Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Invalid ICU message. Missing '}'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3137181Z 
+2025-04-16T04:41:10.3137590Z     src/app/features/wallet/dialogs/transfer-dialog.component.ts:114:2:
+2025-04-16T04:41:10.3138322Z [37m      114 │   [32m`[37m,
+2025-04-16T04:41:10.3138735Z           ╵   [32m^[0m
+2025-04-16T04:41:10.3138947Z 
+2025-04-16T04:41:10.3138954Z 
+2025-04-16T04:41:10.3140376Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected character "EOF" (Do you have an unescaped "{" in your template? Use "{{ '{' }}") to escape it.)[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3141316Z 
+2025-04-16T04:41:10.3141734Z     src/app/features/wallet/dialogs/transfer-dialog.component.ts:114:2:
+2025-04-16T04:41:10.3142468Z [37m      114 │   [32m`[37m,
+2025-04-16T04:41:10.3143061Z           ╵   [32m^[0m
+2025-04-16T04:41:10.3143263Z 
+2025-04-16T04:41:10.3143271Z 
+2025-04-16T04:41:10.3144656Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'Observable<any[] | User[] | UserSearchResult[]>' is not assignable to type 'Observable<UserSearchResult[]>'.
+2025-04-16T04:41:10.3145935Z   Type 'any[] | User[] | UserSearchResult[]' is not assignable to type 'UserSearchResult[]'.
+2025-04-16T04:41:10.3146769Z     Type 'User[]' is not assignable to type 'UserSearchResult[]'.
+2025-04-16T04:41:10.3148104Z       Property 'displayName' is missing in type 'User' but required in type 'UserSearchResult'.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3148881Z 
+2025-04-16T04:41:10.3149286Z     src/app/features/wallet/dialogs/transfer-dialog.component.ts:272:4:
+2025-04-16T04:41:10.3150331Z [37m      272 │     [32mreturn[37m this.userService.searchUsers(query).pipe(
+2025-04-16T04:41:10.3151015Z           ╵     [32m~~~~~~[0m
+2025-04-16T04:41:10.3151264Z 
+2025-04-16T04:41:10.3151452Z   'displayName' is declared here.
+2025-04-16T04:41:10.3151735Z 
+2025-04-16T04:41:10.3152167Z     src/app/features/wallet/dialogs/transfer-dialog.component.ts:21:2:
+2025-04-16T04:41:10.3152993Z [37m      21 │   [32mdisplayName[37m: string;
+2025-04-16T04:41:10.3153767Z          ╵   [32m~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3154022Z 
+2025-04-16T04:41:10.3154030Z 
+2025-04-16T04:41:10.3154800Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "angularx-qrcode"[0m
+2025-04-16T04:41:10.3155290Z 
+2025-04-16T04:41:10.3155562Z     src/app/features/wallet/wallet.component.ts:33:29:
+2025-04-16T04:41:10.3156432Z [37m      33 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3157179Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3157498Z 
+2025-04-16T04:41:10.3158387Z   You can mark the path "angularx-qrcode" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+2025-04-16T04:41:10.3159252Z 
+2025-04-16T04:41:10.3159267Z 
+2025-04-16T04:41:10.3160565Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'angularx-qrcode' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3161475Z 
+2025-04-16T04:41:10.3161758Z     src/app/features/wallet/wallet.component.ts:33:29:
+2025-04-16T04:41:10.3162624Z [37m      33 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3163353Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3163843Z 
+2025-04-16T04:41:10.3163851Z 
+2025-04-16T04:41:10.3164788Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+2025-04-16T04:41:10.3166193Z   Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3166746Z 
+2025-04-16T04:41:10.3167012Z     src/app/features/wallet/wallet.component.ts:81:4:
+2025-04-16T04:41:10.3167699Z [37m      81 │     [32mQRCodeModule[37m,
+2025-04-16T04:41:10.3168228Z          ╵     [32m~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3168488Z 
+2025-04-16T04:41:10.3168619Z   Unknown reference.
+2025-04-16T04:41:10.3168824Z 
+2025-04-16T04:41:10.3169087Z     src/app/features/wallet/wallet.component.ts:81:4:
+2025-04-16T04:41:10.3169733Z [37m      81 │     [32mQRCodeModule[37m,
+2025-04-16T04:41:10.3170247Z          ╵     [32m~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3170502Z 
+2025-04-16T04:41:10.3170510Z 
+2025-04-16T04:41:10.3171089Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "angularx-qrcode"[0m
+2025-04-16T04:41:10.3171533Z 
+2025-04-16T04:41:10.3171765Z     src/app/features/wallet/wallet.module.ts:27:29:
+2025-04-16T04:41:10.3172613Z [37m      27 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3173359Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3173841Z 
+2025-04-16T04:41:10.3174895Z   You can mark the path "angularx-qrcode" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+2025-04-16T04:41:10.3175761Z 
+2025-04-16T04:41:10.3175770Z 
+2025-04-16T04:41:10.3177095Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'angularx-qrcode' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3177996Z 
+2025-04-16T04:41:10.3178255Z     src/app/features/wallet/wallet.module.ts:27:29:
+2025-04-16T04:41:10.3179124Z [37m      27 │ import { QRCodeModule } from [32m'angularx-qrcode'[37m;
+2025-04-16T04:41:10.3179862Z          ╵                              [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3180179Z 
+2025-04-16T04:41:10.3180186Z 
+2025-04-16T04:41:10.3181169Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: Value at position 26 in the NgModule.imports of WalletModule is not a reference
+2025-04-16T04:41:10.3182427Z   Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3182975Z 
+2025-04-16T04:41:10.3183228Z     src/app/features/wallet/wallet.module.ts:52:11:
+2025-04-16T04:41:10.3184119Z [37m      52 │   imports: [32m[[37m
+2025-04-16T04:41:10.3184622Z          ╵            [32m^[0m
+2025-04-16T04:41:10.3184875Z 
+2025-04-16T04:41:10.3185003Z   Unknown reference.
+2025-04-16T04:41:10.3185209Z 
+2025-04-16T04:41:10.3185454Z     src/app/features/wallet/wallet.module.ts:79:4:
+2025-04-16T04:41:10.3186142Z [37m      79 │     [32mQRCodeModule[37m,
+2025-04-16T04:41:10.3186704Z          ╵     [32m~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3186976Z 
+2025-04-16T04:41:10.3186984Z 
+2025-04-16T04:41:10.3188647Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component CardGridComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3189766Z 
+2025-04-16T04:41:10.3190011Z     src/app/shared/emerald/emerald.module.ts:55:4:
+2025-04-16T04:41:10.3190708Z [37m      55 │     [32mCardGridComponent[37m,
+2025-04-16T04:41:10.3191274Z          ╵     [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3191543Z 
+2025-04-16T04:41:10.3191551Z 
+2025-04-16T04:41:10.3219926Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component FloatingActionButtonComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3221172Z 
+2025-04-16T04:41:10.3221453Z     src/app/shared/emerald/emerald.module.ts:56:4:
+2025-04-16T04:41:10.3222276Z [37m      56 │     [32mFloatingActionButtonComponent[37m
+2025-04-16T04:41:10.3222935Z          ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3223244Z 
+2025-04-16T04:41:10.3223253Z 
+2025-04-16T04:41:10.3224956Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996004: Can't be exported from this NgModule, as it must be imported first[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3225789Z 
+2025-04-16T04:41:10.3226048Z     src/app/shared/emerald/emerald.module.ts:83:4:
+2025-04-16T04:41:10.3226766Z [37m      83 │     [32mCardGridComponent[37m,
+2025-04-16T04:41:10.3227333Z          ╵     [32m~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3227610Z 
+2025-04-16T04:41:10.3227618Z 
+2025-04-16T04:41:10.3228804Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996004: Can't be exported from this NgModule, as it must be imported first[0m [1m[35m[plugin angular-compiler][0m
+2025-04-16T04:41:10.3229612Z 
+2025-04-16T04:41:10.3229874Z     src/app/shared/emerald/emerald.module.ts:85:4:
+2025-04-16T04:41:10.3230629Z [37m      85 │     [32mFloatingActionButtonComponent[37m
+2025-04-16T04:41:10.3231277Z          ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3231568Z 
+2025-04-16T04:41:10.3231577Z 
+2025-04-16T04:41:10.3232440Z [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTwo forwarded modules both define a variable named $primary-100.
+2025-04-16T04:41:10.3233355Z     ╷
+2025-04-16T04:41:10.3254364Z 5   │ @forward '../../app/core/design/design-tokens';
+2025-04-16T04:41:10.3255157Z     │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ original @forward
+2025-04-16T04:41:10.3255641Z ... │
+2025-04-16T04:41:10.3256121Z 7   │ @forward '../../app/core/design/main';
+2025-04-16T04:41:10.3256730Z     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ new @forward
+2025-04-16T04:41:10.3257160Z     ╵
+2025-04-16T04:41:10.3257548Z   src/styles/design-system/index.scss 7:1  @use
+2025-04-16T04:41:10.3258471Z   src/styles/main.scss 5:1                 root stylesheet[0m [1m[35m[plugin angular-sass][0m
+2025-04-16T04:41:10.3258980Z 
+2025-04-16T04:41:10.3259185Z     angular:styles/global:styles:1:8:
+2025-04-16T04:41:10.3259863Z [37m      1 │ @import [32m'src/styles/main.scss'[37m;
+2025-04-16T04:41:10.3260492Z         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+2025-04-16T04:41:10.3260794Z 
+2025-04-16T04:41:10.3260952Z [39m[22m
+2025-04-16T04:41:10.4309066Z npm error Lifecycle script `build` failed with error:
+2025-04-16T04:41:10.4310871Z npm error code 1
+2025-04-16T04:41:10.4314552Z npm error path /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T04:41:10.4316055Z npm error workspace client-angular@0.0.0
+2025-04-16T04:41:10.4317014Z npm error location /home/runner/work/date-night-app2/date-night-app2/client-angular
+2025-04-16T04:41:10.4317818Z npm error command failed
+2025-04-16T04:41:10.4318399Z npm error command sh -c ng build client-angular
+2025-04-16T04:41:10.4467803Z ##[error]The process '/opt/hostedtoolcache/node/22.14.0/x64/bin/npm' failed with exit code 1
+2025-04-16T04:41:10.4592387Z ##[group]Run actions/upload-artifact@v4
+2025-04-16T04:41:10.4592665Z with:
+2025-04-16T04:41:10.4592853Z   name: cypress-screenshots
+2025-04-16T04:41:10.4593100Z   path: ./client-angular/cypress/screenshots
+2025-04-16T04:41:10.4593364Z   if-no-files-found: warn
+2025-04-16T04:41:10.4593812Z   compression-level: 6
+2025-04-16T04:41:10.4594007Z   overwrite: false
+2025-04-16T04:41:10.4594217Z   include-hidden-files: false
+2025-04-16T04:41:10.4594439Z env:
+2025-04-16T04:41:10.4594586Z   CI: 1
+2025-04-16T04:41:10.4594790Z   CYPRESS_CACHE_FOLDER: /home/runner/.cache/Cypress
+2025-04-16T04:41:10.4595077Z   npm_config_cache: /home/runner/.npm
+2025-04-16T04:41:10.4595304Z ##[endgroup]
+2025-04-16T04:41:10.6855016Z ##[warning]No files were found with the provided path: ./client-angular/cypress/screenshots. No artifacts will be uploaded.
+2025-04-16T04:41:10.6982073Z Post job cleanup.
+2025-04-16T04:41:10.7985504Z [command]/usr/bin/git version
+2025-04-16T04:41:10.8039550Z git version 2.49.0
+2025-04-16T04:41:10.8112028Z Temporarily overriding HOME='/home/runner/work/_temp/b8faf49f-874e-4914-8e3f-245ceb44f267' before making global git config changes
+2025-04-16T04:41:10.8115688Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T04:41:10.8127688Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T04:41:10.8183043Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T04:41:10.8225329Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T04:41:10.8516411Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T04:41:10.8539712Z http.https://github.com/.extraheader
+2025-04-16T04:41:10.8555457Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T04:41:10.8590137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T04:41:10.8939668Z Cleaning up orphan processes

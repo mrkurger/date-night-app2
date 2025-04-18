@@ -1,0 +1,108 @@
+{
+  "id": 40775128610,
+  "run_id": 14532635574,
+  "workflow_name": "Sync Workflow Error Logs",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/runs/14532635574",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOOTqpm88AAAAJfmMWIg",
+  "head_sha": "326a8ad4dacd936ca692e618563dd59f6cb5e286",
+  "url": "https://api.github.com/repos/mrkurger/date-night-app2/actions/jobs/40775128610",
+  "html_url": "https://github.com/mrkurger/date-night-app2/actions/runs/14532635574/job/40775128610",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2025-04-18T08:57:02Z",
+  "started_at": "2025-04-18T08:57:06Z",
+  "completed_at": "2025-04-18T08:57:28Z",
+  "name": "sync-error-logs",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2025-04-18T08:57:07Z",
+      "completed_at": "2025-04-18T08:57:09Z"
+    },
+    {
+      "name": "Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2025-04-18T08:57:09Z",
+      "completed_at": "2025-04-18T08:57:19Z"
+    },
+    {
+      "name": "Set up Node.js",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2025-04-18T08:57:19Z",
+      "completed_at": "2025-04-18T08:57:21Z"
+    },
+    {
+      "name": "Install dependencies",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 4,
+      "started_at": "2025-04-18T08:57:21Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Fetch workflow run logs",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 5,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Create README for logs",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 6,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Commit and push logs",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 7,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Post Set up Node.js",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 13,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Post Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2025-04-18T08:57:27Z",
+      "completed_at": "2025-04-18T08:57:27Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mrkurger/date-night-app2/check-runs/40775128610",
+  "labels": [
+    "ubuntu-latest"
+  ],
+  "runner_id": 1000000331,
+  "runner_name": "GitHub Actions",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

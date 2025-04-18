@@ -1,0 +1,251 @@
+2025-04-16T13:39:50.8650650Z Current runner version: '2.323.0'
+2025-04-16T13:39:50.8694279Z ##[group]Operating System
+2025-04-16T13:39:50.8695521Z Ubuntu
+2025-04-16T13:39:50.8696271Z 24.04.2
+2025-04-16T13:39:50.8697048Z LTS
+2025-04-16T13:39:50.8697872Z ##[endgroup]
+2025-04-16T13:39:50.8698724Z ##[group]Runner Image
+2025-04-16T13:39:50.8699749Z Image: ubuntu-24.04
+2025-04-16T13:39:50.8700769Z Version: 20250406.1.0
+2025-04-16T13:39:50.8702983Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T13:39:50.8705550Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T13:39:50.8707357Z ##[endgroup]
+2025-04-16T13:39:50.8708358Z ##[group]Runner Image Provisioner
+2025-04-16T13:39:50.8709390Z 2.0.422.1
+2025-04-16T13:39:50.8710334Z ##[endgroup]
+2025-04-16T13:39:50.8714807Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T13:39:50.8717854Z Actions: read
+2025-04-16T13:39:50.8718945Z Attestations: read
+2025-04-16T13:39:50.8720039Z Checks: read
+2025-04-16T13:39:50.8720776Z Contents: read
+2025-04-16T13:39:50.8721664Z Deployments: read
+2025-04-16T13:39:50.8722931Z Discussions: read
+2025-04-16T13:39:50.8723815Z Issues: read
+2025-04-16T13:39:50.8724698Z Metadata: read
+2025-04-16T13:39:50.8725660Z Models: read
+2025-04-16T13:39:50.8726522Z Packages: read
+2025-04-16T13:39:50.8727357Z Pages: read
+2025-04-16T13:39:50.8728354Z PullRequests: read
+2025-04-16T13:39:50.8729325Z RepositoryProjects: read
+2025-04-16T13:39:50.8730242Z SecurityEvents: read
+2025-04-16T13:39:50.8731292Z Statuses: read
+2025-04-16T13:39:50.8732171Z ##[endgroup]
+2025-04-16T13:39:50.8735403Z Secret source: None
+2025-04-16T13:39:50.8736733Z Prepare workflow directory
+2025-04-16T13:39:50.9631125Z Prepare all required actions
+2025-04-16T13:39:50.9753066Z Getting action download info
+2025-04-16T13:39:51.4350666Z Download action repository 'github/dependabot-action@main' (SHA:664562a17c239ac3cdc9a641ab7f057830854084)
+2025-04-16T13:39:52.2406100Z Complete job name: Dependabot
+2025-04-16T13:39:52.3158875Z ##[group]Run mkdir -p  ./dependabot-job-999645508-1744810783
+2025-04-16T13:39:52.3160534Z [36;1mmkdir -p  ./dependabot-job-999645508-1744810783[0m
+2025-04-16T13:39:52.3237140Z shell: /usr/bin/bash -e {0}
+2025-04-16T13:39:52.3238640Z ##[endgroup]
+2025-04-16T13:39:52.3539408Z ##[group]Run github/dependabot-action@main
+2025-04-16T13:39:52.3540081Z env:
+2025-04-16T13:39:52.3540491Z   DEPENDABOT_DISABLE_CLEANUP: 1
+2025-04-16T13:39:52.3541035Z   DEPENDABOT_ENABLE_CONNECTIVITY_CHECK: 0
+2025-04-16T13:39:52.3541924Z   GITHUB_TOKEN: ***
+2025-04-16T13:39:52.3542981Z   GITHUB_DEPENDABOT_JOB_TOKEN: ***
+2025-04-16T13:39:52.3543925Z   GITHUB_DEPENDABOT_CRED_TOKEN: ***
+2025-04-16T13:39:52.3544454Z ##[endgroup]
+2025-04-16T13:39:52.6578758Z 🤖 ~ starting update ~
+2025-04-16T13:39:52.6603611Z Fetching job details
+2025-04-16T13:39:53.1936598Z ##[group]Pulling updater images
+2025-04-16T13:39:53.1991393Z Pulling image ghcr.io/dependabot/dependabot-updater-github-actions:eb47df545f0fac62e8addc09d41784dd2edfd7df (attempt 1)...
+2025-04-16T13:39:53.3425983Z Successfully sent metric (dependabot.action.ghcr_image_pull) to remote API endpoint
+2025-04-16T13:40:07.9287093Z Pulled image ghcr.io/dependabot/dependabot-updater-github-actions:eb47df545f0fac62e8addc09d41784dd2edfd7df
+2025-04-16T13:40:07.9301392Z Pulling image ghcr.io/github/dependabot-update-job-proxy/dependabot-update-job-proxy:v2.0.20250404141843@sha256:488b412514454c4761bb7f61c7f632ba7c393d3d000c280682914dd6257bd37b (attempt 1)...
+2025-04-16T13:40:08.0533013Z Successfully sent metric (dependabot.action.ghcr_image_pull) to remote API endpoint
+2025-04-16T13:40:09.0542047Z Pulled image ghcr.io/github/dependabot-update-job-proxy/dependabot-update-job-proxy:v2.0.20250404141843@sha256:488b412514454c4761bb7f61c7f632ba7c393d3d000c280682914dd6257bd37b
+2025-04-16T13:40:09.0545541Z ##[endgroup]
+2025-04-16T13:40:09.0553387Z Starting update process
+2025-04-16T13:40:09.4471224Z Created proxy container: b184f37abfe315902936060c5ca3177c8a652a4386cb3bbe08f046739db3a564
+2025-04-16T13:40:09.7900209Z Created container: 5d084a3c234fa1371e049d530d05dec54ded2d17e815e5da4478815e12acf25e
+2025-04-16T13:40:09.9139747Z   proxy | 2025/04/16 13:40:09 proxy starting, commit: 0460fa31a2e2abea6b590de770e705dea33dabf6
+2025-04-16T13:40:09.9157782Z   proxy | 2025/04/16 13:40:09 Listening (:1080)
+2025-04-16T13:40:09.9976385Z updater | Updating certificates in /etc/ssl/certs...
+2025-04-16T13:40:10.7684267Z updater | rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+2025-04-16T13:40:10.7855883Z updater | 1 added, 0 removed; done.
+2025-04-16T13:40:10.7863956Z updater | Running hooks in /etc/ca-certificates/update.d...
+2025-04-16T13:40:10.7886987Z updater | done.
+2025-04-16T13:40:12.5417330Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Starting job processing
+2025-04-16T13:40:12.5438546Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Job definition: {"job":{"allowed-updates":[{"dependency-type":"direct","update-type":"all"}],"commit-message-options":{"prefix":null,"prefix-development":null,"include-scope":null},"credentials-metadata":[{"type":"git_source","host":"github.com"}],"debug":null,"dependencies":["dawidd6/action-download-artifact"],"dependency-groups":[],"dependency-group-to-refresh":null,"existing-pull-requests":[[{"dependency-name":"dawidd6/action-download-artifact","dependency-version":"6","directory":"/.github/workflows"}]],"existing-group-pull-requests":[],"experiments":{"record-ecosystem-versions":true,"record-update-job-unknown-error":true,"proxy-cached":true,"move-job-token":true,"dependency-change-validation":true,"nuget-install-dotnet-sdks":true,"nuget-native-analysis":true,"nuget-use-direct-discovery":true,"enable-file-parser-python-local":true,"npm-fallback-version-above-v6":true,"lead-security-dependency":true,"enable-record-ecosystem-meta":true,"enable-shared-helpers-command-timeout":true,"enable-dependabot-setting-up-cronjob":true,"enable-engine-version-detection":true,"avoid-duplicate-updates-package-json":true,"allow-refresh-for-existing-pr-dependencies":true,"exclude-local-composer-packages":true,"enable-enhanced-error-details-for-updater":true,"enable-cooldown-for-python":true,"enable-cooldown-for-uv":true,"enable-cooldown-for-npm-and-yarn":true,"enable-cooldown-for-bun":true,"enable-cooldown-for-bundler":true,"enable-cooldown-for-cargo":true},"ignore-conditions":[],"lockfile-only":false,"max-updater-run-time":2700,"package-manager":"github_actions","proxy-log-response-body-on-auth-failure":true,"requirements-update-strategy":null,"reject-external-code":false,"security-advisories":[{"dependency-name":"dawidd6/action-download-artifact","patched-versions":[],"unaffected-versions":[],"affected-versions":["< 6"]}],"security-updates-only":true,"source":{"provider":"github","repo":"mrkurger/date-night-app2","branch":null,"api-endpoint":"https://api.github.com/","hostname":"github.com","directories":["/.github/workflows"]},"updating-a-pull-request":false,"update-subdependencies":false,"vendor-dependencies":false,"enable-beta-ecosystems":false,"repo-private":true}}
+2025-04-16T13:40:12.5990666Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1070 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T13:40:12.6131496Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1070 completed with status: pid 1070 exit 0
+2025-04-16T13:40:12.6137426Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.02 seconds
+2025-04-16T13:40:12.6171730Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1077 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T13:40:12.6231753Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1077 completed with status: pid 1077 exit 0
+2025-04-16T13:40:12.6235715Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:12.6263825Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1083 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T13:40:12.6292224Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1083 completed with status: pid 1083 exit 0
+2025-04-16T13:40:12.6296144Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:12.6306254Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1089 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T13:40:12.6354322Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1089 completed with status: pid 1089 exit 0
+2025-04-16T13:40:12.6358831Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:12.6395237Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1095 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T13:40:12.6423211Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1095 completed with status: pid 1095 exit 0
+2025-04-16T13:40:12.6428462Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:12.6443918Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1101 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T13:40:12.6496451Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Process PID: 1101 completed with status: pid 1101 exit 0
+2025-04-16T13:40:12.6499867Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:12.6521564Z updater | 2025/04/16 13:40:12 INFO <job_999645508> Started process PID: 1107 with command: {} git clone --no-tags --depth 1 --recurse-submodules --shallow-submodules https://github.com/mrkurger/date-night-app2 /home/dependabot/dependabot-updater/repo {}
+2025-04-16T13:40:12.7870366Z   proxy | 2025/04/16 13:40:12 [002] GET https://github.com:443/mrkurger/date-night-app2/info/refs?service=git-upload-pack
+2025-04-16T13:40:12.7871832Z   proxy | 2025/04/16 13:40:12 [002] * authenticating git server request (host: github.com)
+2025-04-16T13:40:13.0283207Z   proxy | 2025/04/16 13:40:13 [002] 200 https://github.com:443/mrkurger/date-night-app2/info/refs?service=git-upload-pack
+2025-04-16T13:40:13.0846811Z   proxy | 2025/04/16 13:40:13 [004] POST https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T13:40:13.0848099Z   proxy | 2025/04/16 13:40:13 [004] * authenticating git server request (host: github.com)
+2025-04-16T13:40:13.2313797Z   proxy | 2025/04/16 13:40:13 [004] 200 https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T13:40:13.2943903Z   proxy | 2025/04/16 13:40:13 [006] POST https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T13:40:13.2945358Z 2025/04/16 13:40:13 [006] * authenticating git server request (host: github.com)
+2025-04-16T13:40:13.5803461Z   proxy | 2025/04/16 13:40:13 [006] 200 https://github.com:443/mrkurger/date-night-app2/git-upload-pack
+2025-04-16T13:40:16.5968246Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1107 completed with status: pid 1107 exit 0
+2025-04-16T13:40:16.5977764Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 3.95 seconds
+2025-04-16T13:40:16.6036245Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1150 with command: {} git -C /home/dependabot/dependabot-updater/repo ls-files --stage {}
+2025-04-16T13:40:16.6093535Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1150 completed with status: pid 1150 exit 0
+2025-04-16T13:40:16.6096608Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6160705Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1163 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T13:40:16.6218688Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1163 completed with status: pid 1163 exit 0
+2025-04-16T13:40:16.6223634Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6284767Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1170 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T13:40:16.6301030Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1170 completed with status: pid 1170 exit 0
+2025-04-16T13:40:16.6307236Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6314278Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1176 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T13:40:16.6383696Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1176 completed with status: pid 1176 exit 0
+2025-04-16T13:40:16.6384883Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6395687Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1182 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T13:40:16.6449065Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1182 completed with status: pid 1182 exit 0
+2025-04-16T13:40:16.6450772Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6461323Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1188 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T13:40:16.6507652Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1188 completed with status: pid 1188 exit 0
+2025-04-16T13:40:16.6513644Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6535007Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1194 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T13:40:16.6579913Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1194 completed with status: pid 1194 exit 0
+2025-04-16T13:40:16.6581636Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6607867Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1200 with command: {} git rev-parse HEAD {}
+2025-04-16T13:40:16.6733464Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1200 completed with status: pid 1200 exit 0
+2025-04-16T13:40:16.6736163Z 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.6767234Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1213 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T13:40:16.6914745Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1213 completed with status: pid 1213 exit 0
+2025-04-16T13:40:16.6920767Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.02 seconds
+2025-04-16T13:40:16.6935856Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1220 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T13:40:16.7023294Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1220 completed with status: pid 1220 exit 0
+2025-04-16T13:40:16.7028630Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7037542Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1226 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T13:40:16.7124135Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1226 completed with status: pid 1226 exit 0
+2025-04-16T13:40:16.7126631Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7134295Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1232 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T13:40:16.7191045Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1232 completed with status: pid 1232 exit 0
+2025-04-16T13:40:16.7192723Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7221381Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1238 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T13:40:16.7246353Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1238 completed with status: pid 1238 exit 0
+2025-04-16T13:40:16.7248673Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7283572Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1245 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T13:40:16.7307400Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1245 completed with status: pid 1245 exit 0
+2025-04-16T13:40:16.7310390Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7343660Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1251 with command: {} git rev-parse HEAD {}
+2025-04-16T13:40:16.7370497Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1251 completed with status: pid 1251 exit 0
+2025-04-16T13:40:16.7374146Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7482779Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1264 with command: {} git config --global credential.helper '!/home/dependabot/common/lib/dependabot/../../bin/git-credential-store-immutable --file /home/dependabot/dependabot-updater/git.store' {}
+2025-04-16T13:40:16.7546136Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1264 completed with status: pid 1264 exit 0
+2025-04-16T13:40:16.7548570Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7557215Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1271 with command: {} git config --global --replace-all url.https://github.com/.insteadOf ssh://git@github.com/ {}
+2025-04-16T13:40:16.7608743Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1271 completed with status: pid 1271 exit 0
+2025-04-16T13:40:16.7612234Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7641606Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1277 with command: {} git config --global --add url.https://github.com/.insteadOf ssh://git@github.com: {}
+2025-04-16T13:40:16.7673800Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1277 completed with status: pid 1277 exit 0
+2025-04-16T13:40:16.7676365Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7703736Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1283 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com: {}
+2025-04-16T13:40:16.7737080Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1283 completed with status: pid 1283 exit 0
+2025-04-16T13:40:16.7740869Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7756984Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1289 with command: {} git config --global --add url.https://github.com/.insteadOf git@github.com/ {}
+2025-04-16T13:40:16.7808711Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1289 completed with status: pid 1289 exit 0
+2025-04-16T13:40:16.7816703Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7820234Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Started process PID: 1295 with command: {} git config --global --add url.https://github.com/.insteadOf git://github.com/ {}
+2025-04-16T13:40:16.7877517Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Process PID: 1295 completed with status: pid 1295 exit 0
+2025-04-16T13:40:16.7878919Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Total execution time: 0.01 seconds
+2025-04-16T13:40:16.7963655Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Base commit SHA: 665fd583e871e2be7fb01b50389287c3ae246e24
+2025-04-16T13:40:16.7982790Z updater | 2025/04/16 13:40:16 INFO <job_999645508> Finished job processing
+2025-04-16T13:40:18.5797698Z updater | 2025/04/16 13:40:18 INFO <job_999645508> Starting job processing
+2025-04-16T13:40:18.7724163Z   proxy | 2025/04/16 13:40:18 [008] GET https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:18.7725309Z 2025/04/16 13:40:18 [008] * authenticating git server request (host: github.com)
+2025-04-16T13:40:18.8605924Z   proxy | 2025/04/16 13:40:18 [008] 200 https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:18.9802080Z   proxy | 2025/04/16 13:40:18 [010] GET https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:18.9803388Z   proxy | 2025/04/16 13:40:18 [010] * authenticating git server request (host: github.com)
+2025-04-16T13:40:19.0723821Z   proxy | 2025/04/16 13:40:19 [010] 200 https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.2082107Z   proxy | 2025/04/16 13:40:19 [012] GET https://github.com:443/actions/upload-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.2083485Z   proxy | 2025/04/16 13:40:19 [012] * authenticating git server request (host: github.com)
+2025-04-16T13:40:19.2946994Z   proxy | 2025/04/16 13:40:19 [012] 200 https://github.com:443/actions/upload-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.4221093Z   proxy | 2025/04/16 13:40:19 [014] GET https://github.com:443/cypress-io/github-action.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.4222834Z   proxy | 2025/04/16 13:40:19 [014] * authenticating git server request (host: github.com)
+2025-04-16T13:40:19.5049521Z   proxy | 2025/04/16 13:40:19 [014] 200 https://github.com:443/cypress-io/github-action.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.6426495Z   proxy | 2025/04/16 13:40:19 [016] GET https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.6429171Z   proxy | 2025/04/16 13:40:19 [016] 200 https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.7431647Z   proxy | 2025/04/16 13:40:19 [018] GET https://github.com:443/actions/github-script.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.7433064Z   proxy | 2025/04/16 13:40:19 [018] * authenticating git server request (host: github.com)
+2025-04-16T13:40:19.8460036Z   proxy | 2025/04/16 13:40:19 [018] 200 https://github.com:443/actions/github-script.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.9810891Z   proxy | 2025/04/16 13:40:19 [020] GET https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:19.9812194Z   proxy | 2025/04/16 13:40:19 [020] 200 https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.0872963Z   proxy | 2025/04/16 13:40:20 [022] GET https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.0878337Z   proxy | 2025/04/16 13:40:20 [022] 200 https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.1909250Z   proxy | 2025/04/16 13:40:20 [024] GET https://github.com:443/actions/upload-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.1913707Z 2025/04/16 13:40:20 [024] 200 https://github.com:443/actions/upload-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.2924666Z   proxy | 2025/04/16 13:40:20 [026] GET https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.2926101Z 2025/04/16 13:40:20 [026] 200 https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.3995792Z   proxy | 2025/04/16 13:40:20 [028] GET https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.3996913Z   proxy | 2025/04/16 13:40:20 [028] 200 https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.5013124Z   proxy | 2025/04/16 13:40:20 [030] GET https://github.com:443/actions/github-script.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.5016178Z   proxy | 2025/04/16 13:40:20 [030] 200 https://github.com:443/actions/github-script.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.6062076Z   proxy | 2025/04/16 13:40:20 [032] GET https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.6064509Z   proxy | 2025/04/16 13:40:20 [032] 200 https://github.com:443/actions/checkout.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.7072370Z   proxy | 2025/04/16 13:40:20 [034] GET https://github.com:443/dawidd6/action-download-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.7073707Z   proxy | 2025/04/16 13:40:20 [034] * authenticating git server request (host: github.com)
+2025-04-16T13:40:20.7917580Z   proxy | 2025/04/16 13:40:20 [034] 200 https://github.com:443/dawidd6/action-download-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.8966970Z   proxy | 2025/04/16 13:40:20 [036] GET https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:20.8974326Z 2025/04/16 13:40:20 [036] 200 https://github.com:443/actions/setup-node.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:21.0779270Z   proxy | 2025/04/16 13:40:21 [038] POST /update_jobs/999645508/update_dependency_list
+2025-04-16T13:40:21.2461927Z   proxy | 2025/04/16 13:40:21 [038] 204 /update_jobs/999645508/update_dependency_list
+2025-04-16T13:40:21.2947547Z   proxy | 2025/04/16 13:40:21 [040] POST /update_jobs/999645508/increment_metric
+2025-04-16T13:40:21.3565696Z   proxy | 2025/04/16 13:40:21 [040] 204 /update_jobs/999645508/increment_metric
+2025-04-16T13:40:21.3590359Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Starting security update job for mrkurger/date-night-app2
+2025-04-16T13:40:21.3653639Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Checking if dawidd6/action-download-artifact 2 needs updating
+2025-04-16T13:40:21.4679948Z   proxy | 2025/04/16 13:40:21 [042] GET https://github.com:443/dawidd6/action-download-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:21.4689863Z 2025/04/16 13:40:21 [042] 200 https://github.com:443/dawidd6/action-download-artifact.git/info/refs?service=git-upload-pack
+2025-04-16T13:40:21.4879427Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Latest version is 9
+2025-04-16T13:40:21.4982830Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Requirements to unlock own
+2025-04-16T13:40:21.4986524Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Requirements update strategy 
+2025-04-16T13:40:21.5508013Z   proxy | 2025/04/16 13:40:21 [046] POST /update_jobs/999645508/record_update_job_error
+2025-04-16T13:40:21.6191016Z   proxy | 2025/04/16 13:40:21 [046] 204 /update_jobs/999645508/record_update_job_error
+2025-04-16T13:40:21.6200966Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Pull request already exists for dawidd6/action-download-artifact@6
+2025-04-16T13:40:21.6668473Z   proxy | 2025/04/16 13:40:21 [048] POST /update_jobs/999645508/record_ecosystem_meta
+2025-04-16T13:40:21.7269529Z   proxy | 2025/04/16 13:40:21 [048] 204 /update_jobs/999645508/record_ecosystem_meta
+2025-04-16T13:40:21.7758494Z   proxy | 2025/04/16 13:40:21 [050] PATCH /update_jobs/999645508/mark_as_processed
+2025-04-16T13:40:21.9123721Z   proxy | 2025/04/16 13:40:21 [050] 204 /update_jobs/999645508/mark_as_processed
+2025-04-16T13:40:21.9132349Z updater | 2025/04/16 13:40:21 INFO <job_999645508> Finished job processing
+2025-04-16T13:40:21.9164814Z updater | 2025/04/16 13:40:21 INFO Results:
+2025-04-16T13:40:21.9166462Z Dependabot encountered '1' error(s) during execution, please check the logs for more details.
+2025-04-16T13:40:21.9167519Z +--------------------------------------------------------------------------------------------------------+
+2025-04-16T13:40:21.9169008Z |                                                 Errors                                                 |
+2025-04-16T13:40:21.9170377Z +-----------------------------------------+--------------------------------------------------------------+
+2025-04-16T13:40:21.9171042Z | Type                                    | Details                                                      |
+2025-04-16T13:40:21.9171666Z +-----------------------------------------+--------------------------------------------------------------+
+2025-04-16T13:40:21.9172613Z | pull_request_exists_for_security_update | {                                                            |
+2025-04-16T13:40:21.9173339Z |                                         |   "updated-dependencies": [                                  |
+2025-04-16T13:40:21.9173860Z |                                         |     {                                                        |
+2025-04-16T13:40:21.9174406Z |                                         |       "dependency-name": "dawidd6/action-download-artifact", |
+2025-04-16T13:40:21.9175039Z |                                         |       "dependency-version": "6"                              |
+2025-04-16T13:40:21.9175846Z |                                         |     }                                                        |
+2025-04-16T13:40:21.9176298Z |                                         |   ]                                                          |
+2025-04-16T13:40:21.9176792Z |                                         | }                                                            |
+2025-04-16T13:40:21.9177352Z +-----------------------------------------+--------------------------------------------------------------+
+2025-04-16T13:40:22.0947871Z Failure running container 5d084a3c234fa1371e049d530d05dec54ded2d17e815e5da4478815e12acf25e
+2025-04-16T13:40:22.1418573Z Cleaned up container 5d084a3c234fa1371e049d530d05dec54ded2d17e815e5da4478815e12acf25e
+2025-04-16T13:40:22.1542143Z   proxy | 2025/04/16 13:40:22 10/24 calls cached (41%)
+2025-04-16T13:40:22.1545216Z 2025/04/16 13:40:22 Posting metrics to remote API endpoint
+2025-04-16T13:40:22.6859363Z ##[error]Dependabot encountered an error performing the update
+
+Error: The updater encountered one or more errors.
+
+For more information see: https://github.com/mrkurger/date-night-app2/network/updates/999645508 (write access to the repository is required to view the log)
+2025-04-16T13:40:22.6870608Z 🤖 ~ finished: error reported to Dependabot ~
+2025-04-16T13:40:22.6956097Z Post job cleanup.
+2025-04-16T13:40:22.8572268Z Cleaning up orphan processes
