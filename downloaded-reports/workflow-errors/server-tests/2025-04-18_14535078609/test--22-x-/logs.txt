@@ -1,0 +1,1676 @@
+2025-04-18T12:24:31.6907632Z Current runner version: '2.323.0'
+2025-04-18T12:24:31.6944641Z ##[group]Operating System
+2025-04-18T12:24:31.7074545Z Ubuntu
+2025-04-18T12:24:31.7075659Z 24.04.2
+2025-04-18T12:24:31.7076779Z LTS
+2025-04-18T12:24:31.7077526Z ##[endgroup]
+2025-04-18T12:24:31.7078321Z ##[group]Runner Image
+2025-04-18T12:24:31.7079170Z Image: ubuntu-24.04
+2025-04-18T12:24:31.7080131Z Version: 20250413.1.0
+2025-04-18T12:24:31.7081904Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250413.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-18T12:24:31.7084791Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250413.1
+2025-04-18T12:24:31.7086908Z ##[endgroup]
+2025-04-18T12:24:31.7087777Z ##[group]Runner Image Provisioner
+2025-04-18T12:24:31.7088808Z 2.0.422.1
+2025-04-18T12:24:31.7089684Z ##[endgroup]
+2025-04-18T12:24:31.7094519Z ##[group]GITHUB_TOKEN Permissions
+2025-04-18T12:24:31.7098331Z Actions: write
+2025-04-18T12:24:31.7099720Z Attestations: write
+2025-04-18T12:24:31.7100951Z Checks: write
+2025-04-18T12:24:31.7101713Z Contents: write
+2025-04-18T12:24:31.7102570Z Deployments: write
+2025-04-18T12:24:31.7103407Z Discussions: write
+2025-04-18T12:24:31.7104246Z Issues: write
+2025-04-18T12:24:31.7105046Z Metadata: read
+2025-04-18T12:24:31.7105881Z Models: read
+2025-04-18T12:24:31.7107044Z Packages: write
+2025-04-18T12:24:31.7107860Z Pages: write
+2025-04-18T12:24:31.7108820Z PullRequests: write
+2025-04-18T12:24:31.7109705Z RepositoryProjects: write
+2025-04-18T12:24:31.7110719Z SecurityEvents: write
+2025-04-18T12:24:31.7111544Z Statuses: write
+2025-04-18T12:24:31.7112530Z ##[endgroup]
+2025-04-18T12:24:31.7115708Z Secret source: Actions
+2025-04-18T12:24:31.7117607Z Prepare workflow directory
+2025-04-18T12:24:31.7803522Z Prepare all required actions
+2025-04-18T12:24:31.7890428Z Getting action download info
+2025-04-18T12:24:32.3726725Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-18T12:24:32.3727733Z Version: 4.2.2
+2025-04-18T12:24:32.3728741Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-18T12:24:32.3730067Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-18T12:24:32.3730767Z ##[endgroup]
+2025-04-18T12:24:32.4848706Z ##[group]Download immutable action package 'actions/setup-node@v4'
+2025-04-18T12:24:32.4849461Z Version: 4.4.0
+2025-04-18T12:24:32.4850308Z Digest: sha256:9427cefe82346e992fb5b949e3569b39d537ae41aa3086483b14eceebfc16bc1
+2025-04-18T12:24:32.4851213Z Source commit SHA: 49933ea5288caeca8642d1e84afbd3f7d6820020
+2025-04-18T12:24:32.4851885Z ##[endgroup]
+2025-04-18T12:24:32.8002152Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-04-18T12:24:32.8002865Z Version: 4.6.2
+2025-04-18T12:24:32.8003499Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-04-18T12:24:32.8004341Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-04-18T12:24:32.8004935Z ##[endgroup]
+2025-04-18T12:24:33.0083240Z Complete job name: test (22.x)
+2025-04-18T12:24:33.0471518Z ##[group]Checking docker version
+2025-04-18T12:24:33.0484316Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-04-18T12:24:33.1512753Z '1.45'
+2025-04-18T12:24:33.1526450Z Docker daemon API version: '1.45'
+2025-04-18T12:24:33.1527613Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-04-18T12:24:33.1677183Z '1.45'
+2025-04-18T12:24:33.1689668Z Docker client API version: '1.45'
+2025-04-18T12:24:33.1695150Z ##[endgroup]
+2025-04-18T12:24:33.1698287Z ##[group]Clean up resources from previous jobs
+2025-04-18T12:24:33.1703453Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=0e2386"
+2025-04-18T12:24:33.1861374Z ##[command]/usr/bin/docker network prune --force --filter "label=0e2386"
+2025-04-18T12:24:33.2002735Z ##[endgroup]
+2025-04-18T12:24:33.2003210Z ##[group]Create local container network
+2025-04-18T12:24:33.2012740Z ##[command]/usr/bin/docker network create --label 0e2386 github_network_29dc1cc95aa24b76a600ddb31531e371
+2025-04-18T12:24:33.2847473Z 1755cbc75a9920bd3f75c81b038fbc375bc6f2ad0de0c85bb272ba82b8d4b924
+2025-04-18T12:24:33.2864098Z ##[endgroup]
+2025-04-18T12:24:33.2888252Z ##[group]Starting mongodb service container
+2025-04-18T12:24:33.2907242Z ##[command]/usr/bin/docker pull mongo:6
+2025-04-18T12:24:34.2932103Z 6: Pulling from library/mongo
+2025-04-18T12:24:34.5590176Z 30a9c22ae099: Pulling fs layer
+2025-04-18T12:24:34.5591092Z abd374245ca5: Pulling fs layer
+2025-04-18T12:24:34.5591873Z dfcc52b2e041: Pulling fs layer
+2025-04-18T12:24:34.5592637Z b058d84e1082: Pulling fs layer
+2025-04-18T12:24:34.5593478Z e12a18eb1ecf: Pulling fs layer
+2025-04-18T12:24:34.5594293Z 546622740404: Pulling fs layer
+2025-04-18T12:24:34.5595080Z 80a51fc6e5dc: Pulling fs layer
+2025-04-18T12:24:34.5595939Z f7d23c7569c8: Pulling fs layer
+2025-04-18T12:24:34.5610511Z b058d84e1082: Waiting
+2025-04-18T12:24:34.5614666Z 80a51fc6e5dc: Waiting
+2025-04-18T12:24:34.5622061Z f7d23c7569c8: Waiting
+2025-04-18T12:24:34.5622896Z e12a18eb1ecf: Waiting
+2025-04-18T12:24:34.5623661Z 546622740404: Waiting
+2025-04-18T12:24:34.8153535Z abd374245ca5: Verifying Checksum
+2025-04-18T12:24:34.8156822Z abd374245ca5: Download complete
+2025-04-18T12:24:34.8413583Z dfcc52b2e041: Verifying Checksum
+2025-04-18T12:24:34.8415839Z dfcc52b2e041: Download complete
+2025-04-18T12:24:35.0886324Z b058d84e1082: Verifying Checksum
+2025-04-18T12:24:35.0894125Z b058d84e1082: Download complete
+2025-04-18T12:24:35.0944962Z e12a18eb1ecf: Verifying Checksum
+2025-04-18T12:24:35.0948160Z e12a18eb1ecf: Download complete
+2025-04-18T12:24:35.1587327Z 30a9c22ae099: Verifying Checksum
+2025-04-18T12:24:35.1592062Z 30a9c22ae099: Download complete
+2025-04-18T12:24:35.3545171Z 546622740404: Verifying Checksum
+2025-04-18T12:24:35.3548661Z 546622740404: Download complete
+2025-04-18T12:24:35.4172476Z f7d23c7569c8: Verifying Checksum
+2025-04-18T12:24:35.4173794Z f7d23c7569c8: Download complete
+2025-04-18T12:24:36.5339417Z 30a9c22ae099: Pull complete
+2025-04-18T12:24:36.8254387Z 80a51fc6e5dc: Verifying Checksum
+2025-04-18T12:24:36.8259039Z 80a51fc6e5dc: Download complete
+2025-04-18T12:24:37.8615623Z abd374245ca5: Pull complete
+2025-04-18T12:24:38.0118058Z dfcc52b2e041: Pull complete
+2025-04-18T12:24:38.0563703Z b058d84e1082: Pull complete
+2025-04-18T12:24:38.0765818Z e12a18eb1ecf: Pull complete
+2025-04-18T12:24:38.0890613Z 546622740404: Pull complete
+2025-04-18T12:24:44.7520163Z 80a51fc6e5dc: Pull complete
+2025-04-18T12:24:44.7672755Z f7d23c7569c8: Pull complete
+2025-04-18T12:24:44.7725801Z Digest: sha256:5e5dd359de06dabbd2fb587e8ded7afe1dd8ecfff736323aadb5d29a4bd697aa
+2025-04-18T12:24:44.7749476Z Status: Downloaded newer image for mongo:6
+2025-04-18T12:24:44.7762444Z docker.io/library/mongo:6
+2025-04-18T12:24:44.7809718Z ##[command]/usr/bin/docker create --name f19d2620691e4894a12a2b2076c1d79f_mongo6_395b4a --label 0e2386 --network github_network_29dc1cc95aa24b76a600ddb31531e371 --network-alias mongodb -p 27017:27017  -e GITHUB_ACTIONS=true -e CI=true mongo:6
+2025-04-18T12:24:44.8194414Z 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:24:44.8218184Z ##[command]/usr/bin/docker start 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:24:45.1289498Z 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:24:45.1331637Z ##[command]/usr/bin/docker ps --all --filter id=05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-04-18T12:24:45.1526145Z 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a Up Less than a second
+2025-04-18T12:24:45.1552396Z ##[command]/usr/bin/docker port 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:24:45.1727052Z 27017/tcp -> 0.0.0.0:27017
+2025-04-18T12:24:45.1727609Z 27017/tcp -> [::]:27017
+2025-04-18T12:24:45.1803634Z ##[endgroup]
+2025-04-18T12:24:45.1815431Z ##[group]Waiting for all services to be ready
+2025-04-18T12:24:45.1833812Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:24:45.2067082Z mongodb service is healthy.
+2025-04-18T12:24:45.2067928Z ##[endgroup]
+2025-04-18T12:24:45.2396236Z ##[group]Run actions/checkout@v4
+2025-04-18T12:24:45.2397103Z with:
+2025-04-18T12:24:45.2397477Z   repository: mrkurger/date-night-app2
+2025-04-18T12:24:45.2398156Z   token: ***
+2025-04-18T12:24:45.2398497Z   ssh-strict: true
+2025-04-18T12:24:45.2398859Z   ssh-user: git
+2025-04-18T12:24:45.2399256Z   persist-credentials: true
+2025-04-18T12:24:45.2399666Z   clean: true
+2025-04-18T12:24:45.2400029Z   sparse-checkout-cone-mode: true
+2025-04-18T12:24:45.2400482Z   fetch-depth: 1
+2025-04-18T12:24:45.2400830Z   fetch-tags: false
+2025-04-18T12:24:45.2401192Z   show-progress: true
+2025-04-18T12:24:45.2401551Z   lfs: false
+2025-04-18T12:24:45.2401878Z   submodules: false
+2025-04-18T12:24:45.2402239Z   set-safe-directory: true
+2025-04-18T12:24:45.2402893Z env:
+2025-04-18T12:24:45.2403207Z   CI: true
+2025-04-18T12:24:45.2403515Z ##[endgroup]
+2025-04-18T12:24:45.5552032Z Syncing repository: mrkurger/date-night-app2
+2025-04-18T12:24:45.5553876Z ##[group]Getting Git version info
+2025-04-18T12:24:45.5554559Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T12:24:45.5555400Z [command]/usr/bin/git version
+2025-04-18T12:24:45.5663881Z git version 2.49.0
+2025-04-18T12:24:45.5698597Z ##[endgroup]
+2025-04-18T12:24:45.5713325Z Temporarily overriding HOME='/home/runner/work/_temp/e91814a2-f6db-4e49-a1d7-fde933e664a8' before making global git config changes
+2025-04-18T12:24:45.5716828Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T12:24:45.5721218Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T12:24:45.5766861Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-18T12:24:45.5771494Z ##[group]Initializing the repository
+2025-04-18T12:24:45.5776627Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T12:24:45.5868958Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-18T12:24:45.5872006Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-18T12:24:45.5872759Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-18T12:24:45.5873109Z hint:
+2025-04-18T12:24:45.5873546Z hint: 	git config --global init.defaultBranch <name>
+2025-04-18T12:24:45.5873832Z hint:
+2025-04-18T12:24:45.5874118Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-18T12:24:45.5874571Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-18T12:24:45.5874916Z hint:
+2025-04-18T12:24:45.5875097Z hint: 	git branch -m <name>
+2025-04-18T12:24:45.5879251Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-18T12:24:45.5991432Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-18T12:24:45.5993024Z ##[endgroup]
+2025-04-18T12:24:45.5993653Z ##[group]Disabling automatic garbage collection
+2025-04-18T12:24:45.5994184Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-18T12:24:45.6008117Z ##[endgroup]
+2025-04-18T12:24:45.6009054Z ##[group]Setting up auth
+2025-04-18T12:24:45.6017583Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T12:24:45.6052106Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T12:24:45.6437059Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T12:24:45.6471898Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T12:24:45.6713412Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-18T12:24:45.6757118Z ##[endgroup]
+2025-04-18T12:24:45.6758055Z ##[group]Fetching the repository
+2025-04-18T12:24:45.6769377Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +33c1cf6d569fdddb1f0f8121c091c086533cb0eb:refs/remotes/origin/main
+2025-04-18T12:24:48.4010785Z From https://github.com/mrkurger/date-night-app2
+2025-04-18T12:24:48.4014019Z  * [new ref]         33c1cf6d569fdddb1f0f8121c091c086533cb0eb -> origin/main
+2025-04-18T12:24:48.4046431Z ##[endgroup]
+2025-04-18T12:24:48.4046996Z ##[group]Determining the checkout info
+2025-04-18T12:24:48.4051408Z ##[endgroup]
+2025-04-18T12:24:48.4060313Z [command]/usr/bin/git sparse-checkout disable
+2025-04-18T12:24:48.4112690Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-18T12:24:48.4158842Z ##[group]Checking out the ref
+2025-04-18T12:24:48.4165236Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-18T12:24:48.9982481Z Switched to a new branch 'main'
+2025-04-18T12:24:48.9985764Z branch 'main' set up to track 'origin/main'.
+2025-04-18T12:24:49.0021381Z ##[endgroup]
+2025-04-18T12:24:49.0061834Z [command]/usr/bin/git log -1 --format=%H
+2025-04-18T12:24:49.0085600Z 33c1cf6d569fdddb1f0f8121c091c086533cb0eb
+2025-04-18T12:24:49.0320963Z ##[group]Run actions/setup-node@v4
+2025-04-18T12:24:49.0321233Z with:
+2025-04-18T12:24:49.0321412Z   node-version: 22.x
+2025-04-18T12:24:49.0321606Z   cache: npm
+2025-04-18T12:24:49.0321821Z   cache-dependency-path: server/package-lock.json
+2025-04-18T12:24:49.0322106Z   always-auth: false
+2025-04-18T12:24:49.0322290Z   check-latest: false
+2025-04-18T12:24:49.0322596Z   token: ***
+2025-04-18T12:24:49.0322760Z env:
+2025-04-18T12:24:49.0322910Z   CI: true
+2025-04-18T12:24:49.0323065Z ##[endgroup]
+2025-04-18T12:24:49.2079804Z Found in cache @ /opt/hostedtoolcache/node/22.14.0/x64
+2025-04-18T12:24:49.2086860Z ##[group]Environment details
+2025-04-18T12:24:49.6904701Z node: v22.14.0
+2025-04-18T12:24:49.6908848Z npm: 10.9.2
+2025-04-18T12:24:49.6916982Z yarn: 1.22.22
+2025-04-18T12:24:49.6917876Z ##[endgroup]
+2025-04-18T12:24:49.6948060Z [command]/opt/hostedtoolcache/node/22.14.0/x64/bin/npm config get cache
+2025-04-18T12:24:49.8553366Z /home/runner/.npm
+2025-04-18T12:24:50.1337440Z Cache hit for: node-cache-Linux-x64-npm-eb74dc554d17640d6b2005eb2c3c9590e65262bd6e2b7add98bfd17307b4cd7c
+2025-04-18T12:24:51.4627177Z Received 0 of 35603115 (0.0%), 0.0 MBs/sec
+2025-04-18T12:24:51.9181308Z Received 35603115 of 35603115 (100.0%), 23.3 MBs/sec
+2025-04-18T12:24:51.9184214Z Cache Size: ~34 MB (35603115 B)
+2025-04-18T12:24:51.9227196Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d0c90eb3-8c09-4e60-8cac-a134b7e9328a/cache.tzst -P -C /home/runner/work/date-night-app2/date-night-app2 --use-compress-program unzstd
+2025-04-18T12:24:52.1871359Z Cache restored successfully
+2025-04-18T12:24:52.1950597Z Cache restored from key: node-cache-Linux-x64-npm-eb74dc554d17640d6b2005eb2c3c9590e65262bd6e2b7add98bfd17307b4cd7c
+2025-04-18T12:24:52.2099733Z ##[group]Run npm ci
+2025-04-18T12:24:52.2100018Z [36;1mnpm ci[0m
+2025-04-18T12:24:52.2153631Z shell: /usr/bin/bash -e {0}
+2025-04-18T12:24:52.2153889Z env:
+2025-04-18T12:24:52.2154057Z   CI: true
+2025-04-18T12:24:52.2154218Z ##[endgroup]
+2025-04-18T12:24:55.7294424Z npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+2025-04-18T12:24:55.8489028Z npm warn deprecated xss-clean@0.1.4: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2025-04-18T12:24:55.8541407Z npm warn deprecated passport-reddit@1.1.0: While functionally complete, this library will not be receiving any updates going forwards. Users are actively discouraged from using OAuth2 for authentication. See archival notice on github for more details.
+2025-04-18T12:24:55.9134168Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-04-18T12:24:56.0247826Z npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+2025-04-18T12:24:56.2859588Z npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+2025-04-18T12:24:56.3020673Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-04-18T12:24:56.3066454Z npm warn deprecated gauge@3.0.2: This package is no longer supported.
+2025-04-18T12:24:56.6568284Z npm warn deprecated superagent@8.1.2: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+2025-04-18T12:24:57.4029162Z npm warn deprecated eslint@8.56.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-04-18T12:25:01.3507077Z 
+2025-04-18T12:25:01.3512955Z > date-night-app@1.0.0 preinstall
+2025-04-18T12:25:01.3513886Z > node scripts/disable-husky-in-ci.js
+2025-04-18T12:25:01.3514564Z 
+2025-04-18T12:25:01.3875651Z .huskyrc file created to disable husky in CI environments
+2025-04-18T12:25:01.3891511Z .huskyrc file made executable
+2025-04-18T12:25:01.3961815Z 
+2025-04-18T12:25:01.3962413Z > date-night-app@1.0.0 prepare
+2025-04-18T12:25:01.3963901Z > [ -n "$CI" ] || husky
+2025-04-18T12:25:01.3964386Z 
+2025-04-18T12:25:01.4216557Z 
+2025-04-18T12:25:01.4217498Z added 748 packages, and audited 750 packages in 9s
+2025-04-18T12:25:01.4218126Z 
+2025-04-18T12:25:01.4218603Z 116 packages are looking for funding
+2025-04-18T12:25:01.4219266Z   run `npm fund` for details
+2025-04-18T12:25:01.4225227Z 
+2025-04-18T12:25:01.4225634Z found 0 vulnerabilities
+2025-04-18T12:25:01.5172555Z ##[group]Run npm test
+2025-04-18T12:25:01.5172921Z [36;1mnpm test[0m
+2025-04-18T12:25:01.5236441Z shell: /usr/bin/bash -e {0}
+2025-04-18T12:25:01.5236783Z env:
+2025-04-18T12:25:01.5237034Z   CI: true
+2025-04-18T12:25:01.5237293Z   NODE_ENV: test
+2025-04-18T12:25:01.5237695Z   MONGODB_URI: mongodb://localhost:27017/date-night-test
+2025-04-18T12:25:01.5238175Z ##[endgroup]
+2025-04-18T12:25:01.7016680Z 
+2025-04-18T12:25:01.7017355Z > date-night-server@1.0.0 test
+2025-04-18T12:25:01.7017767Z > jest
+2025-04-18T12:25:01.7017934Z 
+2025-04-18T12:25:04.6417511Z PASS tests/unit/services/wallet.service.test.js
+2025-04-18T12:25:04.7385285Z   ● Console
+2025-04-18T12:25:04.7395103Z 
+2025-04-18T12:25:04.7395297Z     console.error
+2025-04-18T12:25:04.7395929Z       Error getting or creating wallet: AppError: User not found
+2025-04-18T12:25:04.7397408Z           at WalletService.getOrCreateWallet (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:50:15)
+2025-04-18T12:25:04.7399189Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:269:7) {
+2025-04-18T12:25:04.7400196Z         statusCode: 404,
+2025-04-18T12:25:04.7400548Z         status: 'fail',
+2025-04-18T12:25:04.7400898Z         isOperational: true
+2025-04-18T12:25:04.7401240Z       }
+2025-04-18T12:25:04.7401409Z 
+2025-04-18T12:25:04.7401851Z     [0m [90m 75 |[39m       [36mreturn[39m wallet[33m;[39m
+2025-04-18T12:25:04.7402550Z      [90m 76 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7403678Z     [31m[1m>[22m[39m[90m 77 |[39m       console[33m.[39merror([32m'Error getting or creating wallet:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7404685Z      [90m    |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7405368Z      [90m 78 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7405904Z      [90m 79 |[39m     }
+2025-04-18T12:25:04.7406509Z      [90m 80 |[39m   }[0m
+2025-04-18T12:25:04.7406722Z 
+2025-04-18T12:25:04.7407128Z       at WalletService.error [as getOrCreateWallet] (services/wallet.service.js:77:15)
+2025-04-18T12:25:04.7408438Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:269:7)
+2025-04-18T12:25:04.7408883Z 
+2025-04-18T12:25:04.7409028Z     console.error
+2025-04-18T12:25:04.7409598Z       Error adding payment method: AppError: Payment method type is required
+2025-04-18T12:25:04.7410828Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:253:15)
+2025-04-18T12:25:04.7412413Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:497:7) {
+2025-04-18T12:25:04.7413473Z         statusCode: 400,
+2025-04-18T12:25:04.7413850Z         status: 'fail',
+2025-04-18T12:25:04.7414215Z         isOperational: true
+2025-04-18T12:25:04.7414583Z       }
+2025-04-18T12:25:04.7414755Z 
+2025-04-18T12:25:04.7415886Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7417429Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7418628Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7419646Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7420323Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7420909Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7421402Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7421689Z 
+2025-04-18T12:25:04.7422187Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7423209Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:497:7)
+2025-04-18T12:25:04.7423726Z 
+2025-04-18T12:25:04.7424260Z     console.error
+2025-04-18T12:25:04.7424956Z       Error adding payment method: AppError: Payment method provider is required
+2025-04-18T12:25:04.7427076Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:257:15)
+2025-04-18T12:25:04.7428903Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:518:7) {
+2025-04-18T12:25:04.7429938Z         statusCode: 400,
+2025-04-18T12:25:04.7430316Z         status: 'fail',
+2025-04-18T12:25:04.7430673Z         isOperational: true
+2025-04-18T12:25:04.7431037Z       }
+2025-04-18T12:25:04.7431204Z 
+2025-04-18T12:25:04.7432359Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7433604Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7434828Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7435845Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7436814Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7437365Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7437787Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7438032Z 
+2025-04-18T12:25:04.7438525Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7439461Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:518:7)
+2025-04-18T12:25:04.7439961Z 
+2025-04-18T12:25:04.7440096Z     console.error
+2025-04-18T12:25:04.7440665Z       Error adding payment method: AppError: Card details are required
+2025-04-18T12:25:04.7441979Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:264:19)
+2025-04-18T12:25:04.7443717Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:533:7) {
+2025-04-18T12:25:04.7444951Z         statusCode: 400,
+2025-04-18T12:25:04.7445299Z         status: 'fail',
+2025-04-18T12:25:04.7445685Z         isOperational: true
+2025-04-18T12:25:04.7446395Z       }
+2025-04-18T12:25:04.7446572Z 
+2025-04-18T12:25:04.7447709Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7448877Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7450042Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7451020Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7451813Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7452500Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7453023Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7453278Z 
+2025-04-18T12:25:04.7453767Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7454736Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:533:7)
+2025-04-18T12:25:04.7455226Z 
+2025-04-18T12:25:04.7455365Z     console.error
+2025-04-18T12:25:04.7456181Z       Error adding payment method: AppError: Bank account details are required
+2025-04-18T12:25:04.7457561Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:270:19)
+2025-04-18T12:25:04.7459373Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:548:7) {
+2025-04-18T12:25:04.7460446Z         statusCode: 400,
+2025-04-18T12:25:04.7460825Z         status: 'fail',
+2025-04-18T12:25:04.7461519Z         isOperational: true
+2025-04-18T12:25:04.7461940Z       }
+2025-04-18T12:25:04.7462109Z 
+2025-04-18T12:25:04.7463277Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7464572Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7465781Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7467101Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7467833Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7468416Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7468883Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7469161Z 
+2025-04-18T12:25:04.7469687Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7470696Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:548:7)
+2025-04-18T12:25:04.7471198Z 
+2025-04-18T12:25:04.7471352Z     console.error
+2025-04-18T12:25:04.7471983Z       Error adding payment method: AppError: Crypto address details are required
+2025-04-18T12:25:04.7473346Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:276:19)
+2025-04-18T12:25:04.7475107Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:563:7) {
+2025-04-18T12:25:04.7476316Z         statusCode: 400,
+2025-04-18T12:25:04.7476680Z         status: 'fail',
+2025-04-18T12:25:04.7477055Z         isOperational: true
+2025-04-18T12:25:04.7477421Z       }
+2025-04-18T12:25:04.7477580Z 
+2025-04-18T12:25:04.7478707Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7479919Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7481083Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7482368Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7483083Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7483815Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7484274Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7484540Z 
+2025-04-18T12:25:04.7485019Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7486283Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:563:7)
+2025-04-18T12:25:04.7486780Z 
+2025-04-18T12:25:04.7486918Z     console.error
+2025-04-18T12:25:04.7487438Z       Error adding payment method: AppError: Unsupported cryptocurrency: UNSUPPORTED
+2025-04-18T12:25:04.7488554Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:280:19)
+2025-04-18T12:25:04.7490237Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:583:7) {
+2025-04-18T12:25:04.7491265Z         statusCode: 400,
+2025-04-18T12:25:04.7491654Z         status: 'fail',
+2025-04-18T12:25:04.7492022Z         isOperational: true
+2025-04-18T12:25:04.7492385Z       }
+2025-04-18T12:25:04.7492552Z 
+2025-04-18T12:25:04.7493730Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7495036Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7496720Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7498081Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7501676Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7502687Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7503133Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7503359Z 
+2025-04-18T12:25:04.7503975Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7504967Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:583:7)
+2025-04-18T12:25:04.7505474Z 
+2025-04-18T12:25:04.7505640Z     console.error
+2025-04-18T12:25:04.7506589Z       Error adding payment method: AppError: Unsupported payment method type: unsupported
+2025-04-18T12:25:04.7508030Z           at WalletService.addPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:288:17)
+2025-04-18T12:25:04.7509796Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:598:7) {
+2025-04-18T12:25:04.7510867Z         statusCode: 400,
+2025-04-18T12:25:04.7511283Z         status: 'fail',
+2025-04-18T12:25:04.7511679Z         isOperational: true
+2025-04-18T12:25:04.7512064Z       }
+2025-04-18T12:25:04.7512234Z 
+2025-04-18T12:25:04.7513393Z     [0m [90m 295 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[wallet[33m.[39mpaymentMethods[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7514641Z      [90m 296 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7515861Z     [31m[1m>[22m[39m[90m 297 |[39m       console[33m.[39merror([32m'Error adding payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7517214Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7517964Z      [90m 298 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7518530Z      [90m 299 |[39m     }
+2025-04-18T12:25:04.7518998Z      [90m 300 |[39m   }[0m
+2025-04-18T12:25:04.7519245Z 
+2025-04-18T12:25:04.7519757Z       at WalletService.error [as addPaymentMethod] (services/wallet.service.js:297:15)
+2025-04-18T12:25:04.7521112Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:598:7)
+2025-04-18T12:25:04.7521618Z 
+2025-04-18T12:25:04.7521750Z     console.error
+2025-04-18T12:25:04.7522378Z       Error removing payment method: AppError: Payment method not found
+2025-04-18T12:25:04.7523773Z           at WalletService.removePaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:316:15)
+2025-04-18T12:25:04.7525567Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:622:7) {
+2025-04-18T12:25:04.7526866Z         statusCode: 404,
+2025-04-18T12:25:04.7527258Z         status: 'fail',
+2025-04-18T12:25:04.7527657Z         isOperational: true
+2025-04-18T12:25:04.7528033Z       }
+2025-04-18T12:25:04.7528204Z 
+2025-04-18T12:25:04.7528738Z     [0m [90m 322 |[39m       [36mreturn[39m [36mtrue[39m[33m;[39m
+2025-04-18T12:25:04.7529482Z      [90m 323 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7530698Z     [31m[1m>[22m[39m[90m 324 |[39m       console[33m.[39merror([32m'Error removing payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7531786Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7532493Z      [90m 325 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7533050Z      [90m 326 |[39m     }
+2025-04-18T12:25:04.7533495Z      [90m 327 |[39m   }[0m
+2025-04-18T12:25:04.7533757Z 
+2025-04-18T12:25:04.7534287Z       at WalletService.error [as removePaymentMethod] (services/wallet.service.js:324:15)
+2025-04-18T12:25:04.7535297Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:622:7)
+2025-04-18T12:25:04.7535803Z 
+2025-04-18T12:25:04.7536164Z     console.error
+2025-04-18T12:25:04.7537049Z       Error setting default payment method: AppError: Payment method not found
+2025-04-18T12:25:04.7538536Z           at WalletService.setDefaultPaymentMethod (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:343:15)
+2025-04-18T12:25:04.7540386Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:649:7) {
+2025-04-18T12:25:04.7541455Z         statusCode: 404,
+2025-04-18T12:25:04.7541853Z         status: 'fail',
+2025-04-18T12:25:04.7542236Z         isOperational: true
+2025-04-18T12:25:04.7542609Z       }
+2025-04-18T12:25:04.7542787Z 
+2025-04-18T12:25:04.7543599Z     [0m [90m 349 |[39m       [36mreturn[39m wallet[33m.[39mpaymentMethods[33m.[39mid(paymentMethodId)[33m;[39m
+2025-04-18T12:25:04.7544620Z      [90m 350 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7545908Z     [31m[1m>[22m[39m[90m 351 |[39m       console[33m.[39merror([32m'Error setting default payment method:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7547321Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7548051Z      [90m 352 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7548681Z      [90m 353 |[39m     }
+2025-04-18T12:25:04.7549156Z      [90m 354 |[39m   }[0m
+2025-04-18T12:25:04.7549418Z 
+2025-04-18T12:25:04.7549975Z       at WalletService.error [as setDefaultPaymentMethod] (services/wallet.service.js:351:15)
+2025-04-18T12:25:04.7551007Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:649:7)
+2025-04-18T12:25:04.7551584Z 
+2025-04-18T12:25:04.7551738Z     console.error
+2025-04-18T12:25:04.7552358Z       Error depositing funds with Stripe: AppError: Valid amount is required
+2025-04-18T12:25:04.7553814Z           at WalletService.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:375:15)
+2025-04-18T12:25:04.7555759Z           at Object.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:703:23)
+2025-04-18T12:25:04.7557841Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7559281Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7566432Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7567988Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7569464Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7571002Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7572740Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7574441Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7576160Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7578104Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7580292Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7582057Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7583932Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7584905Z         statusCode: 400,
+2025-04-18T12:25:04.7585323Z         status: 'fail',
+2025-04-18T12:25:04.7585746Z         isOperational: true
+2025-04-18T12:25:04.7586323Z       }
+2025-04-18T12:25:04.7586513Z 
+2025-04-18T12:25:04.7586875Z     [0m [90m 437 |[39m       }[33m;[39m
+2025-04-18T12:25:04.7587519Z      [90m 438 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7588814Z     [31m[1m>[22m[39m[90m 439 |[39m       console[33m.[39merror([32m'Error depositing funds with Stripe:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7589929Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7590671Z      [90m 440 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7591289Z      [90m 441 |[39m     }
+2025-04-18T12:25:04.7591769Z      [90m 442 |[39m   }[0m
+2025-04-18T12:25:04.7592039Z 
+2025-04-18T12:25:04.7592603Z       at WalletService.error [as depositFundsWithStripe] (services/wallet.service.js:439:15)
+2025-04-18T12:25:04.7593784Z       at Object.depositFundsWithStripe (tests/unit/services/wallet.service.test.js:703:23)
+2025-04-18T12:25:04.7594424Z 
+2025-04-18T12:25:04.7594583Z     console.error
+2025-04-18T12:25:04.7595290Z       Error depositing funds with Stripe: AppError: Unsupported currency: UNSUPPORTED
+2025-04-18T12:25:04.7596993Z           at WalletService.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:379:15)
+2025-04-18T12:25:04.7598926Z           at Object.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:709:23)
+2025-04-18T12:25:04.7600763Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7601803Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7602920Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7604491Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7609121Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7610686Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7612393Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7614084Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7615564Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7617745Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7619957Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7621828Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7623368Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7624302Z         statusCode: 400,
+2025-04-18T12:25:04.7624701Z         status: 'fail',
+2025-04-18T12:25:04.7625093Z         isOperational: true
+2025-04-18T12:25:04.7625477Z       }
+2025-04-18T12:25:04.7625651Z 
+2025-04-18T12:25:04.7626273Z     [0m [90m 437 |[39m       }[33m;[39m
+2025-04-18T12:25:04.7627226Z      [90m 438 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7628562Z     [31m[1m>[22m[39m[90m 439 |[39m       console[33m.[39merror([32m'Error depositing funds with Stripe:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7629641Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7630305Z      [90m 440 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7630860Z      [90m 441 |[39m     }
+2025-04-18T12:25:04.7631294Z      [90m 442 |[39m   }[0m
+2025-04-18T12:25:04.7631548Z 
+2025-04-18T12:25:04.7632086Z       at WalletService.error [as depositFundsWithStripe] (services/wallet.service.js:439:15)
+2025-04-18T12:25:04.7633230Z       at Object.depositFundsWithStripe (tests/unit/services/wallet.service.test.js:709:23)
+2025-04-18T12:25:04.7633829Z 
+2025-04-18T12:25:04.7633987Z     console.error
+2025-04-18T12:25:04.7634647Z       Error depositing funds with Stripe: AppError: Payment method ID is required
+2025-04-18T12:25:04.7636316Z           at WalletService.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:383:15)
+2025-04-18T12:25:04.7638269Z           at Object.depositFundsWithStripe (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:721:23)
+2025-04-18T12:25:04.7640066Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7641133Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7642235Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7643793Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7645623Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7647377Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7649348Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7651109Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7652681Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7654682Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7657094Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7658897Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7660278Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7661125Z         statusCode: 400,
+2025-04-18T12:25:04.7661488Z         status: 'fail',
+2025-04-18T12:25:04.7661872Z         isOperational: true
+2025-04-18T12:25:04.7662232Z       }
+2025-04-18T12:25:04.7662411Z 
+2025-04-18T12:25:04.7662759Z     [0m [90m 437 |[39m       }[33m;[39m
+2025-04-18T12:25:04.7663412Z      [90m 438 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7664677Z     [31m[1m>[22m[39m[90m 439 |[39m       console[33m.[39merror([32m'Error depositing funds with Stripe:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7665790Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7666680Z      [90m 440 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7667457Z      [90m 441 |[39m     }
+2025-04-18T12:25:04.7667973Z      [90m 442 |[39m   }[0m
+2025-04-18T12:25:04.7668235Z 
+2025-04-18T12:25:04.7668802Z       at WalletService.error [as depositFundsWithStripe] (services/wallet.service.js:439:15)
+2025-04-18T12:25:04.7669981Z       at Object.depositFundsWithStripe (tests/unit/services/wallet.service.test.js:721:23)
+2025-04-18T12:25:04.7670642Z 
+2025-04-18T12:25:04.7670808Z     console.error
+2025-04-18T12:25:04.7671380Z       Error withdrawing funds: AppError: Valid amount is required
+2025-04-18T12:25:04.7672677Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:518:15)
+2025-04-18T12:25:04.7674451Z           at Object.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:765:23)
+2025-04-18T12:25:04.7676413Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7677481Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7678550Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7680107Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7681563Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7683144Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7684831Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7686701Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7688189Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7690404Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7692613Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7694436Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7696174Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7697121Z         statusCode: 400,
+2025-04-18T12:25:04.7697500Z         status: 'fail',
+2025-04-18T12:25:04.7697856Z         isOperational: true
+2025-04-18T12:25:04.7698232Z       }
+2025-04-18T12:25:04.7698394Z 
+2025-04-18T12:25:04.7699490Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7700729Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7701923Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7703002Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7703741Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7704310Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7704773Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7705015Z 
+2025-04-18T12:25:04.7705480Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7706946Z       at Object.withdrawFunds (tests/unit/services/wallet.service.test.js:765:23)
+2025-04-18T12:25:04.7707491Z 
+2025-04-18T12:25:04.7707630Z     console.error
+2025-04-18T12:25:04.7708258Z       Error withdrawing funds: AppError: Minimum withdrawal amount is 100 NOK
+2025-04-18T12:25:04.7709592Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:522:15)
+2025-04-18T12:25:04.7741544Z           at Object.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:772:23)
+2025-04-18T12:25:04.7743339Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7744434Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7745555Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7747425Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7748865Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7750419Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7752139Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7753829Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7755294Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7757432Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7759574Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7761646Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7763225Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7764160Z         statusCode: 400,
+2025-04-18T12:25:04.7764553Z         status: 'fail',
+2025-04-18T12:25:04.7764945Z         isOperational: true
+2025-04-18T12:25:04.7765323Z       }
+2025-04-18T12:25:04.7765504Z 
+2025-04-18T12:25:04.7766846Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7767984Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7769072Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7769996Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7770620Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7771132Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7771560Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7771817Z 
+2025-04-18T12:25:04.7772303Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7773319Z       at Object.withdrawFunds (tests/unit/services/wallet.service.test.js:772:23)
+2025-04-18T12:25:04.7773851Z 
+2025-04-18T12:25:04.7774004Z     console.error
+2025-04-18T12:25:04.7774639Z       Error withdrawing funds: AppError: Unsupported currency: UNSUPPORTED
+2025-04-18T12:25:04.7776439Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:529:15)
+2025-04-18T12:25:04.7778261Z           at Object.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:783:23)
+2025-04-18T12:25:04.7780043Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7781123Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7782221Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7783791Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7785284Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7787064Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7788746Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7790417Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7791925Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7793838Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7796259Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7798092Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7799646Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7800862Z         statusCode: 400,
+2025-04-18T12:25:04.7801252Z         status: 'fail',
+2025-04-18T12:25:04.7801643Z         isOperational: true
+2025-04-18T12:25:04.7802034Z       }
+2025-04-18T12:25:04.7802209Z 
+2025-04-18T12:25:04.7803317Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7804537Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7805740Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7807011Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7807752Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7808346Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7808829Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7809126Z 
+2025-04-18T12:25:04.7809615Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7810643Z       at Object.withdrawFunds (tests/unit/services/wallet.service.test.js:783:23)
+2025-04-18T12:25:04.7811198Z 
+2025-04-18T12:25:04.7811358Z     console.error
+2025-04-18T12:25:04.7811958Z       Error withdrawing funds: AppError: Payment method ID is required
+2025-04-18T12:25:04.7813306Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:533:15)
+2025-04-18T12:25:04.7815078Z           at Object.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:788:34)
+2025-04-18T12:25:04.7817291Z           at Promise.then.completed (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:298:28)
+2025-04-18T12:25:04.7818400Z           at new Promise (<anonymous>)
+2025-04-18T12:25:04.7819495Z           at callAsyncCircusFn (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/utils.js:231:10)
+2025-04-18T12:25:04.7821000Z           at _callCircusTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:316:40)
+2025-04-18T12:25:04.7822481Z           at _runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:252:3)
+2025-04-18T12:25:04.7824002Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:126:9)
+2025-04-18T12:25:04.7825538Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7827397Z           at _runTestsForDescribeBlock (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:121:9)
+2025-04-18T12:25:04.7828823Z           at run (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/run.js:71:3)
+2025-04-18T12:25:04.7830691Z           at runAndTransformResultsToJestFormat (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+2025-04-18T12:25:04.7832911Z           at jestAdapter (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+2025-04-18T12:25:04.7834653Z           at runTestInternal (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:367:16)
+2025-04-18T12:25:04.7836342Z           at runTest (/home/runner/work/date-night-app2/date-night-app2/node_modules/jest-runner/build/runTest.js:444:34) {
+2025-04-18T12:25:04.7837204Z         statusCode: 400,
+2025-04-18T12:25:04.7837577Z         status: 'fail',
+2025-04-18T12:25:04.7837968Z         isOperational: true
+2025-04-18T12:25:04.7838343Z       }
+2025-04-18T12:25:04.7838513Z 
+2025-04-18T12:25:04.7839864Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7841051Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7842193Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7843144Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7843855Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7844415Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7844873Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7845140Z 
+2025-04-18T12:25:04.7845614Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7846821Z       at Object.withdrawFunds (tests/unit/services/wallet.service.test.js:788:34)
+2025-04-18T12:25:04.7847331Z 
+2025-04-18T12:25:04.7847488Z     console.error
+2025-04-18T12:25:04.7848026Z       Error withdrawing funds: AppError: Payment method not found
+2025-04-18T12:25:04.7849224Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:542:15)
+2025-04-18T12:25:04.7850901Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:796:7) {
+2025-04-18T12:25:04.7851986Z         statusCode: 404,
+2025-04-18T12:25:04.7852321Z         status: 'fail',
+2025-04-18T12:25:04.7852650Z         isOperational: true
+2025-04-18T12:25:04.7852986Z       }
+2025-04-18T12:25:04.7853151Z 
+2025-04-18T12:25:04.7854191Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7855575Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7856983Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7857976Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7858676Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7859210Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7859633Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7859870Z 
+2025-04-18T12:25:04.7860346Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7861280Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:796:7)
+2025-04-18T12:25:04.7861764Z 
+2025-04-18T12:25:04.7861908Z     console.error
+2025-04-18T12:25:04.7862536Z       Error withdrawing funds: AppError: Insufficient balance. Available: 50 NOK
+2025-04-18T12:25:04.7863855Z           at WalletService.withdrawFunds (/home/runner/work/date-night-app2/date-night-app2/server/services/wallet.service.js:549:15)
+2025-04-18T12:25:04.7865565Z           at Object.<anonymous> (/home/runner/work/date-night-app2/date-night-app2/server/tests/unit/services/wallet.service.test.js:812:7) {
+2025-04-18T12:25:04.7870921Z         statusCode: 400,
+2025-04-18T12:25:04.7871329Z         status: 'fail',
+2025-04-18T12:25:04.7871710Z         isOperational: true
+2025-04-18T12:25:04.7872091Z       }
+2025-04-18T12:25:04.7872256Z 
+2025-04-18T12:25:04.7873354Z     [0m [90m 619 |[39m       [36mreturn[39m wallet[33m.[39mtransactions[wallet[33m.[39mtransactions[33m.[39mlength [33m-[39m [35m1[39m][33m;[39m
+2025-04-18T12:25:04.7874512Z      [90m 620 |[39m     } [36mcatch[39m (error) {
+2025-04-18T12:25:04.7875626Z     [31m[1m>[22m[39m[90m 621 |[39m       console[33m.[39merror([32m'Error withdrawing funds:'[39m[33m,[39m error)[33m;[39m
+2025-04-18T12:25:04.7876803Z      [90m     |[39m               [31m[1m^[22m[39m
+2025-04-18T12:25:04.7877508Z      [90m 622 |[39m       [36mthrow[39m error[33m;[39m
+2025-04-18T12:25:04.7878049Z      [90m 623 |[39m     }
+2025-04-18T12:25:04.7878763Z      [90m 624 |[39m   }[0m
+2025-04-18T12:25:04.7879012Z 
+2025-04-18T12:25:04.7879476Z       at WalletService.error [as withdrawFunds] (services/wallet.service.js:621:15)
+2025-04-18T12:25:04.7880401Z       at Object.<anonymous> (tests/unit/services/wallet.service.test.js:812:7)
+2025-04-18T12:25:04.7880904Z 
+2025-04-18T12:25:06.8497714Z PASS tests/unit/models/ad.model.test.js
+2025-04-18T12:25:06.8537942Z   ● Console
+2025-04-18T12:25:06.8538132Z 
+2025-04-18T12:25:06.8538266Z     console.log
+2025-04-18T12:25:06.8538871Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:52894/
+2025-04-18T12:25:06.8539285Z 
+2025-04-18T12:25:06.8539472Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:06.8539741Z 
+2025-04-18T12:25:06.8539864Z     console.log
+2025-04-18T12:25:06.8540170Z       Database cleared
+2025-04-18T12:25:06.8540370Z 
+2025-04-18T12:25:06.8540588Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8540844Z 
+2025-04-18T12:25:06.8540971Z     console.log
+2025-04-18T12:25:06.8541279Z       Database cleared
+2025-04-18T12:25:06.8541476Z 
+2025-04-18T12:25:06.8541645Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8541906Z 
+2025-04-18T12:25:06.8542021Z     console.log
+2025-04-18T12:25:06.8542335Z       Database cleared
+2025-04-18T12:25:06.8542529Z 
+2025-04-18T12:25:06.8542725Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8542997Z 
+2025-04-18T12:25:06.8543127Z     console.log
+2025-04-18T12:25:06.8543447Z       Database cleared
+2025-04-18T12:25:06.8543662Z 
+2025-04-18T12:25:06.8543835Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8544097Z 
+2025-04-18T12:25:06.8544226Z     console.log
+2025-04-18T12:25:06.8544536Z       Database cleared
+2025-04-18T12:25:06.8544736Z 
+2025-04-18T12:25:06.8544910Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8545176Z 
+2025-04-18T12:25:06.8545300Z     console.log
+2025-04-18T12:25:06.8545913Z       Database cleared
+2025-04-18T12:25:06.8546434Z 
+2025-04-18T12:25:06.8546685Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8546981Z 
+2025-04-18T12:25:06.8547113Z     console.log
+2025-04-18T12:25:06.8547423Z       Database cleared
+2025-04-18T12:25:06.8547641Z 
+2025-04-18T12:25:06.8547830Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8548106Z 
+2025-04-18T12:25:06.8548238Z     console.log
+2025-04-18T12:25:06.8548545Z       Database cleared
+2025-04-18T12:25:06.8548744Z 
+2025-04-18T12:25:06.8548931Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8549205Z 
+2025-04-18T12:25:06.8549335Z     console.log
+2025-04-18T12:25:06.8549655Z       Database cleared
+2025-04-18T12:25:06.8549862Z 
+2025-04-18T12:25:06.8550055Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8550343Z 
+2025-04-18T12:25:06.8550471Z     console.log
+2025-04-18T12:25:06.8550771Z       Database cleared
+2025-04-18T12:25:06.8550977Z 
+2025-04-18T12:25:06.8551156Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8551436Z 
+2025-04-18T12:25:06.8551557Z     console.log
+2025-04-18T12:25:06.8551856Z       Database cleared
+2025-04-18T12:25:06.8552059Z 
+2025-04-18T12:25:06.8552244Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8552505Z 
+2025-04-18T12:25:06.8552621Z     console.log
+2025-04-18T12:25:06.8552919Z       Database cleared
+2025-04-18T12:25:06.8553119Z 
+2025-04-18T12:25:06.8553296Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8553553Z 
+2025-04-18T12:25:06.8553677Z     console.log
+2025-04-18T12:25:06.8553967Z       Database cleared
+2025-04-18T12:25:06.8554171Z 
+2025-04-18T12:25:06.8554347Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8554610Z 
+2025-04-18T12:25:06.8554724Z     console.log
+2025-04-18T12:25:06.8555024Z       Database cleared
+2025-04-18T12:25:06.8555223Z 
+2025-04-18T12:25:06.8555419Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8555684Z 
+2025-04-18T12:25:06.8555802Z     console.log
+2025-04-18T12:25:06.8556532Z       Database cleared
+2025-04-18T12:25:06.8556765Z 
+2025-04-18T12:25:06.8556956Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8557226Z 
+2025-04-18T12:25:06.8557654Z     console.log
+2025-04-18T12:25:06.8557984Z       Database cleared
+2025-04-18T12:25:06.8558194Z 
+2025-04-18T12:25:06.8558387Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8558671Z 
+2025-04-18T12:25:06.8558795Z     console.log
+2025-04-18T12:25:06.8559110Z       Database cleared
+2025-04-18T12:25:06.8559317Z 
+2025-04-18T12:25:06.8559510Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8559781Z 
+2025-04-18T12:25:06.8559910Z     console.log
+2025-04-18T12:25:06.8560217Z       Database cleared
+2025-04-18T12:25:06.8560425Z 
+2025-04-18T12:25:06.8560614Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8560895Z 
+2025-04-18T12:25:06.8561016Z     console.log
+2025-04-18T12:25:06.8561319Z       Database cleared
+2025-04-18T12:25:06.8561521Z 
+2025-04-18T12:25:06.8561708Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:06.8562039Z 
+2025-04-18T12:25:06.8562166Z     console.log
+2025-04-18T12:25:06.8562555Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:06.8562860Z 
+2025-04-18T12:25:06.8563046Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:06.8563322Z 
+2025-04-18T12:25:09.3377447Z PASS tests/integration/controllers/auth.controller.test.js
+2025-04-18T12:25:09.3445745Z   ● Console
+2025-04-18T12:25:09.3446293Z 
+2025-04-18T12:25:09.3446432Z     console.log
+2025-04-18T12:25:09.3447001Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:64686/
+2025-04-18T12:25:09.3447428Z 
+2025-04-18T12:25:09.3447614Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:09.3447878Z 
+2025-04-18T12:25:09.3448005Z     console.log
+2025-04-18T12:25:09.3448312Z       Database cleared
+2025-04-18T12:25:09.3448515Z 
+2025-04-18T12:25:09.3448695Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3448962Z 
+2025-04-18T12:25:09.3449082Z     console.log
+2025-04-18T12:25:09.3449386Z       Database cleared
+2025-04-18T12:25:09.3449592Z 
+2025-04-18T12:25:09.3466677Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3467062Z 
+2025-04-18T12:25:09.3467215Z     console.log
+2025-04-18T12:25:09.3467561Z       Database cleared
+2025-04-18T12:25:09.3467783Z 
+2025-04-18T12:25:09.3467977Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3468255Z 
+2025-04-18T12:25:09.3468377Z     console.log
+2025-04-18T12:25:09.3468693Z       Database cleared
+2025-04-18T12:25:09.3468905Z 
+2025-04-18T12:25:09.3469093Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3469369Z 
+2025-04-18T12:25:09.3469491Z     console.log
+2025-04-18T12:25:09.3469805Z       Database cleared
+2025-04-18T12:25:09.3470013Z 
+2025-04-18T12:25:09.3470218Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3470497Z 
+2025-04-18T12:25:09.3470631Z     console.log
+2025-04-18T12:25:09.3470940Z       Database cleared
+2025-04-18T12:25:09.3471167Z 
+2025-04-18T12:25:09.3471351Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3471622Z 
+2025-04-18T12:25:09.3471747Z     console.log
+2025-04-18T12:25:09.3472068Z       Database cleared
+2025-04-18T12:25:09.3472276Z 
+2025-04-18T12:25:09.3472469Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3472751Z 
+2025-04-18T12:25:09.3472872Z     console.log
+2025-04-18T12:25:09.3473188Z       Database cleared
+2025-04-18T12:25:09.3473410Z 
+2025-04-18T12:25:09.3473587Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3473859Z 
+2025-04-18T12:25:09.3473985Z     console.log
+2025-04-18T12:25:09.3474298Z       Database cleared
+2025-04-18T12:25:09.3474505Z 
+2025-04-18T12:25:09.3474690Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3474969Z 
+2025-04-18T12:25:09.3475092Z     console.log
+2025-04-18T12:25:09.3475406Z       Database cleared
+2025-04-18T12:25:09.3475612Z 
+2025-04-18T12:25:09.3475803Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3476267Z 
+2025-04-18T12:25:09.3476399Z     console.log
+2025-04-18T12:25:09.3476705Z       Database cleared
+2025-04-18T12:25:09.3476919Z 
+2025-04-18T12:25:09.3477107Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3477394Z 
+2025-04-18T12:25:09.3477517Z     console.log
+2025-04-18T12:25:09.3477875Z       Database cleared
+2025-04-18T12:25:09.3478433Z 
+2025-04-18T12:25:09.3478627Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3478912Z 
+2025-04-18T12:25:09.3479038Z     console.log
+2025-04-18T12:25:09.3479350Z       Database cleared
+2025-04-18T12:25:09.3479556Z 
+2025-04-18T12:25:09.3479736Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3480013Z 
+2025-04-18T12:25:09.3480144Z     console.log
+2025-04-18T12:25:09.3480443Z       Database cleared
+2025-04-18T12:25:09.3480650Z 
+2025-04-18T12:25:09.3480838Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3481112Z 
+2025-04-18T12:25:09.3481233Z     console.log
+2025-04-18T12:25:09.3481539Z       Database cleared
+2025-04-18T12:25:09.3481737Z 
+2025-04-18T12:25:09.3481925Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3482189Z 
+2025-04-18T12:25:09.3482308Z     console.log
+2025-04-18T12:25:09.3482612Z       Database cleared
+2025-04-18T12:25:09.3482832Z 
+2025-04-18T12:25:09.3483013Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3483285Z 
+2025-04-18T12:25:09.3483436Z     console.log
+2025-04-18T12:25:09.3483744Z       Database cleared
+2025-04-18T12:25:09.3483945Z 
+2025-04-18T12:25:09.3484126Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3484398Z 
+2025-04-18T12:25:09.3484519Z     console.log
+2025-04-18T12:25:09.3484820Z       Database cleared
+2025-04-18T12:25:09.3485021Z 
+2025-04-18T12:25:09.3485209Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3485472Z 
+2025-04-18T12:25:09.3485600Z     console.log
+2025-04-18T12:25:09.3485893Z       Database cleared
+2025-04-18T12:25:09.3492962Z 
+2025-04-18T12:25:09.3493183Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3493490Z 
+2025-04-18T12:25:09.3493626Z     console.log
+2025-04-18T12:25:09.3493950Z       Database cleared
+2025-04-18T12:25:09.3494170Z 
+2025-04-18T12:25:09.3494361Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3494642Z 
+2025-04-18T12:25:09.3495056Z     console.log
+2025-04-18T12:25:09.3495391Z       Database cleared
+2025-04-18T12:25:09.3495597Z 
+2025-04-18T12:25:09.3495801Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3496288Z 
+2025-04-18T12:25:09.3496422Z     console.log
+2025-04-18T12:25:09.3496708Z       Database cleared
+2025-04-18T12:25:09.3496908Z 
+2025-04-18T12:25:09.3497094Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3497365Z 
+2025-04-18T12:25:09.3497484Z     console.log
+2025-04-18T12:25:09.3497794Z       Database cleared
+2025-04-18T12:25:09.3497986Z 
+2025-04-18T12:25:09.3498172Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3498430Z 
+2025-04-18T12:25:09.3498549Z     console.log
+2025-04-18T12:25:09.3498850Z       Database cleared
+2025-04-18T12:25:09.3499051Z 
+2025-04-18T12:25:09.3499231Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3499483Z 
+2025-04-18T12:25:09.3499610Z     console.log
+2025-04-18T12:25:09.3499914Z       Database cleared
+2025-04-18T12:25:09.3500112Z 
+2025-04-18T12:25:09.3500299Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3500565Z 
+2025-04-18T12:25:09.3500686Z     console.log
+2025-04-18T12:25:09.3501006Z       Database cleared
+2025-04-18T12:25:09.3501210Z 
+2025-04-18T12:25:09.3501417Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3501691Z 
+2025-04-18T12:25:09.3501826Z     console.log
+2025-04-18T12:25:09.3502133Z       Database cleared
+2025-04-18T12:25:09.3502341Z 
+2025-04-18T12:25:09.3502527Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3502807Z 
+2025-04-18T12:25:09.3502931Z     console.log
+2025-04-18T12:25:09.3503236Z       Database cleared
+2025-04-18T12:25:09.3503435Z 
+2025-04-18T12:25:09.3503620Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3503894Z 
+2025-04-18T12:25:09.3504015Z     console.log
+2025-04-18T12:25:09.3504319Z       Database cleared
+2025-04-18T12:25:09.3504521Z 
+2025-04-18T12:25:09.3504711Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:09.3504973Z 
+2025-04-18T12:25:09.3505101Z     console.log
+2025-04-18T12:25:09.3505498Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:09.3505814Z 
+2025-04-18T12:25:09.3506214Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:09.3506747Z 
+2025-04-18T12:25:13.0728374Z PASS tests/unit/models/user.model.test.js
+2025-04-18T12:25:13.0827063Z   ● Console
+2025-04-18T12:25:13.0827525Z 
+2025-04-18T12:25:13.0827952Z     console.log
+2025-04-18T12:25:13.0828554Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:2773/
+2025-04-18T12:25:13.0829018Z 
+2025-04-18T12:25:13.0829221Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:13.0829515Z 
+2025-04-18T12:25:13.0829644Z     console.log
+2025-04-18T12:25:13.0829971Z       Database cleared
+2025-04-18T12:25:13.0830184Z 
+2025-04-18T12:25:13.0830379Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0830653Z 
+2025-04-18T12:25:13.0830788Z     console.log
+2025-04-18T12:25:13.0831370Z       Database cleared
+2025-04-18T12:25:13.0831596Z 
+2025-04-18T12:25:13.0831887Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0832263Z 
+2025-04-18T12:25:13.0832571Z     console.log
+2025-04-18T12:25:13.0832899Z       Database cleared
+2025-04-18T12:25:13.0835722Z 
+2025-04-18T12:25:13.0836270Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0836576Z 
+2025-04-18T12:25:13.0836717Z     console.log
+2025-04-18T12:25:13.0837048Z       Database cleared
+2025-04-18T12:25:13.0837257Z 
+2025-04-18T12:25:13.0837446Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0837727Z 
+2025-04-18T12:25:13.0837857Z     console.log
+2025-04-18T12:25:13.0838167Z       Database cleared
+2025-04-18T12:25:13.0838365Z 
+2025-04-18T12:25:13.0838551Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0838806Z 
+2025-04-18T12:25:13.0838930Z     console.log
+2025-04-18T12:25:13.0839223Z       Database cleared
+2025-04-18T12:25:13.0839453Z 
+2025-04-18T12:25:13.0839633Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0839894Z 
+2025-04-18T12:25:13.0840012Z     console.log
+2025-04-18T12:25:13.0840309Z       Database cleared
+2025-04-18T12:25:13.0840504Z 
+2025-04-18T12:25:13.0840983Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0841252Z 
+2025-04-18T12:25:13.0841381Z     console.log
+2025-04-18T12:25:13.0841689Z       Database cleared
+2025-04-18T12:25:13.0841900Z 
+2025-04-18T12:25:13.0842088Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0842362Z 
+2025-04-18T12:25:13.0842485Z     console.log
+2025-04-18T12:25:13.0842797Z       Database cleared
+2025-04-18T12:25:13.0843001Z 
+2025-04-18T12:25:13.0843191Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0843458Z 
+2025-04-18T12:25:13.0843580Z     console.log
+2025-04-18T12:25:13.0843880Z       Database cleared
+2025-04-18T12:25:13.0844084Z 
+2025-04-18T12:25:13.0844276Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0844545Z 
+2025-04-18T12:25:13.0844676Z     console.log
+2025-04-18T12:25:13.0844974Z       Database cleared
+2025-04-18T12:25:13.0845183Z 
+2025-04-18T12:25:13.0845365Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0845635Z 
+2025-04-18T12:25:13.0845757Z     console.log
+2025-04-18T12:25:13.0846259Z       Database cleared
+2025-04-18T12:25:13.0846472Z 
+2025-04-18T12:25:13.0846670Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0846951Z 
+2025-04-18T12:25:13.0847079Z     console.log
+2025-04-18T12:25:13.0847407Z       Database cleared
+2025-04-18T12:25:13.0847627Z 
+2025-04-18T12:25:13.0847819Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0848119Z 
+2025-04-18T12:25:13.0848246Z     console.log
+2025-04-18T12:25:13.0848566Z       Database cleared
+2025-04-18T12:25:13.0848773Z 
+2025-04-18T12:25:13.0848965Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0849227Z 
+2025-04-18T12:25:13.0849358Z     console.log
+2025-04-18T12:25:13.0849662Z       Database cleared
+2025-04-18T12:25:13.0849874Z 
+2025-04-18T12:25:13.0850063Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0850345Z 
+2025-04-18T12:25:13.0850471Z     console.log
+2025-04-18T12:25:13.0850793Z       Database cleared
+2025-04-18T12:25:13.0851004Z 
+2025-04-18T12:25:13.0851206Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0851492Z 
+2025-04-18T12:25:13.0851626Z     console.log
+2025-04-18T12:25:13.0851951Z       Database cleared
+2025-04-18T12:25:13.0852417Z 
+2025-04-18T12:25:13.0852609Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0852876Z 
+2025-04-18T12:25:13.0853016Z     console.log
+2025-04-18T12:25:13.0853336Z       Database cleared
+2025-04-18T12:25:13.0853543Z 
+2025-04-18T12:25:13.0853730Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0854018Z 
+2025-04-18T12:25:13.0854146Z     console.log
+2025-04-18T12:25:13.0854462Z       Database cleared
+2025-04-18T12:25:13.0854665Z 
+2025-04-18T12:25:13.0854860Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0855130Z 
+2025-04-18T12:25:13.0855262Z     console.log
+2025-04-18T12:25:13.0855570Z       Database cleared
+2025-04-18T12:25:13.0855782Z 
+2025-04-18T12:25:13.0856256Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0856551Z 
+2025-04-18T12:25:13.0856681Z     console.log
+2025-04-18T12:25:13.0856985Z       Database cleared
+2025-04-18T12:25:13.0857198Z 
+2025-04-18T12:25:13.0857386Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0857671Z 
+2025-04-18T12:25:13.0857815Z     console.log
+2025-04-18T12:25:13.0858131Z       Database cleared
+2025-04-18T12:25:13.0858335Z 
+2025-04-18T12:25:13.0858530Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0858796Z 
+2025-04-18T12:25:13.0858926Z     console.log
+2025-04-18T12:25:13.0859224Z       Database cleared
+2025-04-18T12:25:13.0859431Z 
+2025-04-18T12:25:13.0859615Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0859897Z 
+2025-04-18T12:25:13.0860021Z     console.log
+2025-04-18T12:25:13.0860339Z       Database cleared
+2025-04-18T12:25:13.0860545Z 
+2025-04-18T12:25:13.0860745Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0861016Z 
+2025-04-18T12:25:13.0861145Z     console.log
+2025-04-18T12:25:13.0861463Z       Database cleared
+2025-04-18T12:25:13.0861677Z 
+2025-04-18T12:25:13.0861864Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0862137Z 
+2025-04-18T12:25:13.0862498Z     console.log
+2025-04-18T12:25:13.0862861Z       Database cleared
+2025-04-18T12:25:13.0863083Z 
+2025-04-18T12:25:13.0863290Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0863581Z 
+2025-04-18T12:25:13.0863703Z     console.log
+2025-04-18T12:25:13.0864024Z       Database cleared
+2025-04-18T12:25:13.0864230Z 
+2025-04-18T12:25:13.0864424Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:13.0864695Z 
+2025-04-18T12:25:13.0864825Z     console.log
+2025-04-18T12:25:13.0865207Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:13.0865521Z 
+2025-04-18T12:25:13.0865704Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:13.0866197Z 
+2025-04-18T12:25:14.6123541Z PASS tests/unit/models/wallet.model.test.js
+2025-04-18T12:25:14.6206856Z   ● Console
+2025-04-18T12:25:14.6207405Z 
+2025-04-18T12:25:14.6207856Z     console.log
+2025-04-18T12:25:14.6208635Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:52998/
+2025-04-18T12:25:14.6209281Z 
+2025-04-18T12:25:14.6209733Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:14.6210207Z 
+2025-04-18T12:25:14.6210527Z     console.log
+2025-04-18T12:25:14.6211035Z       Database cleared
+2025-04-18T12:25:14.6211455Z 
+2025-04-18T12:25:14.6211826Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6212295Z 
+2025-04-18T12:25:14.6212595Z     console.log
+2025-04-18T12:25:14.6213098Z       Database cleared
+2025-04-18T12:25:14.6213509Z 
+2025-04-18T12:25:14.6213902Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6214391Z 
+2025-04-18T12:25:14.6214729Z     console.log
+2025-04-18T12:25:14.6215277Z       Database cleared
+2025-04-18T12:25:14.6215722Z 
+2025-04-18T12:25:14.6216327Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6216816Z 
+2025-04-18T12:25:14.6217120Z     console.log
+2025-04-18T12:25:14.6217632Z       Database cleared
+2025-04-18T12:25:14.6218041Z 
+2025-04-18T12:25:14.6218611Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6219134Z 
+2025-04-18T12:25:14.6219433Z     console.log
+2025-04-18T12:25:14.6219930Z       Database cleared
+2025-04-18T12:25:14.6220335Z 
+2025-04-18T12:25:14.6220713Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6221531Z 
+2025-04-18T12:25:14.6221826Z     console.log
+2025-04-18T12:25:14.6222327Z       Database cleared
+2025-04-18T12:25:14.6222706Z 
+2025-04-18T12:25:14.6223050Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6223495Z 
+2025-04-18T12:25:14.6223841Z     console.log
+2025-04-18T12:25:14.6224819Z       Database cleared
+2025-04-18T12:25:14.6225176Z 
+2025-04-18T12:25:14.6225544Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6226180Z 
+2025-04-18T12:25:14.6226540Z     console.log
+2025-04-18T12:25:14.6227064Z       Database cleared
+2025-04-18T12:25:14.6227503Z 
+2025-04-18T12:25:14.6227885Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6228412Z 
+2025-04-18T12:25:14.6228725Z     console.log
+2025-04-18T12:25:14.6229270Z       Database cleared
+2025-04-18T12:25:14.6229679Z 
+2025-04-18T12:25:14.6230062Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6230529Z 
+2025-04-18T12:25:14.6230855Z     console.log
+2025-04-18T12:25:14.6231387Z       Database cleared
+2025-04-18T12:25:14.6231782Z 
+2025-04-18T12:25:14.6232152Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6232603Z 
+2025-04-18T12:25:14.6232900Z     console.log
+2025-04-18T12:25:14.6233393Z       Database cleared
+2025-04-18T12:25:14.6233799Z 
+2025-04-18T12:25:14.6234165Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6234628Z 
+2025-04-18T12:25:14.6234919Z     console.log
+2025-04-18T12:25:14.6235416Z       Database cleared
+2025-04-18T12:25:14.6235807Z 
+2025-04-18T12:25:14.6236395Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6237131Z 
+2025-04-18T12:25:14.6237492Z     console.log
+2025-04-18T12:25:14.6238050Z       Database cleared
+2025-04-18T12:25:14.6238527Z 
+2025-04-18T12:25:14.6241060Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6241600Z 
+2025-04-18T12:25:14.6241928Z     console.log
+2025-04-18T12:25:14.6243570Z       Database cleared
+2025-04-18T12:25:14.6244123Z 
+2025-04-18T12:25:14.6244781Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6245359Z 
+2025-04-18T12:25:14.6245700Z     console.log
+2025-04-18T12:25:14.6246501Z       Database cleared
+2025-04-18T12:25:14.6267422Z 
+2025-04-18T12:25:14.6267900Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6268405Z 
+2025-04-18T12:25:14.6268722Z     console.log
+2025-04-18T12:25:14.6269234Z       Database cleared
+2025-04-18T12:25:14.6269646Z 
+2025-04-18T12:25:14.6270018Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6270489Z 
+2025-04-18T12:25:14.6270783Z     console.log
+2025-04-18T12:25:14.6271274Z       Database cleared
+2025-04-18T12:25:14.6271651Z 
+2025-04-18T12:25:14.6272006Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6272442Z 
+2025-04-18T12:25:14.6272735Z     console.log
+2025-04-18T12:25:14.6273215Z       Database cleared
+2025-04-18T12:25:14.6273591Z 
+2025-04-18T12:25:14.6273997Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:14.6275341Z 
+2025-04-18T12:25:14.6277465Z     console.log
+2025-04-18T12:25:14.6278159Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:14.6278706Z 
+2025-04-18T12:25:14.6279094Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:14.6279632Z 
+2025-04-18T12:25:21.8140345Z PASS tests/unit/models/chat-room.model.test.js (7.19 s)
+2025-04-18T12:25:21.8181767Z   ● Console
+2025-04-18T12:25:21.8182165Z 
+2025-04-18T12:25:21.8182517Z     console.log
+2025-04-18T12:25:21.8187407Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:30618/
+2025-04-18T12:25:21.8188133Z 
+2025-04-18T12:25:21.8189516Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:21.8190006Z 
+2025-04-18T12:25:21.8190350Z     console.log
+2025-04-18T12:25:21.8190822Z       Database cleared
+2025-04-18T12:25:21.8191243Z 
+2025-04-18T12:25:21.8191604Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8192112Z 
+2025-04-18T12:25:21.8192399Z     console.log
+2025-04-18T12:25:21.8192919Z       Database cleared
+2025-04-18T12:25:21.8193421Z 
+2025-04-18T12:25:21.8193852Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8194439Z 
+2025-04-18T12:25:21.8194773Z     console.log
+2025-04-18T12:25:21.8195306Z       Database cleared
+2025-04-18T12:25:21.8196308Z 
+2025-04-18T12:25:21.8196637Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8197224Z 
+2025-04-18T12:25:21.8197548Z     console.log
+2025-04-18T12:25:21.8198107Z       Database cleared
+2025-04-18T12:25:21.8198508Z 
+2025-04-18T12:25:21.8198800Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8200125Z 
+2025-04-18T12:25:21.8200272Z     console.log
+2025-04-18T12:25:21.8200608Z       Database cleared
+2025-04-18T12:25:21.8200816Z 
+2025-04-18T12:25:21.8201013Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8201297Z 
+2025-04-18T12:25:21.8201429Z     console.log
+2025-04-18T12:25:21.8201745Z       Database cleared
+2025-04-18T12:25:21.8201965Z 
+2025-04-18T12:25:21.8202152Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8202421Z 
+2025-04-18T12:25:21.8202550Z     console.log
+2025-04-18T12:25:21.8202854Z       Database cleared
+2025-04-18T12:25:21.8203068Z 
+2025-04-18T12:25:21.8203254Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8203521Z 
+2025-04-18T12:25:21.8203652Z     console.log
+2025-04-18T12:25:21.8203959Z       Database cleared
+2025-04-18T12:25:21.8204160Z 
+2025-04-18T12:25:21.8204356Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8204629Z 
+2025-04-18T12:25:21.8204768Z     console.log
+2025-04-18T12:25:21.8205067Z       Database cleared
+2025-04-18T12:25:21.8205283Z 
+2025-04-18T12:25:21.8205466Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8205735Z 
+2025-04-18T12:25:21.8205852Z     console.log
+2025-04-18T12:25:21.8246476Z       Database cleared
+2025-04-18T12:25:21.8246731Z 
+2025-04-18T12:25:21.8246943Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8247238Z 
+2025-04-18T12:25:21.8247377Z     console.log
+2025-04-18T12:25:21.8247724Z       Database cleared
+2025-04-18T12:25:21.8247949Z 
+2025-04-18T12:25:21.8248153Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8248433Z 
+2025-04-18T12:25:21.8248867Z     console.log
+2025-04-18T12:25:21.8249228Z       Database cleared
+2025-04-18T12:25:21.8249468Z 
+2025-04-18T12:25:21.8249686Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8249995Z 
+2025-04-18T12:25:21.8250122Z     console.log
+2025-04-18T12:25:21.8250457Z       Database cleared
+2025-04-18T12:25:21.8250672Z 
+2025-04-18T12:25:21.8250867Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8251149Z 
+2025-04-18T12:25:21.8251277Z     console.log
+2025-04-18T12:25:21.8251588Z       Database cleared
+2025-04-18T12:25:21.8251788Z 
+2025-04-18T12:25:21.8251972Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8252248Z 
+2025-04-18T12:25:21.8252384Z     console.log
+2025-04-18T12:25:21.8252703Z       Database cleared
+2025-04-18T12:25:21.8252913Z 
+2025-04-18T12:25:21.8253103Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8253385Z 
+2025-04-18T12:25:21.8253510Z     console.log
+2025-04-18T12:25:21.8253824Z       Database cleared
+2025-04-18T12:25:21.8254039Z 
+2025-04-18T12:25:21.8254255Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8254535Z 
+2025-04-18T12:25:21.8254669Z     console.log
+2025-04-18T12:25:21.8254979Z       Database cleared
+2025-04-18T12:25:21.8255202Z 
+2025-04-18T12:25:21.8255391Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8255675Z 
+2025-04-18T12:25:21.8255804Z     console.log
+2025-04-18T12:25:21.8256349Z       Database cleared
+2025-04-18T12:25:21.8256560Z 
+2025-04-18T12:25:21.8256750Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8257030Z 
+2025-04-18T12:25:21.8257159Z     console.log
+2025-04-18T12:25:21.8257483Z       Database cleared
+2025-04-18T12:25:21.8257691Z 
+2025-04-18T12:25:21.8257892Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:21.8258169Z 
+2025-04-18T12:25:21.8258313Z     console.log
+2025-04-18T12:25:21.8258700Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:21.8259026Z 
+2025-04-18T12:25:21.8259220Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:21.8259511Z 
+2025-04-18T12:25:22.1325060Z PASS tests/unit/services/auth.service.test.js
+2025-04-18T12:25:26.4661370Z PASS tests/unit/models/chat-message.model.test.js
+2025-04-18T12:25:26.4691974Z   ● Console
+2025-04-18T12:25:26.4693187Z 
+2025-04-18T12:25:26.4693342Z     console.log
+2025-04-18T12:25:26.4693930Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:64410/
+2025-04-18T12:25:26.4694363Z 
+2025-04-18T12:25:26.4694577Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:26.4694877Z 
+2025-04-18T12:25:26.4695019Z     console.log
+2025-04-18T12:25:26.4695345Z       Database cleared
+2025-04-18T12:25:26.4695571Z 
+2025-04-18T12:25:26.4695760Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4696257Z 
+2025-04-18T12:25:26.4696400Z     console.log
+2025-04-18T12:25:26.4696718Z       Database cleared
+2025-04-18T12:25:26.4696929Z 
+2025-04-18T12:25:26.4697113Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4697384Z 
+2025-04-18T12:25:26.4697506Z     console.log
+2025-04-18T12:25:26.4697821Z       Database cleared
+2025-04-18T12:25:26.4698020Z 
+2025-04-18T12:25:26.4698229Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4698491Z 
+2025-04-18T12:25:26.4698616Z     console.log
+2025-04-18T12:25:26.4698925Z       Database cleared
+2025-04-18T12:25:26.4699127Z 
+2025-04-18T12:25:26.4699303Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4699564Z 
+2025-04-18T12:25:26.4699679Z     console.log
+2025-04-18T12:25:26.4699978Z       Database cleared
+2025-04-18T12:25:26.4700172Z 
+2025-04-18T12:25:26.4700349Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4700603Z 
+2025-04-18T12:25:26.4700719Z     console.log
+2025-04-18T12:25:26.4701023Z       Database cleared
+2025-04-18T12:25:26.4701233Z 
+2025-04-18T12:25:26.4701414Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4701671Z 
+2025-04-18T12:25:26.4701803Z     console.log
+2025-04-18T12:25:26.4702115Z       Database cleared
+2025-04-18T12:25:26.4702307Z 
+2025-04-18T12:25:26.4702498Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4702783Z 
+2025-04-18T12:25:26.4702914Z     console.log
+2025-04-18T12:25:26.4703500Z       Database cleared
+2025-04-18T12:25:26.4703737Z 
+2025-04-18T12:25:26.4703943Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4704229Z 
+2025-04-18T12:25:26.4704362Z     console.log
+2025-04-18T12:25:26.4704679Z       Database cleared
+2025-04-18T12:25:26.4704883Z 
+2025-04-18T12:25:26.4705065Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4705328Z 
+2025-04-18T12:25:26.4705465Z     console.log
+2025-04-18T12:25:26.4705788Z       Database cleared
+2025-04-18T12:25:26.4706316Z 
+2025-04-18T12:25:26.4706521Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4706810Z 
+2025-04-18T12:25:26.4706947Z     console.log
+2025-04-18T12:25:26.4707274Z       Database cleared
+2025-04-18T12:25:26.4707486Z 
+2025-04-18T12:25:26.4707686Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4707962Z 
+2025-04-18T12:25:26.4708099Z     console.log
+2025-04-18T12:25:26.4708395Z       Database cleared
+2025-04-18T12:25:26.4708600Z 
+2025-04-18T12:25:26.4708782Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4709067Z 
+2025-04-18T12:25:26.4709185Z     console.log
+2025-04-18T12:25:26.4709480Z       Database cleared
+2025-04-18T12:25:26.4709682Z 
+2025-04-18T12:25:26.4709871Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4710141Z 
+2025-04-18T12:25:26.4710259Z     console.log
+2025-04-18T12:25:26.4710561Z       Database cleared
+2025-04-18T12:25:26.4710765Z 
+2025-04-18T12:25:26.4710945Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4711204Z 
+2025-04-18T12:25:26.4711327Z     console.log
+2025-04-18T12:25:26.4711628Z       Database cleared
+2025-04-18T12:25:26.4711830Z 
+2025-04-18T12:25:26.4712005Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4712266Z 
+2025-04-18T12:25:26.4712381Z     console.log
+2025-04-18T12:25:26.4712684Z       Database cleared
+2025-04-18T12:25:26.4712886Z 
+2025-04-18T12:25:26.4713078Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4713342Z 
+2025-04-18T12:25:26.4713473Z     console.log
+2025-04-18T12:25:26.4713766Z       Database cleared
+2025-04-18T12:25:26.4713984Z 
+2025-04-18T12:25:26.4714168Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:26.4714439Z 
+2025-04-18T12:25:26.4714837Z     console.log
+2025-04-18T12:25:26.4715259Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:26.4715589Z 
+2025-04-18T12:25:26.4715785Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:26.4716269Z 
+2025-04-18T12:25:27.4568072Z PASS tests/unit/models/paymentMethod.model.test.js
+2025-04-18T12:25:27.4599205Z   ● Console
+2025-04-18T12:25:27.4599578Z 
+2025-04-18T12:25:27.4600015Z     console.log
+2025-04-18T12:25:27.4600703Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:46641/
+2025-04-18T12:25:27.4601142Z 
+2025-04-18T12:25:27.4601339Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:27.4601608Z 
+2025-04-18T12:25:27.4601739Z     console.log
+2025-04-18T12:25:27.4602055Z       Database cleared
+2025-04-18T12:25:27.4602259Z 
+2025-04-18T12:25:27.4602442Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4602707Z 
+2025-04-18T12:25:27.4602864Z     console.log
+2025-04-18T12:25:27.4603165Z       Database cleared
+2025-04-18T12:25:27.4603360Z 
+2025-04-18T12:25:27.4603557Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4603808Z 
+2025-04-18T12:25:27.4603929Z     console.log
+2025-04-18T12:25:27.4604217Z       Database cleared
+2025-04-18T12:25:27.4604434Z 
+2025-04-18T12:25:27.4604619Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4604900Z 
+2025-04-18T12:25:27.4605029Z     console.log
+2025-04-18T12:25:27.4605346Z       Database cleared
+2025-04-18T12:25:27.4605571Z 
+2025-04-18T12:25:27.4605763Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4606233Z 
+2025-04-18T12:25:27.4606370Z     console.log
+2025-04-18T12:25:27.4606682Z       Database cleared
+2025-04-18T12:25:27.4606897Z 
+2025-04-18T12:25:27.4607084Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4607358Z 
+2025-04-18T12:25:27.4607478Z     console.log
+2025-04-18T12:25:27.4607788Z       Database cleared
+2025-04-18T12:25:27.4607993Z 
+2025-04-18T12:25:27.4608471Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4608786Z 
+2025-04-18T12:25:27.4608920Z     console.log
+2025-04-18T12:25:27.4609256Z       Database cleared
+2025-04-18T12:25:27.4609461Z 
+2025-04-18T12:25:27.4609658Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4609929Z 
+2025-04-18T12:25:27.4610052Z     console.log
+2025-04-18T12:25:27.4610354Z       Database cleared
+2025-04-18T12:25:27.4610567Z 
+2025-04-18T12:25:27.4610751Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4611026Z 
+2025-04-18T12:25:27.4611147Z     console.log
+2025-04-18T12:25:27.4611455Z       Database cleared
+2025-04-18T12:25:27.4611655Z 
+2025-04-18T12:25:27.4611845Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4612111Z 
+2025-04-18T12:25:27.4612230Z     console.log
+2025-04-18T12:25:27.4612530Z       Database cleared
+2025-04-18T12:25:27.4612736Z 
+2025-04-18T12:25:27.4612915Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:27.4613173Z 
+2025-04-18T12:25:27.4613296Z     console.log
+2025-04-18T12:25:27.4613678Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:27.4613984Z 
+2025-04-18T12:25:27.4614170Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:27.4614456Z 
+2025-04-18T12:25:28.0215349Z PASS tests/unit/middleware/auth.middleware.test.js
+2025-04-18T12:25:28.3891714Z PASS tests/performance/api.performance.test.js
+2025-04-18T12:25:28.3918878Z   ● Console
+2025-04-18T12:25:28.3920214Z 
+2025-04-18T12:25:28.3921433Z     console.log
+2025-04-18T12:25:28.3922520Z       Connected to in-memory MongoDB at mongodb://127.0.0.1:55456/
+2025-04-18T12:25:28.3923101Z 
+2025-04-18T12:25:28.3924265Z       at log (tests/setup.js:31:11)
+2025-04-18T12:25:28.3925005Z 
+2025-04-18T12:25:28.3926286Z     console.log
+2025-04-18T12:25:28.3927258Z       Database cleared
+2025-04-18T12:25:28.3928036Z 
+2025-04-18T12:25:28.3929210Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:28.3929941Z 
+2025-04-18T12:25:28.3931129Z     console.log
+2025-04-18T12:25:28.3932510Z       Database cleared
+2025-04-18T12:25:28.3933768Z 
+2025-04-18T12:25:28.3935017Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:28.3936547Z 
+2025-04-18T12:25:28.3937721Z     console.log
+2025-04-18T12:25:28.3938638Z       Database cleared
+2025-04-18T12:25:28.3939411Z 
+2025-04-18T12:25:28.3940684Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:28.3941423Z 
+2025-04-18T12:25:28.3942538Z     console.log
+2025-04-18T12:25:28.3943358Z       Database cleared
+2025-04-18T12:25:28.3943570Z 
+2025-04-18T12:25:28.3943771Z       at log (tests/setup.js:57:11)
+2025-04-18T12:25:28.3944028Z 
+2025-04-18T12:25:28.3944154Z     console.log
+2025-04-18T12:25:28.3944535Z       Disconnected from in-memory MongoDB
+2025-04-18T12:25:28.3944822Z 
+2025-04-18T12:25:28.3945002Z       at log (tests/setup.js:42:11)
+2025-04-18T12:25:28.3945270Z 
+2025-04-18T12:25:28.5334230Z PASS tests/unit/middleware/security.test.js
+2025-04-18T12:25:28.5352068Z   ● Console
+2025-04-18T12:25:28.5357930Z 
+2025-04-18T12:25:28.5358123Z     console.log
+2025-04-18T12:25:28.5358982Z       2025-04-18 12:25:28 [[32minfo[39m]: CSP configured in report-only mode {
+2025-04-18T12:25:28.5359669Z         "service": "date-night-api"
+2025-04-18T12:25:28.5360114Z       }
+2025-04-18T12:25:28.5360287Z 
+2025-04-18T12:25:28.5360757Z       at Console.log (../node_modules/winston/lib/winston/transports/console.js:87:23)
+2025-04-18T12:25:28.5361324Z 
+2025-04-18T12:25:28.5361470Z     console.log
+2025-04-18T12:25:28.5362207Z       2025-04-18 12:25:28 [[32minfo[39m]: CSP configured in enforce mode {
+2025-04-18T12:25:28.5362813Z         "service": "date-night-api"
+2025-04-18T12:25:28.5363231Z       }
+2025-04-18T12:25:28.5363402Z 
+2025-04-18T12:25:28.5363862Z       at Console.log (../node_modules/winston/lib/winston/transports/console.js:87:23)
+2025-04-18T12:25:28.5364409Z 
+2025-04-18T12:25:28.5374964Z 
+2025-04-18T12:25:28.5376703Z Test Suites: 12 passed, 12 total
+2025-04-18T12:25:28.5377266Z Tests:       1 skipped, 224 passed, 225 total
+2025-04-18T12:25:28.5377769Z Snapshots:   0 total
+2025-04-18T12:25:28.5378161Z Time:        26.222 s
+2025-04-18T12:25:28.5378838Z Ran all test suites.
+2025-04-18T12:25:28.6812104Z ##[group]Run npm run test:integration
+2025-04-18T12:25:28.6812425Z [36;1mnpm run test:integration[0m
+2025-04-18T12:25:28.6861070Z shell: /usr/bin/bash -e {0}
+2025-04-18T12:25:28.6861301Z env:
+2025-04-18T12:25:28.6861572Z   CI: true
+2025-04-18T12:25:28.6861830Z   NODE_ENV: test
+2025-04-18T12:25:28.6862174Z   MONGODB_URI: mongodb://localhost:27017/date-night-test
+2025-04-18T12:25:28.6862690Z ##[endgroup]
+2025-04-18T12:25:28.8222267Z npm error Lifecycle script `test:integration` failed with error:
+2025-04-18T12:25:28.8230752Z npm error workspace date-night-server@1.0.0
+2025-04-18T12:25:28.8231657Z npm error location /home/runner/work/date-night-app2/date-night-app2/server
+2025-04-18T12:25:28.8232511Z npm error Missing script: "test:integration"
+2025-04-18T12:25:28.8232991Z npm error
+2025-04-18T12:25:28.8233409Z npm error To see a list of scripts, run:
+2025-04-18T12:25:28.8234120Z npm error   npm run --workspace=date-night-server@1.0.0
+2025-04-18T12:25:28.8298444Z ##[error]Process completed with exit code 1.
+2025-04-18T12:25:28.8357702Z ##[group]Run actions/upload-artifact@v4
+2025-04-18T12:25:28.8357994Z with:
+2025-04-18T12:25:28.8358169Z   name: server-test-results
+2025-04-18T12:25:28.8358390Z   path: ./server/coverage
+2025-04-18T12:25:28.8358608Z   if-no-files-found: warn
+2025-04-18T12:25:28.8358817Z   compression-level: 6
+2025-04-18T12:25:28.8359009Z   overwrite: false
+2025-04-18T12:25:28.8359202Z   include-hidden-files: false
+2025-04-18T12:25:28.8359406Z env:
+2025-04-18T12:25:28.8359552Z   CI: true
+2025-04-18T12:25:28.8359711Z ##[endgroup]
+2025-04-18T12:25:29.0615580Z ##[warning]No files were found with the provided path: ./server/coverage. No artifacts will be uploaded.
+2025-04-18T12:25:29.0759321Z Post job cleanup.
+2025-04-18T12:25:29.1709440Z [command]/usr/bin/git version
+2025-04-18T12:25:29.1750991Z git version 2.49.0
+2025-04-18T12:25:29.1800273Z Temporarily overriding HOME='/home/runner/work/_temp/1ec7feda-bced-4490-8463-75a85ec9a56f' before making global git config changes
+2025-04-18T12:25:29.1802272Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-18T12:25:29.1808642Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-18T12:25:29.1851059Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-18T12:25:29.1887879Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-18T12:25:29.2143664Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-18T12:25:29.2166889Z http.https://github.com/.extraheader
+2025-04-18T12:25:29.2182206Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-18T12:25:29.2219345Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-18T12:25:29.2553585Z Print service container logs: f19d2620691e4894a12a2b2076c1d79f_mongo6_395b4a
+2025-04-18T12:25:29.2559377Z ##[command]/usr/bin/docker logs --details 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:25:29.2704974Z  {"t":{"$date":"2025-04-18T12:24:45.173+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"-","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+2025-04-18T12:25:29.2708011Z  {"t":{"$date":"2025-04-18T12:24:45.174+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"-","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-18T12:25:29.2711075Z  {"t":{"$date":"2025-04-18T12:24:45.175+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+2025-04-18T12:25:29.2713415Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationDonorService","namespace":"config.tenantMigrationDonors"}}
+2025-04-18T12:25:29.2715861Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationRecipientService","namespace":"config.tenantMigrationRecipients"}}
+2025-04-18T12:25:29.2719285Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"ShardSplitDonorService","namespace":"config.tenantSplitDonors"}}
+2025-04-18T12:25:29.2720840Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+2025-04-18T12:25:29.2722205Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"05220cf1ba4f"}}
+2025-04-18T12:25:29.2724713Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"6.0.22","gitVersion":"ee527360b84c6798535ee0895de3c7186b3522f9","openSSLVersion":"OpenSSL 3.0.2 15 Mar 2022","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu2204","distarch":"x86_64","target_arch":"x86_64"}}}}
+2025-04-18T12:25:29.2730270Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"22.04"}}}
+2025-04-18T12:25:29.2731374Z  {"t":{"$date":"2025-04-18T12:24:45.177+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"}}}}
+2025-04-18T12:25:29.2732584Z  {"t":{"$date":"2025-04-18T12:24:45.179+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+2025-04-18T12:25:29.2735488Z  {"t":{"$date":"2025-04-18T12:24:45.179+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=3457M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,remove=true,path=journal,compressor=snappy),builtin_extension_config=(zstd=(compression_level=6)),file_manager=(close_idle_time=600,close_scan_interval=10,close_handle_minimum=2000),statistics_log=(wait=0),json_output=(error,message),verbose=[recovery_progress:1,checkpoint_progress:1,compact_progress:1,backup:0,checkpoint:0,compact:0,evict:0,history_store:0,recovery:0,rts:0,salvage:0,tiered:0,timestamp:0,transaction:0,verify:0,log:0],"}}
+2025-04-18T12:25:29.2738908Z  {"t":{"$date":"2025-04-18T12:24:45.365+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744979085,"ts_usec":365510,"thread":"1:0x7f59842b2cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery log replay has successfully finished and ran for 0 milliseconds"}}}
+2025-04-18T12:25:29.2740904Z  {"t":{"$date":"2025-04-18T12:24:45.365+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744979085,"ts_usec":365620,"thread":"1:0x7f59842b2cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global recovery timestamp: (0, 0)"}}}
+2025-04-18T12:25:29.2742780Z  {"t":{"$date":"2025-04-18T12:24:45.365+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744979085,"ts_usec":365637,"thread":"1:0x7f59842b2cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"Set global oldest timestamp: (0, 0)"}}}
+2025-04-18T12:25:29.2744951Z  {"t":{"$date":"2025-04-18T12:24:45.365+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1744979085,"ts_usec":365662,"thread":"1:0x7f59842b2cc0","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG","verbose_level_id":1,"msg":"recovery was completed successfully and took 0ms, including 0ms for the log replay, 0ms for the rollback to stable, and 0ms for the checkpoint."}}}
+2025-04-18T12:25:29.2746908Z  {"t":{"$date":"2025-04-18T12:24:45.370+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":191}}
+2025-04-18T12:25:29.2747759Z  {"t":{"$date":"2025-04-18T12:24:45.370+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+2025-04-18T12:25:29.2748837Z  {"t":{"$date":"2025-04-18T12:24:45.390+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+2025-04-18T12:25:29.2750079Z  {"t":{"$date":"2025-04-18T12:24:45.390+00:00"},"s":"W",  "c":"CONTROL",  "id":22178,   "ctx":"initandlisten","msg":"/sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never' in this binary version","tags":["startupWarnings"]}
+2025-04-18T12:25:29.2751434Z  {"t":{"$date":"2025-04-18T12:24:45.390+00:00"},"s":"W",  "c":"CONTROL",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":262144,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+2025-04-18T12:25:29.2752846Z  {"t":{"$date":"2025-04-18T12:24:45.390+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"admin.system.version","uuidDisposition":"provided","uuid":{"uuid":{"$uuid":"641cf94e-630f-49f8-9f5d-e513d6df721b"}},"options":{"uuid":{"$uuid":"641cf94e-630f-49f8-9f5d-e513d6df721b"}}}}
+2025-04-18T12:25:29.2754804Z  {"t":{"$date":"2025-04-18T12:24:45.396+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"641cf94e-630f-49f8-9f5d-e513d6df721b"}},"namespace":"admin.system.version","index":"_id_","ident":"index-1-6182740936362369187","collectionIdent":"collection-0-6182740936362369187","commitTimestamp":null}}
+2025-04-18T12:25:29.2756598Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"REPL",     "id":20459,   "ctx":"initandlisten","msg":"Setting featureCompatibilityVersion","attr":{"newVersion":"6.0"}}
+2025-04-18T12:25:29.2757542Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"setFCV"}}
+2025-04-18T12:25:29.2759681Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":17},"outgoing":{"minWireVersion":6,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-18T12:25:29.2762883Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":17},"incomingInternalClient":{"minWireVersion":17,"maxWireVersion":17},"outgoing":{"minWireVersion":17,"maxWireVersion":17},"isInternalClient":true}}}
+2025-04-18T12:25:29.2765026Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.0","context":"startup"}}
+2025-04-18T12:25:29.2765868Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+2025-04-18T12:25:29.2766685Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+2025-04-18T12:25:29.2767515Z  {"t":{"$date":"2025-04-18T12:24:45.397+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+2025-04-18T12:25:29.2768782Z  {"t":{"$date":"2025-04-18T12:24:45.399+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"local.startup_log","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"8808d465-f38d-4bda-be1d-64f4d00b537f"}},"options":{"capped":true,"size":10485760}}}
+2025-04-18T12:25:29.2770580Z  {"t":{"$date":"2025-04-18T12:24:45.410+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"8808d465-f38d-4bda-be1d-64f4d00b537f"}},"namespace":"local.startup_log","index":"_id_","ident":"index-3-6182740936362369187","collectionIdent":"collection-2-6182740936362369187","commitTimestamp":null}}
+2025-04-18T12:25:29.2772255Z  {"t":{"$date":"2025-04-18T12:24:45.410+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+2025-04-18T12:25:29.2773088Z  {"t":{"$date":"2025-04-18T12:24:45.410+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+2025-04-18T12:25:29.2774256Z  {"t":{"$date":"2025-04-18T12:24:45.412+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"LogicalSessionCacheRefresh","msg":"createCollection","attr":{"namespace":"config.system.sessions","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"2f013aaf-98e6-4f64-b181-0d8b074bf327"}},"options":{}}}
+2025-04-18T12:25:29.2775369Z  {"t":{"$date":"2025-04-18T12:24:45.413+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+2025-04-18T12:25:29.2776625Z  {"t":{"$date":"2025-04-18T12:24:45.413+00:00"},"s":"I",  "c":"CONTROL",  "id":20712,   "ctx":"LogicalSessionCacheReap","msg":"Sessions collection is not set up; waiting until next sessions reap interval","attr":{"error":"NamespaceNotFound: config.system.sessions does not exist"}}
+2025-04-18T12:25:29.2777642Z  {"t":{"$date":"2025-04-18T12:24:45.413+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+2025-04-18T12:25:29.2778319Z  {"t":{"$date":"2025-04-18T12:24:45.413+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+2025-04-18T12:25:29.2782295Z  {"t":{"$date":"2025-04-18T12:24:45.413+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Get metadata describing storage engine":"0 ms","Create storage engine":"0 ms","Create storage engine":"209 ms","Write current PID to file":"0 ms","Write current PID to file":"0 ms","Write a new metadata for storage engine":"0 ms","Write a new metadata for storage engine":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Initialize FCV before rebuilding indexes":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Rebuild indexes for collections":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Start up the replication coordinator":"0 ms","Start transport layer":"1 ms","_initAndListen total elapsed time":"236 ms"}}}}
+2025-04-18T12:25:29.2787337Z  {"t":{"$date":"2025-04-18T12:24:45.424+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"2f013aaf-98e6-4f64-b181-0d8b074bf327"}},"namespace":"config.system.sessions","index":"_id_","ident":"index-5-6182740936362369187","collectionIdent":"collection-4-6182740936362369187","commitTimestamp":null}}
+2025-04-18T12:25:29.2789542Z  {"t":{"$date":"2025-04-18T12:24:45.424+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"2f013aaf-98e6-4f64-b181-0d8b074bf327"}},"namespace":"config.system.sessions","index":"lsidTTLIndex","ident":"index-6-6182740936362369187","collectionIdent":"collection-4-6182740936362369187","commitTimestamp":null}}
+2025-04-18T12:25:29.2796671Z Stop and remove container: f19d2620691e4894a12a2b2076c1d79f_mongo6_395b4a
+2025-04-18T12:25:29.2802003Z ##[command]/usr/bin/docker rm --force 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:25:29.4294769Z 05220cf1ba4f404e9ef2022355e3b229c9ace69b8ebdee8bc0a8fcbf730e8a6a
+2025-04-18T12:25:29.4330238Z Remove container network: github_network_29dc1cc95aa24b76a600ddb31531e371
+2025-04-18T12:25:29.4334553Z ##[command]/usr/bin/docker network rm github_network_29dc1cc95aa24b76a600ddb31531e371
+2025-04-18T12:25:29.5212444Z github_network_29dc1cc95aa24b76a600ddb31531e371
+2025-04-18T12:25:29.5272919Z Cleaning up orphan processes
