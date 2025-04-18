@@ -13,23 +13,23 @@ This file contains structured data from GitHub that can be analyzed by AI assist
 
 ## Workflow Status
 
-- Sync Workflow Error Logs: queued
 - Sync Snyk Issues: in_progress
-- Security Alerts Report (Alternative): success
+- Sync Snyk Issues: in_progress
 - Sync GitHub Insights (Fixed): in_progress
+- Sync Workflow Error Logs: success
+- npm_and_yarn in  for @octokit/request-error - Update #1000932985: failure
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Test Reports: success
-- Sync Workflow Error Logs: failure
 
 ## Security Alerts
 
-Total Open Alerts: 6
+Total Open Alerts: 1
 - critical: 0
-- high: 1
-- medium: 5
+- high: 0
+- medium: 1
 - low: 0
 
 ## Recent Activity

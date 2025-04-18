@@ -15,27 +15,19 @@
 
 | Workflow | Status | Started | Duration |
 |----------|--------|---------|----------|
-| Sync Workflow Error Logs | queued | 2025-04-18 | 0m 0s |
-| Sync Snyk Issues | in_progress | 2025-04-18 | 0m 5s |
-| Security Alerts Report (Alternative) | success | 2025-04-18 | 0m 39s |
-| Sync GitHub Insights (Fixed) | in_progress | 2025-04-18 | 0m 5s |
-| Sync Workflow Error Logs | success | 2025-04-18 | 2m 22s |
+| Sync Snyk Issues | in_progress | 2025-04-18 | 0m 3s |
+| Sync Snyk Issues | in_progress | 2025-04-18 | 0m 4s |
+| Sync GitHub Insights (Fixed) | in_progress | 2025-04-18 | 0m 4s |
+| Sync Workflow Error Logs | success | 2025-04-18 | 1m 51s |
+| npm_and_yarn in  for @octokit/request-error - Update #1000932985 | failure | 2025-04-18 | 1m 3s |
 
 ## Dependabot Security Alerts
 
-### Open Alerts (6)
+### Open Alerts (1)
 
-#### High Severity (1)
+#### Medium Severity (1)
 
-- **semver vulnerable to Regular Expression Denial of Service** in `semver`
-
-#### Medium Severity (5)
-
-- **@octokit/request has a Regular Expression in fetchWrapper that Leads to ReDoS Vulnerability Due to Catastrophic Backtracking** in `@octokit/request`
-- **@octokit/plugin-paginate-rest has a Regular Expression in iterator Leads to ReDoS Vulnerability Due to Catastrophic Backtracking** in `@octokit/plugin-paginate-rest`
 - **@octokit/request-error has a Regular Expression in index that Leads to ReDoS Vulnerability Due to Catastrophic Backtracking** in `@octokit/request-error`
-- **http-proxy-middleware allows fixRequestBody to proceed even if bodyParser has failed** in `http-proxy-middleware`
-- **http-proxy-middleware can call writeBody twice because "else if" is not used** in `http-proxy-middleware`
 
 ## Recent Pull Requests
 
