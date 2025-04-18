@@ -1,0 +1,240 @@
+2025-04-16T13:43:27.7499847Z Current runner version: '2.323.0'
+2025-04-16T13:43:27.7555985Z ##[group]Operating System
+2025-04-16T13:43:27.7557302Z Ubuntu
+2025-04-16T13:43:27.7598626Z 24.04.2
+2025-04-16T13:43:27.7599484Z LTS
+2025-04-16T13:43:27.7600237Z ##[endgroup]
+2025-04-16T13:43:27.7600989Z ##[group]Runner Image
+2025-04-16T13:43:27.7602132Z Image: ubuntu-24.04
+2025-04-16T13:43:27.7602997Z Version: 20250406.1.0
+2025-04-16T13:43:27.7604640Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250406.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-04-16T13:43:27.7607177Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250406.1
+2025-04-16T13:43:27.7608986Z ##[endgroup]
+2025-04-16T13:43:27.7609752Z ##[group]Runner Image Provisioner
+2025-04-16T13:43:27.7610889Z 2.0.422.1
+2025-04-16T13:43:27.7611687Z ##[endgroup]
+2025-04-16T13:43:27.7613657Z ##[group]GITHUB_TOKEN Permissions
+2025-04-16T13:43:27.7616461Z Contents: write
+2025-04-16T13:43:27.7617317Z Metadata: read
+2025-04-16T13:43:27.7625862Z SecurityEvents: read
+2025-04-16T13:43:27.7626867Z ##[endgroup]
+2025-04-16T13:43:27.7630433Z Secret source: Actions
+2025-04-16T13:43:27.7631729Z Prepare workflow directory
+2025-04-16T13:43:27.8595830Z Prepare all required actions
+2025-04-16T13:43:27.8710908Z Getting action download info
+2025-04-16T13:43:28.2996774Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-04-16T13:43:28.2998087Z Version: 4.2.2
+2025-04-16T13:43:28.2999165Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-04-16T13:43:28.3000315Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-04-16T13:43:28.3001110Z ##[endgroup]
+2025-04-16T13:43:28.4040956Z ##[group]Download immutable action package 'actions/github-script@v7'
+2025-04-16T13:43:28.4041785Z Version: 7.0.1
+2025-04-16T13:43:28.4042618Z Digest: sha256:bce02966afe3a75123f766b765abe432fac5464b74976015dc06b811ac9054c7
+2025-04-16T13:43:28.4043569Z Source commit SHA: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+2025-04-16T13:43:28.4044274Z ##[endgroup]
+2025-04-16T13:43:28.6533253Z Complete job name: generate-report
+2025-04-16T13:43:28.7173283Z ##[group]Run actions/checkout@v4
+2025-04-16T13:43:28.7174094Z with:
+2025-04-16T13:43:28.7174500Z   repository: mrkurger/date-night-app2
+2025-04-16T13:43:28.7175168Z   token: ***
+2025-04-16T13:43:28.7175545Z   ssh-strict: true
+2025-04-16T13:43:28.7175934Z   ssh-user: git
+2025-04-16T13:43:28.7176325Z   persist-credentials: true
+2025-04-16T13:43:28.7176765Z   clean: true
+2025-04-16T13:43:28.7177157Z   sparse-checkout-cone-mode: true
+2025-04-16T13:43:28.7177622Z   fetch-depth: 1
+2025-04-16T13:43:28.7178174Z   fetch-tags: false
+2025-04-16T13:43:28.7178577Z   show-progress: true
+2025-04-16T13:43:28.7178974Z   lfs: false
+2025-04-16T13:43:28.7179343Z   submodules: false
+2025-04-16T13:43:28.7179747Z   set-safe-directory: true
+2025-04-16T13:43:28.7180423Z ##[endgroup]
+2025-04-16T13:43:28.9485824Z Syncing repository: mrkurger/date-night-app2
+2025-04-16T13:43:28.9489393Z ##[group]Getting Git version info
+2025-04-16T13:43:28.9490825Z Working directory is '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T13:43:28.9492669Z [command]/usr/bin/git version
+2025-04-16T13:43:28.9581705Z git version 2.49.0
+2025-04-16T13:43:28.9616047Z ##[endgroup]
+2025-04-16T13:43:28.9630378Z Temporarily overriding HOME='/home/runner/work/_temp/755230d1-d7cf-43d8-8c96-26078bc86a6b' before making global git config changes
+2025-04-16T13:43:28.9634658Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T13:43:28.9649044Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:43:28.9689486Z Deleting the contents of '/home/runner/work/date-night-app2/date-night-app2'
+2025-04-16T13:43:28.9693466Z ##[group]Initializing the repository
+2025-04-16T13:43:28.9699139Z [command]/usr/bin/git init /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:43:28.9776510Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-16T13:43:28.9779355Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-16T13:43:28.9782656Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-16T13:43:28.9783943Z hint:
+2025-04-16T13:43:28.9784781Z hint: 	git config --global init.defaultBranch <name>
+2025-04-16T13:43:28.9785900Z hint:
+2025-04-16T13:43:28.9787024Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-16T13:43:28.9789144Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-16T13:43:28.9790629Z hint:
+2025-04-16T13:43:28.9791428Z hint: 	git branch -m <name>
+2025-04-16T13:43:28.9793424Z Initialized empty Git repository in /home/runner/work/date-night-app2/date-night-app2/.git/
+2025-04-16T13:43:28.9801890Z [command]/usr/bin/git remote add origin https://github.com/mrkurger/date-night-app2
+2025-04-16T13:43:28.9839785Z ##[endgroup]
+2025-04-16T13:43:28.9841279Z ##[group]Disabling automatic garbage collection
+2025-04-16T13:43:28.9844080Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-16T13:43:28.9879655Z ##[endgroup]
+2025-04-16T13:43:28.9882617Z ##[group]Setting up auth
+2025-04-16T13:43:28.9886198Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T13:43:28.9923996Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T13:43:29.0279268Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T13:43:29.0314202Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T13:43:29.0555229Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-16T13:43:29.0596857Z ##[endgroup]
+2025-04-16T13:43:29.0600486Z ##[group]Fetching the repository
+2025-04-16T13:43:29.0609852Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2678dbd58829f721984496b33edbd9941365e5e7:refs/remotes/origin/main
+2025-04-16T13:43:31.8786658Z From https://github.com/mrkurger/date-night-app2
+2025-04-16T13:43:31.8787609Z  * [new ref]         2678dbd58829f721984496b33edbd9941365e5e7 -> origin/main
+2025-04-16T13:43:31.8823319Z ##[endgroup]
+2025-04-16T13:43:31.8824047Z ##[group]Determining the checkout info
+2025-04-16T13:43:31.8824825Z ##[endgroup]
+2025-04-16T13:43:31.8828357Z [command]/usr/bin/git sparse-checkout disable
+2025-04-16T13:43:31.8871580Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-04-16T13:43:31.8903128Z ##[group]Checking out the ref
+2025-04-16T13:43:31.8907096Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-16T13:43:32.3345631Z Switched to a new branch 'main'
+2025-04-16T13:43:32.3347811Z branch 'main' set up to track 'origin/main'.
+2025-04-16T13:43:32.3376565Z ##[endgroup]
+2025-04-16T13:43:32.3435921Z [command]/usr/bin/git log -1 --format=%H
+2025-04-16T13:43:32.3472390Z 2678dbd58829f721984496b33edbd9941365e5e7
+2025-04-16T13:43:32.3713222Z ##[group]Run actions/github-script@v7
+2025-04-16T13:43:32.3713528Z with:
+2025-04-16T13:43:32.3713995Z   github-token: ***
+2025-04-16T13:43:32.3719890Z   script: const alerts = await github.rest.dependabot.listAlertsForRepo({
+  owner: context.repo.owner,
+  repo: context.repo.repo,
+  state: 'open',
+  per_page: 100
+});
+
+const fs = require('fs');
+
+let report = '# Dependabot Security Alerts\n\n';
+report += `*Generated on: ${new Date().toISOString().split('T')[0]}*\n\n`;
+
+if (alerts.data.length === 0) {
+  report += '✅ No open security alerts found.\n';
+} else {
+  report += `## Open Alerts (${alerts.data.length})\n\n`;
+  
+  const severityOrder = ['critical', 'high', 'medium', 'low'];
+  const alertsBySeverity = {};
+  
+  severityOrder.forEach(severity => {
+    alertsBySeverity[severity] = [];
+  });
+  
+  alerts.data.forEach(alert => {
+    const severity = alert.security_advisory.severity.toLowerCase();
+    if (alertsBySeverity[severity]) {
+      alertsBySeverity[severity].push(alert);
+    }
+  });
+  
+  severityOrder.forEach(severity => {
+    const severityAlerts = alertsBySeverity[severity];
+    if (severityAlerts.length > 0) {
+      report += `### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
+      
+      severityAlerts.forEach(alert => {
+        report += `#### ${alert.security_advisory.summary}\n\n`;
+        report += `- **Package**: ${alert.dependency.package.name}\n`;
+        report += `- **Current Version**: ${alert.dependency.manifest_path}\n`;
+        report += `- **Vulnerable Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.vulnerable_version_range).join(', ')}\n`;
+        report += `- **Patched Versions**: ${alert.security_advisory.vulnerabilities.map(v => v.patched_version_range || 'None').join(', ')}\n`;
+        report += `- **CVSS Score**: ${alert.security_advisory.cvss.score} (${alert.security_advisory.cvss.vector_string})\n`;
+        report += `- **Details**: [${alert.security_advisory.ghsa_id}](${alert.security_advisory.html_url})\n\n`;
+      });
+    }
+  });
+}
+
+// Create docs directory if it doesn't exist
+try {
+  fs.mkdirSync('docs', { recursive: true });
+} catch (error) {
+  console.log('Docs directory already exists');
+}
+
+fs.writeFileSync('docs/security-alerts.md', report);
+
+return { alertCount: alerts.data.length };
+
+2025-04-16T13:43:32.3726042Z   debug: false
+2025-04-16T13:43:32.3726251Z   user-agent: actions/github-script
+2025-04-16T13:43:32.3726495Z   result-encoding: json
+2025-04-16T13:43:32.3726690Z   retries: 0
+2025-04-16T13:43:32.3726898Z   retry-exempt-status-codes: 400,401,403,404,422
+2025-04-16T13:43:32.3727172Z ##[endgroup]
+2025-04-16T13:43:32.6670634Z RequestError [HttpError]: Resource not accessible by integration
+2025-04-16T13:43:32.6672877Z     at /home/runner/work/_actions/actions/github-script/v7/dist/index.js:9537:21
+2025-04-16T13:43:32.6676608Z     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-04-16T13:43:32.6678514Z     at async eval (eval at callAsyncFunction (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:35424:16), <anonymous>:3:16)
+2025-04-16T13:43:32.6686012Z     at async main (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:35522:20) {
+2025-04-16T13:43:32.6711800Z ##[error]Unhandled error: HttpError: Resource not accessible by integration
+2025-04-16T13:43:32.6721635Z   status: 403,
+2025-04-16T13:43:32.6721976Z   response: {
+2025-04-16T13:43:32.6722744Z     url: 'https://api.github.com/repos/mrkurger/date-night-app2/dependabot/alerts?state=open&per_page=100',
+2025-04-16T13:43:32.6723580Z     status: 403,
+2025-04-16T13:43:32.6723888Z     headers: {
+2025-04-16T13:43:32.6724240Z       'access-control-allow-origin': '*',
+2025-04-16T13:43:32.6726711Z       'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+2025-04-16T13:43:32.6729044Z       'content-encoding': 'gzip',
+2025-04-16T13:43:32.6729541Z       'content-security-policy': "default-src 'none'",
+2025-04-16T13:43:32.6730121Z       'content-type': 'application/json; charset=utf-8',
+2025-04-16T13:43:32.6730630Z       date: 'Wed, 16 Apr 2025 13:43:32 GMT',
+2025-04-16T13:43:32.6731311Z       'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+2025-04-16T13:43:32.6732007Z       server: 'github.com',
+2025-04-16T13:43:32.6732608Z       'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+2025-04-16T13:43:32.6733286Z       'transfer-encoding': 'chunked',
+2025-04-16T13:43:32.6733780Z       vary: 'Accept-Encoding, Accept, X-Requested-With',
+2025-04-16T13:43:32.6734666Z       'x-accepted-github-permissions': 'vulnerability_alerts=read',
+2025-04-16T13:43:32.6735268Z       'x-content-type-options': 'nosniff',
+2025-04-16T13:43:32.6735718Z       'x-frame-options': 'deny',
+2025-04-16T13:43:32.6736184Z       'x-github-api-version-selected': '2022-11-28',
+2025-04-16T13:43:32.6736722Z       'x-github-media-type': 'github.v3; format=json',
+2025-04-16T13:43:32.6737321Z       'x-github-request-id': 'D081:13D9B2:54DCD0F:A916497:67FFB404',
+2025-04-16T13:43:32.6738044Z       'x-ratelimit-limit': '5000',
+2025-04-16T13:43:32.6738478Z       'x-ratelimit-remaining': '4997',
+2025-04-16T13:43:32.6738917Z       'x-ratelimit-reset': '1744813630',
+2025-04-16T13:43:32.6739347Z       'x-ratelimit-resource': 'core',
+2025-04-16T13:43:32.6739769Z       'x-ratelimit-used': '3',
+2025-04-16T13:43:32.6740161Z       'x-xss-protection': '0'
+2025-04-16T13:43:32.6740515Z     },
+2025-04-16T13:43:32.6740792Z     data: {
+2025-04-16T13:43:32.6741159Z       message: 'Resource not accessible by integration',
+2025-04-16T13:43:32.6742086Z       documentation_url: 'https://docs.github.com/rest/dependabot/alerts#list-dependabot-alerts-for-a-repository',
+2025-04-16T13:43:32.6742957Z       status: '403'
+2025-04-16T13:43:32.6743266Z     }
+2025-04-16T13:43:32.6743529Z   },
+2025-04-16T13:43:32.6743808Z   request: {
+2025-04-16T13:43:32.6744099Z     method: 'GET',
+2025-04-16T13:43:32.6744835Z     url: 'https://api.github.com/repos/mrkurger/date-night-app2/dependabot/alerts?state=open&per_page=100',
+2025-04-16T13:43:32.6745615Z     headers: {
+2025-04-16T13:43:32.6745968Z       accept: 'application/vnd.github.v3+json',
+2025-04-16T13:43:32.6746694Z       'user-agent': 'actions/github-script octokit-core.js/5.0.1 Node.js/20.19.0 (linux; x64)',
+2025-04-16T13:43:32.6747429Z       authorization: 'token [REDACTED]'
+2025-04-16T13:43:32.6747828Z     },
+2025-04-16T13:43:32.6748318Z     request: {
+2025-04-16T13:43:32.6748618Z       agent: [Agent],
+2025-04-16T13:43:32.6748993Z       fetch: [Function: proxyFetch],
+2025-04-16T13:43:32.6749419Z       hook: [Function: bound bound register]
+2025-04-16T13:43:32.6749818Z     }
+2025-04-16T13:43:32.6750079Z   }
+2025-04-16T13:43:32.6750340Z }
+2025-04-16T13:43:32.7389114Z Post job cleanup.
+2025-04-16T13:43:32.8331949Z [command]/usr/bin/git version
+2025-04-16T13:43:32.8372951Z git version 2.49.0
+2025-04-16T13:43:32.8419494Z Temporarily overriding HOME='/home/runner/work/_temp/da465d97-5f2c-44f0-b563-7a9af4c48ed2' before making global git config changes
+2025-04-16T13:43:32.8421807Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-16T13:43:32.8427038Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/date-night-app2/date-night-app2
+2025-04-16T13:43:32.8471925Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-16T13:43:32.8507569Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-16T13:43:32.8833660Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-16T13:43:32.8878676Z http.https://github.com/.extraheader
+2025-04-16T13:43:32.8908616Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-04-16T13:43:32.8975212Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-16T13:43:32.9513211Z Cleaning up orphan processes
