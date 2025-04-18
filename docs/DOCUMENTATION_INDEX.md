@@ -189,3 +189,6 @@ When contributing to documentation:
 3. **Include Examples**: Include examples to illustrate concepts
 4. **Update Related Documents**: Update related documents when making changes
 5. **Update the Documentation Index**: Update this document when adding or removing documentation files
+
+
+<!-- TODO: Manually update index after all changes, ensure uppercase filenames. (as per DOCS_IMPROVEMENT_PLAN.md) -->

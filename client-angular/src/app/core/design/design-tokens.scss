@@ -11,6 +11,9 @@
 // Import Emerald UI aligned tokens
 @import 'emerald-tokens';
 
+// Add any additional design tokens or overrides here
+$transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
 // Legacy tokens - kept for backward compatibility
 // These will be deprecated in future versions
 

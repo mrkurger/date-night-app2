@@ -216,60 +216,65 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Retry with exponential backoff and jitter
-   * @param request The original request
-   * @returns An RxJS operator for retrying requests
+   * Creates a retry operator with exponential backoff and jitter
+   * @param request The original HTTP request
+   * @returns A function that applies retry logic to an observable
    */
   private retryWithBackoff(request: HttpRequest<any>) {
-    return (source: Observable<HttpEvent<any>>) =>
-      this.config.retryFailedRequests
-        ? source.pipe(
-            retryWhen(errors =>
-              errors.pipe(
-                concatMap((error, index) => {
-                  const attemptNumber = index + 1;
+    // Return a function that takes an observable and returns a new observable with the same type
+    // Using generic type parameter to ensure type compatibility across different RxJS versions
+    return <T>(source: Observable<T>): Observable<T> => {
+      if (!this.config.retryFailedRequests) {
+        return source;
+      }
 
-                  // Check if we should retry this error
-                  if (!this.isRetryable(error) || attemptNumber > this.config.maxRetryAttempts) {
-                    return throwError(() => error);
-                  }
+      return source.pipe(
+        retryWhen(errors =>
+          errors.pipe(
+            concatMap((error, index) => {
+              const attemptNumber = index + 1;
 
-                  // Calculate delay with exponential backoff and jitter
-                  const backoffDelay = this.getRetryDelay(attemptNumber);
-                  const jitter = Math.floor(Math.random() * this.config.retryJitter);
-                  const totalDelay = backoffDelay + jitter;
+              // Check if we should retry this error
+              if (!this.isRetryable(error) || attemptNumber > this.config.maxRetryAttempts) {
+                return throwError(() => error);
+              }
 
-                  if (this.config.logErrors) {
-                    console.log(
-                      `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`
-                    );
-                  }
+              // Calculate delay with exponential backoff and jitter
+              const backoffDelay = this.getRetryDelay(attemptNumber);
+              const jitter = Math.floor(Math.random() * this.config.retryJitter);
+              const totalDelay = backoffDelay + jitter;
 
-                  // Track retry attempt in telemetry
-                  if (this.config.trackErrors) {
-                    this.telemetryService
-                      .trackError({
-                        errorCode: 'retry_attempt',
-                        statusCode: error.status,
-                        userMessage: 'Retrying request',
-                        technicalMessage: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
-                        url: request.url,
-                        method: request.method,
-                        context: {
-                          attemptNumber,
-                          delay: totalDelay,
-                          maxAttempts: this.config.maxRetryAttempts,
-                        },
-                      })
-                      .subscribe();
-                  }
+              if (this.config.logErrors) {
+                console.log(
+                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`
+                );
+              }
 
-                  return timer(totalDelay);
-                })
-              )
-            )
+              // Track retry attempt in telemetry
+              if (this.config.trackErrors) {
+                this.telemetryService
+                  .trackError({
+                    errorCode: 'retry_attempt',
+                    statusCode: error.status,
+                    userMessage: 'Retrying request',
+                    technicalMessage: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
+                    url: request.url,
+                    method: request.method,
+                    context: {
+                      attemptNumber,
+                      delay: totalDelay,
+                      maxAttempts: this.config.maxRetryAttempts,
+                    },
+                  })
+                  .subscribe();
+              }
+
+              return timer(totalDelay);
+            })
           )
-        : source;
+        )
+      );
+    };
   }
 
   /**

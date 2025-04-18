@@ -214,3 +214,10 @@ The Date Night App is designed to scale horizontally:
 - Database replication
 - Load balancing
 - Geographic distribution
+
+<!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) -->
+
+
+<!-- TODO: Manually enhance with structure, tech, flows, patterns, diagrams. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+
+See [Database Schema Detail](DATABASE_SCHEMA_DETAIL.md) for more details.

@@ -715,3 +715,6 @@ This section provides links to all documentation files in the project, organized
 - Split and modularize Angular components for authentication, ad management, and chat.
 - Enhance error handling in HTTP interceptors.
 - Review and update static asset paths and environment configurations.
+
+
+<!-- TODO: Enhance with project overview, tech stack, links, setup (as per DOCS_IMPROVEMENT_PLAN.md) -->

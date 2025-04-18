@@ -1,5 +1,24 @@
 # Change Log
 
+## 2024-05-30
+
+### Fixed
+
+- **RxJS Type Compatibility**
+  - Fixed TypeScript error in HttpErrorInterceptor related to RxJS Observable type compatibility
+  - Improved retryWithBackoff method with proper generic type parameters
+  - Enhanced type safety to prevent issues when multiple RxJS versions are present
+  - Added detailed documentation in AILessons.md about RxJS type compatibility patterns
+  - Fixed issue with incompatible Observable types between root and client-angular node_modules
+
+### Documentation
+
+- **RxJS Best Practices**
+  - Added new section in AILessons.md about RxJS type compatibility in custom operators
+  - Documented pattern for creating type-safe custom operators with generic type parameters
+  - Added code examples showing proper implementation of custom RxJS operators
+  - Enhanced documentation with explanations about multiple RxJS versions in Angular projects
+
 ## 2025-04-18
 
 ### Security Fixes
@@ -28,6 +47,7 @@
   - Server
   - Client-Angular
 - Added consistent dependency overrides across all package.json files
+- Fixed CI/CD pipeline cache issues by ensuring package-lock.json files exist in all workspaces
 
 ## 2024-05-29
 

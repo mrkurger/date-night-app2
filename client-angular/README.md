@@ -62,3 +62,6 @@ This will compile your project and store the build artifacts in the `dist/` dire
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+<!-- TODO: Enhance with detailed setup, build, test, run instructions, env vars (as per DOCS_IMPROVEMENT_PLAN.md) -->

@@ -1826,3 +1826,5 @@ This document serves as a central reference for all customizable settings in the
 ---
 
 *This index was automatically generated on 2025-04-16 08:50:02. Do not edit manually.*
+
+<!-- TODO: Manually verify scripts/update_config_index.py and run it. Add CI check. (as per DOCS_IMPROVEMENT_PLAN.md) -->
