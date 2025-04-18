@@ -56,3 +56,5 @@ Thumbs.db
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+data/db/WiredTiger.turtle
+data/db/WiredTiger.wt
