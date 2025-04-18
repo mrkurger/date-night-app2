@@ -10,7 +10,7 @@
 const express = require('express');
 const router = express.Router();
 const { asyncHandler } = require('../middleware/asyncHandler');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, restrictTo } = require('../middleware/auth');
 const locationController = require('../controllers/location.controller');
 
 // Import the Norway locations data
@@ -144,7 +144,12 @@ router.get('/:id', asyncHandler(locationController.getLocationById));
  * @desc    Create a new location
  * @access  Admin
  */
-router.post('/', authenticate, authorize('admin'), asyncHandler(locationController.createLocation));
+router.post(
+  '/',
+  authenticate,
+  restrictTo('admin'),
+  asyncHandler(locationController.createLocation)
+);
 
 /**
  * @route   PUT /api/v1/locations/:id
@@ -154,7 +159,7 @@ router.post('/', authenticate, authorize('admin'), asyncHandler(locationControll
 router.put(
   '/:id',
   authenticate,
-  authorize('admin'),
+  restrictTo('admin'),
   asyncHandler(locationController.updateLocation)
 );
 
@@ -166,7 +171,7 @@ router.put(
 router.delete(
   '/:id',
   authenticate,
-  authorize('admin'),
+  restrictTo('admin'),
   asyncHandler(locationController.deleteLocation)
 );
 

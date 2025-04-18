@@ -8,8 +8,11 @@ const express = require('express');
 const router = express.Router();
 const encryptionController = require('./encryption.controller');
 const { protect } = require('../../middleware/auth');
-const { validateRequest } = require('../../middleware/validation');
+const { validate } = require('../../middleware/validation');
 const { body, param } = require('express-validator');
+
+// Debug log to check if the controller is properly imported
+console.log('Encryption controller methods:', Object.keys(encryptionController));
 
 /**
  * @route POST /api/chat/encryption/register-key
@@ -19,14 +22,13 @@ const { body, param } = require('express-validator');
 router.post(
   '/register-key',
   protect,
-  [
+  validate([
     body('publicKey')
       .notEmpty()
       .withMessage('Public key is required')
       .isString()
       .withMessage('Public key must be a string'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.registerPublicKey
 );
 
@@ -38,14 +40,13 @@ router.post(
 router.post(
   '/setup-room',
   protect,
-  [
+  validate([
     body('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
       .isMongoId()
       .withMessage('Invalid room ID format'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.setupRoomEncryption
 );
 
@@ -57,14 +58,13 @@ router.post(
 router.delete(
   '/room/:roomId',
   protect,
-  [
+  validate([
     param('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
       .isMongoId()
       .withMessage('Invalid room ID format'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.disableRoomEncryption
 );
 
@@ -76,7 +76,7 @@ router.delete(
 router.post(
   '/store-key',
   protect,
-  [
+  validate([
     body('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
@@ -92,8 +92,7 @@ router.post(
       .withMessage('Encrypted key is required')
       .isString()
       .withMessage('Encrypted key must be a string'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.storeRoomKey
 );
 
@@ -105,14 +104,13 @@ router.post(
 router.get(
   '/room-key/:roomId',
   protect,
-  [
+  validate([
     param('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
       .isMongoId()
       .withMessage('Invalid room ID format'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.getRoomKey
 );
 
@@ -124,14 +122,13 @@ router.get(
 router.get(
   '/participant-keys/:roomId',
   protect,
-  [
+  validate([
     param('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
       .isMongoId()
       .withMessage('Invalid room ID format'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.getRoomParticipantKeys
 );
 
@@ -143,14 +140,13 @@ router.get(
 router.get(
   '/status/:roomId',
   protect,
-  [
+  validate([
     param('roomId')
       .notEmpty()
       .withMessage('Room ID is required')
       .isMongoId()
       .withMessage('Invalid room ID format'),
-  ],
-  validateRequest,
+  ]),
   encryptionController.getRoomEncryptionStatus
 );
 

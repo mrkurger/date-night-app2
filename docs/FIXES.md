@@ -159,6 +159,20 @@ $error-200: rgba($color-error, 0.2);
 // ... and so on
 ```
 
+### Clean Up Unused Dependencies
+
+Run the dependency cleanup script:
+
+```bash
+node scripts/cleanup-dependencies.js
+```
+
+Install missing dependencies:
+
+```bash
+node scripts/install-missing-dependencies.js
+```
+
 ## Troubleshooting
 
 If you still encounter issues after running the fix script:

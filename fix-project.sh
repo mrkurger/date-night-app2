@@ -120,14 +120,32 @@ cd $PROJECT_ROOT
 node scripts/ensure-mongodb.js
 check_success "Checking MongoDB setup"
 
-# Step 8: Updating packages
-echo -e "${MAGENTA}Step 8: Updating packages...${RESET}"
+# Step 8: Fix ESLint dependency conflicts
+echo -e "${MAGENTA}Step 8: Fixing ESLint dependency conflicts...${RESET}"
 cd $PROJECT_ROOT
-npm run update-packages
+node scripts/fix-eslint-dependencies.js
+check_success "Fixing ESLint dependency conflicts"
+
+# Step 9: Cleanup unused dependencies
+echo -e "${MAGENTA}Step 9: Cleaning up unused dependencies...${RESET}"
+cd $PROJECT_ROOT
+node scripts/cleanup-dependencies.js
+check_success "Cleaning up unused dependencies"
+
+# Step 10: Install missing dependencies
+echo -e "${MAGENTA}Step 10: Installing missing dependencies...${RESET}"
+cd $PROJECT_ROOT
+node scripts/install-missing-dependencies.js
+check_success "Installing missing dependencies"
+
+# Step 11: Updating packages
+echo -e "${MAGENTA}Step 11: Updating packages...${RESET}"
+cd $PROJECT_ROOT
+npm run update-packages --legacy-peer-deps
 check_success "Updating packages"
 
-# Step 9: Verify server/scripts directory
-echo -e "${MAGENTA}Step 9: Verifying server/scripts directory...${RESET}"
+# Step 12: Verify server/scripts directory
+echo -e "${MAGENTA}Step 12: Verifying server/scripts directory...${RESET}"
 if [ ! -d "$SERVER_DIR/scripts" ]; then
   echo -e "${YELLOW}Creating server/scripts directory...${RESET}"
   mkdir -p "$SERVER_DIR/scripts"

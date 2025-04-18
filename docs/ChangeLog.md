@@ -54,8 +54,16 @@
   - Resolves conflicts with @typescript-eslint/utils and @angular-eslint packages
 
 - **Documentation**: Added comprehensive documentation for fixes
+
   - Created `docs/FIXES.md` with detailed explanation of all fixes
   - Updated changelog with details about the fixes
+  - Created `docs/DEPENDENCY_CLEANUP.md` with details about dependency management
+
+- **cleanup-dependencies.js**: Created script to remove unused dependencies
+  - Identifies and removes truly unused dependencies
+  - Preserves dependencies that might be used indirectly
+  - Documents which dependencies were kept and why
+  - Provides a clean way to maintain dependencies over time
   - Added troubleshooting section to help with common issues
 
 ## 2025-05-22: Angular Build Optimization
