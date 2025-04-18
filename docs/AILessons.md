@@ -898,6 +898,54 @@ const cspMiddleware = () => {
    - `'unsafe-eval'` for development (Angular JIT compilation)
    - Hash or nonce for inline scripts in production
 
+3. **Testing CSP Middleware**: When testing CSP middleware, ensure proper handling of report-only mode:
+
+```javascript
+// CORRECT - Explicitly set and restore reportOnly flag
+it('should set Content-Security-Policy header in development mode', async () => {
+  // Save original reportOnly setting
+  const originalReportOnly = cspConfig.reportOnly;
+  // Explicitly set reportOnly to true for this test
+  cspConfig.reportOnly = true;
+
+  try {
+    const middleware = cspMiddleware();
+    app.use(middleware);
+
+    // Test implementation...
+
+    // Check for report-only header
+    expect(res.headers).toHaveProperty('content-security-policy-report-only');
+  } finally {
+    // Restore original reportOnly setting
+    cspConfig.reportOnly = originalReportOnly;
+  }
+});
+
+// INCORRECT - Relying only on environment variables
+it('should set Content-Security-Policy header in development mode', async () => {
+  process.env.NODE_ENV = 'development';
+
+  const middleware = cspMiddleware();
+  app.use(middleware);
+
+  // Test implementation...
+
+  // This may fail if configuration is loaded before environment is set
+  expect(res.headers).toHaveProperty('content-security-policy-report-only');
+});
+```
+
+4. **Case-Insensitive Header Checking**: HTTP headers are case-insensitive, so tests should account for this:
+
+```javascript
+// Check for header with case-insensitive approach
+const reportOnlyHeader =
+  res.headers['content-security-policy-report-only'] ||
+  res.headers['Content-Security-Policy-Report-Only'];
+expect(reportOnlyHeader).toBeTruthy();
+```
+
 3. **External Resources**: If your application uses external resources (like UI libraries), add their domains to the appropriate CSP directives.
 
 ## Angular Testing

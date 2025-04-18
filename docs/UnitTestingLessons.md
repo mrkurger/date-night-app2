@@ -280,7 +280,43 @@ ngOnInit(): void {
 
 3. **Mock Implementation**: When mocking database models or external services, ensure the mock implementation returns objects with the same structure and methods as the real implementation.
 
-4. **Testing MongoDB Models**: When testing MongoDB models:
+4. **Middleware Testing**: When testing Express middleware:
+
+   - Create a fresh Express app instance for each test to avoid state leakage
+   - Apply the middleware before defining routes
+   - Use supertest to make requests to the app
+   - Check for expected headers, status codes, and response bodies
+   - For middleware that depends on configuration, explicitly set and restore configuration values
+   - Use try/finally blocks to ensure configuration is restored even if the test fails
+   - For middleware that sets HTTP headers, check for headers in a case-insensitive way
+   - Test both development and production environments when behavior differs
+
+   ```javascript
+   // Example of testing middleware with configuration
+   it('should set correct headers', async () => {
+     // Save original configuration
+     const originalConfig = { ...config };
+
+     // Set specific configuration for this test
+     config.option = 'test-value';
+
+     try {
+       // Create a fresh app for this test
+       const app = express();
+       app.use(middleware);
+       app.get('/test', (req, res) => res.send('OK'));
+
+       // Make request and check headers
+       const res = await request(app).get('/test');
+       expect(res.headers).toHaveProperty('x-custom-header', 'test-value');
+     } finally {
+       // Restore original configuration
+       Object.assign(config, originalConfig);
+     }
+   });
+   ```
+
+5. **Testing MongoDB Models**: When testing MongoDB models:
 
    - Use `mongodb-memory-server` for in-memory database testing to avoid affecting production data
    - Create separate test data constants for each model type to ensure test clarity
@@ -295,14 +331,14 @@ ngOnInit(): void {
    - Test nested schema structures (e.g., balances, transactions, payment methods in a wallet) thoroughly
    - Verify that unique constraints are enforced at the database level
 
-5. **Test File Location**:
+6. **Test File Location**:
 
    - Place test files in the appropriate test directory structure, not alongside the implementation files
    - For server-side tests, use the pattern: `/server/tests/unit/[module-type]/[file-name].test.js`
    - Example: Tests for `server/services/auth.service.js` should be in `server/tests/unit/services/auth.service.test.js`
    - Incorrect file locations can cause Jest to fail with "Your test suite must contain at least one test" error
 
-6. **Import Paths in Tests**:
+7. **Import Paths in Tests**:
    - When moving test files, ensure import paths are updated correctly
    - For tests in the proper directory structure, use relative paths like `../../../services/auth.service` instead of `./auth.service`
    - Incorrect import paths are a common source of test failures

@@ -88,22 +88,37 @@ describe('Security Middleware', () => {
       devApp.use(express.json());
 
       // Force report-only mode for development test
-      const middleware = cspMiddleware();
-      devApp.use(middleware);
+      // Save original reportOnly setting
+      const originalReportOnly = cspConfig.reportOnly;
+      // Explicitly set reportOnly to true for this test
+      cspConfig.reportOnly = true;
 
-      devApp.get('/test', (req, res) => {
-        res.status(200).json({ message: 'Test endpoint' });
-      });
+      try {
+        const middleware = cspMiddleware();
+        devApp.use(middleware);
 
-      const res = await request(devApp).get('/test');
+        devApp.get('/test', (req, res) => {
+          res.status(200).json({ message: 'Test endpoint' });
+        });
 
-      expect(res.statusCode).toBe(200);
-      expect(res.headers).toHaveProperty('content-security-policy-report-only');
+        const res = await request(devApp).get('/test');
 
-      const cspHeader = res.headers['content-security-policy-report-only'];
+        expect(res.statusCode).toBe(200);
 
-      // Check for essential CSP directives
-      expect(cspHeader).toContain('default-src');
+        // HTTP headers are case-insensitive, so we need to check for either case
+        const reportOnlyHeader =
+          res.headers['content-security-policy-report-only'] ||
+          res.headers['Content-Security-Policy-Report-Only'];
+        expect(reportOnlyHeader).toBeTruthy();
+
+        const cspHeader = reportOnlyHeader;
+
+        // Check for essential CSP directives
+        expect(cspHeader).toContain('default-src');
+      } finally {
+        // Restore original reportOnly setting
+        cspConfig.reportOnly = originalReportOnly;
+      }
     });
 
     it('should set Content-Security-Policy header in production mode', async () => {
