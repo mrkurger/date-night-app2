@@ -8,12 +8,12 @@
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
 // ===================================================
 
-const mongoose = require('mongoose');
-const ChatRoom = require('../../../models/chat-room.model');
-const ChatMessage = require('../../../models/chat-message.model');
-const User = require('../../../models/user.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { TEST_USER_DATA } = require('../../helpers');
+import mongoose from 'mongoose';
+import ChatRoom from '../../../models/chat-room.model.js';
+import ChatMessage from '../../../models/chat-message.model.js';
+import User from '../../../models/user.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { TEST_USER_DATA } from '../../helpers.js';
 
 describe('ChatRoom Model', () => {
   let user1;
