@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (main-layout.component.spec)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, BehaviorSubject } from 'rxjs';
@@ -5,7 +14,7 @@ import { MainLayoutComponent } from './main-layout.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { AdService } from '../../../core/services/ad.service';
 import { ThemeService } from '../../../core/services/theme.service';
-import { EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
+import { ToggleComponent as EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 describe('MainLayoutComponent', () => {
@@ -134,9 +143,69 @@ describe('MainLayoutComponent', () => {
     it('should load premium ads on init', () => {
       // Arrange
       const mockAds = [
-        { id: '1', title: 'Ad 1', media: [{ url: 'url1' }] },
-        { id: '2', title: 'Ad 2', images: ['url2'] },
-        { id: '3', title: 'Ad 3' },
+        {
+          _id: '1',
+          title: 'Ad 1',
+          description: 'Description 1',
+          category: 'Category 1',
+          price: 100,
+          location: 'Location 1',
+          images: [],
+          media: [{ url: 'url1', type: 'image' }],
+          advertiser: 'user1',
+          userId: 'user1',
+          isActive: true,
+          isFeatured: true,
+          isTrending: false,
+          isTouring: false,
+          viewCount: 10,
+          clickCount: 5,
+          inquiryCount: 2,
+          createdAt: '2023-01-01',
+          updatedAt: '2023-01-02',
+        },
+        {
+          _id: '2',
+          title: 'Ad 2',
+          description: 'Description 2',
+          category: 'Category 2',
+          price: 200,
+          location: 'Location 2',
+          images: ['url2'],
+          media: [],
+          advertiser: 'user2',
+          userId: 'user2',
+          isActive: true,
+          isFeatured: true,
+          isTrending: false,
+          isTouring: false,
+          viewCount: 20,
+          clickCount: 10,
+          inquiryCount: 4,
+          createdAt: '2023-01-03',
+          updatedAt: '2023-01-04',
+        },
+        {
+          _id: '3',
+          title: 'Ad 3',
+          description: 'Description 3',
+          category: 'Category 3',
+          price: 300,
+          location: 'Location 3',
+          images: [],
+          media: [],
+          advertiser: 'user3',
+          userId: 'user3',
+          isActive: true,
+          isFeatured: true,
+          isTrending: false,
+          isTouring: false,
+          viewCount: 30,
+          clickCount: 15,
+          inquiryCount: 6,
+          createdAt: '2023-01-05',
+          updatedAt: '2023-01-06',
+        },
       ];
       adServiceMock.getFeaturedAds.and.returnValue(of(mockAds));
 

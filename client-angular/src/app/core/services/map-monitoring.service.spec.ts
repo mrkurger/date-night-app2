@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for service configuration (map-monitoring.service.spec)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { TestBed } from '@angular/core/testing';
 import { MapMonitoringService } from './map-monitoring.service';
 import { LoggingService } from './logging.service';

@@ -7,12 +7,12 @@
 // - MOCK_ITEMS: Mock items data for testing
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+// import { By } from '@angular/platform-browser';
 import {
   DebugElement,
   Component,
   NO_ERRORS_SCHEMA,
-  CUSTOM_ELEMENTS_SCHEMA,
+  // CUSTOM_ELEMENTS_SCHEMA,
   ViewChild,
   TemplateRef,
 } from '@angular/core';
@@ -51,10 +51,10 @@ class TestHostComponent {
   animated = true;
   isLoading = false;
 
-  @ViewChild('itemTemplate') itemTemplate!: TemplateRef<any>;
+  @ViewChild('itemTemplate') itemTemplate!: TemplateRef<unknown>;
 
-  onCardClick(itemId: string): void {}
-  onActionClick(event: { id: string; itemId: string }): void {}
+  onCardClick(_itemId: string): void {}
+  onActionClick(_event: { id: string; itemId: string }): void {}
 }
 
 // Mock items for testing
@@ -92,9 +92,9 @@ const MOCK_ITEMS = [
 describe('CardGridComponent', () => {
   let component: CardGridComponent;
   let fixture: ComponentFixture<CardGridComponent>;
-  let debugElement: DebugElement;
+  // let debugElement: DebugElement;
 
-  let hostComponent: TestHostComponent;
+  // let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {
@@ -111,13 +111,13 @@ describe('CardGridComponent', () => {
 
     // Create the host component first
     hostFixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = hostFixture.componentInstance;
+    // hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges(); // This is needed to initialize the ViewChild
 
     // Create the component directly
     fixture = TestBed.createComponent(CardGridComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
+    // debugElement = fixture.debugElement;
 
     // Set default input values
     component.items = MOCK_ITEMS;

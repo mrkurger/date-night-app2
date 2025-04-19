@@ -9,8 +9,8 @@
 @use 'design-tokens' as tokens;
 
 // Font variables
-$font-primary: tokens.$font-family-heading;
-$font-secondary: tokens.$font-family-base;
+$font-primary: 'Poppins', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
 $font-monospace: 'Roboto Mono', monospace;
 
 // Font weights

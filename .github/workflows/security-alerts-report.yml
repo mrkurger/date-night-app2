@@ -5,11 +5,17 @@ on:
     - cron: '0 0 * * 1' # Run weekly on Monday
   workflow_dispatch: # Allow manual triggering
 
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-report:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    timeout-minutes: 30 # Add timeout to prevent runaway jobs
 
     steps:
       - uses: actions/checkout@v4
@@ -21,8 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g npm-audit-html
-          npm install -g npm-check
+          npm install --save-dev npm-audit-html npm-check
 
       - name: Check Client Dependencies
         id: check-client
@@ -32,8 +37,8 @@ jobs:
             cd client-angular
             echo "## Client Dependencies" > ../client-deps-report.md
             echo "" >> ../client-deps-report.md
-            npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
-            npm audit --json | npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
+            npx npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
+            npm audit --json | npx npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
             cd ..
           else
             echo "Client directory not found, skipping"
@@ -47,8 +52,8 @@ jobs:
             cd server
             echo "## Server Dependencies" > ../server-deps-report.md
             echo "" >> ../server-deps-report.md
-            npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
-            npm audit --json | npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
+            npx npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
+            npm audit --json | npx npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
             cd ..
           else
             echo "Server directory not found, skipping"
@@ -117,14 +122,26 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
+          # Handle any unstaged changes by stashing them
+          git stash -u || true
+
+          # Pull the latest changes with rebase strategy to avoid merge commits
+          git pull --rebase origin main
+
+          # Pop the stash if we stashed anything
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+
+          # Add only the security report files
           git add downloaded-reports/security/dependabot-alerts.md
           git add downloaded-reports/security/html-reports/ || true
-          git commit -m "docs: update security alerts report [skip ci]" || echo "No changes to commit"
 
-          # Use PAT for push if available, otherwise use GITHUB_TOKEN
-          if [ -n "$WORKFLOW_TOKEN" ]; then
-            git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/mrkurger/date-night-app2.git
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update security alerts report [skip ci]"
+            git push
           fi
-          git push
         env:
-          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

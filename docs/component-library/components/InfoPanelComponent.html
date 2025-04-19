@@ -1,0 +1,1135 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  InfoPanelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/emerald/components/info-panel/info-panel.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Emerald InfoPanel Component</p>
+<p>A wrapper for the Emerald.js InfoPanel component.
+This component displays information in a structured panel format.</p>
+<p>Documentation: <a href="https://docs-emerald.condorlabs.io/InfoPanel">https://docs-emerald.condorlabs.io/InfoPanel</a></p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>emerald-info-panel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./info-panel.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./info-panel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isCollapsed" >isCollapsed</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#toggleCollapse" >toggleCollapse</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#collapsible" >collapsible</a>
+                            </li>
+                            <li>
+                                <a href="#initiallyCollapsed" >initiallyCollapsed</a>
+                            </li>
+                            <li>
+                                <a href="#items" >items</a>
+                            </li>
+                            <li>
+                                <a href="#subtitle" >subtitle</a>
+                            </li>
+                            <li>
+                                <a href="#title" >title</a>
+                            </li>
+                            <li>
+                                <a href="#variant" >variant</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:44</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="collapsible"></a>
+                        <b>collapsible</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:41</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="initiallyCollapsed"></a>
+                        <b>initiallyCollapsed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:42</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="items"></a>
+                        <b>items</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/InfoPanelItem.html" target="_self" >InfoPanelItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="subtitle"></a>
+                        <b>subtitle</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="title"></a>
+                        <b>title</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:37</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="variant"></a>
+                        <b>variant</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;default&quot; | &quot;bordered&quot; | &quot;shadowed&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;default&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:40</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleCollapse"></a>
+                    <span class="name">
+                        <span ><b>toggleCollapse</b></span>
+                        <a href="#toggleCollapse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleCollapse()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggle the panel&#39;s collapsed state</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCollapsed"></a>
+                    <span class="name">
+                        <span ><b>isCollapsed</b></span>
+                        <a href="#isCollapsed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/shared/emerald/components/info-panel/info-panel.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+
+/**
+ * Emerald InfoPanel Component
+ *
+ * A wrapper for the Emerald.js InfoPanel component.
+ * This component displays information in a structured panel format.
+ *
+ * Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+ */
+
+// &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+// This file contains settings for the InfoPanel component
+//
+// COMMON CUSTOMIZATIONS:
+// - variant: Visual style of the panel (default: &#x27;default&#x27;)
+//   Valid values: &#x27;default&#x27;, &#x27;bordered&#x27;, &#x27;shadowed&#x27;
+// - collapsible: Whether the panel can be collapsed (default: false)
+//   Valid values: true, false
+// - initiallyCollapsed: Whether the panel starts collapsed (default: false)
+//   Valid values: true, false
+// - items: Array of InfoPanelItem objects to display
+//   Related to: InfoPanelItem interface
+// &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+@Component({
+  selector: &#x27;emerald-info-panel&#x27;,
+  templateUrl: &#x27;./info-panel.component.html&#x27;,
+  styleUrls: [&#x27;./info-panel.component.scss&#x27;],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class InfoPanelComponent implements OnInit {
+  @Input() title &#x3D; &#x27;&#x27;;
+  @Input() subtitle?: string;
+  @Input() items: InfoPanelItem[] &#x3D; [];
+  @Input() variant: &#x27;default&#x27; | &#x27;bordered&#x27; | &#x27;shadowed&#x27; &#x3D; &#x27;default&#x27;;
+  @Input() collapsible &#x3D; false;
+  @Input() initiallyCollapsed &#x3D; false;
+
+  isCollapsed &#x3D; false;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.isCollapsed &#x3D; this.initiallyCollapsed;
+  }
+
+  /**
+   * Toggle the panel&#x27;s collapsed state
+   */
+  toggleCollapse(): void {
+    if (this.collapsible) {
+      this.isCollapsed &#x3D; !this.isCollapsed;
+    }
+  }
+}
+
+/**
+ * InfoPanel Item Interface
+ */
+export interface InfoPanelItem {
+  label: string;
+  value: string | number | boolean;
+  icon?: string;
+  type?: &#x27;text&#x27; | &#x27;badge&#x27; | &#x27;progress&#x27; | &#x27;boolean&#x27;;
+  variant?: &#x27;primary&#x27; | &#x27;success&#x27; | &#x27;warning&#x27; | &#x27;danger&#x27; | &#x27;info&#x27; | &#x27;neutral&#x27;;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Emerald InfoPanel Component --&gt;
+&lt;!-- Documentation: https://docs-emerald.condorlabs.io/InfoPanel --&gt;
+
+&lt;div
+  class&#x3D;&quot;emerald-info-panel&quot;
+  [ngClass]&#x3D;&quot;{
+    &#x27;emerald-info-panel--bordered&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;bordered&#x27;,
+    &#x27;emerald-info-panel--shadowed&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;shadowed&#x27;,
+    &#x27;emerald-info-panel--collapsible&#x27;: collapsible,
+    &#x27;emerald-info-panel--collapsed&#x27;: isCollapsed,
+  }&quot;
+&gt;
+  &lt;!-- Panel Header --&gt;
+  &lt;div class&#x3D;&quot;emerald-info-panel__header&quot; (click)&#x3D;&quot;toggleCollapse()&quot;&gt;
+    &lt;div class&#x3D;&quot;emerald-info-panel__title-container&quot;&gt;
+      &lt;h3 class&#x3D;&quot;emerald-info-panel__title&quot;&gt;{{ title }}&lt;/h3&gt;
+      &lt;p *ngIf&#x3D;&quot;subtitle&quot; class&#x3D;&quot;emerald-info-panel__subtitle&quot;&gt;{{ subtitle }}&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Collapse Toggle --&gt;
+    &lt;button
+      *ngIf&#x3D;&quot;collapsible&quot;
+      class&#x3D;&quot;emerald-info-panel__toggle&quot;
+      [attr.aria-expanded]&#x3D;&quot;!isCollapsed&quot;
+      [attr.aria-label]&#x3D;&quot;isCollapsed ? &#x27;Expand panel&#x27; : &#x27;Collapse panel&#x27;&quot;
+    &gt;
+      &lt;i
+        class&#x3D;&quot;fas&quot;
+        [ngClass]&#x3D;&quot;{ &#x27;fa-chevron-down&#x27;: !isCollapsed, &#x27;fa-chevron-right&#x27;: isCollapsed }&quot;
+      &gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Panel Content --&gt;
+  &lt;div class&#x3D;&quot;emerald-info-panel__content&quot;&gt;
+    &lt;div class&#x3D;&quot;emerald-info-panel__items&quot;&gt;
+      &lt;div *ngFor&#x3D;&quot;let item of items&quot; class&#x3D;&quot;emerald-info-panel__item&quot;&gt;
+        &lt;!-- Item Label --&gt;
+        &lt;div class&#x3D;&quot;emerald-info-panel__item-label&quot;&gt;
+          &lt;i *ngIf&#x3D;&quot;item.icon&quot; class&#x3D;&quot;emerald-info-panel__item-icon {{ item.icon }}&quot;&gt;&lt;/i&gt;
+          &lt;span&gt;{{ item.label }}&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Item Value --&gt;
+        &lt;div class&#x3D;&quot;emerald-info-panel__item-value&quot;&gt;
+          &lt;!-- Text Value --&gt;
+          &lt;span *ngIf&#x3D;&quot;!item.type || item.type &#x3D;&#x3D;&#x3D; &#x27;text&#x27;&quot;&gt;{{ item.value }}&lt;/span&gt;
+
+          &lt;!-- Badge Value --&gt;
+          &lt;span
+            *ngIf&#x3D;&quot;item.type &#x3D;&#x3D;&#x3D; &#x27;badge&#x27;&quot;
+            class&#x3D;&quot;emerald-info-panel__badge&quot;
+            [ngClass]&#x3D;&quot;{
+              &#x27;emerald-info-panel__badge--primary&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;primary&#x27;,
+              &#x27;emerald-info-panel__badge--success&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;success&#x27;,
+              &#x27;emerald-info-panel__badge--warning&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;warning&#x27;,
+              &#x27;emerald-info-panel__badge--danger&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;danger&#x27;,
+              &#x27;emerald-info-panel__badge--info&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;info&#x27;,
+              &#x27;emerald-info-panel__badge--neutral&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;neutral&#x27; || !item.variant,
+            }&quot;
+          &gt;
+            {{ item.value }}
+          &lt;/span&gt;
+
+          &lt;!-- Progress Value --&gt;
+          &lt;div *ngIf&#x3D;&quot;item.type &#x3D;&#x3D;&#x3D; &#x27;progress&#x27;&quot; class&#x3D;&quot;emerald-info-panel__progress&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;emerald-info-panel__progress-bar&quot;
+              [ngClass]&#x3D;&quot;{
+                &#x27;emerald-info-panel__progress-bar--primary&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;primary&#x27;,
+                &#x27;emerald-info-panel__progress-bar--success&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;success&#x27;,
+                &#x27;emerald-info-panel__progress-bar--warning&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;warning&#x27;,
+                &#x27;emerald-info-panel__progress-bar--danger&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;danger&#x27;,
+                &#x27;emerald-info-panel__progress-bar--info&#x27;: item.variant &#x3D;&#x3D;&#x3D; &#x27;info&#x27;,
+                &#x27;emerald-info-panel__progress-bar--neutral&#x27;:
+                  item.variant &#x3D;&#x3D;&#x3D; &#x27;neutral&#x27; || !item.variant,
+              }&quot;
+              [style.width.%]&#x3D;&quot;item.value&quot;
+            &gt;&lt;/div&gt;
+            &lt;span class&#x3D;&quot;emerald-info-panel__progress-text&quot;&gt;{{ item.value }}%&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Boolean Value --&gt;
+          &lt;span *ngIf&#x3D;&quot;item.type &#x3D;&#x3D;&#x3D; &#x27;boolean&#x27;&quot; class&#x3D;&quot;emerald-info-panel__boolean&quot;&gt;
+            &lt;i
+              class&#x3D;&quot;fas&quot;
+              [ngClass]&#x3D;&quot;{
+                &#x27;fa-check emerald-info-panel__boolean--true&#x27;: item.value,
+                &#x27;fa-times emerald-info-panel__boolean--false&#x27;: !item.value,
+              }&quot;
+            &gt;
+            &lt;/i&gt;
+          &lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./info-panel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">// Define variables locally for testing
+$neutral-100: #f3f4f6;
+$neutral-200: #e5e7eb;
+$neutral-300: #d1d5db;
+$neutral-600: #4b5563;
+$neutral-700: #374151;
+$neutral-900: #111827;
+$border-radius-md: 0.375rem;
+$border-radius-sm: 0.25rem;
+$border-radius-full: 9999px;
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-weight-semibold: 600;
+$primary: #3b82f6;
+$primary-100: #dbeafe;
+$primary-700: #1d4ed8;
+$success: #10b981;
+$success-100: #dcfce7;
+$success-700: #15803d;
+$warning: #f59e0b;
+$warning-100: #fef3c7;
+$warning-700: #b45309;
+$danger: #ef4444;
+$danger-100: #fee2e2;
+$danger-700: #b91c1c;
+$info: #0ea5e9;
+$info-100: #e0f2fe;
+$info-700: #0369a1;
+
+// Emerald InfoPanel Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+
+.emerald-info-panel {
+  background-color: $neutral-100;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  // Panel Variants
+  &amp;--bordered {
+    border: 1px solid $neutral-300;
+  }
+
+  &amp;--shadowed {
+    box-shadow: $shadow-md;
+  }
+
+  // Panel Header
+  &amp;__header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $neutral-200;
+
+    .emerald-info-panel--collapsible &amp; {
+      cursor: pointer;
+
+      &amp;:hover {
+        background-color: $neutral-100;
+      }
+    }
+  }
+
+  &amp;__title-container {
+    flex: 1;
+  }
+
+  &amp;__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+  }
+
+  &amp;__subtitle {
+    margin: 4px 0 0;
+    font-size: $font-size-sm;
+    color: $neutral-600;
+  }
+
+  // Collapse Toggle
+  &amp;__toggle {
+    background: none;
+    border: none;
+    color: $neutral-600;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+
+    &amp;:hover {
+      color: $neutral-900;
+    }
+  }
+
+  // Panel Content
+  &amp;__content {
+    transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
+
+    .emerald-info-panel--collapsed &amp; {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+
+  &amp;__items {
+    padding: 16px;
+  }
+
+  // Panel Item
+  &amp;__item {
+    display: flex;
+    margin-bottom: 12px;
+
+    &amp;:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &amp;__item-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: $neutral-700;
+    font-size: $font-size-sm;
+  }
+
+  &amp;__item-icon {
+    margin-right: 8px;
+    color: $neutral-600;
+    width: 16px;
+    text-align: center;
+  }
+
+  &amp;__item-value {
+    flex: 1;
+    text-align: right;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+    font-size: $font-size-sm;
+  }
+
+  // Badge Value
+  &amp;__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+
+    &amp;--primary {
+      background-color: #dbeafe; /* primary-100 */
+      color: #1d4ed8; /* primary-700 */
+    }
+
+    &amp;--success {
+      background-color: #dcfce7; /* success-100 */
+      color: #15803d; /* success-700 */
+    }
+
+    &amp;--warning {
+      background-color: #fef3c7; /* warning-100 */
+      color: #b45309; /* warning-700 */
+    }
+
+    &amp;--danger {
+      background-color: #fee2e2; /* danger-100 */
+      color: #b91c1c; /* danger-700 */
+    }
+
+    &amp;--info {
+      background-color: #e0f2fe; /* info-100 */
+      color: #0369a1; /* info-700 */
+    }
+
+    &amp;--neutral {
+      background-color: #e5e7eb; /* neutral-200 */
+      color: #374151; /* neutral-700 */
+    }
+  }
+
+  // Progress Value
+  &amp;__progress {
+    position: relative;
+    height: 8px;
+    width: 100px;
+    background-color: $neutral-200;
+    border-radius: $border-radius-full;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  &amp;__progress-bar {
+    height: 100%;
+    border-radius: $border-radius-full;
+
+    &amp;--primary {
+      background-color: $primary;
+    }
+
+    &amp;--success {
+      background-color: $success;
+    }
+
+    &amp;--warning {
+      background-color: $warning;
+    }
+
+    &amp;--danger {
+      background-color: $danger;
+    }
+
+    &amp;--info {
+      background-color: $info;
+    }
+
+    &amp;--neutral {
+      background-color: $neutral-600;
+    }
+  }
+
+  &amp;__progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $font-size-xs;
+    color: $neutral-900;
+    text-shadow: 0 0 2px rgba($neutral-100, 0.8);
+  }
+
+  // Boolean Value
+  &amp;__boolean {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    &amp;--true {
+      background-color: $success-100;
+      color: $success;
+    }
+
+    &amp;--false {
+      background-color: $danger-100;
+      color: $danger;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Emerald InfoPanel Component --><!-- Documentation: https://docs-emerald.condorlabs.io/InfoPanel --><div  class="emerald-info-panel"  [ngClass]="{    \'emerald-info-panel--bordered\': variant === \'bordered\',    \'emerald-info-panel--shadowed\': variant === \'shadowed\',    \'emerald-info-panel--collapsible\': collapsible,    \'emerald-info-panel--collapsed\': isCollapsed,  }">  <!-- Panel Header -->  <div class="emerald-info-panel__header" (click)="toggleCollapse()">    <div class="emerald-info-panel__title-container">      <h3 class="emerald-info-panel__title">{{ title }}</h3>      <p *ngIf="subtitle" class="emerald-info-panel__subtitle">{{ subtitle }}</p>    </div>    <!-- Collapse Toggle -->    <button      *ngIf="collapsible"      class="emerald-info-panel__toggle"      [attr.aria-expanded]="!isCollapsed"      [attr.aria-label]="isCollapsed ? \'Expand panel\' : \'Collapse panel\'"    >      <i        class="fas"        [ngClass]="{ \'fa-chevron-down\': !isCollapsed, \'fa-chevron-right\': isCollapsed }"      ></i>    </button>  </div>  <!-- Panel Content -->  <div class="emerald-info-panel__content">    <div class="emerald-info-panel__items">      <div *ngFor="let item of items" class="emerald-info-panel__item">        <!-- Item Label -->        <div class="emerald-info-panel__item-label">          <i *ngIf="item.icon" class="emerald-info-panel__item-icon {{ item.icon }}"></i>          <span>{{ item.label }}</span>        </div>        <!-- Item Value -->        <div class="emerald-info-panel__item-value">          <!-- Text Value -->          <span *ngIf="!item.type || item.type === \'text\'">{{ item.value }}</span>          <!-- Badge Value -->          <span            *ngIf="item.type === \'badge\'"            class="emerald-info-panel__badge"            [ngClass]="{              \'emerald-info-panel__badge--primary\': item.variant === \'primary\',              \'emerald-info-panel__badge--success\': item.variant === \'success\',              \'emerald-info-panel__badge--warning\': item.variant === \'warning\',              \'emerald-info-panel__badge--danger\': item.variant === \'danger\',              \'emerald-info-panel__badge--info\': item.variant === \'info\',              \'emerald-info-panel__badge--neutral\': item.variant === \'neutral\' || !item.variant,            }"          >            {{ item.value }}          </span>          <!-- Progress Value -->          <div *ngIf="item.type === \'progress\'" class="emerald-info-panel__progress">            <div              class="emerald-info-panel__progress-bar"              [ngClass]="{                \'emerald-info-panel__progress-bar--primary\': item.variant === \'primary\',                \'emerald-info-panel__progress-bar--success\': item.variant === \'success\',                \'emerald-info-panel__progress-bar--warning\': item.variant === \'warning\',                \'emerald-info-panel__progress-bar--danger\': item.variant === \'danger\',                \'emerald-info-panel__progress-bar--info\': item.variant === \'info\',                \'emerald-info-panel__progress-bar--neutral\':                  item.variant === \'neutral\' || !item.variant,              }"              [style.width.%]="item.value"            ></div>            <span class="emerald-info-panel__progress-text">{{ item.value }}%</span>          </div>          <!-- Boolean Value -->          <span *ngIf="item.type === \'boolean\'" class="emerald-info-panel__boolean">            <i              class="fas"              [ngClass]="{                \'fa-check emerald-info-panel__boolean--true\': item.value,                \'fa-times emerald-info-panel__boolean--false\': !item.value,              }"            >            </i>          </span>        </div>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'InfoPanelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'InfoPanelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

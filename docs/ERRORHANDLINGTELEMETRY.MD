@@ -73,19 +73,93 @@ The interceptor can be configured with the following options:
 
 ```typescript
 export interface HttpErrorInterceptorConfig {
-  showNotifications: boolean;
-  retryFailedRequests: boolean;
-  maxRetryAttempts: number;
-  retryDelay: number;
-  redirectToLogin: boolean;
-  logErrors: boolean;
-  includeRequestDetails: boolean;
-  trackErrors: boolean;
-  trackPerformance: boolean;
-  groupSimilarErrors: boolean;
-  retryJitter: number;
-  sanitizeSensitiveData: boolean;
-  skipUrls: string[];
+  showNotifications: boolean; // Show user-friendly error notifications
+  retryFailedRequests: boolean; // Automatically retry failed requests
+  maxRetryAttempts: number; // Maximum number of retry attempts
+  retryDelay: number; // Base delay between retries in milliseconds
+  redirectToLogin: boolean; // Redirect to login page on 401 errors
+  logErrors: boolean; // Log errors to console
+  includeRequestDetails: boolean; // Include request details in error logs
+  trackErrors: boolean; // Track errors with telemetry service
+  trackPerformance: boolean; // Track performance metrics
+  groupSimilarErrors: boolean; // Group similar errors in reports
+  retryJitter: number; // Random jitter added to retry delay to prevent thundering herd
+  sanitizeSensitiveData: boolean; // Redact sensitive data in logs and telemetry
+  skipUrls: string[]; // URLs to skip processing (e.g., static assets)
+}
+```
+
+#### Configuration Example
+
+You can configure the interceptor in your application module:
+
+```typescript
+// In your app.module.ts or core.module.ts
+export function httpErrorInterceptorFactory(
+  router: Router,
+  notificationService: NotificationService,
+  telemetryService: TelemetryService,
+  authService: AuthService
+) {
+  const interceptor = new HttpErrorInterceptor();
+
+  // Configure the interceptor with custom settings
+  interceptor.configure({
+    showNotifications: true,
+    retryFailedRequests: true,
+    maxRetryAttempts: 3,
+    retryDelay: 1000,
+    redirectToLogin: true,
+    logErrors: true,
+    includeRequestDetails: false,
+    trackErrors: true,
+    trackPerformance: false,
+    groupSimilarErrors: true,
+    retryJitter: 200,
+    sanitizeSensitiveData: true,
+    skipUrls: ['/assets/', '/api/health'],
+  });
+
+  return interceptor;
+}
+
+@NgModule({
+  // ...
+  providers: [
+    // ...
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: httpErrorInterceptorFactory,
+      deps: [Router, NotificationService, TelemetryService, AuthService],
+      multi: true,
+    },
+  ],
+})
+export class AppModule {}
+```
+
+#### Dynamic Configuration
+
+You can also update the configuration at runtime:
+
+```typescript
+// In a service or component
+export class ErrorConfigService {
+  constructor(private httpErrorInterceptor: HttpErrorInterceptor) {
+    // Configure based on environment or user preferences
+    this.updateErrorHandlingConfig();
+  }
+
+  updateErrorHandlingConfig(userPreferences?: UserPreferences): void {
+    const config: Partial<HttpErrorInterceptorConfig> = {
+      showNotifications: userPreferences?.showErrorNotifications ?? true,
+      retryFailedRequests: navigator.onLine, // Only retry if online
+      trackErrors: !environment.production || userPreferences?.participateInTelemetry,
+      sanitizeSensitiveData: true,
+    };
+
+    this.httpErrorInterceptor.configure(config);
+  }
 }
 ```
 
@@ -498,6 +572,3 @@ The alert lifecycle includes:
     - Offline error collection and batched sending
     - Battery and bandwidth optimizations
     - Mobile-specific metrics (app version, OS version, etc.)
-
-
-<!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. -->

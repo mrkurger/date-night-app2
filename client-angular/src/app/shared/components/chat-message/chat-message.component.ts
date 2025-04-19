@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (chat-message.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import {
   Component,
   Input,
@@ -37,7 +46,8 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if this message is from the current user
-    const currentUserId = this.authService.getCurrentUserId();
+    const currentUser = this.authService.getCurrentUser();
+    const currentUserId = currentUser?.id;
     const senderId =
       typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
 
@@ -106,7 +116,8 @@ export class ChatMessageComponent implements OnInit {
    * Get the timestamp for the message
    */
   getTimestamp(): Date {
-    return new Date(this.message.timestamp || this.message.createdAt || Date.now());
+    // Use timestamp property, fallback to Date.now() if not available
+    return new Date(this.message.timestamp || Date.now());
   }
 
   /**

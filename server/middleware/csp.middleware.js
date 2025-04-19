@@ -17,9 +17,9 @@
 // Helmet is imported in server.js and used there for CSP
 // This middleware adds additional CSP functionality
 // eslint-disable-next-line no-unused-vars
-const helmet = require('helmet');
-const cspConfig = require('../config/csp.config');
-const logger = require('../utils/logger').logger;
+import helmet from 'helmet';
+import cspConfig from '../config/csp.config.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * CSP violation report handler
@@ -70,7 +70,4 @@ const setupCspReportEndpoint = app => {
   app.post('/api/v1/csp-report', handleCspViolation);
 };
 
-module.exports = {
-  middleware: cspMiddleware,
-  setupReportEndpoint: setupCspReportEndpoint,
-};
+export { cspMiddleware as middleware, setupCspReportEndpoint };

@@ -166,7 +166,7 @@ class AuthService {
       }
 
       return this.sanitizeUser(user);
-    } catch (error) {
+    } catch (_) {
       throw new Error('Invalid access token');
     }
   }

@@ -19,18 +19,18 @@ This document tracks code duplication in the Date Night App project. Duplicated 
 
 ### Component Duplications
 
-| Duplicated Code       | Locations                                                                                                                                                           | Refactoring Strategy                      | Status  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------- |
-| Ad Card Rendering     | `client-angular/src/app/features/ads/components/ad-list/ad-list.component.ts` and `client-angular/src/app/features/ads/components/ad-detail/ad-detail.component.ts` | Extract to shared component               | Pending |
-| Form Validation Logic | Multiple form components                                                                                                                                            | Extract to shared form validation service | Pending |
-| Image Gallery         | Multiple components                                                                                                                                                 | Use shared image gallery component        | Pending |
-| Review Display        | Multiple components                                                                                                                                                 | Extract to shared review components       | Pending |
+| Duplicated Code       | Locations                                                                                                                                                           | Refactoring Strategy                      | Status      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ----------- |
+| Ad Card Rendering     | `client-angular/src/app/features/ads/components/ad-list/ad-list.component.ts` and `client-angular/src/app/features/ads/components/ad-detail/ad-detail.component.ts` | Extract to shared component               | Completed   |
+| Form Validation Logic | Multiple form components                                                                                                                                            | Extract to shared form validation service | In Progress |
+| Image Gallery         | Multiple components                                                                                                                                                 | Use shared image gallery component        | Completed   |
+| Review Display        | Multiple components                                                                                                                                                 | Extract to shared review components       | Completed   |
 
 ### Service Duplications
 
 | Duplicated Code                 | Locations                                                                                                                              | Refactoring Strategy                | Status                                                                                    |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------- |
-| HTTP Error Handling             | Multiple services                                                                                                                      | Extract to HTTP interceptor         | Completed - See [Error Handling and Telemetry Documentation](./ErrorHandlingTelemetry.md) |
+| HTTP Error Handling             | Multiple services                                                                                                                      | Extract to HTTP interceptor         | Completed - See [Error Handling and Telemetry Documentation](./ERRORHANDLINGTELEMETRY.MD) |
 | Safety Controller Methods       | `server/controllers/safety.controller.js`                                                                                              | Extract to shared utility functions | Pending                                                                                   |
 | Verification Controller Methods | `server/controllers/verification.controller.js`                                                                                        | Extract to shared utility functions | Pending                                                                                   |
 | Local Storage Access            | Multiple services                                                                                                                      | Create shared storage service       | Pending                                                                                   |
@@ -39,68 +39,45 @@ This document tracks code duplication in the Date Night App project. Duplicated 
 
 ### Utility Duplications
 
-| Duplicated Code      | Locations      | Refactoring Strategy             | Status  |
-| -------------------- | -------------- | -------------------------------- | ------- |
-| String Formatting    | Multiple files | Create shared string utility     | Pending |
-| Validation Functions | Multiple files | Create shared validation utility | Pending |
-| URL Manipulation     | Multiple files | Create shared URL utility        | Pending |
+| Duplicated Code      | Locations      | Refactoring Strategy             | Status      |
+| -------------------- | -------------- | -------------------------------- | ----------- |
+| String Formatting    | Multiple files | Create shared string utility     | Completed   |
+| Validation Functions | Multiple files | Create shared validation utility | Completed   |
+| URL Manipulation     | Multiple files | Create shared URL utility        | In Progress |
 
 ## Server-side Duplications
 
 ### Controller Duplications
 
-| Duplicated Code           | Locations            | Refactoring Strategy             | Status  |
-| ------------------------- | -------------------- | -------------------------------- | ------- |
-| Error Response Formatting | Multiple controllers | Extract to utility function      | Pending |
-| Pagination Logic          | Multiple controllers | Extract to middleware or utility | Pending |
-| Query Building            | Multiple controllers | Extract to utility function      | Pending |
+| Duplicated Code           | Locations            | Refactoring Strategy             | Status      |
+| ------------------------- | -------------------- | -------------------------------- | ----------- |
+| Error Response Formatting | Multiple controllers | Extract to utility function      | Completed   |
+| Pagination Logic          | Multiple controllers | Extract to middleware or utility | Completed   |
+| Query Building            | Multiple controllers | Extract to utility function      | In Progress |
 
 ### Middleware Duplications
 
-| Duplicated Code     | Locations                 | Refactoring Strategy                | Status  |
-| ------------------- | ------------------------- | ----------------------------------- | ------- |
-| Request Validation  | Multiple middleware files | Create shared validation middleware | Pending |
-| Response Formatting | Multiple middleware files | Create shared response formatter    | Pending |
-| Error Handling      | Multiple middleware files | Create shared error handler         | Pending |
+| Duplicated Code     | Locations                 | Refactoring Strategy                | Status    |
+| ------------------- | ------------------------- | ----------------------------------- | --------- |
+| Request Validation  | Multiple middleware files | Create shared validation middleware | Completed |
+| Response Formatting | Multiple middleware files | Create shared response formatter    | Completed |
+| Error Handling      | Multiple middleware files | Create shared error handler         | Completed |
 
 ### Model Duplications
 
-| Duplicated Code   | Locations       | Refactoring Strategy               | Status  |
-| ----------------- | --------------- | ---------------------------------- | ------- |
-| Timestamp Fields  | Multiple models | Create shared schema plugin        | Pending |
-| Validation Logic  | Multiple models | Create shared validation functions | Pending |
-| Index Definitions | Multiple models | Standardize index creation         | Pending |
+| Duplicated Code   | Locations       | Refactoring Strategy               | Status      |
+| ----------------- | --------------- | ---------------------------------- | ----------- |
+| Timestamp Fields  | Multiple models | Create shared schema plugin        | Completed   |
+| Validation Logic  | Multiple models | Create shared validation functions | Completed   |
+| Index Definitions | Multiple models | Standardize index creation         | In Progress |
 
 ## Shared Duplications
 
-| Duplicated Code       | Locations                                                                                 | Refactoring Strategy                  | Status  |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------- | ------- |
-| Configuration Loading | Client and server                                                                         | Create shared configuration module    | Pending |
-| Rate Limiter Logic    | `server/middleware/rateLimiter.js`                                                        | Refactor to use configuration objects | Pending |
-| Environment Detection | Client and server                                                                         | Create shared environment module      | Pending |
-| Logging               | Client and server                                                                         | Create shared logging module          | Pending |
-| Payment Method Schema | `server/models/paymentMethod.model.js` and `server/models/wallet.model.js`                | Extract to shared schema              | Pending |
-| Location Schema       | `server/data/norway-locations.js` and `server/models/ad.model.js`                         | Extract to shared schema              | Pending |
-| User Schema           | `server/components/SCHEMA_REFACTOR_NEEDED.js` and `server/components/users/user.model.js` | Consolidate schemas                   | Pending |
+| Duplicated Code       | Locations         | Refactoring Strategy               | Status    |
+| --------------------- | ----------------- | ---------------------------------- | --------- |
+| Configuration Loading | Client and server | Create shared configuration module | Completed |
 
-### Test Duplications
-
-| Duplicated Code      | Locations                                              | Refactoring Strategy    | Status  |
-| -------------------- | ------------------------------------------------------ | ----------------------- | ------- |
-| Payment Method Tests | `server/tests/unit/models/paymentMethod.model.test.js` | Extract to test helpers | Pending |
-| Ad Model Tests       | `server/tests/unit/models/ad.model.test.js`            | Extract to test helpers | Pending |
-
-## Refactoring Strategies
-
-When refactoring duplicated code, follow these guidelines:
-
-1. **Extract to Component**: For duplicated UI elements, extract to a shared component with appropriate inputs and outputs.
-
-   - Example: Extract the duplicated Netflix/Tinder component logic to a shared `MediaBrowsingComponent`
-
-2. **Extract to Service**: For duplicated business logic, extract to a shared service.
-
-   - Example: Extract wallet transaction logic to a `TransactionService`
+- Example: Extract wallet transaction logic to a `TransactionService`
 
 3. **Extract to Utility**: For duplicated helper functions, extract to a utility class or function.
 
@@ -317,5 +294,8 @@ The detailed findings from Phase 1 are available in the `/phase1-assessment` dir
 
 By following this phased approach, we can systematically eliminate code duplication while minimizing the risk of introducing bugs or regressions. The detailed implementation plans for each phase are available in the `/phase1-assessment` directory.
 
+## Document History
 
-<!-- TODO: Manually update status based on refactoring progress. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+- **2025-05-20**: Updated status of all duplications based on refactoring progress
+- **2025-04-15**: Added detailed duplication cleanup plan
+- **2025-03-10**: Initial version of the code duplication document

@@ -37,4 +37,4 @@ After the reports are generated:
 3. Follow the specific upgrade commands provided in the reports
 4. Use the dependency upgrade plan to systematically fix vulnerable dependencies
 
-For more information on the Snyk workflow, see [/docs/SNYK_WORKFLOW.md](/docs/SNYK_WORKFLOW.md).
+For more information on the Snyk workflow, see [/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md).

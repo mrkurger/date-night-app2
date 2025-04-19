@@ -136,4 +136,14 @@ export class MapMonitoringService {
       (this.metrics as any)[key] = 0;
     });
   }
+
+  /**
+   * Track performance metrics for map operations
+   * @param operation - The operation being measured
+   * @param timeMs - Time in milliseconds
+   * @param details - Additional details
+   */
+  trackPerformance(operation: string, timeMs: number, details?: any): void {
+    this.loggingService.logPerformance(`Map ${operation}`, timeMs, details);
+  }
 }

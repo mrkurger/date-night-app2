@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (map.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import {
   Component,
   OnInit,
@@ -335,14 +344,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
             this.locationSelected.emit({
               latitude,
               longitude,
-              address: result.address,
+              // Use type assertion to add address property
+              ...(result.address ? ({ address: result.address } as any) : {}),
             });
 
             // Track location selection with address
             this.mapMonitoringService.trackLocationSelection({
               latitude,
               longitude,
-              address: result.address,
+              // Use type assertion to add address property
+              ...(result.address ? ({ address: result.address } as any) : {}),
             });
           } else {
             this.locationSelected.emit({
@@ -407,7 +418,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
       });
 
       // Add keyboard handler for accessibility
-      leafletMarker.on('keypress', (e: KeyboardEvent) => {
+      leafletMarker.on('keypress', (e: any) => {
         if (e.key === 'Enter' || e.key === ' ') {
           // Track marker keyboard activation
           this.mapMonitoringService.trackInteraction('marker_keyboard_activation', {
@@ -777,201 +788,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
       this.mapMonitoringService.trackPerformance('refresh_map', refreshTime);
     }, 100);
   }
-}
-  }
 
-  private initMap(): void {
-    // Create the map
-    this.map = L.map('map', {
-      center: [this.initialLatitude, this.initialLongitude],
-      zoom: this.initialZoom,
-    });
-
-    // Add the OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors',
-    }).addTo(this.map);
-
-    // Create a layer for markers
-    this.markerLayer = L.layerGroup().addTo(this.map);
-
-    // Add click handler if selectable
-    if (this.selectable) {
-      this.map.on('click', (e: L.LeafletMouseEvent) => {
-        const latlng = e.latlng;
-        this.mapClick.emit({ latitude: latlng.lat, longitude: latlng.lng });
-
-        // Add a marker at the clicked location
-        this.setSelectedLocation(latlng.lat, latlng.lng);
-
-        // Get address information for the clicked location
-        this.geocodingService.reverseGeocode(latlng.lng, latlng.lat).subscribe(result => {
-          if (result) {
-            this.locationSelected.emit({
-              latitude: latlng.lat,
-              longitude: latlng.lng,
-              address: result.address,
-            });
-          } else {
-            this.locationSelected.emit({
-              latitude: latlng.lat,
-              longitude: latlng.lng,
-            });
-          }
-        });
-      });
-    }
-  }
-
-  private addMarkers(): void {
-    if (!this.map || !this.markerLayer) return;
-
-    // Clear existing markers
-    this.markerLayer.clearLayers();
-
-    // Add markers
-    this.markers.forEach(marker => {
-      const icon = this.createMarkerIcon(marker.color || 'blue', marker.icon);
-
-      const leafletMarker = L.marker([marker.latitude, marker.longitude], { icon }).addTo(
-        this.markerLayer!
-      );
-
-      // Add popup if title is provided
-      if (marker.title) {
-        const popupContent = `
-          <div>
-            <h4>${marker.title}</h4>
-            ${marker.description ? `<p>${marker.description}</p>` : ''}
-          </div>
-        `;
-        leafletMarker.bindPopup(popupContent);
-      }
-
-      // Add click handler
-      leafletMarker.on('click', () => {
-        this.markerClick.emit(marker);
-      });
-    });
-
-    // Fit bounds if there are markers
-    if (this.markers.length > 0) {
-      const bounds = L.latLngBounds(
-        this.markers.map(marker => [marker.latitude, marker.longitude])
-      );
-      this.map.fitBounds(bounds, { padding: [50, 50] });
-    }
-  }
-
-  private createMarkerIcon(color: string, iconName?: string): L.Icon {
-    // Default icon
-    const iconUrl = iconName
-      ? `assets/icons/${iconName}.png`
-      : 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png';
-
-    return L.icon({
-      iconUrl,
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-  }
-
-  private showUserLocation(): void {
-    if (!this.map) return;
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { latitude, longitude } = position.coords;
-
-          // Create a marker for the current location
-          if (this.currentLocationMarker) {
-            this.currentLocationMarker.remove();
-          }
-
-          const icon = L.divIcon({
-            className: 'current-location-marker',
-            html: '<div class="pulse"></div>',
-            iconSize: [20, 20],
-            iconAnchor: [10, 10],
-          });
-
-          this.currentLocationMarker = L.marker([latitude, longitude], { icon })
-            .addTo(this.map!)
-            .bindPopup('Your current location');
-
-          // Center the map on the current location
-          this.map.setView([latitude, longitude], 13);
-        },
-        error => {
-          console.error('Error getting current location:', error);
-        }
-      );
-    }
-  }
-
-  // Public methods
-
-  /**
-   * Update the markers on the map
-   * @param markers New markers to display
-   */
-  updateMarkers(markers: MapMarker[]): void {
-    this.markers = markers;
-    this.addMarkers();
-  }
-
-  /**
-   * Set the selected location on the map
-   * @param latitude Latitude
-   * @param longitude Longitude
-   */
-  setSelectedLocation(latitude: number, longitude: number): void {
-    if (!this.map) return;
-
-    // Remove existing marker if any
-    if (this.selectedLocationMarker) {
-      this.selectedLocationMarker.remove();
-    }
-
-    // Create a new marker
-    const icon = L.icon({
-      iconUrl:
-        'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    this.selectedLocationMarker = L.marker([latitude, longitude], { icon })
-      .addTo(this.map)
-      .bindPopup('Selected location');
-  }
-
-  /**
-   * Center the map on a specific location
-   * @param latitude Latitude
-   * @param longitude Longitude
-   * @param zoom Zoom level
-   */
-  centerMap(latitude: number, longitude: number, zoom?: number): void {
-    if (!this.map) return;
-
-    this.map.setView([latitude, longitude], zoom || this.map.getZoom());
-  }
-
-  /**
-   * Refresh the map (useful when container size changes)
-   */
-  refreshMap(): void {
-    if (!this.map) return;
-
-    this.map.invalidateSize();
-  }
+  // All duplicate methods have been removed
 }

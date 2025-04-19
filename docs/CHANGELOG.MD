@@ -1,5 +1,25 @@
 # Change Log
 
+## 2025-05-26: Ad Service Implementation
+
+### Fixed
+
+- **Ad Service**: Implemented missing methods in the ad service
+  - Added `updateAd` method to update ad details
+  - Added `deleteAd` method to remove ads
+  - Added `getUserAds` method to fetch user's ads
+  - Added `searchAds` method with filtering and pagination
+  - Added `toggleAdStatus` method to activate/deactivate ads
+  - Fixed `recordSwipe` method to properly handle swipe actions
+  - Improved error handling across all methods
+  - Added proper documentation with JSDoc comments
+
+### Changed
+
+- **Test Fixes**: Updated tests to match the new implementation
+  - Fixed failing tests for the ad service
+  - Improved test coverage for ad-related functionality
+
 ## 2025-05-25: ES Module and Design Token Fixes
 
 ### Fixed

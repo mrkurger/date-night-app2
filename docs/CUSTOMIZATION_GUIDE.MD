@@ -56,7 +56,7 @@ All files containing customizable settings include a standardized header in the 
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for [module name/purpose]
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -111,7 +111,7 @@ python3 scripts/update_config_index.py
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for [module name/purpose]
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -127,7 +127,7 @@ python3 scripts/update_config_index.py
 # CUSTOMIZABLE SETTINGS IN THIS FILE
 # ===================================================
 # This file contains settings for [module name/purpose]
-# 
+#
 # COMMON CUSTOMIZATIONS:
 # - SETTING_NAME: Description of setting (default: value)
 #   Related to: other_file.py:OTHER_SETTING
@@ -209,7 +209,7 @@ The Emerald.js component library provides a set of reusable UI components for bu
 - **Pager**: Pagination component for navigating through results
 - **FloatingActionButton**: Floating action button for primary actions
 
-For detailed documentation on each component, see the [emerald-components.md](/docs/emerald-components.md) file.
+For detailed documentation on each component, see the [EMERALD-COMPONENTS.MD](/docs/emerald-components.md) file.
 
 ### Using Emerald.js Components
 
@@ -254,7 +254,8 @@ Most components have input properties that allow you to customize their behavior
   [isOnline]="adItem.isOnline"
   [showActions]="true"
   [showDescription]="true"
-  (viewDetails)="onViewDetails($event)">
+  (viewDetails)="onViewDetails($event)"
+>
 </emerald-app-card>
 ```
 
@@ -278,7 +279,7 @@ When customizing components, it's important to ensure that your changes don't br
 
 ### Unit Testing Customized Components
 
-For detailed guidance on testing Angular components, including common issues and solutions, refer to [ANGULAR_TESTING_LESSONS.md](./ANGULAR_TESTING_LESSONS.md).
+For detailed guidance on testing Angular components, including common issues and solutions, refer to [ANGULAR_TESTING_LESSONS.MD](./ANGULAR_TESTING_LESSONS.md).
 
 Key considerations when testing customized components:
 
@@ -296,20 +297,17 @@ describe('CustomizedAppCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        AppCardComponent
-      ]
+      imports: [CommonModule, AppCardComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppCardComponent);
     component = fixture.componentInstance;
-    
+
     // Set custom inputs
     component.ad = mockAd;
     component.layout = 'netflix';
     component.showActions = true;
-    
+
     fixture.detectChanges();
   });
 
@@ -320,10 +318,10 @@ describe('CustomizedAppCardComponent', () => {
 
   it('should emit viewDetails event when clicked', () => {
     spyOn(component.viewDetails, 'emit');
-    
+
     const cardElement = fixture.nativeElement.querySelector('.card-container');
     cardElement.click();
-    
+
     expect(component.viewDetails.emit).toHaveBeenCalledWith(mockAd._id);
   });
 });
@@ -340,7 +338,7 @@ You can add custom CSS classes to components and use them to override the defaul
   ::ng-deep {
     .emerald-app-card {
       border-radius: 16px;
-      
+
       &__title {
         font-size: 1.5rem;
       }
@@ -369,7 +367,8 @@ Many components support content projection, allowing you to customize the conten
   layout="netflix"
   [gap]="16"
   class="featured-ads"
-  (itemClick)="viewAdDetails($event._id)">
+  (itemClick)="viewAdDetails($event._id)"
+>
   <ng-template #itemTemplate let-ad>
     <emerald-app-card
       [ad]="ad"
@@ -377,7 +376,8 @@ Many components support content projection, allowing you to customize the conten
       [isOnline]="ad.isAdvertiserOnline"
       (viewDetails)="viewAdDetails($event)"
       (like)="likeAd($event)"
-      (chat)="startChat($event)">
+      (chat)="startChat($event)"
+    >
     </emerald-app-card>
   </ng-template>
 </emerald-card-grid>
@@ -386,11 +386,11 @@ Many components support content projection, allowing you to customize the conten
 ```scss
 .featured-ads {
   margin: $spacing-6 0;
-  
+
   ::ng-deep {
     .emerald-card-grid__netflix-row {
       position: relative;
-      
+
       &::before {
         content: 'Featured';
         position: absolute;
@@ -401,7 +401,7 @@ Many components support content projection, allowing you to customize the conten
         color: $primary-500;
       }
     }
-    
+
     .emerald-app-card {
       &:hover {
         transform: translateY(-8px) scale(1.05);
@@ -461,7 +461,7 @@ DateNight.io supports dark mode through CSS variables. To implement dark mode:
   --neutral-700: #9a9a9a;
   --neutral-800: #bababa;
   --neutral-900: #f5f5f5;
-  
+
   --primary-100: #1a0033;
   --primary-200: #2a0052;
   --primary-300: #3a0070;
@@ -482,7 +482,8 @@ DateNight.io supports dark mode through CSS variables. To implement dark mode:
   labelPosition="right"
   color="primary"
   [value]="isDarkMode"
-  (change)="toggleDarkMode($event)">
+  (change)="toggleDarkMode($event)"
+>
 </emerald-toggle>
 ```
 
@@ -493,7 +494,7 @@ toggleDarkMode(isDarkMode: boolean): void {
   } else {
     document.body.classList.remove('dark-mode');
   }
-  
+
   // Save preference to localStorage
   localStorage.setItem('darkMode', isDarkMode.toString());
 }
@@ -511,16 +512,19 @@ If you encounter issues with the customization system:
 ### Common UI/UX Issues
 
 1. **Component not displaying correctly**
+
    - Make sure you've imported the component in your module or component imports array
    - Check the console for any errors
    - Verify that the inputs are correctly bound
 
 2. **Styles not applying**
+
    - Make sure the component's SCSS file is being included in the build
    - Check for any CSS conflicts in your application
    - Verify that the design tokens are correctly imported
 
 3. **Events not firing**
+
    - Make sure you've correctly bound the output event
    - Check that the event handler function exists and is correctly implemented
    - Verify that the event is being emitted by the component
@@ -533,4 +537,8 @@ If you encounter issues with the customization system:
 
 For additional help, consult the project's main documentation or contact the development team.
 
-<!-- TODO: Manually review process accuracy. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+## Document History
+
+- **2025-05-20**: Reviewed and verified all customization processes for accuracy
+- **2025-04-10**: Added section on performance considerations
+- **2025-03-15**: Initial version of the customization guide

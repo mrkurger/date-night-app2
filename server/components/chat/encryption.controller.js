@@ -9,10 +9,17 @@
  * It only stores and distributes encrypted keys and messages.
  */
 
-const mongoose = require('mongoose');
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (encryption.controller)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const User = require('../../models/user.model');
 const ChatRoom = require('../../models/chat-room.model');
-const ChatMessage = require('../../models/chat-message.model');
 const logger = require('../../utils/logger');
 const { validateObjectId } = require('../../utils/validation');
 const { errorResponse, successResponse } = require('../../utils/response');

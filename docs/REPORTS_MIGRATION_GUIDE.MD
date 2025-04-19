@@ -70,11 +70,11 @@ If you have scripts, documentation, or other files that reference the old paths,
 ```markdown
 <!-- Old -->
 
-[Security Alerts](../docs/security-alerts.md)
+[Security Alerts](../docs/SECURITY-ALERTS.MD)
 
 <!-- New -->
 
-[Security Alerts](../downloaded-reports/security/dependabot-alerts.md)
+[Security Alerts](../downloaded-reports/security/DEPENDABOT-ALERTS.MD)
 ```
 
 #### JavaScript/Node.js

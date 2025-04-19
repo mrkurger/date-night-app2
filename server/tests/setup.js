@@ -10,8 +10,8 @@
 //   Related to: server/config/environment.js:jwtSecret
 // ===================================================
 
-const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongoServer;
 
@@ -20,7 +20,7 @@ let mongoServer;
  * Creates an in-memory MongoDB server and connects to it
  * @returns {Promise<void>}
  */
-module.exports.setupTestDB = async () => {
+export const setupTestDB = async () => {
   // Create an in-memory MongoDB server
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
@@ -36,7 +36,7 @@ module.exports.setupTestDB = async () => {
  * Disconnects from MongoDB and stops the in-memory server
  * @returns {Promise<void>}
  */
-module.exports.teardownTestDB = async () => {
+export const teardownTestDB = async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
   console.log('Disconnected from in-memory MongoDB');
@@ -47,7 +47,7 @@ module.exports.teardownTestDB = async () => {
  * Clears all collections in the database
  * @returns {Promise<void>}
  */
-module.exports.clearDatabase = async () => {
+export const clearDatabase = async () => {
   const collections = mongoose.connection.collections;
 
   for (const key in collections) {
@@ -63,7 +63,7 @@ module.exports.clearDatabase = async () => {
  * @param {Object} mockData - The mock data to return
  * @returns {Object} - The mocked model
  */
-module.exports.mockModel = (Model, mockData) => {
+export const mockModel = (Model, mockData) => {
   // Save the original methods
   const originalMethods = {
     find: Model.find,

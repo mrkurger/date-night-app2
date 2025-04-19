@@ -80,10 +80,4 @@ const etagCache = () => {
   };
 };
 
-module.exports = {
-  staticCache,
-  dynamicCache,
-  noCache,
-  conditionalCache,
-  etagCache,
-};
+export { staticCache, dynamicCache, noCache, conditionalCache, etagCache };

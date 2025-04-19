@@ -11,8 +11,10 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Angular 15+ supports standalone components, but many tests were written for NgModule-based components.
 
 **Solution**:
+
 - For standalone components, use `imports` array in the TestBed configuration instead of `declarations`
 - Example:
+
   ```typescript
   // WRONG (for standalone components)
   TestBed.configureTestingModule({
@@ -32,6 +34,7 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests fail with errors like `'mat-card' is not a known element` when using Angular Material components.
 
 **Solution**:
+
 - Import all required Angular Material modules in the test configuration
 - For standalone components, include Material modules in the component's `imports` array
 - Example:
@@ -43,7 +46,7 @@ This document captures key lessons learned while working with Angular unit tests
       MatInputModule,
       MatButtonModule,
       // other required modules
-    ]
+    ],
   });
   ```
 
@@ -52,34 +55,36 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests for services that use HttpClient often fail because the HTTP requests are not properly mocked.
 
 **Solution**:
+
 - Use HttpClientTestingModule and HttpTestingController
 - Flush mock responses for each request
 - Verify that no unexpected requests were made
 - Example:
+
   ```typescript
   let httpMock: HttpTestingController;
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [MyService]
+      providers: [MyService],
     });
-    
+
     service = TestBed.inject(MyService);
     httpMock = TestBed.inject(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpMock.verify(); // Verify no outstanding requests
   });
-  
+
   it('should fetch data', () => {
     const mockData = { id: 1, name: 'Test' };
-    
+
     service.getData().subscribe(data => {
       expect(data).toEqual(mockData);
     });
-    
+
     const req = httpMock.expectOne('api/data');
     expect(req.request.method).toBe('GET');
     req.flush(mockData);
@@ -91,6 +96,7 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests for error handling in HTTP services often fail with "Expected error, not success" because the error callbacks are not properly triggered or captured.
 
 **Solution**:
+
 - Use proper error handling in test callbacks
 - Explicitly capture error objects for verification
 - Use error spy functions to track error handling
@@ -99,17 +105,17 @@ This document captures key lessons learned while working with Angular unit tests
   it('should handle HTTP errors', () => {
     const errorResponse = { status: 404, statusText: 'Not Found' };
     const errorSpy = jasmine.createSpy('error');
-    
+
     service.getData().subscribe({
       next: () => fail('Expected error, not success'),
-      error: (error) => {
+      error: error => {
         errorSpy(error);
-      }
+      },
     });
-    
+
     const req = httpMock.expectOne('api/data');
     req.error(new ErrorEvent('Not Found'), errorResponse);
-    
+
     expect(errorSpy).toHaveBeenCalled();
     const errorArg = errorSpy.calls.mostRecent().args[0];
     expect(errorArg.status).toBe(404);
@@ -121,14 +127,16 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: URL validation tests can be inconsistent across browsers because different browsers have different URL parsing rules.
 
 **Solution**:
+
 - Use reliably invalid URL formats for testing
 - Avoid edge cases that might be valid in some browsers
 - Test with clearly valid and clearly invalid URLs
 - Example:
+
   ```typescript
   // WRONG - Some browsers consider this valid
   expect(service.isValidUrl('http:example.com')).toBeFalse();
-  
+
   // BETTER - More reliably invalid across browsers
   expect(service.isValidUrl('http:///example')).toBeFalse();
   ```
@@ -138,6 +146,7 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests involving timers, promises, or observables often fail due to timing issues.
 
 **Solution**:
+
 - Use `fakeAsync` and `tick()` for timer-based tests
 - Use `async/await` for promise-based tests
 - Properly subscribe to and complete observables
@@ -145,14 +154,14 @@ This document captures key lessons learned while working with Angular unit tests
   ```typescript
   it('should handle delayed operations', fakeAsync(() => {
     let value = false;
-    
+
     service.delayedOperation().subscribe(() => {
       value = true;
     });
-    
+
     expect(value).toBe(false); // Not changed yet
-    tick(1000);                // Fast-forward time
-    expect(value).toBe(true);  // Now it should be changed
+    tick(1000); // Fast-forward time
+    expect(value).toBe(true); // Now it should be changed
   }));
   ```
 
@@ -161,6 +170,7 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Difficulty testing components that use @Input() and @Output() decorators.
 
 **Solution**:
+
 - Set input properties directly on the component instance
 - Subscribe to output EventEmitters to capture emitted values
 - Example:
@@ -168,16 +178,16 @@ This document captures key lessons learned while working with Angular unit tests
   it('should emit when button is clicked', () => {
     // Set up input
     component.inputValue = 'test';
-    
+
     // Set up output capture
     let emittedValue: string | null = null;
     component.outputEvent.subscribe((value: string) => {
       emittedValue = value;
     });
-    
+
     // Trigger the event
     component.onButtonClick();
-    
+
     // Check the result
     expect(emittedValue).toBe('test');
   });
@@ -188,9 +198,11 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Mock data not matching the actual interface requirements, causing type errors.
 
 **Solution**:
+
 - Create shared mock data factories that follow the interface definitions
 - Use TypeScript's type checking to ensure mock data is valid
 - Example:
+
   ```typescript
   // Define a mock factory
   function createMockAd(): Ad {
@@ -213,10 +225,10 @@ This document captures key lessons learned while working with Angular unit tests
       images: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      userId: 'user123'
+      userId: 'user123',
     };
   }
-  
+
   // Use the factory in tests
   const mockAd = createMockAd();
   ```
@@ -226,21 +238,20 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests fail when a component includes child components that are not part of the test setup.
 
 **Solution**:
+
 - Create stub components for child components
 - Use NO_ERRORS_SCHEMA to ignore unknown elements (use sparingly)
 - Example:
+
   ```typescript
   @Component({
     selector: 'app-child',
-    template: '<div>Mock Child</div>'
+    template: '<div>Mock Child</div>',
   })
   class MockChildComponent {}
-  
+
   TestBed.configureTestingModule({
-    declarations: [
-      ParentComponent,
-      MockChildComponent
-    ]
+    declarations: [ParentComponent, MockChildComponent],
     // Alternatively: schemas: [NO_ERRORS_SCHEMA]
   });
   ```
@@ -250,17 +261,19 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: SCSS imports fail in component tests due to incorrect paths or missing design tokens.
 
 **Solution**:
+
 - Ensure SCSS import paths are correct and consistent
 - Create fallback variables for missing design tokens
 - Fix import paths to point to the correct location
 - Example:
+
   ```scss
   // WRONG
   @import '../../../../../core/design/design-tokens';
-  
+
   // CORRECT
   @import '../../../../../app/core/design/design-tokens';
-  
+
   // Add fallback variables if needed
   $primary: $primary-500;
   $danger: $error;
@@ -271,15 +284,17 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests fail due to RxJS compatibility issues between different versions.
 
 **Solution**:
+
 - Use consistent RxJS import paths
 - Avoid mixing pipe operators from different RxJS versions
 - Simplify RxJS usage in tests when possible
 - Example:
+
   ```typescript
   // WRONG (mixing styles)
   import { Observable } from 'rxjs/Observable';
   import { of } from 'rxjs';
-  
+
   // CORRECT
   import { Observable, of } from 'rxjs';
   import { map, filter } from 'rxjs/operators';
@@ -290,19 +305,21 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests that modify window.location fail with "Cannot assign to read only property 'href'".
 
 **Solution**:
+
 - Use spyOn with property getters instead of direct assignment
 - Create a spy object for window.location
 - Example:
+
   ```typescript
   // WRONG
   spyOn(window.location, 'href', 'set');
-  
+
   // CORRECT
   const locationSpy = jasmine.createSpyObj('location', [], {
-    href: ''
+    href: '',
   });
   spyOnProperty(window, 'location', 'get').and.returnValue(locationSpy);
-  
+
   component.navigateToPage();
   expect(locationSpy.href).toBe('/expected-page');
   ```
@@ -312,14 +329,16 @@ This document captures key lessons learned while working with Angular unit tests
 **Issue**: Tests import components from incorrect paths, causing mismatches between test expectations and actual component behavior.
 
 **Solution**:
+
 - Ensure imports in test files match the actual component paths
 - Check for duplicate component implementations in different directories
 - Verify that the test is importing the correct version of the component
 - Example:
+
   ```typescript
   // WRONG
   import { CardGridComponent } from './card-grid.component';
-  
+
   // CORRECT (if component is in a different directory)
   import { CardGridComponent } from '../components/card-grid/card-grid.component';
   ```
@@ -374,19 +393,19 @@ it('should validate form correctly', () => {
   // Set form values
   component.form.patchValue({
     email: 'invalid-email',
-    password: '123'
+    password: '123',
   });
-  
+
   // Check validation results
   expect(component.form.get('email')?.valid).toBeFalse();
   expect(component.form.get('password')?.hasError('minlength')).toBeTrue();
-  
+
   // Fix the values
   component.form.patchValue({
     email: 'valid@example.com',
-    password: 'password123'
+    password: 'password123',
   });
-  
+
   // Verify form is now valid
   expect(component.form.valid).toBeTrue();
 });
@@ -397,9 +416,9 @@ it('should validate form correctly', () => {
 ```typescript
 it('should navigate when button is clicked', () => {
   const routerSpy = spyOn(router, 'navigate');
-  
+
   component.navigateToDetails(123);
-  
+
   expect(routerSpy).toHaveBeenCalledWith(['/details', 123]);
 });
 ```
@@ -410,11 +429,11 @@ it('should navigate when button is clicked', () => {
 it('should update UI when button is clicked', () => {
   // Find button element
   const button = fixture.debugElement.query(By.css('.action-button'));
-  
+
   // Simulate click
   button.triggerEventHandler('click', null);
   fixture.detectChanges();
-  
+
   // Check result in the DOM
   const resultElement = fixture.debugElement.query(By.css('.result'));
   expect(resultElement.nativeElement.textContent).toContain('Success');
@@ -429,12 +448,9 @@ When testing Emerald components, follow these additional guidelines:
 // 1. Use a test host component for complex scenarios
 @Component({
   template: `
-    <emerald-card-grid
-      [items]="items"
-      [layout]="layout"
-      (cardClick)="onCardClick($event)">
+    <emerald-card-grid [items]="items" [layout]="layout" (cardClick)="onCardClick($event)">
     </emerald-card-grid>
-  `
+  `,
 })
 class TestHostComponent {
   items = MOCK_ITEMS;
@@ -453,7 +469,7 @@ it('should initialize with default values', () => {
 it('should apply correct layout class', () => {
   component.layout = 'masonry';
   fixture.detectChanges();
-  
+
   const element = fixture.debugElement.query(By.css('.emerald-card-grid--masonry'));
   expect(element).toBeTruthy();
 });
@@ -464,31 +480,37 @@ it('should apply correct layout class', () => {
 ### Common Error Messages and Solutions
 
 1. **"No provider for X"**
+
    - Add the missing service to the `providers` array in TestBed configuration
    - Create a mock service if the real one has dependencies you don't want to include
 
 2. **"X is not a known element"**
+
    - Import the module that declares the component
    - For Angular Material components, import the specific Material module
    - For custom components, add them to declarations or use a stub
 
 3. **"Cannot read property X of undefined"**
+
    - Check component initialization
    - Ensure all required inputs are provided
    - Verify service dependencies are properly mocked
 
 4. **"Expected X to be Y"**
+
    - Check for async operations that haven't completed
    - Ensure detectChanges() is called after state changes
    - Verify the initial state matches your expectations
 
 5. **"Failed to compile node_modules/..."**
+
    - Check for version mismatches between dependencies
    - Ensure TypeScript version is compatible with Angular version
    - Try clearing node_modules and reinstalling dependencies
 
 6. **"No specs found"**
-   - Check that test files follow the correct naming pattern (*.spec.ts)
+
+   - Check that test files follow the correct naming pattern (\*.spec.ts)
    - Verify that the test configuration is correctly set up
    - Check for syntax errors in test files that might prevent them from being recognized
 
@@ -502,14 +524,16 @@ it('should apply correct layout class', () => {
 **Issue**: Tests fail because component files are not in the expected locations or have incorrect import paths.
 
 **Solution**:
+
 - Ensure component files and their tests are in the same directory structure
 - Update import paths in test files to match the actual component locations
 - Create missing component files in the correct locations
 - Example:
+
   ```typescript
   // WRONG
   import { AppCardComponent } from '../app-card/app-card.component';
-  
+
   // CORRECT (if component is in a different directory)
   import { AppCardComponent } from '../components/app-card/app-card.component';
   ```
@@ -519,13 +543,15 @@ it('should apply correct layout class', () => {
 **Issue**: Type exports cause errors in newer TypeScript versions due to changes in how types are exported.
 
 **Solution**:
+
 - Use `export type` syntax for interfaces and types
 - Update import statements to match the export style
 - Example:
+
   ```typescript
   // WRONG
   export { DropdownItem } from './components/avatar/avatar.component';
-  
+
   // CORRECT
   export type { DropdownItem } from './components/avatar/avatar.component';
   ```
@@ -535,17 +561,19 @@ it('should apply correct layout class', () => {
 **Issue**: Different versions of RxJS in the same project cause type incompatibilities and runtime errors.
 
 **Solution**:
+
 - Ensure consistent RxJS versions across the project
 - Update package.json to specify exact versions
 - Clean npm cache and reinstall dependencies when updating versions
 - Example:
+
   ```bash
   # Check for inconsistent versions
   npm ls rxjs
-  
+
   # Update to a consistent version
   npm install rxjs@7.8.1 --save-exact
-  
+
   # Clean cache and reinstall
   npm cache clean --force
   rm -rf node_modules
@@ -557,15 +585,17 @@ it('should apply correct layout class', () => {
 **Issue**: Tests fail because component property names in tests don't match the actual component implementation.
 
 **Solution**:
+
 - Ensure property names are consistent between components and tests
 - Update tests when component properties are renamed
 - Use interfaces to enforce property name consistency
 - Example:
+
   ```typescript
   // WRONG
   // Component uses 'isLoading' but test checks 'loading'
   expect(component.loading).toBeTrue();
-  
+
   // CORRECT
   expect(component.isLoading).toBeTrue();
   ```
@@ -575,6 +605,7 @@ it('should apply correct layout class', () => {
 **Issue**: Tests fail because component files referenced in imports don't exist.
 
 **Solution**:
+
 - Create missing component files in the correct locations
 - Ensure component files follow the Angular naming conventions
 - Update import paths to match the actual file structure
@@ -587,7 +618,7 @@ it('should apply correct layout class', () => {
     templateUrl: './app-card.component.html',
     styleUrls: ['./app-card.component.scss'],
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule],
   })
   export class AppCardComponent {
     // Component implementation
@@ -599,6 +630,7 @@ it('should apply correct layout class', () => {
 **Issue**: Tests fail with errors like `TypeError: ctx.getMediaCount is not a function` when a component's template tries to use methods that don't exist or have dependencies that aren't properly mocked.
 
 **Solution**:
+
 - Use spies to avoid actual rendering of problematic components
 - Skip detectChanges calls that trigger template rendering
 - Mock child components that cause rendering issues
@@ -607,11 +639,11 @@ it('should apply correct layout class', () => {
   beforeEach(() => {
     // Spy on component methods to avoid template rendering issues
     spyOn(component, 'getGridStyle').and.returnValue({
-      'display': 'grid',
+      display: 'grid',
       'grid-template-columns': 'repeat(4, 1fr)',
-      'gap': '16px'
+      gap: '16px',
     });
-    
+
     // Skip actual rendering by spying on detectChanges
     spyOn(fixture, 'detectChanges').and.callFake(() => {});
   });
@@ -622,10 +654,12 @@ it('should apply correct layout class', () => {
 **Issue**: Tests fail with errors like `Unexpected "PagerComponent" found in the "declarations" array of the "TestBed.configureTestingModule" call, "PagerComponent" is marked as standalone and can't be declared in any NgModule`.
 
 **Solution**:
+
 - Ensure component is consistently defined as either standalone or NgModule-based
 - For standalone components, use imports array instead of declarations
 - Update module imports to match component definition
 - Example:
+
   ```typescript
   // For standalone components
   @Component({
@@ -633,26 +667,26 @@ it('should apply correct layout class', () => {
     templateUrl: './pager.component.html',
     styleUrls: ['./pager.component.scss'],
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule],
   })
-  export class PagerComponent { }
-  
+  export class PagerComponent {}
+
   // In test file
   TestBed.configureTestingModule({
-    imports: [CommonModule, FormsModule, PagerComponent]
+    imports: [CommonModule, FormsModule, PagerComponent],
   }).compileComponents();
-  
+
   // In module file
   @NgModule({
     imports: [
       CommonModule,
-      PagerComponent // Import standalone component
+      PagerComponent, // Import standalone component
     ],
     exports: [
-      PagerComponent // Export for use in other modules
-    ]
+      PagerComponent, // Export for use in other modules
+    ],
   })
-  export class EmeraldModule { }
+  export class EmeraldModule {}
   ```
 
 ## References
@@ -665,8 +699,7 @@ it('should apply correct layout class', () => {
 ## Integration with Other Documentation
 
 This document complements the following guides:
-- [TESTING_GUIDE.md](./TESTING_GUIDE.md) - General testing strategy
-- [CUSTOMIZATION_GUIDE.md](./CUSTOMIZATION_GUIDE.md) - How to customize components
-- [emerald-testing-guide.md](./emerald-testing-guide.md) - Testing Emerald components
 
-<!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. -->
+- [TESTING_GUIDE.MD](./TESTING_GUIDE.md) - General testing strategy
+- [CUSTOMIZATION_GUIDE.MD](./CUSTOMIZATION_GUIDE.md) - How to customize components
+- [EMERALD-TESTING-GUIDE.MD](./emerald-testing-guide.md) - Testing Emerald components

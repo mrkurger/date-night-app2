@@ -104,11 +104,13 @@ If you're using VSCode, the project includes settings for automatic formatting:
 If you encounter issues with the formatting tools:
 
 1. Make sure all dependencies are installed:
+
    ```bash
    npm install
    ```
 
 2. If Git hooks aren't working, try reinstalling Husky:
+
    ```bash
    npm run prepare
    ```
@@ -123,5 +125,3 @@ If you need to customize the formatting rules:
 2. Edit the `.prettierrc` files for formatting rules
 3. Update the `.lintstagedrc.json` file for pre-commit behavior
 4. Modify the `.vscode/settings.json` file for editor integration
-
-<!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) -->

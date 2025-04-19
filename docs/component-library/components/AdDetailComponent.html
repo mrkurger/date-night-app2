@@ -1,0 +1,1249 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AdDetailComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/ads/components/ad-detail/ad-detail.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-ad-detail</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../modules/MaterialModule.html" target="_self" >MaterialModule</a></code>
+                                <code><a href="../components/FavoriteButtonComponent.html" target="_self" >FavoriteButtonComponent</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .ad-detail-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .mat-card {
+        margin-bottom: 20px;
+      }
+      .ad-images {
+        max-width: 100%;
+        margin-bottom: 15px;
+      }
+      .ad-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      .ad-description {
+        margin-bottom: 20px;
+      }
+      .ad-info {
+        margin: 20px 0;
+      }
+      .action-buttons {
+        margin-top: 20px;
+      }
+      .favorite-action {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+      }
+      .favorite-label {
+        margin-left: 8px;
+      }
+    </code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ad-detail.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ad" >ad</a>
+                            </li>
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isFavorited" >isFavorited</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkFavoriteStatus" >checkFavoriteStatus</a>
+                            </li>
+                            <li>
+                                <a href="#isFavorite" >isFavorite</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadAd" >loadAd</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onFavoriteChanged" >onFavoriteChanged</a>
+                            </li>
+                            <li>
+                                <a href="#startChat" >startChat</a>
+                            </li>
+                            <li>
+                                <a href="#toggleFavorite" class="deprecated-name">toggleFavorite</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, router: Router, adService: <a href="../injectables/AdService.html" target="_self">AdService</a>, userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, chatService: <a href="../injectables/ChatService.html" target="_self">ChatService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>adService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AdService.html" target="_self" >AdService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>chatService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChatService.html" target="_self" >ChatService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkFavoriteStatus"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkFavoriteStatus</b></span>
+                        <a href="#checkFavoriteStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkFavoriteStatus(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFavorite"></a>
+                    <span class="name">
+                        <span ><b>isFavorite</b></span>
+                        <a href="#isFavorite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isFavorite()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadAd"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadAd</b></span>
+                        <a href="#loadAd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadAd(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onFavoriteChanged"></a>
+                    <span class="name">
+                        <span ><b>onFavoriteChanged</b></span>
+                        <a href="#onFavoriteChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onFavoriteChanged(isFavorite: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle favorite status change from the favorite button component</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>isFavorite</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New favorite status</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startChat"></a>
+                    <span class="name">
+                        <span ><b>startChat</b></span>
+                        <a href="#startChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startChat()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleFavorite"></a>
+                    <span class="name">
+                        <span class="deprecated-name"><b>toggleFavorite</b></span>
+                        <a href="#toggleFavorite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4 deprecated">
+                    Use the favorite button component instead
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleFavorite()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Legacy method - kept for backward compatibility</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ad"></a>
+                    <span class="name">
+                        <span ><b>ad</b></span>
+                        <a href="#ad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFavorited"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>isFavorited</b></span>
+                        <a href="#isFavorited"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/features/ads/components/ad-detail/ad-detail.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { AdService } from &#x27;../../../../core/services/ad.service&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MaterialModule } from &#x27;../../../../shared/material.module&#x27;;
+import { UserService } from &#x27;../../../../core/services/user.service&#x27;;
+import { ChatService } from &#x27;../../../../core/services/chat.service&#x27;;
+import { FavoriteButtonComponent } from &#x27;../../../../shared/components/favorite-button/favorite-button.component&#x27;;
+
+@Component({
+  selector: &#x27;app-ad-detail&#x27;,
+  templateUrl: &#x27;./ad-detail.component.html&#x27;,
+  styles: [
+    &#x60;
+      .ad-detail-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .mat-card {
+        margin-bottom: 20px;
+      }
+      .ad-images {
+        max-width: 100%;
+        margin-bottom: 15px;
+      }
+      .ad-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      .ad-description {
+        margin-bottom: 20px;
+      }
+      .ad-info {
+        margin: 20px 0;
+      }
+      .action-buttons {
+        margin-top: 20px;
+      }
+      .favorite-action {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+      }
+      .favorite-label {
+        margin-left: 8px;
+      }
+    &#x60;,
+  ],
+  standalone: true,
+  imports: [CommonModule, MaterialModule, FavoriteButtonComponent],
+})
+export class AdDetailComponent implements OnInit {
+  ad: any;
+  loading &#x3D; true;
+  error: string | null &#x3D; null;
+  private isFavorited &#x3D; false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private adService: AdService,
+    private userService: UserService,
+    private chatService: ChatService
+  ) {}
+
+  ngOnInit(): void {
+    const adId &#x3D; this.route.snapshot.paramMap.get(&#x27;id&#x27;);
+    if (!adId) {
+      this.error &#x3D; &#x27;Ad ID missing&#x27;;
+      this.loading &#x3D; false;
+      return;
+    }
+
+    this.loadAd(adId);
+    this.checkFavoriteStatus(adId);
+  }
+
+  private loadAd(adId: string): void {
+    this.adService.getAdById(adId).subscribe({
+      next: ad &#x3D;&gt; {
+        this.ad &#x3D; ad;
+        this.loading &#x3D; false;
+      },
+      error: err &#x3D;&gt; {
+        this.error &#x3D; &#x27;Failed to load ad details&#x27;;
+        this.loading &#x3D; false;
+        console.error(err);
+      },
+    });
+  }
+
+  private checkFavoriteStatus(adId: string): void {
+    this.userService.checkFavorite(adId).subscribe({
+      next: isFavorited &#x3D;&gt; (this.isFavorited &#x3D; isFavorited),
+      error: err &#x3D;&gt; console.error(&#x27;Error checking favorite status:&#x27;, err),
+    });
+  }
+
+  startChat(): void {
+    if (!this.userService.isAuthenticated()) {
+      this.router.navigate([&#x27;/auth/login&#x27;], {
+        queryParams: { returnUrl: this.router.url },
+      });
+      return;
+    }
+
+    this.chatService.createOrGetChatRoom(this.ad.advertiser).subscribe({
+      next: roomId &#x3D;&gt; this.router.navigate([&#x27;/chat&#x27;, roomId]),
+      error: err &#x3D;&gt; {
+        console.error(&#x27;Error starting chat:&#x27;, err);
+        this.error &#x3D; &#x27;Failed to start chat&#x27;;
+      },
+    });
+  }
+
+  /**
+   * Handle favorite status change from the favorite button component
+   * @param isFavorite New favorite status
+   */
+  onFavoriteChanged(isFavorite: boolean): void {
+    this.isFavorited &#x3D; isFavorite;
+  }
+
+  /**
+   * Legacy method - kept for backward compatibility
+   * @deprecated Use the favorite button component instead
+   */
+  toggleFavorite(): void {
+    if (!this.userService.isAuthenticated()) {
+      this.router.navigate([&#x27;/auth/login&#x27;], {
+        queryParams: { returnUrl: this.router.url },
+      });
+      return;
+    }
+
+    const method &#x3D; this.isFavorited ? &#x27;removeFavorite&#x27; : &#x27;addFavorite&#x27;;
+    this.userService[method](this.ad._id).subscribe({
+      next: () &#x3D;&gt; (this.isFavorited &#x3D; !this.isFavorited),
+      error: err &#x3D;&gt; console.error(&#x27;Error toggling favorite:&#x27;, err),
+    });
+  }
+
+  isFavorite(): boolean {
+    return this.isFavorited;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;ad-detail-container&quot;&gt;
+  &lt;mat-spinner *ngIf&#x3D;&quot;loading&quot; diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+
+  &lt;mat-card *ngIf&#x3D;&quot;error&quot; class&#x3D;&quot;error-card&quot;&gt;
+    &lt;mat-card-content&gt;
+      &lt;p class&#x3D;&quot;error-message&quot;&gt;{{ error }}&lt;/p&gt;
+    &lt;/mat-card-content&gt;
+  &lt;/mat-card&gt;
+
+  &lt;mat-card *ngIf&#x3D;&quot;ad&quot;&gt;
+    &lt;mat-card-header&gt;
+      &lt;mat-card-title&gt;{{ ad.title }}&lt;/mat-card-title&gt;
+      &lt;mat-card-subtitle&gt;{{ ad.category }}&lt;/mat-card-subtitle&gt;
+    &lt;/mat-card-header&gt;
+
+    &lt;mat-card-content&gt;
+      &lt;div class&#x3D;&quot;ad-images&quot; *ngIf&#x3D;&quot;ad.images?.length&quot;&gt;
+        &lt;img [src]&#x3D;&quot;ad.images[0]&quot; [alt]&#x3D;&quot;ad.title&quot; /&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;ad-info&quot;&gt;
+        &lt;p&gt;{{ ad.description }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Price:&lt;/strong&gt; ${{ ad.price }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Location:&lt;/strong&gt; {{ ad.location }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+
+    &lt;mat-card-actions align&#x3D;&quot;end&quot;&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;startChat()&quot;&gt;Contact Advertiser&lt;/button&gt;
+      &lt;div class&#x3D;&quot;favorite-action&quot;&gt;
+        &lt;app-favorite-button
+          [adId]&#x3D;&quot;ad._id&quot;
+          [adTitle]&#x3D;&quot;ad.title&quot;
+          [large]&#x3D;&quot;true&quot;
+          (favoriteChanged)&#x3D;&quot;onFavoriteChanged($event)&quot;
+        &gt;
+        &lt;/app-favorite-button&gt;
+        &lt;span class&#x3D;&quot;favorite-label&quot;&gt;{{
+          isFavorite() ? &#x27;Remove from Favorites&#x27; : &#x27;Add to Favorites&#x27;
+        }}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/mat-card-actions&gt;
+  &lt;/mat-card&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .ad-detail-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .mat-card {
+        margin-bottom: 20px;
+      }
+      .ad-images {
+        max-width: 100%;
+        margin-bottom: 15px;
+      }
+      .ad-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      .ad-description {
+        margin-bottom: 20px;
+      }
+      .ad-info {
+        margin: 20px 0;
+      }
+      .action-buttons {
+        margin-top: 20px;
+      }
+      .favorite-action {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+      }
+      .favorite-label {
+        margin-left: 8px;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="ad-detail-container">  <mat-spinner *ngIf="loading" diameter="40"></mat-spinner>  <mat-card *ngIf="error" class="error-card">    <mat-card-content>      <p class="error-message">{{ error }}</p>    </mat-card-content>  </mat-card>  <mat-card *ngIf="ad">    <mat-card-header>      <mat-card-title>{{ ad.title }}</mat-card-title>      <mat-card-subtitle>{{ ad.category }}</mat-card-subtitle>    </mat-card-header>    <mat-card-content>      <div class="ad-images" *ngIf="ad.images?.length">        <img [src]="ad.images[0]" [alt]="ad.title" />      </div>      <div class="ad-info">        <p>{{ ad.description }}</p>        <p><strong>Price:</strong> ${{ ad.price }}</p>        <p><strong>Location:</strong> {{ ad.location }}</p>      </div>    </mat-card-content>    <mat-card-actions align="end">      <button mat-raised-button color="primary" (click)="startChat()">Contact Advertiser</button>      <div class="favorite-action">        <app-favorite-button          [adId]="ad._id"          [adTitle]="ad.title"          [large]="true"          (favoriteChanged)="onFavoriteChanged($event)"        >        </app-favorite-button>        <span class="favorite-label">{{          isFavorite() ? \'Remove from Favorites\' : \'Add to Favorites\'        }}</span>      </div>    </mat-card-actions>  </mat-card></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AdDetailComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AdDetailComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

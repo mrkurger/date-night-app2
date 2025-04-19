@@ -9,7 +9,7 @@
 // ===================================================
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import {
   NotificationComponent,
   NotificationType,

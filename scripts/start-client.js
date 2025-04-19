@@ -16,11 +16,14 @@ console.log('Starting Angular client...');
 try {
   // Change to client directory
   process.chdir(clientDir);
-  
-  // Start the Angular client with the correct project
-  execSync('ng serve client-angular --open', { 
+
+  // Start the Angular client with the correct project and increased memory
+  execSync('NODE_OPTIONS=--max_old_space_size=8192 npx ng serve client-angular --open', {
     stdio: 'inherit',
-    env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=4096' } // Increase memory limit
+    env: {
+      ...process.env,
+      NODE_OPTIONS: '--max_old_space_size=8192',
+    },
   });
 } catch (error) {
   console.error('Error starting Angular client:', error.message);

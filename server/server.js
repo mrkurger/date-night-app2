@@ -111,6 +111,14 @@ app.use(
           'ws:',
           'https://api.stripe.com',
           ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
+          'wss:',
+          'ws:',
+          'https://api.stripe.com',
+          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
+          'wss:',
+          'ws:',
+          'https://api.stripe.com',
+          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
         ],
         // Add additional security directives
         objectSrc: ["'none'"],
@@ -169,9 +177,11 @@ app.use(
 // Compression middleware
 app.use(compression());
 
-// Secure file serving
-const { secureFileServing } = await import('./middleware/fileAccess.js');
-app.use('/uploads/*', secureFileServing);
+// Secure file serving - using IIFE to handle top-level await
+(async () => {
+  const { secureFileServing } = await import('./middleware/fileAccess.js');
+  app.use('/uploads/*', secureFileServing);
+})();
 
 // MongoDB connection with retry logic
 const connectWithRetry = async (retries = 5, delay = 5000) => {
@@ -221,6 +231,31 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
 
 // Parse cookies for CSRF
 app.use(cookieParser());
+
+// Swagger documentation
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './config/swagger.js';
+
+// Serve Swagger documentation
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpecs, {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }',
+    swaggerOptions: {
+      docExpansion: 'none',
+      filter: true,
+      showRequestDuration: true,
+    },
+  })
+);
+
+// Serve Swagger JSON
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpecs);
+});
 
 // API routes with versioning
 // Apply CSRF protection to sensitive routes

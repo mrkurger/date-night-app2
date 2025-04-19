@@ -31,6 +31,6 @@
 
 ## Available Reports
 
-- [Detailed Issues Report](./prioritized-issues.md) - Comprehensive list of all issues with remediation steps
-- [Vulnerable Dependencies Report](./vulnerable-dependencies.md) - Focused analysis of vulnerable dependencies with upgrade paths
+- [Detailed Issues Report](./PRIORITIZED-ISSUES.MD) - Comprehensive list of all issues with remediation steps
+- [Vulnerable Dependencies Report](./VULNERABLE-DEPENDENCIES.MD) - Focused analysis of vulnerable dependencies with upgrade paths
 

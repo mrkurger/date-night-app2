@@ -162,7 +162,7 @@ exports.optionalAuth = async (req, res, next) => {
     }
 
     next();
-  } catch (error) {
+  } catch (_) {
     // Continue without authentication if token is invalid
     next();
   }

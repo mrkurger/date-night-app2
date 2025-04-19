@@ -148,6 +148,7 @@ $transition-slow: 500ms;
 $transition-timing-default: cubic-bezier(0.4, 0, 0.2, 1);
 $transition-timing-in: cubic-bezier(0.4, 0, 1, 1);
 $transition-timing-out: cubic-bezier(0, 0, 0.2, 1);
+$transition-ease: ease-in-out;
 
 // Z-index
 $z-index-dropdown: 1000;

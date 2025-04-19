@@ -1,0 +1,3264 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AlertManagementComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/admin/components/alert-management/alert-management.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-alert-management</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatPaginatorModule</code>
+                            <code>MatSortModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatSlideToggleModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatDialogModule</code>
+                            <code>MatChipsModule</code>
+                            <code>MatBadgeModule</code>
+                            <code>MatTooltipModule</code>
+                            <code>MatTabsModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .alert-management-container {
+        padding: 20px;
+      }
+
+      .alert-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .alert-definitions-container,
+      .active-alerts-container {
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .mat-column-actions {
+        width: 120px;
+      }
+
+      .notification-channels {
+        display: flex;
+        gap: 8px;
+      }
+
+      .severity-info {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      .severity-warning {
+        background-color: #ff9800;
+        color: white;
+      }
+
+      .severity-error {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .severity-critical {
+        background-color: #9c27b0;
+        color: white;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .unacknowledged {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .acknowledged {
+        background-color: #4caf50;
+        color: white;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;alert-management-container&quot;&gt;
+  &lt;h1&gt;Alert Management&lt;/h1&gt;
+
+  &lt;div class&#x3D;&quot;alert-header&quot;&gt;
+    &lt;div class&#x3D;&quot;alert-actions&quot;&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openAlertDialog()&quot;&gt;
+        &lt;mat-icon&gt;add&lt;/mat-icon&gt; Create Alert
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;active-alerts-badge&quot; *ngIf&#x3D;&quot;unacknowledgedCount &gt; 0&quot;&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;warn&quot;
+        [matBadge]&#x3D;&quot;unacknowledgedCount&quot;
+        matBadgePosition&#x3D;&quot;after&quot;
+        matBadgeColor&#x3D;&quot;accent&quot;
+        (click)&#x3D;&quot;selectedTabIndex &#x3D; 1&quot;
+      &gt;
+        Active Alerts
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;mat-tab-group [(selectedIndex)]&#x3D;&quot;selectedTabIndex&quot;&gt;
+    &lt;mat-tab label&#x3D;&quot;Alert Definitions&quot;&gt;
+      &lt;div class&#x3D;&quot;alert-definitions-container&quot;&gt;
+        &lt;mat-card&gt;
+          &lt;mat-card-content&gt;
+            &lt;table mat-table [dataSource]&#x3D;&quot;alerts&quot; matSort (matSortChange)&#x3D;&quot;sortAlerts($event)&quot;&gt;
+              &lt;!-- Name Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;name&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Name&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;{{ alert.name }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Severity Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;severity&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Severity&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                  &lt;mat-chip [ngClass]&#x3D;&quot;getSeverityClass(alert.severity)&quot;&gt;
+                    {{ getSeverityLabel(alert.severity) }}
+                  &lt;/mat-chip&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Condition Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;condition&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Condition&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                  {{ getConditionDescription(alert.condition) }}
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Notifications Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;notifications&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Notifications&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                  &lt;div class&#x3D;&quot;notification-channels&quot;&gt;
+                    &lt;mat-icon *ngIf&#x3D;&quot;hasChannel(alert, &#x27;ui&#x27;)&quot; matTooltip&#x3D;&quot;UI Notification&quot;&gt;
+                      notifications
+                    &lt;/mat-icon&gt;
+                    &lt;mat-icon
+                      *ngIf&#x3D;&quot;hasChannel(alert, &#x27;email&#x27;)&quot;
+                      matTooltip&#x3D;&quot;Email Notification&quot;
+                    &gt;
+                      email
+                    &lt;/mat-icon&gt;
+                    &lt;mat-icon
+                      *ngIf&#x3D;&quot;hasChannel(alert, &#x27;slack&#x27;)&quot;
+                      matTooltip&#x3D;&quot;Slack Notification&quot;
+                    &gt;
+                      chat
+                    &lt;/mat-icon&gt;
+                    &lt;mat-icon
+                      *ngIf&#x3D;&quot;hasChannel(alert, &#x27;webhook&#x27;)&quot;
+                      matTooltip&#x3D;&quot;Webhook Notification&quot;
+                    &gt;
+                      http
+                    &lt;/mat-icon&gt;
+                  &lt;/div&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Status Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Status&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                  &lt;mat-slide-toggle
+                    [checked]&#x3D;&quot;alert.enabled&quot;
+                    (change)&#x3D;&quot;toggleAlert(alert, $event.checked)&quot;
+                    color&#x3D;&quot;primary&quot;
+                  &gt;&lt;/mat-slide-toggle&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Actions Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Actions&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;editAlert(alert)&quot;
+                    matTooltip&#x3D;&quot;Edit&quot;
+                  &gt;
+                    &lt;mat-icon&gt;edit&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;testAlert(alert)&quot;
+                    matTooltip&#x3D;&quot;Test&quot;
+                  &gt;
+                    &lt;mat-icon&gt;play_arrow&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;warn&quot;
+                    (click)&#x3D;&quot;deleteAlert(alert)&quot;
+                    matTooltip&#x3D;&quot;Delete&quot;
+                  &gt;
+                    &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+
+            &lt;mat-paginator
+              [pageSize]&#x3D;&quot;pageSize&quot;
+              [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+              [length]&#x3D;&quot;totalAlerts&quot;
+              (page)&#x3D;&quot;onPageChange($event)&quot;
+            &gt;&lt;/mat-paginator&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/mat-tab&gt;
+
+    &lt;mat-tab label&#x3D;&quot;Active Alerts&quot;&gt;
+      &lt;div class&#x3D;&quot;active-alerts-container&quot;&gt;
+        &lt;mat-card&gt;
+          &lt;mat-card-content&gt;
+            &lt;table
+              mat-table
+              [dataSource]&#x3D;&quot;activeAlerts&quot;
+              matSort
+              (matSortChange)&#x3D;&quot;sortActiveAlerts($event)&quot;
+            &gt;
+              &lt;!-- Timestamp Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Time&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Alert Name Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;alertName&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Alert&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.alertName }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Severity Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;severity&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Severity&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                  &lt;mat-chip [ngClass]&#x3D;&quot;getSeverityClass(event.severity)&quot;&gt;
+                    {{ getSeverityLabel(event.severity) }}
+                  &lt;/mat-chip&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Message Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;message&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Message&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.message }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Status Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                  &lt;span
+                    class&#x3D;&quot;status-badge&quot;
+                    [ngClass]&#x3D;&quot;event.acknowledged ? &#x27;acknowledged&#x27; : &#x27;unacknowledged&#x27;&quot;
+                  &gt;
+                    {{ event.acknowledged ? &#x27;Acknowledged&#x27; : &#x27;Unacknowledged&#x27; }}
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Actions Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Actions&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;acknowledgeAlert(event)&quot;
+                    [disabled]&#x3D;&quot;event.acknowledged&quot;
+                    matTooltip&#x3D;&quot;Acknowledge&quot;
+                  &gt;
+                    &lt;mat-icon&gt;check_circle&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;viewAlertDetails(event)&quot;
+                    matTooltip&#x3D;&quot;View Details&quot;
+                  &gt;
+                    &lt;mat-icon&gt;info&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;activeDisplayedColumns&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: activeDisplayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/mat-tab&gt;
+  &lt;/mat-tab-group&gt;
+&lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activeAlerts" >activeAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#activeDisplayedColumns" >activeDisplayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#alerts" >alerts</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#destroy$" >destroy$</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#pageIndex" >pageIndex</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#selectedTabIndex" >selectedTabIndex</a>
+                            </li>
+                            <li>
+                                <a href="#totalAlerts" >totalAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#unacknowledgedCount" >unacknowledgedCount</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#acknowledgeAlert" >acknowledgeAlert</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#compare" >compare</a>
+                            </li>
+                            <li>
+                                <a href="#deleteAlert" >deleteAlert</a>
+                            </li>
+                            <li>
+                                <a href="#editAlert" >editAlert</a>
+                            </li>
+                            <li>
+                                <a href="#getConditionDescription" >getConditionDescription</a>
+                            </li>
+                            <li>
+                                <a href="#getSeverityClass" >getSeverityClass</a>
+                            </li>
+                            <li>
+                                <a href="#getSeverityLabel" >getSeverityLabel</a>
+                            </li>
+                            <li>
+                                <a href="#getTimeWindowLabel" >getTimeWindowLabel</a>
+                            </li>
+                            <li>
+                                <a href="#hasChannel" >hasChannel</a>
+                            </li>
+                            <li>
+                                <a href="#loadActiveAlerts" >loadActiveAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#loadAlerts" >loadAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onPageChange" >onPageChange</a>
+                            </li>
+                            <li>
+                                <a href="#openAlertDialog" >openAlertDialog</a>
+                            </li>
+                            <li>
+                                <a href="#sortActiveAlerts" >sortActiveAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#sortAlerts" >sortAlerts</a>
+                            </li>
+                            <li>
+                                <a href="#testAlert" >testAlert</a>
+                            </li>
+                            <li>
+                                <a href="#toggleAlert" >toggleAlert</a>
+                            </li>
+                            <li>
+                                <a href="#viewAlertDetails" >viewAlertDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(alertService: <a href="../injectables/AlertService.html" target="_self">AlertService</a>, dialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="389" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:389</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>alertService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AlertService.html" target="_self" >AlertService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="acknowledgeAlert"></a>
+                    <span class="name">
+                        <span ><b>acknowledgeAlert</b></span>
+                        <a href="#acknowledgeAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>acknowledgeAlert(event: <a href="../interfaces/AlertEvent.html" target="_self">AlertEvent</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="561"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:561</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Acknowledge an alert event</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/AlertEvent.html" target="_self" >AlertEvent</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert event to acknowledge</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="compare"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>compare</b></span>
+                        <a href="#compare"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>compare(a: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, b: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, isAsc: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="494"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:494</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Compare function for sorting</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>a</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>b</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>isAsc</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteAlert"></a>
+                    <span class="name">
+                        <span ><b>deleteAlert</b></span>
+                        <a href="#deleteAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteAlert(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="538"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:538</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Delete an alert</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to delete</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editAlert"></a>
+                    <span class="name">
+                        <span ><b>editAlert</b></span>
+                        <a href="#editAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editAlert(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="519"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:519</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Edit an alert</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to edit</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getConditionDescription"></a>
+                    <span class="name">
+                        <span ><b>getConditionDescription</b></span>
+                        <a href="#getConditionDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getConditionDescription(condition: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="616"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:616</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get condition description</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>condition</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert condition</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSeverityClass"></a>
+                    <span class="name">
+                        <span ><b>getSeverityClass</b></span>
+                        <a href="#getSeverityClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSeverityClass(severity: <a href="../undefineds/AlertSeverity.html" target="_self">AlertSeverity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="578"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:578</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get severity CSS class</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>severity</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#AlertSeverity" target="_self" >AlertSeverity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert severity</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSeverityLabel"></a>
+                    <span class="name">
+                        <span ><b>getSeverityLabel</b></span>
+                        <a href="#getSeverityLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSeverityLabel(severity: <a href="../undefineds/AlertSeverity.html" target="_self">AlertSeverity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="597"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:597</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get severity label</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>severity</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#AlertSeverity" target="_self" >AlertSeverity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert severity</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTimeWindowLabel"></a>
+                    <span class="name">
+                        <span ><b>getTimeWindowLabel</b></span>
+                        <a href="#getTimeWindowLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTimeWindowLabel(timeWindow: <a href="../undefineds/AlertTimeWindow.html" target="_self">AlertTimeWindow</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="639"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:639</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get time window label</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>timeWindow</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#AlertTimeWindow" target="_self" >AlertTimeWindow</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Time window</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasChannel"></a>
+                    <span class="name">
+                        <span ><b>hasChannel</b></span>
+                        <a href="#hasChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasChannel(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>, channel: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="665"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:665</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if alert has a specific notification channel</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to check</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>channel</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Channel to check for</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadActiveAlerts"></a>
+                    <span class="name">
+                        <span ><b>loadActiveAlerts</b></span>
+                        <a href="#loadActiveAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadActiveAlerts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="429"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:429</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load active alert events</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadAlerts"></a>
+                    <span class="name">
+                        <span ><b>loadAlerts</b></span>
+                        <a href="#loadAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadAlerts()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="419"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:419</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load alert definitions</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="411"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:411</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageChange"></a>
+                    <span class="name">
+                        <span ><b>onPageChange</b></span>
+                        <a href="#onPageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageChange(event: PageEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="437"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:437</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle page change event</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>PageEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Page event</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAlertDialog"></a>
+                    <span class="name">
+                        <span ><b>openAlertDialog</b></span>
+                        <a href="#openAlertDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openAlertDialog(alert?: <a href="../interfaces/Alert.html" target="_self">Alert</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="502"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:502</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open alert creation/edit dialog</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Optional alert to edit</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortActiveAlerts"></a>
+                    <span class="name">
+                        <span ><b>sortActiveAlerts</b></span>
+                        <a href="#sortActiveAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortActiveAlerts(sort: Sort)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="469"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:469</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sort active alerts</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sort</td>
+                                            <td>
+                                                        <code>Sort</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Sort event</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortAlerts"></a>
+                    <span class="name">
+                        <span ><b>sortAlerts</b></span>
+                        <a href="#sortAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortAlerts(sort: Sort)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="447"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:447</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sort alerts</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sort</td>
+                                            <td>
+                                                        <code>Sort</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Sort event</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="testAlert"></a>
+                    <span class="name">
+                        <span ><b>testAlert</b></span>
+                        <a href="#testAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>testAlert(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="527"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:527</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Test an alert</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to test</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleAlert"></a>
+                    <span class="name">
+                        <span ><b>toggleAlert</b></span>
+                        <a href="#toggleAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleAlert(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>, enabled: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="551"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:551</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggle alert enabled state</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to toggle</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>enabled</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New enabled state</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewAlertDetails"></a>
+                    <span class="name">
+                        <span ><b>viewAlertDetails</b></span>
+                        <a href="#viewAlertDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewAlertDetails(event: <a href="../interfaces/AlertEvent.html" target="_self">AlertEvent</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="569"
+                                    class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:569</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>View alert event details</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/AlertEvent.html" target="_self" >AlertEvent</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert event to view</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeAlerts"></a>
+                    <span class="name">
+                        <span ><b>activeAlerts</b></span>
+                        <a href="#activeAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>AlertEvent[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="375" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:375</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeDisplayedColumns"></a>
+                    <span class="name">
+                        <span ><b>activeDisplayedColumns</b></span>
+                        <a href="#activeDisplayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;timestamp&#x27;,
+    &#x27;alertName&#x27;,
+    &#x27;severity&#x27;,
+    &#x27;message&#x27;,
+    &#x27;status&#x27;,
+    &#x27;actions&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="376" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:376</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alerts"></a>
+                    <span class="name">
+                        <span ><b>alerts</b></span>
+                        <a href="#alerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Alert.html" target="_self" >Alert[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="361" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:361</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroy$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>destroy$</b></span>
+                        <a href="#destroy$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="389" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:389</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;name&#x27;,
+    &#x27;severity&#x27;,
+    &#x27;condition&#x27;,
+    &#x27;notifications&#x27;,
+    &#x27;status&#x27;,
+    &#x27;actions&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="362" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:362</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageIndex"></a>
+                    <span class="name">
+                        <span ><b>pageIndex</b></span>
+                        <a href="#pageIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="371" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:371</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="370" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:370</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedTabIndex"></a>
+                    <span class="name">
+                        <span ><b>selectedTabIndex</b></span>
+                        <a href="#selectedTabIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="387" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:387</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalAlerts"></a>
+                    <span class="name">
+                        <span ><b>totalAlerts</b></span>
+                        <a href="#totalAlerts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="372" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:372</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unacknowledgedCount"></a>
+                    <span class="name">
+                        <span ><b>unacknowledgedCount</b></span>
+                        <a href="#unacknowledgedCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="384" class="link-to-prism">src/app/features/admin/components/alert-management/alert-management.component.ts:384</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { MatPaginatorModule, PageEvent } from &#x27;@angular/material/paginator&#x27;;
+import { MatSortModule, Sort } from &#x27;@angular/material/sort&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatDialogModule, MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { MatChipsModule } from &#x27;@angular/material/chips&#x27;;
+import { MatBadgeModule } from &#x27;@angular/material/badge&#x27;;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
+import { ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { AlertService } from &#x27;../../../../core/services/alert.service&#x27;;
+import {
+  Alert,
+  AlertEvent,
+  AlertSeverity,
+  AlertConditionType,
+  AlertTimeWindow,
+  AlertChannel,
+} from &#x27;../../../../core/models/alert.model&#x27;;
+import { Subject } from &#x27;rxjs&#x27;;
+import { takeUntil } from &#x27;rxjs/operators&#x27;;
+import { AlertFormDialogComponent } from &#x27;../alert-form-dialog/alert-form-dialog.component&#x27;;
+
+@Component({
+  selector: &#x27;app-alert-management&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatTooltipModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+  ],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;alert-management-container&quot;&gt;
+      &lt;h1&gt;Alert Management&lt;/h1&gt;
+
+      &lt;div class&#x3D;&quot;alert-header&quot;&gt;
+        &lt;div class&#x3D;&quot;alert-actions&quot;&gt;
+          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openAlertDialog()&quot;&gt;
+            &lt;mat-icon&gt;add&lt;/mat-icon&gt; Create Alert
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;active-alerts-badge&quot; *ngIf&#x3D;&quot;unacknowledgedCount &gt; 0&quot;&gt;
+          &lt;button
+            mat-raised-button
+            color&#x3D;&quot;warn&quot;
+            [matBadge]&#x3D;&quot;unacknowledgedCount&quot;
+            matBadgePosition&#x3D;&quot;after&quot;
+            matBadgeColor&#x3D;&quot;accent&quot;
+            (click)&#x3D;&quot;selectedTabIndex &#x3D; 1&quot;
+          &gt;
+            Active Alerts
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;mat-tab-group [(selectedIndex)]&#x3D;&quot;selectedTabIndex&quot;&gt;
+        &lt;mat-tab label&#x3D;&quot;Alert Definitions&quot;&gt;
+          &lt;div class&#x3D;&quot;alert-definitions-container&quot;&gt;
+            &lt;mat-card&gt;
+              &lt;mat-card-content&gt;
+                &lt;table mat-table [dataSource]&#x3D;&quot;alerts&quot; matSort (matSortChange)&#x3D;&quot;sortAlerts($event)&quot;&gt;
+                  &lt;!-- Name Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;name&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Name&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;{{ alert.name }}&lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Severity Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;severity&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Severity&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                      &lt;mat-chip [ngClass]&#x3D;&quot;getSeverityClass(alert.severity)&quot;&gt;
+                        {{ getSeverityLabel(alert.severity) }}
+                      &lt;/mat-chip&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Condition Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;condition&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Condition&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                      {{ getConditionDescription(alert.condition) }}
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Notifications Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;notifications&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Notifications&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                      &lt;div class&#x3D;&quot;notification-channels&quot;&gt;
+                        &lt;mat-icon *ngIf&#x3D;&quot;hasChannel(alert, &#x27;ui&#x27;)&quot; matTooltip&#x3D;&quot;UI Notification&quot;&gt;
+                          notifications
+                        &lt;/mat-icon&gt;
+                        &lt;mat-icon
+                          *ngIf&#x3D;&quot;hasChannel(alert, &#x27;email&#x27;)&quot;
+                          matTooltip&#x3D;&quot;Email Notification&quot;
+                        &gt;
+                          email
+                        &lt;/mat-icon&gt;
+                        &lt;mat-icon
+                          *ngIf&#x3D;&quot;hasChannel(alert, &#x27;slack&#x27;)&quot;
+                          matTooltip&#x3D;&quot;Slack Notification&quot;
+                        &gt;
+                          chat
+                        &lt;/mat-icon&gt;
+                        &lt;mat-icon
+                          *ngIf&#x3D;&quot;hasChannel(alert, &#x27;webhook&#x27;)&quot;
+                          matTooltip&#x3D;&quot;Webhook Notification&quot;
+                        &gt;
+                          http
+                        &lt;/mat-icon&gt;
+                      &lt;/div&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Status Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Status&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                      &lt;mat-slide-toggle
+                        [checked]&#x3D;&quot;alert.enabled&quot;
+                        (change)&#x3D;&quot;toggleAlert(alert, $event.checked)&quot;
+                        color&#x3D;&quot;primary&quot;
+                      &gt;&lt;/mat-slide-toggle&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Actions Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Actions&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let alert&quot;&gt;
+                      &lt;button
+                        mat-icon-button
+                        color&#x3D;&quot;primary&quot;
+                        (click)&#x3D;&quot;editAlert(alert)&quot;
+                        matTooltip&#x3D;&quot;Edit&quot;
+                      &gt;
+                        &lt;mat-icon&gt;edit&lt;/mat-icon&gt;
+                      &lt;/button&gt;
+                      &lt;button
+                        mat-icon-button
+                        color&#x3D;&quot;primary&quot;
+                        (click)&#x3D;&quot;testAlert(alert)&quot;
+                        matTooltip&#x3D;&quot;Test&quot;
+                      &gt;
+                        &lt;mat-icon&gt;play_arrow&lt;/mat-icon&gt;
+                      &lt;/button&gt;
+                      &lt;button
+                        mat-icon-button
+                        color&#x3D;&quot;warn&quot;
+                        (click)&#x3D;&quot;deleteAlert(alert)&quot;
+                        matTooltip&#x3D;&quot;Delete&quot;
+                      &gt;
+                        &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+                      &lt;/button&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+                  &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+                &lt;/table&gt;
+
+                &lt;mat-paginator
+                  [pageSize]&#x3D;&quot;pageSize&quot;
+                  [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+                  [length]&#x3D;&quot;totalAlerts&quot;
+                  (page)&#x3D;&quot;onPageChange($event)&quot;
+                &gt;&lt;/mat-paginator&gt;
+              &lt;/mat-card-content&gt;
+            &lt;/mat-card&gt;
+          &lt;/div&gt;
+        &lt;/mat-tab&gt;
+
+        &lt;mat-tab label&#x3D;&quot;Active Alerts&quot;&gt;
+          &lt;div class&#x3D;&quot;active-alerts-container&quot;&gt;
+            &lt;mat-card&gt;
+              &lt;mat-card-content&gt;
+                &lt;table
+                  mat-table
+                  [dataSource]&#x3D;&quot;activeAlerts&quot;
+                  matSort
+                  (matSortChange)&#x3D;&quot;sortActiveAlerts($event)&quot;
+                &gt;
+                  &lt;!-- Timestamp Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Time&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Alert Name Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;alertName&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Alert&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.alertName }}&lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Severity Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;severity&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Severity&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                      &lt;mat-chip [ngClass]&#x3D;&quot;getSeverityClass(event.severity)&quot;&gt;
+                        {{ getSeverityLabel(event.severity) }}
+                      &lt;/mat-chip&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Message Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;message&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Message&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;{{ event.message }}&lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Status Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                      &lt;span
+                        class&#x3D;&quot;status-badge&quot;
+                        [ngClass]&#x3D;&quot;event.acknowledged ? &#x27;acknowledged&#x27; : &#x27;unacknowledged&#x27;&quot;
+                      &gt;
+                        {{ event.acknowledged ? &#x27;Acknowledged&#x27; : &#x27;Unacknowledged&#x27; }}
+                      &lt;/span&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;!-- Actions Column --&gt;
+                  &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                    &lt;th mat-header-cell *matHeaderCellDef&gt;Actions&lt;/th&gt;
+                    &lt;td mat-cell *matCellDef&#x3D;&quot;let event&quot;&gt;
+                      &lt;button
+                        mat-icon-button
+                        color&#x3D;&quot;primary&quot;
+                        (click)&#x3D;&quot;acknowledgeAlert(event)&quot;
+                        [disabled]&#x3D;&quot;event.acknowledged&quot;
+                        matTooltip&#x3D;&quot;Acknowledge&quot;
+                      &gt;
+                        &lt;mat-icon&gt;check_circle&lt;/mat-icon&gt;
+                      &lt;/button&gt;
+                      &lt;button
+                        mat-icon-button
+                        color&#x3D;&quot;primary&quot;
+                        (click)&#x3D;&quot;viewAlertDetails(event)&quot;
+                        matTooltip&#x3D;&quot;View Details&quot;
+                      &gt;
+                        &lt;mat-icon&gt;info&lt;/mat-icon&gt;
+                      &lt;/button&gt;
+                    &lt;/td&gt;
+                  &lt;/ng-container&gt;
+
+                  &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;activeDisplayedColumns&quot;&gt;&lt;/tr&gt;
+                  &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: activeDisplayedColumns&quot;&gt;&lt;/tr&gt;
+                &lt;/table&gt;
+              &lt;/mat-card-content&gt;
+            &lt;/mat-card&gt;
+          &lt;/div&gt;
+        &lt;/mat-tab&gt;
+      &lt;/mat-tab-group&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .alert-management-container {
+        padding: 20px;
+      }
+
+      .alert-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .alert-definitions-container,
+      .active-alerts-container {
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .mat-column-actions {
+        width: 120px;
+      }
+
+      .notification-channels {
+        display: flex;
+        gap: 8px;
+      }
+
+      .severity-info {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      .severity-warning {
+        background-color: #ff9800;
+        color: white;
+      }
+
+      .severity-error {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .severity-critical {
+        background-color: #9c27b0;
+        color: white;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .unacknowledged {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .acknowledged {
+        background-color: #4caf50;
+        color: white;
+      }
+    &#x60;,
+  ],
+})
+export class AlertManagementComponent implements OnInit, OnDestroy {
+  // Alert definitions
+  alerts: Alert[] &#x3D; [];
+  displayedColumns: string[] &#x3D; [
+    &#x27;name&#x27;,
+    &#x27;severity&#x27;,
+    &#x27;condition&#x27;,
+    &#x27;notifications&#x27;,
+    &#x27;status&#x27;,
+    &#x27;actions&#x27;,
+  ];
+  pageSize &#x3D; 10;
+  pageIndex &#x3D; 0;
+  totalAlerts &#x3D; 0;
+
+  // Active alerts
+  activeAlerts: AlertEvent[] &#x3D; [];
+  activeDisplayedColumns: string[] &#x3D; [
+    &#x27;timestamp&#x27;,
+    &#x27;alertName&#x27;,
+    &#x27;severity&#x27;,
+    &#x27;message&#x27;,
+    &#x27;status&#x27;,
+    &#x27;actions&#x27;,
+  ];
+  unacknowledgedCount &#x3D; 0;
+
+  // Tab selection
+  selectedTabIndex &#x3D; 0;
+
+  private destroy$ &#x3D; new Subject&lt;void&gt;();
+
+  constructor(
+    private alertService: AlertService,
+    private dialog: MatDialog
+  ) {}
+
+  ngOnInit(): void {
+    this.loadAlerts();
+    this.loadActiveAlerts();
+
+    // Subscribe to active alerts updates
+    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe(alerts &#x3D;&gt; {
+      this.activeAlerts &#x3D; alerts;
+    });
+
+    // Subscribe to unacknowledged count updates
+    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe(count &#x3D;&gt; {
+      this.unacknowledgedCount &#x3D; count;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Load alert definitions
+   */
+  loadAlerts(): void {
+    this.alertService.getAlerts().subscribe(alerts &#x3D;&gt; {
+      this.alerts &#x3D; alerts;
+      this.totalAlerts &#x3D; alerts.length;
+    });
+  }
+
+  /**
+   * Load active alert events
+   */
+  loadActiveAlerts(): void {
+    this.alertService.getActiveAlertEvents().subscribe();
+  }
+
+  /**
+   * Handle page change event
+   * @param event Page event
+   */
+  onPageChange(event: PageEvent): void {
+    this.pageSize &#x3D; event.pageSize;
+    this.pageIndex &#x3D; event.pageIndex;
+    this.loadAlerts();
+  }
+
+  /**
+   * Sort alerts
+   * @param sort Sort event
+   */
+  sortAlerts(sort: Sort): void {
+    if (!sort.active || sort.direction &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+      return;
+    }
+
+    this.alerts &#x3D; this.alerts.slice().sort((a, b) &#x3D;&gt; {
+      const isAsc &#x3D; sort.direction &#x3D;&#x3D;&#x3D; &#x27;asc&#x27;;
+      switch (sort.active) {
+        case &#x27;name&#x27;:
+          return this.compare(a.name, b.name, isAsc);
+        case &#x27;severity&#x27;:
+          return this.compare(a.severity, b.severity, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  /**
+   * Sort active alerts
+   * @param sort Sort event
+   */
+  sortActiveAlerts(sort: Sort): void {
+    if (!sort.active || sort.direction &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+      return;
+    }
+
+    this.activeAlerts &#x3D; this.activeAlerts.slice().sort((a, b) &#x3D;&gt; {
+      const isAsc &#x3D; sort.direction &#x3D;&#x3D;&#x3D; &#x27;asc&#x27;;
+      switch (sort.active) {
+        case &#x27;timestamp&#x27;:
+          return this.compare(a.timestamp, b.timestamp, isAsc);
+        case &#x27;alertName&#x27;:
+          return this.compare(a.alertName, b.alertName, isAsc);
+        case &#x27;severity&#x27;:
+          return this.compare(a.severity, b.severity, isAsc);
+        case &#x27;status&#x27;:
+          return this.compare(a.acknowledged, b.acknowledged, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  /**
+   * Compare function for sorting
+   */
+  private compare(a: any, b: any, isAsc: boolean): number {
+    return (a &lt; b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  /**
+   * Open alert creation/edit dialog
+   * @param alert Optional alert to edit
+   */
+  openAlertDialog(alert?: Alert): void {
+    const dialogRef &#x3D; this.dialog.open(AlertFormDialogComponent, {
+      width: &#x27;600px&#x27;,
+      data: { alert },
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      if (result) {
+        this.loadAlerts();
+      }
+    });
+  }
+
+  /**
+   * Edit an alert
+   * @param alert Alert to edit
+   */
+  editAlert(alert: Alert): void {
+    this.openAlertDialog(alert);
+  }
+
+  /**
+   * Test an alert
+   * @param alert Alert to test
+   */
+  testAlert(alert: Alert): void {
+    this.alertService.testAlert(alert).subscribe(result &#x3D;&gt; {
+      // Show result in a dialog or notification
+      console.log(&#x27;Test result:&#x27;, result);
+    });
+  }
+
+  /**
+   * Delete an alert
+   * @param alert Alert to delete
+   */
+  deleteAlert(alert: Alert): void {
+    if (confirm(&#x60;Are you sure you want to delete the alert &quot;${alert.name}&quot;?&#x60;)) {
+      this.alertService.deleteAlert(alert.id!).subscribe(() &#x3D;&gt; {
+        this.loadAlerts();
+      });
+    }
+  }
+
+  /**
+   * Toggle alert enabled state
+   * @param alert Alert to toggle
+   * @param enabled New enabled state
+   */
+  toggleAlert(alert: Alert, enabled: boolean): void {
+    this.alertService.toggleAlert(alert.id!, enabled).subscribe(() &#x3D;&gt; {
+      alert.enabled &#x3D; enabled;
+    });
+  }
+
+  /**
+   * Acknowledge an alert event
+   * @param event Alert event to acknowledge
+   */
+  acknowledgeAlert(event: AlertEvent): void {
+    this.alertService.acknowledgeAlertEvent(event.id).subscribe();
+  }
+
+  /**
+   * View alert event details
+   * @param event Alert event to view
+   */
+  viewAlertDetails(event: AlertEvent): void {
+    // Open a dialog with alert details
+    console.log(&#x27;View alert details:&#x27;, event);
+  }
+
+  /**
+   * Get severity CSS class
+   * @param severity Alert severity
+   */
+  getSeverityClass(severity: AlertSeverity): string {
+    switch (severity) {
+      case AlertSeverity.INFO:
+        return &#x27;severity-info&#x27;;
+      case AlertSeverity.WARNING:
+        return &#x27;severity-warning&#x27;;
+      case AlertSeverity.ERROR:
+        return &#x27;severity-error&#x27;;
+      case AlertSeverity.CRITICAL:
+        return &#x27;severity-critical&#x27;;
+      default:
+        return &#x27;&#x27;;
+    }
+  }
+
+  /**
+   * Get severity label
+   * @param severity Alert severity
+   */
+  getSeverityLabel(severity: AlertSeverity): string {
+    switch (severity) {
+      case AlertSeverity.INFO:
+        return &#x27;Info&#x27;;
+      case AlertSeverity.WARNING:
+        return &#x27;Warning&#x27;;
+      case AlertSeverity.ERROR:
+        return &#x27;Error&#x27;;
+      case AlertSeverity.CRITICAL:
+        return &#x27;Critical&#x27;;
+      default:
+        return &#x27;Unknown&#x27;;
+    }
+  }
+
+  /**
+   * Get condition description
+   * @param condition Alert condition
+   */
+  getConditionDescription(condition: any): string {
+    switch (condition.type) {
+      case AlertConditionType.ERROR_COUNT:
+        return &#x60;&gt; ${condition.threshold} errors in ${this.getTimeWindowLabel(condition.timeWindow)}&#x60;;
+      case AlertConditionType.ERROR_RATE:
+        return &#x60;&gt; ${condition.threshold}% error rate in ${this.getTimeWindowLabel(condition.timeWindow)}&#x60;;
+      case AlertConditionType.PERFORMANCE_THRESHOLD:
+        return &#x60;Response time &gt; ${condition.threshold}ms in ${this.getTimeWindowLabel(condition.timeWindow)}&#x60;;
+      case AlertConditionType.ERROR_PATTERN:
+        return &#x60;Error pattern: ${condition.pattern}&#x60;;
+      case AlertConditionType.STATUS_CODE:
+        return &#x60;Status code: ${condition.statusCode}&#x60;;
+      case AlertConditionType.ERROR_CATEGORY:
+        return &#x60;Error category: ${condition.errorCategory}&#x60;;
+      default:
+        return &#x27;Unknown condition&#x27;;
+    }
+  }
+
+  /**
+   * Get time window label
+   * @param timeWindow Time window
+   */
+  getTimeWindowLabel(timeWindow: AlertTimeWindow): string {
+    switch (timeWindow) {
+      case AlertTimeWindow.MINUTES_5:
+        return &#x27;5 minutes&#x27;;
+      case AlertTimeWindow.MINUTES_15:
+        return &#x27;15 minutes&#x27;;
+      case AlertTimeWindow.MINUTES_30:
+        return &#x27;30 minutes&#x27;;
+      case AlertTimeWindow.HOURS_1:
+        return &#x27;1 hour&#x27;;
+      case AlertTimeWindow.HOURS_6:
+        return &#x27;6 hours&#x27;;
+      case AlertTimeWindow.HOURS_12:
+        return &#x27;12 hours&#x27;;
+      case AlertTimeWindow.HOURS_24:
+        return &#x27;24 hours&#x27;;
+      default:
+        return &#x27;Unknown&#x27;;
+    }
+  }
+
+  /**
+   * Check if alert has a specific notification channel
+   * @param alert Alert to check
+   * @param channel Channel to check for
+   */
+  hasChannel(alert: Alert, channel: string): boolean {
+    return alert.notifications.some(n &#x3D;&gt; n.channel &#x3D;&#x3D;&#x3D; channel);
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .alert-management-container {
+        padding: 20px;
+      }
+
+      .alert-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .alert-definitions-container,
+      .active-alerts-container {
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .mat-column-actions {
+        width: 120px;
+      }
+
+      .notification-channels {
+        display: flex;
+        gap: 8px;
+      }
+
+      .severity-info {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      .severity-warning {
+        background-color: #ff9800;
+        color: white;
+      }
+
+      .severity-error {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .severity-critical {
+        background-color: #9c27b0;
+        color: white;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .unacknowledged {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .acknowledged {
+        background-color: #4caf50;
+        color: white;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="alert-management-container">  <h1>Alert Management</h1>  <div class="alert-header">    <div class="alert-actions">      <button mat-raised-button color="primary" (click)="openAlertDialog()">        <mat-icon>add</mat-icon> Create Alert      </button>    </div>    <div class="active-alerts-badge" *ngIf="unacknowledgedCount > 0">      <button        mat-raised-button        color="warn"        [matBadge]="unacknowledgedCount"        matBadgePosition="after"        matBadgeColor="accent"        (click)="selectedTabIndex = 1"      >        Active Alerts      </button>    </div>  </div>  <mat-tab-group [(selectedIndex)]="selectedTabIndex">    <mat-tab label="Alert Definitions">      <div class="alert-definitions-container">        <mat-card>          <mat-card-content>            <table mat-table [dataSource]="alerts" matSort (matSortChange)="sortAlerts($event)">              <!-- Name Column -->              <ng-container matColumnDef="name">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>                <td mat-cell *matCellDef="let alert">{{ alert.name }}</td>              </ng-container>              <!-- Severity Column -->              <ng-container matColumnDef="severity">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>                <td mat-cell *matCellDef="let alert">                  <mat-chip [ngClass]="getSeverityClass(alert.severity)">                    {{ getSeverityLabel(alert.severity) }}                  </mat-chip>                </td>              </ng-container>              <!-- Condition Column -->              <ng-container matColumnDef="condition">                <th mat-header-cell *matHeaderCellDef>Condition</th>                <td mat-cell *matCellDef="let alert">                  {{ getConditionDescription(alert.condition) }}                </td>              </ng-container>              <!-- Notifications Column -->              <ng-container matColumnDef="notifications">                <th mat-header-cell *matHeaderCellDef>Notifications</th>                <td mat-cell *matCellDef="let alert">                  <div class="notification-channels">                    <mat-icon *ngIf="hasChannel(alert, \'ui\')" matTooltip="UI Notification">                      notifications                    </mat-icon>                    <mat-icon                      *ngIf="hasChannel(alert, \'email\')"                      matTooltip="Email Notification"                    >                      email                    </mat-icon>                    <mat-icon                      *ngIf="hasChannel(alert, \'slack\')"                      matTooltip="Slack Notification"                    >                      chat                    </mat-icon>                    <mat-icon                      *ngIf="hasChannel(alert, \'webhook\')"                      matTooltip="Webhook Notification"                    >                      http                    </mat-icon>                  </div>                </td>              </ng-container>              <!-- Status Column -->              <ng-container matColumnDef="status">                <th mat-header-cell *matHeaderCellDef>Status</th>                <td mat-cell *matCellDef="let alert">                  <mat-slide-toggle                    [checked]="alert.enabled"                    (change)="toggleAlert(alert, $event.checked)"                    color="primary"                  ></mat-slide-toggle>                </td>              </ng-container>              <!-- Actions Column -->              <ng-container matColumnDef="actions">                <th mat-header-cell *matHeaderCellDef>Actions</th>                <td mat-cell *matCellDef="let alert">                  <button                    mat-icon-button                    color="primary"                    (click)="editAlert(alert)"                    matTooltip="Edit"                  >                    <mat-icon>edit</mat-icon>                  </button>                  <button                    mat-icon-button                    color="primary"                    (click)="testAlert(alert)"                    matTooltip="Test"                  >                    <mat-icon>play_arrow</mat-icon>                  </button>                  <button                    mat-icon-button                    color="warn"                    (click)="deleteAlert(alert)"                    matTooltip="Delete"                  >                    <mat-icon>delete</mat-icon>                  </button>                </td>              </ng-container>              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>            </table>            <mat-paginator              [pageSize]="pageSize"              [pageSizeOptions]="[5, 10, 25, 50]"              [length]="totalAlerts"              (page)="onPageChange($event)"            ></mat-paginator>          </mat-card-content>        </mat-card>      </div>    </mat-tab>    <mat-tab label="Active Alerts">      <div class="active-alerts-container">        <mat-card>          <mat-card-content>            <table              mat-table              [dataSource]="activeAlerts"              matSort              (matSortChange)="sortActiveAlerts($event)"            >              <!-- Timestamp Column -->              <ng-container matColumnDef="timestamp">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>                <td mat-cell *matCellDef="let event">{{ event.timestamp | date: \'medium\' }}</td>              </ng-container>              <!-- Alert Name Column -->              <ng-container matColumnDef="alertName">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Alert</th>                <td mat-cell *matCellDef="let event">{{ event.alertName }}</td>              </ng-container>              <!-- Severity Column -->              <ng-container matColumnDef="severity">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>                <td mat-cell *matCellDef="let event">                  <mat-chip [ngClass]="getSeverityClass(event.severity)">                    {{ getSeverityLabel(event.severity) }}                  </mat-chip>                </td>              </ng-container>              <!-- Message Column -->              <ng-container matColumnDef="message">                <th mat-header-cell *matHeaderCellDef>Message</th>                <td mat-cell *matCellDef="let event">{{ event.message }}</td>              </ng-container>              <!-- Status Column -->              <ng-container matColumnDef="status">                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>                <td mat-cell *matCellDef="let event">                  <span                    class="status-badge"                    [ngClass]="event.acknowledged ? \'acknowledged\' : \'unacknowledged\'"                  >                    {{ event.acknowledged ? \'Acknowledged\' : \'Unacknowledged\' }}                  </span>                </td>              </ng-container>              <!-- Actions Column -->              <ng-container matColumnDef="actions">                <th mat-header-cell *matHeaderCellDef>Actions</th>                <td mat-cell *matCellDef="let event">                  <button                    mat-icon-button                    color="primary"                    (click)="acknowledgeAlert(event)"                    [disabled]="event.acknowledged"                    matTooltip="Acknowledge"                  >                    <mat-icon>check_circle</mat-icon>                  </button>                  <button                    mat-icon-button                    color="primary"                    (click)="viewAlertDetails(event)"                    matTooltip="View Details"                  >                    <mat-icon>info</mat-icon>                  </button>                </td>              </ng-container>              <tr mat-header-row *matHeaderRowDef="activeDisplayedColumns"></tr>              <tr mat-row *matRowDef="let row; columns: activeDisplayedColumns"></tr>            </table>          </mat-card-content>        </mat-card>      </div>    </mat-tab>  </mat-tab-group></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AlertManagementComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AlertManagementComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

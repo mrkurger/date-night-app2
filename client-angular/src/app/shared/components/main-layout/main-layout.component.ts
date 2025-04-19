@@ -14,7 +14,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { AdService } from '../../../core/services/ad.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Ad } from '../../../core/models/ad.interface';
-import { EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
+import { ToggleComponent as EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
 

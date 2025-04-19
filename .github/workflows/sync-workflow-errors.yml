@@ -5,9 +5,18 @@ on:
     workflows: ['*']
     types:
       - completed
+    conclusion:
+      - failure
+      - cancelled
+      - timed_out
   schedule:
     - cron: '0 */6 * * *' # Run every 6 hours
   workflow_dispatch: # Allow manual triggering
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   sync-error-logs:
@@ -17,6 +26,7 @@ jobs:
     permissions:
       contents: write
       actions: read
+    timeout-minutes: 30 # Add timeout to prevent runaway jobs
 
     steps:
       - name: Checkout repository
@@ -83,27 +93,10 @@ jobs:
           The logs are fetched using the GitHub API and processed with the `adm-zip` library to extract text content from zip files when necessary. This ensures that all logs are stored in a readable text format.
           EOF
 
-      - name: Commit and push logs
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-          # Handle any unstaged changes by stashing them
-          git stash -u || true
-
-          # Pull the latest changes with rebase strategy to avoid merge commits
-          git pull --rebase origin main
-
-          # Pop the stash if we stashed anything
-          git stash list | grep -q "stash@{0}" && git stash pop || true
-
-          # Add only the workflow-errors directory
-          git add downloaded-reports/workflow-errors
-
-          # Only commit if there are changes
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update workflow error logs [skip ci]"
-            git push
-          fi
+      - name: Upload workflow error logs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-error-logs-${{ github.event.workflow_run.id || github.run_id }}
+          path: downloaded-reports/workflow-errors/
+          retention-days: 30 # Keep logs for 30 days
+          if-no-files-found: warn

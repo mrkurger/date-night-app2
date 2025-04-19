@@ -39,9 +39,12 @@ module.exports = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
 
-  // Don't ignore any transformations
-  transformIgnorePatterns: [],
+  // Tell Jest to treat these patterns as CommonJS
+  transformIgnorePatterns: ['/node_modules/', 'tests/'],
 
   // Verbose output for test results
   verbose: true,
+
+  // Ensure proper handling of ES modules
+  moduleFileExtensions: ['js', 'json', 'node'],
 };

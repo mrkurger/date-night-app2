@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (telemetry-dashboard.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -630,9 +639,9 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  viewErrorDetails(error: any): void {
+  viewErrorDetails(error: unknown): void {
     // Open a dialog or navigate to a details page
-    console.log('Error details:', error);
+    console.warn('Error details:', error);
     // Implement dialog or navigation logic
   }
 }

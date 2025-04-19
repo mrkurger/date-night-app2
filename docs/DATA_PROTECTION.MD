@@ -60,7 +60,7 @@ We classify data into the following categories to determine appropriate protecti
 - **File attachments**: Encrypted before upload
 - **Key management**: Keys generated and stored client-side only
 
-For detailed information about the end-to-end encryption implementation, see [END_TO_END_ENCRYPTION.md](END_TO_END_ENCRYPTION.md).
+For detailed information about the end-to-end encryption implementation, see [END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md).
 
 ## Data Storage
 

@@ -1,0 +1,747 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LabelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/emerald/components/label/label.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Emerald Label Component</p>
+<p>A wrapper for the Emerald.js Label component.
+This component displays a label with various styles and variants.</p>
+<p>Documentation: <a href="https://docs-emerald.condorlabs.io/Label">https://docs-emerald.condorlabs.io/Label</a></p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>emerald-label</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./label.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./label.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#icon" >icon</a>
+                            </li>
+                            <li>
+                                <a href="#outlined" >outlined</a>
+                            </li>
+                            <li>
+                                <a href="#pill" >pill</a>
+                            </li>
+                            <li>
+                                <a href="#rounded" >rounded</a>
+                            </li>
+                            <li>
+                                <a href="#size" >size</a>
+                            </li>
+                            <li>
+                                <a href="#text" >text</a>
+                            </li>
+                            <li>
+                                <a href="#variant" >variant</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="icon"></a>
+                        <b>icon</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="outlined"></a>
+                        <b>outlined</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pill"></a>
+                        <b>pill</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rounded"></a>
+                        <b>rounded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="size"></a>
+                        <b>size</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;small&quot; | &quot;medium&quot; | &quot;large&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;medium&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="text"></a>
+                        <b>text</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:29</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="variant"></a>
+                        <b>variant</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;primary&quot; | &quot;success&quot; | &quot;warning&quot; | &quot;danger&quot; | &quot;info&quot; | &quot;neutral&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;primary&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/shared/emerald/components/label/label.component.ts:30</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+
+/**
+ * Emerald Label Component
+ *
+ * A wrapper for the Emerald.js Label component.
+ * This component displays a label with various styles and variants.
+ *
+ * Documentation: https://docs-emerald.condorlabs.io/Label
+ */
+@Component({
+  selector: &#x27;emerald-label&#x27;,
+  templateUrl: &#x27;./label.component.html&#x27;,
+  styleUrls: [&#x27;./label.component.scss&#x27;],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class LabelComponent {
+  @Input() text &#x3D; &#x27;&#x27;;
+  @Input() variant: &#x27;primary&#x27; | &#x27;success&#x27; | &#x27;warning&#x27; | &#x27;danger&#x27; | &#x27;info&#x27; | &#x27;neutral&#x27; &#x3D; &#x27;primary&#x27;;
+  @Input() size: &#x27;small&#x27; | &#x27;medium&#x27; | &#x27;large&#x27; &#x3D; &#x27;medium&#x27;;
+  @Input() icon?: string;
+  @Input() rounded &#x3D; false;
+  @Input() outlined &#x3D; false;
+  @Input() pill &#x3D; false;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Emerald Label Component --&gt;
+&lt;!-- Documentation: https://docs-emerald.condorlabs.io/Label --&gt;
+
+&lt;span
+  class&#x3D;&quot;emerald-label&quot;
+  [ngClass]&#x3D;&quot;{
+    &#x27;emerald-label--primary&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;primary&#x27;,
+    &#x27;emerald-label--success&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;success&#x27;,
+    &#x27;emerald-label--warning&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;warning&#x27;,
+    &#x27;emerald-label--danger&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;danger&#x27;,
+    &#x27;emerald-label--info&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;info&#x27;,
+    &#x27;emerald-label--neutral&#x27;: variant &#x3D;&#x3D;&#x3D; &#x27;neutral&#x27;,
+    &#x27;emerald-label--small&#x27;: size &#x3D;&#x3D;&#x3D; &#x27;small&#x27;,
+    &#x27;emerald-label--medium&#x27;: size &#x3D;&#x3D;&#x3D; &#x27;medium&#x27;,
+    &#x27;emerald-label--large&#x27;: size &#x3D;&#x3D;&#x3D; &#x27;large&#x27;,
+    &#x27;emerald-label--rounded&#x27;: rounded,
+    &#x27;emerald-label--outlined&#x27;: outlined,
+    &#x27;emerald-label--pill&#x27;: pill,
+  }&quot;
+&gt;
+  &lt;!-- Icon (if provided) --&gt;
+  &lt;i *ngIf&#x3D;&quot;icon&quot; class&#x3D;&quot;emerald-label__icon {{ icon }}&quot;&gt;&lt;/i&gt;
+
+  &lt;!-- Label Text --&gt;
+  &lt;span class&#x3D;&quot;emerald-label__text&quot;&gt;{{ text }}&lt;/span&gt;
+&lt;/span&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./label.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../core/design/design-tokens&#x27;;
+
+// Define missing variables
+$success-100: lighten($success, 40%);
+$success-300: lighten($success, 20%);
+$success-700: darken($success, 10%);
+
+$warning-100: lighten($warning, 40%);
+$warning-300: lighten($warning, 20%);
+$warning-700: darken($warning, 10%);
+
+$danger-100: lighten($error, 40%);
+$danger-300: lighten($error, 20%);
+$danger-700: darken($error, 10%);
+
+$info-100: lighten($info, 40%);
+$info-300: lighten($info, 20%);
+$info-700: darken($info, 10%);
+
+// Emerald Label Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/Label
+
+.emerald-label {
+  display: inline-flex;
+  align-items: center;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-sm;
+
+  // Label Sizes
+  &amp;--small {
+    padding: 2px 6px;
+    font-size: $font-size-xs;
+
+    .emerald-label__icon {
+      font-size: 10px;
+      margin-right: 4px;
+    }
+  }
+
+  &amp;--medium {
+    padding: 4px 8px;
+    font-size: $font-size-sm;
+
+    .emerald-label__icon {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+
+  &amp;--large {
+    padding: 6px 12px;
+    font-size: $font-size-base;
+
+    .emerald-label__icon {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+  }
+
+  // Label Variants
+  &amp;--primary {
+    background-color: $primary-100;
+    color: $primary-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $primary-300;
+    }
+  }
+
+  &amp;--success {
+    background-color: $success-100;
+    color: $success-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $success-300;
+    }
+  }
+
+  &amp;--warning {
+    background-color: $warning-100;
+    color: $warning-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $warning-300;
+    }
+  }
+
+  &amp;--danger {
+    background-color: $danger-100;
+    color: $danger-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $danger-300;
+    }
+  }
+
+  &amp;--info {
+    background-color: $info-100;
+    color: $info-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $info-300;
+    }
+  }
+
+  &amp;--neutral {
+    background-color: $neutral-200;
+    color: $neutral-700;
+
+    &amp;.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $neutral-300;
+    }
+  }
+
+  // Label Shapes
+  &amp;--rounded {
+    border-radius: $border-radius-md;
+  }
+
+  &amp;--pill {
+    border-radius: 9999px;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Emerald Label Component --><!-- Documentation: https://docs-emerald.condorlabs.io/Label --><span  class="emerald-label"  [ngClass]="{    \'emerald-label--primary\': variant === \'primary\',    \'emerald-label--success\': variant === \'success\',    \'emerald-label--warning\': variant === \'warning\',    \'emerald-label--danger\': variant === \'danger\',    \'emerald-label--info\': variant === \'info\',    \'emerald-label--neutral\': variant === \'neutral\',    \'emerald-label--small\': size === \'small\',    \'emerald-label--medium\': size === \'medium\',    \'emerald-label--large\': size === \'large\',    \'emerald-label--rounded\': rounded,    \'emerald-label--outlined\': outlined,    \'emerald-label--pill\': pill,  }">  <!-- Icon (if provided) -->  <i *ngIf="icon" class="emerald-label__icon {{ icon }}"></i>  <!-- Label Text -->  <span class="emerald-label__text">{{ text }}</span></span></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LabelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LabelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

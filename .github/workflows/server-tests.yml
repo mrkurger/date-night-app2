@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
+    timeout-minutes: 20 # Add timeout to prevent runaway jobs
 
     strategy:
       matrix:
@@ -67,6 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
+    timeout-minutes: 10 # Add timeout to prevent runaway jobs
 
     strategy:
       matrix:

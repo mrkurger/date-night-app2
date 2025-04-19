@@ -5,7 +5,7 @@ import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Alert, AlertEvent, AlertConditionType, AlertSeverity } from '../models/alert.model';
 import { TelemetrySocketService } from './telemetry-socket.service';
-import { ErrorCategory } from '../interceptors/http-error.interceptor';
+import { ErrorCategory } from '../interceptors/error-category.enum';
 
 /**
  * Service for managing custom alerts

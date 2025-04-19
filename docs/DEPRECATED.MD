@@ -127,5 +127,12 @@ If you find code that should be deprecated but is not listed in this document, p
 2. Adding an entry to this document
 3. Creating an issue in the project's issue tracker
 
+## Dependency Management
 
-<!-- TODO: Manually review timelines, ensure dependency info moved. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+For detailed information about dependency management, including deprecated dependencies and their replacements, see [DEPENDENCY_MANAGEMENT.MD](/docs/DEPENDENCY_MANAGEMENT.MD).
+
+## Document History
+
+- **2025-05-20**: Updated removal timelines and verified dependency information
+- **2025-04-18**: Added deprecated dependencies section
+- **2025-03-15**: Initial version of the deprecated code document

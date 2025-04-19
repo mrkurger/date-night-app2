@@ -20,8 +20,8 @@ describe('PreferencesDemoComponent', () => {
   let mockUserPreferencesService: jasmine.SpyObj<UserPreferencesService>;
   let preferencesSubject: BehaviorSubject<any>;
 
-  const MOCK_PREFERENCES = {
-    defaultViewType: 'netflix',
+  const MOCK_PREFERENCES: any = {
+    defaultViewType: 'netflix' as 'netflix' | 'tinder' | 'list',
     contentDensity: 'comfortable',
     cardSize: 'medium',
     savedFilters: {},
@@ -45,16 +45,23 @@ describe('PreferencesDemoComponent', () => {
     // Configure the mock service
     mockUserPreferencesService.getPreferences.and.returnValue(MOCK_PREFERENCES);
     mockUserPreferencesService.preferences$ = preferencesSubject.asObservable();
-    mockUserPreferencesService.contentDensityOptions = [
-      { value: 'comfortable', label: 'Comfortable' },
-      { value: 'compact', label: 'Compact' },
-      { value: 'condensed', label: 'Condensed' },
-    ];
-    mockUserPreferencesService.cardSizeOptions = [
-      { value: 'small', label: 'Small' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'large', label: 'Large' },
-    ];
+
+    // Create getters for the options
+    Object.defineProperty(mockUserPreferencesService, 'contentDensityOptions', {
+      get: () => [
+        { value: 'comfortable', label: 'Comfortable' },
+        { value: 'compact', label: 'Compact' },
+        { value: 'condensed', label: 'Condensed' },
+      ],
+    });
+
+    Object.defineProperty(mockUserPreferencesService, 'cardSizeOptions', {
+      get: () => [
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'large', label: 'Large' },
+      ],
+    });
 
     await TestBed.configureTestingModule({
       imports: [PreferencesDemoComponent],

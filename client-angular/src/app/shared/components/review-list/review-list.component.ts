@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (review-list.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -392,7 +401,7 @@ export class ReviewListComponent implements OnInit {
 
   respondToReview(reviewId: string, response: string): void {
     this.reviewService.respondToReview(reviewId, response).subscribe({
-      next: updatedReview => {
+      next: () => {
         // Update the review in the list
         const reviewIndex = this.reviews.findIndex(r => r._id === reviewId);
         if (reviewIndex !== -1) {
@@ -425,7 +434,7 @@ export class ReviewListComponent implements OnInit {
     if (stored) {
       try {
         this.helpfulMarked = JSON.parse(stored);
-      } catch (e) {
+      } catch {
         this.helpfulMarked = [];
       }
     }
@@ -436,7 +445,7 @@ export class ReviewListComponent implements OnInit {
     if (stored) {
       try {
         this.reportedReviews = JSON.parse(stored);
-      } catch (e) {
+      } catch {
         this.reportedReviews = [];
       }
     }

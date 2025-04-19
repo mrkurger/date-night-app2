@@ -9,7 +9,7 @@
 // ===================================================
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter, withPreloading } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
 import { routes, routingProviders } from './app.routes';
@@ -18,6 +18,9 @@ import { SharedModule } from './shared/material.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { cspInterceptor } from './core/interceptors/csp.interceptor';
+import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 
 const socketConfig: SocketIoConfig = {
   url: environment.socketUrl || 'http://localhost:3000',
@@ -28,7 +31,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: true, // Enable PWA in all environments

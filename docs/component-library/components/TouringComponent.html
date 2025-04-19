@@ -1,0 +1,1541 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TouringComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/touring/touring.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-touring</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>RouterModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./touring.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./touring.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cities" >cities</a>
+                            </li>
+                            <li>
+                                <a href="#counties" >counties</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#touringAds" >touringAds</a>
+                            </li>
+                            <li>
+                                <a href="#upcomingTours" >upcomingTours</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#formatDate" >formatDate</a>
+                            </li>
+                            <li>
+                                <a href="#loadTouringAdvertisers" >loadTouringAdvertisers</a>
+                            </li>
+                            <li>
+                                <a href="#loadUpcomingTours" >loadUpcomingTours</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#resetFilters" >resetFilters</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(travelService: <a href="../injectables/TravelService.html" target="_self">TravelService</a>, notificationService: <a href="../injectables/NotificationService.html" target="_self">NotificationService</a>, fb: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/features/touring/touring.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>travelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TravelService.html" target="_self" >TravelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatDate"></a>
+                    <span class="name">
+                        <span ><b>formatDate</b></span>
+                        <a href="#formatDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatDate(date: string | Date)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/features/touring/touring.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>date</td>
+                                            <td>
+                                                        <code>string | Date</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTouringAdvertisers"></a>
+                    <span class="name">
+                        <span ><b>loadTouringAdvertisers</b></span>
+                        <a href="#loadTouringAdvertisers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadTouringAdvertisers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/features/touring/touring.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUpcomingTours"></a>
+                    <span class="name">
+                        <span ><b>loadUpcomingTours</b></span>
+                        <a href="#loadUpcomingTours"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUpcomingTours()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/app/features/touring/touring.component.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/features/touring/touring.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFilters"></a>
+                    <span class="name">
+                        <span ><b>resetFilters</b></span>
+                        <a href="#resetFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/features/touring/touring.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cities"></a>
+                    <span class="name">
+                        <span ><b>cities</b></span>
+                        <a href="#cities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Oslo&#x27;,
+    &#x27;Bergen&#x27;,
+    &#x27;Trondheim&#x27;,
+    &#x27;Stavanger&#x27;,
+    &#x27;Drammen&#x27;,
+    &#x27;Fredrikstad&#x27;,
+    &#x27;Kristiansand&#x27;,
+    &#x27;Sandnes&#x27;,
+    &#x27;Tromsø&#x27;,
+    &#x27;Ålesund&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/features/touring/touring.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="counties"></a>
+                    <span class="name">
+                        <span ><b>counties</b></span>
+                        <a href="#counties"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Agder&#x27;,
+    &#x27;Innlandet&#x27;,
+    &#x27;Møre og Romsdal&#x27;,
+    &#x27;Nordland&#x27;,
+    &#x27;Oslo&#x27;,
+    &#x27;Rogaland&#x27;,
+    &#x27;Troms og Finnmark&#x27;,
+    &#x27;Trøndelag&#x27;,
+    &#x27;Vestfold og Telemark&#x27;,
+    &#x27;Vestland&#x27;,
+    &#x27;Viken&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/features/touring/touring.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/features/touring/touring.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/features/touring/touring.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="touringAds"></a>
+                    <span class="name">
+                        <span ><b>touringAds</b></span>
+                        <a href="#touringAds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TouringAd[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/features/touring/touring.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="upcomingTours"></a>
+                    <span class="name">
+                        <span ><b>upcomingTours</b></span>
+                        <a href="#upcomingTours"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TouringAd[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/features/touring/touring.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { FormBuilder, FormGroup, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { TravelService, TouringAd } from &#x27;../../core/services/travel.service&#x27;;
+import { NotificationService } from &#x27;../../core/services/notification.service&#x27;;
+import { finalize, catchError } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-touring&#x27;,
+  templateUrl: &#x27;./touring.component.html&#x27;,
+  styleUrls: [&#x27;./touring.component.scss&#x27;],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+})
+export class TouringComponent implements OnInit {
+  touringAds: TouringAd[] &#x3D; [];
+  upcomingTours: TouringAd[] &#x3D; [];
+  loading &#x3D; false;
+  filterForm: FormGroup;
+
+  // Norwegian counties for filter
+  counties &#x3D; [
+    &#x27;Agder&#x27;,
+    &#x27;Innlandet&#x27;,
+    &#x27;Møre og Romsdal&#x27;,
+    &#x27;Nordland&#x27;,
+    &#x27;Oslo&#x27;,
+    &#x27;Rogaland&#x27;,
+    &#x27;Troms og Finnmark&#x27;,
+    &#x27;Trøndelag&#x27;,
+    &#x27;Vestfold og Telemark&#x27;,
+    &#x27;Vestland&#x27;,
+    &#x27;Viken&#x27;,
+  ];
+
+  // Major cities for filter
+  cities &#x3D; [
+    &#x27;Oslo&#x27;,
+    &#x27;Bergen&#x27;,
+    &#x27;Trondheim&#x27;,
+    &#x27;Stavanger&#x27;,
+    &#x27;Drammen&#x27;,
+    &#x27;Fredrikstad&#x27;,
+    &#x27;Kristiansand&#x27;,
+    &#x27;Sandnes&#x27;,
+    &#x27;Tromsø&#x27;,
+    &#x27;Ålesund&#x27;,
+  ];
+
+  constructor(
+    private travelService: TravelService,
+    private notificationService: NotificationService,
+    private fb: FormBuilder
+  ) {
+    this.filterForm &#x3D; this.fb.group({
+      county: [&#x27;&#x27;],
+      city: [&#x27;&#x27;],
+      days: [30],
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadTouringAdvertisers();
+    this.loadUpcomingTours();
+
+    // Subscribe to filter changes
+    this.filterForm.valueChanges.subscribe(() &#x3D;&gt; {
+      this.loadUpcomingTours();
+    });
+  }
+
+  loadTouringAdvertisers(): void {
+    this.loading &#x3D; true;
+
+    this.travelService
+      .getTouringAdvertisers()
+      .pipe(
+        catchError(error &#x3D;&gt; {
+          this.notificationService.error(&#x27;Failed to load touring advertisers&#x27;);
+          console.error(&#x27;Error loading touring advertisers:&#x27;, error);
+          return of({ success: false, count: 0, data: [] });
+        }),
+        finalize(() &#x3D;&gt; {
+          this.loading &#x3D; false;
+        })
+      )
+      .subscribe(response &#x3D;&gt; {
+        if (response.success) {
+          this.touringAds &#x3D; response.data;
+        }
+      });
+  }
+
+  loadUpcomingTours(): void {
+    const { county, city, days } &#x3D; this.filterForm.value;
+
+    this.loading &#x3D; true;
+
+    this.travelService
+      .getUpcomingTours(city, county, days)
+      .pipe(
+        catchError(error &#x3D;&gt; {
+          this.notificationService.error(&#x27;Failed to load upcoming tours&#x27;);
+          console.error(&#x27;Error loading upcoming tours:&#x27;, error);
+          return of({ success: false, count: 0, data: [] });
+        }),
+        finalize(() &#x3D;&gt; {
+          this.loading &#x3D; false;
+        })
+      )
+      .subscribe(response &#x3D;&gt; {
+        if (response.success) {
+          this.upcomingTours &#x3D; response.data;
+        }
+      });
+  }
+
+  resetFilters(): void {
+    this.filterForm.reset({
+      county: &#x27;&#x27;,
+      city: &#x27;&#x27;,
+      days: 30,
+    });
+  }
+
+  // Format date for display
+  formatDate(date: string | Date): string {
+    return new Date(date).toLocaleDateString();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;touring-container&quot;&gt;
+  &lt;div class&#x3D;&quot;header&quot;&gt;
+    &lt;h1&gt;Touring Advertisers&lt;/h1&gt;
+    &lt;p class&#x3D;&quot;subtitle&quot;&gt;
+      Find advertisers who are currently touring or planning to visit your area
+    &lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;!-- Currently Touring Section --&gt;
+    &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+      &lt;div class&#x3D;&quot;card&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header&quot;&gt;
+          &lt;h2&gt;Currently Touring&lt;/h2&gt;
+          &lt;p&gt;Advertisers who are currently on tour&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-body&quot;&gt;
+          &lt;div *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;text-center&quot;&gt;
+            &lt;div class&#x3D;&quot;spinner-border&quot;&gt;&lt;/div&gt;
+            &lt;p&gt;Loading touring advertisers...&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!loading &amp;&amp; touringAds.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;text-center&quot;&gt;
+            &lt;p&gt;No advertisers are currently touring.&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!loading &amp;&amp; touringAds.length &gt; 0&quot; class&#x3D;&quot;touring-grid&quot;&gt;
+            &lt;div *ngFor&#x3D;&quot;let ad of touringAds&quot; class&#x3D;&quot;touring-card&quot;&gt;
+              &lt;div class&#x3D;&quot;touring-card-image&quot;&gt;
+                &lt;img [src]&#x3D;&quot;ad.profileImage&quot; [alt]&#x3D;&quot;ad.title&quot; /&gt;
+                &lt;div class&#x3D;&quot;touring-badge&quot;&gt;Touring&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;touring-card-content&quot;&gt;
+                &lt;h3&gt;{{ ad.title }}&lt;/h3&gt;
+                &lt;p class&#x3D;&quot;advertiser&quot;&gt;{{ ad.advertiser.username }}&lt;/p&gt;
+                &lt;p class&#x3D;&quot;location&quot;&gt;
+                  &lt;i class&#x3D;&quot;fas fa-map-marker-alt&quot;&gt;&lt;/i&gt;
+                  {{ ad.city }}, {{ ad.county }}
+                &lt;/p&gt;
+                &lt;div class&#x3D;&quot;touring-card-actions&quot;&gt;
+                  &lt;a [routerLink]&#x3D;&quot;[&#x27;/ad-details&#x27;, ad._id]&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;View Profile&lt;/a&gt;
+                  &lt;a
+                    [routerLink]&#x3D;&quot;[&#x27;/chat&#x27;]&quot;
+                    [queryParams]&#x3D;&quot;{ adId: ad._id }&quot;
+                    class&#x3D;&quot;btn btn-outline-primary&quot;
+                  &gt;
+                    &lt;i class&#x3D;&quot;fas fa-comment&quot;&gt;&lt;/i&gt; Chat
+                  &lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Upcoming Tours Section --&gt;
+    &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+      &lt;div class&#x3D;&quot;card&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header&quot;&gt;
+          &lt;h2&gt;Upcoming Tours&lt;/h2&gt;
+          &lt;p&gt;Advertisers who are planning to tour soon&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-body&quot;&gt;
+          &lt;!-- Filter Form --&gt;
+          &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                &lt;div class&#x3D;&quot;form-group&quot;&gt;
+                  &lt;label for&#x3D;&quot;county&quot;&gt;County&lt;/label&gt;
+                  &lt;select id&#x3D;&quot;county&quot; formControlName&#x3D;&quot;county&quot; class&#x3D;&quot;form-control&quot;&gt;
+                    &lt;option value&#x3D;&quot;&quot;&gt;All Counties&lt;/option&gt;
+                    &lt;option *ngFor&#x3D;&quot;let county of counties&quot; [value]&#x3D;&quot;county&quot;&gt;{{ county }}&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                &lt;div class&#x3D;&quot;form-group&quot;&gt;
+                  &lt;label for&#x3D;&quot;city&quot;&gt;City&lt;/label&gt;
+                  &lt;select id&#x3D;&quot;city&quot; formControlName&#x3D;&quot;city&quot; class&#x3D;&quot;form-control&quot;&gt;
+                    &lt;option value&#x3D;&quot;&quot;&gt;All Cities&lt;/option&gt;
+                    &lt;option *ngFor&#x3D;&quot;let city of cities&quot; [value]&#x3D;&quot;city&quot;&gt;{{ city }}&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                &lt;div class&#x3D;&quot;form-group&quot;&gt;
+                  &lt;label for&#x3D;&quot;days&quot;&gt;Days Ahead&lt;/label&gt;
+                  &lt;select id&#x3D;&quot;days&quot; formControlName&#x3D;&quot;days&quot; class&#x3D;&quot;form-control&quot;&gt;
+                    &lt;option [value]&#x3D;&quot;7&quot;&gt;Next 7 days&lt;/option&gt;
+                    &lt;option [value]&#x3D;&quot;14&quot;&gt;Next 14 days&lt;/option&gt;
+                    &lt;option [value]&#x3D;&quot;30&quot;&gt;Next 30 days&lt;/option&gt;
+                    &lt;option [value]&#x3D;&quot;90&quot;&gt;Next 3 months&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;filter-actions&quot;&gt;
+              &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-outline-secondary&quot; (click)&#x3D;&quot;resetFilters()&quot;&gt;
+                Reset Filters
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+
+          &lt;div *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;text-center mt-4&quot;&gt;
+            &lt;div class&#x3D;&quot;spinner-border&quot;&gt;&lt;/div&gt;
+            &lt;p&gt;Loading upcoming tours...&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!loading &amp;&amp; upcomingTours.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;text-center mt-4&quot;&gt;
+            &lt;p&gt;No upcoming tours match your filters.&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!loading &amp;&amp; upcomingTours.length &gt; 0&quot; class&#x3D;&quot;upcoming-list mt-4&quot;&gt;
+            &lt;div *ngFor&#x3D;&quot;let ad of upcomingTours&quot; class&#x3D;&quot;upcoming-item&quot;&gt;
+              &lt;div class&#x3D;&quot;upcoming-image&quot;&gt;
+                &lt;img [src]&#x3D;&quot;ad.profileImage&quot; [alt]&#x3D;&quot;ad.title&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;upcoming-content&quot;&gt;
+                &lt;h3&gt;{{ ad.title }}&lt;/h3&gt;
+                &lt;p class&#x3D;&quot;advertiser&quot;&gt;{{ ad.advertiser.username }}&lt;/p&gt;
+
+                &lt;div *ngFor&#x3D;&quot;let itinerary of ad.travelItinerary&quot; class&#x3D;&quot;itinerary-item&quot;&gt;
+                  &lt;div *ngIf&#x3D;&quot;itinerary.status &#x3D;&#x3D;&#x3D; &#x27;planned&#x27;&quot; class&#x3D;&quot;itinerary-details&quot;&gt;
+                    &lt;div class&#x3D;&quot;destination&quot;&gt;
+                      &lt;i class&#x3D;&quot;fas fa-map-marker-alt&quot;&gt;&lt;/i&gt;
+                      {{ itinerary.destination.city }}, {{ itinerary.destination.county }}
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;dates&quot;&gt;
+                      &lt;i class&#x3D;&quot;far fa-calendar-alt&quot;&gt;&lt;/i&gt;
+                      {{ formatDate(itinerary.arrivalDate) }} -
+                      {{ formatDate(itinerary.departureDate) }}
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class&#x3D;&quot;upcoming-actions&quot;&gt;
+                  &lt;a [routerLink]&#x3D;&quot;[&#x27;/ad-details&#x27;, ad._id]&quot; class&#x3D;&quot;btn btn-sm btn-primary&quot;
+                    &gt;View Profile&lt;/a
+                  &gt;
+                  &lt;a
+                    [routerLink]&#x3D;&quot;[&#x27;/chat&#x27;]&quot;
+                    [queryParams]&#x3D;&quot;{ adId: ad._id }&quot;
+                    class&#x3D;&quot;btn btn-sm btn-outline-primary&quot;
+                  &gt;
+                    &lt;i class&#x3D;&quot;fas fa-comment&quot;&gt;&lt;/i&gt; Chat
+                  &lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./touring.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.touring-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+}
+
+.card {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+  overflow: hidden;
+
+  .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+}
+
+.touring-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.touring-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &amp;:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .touring-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &amp;:hover img {
+      transform: scale(1.05);
+    }
+
+    .touring-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #ff4081;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+  }
+
+  .touring-card-content {
+    padding: 15px;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .advertiser {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .location {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+
+      i {
+        color: #ff4081;
+        margin-right: 5px;
+      }
+    }
+
+    .touring-card-actions {
+      display: flex;
+      gap: 10px;
+
+      .btn {
+        flex: 1;
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+    }
+  }
+}
+
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.upcoming-item {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &amp;:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .upcoming-image {
+    width: 100px;
+    min-width: 100px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .upcoming-content {
+    padding: 15px;
+    flex: 1;
+
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .advertiser {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .itinerary-item {
+      margin-bottom: 10px;
+
+      .itinerary-details {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+
+        .destination {
+          margin-bottom: 5px;
+
+          i {
+            color: #ff4081;
+            margin-right: 5px;
+          }
+        }
+
+        .dates {
+          color: #555;
+
+          i {
+            color: #666;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+
+    .upcoming-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.filter-form {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: block;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .form-control {
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.btn {
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &amp;.btn-primary {
+    background-color: #ff4081;
+    border-color: #ff4081;
+
+    &amp;:hover:not(:disabled) {
+      background-color: #f50057;
+      border-color: #f50057;
+    }
+  }
+
+  &amp;.btn-outline-primary {
+    color: #ff4081;
+    border-color: #ff4081;
+
+    &amp;:hover:not(:disabled) {
+      background-color: #ff4081;
+      color: white;
+    }
+  }
+
+  &amp;.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+
+    &amp;:hover:not(:disabled) {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-md-4 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col-md-6 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (min-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="touring-container">  <div class="header">    <h1>Touring Advertisers</h1>    <p class="subtitle">      Find advertisers who are currently touring or planning to visit your area    </p>  </div>  <div class="row">    <!-- Currently Touring Section -->    <div class="col-md-6">      <div class="card">        <div class="card-header">          <h2>Currently Touring</h2>          <p>Advertisers who are currently on tour</p>        </div>        <div class="card-body">          <div *ngIf="loading" class="text-center">            <div class="spinner-border"></div>            <p>Loading touring advertisers...</p>          </div>          <div *ngIf="!loading && touringAds.length === 0" class="text-center">            <p>No advertisers are currently touring.</p>          </div>          <div *ngIf="!loading && touringAds.length > 0" class="touring-grid">            <div *ngFor="let ad of touringAds" class="touring-card">              <div class="touring-card-image">                <img [src]="ad.profileImage" [alt]="ad.title" />                <div class="touring-badge">Touring</div>              </div>              <div class="touring-card-content">                <h3>{{ ad.title }}</h3>                <p class="advertiser">{{ ad.advertiser.username }}</p>                <p class="location">                  <i class="fas fa-map-marker-alt"></i>                  {{ ad.city }}, {{ ad.county }}                </p>                <div class="touring-card-actions">                  <a [routerLink]="[\'/ad-details\', ad._id]" class="btn btn-primary">View Profile</a>                  <a                    [routerLink]="[\'/chat\']"                    [queryParams]="{ adId: ad._id }"                    class="btn btn-outline-primary"                  >                    <i class="fas fa-comment"></i> Chat                  </a>                </div>              </div>            </div>          </div>        </div>      </div>    </div>    <!-- Upcoming Tours Section -->    <div class="col-md-6">      <div class="card">        <div class="card-header">          <h2>Upcoming Tours</h2>          <p>Advertisers who are planning to tour soon</p>        </div>        <div class="card-body">          <!-- Filter Form -->          <form [formGroup]="filterForm" class="filter-form">            <div class="row">              <div class="col-md-4">                <div class="form-group">                  <label for="county">County</label>                  <select id="county" formControlName="county" class="form-control">                    <option value="">All Counties</option>                    <option *ngFor="let county of counties" [value]="county">{{ county }}</option>                  </select>                </div>              </div>              <div class="col-md-4">                <div class="form-group">                  <label for="city">City</label>                  <select id="city" formControlName="city" class="form-control">                    <option value="">All Cities</option>                    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>                  </select>                </div>              </div>              <div class="col-md-4">                <div class="form-group">                  <label for="days">Days Ahead</label>                  <select id="days" formControlName="days" class="form-control">                    <option [value]="7">Next 7 days</option>                    <option [value]="14">Next 14 days</option>                    <option [value]="30">Next 30 days</option>                    <option [value]="90">Next 3 months</option>                  </select>                </div>              </div>            </div>            <div class="filter-actions">              <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">                Reset Filters              </button>            </div>          </form>          <div *ngIf="loading" class="text-center mt-4">            <div class="spinner-border"></div>            <p>Loading upcoming tours...</p>          </div>          <div *ngIf="!loading && upcomingTours.length === 0" class="text-center mt-4">            <p>No upcoming tours match your filters.</p>          </div>          <div *ngIf="!loading && upcomingTours.length > 0" class="upcoming-list mt-4">            <div *ngFor="let ad of upcomingTours" class="upcoming-item">              <div class="upcoming-image">                <img [src]="ad.profileImage" [alt]="ad.title" />              </div>              <div class="upcoming-content">                <h3>{{ ad.title }}</h3>                <p class="advertiser">{{ ad.advertiser.username }}</p>                <div *ngFor="let itinerary of ad.travelItinerary" class="itinerary-item">                  <div *ngIf="itinerary.status === \'planned\'" class="itinerary-details">                    <div class="destination">                      <i class="fas fa-map-marker-alt"></i>                      {{ itinerary.destination.city }}, {{ itinerary.destination.county }}                    </div>                    <div class="dates">                      <i class="far fa-calendar-alt"></i>                      {{ formatDate(itinerary.arrivalDate) }} -                      {{ formatDate(itinerary.departureDate) }}                    </div>                  </div>                </div>                <div class="upcoming-actions">                  <a [routerLink]="[\'/ad-details\', ad._id]" class="btn btn-sm btn-primary"                    >View Profile</a                  >                  <a                    [routerLink]="[\'/chat\']"                    [queryParams]="{ adId: ad._id }"                    class="btn btn-sm btn-outline-primary"                  >                    <i class="fas fa-comment"></i> Chat                  </a>                </div>              </div>            </div>          </div>        </div>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TouringComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TouringComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (breadcrumbs.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
@@ -42,9 +51,11 @@ export class BreadcrumbsComponent implements OnInit {
     ];
 
     // Subscribe to route changes to update breadcrumbs
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
-    });
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
+      });
   }
 
   private createBreadcrumbs(

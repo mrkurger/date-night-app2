@@ -1,0 +1,1859 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DesignSystemDemoComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/design-system-demo/design-system-demo.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Design System Demo Component</p>
+<p>A demonstration of the DateNight.io design system components.
+This component showcases various components and their variants.</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-design-system-demo</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                            <code>ReactiveFormsModule</code>
+                                <code><a href="../components/ButtonComponent.html" target="_self" >ButtonComponent</a></code>
+                                <code><a href="../components/CardComponent.html" target="_self" >CardComponent</a></code>
+                                <code><a href="../components/IconComponent.html" target="_self" >IconComponent</a></code>
+                                <code><a href="../components/InputComponent.html" target="_self" >InputComponent</a></code>
+                                <code><a href="../components/CheckboxComponent.html" target="_self" >CheckboxComponent</a></code>
+                                <code><a href="../components/SelectComponent.html" target="_self" >SelectComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./design-system-demo.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./design-system-demo.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkboxValue" >checkboxValue</a>
+                            </li>
+                            <li>
+                                <a href="#inputValue" >inputValue</a>
+                            </li>
+                            <li>
+                                <a href="#passwordValue" >passwordValue</a>
+                            </li>
+                            <li>
+                                <a href="#selectOptions" >selectOptions</a>
+                            </li>
+                            <li>
+                                <a href="#selectValue" >selectValue</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onButtonClick" >onButtonClick</a>
+                            </li>
+                            <li>
+                                <a href="#onCheckboxChange" >onCheckboxChange</a>
+                            </li>
+                            <li>
+                                <a href="#onInputChange" >onInputChange</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectChange" >onSelectChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onButtonClick"></a>
+                    <span class="name">
+                        <span ><b>onButtonClick</b></span>
+                        <a href="#onButtonClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onButtonClick(event: MouseEvent, buttonName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles button click events.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>MouseEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The mouse event</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>buttonName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The name of the button that was clicked</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCheckboxChange"></a>
+                    <span class="name">
+                        <span ><b>onCheckboxChange</b></span>
+                        <a href="#onCheckboxChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCheckboxChange(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, checkboxName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles checkbox value change events.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The new checkbox value</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>checkboxName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The name of the checkbox that changed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onInputChange"></a>
+                    <span class="name">
+                        <span ><b>onInputChange</b></span>
+                        <a href="#onInputChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onInputChange(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, inputName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles input value change events.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The new input value</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>inputName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The name of the input that changed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectChange"></a>
+                    <span class="name">
+                        <span ><b>onSelectChange</b></span>
+                        <a href="#onSelectChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectChange(value: string | number, selectName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles select value change events.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>string | number</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The new select value</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>selectName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The name of the select that changed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkboxValue"></a>
+                    <span class="name">
+                        <span ><b>checkboxValue</b></span>
+                        <a href="#checkboxValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inputValue"></a>
+                    <span class="name">
+                        <span ><b>inputValue</b></span>
+                        <a href="#inputValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordValue"></a>
+                    <span class="name">
+                        <span ><b>passwordValue</b></span>
+                        <a href="#passwordValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectOptions"></a>
+                    <span class="name">
+                        <span ><b>selectOptions</b></span>
+                        <a href="#selectOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/SelectOption.html" target="_self" >SelectOption[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: &#x27;option1&#x27;, label: &#x27;Option 1&#x27; },
+    { value: &#x27;option2&#x27;, label: &#x27;Option 2&#x27; },
+    { value: &#x27;option3&#x27;, label: &#x27;Option 3&#x27; },
+    { value: &#x27;option4&#x27;, label: &#x27;Option 4&#x27;, disabled: true },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectValue"></a>
+                    <span class="name">
+                        <span ><b>selectValue</b></span>
+                        <a href="#selectValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/features/design-system-demo/design-system-demo.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { ButtonComponent } from &#x27;../../shared/components/button/button.component&#x27;;
+import { CardComponent } from &#x27;../../shared/components/card/card.component&#x27;;
+import { IconComponent } from &#x27;../../shared/components/icon/icon.component&#x27;;
+import { InputComponent } from &#x27;../../shared/components/input/input.component&#x27;;
+import { CheckboxComponent } from &#x27;../../shared/components/checkbox/checkbox.component&#x27;;
+import { SelectComponent, SelectOption } from &#x27;../../shared/components/select/select.component&#x27;;
+
+/**
+ * Design System Demo Component
+ *
+ * A demonstration of the DateNight.io design system components.
+ * This component showcases various components and their variants.
+ */
+@Component({
+  selector: &#x27;app-design-system-demo&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    CardComponent,
+    IconComponent,
+    InputComponent,
+    CheckboxComponent,
+    SelectComponent,
+  ],
+  templateUrl: &#x27;./design-system-demo.component.html&#x27;,
+  styleUrls: [&#x27;./design-system-demo.component.scss&#x27;],
+})
+export class DesignSystemDemoComponent {
+  // Form values
+  inputValue &#x3D; &#x27;&#x27;;
+  passwordValue &#x3D; &#x27;&#x27;;
+  checkboxValue &#x3D; false;
+  selectValue &#x3D; &#x27;&#x27;;
+
+  // Select options
+  selectOptions: SelectOption[] &#x3D; [
+    { value: &#x27;option1&#x27;, label: &#x27;Option 1&#x27; },
+    { value: &#x27;option2&#x27;, label: &#x27;Option 2&#x27; },
+    { value: &#x27;option3&#x27;, label: &#x27;Option 3&#x27; },
+    { value: &#x27;option4&#x27;, label: &#x27;Option 4&#x27;, disabled: true },
+  ];
+
+  /**
+   * Handles button click events.
+   * @param event The mouse event
+   * @param buttonName The name of the button that was clicked
+   */
+  onButtonClick(event: MouseEvent, buttonName: string): void {
+    console.log(&#x60;Button clicked: ${buttonName}&#x60;, event);
+  }
+
+  /**
+   * Handles input value change events.
+   * @param value The new input value
+   * @param inputName The name of the input that changed
+   */
+  onInputChange(value: string, inputName: string): void {
+    console.log(&#x60;Input changed: ${inputName}&#x60;, value);
+  }
+
+  /**
+   * Handles checkbox value change events.
+   * @param value The new checkbox value
+   * @param checkboxName The name of the checkbox that changed
+   */
+  onCheckboxChange(value: boolean, checkboxName: string): void {
+    console.log(&#x60;Checkbox changed: ${checkboxName}&#x60;, value);
+  }
+
+  /**
+   * Handles select value change events.
+   * @param value The new select value
+   * @param selectName The name of the select that changed
+   */
+  onSelectChange(value: string | number, selectName: string): void {
+    console.log(&#x60;Select changed: ${selectName}&#x60;, value);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;design-demo&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;header class&#x3D;&quot;design-demo__header&quot;&gt;
+      &lt;h1 class&#x3D;&quot;design-demo__title&quot;&gt;DateNight.io Design System&lt;/h1&gt;
+      &lt;p class&#x3D;&quot;design-demo__description&quot;&gt;
+        This page demonstrates the components and styles available in the DateNight.io design
+        system.
+      &lt;/p&gt;
+    &lt;/header&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Typography&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;design-demo__card-grid&quot;&gt;
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-1&quot;&gt;Heading 1&lt;/h3&gt;
+          &lt;h3 class&#x3D;&quot;heading-2&quot;&gt;Heading 2&lt;/h3&gt;
+          &lt;h3 class&#x3D;&quot;heading-3&quot;&gt;Heading 3&lt;/h3&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Heading 4&lt;/h3&gt;
+          &lt;h3 class&#x3D;&quot;heading-5&quot;&gt;Heading 5&lt;/h3&gt;
+          &lt;h3 class&#x3D;&quot;heading-6&quot;&gt;Heading 6&lt;/h3&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;p class&#x3D;&quot;body-large&quot;&gt;Body Large: This is larger body text used for featured content.&lt;/p&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;
+            Body Default: This is the default body text used for most content.
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;body-small&quot;&gt;
+            Body Small: This is smaller body text used for secondary content.
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;body-xs&quot;&gt;
+            Body XS: This is extra small text used for fine print and legal text.
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;caption&quot;&gt;
+            Caption: This is used for image captions and supplementary information.
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;label&quot;&gt;Label: This is used for form labels and small headers.&lt;/p&gt;
+        &lt;/app-card&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Colors&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;design-demo__card-grid&quot;&gt;
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Primary Colors&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;color-grid&quot;&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-primary&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Primary&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-primary-light)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Primary Light&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-primary-dark)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Primary Dark&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Secondary Colors&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;color-grid&quot;&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-secondary&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Secondary&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-secondary-light)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Secondary Light&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-secondary-dark)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Secondary Dark&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Semantic Colors&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;color-grid&quot;&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-success&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Success&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-warning&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Warning&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-danger&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Danger&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-info&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Info&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Neutral Colors&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;color-grid&quot;&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-white&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;White&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-light&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Light Gray 1&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-light-gray-2)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Light Gray 2&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-medium-gray-1)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Medium Gray 1&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-medium-gray-2)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Medium Gray 2&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-dark-gray-1)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Dark Gray 1&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;color-swatch__sample&quot;
+                style&#x3D;&quot;background-color: var(--color-dark-gray-2)&quot;
+              &gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Dark Gray 2&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;color-swatch&quot;&gt;
+              &lt;div class&#x3D;&quot;color-swatch__sample bg-dark&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;color-swatch__name&quot;&gt;Dark Gray 3&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Buttons&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;design-demo__card-grid&quot;&gt;
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Button Variants&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;button-grid&quot;&gt;
+            &lt;app-button variant&#x3D;&quot;primary&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Primary&#x27;)&quot;&gt;
+              Primary
+            &lt;/app-button&gt;
+
+            &lt;app-button variant&#x3D;&quot;secondary&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Secondary&#x27;)&quot;&gt;
+              Secondary
+            &lt;/app-button&gt;
+
+            &lt;app-button variant&#x3D;&quot;tertiary&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Tertiary&#x27;)&quot;&gt;
+              Tertiary
+            &lt;/app-button&gt;
+
+            &lt;app-button variant&#x3D;&quot;danger&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Danger&#x27;)&quot;&gt;
+              Danger
+            &lt;/app-button&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Button Sizes&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;button-grid&quot;&gt;
+            &lt;app-button size&#x3D;&quot;small&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Small&#x27;)&quot;&gt;
+              Small
+            &lt;/app-button&gt;
+
+            &lt;app-button size&#x3D;&quot;medium&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Medium&#x27;)&quot;&gt;
+              Medium
+            &lt;/app-button&gt;
+
+            &lt;app-button size&#x3D;&quot;large&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Large&#x27;)&quot;&gt;
+              Large
+            &lt;/app-button&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Button States&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;button-grid&quot;&gt;
+            &lt;app-button disabled&gt; Disabled &lt;/app-button&gt;
+
+            &lt;app-button loading&gt; Loading &lt;/app-button&gt;
+
+            &lt;app-button fullWidth&gt; Full Width &lt;/app-button&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Buttons with Icons&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;button-grid&quot;&gt;
+            &lt;app-button iconLeft&#x3D;&quot;arrow-left&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Icon Left&#x27;)&quot;&gt;
+              Back
+            &lt;/app-button&gt;
+
+            &lt;app-button iconRight&#x3D;&quot;arrow-right&quot; (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Icon Right&#x27;)&quot;&gt;
+              Next
+            &lt;/app-button&gt;
+
+            &lt;app-button
+              variant&#x3D;&quot;secondary&quot;
+              iconLeft&#x3D;&quot;heart&quot;
+              (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Icon Left Secondary&#x27;)&quot;
+            &gt;
+              Favorite
+            &lt;/app-button&gt;
+
+            &lt;app-button
+              variant&#x3D;&quot;tertiary&quot;
+              iconRight&#x3D;&quot;search&quot;
+              (buttonClick)&#x3D;&quot;onButtonClick($event, &#x27;Icon Right Tertiary&#x27;)&quot;
+            &gt;
+              Search
+            &lt;/app-button&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Form Inputs&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;design-demo__card-grid&quot;&gt;
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Text Inputs&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-input
+              label&#x3D;&quot;Default Input&quot;
+              placeholder&#x3D;&quot;Enter text&quot;
+              [(ngModel)]&#x3D;&quot;inputValue&quot;
+              (valueChange)&#x3D;&quot;onInputChange($event, &#x27;Default Input&#x27;)&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input
+              label&#x3D;&quot;Input with Icon&quot;
+              placeholder&#x3D;&quot;Search...&quot;
+              iconLeft&#x3D;&quot;search&quot;
+              [(ngModel)]&#x3D;&quot;inputValue&quot;
+              (valueChange)&#x3D;&quot;onInputChange($event, &#x27;Input with Icon&#x27;)&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input
+              label&#x3D;&quot;Password Input&quot;
+              type&#x3D;&quot;password&quot;
+              placeholder&#x3D;&quot;Enter password&quot;
+              [(ngModel)]&#x3D;&quot;passwordValue&quot;
+              (valueChange)&#x3D;&quot;onInputChange($event, &#x27;Password Input&#x27;)&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input
+              label&#x3D;&quot;Disabled Input&quot;
+              placeholder&#x3D;&quot;This input is disabled&quot;
+              [disabled]&#x3D;&quot;true&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input
+              label&#x3D;&quot;Input with Error&quot;
+              placeholder&#x3D;&quot;Enter text&quot;
+              errorMessage&#x3D;&quot;This field is required&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input
+              label&#x3D;&quot;Input with Helper Text&quot;
+              placeholder&#x3D;&quot;Enter text&quot;
+              helperText&#x3D;&quot;This is some helper text&quot;
+            &gt;
+            &lt;/app-input&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Input Variants&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-input
+              label&#x3D;&quot;Outlined Input (Default)&quot;
+              placeholder&#x3D;&quot;Outlined input&quot;
+              variant&#x3D;&quot;outlined&quot;
+            &gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input label&#x3D;&quot;Filled Input&quot; placeholder&#x3D;&quot;Filled input&quot; variant&#x3D;&quot;filled&quot;&gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input label&#x3D;&quot;Standard Input&quot; placeholder&#x3D;&quot;Standard input&quot; variant&#x3D;&quot;standard&quot;&gt;
+            &lt;/app-input&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Input Sizes&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-input label&#x3D;&quot;Small Input&quot; placeholder&#x3D;&quot;Small input&quot; size&#x3D;&quot;small&quot;&gt; &lt;/app-input&gt;
+
+            &lt;app-input label&#x3D;&quot;Medium Input (Default)&quot; placeholder&#x3D;&quot;Medium input&quot; size&#x3D;&quot;medium&quot;&gt;
+            &lt;/app-input&gt;
+
+            &lt;app-input label&#x3D;&quot;Large Input&quot; placeholder&#x3D;&quot;Large input&quot; size&#x3D;&quot;large&quot;&gt; &lt;/app-input&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Checkboxes&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-checkbox
+              label&#x3D;&quot;Default Checkbox&quot;
+              [(ngModel)]&#x3D;&quot;checkboxValue&quot;
+              (valueChange)&#x3D;&quot;onCheckboxChange($event, &#x27;Default Checkbox&#x27;)&quot;
+            &gt;
+            &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Checked Checkbox&quot; [checked]&#x3D;&quot;true&quot;&gt; &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Disabled Checkbox&quot; [disabled]&#x3D;&quot;true&quot;&gt; &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Disabled Checked Checkbox&quot; [checked]&#x3D;&quot;true&quot; [disabled]&#x3D;&quot;true&quot;&gt;
+            &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Checkbox with Error&quot; errorMessage&#x3D;&quot;This field is required&quot;&gt;
+            &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Checkbox with Helper Text&quot; helperText&#x3D;&quot;This is some helper text&quot;&gt;
+            &lt;/app-checkbox&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Checkbox Sizes&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-checkbox label&#x3D;&quot;Small Checkbox&quot; size&#x3D;&quot;small&quot;&gt; &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Medium Checkbox (Default)&quot; size&#x3D;&quot;medium&quot;&gt; &lt;/app-checkbox&gt;
+
+            &lt;app-checkbox label&#x3D;&quot;Large Checkbox&quot; size&#x3D;&quot;large&quot;&gt; &lt;/app-checkbox&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Select Inputs&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-select
+              label&#x3D;&quot;Default Select&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              [(ngModel)]&#x3D;&quot;selectValue&quot;
+              (valueChange)&#x3D;&quot;onSelectChange($event, &#x27;Default Select&#x27;)&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Disabled Select&quot;
+              placeholder&#x3D;&quot;This select is disabled&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              [disabled]&#x3D;&quot;true&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Select with Error&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              errorMessage&#x3D;&quot;This field is required&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Select with Helper Text&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              helperText&#x3D;&quot;This is some helper text&quot;
+            &gt;
+            &lt;/app-select&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Select Variants&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-select
+              label&#x3D;&quot;Outlined Select (Default)&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              variant&#x3D;&quot;outlined&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Filled Select&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              variant&#x3D;&quot;filled&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Standard Select&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              variant&#x3D;&quot;standard&quot;
+            &gt;
+            &lt;/app-select&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Select Sizes&lt;/h3&gt;
+          &lt;div class&#x3D;&quot;form-grid&quot;&gt;
+            &lt;app-select
+              label&#x3D;&quot;Small Select&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              size&#x3D;&quot;small&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Medium Select (Default)&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              size&#x3D;&quot;medium&quot;
+            &gt;
+            &lt;/app-select&gt;
+
+            &lt;app-select
+              label&#x3D;&quot;Large Select&quot;
+              placeholder&#x3D;&quot;Select an option&quot;
+              [options]&#x3D;&quot;selectOptions&quot;
+              size&#x3D;&quot;large&quot;
+            &gt;
+            &lt;/app-select&gt;
+          &lt;/div&gt;
+        &lt;/app-card&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Cards&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;design-demo__card-grid&quot;&gt;
+        &lt;app-card&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Default Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This is a default card with medium padding and border radius.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card [bordered]&#x3D;&quot;false&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Borderless Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card has no border, only shadow.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card [shadowed]&#x3D;&quot;false&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;No Shadow Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card has a border but no shadow.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card padding&#x3D;&quot;large&quot; radius&#x3D;&quot;large&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Large Padding &amp; Radius&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card has large padding and border radius.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card padding&#x3D;&quot;small&quot; radius&#x3D;&quot;small&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Small Padding &amp; Radius&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card has small padding and border radius.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card [clickable]&#x3D;&quot;true&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Clickable Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card is clickable and has hover effects.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card [selected]&#x3D;&quot;true&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Selected Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card is in a selected state.&lt;/p&gt;
+        &lt;/app-card&gt;
+
+        &lt;app-card [disabled]&#x3D;&quot;true&quot;&gt;
+          &lt;h3 class&#x3D;&quot;heading-4&quot;&gt;Disabled Card&lt;/h3&gt;
+          &lt;p class&#x3D;&quot;body-default&quot;&gt;This card is in a disabled state.&lt;/p&gt;
+        &lt;/app-card&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;design-demo__section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;design-demo__section-title&quot;&gt;Icons&lt;/h2&gt;
+
+      &lt;app-card&gt;
+        &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Icon Sizes &amp; Colors&lt;/h3&gt;
+        &lt;div class&#x3D;&quot;icon-grid&quot;&gt;
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; size&#x3D;&quot;small&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Small&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; size&#x3D;&quot;medium&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Medium&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; size&#x3D;&quot;large&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Large&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;primary&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Primary&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;secondary&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Secondary&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;success&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Success&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;warning&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Warning&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;error&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Error&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot; color&#x3D;&quot;info&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;Info&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/app-card&gt;
+
+      &lt;app-card class&#x3D;&quot;mt-4&quot;&gt;
+        &lt;h3 class&#x3D;&quot;heading-4 mb-4&quot;&gt;Available Icons&lt;/h3&gt;
+        &lt;div class&#x3D;&quot;icon-grid&quot;&gt;
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;arrow-right&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;arrow-right&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;arrow-left&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;arrow-left&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;check&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;check&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;close&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;close&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;heart&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;heart&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;search&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;search&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;chevron-down&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;chevron-down&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;eye&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;eye&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;icon-demo&quot;&gt;
+            &lt;app-icon name&#x3D;&quot;eye-off&quot;&gt;&lt;/app-icon&gt;
+            &lt;span class&#x3D;&quot;icon-demo__label&quot;&gt;eye-off&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/app-card&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./design-system-demo.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">/**
+ * Design System Demo Component Styles
+ */
+
+@use &#x27;src/app/core/design/main&#x27; as ds;
+
+.design-demo {
+  padding: ds.$spacing-8 0;
+
+  &amp;__header {
+    margin-bottom: ds.$spacing-8;
+    text-align: center;
+  }
+
+  &amp;__title {
+    @include ds.heading-1;
+    color: ds.$color-primary;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &amp;__description {
+    @include ds.body-large;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &amp;__section {
+    margin-bottom: ds.$spacing-12;
+  }
+
+  &amp;__section-title {
+    @include ds.heading-2;
+    margin-bottom: ds.$spacing-6;
+    position: relative;
+
+    &amp;:after {
+      content: &#x27;&#x27;;
+      position: absolute;
+      bottom: -ds.$spacing-3;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: ds.$color-primary;
+      border-radius: ds.$border-radius-full;
+    }
+  }
+
+  &amp;__card-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: ds.$spacing-4;
+
+    @media (min-width: ds.$breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: ds.$breakpoint-desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: ds.$breakpoint-desktop-large) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+// Typography examples
+.heading-1 {
+  @include ds.heading-1;
+}
+
+.heading-2 {
+  @include ds.heading-2;
+}
+
+.heading-3 {
+  @include ds.heading-3;
+}
+
+.heading-4 {
+  @include ds.heading-4;
+}
+
+.heading-5 {
+  @include ds.heading-5;
+}
+
+.heading-6 {
+  @include ds.heading-6;
+}
+
+.body-large {
+  @include ds.body-large;
+}
+
+.body-default {
+  @include ds.body-default;
+}
+
+.body-small {
+  @include ds.body-small;
+}
+
+.body-xs {
+  @include ds.body-xs;
+}
+
+.caption {
+  @include ds.caption;
+}
+
+.label {
+  @include ds.label;
+}
+
+// Color swatches
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: ds.$spacing-3;
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &amp;__sample {
+    width: 60px;
+    height: 60px;
+    border-radius: ds.$border-radius-md;
+    margin-bottom: ds.$spacing-2;
+    border: 1px solid ds.$color-light-gray-2;
+  }
+
+  &amp;__name {
+    @include ds.body-small;
+    text-align: center;
+  }
+}
+
+// Button grid
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  gap: ds.$spacing-3;
+}
+
+// Form grid
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: ds.$spacing-4;
+}
+
+// Icon grid
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: ds.$spacing-4;
+}
+
+.icon-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &amp;__label {
+    @include ds.caption;
+    margin-top: ds.$spacing-2;
+    text-align: center;
+  }
+}
+
+// CSS Variables for color swatches
+:root {
+  --color-primary: #{ds.$color-primary};
+  --color-primary-light: #{ds.$color-primary-light};
+  --color-primary-dark: #{ds.$color-primary-dark};
+
+  --color-secondary: #{ds.$color-secondary};
+  --color-secondary-light: #{ds.$color-secondary-light};
+  --color-secondary-dark: #{ds.$color-secondary-dark};
+
+  --color-light-gray-2: #{ds.$color-light-gray-2};
+  --color-medium-gray-1: #{ds.$color-medium-gray-1};
+  --color-medium-gray-2: #{ds.$color-medium-gray-2};
+  --color-dark-gray-1: #{ds.$color-dark-gray-1};
+  --color-dark-gray-2: #{ds.$color-dark-gray-2};
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .design-demo {
+      &amp;__title {
+        color: ds.$color-primary-light;
+      }
+
+      &amp;__section-title {
+        &amp;:after {
+          background-color: ds.$color-primary-light;
+        }
+      }
+    }
+
+    .color-swatch {
+      &amp;__sample {
+        border-color: ds.$color-dark-gray-1;
+      }
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="design-demo">  <div class="container">    <header class="design-demo__header">      <h1 class="design-demo__title">DateNight.io Design System</h1>      <p class="design-demo__description">        This page demonstrates the components and styles available in the DateNight.io design        system.      </p>    </header>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Typography</h2>      <div class="design-demo__card-grid">        <app-card>          <h3 class="heading-1">Heading 1</h3>          <h3 class="heading-2">Heading 2</h3>          <h3 class="heading-3">Heading 3</h3>          <h3 class="heading-4">Heading 4</h3>          <h3 class="heading-5">Heading 5</h3>          <h3 class="heading-6">Heading 6</h3>        </app-card>        <app-card>          <p class="body-large">Body Large: This is larger body text used for featured content.</p>          <p class="body-default">            Body Default: This is the default body text used for most content.          </p>          <p class="body-small">            Body Small: This is smaller body text used for secondary content.          </p>          <p class="body-xs">            Body XS: This is extra small text used for fine print and legal text.          </p>          <p class="caption">            Caption: This is used for image captions and supplementary information.          </p>          <p class="label">Label: This is used for form labels and small headers.</p>        </app-card>      </div>    </section>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Colors</h2>      <div class="design-demo__card-grid">        <app-card>          <h3 class="heading-4 mb-4">Primary Colors</h3>          <div class="color-grid">            <div class="color-swatch">              <div class="color-swatch__sample bg-primary"></div>              <div class="color-swatch__name">Primary</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-primary-light)"              ></div>              <div class="color-swatch__name">Primary Light</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-primary-dark)"              ></div>              <div class="color-swatch__name">Primary Dark</div>            </div>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Secondary Colors</h3>          <div class="color-grid">            <div class="color-swatch">              <div class="color-swatch__sample bg-secondary"></div>              <div class="color-swatch__name">Secondary</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-secondary-light)"              ></div>              <div class="color-swatch__name">Secondary Light</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-secondary-dark)"              ></div>              <div class="color-swatch__name">Secondary Dark</div>            </div>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Semantic Colors</h3>          <div class="color-grid">            <div class="color-swatch">              <div class="color-swatch__sample bg-success"></div>              <div class="color-swatch__name">Success</div>            </div>            <div class="color-swatch">              <div class="color-swatch__sample bg-warning"></div>              <div class="color-swatch__name">Warning</div>            </div>            <div class="color-swatch">              <div class="color-swatch__sample bg-danger"></div>              <div class="color-swatch__name">Danger</div>            </div>            <div class="color-swatch">              <div class="color-swatch__sample bg-info"></div>              <div class="color-swatch__name">Info</div>            </div>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Neutral Colors</h3>          <div class="color-grid">            <div class="color-swatch">              <div class="color-swatch__sample bg-white"></div>              <div class="color-swatch__name">White</div>            </div>            <div class="color-swatch">              <div class="color-swatch__sample bg-light"></div>              <div class="color-swatch__name">Light Gray 1</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-light-gray-2)"              ></div>              <div class="color-swatch__name">Light Gray 2</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-medium-gray-1)"              ></div>              <div class="color-swatch__name">Medium Gray 1</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-medium-gray-2)"              ></div>              <div class="color-swatch__name">Medium Gray 2</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-dark-gray-1)"              ></div>              <div class="color-swatch__name">Dark Gray 1</div>            </div>            <div class="color-swatch">              <div                class="color-swatch__sample"                style="background-color: var(--color-dark-gray-2)"              ></div>              <div class="color-swatch__name">Dark Gray 2</div>            </div>            <div class="color-swatch">              <div class="color-swatch__sample bg-dark"></div>              <div class="color-swatch__name">Dark Gray 3</div>            </div>          </div>        </app-card>      </div>    </section>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Buttons</h2>      <div class="design-demo__card-grid">        <app-card>          <h3 class="heading-4 mb-4">Button Variants</h3>          <div class="button-grid">            <app-button variant="primary" (buttonClick)="onButtonClick($event, \'Primary\')">              Primary            </app-button>            <app-button variant="secondary" (buttonClick)="onButtonClick($event, \'Secondary\')">              Secondary            </app-button>            <app-button variant="tertiary" (buttonClick)="onButtonClick($event, \'Tertiary\')">              Tertiary            </app-button>            <app-button variant="danger" (buttonClick)="onButtonClick($event, \'Danger\')">              Danger            </app-button>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Button Sizes</h3>          <div class="button-grid">            <app-button size="small" (buttonClick)="onButtonClick($event, \'Small\')">              Small            </app-button>            <app-button size="medium" (buttonClick)="onButtonClick($event, \'Medium\')">              Medium            </app-button>            <app-button size="large" (buttonClick)="onButtonClick($event, \'Large\')">              Large            </app-button>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Button States</h3>          <div class="button-grid">            <app-button disabled> Disabled </app-button>            <app-button loading> Loading </app-button>            <app-button fullWidth> Full Width </app-button>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Buttons with Icons</h3>          <div class="button-grid">            <app-button iconLeft="arrow-left" (buttonClick)="onButtonClick($event, \'Icon Left\')">              Back            </app-button>            <app-button iconRight="arrow-right" (buttonClick)="onButtonClick($event, \'Icon Right\')">              Next            </app-button>            <app-button              variant="secondary"              iconLeft="heart"              (buttonClick)="onButtonClick($event, \'Icon Left Secondary\')"            >              Favorite            </app-button>            <app-button              variant="tertiary"              iconRight="search"              (buttonClick)="onButtonClick($event, \'Icon Right Tertiary\')"            >              Search            </app-button>          </div>        </app-card>      </div>    </section>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Form Inputs</h2>      <div class="design-demo__card-grid">        <app-card>          <h3 class="heading-4 mb-4">Text Inputs</h3>          <div class="form-grid">            <app-input              label="Default Input"              placeholder="Enter text"              [(ngModel)]="inputValue"              (valueChange)="onInputChange($event, \'Default Input\')"            >            </app-input>            <app-input              label="Input with Icon"              placeholder="Search..."              iconLeft="search"              [(ngModel)]="inputValue"              (valueChange)="onInputChange($event, \'Input with Icon\')"            >            </app-input>            <app-input              label="Password Input"              type="password"              placeholder="Enter password"              [(ngModel)]="passwordValue"              (valueChange)="onInputChange($event, \'Password Input\')"            >            </app-input>            <app-input              label="Disabled Input"              placeholder="This input is disabled"              [disabled]="true"            >            </app-input>            <app-input              label="Input with Error"              placeholder="Enter text"              errorMessage="This field is required"            >            </app-input>            <app-input              label="Input with Helper Text"              placeholder="Enter text"              helperText="This is some helper text"            >            </app-input>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Input Variants</h3>          <div class="form-grid">            <app-input              label="Outlined Input (Default)"              placeholder="Outlined input"              variant="outlined"            >            </app-input>            <app-input label="Filled Input" placeholder="Filled input" variant="filled">            </app-input>            <app-input label="Standard Input" placeholder="Standard input" variant="standard">            </app-input>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Input Sizes</h3>          <div class="form-grid">            <app-input label="Small Input" placeholder="Small input" size="small"> </app-input>            <app-input label="Medium Input (Default)" placeholder="Medium input" size="medium">            </app-input>            <app-input label="Large Input" placeholder="Large input" size="large"> </app-input>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Checkboxes</h3>          <div class="form-grid">            <app-checkbox              label="Default Checkbox"              [(ngModel)]="checkboxValue"              (valueChange)="onCheckboxChange($event, \'Default Checkbox\')"            >            </app-checkbox>            <app-checkbox label="Checked Checkbox" [checked]="true"> </app-checkbox>            <app-checkbox label="Disabled Checkbox" [disabled]="true"> </app-checkbox>            <app-checkbox label="Disabled Checked Checkbox" [checked]="true" [disabled]="true">            </app-checkbox>            <app-checkbox label="Checkbox with Error" errorMessage="This field is required">            </app-checkbox>            <app-checkbox label="Checkbox with Helper Text" helperText="This is some helper text">            </app-checkbox>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Checkbox Sizes</h3>          <div class="form-grid">            <app-checkbox label="Small Checkbox" size="small"> </app-checkbox>            <app-checkbox label="Medium Checkbox (Default)" size="medium"> </app-checkbox>            <app-checkbox label="Large Checkbox" size="large"> </app-checkbox>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Select Inputs</h3>          <div class="form-grid">            <app-select              label="Default Select"              placeholder="Select an option"              [options]="selectOptions"              [(ngModel)]="selectValue"              (valueChange)="onSelectChange($event, \'Default Select\')"            >            </app-select>            <app-select              label="Disabled Select"              placeholder="This select is disabled"              [options]="selectOptions"              [disabled]="true"            >            </app-select>            <app-select              label="Select with Error"              placeholder="Select an option"              [options]="selectOptions"              errorMessage="This field is required"            >            </app-select>            <app-select              label="Select with Helper Text"              placeholder="Select an option"              [options]="selectOptions"              helperText="This is some helper text"            >            </app-select>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Select Variants</h3>          <div class="form-grid">            <app-select              label="Outlined Select (Default)"              placeholder="Select an option"              [options]="selectOptions"              variant="outlined"            >            </app-select>            <app-select              label="Filled Select"              placeholder="Select an option"              [options]="selectOptions"              variant="filled"            >            </app-select>            <app-select              label="Standard Select"              placeholder="Select an option"              [options]="selectOptions"              variant="standard"            >            </app-select>          </div>        </app-card>        <app-card>          <h3 class="heading-4 mb-4">Select Sizes</h3>          <div class="form-grid">            <app-select              label="Small Select"              placeholder="Select an option"              [options]="selectOptions"              size="small"            >            </app-select>            <app-select              label="Medium Select (Default)"              placeholder="Select an option"              [options]="selectOptions"              size="medium"            >            </app-select>            <app-select              label="Large Select"              placeholder="Select an option"              [options]="selectOptions"              size="large"            >            </app-select>          </div>        </app-card>      </div>    </section>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Cards</h2>      <div class="design-demo__card-grid">        <app-card>          <h3 class="heading-4">Default Card</h3>          <p class="body-default">This is a default card with medium padding and border radius.</p>        </app-card>        <app-card [bordered]="false">          <h3 class="heading-4">Borderless Card</h3>          <p class="body-default">This card has no border, only shadow.</p>        </app-card>        <app-card [shadowed]="false">          <h3 class="heading-4">No Shadow Card</h3>          <p class="body-default">This card has a border but no shadow.</p>        </app-card>        <app-card padding="large" radius="large">          <h3 class="heading-4">Large Padding & Radius</h3>          <p class="body-default">This card has large padding and border radius.</p>        </app-card>        <app-card padding="small" radius="small">          <h3 class="heading-4">Small Padding & Radius</h3>          <p class="body-default">This card has small padding and border radius.</p>        </app-card>        <app-card [clickable]="true">          <h3 class="heading-4">Clickable Card</h3>          <p class="body-default">This card is clickable and has hover effects.</p>        </app-card>        <app-card [selected]="true">          <h3 class="heading-4">Selected Card</h3>          <p class="body-default">This card is in a selected state.</p>        </app-card>        <app-card [disabled]="true">          <h3 class="heading-4">Disabled Card</h3>          <p class="body-default">This card is in a disabled state.</p>        </app-card>      </div>    </section>    <section class="design-demo__section">      <h2 class="design-demo__section-title">Icons</h2>      <app-card>        <h3 class="heading-4 mb-4">Icon Sizes & Colors</h3>        <div class="icon-grid">          <div class="icon-demo">            <app-icon name="heart" size="small"></app-icon>            <span class="icon-demo__label">Small</span>          </div>          <div class="icon-demo">            <app-icon name="heart" size="medium"></app-icon>            <span class="icon-demo__label">Medium</span>          </div>          <div class="icon-demo">            <app-icon name="heart" size="large"></app-icon>            <span class="icon-demo__label">Large</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="primary"></app-icon>            <span class="icon-demo__label">Primary</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="secondary"></app-icon>            <span class="icon-demo__label">Secondary</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="success"></app-icon>            <span class="icon-demo__label">Success</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="warning"></app-icon>            <span class="icon-demo__label">Warning</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="error"></app-icon>            <span class="icon-demo__label">Error</span>          </div>          <div class="icon-demo">            <app-icon name="heart" color="info"></app-icon>            <span class="icon-demo__label">Info</span>          </div>        </div>      </app-card>      <app-card class="mt-4">        <h3 class="heading-4 mb-4">Available Icons</h3>        <div class="icon-grid">          <div class="icon-demo">            <app-icon name="arrow-right"></app-icon>            <span class="icon-demo__label">arrow-right</span>          </div>          <div class="icon-demo">            <app-icon name="arrow-left"></app-icon>            <span class="icon-demo__label">arrow-left</span>          </div>          <div class="icon-demo">            <app-icon name="check"></app-icon>            <span class="icon-demo__label">check</span>          </div>          <div class="icon-demo">            <app-icon name="close"></app-icon>            <span class="icon-demo__label">close</span>          </div>          <div class="icon-demo">            <app-icon name="heart"></app-icon>            <span class="icon-demo__label">heart</span>          </div>          <div class="icon-demo">            <app-icon name="search"></app-icon>            <span class="icon-demo__label">search</span>          </div>          <div class="icon-demo">            <app-icon name="chevron-down"></app-icon>            <span class="icon-demo__label">chevron-down</span>          </div>          <div class="icon-demo">            <app-icon name="eye"></app-icon>            <span class="icon-demo__label">eye</span>          </div>          <div class="icon-demo">            <app-icon name="eye-off"></app-icon>            <span class="icon-demo__label">eye-off</span>          </div>        </div>      </app-card>    </section>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DesignSystemDemoComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DesignSystemDemoComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

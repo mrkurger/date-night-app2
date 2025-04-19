@@ -1,107 +1,88 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 /**
- * Content Security Policy Interceptor
+ * Content Security Policy (CSP) Interceptor
  *
- * This interceptor adds CSP headers to outgoing HTTP requests.
- * Note: For a production application, these headers should be set at the server level.
- * This is a client-side fallback for development purposes.
+ * This interceptor adds CSP headers to same-origin requests to enhance security.
+ * It helps protect against XSS, clickjacking, and other code injection attacks.
  */
-@Injectable()
-export class CSPInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Only add CSP headers to same-origin requests
-    if (this.isSameOrigin(req.url)) {
-      const cspReq = req.clone({
-        setHeaders: {
-          'Content-Security-Policy': this.getCSPPolicy(),
-        },
-      });
-      return next.handle(cspReq);
-    }
-
-    return next.handle(req);
+export const cspInterceptor: HttpInterceptorFn = (
+  request: HttpRequest<unknown>,
+  next: HttpHandlerFn
+) => {
+  // Only add CSP headers to same-origin requests
+  if (isSameOrigin(request.url)) {
+    request = request.clone({
+      setHeaders: {
+        'Content-Security-Policy': getCSPPolicy(),
+      },
+    });
   }
 
-  /**
-   * Determines if a URL is same-origin relative to the current window location
-   * @param url The URL to check
-   * @returns True if the URL is same-origin, false otherwise
-   */
-  private isSameOrigin(url: string): boolean {
-    // Relative URLs are always same-origin
-    if (url.startsWith('/')) {
-      return true;
-    }
+  return next(request);
+};
 
-    try {
-      // For absolute URLs, compare origins
-      return url.startsWith(window.location.origin);
-    } catch (e) {
-      // If there's an error parsing the URL, assume it's not same-origin
-      return false;
-    }
+/**
+ * Determines if a URL is same-origin
+ */
+function isSameOrigin(url: string): boolean {
+  // Relative URLs are always same-origin
+  if (url.startsWith('/')) {
+    return true;
   }
 
-  private getCSPPolicy(): string {
-    // Define trusted domains
-    const trustedScriptSources = [
-      "'self'",
-      "'unsafe-inline'",
-      "'unsafe-eval'",
-      'https://cdn.jsdelivr.net',
-      'https://cdnjs.cloudflare.com',
-    ];
-
-    const trustedStyleSources = [
-      "'self'",
-      "'unsafe-inline'",
-      'https://cdn.jsdelivr.net',
-      'https://cdnjs.cloudflare.com',
-      'https://fonts.googleapis.com',
-    ];
-
-    const trustedFontSources = [
-      "'self'",
-      'data:',
-      'https://fonts.gstatic.com',
-      'https://cdn.jsdelivr.net',
-      'https://cdnjs.cloudflare.com',
-    ];
-
-    const trustedImageSources = [
-      "'self'",
-      'data:',
-      'blob:',
-      'https://*.cloudinary.com',
-      'https://*.unsplash.com',
-      'https://*.githubusercontent.com',
-    ];
-
-    const trustedConnectSources = [
-      "'self'",
-      'wss://*.example.com',
-      'https://*.example.com',
-      'https://api.example.com',
-    ];
-
-    // Build the CSP policy
-    return [
-      "default-src 'self'",
-      `script-src ${trustedScriptSources.join(' ')}`,
-      `style-src ${trustedStyleSources.join(' ')}`,
-      `font-src ${trustedFontSources.join(' ')}`,
-      `img-src ${trustedImageSources.join(' ')}`,
-      `connect-src ${trustedConnectSources.join(' ')}`,
-      "frame-src 'self'",
-      "media-src 'self' blob:",
-      "object-src 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "frame-ancestors 'self'",
-      'upgrade-insecure-requests',
-    ].join('; ');
+  try {
+    const urlObj = new URL(url);
+    return urlObj.origin === window.location.origin;
+  } catch {
+    // If URL parsing fails, assume it's not same-origin
+    return false;
   }
+}
+
+/**
+ * Generates a Content Security Policy
+ */
+function getCSPPolicy(): string {
+  return [
+    // Default policy for everything
+    "default-src 'self'",
+
+    // Script sources
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net cdnjs.cloudflare.com",
+
+    // Style sources
+    "style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net cdnjs.cloudflare.com",
+
+    // Font sources
+    "font-src 'self' fonts.googleapis.com fonts.gstatic.com cdn.jsdelivr.net cdnjs.cloudflare.com",
+
+    // Image sources
+    "img-src 'self' data: blob: cloudinary.com *.cloudinary.com unsplash.com *.unsplash.com githubusercontent.com example.com",
+
+    // Connect sources (XHR, WebSockets, etc.)
+    "connect-src 'self' api.example.com example.com",
+
+    // Frame sources
+    "frame-src 'self' example.com",
+
+    // Media sources
+    "media-src 'self' cloudinary.com *.cloudinary.com example.com",
+
+    // Object sources (plugins)
+    "object-src 'none'",
+
+    // Base URI restriction
+    "base-uri 'self'",
+
+    // Form action restriction
+    "form-action 'self'",
+
+    // Frame ancestors restriction (prevents clickjacking)
+    "frame-ancestors 'self'",
+
+    // Upgrade insecure requests
+    'upgrade-insecure-requests',
+  ].join('; ');
 }
