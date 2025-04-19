@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { CSPInterceptor } from './csp.interceptor';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { cspInterceptor } from './csp.interceptor';
 import { Injectable } from '@angular/core';
 
 /**
@@ -27,7 +27,7 @@ class MockLocationService {
     try {
       const urlObj = new URL(url);
       return urlObj.origin === this.origin;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -41,29 +41,23 @@ class MockLocationService {
  * 2. Doesn't add CSP headers to cross-origin requests
  * 3. Includes all required CSP directives in the header
  */
-describe('CSPInterceptor', () => {
+describe('CSP Interceptor', () => {
   let httpClient: HttpClient;
   let httpMock: HttpTestingController;
-  let interceptor: CSPInterceptor;
   let locationService: MockLocationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        CSPInterceptor,
-        { provide: HTTP_INTERCEPTORS, useClass: CSPInterceptor, multi: true },
-        MockLocationService,
-      ],
+      providers: [provideHttpClient(withInterceptors([cspInterceptor])), MockLocationService],
     });
 
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
-    interceptor = TestBed.inject(CSPInterceptor);
     locationService = TestBed.inject(MockLocationService);
 
-    // Patch the interceptor to use our mock location service
-    interceptor['isSameOrigin'] = (url: string) => locationService.isSameOrigin(url);
+    // We can't patch the interceptor directly since it's a function now
+    // Instead, we'll rely on the actual implementation
   });
 
   afterEach(() => {
@@ -122,17 +116,25 @@ describe('CSPInterceptor', () => {
   });
 
   it('should include trusted domains in CSP policy', () => {
-    // Test the getCSPPolicy method directly
-    const cspPolicy = interceptor['getCSPPolicy']();
+    // We can't test the getCSPPolicy method directly since it's a private function
+    // Instead, we'll check the header content from a request
+
+    httpClient.get('/api/test').subscribe();
+
+    const req = httpMock.expectOne('/api/test');
+    const cspHeader = req.request.headers.get('Content-Security-Policy');
 
     // Check for trusted domains in different directives
-    expect(cspPolicy).toContain('cdn.jsdelivr.net');
-    expect(cspPolicy).toContain('cdnjs.cloudflare.com');
-    expect(cspPolicy).toContain('fonts.googleapis.com');
-    expect(cspPolicy).toContain('fonts.gstatic.com');
-    expect(cspPolicy).toContain('cloudinary.com');
-    expect(cspPolicy).toContain('unsplash.com');
-    expect(cspPolicy).toContain('githubusercontent.com');
-    expect(cspPolicy).toContain('example.com');
+    expect(cspHeader).toContain('cdn.jsdelivr.net');
+    expect(cspHeader).toContain('cdnjs.cloudflare.com');
+    expect(cspHeader).toContain('fonts.googleapis.com');
+    expect(cspHeader).toContain('fonts.gstatic.com');
+    expect(cspHeader).toContain('cloudinary.com');
+    expect(cspHeader).toContain('unsplash.com');
+    expect(cspHeader).toContain('githubusercontent.com');
+    expect(cspHeader).toContain('example.com');
+
+    // Verify the request continues
+    req.flush({ success: true });
   });
 });

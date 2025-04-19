@@ -1,5 +1,64 @@
 # Change Log
 
+## 2025-04-21
+
+### Security Fixes
+
+- **Dependency Vulnerabilities**
+  - Fixed Regular Expression Denial of Service (ReDoS) vulnerability in `@octokit/request-error`
+  - Updated `@octokit/request-error` from version 6.0.1 to 6.1.7 in package overrides
+  - Addressed medium severity security issue reported by Snyk
+
+### Improved
+
+- **GitHub Actions Workflows**
+  - Moved inline script in `sync-github-insights.yml` to a separate `.js` file for better maintainability
+  - Created `.github/scripts/generate-github-insights.js` with comprehensive error handling
+  - Improved Snyk JSON cleanup strategy in `sync-snyk-issues.yml` to use artifacts instead of committing files
+  - Updated `.gitignore` to exclude generated JSON files from Snyk scans
+  - Enhanced Git operations in workflows with robust conflict handling
+
+### Fixed
+
+- **Code Quality and Linting**
+  - Fixed linting errors in http-error.interceptor.ts by removing console.log statement
+  - Improved error handling in csp.interceptor.spec.ts by removing unused error variable
+  - Removed unused imports from http-error.interceptor.ts for better code quality
+  - Enhanced code readability and maintainability in interceptors
+
+## 2025-04-20
+
+### Fixed
+
+- **Angular Compatibility Issues**
+  - Implemented missing `configure` method in HttpErrorInterceptor
+  - Fixed CSP interceptor by properly implementing RxJS operators
+  - Converted all SCSS variables to CSS custom properties in components.scss
+  - Updated HttpErrorInterceptor factory to use the new configure method
+  - Added comprehensive error handling with retry capabilities
+  - Improved error sanitization for sensitive data in HTTP requests
+  - Created detailed documentation for error handling configuration
+
+## 2025-04-19
+
+### Fixed
+
+- **Angular Compatibility Issues**
+  - Created simplified HttpErrorInterceptor to fix RxJS compatibility issues
+  - Extracted ErrorCategory enum to a separate file for better maintainability
+  - Fixed SCSS variable references by replacing with CSS variables
+  - Updated Leaflet CSS import path to fix module resolution
+  - Added missing trackPerformance method to MapMonitoringService
+  - Fixed type issues in map component event handlers
+  - Created comprehensive documentation of fixes in FIXES_SUMMARY.md
+
+### Documentation
+
+- **Fix Documentation**
+  - Created FIXES_SUMMARY.md with details of fixed and remaining issues
+  - Documented RxJS compatibility issues and solutions
+  - Added next steps for resolving remaining issues
+
 ## 2024-05-30
 
 ### Fixed

@@ -1,863 +1,290 @@
-import { Injectable } from '@angular/core';
 import {
+  HttpInterceptorFn,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
+  HttpHandlerFn,
   HttpErrorResponse,
-  HttpResponse,
 } from '@angular/common/http';
-import { Observable, throwError, timer } from 'rxjs';
-import {
-  catchError,
-  retry,
-  finalize,
-  tap,
-  retryWhen,
-  mergeMap,
-  delay,
-  concatMap,
-} from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { AuthService } from '../services/auth.service';
 
 /**
- * Configuration options for the HTTP error interceptor
+ * Configuration interface for HttpErrorInterceptor
  */
 export interface HttpErrorInterceptorConfig {
-  /** Whether to show notifications for errors */
   showNotifications: boolean;
-  /** Whether to retry failed requests */
   retryFailedRequests: boolean;
-  /** Maximum number of retry attempts */
   maxRetryAttempts: number;
-  /** Base delay for exponential backoff (in ms) */
   retryDelay: number;
-  /** Whether to redirect to login on 401 errors */
   redirectToLogin: boolean;
-  /** Whether to log errors to console */
   logErrors: boolean;
-  /** Whether to include request details in error logs */
   includeRequestDetails: boolean;
-  /** Whether to track errors with telemetry */
   trackErrors: boolean;
-  /** Whether to track performance metrics */
   trackPerformance: boolean;
-  /** Whether to group similar errors in notifications */
   groupSimilarErrors: boolean;
-  /** Maximum jitter to add to retry delay (in ms) */
   retryJitter: number;
-  /** Whether to sanitize sensitive data in logs */
   sanitizeSensitiveData: boolean;
-  /** URLs to skip error handling for */
   skipUrls: string[];
 }
 
-/**
- * Default configuration for the HTTP error interceptor
- */
-const DEFAULT_CONFIG: HttpErrorInterceptorConfig = {
+// Default configuration
+const defaultConfig: HttpErrorInterceptorConfig = {
   showNotifications: true,
-  retryFailedRequests: true,
-  maxRetryAttempts: 3,
+  retryFailedRequests: false,
+  maxRetryAttempts: 2,
   retryDelay: 1000,
   redirectToLogin: true,
   logErrors: true,
-  includeRequestDetails: true,
+  includeRequestDetails: false,
   trackErrors: true,
-  trackPerformance: true,
+  trackPerformance: false,
   groupSimilarErrors: true,
-  retryJitter: 300,
+  retryJitter: 200,
   sanitizeSensitiveData: true,
-  skipUrls: ['/api/health', '/api/metrics', '/api/telemetry'],
+  skipUrls: [],
 };
 
+// Current configuration (can be updated by the configure function)
+let config: HttpErrorInterceptorConfig = { ...defaultConfig };
+
 /**
- * Error categories for better error handling
+ * Configure the interceptor with custom settings
+ * @param newConfig Partial configuration to override default settings
  */
-export enum ErrorCategory {
-  NETWORK = 'network',
-  AUTHENTICATION = 'authentication',
-  AUTHORIZATION = 'authorization',
-  VALIDATION = 'validation',
-  SERVER = 'server',
-  CLIENT = 'client',
-  TIMEOUT = 'timeout',
-  RATE_LIMIT = 'rate_limit',
-  NOT_FOUND = 'not_found',
-  CONFLICT = 'conflict',
-  UNKNOWN = 'unknown',
+export function configureHttpErrorInterceptor(
+  newConfig: Partial<HttpErrorInterceptorConfig>
+): void {
+  config = { ...config, ...newConfig };
+  // Configuration is applied silently
 }
 
 /**
- * HTTP interceptor that handles error responses
- * - Retries failed requests with exponential backoff and jitter
- * - Shows user-friendly error notifications
- * - Redirects to login page on authentication errors
- * - Logs detailed error information
- * - Tracks errors and performance metrics with telemetry
- * - Sanitizes sensitive information
- * - Categorizes errors for better handling
+ * HTTP Error Interceptor
+ *
+ * Handles HTTP errors and provides user-friendly error messages.
+ * Can be configured with various options to customize behavior.
  */
-@Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
-  private config: HttpErrorInterceptorConfig;
-  private requestTimings: Map<string, { startTime: number; url: string; method: string }> =
-    new Map();
+export const httpErrorInterceptor: HttpInterceptorFn = (
+  request: HttpRequest<unknown>,
+  next: HttpHandlerFn
+) => {
+  const router = inject(Router);
+  const notificationService = inject(NotificationService);
+  const telemetryService = inject(TelemetryService);
+  const authService = inject(AuthService);
 
-  // Track recent errors to avoid showing duplicates
-  private recentErrors: Map<string, { count: number; timestamp: number }> = new Map();
-  // Error notification cooldown period (ms)
-  private readonly ERROR_COOLDOWN = 5000;
-
-  constructor(
-    private router: Router,
-    private notificationService: NotificationService,
-    private telemetryService: TelemetryService,
-    private authService: AuthService
-  ) {
-    this.config = DEFAULT_CONFIG;
-
-    // Clean up old errors periodically
-    setInterval(() => this.cleanupRecentErrors(), 60000);
+  // Skip processing for URLs in the skipUrls list
+  if (shouldSkipUrl(request.url)) {
+    return next(request);
   }
 
-  /**
-   * Configure the interceptor
-   * @param config Configuration options
-   */
-  configure(config: Partial<HttpErrorInterceptorConfig>): void {
-    this.config = { ...DEFAULT_CONFIG, ...config };
-  }
+  return next(request).pipe(
+    // Apply retry logic if enabled
+    config.retryFailedRequests
+      ? retry({
+          count: config.maxRetryAttempts,
+          delay: (error, retryCount) => {
+            // Only retry certain types of errors
+            if (isRetryable(error)) {
+              // Add jitter to prevent thundering herd problem
+              const jitter = Math.random() * config.retryJitter;
+              return config.retryDelay * retryCount + jitter;
+            }
+            return throwError(() => error);
+          },
+        })
+      : retry(0),
 
-  /**
-   * Intercept HTTP requests and handle errors
-   * @param request The outgoing request
-   * @param next The next handler
-   * @returns An observable of the HTTP event
-   */
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Skip error handling for specific endpoints if needed
-    if (this.shouldSkipErrorHandling(request.url)) {
-      return next.handle(request);
-    }
+    catchError((error: HttpErrorResponse) => {
+      handleError(error, request, router, notificationService, telemetryService, authService);
+      return throwError(() => error);
+    })
+  );
+};
 
-    // Generate a unique request ID for tracking
-    const requestId = this.generateRequestId();
+/**
+ * Determines if the error is retryable
+ */
+function isRetryable(error: HttpErrorResponse): boolean {
+  // Don't retry client-side errors
+  if (!error.status) return false;
 
-    // Track request start time for performance monitoring
-    if (this.config.trackPerformance) {
-      this.requestTimings.set(requestId, {
-        startTime: performance.now(),
+  // Don't retry authentication errors
+  if (error.status === 401 || error.status === 403) return false;
+
+  // Don't retry bad requests or not found
+  if (error.status === 400 || error.status === 404) return false;
+
+  // Retry server errors and network issues
+  return error.status >= 500 || error.status === 0;
+}
+
+/**
+ * Handles the HTTP error response
+ */
+function handleError(
+  error: HttpErrorResponse,
+  request: HttpRequest<unknown>,
+  router: Router,
+  notificationService: NotificationService,
+  telemetryService: TelemetryService,
+  authService: AuthService
+): void {
+  // Log error if enabled
+  if (config.logErrors) {
+    console.error('HTTP Error:', error);
+
+    if (config.includeRequestDetails) {
+      console.error('Request that caused error:', {
         url: request.url,
         method: request.method,
-      });
-    }
-
-    return next.handle(request).pipe(
-      // Track successful responses for performance monitoring
-      tap(event => {
-        if (event instanceof HttpResponse && this.config.trackPerformance) {
-          this.trackRequestPerformance(requestId, event);
-        }
-      }),
-
-      // Retry failed requests with exponential backoff and jitter
-      this.retryWithBackoff(request),
-
-      // Handle errors
-      catchError((error: HttpErrorResponse) => {
-        const errorDetails = this.getErrorDetails(error, request);
-        const errorCategory = this.categorizeError(error);
-
-        // Enhance error details with category
-        errorDetails.category = errorCategory;
-
-        // Log the error
-        if (this.config.logErrors) {
-          this.logError(errorDetails);
-        }
-
-        // Track error with telemetry
-        if (this.config.trackErrors) {
-          this.trackError(errorDetails, request);
-        }
-
-        // Show notification (if not in cooldown period)
-        if (this.config.showNotifications && !this.isInCooldown(errorDetails.errorCode)) {
-          this.showErrorNotification(errorDetails);
-        }
-
-        // Handle authentication errors
-        if (errorCategory === ErrorCategory.AUTHENTICATION && this.config.redirectToLogin) {
-          this.authService.logout();
-          this.router.navigate(['/auth/login']);
-        }
-
-        // Return the error for further handling
-        return throwError(() => ({
-          error,
-          message: errorDetails.userMessage,
-          details: errorDetails,
-          category: errorCategory,
-        }));
-      }),
-
-      // Finalize the request
-      finalize(() => {
-        // Clean up request timing data
-        if (this.config.trackPerformance) {
-          this.requestTimings.delete(requestId);
-        }
-      })
-    );
-  }
-
-  /**
-   * Creates a retry operator with exponential backoff and jitter
-   * @param request The original HTTP request
-   * @returns A function that applies retry logic to an observable
-   */
-  private retryWithBackoff(request: HttpRequest<any>) {
-    // Return a function that takes an observable and returns a new observable with the same type
-    // Using generic type parameter to ensure type compatibility across different RxJS versions
-    return <T>(source: Observable<T>): Observable<T> => {
-      if (!this.config.retryFailedRequests) {
-        return source;
-      }
-
-      return source.pipe(
-        retryWhen(errors =>
-          errors.pipe(
-            concatMap((error, index) => {
-              const attemptNumber = index + 1;
-
-              // Check if we should retry this error
-              if (!this.isRetryable(error) || attemptNumber > this.config.maxRetryAttempts) {
-                return throwError(() => error);
-              }
-
-              // Calculate delay with exponential backoff and jitter
-              const backoffDelay = this.getRetryDelay(attemptNumber);
-              const jitter = Math.floor(Math.random() * this.config.retryJitter);
-              const totalDelay = backoffDelay + jitter;
-
-              if (this.config.logErrors) {
-                console.log(
-                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`
-                );
-              }
-
-              // Track retry attempt in telemetry
-              if (this.config.trackErrors) {
-                this.telemetryService
-                  .trackError({
-                    errorCode: 'retry_attempt',
-                    statusCode: error.status,
-                    userMessage: 'Retrying request',
-                    technicalMessage: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
-                    url: request.url,
-                    method: request.method,
-                    context: {
-                      attemptNumber,
-                      delay: totalDelay,
-                      maxAttempts: this.config.maxRetryAttempts,
-                    },
-                  })
-                  .subscribe();
-              }
-
-              return timer(totalDelay);
-            })
-          )
-        )
-      );
-    };
-  }
-
-  /**
-   * Generate a unique request ID
-   * @returns A unique request ID
-   */
-  private generateRequestId(): string {
-    return Date.now().toString(36) + Math.random().toString(36).substring(2);
-  }
-
-  /**
-   * Track request performance metrics
-   * @param requestId The unique request ID
-   * @param response The HTTP response
-   */
-  private trackRequestPerformance(requestId: string, response: HttpResponse<any>): void {
-    const timing = this.requestTimings.get(requestId);
-    if (!timing) return;
-
-    const endTime = performance.now();
-    const duration = endTime - timing.startTime;
-
-    // Calculate response size if possible
-    let responseSize: number | undefined;
-    if (response.body && typeof response.body === 'string') {
-      responseSize = new Blob([response.body]).size;
-    } else if (response.body) {
-      try {
-        responseSize = new Blob([JSON.stringify(response.body)]).size;
-      } catch (e) {
-        // Ignore if we can't calculate size
-      }
-    }
-
-    this.telemetryService
-      .trackPerformance({
-        url: timing.url,
-        method: timing.method,
-        duration,
-        responseSize,
-        context: {
-          status: response.status,
-          statusText: response.statusText,
-          contentType: response.headers.get('content-type') || undefined,
-          contentLength: response.headers.get('content-length') || undefined,
-        },
-      })
-      .subscribe();
-
-    // Remove the timing data
-    this.requestTimings.delete(requestId);
-  }
-
-  /**
-   * Track error with telemetry service
-   * @param errorDetails The error details
-   * @param request The original request
-   */
-  private trackError(errorDetails: any, request: HttpRequest<any>): void {
-    this.telemetryService
-      .trackError({
-        errorCode: errorDetails.errorCode,
-        statusCode: errorDetails.status,
-        userMessage: errorDetails.userMessage,
-        technicalMessage: errorDetails.technicalMessage,
-        url: request.url,
-        method: request.method,
-        context: {
-          category: errorDetails.category,
-          requestDetails: this.config.includeRequestDetails
-            ? {
-                headers: this.getHeadersMap(
-                  request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
-                ),
-                body: this.config.sanitizeSensitiveData
-                  ? this.sanitizeRequestBody(request.body)
-                  : request.body,
-                queryParams: request.params
-                  .keys()
-                  .reduce((params: Record<string, string>, key: string) => {
-                    params[key] = request.params.get(key) || '';
-                    return params;
-                  }, {}),
-              }
-            : undefined,
-          response: errorDetails.response,
-          timestamp: new Date().toISOString(),
-          browser: navigator.userAgent,
-          viewportSize: `${window.innerWidth}x${window.innerHeight}`,
-          url: window.location.href,
-        },
-      })
-      .subscribe();
-  }
-
-  /**
-   * Determine if an error is retryable
-   * @param error The HTTP error
-   * @returns Whether the error is retryable
-   */
-  private isRetryable(error: HttpErrorResponse): boolean {
-    // Don't retry client-side errors
-    if (error.error instanceof ErrorEvent) {
-      return false;
-    }
-
-    // Don't retry authentication/authorization errors
-    if (error.status === 401 || error.status === 403) {
-      return false;
-    }
-
-    // Don't retry bad requests or validation errors
-    if (error.status === 400 || error.status === 422) {
-      return false;
-    }
-
-    // Don't retry not found errors
-    if (error.status === 404) {
-      return false;
-    }
-
-    // Don't retry conflict errors
-    if (error.status === 409) {
-      return false;
-    }
-
-    // Retry server errors, network errors, and rate limit errors (after delay)
-    return error.status === 0 || error.status >= 500 || error.status === 429;
-  }
-
-  /**
-   * Calculate retry delay with exponential backoff
-   * @param attempt The retry attempt number
-   * @returns The delay in milliseconds
-   */
-  private getRetryDelay(attempt: number): number {
-    // Exponential backoff: baseDelay * 2^(attempt-1)
-    return this.config.retryDelay * Math.pow(2, attempt - 1);
-  }
-
-  /**
-   * Categorize an error for better handling
-   * @param error The HTTP error
-   * @returns The error category
-   */
-  private categorizeError(error: HttpErrorResponse): ErrorCategory {
-    if (error.error instanceof ErrorEvent) {
-      return ErrorCategory.CLIENT;
-    }
-
-    switch (error.status) {
-      case 0:
-        return ErrorCategory.NETWORK;
-      case 401:
-        return ErrorCategory.AUTHENTICATION;
-      case 403:
-        return ErrorCategory.AUTHORIZATION;
-      case 404:
-        return ErrorCategory.NOT_FOUND;
-      case 408:
-        return ErrorCategory.TIMEOUT;
-      case 409:
-        return ErrorCategory.CONFLICT;
-      case 422:
-        return ErrorCategory.VALIDATION;
-      case 429:
-        return ErrorCategory.RATE_LIMIT;
-      case 500:
-      case 502:
-      case 503:
-      case 504:
-        return ErrorCategory.SERVER;
-      default:
-        return ErrorCategory.UNKNOWN;
-    }
-  }
-
-  /**
-   * Get detailed error information
-   * @param error The HTTP error
-   * @param request The original request
-   * @returns Detailed error information
-   */
-  private getErrorDetails(error: HttpErrorResponse, request: HttpRequest<any>): any {
-    let errorCode = 'unknown_error';
-    let userMessage = 'An unknown error occurred';
-    let technicalMessage = error.message || 'Unknown error';
-
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorCode = 'client_error';
-      userMessage = 'A problem occurred in your browser';
-      technicalMessage = error.error.message;
-    } else {
-      // Server-side error
-      switch (error.status) {
-        case 0:
-          errorCode = 'network_error';
-          userMessage = 'Unable to connect to the server';
-          technicalMessage = 'Network error or CORS issue';
-          break;
-        case 400:
-          errorCode = 'bad_request';
-          userMessage = 'The request was invalid';
-          technicalMessage = error.error?.message || 'Bad Request';
-          break;
-        case 401:
-          errorCode = 'unauthorized';
-          userMessage = 'Please log in to continue';
-          technicalMessage = 'Authentication required';
-          break;
-        case 403:
-          errorCode = 'forbidden';
-          userMessage = 'You do not have permission to access this resource';
-          technicalMessage = 'Access forbidden';
-          break;
-        case 404:
-          errorCode = 'not_found';
-          userMessage = 'The requested resource was not found';
-          technicalMessage = 'Resource not found';
-          break;
-        case 408:
-          errorCode = 'timeout';
-          userMessage = 'The request timed out';
-          technicalMessage = 'Request timeout';
-          break;
-        case 409:
-          errorCode = 'conflict';
-          userMessage = 'The request could not be completed due to a conflict';
-          technicalMessage = error.error?.message || 'Resource conflict';
-          break;
-        case 422:
-          errorCode = 'validation_error';
-          userMessage =
-            this.getValidationErrorMessage(error.error) || 'The submitted data is invalid';
-          technicalMessage = error.error?.message || 'Validation failed';
-          break;
-        case 429:
-          errorCode = 'too_many_requests';
-          userMessage = 'Too many requests, please try again later';
-          technicalMessage = 'Rate limit exceeded';
-          break;
-        case 500:
-          errorCode = 'server_error';
-          userMessage = 'Something went wrong on our end';
-          technicalMessage = error.error?.message || 'Internal server error';
-          break;
-        case 502:
-          errorCode = 'bad_gateway';
-          userMessage = 'Service temporarily unavailable';
-          technicalMessage = 'Bad gateway';
-          break;
-        case 503:
-          errorCode = 'service_unavailable';
-          userMessage = 'Service temporarily unavailable';
-          technicalMessage = 'Service unavailable';
-          break;
-        case 504:
-          errorCode = 'gateway_timeout';
-          userMessage = 'Service temporarily unavailable';
-          technicalMessage = 'Gateway timeout';
-          break;
-        default:
-          errorCode = `http_${error.status}`;
-          userMessage = `Error ${error.status}: ${error.statusText}`;
-          technicalMessage = error.error?.message || error.statusText;
-      }
-    }
-
-    const details: any = {
-      errorCode,
-      userMessage,
-      technicalMessage,
-      timestamp: new Date().toISOString(),
-      status: error.status,
-      statusText: error.statusText,
-    };
-
-    // Include request details if configured
-    if (this.config.includeRequestDetails) {
-      details.request = {
-        url: request.url,
-        method: request.method,
-        headers: this.getHeadersMap(
+        headers: sanitizeHeaders(
           request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
         ),
-        body: this.config.sanitizeSensitiveData
-          ? this.sanitizeRequestBody(request.body)
-          : request.body,
-      };
-    }
-
-    // Include error response if available
-    if (error.error && typeof error.error === 'object') {
-      details.response = this.config.sanitizeSensitiveData
-        ? this.sanitizeResponseData(error.error)
-        : error.error;
-    }
-
-    return details;
-  }
-
-  /**
-   * Extract a user-friendly validation error message
-   * @param errorResponse The error response object
-   * @returns A user-friendly validation error message
-   */
-  private getValidationErrorMessage(errorResponse: any): string | null {
-    if (!errorResponse) return null;
-
-    // Handle array of validation errors
-    if (errorResponse.errors && Array.isArray(errorResponse.errors)) {
-      if (errorResponse.errors.length === 0) return null;
-
-      // If there's only one error, return it directly
-      if (errorResponse.errors.length === 1) {
-        const error = errorResponse.errors[0];
-        return error.message || `Invalid ${error.field || 'input'}`;
-      }
-
-      // If there are multiple errors, summarize them
-      const fieldErrors = errorResponse.errors.filter((e: any) => e.field).map((e: any) => e.field);
-
-      if (fieldErrors.length > 0) {
-        return `Please check the following fields: ${fieldErrors.join(', ')}`;
-      }
-
-      return 'Multiple validation errors occurred';
-    }
-
-    // Handle single error message
-    if (errorResponse.message) {
-      return errorResponse.message;
-    }
-
-    return null;
-  }
-
-  /**
-   * Log error details to the console
-   * @param errorDetails The error details
-   */
-  private logError(errorDetails: any): void {
-    console.group(`HTTP Error: ${errorDetails.errorCode} (${errorDetails.category})`);
-    console.error(`${errorDetails.technicalMessage}`);
-    console.error('Status:', errorDetails.status, errorDetails.statusText);
-    console.error('URL:', errorDetails.request?.url);
-    console.error('Details:', errorDetails);
-    console.groupEnd();
-  }
-
-  /**
-   * Show an error notification to the user
-   * @param errorDetails The error details
-   */
-  private showErrorNotification(errorDetails: any): void {
-    // Track this error to avoid showing duplicates
-    this.trackRecentError(errorDetails.errorCode);
-
-    // Show notification
-    this.notificationService.error(errorDetails.userMessage);
-  }
-
-  /**
-   * Track a recent error to avoid showing duplicate notifications
-   * @param errorCode The error code
-   */
-  private trackRecentError(errorCode: string): void {
-    const now = Date.now();
-    const existing = this.recentErrors.get(errorCode);
-
-    if (existing) {
-      this.recentErrors.set(errorCode, {
-        count: existing.count + 1,
-        timestamp: now,
-      });
-    } else {
-      this.recentErrors.set(errorCode, {
-        count: 1,
-        timestamp: now,
+        body: sanitizeBody(request.body),
       });
     }
   }
 
-  /**
-   * Check if an error is in the cooldown period
-   * @param errorCode The error code
-   * @returns Whether the error is in cooldown
-   */
-  private isInCooldown(errorCode: string): boolean {
-    const existing = this.recentErrors.get(errorCode);
-    if (!existing) return false;
-
-    const now = Date.now();
-    const elapsed = now - existing.timestamp;
-
-    // If this is the first occurrence or cooldown has elapsed, it's not in cooldown
-    if (existing.count === 1 || elapsed > this.ERROR_COOLDOWN) {
-      return false;
-    }
-
-    // Otherwise, it's in cooldown
-    return true;
-  }
-
-  /**
-   * Clean up old errors from the recent errors map
-   */
-  private cleanupRecentErrors(): void {
-    const now = Date.now();
-
-    for (const [code, data] of this.recentErrors.entries()) {
-      if (now - data.timestamp > this.ERROR_COOLDOWN * 2) {
-        this.recentErrors.delete(code);
-      }
-    }
-  }
-
-  /**
-   * Convert headers array to a map
-   * @param headers The headers array
-   * @returns Headers map
-   */
-  private getHeadersMap(
-    headers: Array<{ key: string; value: string | null }>
-  ): Record<string, string> {
-    const result: Record<string, string> = {};
-
-    headers.forEach(({ key, value }) => {
-      if (value !== null) {
-        // Exclude sensitive headers
-        if (!this.isSensitiveHeader(key)) {
-          result[key] = value;
-        } else if (this.config.sanitizeSensitiveData) {
-          result[key] = '********';
-        }
-      }
-    });
-
-    return result;
-  }
-
-  /**
-   * Check if a header is sensitive and should be excluded from logs
-   * @param headerName The header name
-   * @returns Whether the header is sensitive
-   */
-  private isSensitiveHeader(headerName: string): boolean {
-    const sensitiveHeaders = [
-      'authorization',
-      'x-auth-token',
-      'cookie',
-      'set-cookie',
-      'x-csrf-token',
-      'x-api-key',
-      'x-access-token',
-      'x-session-id',
-    ];
-
-    return sensitiveHeaders.includes(headerName.toLowerCase());
-  }
-
-  /**
-   * Sanitize request body to remove sensitive information
-   * @param body The request body
-   * @returns Sanitized body
-   */
-  private sanitizeRequestBody(body: any): any {
-    if (!body) {
-      return body;
-    }
-
-    if (typeof body !== 'object') {
-      return body;
-    }
-
-    // Clone the body to avoid modifying the original
-    const sanitized = Array.isArray(body) ? [...body] : { ...body };
-
-    // Mask sensitive fields
-    const sensitiveFields = [
-      'password',
-      'token',
-      'secret',
-      'creditCard',
-      'cardNumber',
-      'cvv',
-      'pin',
-      'ssn',
-      'socialSecurity',
-      'accessToken',
-      'refreshToken',
-      'apiKey',
-      'privateKey',
-      'authorization',
-    ];
-
-    // Recursively sanitize objects
-    this.sanitizeObject(sanitized, sensitiveFields);
-
-    return sanitized;
-  }
-
-  /**
-   * Sanitize response data to remove sensitive information
-   * @param data The response data
-   * @returns Sanitized data
-   */
-  private sanitizeResponseData(data: any): any {
-    if (!data) {
-      return data;
-    }
-
-    if (typeof data !== 'object') {
-      return data;
-    }
-
-    // Clone the data to avoid modifying the original
-    const sanitized = Array.isArray(data) ? [...data] : { ...data };
-
-    // Mask sensitive fields
-    const sensitiveFields = [
-      'password',
-      'token',
-      'secret',
-      'creditCard',
-      'cardNumber',
-      'cvv',
-      'pin',
-      'ssn',
-      'socialSecurity',
-      'accessToken',
-      'refreshToken',
-      'apiKey',
-      'privateKey',
-      'authorization',
-    ];
-
-    // Recursively sanitize objects
-    this.sanitizeObject(sanitized, sensitiveFields);
-
-    return sanitized;
-  }
-
-  /**
-   * Recursively sanitize an object to mask sensitive fields
-   * @param obj The object to sanitize
-   * @param sensitiveFields Array of sensitive field names
-   */
-  private sanitizeObject(obj: any, sensitiveFields: string[]): void {
-    if (!obj || typeof obj !== 'object') {
-      return;
-    }
-
-    if (Array.isArray(obj)) {
-      // Recursively sanitize array items
-      obj.forEach(item => {
-        if (item && typeof item === 'object') {
-          this.sanitizeObject(item, sensitiveFields);
-        }
-      });
-      return;
-    }
-
-    // Process each property in the object
-    Object.keys(obj).forEach(key => {
-      // Check if this is a sensitive field
-      if (sensitiveFields.some(field => key.toLowerCase().includes(field.toLowerCase()))) {
-        obj[key] = '********';
-      }
-      // Recursively sanitize nested objects
-      else if (obj[key] && typeof obj[key] === 'object') {
-        this.sanitizeObject(obj[key], sensitiveFields);
-      }
+  // Track error with telemetry if enabled
+  if (config.trackErrors) {
+    telemetryService.trackError({
+      name: 'HttpError',
+      message: error.message,
+      stack: error.error?.stack,
+      status: error.status,
+      url: config.sanitizeSensitiveData ? sanitizeUrl(request.url) : request.url,
     });
   }
 
-  /**
-   * Check if error handling should be skipped for a URL
-   * @param url The request URL
-   * @returns Whether to skip error handling
-   */
-  private shouldSkipErrorHandling(url: string): boolean {
-    return this.config.skipUrls.some(skipUrl => url.includes(skipUrl));
+  // Handle authentication errors
+  if (error.status === 401 && config.redirectToLogin) {
+    authService.logout();
+    router.navigate(['/auth/login'], {
+      queryParams: { returnUrl: router.url },
+    });
   }
+
+  // Show notification if enabled
+  if (config.showNotifications) {
+    const message = getErrorMessage(error);
+    notificationService.error(message);
+  }
+}
+
+/**
+ * Gets a user-friendly error message
+ */
+function getErrorMessage(error: HttpErrorResponse): string {
+  // Try to get a custom error message from the server
+  if (error.error?.message) {
+    return error.error.message;
+  }
+
+  // Default messages based on status code
+  switch (error.status) {
+    case 0:
+      return 'Unable to connect to the server. Please check your internet connection.';
+    case 400:
+      return 'The request was invalid. Please check your input and try again.';
+    case 401:
+      return 'You need to log in to access this resource.';
+    case 403:
+      return 'You do not have permission to access this resource.';
+    case 404:
+      return 'The requested resource was not found.';
+    case 500:
+      return 'An error occurred on the server. Please try again later.';
+    default:
+      return `An error occurred (${error.status}). Please try again later.`;
+  }
+}
+
+/**
+ * Checks if the URL should be skipped
+ */
+function shouldSkipUrl(url: string): boolean {
+  return config.skipUrls.some(skipUrl => url.includes(skipUrl));
+}
+
+/**
+ * Sanitizes headers to remove sensitive information
+ */
+function sanitizeHeaders(
+  headers: Array<{ key: string; value: string | null }>
+): Array<{ key: string; value: string | null }> {
+  if (!config.sanitizeSensitiveData) {
+    return headers;
+  }
+
+  const sensitiveHeaders = ['authorization', 'cookie', 'x-auth-token'];
+  return headers.map(header => {
+    if (sensitiveHeaders.includes(header.key.toLowerCase())) {
+      return { key: header.key, value: '[REDACTED]' };
+    }
+    return header;
+  });
+}
+
+/**
+ * Sanitizes request body to remove sensitive information
+ */
+function sanitizeBody(body: unknown): unknown {
+  if (!body || !config.sanitizeSensitiveData) {
+    return body;
+  }
+
+  if (typeof body !== 'object') {
+    return body;
+  }
+
+  const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn'];
+  const sanitized = { ...(body as Record<string, unknown>) };
+
+  Object.keys(sanitized).forEach(key => {
+    if (sensitiveFields.some(field => key.toLowerCase().includes(field))) {
+      sanitized[key] = '[REDACTED]';
+    } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
+      sanitized[key] = sanitizeBody(sanitized[key]);
+    }
+  });
+
+  return sanitized;
+}
+
+/**
+ * Sanitizes URL to remove sensitive information
+ */
+function sanitizeUrl(url: string): string {
+  if (!config.sanitizeSensitiveData) {
+    return url;
+  }
+
+  // Remove query parameters that might contain sensitive information
+  const sensitiveParams = ['token', 'key', 'password', 'secret'];
+  try {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+
+    let modified = false;
+    sensitiveParams.forEach(param => {
+      if (params.has(param)) {
+        params.set(param, '[REDACTED]');
+        modified = true;
+      }
+    });
+
+    if (modified) {
+      urlObj.search = params.toString();
+      return urlObj.toString();
+    }
+  } catch {
+    // If URL parsing fails, return as is
+  }
+
+  return url;
 }
