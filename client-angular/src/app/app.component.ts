@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, Renderer2 } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
@@ -17,7 +17,6 @@ import { ChatService } from './core/services/chat.service';
 import { CsrfService } from './core/services/csrf.service';
 import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
-import { OnboardingService } from './core/services/onboarding.service';
 import { ThemeService } from './core/services/theme.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
@@ -130,17 +129,18 @@ export class AppComponent implements OnInit, OnDestroy {
       // Check for PWA updates
       this.pwaService.checkForUpdates().then(hasUpdate => {
         if (hasUpdate) {
-          console.log('New version available');
+          console.warn('New version available');
         }
       });
 
-      this.authSubscription = this.authService.currentUser$.subscribe((user: any) => {
+      this.authSubscription = this.authService.currentUser$.subscribe((user: unknown) => {
         this.isAuthenticated = !!user;
 
         if (user) {
-          this.username = user.username;
-          this.isAdvertiser = user.role === 'advertiser' || user.role === 'admin';
-          this.isAdmin = user.role === 'admin';
+          const userObj = user as { username: string; role: string };
+          this.username = userObj.username;
+          this.isAdvertiser = userObj.role === 'advertiser' || userObj.role === 'admin';
+          this.isAdmin = userObj.role === 'admin';
 
           // Initialize chat service if authenticated
           this.initializeChat();
@@ -201,7 +201,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   installPwa(): void {
     if (!this.deferredPrompt) {
-      console.log('Installation prompt not available');
+      console.warn('Installation prompt not available');
       return;
     }
 
@@ -211,10 +211,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // Wait for the user to respond to the prompt
     this.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+        console.warn('User accepted the install prompt');
         this.notificationService.success('App installation started!');
       } else {
-        console.log('User dismissed the install prompt');
+        console.warn('User dismissed the install prompt');
       }
 
       // Clear the deferred prompt variable

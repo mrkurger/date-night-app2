@@ -7,7 +7,7 @@
 // - MOCK_ITEM: Mock item data for testing
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+// import { By } from '@angular/platform-browser';
 import { DebugElement, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -40,7 +40,7 @@ class TestAppCardComponent extends AppCardComponent {}
 describe('AppCardComponent (Basic Version)', () => {
   let component: TestAppCardComponent;
   let fixture: ComponentFixture<TestAppCardComponent>;
-  let debugElement: DebugElement;
+  // let debugElement: DebugElement;
 
   // Mock item data for testing
   const mockItem = {
@@ -67,7 +67,7 @@ describe('AppCardComponent (Basic Version)', () => {
 
     fixture = TestBed.createComponent(TestAppCardComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
+    // debugElement = fixture.debugElement;
 
     // Set the mock item data
     component.title = mockItem.title;

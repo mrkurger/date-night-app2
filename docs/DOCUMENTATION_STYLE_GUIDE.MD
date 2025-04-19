@@ -34,38 +34,43 @@ This document provides guidelines for writing and formatting documentation in th
 All documentation files should include the following sections:
 
 1. **Title**: Use a descriptive title that clearly indicates the content of the document.
+
    ```markdown
    # Document Title
    ```
 
 2. **Brief Description**: Provide a brief description of the document's purpose and content.
+
    ```markdown
    This document provides guidelines for writing and formatting documentation in the Date Night App project.
    ```
 
 3. **Table of Contents**: Include a table of contents for documents with multiple sections.
+
    ```markdown
    ## Table of Contents
-   
+
    - [Section 1](#section-1)
    - [Section 2](#section-2)
    ```
 
 4. **Main Content**: Organize the main content into logical sections with clear headings.
+
    ```markdown
    ## Section 1
-   
+
    Content for section 1.
-   
+
    ## Section 2
-   
+
    Content for section 2.
    ```
 
 5. **Conclusion or Summary**: Summarize the key points of the document (if applicable).
+
    ```markdown
    ## Conclusion
-   
+
    This document provides guidelines for writing and formatting documentation in the Date Night App project.
    ```
 
@@ -77,8 +82,11 @@ Use Markdown headings to structure your document:
 
 ```markdown
 # Level 1 Heading (Document Title)
+
 ## Level 2 Heading (Main Sections)
+
 ### Level 3 Heading (Subsections)
+
 #### Level 4 Heading (Sub-subsections)
 ```
 
@@ -149,7 +157,7 @@ Use tables for structured data:
 
 ```markdown
 | Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
+| -------- | -------- | -------- |
 | Row 1    | Data     | Data     |
 | Row 2    | Data     | Data     |
 ```
@@ -158,9 +166,9 @@ Align columns for better readability:
 
 ```markdown
 | Left-aligned | Center-aligned | Right-aligned |
-|:-------------|:-------------:|-------------:|
-| Left         | Center        | Right        |
-| Left         | Center        | Right        |
+| :----------- | :------------: | ------------: |
+| Left         |     Center     |         Right |
+| Left         |     Center     |         Right |
 ```
 
 ### Links
@@ -168,19 +176,19 @@ Align columns for better readability:
 Use descriptive link text:
 
 ```markdown
-[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.md)
+[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)
 ```
 
 Use relative links for files in the same directory:
 
 ```markdown
-[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.md)
+[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)
 ```
 
 Use absolute links for files in different directories:
 
 ```markdown
-[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.md)
+[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)
 ```
 
 Use absolute links for external resources:
@@ -218,26 +226,32 @@ Use blockquotes for important notes, warnings, or quotes:
 ## Language and Style
 
 1. **Voice**: Use active voice instead of passive voice.
+
    - Active: "Click the button to save your changes."
    - Passive: "The button should be clicked to save your changes."
 
 2. **Tense**: Use present tense.
+
    - Present: "The function returns a value."
    - Past: "The function returned a value."
 
 3. **Person**: Use second person ("you") for instructions.
+
    - "You can configure the settings in the config file."
    - "The developer can configure the settings in the config file."
 
 4. **Tone**: Use a professional, friendly tone.
+
    - Professional: "Configure the settings according to your requirements."
    - Too casual: "Just play around with the settings until it works."
 
 5. **Terminology**: Use consistent terminology throughout the documentation.
+
    - Define technical terms when they're first used.
    - Use the same term for the same concept throughout the documentation.
 
 6. **Abbreviations**: Define abbreviations when they're first used.
+
    - "Content Security Policy (CSP) is a security feature that helps prevent cross-site scripting (XSS) attacks."
 
 7. **Numbers**: Spell out numbers less than 10, use numerals for 10 and above.
@@ -247,25 +261,29 @@ Use blockquotes for important notes, warnings, or quotes:
 ## File Organization
 
 1. **File Names**: Use descriptive file names that clearly indicate the content of the file.
+
    - Use `.md` extension for all documentation files.
-   - Use uppercase for main documentation files (e.g., README.md, SETUP.md).
-   - Use lowercase with hyphens for specific documentation files (e.g., ui-ux-roadmap.md).
+   - Use UPPERCASE with underscores for all documentation files (e.g., README.MD, SETUP.MD, UI_UX_ROADMAP.MD).
+   - This ensures consistency and makes documentation files easily identifiable.
 
 2. **Directory Structure**: Organize documentation files in a logical directory structure.
+
    - Store general documentation in the root directory (e.g., README.md, SETUP.md).
    - Store detailed documentation in the `/docs` directory.
    - Store component-specific documentation in the component's directory.
 
 3. **Documentation Index**: Maintain a documentation index that lists all documentation files with descriptions and links.
-   - [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)
+   - [DOCUMENTATION_INDEX.MD](DOCUMENTATION_INDEX.md)
 
 ## Versioning
 
 1. **Version Numbers**: Include version numbers in documentation when applicable.
+
    - "This guide applies to version 1.0.0 of the application."
 
 2. **Change Log**: Maintain a change log that documents changes to the application.
-   - [ChangeLog.md](ChangeLog.md)
+
+   - [CHANGELOG.MD](ChangeLog.md)
 
 3. **Documentation Updates**: Update documentation when the application changes.
    - Add a note indicating when the documentation was last updated.
@@ -326,11 +344,11 @@ function example(param1: string, param2: number): boolean {
 ### Example Table
 
 ```markdown
-| Setting | Description | Default Value | Environment |
-|---------|-------------|---------------|------------|
-| port | Server port number | 3000 | Development |
-| mongoUri | MongoDB connection string | mongodb://localhost:27017/datenight_dev | Development |
-| jwtSecret | Secret key for JWT | random string | All |
+| Setting   | Description               | Default Value                           | Environment |
+| --------- | ------------------------- | --------------------------------------- | ----------- |
+| port      | Server port number        | 3000                                    | Development |
+| mongoUri  | MongoDB connection string | mongodb://localhost:27017/datenight_dev | Development |
+| jwtSecret | Secret key for JWT        | random string                           | All         |
 ```
 
 ### Example Note
@@ -349,4 +367,8 @@ function example(param1: string, param2: number): boolean {
 
 Following these guidelines ensures consistency across all documentation in the Date Night App project. Consistent documentation is easier to read, understand, and maintain, which benefits both developers and users of the application.
 
-<!-- TODO: Manually ensure consistency, add uppercase filename rule. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+## Recent Updates
+
+- **2025-05-20**: Updated file naming convention to use UPPERCASE with underscores for all documentation files.
+- **2025-05-15**: Added additional examples for code blocks and tables.
+- **2025-05-10**: Initial version of the documentation style guide.

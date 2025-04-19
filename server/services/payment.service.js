@@ -61,11 +61,15 @@ class PaymentService {
       if (!customerId) {
         const customer = await stripe.customers.create({
           email: user.email,
-          name: user.username,
+          name: user.username || 'User',
           metadata: {
             userId: user._id.toString(),
           },
         });
+
+        if (!customer || !customer.id) {
+          throw new AppError('Failed to create Stripe customer', 500);
+        }
 
         customerId = customer.id;
 
@@ -99,19 +103,45 @@ class PaymentService {
         price_vip: 'vip',
       };
 
-      user.subscriptionTier = subscriptionTiers[priceId] || 'free';
+      // Extract the price ID from the full price ID if needed
+      const simplePriceId = priceId.includes('_') ? priceId.split('_').pop() : priceId;
+
+      user.subscriptionTier =
+        subscriptionTiers[simplePriceId] || subscriptionTiers[priceId] || 'free';
+
+      if (!subscription || !subscription.id) {
+        throw new AppError('Invalid subscription response from Stripe', 500);
+      }
+
       user.stripeSubscriptionId = subscription.id;
 
       // Set subscription expiration date
       const currentPeriodEnd = new Date(subscription.current_period_end * 1000);
       user.subscriptionExpires = currentPeriodEnd;
 
+      // Ensure the subscription object exists on the user model
+      if (!user.subscription) {
+        user.subscription = {};
+      }
+
+      // Update subscription details
+      if (subscription && subscription.id) {
+        user.subscription.id = subscription.id;
+        user.subscription.status = subscription.status || 'unknown';
+        user.subscription.currentPeriodEnd = currentPeriodEnd;
+      }
+
       await user.save();
 
+      // Safely extract values from the subscription object
+      const subscriptionId = subscription?.id || '';
+      const clientSecret = subscription?.latest_invoice?.payment_intent?.client_secret || '';
+      const subscriptionStatus = subscription?.status || 'unknown';
+
       return {
-        subscriptionId: subscription.id,
-        clientSecret: subscription.latest_invoice.payment_intent.client_secret,
-        subscriptionStatus: subscription.status,
+        subscriptionId,
+        clientSecret,
+        subscriptionStatus,
         currentPeriodEnd,
       };
     } catch (error) {
@@ -133,19 +163,28 @@ class PaymentService {
         throw new AppError('User not found', 404);
       }
 
-      if (!user.stripeSubscriptionId) {
+      // Check if user has an active subscription
+      if (!user.stripeSubscriptionId && (!user.subscription || !user.subscription.id)) {
         throw new AppError('No active subscription found', 400);
       }
 
+      // Get subscription ID from either location
+      const subscriptionId = user.stripeSubscriptionId || user.subscription.id;
+
       // Cancel at period end to allow user to use the subscription until it expires
-      const subscription = await stripe.subscriptions.update(user.stripeSubscriptionId, {
+      const subscription = await stripe.subscriptions.update(subscriptionId, {
         cancel_at_period_end: true,
       });
 
+      // Update user's subscription status
+      if (user.subscription) {
+        user.subscription.status = 'canceled';
+        await user.save();
+      }
+
       return {
+        canceled: true,
         subscriptionId: subscription.id,
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
       };
     } catch (error) {
       console.error('Error canceling subscription:', error);
@@ -462,16 +501,25 @@ class PaymentService {
         expand: ['data.product'],
       });
 
-      return prices.data.map(price => ({
-        id: price.id,
-        productId: price.product.id,
-        productName: price.product.name,
-        description: price.product.description,
-        unitAmount: price.unit_amount,
-        currency: price.currency,
-        interval: price.recurring.interval,
-        intervalCount: price.recurring.interval_count,
-      }));
+      if (!prices || !prices.data) {
+        return [];
+      }
+
+      return prices.data.map(price => {
+        // Ensure product exists and has required properties
+        const product = price.product || {};
+
+        return {
+          id: price.id,
+          productId: product.id || '',
+          productName: product.name || 'Unknown Product',
+          description: product.description || '',
+          unitAmount: price.unit_amount || 0,
+          currency: price.currency || 'nok',
+          interval: price.recurring?.interval || 'month',
+          intervalCount: price.recurring?.interval_count || 1,
+        };
+      });
     } catch (error) {
       console.error('Error fetching subscription prices:', error);
       throw new AppError('Failed to fetch subscription prices', 500);

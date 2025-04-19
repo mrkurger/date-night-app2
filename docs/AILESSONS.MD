@@ -1,35 +1,30 @@
 # AI Lessons Learned
 
-This document contains lessons learned by the AI while working on the Date Night App project.
+This document serves as a log of key insights, patterns, and solutions discovered during the development of the Date Night App. It is intended as a reference for developers working on the project.
+
+> **Note**: This document is a curated log of AI-discovered patterns and solutions. For canonical documentation on specific topics, please refer to the linked dedicated documentation files.
 
 ## Table of Contents
 
-- [Dependency Management](#dependency-management)
-  - [ESLint Dependencies](#eslint-dependencies)
-  - [Package Overrides](#package-overrides)
-- [Backend Testing](#backend-testing)
-  - [Mongoose Schema Testing](#mongoose-schema-testing)
-  - [Test File Organization](#test-file-organization)
-  - [Content Security Policy (CSP)](#content-security-policy-csp)
-- [Angular Testing](#angular-testing)
-  - [Component Dependencies](#component-dependencies)
-  - [Standalone Components](#standalone-components)
-  - [SCSS Variables](#scss-variables)
-- [Angular Router Testing](#angular-router-testing)
-- [HTTP Service Testing](#http-service-testing)
-- [Angular Build Optimization](#angular-build-optimization)
-  - [Memory Allocation](#memory-allocation)
-  - [Clean Build Process](#clean-build-process)
-  - [Node.js Version Compatibility](#nodejs-version-compatibility)
-- [Map Integration Patterns](#map-integration-patterns)
-  - [Reusable Map Component](#reusable-map-component)
-  - [Accessibility Considerations](#accessibility-considerations)
+- [Stable Patterns](#stable-patterns)
+  - [Error Handling](#error-handling)
+  - [Testing Strategies](#testing-strategies)
   - [Performance Optimization](#performance-optimization)
-- [Debugging Strategies](#debugging-strategies)
-- [Dependency Management](#dependency-management)
-  - [ESLint Dependencies](#eslint-dependencies)
+  - [Security Practices](#security-practices)
+  - [UI/UX Patterns](#uiux-patterns)
+- [Technical Solutions](#technical-solutions)
+  - [MongoDB Service Patterns](#mongodb-service-patterns)
+  - [Angular Build Optimization](#angular-build-optimization)
+  - [Dependency Management](#dependency-management)
+  - [Map Integration](#map-integration)
+  - [User Preferences](#user-preferences)
+  - [RxJS Compatibility](#rxjs-compatibility)
+- [Historical Notes](#historical-notes)
+  - [Obsolete Approaches](#obsolete-approaches)
+  - [Fixed Issues](#fixed-issues)
   - [Package Overrides](#package-overrides)
 - [Linting and Formatting](#linting-and-formatting)
+  - [Code Quality Best Practices](#code-quality-best-practices)
   - [ESLint Configuration](#eslint-configuration)
   - [NPM Scripts](#npm-scripts)
   - [Common Issues](#common-issues)
@@ -43,6 +38,7 @@ This document contains lessons learned by the AI while working on the Date Night
 - [Security Best Practices](#security-best-practices)
   - [Handling Security Vulnerabilities](#handling-security-vulnerabilities)
   - [Dependency Management](#dependency-management)
+  - [GitHub Actions Workflow Patterns](#github-actions-workflow-patterns)
   - [GitHub Actions Security](#github-actions-security)
   - [CI/CD and Git Hooks](#cicd-and-git-hooks)
   - [CI/CD Caching Best Practices](#cicd-caching-best-practices)
@@ -56,10 +52,68 @@ This document contains lessons learned by the AI while working on the Date Night
   - [Purpose-Specific Documentation](#purpose-specific-documentation)
   - [Implementation vs. Verification](#implementation-vs-verification)
 - [Favorites System Implementation](#favorites-system-implementation)
-  - [Batch Operations](#batch-operations)
-  - [Filtering and Sorting](#filtering-and-sorting)
-  - [Tagging and Categorization](#tagging-and-categorization)
-- [Review System Implementation](#review-system-implementation)
+
+## Stable Patterns
+
+This section contains well-established patterns that have proven effective in the DateNight.io project. These patterns are considered stable and recommended for use throughout the codebase.
+
+### Error Handling
+
+For comprehensive error handling documentation, see [ERRORHANDLINGTELEMETRY.MD](/docs/ERRORHANDLINGTELEMETRY.MD).
+
+**Key Patterns:**
+
+- Use HTTP interceptors for global error handling
+- Implement context-specific error handling in services
+- Provide user-friendly error messages
+- Log errors with appropriate severity levels
+- Include contextual information in error logs
+
+### Testing Strategies
+
+For detailed testing guidelines, see [TESTING_GUIDE.MD](/docs/TESTING_GUIDE.MD) and [ANGULAR_TESTING_LESSONS.MD](/docs/ANGULAR_TESTING_LESSONS.MD).
+
+**Key Patterns:**
+
+- Write unit tests for business logic
+- Use integration tests for API endpoints
+- Implement E2E tests for critical user flows
+- Mock external dependencies
+- Use test-driven development for complex features
+
+### Performance Optimization
+
+**Key Patterns:**
+
+- Lazy load Angular modules
+- Implement virtual scrolling for long lists
+- Use trackBy with ngFor
+- Optimize change detection
+- Implement proper caching strategies
+
+### Security Practices
+
+For comprehensive security guidelines, see [SECURITY_BEST_PRACTICES.MD](/docs/SECURITY_BEST_PRACTICES.MD).
+
+**Key Patterns:**
+
+- Validate all user inputs
+- Implement proper authentication and authorization
+- Use HTTPS for all communications
+- Follow the principle of least privilege
+- Keep dependencies updated
+
+### UI/UX Patterns
+
+For UI component documentation, see [COMPONENT_LIBRARY.MD](/docs/COMPONENT_LIBRARY.MD) and [EMERALD-COMPONENTS.MD](/docs/EMERALD-COMPONENTS.MD).
+
+**Key Patterns:**
+
+- Use consistent design language
+- Implement responsive layouts
+- Provide feedback for user actions
+- Ensure accessibility compliance
+- Design for progressive enhancement
   - [Component Architecture](#component-architecture)
 - [User Preferences Implementation](#user-preferences-implementation)
   - [Preference Storage](#preference-storage)
@@ -152,7 +206,7 @@ When creating a design system demo page, we found these effective approaches:
 
 ### Theme System Implementation
 
-For detailed implementation of the theme system, see [THEME_SYSTEM.md](./THEME_SYSTEM.md).
+For detailed implementation of the theme system, see [THEME_SYSTEM.MD](./THEME_SYSTEM.md).
 
 When implementing a theme system as part of a design system, we discovered several important patterns:
 
@@ -470,11 +524,116 @@ private sendBatch(url: string, batch: any[]): void {
 }
 ```
 
-Benefits:
+## RxJS Compatibility
 
-- Reduces network overhead
-- Prevents overwhelming the server
-- Improves performance for large telemetry datasets
+### Multiple RxJS Versions Issue
+
+When working with Angular applications that have dependencies with different RxJS versions, you may encounter type compatibility issues. This is particularly common in HTTP interceptors and services that use RxJS operators.
+
+#### Symptoms
+
+- TypeScript errors about incompatible Observable types
+- Errors mentioning "Property 'isStopped' is protected but type 'Subscriber<T>' is not a class derived from 'Subscriber<T>'"
+- Errors about incompatible call signatures for RxJS operators
+
+#### Root Cause
+
+The root cause is typically having multiple versions of RxJS in the dependency tree:
+
+1. One version in the root node_modules folder
+2. Another version in a nested node_modules folder (e.g., client-angular/node_modules)
+
+This creates type incompatibilities when:
+
+- A service defined in one context uses an Observable from another context
+- Custom operators are defined with specific RxJS types from one version but used with Observables from another version
+
+#### Solutions
+
+##### 1. Simplified Interceptors
+
+For HTTP interceptors, the simplest solution is to create a simplified version that avoids complex RxJS operations:
+
+```typescript
+@Injectable()
+export class HttpErrorInterceptor implements HttpInterceptor {
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService,
+    private telemetryService: TelemetryService,
+    private authService: AuthService
+  ) {}
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Simply pass through all requests without modification
+    return next.handle(request);
+  }
+}
+```
+
+##### 2. Type-Safe Custom Operators
+
+For custom RxJS operators, use generic type parameters to ensure type compatibility:
+
+```typescript
+// Return a function that takes an observable and returns a new observable with the same type
+// Using generic type parameter to ensure type compatibility across different RxJS versions
+private retryWithBackoff<T>(maxRetries: number, initialDelay: number) {
+  return (source: Observable<T>): Observable<T> => {
+    return source.pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          concatMap((error, index) => {
+            const attemptNumber = index + 1;
+            if (attemptNumber > maxRetries) {
+              return throwError(() => error);
+            }
+            const delay = initialDelay * Math.pow(2, attemptNumber);
+            return timer(delay);
+          })
+        )
+      )
+    );
+  };
+}
+```
+
+##### 3. Extract Shared Types
+
+For shared types like enums that are used across different contexts, extract them to separate files:
+
+```typescript
+// error-category.enum.ts
+export enum ErrorCategory {
+  NETWORK = 'network',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  SERVER = 'server',
+  CLIENT = 'client',
+  TIMEOUT = 'timeout',
+  RATE_LIMIT = 'rate_limit',
+  NOT_FOUND = 'not_found',
+  CONFLICT = 'conflict',
+  UNKNOWN = 'unknown',
+}
+```
+
+##### 4. Long-Term Solutions
+
+For a more permanent solution:
+
+1. **Dependency Hoisting**: Configure npm or yarn to hoist dependencies to the root level
+2. **Package Overrides**: Use package overrides in package.json to force a specific RxJS version
+3. **Monorepo Structure**: Consider using a monorepo tool like Nx or Lerna with proper workspace configuration
+
+Benefits of these approaches:
+
+- Resolves RxJS type compatibility issues
+- Maintains code functionality while fixing type errors
+- Provides both short-term fixes and long-term solutions
+- Improves code maintainability and type safety
+- Reduces build errors and runtime issues
 
 #### Session and User Tracking
 
@@ -619,7 +778,7 @@ Based on the implementation in the Date Night App, we've identified these best p
 
 10. **Dashboard Visualization**: Visualize error and performance statistics.
 
-For a complete overview of the error handling and telemetry implementation, see the [Error Handling and Telemetry Documentation](../ErrorHandlingTelemetry.md).
+For a complete overview of the error handling and telemetry implementation, see the [Error Handling and Telemetry Documentation](../ERRORHANDLINGTELEMETRY.MD).
 
 ### Telemetry Dashboard Implementation
 
@@ -997,6 +1156,142 @@ expect(reportOnlyHeader).toBeTruthy();
      - Use automated tools to detect duplicate or conflicting CSP directives
      - Document the purpose of each CSP directive to prevent accidental duplication
 
+## MongoDB Service Patterns
+
+When implementing services that interact with MongoDB models, we've found the following patterns to be effective:
+
+### Query Execution Pattern
+
+Always use `.exec()` at the end of MongoDB queries to ensure proper Promise handling:
+
+```javascript
+// Good practice
+return await Ad.find({ userId: userId }).exec();
+
+// Avoid this pattern
+return await Ad.find({ userId: userId });
+```
+
+This ensures consistent behavior across different MongoDB driver versions and makes testing more predictable.
+
+### Error Handling Pattern
+
+Wrap all database operations in try/catch blocks with specific error messages:
+
+```javascript
+async getUserAds(userId) {
+  try {
+    const query = Ad.find({ userId: userId });
+    return await query.exec();
+  } catch (error) {
+    throw new Error('Error fetching user ads: ' + error.message);
+  }
+}
+```
+
+This approach:
+
+- Provides clear error context for debugging
+- Maintains a consistent error handling pattern
+- Preserves the original error message for troubleshooting
+
+### Pagination Pattern
+
+Implement standard pagination with page, limit, skip parameters:
+
+```javascript
+async searchAds(searchParams) {
+  try {
+    const query = {};
+    const page = searchParams.page || 1;
+    const limit = searchParams.limit || 10;
+    const skip = (page - 1) * limit;
+
+    // Build query...
+
+    // Execute query with pagination
+    const adsQuery = Ad.find(query)
+      .sort(searchParams.sort || { createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    // Get total count for pagination
+    const total = await Ad.countDocuments(query);
+    const ads = await adsQuery.exec();
+
+    // Return with pagination metadata
+    return {
+      ads,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  } catch (error) {
+    throw new Error('Error searching ads: ' + error.message);
+  }
+}
+```
+
+This pattern:
+
+- Provides consistent pagination across the application
+- Returns metadata needed for UI pagination controls
+- Optimizes database queries by limiting results
+
+### Query Building Pattern
+
+Build query objects incrementally based on provided parameters:
+
+```javascript
+// Apply search filters
+if (searchParams.title) {
+  query.title = { $regex: searchParams.title, $options: 'i' };
+}
+
+if (searchParams.category) {
+  query.category = searchParams.category;
+}
+
+if (searchParams.minPrice) {
+  query.price = { ...query.price, $gte: searchParams.minPrice };
+}
+
+if (searchParams.maxPrice) {
+  query.price = { ...query.price, $lte: searchParams.maxPrice };
+}
+```
+
+This approach:
+
+- Creates flexible search functionality
+- Handles complex filtering requirements
+- Maintains clean, readable code
+
+### Testing Considerations
+
+When testing MongoDB services:
+
+```javascript
+// Mock the Ad.find method to return a chainable query object
+Ad.find.mockReturnValue({
+  sort: jest.fn().mockReturnThis(),
+  skip: jest.fn().mockReturnThis(),
+  limit: jest.fn().mockReturnThis(),
+  exec: jest.fn().mockResolvedValue(mockAds),
+});
+
+// Mock countDocuments for pagination
+Ad.countDocuments.mockResolvedValue(mockCount);
+```
+
+Key testing patterns:
+
+- Mock all methods in the chain (find, sort, limit, skip, exec)
+- Test both success and error scenarios
+- Verify correct parameters are passed to MongoDB methods
+- Test pagination metadata calculations
+
 ## Angular Testing
 
 ### Component Dependencies
@@ -1300,7 +1595,7 @@ When working with large Angular applications, build performance and memory usage
    - package.json "engines" field for automated checks
    - CI/CD configuration to ensure consistent builds
 
-For more detailed information on Angular build optimization, see [ANGULAR_BUILD_OPTIMIZATION.md](./ANGULAR_BUILD_OPTIMIZATION.md).
+For more detailed information on Angular build optimization, see [ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md).
 
 ## Map Integration Patterns
 
@@ -1545,6 +1840,44 @@ private setupMapEvents(): void {
 
 ## Linting and Formatting
 
+### Code Quality Best Practices
+
+When maintaining code quality in Angular applications, we've identified several key practices:
+
+1. **Avoid Console Statements in Production Code**:
+
+   - Console statements should be removed from production code to prevent information leakage
+   - Use proper logging services instead of direct console calls
+   - Configure ESLint to warn or error on console statements in production code
+   - Example fix: Replace `console.log('HttpErrorInterceptor configured:', config);` with a comment
+
+2. **Remove Unused Imports and Variables**:
+
+   - Unused imports and variables increase bundle size and reduce code readability
+   - Configure ESLint to detect and warn about unused imports and variables
+   - Regularly clean up unused code during maintenance
+   - Example fix: Remove unused imports like `HttpEvent` and `Observable` when not needed
+
+3. **Proper Error Handling**:
+
+   - Avoid catching errors without proper handling
+   - Use specific error types when possible
+   - If an error variable is not used in the catch block, use the empty catch pattern: `catch {}`
+   - Example fix: Replace `catch (error) { return false; }` with `catch { return false; }`
+
+4. **Consistent Code Style**:
+
+   - Follow established code style guidelines
+   - Use automated formatting tools like Prettier
+   - Configure ESLint to enforce consistent code style
+   - Run linting as part of CI/CD pipelines
+
+5. **Regular Linting Checks**:
+   - Run linting checks regularly during development
+   - Fix linting issues as they arise rather than accumulating technical debt
+   - Use pre-commit hooks to prevent committing code with linting errors
+   - Integrate linting into the build process
+
 ### ESLint Configuration
 
 #### HTML Files in Angular
@@ -1744,7 +2077,7 @@ For projects with many warnings that need to be addressed over time:
 
 ### Theme Toggle Implementation
 
-For detailed lessons on theme toggle implementation, see [AILessons-theme-toggle.md](./AILessons-theme-toggle.md).
+For detailed lessons on theme toggle implementation, see [AILESSONS-THEME-TOGGLE.MD](./AILessons-theme-toggle.md).
 
 When implementing the theme toggle feature in the DateNight.io application, we discovered several important patterns:
 
@@ -1951,6 +2284,138 @@ Effective dependency management is crucial for maintaining security in modern ap
    - Prioritize vulnerabilities based on severity (high, medium, low)
    - Establish a clear process for addressing security alerts
    - Document all security-related changes in CHANGELOG.md
+
+### GitHub Actions Workflow Patterns
+
+Effective GitHub Actions workflow organization follows these patterns:
+
+1. **Script Externalization**:
+
+   - Move inline scripts to separate files in the `.github/scripts/` directory
+   - Benefits include improved maintainability, reusability, and version control
+   - Example implementation:
+
+     ```javascript
+     // .github/scripts/generate-github-insights.js
+     const fs = require('fs');
+     const { Octokit } = require('@octokit/rest');
+
+     async function generateInsightsReport() {
+       // Implementation details...
+     }
+
+     // Export for use in other scripts
+     module.exports = { generateInsightsReport };
+
+     // Execute if run directly
+     if (require.main === module) {
+       generateInsightsReport();
+     }
+     ```
+
+2. **Artifact Usage vs. Repository Storage**:
+
+   - Use artifacts for logs, test results, and other large files
+   - Only commit processed, human-readable reports and summaries
+   - Clean up temporary files before committing
+   - Example implementation:
+
+     ```yaml
+     # Upload raw data as artifacts
+     - name: Upload JSON results as artifacts
+       uses: actions/upload-artifact@v4
+       with:
+         name: results-${{ github.run_id }}
+         path: |
+           *.json
+           *.log
+         retention-days: 7
+
+     # Clean up before committing
+     - name: Remove temporary files
+       run: rm -f *.json *.log
+     ```
+
+3. **Robust Git Operations**:
+
+   - Use stash/pull/rebase pattern to handle potential conflicts
+   - Only commit if there are actual changes
+   - Add `[skip ci]` to commit messages to prevent triggering additional workflows
+   - Example implementation:
+
+     ```yaml
+     - name: Commit changes
+       run: |
+         git config --local user.email "action@github.com"
+         git config --local user.name "GitHub Action"
+
+         # Handle any unstaged changes
+         git stash -u || true
+
+         # Pull latest changes with rebase
+         git pull --rebase origin main || true
+
+         # Restore stashed changes
+         git stash list | grep -q "stash@{0}" && git stash pop || true
+
+         # Add only specific files
+         git add reports/
+
+         # Only commit if there are changes
+         if git diff --staged --quiet; then
+           echo "No changes to commit"
+         else
+           git commit -m "docs: update report [skip ci]"
+           git push
+         fi
+     ```
+
+4. **Concurrency Control**:
+
+   - Prevent multiple instances of the same workflow from running simultaneously
+   - Example implementation:
+     ```yaml
+     concurrency:
+       group: ${{ github.workflow }}-${{ github.ref }}
+       cancel-in-progress: true
+     ```
+
+5. **Timeout Management**:
+
+   - Add timeouts to prevent runaway jobs
+   - Example implementation:
+     ```yaml
+     jobs:
+       my-job:
+         runs-on: ubuntu-latest
+         timeout-minutes: 30 # Adjust based on expected runtime
+     ```
+
+6. **Workflow Trigger Optimization**:
+
+   - Use path filtering to trigger workflows only when relevant files change
+   - For workflow_run triggers, filter by conclusion (success, failure, etc.)
+   - Use cron schedules that don't overlap with high-activity periods
+   - Example path filtering:
+     ```yaml
+     on:
+       push:
+         branches: [main, develop]
+         paths:
+           - 'client-angular/**'
+           - '.github/workflows/angular-tests.yml'
+     ```
+   - Example conclusion filtering:
+     ```yaml
+     on:
+       workflow_run:
+         workflows: ['*']
+         types: [completed]
+         conclusion:
+           - failure
+           - cancelled
+           - timed_out
+     ```
 
 ### GitHub Actions Security
 
@@ -2894,8 +3359,22 @@ Creating a dedicated demo component provides several benefits:
 
 This approach of creating dedicated demo components can be applied to other complex features to improve understanding and adoption.
 
-// CORRECT: Acknowledging existing implementation
-"The geocoding service is well-implemented with multiple fallback strategies"
+## Historical Notes
 
+This section contains notes on approaches that have been superseded by better implementations or issues that have been fixed. They are kept for historical reference.
 
-<!-- TODO: Manually review and curate this file. Extract stable patterns, archive obsolete sections (as per DOCS_IMPROVEMENT_PLAN.md) -->
+### Obsolete Approaches
+
+> **Obsolete**: The original HTTP error handling implementation using a global error interceptor without context-specific handling has been replaced with a more robust approach. See [ERRORHANDLINGTELEMETRY.MD](/docs/ERRORHANDLINGTELEMETRY.MD) for the current implementation.
+
+> **Obsolete**: The initial approach to theme toggling using direct DOM manipulation has been replaced with a more maintainable CSS variables approach. See [THEMING_GUIDE.MD](/docs/THEMING_GUIDE.MD) for details.
+
+### Fixed Issues
+
+> **Fixed**: The geocoding service now implements multiple fallback strategies for improved reliability.
+
+> **Fixed**: Angular build memory issues have been addressed with the solutions documented in [ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.MD).
+
+---
+
+_Last Updated: 2025-05-20_

@@ -63,7 +63,7 @@ export class MyModule { }
 
 ## Documentation
 
-For detailed documentation on each component, see the [COMPONENTS.md](./COMPONENTS.md) file.
+For detailed documentation on each component, see the [COMPONENTS.MD](./COMPONENTS.md) file.
 
 ## Design Tokens
 

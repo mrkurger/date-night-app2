@@ -45,4 +45,4 @@ const config = {
   },
 };
 
-module.exports = config[environment];
+export default config[environment];

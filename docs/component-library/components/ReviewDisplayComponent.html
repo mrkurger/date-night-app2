@@ -1,0 +1,1546 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ReviewDisplayComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/components/review-display/review-display.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-review-display</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../components/StarRatingComponent.html" target="_self" >StarRatingComponent</a></code>
+                            <code>TimeAgoPipe</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatDividerModule</code>
+                            <code>MatTooltipModule</code>
+                            <code>MatBadgeModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./review-display.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./review-display.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getCategoryAverage" >getCategoryAverage</a>
+                            </li>
+                            <li>
+                                <a href="#getCategoryRating" >getCategoryRating</a>
+                            </li>
+                            <li>
+                                <a href="#hasCategoryRating" >hasCategoryRating</a>
+                            </li>
+                            <li>
+                                <a href="#onDeleteReview" >onDeleteReview</a>
+                            </li>
+                            <li>
+                                <a href="#onEditReview" >onEditReview</a>
+                            </li>
+                            <li>
+                                <a href="#onMarkHelpful" >onMarkHelpful</a>
+                            </li>
+                            <li>
+                                <a href="#onReportReview" >onReportReview</a>
+                            </li>
+                            <li>
+                                <a href="#onRespondToReview" >onRespondToReview</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isCurrentUserAdvertiser" >isCurrentUserAdvertiser</a>
+                            </li>
+                            <li>
+                                <a href="#isCurrentUserReviewer" >isCurrentUserReviewer</a>
+                            </li>
+                            <li>
+                                <a href="#review" >review</a>
+                            </li>
+                            <li>
+                                <a href="#showActions" >showActions</a>
+                            </li>
+                            <li>
+                                <a href="#showAdvertiserInfo" >showAdvertiserInfo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#deleteReview" >deleteReview</a>
+                            </li>
+                            <li>
+                                <a href="#editReview" >editReview</a>
+                            </li>
+                            <li>
+                                <a href="#markHelpful" >markHelpful</a>
+                            </li>
+                            <li>
+                                <a href="#reportReview" >reportReview</a>
+                            </li>
+                            <li>
+                                <a href="#respondToReview" >respondToReview</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCurrentUserAdvertiser"></a>
+                        <b>isCurrentUserAdvertiser</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:78</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCurrentUserReviewer"></a>
+                        <b>isCurrentUserReviewer</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:77</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="review"></a>
+                        <b>review</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Review.html" target="_self" >Review</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:76</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showActions"></a>
+                        <b>showActions</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:80</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showAdvertiserInfo"></a>
+                        <b>showAdvertiserInfo</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:79</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deleteReview"></a>
+                        <b>deleteReview</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:86</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="editReview"></a>
+                        <b>editReview</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:85</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="markHelpful"></a>
+                        <b>markHelpful</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:82</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="reportReview"></a>
+                        <b>reportReview</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:83</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="respondToReview"></a>
+                        <b>respondToReview</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:84</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategoryAverage"></a>
+                    <span class="name">
+                        <span ><b>getCategoryAverage</b></span>
+                        <a href="#getCategoryAverage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategoryAverage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the average category rating</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategoryRating"></a>
+                    <span class="name">
+                        <span ><b>getCategoryRating</b></span>
+                        <a href="#getCategoryRating"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategoryRating(category: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get a category rating</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>category</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasCategoryRating"></a>
+                    <span class="name">
+                        <span ><b>hasCategoryRating</b></span>
+                        <a href="#hasCategoryRating"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasCategoryRating(category: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if a category has a rating</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>category</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDeleteReview"></a>
+                    <span class="name">
+                        <span ><b>onDeleteReview</b></span>
+                        <a href="#onDeleteReview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDeleteReview()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:165</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle delete review action</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEditReview"></a>
+                    <span class="name">
+                        <span ><b>onEditReview</b></span>
+                        <a href="#onEditReview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEditReview()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle edit review action</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMarkHelpful"></a>
+                    <span class="name">
+                        <span ><b>onMarkHelpful</b></span>
+                        <a href="#onMarkHelpful"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onMarkHelpful()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle mark as helpful action</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onReportReview"></a>
+                    <span class="name">
+                        <span ><b>onReportReview</b></span>
+                        <a href="#onReportReview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onReportReview()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle report review action</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRespondToReview"></a>
+                    <span class="name">
+                        <span ><b>onRespondToReview</b></span>
+                        <a href="#onRespondToReview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRespondToReview()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/shared/components/review-display/review-display.component.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle respond to review action</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { StarRatingComponent } from &#x27;../star-rating/star-rating.component&#x27;;
+import { TimeAgoPipe } from &#x27;../../pipes/time-ago.pipe&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatDividerModule } from &#x27;@angular/material/divider&#x27;;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;;
+import { MatBadgeModule } from &#x27;@angular/material/badge&#x27;;
+
+export interface Review {
+  _id: string;
+  reviewer: {
+    _id: string;
+    username: string;
+    profileImage?: string;
+  };
+  advertiser: {
+    _id: string;
+    username: string;
+    profileImage?: string;
+  };
+  ad?: {
+    _id: string;
+    title: string;
+  };
+  rating: number;
+  title: string;
+  content: string;
+  categories?: {
+    communication?: number;
+    appearance?: number;
+    location?: number;
+    value?: number;
+  };
+  status: &#x27;pending&#x27; | &#x27;approved&#x27; | &#x27;rejected&#x27;;
+  isVerifiedMeeting?: boolean;
+  meetingDate?: string;
+  advertiserResponse?: {
+    content: string;
+    date: string;
+  };
+  helpfulVotes: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+@Component({
+  selector: &#x27;app-review-display&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    StarRatingComponent,
+    TimeAgoPipe,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatBadgeModule,
+  ],
+  templateUrl: &#x27;./review-display.component.html&#x27;,
+  styleUrls: [&#x27;./review-display.component.scss&#x27;],
+})
+export class ReviewDisplayComponent {
+  @Input() review!: Review;
+  @Input() isCurrentUserReviewer &#x3D; false;
+  @Input() isCurrentUserAdvertiser &#x3D; false;
+  @Input() showAdvertiserInfo &#x3D; true;
+  @Input() showActions &#x3D; true;
+
+  @Output() markHelpful &#x3D; new EventEmitter&lt;string&gt;();
+  @Output() reportReview &#x3D; new EventEmitter&lt;string&gt;();
+  @Output() respondToReview &#x3D; new EventEmitter&lt;string&gt;();
+  @Output() editReview &#x3D; new EventEmitter&lt;string&gt;();
+  @Output() deleteReview &#x3D; new EventEmitter&lt;string&gt;();
+
+  /**
+   * Get the average category rating
+   */
+  getCategoryAverage(): number {
+    if (!this.review.categories) {
+      return this.review.rating;
+    }
+
+    const categories &#x3D; this.review.categories;
+    const values &#x3D; [
+      categories.communication,
+      categories.appearance,
+      categories.location,
+      categories.value,
+    ].filter(val &#x3D;&gt; val !&#x3D;&#x3D; undefined &amp;&amp; val &gt; 0) as number[];
+
+    if (values.length &#x3D;&#x3D;&#x3D; 0) {
+      return this.review.rating;
+    }
+
+    const sum &#x3D; values.reduce((total, val) &#x3D;&gt; total + val, 0);
+    return sum / values.length;
+  }
+
+  /**
+   * Check if a category has a rating
+   */
+  hasCategoryRating(category: string): boolean {
+    return !!(
+      this.review.categories &amp;&amp;
+      this.review.categories[category as keyof typeof this.review.categories] &amp;&amp;
+      this.review.categories[category as keyof typeof this.review.categories]! &gt; 0
+    );
+  }
+
+  /**
+   * Get a category rating
+   */
+  getCategoryRating(category: string): number {
+    if (!this.review.categories) {
+      return 0;
+    }
+
+    return this.review.categories[category as keyof typeof this.review.categories] || 0;
+  }
+
+  /**
+   * Handle mark as helpful action
+   */
+  onMarkHelpful(): void {
+    this.markHelpful.emit(this.review._id);
+  }
+
+  /**
+   * Handle report review action
+   */
+  onReportReview(): void {
+    this.reportReview.emit(this.review._id);
+  }
+
+  /**
+   * Handle respond to review action
+   */
+  onRespondToReview(): void {
+    this.respondToReview.emit(this.review._id);
+  }
+
+  /**
+   * Handle edit review action
+   */
+  onEditReview(): void {
+    this.editReview.emit(this.review._id);
+  }
+
+  /**
+   * Handle delete review action
+   */
+  onDeleteReview(): void {
+    this.deleteReview.emit(this.review._id);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-card class&#x3D;&quot;review-card&quot; [class.pending]&#x3D;&quot;review.status &#x3D;&#x3D;&#x3D; &#x27;pending&#x27;&quot;&gt;
+  &lt;!-- Review Header --&gt;
+  &lt;mat-card-header&gt;
+    &lt;img
+      mat-card-avatar
+      [src]&#x3D;&quot;review.reviewer.profileImage || &#x27;/assets/img/default-profile.jpg&#x27;&quot;
+      [alt]&#x3D;&quot;review.reviewer.username&quot;
+    /&gt;
+    &lt;mat-card-title&gt;
+      {{ review.title }}
+      &lt;span class&#x3D;&quot;verified-badge&quot; *ngIf&#x3D;&quot;review.isVerifiedMeeting&quot; matTooltip&#x3D;&quot;Verified Meeting&quot;&gt;
+        &lt;mat-icon&gt;verified&lt;/mat-icon&gt;
+      &lt;/span&gt;
+    &lt;/mat-card-title&gt;
+    &lt;mat-card-subtitle&gt;
+      &lt;span class&#x3D;&quot;reviewer-name&quot;&gt;{{ review.reviewer.username }}&lt;/span&gt;
+      &lt;span class&#x3D;&quot;review-date&quot;&gt;{{ review.createdAt | timeAgo }}&lt;/span&gt;
+
+      &lt;span class&#x3D;&quot;status-badge&quot; *ngIf&#x3D;&quot;review.status &#x3D;&#x3D;&#x3D; &#x27;pending&#x27;&quot;&gt; Pending Approval &lt;/span&gt;
+    &lt;/mat-card-subtitle&gt;
+
+    &lt;div class&#x3D;&quot;review-rating&quot;&gt;
+      &lt;app-star-rating
+        [rating]&#x3D;&quot;review.rating&quot;
+        [readonly]&#x3D;&quot;true&quot;
+        [showRatingText]&#x3D;&quot;true&quot;
+      &gt;&lt;/app-star-rating&gt;
+    &lt;/div&gt;
+  &lt;/mat-card-header&gt;
+
+  &lt;!-- Review Content --&gt;
+  &lt;mat-card-content&gt;
+    &lt;div class&#x3D;&quot;review-content&quot;&gt;
+      {{ review.content }}
+    &lt;/div&gt;
+
+    &lt;!-- Category Ratings --&gt;
+    &lt;div
+      class&#x3D;&quot;category-ratings&quot;
+      *ngIf&#x3D;&quot;
+        hasCategoryRating(&#x27;communication&#x27;) ||
+        hasCategoryRating(&#x27;appearance&#x27;) ||
+        hasCategoryRating(&#x27;location&#x27;) ||
+        hasCategoryRating(&#x27;value&#x27;)
+      &quot;
+    &gt;
+      &lt;h4&gt;Category Ratings&lt;/h4&gt;
+
+      &lt;div class&#x3D;&quot;category-grid&quot;&gt;
+        &lt;div class&#x3D;&quot;category-item&quot; *ngIf&#x3D;&quot;hasCategoryRating(&#x27;communication&#x27;)&quot;&gt;
+          &lt;div class&#x3D;&quot;category-label&quot;&gt;Communication&lt;/div&gt;
+          &lt;app-star-rating
+            [rating]&#x3D;&quot;getCategoryRating(&#x27;communication&#x27;)&quot;
+            [readonly]&#x3D;&quot;true&quot;
+            [small]&#x3D;&quot;true&quot;
+          &gt;&lt;/app-star-rating&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;category-item&quot; *ngIf&#x3D;&quot;hasCategoryRating(&#x27;appearance&#x27;)&quot;&gt;
+          &lt;div class&#x3D;&quot;category-label&quot;&gt;Appearance&lt;/div&gt;
+          &lt;app-star-rating
+            [rating]&#x3D;&quot;getCategoryRating(&#x27;appearance&#x27;)&quot;
+            [readonly]&#x3D;&quot;true&quot;
+            [small]&#x3D;&quot;true&quot;
+          &gt;&lt;/app-star-rating&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;category-item&quot; *ngIf&#x3D;&quot;hasCategoryRating(&#x27;location&#x27;)&quot;&gt;
+          &lt;div class&#x3D;&quot;category-label&quot;&gt;Location&lt;/div&gt;
+          &lt;app-star-rating
+            [rating]&#x3D;&quot;getCategoryRating(&#x27;location&#x27;)&quot;
+            [readonly]&#x3D;&quot;true&quot;
+            [small]&#x3D;&quot;true&quot;
+          &gt;&lt;/app-star-rating&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;category-item&quot; *ngIf&#x3D;&quot;hasCategoryRating(&#x27;value&#x27;)&quot;&gt;
+          &lt;div class&#x3D;&quot;category-label&quot;&gt;Value&lt;/div&gt;
+          &lt;app-star-rating
+            [rating]&#x3D;&quot;getCategoryRating(&#x27;value&#x27;)&quot;
+            [readonly]&#x3D;&quot;true&quot;
+            [small]&#x3D;&quot;true&quot;
+          &gt;&lt;/app-star-rating&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Meeting Date --&gt;
+    &lt;div class&#x3D;&quot;meeting-date&quot; *ngIf&#x3D;&quot;review.isVerifiedMeeting &amp;&amp; review.meetingDate&quot;&gt;
+      &lt;mat-icon&gt;event&lt;/mat-icon&gt;
+      &lt;span&gt;Met on {{ review.meetingDate | date: &#x27;mediumDate&#x27; }}&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Advertiser Response --&gt;
+    &lt;div class&#x3D;&quot;advertiser-response&quot; *ngIf&#x3D;&quot;review.advertiserResponse&quot;&gt;
+      &lt;mat-divider&gt;&lt;/mat-divider&gt;
+      &lt;div class&#x3D;&quot;response-header&quot;&gt;
+        &lt;img
+          class&#x3D;&quot;response-avatar&quot;
+          [src]&#x3D;&quot;review.advertiser.profileImage || &#x27;/assets/img/default-profile.jpg&#x27;&quot;
+          [alt]&#x3D;&quot;review.advertiser.username&quot;
+        /&gt;
+        &lt;div class&#x3D;&quot;response-meta&quot;&gt;
+          &lt;div class&#x3D;&quot;response-name&quot;&gt;
+            &lt;strong&gt;Response from {{ review.advertiser.username }}&lt;/strong&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;response-date&quot;&gt;{{ review.advertiserResponse.date | timeAgo }}&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;response-content&quot;&gt;
+        {{ review.advertiserResponse.content }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/mat-card-content&gt;
+
+  &lt;!-- Review Actions --&gt;
+  &lt;mat-card-actions *ngIf&#x3D;&quot;showActions &amp;&amp; review.status &#x3D;&#x3D;&#x3D; &#x27;approved&#x27;&quot;&gt;
+    &lt;button
+      mat-button
+      color&#x3D;&quot;primary&quot;
+      (click)&#x3D;&quot;onMarkHelpful()&quot;
+      [disabled]&#x3D;&quot;isCurrentUserReviewer&quot;
+      matTooltip&#x3D;&quot;Mark this review as helpful&quot;
+    &gt;
+      &lt;mat-icon&gt;thumb_up&lt;/mat-icon&gt;
+      Helpful ({{ review.helpfulVotes }})
+    &lt;/button&gt;
+
+    &lt;button
+      mat-button
+      color&#x3D;&quot;warn&quot;
+      (click)&#x3D;&quot;onReportReview()&quot;
+      [disabled]&#x3D;&quot;isCurrentUserReviewer&quot;
+      matTooltip&#x3D;&quot;Report this review&quot;
+    &gt;
+      &lt;mat-icon&gt;flag&lt;/mat-icon&gt;
+      Report
+    &lt;/button&gt;
+
+    &lt;span class&#x3D;&quot;spacer&quot;&gt;&lt;/span&gt;
+
+    &lt;!-- Advertiser Actions --&gt;
+    &lt;button
+      mat-button
+      color&#x3D;&quot;primary&quot;
+      *ngIf&#x3D;&quot;isCurrentUserAdvertiser &amp;&amp; !review.advertiserResponse&quot;
+      (click)&#x3D;&quot;onRespondToReview()&quot;
+      matTooltip&#x3D;&quot;Respond to this review&quot;
+    &gt;
+      &lt;mat-icon&gt;reply&lt;/mat-icon&gt;
+      Respond
+    &lt;/button&gt;
+
+    &lt;!-- Reviewer Actions --&gt;
+    &lt;button
+      mat-button
+      color&#x3D;&quot;primary&quot;
+      *ngIf&#x3D;&quot;isCurrentUserReviewer&quot;
+      (click)&#x3D;&quot;onEditReview()&quot;
+      matTooltip&#x3D;&quot;Edit your review&quot;
+    &gt;
+      &lt;mat-icon&gt;edit&lt;/mat-icon&gt;
+      Edit
+    &lt;/button&gt;
+
+    &lt;button
+      mat-button
+      color&#x3D;&quot;warn&quot;
+      *ngIf&#x3D;&quot;isCurrentUserReviewer&quot;
+      (click)&#x3D;&quot;onDeleteReview()&quot;
+      matTooltip&#x3D;&quot;Delete your review&quot;
+    &gt;
+      &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+      Delete
+    &lt;/button&gt;
+  &lt;/mat-card-actions&gt;
+&lt;/mat-card&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./review-display.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../styles/variables&#x27;;
+@import &#x27;../../../../styles/mixins&#x27;;
+
+.review-card {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &amp;.pending {
+    border: 1px solid var(--color-warning);
+    background-color: rgba(var(--color-warning-rgb), 0.05);
+  }
+}
+
+.review-rating {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  color: var(--color-success);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.reviewer-name {
+  font-weight: 500;
+}
+
+.review-date {
+  margin-left: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.85em;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+
+.review-content {
+  margin: 16px 0;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.category-ratings {
+  margin: 16px 0;
+
+  h4 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+  }
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+
+  .category-label {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    color: var(--color-text-muted);
+  }
+}
+
+.meeting-date {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+}
+
+.advertiser-response {
+  margin-top: 24px;
+  padding-top: 16px;
+
+  .response-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .response-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+
+  .response-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .response-name {
+    font-size: 0.875rem;
+  }
+
+  .response-date {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .response-content {
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    font-style: italic;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .review-rating {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 8px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card class="review-card" [class.pending]="review.status === \'pending\'">  <!-- Review Header -->  <mat-card-header>    <img      mat-card-avatar      [src]="review.reviewer.profileImage || \'/assets/img/default-profile.jpg\'"      [alt]="review.reviewer.username"    />    <mat-card-title>      {{ review.title }}      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" matTooltip="Verified Meeting">        <mat-icon>verified</mat-icon>      </span>    </mat-card-title>    <mat-card-subtitle>      <span class="reviewer-name">{{ review.reviewer.username }}</span>      <span class="review-date">{{ review.createdAt | timeAgo }}</span>      <span class="status-badge" *ngIf="review.status === \'pending\'"> Pending Approval </span>    </mat-card-subtitle>    <div class="review-rating">      <app-star-rating        [rating]="review.rating"        [readonly]="true"        [showRatingText]="true"      ></app-star-rating>    </div>  </mat-card-header>  <!-- Review Content -->  <mat-card-content>    <div class="review-content">      {{ review.content }}    </div>    <!-- Category Ratings -->    <div      class="category-ratings"      *ngIf="        hasCategoryRating(\'communication\') ||        hasCategoryRating(\'appearance\') ||        hasCategoryRating(\'location\') ||        hasCategoryRating(\'value\')      "    >      <h4>Category Ratings</h4>      <div class="category-grid">        <div class="category-item" *ngIf="hasCategoryRating(\'communication\')">          <div class="category-label">Communication</div>          <app-star-rating            [rating]="getCategoryRating(\'communication\')"            [readonly]="true"            [small]="true"          ></app-star-rating>        </div>        <div class="category-item" *ngIf="hasCategoryRating(\'appearance\')">          <div class="category-label">Appearance</div>          <app-star-rating            [rating]="getCategoryRating(\'appearance\')"            [readonly]="true"            [small]="true"          ></app-star-rating>        </div>        <div class="category-item" *ngIf="hasCategoryRating(\'location\')">          <div class="category-label">Location</div>          <app-star-rating            [rating]="getCategoryRating(\'location\')"            [readonly]="true"            [small]="true"          ></app-star-rating>        </div>        <div class="category-item" *ngIf="hasCategoryRating(\'value\')">          <div class="category-label">Value</div>          <app-star-rating            [rating]="getCategoryRating(\'value\')"            [readonly]="true"            [small]="true"          ></app-star-rating>        </div>      </div>    </div>    <!-- Meeting Date -->    <div class="meeting-date" *ngIf="review.isVerifiedMeeting && review.meetingDate">      <mat-icon>event</mat-icon>      <span>Met on {{ review.meetingDate | date: \'mediumDate\' }}</span>    </div>    <!-- Advertiser Response -->    <div class="advertiser-response" *ngIf="review.advertiserResponse">      <mat-divider></mat-divider>      <div class="response-header">        <img          class="response-avatar"          [src]="review.advertiser.profileImage || \'/assets/img/default-profile.jpg\'"          [alt]="review.advertiser.username"        />        <div class="response-meta">          <div class="response-name">            <strong>Response from {{ review.advertiser.username }}</strong>          </div>          <div class="response-date">{{ review.advertiserResponse.date | timeAgo }}</div>        </div>      </div>      <div class="response-content">        {{ review.advertiserResponse.content }}      </div>    </div>  </mat-card-content>  <!-- Review Actions -->  <mat-card-actions *ngIf="showActions && review.status === \'approved\'">    <button      mat-button      color="primary"      (click)="onMarkHelpful()"      [disabled]="isCurrentUserReviewer"      matTooltip="Mark this review as helpful"    >      <mat-icon>thumb_up</mat-icon>      Helpful ({{ review.helpfulVotes }})    </button>    <button      mat-button      color="warn"      (click)="onReportReview()"      [disabled]="isCurrentUserReviewer"      matTooltip="Report this review"    >      <mat-icon>flag</mat-icon>      Report    </button>    <span class="spacer"></span>    <!-- Advertiser Actions -->    <button      mat-button      color="primary"      *ngIf="isCurrentUserAdvertiser && !review.advertiserResponse"      (click)="onRespondToReview()"      matTooltip="Respond to this review"    >      <mat-icon>reply</mat-icon>      Respond    </button>    <!-- Reviewer Actions -->    <button      mat-button      color="primary"      *ngIf="isCurrentUserReviewer"      (click)="onEditReview()"      matTooltip="Edit your review"    >      <mat-icon>edit</mat-icon>      Edit    </button>    <button      mat-button      color="warn"      *ngIf="isCurrentUserReviewer"      (click)="onDeleteReview()"      matTooltip="Delete your review"    >      <mat-icon>delete</mat-icon>      Delete    </button>  </mat-card-actions></mat-card></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ReviewDisplayComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ReviewDisplayComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

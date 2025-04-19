@@ -1,0 +1,2199 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ErrorDashboardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Error Dashboard Component</p>
+<p>Displays a dashboard for analyzing and monitoring application errors.
+Features include:</p>
+<ul>
+<li>Filtering by error category, status code, date range</li>
+<li>Sorting by various columns</li>
+<li>Pagination for large datasets</li>
+<li>Detailed error information</li>
+</ul>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-error-dashboard</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatPaginatorModule</code>
+                            <code>MatSortModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatDatepickerModule</code>
+                            <code>MatNativeDateModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatChipsModule</code>
+                            <code>MatProgressSpinnerModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .filter-card {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .filter-form mat-form-field {
+        flex: 1 1 200px;
+      }
+
+      .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .dashboard-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .error-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        flex: 1 1 200px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3f51b5;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: #666;
+      }
+
+      .error-list-card {
+        width: 100%;
+      }
+
+      .error-table {
+        width: 100%;
+      }
+
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .no-data-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+      }
+
+      mat-chip.category-network {
+        background-color: #ff9800;
+      }
+      mat-chip.category-authentication {
+        background-color: #f44336;
+      }
+      mat-chip.category-authorization {
+        background-color: #e91e63;
+      }
+      mat-chip.category-validation {
+        background-color: #9c27b0;
+      }
+      mat-chip.category-server {
+        background-color: #673ab7;
+      }
+      mat-chip.category-client {
+        background-color: #3f51b5;
+      }
+      mat-chip.category-timeout {
+        background-color: #2196f3;
+      }
+      mat-chip.category-rate_limit {
+        background-color: #03a9f4;
+      }
+      mat-chip.category-not_found {
+        background-color: #00bcd4;
+      }
+      mat-chip.category-conflict {
+        background-color: #009688;
+      }
+      mat-chip.category-unknown {
+        background-color: #607d8b;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+  &lt;h1&gt;Error Monitoring Dashboard&lt;/h1&gt;
+
+  &lt;mat-card class&#x3D;&quot;filter-card&quot;&gt;
+    &lt;mat-card-header&gt;
+      &lt;mat-card-title&gt;Filters&lt;/mat-card-title&gt;
+    &lt;/mat-card-header&gt;
+    &lt;mat-card-content&gt;
+      &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;category&quot;&gt;
+            &lt;mat-option value&#x3D;&quot;&quot;&gt;All Categories&lt;/mat-option&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let category of errorCategories&quot; [value]&#x3D;&quot;category.value&quot;&gt;
+              {{ category.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+          &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g., 500&quot; /&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;From Date&lt;/mat-label&gt;
+          &lt;input matInput [matDatepicker]&#x3D;&quot;fromPicker&quot; formControlName&#x3D;&quot;fromDate&quot; /&gt;
+          &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;fromPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+          &lt;mat-datepicker #fromPicker&gt;&lt;/mat-datepicker&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;To Date&lt;/mat-label&gt;
+          &lt;input matInput [matDatepicker]&#x3D;&quot;toPicker&quot; formControlName&#x3D;&quot;toDate&quot; /&gt;
+          &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;toPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+          &lt;mat-datepicker #toPicker&gt;&lt;/mat-datepicker&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;div class&#x3D;&quot;filter-actions&quot;&gt;
+          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;
+            &lt;mat-icon&gt;filter_list&lt;/mat-icon&gt; Apply Filters
+          &lt;/button&gt;
+          &lt;button mat-button (click)&#x3D;&quot;resetFilters()&quot;&gt;&lt;mat-icon&gt;clear&lt;/mat-icon&gt; Reset&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/mat-card-content&gt;
+  &lt;/mat-card&gt;
+
+  &lt;div class&#x3D;&quot;dashboard-content&quot;&gt;
+    &lt;div class&#x3D;&quot;error-stats&quot;&gt;
+      &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.totalErrors || 0 }}&lt;/div&gt;
+          &lt;div class&#x3D;&quot;stat-label&quot;&gt;Total Errors&lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+      &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.uniqueErrors || 0 }}&lt;/div&gt;
+          &lt;div class&#x3D;&quot;stat-label&quot;&gt;Unique Error Codes&lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+      &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.serverErrors || 0 }}&lt;/div&gt;
+          &lt;div class&#x3D;&quot;stat-label&quot;&gt;Server Errors&lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+      &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.clientErrors || 0 }}&lt;/div&gt;
+          &lt;div class&#x3D;&quot;stat-label&quot;&gt;Client Errors&lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+    &lt;/div&gt;
+
+    &lt;mat-card class&#x3D;&quot;error-list-card&quot;&gt;
+      &lt;mat-card-header&gt;
+        &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+      &lt;/mat-card-header&gt;
+      &lt;mat-card-content&gt;
+        &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;loading&quot;&gt;
+          &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+        &lt;/div&gt;
+
+        &lt;table
+          mat-table
+          [dataSource]&#x3D;&quot;errors&quot;
+          matSort
+          (matSortChange)&#x3D;&quot;sortData($event)&quot;
+          class&#x3D;&quot;error-table&quot;
+          *ngIf&#x3D;&quot;!loading&quot;
+        &gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;category&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Category&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+              &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + error.context?.category&quot;&gt;
+                {{ error.context?.category || &#x27;unknown&#x27; }}
+              &lt;/mat-chip&gt;
+            &lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;statusCode&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;userMessage&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;User Message&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;URL&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.url }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+              &lt;button mat-icon-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+          &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+
+        &lt;div class&#x3D;&quot;no-data-message&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; errors.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+          No errors found matching the current filters.
+        &lt;/div&gt;
+
+        &lt;mat-paginator
+          [length]&#x3D;&quot;totalErrors&quot;
+          [pageSize]&#x3D;&quot;pageSize&quot;
+          [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+          (page)&#x3D;&quot;pageChanged($event)&quot;
+          *ngIf&#x3D;&quot;!loading &amp;&amp; errors.length &gt; 0&quot;
+        &gt;
+        &lt;/mat-paginator&gt;
+      &lt;/mat-card-content&gt;
+    &lt;/mat-card&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#errorCategories" >errorCategories</a>
+                            </li>
+                            <li>
+                                <a href="#errors" >errors</a>
+                            </li>
+                            <li>
+                                <a href="#errorStats$" >errorStats$</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#pageIndex" >pageIndex</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#sortDirection" >sortDirection</a>
+                            </li>
+                            <li>
+                                <a href="#sortField" >sortField</a>
+                            </li>
+                            <li>
+                                <a href="#totalErrors" >totalErrors</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilters" >applyFilters</a>
+                            </li>
+                            <li>
+                                <a href="#getErrorStatistics" >getErrorStatistics</a>
+                            </li>
+                            <li>
+                                <a href="#getFilters" >getFilters</a>
+                            </li>
+                            <li>
+                                <a href="#loadErrors" >loadErrors</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#pageChanged" >pageChanged</a>
+                            </li>
+                            <li>
+                                <a href="#resetFilters" >resetFilters</a>
+                            </li>
+                            <li>
+                                <a href="#sortData" >sortData</a>
+                            </li>
+                            <li>
+                                <a href="#viewErrorDetails" >viewErrorDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(telemetryService: <a href="../injectables/TelemetryService.html" target="_self">TelemetryService</a>, fb: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="372" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:372</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>telemetryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TelemetryService.html" target="_self" >TelemetryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilters"></a>
+                    <span class="name">
+                        <span ><b>applyFilters</b></span>
+                        <a href="#applyFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="480"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:480</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Apply filters from the form</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getErrorStatistics"></a>
+                    <span class="name">
+                        <span ><b>getErrorStatistics</b></span>
+                        <a href="#getErrorStatistics"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getErrorStatistics()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="426"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:426</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get error statistics for the dashboard</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFilters"></a>
+                    <span class="name">
+                        <span ><b>getFilters</b></span>
+                        <a href="#getFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="502"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:502</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get current filters from the form</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadErrors"></a>
+                    <span class="name">
+                        <span ><b>loadErrors</b></span>
+                        <a href="#loadErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadErrors()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load errors with current pagination, sorting, and filtering</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="389"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:389</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageChanged"></a>
+                    <span class="name">
+                        <span ><b>pageChanged</b></span>
+                        <a href="#pageChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>pageChanged(event: PageEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="462"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:462</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle page change event</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>PageEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFilters"></a>
+                    <span class="name">
+                        <span ><b>resetFilters</b></span>
+                        <a href="#resetFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="488"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:488</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset all filters</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortData"></a>
+                    <span class="name">
+                        <span ><b>sortData</b></span>
+                        <a href="#sortData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortData(sort: Sort)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="471"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:471</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle sort change event</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sort</td>
+                                            <td>
+                                                        <code>Sort</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewErrorDetails"></a>
+                    <span class="name">
+                        <span ><b>viewErrorDetails</b></span>
+                        <a href="#viewErrorDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewErrorDetails(error: <a href="../interfaces/ErrorTelemetry.html" target="_self">ErrorTelemetry</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="528"
+                                    class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:528</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>View detailed information for an error</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ErrorTelemetry.html" target="_self" >ErrorTelemetry</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;timestamp&#x27;,
+    &#x27;errorCode&#x27;,
+    &#x27;category&#x27;,
+    &#x27;statusCode&#x27;,
+    &#x27;userMessage&#x27;,
+    &#x27;url&#x27;,
+    &#x27;actions&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="352" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorCategories"></a>
+                    <span class="name">
+                        <span ><b>errorCategories</b></span>
+                        <a href="#errorCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Object.entries(ErrorCategory).map(([key, value]) &#x3D;&gt; ({
+    label: key.charAt(0) + key.slice(1).toLowerCase().replace(&#x27;_&#x27;, &#x27; &#x27;),
+    value,
+  }))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="366" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:366</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errors"></a>
+                    <span class="name">
+                        <span ><b>errors</b></span>
+                        <a href="#errors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ErrorTelemetry.html" target="_self" >ErrorTelemetry[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="339" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:339</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorStats$"></a>
+                    <span class="name">
+                        <span ><b>errorStats$</b></span>
+                        <a href="#errorStats$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Observable&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="372" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:372</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="363" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:363</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="341" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:341</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageIndex"></a>
+                    <span class="name">
+                        <span ><b>pageIndex</b></span>
+                        <a href="#pageIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="344" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:344</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="345" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:345</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortDirection"></a>
+                    <span class="name">
+                        <span ><b>sortDirection</b></span>
+                        <a href="#sortDirection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;desc&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="349" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:349</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortField"></a>
+                    <span class="name">
+                        <span ><b>sortField</b></span>
+                        <a href="#sortField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;timestamp&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="348" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:348</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalErrors"></a>
+                    <span class="name">
+                        <span ><b>totalErrors</b></span>
+                        <a href="#totalErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:340</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { MatPaginatorModule, PageEvent } from &#x27;@angular/material/paginator&#x27;;
+import { MatSortModule, Sort } from &#x27;@angular/material/sort&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatDatepickerModule } from &#x27;@angular/material/datepicker&#x27;;
+import { MatNativeDateModule } from &#x27;@angular/material/core&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatChipsModule } from &#x27;@angular/material/chips&#x27;;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;;
+import { ReactiveFormsModule, FormGroup, FormBuilder } from &#x27;@angular/forms&#x27;;
+import { TelemetryService, ErrorTelemetry } from &#x27;../../../../core/services/telemetry.service&#x27;;
+import { ErrorCategory } from &#x27;../../../../core/interceptors/http-error.interceptor&#x27;;
+import { Observable, catchError, map, of, startWith, switchMap } from &#x27;rxjs&#x27;;
+
+/**
+ * Error Dashboard Component
+ *
+ * Displays a dashboard for analyzing and monitoring application errors.
+ * Features include:
+ * - Filtering by error category, status code, date range
+ * - Sorting by various columns
+ * - Pagination for large datasets
+ * - Detailed error information
+ */
+@Component({
+  selector: &#x27;app-error-dashboard&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+  ],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+      &lt;h1&gt;Error Monitoring Dashboard&lt;/h1&gt;
+
+      &lt;mat-card class&#x3D;&quot;filter-card&quot;&gt;
+        &lt;mat-card-header&gt;
+          &lt;mat-card-title&gt;Filters&lt;/mat-card-title&gt;
+        &lt;/mat-card-header&gt;
+        &lt;mat-card-content&gt;
+          &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;category&quot;&gt;
+                &lt;mat-option value&#x3D;&quot;&quot;&gt;All Categories&lt;/mat-option&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let category of errorCategories&quot; [value]&#x3D;&quot;category.value&quot;&gt;
+                  {{ category.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+              &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g., 500&quot; /&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;From Date&lt;/mat-label&gt;
+              &lt;input matInput [matDatepicker]&#x3D;&quot;fromPicker&quot; formControlName&#x3D;&quot;fromDate&quot; /&gt;
+              &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;fromPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+              &lt;mat-datepicker #fromPicker&gt;&lt;/mat-datepicker&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;To Date&lt;/mat-label&gt;
+              &lt;input matInput [matDatepicker]&#x3D;&quot;toPicker&quot; formControlName&#x3D;&quot;toDate&quot; /&gt;
+              &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;toPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+              &lt;mat-datepicker #toPicker&gt;&lt;/mat-datepicker&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;div class&#x3D;&quot;filter-actions&quot;&gt;
+              &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;
+                &lt;mat-icon&gt;filter_list&lt;/mat-icon&gt; Apply Filters
+              &lt;/button&gt;
+              &lt;button mat-button (click)&#x3D;&quot;resetFilters()&quot;&gt;&lt;mat-icon&gt;clear&lt;/mat-icon&gt; Reset&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+      &lt;div class&#x3D;&quot;dashboard-content&quot;&gt;
+        &lt;div class&#x3D;&quot;error-stats&quot;&gt;
+          &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+            &lt;mat-card-content&gt;
+              &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.totalErrors || 0 }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;stat-label&quot;&gt;Total Errors&lt;/div&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+
+          &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+            &lt;mat-card-content&gt;
+              &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.uniqueErrors || 0 }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;stat-label&quot;&gt;Unique Error Codes&lt;/div&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+
+          &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+            &lt;mat-card-content&gt;
+              &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.serverErrors || 0 }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;stat-label&quot;&gt;Server Errors&lt;/div&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+
+          &lt;mat-card class&#x3D;&quot;stat-card&quot;&gt;
+            &lt;mat-card-content&gt;
+              &lt;div class&#x3D;&quot;stat-value&quot;&gt;{{ (errorStats$ | async)?.clientErrors || 0 }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;stat-label&quot;&gt;Client Errors&lt;/div&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+        &lt;/div&gt;
+
+        &lt;mat-card class&#x3D;&quot;error-list-card&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;loading&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+            &lt;/div&gt;
+
+            &lt;table
+              mat-table
+              [dataSource]&#x3D;&quot;errors&quot;
+              matSort
+              (matSortChange)&#x3D;&quot;sortData($event)&quot;
+              class&#x3D;&quot;error-table&quot;
+              *ngIf&#x3D;&quot;!loading&quot;
+            &gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;category&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Category&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                  &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + error.context?.category&quot;&gt;
+                    {{ error.context?.category || &#x27;unknown&#x27; }}
+                  &lt;/mat-chip&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;statusCode&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;userMessage&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;User Message&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;URL&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.url }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                  &lt;button mat-icon-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                    &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+
+            &lt;div class&#x3D;&quot;no-data-message&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; errors.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+              No errors found matching the current filters.
+            &lt;/div&gt;
+
+            &lt;mat-paginator
+              [length]&#x3D;&quot;totalErrors&quot;
+              [pageSize]&#x3D;&quot;pageSize&quot;
+              [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+              (page)&#x3D;&quot;pageChanged($event)&quot;
+              *ngIf&#x3D;&quot;!loading &amp;&amp; errors.length &gt; 0&quot;
+            &gt;
+            &lt;/mat-paginator&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .filter-card {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .filter-form mat-form-field {
+        flex: 1 1 200px;
+      }
+
+      .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .dashboard-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .error-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        flex: 1 1 200px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3f51b5;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: #666;
+      }
+
+      .error-list-card {
+        width: 100%;
+      }
+
+      .error-table {
+        width: 100%;
+      }
+
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .no-data-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+      }
+
+      mat-chip.category-network {
+        background-color: #ff9800;
+      }
+      mat-chip.category-authentication {
+        background-color: #f44336;
+      }
+      mat-chip.category-authorization {
+        background-color: #e91e63;
+      }
+      mat-chip.category-validation {
+        background-color: #9c27b0;
+      }
+      mat-chip.category-server {
+        background-color: #673ab7;
+      }
+      mat-chip.category-client {
+        background-color: #3f51b5;
+      }
+      mat-chip.category-timeout {
+        background-color: #2196f3;
+      }
+      mat-chip.category-rate_limit {
+        background-color: #03a9f4;
+      }
+      mat-chip.category-not_found {
+        background-color: #00bcd4;
+      }
+      mat-chip.category-conflict {
+        background-color: #009688;
+      }
+      mat-chip.category-unknown {
+        background-color: #607d8b;
+      }
+    &#x60;,
+  ],
+})
+export class ErrorDashboardComponent implements OnInit {
+  // Error data
+  errors: ErrorTelemetry[] &#x3D; [];
+  totalErrors &#x3D; 0;
+  loading &#x3D; true;
+
+  // Pagination
+  pageIndex &#x3D; 0;
+  pageSize &#x3D; 10;
+
+  // Sorting
+  sortField &#x3D; &#x27;timestamp&#x27;;
+  sortDirection &#x3D; &#x27;desc&#x27;;
+
+  // Table columns
+  displayedColumns &#x3D; [
+    &#x27;timestamp&#x27;,
+    &#x27;errorCode&#x27;,
+    &#x27;category&#x27;,
+    &#x27;statusCode&#x27;,
+    &#x27;userMessage&#x27;,
+    &#x27;url&#x27;,
+    &#x27;actions&#x27;,
+  ];
+
+  // Filter form
+  filterForm: FormGroup;
+
+  // Error categories for filter dropdown
+  errorCategories &#x3D; Object.entries(ErrorCategory).map(([key, value]) &#x3D;&gt; ({
+    label: key.charAt(0) + key.slice(1).toLowerCase().replace(&#x27;_&#x27;, &#x27; &#x27;),
+    value,
+  }));
+
+  // Error statistics
+  errorStats$: Observable&lt;any&gt;;
+
+  constructor(
+    private telemetryService: TelemetryService,
+    private fb: FormBuilder
+  ) {
+    this.filterForm &#x3D; this.fb.group({
+      category: [&#x27;&#x27;],
+      statusCode: [&#x27;&#x27;],
+      fromDate: [null],
+      toDate: [null],
+    });
+
+    // Initialize error statistics
+    this.errorStats$ &#x3D; this.getErrorStatistics();
+  }
+
+  ngOnInit(): void {
+    this.loadErrors();
+  }
+
+  /**
+   * Load errors with current pagination, sorting, and filtering
+   */
+  loadErrors(): void {
+    this.loading &#x3D; true;
+
+    const filters &#x3D; this.getFilters();
+
+    this.telemetryService
+      .getErrorStatistics({
+        ...filters,
+        page: this.pageIndex,
+        limit: this.pageSize,
+        sort: this.sortField,
+        order: this.sortDirection,
+      })
+      .pipe(
+        catchError(error &#x3D;&gt; {
+          console.error(&#x27;Error loading error data:&#x27;, error);
+          this.loading &#x3D; false;
+          return of({ errors: [], total: 0 });
+        })
+      )
+      .subscribe(data &#x3D;&gt; {
+        this.errors &#x3D; data.errors || [];
+        this.totalErrors &#x3D; data.total || 0;
+        this.loading &#x3D; false;
+      });
+  }
+
+  /**
+   * Get error statistics for the dashboard
+   */
+  getErrorStatistics(): Observable&lt;any&gt; {
+    return this.filterForm.valueChanges.pipe(
+      startWith(this.filterForm.value),
+      switchMap(() &#x3D;&gt; {
+        const filters &#x3D; this.getFilters();
+        return this.telemetryService
+          .getErrorStatistics({
+            ...filters,
+            stats: true,
+          })
+          .pipe(
+            map(
+              data &#x3D;&gt;
+                data.statistics || {
+                  totalErrors: 0,
+                  uniqueErrors: 0,
+                  serverErrors: 0,
+                  clientErrors: 0,
+                }
+            ),
+            catchError(() &#x3D;&gt;
+              of({
+                totalErrors: 0,
+                uniqueErrors: 0,
+                serverErrors: 0,
+                clientErrors: 0,
+              })
+            )
+          );
+      })
+    );
+  }
+
+  /**
+   * Handle page change event
+   */
+  pageChanged(event: PageEvent): void {
+    this.pageIndex &#x3D; event.pageIndex;
+    this.pageSize &#x3D; event.pageSize;
+    this.loadErrors();
+  }
+
+  /**
+   * Handle sort change event
+   */
+  sortData(sort: Sort): void {
+    this.sortField &#x3D; sort.active;
+    this.sortDirection &#x3D; sort.direction || &#x27;asc&#x27;;
+    this.loadErrors();
+  }
+
+  /**
+   * Apply filters from the form
+   */
+  applyFilters(): void {
+    this.pageIndex &#x3D; 0; // Reset to first page when filtering
+    this.loadErrors();
+  }
+
+  /**
+   * Reset all filters
+   */
+  resetFilters(): void {
+    this.filterForm.reset({
+      category: &#x27;&#x27;,
+      statusCode: &#x27;&#x27;,
+      fromDate: null,
+      toDate: null,
+    });
+    this.pageIndex &#x3D; 0;
+    this.loadErrors();
+  }
+
+  /**
+   * Get current filters from the form
+   */
+  getFilters(): any {
+    const filters: any &#x3D; {};
+    const formValues &#x3D; this.filterForm.value;
+
+    if (formValues.category) {
+      filters.category &#x3D; formValues.category;
+    }
+
+    if (formValues.statusCode) {
+      filters.statusCode &#x3D; formValues.statusCode;
+    }
+
+    if (formValues.fromDate) {
+      filters.fromDate &#x3D; formValues.fromDate.toISOString();
+    }
+
+    if (formValues.toDate) {
+      filters.toDate &#x3D; formValues.toDate.toISOString();
+    }
+
+    return filters;
+  }
+
+  /**
+   * View detailed information for an error
+   */
+  viewErrorDetails(error: ErrorTelemetry): void {
+    // This would typically open a dialog with detailed error information
+    console.log(&#x27;View error details:&#x27;, error);
+    // Implementation for error details dialog would go here
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .filter-card {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .filter-form mat-form-field {
+        flex: 1 1 200px;
+      }
+
+      .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .dashboard-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .error-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        flex: 1 1 200px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3f51b5;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: #666;
+      }
+
+      .error-list-card {
+        width: 100%;
+      }
+
+      .error-table {
+        width: 100%;
+      }
+
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .no-data-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+      }
+
+      mat-chip.category-network {
+        background-color: #ff9800;
+      }
+      mat-chip.category-authentication {
+        background-color: #f44336;
+      }
+      mat-chip.category-authorization {
+        background-color: #e91e63;
+      }
+      mat-chip.category-validation {
+        background-color: #9c27b0;
+      }
+      mat-chip.category-server {
+        background-color: #673ab7;
+      }
+      mat-chip.category-client {
+        background-color: #3f51b5;
+      }
+      mat-chip.category-timeout {
+        background-color: #2196f3;
+      }
+      mat-chip.category-rate_limit {
+        background-color: #03a9f4;
+      }
+      mat-chip.category-not_found {
+        background-color: #00bcd4;
+      }
+      mat-chip.category-conflict {
+        background-color: #009688;
+      }
+      mat-chip.category-unknown {
+        background-color: #607d8b;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="dashboard-container">  <h1>Error Monitoring Dashboard</h1>  <mat-card class="filter-card">    <mat-card-header>      <mat-card-title>Filters</mat-card-title>    </mat-card-header>    <mat-card-content>      <form [formGroup]="filterForm" class="filter-form">        <mat-form-field appearance="outline">          <mat-label>Error Category</mat-label>          <mat-select formControlName="category">            <mat-option value="">All Categories</mat-option>            <mat-option *ngFor="let category of errorCategories" [value]="category.value">              {{ category.label }}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>Status Code</mat-label>          <input matInput type="number" formControlName="statusCode" placeholder="e.g., 500" />        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>From Date</mat-label>          <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" />          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>          <mat-datepicker #fromPicker></mat-datepicker>        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>To Date</mat-label>          <input matInput [matDatepicker]="toPicker" formControlName="toDate" />          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>          <mat-datepicker #toPicker></mat-datepicker>        </mat-form-field>        <div class="filter-actions">          <button mat-raised-button color="primary" (click)="applyFilters()">            <mat-icon>filter_list</mat-icon> Apply Filters          </button>          <button mat-button (click)="resetFilters()"><mat-icon>clear</mat-icon> Reset</button>        </div>      </form>    </mat-card-content>  </mat-card>  <div class="dashboard-content">    <div class="error-stats">      <mat-card class="stat-card">        <mat-card-content>          <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>          <div class="stat-label">Total Errors</div>        </mat-card-content>      </mat-card>      <mat-card class="stat-card">        <mat-card-content>          <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>          <div class="stat-label">Unique Error Codes</div>        </mat-card-content>      </mat-card>      <mat-card class="stat-card">        <mat-card-content>          <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>          <div class="stat-label">Server Errors</div>        </mat-card-content>      </mat-card>      <mat-card class="stat-card">        <mat-card-content>          <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>          <div class="stat-label">Client Errors</div>        </mat-card-content>      </mat-card>    </div>    <mat-card class="error-list-card">      <mat-card-header>        <mat-card-title>Recent Errors</mat-card-title>      </mat-card-header>      <mat-card-content>        <div class="loading-container" *ngIf="loading">          <mat-spinner diameter="40"></mat-spinner>        </div>        <table          mat-table          [dataSource]="errors"          matSort          (matSortChange)="sortData($event)"          class="error-table"          *ngIf="!loading"        >          <ng-container matColumnDef="timestamp">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>            <td mat-cell *matCellDef="let error">{{ error.timestamp | date: \'medium\' }}</td>          </ng-container>          <ng-container matColumnDef="errorCode">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>            <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>          </ng-container>          <ng-container matColumnDef="category">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>            <td mat-cell *matCellDef="let error">              <mat-chip [ngClass]="\'category-\' + error.context?.category">                {{ error.context?.category || \'unknown\' }}              </mat-chip>            </td>          </ng-container>          <ng-container matColumnDef="statusCode">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>            <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>          </ng-container>          <ng-container matColumnDef="userMessage">            <th mat-header-cell *matHeaderCellDef>User Message</th>            <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>          </ng-container>          <ng-container matColumnDef="url">            <th mat-header-cell *matHeaderCellDef>URL</th>            <td mat-cell *matCellDef="let error">{{ error.url }}</td>          </ng-container>          <ng-container matColumnDef="actions">            <th mat-header-cell *matHeaderCellDef></th>            <td mat-cell *matCellDef="let error">              <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">                <mat-icon>visibility</mat-icon>              </button>            </td>          </ng-container>          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>        </table>        <div class="no-data-message" *ngIf="!loading && errors.length === 0">          No errors found matching the current filters.        </div>        <mat-paginator          [length]="totalErrors"          [pageSize]="pageSize"          [pageSizeOptions]="[5, 10, 25, 50]"          (page)="pageChanged($event)"          *ngIf="!loading && errors.length > 0"        >        </mat-paginator>      </mat-card-content>    </mat-card>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ErrorDashboardComponent-1'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ErrorDashboardComponent-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

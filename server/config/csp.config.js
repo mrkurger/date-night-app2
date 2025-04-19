@@ -81,7 +81,7 @@ const productionDirectives = {
 // Choose the appropriate directives based on environment
 const directives = isDevelopment ? developmentDirectives : productionDirectives;
 
-module.exports = {
+export default {
   directives,
   // Report CSP violations but don't enforce in development
   reportOnly: isDevelopment,

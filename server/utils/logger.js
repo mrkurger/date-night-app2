@@ -12,14 +12,17 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const winston = require('winston');
+import winston from 'winston';
 const { createLogger, format, transports } = winston;
 const { combine, timestamp, printf, colorize, json } = format;
-require('winston-daily-rotate-file');
-const path = require('path');
-const fs = require('fs');
+import 'winston-daily-rotate-file';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-// Create logs directory if it doesn't exist
+// Get current directory (equivalent to __dirname in CommonJS)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const logsDir = path.join(__dirname, '..', 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
@@ -104,7 +107,4 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-module.exports = {
-  logger,
-  requestLogger,
-};
+export { logger, requestLogger };

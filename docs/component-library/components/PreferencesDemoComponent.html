@@ -1,0 +1,1730 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PreferencesDemoComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/preferences-demo/preferences-demo.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-preferences-demo</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>FormsModule</code>
+                            <code>ReactiveFormsModule</code>
+                                <code><a href="../components/AdCardComponent.html" target="_self" >AdCardComponent</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .preferences-demo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .settings-card {
+        margin-bottom: 24px;
+      }
+
+      .settings-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      mat-form-field {
+        min-width: 200px;
+        flex: 1;
+      }
+
+      .demo-section {
+        margin-top: 32px;
+      }
+
+      .demo-description {
+        margin-bottom: 24px;
+        color: #666;
+      }
+
+      .cards-container {
+        display: grid;
+        gap: 24px;
+      }
+
+      .layout-netflix,
+      .layout-tinder {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+
+      .layout-list {
+        grid-template-columns: 1fr;
+      }
+
+      @media (max-width: 768px) {
+        .settings-form {
+          flex-direction: column;
+        }
+
+        .layout-netflix,
+        .layout-tinder {
+          grid-template-columns: 1fr;
+        }
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;preferences-demo-container&quot;&gt;
+  &lt;mat-card class&#x3D;&quot;settings-card&quot;&gt;
+    &lt;mat-card-header&gt;
+      &lt;mat-card-title&gt;User Preferences Demo&lt;/mat-card-title&gt;
+      &lt;mat-card-subtitle&gt;Customize your viewing experience&lt;/mat-card-subtitle&gt;
+    &lt;/mat-card-header&gt;
+    &lt;mat-card-content&gt;
+      &lt;div class&#x3D;&quot;settings-form&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+          &lt;mat-label&gt;Default View Type&lt;/mat-label&gt;
+          &lt;mat-select [(ngModel)]&#x3D;&quot;defaultViewType&quot; (selectionChange)&#x3D;&quot;onViewTypeChange()&quot;&gt;
+            &lt;mat-option value&#x3D;&quot;netflix&quot;&gt;Netflix Style&lt;/mat-option&gt;
+            &lt;mat-option value&#x3D;&quot;tinder&quot;&gt;Tinder Style&lt;/mat-option&gt;
+            &lt;mat-option value&#x3D;&quot;list&quot;&gt;List View&lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+          &lt;mat-label&gt;Content Density&lt;/mat-label&gt;
+          &lt;mat-select [(ngModel)]&#x3D;&quot;contentDensity&quot; (selectionChange)&#x3D;&quot;onContentDensityChange()&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let option of contentDensityOptions&quot; [value]&#x3D;&quot;option.value&quot;&gt;
+              {{ option.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+          &lt;mat-label&gt;Card Size&lt;/mat-label&gt;
+          &lt;mat-select [(ngModel)]&#x3D;&quot;cardSize&quot; (selectionChange)&#x3D;&quot;onCardSizeChange()&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let option of cardSizeOptions&quot; [value]&#x3D;&quot;option.value&quot;&gt;
+              {{ option.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+    &lt;mat-card-actions&gt;
+      &lt;button mat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;resetPreferences()&quot;&gt;Reset to Defaults&lt;/button&gt;
+    &lt;/mat-card-actions&gt;
+  &lt;/mat-card&gt;
+
+  &lt;div class&#x3D;&quot;demo-section&quot;&gt;
+    &lt;h2&gt;Preview&lt;/h2&gt;
+    &lt;p class&#x3D;&quot;demo-description&quot;&gt;
+      Current settings: {{ defaultViewType | titlecase }} view,
+      {{ getContentDensityLabel() }} density, {{ getCardSizeLabel() }} cards
+    &lt;/p&gt;
+
+    &lt;div class&#x3D;&quot;cards-container&quot; [ngClass]&#x3D;&quot;&#x27;layout-&#x27; + defaultViewType&quot;&gt;
+      &lt;app-ad-card
+        *ngFor&#x3D;&quot;let ad of mockAds&quot;
+        [ad]&#x3D;&quot;ad&quot;
+        [layout]&#x3D;&quot;defaultViewType &#x3D;&#x3D;&#x3D; &#x27;list&#x27; ? &#x27;list&#x27; : &#x27;grid&#x27;&quot;
+        (viewDetails)&#x3D;&quot;onViewDetails($event)&quot;
+        (like)&#x3D;&quot;onLike($event)&quot;
+        (chat)&#x3D;&quot;onChat($event)&quot;
+      &gt;&lt;/app-ad-card&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cardSize" >cardSize</a>
+                            </li>
+                            <li>
+                                <a href="#cardSizeOptions" >cardSizeOptions</a>
+                            </li>
+                            <li>
+                                <a href="#contentDensity" >contentDensity</a>
+                            </li>
+                            <li>
+                                <a href="#contentDensityOptions" >contentDensityOptions</a>
+                            </li>
+                            <li>
+                                <a href="#defaultViewType" >defaultViewType</a>
+                            </li>
+                            <li>
+                                <a href="#mockAds" >mockAds</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscriptions" >subscriptions</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getCardSizeLabel" >getCardSizeLabel</a>
+                            </li>
+                            <li>
+                                <a href="#getContentDensityLabel" >getContentDensityLabel</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onCardSizeChange" >onCardSizeChange</a>
+                            </li>
+                            <li>
+                                <a href="#onChat" >onChat</a>
+                            </li>
+                            <li>
+                                <a href="#onContentDensityChange" >onContentDensityChange</a>
+                            </li>
+                            <li>
+                                <a href="#onLike" >onLike</a>
+                            </li>
+                            <li>
+                                <a href="#onViewDetails" >onViewDetails</a>
+                            </li>
+                            <li>
+                                <a href="#onViewTypeChange" >onViewTypeChange</a>
+                            </li>
+                            <li>
+                                <a href="#resetPreferences" >resetPreferences</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(userPreferencesService: <a href="../injectables/UserPreferencesService.html" target="_self">UserPreferencesService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="262" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:262</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>userPreferencesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserPreferencesService.html" target="_self" >UserPreferencesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCardSizeLabel"></a>
+                    <span class="name">
+                        <span ><b>getCardSizeLabel</b></span>
+                        <a href="#getCardSizeLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCardSizeLabel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="330"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:330</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the label for the current card size</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getContentDensityLabel"></a>
+                    <span class="name">
+                        <span ><b>getContentDensityLabel</b></span>
+                        <a href="#getContentDensityLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getContentDensityLabel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="322"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:322</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the label for the current content density</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="286"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCardSizeChange"></a>
+                    <span class="name">
+                        <span ><b>onCardSizeChange</b></span>
+                        <a href="#onCardSizeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCardSizeChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle card size change</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onChat"></a>
+                    <span class="name">
+                        <span ><b>onChat</b></span>
+                        <a href="#onChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onChat(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="352"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle chat click</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onContentDensityChange"></a>
+                    <span class="name">
+                        <span ><b>onContentDensityChange</b></span>
+                        <a href="#onContentDensityChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onContentDensityChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="301"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:301</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle content density change</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onLike"></a>
+                    <span class="name">
+                        <span ><b>onLike</b></span>
+                        <a href="#onLike"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onLike(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="345"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:345</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle like click</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onViewDetails"></a>
+                    <span class="name">
+                        <span ><b>onViewDetails</b></span>
+                        <a href="#onViewDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onViewDetails(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="338"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:338</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle view details click</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onViewTypeChange"></a>
+                    <span class="name">
+                        <span ><b>onViewTypeChange</b></span>
+                        <a href="#onViewTypeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onViewTypeChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="294"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:294</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle view type change</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetPreferences"></a>
+                    <span class="name">
+                        <span ><b>resetPreferences</b></span>
+                        <a href="#resetPreferences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetPreferences()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="315"
+                                    class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset preferences to defaults</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardSize"></a>
+                    <span class="name">
+                        <span ><b>cardSize</b></span>
+                        <a href="#cardSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/CardSize.html#value" target="_self" >CardSize['value']</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;medium&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:253</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardSizeOptions"></a>
+                    <span class="name">
+                        <span ><b>cardSizeOptions</b></span>
+                        <a href="#cardSizeOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/CardSize.html" target="_self" >CardSize[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="257" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:257</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contentDensity"></a>
+                    <span class="name">
+                        <span ><b>contentDensity</b></span>
+                        <a href="#contentDensity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ContentDensity.html#value" target="_self" >ContentDensity['value']</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;comfortable&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="252" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contentDensityOptions"></a>
+                    <span class="name">
+                        <span ><b>contentDensityOptions</b></span>
+                        <a href="#contentDensityOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ContentDensity.html" target="_self" >ContentDensity[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="256" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultViewType"></a>
+                    <span class="name">
+                        <span ><b>defaultViewType</b></span>
+                        <a href="#defaultViewType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;netflix&quot; | &quot;tinder&quot; | &quot;list&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;netflix&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="251" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:251</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mockAds"></a>
+                    <span class="name">
+                        <span ><b>mockAds</b></span>
+                        <a href="#mockAds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>MOCK_ADS</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:260</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscriptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscriptions</b></span>
+                        <a href="#subscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Subscription.html" target="_self" >Subscription[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="262" class="link-to-prism">src/app/features/preferences-demo/preferences-demo.component.ts:262</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import {
+  UserPreferencesService,
+  ContentDensity,
+  CardSize,
+} from &#x27;../../core/services/user-preferences.service&#x27;;
+import { AdCardComponent } from &#x27;../../shared/components/ad-card/ad-card.component&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+
+// Mock data for demonstration
+const MOCK_ADS &#x3D; [
+  {
+    _id: &#x27;1&#x27;,
+    title: &#x27;Professional Photographer&#x27;,
+    description:
+      &#x27;Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.&#x27;,
+    category: &#x27;Photography&#x27;,
+    price: 200,
+    location: &#x27;New York, NY&#x27;,
+    images: [&#x27;/assets/img/sample/photo1.jpg&#x27;, &#x27;/assets/img/sample/photo2.jpg&#x27;],
+    advertiser: &#x27;John Smith&#x27;,
+    isActive: true,
+    isFeatured: true,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 245,
+    clickCount: 32,
+    inquiryCount: 8,
+    createdAt: &#x27;2023-04-15T10:30:00Z&#x27;,
+    updatedAt: &#x27;2023-04-15T10:30:00Z&#x27;,
+  },
+  {
+    _id: &#x27;2&#x27;,
+    title: &#x27;Makeup Artist&#x27;,
+    description:
+      &#x27;Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.&#x27;,
+    category: &#x27;Beauty&#x27;,
+    price: 150,
+    location: &#x27;Los Angeles, CA&#x27;,
+    images: [&#x27;/assets/img/sample/makeup1.jpg&#x27;, &#x27;/assets/img/sample/makeup2.jpg&#x27;],
+    advertiser: &#x27;Sarah Johnson&#x27;,
+    isActive: true,
+    isFeatured: false,
+    isTrending: true,
+    isTouring: false,
+    viewCount: 189,
+    clickCount: 27,
+    inquiryCount: 5,
+    createdAt: &#x27;2023-04-10T14:20:00Z&#x27;,
+    updatedAt: &#x27;2023-04-10T14:20:00Z&#x27;,
+  },
+  {
+    _id: &#x27;3&#x27;,
+    title: &#x27;Live Band for Events&#x27;,
+    description:
+      &#x27;Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&amp;B.&#x27;,
+    category: &#x27;Music&#x27;,
+    price: 800,
+    location: &#x27;Chicago, IL&#x27;,
+    images: [&#x27;/assets/img/sample/band1.jpg&#x27;, &#x27;/assets/img/sample/band2.jpg&#x27;],
+    advertiser: &#x27;The Harmonics&#x27;,
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: true,
+    viewCount: 312,
+    clickCount: 45,
+    inquiryCount: 12,
+    createdAt: &#x27;2023-04-05T09:15:00Z&#x27;,
+    updatedAt: &#x27;2023-04-05T09:15:00Z&#x27;,
+    tourDates: {
+      start: &#x27;2023-05-01T00:00:00Z&#x27;,
+      end: &#x27;2023-07-31T00:00:00Z&#x27;,
+      cities: [&#x27;Chicago, IL&#x27;, &#x27;Detroit, MI&#x27;, &#x27;Cleveland, OH&#x27;, &#x27;Indianapolis, IN&#x27;],
+    },
+  },
+  {
+    _id: &#x27;4&#x27;,
+    title: &#x27;Event Planner&#x27;,
+    description:
+      &#x27;Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.&#x27;,
+    category: &#x27;Events&#x27;,
+    price: 500,
+    location: &#x27;Miami, FL&#x27;,
+    images: [&#x27;/assets/img/sample/event1.jpg&#x27;, &#x27;/assets/img/sample/event2.jpg&#x27;],
+    advertiser: &#x27;Elegant Events&#x27;,
+    isActive: true,
+    isFeatured: true,
+    isTrending: true,
+    isTouring: false,
+    viewCount: 278,
+    clickCount: 39,
+    inquiryCount: 15,
+    createdAt: &#x27;2023-04-12T11:45:00Z&#x27;,
+    updatedAt: &#x27;2023-04-12T11:45:00Z&#x27;,
+  },
+];
+
+@Component({
+  selector: &#x27;app-preferences-demo&#x27;,
+  template: &#x60;
+    &lt;div class&#x3D;&quot;preferences-demo-container&quot;&gt;
+      &lt;mat-card class&#x3D;&quot;settings-card&quot;&gt;
+        &lt;mat-card-header&gt;
+          &lt;mat-card-title&gt;User Preferences Demo&lt;/mat-card-title&gt;
+          &lt;mat-card-subtitle&gt;Customize your viewing experience&lt;/mat-card-subtitle&gt;
+        &lt;/mat-card-header&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;settings-form&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+              &lt;mat-label&gt;Default View Type&lt;/mat-label&gt;
+              &lt;mat-select [(ngModel)]&#x3D;&quot;defaultViewType&quot; (selectionChange)&#x3D;&quot;onViewTypeChange()&quot;&gt;
+                &lt;mat-option value&#x3D;&quot;netflix&quot;&gt;Netflix Style&lt;/mat-option&gt;
+                &lt;mat-option value&#x3D;&quot;tinder&quot;&gt;Tinder Style&lt;/mat-option&gt;
+                &lt;mat-option value&#x3D;&quot;list&quot;&gt;List View&lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+              &lt;mat-label&gt;Content Density&lt;/mat-label&gt;
+              &lt;mat-select [(ngModel)]&#x3D;&quot;contentDensity&quot; (selectionChange)&#x3D;&quot;onContentDensityChange()&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let option of contentDensityOptions&quot; [value]&#x3D;&quot;option.value&quot;&gt;
+                  {{ option.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;fill&quot;&gt;
+              &lt;mat-label&gt;Card Size&lt;/mat-label&gt;
+              &lt;mat-select [(ngModel)]&#x3D;&quot;cardSize&quot; (selectionChange)&#x3D;&quot;onCardSizeChange()&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let option of cardSizeOptions&quot; [value]&#x3D;&quot;option.value&quot;&gt;
+                  {{ option.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+          &lt;/div&gt;
+        &lt;/mat-card-content&gt;
+        &lt;mat-card-actions&gt;
+          &lt;button mat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;resetPreferences()&quot;&gt;Reset to Defaults&lt;/button&gt;
+        &lt;/mat-card-actions&gt;
+      &lt;/mat-card&gt;
+
+      &lt;div class&#x3D;&quot;demo-section&quot;&gt;
+        &lt;h2&gt;Preview&lt;/h2&gt;
+        &lt;p class&#x3D;&quot;demo-description&quot;&gt;
+          Current settings: {{ defaultViewType | titlecase }} view,
+          {{ getContentDensityLabel() }} density, {{ getCardSizeLabel() }} cards
+        &lt;/p&gt;
+
+        &lt;div class&#x3D;&quot;cards-container&quot; [ngClass]&#x3D;&quot;&#x27;layout-&#x27; + defaultViewType&quot;&gt;
+          &lt;app-ad-card
+            *ngFor&#x3D;&quot;let ad of mockAds&quot;
+            [ad]&#x3D;&quot;ad&quot;
+            [layout]&#x3D;&quot;defaultViewType &#x3D;&#x3D;&#x3D; &#x27;list&#x27; ? &#x27;list&#x27; : &#x27;grid&#x27;&quot;
+            (viewDetails)&#x3D;&quot;onViewDetails($event)&quot;
+            (like)&#x3D;&quot;onLike($event)&quot;
+            (chat)&#x3D;&quot;onChat($event)&quot;
+          &gt;&lt;/app-ad-card&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .preferences-demo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .settings-card {
+        margin-bottom: 24px;
+      }
+
+      .settings-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      mat-form-field {
+        min-width: 200px;
+        flex: 1;
+      }
+
+      .demo-section {
+        margin-top: 32px;
+      }
+
+      .demo-description {
+        margin-bottom: 24px;
+        color: #666;
+      }
+
+      .cards-container {
+        display: grid;
+        gap: 24px;
+      }
+
+      .layout-netflix,
+      .layout-tinder {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+
+      .layout-list {
+        grid-template-columns: 1fr;
+      }
+
+      @media (max-width: 768px) {
+        .settings-form {
+          flex-direction: column;
+        }
+
+        .layout-netflix,
+        .layout-tinder {
+          grid-template-columns: 1fr;
+        }
+      }
+    &#x60;,
+  ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AdCardComponent,
+  ],
+})
+export class PreferencesDemoComponent implements OnInit, OnDestroy {
+  // User preferences
+  defaultViewType: &#x27;netflix&#x27; | &#x27;tinder&#x27; | &#x27;list&#x27; &#x3D; &#x27;netflix&#x27;;
+  contentDensity: ContentDensity[&#x27;value&#x27;] &#x3D; &#x27;comfortable&#x27;;
+  cardSize: CardSize[&#x27;value&#x27;] &#x3D; &#x27;medium&#x27;;
+
+  // Options for select inputs
+  contentDensityOptions: ContentDensity[] &#x3D; [];
+  cardSizeOptions: CardSize[] &#x3D; [];
+
+  // Mock data
+  mockAds &#x3D; MOCK_ADS;
+
+  private subscriptions: Subscription[] &#x3D; [];
+
+  constructor(private userPreferencesService: UserPreferencesService) {
+    this.contentDensityOptions &#x3D; this.userPreferencesService.contentDensityOptions;
+    this.cardSizeOptions &#x3D; this.userPreferencesService.cardSizeOptions;
+  }
+
+  ngOnInit(): void {
+    // Load initial preferences
+    const preferences &#x3D; this.userPreferencesService.getPreferences();
+    this.defaultViewType &#x3D; preferences.defaultViewType;
+    this.contentDensity &#x3D; preferences.contentDensity;
+    this.cardSize &#x3D; preferences.cardSize;
+
+    // Subscribe to preference changes
+    this.subscriptions.push(
+      this.userPreferencesService.preferences$.subscribe(prefs &#x3D;&gt; {
+        this.defaultViewType &#x3D; prefs.defaultViewType;
+        this.contentDensity &#x3D; prefs.contentDensity;
+        this.cardSize &#x3D; prefs.cardSize;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub &#x3D;&gt; sub.unsubscribe());
+  }
+
+  /**
+   * Handle view type change
+   */
+  onViewTypeChange(): void {
+    this.userPreferencesService.setDefaultViewType(this.defaultViewType);
+  }
+
+  /**
+   * Handle content density change
+   */
+  onContentDensityChange(): void {
+    this.userPreferencesService.setContentDensity(this.contentDensity);
+  }
+
+  /**
+   * Handle card size change
+   */
+  onCardSizeChange(): void {
+    this.userPreferencesService.setCardSize(this.cardSize);
+  }
+
+  /**
+   * Reset preferences to defaults
+   */
+  resetPreferences(): void {
+    this.userPreferencesService.resetPreferences();
+  }
+
+  /**
+   * Get the label for the current content density
+   */
+  getContentDensityLabel(): string {
+    const option &#x3D; this.contentDensityOptions.find(opt &#x3D;&gt; opt.value &#x3D;&#x3D;&#x3D; this.contentDensity);
+    return option ? option.label : &#x27;&#x27;;
+  }
+
+  /**
+   * Get the label for the current card size
+   */
+  getCardSizeLabel(): string {
+    const option &#x3D; this.cardSizeOptions.find(opt &#x3D;&gt; opt.value &#x3D;&#x3D;&#x3D; this.cardSize);
+    return option ? option.label : &#x27;&#x27;;
+  }
+
+  /**
+   * Handle view details click
+   */
+  onViewDetails(adId: string): void {
+    console.log(&#x27;View details for ad:&#x27;, adId);
+  }
+
+  /**
+   * Handle like click
+   */
+  onLike(adId: string): void {
+    console.log(&#x27;Like ad:&#x27;, adId);
+  }
+
+  /**
+   * Handle chat click
+   */
+  onChat(adId: string): void {
+    console.log(&#x27;Chat about ad:&#x27;, adId);
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .preferences-demo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .settings-card {
+        margin-bottom: 24px;
+      }
+
+      .settings-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      mat-form-field {
+        min-width: 200px;
+        flex: 1;
+      }
+
+      .demo-section {
+        margin-top: 32px;
+      }
+
+      .demo-description {
+        margin-bottom: 24px;
+        color: #666;
+      }
+
+      .cards-container {
+        display: grid;
+        gap: 24px;
+      }
+
+      .layout-netflix,
+      .layout-tinder {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+
+      .layout-list {
+        grid-template-columns: 1fr;
+      }
+
+      @media (max-width: 768px) {
+        .settings-form {
+          flex-direction: column;
+        }
+
+        .layout-netflix,
+        .layout-tinder {
+          grid-template-columns: 1fr;
+        }
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="preferences-demo-container">  <mat-card class="settings-card">    <mat-card-header>      <mat-card-title>User Preferences Demo</mat-card-title>      <mat-card-subtitle>Customize your viewing experience</mat-card-subtitle>    </mat-card-header>    <mat-card-content>      <div class="settings-form">        <mat-form-field appearance="fill">          <mat-label>Default View Type</mat-label>          <mat-select [(ngModel)]="defaultViewType" (selectionChange)="onViewTypeChange()">            <mat-option value="netflix">Netflix Style</mat-option>            <mat-option value="tinder">Tinder Style</mat-option>            <mat-option value="list">List View</mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="fill">          <mat-label>Content Density</mat-label>          <mat-select [(ngModel)]="contentDensity" (selectionChange)="onContentDensityChange()">            <mat-option *ngFor="let option of contentDensityOptions" [value]="option.value">              {{ option.label }}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="fill">          <mat-label>Card Size</mat-label>          <mat-select [(ngModel)]="cardSize" (selectionChange)="onCardSizeChange()">            <mat-option *ngFor="let option of cardSizeOptions" [value]="option.value">              {{ option.label }}            </mat-option>          </mat-select>        </mat-form-field>      </div>    </mat-card-content>    <mat-card-actions>      <button mat-button color="primary" (click)="resetPreferences()">Reset to Defaults</button>    </mat-card-actions>  </mat-card>  <div class="demo-section">    <h2>Preview</h2>    <p class="demo-description">      Current settings: {{ defaultViewType | titlecase }} view,      {{ getContentDensityLabel() }} density, {{ getCardSizeLabel() }} cards    </p>    <div class="cards-container" [ngClass]="\'layout-\' + defaultViewType">      <app-ad-card        *ngFor="let ad of mockAds"        [ad]="ad"        [layout]="defaultViewType === \'list\' ? \'list\' : \'grid\'"        (viewDetails)="onViewDetails($event)"        (like)="onLike($event)"        (chat)="onChat($event)"      ></app-ad-card>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PreferencesDemoComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PreferencesDemoComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

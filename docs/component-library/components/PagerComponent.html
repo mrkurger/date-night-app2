@@ -1,0 +1,1760 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PagerComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/emerald/components/pager/pager.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Emerald Pager Component</p>
+<p>A pagination component for navigating through pages of results.
+This component provides a flexible pagination system with various styles and options.</p>
+<p>Documentation: <a href="https://docs-emerald.condorlabs.io/Pager">https://docs-emerald.condorlabs.io/Pager</a></p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnChanges</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>emerald-pager</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./pager.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./pager.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#visiblePages" >visiblePages</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#calculateVisiblePages" >calculateVisiblePages</a>
+                            </li>
+                            <li>
+                                <a href="#goToFirstPage" >goToFirstPage</a>
+                            </li>
+                            <li>
+                                <a href="#goToLastPage" >goToLastPage</a>
+                            </li>
+                            <li>
+                                <a href="#goToNextPage" >goToNextPage</a>
+                            </li>
+                            <li>
+                                <a href="#goToPage" >goToPage</a>
+                            </li>
+                            <li>
+                                <a href="#goToPreviousPage" >goToPreviousPage</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#onPageSizeChange" >onPageSizeChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#align" >align</a>
+                            </li>
+                            <li>
+                                <a href="#currentPage" >currentPage</a>
+                            </li>
+                            <li>
+                                <a href="#maxVisiblePages" >maxVisiblePages</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#pageSizes" >pageSizes</a>
+                            </li>
+                            <li>
+                                <a href="#showFirstLast" >showFirstLast</a>
+                            </li>
+                            <li>
+                                <a href="#showPageSize" >showPageSize</a>
+                            </li>
+                            <li>
+                                <a href="#showPrevNext" >showPrevNext</a>
+                            </li>
+                            <li>
+                                <a href="#size" >size</a>
+                            </li>
+                            <li>
+                                <a href="#style" >style</a>
+                            </li>
+                            <li>
+                                <a href="#totalPages" >totalPages</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#pageChange" >pageChange</a>
+                            </li>
+                            <li>
+                                <a href="#pageSizeChange" >pageSizeChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="align"></a>
+                        <b>align</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;left&quot; | &quot;center&quot; | &quot;right&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;center&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:87</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The alignment of the pager</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentPage"></a>
+                        <b>currentPage</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:34</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The current page number (1-based)</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="maxVisiblePages"></a>
+                        <b>maxVisiblePages</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:44</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The maximum number of page buttons to show</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageSize"></a>
+                        <b>pageSize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:69</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The current page size</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageSizes"></a>
+                        <b>pageSizes</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[10, 25, 50, 100]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:64</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The available page sizes</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showFirstLast"></a>
+                        <b>showFirstLast</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:49</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Whether to show first/last page buttons</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showPageSize"></a>
+                        <b>showPageSize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:59</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Whether to show the page size selector</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showPrevNext"></a>
+                        <b>showPrevNext</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:54</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Whether to show previous/next page buttons</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="size"></a>
+                        <b>size</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;small&quot; | &quot;medium&quot; | &quot;large&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;medium&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:82</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The size of the pager</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="style"></a>
+                        <b>style</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;default&quot; | &quot;simple&quot; | &quot;compact&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;default&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:77</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The style of the pager</p>
+<ul>
+<li>&#39;default&#39;: Standard pagination with page numbers</li>
+<li>&#39;simple&#39;: Simple previous/next buttons</li>
+<li>&#39;compact&#39;: Compact pagination with limited page numbers</li>
+</ul>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="totalPages"></a>
+                        <b>totalPages</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:39</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of pages</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageChange"></a>
+                        <b>pageChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:92</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitted when the page changes</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageSizeChange"></a>
+                        <b>pageSizeChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:97</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitted when the page size changes</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculateVisiblePages"></a>
+                    <span class="name">
+                        <span ><b>calculateVisiblePages</b></span>
+                        <a href="#calculateVisiblePages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculateVisiblePages()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Calculate the visible page numbers based on the current page and total pages</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToFirstPage"></a>
+                    <span class="name">
+                        <span ><b>goToFirstPage</b></span>
+                        <a href="#goToFirstPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToFirstPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:165</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go to the first page</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToLastPage"></a>
+                    <span class="name">
+                        <span ><b>goToLastPage</b></span>
+                        <a href="#goToLastPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToLastPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:174</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go to the last page</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToNextPage"></a>
+                    <span class="name">
+                        <span ><b>goToNextPage</b></span>
+                        <a href="#goToNextPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToNextPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go to the next page</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToPage"></a>
+                    <span class="name">
+                        <span ><b>goToPage</b></span>
+                        <a href="#goToPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToPage(page: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go to a specific page</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>page</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToPreviousPage"></a>
+                    <span class="name">
+                        <span ><b>goToPreviousPage</b></span>
+                        <a href="#goToPreviousPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToPreviousPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go to the previous page</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: SimpleChanges)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:104</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changes</td>
+                                            <td>
+                                                        <code>SimpleChanges</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageSizeChange"></a>
+                    <span class="name">
+                        <span ><b>onPageSizeChange</b></span>
+                        <a href="#onPageSizeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageSizeChange(event: Event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="183"
+                                    class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:183</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Change the page size</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="visiblePages"></a>
+                    <span class="name">
+                        <span ><b>visiblePages</b></span>
+                        <a href="#visiblePages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/app/shared/emerald/components/pager/pager.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The array of visible page numbers</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+
+/**
+ * Emerald Pager Component
+ *
+ * A pagination component for navigating through pages of results.
+ * This component provides a flexible pagination system with various styles and options.
+ *
+ * Documentation: https://docs-emerald.condorlabs.io/Pager
+ */
+@Component({
+  selector: &#x27;emerald-pager&#x27;,
+  templateUrl: &#x27;./pager.component.html&#x27;,
+  styleUrls: [&#x27;./pager.component.scss&#x27;],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class PagerComponent implements OnChanges {
+  /**
+   * The current page number (1-based)
+   */
+  @Input() currentPage &#x3D; 1;
+
+  /**
+   * The total number of pages
+   */
+  @Input() totalPages &#x3D; 1;
+
+  /**
+   * The maximum number of page buttons to show
+   */
+  @Input() maxVisiblePages &#x3D; 5;
+
+  /**
+   * Whether to show first/last page buttons
+   */
+  @Input() showFirstLast &#x3D; true;
+
+  /**
+   * Whether to show previous/next page buttons
+   */
+  @Input() showPrevNext &#x3D; true;
+
+  /**
+   * Whether to show the page size selector
+   */
+  @Input() showPageSize &#x3D; false;
+
+  /**
+   * The available page sizes
+   */
+  @Input() pageSizes: number[] &#x3D; [10, 25, 50, 100];
+
+  /**
+   * The current page size
+   */
+  @Input() pageSize &#x3D; 10;
+
+  /**
+   * The style of the pager
+   * - &#x27;default&#x27;: Standard pagination with page numbers
+   * - &#x27;simple&#x27;: Simple previous/next buttons
+   * - &#x27;compact&#x27;: Compact pagination with limited page numbers
+   */
+  @Input() style: &#x27;default&#x27; | &#x27;simple&#x27; | &#x27;compact&#x27; &#x3D; &#x27;default&#x27;;
+
+  /**
+   * The size of the pager
+   */
+  @Input() size: &#x27;small&#x27; | &#x27;medium&#x27; | &#x27;large&#x27; &#x3D; &#x27;medium&#x27;;
+
+  /**
+   * The alignment of the pager
+   */
+  @Input() align: &#x27;left&#x27; | &#x27;center&#x27; | &#x27;right&#x27; &#x3D; &#x27;center&#x27;;
+
+  /**
+   * Emitted when the page changes
+   */
+  @Output() pageChange &#x3D; new EventEmitter&lt;number&gt;();
+
+  /**
+   * Emitted when the page size changes
+   */
+  @Output() pageSizeChange &#x3D; new EventEmitter&lt;number&gt;();
+
+  /**
+   * The array of visible page numbers
+   */
+  visiblePages: number[] &#x3D; [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes[&#x27;currentPage&#x27;] || changes[&#x27;totalPages&#x27;] || changes[&#x27;maxVisiblePages&#x27;]) {
+      this.calculateVisiblePages();
+    }
+  }
+
+  /**
+   * Calculate the visible page numbers based on the current page and total pages
+   */
+  calculateVisiblePages(): void {
+    if (this.totalPages &lt;&#x3D; this.maxVisiblePages) {
+      // If total pages is less than or equal to max visible pages, show all pages
+      this.visiblePages &#x3D; Array.from({ length: this.totalPages }, (_, i) &#x3D;&gt; i + 1);
+    } else {
+      // Calculate the range of visible pages
+      const halfVisible &#x3D; Math.floor(this.maxVisiblePages / 2);
+      let start &#x3D; Math.max(this.currentPage - halfVisible, 1);
+      const end &#x3D; Math.min(start + this.maxVisiblePages - 1, this.totalPages);
+
+      // Adjust start if end is at max
+      if (end &#x3D;&#x3D;&#x3D; this.totalPages) {
+        start &#x3D; Math.max(end - this.maxVisiblePages + 1, 1);
+      }
+
+      // Create the array of visible pages
+      this.visiblePages &#x3D; Array.from({ length: end - start + 1 }, (_, i) &#x3D;&gt; start + i);
+    }
+  }
+
+  /**
+   * Go to a specific page
+   */
+  goToPage(page: number): void {
+    if (page &lt; 1 || page &gt; this.totalPages || page &#x3D;&#x3D;&#x3D; this.currentPage) {
+      return;
+    }
+
+    this.pageChange.emit(page);
+  }
+
+  /**
+   * Go to the previous page
+   */
+  goToPreviousPage(): void {
+    if (this.currentPage &gt; 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  /**
+   * Go to the next page
+   */
+  goToNextPage(): void {
+    if (this.currentPage &lt; this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  /**
+   * Go to the first page
+   */
+  goToFirstPage(): void {
+    if (this.currentPage !&#x3D;&#x3D; 1) {
+      this.goToPage(1);
+    }
+  }
+
+  /**
+   * Go to the last page
+   */
+  goToLastPage(): void {
+    if (this.currentPage !&#x3D;&#x3D; this.totalPages) {
+      this.goToPage(this.totalPages);
+    }
+  }
+
+  /**
+   * Change the page size
+   */
+  onPageSizeChange(event: Event): void {
+    const select &#x3D; event.target as HTMLSelectElement;
+    const newPageSize &#x3D; parseInt(select.value, 10);
+
+    if (newPageSize !&#x3D;&#x3D; this.pageSize) {
+      this.pageSizeChange.emit(newPageSize);
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Emerald Pager Component --&gt;
+&lt;!-- Documentation: https://docs-emerald.condorlabs.io/Pager --&gt;
+
+&lt;div
+  class&#x3D;&quot;emerald-pager&quot;
+  [ngClass]&#x3D;&quot;{
+    &#x27;emerald-pager--simple&#x27;: style &#x3D;&#x3D;&#x3D; &#x27;simple&#x27;,
+    &#x27;emerald-pager--compact&#x27;: style &#x3D;&#x3D;&#x3D; &#x27;compact&#x27;,
+    &#x27;emerald-pager--small&#x27;: size &#x3D;&#x3D;&#x3D; &#x27;small&#x27;,
+    &#x27;emerald-pager--large&#x27;: size &#x3D;&#x3D;&#x3D; &#x27;large&#x27;,
+    &#x27;emerald-pager--left&#x27;: align &#x3D;&#x3D;&#x3D; &#x27;left&#x27;,
+    &#x27;emerald-pager--right&#x27;: align &#x3D;&#x3D;&#x3D; &#x27;right&#x27;,
+  }&quot;
+&gt;
+  &lt;!-- Page Size Selector --&gt;
+  &lt;div class&#x3D;&quot;emerald-pager__size-selector&quot; *ngIf&#x3D;&quot;showPageSize&quot;&gt;
+    &lt;label for&#x3D;&quot;pageSize&quot;&gt;Items per page:&lt;/label&gt;
+    &lt;select id&#x3D;&quot;pageSize&quot; [value]&#x3D;&quot;pageSize&quot; (change)&#x3D;&quot;onPageSizeChange($event)&quot;&gt;
+      &lt;option *ngFor&#x3D;&quot;let size of pageSizes&quot; [value]&#x3D;&quot;size&quot;&gt;{{ size }}&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Pagination Controls --&gt;
+  &lt;div class&#x3D;&quot;emerald-pager__controls&quot;&gt;
+    &lt;!-- First Page Button --&gt;
+    &lt;button
+      *ngIf&#x3D;&quot;showFirstLast &amp;&amp; style !&#x3D;&#x3D; &#x27;simple&#x27;&quot;
+      class&#x3D;&quot;emerald-pager__button emerald-pager__button--first&quot;
+      [disabled]&#x3D;&quot;currentPage &#x3D;&#x3D;&#x3D; 1&quot;
+      (click)&#x3D;&quot;goToFirstPage()&quot;
+      aria-label&#x3D;&quot;Go to first page&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;fas fa-angle-double-left&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Previous Page Button --&gt;
+    &lt;button
+      *ngIf&#x3D;&quot;showPrevNext&quot;
+      class&#x3D;&quot;emerald-pager__button emerald-pager__button--prev&quot;
+      [disabled]&#x3D;&quot;currentPage &#x3D;&#x3D;&#x3D; 1&quot;
+      (click)&#x3D;&quot;goToPreviousPage()&quot;
+      aria-label&#x3D;&quot;Go to previous page&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;fas fa-angle-left&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Page Numbers (Default and Compact Styles) --&gt;
+    &lt;div *ngIf&#x3D;&quot;style !&#x3D;&#x3D; &#x27;simple&#x27;&quot; class&#x3D;&quot;emerald-pager__pages&quot;&gt;
+      &lt;button
+        *ngFor&#x3D;&quot;let page of visiblePages&quot;
+        class&#x3D;&quot;emerald-pager__button emerald-pager__button--page&quot;
+        [ngClass]&#x3D;&quot;{ &#x27;emerald-pager__button--active&#x27;: page &#x3D;&#x3D;&#x3D; currentPage }&quot;
+        (click)&#x3D;&quot;goToPage(page)&quot;
+      &gt;
+        {{ page }}
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Current Page Indicator (Simple Style) --&gt;
+    &lt;div *ngIf&#x3D;&quot;style &#x3D;&#x3D;&#x3D; &#x27;simple&#x27;&quot; class&#x3D;&quot;emerald-pager__current&quot;&gt;
+      &lt;span&gt;{{ currentPage }} / {{ totalPages }}&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Next Page Button --&gt;
+    &lt;button
+      *ngIf&#x3D;&quot;showPrevNext&quot;
+      class&#x3D;&quot;emerald-pager__button emerald-pager__button--next&quot;
+      [disabled]&#x3D;&quot;currentPage &#x3D;&#x3D;&#x3D; totalPages&quot;
+      (click)&#x3D;&quot;goToNextPage()&quot;
+      aria-label&#x3D;&quot;Go to next page&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;fas fa-angle-right&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Last Page Button --&gt;
+    &lt;button
+      *ngIf&#x3D;&quot;showFirstLast &amp;&amp; style !&#x3D;&#x3D; &#x27;simple&#x27;&quot;
+      class&#x3D;&quot;emerald-pager__button emerald-pager__button--last&quot;
+      [disabled]&#x3D;&quot;currentPage &#x3D;&#x3D;&#x3D; totalPages&quot;
+      (click)&#x3D;&quot;goToLastPage()&quot;
+      aria-label&#x3D;&quot;Go to last page&quot;
+    &gt;
+      &lt;i class&#x3D;&quot;fas fa-angle-double-right&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./pager.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../core/design/design-tokens&#x27;;
+
+// Emerald Pager Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/Pager
+
+.emerald-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $spacing-4 0;
+  font-family: $font-primary;
+
+  // Alignment variants
+  &amp;--left {
+    justify-content: flex-start;
+  }
+
+  &amp;--right {
+    justify-content: flex-end;
+  }
+
+  // Page size selector
+  &amp;__size-selector {
+    display: flex;
+    align-items: center;
+    margin-right: $spacing-4;
+
+    label {
+      margin-right: $spacing-2;
+      font-size: $font-size-sm;
+      color: $neutral-700;
+    }
+
+    select {
+      padding: $spacing-1 $spacing-2;
+      border: 1px solid $neutral-300;
+      border-radius: $border-radius-md;
+      background-color: $neutral-100;
+      font-size: $font-size-sm;
+      color: $neutral-800;
+      cursor: pointer;
+
+      &amp;:focus {
+        outline: none;
+        border-color: $primary-500;
+        box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
+      }
+    }
+  }
+
+  // Pagination controls
+  &amp;__controls {
+    display: flex;
+    align-items: center;
+  }
+
+  // Page numbers container
+  &amp;__pages {
+    display: flex;
+    align-items: center;
+  }
+
+  // Current page indicator for simple style
+  &amp;__current {
+    margin: 0 $spacing-2;
+    font-size: $font-size-sm;
+    color: $neutral-800;
+
+    .emerald-pager--large &amp; {
+      font-size: $font-size-base;
+    }
+
+    .emerald-pager--small &amp; {
+      font-size: $font-size-xs;
+    }
+  }
+
+  // Pagination buttons
+  &amp;__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    margin: 0 $spacing-1;
+    padding: 0 $spacing-2;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius-md;
+    background-color: $neutral-100;
+    color: $neutral-800;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &amp;:hover:not(:disabled) {
+      background-color: $neutral-200;
+      border-color: $neutral-400;
+    }
+
+    &amp;:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
+    }
+
+    &amp;:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    // Active page button
+    &amp;--active {
+      background-color: $primary-500;
+      border-color: $primary-500;
+      color: $neutral-100;
+
+      &amp;:hover {
+        background-color: $primary-600;
+        border-color: $primary-600;
+      }
+    }
+
+    // Size variants
+    .emerald-pager--large &amp; {
+      min-width: 44px;
+      height: 44px;
+      font-size: $font-size-base;
+    }
+
+    .emerald-pager--small &amp; {
+      min-width: 28px;
+      height: 28px;
+      font-size: $font-size-xs;
+      padding: 0 $spacing-1;
+    }
+
+    // Style variants
+    .emerald-pager--compact &amp; {
+      min-width: 32px;
+      margin: 0 $spacing-1;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .emerald-pager {
+    flex-direction: column;
+
+    &amp;__size-selector {
+      margin-right: 0;
+      margin-bottom: $spacing-2;
+    }
+
+    &amp;__button {
+      min-width: 32px;
+      height: 32px;
+      margin: 0 $spacing-1;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Emerald Pager Component --><!-- Documentation: https://docs-emerald.condorlabs.io/Pager --><div  class="emerald-pager"  [ngClass]="{    \'emerald-pager--simple\': style === \'simple\',    \'emerald-pager--compact\': style === \'compact\',    \'emerald-pager--small\': size === \'small\',    \'emerald-pager--large\': size === \'large\',    \'emerald-pager--left\': align === \'left\',    \'emerald-pager--right\': align === \'right\',  }">  <!-- Page Size Selector -->  <div class="emerald-pager__size-selector" *ngIf="showPageSize">    <label for="pageSize">Items per page:</label>    <select id="pageSize" [value]="pageSize" (change)="onPageSizeChange($event)">      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>    </select>  </div>  <!-- Pagination Controls -->  <div class="emerald-pager__controls">    <!-- First Page Button -->    <button      *ngIf="showFirstLast && style !== \'simple\'"      class="emerald-pager__button emerald-pager__button--first"      [disabled]="currentPage === 1"      (click)="goToFirstPage()"      aria-label="Go to first page"    >      <i class="fas fa-angle-double-left"></i>    </button>    <!-- Previous Page Button -->    <button      *ngIf="showPrevNext"      class="emerald-pager__button emerald-pager__button--prev"      [disabled]="currentPage === 1"      (click)="goToPreviousPage()"      aria-label="Go to previous page"    >      <i class="fas fa-angle-left"></i>    </button>    <!-- Page Numbers (Default and Compact Styles) -->    <div *ngIf="style !== \'simple\'" class="emerald-pager__pages">      <button        *ngFor="let page of visiblePages"        class="emerald-pager__button emerald-pager__button--page"        [ngClass]="{ \'emerald-pager__button--active\': page === currentPage }"        (click)="goToPage(page)"      >        {{ page }}      </button>    </div>    <!-- Current Page Indicator (Simple Style) -->    <div *ngIf="style === \'simple\'" class="emerald-pager__current">      <span>{{ currentPage }} / {{ totalPages }}</span>    </div>    <!-- Next Page Button -->    <button      *ngIf="showPrevNext"      class="emerald-pager__button emerald-pager__button--next"      [disabled]="currentPage === totalPages"      (click)="goToNextPage()"      aria-label="Go to next page"    >      <i class="fas fa-angle-right"></i>    </button>    <!-- Last Page Button -->    <button      *ngIf="showFirstLast && style !== \'simple\'"      class="emerald-pager__button emerald-pager__button--last"      [disabled]="currentPage === totalPages"      (click)="goToLastPage()"      aria-label="Go to last page"    >      <i class="fas fa-angle-double-right"></i>    </button>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PagerComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PagerComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,3 +1,3 @@
-# Database Schema Detail (Placeholder)
+# Database Schema Documentation
 
-<!-- TODO: Generate schema documentation from Mongoose models and add content here. Link from ARCHITECTURE.md. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+## Table of Contents

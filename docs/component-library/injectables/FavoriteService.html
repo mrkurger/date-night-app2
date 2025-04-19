@@ -1,0 +1,1846 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >FavoriteService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/favorite.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service for managing user favorites
+Provides methods for adding, removing, and managing favorite ads</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#apiUrl" >apiUrl</a>
+                            </li>
+                            <li>
+                                <a href="#favorites$" >favorites$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#favoritesLoaded" >favoritesLoaded</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#favoritesSubject" >favoritesSubject</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addFavorite" >addFavorite</a>
+                            </li>
+                            <li>
+                                <a href="#addFavoritesBatch" >addFavoritesBatch</a>
+                            </li>
+                            <li>
+                                <a href="#clearCache" >clearCache</a>
+                            </li>
+                            <li>
+                                <a href="#getFavorites" >getFavorites</a>
+                            </li>
+                            <li>
+                                <a href="#getUserTags" >getUserTags</a>
+                            </li>
+                            <li>
+                                <a href="#isFavorite" >isFavorite</a>
+                            </li>
+                            <li>
+                                <a href="#loadFavoriteIds" >loadFavoriteIds</a>
+                            </li>
+                            <li>
+                                <a href="#removeFavorite" >removeFavorite</a>
+                            </li>
+                            <li>
+                                <a href="#removeFavoritesBatch" >removeFavoritesBatch</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNotifications" >toggleNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#updateNotes" >updateNotes</a>
+                            </li>
+                            <li>
+                                <a href="#updatePriority" >updatePriority</a>
+                            </li>
+                            <li>
+                                <a href="#updateTags" >updateTags</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/core/services/favorite.service.ts:61</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFavorite"></a>
+                    <span class="name">
+                        <span ><b>addFavorite</b></span>
+                        <a href="#addFavorite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addFavorite(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, notes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, notificationsEnabled, tags: string[], priority: "low" | "normal" | "high")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="157"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:157</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Add an ad to favorites</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <p>Ad ID to add</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>notes</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional notes about this favorite</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>notificationsEnabled</td>
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>true</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Whether to enable notifications for this favorite</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tags</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>[]</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional tags for categorizing this favorite</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>priority</td>
+                                            <td>
+                                                        <code>&quot;low&quot; | &quot;normal&quot; | &quot;high&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;normal&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional priority level (low, normal, high)</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFavoritesBatch"></a>
+                    <span class="name">
+                        <span ><b>addFavoritesBatch</b></span>
+                        <a href="#addFavoritesBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addFavoritesBatch(adIds: string[], notes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, notificationsEnabled, tags: string[], priority: "low" | "normal" | "high")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:191</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Add multiple ads to favorites in a batch operation</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <p>Array of ad IDs to add</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>notes</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional notes to apply to all favorites</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>notificationsEnabled</td>
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>true</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Whether to enable notifications for all favorites</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tags</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>[]</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional tags to apply to all favorites</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>priority</td>
+                                            <td>
+                                                        <code>&quot;low&quot; | &quot;normal&quot; | &quot;high&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;normal&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Optional priority level to apply to all favorites</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;FavoriteBatchResult&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearCache"></a>
+                    <span class="name">
+                        <span ><b>clearCache</b></span>
+                        <a href="#clearCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearCache()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="297"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:297</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Clear the cached favorites (e.g., on logout)</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFavorites"></a>
+                    <span class="name">
+                        <span ><b>getFavorites</b></span>
+                        <a href="#getFavorites"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFavorites(options?: <a href="../interfaces/FavoriteFilterOptions.html" target="_self">FavoriteFilterOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get all favorites for the current user with full ad details</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/FavoriteFilterOptions.html" target="_self" >FavoriteFilterOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Optional filter and sort options</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;Favorite[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserTags"></a>
+                    <span class="name">
+                        <span ><b>getUserTags</b></span>
+                        <a href="#getUserTags"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserTags()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get all tags used by the current user</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;FavoriteTag[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable of tags with usage counts</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFavorite"></a>
+                    <span class="name">
+                        <span ><b>isFavorite</b></span>
+                        <a href="#isFavorite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isFavorite(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if an ad is in the user&#39;s favorites</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID to check</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadFavoriteIds"></a>
+                    <span class="name">
+                        <span ><b>loadFavoriteIds</b></span>
+                        <a href="#loadFavoriteIds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadFavoriteIds()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load all favorite IDs for the current user
+This is used to efficiently check if an ad is favorited</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;string[]&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeFavorite"></a>
+                    <span class="name">
+                        <span ><b>removeFavorite</b></span>
+                        <a href="#removeFavorite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeFavorite(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="229"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:229</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Remove an ad from favorites</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID to remove</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeFavoritesBatch"></a>
+                    <span class="name">
+                        <span ><b>removeFavoritesBatch</b></span>
+                        <a href="#removeFavoritesBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeFavoritesBatch(adIds: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Remove multiple ads from favorites in a batch operation</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Array of ad IDs to remove</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;FavoriteBatchResult&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNotifications"></a>
+                    <span class="name">
+                        <span ><b>toggleNotifications</b></span>
+                        <a href="#toggleNotifications"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNotifications(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="290"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:290</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggle notifications for a favorite</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateNotes"></a>
+                    <span class="name">
+                        <span ><b>updateNotes</b></span>
+                        <a href="#updateNotes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateNotes(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, notes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="264"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:264</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Update notes for a favorite</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>notes</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New notes</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePriority"></a>
+                    <span class="name">
+                        <span ><b>updatePriority</b></span>
+                        <a href="#updatePriority"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updatePriority(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, priority: "low" | "normal" | "high")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="282"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:282</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Update priority for a favorite</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>priority</td>
+                                            <td>
+                                                        <code>&quot;low&quot; | &quot;normal&quot; | &quot;high&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New priority (low, normal, high)</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateTags"></a>
+                    <span class="name">
+                        <span ><b>updateTags</b></span>
+                        <a href="#updateTags"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateTags(adId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, tags: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/core/services/favorite.service.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Update tags for a favorite</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>adId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Ad ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tags</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New tags array</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="apiUrl"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>apiUrl</b></span>
+                        <a href="#apiUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x60;${environment.apiUrl}/favorites&#x60;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/core/services/favorite.service.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="favorites$"></a>
+                    <span class="name">
+                        <span ><b>favorites$</b></span>
+                        <a href="#favorites$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.favoritesSubject.asObservable()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/core/services/favorite.service.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="favoritesLoaded"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>favoritesLoaded</b></span>
+                        <a href="#favoritesLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/core/services/favorite.service.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="favoritesSubject"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>favoritesSubject</b></span>
+                        <a href="#favoritesSubject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject&lt;string[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/core/services/favorite.service.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpParams } from &#x27;@angular/common/http&#x27;;
+import { Observable, BehaviorSubject } from &#x27;rxjs&#x27;;
+import { tap, map } from &#x27;rxjs/operators&#x27;;
+import { environment } from &#x27;../../../environments/environment&#x27;;
+import { Ad } from &#x27;../models/ad.interface&#x27;;
+
+export interface FavoriteTag {
+  tag: string;
+  count: number;
+}
+
+export interface FavoriteFilterOptions {
+  sort?:
+    | &#x27;newest&#x27;
+    | &#x27;oldest&#x27;
+    | &#x27;price-asc&#x27;
+    | &#x27;price-desc&#x27;
+    | &#x27;title-asc&#x27;
+    | &#x27;title-desc&#x27;
+    | &#x27;priority-high&#x27;
+    | &#x27;priority-low&#x27;;
+  category?: string;
+  county?: string;
+  city?: string;
+  search?: string;
+}
+
+export interface FavoriteBatchResult {
+  message: string;
+  added?: number;
+  alreadyFavorited?: number;
+  removed?: number;
+}
+
+export interface Favorite {
+  _id: string;
+  user: string;
+  ad: Ad;
+  notes: string;
+  notificationsEnabled: boolean;
+  tags: string[];
+  priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27;;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Service for managing user favorites
+ * Provides methods for adding, removing, and managing favorite ads
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class FavoriteService {
+  private apiUrl &#x3D; &#x60;${environment.apiUrl}/favorites&#x60;;
+  private favoritesSubject &#x3D; new BehaviorSubject&lt;string[]&gt;([]);
+  private favoritesLoaded &#x3D; false;
+
+  // Observable of favorite ad IDs
+  favorites$ &#x3D; this.favoritesSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  /**
+   * Load all favorite IDs for the current user
+   * This is used to efficiently check if an ad is favorited
+   */
+  loadFavoriteIds(): Observable&lt;string[]&gt; {
+    return this.http.get&lt;string[]&gt;(&#x60;${this.apiUrl}/ids&#x60;).pipe(
+      tap(ids &#x3D;&gt; {
+        this.favoritesSubject.next(ids);
+        this.favoritesLoaded &#x3D; true;
+      })
+    );
+  }
+
+  /**
+   * Get all favorites for the current user with full ad details
+   * @param options Optional filter and sort options
+   */
+  getFavorites(options?: FavoriteFilterOptions): Observable&lt;Favorite[]&gt; {
+    let params &#x3D; new HttpParams();
+
+    if (options) {
+      if (options.sort) {
+        params &#x3D; params.set(&#x27;sort&#x27;, options.sort);
+      }
+      if (options.category) {
+        params &#x3D; params.set(&#x27;category&#x27;, options.category);
+      }
+      if (options.county) {
+        params &#x3D; params.set(&#x27;county&#x27;, options.county);
+      }
+      if (options.city) {
+        params &#x3D; params.set(&#x27;city&#x27;, options.city);
+      }
+      if (options.search) {
+        params &#x3D; params.set(&#x27;search&#x27;, options.search);
+      }
+      if (options.priority) {
+        params &#x3D; params.set(&#x27;priority&#x27;, options.priority);
+      }
+      if (options.priceMin !&#x3D;&#x3D; undefined) {
+        params &#x3D; params.set(&#x27;priceMin&#x27;, options.priceMin.toString());
+      }
+      if (options.priceMax !&#x3D;&#x3D; undefined) {
+        params &#x3D; params.set(&#x27;priceMax&#x27;, options.priceMax.toString());
+      }
+      if (options.dateFrom) {
+        params &#x3D; params.set(&#x27;dateFrom&#x27;, new Date(options.dateFrom).toISOString());
+      }
+      if (options.dateTo) {
+        params &#x3D; params.set(&#x27;dateTo&#x27;, new Date(options.dateTo).toISOString());
+      }
+      if (options.tags &amp;&amp; options.tags.length &gt; 0) {
+        // For multiple tags, we need to handle them specially
+        options.tags.forEach(tag &#x3D;&gt; {
+          params &#x3D; params.append(&#x27;tags&#x27;, tag);
+        });
+      }
+    }
+
+    return this.http.get&lt;Favorite[]&gt;(this.apiUrl, { params });
+  }
+
+  /**
+   * Get all tags used by the current user
+   * @returns Observable of tags with usage counts
+   */
+  getUserTags(): Observable&lt;FavoriteTag[]&gt; {
+    return this.http.get&lt;FavoriteTag[]&gt;(&#x60;${this.apiUrl}/tags&#x60;);
+  }
+
+  /**
+   * Check if an ad is in the user&#x27;s favorites
+   * @param adId Ad ID to check
+   */
+  isFavorite(adId: string): Observable&lt;boolean&gt; {
+    // If we&#x27;ve already loaded favorites, check locally
+    if (this.favoritesLoaded) {
+      return this.favorites$.pipe(map(favorites &#x3D;&gt; favorites.includes(adId)));
+    }
+
+    // Otherwise, check with the server
+    return this.http.get&lt;boolean&gt;(&#x60;${this.apiUrl}/check/${adId}&#x60;);
+  }
+
+  /**
+   * Add an ad to favorites
+   * @param adId Ad ID to add
+   * @param notes Optional notes about this favorite
+   * @param notificationsEnabled Whether to enable notifications for this favorite
+   * @param tags Optional tags for categorizing this favorite
+   * @param priority Optional priority level (low, normal, high)
+   */
+  addFavorite(
+    adId: string,
+    notes &#x3D; &#x27;&#x27;,
+    notificationsEnabled &#x3D; true,
+    tags: string[] &#x3D; [],
+    priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27; &#x3D; &#x27;normal&#x27;
+  ): Observable&lt;any&gt; {
+    return this.http
+      .post(&#x60;${this.apiUrl}/${adId}&#x60;, {
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
+      .pipe(
+        tap(() &#x3D;&gt; {
+          if (this.favoritesLoaded) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            if (!currentFavorites.includes(adId)) {
+              this.favoritesSubject.next([...currentFavorites, adId]);
+            }
+          }
+        })
+      );
+  }
+
+  /**
+   * Add multiple ads to favorites in a batch operation
+   * @param adIds Array of ad IDs to add
+   * @param notes Optional notes to apply to all favorites
+   * @param notificationsEnabled Whether to enable notifications for all favorites
+   * @param tags Optional tags to apply to all favorites
+   * @param priority Optional priority level to apply to all favorites
+   */
+  addFavoritesBatch(
+    adIds: string[],
+    notes &#x3D; &#x27;&#x27;,
+    notificationsEnabled &#x3D; true,
+    tags: string[] &#x3D; [],
+    priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27; &#x3D; &#x27;normal&#x27;
+  ): Observable&lt;FavoriteBatchResult&gt; {
+    return this.http
+      .post&lt;FavoriteBatchResult&gt;(&#x60;${this.apiUrl}/batch&#x60;, {
+        adIds,
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
+      .pipe(
+        tap(result &#x3D;&gt; {
+          if (this.favoritesLoaded &amp;&amp; result.added &amp;&amp; result.added &gt; 0) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            const newFavorites &#x3D; [...currentFavorites];
+
+            // Add only the IDs that aren&#x27;t already in the list
+            adIds.forEach(id &#x3D;&gt; {
+              if (!currentFavorites.includes(id)) {
+                newFavorites.push(id);
+              }
+            });
+
+            this.favoritesSubject.next(newFavorites);
+          }
+        })
+      );
+  }
+
+  /**
+   * Remove an ad from favorites
+   * @param adId Ad ID to remove
+   */
+  removeFavorite(adId: string): Observable&lt;any&gt; {
+    return this.http.delete(&#x60;${this.apiUrl}/${adId}&#x60;).pipe(
+      tap(() &#x3D;&gt; {
+        if (this.favoritesLoaded) {
+          const currentFavorites &#x3D; this.favoritesSubject.value;
+          this.favoritesSubject.next(currentFavorites.filter(id &#x3D;&gt; id !&#x3D;&#x3D; adId));
+        }
+      })
+    );
+  }
+
+  /**
+   * Remove multiple ads from favorites in a batch operation
+   * @param adIds Array of ad IDs to remove
+   */
+  removeFavoritesBatch(adIds: string[]): Observable&lt;FavoriteBatchResult&gt; {
+    return this.http
+      .delete&lt;FavoriteBatchResult&gt;(&#x60;${this.apiUrl}/batch&#x60;, {
+        body: { adIds },
+      })
+      .pipe(
+        tap(() &#x3D;&gt; {
+          if (this.favoritesLoaded) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            this.favoritesSubject.next(currentFavorites.filter(id &#x3D;&gt; !adIds.includes(id)));
+          }
+        })
+      );
+  }
+
+  /**
+   * Update notes for a favorite
+   * @param adId Ad ID
+   * @param notes New notes
+   */
+  updateNotes(adId: string, notes: string): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/notes&#x60;, { notes });
+  }
+
+  /**
+   * Update tags for a favorite
+   * @param adId Ad ID
+   * @param tags New tags array
+   */
+  updateTags(adId: string, tags: string[]): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/tags&#x60;, { tags });
+  }
+
+  /**
+   * Update priority for a favorite
+   * @param adId Ad ID
+   * @param priority New priority (low, normal, high)
+   */
+  updatePriority(adId: string, priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27;): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/priority&#x60;, { priority });
+  }
+
+  /**
+   * Toggle notifications for a favorite
+   * @param adId Ad ID
+   */
+  toggleNotifications(adId: string): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/notifications&#x60;, {});
+  }
+
+  /**
+   * Clear the cached favorites (e.g., on logout)
+   */
+  clearCache(): void {
+    this.favoritesSubject.next([]);
+    this.favoritesLoaded &#x3D; false;
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'FavoriteService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -8,12 +8,12 @@
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
 // ===================================================
 
-const mongoose = require('mongoose');
-const argon2 = require('argon2');
-const bcrypt = require('bcrypt');
-const User = require('../../../models/user.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { TEST_USER_DATA } = require('../../helpers');
+import mongoose from 'mongoose';
+import argon2 from 'argon2';
+import bcrypt from 'bcrypt';
+import User from '../../../models/user.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { TEST_USER_DATA } from '../../helpers.js';
 
 describe('User Model', () => {
   // Setup and teardown for all tests

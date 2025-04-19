@@ -91,7 +91,7 @@ const validateCsrfToken = (req, res, next) => {
   try {
     validateRequest(req, res);
     next();
-  } catch (error) {
+  } catch (_) {
     res.status(403).json({
       success: false,
       message: 'Invalid or missing CSRF token. Please refresh the page and try again.',

@@ -1,0 +1,1094 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  WalletTransaction</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/wallet.service.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#_id" 
+>
+                                            _id
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#amount" 
+>
+                                            amount
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#createdAt" 
+>
+                                            createdAt
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#currency" 
+>
+                                            currency
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#description" 
+>
+                                            description
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#fee" 
+>
+                                            fee
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#metadata" 
+>
+                                            metadata
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#status" 
+>
+                                            status
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#type" 
+>
+                                            type
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#updatedAt" 
+>
+                                            updatedAt
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="_id"></a>
+                                        <span class="name "><b>_id</b>
+                                            <a href="#_id">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>_id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="amount"></a>
+                                        <span class="name "><b>amount</b>
+                                            <a href="#amount">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>amount:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="createdAt"></a>
+                                        <span class="name "><b>createdAt</b>
+                                            <a href="#createdAt">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>createdAt:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="currency"></a>
+                                        <span class="name "><b>currency</b>
+                                            <a href="#currency">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>currency:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="description"></a>
+                                        <span class="name "><b>description</b>
+                                            <a href="#description">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>description:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="fee"></a>
+                                        <span class="name "><b>fee</b>
+                                            <a href="#fee">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>fee:     <code>literal type</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>literal type</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="metadata"></a>
+                                        <span class="name "><b>metadata</b>
+                                            <a href="#metadata">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>metadata:     <code>literal type</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>literal type</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="status"></a>
+                                        <span class="name "><b>status</b>
+                                            <a href="#status">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>status:     <code>&quot;pending&quot; | &quot;completed&quot; | &quot;failed&quot; | &quot;cancelled&quot;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>&quot;pending&quot; | &quot;completed&quot; | &quot;failed&quot; | &quot;cancelled&quot;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="type"></a>
+                                        <span class="name "><b>type</b>
+                                            <a href="#type">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>type:     <code>&quot;deposit&quot; | &quot;withdrawal&quot; | &quot;transfer&quot; | &quot;payment&quot; | &quot;refund&quot; | &quot;fee&quot;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>&quot;deposit&quot; | &quot;withdrawal&quot; | &quot;transfer&quot; | &quot;payment&quot; | &quot;refund&quot; | &quot;fee&quot;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="updatedAt"></a>
+                                        <span class="name "><b>updatedAt</b>
+                                            <a href="#updatedAt">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>updatedAt:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
+import { Observable, BehaviorSubject } from &#x27;rxjs&#x27;;
+import { tap, map } from &#x27;rxjs/operators&#x27;;
+import { environment } from &#x27;../../../environments/environment&#x27;;
+
+export interface WalletBalance {
+  currency: string;
+  available: number;
+  pending: number;
+  reserved: number;
+}
+
+export interface WalletTransaction {
+  _id: string;
+  type: &#x27;deposit&#x27; | &#x27;withdrawal&#x27; | &#x27;transfer&#x27; | &#x27;payment&#x27; | &#x27;refund&#x27; | &#x27;fee&#x27;;
+  amount: number;
+  currency: string;
+  status: &#x27;pending&#x27; | &#x27;completed&#x27; | &#x27;failed&#x27; | &#x27;cancelled&#x27;;
+  description: string;
+  metadata: {
+    paymentIntentId?: string;
+    paymentMethodId?: string;
+    transactionId?: string;
+    txHash?: string;
+    blockConfirmations?: number;
+    provider?: string;
+    senderWalletId?: string;
+    recipientWalletId?: string;
+    adId?: string;
+    serviceType?: string;
+    address?: string;
+    network?: string;
+    memo?: string;
+  };
+  fee?: {
+    amount: number;
+    currency: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PaymentMethod {
+  _id: string;
+  type: &#x27;card&#x27; | &#x27;bank_account&#x27; | &#x27;crypto_address&#x27;;
+  provider: string;
+  isDefault: boolean;
+  cardDetails?: {
+    lastFour: string;
+    brand: string;
+    expiryMonth: number;
+    expiryYear: number;
+    tokenId: string;
+  };
+  bankDetails?: {
+    accountType: string;
+    lastFour: string;
+    bankName: string;
+    country: string;
+    currency: string;
+    tokenId: string;
+  };
+  cryptoDetails?: {
+    currency: string;
+    address: string;
+    network: string;
+    memo?: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface WalletSettings {
+  autoWithdrawal: {
+    enabled: boolean;
+    threshold: number;
+    paymentMethodId: string;
+  };
+  defaultCurrency: string;
+  notificationPreferences: {
+    email: {
+      deposit: boolean;
+      withdrawal: boolean;
+      payment: boolean;
+    };
+    push: {
+      deposit: boolean;
+      withdrawal: boolean;
+      payment: boolean;
+    };
+  };
+}
+
+export interface Wallet {
+  _id: string;
+  balances: WalletBalance[];
+  paymentMethods: PaymentMethod[];
+  settings: WalletSettings;
+}
+
+export interface TransactionFilters {
+  type?: string;
+  status?: string;
+  currency?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface TransactionResponse {
+  transactions: WalletTransaction[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+}
+
+export interface CryptoDepositAddress {
+  currency: string;
+  address: string;
+  network: string;
+  memo?: string;
+}
+
+export interface ExchangeRate {
+  fromCurrency: string;
+  toCurrency: string;
+  rate: number;
+}
+
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class WalletService {
+  private apiUrl &#x3D; &#x60;${environment.apiUrl}/wallet&#x60;;
+  private walletSubject &#x3D; new BehaviorSubject&lt;Wallet | null&gt;(null);
+  private balancesSubject &#x3D; new BehaviorSubject&lt;WalletBalance[]&gt;([]);
+
+  wallet$ &#x3D; this.walletSubject.asObservable();
+  balances$ &#x3D; this.balancesSubject.asObservable();
+
+  // Supported currencies
+  readonly SUPPORTED_CURRENCIES &#x3D; [&#x27;NOK&#x27;, &#x27;USD&#x27;, &#x27;EUR&#x27;, &#x27;GBP&#x27;];
+  readonly SUPPORTED_CRYPTOCURRENCIES &#x3D; [&#x27;BTC&#x27;, &#x27;ETH&#x27;, &#x27;USDT&#x27;, &#x27;USDC&#x27;];
+
+  constructor(private http: HttpClient) {}
+
+  /**
+   * Get wallet
+   */
+  getWallet(): Observable&lt;Wallet&gt; {
+    return this.http.get&lt;{ status: string; data: { wallet: Wallet } }&gt;(&#x60;${this.apiUrl}&#x60;).pipe(
+      map(response &#x3D;&gt; response.data.wallet),
+      tap(wallet &#x3D;&gt; {
+        this.walletSubject.next(wallet);
+        this.balancesSubject.next(wallet.balances);
+      })
+    );
+  }
+
+  /**
+   * Get wallet balance
+   * @param currency Optional currency filter
+   */
+  getWalletBalance(currency?: string): Observable&lt;WalletBalance | WalletBalance[]&gt; {
+    let url &#x3D; &#x60;${this.apiUrl}/balance&#x60;;
+    if (currency) {
+      url +&#x3D; &#x60;?currency&#x3D;${currency}&#x60;;
+    }
+
+    return this.http
+      .get&lt;{ status: string; data: { balance: WalletBalance | WalletBalance[] } }&gt;(url)
+      .pipe(
+        map(response &#x3D;&gt; response.data.balance),
+        tap(balance &#x3D;&gt; {
+          if (Array.isArray(balance)) {
+            this.balancesSubject.next(balance);
+          }
+        })
+      );
+  }
+
+  /**
+   * Get wallet transactions
+   * @param filters Optional filters
+   * @param page Page number
+   * @param limit Items per page
+   */
+  getWalletTransactions(
+    filters?: TransactionFilters,
+    page &#x3D; 1,
+    limit &#x3D; 20
+  ): Observable&lt;TransactionResponse&gt; {
+    let url &#x3D; &#x60;${this.apiUrl}/transactions?page&#x3D;${page}&amp;limit&#x3D;${limit}&#x60;;
+
+    if (filters) {
+      if (filters.type) url +&#x3D; &#x60;&amp;type&#x3D;${filters.type}&#x60;;
+      if (filters.status) url +&#x3D; &#x60;&amp;status&#x3D;${filters.status}&#x60;;
+      if (filters.currency) url +&#x3D; &#x60;&amp;currency&#x3D;${filters.currency}&#x60;;
+      if (filters.startDate) url +&#x3D; &#x60;&amp;startDate&#x3D;${filters.startDate}&#x60;;
+      if (filters.endDate) url +&#x3D; &#x60;&amp;endDate&#x3D;${filters.endDate}&#x60;;
+    }
+
+    return this.http
+      .get&lt;{ status: string; data: TransactionResponse }&gt;(url)
+      .pipe(map(response &#x3D;&gt; response.data));
+  }
+
+  /**
+   * Get wallet payment methods
+   */
+  getWalletPaymentMethods(): Observable&lt;PaymentMethod[]&gt; {
+    return this.http
+      .get&lt;{
+        status: string;
+        data: { paymentMethods: PaymentMethod[] };
+      }&gt;(&#x60;${this.apiUrl}/payment-methods&#x60;)
+      .pipe(map(response &#x3D;&gt; response.data.paymentMethods));
+  }
+
+  /**
+   * Add payment method
+   * @param paymentMethodData Payment method data
+   */
+  addPaymentMethod(paymentMethodData: Partial&lt;PaymentMethod&gt;): Observable&lt;PaymentMethod&gt; {
+    return this.http
+      .post&lt;{
+        status: string;
+        data: { paymentMethod: PaymentMethod };
+      }&gt;(&#x60;${this.apiUrl}/payment-methods&#x60;, paymentMethodData)
+      .pipe(
+        map(response &#x3D;&gt; response.data.paymentMethod),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Remove payment method
+   * @param paymentMethodId Payment method ID
+   */
+  removePaymentMethod(paymentMethodId: string): Observable&lt;void&gt; {
+    return this.http
+      .delete&lt;{ status: string; data: null }&gt;(&#x60;${this.apiUrl}/payment-methods/${paymentMethodId}&#x60;)
+      .pipe(
+        map(() &#x3D;&gt; undefined),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Set default payment method
+   * @param paymentMethodId Payment method ID
+   */
+  setDefaultPaymentMethod(paymentMethodId: string): Observable&lt;PaymentMethod&gt; {
+    return this.http
+      .patch&lt;{
+        status: string;
+        data: { paymentMethod: PaymentMethod };
+      }&gt;(&#x60;${this.apiUrl}/payment-methods/${paymentMethodId}/default&#x60;, {})
+      .pipe(
+        map(response &#x3D;&gt; response.data.paymentMethod),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Deposit funds with Stripe
+   * @param amount Amount in smallest currency unit (e.g., cents)
+   * @param currency Currency code
+   * @param paymentMethodId Stripe payment method ID
+   * @param description Optional description
+   */
+  depositFundsWithStripe(
+    amount: number,
+    currency: string,
+    paymentMethodId: string,
+    description?: string
+  ): Observable&lt;{ transaction: WalletTransaction; clientSecret: string }&gt; {
+    return this.http
+      .post&lt;{
+        status: string;
+        data: { transaction: WalletTransaction; clientSecret: string };
+      }&gt;(&#x60;${this.apiUrl}/deposit/stripe&#x60;, { amount, currency, paymentMethodId, description })
+      .pipe(
+        map(response &#x3D;&gt; response.data),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Get crypto deposit address
+   * @param currency Cryptocurrency code
+   */
+  getCryptoDepositAddress(currency: string): Observable&lt;CryptoDepositAddress&gt; {
+    return this.http
+      .get&lt;{
+        status: string;
+        data: CryptoDepositAddress;
+      }&gt;(&#x60;${this.apiUrl}/deposit/crypto/${currency}&#x60;)
+      .pipe(map(response &#x3D;&gt; response.data));
+  }
+
+  /**
+   * Withdraw funds
+   * @param amount Amount in smallest currency unit (e.g., cents)
+   * @param currency Currency code
+   * @param paymentMethodId Payment method ID
+   * @param description Optional description
+   */
+  withdrawFunds(
+    amount: number,
+    currency: string,
+    paymentMethodId: string,
+    description?: string
+  ): Observable&lt;WalletTransaction&gt; {
+    return this.http
+      .post&lt;{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }&gt;(&#x60;${this.apiUrl}/withdraw&#x60;, { amount, currency, paymentMethodId, description })
+      .pipe(
+        map(response &#x3D;&gt; response.data.transaction),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Withdraw cryptocurrency
+   * @param amount Amount in smallest currency unit
+   * @param currency Cryptocurrency code
+   * @param address Destination address
+   * @param network Blockchain network
+   * @param memo Optional memo/tag
+   * @param description Optional description
+   */
+  withdrawCrypto(
+    amount: number,
+    currency: string,
+    address: string,
+    network: string,
+    memo?: string,
+    description?: string
+  ): Observable&lt;WalletTransaction&gt; {
+    return this.http
+      .post&lt;{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }&gt;(&#x60;${this.apiUrl}/withdraw/crypto&#x60;, {
+        amount,
+        currency,
+        address,
+        network,
+        memo,
+        description,
+      })
+      .pipe(
+        map(response &#x3D;&gt; response.data.transaction),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Transfer funds to another user
+   * @param recipientUserId Recipient user ID
+   * @param amount Amount in smallest currency unit
+   * @param currency Currency code
+   * @param description Optional description
+   */
+  transferFunds(
+    recipientUserId: string,
+    amount: number,
+    currency: string,
+    description?: string
+  ): Observable&lt;WalletTransaction&gt; {
+    return this.http
+      .post&lt;{
+        status: string;
+        data: { transaction: WalletTransaction };
+      }&gt;(&#x60;${this.apiUrl}/transfer&#x60;, { recipientUserId, amount, currency, description })
+      .pipe(
+        map(response &#x3D;&gt; response.data.transaction),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Update wallet settings
+   * @param settings Wallet settings
+   */
+  updateWalletSettings(settings: Partial&lt;WalletSettings&gt;): Observable&lt;WalletSettings&gt; {
+    return this.http
+      .patch&lt;{
+        status: string;
+        data: { settings: WalletSettings };
+      }&gt;(&#x60;${this.apiUrl}/settings&#x60;, settings)
+      .pipe(
+        map(response &#x3D;&gt; response.data.settings),
+        tap(() &#x3D;&gt; this.refreshWallet())
+      );
+  }
+
+  /**
+   * Get exchange rates
+   * @param fromCurrency From currency code
+   * @param toCurrency To currency code
+   */
+  getExchangeRates(fromCurrency: string, toCurrency: string): Observable&lt;ExchangeRate&gt; {
+    return this.http
+      .get&lt;{
+        status: string;
+        data: ExchangeRate;
+      }&gt;(&#x60;${this.apiUrl}/exchange-rates?fromCurrency&#x3D;${fromCurrency}&amp;toCurrency&#x3D;${toCurrency}&#x60;)
+      .pipe(map(response &#x3D;&gt; response.data));
+  }
+
+  /**
+   * Format currency amount for display
+   * @param amount Amount in smallest currency unit (e.g., cents)
+   * @param currency Currency code
+   */
+  formatCurrency(amount: number, currency: string): string {
+    // For cryptocurrencies, use different formatting
+    if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
+      // Format based on cryptocurrency
+      switch (currency) {
+        case &#x27;BTC&#x27;:
+          // Convert satoshis to BTC (1 BTC &#x3D; 100,000,000 satoshis)
+          return &#x60;${(amount / 100000000).toFixed(8)} BTC&#x60;;
+        case &#x27;ETH&#x27;:
+          // Convert wei to ETH (1 ETH &#x3D; 1,000,000,000,000,000,000 wei)
+          return &#x60;${(amount / 1000000000000000000).toFixed(6)} ETH&#x60;;
+        case &#x27;USDT&#x27;:
+        case &#x27;USDC&#x27;:
+          // Stablecoins typically use 6 decimals (1 USDT &#x3D; 1,000,000 units)
+          return &#x60;${(amount / 1000000).toFixed(2)} ${currency}&#x60;;
+        default:
+          return &#x60;${(amount / 100).toFixed(2)} ${currency}&#x60;;
+      }
+    }
+
+    // For fiat currencies, use Intl.NumberFormat
+    return new Intl.NumberFormat(&#x27;no-NO&#x27;, {
+      style: &#x27;currency&#x27;,
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(amount / 100);
+  }
+
+  /**
+   * Refresh wallet data
+   */
+  private refreshWallet(): void {
+    this.getWallet().subscribe();
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'WalletTransaction.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -10,6 +10,15 @@
  * @param {number} statusCode - HTTP status code (default: 200)
  * @returns {Object} - Formatted success response
  */
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for response settings
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 const successResponse = (data = null, message = 'Operation successful', statusCode = 200) => {
   return {
     success: true,

@@ -1,14 +1,31 @@
-# CI CD GUIDE (Manual Merge Required)
+# CI/CD Guide
 
-<!-- TODO: Manually merge content from the following source files into this document, then remove this comment. -->
-<!-- Source: docs/AI_GITHUB_ACTIONS.md -->
+This comprehensive guide outlines the Continuous Integration and Continuous Deployment (CI/CD) practices for the Date Night App project, including GitHub Actions workflows, GitHub integrations, and best practices.
 
+## Table of Contents
 
-## Content from docs/AI_GITHUB_ACTIONS.md
+- [Overview](#overview)
+- [GitHub Actions Workflows](#github-actions-workflows)
+  - [Core Workflows](#core-workflows)
+  - [AI-Powered Workflows](#ai-powered-workflows)
+  - [GitHub Insights Workflows](#github-insights-workflows)
+- [GitHub Integration](#github-integration)
+  - [Dependabot Integration](#dependabot-integration)
+  - [Security Scanning](#security-scanning)
+  - [Test Results Integration](#test-results-integration)
+  - [Documentation Automation](#documentation-automation)
+- [Workflow Permissions](#workflow-permissions)
+- [Troubleshooting](#troubleshooting)
+  - [Common Issues](#common-issues)
+  - [Husky Integration Issues](#husky-integration-issues)
+- [Best Practices](#best-practices)
+- [Implementation Plan](#implementation-plan)
 
-# AI-Powered GitHub Actions
+## Overview
 
-This document outlines AI-powered GitHub Actions that can be integrated into the project workflow to enhance code quality, security, and development efficiency.
+## AI-Powered GitHub Actions
+
+This section outlines AI-powered GitHub Actions that can be integrated into the project workflow to enhance code quality, security, and development efficiency.
 
 ## Code Quality and Review
 
@@ -304,14 +321,10 @@ To implement these AI-powered GitHub Actions:
    - Test Insights with AI
 
 Each of these actions can be implemented incrementally to avoid overwhelming the CI/CD pipeline and to allow time for the team to adapt to the new tools and insights.
-<!-- Source: docs/GITHUB_INSIGHTS_WORKFLOW.md -->
 
+## GitHub Insights Workflows
 
-## Content from docs/GITHUB_INSIGHTS_WORKFLOW.md
-
-# GitHub Insights Workflow Guide
-
-This document explains the two approaches we've implemented for generating GitHub insights reports in the project.
+This section explains the two approaches we've implemented for generating GitHub insights reports in the project.
 
 ## Approach 1: Using GitHub API (Requires Special Permissions)
 
@@ -431,14 +444,10 @@ If the reports are empty or incomplete:
 1. Check the workflow logs for any errors during the execution
 2. Verify that the git commands are working correctly
 3. Check that the workflow can access the necessary files and directories
-<!-- Source: docs/GITHUB_INTEGRATION.md -->
 
+## GitHub Integration
 
-## Content from docs/GITHUB_INTEGRATION.md
-
-# GitHub Integration Strategy
-
-This document outlines how the Date Night App project can better leverage GitHub features, particularly for integrating Dependabot alerts and GitHub Actions test results into the development workflow.
+This section outlines how the Date Night App project can better leverage GitHub features, particularly for integrating Dependabot alerts and GitHub Actions test results into the development workflow.
 
 ## Table of Contents
 
@@ -749,7 +758,7 @@ async function generateTestReport() {
     `- **Failed**: ${totalFailures}\n` +
     `- **Errors**: ${totalErrors}\n` +
     `- **Skipped**: ${totalSkipped}\n\n` +
-    `[View Full Report](./test-results.md)\n`;
+    `[View Full Report](./TEST-RESULTS.MD)\n`;
 
   fs.writeFileSync('docs/latest-test-results.md', summaryReport);
 }
@@ -1017,14 +1026,10 @@ These improvements will lead to:
 - Better visibility into project health
 - Improved security through timely dependency updates
 - More efficient development through AI assistance
-<!-- Source: docs/GITHUB_SETUP.md -->
 
+## GitHub Repository Setup Guide
 
-## Content from docs/GITHUB_SETUP.md
-
-# GitHub Repository Setup Guide
-
-This guide provides instructions for configuring the GitHub repository settings to enable all the integration features we've implemented.
+This section provides instructions for configuring the GitHub repository settings to enable all the integration features we've implemented.
 
 ## Enabling Dependabot Alerts
 
@@ -1118,14 +1123,10 @@ If you encounter issues with the GitHub integration:
 2. Verify that the repository has the correct permissions
 3. Ensure all required files (`.github/workflows/*.yml` and `.github/dependabot.yml`) are present in the repository
 4. Check that branch protection rules are correctly configured
-<!-- Source: docs/GITHUB_WORKFLOW_PERMISSIONS.md -->
 
+## Workflow Permissions
 
-## Content from docs/GITHUB_WORKFLOW_PERMISSIONS.md
-
-# GitHub Workflow Permissions Guide
-
-This document explains how to resolve common permission issues with GitHub Actions workflows, particularly when accessing artifacts from other workflows or pushing changes to the repository.
+This section explains how to resolve common permission issues with GitHub Actions workflows, particularly when accessing artifacts from other workflows or pushing changes to the repository.
 
 ## Common Permission Issues
 
@@ -1310,20 +1311,16 @@ If you continue to experience permission issues:
 
 - [GitHub Actions Permissions Documentation](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
 - [Personal Access Tokens Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-<!-- Source: docs/HUSKY_CI_FIX.md -->
 
+## Husky Integration Issues
 
-## Content from docs/HUSKY_CI_FIX.md
-
-# Husky CI Fix Documentation
-
-## Issue
+### Issue
 
 The GitHub Actions workflows were failing with errors related to Husky not being found in CI environments. This was happening because the `prepare` script in package.json was trying to run Husky in CI environments where it wasn't needed.
 
-## Solution
+### Solution
 
-### 1. Added a preinstall script
+#### 1. Added a preinstall script
 
 Added a `preinstall` script to package.json that runs a custom script to disable Husky in CI environments:
 
@@ -1331,7 +1328,7 @@ Added a `preinstall` script to package.json that runs a custom script to disable
 "preinstall": "node scripts/disable-husky-in-ci.js"
 ```
 
-### 2. Created a disable-husky-in-ci.js script
+#### 2. Created a disable-husky-in-ci.js script
 
 Created a script that:
 
@@ -1381,7 +1378,7 @@ if (!packageJson.scripts.preinstall) {
 }
 ```
 
-### 3. Created a .huskyrc file
+#### 3. Created a .huskyrc file
 
 Created a `.huskyrc` file with the following content:
 
@@ -1393,18 +1390,18 @@ if [ -n "$CI" ]; then
 fi
 ```
 
-### 4. Updated documentation
+#### 4. Updated documentation
 
 1. Updated the CHANGELOG.md file to document the changes
 2. Added a new section to AILessons.md about CI/CD and Git Hooks
 3. Created a dedicated WORKFLOW_FIXES.md file to document the workflow fixes
 4. Created this HUSKY_CI_FIX.md file with detailed information about the fix
 
-## Testing
+### Testing
 
 The fix was tested by running the analyze-workflow-errors.js script, which confirmed that the error patterns were correctly identified.
 
-## Future Considerations
+### Future Considerations
 
 1. Consider using a more robust method for detecting CI environments across different CI providers
 2. Monitor workflow runs to ensure the fixes are working as expected

@@ -1,0 +1,1231 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DebugInfoComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/shared/components/debug-info/debug-info.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-debug-info</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .debug-panel {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        z-index: 9999;
+        max-width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .debug-panel h3 {
+        margin-top: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 8px;
+      }
+
+      .debug-content {
+        font-size: 12px;
+      }
+
+      .debug-content p {
+        margin: 5px 0;
+      }
+
+      .close-btn {
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .debug-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 9999;
+      }
+
+      .bootstrap-test {
+        padding: 2px 5px;
+        background-color: #0d6efd;
+        border-radius: 3px;
+      }
+
+      .fontawesome-test::before {
+        content: &#x27;\f005&#x27;;
+        font-family: &#x27;Font Awesome 6 Free&#x27;;
+        font-weight: 900;
+        margin-right: 5px;
+      }
+
+      .material-test {
+        font-family: &#x27;Material Icons&#x27;;
+        vertical-align: middle;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;debug-panel&quot; *ngIf&#x3D;&quot;showDebugInfo&quot;&gt;
+  &lt;h3&gt;Debug Information&lt;/h3&gt;
+  &lt;div class&#x3D;&quot;debug-content&quot;&gt;
+    &lt;p&gt;&lt;strong&gt;Angular Version:&lt;/strong&gt; 19.2.0&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Environment:&lt;/strong&gt; {{ environment }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Browser:&lt;/strong&gt; {{ browserInfo }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Screen Size:&lt;/strong&gt; {{ screenSize }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;User Agent:&lt;/strong&gt; {{ userAgent }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;PWA Enabled:&lt;/strong&gt; {{ isPwaEnabled }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Service Worker:&lt;/strong&gt; {{ hasServiceWorker }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Online Status:&lt;/strong&gt; {{ isOnline ? &#x27;Online&#x27; : &#x27;Offline&#x27; }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Rendering Mode:&lt;/strong&gt; {{ renderingMode }}&lt;/p&gt;
+    &lt;div class&#x3D;&quot;css-test&quot;&gt;
+      &lt;p&gt;
+        &lt;strong&gt;CSS Test:&lt;/strong&gt; &lt;span class&#x3D;&quot;bootstrap-test&quot;&gt;Bootstrap&lt;/span&gt; |
+        &lt;span class&#x3D;&quot;fontawesome-test&quot;&gt;FontAwesome&lt;/span&gt; |
+        &lt;span class&#x3D;&quot;material-test&quot;&gt;Material&lt;/span&gt;
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button (click)&#x3D;&quot;toggleDebugInfo()&quot; class&#x3D;&quot;close-btn&quot;&gt;Close&lt;/button&gt;
+&lt;/div&gt;
+&lt;button (click)&#x3D;&quot;toggleDebugInfo()&quot; *ngIf&#x3D;&quot;!showDebugInfo&quot; class&#x3D;&quot;debug-toggle&quot;&gt;Debug&lt;/button&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#browserInfo" >browserInfo</a>
+                            </li>
+                            <li>
+                                <a href="#environment" >environment</a>
+                            </li>
+                            <li>
+                                <a href="#hasServiceWorker" >hasServiceWorker</a>
+                            </li>
+                            <li>
+                                <a href="#isOnline" >isOnline</a>
+                            </li>
+                            <li>
+                                <a href="#isPwaEnabled" >isPwaEnabled</a>
+                            </li>
+                            <li>
+                                <a href="#renderingMode" >renderingMode</a>
+                            </li>
+                            <li>
+                                <a href="#screenSize" >screenSize</a>
+                            </li>
+                            <li>
+                                <a href="#showDebugInfo" >showDebugInfo</a>
+                            </li>
+                            <li>
+                                <a href="#userAgent" >userAgent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkPwaStatus" >checkPwaStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkRenderingMode" >checkRenderingMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getBrowserInfo" >getBrowserInfo</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#toggleDebugInfo" >toggleDebugInfo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkPwaStatus"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkPwaStatus</b></span>
+                        <a href="#checkPwaStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkPwaStatus()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkRenderingMode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkRenderingMode</b></span>
+                        <a href="#checkRenderingMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkRenderingMode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="195"
+                                    class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:195</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBrowserInfo"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getBrowserInfo</b></span>
+                        <a href="#getBrowserInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getBrowserInfo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleDebugInfo"></a>
+                    <span class="name">
+                        <span ><b>toggleDebugInfo</b></span>
+                        <a href="#toggleDebugInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleDebugInfo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="browserInfo"></a>
+                    <span class="name">
+                        <span ><b>browserInfo</b></span>
+                        <a href="#browserInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>environment.production ? &#x27;Production&#x27; : &#x27;Development&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasServiceWorker"></a>
+                    <span class="name">
+                        <span ><b>hasServiceWorker</b></span>
+                        <a href="#hasServiceWorker"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Checking...&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isOnline"></a>
+                    <span class="name">
+                        <span ><b>isOnline</b></span>
+                        <a href="#isOnline"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>navigator.onLine</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isPwaEnabled"></a>
+                    <span class="name">
+                        <span ><b>isPwaEnabled</b></span>
+                        <a href="#isPwaEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Checking...&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderingMode"></a>
+                    <span class="name">
+                        <span ><b>renderingMode</b></span>
+                        <a href="#renderingMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Checking...&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="screenSize"></a>
+                    <span class="name">
+                        <span ><b>screenSize</b></span>
+                        <a href="#screenSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showDebugInfo"></a>
+                    <span class="name">
+                        <span ><b>showDebugInfo</b></span>
+                        <a href="#showDebugInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userAgent"></a>
+                    <span class="name">
+                        <span ><b>userAgent</b></span>
+                        <a href="#userAgent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/shared/components/debug-info/debug-info.component.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+// Define a local environment object to avoid import issues
+const environment &#x3D; {
+  production: false,
+};
+
+@Component({
+  selector: &#x27;app-debug-info&#x27;,
+  standalone: true,
+  imports: [CommonModule],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;debug-panel&quot; *ngIf&#x3D;&quot;showDebugInfo&quot;&gt;
+      &lt;h3&gt;Debug Information&lt;/h3&gt;
+      &lt;div class&#x3D;&quot;debug-content&quot;&gt;
+        &lt;p&gt;&lt;strong&gt;Angular Version:&lt;/strong&gt; 19.2.0&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Environment:&lt;/strong&gt; {{ environment }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Browser:&lt;/strong&gt; {{ browserInfo }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Screen Size:&lt;/strong&gt; {{ screenSize }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;User Agent:&lt;/strong&gt; {{ userAgent }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;PWA Enabled:&lt;/strong&gt; {{ isPwaEnabled }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Service Worker:&lt;/strong&gt; {{ hasServiceWorker }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Online Status:&lt;/strong&gt; {{ isOnline ? &#x27;Online&#x27; : &#x27;Offline&#x27; }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Rendering Mode:&lt;/strong&gt; {{ renderingMode }}&lt;/p&gt;
+        &lt;div class&#x3D;&quot;css-test&quot;&gt;
+          &lt;p&gt;
+            &lt;strong&gt;CSS Test:&lt;/strong&gt; &lt;span class&#x3D;&quot;bootstrap-test&quot;&gt;Bootstrap&lt;/span&gt; |
+            &lt;span class&#x3D;&quot;fontawesome-test&quot;&gt;FontAwesome&lt;/span&gt; |
+            &lt;span class&#x3D;&quot;material-test&quot;&gt;Material&lt;/span&gt;
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button (click)&#x3D;&quot;toggleDebugInfo()&quot; class&#x3D;&quot;close-btn&quot;&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;button (click)&#x3D;&quot;toggleDebugInfo()&quot; *ngIf&#x3D;&quot;!showDebugInfo&quot; class&#x3D;&quot;debug-toggle&quot;&gt;Debug&lt;/button&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .debug-panel {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        z-index: 9999;
+        max-width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .debug-panel h3 {
+        margin-top: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 8px;
+      }
+
+      .debug-content {
+        font-size: 12px;
+      }
+
+      .debug-content p {
+        margin: 5px 0;
+      }
+
+      .close-btn {
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .debug-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 9999;
+      }
+
+      .bootstrap-test {
+        padding: 2px 5px;
+        background-color: #0d6efd;
+        border-radius: 3px;
+      }
+
+      .fontawesome-test::before {
+        content: &#x27;\\f005&#x27;;
+        font-family: &#x27;Font Awesome 6 Free&#x27;;
+        font-weight: 900;
+        margin-right: 5px;
+      }
+
+      .material-test {
+        font-family: &#x27;Material Icons&#x27;;
+        vertical-align: middle;
+      }
+    &#x60;,
+  ],
+})
+export class DebugInfoComponent implements OnInit {
+  showDebugInfo &#x3D; false;
+  environment &#x3D; environment.production ? &#x27;Production&#x27; : &#x27;Development&#x27;;
+  browserInfo &#x3D; &#x27;&#x27;;
+  screenSize &#x3D; &#x27;&#x27;;
+  userAgent &#x3D; &#x27;&#x27;;
+  isPwaEnabled &#x3D; &#x27;Checking...&#x27;;
+  hasServiceWorker &#x3D; &#x27;Checking...&#x27;;
+  isOnline &#x3D; navigator.onLine;
+  renderingMode &#x3D; &#x27;Checking...&#x27;;
+
+  ngOnInit() {
+    this.getBrowserInfo();
+    this.checkPwaStatus();
+    this.checkRenderingMode();
+
+    // Listen for online/offline events
+    window.addEventListener(&#x27;online&#x27;, () &#x3D;&gt; (this.isOnline &#x3D; true));
+    window.addEventListener(&#x27;offline&#x27;, () &#x3D;&gt; (this.isOnline &#x3D; false));
+
+    // Listen for screen size changes
+    window.addEventListener(&#x27;resize&#x27;, () &#x3D;&gt; {
+      this.screenSize &#x3D; &#x60;${window.innerWidth}x${window.innerHeight}&#x60;;
+    });
+  }
+
+  toggleDebugInfo() {
+    this.showDebugInfo &#x3D; !this.showDebugInfo;
+  }
+
+  private getBrowserInfo() {
+    this.userAgent &#x3D; navigator.userAgent;
+    this.screenSize &#x3D; &#x60;${window.innerWidth}x${window.innerHeight}&#x60;;
+
+    // Detect browser
+    const ua &#x3D; navigator.userAgent;
+    if (ua.includes(&#x27;Firefox&#x27;)) {
+      this.browserInfo &#x3D; &#x27;Firefox&#x27;;
+    } else if (ua.includes(&#x27;Chrome&#x27;) &amp;&amp; !ua.includes(&#x27;Edg&#x27;)) {
+      this.browserInfo &#x3D; &#x27;Chrome&#x27;;
+    } else if (ua.includes(&#x27;Safari&#x27;) &amp;&amp; !ua.includes(&#x27;Chrome&#x27;)) {
+      this.browserInfo &#x3D; &#x27;Safari&#x27;;
+    } else if (ua.includes(&#x27;Edg&#x27;)) {
+      this.browserInfo &#x3D; &#x27;Edge&#x27;;
+    } else {
+      this.browserInfo &#x3D; &#x27;Unknown&#x27;;
+    }
+  }
+
+  private checkPwaStatus() {
+    // Check if running as installed PWA
+    if (window.matchMedia(&#x27;(display-mode: standalone)&#x27;).matches) {
+      this.isPwaEnabled &#x3D; &#x27;Yes (Standalone)&#x27;;
+    } else if (window.navigator &amp;&amp; (window.navigator as any).standalone &#x3D;&#x3D;&#x3D; true) {
+      this.isPwaEnabled &#x3D; &#x27;Yes (iOS Standalone)&#x27;;
+    } else {
+      this.isPwaEnabled &#x3D; &#x27;No&#x27;;
+    }
+
+    // Check for service worker support
+    if (&#x27;serviceWorker&#x27; in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then(registrations &#x3D;&gt; {
+          this.hasServiceWorker &#x3D;
+            registrations.length &gt; 0 ? &#x27;Yes (Active)&#x27; : &#x27;Supported but not registered&#x27;;
+        })
+        .catch(() &#x3D;&gt; {
+          this.hasServiceWorker &#x3D; &#x27;Error checking&#x27;;
+        });
+    } else {
+      this.hasServiceWorker &#x3D; &#x27;Not supported&#x27;;
+    }
+  }
+
+  private checkRenderingMode() {
+    // Check if Angular is running in development mode
+    setTimeout(() &#x3D;&gt; {
+      const appRoot &#x3D; document.querySelector(&#x27;app-root&#x27;);
+      if (appRoot &amp;&amp; appRoot.hasAttribute(&#x27;ng-version&#x27;)) {
+        this.renderingMode &#x3D; &#x27;Angular (Client-side)&#x27;;
+      } else {
+        this.renderingMode &#x3D; &#x27;Unknown&#x27;;
+      }
+    }, 0);
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .debug-panel {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        z-index: 9999;
+        max-width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .debug-panel h3 {
+        margin-top: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 8px;
+      }
+
+      .debug-content {
+        font-size: 12px;
+      }
+
+      .debug-content p {
+        margin: 5px 0;
+      }
+
+      .close-btn {
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .debug-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 9999;
+      }
+
+      .bootstrap-test {
+        padding: 2px 5px;
+        background-color: #0d6efd;
+        border-radius: 3px;
+      }
+
+      .fontawesome-test::before {
+        content: &#x27;\f005&#x27;;
+        font-family: &#x27;Font Awesome 6 Free&#x27;;
+        font-weight: 900;
+        margin-right: 5px;
+      }
+
+      .material-test {
+        font-family: &#x27;Material Icons&#x27;;
+        vertical-align: middle;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="debug-panel" *ngIf="showDebugInfo">  <h3>Debug Information</h3>  <div class="debug-content">    <p><strong>Angular Version:</strong> 19.2.0</p>    <p><strong>Environment:</strong> {{ environment }}</p>    <p><strong>Browser:</strong> {{ browserInfo }}</p>    <p><strong>Screen Size:</strong> {{ screenSize }}</p>    <p><strong>User Agent:</strong> {{ userAgent }}</p>    <p><strong>PWA Enabled:</strong> {{ isPwaEnabled }}</p>    <p><strong>Service Worker:</strong> {{ hasServiceWorker }}</p>    <p><strong>Online Status:</strong> {{ isOnline ? \'Online\' : \'Offline\' }}</p>    <p><strong>Rendering Mode:</strong> {{ renderingMode }}</p>    <div class="css-test">      <p>        <strong>CSS Test:</strong> <span class="bootstrap-test">Bootstrap</span> |        <span class="fontawesome-test">FontAwesome</span> |        <span class="material-test">Material</span>      </p>    </div>  </div>  <button (click)="toggleDebugInfo()" class="close-btn">Close</button></div><button (click)="toggleDebugInfo()" *ngIf="!showDebugInfo" class="debug-toggle">Debug</button></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DebugInfoComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DebugInfoComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

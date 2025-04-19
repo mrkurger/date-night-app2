@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for admin-routing.module settings
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';

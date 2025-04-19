@@ -1,0 +1,2258 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AlertFormDialogComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-alert-form-dialog</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatDialogModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatSlideToggleModule</code>
+                            <code>MatCheckboxModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatDividerModule</code>
+                            <code>MatExpansionModule</code>
+                            <code>MatTooltipModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      mat-dialog-content {
+        min-width: 500px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        align-items: center;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      mat-divider {
+        margin: 24px 0;
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      .notification-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;h2 mat-dialog-title&gt;{{ isEditMode ? &#x27;Edit Alert&#x27; : &#x27;Create Alert&#x27; }}&lt;/h2&gt;
+
+&lt;mat-dialog-content&gt;
+  &lt;form [formGroup]&#x3D;&quot;alertForm&quot;&gt;
+    &lt;div class&#x3D;&quot;form-row&quot;&gt;
+      &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+        &lt;mat-label&gt;Alert Name&lt;/mat-label&gt;
+        &lt;input matInput formControlName&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Enter alert name&quot; /&gt;
+        &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;name&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+          Name is required
+        &lt;/mat-error&gt;
+      &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-row&quot;&gt;
+      &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+        &lt;mat-label&gt;Description&lt;/mat-label&gt;
+        &lt;textarea
+          matInput
+          formControlName&#x3D;&quot;description&quot;
+          placeholder&#x3D;&quot;Enter alert description&quot;
+          rows&#x3D;&quot;2&quot;
+        &gt;&lt;/textarea&gt;
+      &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-row&quot;&gt;
+      &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+        &lt;mat-label&gt;Severity&lt;/mat-label&gt;
+        &lt;mat-select formControlName&#x3D;&quot;severity&quot;&gt;
+          &lt;mat-option *ngFor&#x3D;&quot;let severity of severityOptions&quot; [value]&#x3D;&quot;severity.value&quot;&gt;
+            {{ severity.label }}
+          &lt;/mat-option&gt;
+        &lt;/mat-select&gt;
+      &lt;/mat-form-field&gt;
+
+      &lt;mat-slide-toggle formControlName&#x3D;&quot;enabled&quot; color&#x3D;&quot;primary&quot;&gt; Enabled &lt;/mat-slide-toggle&gt;
+    &lt;/div&gt;
+
+    &lt;mat-divider&gt;&lt;/mat-divider&gt;
+
+    &lt;h3&gt;Alert Condition&lt;/h3&gt;
+    &lt;div formGroupName&#x3D;&quot;condition&quot;&gt;
+      &lt;div class&#x3D;&quot;form-row&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Condition Type&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;type&quot; (selectionChange)&#x3D;&quot;onConditionTypeChange()&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let type of conditionTypeOptions&quot; [value]&#x3D;&quot;type.value&quot;&gt;
+              {{ type.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Time Window&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;timeWindow&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let window of timeWindowOptions&quot; [value]&#x3D;&quot;window.value&quot;&gt;
+              {{ window.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-row&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Threshold&lt;/mat-label&gt;
+          &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;threshold&quot; min&#x3D;&quot;1&quot; /&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.threshold&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+            Threshold is required
+          &lt;/mat-error&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.threshold&#x27;)?.hasError(&#x27;min&#x27;)&quot;&gt;
+            Threshold must be at least 1
+          &lt;/mat-error&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;!-- Conditional fields based on condition type --&gt;
+        &lt;ng-container [ngSwitch]&#x3D;&quot;alertForm.get(&#x27;condition.type&#x27;)?.value&quot;&gt;
+          &lt;!-- Error Code --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_code&#x27;&quot;&gt;
+            &lt;mat-label&gt;Error Code&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;errorCode&quot; placeholder&#x3D;&quot;e.g. network_error&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.errorCode&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Error code is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Status Code --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;status_code&#x27;&quot;&gt;
+            &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+            &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g. 500&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.statusCode&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Status code is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Error Category --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_category&#x27;&quot;&gt;
+            &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+            &lt;mat-select formControlName&#x3D;&quot;errorCategory&quot;&gt;
+              &lt;mat-option
+                *ngFor&#x3D;&quot;let category of errorCategoryOptions&quot;
+                [value]&#x3D;&quot;category.value&quot;
+              &gt;
+                {{ category.label }}
+              &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.errorCategory&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Error category is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Endpoint --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;performance_threshold&#x27;&quot;&gt;
+            &lt;mat-label&gt;Endpoint (optional)&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;endpoint&quot; placeholder&#x3D;&quot;e.g. /api/users&quot; /&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Pattern --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_pattern&#x27;&quot;&gt;
+            &lt;mat-label&gt;Error Pattern&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;pattern&quot; placeholder&#x3D;&quot;e.g. *database*&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.pattern&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Pattern is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/ng-container&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;mat-divider&gt;&lt;/mat-divider&gt;
+
+    &lt;h3&gt;Notifications&lt;/h3&gt;
+    &lt;div formArrayName&#x3D;&quot;notifications&quot;&gt;
+      &lt;div
+        *ngFor&#x3D;&quot;let notification of notificationsArray.controls; let i &#x3D; index&quot;
+        [formGroupName]&#x3D;&quot;i&quot;
+        class&#x3D;&quot;notification-item&quot;
+      &gt;
+        &lt;div class&#x3D;&quot;form-row&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+            &lt;mat-label&gt;Notification Channel&lt;/mat-label&gt;
+            &lt;mat-select formControlName&#x3D;&quot;channel&quot; (selectionChange)&#x3D;&quot;onChannelChange(i)&quot;&gt;
+              &lt;mat-option *ngFor&#x3D;&quot;let channel of channelOptions&quot; [value]&#x3D;&quot;channel.value&quot;&gt;
+                {{ channel.label }}
+              &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;button
+            mat-icon-button
+            color&#x3D;&quot;warn&quot;
+            type&#x3D;&quot;button&quot;
+            (click)&#x3D;&quot;removeNotification(i)&quot;
+            [disabled]&#x3D;&quot;notificationsArray.length &lt;&#x3D; 1&quot;
+            matTooltip&#x3D;&quot;Remove notification&quot;
+          &gt;
+            &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Channel-specific fields --&gt;
+        &lt;div class&#x3D;&quot;form-row&quot; [ngSwitch]&#x3D;&quot;notification.get(&#x27;channel&#x27;)?.value&quot;&gt;
+          &lt;!-- Email --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;email&#x27;&quot;&gt;
+            &lt;mat-label&gt;Email Address&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Enter email address&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;email&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Email is required
+            &lt;/mat-error&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;email&#x27;)?.hasError(&#x27;email&#x27;)&quot;&gt;
+              Please enter a valid email address
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Slack --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;slack&#x27;&quot;&gt;
+            &lt;mat-label&gt;Slack Webhook URL&lt;/mat-label&gt;
+            &lt;input
+              matInput
+              formControlName&#x3D;&quot;slackWebhook&quot;
+              placeholder&#x3D;&quot;Enter Slack webhook URL&quot;
+            /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;slackWebhook&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Slack webhook URL is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- Webhook --&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;webhook&#x27;&quot;&gt;
+            &lt;mat-label&gt;Webhook URL&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;webhookUrl&quot; placeholder&#x3D;&quot;Enter webhook URL&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;webhookUrl&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Webhook URL is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Message template --&gt;
+        &lt;div class&#x3D;&quot;form-row&quot; *ngIf&#x3D;&quot;notification.get(&#x27;channel&#x27;)?.value !&#x3D;&#x3D; &#x27;ui&#x27;&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+            &lt;mat-label&gt;Message Template (optional)&lt;/mat-label&gt;
+            &lt;textarea
+              matInput
+              formControlName&#x3D;&quot;messageTemplate&quot;
+              placeholder&#x3D;&quot;Enter custom message template&quot;
+              rows&#x3D;&quot;2&quot;
+            &gt;&lt;/textarea&gt;
+            &lt;mat-hint&gt;Use {{ variables }} for dynamic content&lt;/mat-hint&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-row&quot;&gt;
+        &lt;button mat-button color&#x3D;&quot;primary&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;addNotification()&quot;&gt;
+          &lt;mat-icon&gt;add&lt;/mat-icon&gt; Add Notification Channel
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/mat-dialog-content&gt;
+
+&lt;mat-dialog-actions align&#x3D;&quot;end&quot;&gt;
+  &lt;button mat-button mat-dialog-close&gt;Cancel&lt;/button&gt;
+  &lt;button
+    mat-raised-button
+    color&#x3D;&quot;primary&quot;
+    [disabled]&#x3D;&quot;alertForm.invalid&quot;
+    (click)&#x3D;&quot;saveAlert()&quot;
+  &gt;
+    {{ isEditMode ? &#x27;Update&#x27; : &#x27;Create&#x27; }}
+  &lt;/button&gt;
+&lt;/mat-dialog-actions&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#alertForm" >alertForm</a>
+                            </li>
+                            <li>
+                                <a href="#channelOptions" >channelOptions</a>
+                            </li>
+                            <li>
+                                <a href="#conditionTypeOptions" >conditionTypeOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialogRef" >dialogRef</a>
+                            </li>
+                            <li>
+                                <a href="#errorCategoryOptions" >errorCategoryOptions</a>
+                            </li>
+                            <li>
+                                <a href="#isEditMode" >isEditMode</a>
+                            </li>
+                            <li>
+                                <a href="#severityOptions" >severityOptions</a>
+                            </li>
+                            <li>
+                                <a href="#timeWindowOptions" >timeWindowOptions</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addNotification" >addNotification</a>
+                            </li>
+                            <li>
+                                <a href="#createAlertForm" >createAlertForm</a>
+                            </li>
+                            <li>
+                                <a href="#createNotificationGroup" >createNotificationGroup</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onChannelChange" >onChannelChange</a>
+                            </li>
+                            <li>
+                                <a href="#onConditionTypeChange" >onConditionTypeChange</a>
+                            </li>
+                            <li>
+                                <a href="#populateForm" >populateForm</a>
+                            </li>
+                            <li>
+                                <a href="#removeNotification" >removeNotification</a>
+                            </li>
+                            <li>
+                                <a href="#saveAlert" >saveAlert</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#notificationsArray" >notificationsArray</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: FormBuilder, alertService: <a href="../injectables/AlertService.html" target="_self">AlertService</a>, dialogRef: <a href="../interfaces/Alert.html" target="_self">MatDialogRef&lt;AlertFormDialogComponent&gt;</a>, data: literal type)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="371" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:371</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>alertService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AlertService.html" target="_self" >AlertService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/Alert.html" target="_self" >MatDialogRef&lt;AlertFormDialogComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                    <code>literal type</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addNotification"></a>
+                    <span class="name">
+                        <span ><b>addNotification</b></span>
+                        <a href="#addNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addNotification()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="435"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:435</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Add a new notification</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createAlertForm"></a>
+                    <span class="name">
+                        <span ><b>createAlertForm</b></span>
+                        <a href="#createAlertForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createAlertForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="392"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:392</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Create the alert form</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>FormGroup</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createNotificationGroup"></a>
+                    <span class="name">
+                        <span ><b>createNotificationGroup</b></span>
+                        <a href="#createNotificationGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createNotificationGroup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="415"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:415</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Create a notification form group</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>FormGroup</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="387"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:387</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onChannelChange"></a>
+                    <span class="name">
+                        <span ><b>onChannelChange</b></span>
+                        <a href="#onChannelChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onChannelChange(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="490"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:490</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle notification channel change</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Index of the notification</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onConditionTypeChange"></a>
+                    <span class="name">
+                        <span ><b>onConditionTypeChange</b></span>
+                        <a href="#onConditionTypeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onConditionTypeChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="452"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:452</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle condition type change</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateForm"></a>
+                    <span class="name">
+                        <span ><b>populateForm</b></span>
+                        <a href="#populateForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateForm(alert: <a href="../interfaces/Alert.html" target="_self">Alert</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="522"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:522</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Populate the form with an existing alert</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>alert</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Alert.html" target="_self" >Alert</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Alert to populate the form with</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeNotification"></a>
+                    <span class="name">
+                        <span ><b>removeNotification</b></span>
+                        <a href="#removeNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeNotification(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="443"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:443</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Remove a notification</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Index of the notification to remove</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveAlert"></a>
+                    <span class="name">
+                        <span ><b>saveAlert</b></span>
+                        <a href="#saveAlert"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveAlert()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="570"
+                                    class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:570</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Save the alert</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertForm"></a>
+                    <span class="name">
+                        <span ><b>alertForm</b></span>
+                        <a href="#alertForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="322" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:322</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelOptions"></a>
+                    <span class="name">
+                        <span ><b>channelOptions</b></span>
+                        <a href="#channelOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: AlertChannel.UI, label: &#x27;UI Notification&#x27; },
+    { value: AlertChannel.EMAIL, label: &#x27;Email&#x27; },
+    { value: AlertChannel.SLACK, label: &#x27;Slack&#x27; },
+    { value: AlertChannel.WEBHOOK, label: &#x27;Webhook&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="352" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="conditionTypeOptions"></a>
+                    <span class="name">
+                        <span ><b>conditionTypeOptions</b></span>
+                        <a href="#conditionTypeOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: AlertConditionType.ERROR_COUNT, label: &#x27;Error Count&#x27; },
+    { value: AlertConditionType.ERROR_RATE, label: &#x27;Error Rate&#x27; },
+    { value: AlertConditionType.PERFORMANCE_THRESHOLD, label: &#x27;Performance Threshold&#x27; },
+    { value: AlertConditionType.ERROR_PATTERN, label: &#x27;Error Pattern&#x27; },
+    { value: AlertConditionType.STATUS_CODE, label: &#x27;Status Code&#x27; },
+    { value: AlertConditionType.ERROR_CATEGORY, label: &#x27;Error Category&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="333" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:333</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>data</b></span>
+                        <a href="#data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Inject(MAT_DIALOG_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="377" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:377</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialogRef"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialogRef</b></span>
+                        <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Alert.html" target="_self" >MatDialogRef&lt;AlertFormDialogComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="376" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:376</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorCategoryOptions"></a>
+                    <span class="name">
+                        <span ><b>errorCategoryOptions</b></span>
+                        <a href="#errorCategoryOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: ErrorCategory.NETWORK, label: &#x27;Network&#x27; },
+    { value: ErrorCategory.AUTHENTICATION, label: &#x27;Authentication&#x27; },
+    { value: ErrorCategory.AUTHORIZATION, label: &#x27;Authorization&#x27; },
+    { value: ErrorCategory.VALIDATION, label: &#x27;Validation&#x27; },
+    { value: ErrorCategory.SERVER, label: &#x27;Server&#x27; },
+    { value: ErrorCategory.CLIENT, label: &#x27;Client&#x27; },
+    { value: ErrorCategory.TIMEOUT, label: &#x27;Timeout&#x27; },
+    { value: ErrorCategory.RATE_LIMIT, label: &#x27;Rate Limit&#x27; },
+    { value: ErrorCategory.NOT_FOUND, label: &#x27;Not Found&#x27; },
+    { value: ErrorCategory.CONFLICT, label: &#x27;Conflict&#x27; },
+    { value: ErrorCategory.UNKNOWN, label: &#x27;Unknown&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="359" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:359</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditMode"></a>
+                    <span class="name">
+                        <span ><b>isEditMode</b></span>
+                        <a href="#isEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="323" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="severityOptions"></a>
+                    <span class="name">
+                        <span ><b>severityOptions</b></span>
+                        <a href="#severityOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: AlertSeverity.INFO, label: &#x27;Info&#x27; },
+    { value: AlertSeverity.WARNING, label: &#x27;Warning&#x27; },
+    { value: AlertSeverity.ERROR, label: &#x27;Error&#x27; },
+    { value: AlertSeverity.CRITICAL, label: &#x27;Critical&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="326" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:326</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="timeWindowOptions"></a>
+                    <span class="name">
+                        <span ><b>timeWindowOptions</b></span>
+                        <a href="#timeWindowOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: AlertTimeWindow.MINUTES_5, label: &#x27;5 minutes&#x27; },
+    { value: AlertTimeWindow.MINUTES_15, label: &#x27;15 minutes&#x27; },
+    { value: AlertTimeWindow.MINUTES_30, label: &#x27;30 minutes&#x27; },
+    { value: AlertTimeWindow.HOURS_1, label: &#x27;1 hour&#x27; },
+    { value: AlertTimeWindow.HOURS_6, label: &#x27;6 hours&#x27; },
+    { value: AlertTimeWindow.HOURS_12, label: &#x27;12 hours&#x27; },
+    { value: AlertTimeWindow.HOURS_24, label: &#x27;24 hours&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="342" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:342</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="notificationsArray"></a>
+                        <span class="name"><b>notificationsArray</b><a href="#notificationsArray"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>notificationsArray()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="428" class="link-to-prism">src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:428</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Get the notifications form array</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>FormArray</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;;
+import { MatCheckboxModule } from &#x27;@angular/material/checkbox&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatDividerModule } from &#x27;@angular/material/divider&#x27;;
+import { MatExpansionModule } from &#x27;@angular/material/expansion&#x27;;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;;
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from &#x27;@angular/forms&#x27;;
+import { AlertService } from &#x27;../../../../core/services/alert.service&#x27;;
+import {
+  Alert,
+  AlertSeverity,
+  AlertConditionType,
+  AlertTimeWindow,
+  AlertChannel,
+} from &#x27;../../../../core/models/alert.model&#x27;;
+import { ErrorCategory } from &#x27;../../../../core/interceptors/http-error.interceptor&#x27;;
+
+@Component({
+  selector: &#x27;app-alert-form-dialog&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+  ],
+  template: &#x60;
+    &lt;h2 mat-dialog-title&gt;{{ isEditMode ? &#x27;Edit Alert&#x27; : &#x27;Create Alert&#x27; }}&lt;/h2&gt;
+
+    &lt;mat-dialog-content&gt;
+      &lt;form [formGroup]&#x3D;&quot;alertForm&quot;&gt;
+        &lt;div class&#x3D;&quot;form-row&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+            &lt;mat-label&gt;Alert Name&lt;/mat-label&gt;
+            &lt;input matInput formControlName&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Enter alert name&quot; /&gt;
+            &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;name&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+              Name is required
+            &lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;form-row&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+            &lt;mat-label&gt;Description&lt;/mat-label&gt;
+            &lt;textarea
+              matInput
+              formControlName&#x3D;&quot;description&quot;
+              placeholder&#x3D;&quot;Enter alert description&quot;
+              rows&#x3D;&quot;2&quot;
+            &gt;&lt;/textarea&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;form-row&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+            &lt;mat-label&gt;Severity&lt;/mat-label&gt;
+            &lt;mat-select formControlName&#x3D;&quot;severity&quot;&gt;
+              &lt;mat-option *ngFor&#x3D;&quot;let severity of severityOptions&quot; [value]&#x3D;&quot;severity.value&quot;&gt;
+                {{ severity.label }}
+              &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;mat-slide-toggle formControlName&#x3D;&quot;enabled&quot; color&#x3D;&quot;primary&quot;&gt; Enabled &lt;/mat-slide-toggle&gt;
+        &lt;/div&gt;
+
+        &lt;mat-divider&gt;&lt;/mat-divider&gt;
+
+        &lt;h3&gt;Alert Condition&lt;/h3&gt;
+        &lt;div formGroupName&#x3D;&quot;condition&quot;&gt;
+          &lt;div class&#x3D;&quot;form-row&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Condition Type&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;type&quot; (selectionChange)&#x3D;&quot;onConditionTypeChange()&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let type of conditionTypeOptions&quot; [value]&#x3D;&quot;type.value&quot;&gt;
+                  {{ type.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Time Window&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;timeWindow&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let window of timeWindowOptions&quot; [value]&#x3D;&quot;window.value&quot;&gt;
+                  {{ window.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;form-row&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Threshold&lt;/mat-label&gt;
+              &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;threshold&quot; min&#x3D;&quot;1&quot; /&gt;
+              &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.threshold&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                Threshold is required
+              &lt;/mat-error&gt;
+              &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.threshold&#x27;)?.hasError(&#x27;min&#x27;)&quot;&gt;
+                Threshold must be at least 1
+              &lt;/mat-error&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;!-- Conditional fields based on condition type --&gt;
+            &lt;ng-container [ngSwitch]&#x3D;&quot;alertForm.get(&#x27;condition.type&#x27;)?.value&quot;&gt;
+              &lt;!-- Error Code --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_code&#x27;&quot;&gt;
+                &lt;mat-label&gt;Error Code&lt;/mat-label&gt;
+                &lt;input matInput formControlName&#x3D;&quot;errorCode&quot; placeholder&#x3D;&quot;e.g. network_error&quot; /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.errorCode&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Error code is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Status Code --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;status_code&#x27;&quot;&gt;
+                &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+                &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g. 500&quot; /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.statusCode&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Status code is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Error Category --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_category&#x27;&quot;&gt;
+                &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+                &lt;mat-select formControlName&#x3D;&quot;errorCategory&quot;&gt;
+                  &lt;mat-option
+                    *ngFor&#x3D;&quot;let category of errorCategoryOptions&quot;
+                    [value]&#x3D;&quot;category.value&quot;
+                  &gt;
+                    {{ category.label }}
+                  &lt;/mat-option&gt;
+                &lt;/mat-select&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.errorCategory&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Error category is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Endpoint --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;performance_threshold&#x27;&quot;&gt;
+                &lt;mat-label&gt;Endpoint (optional)&lt;/mat-label&gt;
+                &lt;input matInput formControlName&#x3D;&quot;endpoint&quot; placeholder&#x3D;&quot;e.g. /api/users&quot; /&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Pattern --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; *ngSwitchCase&#x3D;&quot;&#x27;error_pattern&#x27;&quot;&gt;
+                &lt;mat-label&gt;Error Pattern&lt;/mat-label&gt;
+                &lt;input matInput formControlName&#x3D;&quot;pattern&quot; placeholder&#x3D;&quot;e.g. *database*&quot; /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;alertForm.get(&#x27;condition.pattern&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Pattern is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+            &lt;/ng-container&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;mat-divider&gt;&lt;/mat-divider&gt;
+
+        &lt;h3&gt;Notifications&lt;/h3&gt;
+        &lt;div formArrayName&#x3D;&quot;notifications&quot;&gt;
+          &lt;div
+            *ngFor&#x3D;&quot;let notification of notificationsArray.controls; let i &#x3D; index&quot;
+            [formGroupName]&#x3D;&quot;i&quot;
+            class&#x3D;&quot;notification-item&quot;
+          &gt;
+            &lt;div class&#x3D;&quot;form-row&quot;&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+                &lt;mat-label&gt;Notification Channel&lt;/mat-label&gt;
+                &lt;mat-select formControlName&#x3D;&quot;channel&quot; (selectionChange)&#x3D;&quot;onChannelChange(i)&quot;&gt;
+                  &lt;mat-option *ngFor&#x3D;&quot;let channel of channelOptions&quot; [value]&#x3D;&quot;channel.value&quot;&gt;
+                    {{ channel.label }}
+                  &lt;/mat-option&gt;
+                &lt;/mat-select&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;button
+                mat-icon-button
+                color&#x3D;&quot;warn&quot;
+                type&#x3D;&quot;button&quot;
+                (click)&#x3D;&quot;removeNotification(i)&quot;
+                [disabled]&#x3D;&quot;notificationsArray.length &lt;&#x3D; 1&quot;
+                matTooltip&#x3D;&quot;Remove notification&quot;
+              &gt;
+                &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Channel-specific fields --&gt;
+            &lt;div class&#x3D;&quot;form-row&quot; [ngSwitch]&#x3D;&quot;notification.get(&#x27;channel&#x27;)?.value&quot;&gt;
+              &lt;!-- Email --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;email&#x27;&quot;&gt;
+                &lt;mat-label&gt;Email Address&lt;/mat-label&gt;
+                &lt;input matInput formControlName&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Enter email address&quot; /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;email&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Email is required
+                &lt;/mat-error&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;email&#x27;)?.hasError(&#x27;email&#x27;)&quot;&gt;
+                  Please enter a valid email address
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Slack --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;slack&#x27;&quot;&gt;
+                &lt;mat-label&gt;Slack Webhook URL&lt;/mat-label&gt;
+                &lt;input
+                  matInput
+                  formControlName&#x3D;&quot;slackWebhook&quot;
+                  placeholder&#x3D;&quot;Enter Slack webhook URL&quot;
+                /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;slackWebhook&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Slack webhook URL is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+
+              &lt;!-- Webhook --&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot; *ngSwitchCase&#x3D;&quot;&#x27;webhook&#x27;&quot;&gt;
+                &lt;mat-label&gt;Webhook URL&lt;/mat-label&gt;
+                &lt;input matInput formControlName&#x3D;&quot;webhookUrl&quot; placeholder&#x3D;&quot;Enter webhook URL&quot; /&gt;
+                &lt;mat-error *ngIf&#x3D;&quot;notification.get(&#x27;webhookUrl&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                  Webhook URL is required
+                &lt;/mat-error&gt;
+              &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Message template --&gt;
+            &lt;div class&#x3D;&quot;form-row&quot; *ngIf&#x3D;&quot;notification.get(&#x27;channel&#x27;)?.value !&#x3D;&#x3D; &#x27;ui&#x27;&quot;&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                &lt;mat-label&gt;Message Template (optional)&lt;/mat-label&gt;
+                &lt;textarea
+                  matInput
+                  formControlName&#x3D;&quot;messageTemplate&quot;
+                  placeholder&#x3D;&quot;Enter custom message template&quot;
+                  rows&#x3D;&quot;2&quot;
+                &gt;&lt;/textarea&gt;
+                &lt;mat-hint&gt;Use {{ variables }} for dynamic content&lt;/mat-hint&gt;
+              &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;form-row&quot;&gt;
+            &lt;button mat-button color&#x3D;&quot;primary&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;addNotification()&quot;&gt;
+              &lt;mat-icon&gt;add&lt;/mat-icon&gt; Add Notification Channel
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/mat-dialog-content&gt;
+
+    &lt;mat-dialog-actions align&#x3D;&quot;end&quot;&gt;
+      &lt;button mat-button mat-dialog-close&gt;Cancel&lt;/button&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;primary&quot;
+        [disabled]&#x3D;&quot;alertForm.invalid&quot;
+        (click)&#x3D;&quot;saveAlert()&quot;
+      &gt;
+        {{ isEditMode ? &#x27;Update&#x27; : &#x27;Create&#x27; }}
+      &lt;/button&gt;
+    &lt;/mat-dialog-actions&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      mat-dialog-content {
+        min-width: 500px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        align-items: center;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      mat-divider {
+        margin: 24px 0;
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      .notification-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+    &#x60;,
+  ],
+})
+export class AlertFormDialogComponent implements OnInit {
+  alertForm: FormGroup;
+  isEditMode &#x3D; false;
+
+  // Options for dropdowns
+  severityOptions &#x3D; [
+    { value: AlertSeverity.INFO, label: &#x27;Info&#x27; },
+    { value: AlertSeverity.WARNING, label: &#x27;Warning&#x27; },
+    { value: AlertSeverity.ERROR, label: &#x27;Error&#x27; },
+    { value: AlertSeverity.CRITICAL, label: &#x27;Critical&#x27; },
+  ];
+
+  conditionTypeOptions &#x3D; [
+    { value: AlertConditionType.ERROR_COUNT, label: &#x27;Error Count&#x27; },
+    { value: AlertConditionType.ERROR_RATE, label: &#x27;Error Rate&#x27; },
+    { value: AlertConditionType.PERFORMANCE_THRESHOLD, label: &#x27;Performance Threshold&#x27; },
+    { value: AlertConditionType.ERROR_PATTERN, label: &#x27;Error Pattern&#x27; },
+    { value: AlertConditionType.STATUS_CODE, label: &#x27;Status Code&#x27; },
+    { value: AlertConditionType.ERROR_CATEGORY, label: &#x27;Error Category&#x27; },
+  ];
+
+  timeWindowOptions &#x3D; [
+    { value: AlertTimeWindow.MINUTES_5, label: &#x27;5 minutes&#x27; },
+    { value: AlertTimeWindow.MINUTES_15, label: &#x27;15 minutes&#x27; },
+    { value: AlertTimeWindow.MINUTES_30, label: &#x27;30 minutes&#x27; },
+    { value: AlertTimeWindow.HOURS_1, label: &#x27;1 hour&#x27; },
+    { value: AlertTimeWindow.HOURS_6, label: &#x27;6 hours&#x27; },
+    { value: AlertTimeWindow.HOURS_12, label: &#x27;12 hours&#x27; },
+    { value: AlertTimeWindow.HOURS_24, label: &#x27;24 hours&#x27; },
+  ];
+
+  channelOptions &#x3D; [
+    { value: AlertChannel.UI, label: &#x27;UI Notification&#x27; },
+    { value: AlertChannel.EMAIL, label: &#x27;Email&#x27; },
+    { value: AlertChannel.SLACK, label: &#x27;Slack&#x27; },
+    { value: AlertChannel.WEBHOOK, label: &#x27;Webhook&#x27; },
+  ];
+
+  errorCategoryOptions &#x3D; [
+    { value: ErrorCategory.NETWORK, label: &#x27;Network&#x27; },
+    { value: ErrorCategory.AUTHENTICATION, label: &#x27;Authentication&#x27; },
+    { value: ErrorCategory.AUTHORIZATION, label: &#x27;Authorization&#x27; },
+    { value: ErrorCategory.VALIDATION, label: &#x27;Validation&#x27; },
+    { value: ErrorCategory.SERVER, label: &#x27;Server&#x27; },
+    { value: ErrorCategory.CLIENT, label: &#x27;Client&#x27; },
+    { value: ErrorCategory.TIMEOUT, label: &#x27;Timeout&#x27; },
+    { value: ErrorCategory.RATE_LIMIT, label: &#x27;Rate Limit&#x27; },
+    { value: ErrorCategory.NOT_FOUND, label: &#x27;Not Found&#x27; },
+    { value: ErrorCategory.CONFLICT, label: &#x27;Conflict&#x27; },
+    { value: ErrorCategory.UNKNOWN, label: &#x27;Unknown&#x27; },
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    public dialogRef: MatDialogRef&lt;AlertFormDialogComponent&gt;,
+    @Inject(MAT_DIALOG_DATA) public data: { alert?: Alert }
+  ) {
+    this.alertForm &#x3D; this.createAlertForm();
+
+    if (data?.alert) {
+      this.isEditMode &#x3D; true;
+      this.populateForm(data.alert);
+    }
+  }
+
+  ngOnInit(): void {}
+
+  /**
+   * Create the alert form
+   */
+  createAlertForm(): FormGroup {
+    return this.fb.group({
+      name: [&#x27;&#x27;, Validators.required],
+      description: [&#x27;&#x27;],
+      enabled: [true],
+      severity: [AlertSeverity.WARNING, Validators.required],
+      condition: this.fb.group({
+        type: [AlertConditionType.ERROR_COUNT, Validators.required],
+        threshold: [10, [Validators.required, Validators.min(1)]],
+        timeWindow: [AlertTimeWindow.MINUTES_15, Validators.required],
+        errorCode: [&#x27;&#x27;],
+        statusCode: [null],
+        errorCategory: [&#x27;&#x27;],
+        endpoint: [&#x27;&#x27;],
+        pattern: [&#x27;&#x27;],
+      }),
+      notifications: this.fb.array([this.createNotificationGroup()]),
+    });
+  }
+
+  /**
+   * Create a notification form group
+   */
+  createNotificationGroup(): FormGroup {
+    return this.fb.group({
+      channel: [AlertChannel.UI, Validators.required],
+      email: [&#x27;&#x27;],
+      slackWebhook: [&#x27;&#x27;],
+      webhookUrl: [&#x27;&#x27;],
+      messageTemplate: [&#x27;&#x27;],
+    });
+  }
+
+  /**
+   * Get the notifications form array
+   */
+  get notificationsArray(): FormArray {
+    return this.alertForm.get(&#x27;notifications&#x27;) as FormArray;
+  }
+
+  /**
+   * Add a new notification
+   */
+  addNotification(): void {
+    this.notificationsArray.push(this.createNotificationGroup());
+  }
+
+  /**
+   * Remove a notification
+   * @param index Index of the notification to remove
+   */
+  removeNotification(index: number): void {
+    if (this.notificationsArray.length &gt; 1) {
+      this.notificationsArray.removeAt(index);
+    }
+  }
+
+  /**
+   * Handle condition type change
+   */
+  onConditionTypeChange(): void {
+    const conditionType &#x3D; this.alertForm.get(&#x27;condition.type&#x27;)?.value;
+    const conditionGroup &#x3D; this.alertForm.get(&#x27;condition&#x27;) as FormGroup;
+
+    // Reset validators
+    conditionGroup.get(&#x27;errorCode&#x27;)?.clearValidators();
+    conditionGroup.get(&#x27;statusCode&#x27;)?.clearValidators();
+    conditionGroup.get(&#x27;errorCategory&#x27;)?.clearValidators();
+    conditionGroup.get(&#x27;pattern&#x27;)?.clearValidators();
+
+    // Set validators based on condition type
+    switch (conditionType) {
+      case AlertConditionType.ERROR_COUNT:
+      case AlertConditionType.ERROR_RATE:
+        // No additional validators needed
+        break;
+      case AlertConditionType.STATUS_CODE:
+        conditionGroup.get(&#x27;statusCode&#x27;)?.setValidators([Validators.required]);
+        break;
+      case AlertConditionType.ERROR_CATEGORY:
+        conditionGroup.get(&#x27;errorCategory&#x27;)?.setValidators([Validators.required]);
+        break;
+      case AlertConditionType.ERROR_PATTERN:
+        conditionGroup.get(&#x27;pattern&#x27;)?.setValidators([Validators.required]);
+        break;
+    }
+
+    // Update validators
+    conditionGroup.get(&#x27;errorCode&#x27;)?.updateValueAndValidity();
+    conditionGroup.get(&#x27;statusCode&#x27;)?.updateValueAndValidity();
+    conditionGroup.get(&#x27;errorCategory&#x27;)?.updateValueAndValidity();
+    conditionGroup.get(&#x27;pattern&#x27;)?.updateValueAndValidity();
+  }
+
+  /**
+   * Handle notification channel change
+   * @param index Index of the notification
+   */
+  onChannelChange(index: number): void {
+    const notificationGroup &#x3D; this.notificationsArray.at(index) as FormGroup;
+    const channel &#x3D; notificationGroup.get(&#x27;channel&#x27;)?.value;
+
+    // Reset validators
+    notificationGroup.get(&#x27;email&#x27;)?.clearValidators();
+    notificationGroup.get(&#x27;slackWebhook&#x27;)?.clearValidators();
+    notificationGroup.get(&#x27;webhookUrl&#x27;)?.clearValidators();
+
+    // Set validators based on channel
+    switch (channel) {
+      case AlertChannel.EMAIL:
+        notificationGroup.get(&#x27;email&#x27;)?.setValidators([Validators.required, Validators.email]);
+        break;
+      case AlertChannel.SLACK:
+        notificationGroup.get(&#x27;slackWebhook&#x27;)?.setValidators([Validators.required]);
+        break;
+      case AlertChannel.WEBHOOK:
+        notificationGroup.get(&#x27;webhookUrl&#x27;)?.setValidators([Validators.required]);
+        break;
+    }
+
+    // Update validators
+    notificationGroup.get(&#x27;email&#x27;)?.updateValueAndValidity();
+    notificationGroup.get(&#x27;slackWebhook&#x27;)?.updateValueAndValidity();
+    notificationGroup.get(&#x27;webhookUrl&#x27;)?.updateValueAndValidity();
+  }
+
+  /**
+   * Populate the form with an existing alert
+   * @param alert Alert to populate the form with
+   */
+  populateForm(alert: Alert): void {
+    // Set basic fields
+    this.alertForm.patchValue({
+      name: alert.name,
+      description: alert.description || &#x27;&#x27;,
+      enabled: alert.enabled,
+      severity: alert.severity,
+      condition: {
+        type: alert.condition.type,
+        threshold: alert.condition.threshold,
+        timeWindow: alert.condition.timeWindow,
+        errorCode: alert.condition.errorCode || &#x27;&#x27;,
+        statusCode: alert.condition.statusCode || null,
+        errorCategory: alert.condition.errorCategory || &#x27;&#x27;,
+        endpoint: alert.condition.endpoint || &#x27;&#x27;,
+        pattern: alert.condition.pattern || &#x27;&#x27;,
+      },
+    });
+
+    // Set notifications
+    this.notificationsArray.clear();
+    if (alert.notifications &amp;&amp; alert.notifications.length &gt; 0) {
+      alert.notifications.forEach(notification &#x3D;&gt; {
+        const notificationGroup &#x3D; this.createNotificationGroup();
+        notificationGroup.patchValue({
+          channel: notification.channel,
+          email: notification.email || &#x27;&#x27;,
+          slackWebhook: notification.slackWebhook || &#x27;&#x27;,
+          webhookUrl: notification.webhookUrl || &#x27;&#x27;,
+          messageTemplate: notification.messageTemplate || &#x27;&#x27;,
+        });
+        this.notificationsArray.push(notificationGroup);
+      });
+    } else {
+      // Add default notification if none exists
+      this.notificationsArray.push(this.createNotificationGroup());
+    }
+
+    // Update validators
+    this.onConditionTypeChange();
+    for (let i &#x3D; 0; i &lt; this.notificationsArray.length; i++) {
+      this.onChannelChange(i);
+    }
+  }
+
+  /**
+   * Save the alert
+   */
+  saveAlert(): void {
+    if (this.alertForm.invalid) {
+      return;
+    }
+
+    const formValue &#x3D; this.alertForm.value;
+    const alert: Alert &#x3D; {
+      name: formValue.name,
+      description: formValue.description,
+      enabled: formValue.enabled,
+      severity: formValue.severity,
+      condition: {
+        type: formValue.condition.type,
+        threshold: formValue.condition.threshold,
+        timeWindow: formValue.condition.timeWindow,
+      },
+      notifications: formValue.notifications,
+    };
+
+    // Add conditional fields based on condition type
+    switch (formValue.condition.type) {
+      case AlertConditionType.ERROR_COUNT:
+      case AlertConditionType.ERROR_RATE:
+        // No additional fields needed
+        break;
+      case AlertConditionType.STATUS_CODE:
+        alert.condition.statusCode &#x3D; formValue.condition.statusCode;
+        break;
+      case AlertConditionType.ERROR_CATEGORY:
+        alert.condition.errorCategory &#x3D; formValue.condition.errorCategory;
+        break;
+      case AlertConditionType.PERFORMANCE_THRESHOLD:
+        if (formValue.condition.endpoint) {
+          alert.condition.endpoint &#x3D; formValue.condition.endpoint;
+        }
+        break;
+      case AlertConditionType.ERROR_PATTERN:
+        alert.condition.pattern &#x3D; formValue.condition.pattern;
+        break;
+    }
+
+    if (this.isEditMode &amp;&amp; this.data.alert?.id) {
+      // Update existing alert
+      this.alertService.updateAlert(this.data.alert.id, alert).subscribe(
+        updatedAlert &#x3D;&gt; {
+          this.dialogRef.close(updatedAlert);
+        },
+        error &#x3D;&gt; {
+          console.error(&#x27;Error updating alert:&#x27;, error);
+        }
+      );
+    } else {
+      // Create new alert
+      this.alertService.createAlert(alert).subscribe(
+        newAlert &#x3D;&gt; {
+          this.dialogRef.close(newAlert);
+        },
+        error &#x3D;&gt; {
+          console.error(&#x27;Error creating alert:&#x27;, error);
+        }
+      );
+    }
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      mat-dialog-content {
+        min-width: 500px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        align-items: center;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      mat-divider {
+        margin: 24px 0;
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      .notification-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><h2 mat-dialog-title>{{ isEditMode ? \'Edit Alert\' : \'Create Alert\' }}</h2><mat-dialog-content>  <form [formGroup]="alertForm">    <div class="form-row">      <mat-form-field appearance="outline" class="full-width">        <mat-label>Alert Name</mat-label>        <input matInput formControlName="name" placeholder="Enter alert name" />        <mat-error *ngIf="alertForm.get(\'name\')?.hasError(\'required\')">          Name is required        </mat-error>      </mat-form-field>    </div>    <div class="form-row">      <mat-form-field appearance="outline" class="full-width">        <mat-label>Description</mat-label>        <textarea          matInput          formControlName="description"          placeholder="Enter alert description"          rows="2"        ></textarea>      </mat-form-field>    </div>    <div class="form-row">      <mat-form-field appearance="outline">        <mat-label>Severity</mat-label>        <mat-select formControlName="severity">          <mat-option *ngFor="let severity of severityOptions" [value]="severity.value">            {{ severity.label }}          </mat-option>        </mat-select>      </mat-form-field>      <mat-slide-toggle formControlName="enabled" color="primary"> Enabled </mat-slide-toggle>    </div>    <mat-divider></mat-divider>    <h3>Alert Condition</h3>    <div formGroupName="condition">      <div class="form-row">        <mat-form-field appearance="outline">          <mat-label>Condition Type</mat-label>          <mat-select formControlName="type" (selectionChange)="onConditionTypeChange()">            <mat-option *ngFor="let type of conditionTypeOptions" [value]="type.value">              {{ type.label }}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>Time Window</mat-label>          <mat-select formControlName="timeWindow">            <mat-option *ngFor="let window of timeWindowOptions" [value]="window.value">              {{ window.label }}            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="form-row">        <mat-form-field appearance="outline">          <mat-label>Threshold</mat-label>          <input matInput type="number" formControlName="threshold" min="1" />          <mat-error *ngIf="alertForm.get(\'condition.threshold\')?.hasError(\'required\')">            Threshold is required          </mat-error>          <mat-error *ngIf="alertForm.get(\'condition.threshold\')?.hasError(\'min\')">            Threshold must be at least 1          </mat-error>        </mat-form-field>        <!-- Conditional fields based on condition type -->        <ng-container [ngSwitch]="alertForm.get(\'condition.type\')?.value">          <!-- Error Code -->          <mat-form-field appearance="outline" *ngSwitchCase="\'error_code\'">            <mat-label>Error Code</mat-label>            <input matInput formControlName="errorCode" placeholder="e.g. network_error" />            <mat-error *ngIf="alertForm.get(\'condition.errorCode\')?.hasError(\'required\')">              Error code is required            </mat-error>          </mat-form-field>          <!-- Status Code -->          <mat-form-field appearance="outline" *ngSwitchCase="\'status_code\'">            <mat-label>Status Code</mat-label>            <input matInput type="number" formControlName="statusCode" placeholder="e.g. 500" />            <mat-error *ngIf="alertForm.get(\'condition.statusCode\')?.hasError(\'required\')">              Status code is required            </mat-error>          </mat-form-field>          <!-- Error Category -->          <mat-form-field appearance="outline" *ngSwitchCase="\'error_category\'">            <mat-label>Error Category</mat-label>            <mat-select formControlName="errorCategory">              <mat-option                *ngFor="let category of errorCategoryOptions"                [value]="category.value"              >                {{ category.label }}              </mat-option>            </mat-select>            <mat-error *ngIf="alertForm.get(\'condition.errorCategory\')?.hasError(\'required\')">              Error category is required            </mat-error>          </mat-form-field>          <!-- Endpoint -->          <mat-form-field appearance="outline" *ngSwitchCase="\'performance_threshold\'">            <mat-label>Endpoint (optional)</mat-label>            <input matInput formControlName="endpoint" placeholder="e.g. /api/users" />          </mat-form-field>          <!-- Pattern -->          <mat-form-field appearance="outline" *ngSwitchCase="\'error_pattern\'">            <mat-label>Error Pattern</mat-label>            <input matInput formControlName="pattern" placeholder="e.g. *database*" />            <mat-error *ngIf="alertForm.get(\'condition.pattern\')?.hasError(\'required\')">              Pattern is required            </mat-error>          </mat-form-field>        </ng-container>      </div>    </div>    <mat-divider></mat-divider>    <h3>Notifications</h3>    <div formArrayName="notifications">      <div        *ngFor="let notification of notificationsArray.controls; let i = index"        [formGroupName]="i"        class="notification-item"      >        <div class="form-row">          <mat-form-field appearance="outline">            <mat-label>Notification Channel</mat-label>            <mat-select formControlName="channel" (selectionChange)="onChannelChange(i)">              <mat-option *ngFor="let channel of channelOptions" [value]="channel.value">                {{ channel.label }}              </mat-option>            </mat-select>          </mat-form-field>          <button            mat-icon-button            color="warn"            type="button"            (click)="removeNotification(i)"            [disabled]="notificationsArray.length <= 1"            matTooltip="Remove notification"          >            <mat-icon>delete</mat-icon>          </button>        </div>        <!-- Channel-specific fields -->        <div class="form-row" [ngSwitch]="notification.get(\'channel\')?.value">          <!-- Email -->          <mat-form-field appearance="outline" class="full-width" *ngSwitchCase="\'email\'">            <mat-label>Email Address</mat-label>            <input matInput formControlName="email" placeholder="Enter email address" />            <mat-error *ngIf="notification.get(\'email\')?.hasError(\'required\')">              Email is required            </mat-error>            <mat-error *ngIf="notification.get(\'email\')?.hasError(\'email\')">              Please enter a valid email address            </mat-error>          </mat-form-field>          <!-- Slack -->          <mat-form-field appearance="outline" class="full-width" *ngSwitchCase="\'slack\'">            <mat-label>Slack Webhook URL</mat-label>            <input              matInput              formControlName="slackWebhook"              placeholder="Enter Slack webhook URL"            />            <mat-error *ngIf="notification.get(\'slackWebhook\')?.hasError(\'required\')">              Slack webhook URL is required            </mat-error>          </mat-form-field>          <!-- Webhook -->          <mat-form-field appearance="outline" class="full-width" *ngSwitchCase="\'webhook\'">            <mat-label>Webhook URL</mat-label>            <input matInput formControlName="webhookUrl" placeholder="Enter webhook URL" />            <mat-error *ngIf="notification.get(\'webhookUrl\')?.hasError(\'required\')">              Webhook URL is required            </mat-error>          </mat-form-field>        </div>        <!-- Message template -->        <div class="form-row" *ngIf="notification.get(\'channel\')?.value !== \'ui\'">          <mat-form-field appearance="outline" class="full-width">            <mat-label>Message Template (optional)</mat-label>            <textarea              matInput              formControlName="messageTemplate"              placeholder="Enter custom message template"              rows="2"            ></textarea>            <mat-hint>Use {{ variables }} for dynamic content</mat-hint>          </mat-form-field>        </div>      </div>      <div class="form-row">        <button mat-button color="primary" type="button" (click)="addNotification()">          <mat-icon>add</mat-icon> Add Notification Channel        </button>      </div>    </div>  </form></mat-dialog-content><mat-dialog-actions align="end">  <button mat-button mat-dialog-close>Cancel</button>  <button    mat-raised-button    color="primary"    [disabled]="alertForm.invalid"    (click)="saveAlert()"  >    {{ isEditMode ? \'Update\' : \'Create\' }}  </button></mat-dialog-actions></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AlertFormDialogComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AlertFormDialogComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

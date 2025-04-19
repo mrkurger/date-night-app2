@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (favorites-list.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -872,8 +881,8 @@ export class FavoritesListComponent implements OnInit {
 
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
-      .filter(favorite => favorite.selected)
-      .map(favorite => favorite.ad._id);
+      .filter(favorite => (favorite as any).selected)
+      .map(favorite => (typeof favorite.ad === 'string' ? favorite.ad : favorite.ad._id));
   }
 
   getPriorityClass(favorite: Favorite): string {

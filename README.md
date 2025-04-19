@@ -162,7 +162,7 @@ The project uses a modern Angular frontend with an Express.js backend:
    npm run clean:build
    ```
 
-   > **Note:** If you encounter JavaScript heap out of memory errors during build, see [docs/ANGULAR_BUILD_OPTIMIZATION.md](/docs/ANGULAR_BUILD_OPTIMIZATION.md) for detailed solutions.
+   > **Note:** If you encounter JavaScript heap out of memory errors during build, see [docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md) for detailed solutions.
 
 8. **Access the Application:**
    - Open your browser and navigate to `http://localhost:4200`
@@ -201,7 +201,7 @@ python3 scripts/update_customization_headers.py
 python3 scripts/update_config_index.py
 ```
 
-For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md).
+For more details, see [docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md).
 
 ## Feature Roadmap & Status
 
@@ -235,7 +235,7 @@ For more details, see [docs/CUSTOMIZATION_GUIDE.md](/docs/CUSTOMIZATION_GUIDE.md
 
 ## Development Roadmap
 
-See our detailed implementation plan in [docs/completion-plan-2024.md](/docs/completion-plan-2024.md) for a comprehensive roadmap of upcoming features and enhancements.
+See our detailed implementation plan in [docs/COMPLETION-PLAN-2024.MD](/docs/completion-plan-2024.md) for a comprehensive roadmap of upcoming features and enhancements.
 
 ## OAuth Setup Instructions
 
@@ -615,92 +615,92 @@ This section provides links to all documentation files in the project, organized
 
 ### Project Documentation
 
-- [ChangeLog.md](/docs/ChangeLog.md) - History of changes to the project
-- [Requirements.md](/docs/requirements.md) - Project requirements and specifications
-- [Task List](/docs/task-list.md) - Current tasks and their status
-- [Completion Plan 2024](/docs/completion-plan-2024.md) - Plan for completing the project in 2024
-- [Migration Completion Plan](/docs/migration-completion-plan.md) - Plan for completing the Angular migration
-- [Implementation Plan](/docs/implementation-plan.md) - General implementation plan
-- [Architecture](docs/ARCHITECTURE.md) - System architecture documentation
-- [Deprecated Code](/docs/DEPRECATED.md) - List of deprecated code that should be avoided
-- [Code Duplication](/docs/DUPLICATES.md) - List of code duplication that should be refactored
-- [Documentation Improvements](/docs/documentation-improvements.md) - Summary of documentation improvements
-- [Documentation Index](/docs/DOCUMENTATION_INDEX.md) - Comprehensive index of all documentation
-- [Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.md) - Guidelines for writing documentation
+- [CHANGELOG.MD](/docs/ChangeLog.md) - History of changes to the project
+- [Requirements.md](/docs/REQUIREMENTS.MD) - Project requirements and specifications
+- [Task List](/docs/TASK-LIST.MD) - Current tasks and their status
+- [Completion Plan 2024](/docs/COMPLETION-PLAN-2024.MD) - Plan for completing the project in 2024
+- [Migration Completion Plan](/docs/MIGRATION-COMPLETION-PLAN.MD) - Plan for completing the Angular migration
+- [Implementation Plan](/docs/IMPLEMENTATION-PLAN.MD) - General implementation plan
+- [Architecture](docs/ARCHITECTURE.MD) - System architecture documentation
+- [Deprecated Code](/docs/DEPRECATED.MD) - List of deprecated code that should be avoided
+- [Code Duplication](/docs/DUPLICATES.MD) - List of code duplication that should be refactored
+- [Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD) - Summary of documentation improvements
+- [Documentation Index](/docs/DOCUMENTATION_INDEX.MD) - Comprehensive index of all documentation
+- [Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD) - Guidelines for writing documentation
 
 ### GitHub Integration
 
-- [GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.md) - Comprehensive strategy for GitHub integration
-- [GitHub Setup Guide](/docs/GITHUB_SETUP.md) - Instructions for setting up GitHub repository
-- [GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.md) - Guide to resolving workflow permission issues
-- [Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.md) - Guide to security alerts generation workflows
-- [GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.md) - Guide to GitHub insights generation workflows
-- [AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.md) - AI-powered GitHub Actions for the project
+- [GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.MD) - Comprehensive strategy for GitHub integration
+- [GitHub Setup Guide](/docs/GITHUB_SETUP.MD) - Instructions for setting up GitHub repository
+- [GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.MD) - Guide to resolving workflow permission issues
+- [Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.MD) - Guide to security alerts generation workflows
+- [GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.MD) - Guide to GitHub insights generation workflows
+- [AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.MD) - AI-powered GitHub Actions for the project
 - [GitHub Insights](/docs/github-insights/README.md) - Reports and data from GitHub Actions workflows
 
 ### Workflow Error Monitoring
 
-- [Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.md) - Documentation for the workflow error monitoring system
+- [Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.MD) - Documentation for the workflow error monitoring system
 - [Workflow Error Logs](/workflow-error-logs/README.md) - Directory containing logs from failed GitHub Actions workflows
 - [Workflow Error Analysis Tool](/scripts/analyze-workflow-errors.js) - Script for analyzing workflow error logs
 - [Robust Workflow File](/.github/workflows/sync-workflow-errors-robust.yml) - Advanced workflow with conflict resolution
 
 ### Development Guides
 
-- [Setup Guide](SETUP.md) - Guide for setting up the development environment
-- [Node.js Installation Guide](nodejs-installation-guide.md) - Guide for installing Node.js
-- [Specific Version Installation Guide](specific-version-installation-guide.md) - Guide for installing specific versions of Node.js
-- [MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.md) - Guide for troubleshooting MongoDB issues
+- [Setup Guide](SETUP.MD) - Guide for setting up the development environment
+- [Node.js Installation Guide](NODEJS-INSTALLATION-GUIDE.MD) - Guide for installing Node.js
+- [Specific Version Installation Guide](SPECIFIC-VERSION-INSTALLATION-GUIDE.MD) - Guide for installing specific versions of Node.js
+- [MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.MD) - Guide for troubleshooting MongoDB issues
 
 ### Testing Documentation
 
-- [Testing Guide](/docs/TESTING_GUIDE.md) - General testing strategy and guidelines
-- [Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.md) - Lessons learned from Angular testing
-- [Unit Testing Lessons](/docs/UnitTestLessons.md) - Lessons learned from unit testing
-- [Unit Testing Strategy](/docs/UnitStrat.md) - Strategy for unit testing
-- [Example Unit Strategy](/docs/Example_UnitStrat.md) - Example of a unit testing strategy
-- [Frontend Testing Review](FRONTEND_TESTING_REVIEW.md) - Review of frontend testing
-- [Testing Improvements](TESTING_IMPROVEMENTS.md) - Improvements to testing
+- [Testing Guide](/docs/TESTING_GUIDE.MD) - General testing strategy and guidelines
+- [Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.MD) - Lessons learned from Angular testing
+- [Unit Testing Lessons](/docs/UNITTESTLESSONS.MD) - Lessons learned from unit testing
+- [Unit Testing Strategy](/docs/UNITSTRAT.MD) - Strategy for unit testing
+- [Example Unit Strategy](/docs/EXAMPLE_UNITSTRAT.MD) - Example of a unit testing strategy
+- [Frontend Testing Review](FRONTEND_TESTING_REVIEW.MD) - Review of frontend testing
+- [Testing Improvements](TESTING_IMPROVEMENTS.MD) - Improvements to testing
 
 ### UI/UX Documentation
 
-- [UI/UX Roadmap](/docs/ui-ux-roadmap.md) - Roadmap for UI/UX improvements
-- [UI/UX Implementation](/docs/ui-ux-implementation.md) - Implementation details for UI/UX
-- [UI/UX Improvement Summary](/docs/ui-ux-improvement-summary.md) - Summary of UI/UX improvements
-- [UI/UX Completion Report](/docs/ui-ux-completion-report.md) - Report on UI/UX completion
-- [UI Components Technical](/docs/ui-components-technical.md) - Technical details of UI components
-- [Styling Guide](/docs/styling-guide.md) - Guide for styling components
+- [UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD) - Roadmap for UI/UX improvements
+- [UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD) - Implementation details for UI/UX
+- [UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD) - Summary of UI/UX improvements
+- [UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD) - Report on UI/UX completion
+- [UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD) - Technical details of UI components
+- [Styling Guide](/docs/STYLING_GUIDE.MD) - Guide for styling components
 
 ### Customization Documentation
 
-- [Customization Guide](/docs/CUSTOMIZATION_GUIDE.md) - Guide for using the customization system
-- [Configuration Index](/docs/CONFIG_INDEX.md) - Index of all customizable settings
-- [CSP Configuration](/docs/csp-configuration.md) - Guide for configuring Content Security Policy
+- [Customization Guide](/docs/CUSTOMIZATION_GUIDE.MD) - Guide for using the customization system
+- [Configuration Index](/docs/CONFIG_INDEX.MD) - Index of all customizable settings
+- [CSP Configuration](/docs/CSP-CONFIGURATION.MD) - Guide for configuring Content Security Policy
 
 ### Security Documentation
 
-- [End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.md) - Implementation details of the E2EE chat system
-- [Security Best Practices](/docs/SECURITY_BEST_PRACTICES.md) - Security best practices for the application
-- [Authentication Flow](/docs/AUTHENTICATION_FLOW.md) - Details of the authentication system
-- [Data Protection](/docs/DATA_PROTECTION.md) - How user data is protected in the application
-- [Snyk Workflow](/docs/SNYK_WORKFLOW.md) - Documentation for the Snyk security scanning workflow
-- [Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.md) - Guide for setting up Snyk API token
+- [End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.MD) - Implementation details of the E2EE chat system
+- [Security Best Practices](/docs/SECURITY_BEST_PRACTICES.MD) - Security best practices for the application
+- [Authentication Flow](/docs/AUTHENTICATION_FLOW.MD) - Details of the authentication system
+- [Data Protection](/docs/DATA_PROTECTION.MD) - How user data is protected in the application
+- [Snyk Workflow](/docs/SNYK_WORKFLOW.MD) - Documentation for the Snyk security scanning workflow
+- [Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.MD) - Guide for setting up Snyk API token
 - [Snyk Reports](/docs/snyk-reports/README.md) - Security vulnerability reports generated by Snyk
-- [Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.md) - Guide for fixing security vulnerabilities
+- [Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.MD) - Guide for fixing security vulnerabilities
 
 ### Emerald Component Documentation
 
-- [Emerald Components](/docs/emerald-components.md) - Documentation for Emerald UI components
-- [Emerald Components Changelog](/docs/emerald-components-changelog.md) - Changelog for Emerald components
-- [Emerald Implementation Plan](/docs/emerald-implementation-plan.md) - Plan for implementing Emerald components
-- [Emerald Implementation Report](/docs/emerald-implementation-report.md) - Report on Emerald implementation
-- [Emerald Implementation Summary](/docs/emerald-implementation-summary.md) - Summary of Emerald implementation
-- [Emerald Testing Guide](/docs/emerald-testing-guide.md) - Guide for testing Emerald components
+- [Emerald Components](/docs/EMERALD-COMPONENTS.MD) - Documentation for Emerald UI components
+- [Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD) - Changelog for Emerald components
+- [Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD) - Plan for implementing Emerald components
+- [Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD) - Report on Emerald implementation
+- [Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD) - Summary of Emerald implementation
+- [Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD) - Guide for testing Emerald components
 
 ### Lessons Learned
 
-- [AI Lessons](/docs/AILessons.md) - Lessons learned by the AI while working on the project
-- [Unit Testing Lessons](/docs/UnitTestingLessons.md) - Comprehensive lessons learned from unit testing
+- [AI Lessons](/docs/AILESSONS.MD) - Lessons learned by the AI while working on the project
+- [Unit Testing Lessons](/docs/UNITTESTINGLESSONS.MD) - Comprehensive lessons learned from unit testing
 
 ## Progress Tracking
 
@@ -716,5 +716,42 @@ This section provides links to all documentation files in the project, organized
 - Enhance error handling in HTTP interceptors.
 - Review and update static asset paths and environment configurations.
 
+## Key Documentation
 
-<!-- TODO: Enhance with project overview, tech stack, links, setup (as per DOCS_IMPROVEMENT_PLAN.md) -->
+- [Architecture Overview](/docs/ARCHITECTURE.MD) - High-level system architecture and design patterns
+- [Setup Guide](/docs/SETUP.MD) - Detailed setup instructions for development environment
+- [Contributing Guidelines](/CONTRIBUTING.MD) - Guidelines for contributing to the project
+- [Deployment Guide](/docs/DEPLOYMENT.MD) - Instructions for deploying to various environments
+- [API Documentation](/docs/API_DOCUMENTATION.MD) - API endpoints and usage
+- [Component Library](/docs/COMPONENT_LIBRARY.MD) - UI component documentation
+
+## Tech Stack
+
+- **Frontend**: Angular ~19, RxJS, Socket.IO Client, Bootstrap 5, Angular Material, NgRx
+- **Backend**: Node.js ~22, Express, MongoDB, Mongoose, Socket.IO, JWT Authentication
+- **Testing**: Jest, Karma, Jasmine, Cypress
+- **DevOps**: GitHub Actions, Docker, Snyk Security
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/date-night-app.git
+cd date-night-app
+
+# Install dependencies
+npm run install-all
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start development servers
+npm run dev
+
+# Access the application
+# Frontend: http://localhost:4200
+# API: http://localhost:3000/api/v1
+```
+
+For detailed setup instructions, see the [Setup Guide](/docs/SETUP.MD).

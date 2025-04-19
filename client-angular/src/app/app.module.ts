@@ -16,11 +16,8 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.

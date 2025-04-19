@@ -19,8 +19,17 @@
 @use 'design-tokens' as *;
 @forward 'variables';
 @forward 'components';
-@forward 'typography-mixins';
-@forward 'spacing-utilities';
+// Prevent duplicate variable definitions by using 'hide' to hide conflicting variables
+@forward 'typography-mixins' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
+  $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
+  $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
+  $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
+  $color-secondary-dark, $color-white;
+@forward 'spacing-utilities' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
+  $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
+  $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
+  $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
+  $color-secondary-dark, $color-white;
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono&display=swap');

@@ -5,12 +5,18 @@ on:
     - cron: '0 0 * * *' # Run daily at midnight
   workflow_dispatch: # Allow manual triggering
 
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   sync-snyk-issues:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       security-events: read
+    timeout-minutes: 45 # Add timeout to prevent runaway jobs
 
     steps:
       - name: Checkout repository
@@ -73,13 +79,22 @@ jobs:
           mkdir -p downloaded-reports/snyk
           node .github/scripts/generate-snyk-task-list.js
 
-      # Clean up large JSON files to avoid bloating the repository
-      - name: Clean up large JSON files
+      # Upload JSON files as artifacts instead of committing them
+      - name: Upload Snyk JSON results as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-json-results-${{ github.run_id }}
+          path: |
+            snyk-*.json
+            npm-*.json
+          retention-days: 7
+          if-no-files-found: warn
+
+      # Clean up JSON files to avoid committing them
+      - name: Remove JSON files
         run: |
-          # Keep only the most recent JSON files
-          find . -name "npm-*-deps-tree.json" -type f -size +1M -delete || true
-          # Compress remaining large files
-          find . -name "*.json" -type f -size +1M -exec gzip -9 {} \; || true
+          # Remove all JSON files after they've been uploaded as artifacts
+          rm -f snyk-*.json npm-*.json
 
       - name: Configure Git
         run: |
@@ -88,8 +103,24 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          # Handle any unstaged changes by stashing them
+          git stash -u || true
+
+          # Pull the latest changes with rebase strategy to avoid merge conflicts
+          git pull --rebase origin main || true
+
+          # Pop the stash if we stashed anything
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+
+          # Add only the Snyk report files
           git add downloaded-reports/snyk/
-          git commit -m "docs: update Snyk issues task list [skip ci]" || echo "No changes to commit"
-          git push
+
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update Snyk issues task list [skip ci]"
+            git push
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

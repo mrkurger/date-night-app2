@@ -27,7 +27,7 @@ The Date Night App uses a modern, microservices-based architecture with the foll
 - **Payment Service**: Integrates with Stripe for payments
 - **Notification Service**: Handles email and push notifications
 
-![System Architecture](/docs/images/architecture.md)
+![System Architecture](/docs/images/ARCHITECTURE.MD)
 
 ## Component Hierarchy
 
@@ -44,7 +44,7 @@ The Angular client is organized into modules and components following Angular be
   - Travel Module: Travel List, Travel Form, Travel Map
   - Payment Module: Payment Methods, Add Payment Method, Payment History
 
-![Component Hierarchy](/docs/images/component_hierarchy.md)
+![Component Hierarchy](/docs/images/COMPONENT_HIERARCHY.MD)
 
 ## Data Flow
 
@@ -57,11 +57,12 @@ The data flow in the Date Night App follows a standard client-server architectur
 5. UI updates the display based on the responses
 
 Additional data flows include:
+
 - Event-based notifications via an event bus
 - Payment processing via the payment service
 - Media uploads and downloads via the media service
 
-![Data Flow](/docs/images/data_flow.md)
+![Data Flow](/docs/images/DATA_FLOW.MD)
 
 ## Database Schema
 
@@ -75,7 +76,7 @@ The Date Night App uses MongoDB as its primary database. The main collections ar
 - **PaymentMethods**: User payment methods
 - **Payments**: Payment records
 
-![Database Schema](/docs/images/database_schema.md)
+![Database Schema](/docs/images/DATABASE_SCHEMA.MD)
 
 ## API Endpoints
 
@@ -89,13 +90,14 @@ The Date Night App API is organized into the following groups:
 - **Media Management**: Upload Media, Delete Media
 - **Payment**: Create Payment Intent, Get Payment Methods, Add Payment Method
 
-![API Endpoints](/docs/images/api_endpoints.md)
+![API Endpoints](/docs/images/API_ENDPOINTS.MD)
 
 ## Technology Stack
 
 The Date Night App uses the following technology stack:
 
 ### Frontend
+
 - **Framework**: Angular
 - **State Management**: NgRx
 - **UI Components**: Angular Material
@@ -104,6 +106,7 @@ The Date Night App uses the following technology stack:
 - **Testing**: Jasmine, Karma
 
 ### Backend
+
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Database**: MongoDB
@@ -113,6 +116,7 @@ The Date Night App uses the following technology stack:
 - **Testing**: Jest, Supertest
 
 ### DevOps
+
 - **Version Control**: Git
 - **CI/CD**: GitHub Actions
 - **Containerization**: Docker
@@ -124,17 +128,20 @@ The Date Night App uses the following technology stack:
 The Date Night App can be deployed in various environments:
 
 ### Development
+
 - Local development environment with hot reloading
 - MongoDB running locally or in a Docker container
 - Node.js API server running locally
 
 ### Staging
+
 - Containerized deployment with Docker Compose
 - MongoDB running in a container
 - Node.js API server running in a container
 - Angular client served from a static file server
 
 ### Production
+
 - Kubernetes-based deployment
 - MongoDB running in a managed service (e.g., MongoDB Atlas)
 - Node.js API server running in multiple pods
@@ -147,6 +154,7 @@ The Date Night App can be deployed in various environments:
 The Date Night App implements the following security measures:
 
 ### Authentication and Authorization
+
 - JWT-based authentication
 - Role-based access control
 - Secure password storage with bcrypt
@@ -154,6 +162,7 @@ The Date Night App implements the following security measures:
 - CSRF protection
 
 ### Data Security
+
 - HTTPS for all communications
 - Input validation and sanitization
 - MongoDB security best practices
@@ -161,6 +170,7 @@ The Date Night App implements the following security measures:
 - Payment information stored securely with Stripe
 
 ### Infrastructure Security
+
 - Firewall rules
 - Network segmentation
 - Regular security updates
@@ -172,6 +182,7 @@ The Date Night App implements the following security measures:
 The Date Night App is designed for optimal performance:
 
 ### Frontend
+
 - Lazy loading of modules
 - AOT compilation
 - Minification and bundling
@@ -179,6 +190,7 @@ The Date Night App is designed for optimal performance:
 - Caching strategies
 
 ### Backend
+
 - Database indexing
 - Query optimization
 - Connection pooling
@@ -186,6 +198,7 @@ The Date Night App is designed for optimal performance:
 - Rate limiting
 
 ### Infrastructure
+
 - CDN for static assets
 - Load balancing
 - Horizontal scaling
@@ -197,11 +210,13 @@ The Date Night App is designed for optimal performance:
 The Date Night App is designed to scale horizontally:
 
 ### Frontend
+
 - Stateless design
 - CDN distribution
 - Progressive web app capabilities
 
 ### Backend
+
 - Stateless API design
 - Microservices architecture
 - Message queues for asynchronous processing
@@ -209,15 +224,125 @@ The Date Night App is designed to scale horizontally:
 - Caching strategies
 
 ### Infrastructure
+
 - Auto-scaling groups
 - Container orchestration
 - Database replication
 - Load balancing
 - Geographic distribution
 
-<!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) -->
+## Design Patterns
 
+The Date Night App implements several design patterns to ensure maintainability, scalability, and code quality:
 
-<!-- TODO: Manually enhance with structure, tech, flows, patterns, diagrams. (as per DOCS_IMPROVEMENT_PLAN.md) -->
+### Frontend Patterns
 
-See [Database Schema Detail](DATABASE_SCHEMA_DETAIL.md) for more details.
+1. **Component-Based Architecture**
+
+   - Reusable UI components with clear interfaces
+   - Smart/Container and Presentational/Dumb component separation
+   - Component composition for complex UIs
+
+2. **Reactive Programming**
+
+   - Observable-based data flow with RxJS
+   - Reactive forms for user input
+   - State management with NgRx (Store, Effects, Selectors)
+
+3. **Dependency Injection**
+
+   - Service-based architecture
+   - Hierarchical injector system
+   - Testing facilitation through DI
+
+4. **Module Organization**
+   - Feature modules for domain-specific functionality
+   - Shared module for common components
+   - Core module for singleton services
+
+### Backend Patterns
+
+1. **MVC Architecture**
+
+   - Controllers for handling HTTP requests
+   - Services for business logic
+   - Models for data representation
+
+2. **Repository Pattern**
+
+   - Data access abstraction
+   - Query encapsulation
+   - Database independence
+
+3. **Middleware Pattern**
+
+   - Request processing pipeline
+   - Cross-cutting concerns (logging, authentication, error handling)
+   - Request/response transformation
+
+4. **Factory Pattern**
+   - Object creation abstraction
+   - Configuration-based instantiation
+   - Testing facilitation
+
+### Cross-Cutting Patterns
+
+1. **Observer Pattern**
+
+   - Event-based communication
+   - Loose coupling between components
+   - Real-time updates with Socket.IO
+
+2. **Strategy Pattern**
+
+   - Pluggable algorithms
+   - Runtime behavior selection
+   - Configuration-based behavior
+
+3. **Adapter Pattern**
+
+   - Third-party service integration
+   - API normalization
+   - Legacy code integration
+
+4. **Decorator Pattern**
+   - Dynamic behavior extension
+   - Cross-cutting concerns
+   - Non-invasive feature addition
+
+## Implementation Details
+
+### Authentication Flow
+
+The authentication system uses JWT tokens with a refresh token mechanism:
+
+1. User logs in with credentials
+2. Server validates credentials and issues access and refresh tokens
+3. Client stores tokens securely
+4. Access token is used for API requests
+5. When access token expires, refresh token is used to obtain a new access token
+6. Refresh tokens can be revoked for security
+
+### Real-Time Communication
+
+The chat system uses Socket.IO for real-time communication:
+
+1. Client establishes Socket.IO connection
+2. Connection is authenticated using JWT
+3. Client joins rooms for conversations
+4. Messages are sent and received in real-time
+5. Offline messages are stored and delivered when user comes online
+6. End-to-end encryption ensures message privacy
+
+### Data Flow Optimization
+
+The application optimizes data flow for performance:
+
+1. Pagination for large data sets
+2. Lazy loading of data and components
+3. Caching strategies for frequently accessed data
+4. Optimistic UI updates for better user experience
+5. Debouncing and throttling for user input
+6. Batch processing for multiple operations
+
+See [Database Schema Detail](DATABASE_SCHEMA_DETAIL.MD) for more details on the data model.

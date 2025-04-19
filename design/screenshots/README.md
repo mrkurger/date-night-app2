@@ -1,6 +1,6 @@
 # DateNight.io UI Screenshots
 
-This directory contains high-fidelity SVG screenshots for the DateNight.io application, showcasing the different views and responsive designs for both desktop and mobile platforms. These screenshots adhere to the styling guidelines specified in `docs/styling-guide.md`.
+This directory contains high-fidelity SVG screenshots for the DateNight.io application, showcasing the different views and responsive designs for both desktop and mobile platforms. These screenshots adhere to the styling guidelines specified in `docs/STYLING_GUIDE.MD`.
 
 ## Desktop Screenshots (1900x1200)
 

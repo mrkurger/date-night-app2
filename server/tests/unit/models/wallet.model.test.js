@@ -8,11 +8,11 @@
 //   Related to: server/models/wallet.model.js
 // ===================================================
 
-const mongoose = require('mongoose');
-const Wallet = require('../../../models/wallet.model');
-const User = require('../../../models/user.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { createTestUser } = require('../../helpers');
+import mongoose from 'mongoose';
+import Wallet from '../../../models/wallet.model.js';
+import User from '../../../models/user.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { createTestUser } from '../../helpers.js';
 
 // Test data for wallet
 const TEST_TRANSACTION = {

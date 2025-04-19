@@ -11,7 +11,7 @@
 // - MINIMUM_WITHDRAWAL: Minimum withdrawal amount in smallest currency unit (default: 10000 = 100 NOK)
 //   Related to: payment.service.js:MINIMUM_WITHDRAWAL
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define the transaction schema
 const transactionSchema = new mongoose.Schema({
@@ -290,4 +290,7 @@ walletSchema.methods.setDefaultPaymentMethod = function (paymentMethodId) {
   return this.save();
 };
 
-module.exports = mongoose.model('Wallet', walletSchema);
+// Check if model already exists before defining
+const Wallet = mongoose.models.Wallet || mongoose.model('Wallet', walletSchema);
+
+export default Wallet;

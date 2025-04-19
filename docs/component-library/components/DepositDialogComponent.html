@@ -1,0 +1,1904 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DepositDialogComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/wallet/dialogs/deposit-dialog.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-deposit-dialog</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>MatDialogModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatRadioModule</code>
+                            <code>MatTabsModule</code>
+                            <code>MatProgressSpinnerModule</code>
+                            <code>MatSnackBarModule</code>
+                                <code><a href="../modules/QRCodeModule.html" target="_self" >QRCodeModule</a></code>
+                            <code>ClipboardModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .deposit-form {
+        padding: 16px 0;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      .no-payment-methods {
+        margin: 16px 0;
+        text-align: center;
+
+        p {
+          margin-bottom: 16px;
+          color: #f44336;
+        }
+      }
+
+      .processing-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 0;
+
+        p {
+          margin-top: 16px;
+        }
+      }
+
+      .crypto-deposit-container {
+        padding: 16px 0;
+      }
+
+      .crypto-address-container {
+        margin-top: 24px;
+
+        h3 {
+          margin-bottom: 16px;
+        }
+      }
+
+      .qr-code {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .address-container,
+      .memo-container {
+        margin-bottom: 16px;
+      }
+
+      .address-label,
+      .memo-label {
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .address,
+      .memo {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding: 8px 16px;
+        border-radius: 4px;
+
+        code {
+          flex: 1;
+          word-break: break-all;
+          font-family: monospace;
+        }
+      }
+
+      .network-info {
+        margin-bottom: 16px;
+      }
+
+      .crypto-instructions {
+        margin-top: 24px;
+        padding: 16px;
+        background-color: #fff8e1;
+        border-radius: 4px;
+
+        p {
+          margin-bottom: 8px;
+
+          &amp;:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;h2 mat-dialog-title&gt;Deposit Funds&lt;/h2&gt;
+
+&lt;mat-dialog-content&gt;
+  &lt;mat-tab-group animationDuration&#x3D;&quot;0ms&quot;&gt;
+    &lt;!-- Fiat Currency Deposit --&gt;
+    &lt;mat-tab label&#x3D;&quot;Fiat Currency&quot;&gt;
+      &lt;form [formGroup]&#x3D;&quot;depositForm&quot; class&#x3D;&quot;deposit-form&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+          &lt;mat-label&gt;Currency&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;currency&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let currency of fiatCurrencies&quot; [value]&#x3D;&quot;currency&quot;&gt;
+              {{ currency }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+          &lt;mat-label&gt;Amount&lt;/mat-label&gt;
+          &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;amount&quot; min&#x3D;&quot;1&quot; /&gt;
+          &lt;span matTextSuffix&gt;{{ depositForm.get(&#x27;currency&#x27;)?.value }}&lt;/span&gt;
+          &lt;mat-hint&gt;Minimum deposit: 10 {{ depositForm.get(&#x27;currency&#x27;)?.value }}&lt;/mat-hint&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;amount&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+            Amount is required
+          &lt;/mat-error&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;amount&#x27;)?.hasError(&#x27;min&#x27;)&quot;&gt;
+            Minimum amount is 10 {{ depositForm.get(&#x27;currency&#x27;)?.value }}
+          &lt;/mat-error&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+          &lt;mat-label&gt;Payment Method&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;paymentMethodId&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let method of cardPaymentMethods&quot; [value]&#x3D;&quot;method._id&quot;&gt;
+              {{ getPaymentMethodDisplayName(method) }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;paymentMethodId&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+            Payment method is required
+          &lt;/mat-error&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;div *ngIf&#x3D;&quot;cardPaymentMethods.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;no-payment-methods&quot;&gt;
+          &lt;p&gt;You don&#x27;t have any payment methods. Please add a payment method first.&lt;/p&gt;
+          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;closeAndOpenAddPaymentMethod()&quot;&gt;
+            Add Payment Method
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;processingDeposit&quot; class&#x3D;&quot;processing-container&quot;&gt;
+          &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+          &lt;p&gt;Processing your deposit...&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/mat-tab&gt;
+
+    &lt;!-- Cryptocurrency Deposit --&gt;
+    &lt;mat-tab label&#x3D;&quot;Cryptocurrency&quot;&gt;
+      &lt;div class&#x3D;&quot;crypto-deposit-container&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+          &lt;mat-label&gt;Cryptocurrency&lt;/mat-label&gt;
+          &lt;mat-select
+            [(ngModel)]&#x3D;&quot;selectedCrypto&quot;
+            (selectionChange)&#x3D;&quot;getCryptoDepositAddress()&quot;
+          &gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let crypto of cryptocurrencies&quot; [value]&#x3D;&quot;crypto&quot;&gt;
+              {{ crypto }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;div *ngIf&#x3D;&quot;loadingCryptoAddress&quot; class&#x3D;&quot;processing-container&quot;&gt;
+          &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+          &lt;p&gt;Generating deposit address...&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div
+          *ngIf&#x3D;&quot;cryptoDepositAddress &amp;&amp; !loadingCryptoAddress&quot;
+          class&#x3D;&quot;crypto-address-container&quot;
+        &gt;
+          &lt;h3&gt;Deposit Address&lt;/h3&gt;
+
+          &lt;div class&#x3D;&quot;qr-code&quot;&gt;
+            &lt;qrcode
+              [qrdata]&#x3D;&quot;cryptoDepositAddress.address&quot;
+              [width]&#x3D;&quot;200&quot;
+              [errorCorrectionLevel]&#x3D;&quot;&#x27;M&#x27;&quot;
+            &gt;
+            &lt;/qrcode&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;address-container&quot;&gt;
+            &lt;p class&#x3D;&quot;address-label&quot;&gt;{{ selectedCrypto }} Address:&lt;/p&gt;
+            &lt;div class&#x3D;&quot;address&quot;&gt;
+              &lt;code&gt;{{ cryptoDepositAddress.address }}&lt;/code&gt;
+              &lt;button
+                mat-icon-button
+                [cdkCopyToClipboard]&#x3D;&quot;cryptoDepositAddress.address&quot;
+                (click)&#x3D;&quot;notifyAddressCopied()&quot;
+              &gt;
+                &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;cryptoDepositAddress.network&quot; class&#x3D;&quot;network-info&quot;&gt;
+            &lt;p&gt;&lt;strong&gt;Network:&lt;/strong&gt; {{ cryptoDepositAddress.network }}&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;cryptoDepositAddress.memo&quot; class&#x3D;&quot;memo-container&quot;&gt;
+            &lt;p class&#x3D;&quot;memo-label&quot;&gt;&lt;strong&gt;Memo/Tag (Required):&lt;/strong&gt;&lt;/p&gt;
+            &lt;div class&#x3D;&quot;memo&quot;&gt;
+              &lt;code&gt;{{ cryptoDepositAddress.memo }}&lt;/code&gt;
+              &lt;button
+                mat-icon-button
+                [cdkCopyToClipboard]&#x3D;&quot;cryptoDepositAddress.memo&quot;
+                (click)&#x3D;&quot;notifyMemoCopied()&quot;
+              &gt;
+                &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;crypto-instructions&quot;&gt;
+            &lt;p&gt;
+              Send only {{ selectedCrypto }} to this address. Sending any other cryptocurrency
+              may result in permanent loss.
+            &lt;/p&gt;
+            &lt;p&gt;
+              Your deposit will be credited to your wallet after network confirmation (typically
+              10-60 minutes).
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/mat-tab&gt;
+  &lt;/mat-tab-group&gt;
+&lt;/mat-dialog-content&gt;
+
+&lt;mat-dialog-actions align&#x3D;&quot;end&quot;&gt;
+  &lt;button mat-button mat-dialog-close&gt;Cancel&lt;/button&gt;
+  &lt;button
+    mat-raised-button
+    color&#x3D;&quot;primary&quot;
+    [disabled]&#x3D;&quot;depositForm.invalid || processingDeposit || cardPaymentMethods.length &#x3D;&#x3D;&#x3D; 0&quot;
+    (click)&#x3D;&quot;depositFiat()&quot;
+    *ngIf&#x3D;&quot;!cryptoDepositAddress&quot;
+  &gt;
+    Deposit
+  &lt;/button&gt;
+  &lt;button mat-raised-button color&#x3D;&quot;primary&quot; mat-dialog-close *ngIf&#x3D;&quot;cryptoDepositAddress&quot;&gt;
+    Done
+  &lt;/button&gt;
+&lt;/mat-dialog-actions&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cardPaymentMethods" >cardPaymentMethods</a>
+                            </li>
+                            <li>
+                                <a href="#cryptocurrencies" >cryptocurrencies</a>
+                            </li>
+                            <li>
+                                <a href="#cryptoDepositAddress" >cryptoDepositAddress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                <a href="#depositForm" >depositForm</a>
+                            </li>
+                            <li>
+                                <a href="#fiatCurrencies" >fiatCurrencies</a>
+                            </li>
+                            <li>
+                                <a href="#loadingCryptoAddress" >loadingCryptoAddress</a>
+                            </li>
+                            <li>
+                                <a href="#processingDeposit" >processingDeposit</a>
+                            </li>
+                            <li>
+                                <a href="#selectedCrypto" >selectedCrypto</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeAndOpenAddPaymentMethod" >closeAndOpenAddPaymentMethod</a>
+                            </li>
+                            <li>
+                                <a href="#depositFiat" >depositFiat</a>
+                            </li>
+                            <li>
+                                <a href="#getCryptoDepositAddress" >getCryptoDepositAddress</a>
+                            </li>
+                            <li>
+                                <a href="#getPaymentMethodDisplayName" >getPaymentMethodDisplayName</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#notifyAddressCopied" >notifyAddressCopied</a>
+                            </li>
+                            <li>
+                                <a href="#notifyMemoCopied" >notifyMemoCopied</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialogRef: <a href="../components/DepositDialogComponent.html" target="_self">MatDialogRef&lt;DepositDialogComponent&gt;</a>, data: literal type, fb: FormBuilder, walletService: <a href="../injectables/WalletService.html" target="_self">WalletService</a>, paymentService: <a href="../injectables/PaymentService.html" target="_self">PaymentService</a>, notificationService: <a href="../injectables/NotificationService.html" target="_self">NotificationService</a>, snackBar: MatSnackBar)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="324" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:324</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../components/DepositDialogComponent.html" target="_self" >MatDialogRef&lt;DepositDialogComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                    <code>literal type</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>walletService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/WalletService.html" target="_self" >WalletService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>paymentService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PaymentService.html" target="_self" >PaymentService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeAndOpenAddPaymentMethod"></a>
+                    <span class="name">
+                        <span ><b>closeAndOpenAddPaymentMethod</b></span>
+                        <a href="#closeAndOpenAddPaymentMethod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeAndOpenAddPaymentMethod()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="416"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:416</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Close dialog and open add payment method dialog</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="depositFiat"></a>
+                    <span class="name">
+                        <span ><b>depositFiat</b></span>
+                        <a href="#depositFiat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>depositFiat()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="368"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deposit fiat currency</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCryptoDepositAddress"></a>
+                    <span class="name">
+                        <span ><b>getCryptoDepositAddress</b></span>
+                        <a href="#getCryptoDepositAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCryptoDepositAddress()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get crypto deposit address</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPaymentMethodDisplayName"></a>
+                    <span class="name">
+                        <span ><b>getPaymentMethodDisplayName</b></span>
+                        <a href="#getPaymentMethodDisplayName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPaymentMethodDisplayName(paymentMethod: <a href="../interfaces/PaymentMethod.html" target="_self">PaymentMethod</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="423"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:423</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get payment method display name</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paymentMethod</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PaymentMethod.html" target="_self" >PaymentMethod</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="363"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:363</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notifyAddressCopied"></a>
+                    <span class="name">
+                        <span ><b>notifyAddressCopied</b></span>
+                        <a href="#notifyAddressCopied"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notifyAddressCopied()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="433"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:433</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Show notification when address is copied</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notifyMemoCopied"></a>
+                    <span class="name">
+                        <span ><b>notifyMemoCopied</b></span>
+                        <a href="#notifyMemoCopied"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notifyMemoCopied()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="442"
+                                    class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:442</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Show notification when memo is copied</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardPaymentMethods"></a>
+                    <span class="name">
+                        <span ><b>cardPaymentMethods</b></span>
+                        <a href="#cardPaymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>PaymentMethod[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="324" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:324</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cryptocurrencies"></a>
+                    <span class="name">
+                        <span ><b>cryptocurrencies</b></span>
+                        <a href="#cryptocurrencies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="323" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cryptoDepositAddress"></a>
+                    <span class="name">
+                        <span ><b>cryptoDepositAddress</b></span>
+                        <a href="#cryptoDepositAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CryptoDepositAddress | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="319" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:319</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>data</b></span>
+                        <a href="#data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Inject(MAT_DIALOG_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="329" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:329</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="depositForm"></a>
+                    <span class="name">
+                        <span ><b>depositForm</b></span>
+                        <a href="#depositForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="313" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:313</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fiatCurrencies"></a>
+                    <span class="name">
+                        <span ><b>fiatCurrencies</b></span>
+                        <a href="#fiatCurrencies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="322" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:322</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingCryptoAddress"></a>
+                    <span class="name">
+                        <span ><b>loadingCryptoAddress</b></span>
+                        <a href="#loadingCryptoAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processingDeposit"></a>
+                    <span class="name">
+                        <span ><b>processingDeposit</b></span>
+                        <a href="#processingDeposit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="314" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:314</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedCrypto"></a>
+                    <span class="name">
+                        <span ><b>selectedCrypto</b></span>
+                        <a href="#selectedCrypto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;BTC&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="318" class="link-to-prism">src/app/features/wallet/dialogs/deposit-dialog.component.ts:318</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Inject, OnInit, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from &#x27;@angular/material/dialog&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatRadioModule } from &#x27;@angular/material/radio&#x27;;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;;
+import { MatSnackBar, MatSnackBarModule } from &#x27;@angular/material/snack-bar&#x27;;
+import { ClipboardModule } from &#x27;@angular/cdk/clipboard&#x27;;
+import { QRCodeModule } from &#x27;../../../shared/qrcode/qrcode.module&#x27;;
+
+import {
+  WalletService,
+  PaymentMethod,
+  CryptoDepositAddress,
+} from &#x27;../../../core/services/wallet.service&#x27;;
+import { PaymentService } from &#x27;../../../core/services/payment.service&#x27;;
+import { NotificationService } from &#x27;../../../core/services/notification.service&#x27;;
+
+@Component({
+  selector: &#x27;app-deposit-dialog&#x27;,
+  template: &#x60;
+    &lt;h2 mat-dialog-title&gt;Deposit Funds&lt;/h2&gt;
+
+    &lt;mat-dialog-content&gt;
+      &lt;mat-tab-group animationDuration&#x3D;&quot;0ms&quot;&gt;
+        &lt;!-- Fiat Currency Deposit --&gt;
+        &lt;mat-tab label&#x3D;&quot;Fiat Currency&quot;&gt;
+          &lt;form [formGroup]&#x3D;&quot;depositForm&quot; class&#x3D;&quot;deposit-form&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+              &lt;mat-label&gt;Currency&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;currency&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let currency of fiatCurrencies&quot; [value]&#x3D;&quot;currency&quot;&gt;
+                  {{ currency }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+              &lt;mat-label&gt;Amount&lt;/mat-label&gt;
+              &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;amount&quot; min&#x3D;&quot;1&quot; /&gt;
+              &lt;span matTextSuffix&gt;{{ depositForm.get(&#x27;currency&#x27;)?.value }}&lt;/span&gt;
+              &lt;mat-hint&gt;Minimum deposit: 10 {{ depositForm.get(&#x27;currency&#x27;)?.value }}&lt;/mat-hint&gt;
+              &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;amount&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                Amount is required
+              &lt;/mat-error&gt;
+              &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;amount&#x27;)?.hasError(&#x27;min&#x27;)&quot;&gt;
+                Minimum amount is 10 {{ depositForm.get(&#x27;currency&#x27;)?.value }}
+              &lt;/mat-error&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+              &lt;mat-label&gt;Payment Method&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;paymentMethodId&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let method of cardPaymentMethods&quot; [value]&#x3D;&quot;method._id&quot;&gt;
+                  {{ getPaymentMethodDisplayName(method) }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+              &lt;mat-error *ngIf&#x3D;&quot;depositForm.get(&#x27;paymentMethodId&#x27;)?.hasError(&#x27;required&#x27;)&quot;&gt;
+                Payment method is required
+              &lt;/mat-error&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;div *ngIf&#x3D;&quot;cardPaymentMethods.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;no-payment-methods&quot;&gt;
+              &lt;p&gt;You don&#x27;t have any payment methods. Please add a payment method first.&lt;/p&gt;
+              &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;closeAndOpenAddPaymentMethod()&quot;&gt;
+                Add Payment Method
+              &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;div *ngIf&#x3D;&quot;processingDeposit&quot; class&#x3D;&quot;processing-container&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+              &lt;p&gt;Processing your deposit...&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/mat-tab&gt;
+
+        &lt;!-- Cryptocurrency Deposit --&gt;
+        &lt;mat-tab label&#x3D;&quot;Cryptocurrency&quot;&gt;
+          &lt;div class&#x3D;&quot;crypto-deposit-container&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+              &lt;mat-label&gt;Cryptocurrency&lt;/mat-label&gt;
+              &lt;mat-select
+                [(ngModel)]&#x3D;&quot;selectedCrypto&quot;
+                (selectionChange)&#x3D;&quot;getCryptoDepositAddress()&quot;
+              &gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let crypto of cryptocurrencies&quot; [value]&#x3D;&quot;crypto&quot;&gt;
+                  {{ crypto }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;div *ngIf&#x3D;&quot;loadingCryptoAddress&quot; class&#x3D;&quot;processing-container&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+              &lt;p&gt;Generating deposit address...&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;div
+              *ngIf&#x3D;&quot;cryptoDepositAddress &amp;&amp; !loadingCryptoAddress&quot;
+              class&#x3D;&quot;crypto-address-container&quot;
+            &gt;
+              &lt;h3&gt;Deposit Address&lt;/h3&gt;
+
+              &lt;div class&#x3D;&quot;qr-code&quot;&gt;
+                &lt;qrcode
+                  [qrdata]&#x3D;&quot;cryptoDepositAddress.address&quot;
+                  [width]&#x3D;&quot;200&quot;
+                  [errorCorrectionLevel]&#x3D;&quot;&#x27;M&#x27;&quot;
+                &gt;
+                &lt;/qrcode&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;address-container&quot;&gt;
+                &lt;p class&#x3D;&quot;address-label&quot;&gt;{{ selectedCrypto }} Address:&lt;/p&gt;
+                &lt;div class&#x3D;&quot;address&quot;&gt;
+                  &lt;code&gt;{{ cryptoDepositAddress.address }}&lt;/code&gt;
+                  &lt;button
+                    mat-icon-button
+                    [cdkCopyToClipboard]&#x3D;&quot;cryptoDepositAddress.address&quot;
+                    (click)&#x3D;&quot;notifyAddressCopied()&quot;
+                  &gt;
+                    &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div *ngIf&#x3D;&quot;cryptoDepositAddress.network&quot; class&#x3D;&quot;network-info&quot;&gt;
+                &lt;p&gt;&lt;strong&gt;Network:&lt;/strong&gt; {{ cryptoDepositAddress.network }}&lt;/p&gt;
+              &lt;/div&gt;
+
+              &lt;div *ngIf&#x3D;&quot;cryptoDepositAddress.memo&quot; class&#x3D;&quot;memo-container&quot;&gt;
+                &lt;p class&#x3D;&quot;memo-label&quot;&gt;&lt;strong&gt;Memo/Tag (Required):&lt;/strong&gt;&lt;/p&gt;
+                &lt;div class&#x3D;&quot;memo&quot;&gt;
+                  &lt;code&gt;{{ cryptoDepositAddress.memo }}&lt;/code&gt;
+                  &lt;button
+                    mat-icon-button
+                    [cdkCopyToClipboard]&#x3D;&quot;cryptoDepositAddress.memo&quot;
+                    (click)&#x3D;&quot;notifyMemoCopied()&quot;
+                  &gt;
+                    &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;crypto-instructions&quot;&gt;
+                &lt;p&gt;
+                  Send only {{ selectedCrypto }} to this address. Sending any other cryptocurrency
+                  may result in permanent loss.
+                &lt;/p&gt;
+                &lt;p&gt;
+                  Your deposit will be credited to your wallet after network confirmation (typically
+                  10-60 minutes).
+                &lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/mat-tab&gt;
+      &lt;/mat-tab-group&gt;
+    &lt;/mat-dialog-content&gt;
+
+    &lt;mat-dialog-actions align&#x3D;&quot;end&quot;&gt;
+      &lt;button mat-button mat-dialog-close&gt;Cancel&lt;/button&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;primary&quot;
+        [disabled]&#x3D;&quot;depositForm.invalid || processingDeposit || cardPaymentMethods.length &#x3D;&#x3D;&#x3D; 0&quot;
+        (click)&#x3D;&quot;depositFiat()&quot;
+        *ngIf&#x3D;&quot;!cryptoDepositAddress&quot;
+      &gt;
+        Deposit
+      &lt;/button&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; mat-dialog-close *ngIf&#x3D;&quot;cryptoDepositAddress&quot;&gt;
+        Done
+      &lt;/button&gt;
+    &lt;/mat-dialog-actions&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .deposit-form {
+        padding: 16px 0;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      .no-payment-methods {
+        margin: 16px 0;
+        text-align: center;
+
+        p {
+          margin-bottom: 16px;
+          color: #f44336;
+        }
+      }
+
+      .processing-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 0;
+
+        p {
+          margin-top: 16px;
+        }
+      }
+
+      .crypto-deposit-container {
+        padding: 16px 0;
+      }
+
+      .crypto-address-container {
+        margin-top: 24px;
+
+        h3 {
+          margin-bottom: 16px;
+        }
+      }
+
+      .qr-code {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .address-container,
+      .memo-container {
+        margin-bottom: 16px;
+      }
+
+      .address-label,
+      .memo-label {
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .address,
+      .memo {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding: 8px 16px;
+        border-radius: 4px;
+
+        code {
+          flex: 1;
+          word-break: break-all;
+          font-family: monospace;
+        }
+      }
+
+      .network-info {
+        margin-bottom: 16px;
+      }
+
+      .crypto-instructions {
+        margin-top: 24px;
+        padding: 16px;
+        background-color: #fff8e1;
+        border-radius: 4px;
+
+        p {
+          margin-bottom: 8px;
+
+          &amp;:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    &#x60;,
+  ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    QRCodeModule,
+    ClipboardModule,
+  ],
+})
+export class DepositDialogComponent implements OnInit {
+  depositForm: FormGroup;
+  processingDeposit &#x3D; false;
+  loadingCryptoAddress &#x3D; false;
+
+  // Crypto deposit
+  selectedCrypto &#x3D; &#x27;BTC&#x27;;
+  cryptoDepositAddress: CryptoDepositAddress | null &#x3D; null;
+
+  // Filtered currencies and payment methods
+  fiatCurrencies: string[] &#x3D; [];
+  cryptocurrencies: string[] &#x3D; [];
+  cardPaymentMethods: PaymentMethod[] &#x3D; [];
+
+  constructor(
+    private dialogRef: MatDialogRef&lt;DepositDialogComponent&gt;,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      currencies: string[];
+      paymentMethods: PaymentMethod[];
+      selectedCurrency: string;
+    },
+    private fb: FormBuilder,
+    private walletService: WalletService,
+    private paymentService: PaymentService,
+    private notificationService: NotificationService,
+    private snackBar: MatSnackBar
+  ) {
+    // Initialize form
+    this.depositForm &#x3D; this.fb.group({
+      currency: [data.selectedCurrency, Validators.required],
+      amount: [1000, [Validators.required, Validators.min(1000)]],
+      paymentMethodId: [&#x27;&#x27;, Validators.required],
+    });
+
+    // Filter currencies
+    this.fiatCurrencies &#x3D; this.walletService.SUPPORTED_CURRENCIES;
+    this.cryptocurrencies &#x3D; this.walletService.SUPPORTED_CRYPTOCURRENCIES;
+
+    // Filter payment methods (only cards for fiat deposits)
+    this.cardPaymentMethods &#x3D; data.paymentMethods.filter(method &#x3D;&gt; method.type &#x3D;&#x3D;&#x3D; &#x27;card&#x27;);
+
+    // Set default payment method if available
+    const defaultCard &#x3D; this.cardPaymentMethods.find(method &#x3D;&gt; method.isDefault);
+    if (defaultCard) {
+      this.depositForm.patchValue({ paymentMethodId: defaultCard._id });
+    } else if (this.cardPaymentMethods.length &gt; 0) {
+      this.depositForm.patchValue({ paymentMethodId: this.cardPaymentMethods[0]._id });
+    }
+  }
+
+  ngOnInit(): void {}
+
+  /**
+   * Deposit fiat currency
+   */
+  depositFiat(): void {
+    if (this.depositForm.invalid) {
+      return;
+    }
+
+    const { currency, amount, paymentMethodId } &#x3D; this.depositForm.value;
+
+    this.processingDeposit &#x3D; true;
+
+    this.walletService.depositFundsWithStripe(amount, currency, paymentMethodId).subscribe({
+      next: result &#x3D;&gt; {
+        this.processingDeposit &#x3D; false;
+        this.notificationService.success(
+          &#x60;Successfully deposited ${this.walletService.formatCurrency(amount, currency)}&#x60;
+        );
+        this.dialogRef.close(true);
+      },
+      error: error &#x3D;&gt; {
+        this.processingDeposit &#x3D; false;
+        console.error(&#x27;Error depositing funds:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to deposit funds. Please try again.&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Get crypto deposit address
+   */
+  getCryptoDepositAddress(): void {
+    this.loadingCryptoAddress &#x3D; true;
+    this.cryptoDepositAddress &#x3D; null;
+
+    this.walletService.getCryptoDepositAddress(this.selectedCrypto).subscribe({
+      next: address &#x3D;&gt; {
+        this.cryptoDepositAddress &#x3D; address;
+        this.loadingCryptoAddress &#x3D; false;
+      },
+      error: error &#x3D;&gt; {
+        this.loadingCryptoAddress &#x3D; false;
+        console.error(&#x27;Error getting crypto deposit address:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to generate deposit address. Please try again.&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Close dialog and open add payment method dialog
+   */
+  closeAndOpenAddPaymentMethod(): void {
+    this.dialogRef.close(&#x27;add-payment-method&#x27;);
+  }
+
+  /**
+   * Get payment method display name
+   */
+  getPaymentMethodDisplayName(paymentMethod: PaymentMethod): string {
+    if (paymentMethod.type &#x3D;&#x3D;&#x3D; &#x27;card&#x27; &amp;&amp; paymentMethod.cardDetails) {
+      return &#x60;${paymentMethod.cardDetails.brand} •••• ${paymentMethod.cardDetails.lastFour}&#x60;;
+    }
+    return &#x27;Card&#x27;;
+  }
+
+  /**
+   * Show notification when address is copied
+   */
+  notifyAddressCopied(): void {
+    this.snackBar.open(&#x27;Address copied to clipboard&#x27;, &#x27;Dismiss&#x27;, {
+      duration: 3000,
+    });
+  }
+
+  /**
+   * Show notification when memo is copied
+   */
+  notifyMemoCopied(): void {
+    this.snackBar.open(&#x27;Memo copied to clipboard&#x27;, &#x27;Dismiss&#x27;, {
+      duration: 3000,
+    });
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .deposit-form {
+        padding: 16px 0;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      .no-payment-methods {
+        margin: 16px 0;
+        text-align: center;
+
+        p {
+          margin-bottom: 16px;
+          color: #f44336;
+        }
+      }
+
+      .processing-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 0;
+
+        p {
+          margin-top: 16px;
+        }
+      }
+
+      .crypto-deposit-container {
+        padding: 16px 0;
+      }
+
+      .crypto-address-container {
+        margin-top: 24px;
+
+        h3 {
+          margin-bottom: 16px;
+        }
+      }
+
+      .qr-code {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .address-container,
+      .memo-container {
+        margin-bottom: 16px;
+      }
+
+      .address-label,
+      .memo-label {
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .address,
+      .memo {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding: 8px 16px;
+        border-radius: 4px;
+
+        code {
+          flex: 1;
+          word-break: break-all;
+          font-family: monospace;
+        }
+      }
+
+      .network-info {
+        margin-bottom: 16px;
+      }
+
+      .crypto-instructions {
+        margin-top: 24px;
+        padding: 16px;
+        background-color: #fff8e1;
+        border-radius: 4px;
+
+        p {
+          margin-bottom: 8px;
+
+          &amp;:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><h2 mat-dialog-title>Deposit Funds</h2><mat-dialog-content>  <mat-tab-group animationDuration="0ms">    <!-- Fiat Currency Deposit -->    <mat-tab label="Fiat Currency">      <form [formGroup]="depositForm" class="deposit-form">        <mat-form-field appearance="outline" class="full-width">          <mat-label>Currency</mat-label>          <mat-select formControlName="currency">            <mat-option *ngFor="let currency of fiatCurrencies" [value]="currency">              {{ currency }}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="outline" class="full-width">          <mat-label>Amount</mat-label>          <input matInput type="number" formControlName="amount" min="1" />          <span matTextSuffix>{{ depositForm.get(\'currency\')?.value }}</span>          <mat-hint>Minimum deposit: 10 {{ depositForm.get(\'currency\')?.value }}</mat-hint>          <mat-error *ngIf="depositForm.get(\'amount\')?.hasError(\'required\')">            Amount is required          </mat-error>          <mat-error *ngIf="depositForm.get(\'amount\')?.hasError(\'min\')">            Minimum amount is 10 {{ depositForm.get(\'currency\')?.value }}          </mat-error>        </mat-form-field>        <mat-form-field appearance="outline" class="full-width">          <mat-label>Payment Method</mat-label>          <mat-select formControlName="paymentMethodId">            <mat-option *ngFor="let method of cardPaymentMethods" [value]="method._id">              {{ getPaymentMethodDisplayName(method) }}            </mat-option>          </mat-select>          <mat-error *ngIf="depositForm.get(\'paymentMethodId\')?.hasError(\'required\')">            Payment method is required          </mat-error>        </mat-form-field>        <div *ngIf="cardPaymentMethods.length === 0" class="no-payment-methods">          <p>You don\'t have any payment methods. Please add a payment method first.</p>          <button mat-raised-button color="primary" (click)="closeAndOpenAddPaymentMethod()">            Add Payment Method          </button>        </div>        <div *ngIf="processingDeposit" class="processing-container">          <mat-spinner diameter="30"></mat-spinner>          <p>Processing your deposit...</p>        </div>      </form>    </mat-tab>    <!-- Cryptocurrency Deposit -->    <mat-tab label="Cryptocurrency">      <div class="crypto-deposit-container">        <mat-form-field appearance="outline" class="full-width">          <mat-label>Cryptocurrency</mat-label>          <mat-select            [(ngModel)]="selectedCrypto"            (selectionChange)="getCryptoDepositAddress()"          >            <mat-option *ngFor="let crypto of cryptocurrencies" [value]="crypto">              {{ crypto }}            </mat-option>          </mat-select>        </mat-form-field>        <div *ngIf="loadingCryptoAddress" class="processing-container">          <mat-spinner diameter="30"></mat-spinner>          <p>Generating deposit address...</p>        </div>        <div          *ngIf="cryptoDepositAddress && !loadingCryptoAddress"          class="crypto-address-container"        >          <h3>Deposit Address</h3>          <div class="qr-code">            <qrcode              [qrdata]="cryptoDepositAddress.address"              [width]="200"              [errorCorrectionLevel]="\'M\'"            >            </qrcode>          </div>          <div class="address-container">            <p class="address-label">{{ selectedCrypto }} Address:</p>            <div class="address">              <code>{{ cryptoDepositAddress.address }}</code>              <button                mat-icon-button                [cdkCopyToClipboard]="cryptoDepositAddress.address"                (click)="notifyAddressCopied()"              >                <mat-icon>content_copy</mat-icon>              </button>            </div>          </div>          <div *ngIf="cryptoDepositAddress.network" class="network-info">            <p><strong>Network:</strong> {{ cryptoDepositAddress.network }}</p>          </div>          <div *ngIf="cryptoDepositAddress.memo" class="memo-container">            <p class="memo-label"><strong>Memo/Tag (Required):</strong></p>            <div class="memo">              <code>{{ cryptoDepositAddress.memo }}</code>              <button                mat-icon-button                [cdkCopyToClipboard]="cryptoDepositAddress.memo"                (click)="notifyMemoCopied()"              >                <mat-icon>content_copy</mat-icon>              </button>            </div>          </div>          <div class="crypto-instructions">            <p>              Send only {{ selectedCrypto }} to this address. Sending any other cryptocurrency              may result in permanent loss.            </p>            <p>              Your deposit will be credited to your wallet after network confirmation (typically              10-60 minutes).            </p>          </div>        </div>      </div>    </mat-tab>  </mat-tab-group></mat-dialog-content><mat-dialog-actions align="end">  <button mat-button mat-dialog-close>Cancel</button>  <button    mat-raised-button    color="primary"    [disabled]="depositForm.invalid || processingDeposit || cardPaymentMethods.length === 0"    (click)="depositFiat()"    *ngIf="!cryptoDepositAddress"  >    Deposit  </button>  <button mat-raised-button color="primary" mat-dialog-close *ngIf="cryptoDepositAddress">    Done  </button></mat-dialog-actions></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DepositDialogComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DepositDialogComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

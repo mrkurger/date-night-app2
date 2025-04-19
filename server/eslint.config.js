@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for configuration settings (eslint.config)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
 import eslint from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
@@ -10,7 +19,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Create a compatibility instance
-const compat = new FlatCompat({
+// FlatCompat instance is created but not currently used
+// Keeping it for potential future use
+new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: eslint.configs.recommended,
 });

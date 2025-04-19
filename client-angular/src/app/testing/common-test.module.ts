@@ -6,6 +6,15 @@
 // USAGE:
 // Import this module in your test setup to get access to common mocks
 // ===================================================
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for common-test.module settings
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';

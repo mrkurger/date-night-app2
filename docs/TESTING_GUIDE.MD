@@ -11,11 +11,13 @@ The testing framework is organized into several categories:
 ### Server-side Testing
 
 1. **Unit Tests**
+
    - Location: `server/tests/unit/`
    - Purpose: Test individual functions, methods, and classes in isolation
    - Tools: Jest
 
 2. **Integration Tests**
+
    - Location: `server/tests/integration/`
    - Purpose: Test interactions between components and API endpoints
    - Tools: Jest, Supertest
@@ -28,6 +30,7 @@ The testing framework is organized into several categories:
 ### Client-side Testing
 
 1. **Unit Tests**
+
    - Location: `client-angular/src/app/**/*.spec.ts`
    - Purpose: Test individual Angular components, services, and pipes
    - Tools: Jasmine, Karma
@@ -98,12 +101,14 @@ Angular tests use Karma, which is configured in `client-angular/karma.conf.js`.
 ### Server-side Test Guidelines
 
 1. **Unit Tests**
+
    - Test one function or method at a time
    - Mock all external dependencies
    - Use the test helpers in `server/tests/helpers.js`
    - Follow the AAA pattern: Arrange, Act, Assert
 
 2. **Integration Tests**
+
    - Use the in-memory MongoDB database provided by `server/tests/setup.js`
    - Test complete API flows
    - Verify both successful and error responses
@@ -116,6 +121,7 @@ Angular tests use Karma, which is configured in `client-angular/karma.conf.js`.
 ### Client-side Test Guidelines
 
 1. **Component Tests**
+
    - Test component initialization
    - Test form validation
    - Test user interactions
@@ -127,7 +133,7 @@ Angular tests use Karma, which is configured in `client-angular/karma.conf.js`.
    - Test state management
    - Test error handling
 
-> **Note:** For detailed Angular testing patterns, common issues, and solutions, refer to [UnitTestingLessons.md](./UnitTestingLessons.md)
+> **Note:** For detailed Angular testing patterns, common issues, and solutions, refer to [UNITTESTINGLESSONS.MD](./UnitTestingLessons.md)
 
 ## Test Helpers and Utilities
 
@@ -175,10 +181,12 @@ Use `npm run analyze:security` to run security audits.
 Common issues and solutions:
 
 1. **Tests timing out**
+
    - Increase timeout in Jest configuration
    - Check for infinite loops or unresolved promises
 
 2. **Database connection issues**
+
    - Verify MongoDB is running for integration tests
    - Check that the in-memory database is properly configured
 
@@ -189,10 +197,12 @@ Common issues and solutions:
 ## Best Practices
 
 1. **Test Coverage**
+
    - Aim for at least 70% code coverage
    - Focus on critical business logic and security features
 
 2. **Test Maintenance**
+
    - Update tests when changing functionality
    - Refactor tests to reduce duplication
    - Keep tests fast and reliable
@@ -205,5 +215,3 @@ Common issues and solutions:
 ## Conclusion
 
 A comprehensive testing strategy is essential for maintaining code quality, performance, and security in the Date Night App. By following this guide, developers can ensure that their code meets the project's standards and provides a reliable experience for users.
-
-<!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. -->

@@ -9,10 +9,11 @@ export interface Favorite {
   notificationsEnabled: boolean;
   tags: string[];
   priority: 'low' | 'normal' | 'high';
-  lastViewed?: Date;
-  lastNotified?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  lastViewed?: Date | string;
+  lastNotified?: Date | string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  selected?: boolean; // UI state for selection in lists
 }
 
 export interface FavoriteCreateData {

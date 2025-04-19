@@ -19,7 +19,7 @@ import {
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ad } from '../../../../core/models/ad.interface';
+// import { Ad } from '../../../../core/models/ad.interface';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { AppCardComponent } from '../app-card/app-card.component';
 
@@ -144,7 +144,7 @@ export class CardGridComponent {
   /**
    * Handle card click event
    */
-  handleCardClick(id: string): void {
+  handleCardClick(_id: string): void {
     // Prevent double click handling
     event?.stopPropagation();
   }
@@ -152,7 +152,7 @@ export class CardGridComponent {
   /**
    * Handle action click event
    */
-  handleActionClick(event: any): void {
+  handleActionClick(_event: unknown): void {
     // Handle action click
   }
 }

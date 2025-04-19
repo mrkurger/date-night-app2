@@ -29,6 +29,11 @@ coverage/
 tmp/
 **/tmp/
 test-results/
+downloaded-reports/workflow-errors/
+
+# Generated JSON files from workflows
+snyk-*.json
+npm-*-deps-tree.json
 
 # Angular specific
 **/.angular/cache

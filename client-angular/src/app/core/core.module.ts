@@ -33,7 +33,7 @@ import { SafetyService } from './services/safety.service';
 import { VerificationService } from './services/verification.service';
 
 // Interceptors
-import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor.simple';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CSPInterceptor } from './interceptors/csp.interceptor';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
@@ -58,13 +58,27 @@ export function csrfInterceptorFactory(csrfService: CsrfService) {
   return new CsrfInterceptor(csrfService);
 }
 
-export function httpErrorInterceptorFactory(
-  router: Router,
-  notificationService: NotificationService,
-  telemetryService: TelemetryService,
-  authService: AuthService
-) {
-  return new HttpErrorInterceptor(router, notificationService, telemetryService, authService);
+export function httpErrorInterceptorFactory() {
+  const interceptor = new HttpErrorInterceptor();
+
+  // Configure the interceptor with default settings
+  interceptor.configure({
+    showNotifications: true,
+    retryFailedRequests: true,
+    maxRetryAttempts: 2,
+    retryDelay: 1000,
+    redirectToLogin: true,
+    logErrors: true,
+    includeRequestDetails: false,
+    trackErrors: true,
+    trackPerformance: false,
+    groupSimilarErrors: true,
+    retryJitter: 200,
+    sanitizeSensitiveData: true,
+    skipUrls: ['/assets/', '/api/health'],
+  });
+
+  return interceptor;
 }
 
 /**

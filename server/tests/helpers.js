@@ -10,10 +10,11 @@
 //   Related to: server/services/auth.service.js
 // ===================================================
 
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
-const User = require('../models/user.model');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
+import User from '../models/user.model.js';
+import { jest } from '@jest/globals';
 
 // Default test user data
 const TEST_USER_DATA = {
@@ -218,7 +219,7 @@ const createTimingUtil = () => {
   };
 };
 
-module.exports = {
+export {
   TEST_USER_DATA,
   TEST_AD_DATA,
   TEST_MESSAGE_DATA,
