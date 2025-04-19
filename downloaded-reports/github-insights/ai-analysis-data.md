@@ -1,6 +1,6 @@
 # GitHub Insights for AI Analysis
 
-*Generated on: 2025-04-18*
+*Generated on: 2025-04-19*
 
 This file contains structured data from GitHub that can be analyzed by AI assistants to provide insights and recommendations for the project.
 
@@ -13,16 +13,16 @@ This file contains structured data from GitHub that can be analyzed by AI assist
 
 ## Workflow Status
 
-- Sync Snyk Issues: in_progress
-- Sync Snyk Issues: in_progress
 - Sync GitHub Insights (Fixed): in_progress
-- Sync Workflow Error Logs: success
-- npm_and_yarn in  for @octokit/request-error - Update #1000932985: failure
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Workflow Error Logs: success
 - Sync Test Reports: success
+- Sync Workflow Error Logs: success
+- Sync Workflow Error Logs: success
+- Sync Test Reports: failure
+- Sync Workflow Error Logs: success
 
 ## Security Alerts
 

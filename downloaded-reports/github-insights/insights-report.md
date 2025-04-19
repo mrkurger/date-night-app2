@@ -1,6 +1,6 @@
 # GitHub Insights Report
 
-*Generated on: 2025-04-18*
+*Generated on: 2025-04-19*
 
 ## Repository Information
 
@@ -15,11 +15,11 @@
 
 | Workflow | Status | Started | Duration |
 |----------|--------|---------|----------|
-| Sync Snyk Issues | in_progress | 2025-04-18 | 0m 3s |
-| Sync Snyk Issues | in_progress | 2025-04-18 | 0m 4s |
-| Sync GitHub Insights (Fixed) | in_progress | 2025-04-18 | 0m 4s |
-| Sync Workflow Error Logs | success | 2025-04-18 | 1m 51s |
-| npm_and_yarn in  for @octokit/request-error - Update #1000932985 | failure | 2025-04-18 | 1m 3s |
+| Sync GitHub Insights (Fixed) | in_progress | 2025-04-19 | 0m 4s |
+| Sync Workflow Error Logs | success | 2025-04-18 | 2m 23s |
+| Sync Workflow Error Logs | success | 2025-04-18 | 2m 23s |
+| Sync Workflow Error Logs | success | 2025-04-18 | 1m 54s |
+| Sync Workflow Error Logs | success | 2025-04-18 | 2m 20s |
 
 ## Dependabot Security Alerts
 
@@ -33,11 +33,11 @@
 
 | Title | Status | Author | Updated |
 |-------|--------|--------|--------|
+| [#8: Docs upgrade script](https://github.com/mrkurger/date-night-app2/pull/8) | ✅ Merged | mrkurger | 2025-04-18 |
 | [#5: Bump @octokit/request and @octokit/rest](https://github.com/mrkurger/date-night-app2/pull/5) | ❌ Closed | dependabot[bot] | 2025-04-18 |
 | [#6: Bump @octokit/request-error and @octokit/rest](https://github.com/mrkurger/date-night-app2/pull/6) | ❌ Closed | dependabot[bot] | 2025-04-18 |
 | [#7: Bump @octokit/plugin-paginate-rest and @octokit/rest](https://github.com/mrkurger/date-night-app2/pull/7) | ❌ Closed | dependabot[bot] | 2025-04-18 |
 | [#2: Bump semver and nodemon in /server](https://github.com/mrkurger/date-night-app2/pull/2) | ❌ Closed | dependabot[bot] | 2025-04-16 |
-| [#3: ci(deps): bump dawidd6/action-download-artifact from 2 to 9](https://github.com/mrkurger/date-night-app2/pull/3) | ✅ Merged | dependabot[bot] | 2025-04-16 |
 
 ## Recent Issues
 
