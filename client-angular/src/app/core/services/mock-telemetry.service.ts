@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
-import { ErrorCategory } from '../interceptors/http-error.interceptor';
+import { ErrorCategory } from '../interceptors/http-error.interceptor.original'; // Added .original
 
 /**
  * Mock implementation of the telemetry service for development and testing
@@ -41,7 +41,7 @@ export class MockTelemetryService {
     };
 
     this.errors.push(errorData);
-    console.log('Tracked error:', errorData);
+    console.debug('Tracked error:', errorData); // Changed to console.debug
     return of({ success: true }).pipe(delay(100));
   }
 
@@ -67,7 +67,7 @@ export class MockTelemetryService {
     };
 
     this.performance.push(performanceData);
-    console.log('Tracked performance:', performanceData);
+    console.debug('Tracked performance:', performanceData); // Changed to console.debug
     return of({ success: true }).pipe(delay(100));
   }
 

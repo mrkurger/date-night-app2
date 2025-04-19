@@ -8,15 +8,16 @@
 //   Related to: server/config/csp.config.js
 // ===================================================
 
-const request = require('supertest');
-const express = require('express');
-const securityHeaders = require('../../../middleware/securityHeaders');
-const {
-  middleware: cspMiddleware,
+import request from 'supertest';
+import express from 'express';
+import securityHeaders from '../../../middleware/securityHeaders.js';
+import {
+  middleware as cspMiddleware,
   setupReportEndpoint,
-} = require('../../../middleware/csp.middleware');
-const cspConfig = require('../../../config/csp.config');
-const helmet = require('helmet');
+} from '../../../middleware/csp.middleware.js';
+import cspConfig from '../../../config/csp.config.js';
+import helmet from 'helmet';
+import { jest } from '@jest/globals';
 
 describe('Security Middleware', () => {
   let app;

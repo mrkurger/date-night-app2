@@ -7,10 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const User = require('../models/user.model');
-const Ad = require('../models/ad.model');
-const { AppError } = require('../middleware/errorHandler');
+import Stripe from 'stripe';
+import User from '../models/user.model.js';
+import Ad from '../models/ad.model.js';
+import { AppError } from '../middleware/errorHandler.js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 /**
  * Payment Service for handling subscriptions and one-time payments
@@ -527,4 +529,4 @@ class PaymentService {
   }
 }
 
-module.exports = new PaymentService();
+export default new PaymentService();

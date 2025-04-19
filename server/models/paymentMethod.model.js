@@ -6,7 +6,7 @@
 // COMMON CUSTOMIZATIONS:
 // - PAYMENT_METHOD_TYPES: List of supported payment method types (default: ['card', 'bank_account', 'crypto_address'])
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define the payment method schema
 const paymentMethodSchema = new mongoose.Schema(
@@ -73,4 +73,6 @@ paymentMethodSchema.index({ 'cardDetails.tokenId': 1 });
 paymentMethodSchema.index({ 'bankDetails.tokenId': 1 });
 paymentMethodSchema.index({ 'cryptoDetails.address': 1 });
 
-module.exports = mongoose.model('PaymentMethod', paymentMethodSchema);
+const PaymentMethod =
+  mongoose.models.PaymentMethod || mongoose.model('PaymentMethod', paymentMethodSchema);
+export default PaymentMethod;

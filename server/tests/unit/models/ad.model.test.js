@@ -8,11 +8,11 @@
 //   Related to: server/tests/helpers.js:TEST_AD_DATA
 // ===================================================
 
-const mongoose = require('mongoose');
-const Ad = require('../../../models/ad.model');
-const User = require('../../../models/user.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { TEST_AD_DATA, createTestUser } = require('../../helpers');
+import mongoose from 'mongoose';
+import Ad from '../../../models/ad.model.js';
+import User from '../../../models/user.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { TEST_AD_DATA, createTestUser } from '../../helpers.js';
 
 describe('Ad Model', () => {
   let testUser;

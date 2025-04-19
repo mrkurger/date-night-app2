@@ -8,7 +8,7 @@
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser';
-import { DebugElement, Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppCardComponent } from './app-card.component';

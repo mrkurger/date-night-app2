@@ -13,7 +13,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AdService } from './ad.service';
 import { environment } from '../../../environments/environment';
 import { Ad } from '../models/ad.interface';
-import { of } from 'rxjs';
+// import { of } from 'rxjs'; // Unused import
 
 describe('AdService', () => {
   let service: AdService;

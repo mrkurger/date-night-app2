@@ -14,12 +14,14 @@
 // - DEPOSIT_FEE_PERCENTAGE: Fee percentage for deposits (default: 1.5)
 // - CRYPTO_WITHDRAWAL_FEE: Fixed fee for crypto withdrawals in smallest currency unit (default: 5000 = 50 NOK)
 // ===================================================
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const Wallet = require('../models/wallet.model');
-const User = require('../models/user.model');
-const { AppError } = require('../middleware/errorHandler');
-const axios = require('axios');
-const crypto = require('crypto');
+import Stripe from 'stripe';
+import Wallet from '../models/wallet.model.js';
+import User from '../models/user.model.js';
+import { AppError } from '../middleware/errorHandler.js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import axios from 'axios';
+import crypto from 'crypto';
 
 // Constants
 const SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP'];
@@ -1030,4 +1032,5 @@ class WalletService {
   }
 }
 
-module.exports = new WalletService();
+const walletService = new WalletService();
+export { walletService as default };

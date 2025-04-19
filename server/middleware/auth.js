@@ -162,8 +162,9 @@ exports.optionalAuth = async (req, res, next) => {
     }
 
     next();
-  } catch (_) {
+  } catch (/* eslint-disable-line no-unused-vars */ error) {
     // Continue without authentication if token is invalid
+    // Error is intentionally not used
     next();
   }
 };

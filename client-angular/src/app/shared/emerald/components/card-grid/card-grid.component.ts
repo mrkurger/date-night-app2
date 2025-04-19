@@ -143,16 +143,20 @@ export class CardGridComponent {
 
   /**
    * Handle card click event
+   * @param _id The ID of the card that was clicked
    */
   handleCardClick(_id: string): void {
     // Prevent double click handling
     event?.stopPropagation();
+    // Implementation can be added here when needed
   }
 
   /**
    * Handle action click event
+   * @param _actionEvent The event data from the action click
    */
-  handleActionClick(_event: unknown): void {
+  handleActionClick(_actionEvent: unknown): void {
     // Handle action click
+    // Implementation can be added here when needed
   }
 }

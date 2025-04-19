@@ -10,25 +10,26 @@
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
 // ===================================================
 
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const { authenticate, optionalAuth, restrictTo } = require('../../../middleware/auth');
-const User = require('../../../models/user.model');
-const TokenBlacklist = require('../../../models/token-blacklist.model');
-const authService = require('../../../services/auth.service');
-const {
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+import { authenticate, optionalAuth, restrictTo } from '../../../middleware/auth.js';
+import User from '../../../models/user.model.js';
+import TokenBlacklist from '../../../models/token-blacklist.model.js';
+import authService from '../../../services/auth.service.js';
+import {
   mockRequest,
   mockResponse,
   mockNext,
   generateTestToken,
   TEST_USER_DATA,
-} = require('../../helpers');
-const { mockModel } = require('../../setup');
+} from '../../helpers.js';
+import { mockModel } from '../../setup.js';
+import { jest } from '@jest/globals';
 
 // Mock the User and TokenBlacklist models
-jest.mock('../../../models/user.model');
-jest.mock('../../../models/token-blacklist.model');
-jest.mock('../../../services/auth.service');
+jest.mock('../../../models/user.model.js');
+jest.mock('../../../models/token-blacklist.model.js');
+jest.mock('../../../services/auth.service.js');
 
 describe('Auth Middleware', () => {
   let req, res, next;

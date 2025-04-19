@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { AuthService } from '../services/auth.service';
-import { Dictionary, ApiResponse } from '../../shared/types/common.types';
+// import { Dictionary, ApiResponse } from '../../shared/types/common.types'; // Unused imports
 
 /**
  * Configuration options for the HTTP error interceptor
@@ -296,7 +296,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else if (response.body) {
       try {
         responseSize = new Blob([JSON.stringify(response.body)]).size;
-      } catch (_) {
+      } catch (_error) {
         // Ignore if we can't calculate size
       }
     }

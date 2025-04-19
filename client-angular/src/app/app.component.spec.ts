@@ -24,7 +24,7 @@ import { ThemeService } from './core/services/theme.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
-import { By } from '@angular/platform-browser';
+// import { By } from '@angular/platform-browser'; // Unused import
 
 /**
  * Test suite for the AppComponent

@@ -91,7 +91,8 @@ const validateCsrfToken = (req, res, next) => {
   try {
     validateRequest(req, res);
     next();
-  } catch (_) {
+  } catch (/* eslint-disable-line no-unused-vars */ error) {
+    // Error details intentionally not used to avoid leaking security information
     res.status(403).json({
       success: false,
       message: 'Invalid or missing CSRF token. Please refresh the page and try again.',

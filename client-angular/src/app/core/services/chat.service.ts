@@ -10,9 +10,9 @@
 // ===================================================
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http'; // Removed HttpEventType
 import { BehaviorSubject, Observable, of, from } from 'rxjs';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators'; // Removed tap
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
 import { EncryptionService, EncryptedData } from './encryption.service';

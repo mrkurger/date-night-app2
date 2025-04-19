@@ -8,11 +8,11 @@
 //   Related to: server/tests/helpers.js:TEST_MESSAGE_DATA
 // ===================================================
 
-const mongoose = require('mongoose');
-const ChatMessage = require('../../../models/chat-message.model');
-const User = require('../../../models/user.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { TEST_USER_DATA, TEST_MESSAGE_DATA } = require('../../helpers');
+import mongoose from 'mongoose';
+import ChatMessage from '../../../models/chat-message.model.js';
+import User from '../../../models/user.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { TEST_USER_DATA, TEST_MESSAGE_DATA } from '../../helpers.js';
 
 describe('ChatMessage Model', () => {
   let sender;

@@ -8,12 +8,12 @@
 //   Related to: server/models/paymentMethod.model.js
 // ===================================================
 
-const mongoose = require('mongoose');
-const PaymentMethod = require('../../../models/paymentMethod.model');
-const User = require('../../../models/user.model');
-const Wallet = require('../../../models/wallet.model');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const { createTestUser } = require('../../helpers');
+import mongoose from 'mongoose';
+import PaymentMethod from '../../../models/paymentMethod.model.js';
+import User from '../../../models/user.model.js';
+import Wallet from '../../../models/wallet.model.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { createTestUser } from '../../helpers.js';
 
 // Test data for payment methods
 const TEST_CARD_PAYMENT_METHOD = {

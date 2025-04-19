@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+// import { By } from '@angular/platform-browser'; // Commented out as it's currently unused
 import { ChangeDetectorRef } from '@angular/core';
 import { ChatMessageComponent } from './chat-message.component';
 import { EncryptionService } from '../../../core/services/encryption.service';
@@ -12,8 +12,10 @@ describe('ChatMessageComponent', () => {
   let component: ChatMessageComponent;
   let fixture: ComponentFixture<ChatMessageComponent>;
   let encryptionServiceSpy: jasmine.SpyObj<EncryptionService>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let changeDetectorRefSpy: jasmine.SpyObj<ChangeDetectorRef>;
+  // These spies are created but not used in current tests
+  // Will be used in future test implementations
+  // let authServiceSpy: jasmine.SpyObj<AuthService>;
+  // let changeDetectorRefSpy: jasmine.SpyObj<ChangeDetectorRef>;
 
   beforeEach(async () => {
     const encryptionSpy = jasmine.createSpyObj('EncryptionService', ['decryptMessage']);

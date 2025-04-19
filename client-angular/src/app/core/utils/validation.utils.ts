@@ -54,7 +54,8 @@ export function isValidUrl(url: string): boolean {
     // Otherwise, try to create a URL object
     new URL(url);
     return true;
-  } catch (error) {
+  } catch {
+    // Removed unused 'error' variable
     return false;
   }
 }
@@ -278,7 +279,7 @@ export function isValidCreditCard(cardNumber: string): boolean {
 
   // Loop through the digits in reverse order
   for (let i = sanitizedNumber.length - 1; i >= 0; i--) {
-    let digit = parseInt(sanitizedNumber.charAt(i));
+    let digit = parseInt(sanitizedNumber.charAt(i), 10); // Add radix 10
 
     if (shouldDouble) {
       digit *= 2;

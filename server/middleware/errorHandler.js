@@ -10,7 +10,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-class AppError extends Error {
+import { logger } from '../utils/logger.js';
+
+export class AppError extends Error {
   constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
@@ -58,8 +60,7 @@ const handleCastErrorDB = err => {
   return new AppError(message, 400);
 };
 
-// Import logger
-const { logger } = require('../utils/logger');
+// Logger is imported at the top of the file
 
 /**
  * Send error response in development environment
@@ -140,13 +141,20 @@ const sendErrorProd = (err, req, res) => {
  * @param {Function} _next - Express next function (not used as this is the final handler)
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (err, req, res, _next) => {
+export default (err, req, res, _next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
   // Ensure correlation ID is available
   if (!req.correlationId) {
-    req.correlationId = require('uuid').v4();
+    // Import uuid dynamically
+    import('uuid')
+      .then(uuid => {
+        req.correlationId = uuid.v4();
+      })
+      .catch(() => {
+        req.correlationId = `fallback-${Date.now()}`;
+      });
   }
 
   // Different error handling for development and production
@@ -176,4 +184,4 @@ module.exports = (err, req, res, _next) => {
 };
 
 // Export the AppError class for use in other files
-module.exports.AppError = AppError;
+// AppError is exported at the top of the file

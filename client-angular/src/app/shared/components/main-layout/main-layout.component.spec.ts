@@ -25,8 +25,10 @@ describe('MainLayoutComponent', () => {
   let themeServiceMock: jasmine.SpyObj<ThemeService>;
   let isDarkModeMock: BehaviorSubject<boolean>;
   let themeMock: BehaviorSubject<'light' | 'dark' | 'system'>;
-  let localStorageSpy: jasmine.Spy;
-  let matchMediaSpy: jasmine.Spy;
+  // These spies are set up but not used in tests yet
+  // Will be used in future test implementations
+  // let localStorageSpy: jasmine.Spy;
+  // let matchMediaSpy: jasmine.Spy;
 
   beforeEach(async () => {
     // Create mock services

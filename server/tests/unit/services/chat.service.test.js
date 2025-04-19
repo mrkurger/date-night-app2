@@ -5,24 +5,25 @@
  * chat rooms, and real-time communication.
  */
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
-const chatService = require('../../../services/chat.service');
-const ChatMessage = require('../../../models/chat-message.model');
-const ChatRoom = require('../../../models/chat-room.model');
-const User = require('../../../models/user.model');
-const Ad = require('../../../models/ad.model');
-const socketService = require('../../../services/socket.service');
-const cryptoHelpers = require('../../../utils/cryptoHelpers');
-const { AppError } = require('../../../middleware/errorHandler');
+import chatService from '../../../services/chat.service.js';
+import { ChatMessage } from '../../../models/chat-message.model.js';
+import ChatRoom from '../../../models/chat-room.model.js';
+import User from '../../../models/user.model.js';
+import Ad from '../../../models/ad.model.js';
+import socketService from '../../../services/socket.service.js';
+import * as cryptoHelpers from '../../../utils/cryptoHelpers.js';
+import { AppError } from '../../../middleware/errorHandler.js';
+import { jest } from '@jest/globals';
 
 // Mock dependencies
-jest.mock('../../../models/chat-message.model');
-jest.mock('../../../models/chat-room.model');
-jest.mock('../../../models/user.model');
-jest.mock('../../../models/ad.model');
-jest.mock('../../../services/socket.service');
-jest.mock('../../../utils/cryptoHelpers');
+jest.mock('../../../models/chat-message.model.js');
+jest.mock('../../../models/chat-room.model.js');
+jest.mock('../../../models/user.model.js');
+jest.mock('../../../models/ad.model.js');
+jest.mock('../../../services/socket.service.js');
+jest.mock('../../../utils/cryptoHelpers.js');
 
 describe('Chat Service', () => {
   // Setup common test variables

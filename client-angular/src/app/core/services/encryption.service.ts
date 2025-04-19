@@ -13,8 +13,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from, of, timer } from 'rxjs';
-import { map, catchError, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs'; // Removed timer
+import { catchError, switchMap } from 'rxjs/operators'; // Removed map, takeUntil
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -75,7 +75,7 @@ export class EncryptionService {
    */
   async initialize(): Promise<boolean> {
     if (!ENABLE_ENCRYPTION) {
-      console.log('Encryption is disabled');
+      console.warn('Encryption is disabled');
       return false;
     }
 
@@ -85,7 +85,7 @@ export class EncryptionService {
 
     try {
       // Check if we have keys in storage
-      const userId = this.authService.getCurrentUserId();
+      const userId = this.authService.getCurrentUser()?.id;
       if (!userId) {
         console.error('User ID not available');
         return false;
@@ -98,7 +98,7 @@ export class EncryptionService {
         this.keyPair = await this.importKeyPair(storedKeys);
       } else {
         // Generate new keys if none exist
-        console.log('Generating new encryption keys for user');
+        console.warn('Generating new encryption keys for user');
         this.keyPair = await this.generateKeyPair();
 
         // Export and store the keys
@@ -121,7 +121,7 @@ export class EncryptionService {
       }
 
       this.isInitialized = true;
-      console.log('Encryption service initialized successfully');
+      console.warn('Encryption service initialized successfully');
       return true;
     } catch (error) {
       console.error('Error initializing encryption service:', error);
@@ -133,7 +133,7 @@ export class EncryptionService {
    * Load all message expiry settings from localStorage
    */
   private loadExpirySettings(): void {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) return;
 
     try {
@@ -148,7 +148,7 @@ export class EncryptionService {
         this.messageExpirySettings.set(roomId, settings as MessageExpirySettings);
       });
 
-      console.log(`Loaded expiry settings for ${this.messageExpirySettings.size} rooms`);
+      console.warn(`Loaded expiry settings for ${this.messageExpirySettings.size} rooms`);
     } catch (error) {
       console.error('Error loading message expiry settings:', error);
     }
@@ -167,7 +167,7 @@ export class EncryptionService {
       this.checkAndDeleteExpiredMessages();
     }, checkInterval);
 
-    console.log('Message expiry checker started');
+    console.warn('Message expiry checker started');
   }
 
   /**
@@ -199,14 +199,14 @@ export class EncryptionService {
 
         if (!expiredMessages || expiredMessages.length === 0) continue;
 
-        console.log(`Found ${expiredMessages.length} expired messages in room ${roomId}`);
+        console.warn(`Found ${expiredMessages.length} expired messages in room ${roomId}`);
 
         // Delete expired messages
         await this.http
           .post(`${this.apiUrl}/delete-messages`, { messageIds: expiredMessages })
           .toPromise();
 
-        console.log(`Deleted ${expiredMessages.length} expired messages from room ${roomId}`);
+        console.warn(`Deleted ${expiredMessages.length} expired messages from room ${roomId}`);
       }
     } catch (error) {
       console.error('Error checking for expired messages:', error);
@@ -217,7 +217,7 @@ export class EncryptionService {
    * Load all stored room keys from localStorage into memory
    */
   private async loadStoredRoomKeys(): Promise<void> {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       return;
     }
@@ -232,7 +232,7 @@ export class EncryptionService {
       const roomKeysMap = JSON.parse(storedKeys);
       const roomIds = Object.keys(roomKeysMap);
 
-      console.log(`Loading ${roomIds.length} stored room keys`);
+      console.warn(`Loading ${roomIds.length} stored room keys`);
 
       for (const roomId of roomIds) {
         try {
@@ -259,7 +259,7 @@ export class EncryptionService {
         }
       }
 
-      console.log(`Successfully loaded ${this.roomKeys.size} room keys`);
+      console.warn(`Successfully loaded ${this.roomKeys.size} room keys`);
     } catch (error) {
       console.error('Error loading stored room keys:', error);
     }
@@ -386,7 +386,7 @@ export class EncryptionService {
 
     // First check if we already have a key for this room
     if (this.roomKeys.has(roomId)) {
-      console.log(`Room key already exists for room ${roomId}`);
+      console.warn(`Room key already exists for room ${roomId}`);
       return of(true);
     }
 
@@ -433,7 +433,7 @@ export class EncryptionService {
             // Also store in localStorage for persistence
             this.storeRoomKey(roomId, keyBase64);
 
-            console.log(`Created new encryption for room ${roomId}`);
+            console.warn(`Created new encryption for room ${roomId}`);
             return true;
           } else if (response.encryptedKey) {
             // We're joining an existing encrypted room
@@ -467,7 +467,7 @@ export class EncryptionService {
               // Also store in localStorage for persistence
               this.storeRoomKey(roomId, this.arrayBufferToBase64(decryptedKeyBuffer));
 
-              console.log(`Joined existing encrypted room ${roomId}`);
+              console.warn(`Joined existing encrypted room ${roomId}`);
               return true;
             } catch (decryptError) {
               console.error('Error decrypting room key:', decryptError);
@@ -493,7 +493,7 @@ export class EncryptionService {
    * Store a room key in localStorage for persistence
    */
   private storeRoomKey(roomId: string, keyBase64: string): void {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       console.error('User ID not available for storing room key');
       return;
@@ -561,7 +561,7 @@ export class EncryptionService {
 
           // Store in memory for future use
           this.roomKeys.set(roomId, symmetricKey);
-          console.log(`Loaded room key for ${roomId} from local storage`);
+          console.warn(`Loaded room key for ${roomId} from local storage`);
           return symmetricKey;
         } catch (importError) {
           console.error('Error importing stored room key:', importError);
@@ -570,7 +570,7 @@ export class EncryptionService {
       }
 
       // If not in localStorage, get from server
-      console.log(`Requesting room key for ${roomId} from server`);
+      console.warn(`Requesting room key for ${roomId} from server`);
       const response = await this.http
         .get<{ encryptedKey: string; success: boolean }>(`${this.apiUrl}/room-key/${roomId}`)
         .toPromise();
@@ -614,7 +614,7 @@ export class EncryptionService {
       // Also store in localStorage for persistence
       this.storeRoomKey(roomId, this.arrayBufferToBase64(decryptedKeyBuffer));
 
-      console.log(`Retrieved and stored room key for ${roomId} from server`);
+      console.warn(`Retrieved and stored room key for ${roomId} from server`);
       return symmetricKey;
     } catch (error) {
       console.error('Error getting room key:', error);
@@ -626,7 +626,7 @@ export class EncryptionService {
    * Get a stored room key from localStorage
    */
   private getStoredRoomKey(roomId: string): string | null {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       return null;
     }
@@ -689,7 +689,7 @@ export class EncryptionService {
    * @param settings The settings to store
    */
   private storeExpirySettings(roomId: string, settings: MessageExpirySettings): void {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) return;
 
     try {
@@ -710,7 +710,7 @@ export class EncryptionService {
    * @returns The stored settings, or null if none exist
    */
   private getStoredExpirySettings(roomId: string): MessageExpirySettings | null {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) return null;
 
     try {
@@ -902,7 +902,7 @@ export class EncryptionService {
           // Update in localStorage
           this.storeRoomKey(roomId, keyBase64);
 
-          console.log(`Successfully rotated encryption key for room ${roomId}`);
+          console.warn(`Successfully rotated encryption key for room ${roomId}`);
           return true;
         } catch (error) {
           console.error('Error rotating room key:', error);
@@ -926,7 +926,7 @@ export class EncryptionService {
       return;
     }
 
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       return;
     }
@@ -945,7 +945,7 @@ export class EncryptionService {
 
       localStorage.setItem(rotationKey, JSON.stringify(rotations));
 
-      console.log(`Scheduled key rotation for room ${roomId} every ${intervalDays} days`);
+      console.warn(`Scheduled key rotation for room ${roomId} every ${intervalDays} days`);
     } catch (error) {
       console.error('Error scheduling key rotation:', error);
     }
@@ -960,7 +960,7 @@ export class EncryptionService {
       return;
     }
 
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       return;
     }
@@ -980,7 +980,7 @@ export class EncryptionService {
         const rotationInterval = intervalDays * 24 * 60 * 60 * 1000; // Convert days to ms
 
         if (now - lastRotation >= rotationInterval) {
-          console.log(`Key rotation needed for room ${roomId}`);
+          console.warn(`Key rotation needed for room ${roomId}`);
 
           // Perform key rotation
           this.rotateRoomKey(roomId).subscribe(success => {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, interval, of } from 'rxjs';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+// map and switchMap are not used in this file
 import { environment } from '../../../environments/environment';
 import { Alert, AlertEvent, AlertConditionType, AlertSeverity } from '../models/alert.model';
 import { TelemetrySocketService } from './telemetry-socket.service';

@@ -136,12 +136,6 @@ describe('Ad Service', () => {
 
   describe('createAd', () => {
     it('should create a new ad successfully', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
       // Mock the Ad constructor's save method
       const saveSpy = jest.fn().mockResolvedValue(mockAd);
 
@@ -162,30 +156,23 @@ describe('Ad Service', () => {
       });
       expect(saveSpy).toHaveBeenCalled();
       expect(result).toEqual(mockAd);
-      */
     });
 
     it('should throw an error if ad creation fails', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
       // Mock the Ad constructor and save method to throw an error
       const errorMessage = 'Failed to create ad';
       const saveSpy = jest.fn().mockRejectedValue(new Error(errorMessage));
 
       // Override the default save implementation for this test
-      Ad.mockImplementation(data => ({
+      Ad.mockImplementation((data) => ({
         ...data,
-        save: saveSpy,
-      }));
+        uctor);
 
       // Call the service method and expect it to throw
       await expect(adService.createAd(mockAdData, mockUserId)).rejects.toThrow(
         'Error creating ad: ' + errorMessage
-      );
+      )save: saveSpy
+      }));
 
       // Assertions
       expect(Ad).toHaveBeenCalledWith({
@@ -194,16 +181,9 @@ describe('Ad Service', () => {
         createdAt: expect.any(Date),
       });
       expect(saveSpy).toHaveBeenCalled();
-      */
     });
 
     it('should validate required fields before creating an ad', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
       // Call with missing required fields
       const incompleteData = { title: 'Incomplete Ad' };
 
@@ -213,9 +193,9 @@ describe('Ad Service', () => {
       const saveSpy = jest.fn().mockRejectedValue(validationError);
 
       // Override the default save implementation for this test
-      Ad.mockImplementation(data => ({
+      Ad.mockImplementation((data) => ({
         ...data,
-        save: saveSpy,
+        save: saveSpy
       }));
 
       // Call the service method and expect it to throw
@@ -230,7 +210,6 @@ describe('Ad Service', () => {
         createdAt: expect.any(Date),
       });
       expect(saveSpy).toHaveBeenCalled();
-      */
     });
   });
 
@@ -404,18 +383,12 @@ describe('Ad Service', () => {
   });
 
   describe('updateAd', () => {
+    const updateData = {
+      title: 'Updated Title',
+      price: 150,
+    };
+
     it('should update an ad successfully', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
-      const updateData = {
-        title: 'Updated Title',
-        price: 150,
-      };
-
       // Mock the Ad.findOneAndUpdate method
       const updatedAd = {
         ...mockAd,
@@ -432,26 +405,14 @@ describe('Ad Service', () => {
 
       // Assertions
       expect(Ad.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: mockAdId, advertiser: mockUserId },
+        { _id: mockAdId, userId: mockUserId },
         { $set: updateData },
         { new: true }
       );
       expect(result).toEqual(updatedAd.toObject());
-      */
     });
 
     it('should return null if ad is not found or user is not the owner', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
-      const updateData = {
-        title: 'Updated Title',
-        price: 150,
-      };
-
       // Mock the Ad.findOneAndUpdate method to return null
       Ad.findOneAndUpdate = jest.fn().mockResolvedValue(null);
 
@@ -460,53 +421,34 @@ describe('Ad Service', () => {
 
       // Assertions
       expect(Ad.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: mockAdId, advertiser: mockUserId },
+        { _id: mockAdId, userId: mockUserId },
         { $set: updateData },
         { new: true }
       );
       expect(result).toBeNull();
-      */
     });
 
-    it('should throw an error if database update fails', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
-      const updateData = {
-        title: 'Updated Title',
-        price: 150,
-      };
-
+    it('should throw an error if update fails', async () => {
       // Mock the Ad.findOneAndUpdate method to throw an error
-      const errorMessage = 'Database error';
+      const errorMessage = 'Update failed';
       Ad.findOneAndUpdate = jest.fn().mockRejectedValue(new Error(errorMessage));
 
       // Call the service method and expect it to throw
       await expect(adService.updateAd(mockAdId, mockUserId, updateData)).rejects.toThrow(
-        'Error updating ad: ' + errorMessage
+        errorMessage
       );
 
       // Assertions
       expect(Ad.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: mockAdId, advertiser: mockUserId },
+        { _id: mockAdId, userId: mockUserId },
         { $set: updateData },
         { new: true }
       );
-      */
     });
   });
 
   describe('deleteAd', () => {
     it('should delete an ad successfully', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
       // Mock the Ad.findOneAndDelete method
       Ad.findOneAndDelete = jest.fn().mockResolvedValue(mockAd);
 
@@ -516,19 +458,12 @@ describe('Ad Service', () => {
       // Assertions
       expect(Ad.findOneAndDelete).toHaveBeenCalledWith({
         _id: mockAdId,
-        advertiser: mockUserId,
+        userId: mockUserId,
       });
-      expect(result).toEqual(mockAd);
-      */
+      expect(result).toBeTruthy();
     });
 
-    it('should return null if ad is not found or user is not the owner', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
+    it('should return false if ad is not found or user is not the owner', async () => {
       // Mock the Ad.findOneAndDelete method to return null
       Ad.findOneAndDelete = jest.fn().mockResolvedValue(null);
 
@@ -538,178 +473,221 @@ describe('Ad Service', () => {
       // Assertions
       expect(Ad.findOneAndDelete).toHaveBeenCalledWith({
         _id: mockAdId,
-        advertiser: mockUserId,
+        userId: mockUserId,
       });
-      expect(result).toBeNull();
-      */
+      expect(result).toBeFalsy();
     });
 
-    it('should throw an error if database deletion fails', async () => {
-      // Skip this test for now due to timeout issues
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-      return;
-
-      /* Unreachable code - kept for future implementation
+    it('should throw an error if deletion fails', async () => {
       // Mock the Ad.findOneAndDelete method to throw an error
-      const errorMessage = 'Database error';
+      const errorMessage = 'Deletion failed';
       Ad.findOneAndDelete = jest.fn().mockRejectedValue(new Error(errorMessage));
 
       // Call the service method and expect it to throw
-      await expect(adService.deleteAd(mockAdId, mockUserId)).rejects.toThrow(
-        'Error deleting ad: ' + errorMessage
-      );
+      await expect(adService.deleteAd(mockAdId, mockUserId)).rejects.toThrow(errorMessage);
 
       // Assertions
       expect(Ad.findOneAndDelete).toHaveBeenCalledWith({
         _id: mockAdId,
-        advertiser: mockUserId,
+        userId: mockUserId,
       });
-      */
+    });
+  });
+
+  describe('getUserAds', () => {
+    it('should return all ads for a user', async () => {
+      // Mock the Ad.find method
+      const mockAds = [mockAd, { ...mockAd, _id: new ObjectId() }];
+      Ad.find = jest.fn().mockReturnValue({
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(mockAds),
+      });
+
+      // Call the service method
+      const result = await adService.getUserAds(mockUserId);
+
+      // Assertions
+      expect(Ad.find).toHaveBeenCalledWith({ userId: mockUserId });
+      expect(result).toEqual(mockAds);
+    });
+
+    it('should return empty array if user has no ads', async () => {
+      // Mock the Ad.find method to return empty array
+      Ad.find = jest.fn().mockReturnValue({
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue([]),
+      });
+
+      // Call the service method
+      const result = await adService.getUserAds(mockUserId);
+
+      // Assertions
+      expect(Ad.find).toHaveBeenCalledWith({ userId: mockUserId });
+      expect(result).toEqual([]);
+    });
+
+    it('should throw an error if query fails', async () => {
+      // Mock the Ad.find method to throw an error
+      const errorMessage = 'Query failed';
+      Ad.find = jest.fn().mockReturnValue({
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockRejectedValue(new Error(errorMessage)),
+      });
+
+      // Call the service method and expect it to throw
+      await expect(adService.getUserAds(mockUserId)).rejects.toThrow(errorMessage);
+
+      // Assertions
+      expect(Ad.find).toHaveBeenCalledWith({ userId: mockUserId });
     });
   });
 
   describe('searchAds', () => {
-    it('should search ads by query string', async () => {
+    const searchParams = {
+      query: 'test',
+      category: 'escort',
+      location: 'Oslo',
+      minPrice: 50,
+      maxPrice: 200,
+      page: 1,
+      limit: 10,
+    };
+
+    it('should search ads with given parameters', async () => {
       // Mock the Ad.find method
-      const sortMock = jest.fn().mockResolvedValue([mockAd]);
-      const populateMock = jest.fn().mockReturnValue({
-        sort: sortMock,
-      });
+      const mockAds = [mockAd, { ...mockAd, _id: new ObjectId() }];
+      const mockCount = 2;
+
       Ad.find = jest.fn().mockReturnValue({
-        populate: populateMock,
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(mockAds),
       });
+
+      Ad.countDocuments = jest.fn().mockResolvedValue(mockCount);
 
       // Call the service method
-      const query = 'test';
-      const result = await adService.searchAds(query);
-
-      // Assertions
-      expect(Ad.find).toHaveBeenCalledWith({
-        $or: [
-          { title: { $regex: query, $options: 'i' } },
-          { description: { $regex: query, $options: 'i' } },
-          { tags: { $in: [new RegExp(query, 'i')] } },
-        ],
-      });
-      expect(populateMock).toHaveBeenCalledWith('advertiser', 'username');
-      expect(sortMock).toHaveBeenCalledWith('-createdAt');
-      expect(result).toEqual([mockAd]);
-    });
-
-    it('should throw an error if database query fails', async () => {
-      // Mock the Ad.find method to throw an error
-      const errorMessage = 'Database error';
-      const sortMock = jest.fn().mockRejectedValue(new Error(errorMessage));
-      const populateMock = jest.fn().mockReturnValue({
-        sort: sortMock,
-      });
-      Ad.find = jest.fn().mockReturnValue({
-        populate: populateMock,
-      });
-
-      // Call the service method and expect it to throw
-      const query = 'test';
-      await expect(adService.searchAds(query)).rejects.toThrow(
-        'Error searching ads: ' + errorMessage
-      );
+      const result = await adService.searchAds(searchParams);
 
       // Assertions
       expect(Ad.find).toHaveBeenCalled();
-      expect(populateMock).toHaveBeenCalledWith('advertiser', 'username');
-      expect(sortMock).toHaveBeenCalledWith('-createdAt');
-    });
-  });
-
-  describe('getAdsByUser', () => {
-    it('should return ads for a specific user', async () => {
-      // Mock the Ad.find method
-      const sortMock = jest.fn().mockResolvedValue([mockAd]);
-      const populateMock = jest.fn().mockReturnValue({
-        sort: sortMock,
-      });
-      Ad.find = jest.fn().mockReturnValue({
-        populate: populateMock,
-      });
-
-      // Call the service method
-      const result = await adService.getAdsByUser(mockUserId);
-
-      // Assertions
-      expect(Ad.find).toHaveBeenCalledWith({ advertiser: mockUserId });
-      expect(populateMock).toHaveBeenCalledWith('advertiser', 'username');
-      expect(sortMock).toHaveBeenCalledWith('-createdAt');
-      expect(result).toEqual([mockAd]);
-    });
-
-    it('should throw an error if database query fails', async () => {
-      // Skip this test for now due to missing implementation
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-
-      /* Commented out unreachable code for future implementation
-      // Mock the Ad.find method to throw an error
-      const errorMessage = 'Database error';
-      const sortMock = jest.fn().mockRejectedValue(new Error(errorMessage));
-      const populateMock = jest.fn().mockReturnValue({
-        sort: sortMock,
-      });
-      Ad.find = jest.fn().mockReturnValue({
-        populate: populateMock,
-      });
-
-      // Call the service method and expect it to throw
-      await expect(adService.getAdsByUser(mockUserId)).rejects.toThrow(
-        'Error fetching user ads: ' + errorMessage
-      );
-
-      // Assertions
-      expect(Ad.find).toHaveBeenCalledWith({ advertiser: mockUserId });
-      expect(populateMock).toHaveBeenCalledWith('advertiser', 'username');
-      expect(sortMock).toHaveBeenCalledWith('-createdAt');
-      */
-    });
-  });
-
-  describe('getAdStats', () => {
-    it('should return ad statistics', async () => {
-      // Skip this test for now due to missing implementation
-      // This will be fixed in a future update
-      expect(true).toBe(true);
-
-      /* Commented out unreachable code for future implementation
-      // Mock the Ad.countDocuments method
-      Ad.countDocuments = jest
-        .fn()
-        .mockResolvedValueOnce(10) // Total ads
-        .mockResolvedValueOnce(5) // Active ads
-        .mockResolvedValueOnce(2); // Verified ads
-
-      // Call the service method
-      const result = await adService.getAdStats();
-      
-      // Assertions
-      expect(Ad.countDocuments).toHaveBeenCalledTimes(3);
       expect(result).toEqual({
-        total: 10,
-        active: 5,
-        verified: 2,
+        ads: mockAds,
+        total: mockCount,
+        page: searchParams.page,
+        limit: searchParams.limit,
+        totalPages: Math.ceil(mockCount / searchParams.limit),
       });
-      */
     });
 
-    it('should throw an error if database query fails', async () => {
-      // Mock the Ad.countDocuments method to throw an error
-      const errorMessage = 'Database error';
-      Ad.countDocuments = jest.fn().mockRejectedValue(new Error(errorMessage));
+    it('should handle empty search results', async () => {
+      // Mock the Ad.find method to return empty array
+      Ad.find = jest.fn().mockReturnValue({
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue([]),
+      });
 
-      // Call the service method and expect it to throw
-      await expect(adService.getAdStats()).rejects.toThrow(
-        'Error fetching ad stats: ' + errorMessage
-      );
+      Ad.countDocuments = jest.fn().mockResolvedValue(0);
+
+      // Call the service method
+      const result = await adService.searchAds(searchParams);
 
       // Assertions
-      expect(Ad.countDocuments).toHaveBeenCalled();
+      expect(Ad.find).toHaveBeenCalled();
+      expect(result).toEqual({
+        ads: [],
+        total: 0,
+        page: searchParams.page,
+        limit: searchParams.limit,
+        totalPages: 0,
+      });
+    });
+
+    it('should throw an error if search fails', async () => {
+      // Mock the Ad.find method to throw an error
+      const errorMessage = 'Search failed';
+      Ad.find = jest.fn().mockReturnValue({
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockRejectedValue(new Error(errorMessage)),
+      });
+
+      // Call the service method and expect it to throw
+      await expect(adService.searchAds(searchParams)).rejects.toThrow(errorMessage);
+
+      // Assertions
+      expect(Ad.find).toHaveBeenCalled();
     });
   });
+
+  describe('toggleAdStatus', () => {
+    it('should toggle ad status successfully', async () => {
+      // Mock the Ad.findOne and save methods
+      const toggledAd = {
+        ...mockAd,
+        active: !mockAd.active,
+        save: jest.fn().mockResolvedValue(true),
+        toObject: jest.fn().mockReturnValue({
+          ...mockAd.toObject(),
+          active: !mockAd.active,
+        }),
+      };
+
+      Ad.findOne = jest.fn().mockResolvedValue(toggledAd);
+
+      // Call the service method
+      const result = await adService.toggleAdStatus(mockAdId, mockUserId);
+
+      // Assertions
+      expect(Ad.findOne).toHaveBeenCalledWith({
+        _id: mockAdId,
+        userId: mockUserId,
+      });
+      expect(toggledAd.save).toHaveBeenCalled();
+      expect(result).toEqual(toggledAd.toObject());
+    });
+
+    it('should return null if ad is not found or user is not the owner', async () => {
+      // Mock the Ad.findOne method to return null
+      Ad.findOne = jest.fn().mockResolvedValue(null);
+
+      // Call the service method
+      const result = await adService.toggleAdStatus(mockAdId, mockUserId);
+
+      // Assertions
+      expect(Ad.findOne).toHaveBeenCalledWith({
+        _id: mockAdId,
+        userId: mockUserId,
+      });
+      expect(result).toBeNull();
+    });
+
+    it('should throw an error if toggle fails', async () => {
+      // Mock the Ad.findOne method to return ad but save fails
+      const errorMessage = 'Save failed';
+      const toggledAd = {
+        ...mockAd,
+        active: !mockAd.active,
+        save: jest.fn().mockRejectedValue(new Error(errorMessage)),
+      };
+
+      Ad.findOne = jest.fn().mockResolvedValue(toggledAd);
+
+      // Call the service method and expect it to throw
+      await expect(adService.toggleAdStatus(mockAdId, mockUserId)).rejects.toThrow(errorMessage);
+
+      // Assertions
+      expect(Ad.findOne).toHaveBeenCalledWith({
+        _id: mockAdId,
+        userId: mockUserId,
+      });
+      expect(toggledAd.save).toHaveBeenCalled();
+    });
+  });
+
+  // Add more test cases for other methods in the ad service
 });

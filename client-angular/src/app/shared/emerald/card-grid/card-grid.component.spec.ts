@@ -9,7 +9,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser';
 import {
-  DebugElement,
+  // DebugElement, // Commented out as it's currently unused
   Component,
   NO_ERRORS_SCHEMA,
   // CUSTOM_ELEMENTS_SCHEMA,
@@ -53,8 +53,12 @@ class TestHostComponent {
 
   @ViewChild('itemTemplate') itemTemplate!: TemplateRef<unknown>;
 
-  onCardClick(_itemId: string): void {}
-  onActionClick(_event: { id: string; itemId: string }): void {}
+  onCardClick(_itemId: string): void {
+    // Implementation not needed for test component
+  }
+  onActionClick(_event: { id: string; itemId: string }): void {
+    // Implementation not needed for test component
+  }
 }
 
 // Mock items for testing

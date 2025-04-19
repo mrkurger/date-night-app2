@@ -4,17 +4,18 @@
  * Tests the payment controller endpoints with mocked payment service.
  */
 
-const request = require('supertest');
-const express = require('express');
-const mongoose = require('mongoose');
+import request from 'supertest';
+import express from 'express';
+import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
-const paymentController = require('../../../controllers/payment.controller');
-const paymentService = require('../../../services/payment.service');
-const { AppError } = require('../../../middleware/errorHandler');
-const errorHandler = require('../../../middleware/errorHandler');
+import paymentController from '../../../controllers/payment.controller.js';
+import paymentService from '../../../services/payment.service.js';
+import { AppError } from '../../../middleware/errorHandler.js';
+import errorHandler from '../../../middleware/errorHandler.js';
+import { jest } from '@jest/globals';
 
 // Mock the payment service
-jest.mock('../../../services/payment.service');
+jest.mock('../../../services/payment.service.js');
 
 describe('Payment Controller', () => {
   let app;

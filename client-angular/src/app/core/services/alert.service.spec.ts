@@ -20,7 +20,8 @@ import {
   AlertChannel,
   AlertEvent,
 } from '../models/alert.model';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+// import { of } from 'rxjs'; // Unused import
 
 describe('AlertService', () => {
   let service: AlertService;

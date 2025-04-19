@@ -15,9 +15,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
+import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component'; // Corrected path
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
-import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+// import { EmptyStateComponent } from '../../shared/emerald/components/empty-state/empty-state.component'; // Commented out - Cannot find module
 import { NotificationService } from '../../core/services/notification.service';
 
 export interface Favorite {
@@ -51,7 +51,7 @@ export interface Favorite {
     MainLayoutComponent,
     CardGridComponent,
     LoadingSpinnerComponent,
-    EmptyStateComponent,
+    // EmptyStateComponent, // Commented out - Cannot find module
   ],
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss'],

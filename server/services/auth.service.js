@@ -7,10 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model.js';
+import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 class AuthService {
   /**
@@ -166,7 +166,8 @@ class AuthService {
       }
 
       return this.sanitizeUser(user);
-    } catch (_) {
+    } catch (/* eslint-disable-line no-unused-vars */ error) {
+      // Original error details not exposed for security reasons
       throw new Error('Invalid access token');
     }
   }
@@ -235,4 +236,5 @@ class AuthService {
   }
 }
 
-module.exports = new AuthService();
+const authService = new AuthService();
+export default authService;

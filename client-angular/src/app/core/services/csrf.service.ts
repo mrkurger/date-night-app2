@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators'; // Removed tap
 import { environment } from '../../../environments/environment';
 
 /**

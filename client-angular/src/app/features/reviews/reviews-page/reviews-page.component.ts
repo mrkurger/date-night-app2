@@ -19,7 +19,7 @@ import { ReviewsService } from '../../../core/services/reviews.service';
 import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { switchMap, tap, catchError } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators'; // Removed switchMap
 import { of } from 'rxjs';
 
 @Component({
@@ -63,7 +63,7 @@ export class ReviewsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.getCurrentUserId();
+    this.currentUserId = this.authService.getCurrentUser()?.id;
 
     this.route.params.subscribe(params => {
       this.adId = params['id'];

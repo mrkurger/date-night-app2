@@ -77,7 +77,8 @@ export class ContentSanitizerService {
       // Otherwise, try to create a URL object
       new URL(url);
       return true;
-    } catch (error) {
+    } catch {
+      // Removed unused 'error' variable
       return false;
     }
   }

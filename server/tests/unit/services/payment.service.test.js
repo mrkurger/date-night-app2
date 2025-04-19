@@ -5,12 +5,13 @@
  * payment intents, subscriptions, and payment processing.
  */
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
-const paymentService = require('../../../services/payment.service');
-const User = require('../../../models/user.model');
-const Ad = require('../../../models/ad.model');
-const { AppError } = require('../../../middleware/errorHandler');
+import paymentService from '../../../services/payment.service.js';
+import User from '../../../models/user.model.js';
+import Ad from '../../../models/ad.model.js';
+import { AppError } from '../../../middleware/errorHandler.js';
+import Stripe from 'stripe';
 
 // Mock Stripe
 jest.mock('stripe', () => {
@@ -85,7 +86,7 @@ describe('Payment Service', () => {
   };
 
   // Get Stripe mock
-  const stripe = require('stripe')();
+  const stripe = new Stripe();
 
   // Reset mocks before each test
   beforeEach(() => {

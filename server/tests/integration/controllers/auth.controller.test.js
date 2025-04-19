@@ -8,17 +8,18 @@
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
 // ===================================================
 
-const request = require('supertest');
-const express = require('express');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../../setup');
-const {
+import request from 'supertest';
+import express from 'express';
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import {
   createTestUser,
   TEST_USER_DATA,
   generateTestToken,
   generateRefreshToken,
-} = require('../../helpers');
+} from '../../helpers.js';
+import { jest } from '@jest/globals';
 
 // Import server app - adjust path as needed
 let app;

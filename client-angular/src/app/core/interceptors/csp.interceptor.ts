@@ -1,5 +1,5 @@
-import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/http';
+// HttpEvent and Observable are not used in this file
 
 /**
  * Content Security Policy (CSP) Interceptor

@@ -10,9 +10,10 @@
 //   Related to: server/middleware/rateLimiter.js
 // ===================================================
 
-const request = require('supertest');
+import request from 'supertest';
 // Import the setup functions directly from the setup.js file in the parent directory
-const { setupTestDB, teardownTestDB, clearDatabase } = require('../setup');
+import { setupTestDB, teardownTestDB, clearDatabase } from '../setup.js';
+import { jest } from '@jest/globals';
 
 // Mock the user functions
 const TEST_USER_DATA = {
@@ -54,7 +55,7 @@ describe('API Performance Tests', () => {
     await setupTestDB();
 
     // Create a mock Express app for testing
-    const express = require('express');
+    const express = (await import('express')).default;
     app = express();
     app.use(express.json());
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators'; // Removed map
 import { environment } from '../../../environments/environment';
 import { Review } from '../../features/reviews/reviews-list/reviews-list.component';
 import { ReviewData } from '../../features/reviews/review-form/review-form.component';

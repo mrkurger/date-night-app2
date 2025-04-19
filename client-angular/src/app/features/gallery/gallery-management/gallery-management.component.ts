@@ -8,7 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+// Removed unused HttpEventType, HttpResponse from '@angular/common/http'
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';

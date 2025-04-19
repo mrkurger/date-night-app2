@@ -57,6 +57,40 @@ This document serves as a log of key insights, patterns, and solutions discovere
 
 This section contains well-established patterns that have proven effective in the DateNight.io project. These patterns are considered stable and recommended for use throughout the codebase.
 
+### Test Mocking Patterns
+
+When mocking models in Jest tests, we've discovered several important patterns:
+
+1. **Proper Mock Implementation**:
+
+   - Use `jest.mock()` to mock the entire module
+   - Implement mock methods that match the actual implementation
+   - Ensure mock methods return promises when the actual methods do
+   - Set up mock implementations that support method chaining
+
+2. **Model Constructor Mocking**:
+
+   - Mock the constructor function to return an object with the expected methods
+   - Include a `save()` method that resolves with the object itself
+   - Include a `toObject()` method that returns a plain object representation
+
+3. **Static Method Mocking**:
+
+   - Add static methods directly to the mocked model
+   - Ensure static methods return appropriate values or promises
+   - Set up method chains for complex queries (e.g., `find().populate().sort()`)
+
+4. **Mock Reset Between Tests**:
+
+   - Reset mocks in `beforeEach()` to ensure test isolation
+   - Use `mockClear()`, `mockReset()`, or `mockRestore()` as appropriate
+   - Consider using `jest.resetAllMocks()` for comprehensive reset
+
+5. **Handling Edge Cases**:
+   - Mock error scenarios to test error handling
+   - Test with various input parameters
+   - Verify that the correct methods are called with the expected parameters
+
 ### Error Handling
 
 For comprehensive error handling documentation, see [ERRORHANDLINGTELEMETRY.MD](/docs/ERRORHANDLINGTELEMETRY.MD).

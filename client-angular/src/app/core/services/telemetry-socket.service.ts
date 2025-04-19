@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs'; // Removed Observable
 import { environment } from '../../../environments/environment';
 import { ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
 import { AlertEvent } from '../models/alert.model';

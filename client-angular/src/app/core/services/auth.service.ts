@@ -9,8 +9,8 @@
 // ===================================================
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User, LoginDTO, RegisterDTO, AuthResponse } from '../models/user.interface';
 import { Router } from '@angular/router';
@@ -39,7 +39,8 @@ export class AuthService {
     // With HttpOnly cookies, we need to validate with the server
     // We don't have access to the token expiration time client-side
     this.validateToken().subscribe({
-      next: user => {
+      next: () => {
+        // Removed unused 'user' parameter
         // Set auto refresh token timer (every 12 hours)
         this.setAutoRefresh(12 * 60 * 60 * 1000);
       },

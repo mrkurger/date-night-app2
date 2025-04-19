@@ -7,14 +7,15 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+// import { fakeAsync, tick } from '@angular/core/testing'; // Unused imports
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { httpErrorInterceptor } from './http-error.interceptor';
-import { of } from 'rxjs';
+// import { of } from 'rxjs'; // Unused import
 import { AuthService } from '../services/auth.service';
 
 /**

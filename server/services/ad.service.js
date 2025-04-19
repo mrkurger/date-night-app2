@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const Ad = require('../models/ad.model');
+import Ad from '../models/ad.model.js';
 
 class AdService {
   // TODO: Add caching layer for performance
@@ -150,11 +150,26 @@ class AdService {
 
   /**
    * Search ads with filters
-   * @param {Object} searchParams - Search parameters
-   * @returns {Promise<Object>} Object containing ads and pagination info
+   * @param {Object|string} searchParams - Search parameters or query string
+   * @returns {Promise<Object|Array>} Object containing ads and pagination info or array of ads
    */
   async searchAds(searchParams) {
     try {
+      // Handle simple string query for backward compatibility
+      if (typeof searchParams === 'string') {
+        const query = searchParams;
+        const queryObj = {
+          $or: [
+            { title: { $regex: query, $options: 'i' } },
+            { description: { $regex: query, $options: 'i' } },
+            { tags: { $in: [new RegExp(query, 'i')] } },
+          ],
+        };
+
+        return await Ad.find(queryObj).populate('advertiser', 'username').sort('-createdAt');
+      }
+
+      // Handle full search params object
       const query = {};
       const page = searchParams.page || 1;
       const limit = searchParams.limit || 10;
@@ -227,6 +242,42 @@ class AdService {
       throw new Error('Error toggling ad status: ' + error.message);
     }
   }
+
+  /**
+   * Get ads by user ID
+   * @param {string} userId - User ID
+   * @returns {Promise<Array>} List of ads
+   */
+  async getAdsByUser(userId) {
+    try {
+      return await Ad.find({ advertiser: userId })
+        .populate('advertiser', 'username')
+        .sort('-createdAt');
+    } catch (error) {
+      throw new Error('Error fetching user ads: ' + error.message);
+    }
+  }
+
+  /**
+   * Get ad statistics
+   * @returns {Promise<Object>} Statistics object
+   */
+  async getAdStats() {
+    try {
+      const total = await Ad.countDocuments({});
+      const active = await Ad.countDocuments({ active: true });
+      const verified = await Ad.countDocuments({ verified: true });
+
+      return {
+        total,
+        active,
+        verified,
+      };
+    } catch (error) {
+      throw new Error('Error fetching ad stats: ' + error.message);
+    }
+  }
 }
 
-module.exports = new AdService();
+const adService = new AdService();
+export default adService;

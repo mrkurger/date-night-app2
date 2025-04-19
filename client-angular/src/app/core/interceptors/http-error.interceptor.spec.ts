@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { httpErrorInterceptor } from './http-error.interceptor';
-import { of } from 'rxjs';
+// import { of } from 'rxjs'; // Unused import
 import { AuthService } from '../services/auth.service';
 
 describe('HTTP Error Interceptor', () => {

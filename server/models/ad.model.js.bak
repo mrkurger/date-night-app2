@@ -142,9 +142,8 @@ const serviceSchema = new mongoose.Schema({
 });
 
 // Check if model already exists before defining
-let Ad;
 if (mongoose.models.Ad) {
-  Ad = mongoose.model('Ad');
+  module.exports = mongoose.model('Ad');
 } else {
   const adSchema = new mongoose.Schema(
     {
@@ -577,7 +576,8 @@ if (mongoose.models.Ad) {
     return this.save();
   };
 
-  Ad = mongoose.model('Ad', adSchema);
+  };
 }
 
+const Ad = mongoose.models.Ad || mongoose.model('Ad', adSchema);
 export default Ad;
