@@ -339,9 +339,25 @@ ngOnInit(): void {
    - Incorrect file locations can cause Jest to fail with "Your test suite must contain at least one test" error
 
 7. **Import Paths in Tests**:
+
    - When moving test files, ensure import paths are updated correctly
    - For tests in the proper directory structure, use relative paths like `../../../services/auth.service` instead of `./auth.service`
    - Incorrect import paths are a common source of test failures
+
+8. **MongoDB ObjectId Handling**:
+
+   - When testing with MongoDB ObjectIds, always use toString() when comparing IDs in tests
+   - Example: `expect(User.findById).toHaveBeenCalledWith(mockUserId.toString());`
+   - Direct comparison of ObjectId instances may fail even when they represent the same ID
+   - When mocking JWT payloads that contain IDs, ensure the ID is a string: `{ id: mockUserId.toString() }`
+   - This is especially important in auth service tests where IDs are passed between JWT and database queries
+
+9. **Error Message Testing**:
+   - Ensure error messages in tests match exactly what the implementation throws
+   - For security-related errors, implementation may intentionally use generic error messages
+   - Example: Auth services often throw "Invalid access token" instead of specific errors like "User not found"
+   - Update tests to expect the actual error messages from the implementation
+   - Document when error messages are intentionally generic for security reasons
 
 ## General Testing Tips
 

@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { doubleCsrf } = require('csrf-csrf');
-const cookieParser = require('cookie-parser');
+import { doubleCsrf } from 'csrf-csrf';
+import cookieParser from 'cookie-parser';
 
 // CSRF protection configuration
 const csrfProtectionConfig = {
@@ -100,11 +100,17 @@ const validateCsrfToken = (req, res, next) => {
   }
 };
 
-module.exports = {
-  csrfProtection: doubleCsrfProtection,
+export {
+  doubleCsrfProtection as csrfProtection,
   handleCsrfError,
   sendCsrfToken,
   validateCsrfToken,
   generateToken,
-  csrfMiddleware: [cookieParser(), doubleCsrfProtection, handleCsrfError, sendCsrfToken],
 };
+
+export const csrfMiddleware = [
+  cookieParser(),
+  doubleCsrfProtection,
+  handleCsrfError,
+  sendCsrfToken,
+];

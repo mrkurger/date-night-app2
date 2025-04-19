@@ -296,7 +296,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else if (response.body) {
       try {
         responseSize = new Blob([JSON.stringify(response.body)]).size;
-      } catch (_error) {
+      } catch {
         // Ignore if we can't calculate size
       }
     }
