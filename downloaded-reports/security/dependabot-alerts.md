@@ -1,227 +1,183 @@
 # Security Alerts and Dependency Report
 
-*Generated on: 2025-04-18*
+*Generated on: 2025-04-20*
 
 This report provides an overview of dependencies and potential security issues in the project.
 
 ## Client Dependencies
 
 
-@angular/animations                 MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/animations@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/animations                 NPM ERR!  Registry error got is not a function
 
-@angular/cdk                        MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/components#readme
-                                              npm install @angular/cdk@19.2.10 --save to go from 19.2.5 to 19.2.10
+@angular/cdk                        NPM ERR!  Registry error got is not a function
 
-@angular/common                     MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/common@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/common                     NPM ERR!  Registry error got is not a function
 
-@angular/compiler                   MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/compiler@19.2.7 --save to go from 19.2.5 to 19.2.7
-                                    NOTUSED?  Still using @angular/compiler?
+@angular/compiler                   NOTUSED?  Still using @angular/compiler?
                                               Depcheck did not find code similar to require('@angular/compiler') or import from '@angular/compiler'.
                                               Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
                                               Use rc file options to remove unused check, but still monitor for outdated version:
                                                   .npmcheckrc {"depcheck": {"ignoreMatches": ["@angular/compiler"]}}
                                               Use --skip-unused to skip this check.
                                               To remove this package: npm uninstall @angular/compiler --save
+                                    NPM ERR!  Registry error got is not a function
 
-@angular/core                       MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/core@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/core                       NPM ERR!  Registry error got is not a function
 
-@angular/forms                      MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/forms@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/forms                      NPM ERR!  Registry error got is not a function
 
-@angular/material                   MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/components#readme
-                                              npm install @angular/material@19.2.10 --save to go from 19.2.5 to 19.2.10
+@angular/material                   NPM ERR!  Registry error got is not a function
 
-@angular/platform-browser           MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/platform-browser@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/platform-browser           NPM ERR!  Registry error got is not a function
 
-@angular/platform-browser-dynamic   MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/platform-browser-dynamic@19.2.7 --save to go from 19.2.5 to 19.2.7
-                                    NOTUSED?  Still using @angular/platform-browser-dynamic?
-                                              Depcheck did not find code similar to require('@angular/platform-browser-dynamic') or import from '@angular/platform-browser-dynamic'.
-                                              Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
-                                              Use rc file options to remove unused check, but still monitor for outdated version:
-                                                  .npmcheckrc {"depcheck": {"ignoreMatches": ["@angular/platform-browser-dynamic"]}}
-                                              Use --skip-unused to skip this check.
-                                              To remove this package: npm uninstall @angular/platform-browser-dynamic --save
+@angular/platform-browser-dynamic   NPM ERR!  Registry error got is not a function
 
-@angular/router                     MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular/tree/main/packages/router
-                                              npm install @angular/router@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/router                     NPM ERR!  Registry error got is not a function
 
-@angular/service-worker             MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://github.com/angular/angular#readme
-                                              npm install @angular/service-worker@19.2.7 --save to go from 19.2.5 to 19.2.7
+@angular/service-worker             NPM ERR!  Registry error got is not a function
 
-@fortawesome/fontawesome-free       MISSING!  Not installed.
-                                    NOTUSED?  Still using @fortawesome/fontawesome-free?
-                                              Depcheck did not find code similar to require('@fortawesome/fontawesome-free') or import from '@fortawesome/fontawesome-free'.
-                                              Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
-                                              Use rc file options to remove unused check, but still monitor for outdated version:
-                                                  .npmcheckrc {"depcheck": {"ignoreMatches": ["@fortawesome/fontawesome-free"]}}
-                                              Use --skip-unused to skip this check.
-                                              To remove this package: npm uninstall @fortawesome/fontawesome-free --save
+@ng-bootstrap/ng-bootstrap          NPM ERR!  Registry error got is not a function
 
-@ng-bootstrap/ng-bootstrap          MISSING!  Not installed.
+@swimlane/ngx-charts                NPM ERR!  Registry error got is not a function
 
-@types/leaflet                      MISSING!  Not installed.
+@types/leaflet                      NPM ERR!  Registry error got is not a function
 
-angularx-qrcode                     MISSING!  Not installed.
+angularx-qrcode                     NPM ERR!  Registry error got is not a function
 
-bootstrap                           MISSING!  Not installed.
-                                    NOTUSED?  Still using bootstrap?
+bootstrap                           NOTUSED?  Still using bootstrap?
                                               Depcheck did not find code similar to require('bootstrap') or import from 'bootstrap'.
                                               Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
                                               Use rc file options to remove unused check, but still monitor for outdated version:
                                                   .npmcheckrc {"depcheck": {"ignoreMatches": ["bootstrap"]}}
                                               Use --skip-unused to skip this check.
                                               To remove this package: npm uninstall bootstrap --save
+                                    NPM ERR!  Registry error got is not a function
 
-leaflet                             MISSING!  Not installed.
+chart.js                            NPM ERR!  Registry error got is not a function
 
-ngx-socket-io                       MISSING!  Not installed.
+leaflet                             NPM ERR!  Registry error got is not a function
 
-rxjs                                MISSING!  Not installed.
-                                    PATCH UP  Patch update available. https://rxjs.dev
-                                              npm install rxjs@7.8.2 --save to go from 7.8.1 to 7.8.2
+ngx-socket-io                       NPM ERR!  Registry error got is not a function
 
-tslib                               MISSING!  Not installed.
-                                    NOTUSED?  Still using tslib?
+rxjs                                NPM ERR!  Registry error got is not a function
+
+socket.io-client                    NPM ERR!  Registry error got is not a function
+
+tslib                               NOTUSED?  Still using tslib?
                                               Depcheck did not find code similar to require('tslib') or import from 'tslib'.
                                               Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
                                               Use rc file options to remove unused check, but still monitor for outdated version:
                                                   .npmcheckrc {"depcheck": {"ignoreMatches": ["tslib"]}}
                                               Use --skip-unused to skip this check.
                                               To remove this package: npm uninstall tslib --save
+                                    NPM ERR!  Registry error got is not a function
 
-zone.js                             MISSING!  Not installed.
-                                    NOTUSED?  Still using zone.js?
-                                              Depcheck did not find code similar to require('zone.js') or import from 'zone.js'.
-                                              Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
-                                              Use rc file options to remove unused check, but still monitor for outdated version:
-                                                  .npmcheckrc {"depcheck": {"ignoreMatches": ["zone.js"]}}
-                                              Use --skip-unused to skip this check.
-                                              To remove this package: npm uninstall zone.js --save
+zone.js                             NPM ERR!  Registry error got is not a function
 
 src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/checkbox/checkbox.component.scss, /src/app/shared/components/card/card.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/design-system-demo/design-system-demo.component.scss
                                     PKG ERR!  A package.json was not found at /home/runner/work/date-night-app2/date-night-app2/client-angular/src/package.json
+                                    NPM ERR!  Registry error got is not a function
 
-@swimlane/ngx-charts                MISSING!  Not installed.
-                                    PKG ERR!  Not in the package.json. Found in: /src/app/features/admin/admin.module.ts, /src/app/features/admin/components/performance-dashboard/performance-dashboard.component.ts, /src/app/features/admin/components/error-dashboard/error-dashboard.component.ts
-
-socket.io-client                    MISSING!  Not installed.
-                                    PKG ERR!  Not in the package.json. Found in: /src/app/core/services/chat.service.ts, /src/app/core/services/socket.service.ts
-
-chart.js                            MISSING!  Not installed.
-                                    PKG ERR!  Not in the package.json. Found in: /src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts
+sass                                PKG ERR!  Not in the package.json. Found in: /src/app/core/design/design-tokens.scss
+                                    NPM ERR!  Registry error got is not a function
 
 Use npm-check -u for interactive update.
 
 ## Server Dependencies
 
 
-argon2                      MISSING!  Not installed.
+argon2                      NPM ERR!  Registry error got is not a function
 
-axios                       MISSING!  Not installed.
+axios                       NPM ERR!  Registry error got is not a function
 
-bcrypt                      MISSING!  Not installed.
+bcrypt                      NPM ERR!  Registry error got is not a function
 
-body-parser                 MISSING!  Not installed.
-                            MAJOR UP  Major update available. https://github.com/expressjs/body-parser#readme
-                                      npm install body-parser@2.2.0 --save to go from 1.20.3 to 2.2.0
+body-parser                 NPM ERR!  Registry error got is not a function
 
-compression                 MISSING!  Not installed.
+compression                 NPM ERR!  Registry error got is not a function
 
-cookie-parser               MISSING!  Not installed.
+cookie-parser               NPM ERR!  Registry error got is not a function
 
-cors                        MISSING!  Not installed.
+cors                        NPM ERR!  Registry error got is not a function
 
-csrf-csrf                   MISSING!  Not installed.
+csrf-csrf                   NPM ERR!  Registry error got is not a function
 
-dotenv                      MISSING!  Not installed.
+dotenv                      NPM ERR!  Registry error got is not a function
 
-express                     MISSING!  Not installed.
-                            MAJOR UP  Major update available. https://expressjs.com/
-                                      npm install express@5.1.0 --save to go from 4.21.2 to 5.1.0
+express                     NPM ERR!  Registry error got is not a function
 
-express-mongo-sanitize      MISSING!  Not installed.
+express-mongo-sanitize      NPM ERR!  Registry error got is not a function
 
-express-rate-limit          MISSING!  Not installed.
+express-rate-limit          NPM ERR!  Registry error got is not a function
 
-express-session             MISSING!  Not installed.
-                            NOTUSED?  Still using express-session?
+express-session             NOTUSED?  Still using express-session?
                                       Depcheck did not find code similar to require('express-session') or import from 'express-session'.
                                       Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
                                       Use rc file options to remove unused check, but still monitor for outdated version:
                                           .npmcheckrc {"depcheck": {"ignoreMatches": ["express-session"]}}
                                       Use --skip-unused to skip this check.
                                       To remove this package: npm uninstall express-session --save
+                            NPM ERR!  Registry error got is not a function
 
-express-validator           MISSING!  Not installed.
+express-validator           NPM ERR!  Registry error got is not a function
 
-file-type                   MISSING!  Not installed.
+file-type                   NPM ERR!  Registry error got is not a function
 
-helmet                      MISSING!  Not installed.
+helmet                      NPM ERR!  Registry error got is not a function
 
-hpp                         MISSING!  Not installed.
+hpp                         NPM ERR!  Registry error got is not a function
 
-jsonwebtoken                MISSING!  Not installed.
+jsonwebtoken                NPM ERR!  Registry error got is not a function
 
-mongoose                    MISSING!  Not installed.
+mongoose                    NPM ERR!  Registry error got is not a function
 
-morgan                      MISSING!  Not installed.
+morgan                      NPM ERR!  Registry error got is not a function
 
-multer                      MISSING!  Not installed.
+multer                      NPM ERR!  Registry error got is not a function
 
-node-cache                  MISSING!  Not installed.
+node-cache                  NPM ERR!  Registry error got is not a function
 
-node-cron                   MISSING!  Not installed.
+node-cron                   NPM ERR!  Registry error got is not a function
 
-passport                    MISSING!  Not installed.
+passport                    NPM ERR!  Registry error got is not a function
 
-passport-apple              MISSING!  Not installed.
+passport-apple              NPM ERR!  Registry error got is not a function
 
-passport-github2            MISSING!  Not installed.
+passport-github2            NPM ERR!  Registry error got is not a function
 
-passport-google-oauth20     MISSING!  Not installed.
+passport-google-oauth20     NPM ERR!  Registry error got is not a function
 
-passport-jwt                MISSING!  Not installed.
+passport-jwt                NPM ERR!  Registry error got is not a function
 
-passport-local              MISSING!  Not installed.
+passport-local              NPM ERR!  Registry error got is not a function
 
-passport-reddit             MISSING!  Not installed.
+passport-reddit             NPM ERR!  Registry error got is not a function
 
-sharp                       MISSING!  Not installed.
-                            NEW VER!  NonSemver update available. https://sharp.pixelplumbing.com
-                                      npm install sharp@0.34.1 --save to go from 0.33.3 to 0.34.1
+sharp                       NPM ERR!  Registry error got is not a function
 
-socket.io                   MISSING!  Not installed.
+socket.io                   NPM ERR!  Registry error got is not a function
 
-stripe                      MISSING!  Not installed.
-                            MAJOR UP  Major update available. https://github.com/stripe/stripe-node
-                                      npm install stripe@18.0.0 --save to go from 14.25.0 to 18.0.0
+stripe                      NPM ERR!  Registry error got is not a function
 
-uuid                        MISSING!  Not installed.
-                            MAJOR UP  Major update available. https://github.com/uuidjs/uuid#readme
-                                      npm install uuid@11.1.0 --save to go from 9.0.1 to 11.1.0
+uuid                        NPM ERR!  Registry error got is not a function
 
-winston                     MISSING!  Not installed.
+winston                     NPM ERR!  Registry error got is not a function
 
-winston-daily-rotate-file   MISSING!  Not installed.
+winston-daily-rotate-file   NPM ERR!  Registry error got is not a function
 
-xss-clean                   MISSING!  Not installed.
+xss-clean                   NPM ERR!  Registry error got is not a function
+
+@eslint/js                  PKG ERR!  Not in the package.json. Found in: /eslint.config.js
+                            NPM ERR!  Registry error got is not a function
+
+swagger-ui-express          PKG ERR!  Not in the package.json. Found in: /server.js
+                            NPM ERR!  Registry error got is not a function
+
+@jest/globals               PKG ERR!  Not in the package.json. Found in: /tests/helpers.js
+                            NPM ERR!  Registry error got is not a function
+
+swagger-jsdoc               PKG ERR!  Not in the package.json. Found in: /config/swagger.js
+                            NPM ERR!  Registry error got is not a function
 
 Use npm-check -u for interactive update.
 
