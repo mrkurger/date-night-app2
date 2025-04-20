@@ -19,11 +19,13 @@ import { ChatMessage } from '../../../core/services/chat.service';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
+import { LinkifyPipe } from '../../pipes/linkify.pipe';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipe],
+  imports: [CommonModule, TimeAgoPipe, LinkifyPipe, FileSizePipe],
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,6 +115,25 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
+   * Get the profile image URL for the message sender
+   * @returns URL to the sender's profile image or default image
+   */
+  getSenderProfileImage(): string {
+    const defaultImage = '/assets/img/default-profile.jpg';
+
+    if (!this.message.sender) {
+      return defaultImage;
+    }
+
+    if (typeof this.message.sender === 'string') {
+      return defaultImage;
+    }
+
+    // Check if the sender object has a profileImage property
+    return (this.message.sender as any).profileImage || defaultImage;
+  }
+
+  /**
    * Get the timestamp for the message
    */
   getTimestamp(): Date {
@@ -132,5 +153,61 @@ export class ChatMessageComponent implements OnInit {
       'message--decryption-failed': this.decryptionFailed,
       'message--system': this.message.type === 'system',
     };
+  }
+
+  /**
+   * Open an attachment in a new window or download it
+   * @param attachment The attachment to open
+   */
+  openAttachment(attachment: any): void {
+    if (!attachment || !attachment.url) {
+      console.error('Invalid attachment or missing URL');
+      return;
+    }
+
+    // Open the attachment in a new window
+    window.open(attachment.url, '_blank');
+  }
+
+  /**
+   * Download an attachment
+   * @param attachment The attachment to download
+   */
+  downloadAttachment(attachment: any): void {
+    if (!attachment || !attachment.url) {
+      console.error('Invalid attachment or missing URL');
+      return;
+    }
+
+    // Create a temporary anchor element to trigger the download
+    const link = document.createElement('a');
+    link.href = attachment.url;
+    link.download = attachment.name || 'download';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  /**
+   * Get the expiry date as a Date object
+   * @returns Date object for the expiry time
+   */
+  getExpiryDate(): Date {
+    if (!this.message.expiresAt) {
+      return new Date();
+    }
+
+    // If expiresAt is a number (timestamp), convert it to a Date
+    if (typeof this.message.expiresAt === 'number') {
+      return new Date(this.message.expiresAt);
+    }
+
+    // If it's already a Date, return it
+    if (this.message.expiresAt instanceof Date) {
+      return this.message.expiresAt;
+    }
+
+    // If it's a string, parse it
+    return new Date(this.message.expiresAt);
   }
 }

@@ -259,16 +259,16 @@ td {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -($grid-gutter-width / 2);
-  margin-left: -($grid-gutter-width / 2);
+  margin-right: calc(-1 * $grid-gutter-width / 2);
+  margin-left: calc(-1 * $grid-gutter-width / 2);
 }
 
 .col {
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
-  padding-right: ($grid-gutter-width / 2);
-  padding-left: ($grid-gutter-width / 2);
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
 }
 
 @for $i from 1 through $grid-columns {

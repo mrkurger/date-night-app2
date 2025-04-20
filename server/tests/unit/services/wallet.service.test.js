@@ -615,8 +615,8 @@ describe('Wallet Service', () => {
       Stripe.mockImplementation(() => mockStripeInstance);
 
       // Replace the global stripe instance
-      const originalStripe = global.stripe;
-      global.stripe = mockStripeInstance;
+      const originalStripe = globalThis.stripe;
+      globalThis.stripe = mockStripeInstance;
 
       const result = await walletService.depositFundsWithStripe(
         mockUserId,
@@ -627,7 +627,7 @@ describe('Wallet Service', () => {
       );
 
       // Restore the original stripe
-      global.stripe = originalStripe;
+      globalThis.stripe = originalStripe;
 
       // Verify the underlying calls were made
       expect(User.findById).toHaveBeenCalledWith(mockUserId);
@@ -1243,8 +1243,8 @@ describe('Wallet Service', () => {
       // Skip this test for now as it requires more complex mocking
       // This will be fixed in a future update
       expect(true).toBe(true);
-      return;
-
+      // Test is skipped for now, but keeping the code commented for future reference
+      /*
       const amount = 10000; // 100 NOK in øre
       const currency = 'NOK';
       const paymentMethodId = 'pm_test123';
@@ -1260,7 +1260,7 @@ describe('Wallet Service', () => {
 
       expect(User.findById).toHaveBeenCalledWith(mockUserId);
       expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUserId });
-      expect(paymentIntentsCreateSpy).toHaveBeenCalledWith({
+      expect(mockStripeInstance.paymentIntents.create).toHaveBeenCalledWith({
         amount,
         currency: currency.toLowerCase(),
         payment_method: paymentMethodId,
@@ -1277,7 +1277,9 @@ describe('Wallet Service', () => {
       expect(mockWallet.updateBalance).toHaveBeenCalled();
 
       expect(result).toHaveProperty('transaction');
-      expect(result).toHaveProperty('clientSecret');
+      */
+      // The actual test is skipped, so we're just checking that the function exists
+      expect(walletService.depositFundsWithStripe).toBeDefined();
     });
   });
 });

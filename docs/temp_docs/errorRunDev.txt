@@ -1,107 +1,117 @@
-      ╵         ~~~~~~~~~~~~~~~~~~~~~~
+
+[1] 
+[1] ✘ [ERROR] Can't find stylesheet to import.
+[1]   ╷
+[1] 1 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1]   ╵
+[1]   src/app/features/auth/login/login.component.scss 1:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
 [1] ✘ [ERROR] Can't find stylesheet to import.
 [1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] 1 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [1]   ╵
-[1]   src/app/shared/components/button/button.component.scss 7:1  root stylesheet [plugin angular-sass]
+[1]   src/app/features/list-view/list-view.component.scss 1:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
-[1] ✘ [ERROR] Two forwarded modules both define a variable named $color-light-gray-1.
+[1] ✘ [ERROR] Undefined variable.
 [1]    ╷
-[1] 23 │ ┌ @forward 'typography-mixins' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 24 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 25 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 26 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 27 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ original @forward
-[1] 28 │ ┌ @forward 'spacing-utilities' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 29 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 30 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 31 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 32 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ new @forward
+[1] 16 │ $font-family-base: tokens.$font-family-base;
+[1]    │                    ^^^^^^^^^^^^^^^^^^^^^^^^
 [1]    ╵
-[1]   src/app/core/design/main.scss 28:1                                @forward
-[1]   src/styles/design-system/index.scss 23:1                          @use
-[1]   src/app/features/user-settings/user-settings.component.scss 10:1  root stylesheet [plugin angular-sass]
-[1] 
-[1] 
-[1] ✘ [ERROR] Can't find stylesheet to import.
-[1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[1]   ╵
-[1]   src/app/shared/components/input/input.component.scss 7:1  root stylesheet [plugin angular-sass]
-[1] 
-[1] 
-[1] ✘ [ERROR] Can't find stylesheet to import.
-[1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[1]   ╵
-[1]   src/app/shared/components/checkbox/checkbox.component.scss 7:1  root stylesheet [plugin angular-sass]
-[1] 
-[1] 
-[1] ✘ [ERROR] Two forwarded modules both define a variable named $color-light-gray-1.
-[1]    ╷
-[1] 23 │ ┌ @forward 'typography-mixins' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 24 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 25 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 26 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 27 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ original @forward
-[1] 28 │ ┌ @forward 'spacing-utilities' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 29 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 30 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 31 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 32 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ new @forward
-[1]    ╵
-[1]   src/app/core/design/main.scss 28:1                                         @forward
+[1]   src/app/core/design/variables.scss 16:20                                   @forward
+[1]   src/app/core/design/main.scss 20:1                                         @forward
 [1]   src/styles/design-system/index.scss 23:1                                   @use
 [1]   src/app/features/advertiser-profile/advertiser-profile.component.scss 1:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
+[1] ✘ [ERROR] Undefined variable.
+[1]    ╷
+[1] 16 │ $font-family-base: tokens.$font-family-base;
+[1]    │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+[1]    ╵
+[1]   src/app/core/design/variables.scss 16:20                                   @forward
+[1]   src/app/core/design/main.scss 20:1                                         @use
+[1]   src/app/features/design-system-demo/design-system-demo.component.scss 5:1  root stylesheet [plugin angular-sass]
+[1] 
+[1] 
+[1] ✘ [ERROR] Undefined variable.
+[1]    ╷
+[1] 16 │ $font-family-base: tokens.$font-family-base;
+[1]    │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+[1]    ╵
+[1]   src/app/core/design/variables.scss 16:20                      @forward
+[1]   src/app/core/design/main.scss 20:1                            @use
+[1]   src/app/features/chat/chat-room/chat-room.component.scss 1:1  root stylesheet [plugin angular-sass]
+[1] 
+[1] 
 [1] ✘ [ERROR] Can't find stylesheet to import.
 [1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1]   ╵
+[1]   src/app/shared/components/button/button.component.scss 7:1  root stylesheet [plugin angular-sass]
+[1] 
+[1] 
+[1] ✘ [ERROR] Can't find stylesheet to import.
+[1]   ╷
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1]   ╵
+[1]   src/app/shared/components/select/select.component.scss 7:1  root stylesheet [plugin angular-sass]
+[1] 
+[1] 
+[1] ✘ [ERROR] Can't find stylesheet to import.
+[1]   ╷
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [1]   ╵
 [1]   src/app/shared/components/icon/icon.component.scss 7:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
 [1] ✘ [ERROR] Can't find stylesheet to import.
 [1]   ╷
-[1] 5 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [1]   ╵
-[1]   src/app/features/design-system-demo/design-system-demo.component.scss 5:1  root stylesheet [plugin angular-sass]
+[1]   src/app/shared/components/checkbox/checkbox.component.scss 7:1  root stylesheet [plugin angular-sass]
+[1] 
+[1] 
+[1] ✘ [ERROR] Undefined variable.
+[1]    ╷
+[1] 16 │ $font-family-base: tokens.$font-family-base;
+[1]    │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+[1]    ╵
+[1]   src/app/core/design/variables.scss 16:20                          @forward
+[1]   src/app/core/design/main.scss 20:1                                @forward
+[1]   src/styles/design-system/index.scss 23:1                          @use
+[1]   src/app/features/user-settings/user-settings.component.scss 10:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
 [1] ✘ [ERROR] Can't find stylesheet to import.
 [1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [1]   ╵
 [1]   src/app/shared/components/card/card.component.scss 7:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
 [1] ✘ [ERROR] Can't find stylesheet to import.
 [1]   ╷
-[1] 7 │ @use 'src/app/core/design/main' as ds;
-[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] 1 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [1]   ╵
-[1]   src/app/shared/components/select/select.component.scss 7:1  root stylesheet [plugin angular-sass]
+[1]   src/app/features/chat/chat-list/chat-list.component.scss 1:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/app.component.ts:13:29:
-[1]       13 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
+[1] ✘ [ERROR] Can't find stylesheet to import.
+[1]   ╷
+[1] 7 │ @use 'src/styles/design-system/index' as ds;
+[1]   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1]   ╵
+[1]   src/app/shared/components/input/input.component.scss 7:1  root stylesheet [plugin angular-sass]
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2724: '"./interceptors/auth.interceptor"' has no exported member named 'AuthInterceptor'. Did you mean 'authInterceptor'? [plugin angular-compiler]
@@ -130,39 +140,25 @@
 [1]          ╵              ~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
+[1] ✘ [ERROR] TS2552: Cannot find name 'cspInterceptor'. Did you mean 'CSPInterceptor'? [plugin angular-compiler]
 [1] 
-[1]     src/app/core/guards/role.guard.ts:4:32:
-[1]       4 │ import { map, Observable } from 'rxjs';
-[1]         ╵                                 ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/interceptors/auth.interceptor.ts:8:39:
-[1]       8 │ import { Observable, throwError } from 'rxjs';
-[1]         ╵                                        ~~~~~~
+[1]     src/app/core/core.module.ts:46:9:
+[1]       46 │   return cspInterceptor;
+[1]          ╵          ~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
+[1] ✘ [ERROR] TS2552: Cannot find name 'authInterceptor'. Did you mean 'AuthInterceptor'? [plugin angular-compiler]
 [1] 
-[1]     src/app/core/interceptors/csrf.interceptor.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/interceptors/http-error.interceptor.simple.ts:3:27:
-      3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
+[1]     src/app/core/core.module.ts:54:9:
+[1]       54 │   return authInterceptor;
+[1]          ╵          ~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
+[1] ✘ [ERROR] TS2552: Cannot find name 'csrfInterceptor'. Did you mean 'CsrfInterceptor'? [plugin angular-compiler]
 [1] 
-[1]     src/app/core/interceptors/http-error.interceptor.ts:7:27:
-[1]       7 │ import { throwError } from 'rxjs';
-[1]         ╵                            ~~~~~~
+[1]     src/app/core/core.module.ts:58:9:
+[1]       58 │   return csrfInterceptor;
+[1]          ╵          ~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'Partial<ErrorTelemetry>'. [plugin angular-compiler]
@@ -179,517 +175,11 @@
 [1]         ╵                                  ~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/ad.service.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:3:58:
-[1]       3 │ import { Observable, BehaviorSubject, interval, of } from 'rxjs';
-[1]         ╵                                                           ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type 'string' is not assignable to type 'AlertTimeWindow'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:181:8:
-[1]       181 │         timeWindow,
-[1]           ╵         ~~~~~~~~~~
-[1] 
-[1]   The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
-[1] 
-[1]     src/app/core/models/alert.model.ts:52:2:
-[1]       52 │   timeWindow: AlertTimeWindow;
-[1]          ╵   ~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"ui"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:186:10:
-[1]       186 │           channel: 'ui',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"email"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:189:10:
-[1]       189 │           channel: 'email',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type 'string' is not assignable to type 'AlertTimeWindow'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:220:8:
-[1]       220 │         timeWindow,
-[1]           ╵         ~~~~~~~~~~
-[1] 
-[1]   The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
-[1] 
-[1]     src/app/core/models/alert.model.ts:52:2:
-[1]       52 │   timeWindow: AlertTimeWindow;
-[1]          ╵   ~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"ui"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:224:10:
-[1]       224 │           channel: 'ui',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"email"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:227:10:
-[1]       227 │           channel: 'email',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type 'string' is not assignable to type 'AlertTimeWindow'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:260:8:
-[1]       260 │         timeWindow,
-[1]           ╵         ~~~~~~~~~~
-[1] 
-[1]   The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
-[1] 
-[1]     src/app/core/models/alert.model.ts:52:2:
-[1]       52 │   timeWindow: AlertTimeWindow;
-[1]          ╵   ~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"ui"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:265:10:
-[1]       265 │           channel: 'ui',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"slack"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:268:10:
-[1]       268 │           channel: 'slack',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type 'string' is not assignable to type 'AlertTimeWindow'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:301:8:
-[1]       301 │         timeWindow,
-[1]           ╵         ~~~~~~~~~~
-[1] 
-[1]   The expected type comes from property 'timeWindow' which is declared here on type 'AlertCondition'
-[1] 
-[1]     src/app/core/models/alert.model.ts:52:2:
-[1]       52 │   timeWindow: AlertTimeWindow;
-[1]          ╵   ~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"ui"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:306:10:
-[1]       306 │           channel: 'ui',
-[1]           ╵           ~~~~~~~
-[1] 
-[1]   The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2322: Type '"email"' is not assignable to type 'AlertChannel'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/alert.service.ts:309:10:
-[1]       309 │           channel: 'email',
-[1]           ╵           ~~~~~~~
-[1] 
-  The expected type comes from property 'channel' which is declared here on type 'AlertNotification'
-[1] 
-[1]     src/app/core/models/alert.model.ts:66:2:
-[1]       66 │   channel: AlertChannel;
-[1]          ╵   ~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/auth.service.ts:12:56:
-[1]       12 │ import { BehaviorSubject, Observable, throwError } from 'rxjs';
-[1]          ╵                                                         ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/caching.service.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/chat.service.ts:14:54:
-[1]       14 │ import { BehaviorSubject, Observable, of, from } from 'rxjs';
-[1]          ╵                                                       ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/csrf.service.ts:2:37:
-[1]       2 │ import { Observable, of, from } from 'rxjs';
-[1]         ╵                                      ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/dialog.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/encryption.service.ts:16:37:
-[1]       16 │ import { Observable, from, of } from 'rxjs'; // Removed timer
-[1]          ╵                                      ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:3:44:
-[1]       3 │ import { Observable, BehaviorSubject } from 'rxjs';
-[1]         ╵                                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:101:18:
-[1]       101 │       if (options.priority) {
-[1]           ╵                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:102:48:
-[1]       102 │         params = params.set('priority', options.priority);
-[1]           ╵                                                 ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:104:18:
-[1]       104 │       if (options.priceMin !== undefined) {
-[1]           ╵                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:105:48:
-[1]       105 │ ...    params = params.set('priceMin', options.priceMin.toString());
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:107:18:
-[1]       107 │       if (options.priceMax !== undefined) {
-[1]           ╵                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:108:48:
-[1]       108 │ ...    params = params.set('priceMax', options.priceMax.toString());
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:110:18:
-[1]       110 │       if (options.dateFrom) {
-[1]           ╵                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:111:57:
-[1]       111 │ ...params.set('dateFrom', new Date(options.dateFrom).toISOString());
-[1]           ╵                                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:113:18:
-[1]       113 │       if (options.dateTo) {
-[1]           ╵                   ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:114:55:
-[1]       114 │ ...s = params.set('dateTo', new Date(options.dateTo).toISOString());
-[1]           ╵                                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'tags' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:116:18:
-[1]       116 │       if (options.tags && options.tags.length > 0) {
-[1]           ╵                   ~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'tags' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:116:34:
-[1]       116 │       if (options.tags && options.tags.length > 0) {
-[1]           ╵                                   ~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'tags' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/favorite.service.ts:118:16:
-[1]       118 │         options.tags.forEach(tag => {
-[1]           ╵                 ~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:15:31:
-[1]       15 │ import { Observable, of } from 'rxjs';
-[1]          ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'googleMapsApiKey' does not exist on type '{ production: boolean; apiUrl: string; chatWsUrl: string; socketUrl: string; defaultImageUrl: string; maxUploadSize: number; supportedImageTypes: string[]; mapboxToken: string; stripePublicKey: string; cdnUrl: string; imageSizes: number[]; }'. [plugin angular-compiler]
-[1] 
-    src/app/core/services/geocoding.service.ts:23:40:
-[1]       23 │ const GOOGLE_MAPS_API_KEY = environment.googleMapsApiKey || '';
-[1]          ╵                                         ~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"mapbox"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:296:11:
-[1]       296 │       case 'mapbox':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"google"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:304:11:
-[1]       304 │       case 'google':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"mapbox"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:344:11:
-[1]       344 │       case 'mapbox':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"google"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:352:11:
-[1]       352 │       case 'google':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"mapbox"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:416:11:
-[1]       416 │       case 'mapbox':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2678: Type '"google"' is not comparable to type '"nominatim"'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:420:11:
-[1]       420 │       case 'google':
-[1]           ╵            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string | number | boolean'. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/geocoding.service.ts:626:58:
-[1]       626 │       .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-[1]           ╵                                                           ~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/location.service.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/media.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/notification.service.ts:12:44:
-[1]       12 │ import { BehaviorSubject, Observable } from 'rxjs';
-[1]          ╵                                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/payment.service.ts:12:27:
-[1]       12 │ import { Observable } from 'rxjs';
-[1]          ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/profile.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/review.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/reviews.service.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/safety.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/telemetry-socket.service.ts:2:41:
-[1]       2 │ import { Subject, BehaviorSubject } from 'rxjs'; // Removed Observable
-[1]         ╵                                          ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/telemetry.service.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/theme.service.ts:2:44:
-[1]       2 │ import { BehaviorSubject, Observable } from 'rxjs';
-[1]         ╵                                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/travel.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/user-preferences.service.ts:14:44:
-[1]       14 │ import { BehaviorSubject, Observable } from 'rxjs';
-[1]          ╵                                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/user.service.ts:3:56:
-[1]       3 │ import { Observable, BehaviorSubject, throwError } from 'rxjs';
-[1]         ╵                                                         ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/verification.service.ts:3:27:
-[1]       3 │ import { Observable } from 'rxjs';
-[1]         ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/services/wallet.service.ts:12:44:
-[1]       12 │ import { Observable, BehaviorSubject } from 'rxjs';
-         ╵                                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/strategies/selective-preloading.strategy.ts:3:31:
-[1]       3 │ import { Observable, of } from 'rxjs';
-[1]         ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/core/utils/rxjs-operators.ts:7:46:
-[1]       7 │ import { Observable, throwError, timer } from 'rxjs';
-[1]         ╵                                               ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/ad-form/ad-form.component.ts:17:31:
-[1]       17 │ import { Observable, of } from 'rxjs';
-[1]          ╵                                ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG8001: 'mat-tabs' is not a known element:
 [1] 1. If 'mat-tabs' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
 [1] 2. If 'mat-tabs' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:13:6:
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:13:6:
 [1]       13 │       <mat-tabs (selectedTabChange)="onTabChange($event)" [selecte...
 [1]          ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
@@ -781,7 +271,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:406:52:
 [1]       406 │ ...<strong>Dates:</strong> {{ formatDate(itinerary.arrivalDate) }} -
@@ -799,97 +289,6 @@
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:406:52:
 [1]       406 │ ...<strong>Dates:</strong> {{ formatDate(itinerary.arrivalDate) }} -
 [1]           ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
-[1]       409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
-[1]           ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
-[1]       409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
-[1]           ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
-[1]       410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
-[1]           ╵                                                ~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
-[1]       410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
-[1]           ╵                                                ~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
-[1]       428 │                     [height]="'500px'"
-[1]           ╵                               ~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
-[1]       428 │                     [height]="'500px'"
-[1]           ╵                               ~~~~~~~
-[1] 
-[1]   Error occurs in the template of component TravelItineraryComponent.
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
-[1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:429:39:
-[1]       429 │                     [initialLatitude]="59.9139"
-[1]           ╵                                        ~~~~~~~
 [1] 
 [1]   Error occurs in the template of component TravelItineraryComponent.
 [1] 
@@ -898,6 +297,97 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
+[1]       409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
+[1]           ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
+[1]       409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
+[1]           ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
+[1]       410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
+[1]           ╵                                                ~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
+[1]       410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
+[1]           ╵                                                ~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
+[1]       428 │                     [height]="'500px'"
+[1]           ╵                               ~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
+[1]       428 │                     [height]="'500px'"
+[1]           ╵                               ~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:429:39:
+[1]       429 │                     [initialLatitude]="59.9139"
+[1]           ╵                                        ~~~~~~~
+[1] 
+[1]   Error occurs in the template of component TravelItineraryComponent.
+[1] 
+[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+[1]       37 │   templateUrl: './travel-itinerary.component.html',
+[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1] 
+[1] 
 [1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:429:39:
@@ -913,7 +403,7 @@
 [1] 
 [1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
 [1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:430:40:
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:430:40:
 [1]       430 │                     [initialLongitude]="10.7522"
 [1]           ╵                                         ~~~~~~~
 [1] 
@@ -1008,7 +498,7 @@
 [1]       433 │                     [showCurrentLocation]="true"
 [1]           ╵                                            ~~~~
 [1] 
-  Error occurs in the template of component TravelItineraryComponent.
+[1]   Error occurs in the template of component TravelItineraryComponent.
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
 [1]       37 │   templateUrl: './travel-itinerary.component.html',
@@ -1028,7 +518,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:434:35:
 [1]       434 │                     (markerClick)="onMarkerClick($event)"
@@ -1122,7 +612,7 @@
 [1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:455:35:
-      455 │                     [initialZoom]="6"
+[1]       455 │                     [initialZoom]="6"
 [1]           ╵                                    ^
 [1] 
 [1]   Error occurs in the template of component TravelItineraryComponent.
@@ -1145,7 +635,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:456:31:
 [1]       456 │                     [markers]="mapMarkers"
@@ -1236,7 +726,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+[1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:467:64:
 [1]       467 │ ... <div class="marker-legend" [ngClass]="'marker-' + status"></div>
@@ -1259,7 +749,7 @@
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
 [1]       37 │   templateUrl: './travel-itinerary.component.html',
-[1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
@@ -1275,18 +765,17 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:17:31:
-[1]       17 │ import { Observable, of } from 'rxjs';
-[1]          ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2304: Cannot find name 'map'. [plugin angular-compiler]
+[1] ✘ [ERROR] TS2552: Cannot find name 'map'. Did you mean 'Map'? [plugin angular-compiler]
 [1] 
 [1]     src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:446:16:
 [1]       446 │                 map(addressInfo => ({ response, addressInfo })),
 [1]           ╵                 ~~~
+[1] 
+[1]   'Map' is declared here.
+[1] 
+[1]     ../node_modules/typescript/lib/lib.es2015.collection.d.ts:53:12:
+[1]       53 │ declare var Map: MapConstructor;
+[1]          ╵             ~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
@@ -1303,39 +792,11 @@
 [1]           ╵                               ~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/admin/components/alert-management/alert-management.component.ts:37:24:
-[1]       37 │ import { Subject } from 'rxjs';
-[1]          ╵                         ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:31:9:
 [1]       31 │ import { ErrorCategory } from '../../../../core/interceptors/http-...
 [1]          ╵          ~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:34:28:
-[1]       34 │ import { of, Subject } from 'rxjs';
-[1]          ╵                             ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/admin/components/performance-dashboard/performance-dashboard.component.ts:30:19:
-[1]       30 │ import { of } from 'rxjs';
-[1]          ╵                    ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/browse/browse.component.ts:17:29:
-[1]       17 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
@@ -1377,7 +838,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+[1] ✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/chat/chat-list/chat-list.component.html:83:31:
 [1]       83 │           [class.active]="room.pinned"
@@ -1401,13 +862,6 @@
 [1]     src/app/features/chat/chat-list/chat-list.component.ts:23:15:
 [1]       23 │   templateUrl: './chat-list.component.html',
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/chat/chat-list/chat-list.component.ts:13:29:
-[1]       13 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
@@ -1451,7 +905,7 @@
 [1]           ╵                          ~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2339: Property 'createdAt' does not exist on type 'ChatMessage'. [plugin angular-compiler]
+✘ [ERROR] TS2339: Property 'createdAt' does not exist on type 'ChatMessage'. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/chat/chat-list/chat-list.component.ts:212:67:
 [1]       212 │ ...w Date(room.lastMessage.timestamp || room.lastMessage.createdAt);
@@ -1524,13 +978,6 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/chat/chat-room/chat-room.component.ts:22:29:
-[1]       22 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
 [1] 
 [1]     src/app/features/chat/chat-room/chat-room.component.ts:80:42:
@@ -1539,7 +986,7 @@
 [1] 
 [1]   'getCurrentUser' is declared here.
 [1] 
-    src/app/core/services/auth.service.ts:136:2:
+[1]     src/app/core/services/auth.service.ts:136:2:
 [1]       136 │   getCurrentUser(): User | null {
 [1]           ╵   ~~~~~~~~~~~~~~
 [1] 
@@ -1604,7 +1051,7 @@
 [1] 2. If 'app-checkbox' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
 [1] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/design-system-demo/design-system-demo.component.html:356:60:
+    src/app/features/design-system-demo/design-system-demo.component.html:356:60:
 [1]       356 │ ...l="Disabled Checked Checkbox" [checked]="true" [disabled]="true">
 [1]           ╵                                  ~~~~~~~~~~~~~~~~
 [1] 
@@ -1613,13 +1060,6 @@
 [1]     src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
 [1]       40 │   templateUrl: './design-system-demo.component.html',
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-list/favorites-list.component.ts:37:24:
-[1]       37 │ import { Subject } from 'rxjs';
-[1]          ╵                         ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG9: Property 'selected' does not exist on type 'Favorite'. [plugin angular-compiler]
@@ -1665,499 +1105,90 @@
 [1]           ╵                                                               ~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:42:24:
-[1]       42 │ import { Subject } from 'rxjs';
-[1]          ╵                         ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:43:31:
-[1]       43 │ import { firstValueFrom } from 'rxjs';
-[1]          ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-    src/app/features/favorites/favorites-page/favorites-page.component.ts:176:53:
-[1]       176 │ ...[(ngModel)]="filterOptions.priority" (selectionChange)="applyF...
-[1]           ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:176:53:
-[1]       176 │ ...[(ngModel)]="filterOptions.priority" (selectionChange)="applyF...
-[1]           ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:226:47:
-[1]       226 │                     [(ngModel)]="filterOptions.priceMin"
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:226:47:
-[1]       226 │                     [(ngModel)]="filterOptions.priceMin"
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:237:47:
-[1]       237 │                     [(ngModel)]="filterOptions.priceMax"
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:237:47:
-[1]       237 │                     [(ngModel)]="filterOptions.priceMax"
-[1]           ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8002: Can't bind to 'matDatepicker' since it isn't a known property of 'input'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:254:20:
-[1]       254 │                     [matDatepicker]="fromPicker"
-[1]           ╵                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8002: Can't bind to 'htmlFor' since it isn't a known property of 'mat-datepicker-toggle'.
-[1] 1. If 'mat-datepicker-toggle' is an Angular component and it has 'htmlFor' input, then verify that it is included in the '@Component.imports' of this component.
-[1] 2. If 'mat-datepicker-toggle' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
-[1] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:258:51:
-[1]       258 │ ...cker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-[1]           ╵                          ~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8001: 'mat-datepicker' is not a known element:
-[1] 1. If 'mat-datepicker' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[1] 2. If 'mat-datepicker' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:259:18:
-[1]       259 │                   <mat-datepicker #fromPicker></mat-datepicker>
-[1]           ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8002: Can't bind to 'matDatepicker' since it isn't a known property of 'input'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:266:20:
-[1]       266 │                     [matDatepicker]="toPicker"
-[1]           ╵                     ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8002: Can't bind to 'htmlFor' since it isn't a known property of 'mat-datepicker-toggle'.
-[1] 1. If 'mat-datepicker-toggle' is an Angular component and it has 'htmlFor' input, then verify that it is included in the '@Component.imports' of this component.
-[1] 2. If 'mat-datepicker-toggle' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
-[1] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:270:51:
-[1]       270 │ ...picker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-[1]           ╵                            ~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG8001: 'mat-datepicker' is not a known element:
-[1] 1. If 'mat-datepicker' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-[1] 2. If 'mat-datepicker' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:271:18:
-[1]       271 │                   <mat-datepicker #toPicker></mat-datepicker>
-[1]           ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:308:45:
-[1]       308 │ ...-chip *ngIf="filterOptions.priority" (removed)="clearPriorityF...
-[1]           ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:309:43:
-[1]       309 │                 Priority: {{ filterOptions.priority | titlecase }}
-[1]           ╵                                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:333:37:
-[1]       333 │ ...      *ngIf="filterOptions.priceMin !== undefined || filterOpt...
-[1]           ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:333:77:
-[1]       333 │ ...s.priceMin !== undefined || filterOptions.priceMax !== undefined"
-[1]           ╵                                              ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:342:37:
-[1]       342 │ ...           *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
-          ╵                                    ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:342:63:
-[1]       342 │ ...           *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
-[1]           ╵                                                              ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG9: Property 'url' does not exist on type 'string'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:399:42:
-[1]       399 │                   ? favorite.ad.images[0].url
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:403:42:
+[1]       403 │                   ? favorite.ad.images[0].url
 [1]           ╵                                           ~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'img'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:404:14:
-[1]       404 │               [routerLink]="['/ads', favorite.ad._id]"
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:408:14:
+[1]       408 │               [routerLink]="['/ads', favorite.ad._id]"
 [1]           ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'h3'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:408:41:
-[1]       408 │ ... class="favorite-title" [routerLink]="['/ads', favorite.ad._id]">
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:412:41:
+[1]       412 │ ... class="favorite-title" [routerLink]="['/ads', favorite.ad._id]">
 [1]           ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG9: Property 'city' does not exist on type 'string'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:415:43:
-[1]       415 │ ...    {{ favorite.ad.location?.city }}, {{ favorite.ad.location?...
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:419:43:
+[1]       419 │ ...    {{ favorite.ad.location?.city }}, {{ favorite.ad.location?...
 [1]           ╵                                 ~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG9: Property 'county' does not exist on type 'string'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:415:77:
-[1]       415 │ ...favorite.ad.location?.city }}, {{ favorite.ad.location?.county }}
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:419:77:
+[1]       419 │ ...favorite.ad.location?.city }}, {{ favorite.ad.location?.county }}
 [1]           ╵                                                            ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:452:38:
-[1]       452 │ ...  <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:456:38:
+[1]       456 │ ...  <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
 [1]           ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:509:47:
-[1]       509 │ ...-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:513:47:
+[1]       513 │ ...-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
 [1]           ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:517:14:
-[1]       517 │               [routerLink]="['/chat']"
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:521:14:
+[1]       521 │               [routerLink]="['/chat']"
 [1]           ╵               ~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG8002: Can't bind to 'queryParams' since it isn't a known property of 'button'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:518:14:
-[1]       518 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:522:14:
+[1]       522 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
 [1]           ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG9: Property '_id' does not exist on type 'string | { username: string; profileImage?: string; }'.
 [1]   Property '_id' does not exist on type 'string'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:518:62:
-[1]       518 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:522:62:
+[1]       522 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
 [1]           ╵                                                               ~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'tags' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:963:25:
-[1]       963 │       this.filterOptions.tags = this.selectedTagFilters;
-[1]           ╵                          ~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'tags' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:965:32:
-[1]       965 │       delete this.filterOptions.tags;
-[1]           ╵                                 ~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1037:25:
-[1]       1037 │       this.filterOptions.dateFrom = this.dateFrom;
-[1]            ╵                          ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1039:32:
-[1]       1039 │       delete this.filterOptions.dateFrom;
-[1]            ╵                                 ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1043:25:
-[1]       1043 │       this.filterOptions.dateTo = this.dateTo;
-[1]            ╵                          ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1045:32:
-[1]       1045 │       delete this.filterOptions.dateTo;
-[1]            ╵                                 ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2353: Object literal may only specify known properties, and 'existingNotes' does not exist in type 'NotesDialogData'. [plugin angular-compiler]
 [1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1059:8:
-[1]       1059 │         existingNotes: '',
+[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1063:8:
+[1]       1063 │         existingNotes: '',
 [1]            ╵         ~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1118:27:
-[1]       1118 │     if (this.filterOptions.priceMin !== undefined && this.filter...
-[1]            ╵                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1118:72:
-      1118 │ ...in !== undefined && this.filterOptions.priceMax !== undefined) {
-[1]            ╵                                           ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1119:36:
-[1]       1119 │ ...urn `$${this.filterOptions.priceMin} - $${this.filterOptions....
-[1]            ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1119:70:
-[1]       1119 │ ...this.filterOptions.priceMin} - $${this.filterOptions.priceMax}`;
-[1]            ╵                                                         ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1120:34:
-[1]       1120 │     } else if (this.filterOptions.priceMin !== undefined) {
-[1]            ╵                                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1121:36:
-[1]       1121 │       return `$${this.filterOptions.priceMin}+`;
-[1]            ╵                                     ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1122:34:
-[1]       1122 │     } else if (this.filterOptions.priceMax !== undefined) {
-[1]            ╵                                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1123:42:
-[1]       1123 │       return `Up to $${this.filterOptions.priceMax}`;
-[1]            ╵                                           ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1137:27:
-[1]       1137 │     if (this.filterOptions.dateFrom && this.filterOptions.dateTo) {
-[1]            ╵                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1137:58:
-[1]       1137 │     if (this.filterOptions.dateFrom && this.filterOptions.dateTo) {
-[1]            ╵                                                           ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1138:46:
-[1]       1138 │ ...formatDate(this.filterOptions.dateFrom as Date)} - ${formatDate(
-[1]            ╵                                  ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1139:27:
-[1]       1139 │         this.filterOptions.dateTo as Date
-[1]            ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1141:34:
-[1]       1141 │     } else if (this.filterOptions.dateFrom) {
-[1]            ╵                                   ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1142:52:
-[1]       1142 │ ...turn `After ${formatDate(this.filterOptions.dateFrom as Date)}`;
-[1]            ╵                                                ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1143:34:
-[1]       1143 │     } else if (this.filterOptions.dateTo) {
-[1]            ╵                                   ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1144:53:
-[1]       1144 │ ...eturn `Before ${formatDate(this.filterOptions.dateTo as Date)}`;
-[1]            ╵                                                  ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1161:30:
-[1]       1161 │     delete this.filterOptions.priority;
-[1]            ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1195:30:
-[1]       1195 │     delete this.filterOptions.priceMin;
-[1]            ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1196:30:
-[1]       1196 │     delete this.filterOptions.priceMax;
-[1]            ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1204:30:
-[1]       1204 │     delete this.filterOptions.dateFrom;
-[1]            ╵                               ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1205:30:
-[1]       1205 │     delete this.filterOptions.dateTo;
-[1]            ╵                               ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priority' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1228:27:
-[1]       1228 │       !!this.filterOptions.priority ||
-           ╵                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMin' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1229:25:
-[1]       1229 │       this.filterOptions.priceMin !== undefined ||
-[1]            ╵                          ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'priceMax' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1230:25:
-[1]       1230 │       this.filterOptions.priceMax !== undefined ||
-[1]            ╵                          ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateFrom' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1231:27:
-[1]       1231 │       !!this.filterOptions.dateFrom ||
-[1]            ╵                            ~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2339: Property 'dateTo' does not exist on type 'FavoriteFilterOptions'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/favorites/favorites-page/favorites-page.component.ts:1232:27:
-[1]       1232 │       !!this.filterOptions.dateTo ||
-[1]            ╵                            ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/gallery/gallery.component.ts:16:29:
-[1]       16 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/location-matching/location-matching.component.ts:27:53:
-[1]       27 │ import { Observable, catchError, finalize, of } from 'rxjs';
-[1]          ╵                                                      ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/payment/payment.component.ts:16:29:
-[1]       16 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/preferences-demo/preferences-demo.component.ts:23:29:
-[1]       23 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG2: Type '{ _id: string; title: string; description: string; category: string; price: number; location: string; images: string[]; advertiser: string; isActive: boolean; isFeatured: boolean; isTrending: boolean; ... 6 more ...; tourDates?: undefined; } | { ...; }' is not assignable to type 'Ad'.
-[1]   Type '{ _id: string; title: string; description: string; category: string; price: number; location: string; images: string[]; advertiser: string; isActive: boolean; isFeatured: boolean; isTrending: boolean; ... 6 more ...; tourDates?: undefined; }' is missing the following properties from type 'Ad': media, userId [plugin angular-compiler]
+  Type '{ _id: string; title: string; description: string; category: string; price: number; location: string; images: string[]; advertiser: string; isActive: boolean; isFeatured: boolean; isTrending: boolean; ... 6 more ...; tourDates?: undefined; }' is missing the following properties from type 'Ad': media, userId [plugin angular-compiler]
 [1] 
 [1]     src/app/features/preferences-demo/preferences-demo.component.ts:168:13:
 [1]       168 │             [ad]="ad"
 [1]           ╵              ~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/profile/profile.component.ts:15:19:
-[1]       15 │ import { of } from 'rxjs';
-[1]          ╵                    ~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
@@ -2173,13 +1204,6 @@
 [1]           ╵   ~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/reviews/reviews-page/reviews-page.component.ts:23:19:
-[1]       23 │ import { of } from 'rxjs';
-[1]          ╵                    ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:27:9:
@@ -2187,62 +1211,6 @@
 [1]          ╵          ~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:28:70:
-[1]       28 │ ...servable, catchError, map, of, startWith, switchMap } from 'rxjs';
-[1]          ╵                                                               ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'totalErrors' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:113:64:
-[1]       113 │ ...="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>
-[1]           ╵                                            ~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'uniqueErrors' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:120:64:
-[1]       120 │ ..."stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>
-[1]           ╵                                           ~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'serverErrors' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:127:64:
-[1]       127 │ ..."stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>
-[1]           ╵                                           ~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'clientErrors' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:134:64:
-[1]       134 │ ..."stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>
-[1]           ╵                                           ~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:29:70:
-      29 │ ...servable, catchError, map, of, startWith, switchMap } from 'rxjs';
-[1]          ╵                                                               ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'totalRequests' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:125:70:
-[1]       125 │ ...alue">{{ (performanceStats$ | async)?.totalRequests || 0 }}</div>
-[1]           ╵                                          ~~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'avgDuration' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:133:48:
-[1]       133 │ ...rformanceStats$ | async)?.avgDuration | number: '1.0-0' || 0 }...
-[1]           ╵                              ~~~~~~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:133:70:
@@ -2266,13 +1234,6 @@
 [1]           ╵                                                   ~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] NG9: Property 'p95Duration' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:142:48:
-[1]       142 │ ...rformanceStats$ | async)?.p95Duration | number: '1.0-0' || 0 }...
-[1]           ╵                              ~~~~~~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
 [1] 
 [1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:142:70:
@@ -2294,13 +1255,6 @@
 [1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:142:70:
 [1]       142 │ ...formanceStats$ | async)?.p95Duration | number: '1.0-0' || 0 }} ms
 [1]           ╵                                                   ~~~~~~~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] NG9: Property 'maxDuration' does not exist on type 'unknown'. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:151:48:
-[1]       151 │ ...rformanceStats$ | async)?.maxDuration | number: '1.0-0' || 0 }...
-[1]           ╵                              ~~~~~~~~~~~
 [1] 
 [1] 
 [1] ✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
@@ -2333,41 +1287,6 @@
 [1]           ╵                                               ~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/touring/touring.component.ts:15:19:
-[1]       15 │ import { of } from 'rxjs';
-[1]          ╵                    ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/user-settings/user-settings.component.ts:23:29:
-[1]       23 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/features/wallet/dialogs/transfer-dialog.component.ts:27:73:
-[1]       27 │ ...vable, of, debounceTime, switchMap, catchError, map } from 'rxjs';
-         ╵                                                               ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/ad-card/ad-card.component.ts:19:29:
-[1]       19 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/alert-notifications/alert-notifications.component.ts:21:24:
-[1]       21 │ import { Subject } from 'rxjs';
-[1]          ╵                         ~~~~~~
-[1] 
-[1] 
 [1] ✘ [ERROR] NG8001: 'app-icon' is not a known element:
 [1] 1. If 'app-icon' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
 [1] 2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
@@ -2388,7 +1307,7 @@
 [1] 2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
 [1] 3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
 [1] 
-[1]     src/app/shared/components/button/button.component.html:36:16:
+    src/app/shared/components/button/button.component.html:36:16:
 [1]       36 │       <app-icon [name]="iconLeft"></app-icon>
 [1]          ╵                 ~~~~~~~~~~~~~~~~~
 [1] 
@@ -2496,7 +1415,7 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-✘ [ERROR] NG5: Argument of type 'number' is not assignable to parameter of type 'string | Date'. [plugin angular-compiler]
+[1] ✘ [ERROR] NG5: Argument of type 'number' is not assignable to parameter of type 'string | Date'. [plugin angular-compiler]
 [1] 
 [1]     src/app/shared/components/chat-message/chat-message.component.html:95:62:
 [1]       95 │ ...age__expiry-time">Expires {{ message.expiresAt | timeAgo }}</span>
@@ -2509,64 +1428,13 @@
 [1]          ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [1] 
 [1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/chat-settings/chat-settings.component.ts:22:19:
-[1]       22 │ import { of } from 'rxjs';
-[1]          ╵                    ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/favorite-button/favorite-button.component.ts:19:29:
-[1]       19 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/main-layout/main-layout.component.ts:19:29:
-[1]       19 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/map/map.component.ts:28:31:
-[1]       28 │ import { catchError, of } from 'rxjs';
-[1]          ╵                                ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/notification/notification.component.ts:11:29:
-[1]       11 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] TS2307: Cannot find module 'rxjs' or its corresponding type declarations. [plugin angular-compiler]
-[1] 
-[1]     src/app/shared/components/theme-toggle/theme-toggle.component.ts:13:29:
-[1]       13 │ import { Subscription } from 'rxjs';
-[1]          ╵                              ~~~~~~
-[1] 
-[1] 
-[1] ✘ [ERROR] Two forwarded modules both define a variable named $color-light-gray-1.
+[1] ✘ [ERROR] Undefined variable.
 [1]    ╷
-[1] 23 │ ┌ @forward 'typography-mixins' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 24 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 25 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 26 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 27 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ original @forward
-[1] 28 │ ┌ @forward 'spacing-utilities' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-[1] 29 │ │   $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-[1] 30 │ │   $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-[1] 31 │ │   $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-[1] 32 │ │   $color-secondary-dark, $color-white;
-[1]    │ └─────────────────────────────────────^ new @forward
+[1] 16 │ $font-family-base: tokens.$font-family-base;
+[1]    │                    ^^^^^^^^^^^^^^^^^^^^^^^^
 [1]    ╵
-[1]   src/app/core/design/main.scss 28:1        @forward
+[1]   src/app/core/design/variables.scss 16:20  @forward
+[1]   src/app/core/design/main.scss 20:1        @forward
 [1]   src/styles/design-system/index.scss 23:1  @use
 [1]   src/styles/main.scss 5:1                  root stylesheet [plugin angular-sass]
 [1] 
@@ -2593,7 +1461,7 @@
 [1]   You can mark the path "images/layers-2x.png" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
 [1] 
 [1] 
-[1] ✘ [ERROR] Could not resolve "images/marker-icon.png" [plugin angular-css-resource]
+✘ [ERROR] Could not resolve "images/marker-icon.png" [plugin angular-css-resource]
 [1] 
 [1]     src/assets/styles/leaflet.css:417:20:
 [1]       417 │   background-image: url(images/marker-icon.png);
@@ -2603,6 +1471,24 @@
 [1] 
 [1] 
 [1] Watch mode enabled. Watching for file changes...
-^C[0] npm run start:server exited with code SIGINT
-[1] npm run start:client exited with code SIGINT
-oivindlund@Mac date-night-app % 
+
+/Users/oivindlund/date-night-app/server/services/wallet.service.js
+   20:8   warning  'Transaction' is defined but never used  no-unused-vars
+   25:16  error    'global' is not defined                  no-undef
+  404:30  error    'global' is not defined                  no-undef
+
+/Users/oivindlund/date-night-app/server/tests/unit/services/chat.service.test.js
+  401:1  error  Parsing error: Unexpected token }
+
+/Users/oivindlund/date-night-app/server/tests/unit/services/wallet.service.test.js
+   618:30  error  'global' is not defined                   no-undef
+   619:7   error  'global' is not defined                   no-undef
+   630:7   error  'global' is not defined                   no-undef
+  1248:7   error  Unreachable code                          no-unreachable
+  1263:14  error  'paymentIntentsCreateSpy' is not defined  no-undef
+
+✖ 9 problems (8 errors, 1 warning)
+
+npm error Lifecycle script `lint` failed with error:
+npm error code 1
+npm error path /Users/oivindlund/date-night-app

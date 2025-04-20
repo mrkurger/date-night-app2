@@ -338,8 +338,170 @@ Always use the modern `@use` syntax instead of the deprecated `@import`:
 @use 'path/to/file' as namespace;
 
 // INCORRECT: Deprecated syntax
-@import 'path/to/file'; // AVOID THIS
+@import 'path/to/file';
 ```
+
+### Relative vs. Absolute Paths in SCSS
+
+When importing SCSS files, prefer relative paths over absolute paths to avoid resolution issues:
+
+```scss
+// CORRECT: Use relative paths
+@use '../../../styles/design-system/index' as ds;
+
+// INCORRECT: Avoid absolute paths
+@use 'src/styles/design-system/index' as ds;
+```
+
+Benefits of relative paths:
+
+1. **Portability**: Works regardless of project structure
+2. **Build Tool Compatibility**: Works with different build tools and configurations
+3. **Prevents Resolution Issues**: Avoids path resolution problems in different environments
+
+### Using @forward for Design Tokens
+
+When creating a design tokens file that needs to expose variables to other files, use `@forward` to make all variables available:
+
+```scss
+// design-tokens.scss
+@use 'emerald-tokens';
+@forward 'emerald-tokens'; // Makes all variables available to importers
+```
+
+This ensures that all variables from the imported module are available to any file that imports your module.
+
+### Automated SCSS Import Fixing
+
+For projects with many SCSS files, create automated scripts to fix import issues:
+
+1. **Path Calculation**: Calculate relative paths based on file locations
+2. **Pattern Matching**: Use regex to identify problematic imports
+3. **Batch Processing**: Process multiple files in a single run
+4. **Backup Creation**: Create backups before modifying files
+
+See `scripts/fix-scss-imports.js` for implementation details.
+
+## Angular Component Best Practices
+
+### Custom UI Components vs. Material Components
+
+When working with Angular Material components, consider these guidelines:
+
+1. **Proper Module Imports**: Always import the specific Material modules needed
+2. **Fallback Strategies**: Implement custom UI components as fallbacks when Material components fail
+3. **Consistent Styling**: Ensure custom components match the styling of Material components
+4. **Performance Considerations**: Custom implementations may be lighter weight than Material components
+
+### Template Performance Optimization
+
+To optimize Angular templates for performance:
+
+1. **Avoid Filter Operations in Templates**:
+
+```html
+<!-- INCORRECT: Filter in template -->
+<div *ngFor="let item of items.filter(i => i.status === 'active')">
+  <!-- CORRECT: Use component method -->
+  <div *ngFor="let item of getActiveItems()"></div>
+</div>
+```
+
+2. **Implement Component Methods for Filtering**:
+
+```typescript
+// In component class
+getActiveItems(): Item[] {
+  return this.items.filter(i => i.status === 'active');
+}
+```
+
+Benefits:
+
+- Reduces template complexity
+- Improves change detection performance
+- Makes code more maintainable and testable
+- Prevents duplicate filter operations
+
+### Custom Tab Implementation
+
+When Material tabs cause issues or aren't needed, implement custom tabs:
+
+1. **HTML Structure**:
+
+```html
+<div class="tabs-container">
+  <div class="tabs-header">
+    <button
+      *ngFor="let tab of tabLabels; let i = index"
+      class="tab-button"
+      [class.active]="activeTab === i"
+      (click)="activeTab = i; onTabChange({index: i})"
+    >
+      {{ tab }}
+    </button>
+  </div>
+  <div class="tabs-content">
+    <div *ngIf="activeTab === 0" class="tab-pane">
+      <!-- Tab 1 content -->
+    </div>
+    <div *ngIf="activeTab === 1" class="tab-pane">
+      <!-- Tab 2 content -->
+    </div>
+  </div>
+</div>
+```
+
+2. **SCSS Styling**:
+
+```scss
+.tabs-container {
+  margin-bottom: 20px;
+}
+
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #17a2b8;
+  }
+
+  &.active {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+  }
+}
+
+.tab-pane {
+  display: block;
+  padding: 15px 0;
+}
+```
+
+3. **Component Logic**:
+
+```typescript
+activeTab = 0;
+
+onTabChange(event: {index: number}): void {
+  // Handle tab change logic
+}
+```
+
+This approach provides a lightweight alternative to Material tabs with full control over styling and behavior.
 
 ### Handling Variable Conflicts
 

@@ -13,6 +13,7 @@
 
 // Use Emerald UI aligned tokens (introduces 'emerald-tokens' namespace)
 @use 'emerald-tokens';
+@forward 'emerald-tokens';
 
 // Add any additional design tokens or overrides here
 $transition-ease: cubic-bezier(0.4, 0, 0.2, 1);

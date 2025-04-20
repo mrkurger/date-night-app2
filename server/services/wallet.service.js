@@ -17,14 +17,18 @@
 import Stripe from 'stripe';
 import Wallet from '../models/wallet.model.js';
 import User from '../models/user.model.js';
-import Transaction from '../models/transaction.model.js';
+// Keeping Transaction import for future use
+import Transaction from '../models/transaction.model.js'; // eslint-disable-line no-unused-vars
 import { AppError } from '../middleware/errorHandler.js';
+import axios from 'axios';
+import crypto from 'crypto';
 
 // Initialize Stripe with the API key, but allow for testing by checking if it's already defined
 // This helps with mocking in tests
-const stripe = global.stripe || new Stripe(process.env.STRIPE_SECRET_KEY);
-import axios from 'axios';
-import crypto from 'crypto';
+const stripe =
+  typeof globalThis !== 'undefined' && globalThis.stripe
+    ? globalThis.stripe
+    : new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Constants
 const SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP'];
@@ -401,7 +405,8 @@ class WalletService {
 
       // Create a payment intent with Stripe
       // Make sure stripe is properly initialized
-      const stripeInstance = global.stripe || stripe;
+      const stripeInstance =
+        typeof globalThis !== 'undefined' && globalThis.stripe ? globalThis.stripe : stripe;
       const paymentIntent = await stripeInstance.paymentIntents.create({
         amount,
         currency: currency.toLowerCase(),

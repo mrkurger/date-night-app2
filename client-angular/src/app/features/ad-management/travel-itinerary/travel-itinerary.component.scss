@@ -263,13 +263,40 @@ label {
   background-color: #dc3545;
 }
 
-/* Tab styling */
-::ng-deep .mat-mdc-tab-header {
+/* Custom tabs styling */
+.tabs-container {
   margin-bottom: 20px;
 }
 
-::ng-deep .mat-mdc-tab-body-content {
-  overflow: hidden !important;
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #17a2b8;
+  }
+
+  &.active {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+  }
+}
+
+.tab-pane {
+  display: block;
+  padding: 15px 0;
 }
 
 /* Card styling for active itineraries */

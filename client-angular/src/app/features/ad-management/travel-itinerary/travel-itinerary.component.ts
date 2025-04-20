@@ -25,7 +25,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MapComponent, MapMarker } from '../../../shared/components/map/map.component';
 import { LocationService } from '../../../core/services/location.service';
@@ -49,7 +48,6 @@ import { NorwayCity, NorwayCounty } from '../../../core/constants/norway-locatio
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatTabsModule,
     MatAutocompleteModule,
     MapComponent,
   ],
@@ -66,9 +64,35 @@ export class TravelItineraryComponent implements OnInit {
   editMode = false;
   currentItineraryId: string | null = null;
 
+  // For custom tabs implementation
+  activeTab = 0; // Default to first tab
+
+  /**
+   * Returns active itineraries filtered from the main itineraries array
+   * Used in template to avoid filter operations in template bindings
+   */
+  getActiveItineraries(): TravelItinerary[] {
+    return this.itineraries.filter(i => i.status === 'active');
+  }
+
   // For location tracking
   trackingLocation = false;
   currentPosition: { longitude: number; latitude: number } | null = null;
+
+  /**
+   * Handles tab change events
+   * @param event The tab change event with index property
+   */
+  onTabChange(event: { index: number }): void {
+    // Update maps when switching to map tabs
+    setTimeout(() => {
+      if (event.index === 0 && this.locationMap) {
+        this.locationMap.refreshMap();
+      } else if (event.index === 3 && this.itineraryMap) {
+        this.itineraryMap.refreshMap();
+      }
+    }, 100);
+  }
 
   // For map
   mapMarkers: MapMarker[] = [];
@@ -80,7 +104,6 @@ export class TravelItineraryComponent implements OnInit {
   filteredCities: NorwayCity[] = [];
 
   // View state
-  activeTab = 0;
   showMap = true;
 
   constructor(

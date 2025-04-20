@@ -31,7 +31,7 @@ module.exports = {
 
   // Use babel-jest for transforming
   transform: {
-    '^.+\\.js$': ['babel-jest', { configFile: './babel.config.cjs' }],
+    '^.+\\.(js|mjs)$': ['babel-jest', { configFile: './babel.config.cjs' }],
   },
 
   // Module name mapping for imports
@@ -55,7 +55,7 @@ module.exports = {
 
   // Transform ignore patterns
   transformIgnorePatterns: [
-    'node_modules/(?!(mongoose|@babel/runtime|@jest/globals|bcrypt|jsonwebtoken|supertest|stripe)/)',
+    'node_modules/(?!(mongoose|@babel/runtime|@jest/globals|bcrypt|jsonwebtoken|supertest|stripe|jest-extended)/)',
   ],
 
   // No need to specify .js as ESM since package.json has "type": "module",

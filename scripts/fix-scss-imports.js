@@ -13,15 +13,23 @@
  *   --dry-run  Only report issues without making changes
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+// Get the directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const CLIENT_DIR = path.join(__dirname, '..', 'client-angular');
 const SCSS_GLOB = 'src/**/*.scss';
 const OLD_IMPORT_PATTERN = /@use\s+['"]src\/app\/core\/design\/main['"]\s+as\s+(\w+);/g;
 const NEW_IMPORT_PATH = 'src/styles/design-system';
+
+// Pattern for absolute path imports
+const ABSOLUTE_IMPORT_PATTERN = /@use\s+['"]src\/styles\/design-system\/index['"]\s+as\s+(\w+);/g;
 
 // Command line arguments
 const args = process.argv.slice(2);
@@ -49,6 +57,18 @@ function findScssFiles() {
 }
 
 /**
+ * Calculate relative path from file to target
+ * @param {string} filePath Source file path
+ * @param {string} targetPath Target path
+ * @returns {string} Relative path with forward slashes
+ */
+function calculateRelativePath(filePath, targetPath) {
+  const fileDir = path.dirname(filePath);
+  const relativePath = path.relative(fileDir, path.join(CLIENT_DIR, targetPath));
+  return relativePath.replace(/\\/g, '/'); // Ensure forward slashes for SCSS
+}
+
+/**
  * Fix imports in a single file
  * @param {string} filePath Path to the SCSS file
  * @returns {boolean} True if file was modified
@@ -57,21 +77,38 @@ function fixImportsInFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
     stats.scanned++;
+    let wasModified = false;
+    let updatedContent = content;
 
-    // Check if the file contains the old import pattern
-    if (!OLD_IMPORT_PATTERN.test(content)) {
-      return false;
+    // Check and fix old core/design/main imports
+    if (OLD_IMPORT_PATTERN.test(content)) {
+      // Reset the regex lastIndex
+      OLD_IMPORT_PATTERN.lastIndex = 0;
+
+      // Replace the old import with the new one
+      updatedContent = updatedContent.replace(OLD_IMPORT_PATTERN, (match, namespace) => {
+        return `@use '${NEW_IMPORT_PATH}' as ${namespace};`;
+      });
+      wasModified = true;
     }
 
-    // Reset the regex lastIndex
-    OLD_IMPORT_PATTERN.lastIndex = 0;
+    // Check and fix absolute path imports
+    if (ABSOLUTE_IMPORT_PATTERN.test(updatedContent)) {
+      // Reset the regex lastIndex
+      ABSOLUTE_IMPORT_PATTERN.lastIndex = 0;
 
-    // Replace the old import with the new one
-    const updatedContent = content.replace(OLD_IMPORT_PATTERN, (match, namespace) => {
-      return `@use '${NEW_IMPORT_PATH}' as ${namespace};`;
-    });
+      // Calculate the relative path to the design system
+      const designSystemPath = 'src/styles/design-system/index';
+      const relativePath = calculateRelativePath(filePath, designSystemPath);
 
-    if (content !== updatedContent) {
+      // Replace the absolute import with a relative one
+      updatedContent = updatedContent.replace(ABSOLUTE_IMPORT_PATTERN, (match, namespace) => {
+        return `@use '${relativePath}' as ${namespace};`;
+      });
+      wasModified = true;
+    }
+
+    if (wasModified && content !== updatedContent) {
       if (!DRY_RUN) {
         fs.writeFileSync(filePath, updatedContent, 'utf8');
       }

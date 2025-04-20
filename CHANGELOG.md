@@ -5,12 +5,19 @@
 ### Fixed
 
 - **SCSS Import Paths**
+
   - Fixed SCSS import paths in multiple component files to use the centralized design system
   - Updated all component SCSS files to use `@use 'src/styles/design-system/index' as ds;` instead of direct imports
   - Fixed button.component.scss, card.component.scss, input.component.scss, checkbox.component.scss, select.component.scss, icon.component.scss
   - Fixed feature component SCSS files including list-view.component.scss, login.component.scss, chat-list.component.scss
   - Updated AILessons.md to document the correct SCSS import pattern with the index file
   - Ensured consistent design system usage across all components
+
+- **Unit Tests**
+  - Fixed chat.service.test.js to properly wrap test code in async test functions
+  - Fixed SyntaxError related to using await outside of async functions
+  - Ensured all test cases are properly wrapped in it() or test() functions
+  - Improved test structure for better readability and maintainability
 
 ## 2025-04-22
 

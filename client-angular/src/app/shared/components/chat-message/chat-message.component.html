@@ -1,10 +1,6 @@
 <div [ngClass]="getMessageClasses()">
   <div class="message__avatar" *ngIf="!isCurrentUser && showSender">
-    <img
-      [src]="(message.sender && message.sender.profileImage) || '/assets/img/default-profile.jpg'"
-      [alt]="getSenderName()"
-      class="avatar-img"
-    />
+    <img [src]="getSenderProfileImage()" [alt]="getSenderName()" class="avatar-img" />
   </div>
 
   <div class="message__content">
@@ -92,7 +88,7 @@
       <!-- Expiry indicator -->
       <span class="message__expiry" *ngIf="message.expiresAt">
         <i class="icon-timer" aria-hidden="true"></i>
-        <span class="message__expiry-time">Expires {{ message.expiresAt | timeAgo }}</span>
+        <span class="message__expiry-time">Expires {{ getExpiryDate() | timeAgo }}</span>
       </span>
     </div>
   </div>

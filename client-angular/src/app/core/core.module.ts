@@ -34,8 +34,8 @@ import { VerificationService } from './services/verification.service';
 
 // Interceptors
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor.simple';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { CSPInterceptor } from './interceptors/csp.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { cspInterceptor } from './interceptors/csp.interceptor';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 
 /**

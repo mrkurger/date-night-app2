@@ -1,5 +1,42 @@
 # Change Log
 
+## 2025-04-22: Angular Client Fixes
+
+### Fixed
+
+- **Angular Interceptors**: Fixed interceptor imports in core.module.ts
+
+  - Updated imports to use the correct function imports for authInterceptor and cspInterceptor
+  - Fixed factory functions to properly use the imported interceptors
+
+- **Component Template Issues**: Fixed template issues in travel-itinerary component
+
+  - Replaced mat-tab elements with custom tabs implementation
+  - Added custom tabs styling in travel-itinerary.component.scss
+  - Fixed filter operations in template by using getActiveItineraries() method
+
+- **Duplicate Code**: Fixed duplicate method in travel-itinerary component
+
+  - Removed duplicate getActiveItineraries method
+  - Updated DUPLICATES.md to document the issue
+
+- **SCSS Import Issues**: Fixed SCSS import path issues
+  - Created fix-scss-imports.js script to convert absolute imports to relative imports
+  - Created fix-tokens-variables.js script to properly forward emerald-tokens variables
+  - Created fix-angular-issues.sh script to run all fixes in one command
+
+### Added
+
+- **Custom Tabs Implementation**: Added custom tabs to replace MatTabsModule
+
+  - Created tab-button elements with proper styling
+  - Implemented tab content switching with ngIf directives
+  - Added active state styling for selected tabs
+
+- **Documentation**: Updated documentation for fixes
+  - Added entries to DUPLICATES.md for the duplicate method
+  - Added documentation for SCSS import issues
+
 ## 2025-04-21: Geocoding Service TypeScript Fixes
 
 ### Fixed

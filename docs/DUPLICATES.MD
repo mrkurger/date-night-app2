@@ -25,6 +25,7 @@ This document tracks code duplication in the Date Night App project. Duplicated 
 | Form Validation Logic | Multiple form components                                                                                                                                            | Extract to shared form validation service | In Progress |
 | Image Gallery         | Multiple components                                                                                                                                                 | Use shared image gallery component        | Completed   |
 | Review Display        | Multiple components                                                                                                                                                 | Extract to shared review components       | Completed   |
+| getActiveItineraries  | `client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts`                                                                      | Remove duplicate method                   | Completed   |
 
 ### Service Duplications
 
@@ -182,6 +183,7 @@ The detailed findings from Phase 1 are available in the `/phase1-assessment` dir
    - Extract shared mixins
    - Consolidate design tokens
    - Create reusable animation definitions
+   - Fix SCSS import paths (absolute vs. relative)
 
 3. **Test Helpers**: Create shared test utilities
 
