@@ -173,7 +173,7 @@ xss-clean                   NPM ERR!  Registry error got is not a function
 swagger-ui-express          PKG ERR!  Not in the package.json. Found in: /server.js
                             NPM ERR!  Registry error got is not a function
 
-@jest/globals               PKG ERR!  Not in the package.json. Found in: /tests/helpers.js
+@jest/globals               PKG ERR!  Not in the package.json. Found in: /tests/helpers.js, /tests/unit/simple.test.cjs, /tests/unit/simple.test.js, /tests/unit/services/ad.service.test.js, /tests/unit/services/auth.service.test.js, /tests/unit/services/payment.service.test.js, /tests/unit/services/wallet.service.test.js, /tests/unit/middleware/auth.middleware.test.js, /tests/unit/middleware/security.test.js, /tests/performance/api.performance.test.js, /tests/integration/controllers/auth.controller.test.js, /tests/integration/controllers/payment.controller.test.js
                             NPM ERR!  Registry error got is not a function
 
 swagger-jsdoc               PKG ERR!  Not in the package.json. Found in: /config/swagger.js
