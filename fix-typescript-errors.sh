@@ -15,11 +15,20 @@ if ! npm list ts-morph --depth=0 >/dev/null 2>&1; then
   npm install --no-save ts-morph
 fi
 
-# Check if errors.csv exists
-if [ ! -f "errors.csv" ]; then
-  echo "Error: errors.csv file not found. Please create it first."
-  exit 1
+# Check if errors-new.csv exists
+if [ ! -f "errors-new.csv" ]; then
+  echo "Creating a sample errors-new.csv file..."
+  echo "file_path,error_codes" > errors-new.csv
+  echo "src/app/core/services/alert.service.ts,TS2322" >> errors-new.csv
+  echo "src/app/core/core.module.ts,TS2724" >> errors-new.csv
 fi
+
+# Display the format of the errors.csv file
+echo "Using errors-new.csv file with the following format:"
+head -n 3 errors-new.csv
+
+# Set the errors file to use
+export ERRORS_FILE="errors-new.csv"
 
 # Make the scripts executable
 chmod +x scripts/fix-typescript-errors.mjs

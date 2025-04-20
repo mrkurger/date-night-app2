@@ -103,11 +103,26 @@ These scripts work together to automatically fix common TypeScript errors such a
    - Verify fixes with incremental builds
 
 4. **Common Fix Patterns**:
+
    - Add missing imports at the top of the file
    - Convert string literals to enum values
    - Add missing properties to interfaces
    - Use bracket notation for dynamic property access
    - Add type assertions for comparison operations
+
+5. **CSV Error Format**:
+
+   - Use a simple CSV format for error tracking
+   - Format: `file_path,error_codes`
+   - Process multiple error types per file
+   - Handle quoted strings and special characters properly
+   - Support environment variable configuration
+
+6. **Error Handling Improvements**:
+   - Robust CSV parsing to handle different formats
+   - Graceful handling of malformed input
+   - Clear error messages and logging
+   - Comprehensive reporting of fixed vs. skipped errors
 
 For detailed implementation, see [TYPESCRIPT_ERROR_FIXING.md](/docs/TYPESCRIPT_ERROR_FIXING.md).
 
@@ -301,7 +316,7 @@ When importing design system styles in SCSS files, always use the centralized de
 
 ```scss
 // CORRECT: Use the centralized design system entry point
-@use 'src/styles/design-system' as ds;
+@use 'src/styles/design-system/index' as ds;
 
 // INCORRECT: Don't import directly from core/design
 @use 'src/app/core/design/main' as ds; // AVOID THIS

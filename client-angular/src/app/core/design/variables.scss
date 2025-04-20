@@ -12,6 +12,7 @@
 $font-primary: 'Poppins', sans-serif;
 $font-secondary: 'Roboto', sans-serif;
 $font-monospace: 'Roboto Mono', monospace;
+// Use the font variables directly from tokens
 $font-family-base: tokens.$font-family-base;
 $font-family-heading: tokens.$font-family-heading;
 

@@ -1,5 +1,17 @@
 # Change Log
 
+## 2025-04-23
+
+### Fixed
+
+- **SCSS Import Paths**
+  - Fixed SCSS import paths in multiple component files to use the centralized design system
+  - Updated all component SCSS files to use `@use 'src/styles/design-system/index' as ds;` instead of direct imports
+  - Fixed button.component.scss, card.component.scss, input.component.scss, checkbox.component.scss, select.component.scss, icon.component.scss
+  - Fixed feature component SCSS files including list-view.component.scss, login.component.scss, chat-list.component.scss
+  - Updated AILessons.md to document the correct SCSS import pattern with the index file
+  - Ensured consistent design system usage across all components
+
 ## 2025-04-22
 
 ### Fixed

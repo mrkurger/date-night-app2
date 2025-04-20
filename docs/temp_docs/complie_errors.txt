@@ -1,0 +1,1464 @@
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                    @forward
+  src/app/core/design/main.scss 20:1                          @use
+  src/app/shared/components/select/select.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                        @forward
+  src/app/core/design/main.scss 20:1                              @use
+  src/app/shared/components/checkbox/checkbox.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                          @forward
+  src/app/core/design/main.scss 20:1                                @forward
+  src/styles/design-system/index.scss 23:1                          @use
+  src/app/features/user-settings/user-settings.component.scss 10:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                      @forward
+  src/app/core/design/main.scss 20:1                            @use
+  src/app/features/chat/chat-list/chat-list.component.scss 1:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                      @forward
+  src/app/core/design/main.scss 20:1                            @use
+  src/app/features/chat/chat-room/chat-room.component.scss 1:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20              @forward
+  src/app/core/design/main.scss 20:1                    @use
+  src/app/features/auth/login/login.component.scss 1:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                 @forward
+  src/app/core/design/main.scss 20:1                       @use
+  src/app/features/list-view/list-view.component.scss 1:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Can't find stylesheet to import.
+  ╷
+7 │ @use 'src/app/core/design/main' as ds;
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/app/shared/components/card/card.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                                   @forward
+  src/app/core/design/main.scss 20:1                                         @forward
+  src/styles/design-system/index.scss 23:1                                   @use
+  src/app/features/advertiser-profile/advertiser-profile.component.scss 1:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Can't find stylesheet to import.
+  ╷
+7 │ @use 'src/app/core/design/main' as ds;
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/app/shared/components/button/button.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                @forward
+  src/app/core/design/main.scss 20:1                      @use
+  src/app/shared/components/icon/icon.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20                                   @forward
+  src/app/core/design/main.scss 20:1                                         @use
+  src/app/features/design-system-demo/design-system-demo.component.scss 5:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] Can't find stylesheet to import.
+  ╷
+7 │ @use 'src/app/core/design/main' as ds;
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/app/shared/components/input/input.component.scss 7:1  root stylesheet [plugin angular-sass]
+
+
+✘ [ERROR] TS2724: '"./interceptors/auth.interceptor"' has no exported member named 'AuthInterceptor'. Did you mean 'authInterceptor'? [plugin angular-compiler]
+
+    src/app/core/core.module.ts:37:9:
+      37 │ import { AuthInterceptor } from './interceptors/auth.interceptor';
+         ╵          ~~~~~~~~~~~~~~~
+
+  'authInterceptor' is declared here.
+
+    src/app/core/interceptors/auth.interceptor.ts:21:13:
+      21 │ export const authInterceptor: HttpInterceptorFn = (
+         ╵              ~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2724: '"./interceptors/csp.interceptor"' has no exported member named 'CSPInterceptor'. Did you mean 'cspInterceptor'? [plugin angular-compiler]
+
+    src/app/core/core.module.ts:38:9:
+      38 │ import { CSPInterceptor } from './interceptors/csp.interceptor';
+         ╵          ~~~~~~~~~~~~~~
+
+  'cspInterceptor' is declared here.
+
+    src/app/core/interceptors/csp.interceptor.ts:10:13:
+      10 │ export const cspInterceptor: HttpInterceptorFn = (
+         ╵              ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'Partial<ErrorTelemetry>'. [plugin angular-compiler]
+
+    src/app/core/interceptors/http-error.interceptor.ts:151:6:
+      151 │       name: 'HttpError',
+          ╵       ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'User'. [plugin angular-compiler]
+
+    src/app/core/models/profile.interface.ts:1:33:
+      1 │ export interface Profile extends User {
+        ╵                                  ~~~~
+
+
+✘ [ERROR] NG8001: 'mat-tabs' is not a known element:
+1. If 'mat-tabs' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-tabs' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:13:6:
+      13 │       <mat-tabs (selectedTabChange)="onTabChange($event)" [selecte...
+         ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'selectedIndex' since it isn't a known property of 'mat-tabs'.
+1. If 'mat-tabs' is an Angular component and it has 'selectedIndex' input, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-tabs' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:13:58:
+      13 │ ...ectedTabChange)="onTabChange($event)" [selectedIndex]="activeTab">
+         ╵                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:390:22:
+      390 │ ...          *ngIf="itineraries.filter(i => i.status === 'active'...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:397:22:
+      397 │ ...          *ngFor="let itinerary of itineraries.filter(i => i.s...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:397:22:
+      397 │ ...          *ngFor="let itinerary of itineraries.filter(i => i.s...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:403:28:
+      403 │ ...          {{ itinerary.destination.city }}, {{ itinerary.desti...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:403:28:
+      403 │ ...          {{ itinerary.destination.city }}, {{ itinerary.desti...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:406:52:
+      406 │ ...<strong>Dates:</strong> {{ formatDate(itinerary.arrivalDate) }} -
+          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:406:52:
+      406 │ ...<strong>Dates:</strong> {{ formatDate(itinerary.arrivalDate) }} -
+          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
+      409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
+          ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:409:47:
+      409 │ ...                    <p class="card-text" *ngIf="itinerary.notes">
+          ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
+      410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
+          ╵                                                ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:410:52:
+      410 │ ...                    <strong>Notes:</strong> {{ itinerary.notes }}
+          ╵                                                ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
+      428 │                     [height]="'500px'"
+          ╵                               ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:428:30:
+      428 │                     [height]="'500px'"
+          ╵                               ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:429:39:
+      429 │                     [initialLatitude]="59.9139"
+          ╵                                        ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:429:39:
+      429 │                     [initialLatitude]="59.9139"
+          ╵                                        ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:430:40:
+      430 │                     [initialLongitude]="10.7522"
+          ╵                                         ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:430:40:
+      430 │                     [initialLongitude]="10.7522"
+          ╵                                         ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:431:35:
+      431 │                     [initialZoom]="6"
+          ╵                                    ^
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:431:35:
+      431 │                     [initialZoom]="6"
+          ╵                                    ^
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:432:31:
+      432 │                     [markers]="mapMarkers"
+          ╵                                ~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:432:31:
+      432 │                     [markers]="mapMarkers"
+          ╵                                ~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:433:43:
+      433 │                     [showCurrentLocation]="true"
+          ╵                                            ~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:433:43:
+      433 │                     [showCurrentLocation]="true"
+          ╵                                            ~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:434:35:
+      434 │                     (markerClick)="onMarkerClick($event)"
+          ╵                                    ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:434:35:
+      434 │                     (markerClick)="onMarkerClick($event)"
+          ╵                                    ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:452:30:
+      452 │                     [height]="'600px'"
+          ╵                               ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:452:30:
+      452 │                     [height]="'600px'"
+          ╵                               ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:453:39:
+      453 │                     [initialLatitude]="59.9139"
+          ╵                                        ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:453:39:
+      453 │                     [initialLatitude]="59.9139"
+          ╵                                        ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:454:40:
+      454 │                     [initialLongitude]="10.7522"
+          ╵                                         ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:454:40:
+      454 │                     [initialLongitude]="10.7522"
+          ╵                                         ~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:455:35:
+      455 │                     [initialZoom]="6"
+          ╵                                    ^
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:455:35:
+      455 │                     [initialZoom]="6"
+          ╵                                    ^
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:456:31:
+      456 │                     [markers]="mapMarkers"
+          ╵                                ~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:456:31:
+      456 │                     [markers]="mapMarkers"
+          ╵                                ~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:457:35:
+      457 │                     (markerClick)="onMarkerClick($event)"
+          ╵                                    ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:457:35:
+      457 │                     (markerClick)="onMarkerClick($event)"
+          ╵                                    ~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:464:24:
+      464 │ ...          *ngFor="let status of ['planned', 'active', 'complet...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:464:24:
+      464 │ ...          *ngFor="let status of ['planned', 'active', 'complet...
+          ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:467:64:
+      467 │ ... <div class="marker-legend" [ngClass]="'marker-' + status"></div>
+          ╵                                           ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:467:64:
+      467 │ ... <div class="marker-legend" [ngClass]="'marker-' + status"></div>
+          ╵                                           ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 23 in [itineraries.filter(i => i.status === 'active').length === 0] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@389:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:468:32:
+      468 │                           <span>{{ status | titlecase }}</span>
+          ╵                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5002: Parser Error: Bindings cannot contain assignments at column 40 in [let itinerary of itineraries.filter(i => i.status === 'active')] in /Users/oivindlund/date-night-app/client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html@396:22 [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.html:468:32:
+      468 │                           <span>{{ status | titlecase }}</span>
+          ╵                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component TravelItineraryComponent.
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:37:15:
+      37 │   templateUrl: './travel-itinerary.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'map'. [plugin angular-compiler]
+
+    src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts:446:16:
+      446 │                 map(addressInfo => ({ response, addressInfo })),
+          ╵                 ~~~
+
+
+✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
+
+    src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:32:9:
+      32 │ import { ErrorCategory } from '../../../../core/interceptors/http-...
+         ╵          ~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'variables' does not exist on type 'AlertFormDialogComponent'. [plugin angular-compiler]
+
+    src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts:260:33:
+      260 │ ...          <mat-hint>Use {{ variables }} for dynamic content</m...
+          ╵                               ~~~~~~~~~
+
+
+✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
+
+    src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:31:9:
+      31 │ import { ErrorCategory } from '../../../../core/interceptors/http-...
+         ╵          ~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.html:41:27:
+      41 │       [class.pinned]="room.pinned"
+         ╵                            ~~~~~~
+
+  Error occurs in the template of component ChatListComponent.
+
+    src/app/features/chat/chat-list/chat-list.component.ts:23:15:
+      23 │   templateUrl: './chat-list.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.html:55:68:
+      55 │ ...  <span class="chat-room-item__pin-indicator" *ngIf="room.pinned">
+         ╵                                                              ~~~~~~
+
+  Error occurs in the template of component ChatListComponent.
+
+    src/app/features/chat/chat-list/chat-list.component.ts:23:15:
+      23 │   templateUrl: './chat-list.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'encryptionEnabled' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.html:69:62:
+      69 │ ...class="chat-room-item__encryption" *ngIf="room.encryptionEnabled">
+         ╵                                                   ~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatListComponent.
+
+    src/app/features/chat/chat-list/chat-list.component.ts:23:15:
+      23 │   templateUrl: './chat-list.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.html:83:31:
+      83 │           [class.active]="room.pinned"
+         ╵                                ~~~~~~
+
+  Error occurs in the template of component ChatListComponent.
+
+    src/app/features/chat/chat-list/chat-list.component.ts:23:15:
+      23 │   templateUrl: './chat-list.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.html:85:25:
+      85 │           title="{{ room.pinned ? 'Unpin' : 'Pin' }}"
+         ╵                          ~~~~~~
+
+  Error occurs in the template of component ChatListComponent.
+
+    src/app/features/chat/chat-list/chat-list.component.ts:23:15:
+      23 │   templateUrl: './chat-list.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:42:42:
+      42 │     this.currentUserId = this.authService.getCurrentUserId();
+         ╵                                           ~~~~~~~~~~~~~~~~
+
+  'getCurrentUser' is declared here.
+
+    src/app/core/services/auth.service.ts:136:2:
+      136 │   getCurrentUser(): User | null {
+          ╵   ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:128:12:
+      128 │       if (a.pinned && !b.pinned) return -1;
+          ╵             ~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:128:25:
+      128 │       if (a.pinned && !b.pinned) return -1;
+          ╵                          ~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:129:13:
+      129 │       if (!a.pinned && b.pinned) return 1;
+          ╵              ~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:129:25:
+      129 │       if (!a.pinned && b.pinned) return 1;
+          ╵                          ~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'createdAt' does not exist on type 'ChatMessage'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:212:67:
+      212 │ ...w Date(room.lastMessage.timestamp || room.lastMessage.createdAt);
+          ╵                                                          ~~~~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:247:28:
+      247 │     const newPinned = !room.pinned;
+          ╵                             ~~~~~~
+
+
+✘ [ERROR] TS2339: Property 'pinned' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-list/chat-list.component.ts:252:13:
+      252 │         room.pinned = newPinned;
+          ╵              ~~~~~~
+
+
+✘ [ERROR] NG1: Property 'router' is private and only accessible within class 'ChatRoomComponent'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-room/chat-room.component.html:4:42:
+      4 │     <div class="chat-room__back" (click)="router.navigate(['/chat'])">
+        ╵                                           ~~~~~~
+
+  Error occurs in the template of component ChatRoomComponent.
+
+    src/app/features/chat/chat-room/chat-room.component.ts:43:15:
+      43 │   templateUrl: './chat-room.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'messageExpiryEnabled' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-room/chat-room.component.html:50:36:
+      50 │         messageExpiryEnabled: room?.messageExpiryEnabled || false,
+         ╵                                     ~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatRoomComponent.
+
+    src/app/features/chat/chat-room/chat-room.component.ts:43:15:
+      43 │   templateUrl: './chat-room.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'messageExpiryTime' does not exist on type 'ChatRoom'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-room/chat-room.component.html:51:33:
+      51 │         messageExpiryTime: room?.messageExpiryTime || 24,
+         ╵                                  ~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatRoomComponent.
+
+    src/app/features/chat/chat-room/chat-room.component.ts:43:15:
+      43 │   templateUrl: './chat-room.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG1: Property 'hasMoreMessages' is private and only accessible within class 'ChatRoomComponent'. [plugin angular-compiler]
+
+    src/app/features/chat/chat-room/chat-room.component.html:67:45:
+      67 │ ...room__load-more" *ngIf="hasMoreMessages && !loading && !loading...
+         ╵                            ~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatRoomComponent.
+
+    src/app/features/chat/chat-room/chat-room.component.ts:43:15:
+      43 │   templateUrl: './chat-room.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
+
+    src/app/features/chat/chat-room/chat-room.component.ts:80:42:
+      80 │     this.currentUserId = this.authService.getCurrentUserId();
+         ╵                                           ~~~~~~~~~~~~~~~~
+
+  'getCurrentUser' is declared here.
+
+    src/app/core/services/auth.service.ts:136:2:
+      136 │   getCurrentUser(): User | null {
+          ╵   ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: Type 'string' is not assignable to type 'boolean'. [plugin angular-compiler]
+
+    src/app/features/design-system-demo/design-system-demo.component.html:217:24:
+      217 │             <app-button disabled> Disabled </app-button>
+          ╵                         ~~~~~~~~
+
+  Error occurs in the template of component DesignSystemDemoComponent.
+
+    src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
+      40 │   templateUrl: './design-system-demo.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: Type 'string' is not assignable to type 'boolean'. [plugin angular-compiler]
+
+    src/app/features/design-system-demo/design-system-demo.component.html:219:24:
+      219 │             <app-button loading> Loading </app-button>
+          ╵                         ~~~~~~~
+
+  Error occurs in the template of component DesignSystemDemoComponent.
+
+    src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
+      40 │   templateUrl: './design-system-demo.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: Type 'string' is not assignable to type 'boolean'. [plugin angular-compiler]
+
+    src/app/features/design-system-demo/design-system-demo.component.html:221:24:
+      221 │             <app-button fullWidth> Full Width </app-button>
+          ╵                         ~~~~~~~~~
+
+  Error occurs in the template of component DesignSystemDemoComponent.
+
+    src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
+      40 │   templateUrl: './design-system-demo.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'checked' since it isn't a known property of 'app-checkbox'.
+1. If 'app-checkbox' is an Angular component and it has 'checked' input, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-checkbox' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
+
+    src/app/features/design-system-demo/design-system-demo.component.html:352:51:
+      352 │ ...eckbox label="Checked Checkbox" [checked]="true"> </app-checkbox>
+          ╵                                    ~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DesignSystemDemoComponent.
+
+    src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
+      40 │   templateUrl: './design-system-demo.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'checked' since it isn't a known property of 'app-checkbox'.
+1. If 'app-checkbox' is an Angular component and it has 'checked' input, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-checkbox' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
+
+    src/app/features/design-system-demo/design-system-demo.component.html:356:60:
+      356 │ ...l="Disabled Checked Checkbox" [checked]="true" [disabled]="true">
+          ╵                                  ~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DesignSystemDemoComponent.
+
+    src/app/features/design-system-demo/design-system-demo.component.ts:40:15:
+      40 │   templateUrl: './design-system-demo.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'selected' does not exist on type 'Favorite'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:172:38:
+      172 │                 [(ngModel)]="favorite.selected"
+          ╵                                       ~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'selected' does not exist on type 'Favorite'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:172:38:
+      172 │                 [(ngModel)]="favorite.selected"
+          ╵                                       ~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'url' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:181:42:
+      181 │                   ? favorite.ad.images[0].url
+          ╵                                           ~~~
+
+
+✘ [ERROR] NG9: Property 'city' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:197:42:
+      197 │ ...     {{ favorite.ad.location.city }}, {{ favorite.ad.location....
+          ╵                                 ~~~~
+
+
+✘ [ERROR] NG9: Property 'county' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:197:75:
+      197 │ ...{ favorite.ad.location.city }}, {{ favorite.ad.location.county }}
+          ╵                                                            ~~~~~~
+
+
+✘ [ERROR] NG9: Property '_id' does not exist on type 'string | { username: string; profileImage?: string; }'.
+  Property '_id' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-list/favorites-list.component.ts:300:62:
+      300 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
+          ╵                                                               ~~~
+
+
+✘ [ERROR] NG9: Property 'url' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:403:42:
+      403 │                   ? favorite.ad.images[0].url
+          ╵                                           ~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'img'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:408:14:
+      408 │               [routerLink]="['/ads', favorite.ad._id]"
+          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'h3'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:412:41:
+      412 │ ... class="favorite-title" [routerLink]="['/ads', favorite.ad._id]">
+          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'city' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:419:43:
+      419 │ ...    {{ favorite.ad.location?.city }}, {{ favorite.ad.location?...
+          ╵                                 ~~~~
+
+
+✘ [ERROR] NG9: Property 'county' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:419:77:
+      419 │ ...favorite.ad.location?.city }}, {{ favorite.ad.location?.county }}
+          ╵                                                            ~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:456:38:
+      456 │ ...  <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
+          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:513:47:
+      513 │ ...-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
+          ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:521:14:
+      521 │               [routerLink]="['/chat']"
+          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'queryParams' since it isn't a known property of 'button'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:522:14:
+      522 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
+          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property '_id' does not exist on type 'string | { username: string; profileImage?: string; }'.
+  Property '_id' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:522:62:
+      522 │               [queryParams]="{ userId: favorite.ad.advertiser._id }"
+          ╵                                                               ~~~
+
+
+✘ [ERROR] TS2353: Object literal may only specify known properties, and 'existingNotes' does not exist in type 'NotesDialogData'. [plugin angular-compiler]
+
+    src/app/features/favorites/favorites-page/favorites-page.component.ts:1063:8:
+      1063 │         existingNotes: '',
+           ╵         ~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: Type '{ _id: string; title: string; description: string; category: string; price: number; location: string; images: string[]; advertiser: string; isActive: boolean; isFeatured: boolean; isTrending: boolean; ... 6 more ...; tourDates?: undefined; } | { ...; }' is not assignable to type 'Ad'.
+  Type '{ _id: string; title: string; description: string; category: string; price: number; location: string; images: string[]; advertiser: string; isActive: boolean; isFeatured: boolean; isTrending: boolean; ... 6 more ...; tourDates?: undefined; }' is missing the following properties from type 'Ad': media, userId [plugin angular-compiler]
+
+    src/app/features/preferences-demo/preferences-demo.component.ts:168:13:
+      168 │             [ad]="ad"
+          ╵              ~~
+
+
+✘ [ERROR] TS2551: Property 'getCurrentUserId' does not exist on type 'AuthService'. Did you mean 'getCurrentUser'? [plugin angular-compiler]
+
+    src/app/features/reviews/reviews-list/reviews-list.component.ts:73:42:
+      73 │     this.currentUserId = this.authService.getCurrentUserId();
+         ╵                                           ~~~~~~~~~~~~~~~~
+
+  'getCurrentUser' is declared here.
+
+    src/app/core/services/auth.service.ts:136:2:
+      136 │   getCurrentUser(): User | null {
+          ╵   ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2305: Module '"../../../../core/interceptors/http-error.interceptor"' has no exported member 'ErrorCategory'. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts:27:9:
+      27 │ import { ErrorCategory } from '../../../../core/interceptors/http-...
+         ╵          ~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:133:70:
+      133 │ ...formanceStats$ | async)?.avgDuration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: No overload matches this call.
+  Overload 1 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 2 of 3, '(value: null, digitsInfo?: string, locale?: string): null', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 3 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:133:70:
+      133 │ ...formanceStats$ | async)?.avgDuration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:142:70:
+      142 │ ...formanceStats$ | async)?.p95Duration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: No overload matches this call.
+  Overload 1 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 2 of 3, '(value: null, digitsInfo?: string, locale?: string): null', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 3 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:142:70:
+      142 │ ...formanceStats$ | async)?.p95Duration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:151:70:
+      151 │ ...formanceStats$ | async)?.maxDuration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: No overload matches this call.
+  Overload 1 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 2 of 3, '(value: null, digitsInfo?: string, locale?: string): null', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'.
+  Overload 3 of 3, '(value: string | number, digitsInfo?: string, locale?: string): string', gave the following error.
+    Argument of type 'string | number' is not assignable to parameter of type 'string'.
+      Type 'number' is not assignable to type 'string'. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:151:70:
+      151 │ ...formanceStats$ | async)?.maxDuration | number: '1.0-0' || 0 }} ms
+          ╵                                                   ~~~~~~~~~~~~
+
+
+✘ [ERROR] NG2: This kind of expression is always truthy. [plugin angular-compiler]
+
+    src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts:199:75:
+      199 │ ...tCellDef="let item">{{ item.ttfb | number: '1.0-0' || '-' }}</td>
+          ╵                                               ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8001: 'app-icon' is not a known element:
+1. If 'app-icon' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/shared/components/button/button.component.html:36:6:
+      36 │       <app-icon [name]="iconLeft"></app-icon>
+         ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ButtonComponent.
+
+    src/app/shared/components/button/button.component.ts:23:15:
+      23 │   templateUrl: './button.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'name' since it isn't a known property of 'app-icon'.
+1. If 'app-icon' is an Angular component and it has 'name' input, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
+
+    src/app/shared/components/button/button.component.html:36:16:
+      36 │       <app-icon [name]="iconLeft"></app-icon>
+         ╵                 ~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ButtonComponent.
+
+    src/app/shared/components/button/button.component.ts:23:15:
+      23 │   templateUrl: './button.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8001: 'app-icon' is not a known element:
+1. If 'app-icon' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/shared/components/button/button.component.html:48:6:
+      48 │       <app-icon [name]="iconRight"></app-icon>
+         ╵       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ButtonComponent.
+
+    src/app/shared/components/button/button.component.ts:23:15:
+      23 │   templateUrl: './button.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8002: Can't bind to 'name' since it isn't a known property of 'app-icon'.
+1. If 'app-icon' is an Angular component and it has 'name' input, then verify that it is included in the '@Component.imports' of this component.
+2. If 'app-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component. [plugin angular-compiler]
+
+    src/app/shared/components/button/button.component.html:48:16:
+      48 │       <app-icon [name]="iconRight"></app-icon>
+         ╵                 ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ButtonComponent.
+
+    src/app/shared/components/button/button.component.ts:23:15:
+      23 │   templateUrl: './button.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'profileImage' does not exist on type 'string | { id: string; username: string; }'.
+  Property 'profileImage' does not exist on type 'string'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:4:47:
+      4 │ ....sender && message.sender.profileImage) || '/assets/img/default-...
+        ╵                              ~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8004: No pipe found with name 'linkify'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:49:46:
+      49 │         <span [innerHTML]="decryptedContent | linkify"></span>
+         ╵                                               ~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'openAttachment' does not exist on type 'ChatMessageComponent'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:63:23:
+      63 │               (click)="openAttachment(attachment)"
+         ╵                        ~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG8004: No pipe found with name 'fileSize'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:74:65:
+      74 │ ...iv class="attachment__size">{{ attachment.size | fileSize }}</div>
+         ╵                                                     ~~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'downloadAttachment' does not exist on type 'ChatMessageComponent'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:76:58:
+      76 │ ...s="attachment__download" (click)="downloadAttachment(attachment)">
+         ╵                                      ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG5: Argument of type 'number' is not assignable to parameter of type 'string | Date'. [plugin angular-compiler]
+
+    src/app/shared/components/chat-message/chat-message.component.html:95:62:
+      95 │ ...age__expiry-time">Expires {{ message.expiresAt | timeAgo }}</span>
+         ╵                                         ~~~~~~~~~
+
+  Error occurs in the template of component ChatMessageComponent.
+
+    src/app/shared/components/chat-message/chat-message.component.ts:27:15:
+      27 │   templateUrl: './chat-message.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] Undefined variable.
+   ╷
+15 │ $font-family-base: tokens.$font-family-base;
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+  src/app/core/design/variables.scss 15:20  @forward
+  src/app/core/design/main.scss 20:1        @forward
+  src/styles/design-system/index.scss 23:1  @use
+  src/styles/main.scss 5:1                  root stylesheet [plugin angular-sass]
+
+    angular:styles/global:styles:1:8:
+      1 │ @import 'src/styles/main.scss';
+        ╵         ~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] Could not resolve "images/layers.png" [plugin angular-css-resource]
+
+    src/assets/styles/leaflet.css:371:20:
+      371 │   background-image: url(images/layers.png);
+          ╵                     ~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "images/layers.png" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+✘ [ERROR] Could not resolve "images/layers-2x.png" [plugin angular-css-resource]
+
+    src/assets/styles/leaflet.css:376:20:
+      376 │   background-image: url(images/layers-2x.png);
+          ╵                     ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "images/layers-2x.png" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+✘ [ERROR] Could not resolve "images/marker-icon.png" [plugin angular-css-resource]
+
+    src/assets/styles/leaflet.css:417:20:
+      417 │   background-image: url(images/marker-icon.png);
+          ╵                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "images/marker-icon.png" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/oivindlund/date-night-app/client-angular
+npm error workspace client-angular@0.0.0
+npm error location /Users/oivindlund/date-night-app/client-angular
+npm error command failed
+npm error command sh -c NODE_OPTIONS=--max_old_space_size=8192 ng build client-angular
+oivindlund@Mac client-angular % 

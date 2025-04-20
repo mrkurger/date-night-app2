@@ -23,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration
 const CONFIG = {
-  errorsFile: path.resolve(__dirname, '../errors.csv'),
+  errorsFile: path.resolve(__dirname, '../' + (process.env.ERRORS_FILE || 'errors.csv')),
   clientDir: path.resolve(__dirname, '../client-angular'),
   backupDir: path.resolve(__dirname, '../ts-fixes-backup'),
   dryRun: false, // Set to true to preview changes without applying them
@@ -130,17 +130,29 @@ function readErrorsFromCSV(filePath) {
   return lines
     .filter(line => line.trim())
     .map(line => {
-      const [code, message, pointer, path] = line.split(',');
-      const [lineNum, colNum] = pointer.split(':');
+      // The format is: file_path,error_codes
+      const [path, errorCodes] = line.split(',');
 
-      return {
-        code,
-        message: message.replace(/^"|"$/g, ''), // Remove quotes
-        line: parseInt(lineNum, 10),
-        column: parseInt(colNum, 10),
-        path: path.replace(/^\[1\]\s+/, '').trim(),
-      };
-    });
+      if (!path || !errorCodes) {
+        console.warn(`Warning: Malformed line in CSV: ${line}`);
+        return null;
+      }
+
+      // Split multiple error codes if present
+      const codes = errorCodes.split(/[,;]/).map(code => code.trim());
+
+      // Create an error object for each code
+      return codes.map(code => ({
+        code: code.replace(/^"|"$/g, ''), // Remove quotes if present
+        path,
+        // We don't have line and column info in this format
+        line: 0,
+        column: 0,
+        message: `Error ${code} in ${path}`,
+      }));
+    })
+    .filter(error => error !== null) // Remove any null entries from malformed lines
+    .flat(); // Flatten the array of arrays
 }
 
 // Group errors by file for more efficient processing

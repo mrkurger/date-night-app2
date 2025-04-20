@@ -34,10 +34,33 @@ To fix TypeScript errors in the frontend:
 
 1. Generate a CSV file with TypeScript errors:
 
+The script expects an errors CSV file with the following format:
+
+```
+file_path,error_codes
+src/app/core/services/alert.service.ts,TS2322
+src/app/core/core.module.ts,TS2724
+```
+
+Where:
+
+- `file_path` is the relative path to the file with errors
+- `error_codes` is the TypeScript error code
+
+By default, the script looks for a file named `errors-new.csv` in the project root. If this file doesn't exist, a sample file will be created automatically.
+
+You can generate this file manually or by parsing the output of the TypeScript compiler:
+
 ```bash
 cd client-angular
 npm run build > typescript-errors.txt
-# Extract errors to CSV format
+# Extract errors to CSV format using a script or manually
+```
+
+You can also specify a different errors file by setting the `ERRORS_FILE` environment variable:
+
+```bash
+ERRORS_FILE="my-custom-errors.csv" ./fix-typescript-errors.sh
 ```
 
 2. Run the error fixing script:

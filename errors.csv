@@ -1,13 +1,68 @@
-Error Code,Message,Location,File Path
-TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",173:20,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",210:20,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",250:20,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",291:20,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",186:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",189:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",224:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",227:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",265:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",268:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",306:18,[1] src/app/core/services/alert.service.ts
-TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",309:18,[1] src/app/core/services/alert.service.ts
+file_path,error_codes
+src/app/app.component.ts,TS2307
+src/app/core/core.module.ts,TS2724
+src/app/core/guards/role.guard.ts,TS2307
+src/app/core/interceptors/auth.interceptor.ts,TS2307
+src/app/core/interceptors/csrf.interceptor.ts,TS2307
+src/app/core/interceptors/http-error.interceptor.simple.ts,TS2307
+src/app/core/interceptors/http-error.interceptor.ts,"TS2307,TS2353"
+src/app/core/models/profile.interface.ts,TS2304
+src/app/core/services/ad.service.ts,TS2307
+src/app/core/services/alert.service.ts,"TS2307,TS2322"
+src/app/core/services/auth.service.ts,TS2307
+src/app/core/services/caching.service.ts,TS2307
+src/app/core/services/chat.service.ts,TS2307
+src/app/core/services/csrf.service.ts,TS2307
+src/app/core/services/dialog.service.ts,TS2307
+src/app/core/services/encryption.service.ts,TS2307
+src/app/core/services/favorite.service.ts,"TS2307,TS2339"
+src/app/core/services/geocoding.service.ts,"TS2307,TS2339,TS2345,TS2678"
+src/app/core/services/location.service.ts,TS2307
+src/app/core/services/media.service.ts,TS2307
+src/app/core/services/notification.service.ts,TS2307
+src/app/core/services/payment.service.ts,TS2307
+src/app/core/services/profile.service.ts,TS2307
+src/app/core/services/review.service.ts,TS2307
+src/app/core/services/reviews.service.ts,TS2307
+src/app/core/services/safety.service.ts,TS2307
+src/app/core/services/telemetry-socket.service.ts,TS2307
+src/app/core/services/telemetry.service.ts,TS2307
+src/app/core/services/theme.service.ts,TS2307
+src/app/core/services/travel.service.ts,TS2307
+src/app/core/services/user-preferences.service.ts,TS2307
+src/app/core/services/user.service.ts,TS2307
+src/app/core/services/verification.service.ts,TS2307
+src/app/core/services/wallet.service.ts,TS2307
+src/app/core/strategies/selective-preloading.strategy.ts,TS2307
+src/app/core/utils/rxjs-operators.ts,TS2307
+src/app/features/ad-management/ad-form/ad-form.component.ts,TS2307
+src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts,"TS2304,TS2307"
+src/app/features/admin/components/alert-form-dialog/alert-form-dialog.component.ts,TS2305
+src/app/features/admin/components/alert-management/alert-management.component.ts,TS2307
+src/app/features/admin/components/error-dashboard/error-dashboard.component.ts,"TS2305,TS2307"
+src/app/features/admin/components/performance-dashboard/performance-dashboard.component.ts,TS2307
+src/app/features/browse/browse.component.ts,TS2307
+src/app/features/chat/chat-list/chat-list.component.ts,"TS2307,TS2339,TS2551"
+src/app/features/chat/chat-room/chat-room.component.ts,"TS2307,TS2551"
+src/app/features/favorites/favorites-list/favorites-list.component.ts,TS2307
+src/app/features/favorites/favorites-page/favorites-page.component.ts,"TS2307,TS2339,TS2353"
+src/app/features/gallery/gallery.component.ts,TS2307
+src/app/features/location-matching/location-matching.component.ts,TS2307
+src/app/features/payment/payment.component.ts,TS2307
+src/app/features/preferences-demo/preferences-demo.component.ts,TS2307
+src/app/features/profile/profile.component.ts,TS2307
+src/app/features/reviews/reviews-list/reviews-list.component.ts,TS2551
+src/app/features/reviews/reviews-page/reviews-page.component.ts,TS2307
+src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts,"TS2305,TS2307"
+src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts,TS2307
+src/app/features/touring/touring.component.ts,TS2307
+src/app/features/user-settings/user-settings.component.ts,TS2307
+src/app/features/wallet/dialogs/transfer-dialog.component.ts,TS2307
+src/app/shared/components/ad-card/ad-card.component.ts,TS2307
+src/app/shared/components/alert-notifications/alert-notifications.component.ts,TS2307
+src/app/shared/components/chat-settings/chat-settings.component.ts,TS2307
+src/app/shared/components/favorite-button/favorite-button.component.ts,TS2307
+src/app/shared/components/main-layout/main-layout.component.ts,TS2307
+src/app/shared/components/map/map.component.ts,TS2307
+src/app/shared/components/notification/notification.component.ts,TS2307
+src/app/shared/components/theme-toggle/theme-toggle.component.ts,TS2307
