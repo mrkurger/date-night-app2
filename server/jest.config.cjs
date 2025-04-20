@@ -6,7 +6,12 @@ module.exports = {
   testEnvironment: 'node',
 
   // Test patterns
-  testMatch: ['**/tests/**/*.test.js', '**/tests/**/*.test.cjs', '**/tests/**/*.spec.js'],
+  testMatch: [
+    '**/tests/**/*.test.js',
+    '**/tests/**/*.test.cjs',
+    '**/tests/**/*.test.mjs',
+    '**/tests/**/*.spec.js',
+  ],
 
   // Setup files
   setupFilesAfterEnv: ['jest-extended/all'],
@@ -32,14 +37,18 @@ module.exports = {
   // Module name mapping for imports
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+
+  // Set NODE_ENV to test
+  testEnvironmentOptions: {
+    NODE_ENV: 'test',
   },
 
   // Verbose output for test results
   verbose: true,
 
   // Ensure proper handling of ES modules
-  moduleFileExtensions: ['js', 'json', 'node'],
+  moduleFileExtensions: ['js', 'json', 'node', 'mjs'],
 
   // Required for proper ES modules support
   testRunner: 'jest-circus/runner',
@@ -48,4 +57,6 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(mongoose|@babel/runtime|@jest/globals|bcrypt|jsonwebtoken|supertest|stripe)/)',
   ],
+
+  // No need to specify .js as ESM since package.json has "type": "module",
 };

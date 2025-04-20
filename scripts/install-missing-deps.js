@@ -6,8 +6,14 @@
  */
 
 import { execSync } from 'child_process';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Define directories
 const rootDir = path.join(__dirname, '..');
@@ -22,7 +28,7 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 console.log(`${colors.cyan}Date Night App - Dependency Checker${colors.reset}`);
@@ -59,12 +65,9 @@ const dependencies = {
       'hpp',
       'argon2',
       'stripe',
-      'node-cron'
+      'node-cron',
     ],
-    dev: [
-      'nodemon',
-      'jest'
-    ]
+    dev: ['nodemon', 'jest'],
   },
   client: {
     prod: [
@@ -75,29 +78,14 @@ const dependencies = {
       '@angular/router',
       'rxjs',
       'zone.js',
-      'ngx-socket-io'
+      'ngx-socket-io',
     ],
-    dev: [
-      '@angular/cli',
-      '@angular-devkit/build-angular',
-      'typescript',
-      'jasmine-core',
-      'karma'
-    ]
+    dev: ['@angular/cli', '@angular-devkit/build-angular', 'typescript', 'jasmine-core', 'karma'],
   },
   root: {
-    prod: [
-      'dotenv',
-      'mongoose',
-      'helmet@8.1.0',
-      'semver',
-      'fs-extra'
-    ],
-    dev: [
-      'concurrently',
-      'jest'
-    ]
-  }
+    prod: ['dotenv', 'mongoose', 'helmet@8.1.0', 'semver', 'fs-extra'],
+    dev: ['concurrently', 'jest'],
+  },
 };
 
 // Function to check if package.json exists
@@ -114,10 +102,12 @@ function getInstalledDependencies(dir) {
 
     return {
       prod: packageJson.dependencies || {},
-      dev: packageJson.devDependencies || {}
+      dev: packageJson.devDependencies || {},
     };
   } catch (error) {
-    console.error(`${colors.red}Error reading package.json in ${dir}: ${error.message}${colors.reset}`);
+    console.error(
+      `${colors.red}Error reading package.json in ${dir}: ${error.message}${colors.reset}`
+    );
     return { prod: {}, dev: {} };
   }
 }
@@ -125,26 +115,35 @@ function getInstalledDependencies(dir) {
 // Function to install missing dependencies
 function installMissingDependencies(dir, deps, type) {
   if (deps.length === 0) {
-    console.log(`${colors.green}All ${type} dependencies are already installed in ${path.basename(dir)}!${colors.reset}`);
+    console.log(
+      `${colors.green}All ${type} dependencies are already installed in ${path.basename(dir)}!${colors.reset}`
+    );
     return;
   }
 
-  console.log(`${colors.yellow}Installing missing ${type} dependencies in ${path.basename(dir)}: ${deps.join(', ')}${colors.reset}`);
+  console.log(
+    `${colors.yellow}Installing missing ${type} dependencies in ${path.basename(dir)}: ${deps.join(', ')}${colors.reset}`
+  );
 
   try {
     // Change to directory
     process.chdir(dir);
 
     // Install missing dependencies
-    const installCmd = type === 'production'
-      ? `npm install --save ${deps.join(' ')}`
-      : `npm install --save-dev ${deps.join(' ')}`;
+    const installCmd =
+      type === 'production'
+        ? `npm install --save ${deps.join(' ')}`
+        : `npm install --save-dev ${deps.join(' ')}`;
 
     execSync(installCmd, { stdio: 'inherit' });
 
-    console.log(`${colors.green}Dependencies installed successfully in ${path.basename(dir)}!${colors.reset}`);
+    console.log(
+      `${colors.green}Dependencies installed successfully in ${path.basename(dir)}!${colors.reset}`
+    );
   } catch (error) {
-    console.error(`${colors.red}Error installing dependencies in ${path.basename(dir)}: ${error.message}${colors.reset}`);
+    console.error(
+      `${colors.red}Error installing dependencies in ${path.basename(dir)}: ${error.message}${colors.reset}`
+    );
   }
 }
 
@@ -191,11 +190,7 @@ try {
     packageJson.scripts['install-missing'] = 'node scripts/install-missing-deps.js';
 
     // Write the updated package.json
-    fs.writeFileSync(
-      rootPackageJsonPath,
-      JSON.stringify(packageJson, null, 2),
-      'utf8'
-    );
+    fs.writeFileSync(rootPackageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
 
     console.log(`\n${colors.green}Added "install-missing" script to package.json${colors.reset}`);
   }

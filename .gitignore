@@ -29,7 +29,7 @@ coverage/
 tmp/
 **/tmp/
 test-results/
-downloaded-reports/workflow-errors/
+downloaded-reports/*
 
 # Generated JSON files from workflows
 snyk-*.json

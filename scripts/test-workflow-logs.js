@@ -10,6 +10,12 @@
 import fs from 'fs-extra';
 import path from 'path';
 import AdmZip from 'adm-zip';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Create a test directory
 const testDir = path.join(__dirname, '..', 'test-workflow-logs');

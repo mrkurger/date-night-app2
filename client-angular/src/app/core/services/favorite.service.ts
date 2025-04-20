@@ -24,6 +24,12 @@ export interface FavoriteFilterOptions {
   county?: string;
   city?: string;
   search?: string;
+  priority?: 'high' | 'normal' | 'low';
+  priceMin?: number;
+  priceMax?: number;
+  dateFrom?: Date;
+  dateTo?: Date;
+  tags?: string[];
 }
 
 export interface FavoriteBatchResult {

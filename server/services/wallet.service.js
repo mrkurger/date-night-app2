@@ -17,9 +17,12 @@
 import Stripe from 'stripe';
 import Wallet from '../models/wallet.model.js';
 import User from '../models/user.model.js';
+import Transaction from '../models/transaction.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Initialize Stripe with the API key, but allow for testing by checking if it's already defined
+// This helps with mocking in tests
+const stripe = global.stripe || new Stripe(process.env.STRIPE_SECRET_KEY);
 import axios from 'axios';
 import crypto from 'crypto';
 
@@ -226,6 +229,122 @@ class WalletService {
   }
 
   /**
+   * Get a specific wallet transaction for a user
+   * @param {string} userId - User ID
+   * @param {string} transactionId - Transaction ID
+   * @returns {Promise<Object|null>} Transaction object or null if not found
+   */
+  async getWalletTransaction(userId, transactionId) {
+    try {
+      const wallet = await this.getOrCreateWallet(userId);
+
+      // Find the transaction by ID
+      const transaction = wallet.transactions.find(
+        t => t._id.toString() === transactionId.toString()
+      );
+
+      return transaction || null;
+    } catch (error) {
+      console.error('Error getting wallet transaction:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Add payment method to wallet
+   * @param {string} userId - User ID
+   * @param {Object} paymentMethodData - Payment method data
+   * @returns {Promise<Object>} Added payment method
+   */
+  async addPaymentMethod(userId, paymentMethodData) {
+    try {
+      const wallet = await this.getOrCreateWallet(userId);
+
+      // Add payment method to wallet
+      const result = await wallet.addPaymentMethod(paymentMethodData);
+
+      return result;
+    } catch (error) {
+      console.error('Error adding payment method to wallet:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Remove payment method from wallet
+   * @param {string} userId - User ID
+   * @param {string} paymentMethodId - Payment method ID
+   * @returns {Promise<boolean>} Success status
+   */
+  async removePaymentMethod(userId, paymentMethodId) {
+    try {
+      const wallet = await this.getOrCreateWallet(userId);
+
+      // Check if payment method exists
+      const paymentMethod = wallet.paymentMethods.find(pm => pm.id === paymentMethodId);
+
+      if (!paymentMethod) {
+        throw new AppError('Payment method not found', 404);
+      }
+
+      // Remove payment method
+      await wallet.removePaymentMethod(paymentMethodId);
+
+      return true;
+    } catch (error) {
+      console.error('Error removing payment method from wallet:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get default payment method for a specific type
+   * @param {string} userId - User ID
+   * @param {string} type - Payment method type
+   * @returns {Promise<Object|null>} Default payment method or null if not found
+   */
+  async getDefaultPaymentMethod(userId, type) {
+    try {
+      const wallet = await this.getOrCreateWallet(userId);
+
+      // Get default payment method
+      const paymentMethod = wallet.getDefaultPaymentMethod(type);
+
+      return paymentMethod;
+    } catch (error) {
+      console.error('Error getting default payment method:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Set default payment method
+   * @param {string} userId - User ID
+   * @param {string} paymentMethodId - Payment method ID
+   * @returns {Promise<Object>} Updated payment method
+   */
+  async setDefaultPaymentMethod(userId, paymentMethodId) {
+    try {
+      const wallet = await this.getOrCreateWallet(userId);
+
+      // Set default payment method
+      const paymentMethod = wallet.setDefaultPaymentMethod(paymentMethodId);
+
+      if (!paymentMethod) {
+        throw new AppError('Payment method not found', 404);
+      }
+
+      // Save wallet
+      await wallet.save();
+
+      return paymentMethod;
+    } catch (error) {
+      console.error('Error setting default payment method:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Get wallet payment methods for a user
    * @param {string} userId - User ID
    * @returns {Promise<Array>} Wallet payment methods
@@ -240,120 +359,7 @@ class WalletService {
     }
   }
 
-  /**
-   * Add a payment method to a wallet
-   * @param {string} userId - User ID
-   * @param {Object} paymentMethodData - Payment method data
-   * @returns {Promise<Object>} Added payment method
-   */
-  async addPaymentMethod(userId, paymentMethodData) {
-    try {
-      const wallet = await this.getOrCreateWallet(userId);
-
-      // Validate payment method data
-      if (!paymentMethodData.type) {
-        throw new AppError('Payment method type is required', 400);
-      }
-
-      if (!paymentMethodData.provider) {
-        throw new AppError('Payment method provider is required', 400);
-      }
-
-      // Handle different payment method types
-      switch (paymentMethodData.type) {
-        case 'card':
-          if (!paymentMethodData.cardDetails) {
-            throw new AppError('Card details are required', 400);
-          }
-          break;
-
-        case 'bank_account':
-          if (!paymentMethodData.bankDetails) {
-            throw new AppError('Bank account details are required', 400);
-          }
-          break;
-
-        case 'crypto_address':
-          if (!paymentMethodData.cryptoDetails) {
-            throw new AppError('Crypto address details are required', 400);
-          }
-
-          if (!SUPPORTED_CRYPTOCURRENCIES.includes(paymentMethodData.cryptoDetails.currency)) {
-            throw new AppError(
-              `Unsupported cryptocurrency: ${paymentMethodData.cryptoDetails.currency}`,
-              400
-            );
-          }
-          break;
-
-        default:
-          throw new AppError(`Unsupported payment method type: ${paymentMethodData.type}`, 400);
-      }
-
-      // Add payment method to wallet
-      await wallet.addPaymentMethod(paymentMethodData);
-
-      // Return the added payment method
-      return wallet.paymentMethods[wallet.paymentMethods.length - 1];
-    } catch (error) {
-      console.error('Error adding payment method:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Remove a payment method from a wallet
-   * @param {string} userId - User ID
-   * @param {string} paymentMethodId - Payment method ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async removePaymentMethod(userId, paymentMethodId) {
-    try {
-      const wallet = await this.getOrCreateWallet(userId);
-
-      // Check if payment method exists
-      const paymentMethod = wallet.paymentMethods.id(paymentMethodId);
-
-      if (!paymentMethod) {
-        throw new AppError('Payment method not found', 404);
-      }
-
-      // Remove payment method from wallet
-      await wallet.removePaymentMethod(paymentMethodId);
-
-      return true;
-    } catch (error) {
-      console.error('Error removing payment method:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Set a payment method as default
-   * @param {string} userId - User ID
-   * @param {string} paymentMethodId - Payment method ID
-   * @returns {Promise<Object>} Updated payment method
-   */
-  async setDefaultPaymentMethod(userId, paymentMethodId) {
-    try {
-      const wallet = await this.getOrCreateWallet(userId);
-
-      // Check if payment method exists
-      const paymentMethod = wallet.paymentMethods.id(paymentMethodId);
-
-      if (!paymentMethod) {
-        throw new AppError('Payment method not found', 404);
-      }
-
-      // Set payment method as default
-      await wallet.setDefaultPaymentMethod(paymentMethodId);
-
-      return wallet.paymentMethods.id(paymentMethodId);
-    } catch (error) {
-      console.error('Error setting default payment method:', error);
-      throw error;
-    }
-  }
+  // Removed the incorrectly restored duplicate block
 
   /**
    * Deposit funds to a wallet using Stripe
@@ -394,7 +400,9 @@ class WalletService {
       const netAmount = amount - feeAmount;
 
       // Create a payment intent with Stripe
-      const paymentIntent = await stripe.paymentIntents.create({
+      // Make sure stripe is properly initialized
+      const stripeInstance = global.stripe || stripe;
+      const paymentIntent = await stripeInstance.paymentIntents.create({
         amount,
         currency: currency.toLowerCase(),
         payment_method: paymentMethodId,

@@ -8,8 +8,9 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model';
-import ChatMessage from '../models/chat-message.model';
+import User from '../models/user.model.js'; // Added .js
+import ChatMessage from '../models/chat-message.model.js'; // Added .js
+import socketIo from 'socket.io'; // Import default export
 
 class SocketService {
   constructor() {
@@ -22,12 +23,12 @@ class SocketService {
    * Initialize Socket.IO server
    * @param {Object} server - HTTP server instance
    */
-  async initialize(server) {
-    const socketIoModule = await import('socket.io');
-    const socketIo = socketIoModule.default;
+  initialize(server) {
+    // Removed async as dynamic import is no longer needed
+    // Use the imported socketIo directly
     this.io = socketIo(server, {
       cors: {
-        origin: process.env.CLIENT_URL || 'http://localhost:4200',
+        origin: process.env.CLIENT_URL || 'http://localhost:4200', // Keep dynamic origin based on env
         methods: ['GET', 'POST'],
         credentials: true,
       },
@@ -355,4 +356,5 @@ class SocketService {
   }
 }
 
-module.exports = new SocketService();
+const socketService = new SocketService();
+export default socketService;

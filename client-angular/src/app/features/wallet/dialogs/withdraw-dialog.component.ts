@@ -535,7 +535,7 @@ export class WithdrawDialogComponent implements OnInit {
     this.processingWithdrawal = true;
 
     this.walletService.withdrawFunds(amount, currency, paymentMethodId, description).subscribe({
-      next: transaction => {
+      next: () => {
         this.processingWithdrawal = false;
         this.notificationService.success(
           `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`
@@ -565,7 +565,7 @@ export class WithdrawDialogComponent implements OnInit {
     this.walletService
       .withdrawCrypto(amount, currency, address, network, memo, description)
       .subscribe({
-        next: transaction => {
+        next: () => {
           this.processingCryptoWithdrawal = false;
           this.notificationService.success(
             `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`

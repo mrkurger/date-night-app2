@@ -7,14 +7,14 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import Ad from '../models/ad.model';
-import User from '../models/user.model';
-import { AppError } from '../middleware/errorHandler';
-import socketService from './socket.service';
-import { logger } from '../utils/logger';
+import Ad from '../models/ad.model.js'; // Added .js
+import User from '../models/user.model.js'; // Added .js
+import { AppError } from '../middleware/errorHandler.js'; // Added .js
+import socketService from './socket.service.js'; // Added .js
+import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
 import axios from 'axios';
-import config from '../config';
+import config from '../config/index.js'; // Assuming config exports from an index.js
 
 // Initialize cache with 5 minute TTL and check period of 10 minutes
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });

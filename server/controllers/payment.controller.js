@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import paymentService from '../services/payment.service';
-import { AppError } from '../middleware/errorHandler';
+import paymentService from '../services/payment.service.js';
+import { AppError } from '../middleware/errorHandler.js';
 
 /**
  * Payment Controller for handling payment-related API endpoints
@@ -25,7 +25,7 @@ class PaymentController {
       const { amount, currency, metadata } = req.body;
 
       if (!amount || amount <= 0) {
-        return next(new AppError('Valid amount is required', 400));
+        return next(new AppError('Valid amount is required', 400, 'error'));
       }
 
       const paymentIntent = await paymentService.createPaymentIntent(amount, currency || 'nok', {
@@ -55,7 +55,7 @@ class PaymentController {
       const { priceId, paymentMethodId } = req.body;
 
       if (!priceId || !paymentMethodId) {
-        return next(new AppError('Price ID and payment method ID are required', 400));
+        return next(new AppError('Price ID and payment method ID are required', 400, 'error'));
       }
 
       const subscription = await paymentService.createSubscription(
@@ -103,7 +103,7 @@ class PaymentController {
       const { adId, days, paymentMethodId } = req.body;
 
       if (!adId || !paymentMethodId) {
-        return next(new AppError('Ad ID and payment method ID are required', 400));
+        return next(new AppError('Ad ID and payment method ID are required', 400, 'error'));
       }
 
       const result = await paymentService.boostAd(adId, req.user.id, days || 7, paymentMethodId);
@@ -128,7 +128,7 @@ class PaymentController {
       const { adId, paymentMethodId } = req.body;
 
       if (!adId || !paymentMethodId) {
-        return next(new AppError('Ad ID and payment method ID are required', 400));
+        return next(new AppError('Ad ID and payment method ID are required', 400, 'error'));
       }
 
       const result = await paymentService.featureAd(adId, req.user.id, paymentMethodId);
@@ -202,4 +202,4 @@ class PaymentController {
   }
 }
 
-module.exports = new PaymentController();
+export default new PaymentController();

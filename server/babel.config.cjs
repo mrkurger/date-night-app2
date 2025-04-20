@@ -19,9 +19,10 @@ module.exports = {
         targets: {
           node: 'current',
         },
-        modules: 'auto',
+        // Transform modules to CommonJS for Jest compatibility
+        modules: 'commonjs',
       },
     ],
   ],
-  plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-modules-commonjs'],
+  plugins: ['@babel/plugin-syntax-dynamic-import'],
 };

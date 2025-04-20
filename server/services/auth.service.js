@@ -8,7 +8,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
+import User from '../models/user.model.js'; // Already has .js, no change needed here
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
@@ -152,22 +152,29 @@ class AuthService {
   /**
    * Validate an access token
    * @param {string} token - Access token to validate
-   * @returns {Promise<Object>} User document if token is valid
+   * @returns {Promise<Object>} Sanitized user document if token is valid
    */
   async validateAccessToken(token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id);
 
       if (!user) {
         throw new Error('User not found');
       }
 
-      return user;
+      return this.sanitizeUser(user);
     } catch (error) {
-      if (error.message === 'User not found') {
-        throw error;
+      // Preserve specific errors like 'User not found'
+      if (
+        error.message === 'User not found' ||
+        error.name === 'JsonWebTokenError' ||
+        error.name === 'TokenExpiredError'
+      ) {
+        throw error; // Re-throw JWT errors or 'User not found'
       }
+      // Throw a generic error for other unexpected issues
+      console.error('Unexpected error during access token validation:', error); // Log unexpected errors
       throw new Error('Invalid access token');
     }
   }

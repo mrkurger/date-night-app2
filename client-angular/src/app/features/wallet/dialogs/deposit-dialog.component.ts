@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -375,7 +375,7 @@ export class DepositDialogComponent implements OnInit {
     this.processingDeposit = true;
 
     this.walletService.depositFundsWithStripe(amount, currency, paymentMethodId).subscribe({
-      next: result => {
+      next: () => {
         this.processingDeposit = false;
         this.notificationService.success(
           `Successfully deposited ${this.walletService.formatCurrency(amount, currency)}`

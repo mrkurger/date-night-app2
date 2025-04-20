@@ -5,6 +5,12 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Path to the client-angular package.json
 const packageJsonPath = path.join(__dirname, '..', 'client-angular', 'package.json');

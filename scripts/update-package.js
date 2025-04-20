@@ -6,21 +6,28 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Define the server directory and package.json path
 const serverDir = path.join(__dirname, '..', 'server');
 const packageJsonPath = path.join(serverDir, 'package.json');
 
 // Read the current package.json
-const packageJson = require(packageJsonPath);
+const packageJsonContent = await fs.readFile(packageJsonPath, 'utf8');
+const packageJson = JSON.parse(packageJsonContent);
 
 // Define the dependencies to add
 const dependenciesToAdd = {
   'csrf-csrf': '^4.0.1',
-  'winston': '^3.11.0',
+  winston: '^3.11.0',
   'winston-daily-rotate-file': '^4.7.1',
   'express-validator': '^7.0.1',
-  'node-cache': '^5.1.2'
+  'node-cache': '^5.1.2',
 };
 
 // Add the dependencies if they don't exist
@@ -39,11 +46,7 @@ if (!dependenciesAdded) {
 }
 
 // Write the updated package.json
-fs.writeFileSync(
-  packageJsonPath,
-  JSON.stringify(packageJson, null, 2),
-  'utf8'
-);
+fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
 
 console.log('Updated package.json successfully');
 console.log('Run "npm install" in the server directory to install the new dependencies');

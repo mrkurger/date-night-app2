@@ -36,6 +36,7 @@ export const environment = {
   maxUploadSize: 5 * 1024 * 1024, // 5MB
   supportedImageTypes: ['image/jpeg', 'image/png', 'image/webp'],
   mapboxToken: 'your_mapbox_token', // Replace with actual token if using location features
+  googleMapsApiKey: 'your_google_maps_api_key', // Replace with actual Google Maps API key if using location features
   stripePublicKey: 'pk_test_51NxSampleTestKeyDoNotUseInProductionXYZ', // Replace with actual Stripe public key in production
   cdnUrl: '', // Set to empty for local development, will use local images
   imageSizes: [320, 640, 960, 1280, 1920], // Common responsive image sizes

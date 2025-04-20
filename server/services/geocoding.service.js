@@ -10,9 +10,9 @@
 //   Related to: travel.service.js:geocodeLocation
 // ===================================================
 import axios from 'axios';
-import Location from '../models/location.model';
-import { AppError } from '../middleware/errorHandler';
-import { logger } from '../utils/logger';
+import Location from '../models/location.model.js'; // Added .js
+import { AppError } from '../middleware/errorHandler.js'; // Added .js
+import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
 
 // Initialize cache with 1 day TTL and check period of 1 hour
@@ -381,4 +381,5 @@ class GeocodingService {
   }
 }
 
-module.exports = new GeocodingService();
+const geocodingService = new GeocodingService();
+export default geocodingService;

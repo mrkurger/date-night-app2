@@ -4,18 +4,30 @@
  * Tests the payment controller endpoints with mocked payment service.
  */
 
-import request from 'supertest';
-import express from 'express';
+import { jest } from '@jest/globals';
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
-import paymentController from '../../../controllers/payment.controller.js';
-import paymentService from '../../../services/payment.service.js';
-import { AppError } from '../../../middleware/errorHandler.js';
-import errorHandler from '../../../middleware/errorHandler.js';
-import { jest } from '@jest/globals';
 
 // Mock the payment service
-jest.mock('../../../services/payment.service.js');
+jest.mock('../../../services/payment.service.js', () => ({
+  __esModule: true,
+  default: {
+    createPaymentIntent: jest.fn(),
+    createSubscription: jest.fn(),
+    cancelSubscription: jest.fn(),
+    boostAd: jest.fn(),
+    featureAd: jest.fn(),
+    getSubscriptionPrices: jest.fn(),
+  },
+}));
+
+// Import dependencies after mocking
+import request from 'supertest';
+import express from 'express';
+import { AppError } from '../../../middleware/errorHandler.js';
+import errorHandler from '../../../middleware/errorHandler.js';
+import paymentController from '../../../controllers/payment.controller.js';
+import paymentService from '../../../services/payment.service.js';
 
 describe('Payment Controller', () => {
   let app;
@@ -164,7 +176,7 @@ describe('Payment Controller', () => {
       const subscription = {
         id: 'sub_123',
         status: 'active',
-        current_period_end: new Date(),
+        current_period_end: new Date().toISOString(),
         client_secret: 'cs_123',
       };
 
@@ -250,7 +262,7 @@ describe('Payment Controller', () => {
     it('should handle service errors', async () => {
       // Mock service error
       const errorMessage = 'No active subscription found';
-      paymentService.cancelSubscription.mockRejectedValue(new AppError(errorMessage, 404));
+      paymentService.cancelSubscription.mockRejectedValue(new AppError(errorMessage, 404, 'error'));
 
       // Make request
       const response = await request(app)
@@ -278,7 +290,7 @@ describe('Payment Controller', () => {
       const boostResult = {
         adId,
         boosted: true,
-        boostExpires: new Date(),
+        boostExpires: new Date().toISOString(),
         paymentIntentId: 'pi_123',
       };
 
@@ -316,7 +328,7 @@ describe('Payment Controller', () => {
       const boostResult = {
         adId,
         boosted: true,
-        boostExpires: new Date(),
+        boostExpires: new Date().toISOString(),
         paymentIntentId: 'pi_123',
       };
 

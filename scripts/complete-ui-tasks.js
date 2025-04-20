@@ -1,6 +1,13 @@
-import fs from 'fs/promises';
+import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Define paths
 const clientPath = path.join(__dirname, '../client-angular');
@@ -2556,13 +2563,10 @@ console.log('✓ Created global CSS files');
 const angularJsonPath = path.join(clientPath, 'angular.json');
 if (fs.existsSync(angularJsonPath)) {
   let angularJson = fs.readFileSync(angularJsonPath, 'utf8');
-  
+
   // Replace the styles array with our new styles.css
-  angularJson = angularJson.replace(
-    /"styles": \[[^\]]*\]/,
-    '"styles": ["src/styles/styles.css"]'
-  );
-  
+  angularJson = angularJson.replace(/"styles": \[[^\]]*\]/, '"styles": ["src/styles/styles.css"]');
+
   fs.writeFileSync(angularJsonPath, angularJson);
   console.log('✓ Updated angular.json to use new styles');
 }
@@ -2571,7 +2575,7 @@ if (fs.existsSync(angularJsonPath)) {
 const indexHtmlPath = path.join(clientPath, 'src/index.html');
 if (fs.existsSync(indexHtmlPath)) {
   let indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
-  
+
   // Add Font Awesome and Google Fonts if not already present
   if (!indexHtml.includes('font-awesome')) {
     indexHtml = indexHtml.replace(
@@ -2580,7 +2584,7 @@ if (fs.existsSync(indexHtmlPath)) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap">
 </head>`
     );
-    
+
     fs.writeFileSync(indexHtmlPath, indexHtml);
     console.log('✓ Added Font Awesome and Google Fonts to index.html');
   }
@@ -2779,11 +2783,11 @@ try {
   // Run the UI/UX status update script
   console.log('\nUpdating UI/UX documentation...');
   execSync('node ' + path.join(__dirname, 'update-ui-ux-status.js'), { stdio: 'inherit' });
-  
+
   // Run the populate accounts script
   console.log('\nPopulating accounts...');
   execSync('node ' + path.join(__dirname, 'populate-accounts.js'), { stdio: 'inherit' });
-  
+
   console.log('\n✨ All tasks completed successfully!');
   console.log('\nSummary:');
   console.log('1. Created global CSS files with variables, utilities, components, and themes');
@@ -2791,7 +2795,6 @@ try {
   console.log('3. Created 15 advertiser accounts, 3 regular user accounts, and 1 admin account');
   console.log('4. Generated ads for advertisers with realistic data');
   console.log('5. Applied consistent styling throughout the application');
-  
 } catch (error) {
   console.error('\n❌ Error running scripts:', error.message);
 }

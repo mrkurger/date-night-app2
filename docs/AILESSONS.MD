@@ -57,6 +57,26 @@ This document serves as a log of key insights, patterns, and solutions discovere
 
 This section contains well-established patterns that have proven effective in the DateNight.io project. These patterns are considered stable and recommended for use throughout the codebase.
 
+### Service Implementation Patterns
+
+When implementing service methods in the application, we've established these effective patterns:
+
+1. **Method Structure**:
+
+   - Use async/await for asynchronous operations
+   - Implement consistent error handling with try/catch blocks
+   - Log errors with appropriate context information
+   - Return meaningful data structures
+   - Use JSDoc comments to document parameters, return values, and behavior
+
+2. **Wallet Service Patterns**:
+   - Implement methods to retrieve specific resources by ID
+   - Use the getOrCreateWallet pattern to ensure a wallet exists before operations
+   - Validate inputs before processing
+   - Handle edge cases (e.g., resource not found)
+   - Return null for non-existent resources rather than throwing errors (when appropriate)
+   - Use descriptive error messages that help with troubleshooting
+
 ### Test Mocking Patterns
 
 When mocking models in Jest tests, we've discovered several important patterns:

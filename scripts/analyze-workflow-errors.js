@@ -10,6 +10,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 import util from 'util';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const LOGS_DIR = path.join(__dirname, '..', 'workflow-error-logs');
 const REPORT_FILE = path.join(__dirname, '..', 'workflow-error-report.md');

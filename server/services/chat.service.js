@@ -7,13 +7,13 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import ChatMessage from '../models/chat-message.model';
-import ChatRoom from '../models/chat-room.model';
-import User from '../models/user.model';
-import Ad from '../models/ad.model';
-import socketService from './socket.service';
-import cryptoHelpers from '../utils/cryptoHelpers';
-import { AppError } from '../middleware/errorHandler';
+import ChatMessage from '../models/chat-message.model.js';
+import ChatRoom from '../models/chat-room.model.js';
+import User from '../models/user.model.js';
+import Ad from '../models/ad.model.js';
+import socketService from './socket.service.js';
+import cryptoHelpers from '../utils/cryptoHelpers.js';
+import { AppError } from '../middleware/errorHandler.js';
 
 class ChatService {
   // TODO: Add message queue for reliable delivery
@@ -723,4 +723,5 @@ class ChatService {
   }
 }
 
-module.exports = new ChatService();
+const chatService = new ChatService();
+export default chatService;

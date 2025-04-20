@@ -7,17 +7,23 @@
 
 import { execSync } from 'child_process';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 console.log('🔧 Starting workflow issues fix script...');
 
 try {
   // Run the update-deprecated-packages.js script
   console.log('\n📦 Updating deprecated packages...');
-  import './update-deprecated-packages';
+  import('./update-deprecated-packages.js');
 
   // Run the increase-node-memory.js script
   console.log('\n💾 Increasing Node.js heap memory for Angular tests...');
-  import './increase-node-memory';
+  import('./increase-node-memory.js');
 
   // Reinstall dependencies to apply the overrides
   console.log('\n🔄 Reinstalling dependencies to apply overrides...');

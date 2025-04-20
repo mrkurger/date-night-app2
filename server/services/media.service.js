@@ -7,31 +7,34 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import fs from 'fs/promises';
+import fsSync from 'fs'; // For existsSync
+import { mkdir, writeFile, unlink } from 'fs/promises'; // Use fs/promises directly
 import path from 'path';
-import { promisify } from 'util';
+import { fileURLToPath } from 'url'; // To handle __dirname equivalent
 import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
-import Ad from '../components/ads/ad.model';
+import Ad from '../models/ad.model.js'; // Changed path and added .js extension
 
-// Convert fs functions to promise-based
-const mkdir = promisify(fs.mkdir);
-const writeFile = promisify(fs.writeFile);
-const unlink = promisify(fs.unlink);
+// Get __dirname equivalent in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class MediaService {
   constructor() {
-    this.uploadDir = path.join(__dirname, '../uploads');
+    // Adjusted paths to use the new __dirname and point to the correct relative 'uploads' directory
+    // Assuming 'uploads' should be at the project root level, not relative to 'services'
+    this.uploadDir = path.join(__dirname, '../../uploads'); // Go up two levels from services
     this.thumbnailDir = path.join(this.uploadDir, 'thumbnails');
     this.ensureDirectoriesExist();
   }
 
   async ensureDirectoriesExist() {
     try {
-      if (!fs.existsSync(this.uploadDir)) {
+      // Use fsSync for existsSync
+      if (!fsSync.existsSync(this.uploadDir)) {
         await mkdir(this.uploadDir, { recursive: true });
       }
-      if (!fs.existsSync(this.thumbnailDir)) {
+      if (!fsSync.existsSync(this.thumbnailDir)) {
         await mkdir(this.thumbnailDir, { recursive: true });
       }
     } catch (error) {
@@ -56,7 +59,7 @@ class MediaService {
       const filename = `${uuidv4()}${fileExt}`;
       const filePath = path.join(this.uploadDir, filename);
 
-      // Write file to disk
+      // Write file to disk using imported writeFile from fs/promises
       await writeFile(filePath, file.buffer);
 
       // Create thumbnail for images
@@ -146,16 +149,18 @@ class MediaService {
 
       const media = ad.media[mediaIndex];
 
-      // Delete the file from disk
-      const filePath = path.join(__dirname, '..', media.url);
-      if (fs.existsSync(filePath)) {
+      // Delete the file from disk using imported unlink from fs/promises
+      // Adjust path assuming media.url is like '/uploads/filename.ext'
+      const filePath = path.join(__dirname, '../..', media.url); // Go up two levels
+      if (fsSync.existsSync(filePath)) {
         await unlink(filePath);
       }
 
       // Delete the thumbnail if it exists
       if (media.thumbnail) {
-        const thumbnailPath = path.join(__dirname, '..', media.thumbnail);
-        if (fs.existsSync(thumbnailPath)) {
+        // Adjust path assuming media.thumbnail is like '/uploads/thumbnails/thumb_filename.ext'
+        const thumbnailPath = path.join(__dirname, '../..', media.thumbnail); // Go up two levels
+        if (fsSync.existsSync(thumbnailPath)) {
           await unlink(thumbnailPath);
         }
       }
@@ -279,4 +284,5 @@ class MediaService {
   }
 }
 
-module.exports = new MediaService();
+const mediaService = new MediaService();
+export default mediaService;

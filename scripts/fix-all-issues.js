@@ -7,6 +7,12 @@
 import { execSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Colors for console output
 const colors = {
@@ -16,7 +22,7 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 console.log(`${colors.cyan}Date Night App - Fix All Issues${colors.reset}`);
@@ -25,7 +31,7 @@ console.log(`${colors.cyan}=============================${colors.reset}\n`);
 // Function to run a command and log the output
 function runCommand(command, message) {
   console.log(`${colors.blue}${message}...${colors.reset}`);
-  
+
   try {
     const output = execSync(command, { encoding: 'utf8' });
     console.log(output);
@@ -52,32 +58,32 @@ async function fixAllIssues() {
   // 1. Make scripts executable
   console.log(`${colors.magenta}Step 1: Making scripts executable${colors.reset}`);
   runCommand('bash scripts/make-scripts-executable.sh', 'Making scripts executable');
-  
+
   // 2. Ensure server/scripts directory exists
   console.log(`${colors.magenta}Step 2: Ensuring server/scripts directory exists${colors.reset}`);
   const serverScriptsDir = path.join(__dirname, '..', 'server', 'scripts');
   ensureDirectoryExists(serverScriptsDir);
-  
+
   // 3. Fix npm audit issues
   console.log(`${colors.magenta}Step 3: Fixing npm audit issues${colors.reset}`);
   runCommand('npm audit fix --force', 'Running npm audit fix');
-  
+
   // 4. Check MongoDB setup
   console.log(`${colors.magenta}Step 4: Checking MongoDB setup${colors.reset}`);
   runCommand('node scripts/check-mongodb-permissions.js', 'Checking MongoDB permissions');
-  
+
   // 5. Fix MongoDB issues if any
   console.log(`${colors.magenta}Step 5: Fixing MongoDB issues${colors.reset}`);
   runCommand('node scripts/fix-mongodb-issues.js', 'Fixing MongoDB issues');
-  
+
   // 6. Install missing dependencies
   console.log(`${colors.magenta}Step 6: Installing missing dependencies${colors.reset}`);
   runCommand('npm run install-missing', 'Installing missing dependencies');
-  
+
   // 7. Update packages
   console.log(`${colors.magenta}Step 7: Updating packages${colors.reset}`);
   runCommand('npm run update-packages', 'Updating packages');
-  
+
   console.log(`${colors.green}All issues have been fixed!${colors.reset}`);
   console.log(`${colors.green}You can now run the application with: npm run dev${colors.reset}`);
 }

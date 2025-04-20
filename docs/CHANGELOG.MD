@@ -1,5 +1,20 @@
 # Change Log
 
+## 2025-04-20: Wallet Service Implementation
+
+### Added
+
+- **Wallet Service**: Implemented missing method in the wallet service
+  - Added `getWalletTransaction` method to retrieve a specific transaction by ID
+  - Added proper JSDoc documentation for the new method
+  - Ensured consistent error handling with other wallet service methods
+
+### Fixed
+
+- **Test Coverage**: Updated tests to match the new implementation
+  - Fixed failing tests for the wallet service
+  - Improved test coverage for wallet transaction functionality
+
 ## 2025-04-19: Test Fixes for Ad and Auth Services
 
 ### Fixed

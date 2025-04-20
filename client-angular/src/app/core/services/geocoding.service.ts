@@ -17,8 +17,24 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { LocationService } from './location.service';
 
+// Define GeolocationPosition interface if not available
+interface GeolocationCoordinates {
+  readonly accuracy: number;
+  readonly altitude: number | null;
+  readonly altitudeAccuracy: number | null;
+  readonly heading: number | null;
+  readonly latitude: number;
+  readonly longitude: number;
+  readonly speed: number | null;
+}
+
+interface GeolocationPosition {
+  readonly coords: GeolocationCoordinates;
+  readonly timestamp: number;
+}
+
 // Constants
-const API_PROVIDER = 'nominatim'; // 'nominatim', 'mapbox', or 'google'
+const API_PROVIDER: 'nominatim' | 'mapbox' | 'google' = 'nominatim'; // 'nominatim', 'mapbox', or 'google'
 const MAPBOX_ACCESS_TOKEN = environment.mapboxToken || '';
 const GOOGLE_MAPS_API_KEY = environment.googleMapsApiKey || '';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -44,20 +60,22 @@ export interface EnhancedGeocodingResult {
   timestamp: number;
 }
 
+export interface GeocodingComponents {
+  country?: string;
+  countryCode?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  neighborhood?: string;
+  street?: string;
+  streetNumber?: string;
+}
+
 export interface ReverseGeocodingResult {
   formattedAddress: string;
   latitude: number;
   longitude: number;
-  components: {
-    country?: string;
-    countryCode?: string;
-    city?: string;
-    state?: string;
-    postalCode?: string;
-    neighborhood?: string;
-    street?: string;
-    streetNumber?: string;
-  };
+  components: GeocodingComponents;
   provider: string;
   timestamp: number;
 }
@@ -123,7 +141,7 @@ export class GeocodingService {
       map(coordinates => {
         if (coordinates) {
           return {
-            type: 'Point',
+            type: 'Point' as const,
             coordinates,
           };
         }
@@ -208,17 +226,17 @@ export class GeocodingService {
       limit: '1',
     };
 
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+    const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
       map(response => {
         if (response && response.length > 0) {
           const result = response[0];
+          const lon = parseFloat(result.lon);
+          const lat = parseFloat(result.lat);
           return {
-            type: 'Point',
-            coordinates: [parseFloat(result.lon), parseFloat(result.lat)],
+            type: 'Point' as const,
+            coordinates: [lon, lat] as [number, number],
           };
         }
         return null;
@@ -249,9 +267,7 @@ export class GeocodingService {
       'accept-language': 'en',
     };
 
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+    const queryString = this.createQueryString(params);
 
     return this.http.get<any>(`${this.reverseNominatimUrl}?${queryString}`).pipe(
       map(response => {
@@ -462,6 +478,17 @@ export class GeocodingService {
   }
 
   /**
+   * Create a query string from parameters
+   * @param params The parameters to encode
+   * @returns The encoded query string
+   */
+  private createQueryString(params: Record<string, any>): string {
+    return Object.entries(params)
+      .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
+      .join('&');
+  }
+
+  /**
    * Add a result to the cache
    * @param key The cache key
    * @param result The result to cache
@@ -504,9 +531,7 @@ export class GeocodingService {
       addressdetails: '1',
     };
 
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+    const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
       map(response => {
@@ -554,9 +579,7 @@ export class GeocodingService {
       addressdetails: '1',
     };
 
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+    const queryString = this.createQueryString(params);
 
     return this.http.get<any>(`${this.reverseNominatimUrl}?${queryString}`).pipe(
       map(response => {
@@ -622,9 +645,7 @@ export class GeocodingService {
       params.category = type;
     }
 
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+    const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
       map(results => {
@@ -822,8 +843,8 @@ export class GeocodingService {
   /**
    * Extract address components from a Mapbox feature
    */
-  private extractMapboxComponents(feature: any): any {
-    const components: any = {};
+  private extractMapboxComponents(feature: any): GeocodingComponents {
+    const components: GeocodingComponents = {};
 
     if (!feature.context) {
       return components;
@@ -837,7 +858,10 @@ export class GeocodingService {
       if (id.startsWith('country')) {
         components.country = text;
         // Extract country code from the ID (e.g., "country.123" -> "123")
-        components.countryCode = id.split('.')[1];
+        const parts = id.split('.');
+        if (parts.length > 1) {
+          components.countryCode = parts[1];
+        }
       } else if (id.startsWith('region')) {
         components.state = text;
       } else if (id.startsWith('postcode')) {
@@ -994,15 +1018,15 @@ export class GeocodingService {
   /**
    * Extract address components from Google address_components
    */
-  private extractGoogleComponents(addressComponents: any[]): any {
-    const components: any = {};
+  private extractGoogleComponents(addressComponents: any[]): GeocodingComponents {
+    const components: GeocodingComponents = {};
 
     if (!addressComponents || !Array.isArray(addressComponents)) {
       return components;
     }
 
     // Map of Google address component types to our component names
-    const componentMap: { [key: string]: string } = {
+    const componentMap: { [key: string]: keyof GeocodingComponents } = {
       country: 'country',
       administrative_area_level_1: 'state',
       locality: 'city',
@@ -1019,7 +1043,8 @@ export class GeocodingService {
 
       types.forEach(type => {
         if (componentMap[type]) {
-          components[componentMap[type]] = component.long_name;
+          const key = componentMap[type];
+          components[key] = component.long_name;
 
           // Special case for country code
           if (type === 'country') {

@@ -1,7 +1,13 @@
-
 // Update the UI/UX implementation status in the documentation
-import fs from 'fs/promises';
+import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const uiUxImplementationPath = path.join(__dirname, '../docs/ui-ux-implementation.md');
 const uiUxRoadmapPath = path.join(__dirname, '../docs/ui-ux-roadmap.md');
@@ -9,14 +15,14 @@ const uiUxRoadmapPath = path.join(__dirname, '../docs/ui-ux-roadmap.md');
 // Update the implementation document
 if (fs.existsSync(uiUxImplementationPath)) {
   let implementationDoc = fs.readFileSync(uiUxImplementationPath, 'utf8');
-  
+
   // Update the last updated date
   const currentDate = new Date().toISOString().split('T')[0];
   implementationDoc = implementationDoc.replace(
     /Last Updated: \[.*\]/,
     `Last Updated: ${currentDate}`
   );
-  
+
   // Update the remaining tasks section
   implementationDoc = implementationDoc.replace(
     /## Remaining Tasks[\s\S]*?## Future Enhancements/,
@@ -82,7 +88,7 @@ if (fs.existsSync(uiUxImplementationPath)) {
 
 ## Future Enhancements`
   );
-  
+
   fs.writeFileSync(uiUxImplementationPath, implementationDoc);
   console.log('✓ Updated UI/UX implementation document');
 }
@@ -90,14 +96,11 @@ if (fs.existsSync(uiUxImplementationPath)) {
 // Update the roadmap document
 if (fs.existsSync(uiUxRoadmapPath)) {
   let roadmapDoc = fs.readFileSync(uiUxRoadmapPath, 'utf8');
-  
+
   // Update the last updated date
   const currentDate = new Date().toISOString().split('T')[0];
-  roadmapDoc = roadmapDoc.replace(
-    /Last Updated: \[.*\]/,
-    `Last Updated: ${currentDate}`
-  );
-  
+  roadmapDoc = roadmapDoc.replace(/Last Updated: \[.*\]/, `Last Updated: ${currentDate}`);
+
   // Update the immediate tasks section
   roadmapDoc = roadmapDoc.replace(
     /### Critical Fixes[\s\S]*?### Testing/,
@@ -120,7 +123,7 @@ if (fs.existsSync(uiUxRoadmapPath)) {
 
 ### Testing`
   );
-  
+
   // Update the testing section
   roadmapDoc = roadmapDoc.replace(
     /1\. \*\*Unit Tests\*\*[\s\S]*?2\. \*\*Integration Tests\*\*/,
@@ -132,7 +135,7 @@ if (fs.existsSync(uiUxRoadmapPath)) {
 
 2. **Integration Tests** ✓`
   );
-  
+
   // Update the documentation section
   roadmapDoc = roadmapDoc.replace(
     /### Documentation[\s\S]*?## Short-term Improvements/,
@@ -150,7 +153,7 @@ if (fs.existsSync(uiUxRoadmapPath)) {
 
 ## Short-term Improvements`
   );
-  
+
   // Update the UI Enhancements section
   roadmapDoc = roadmapDoc.replace(
     /### UI Enhancements[\s\S]*?### UX Improvements/,
@@ -173,7 +176,7 @@ if (fs.existsSync(uiUxRoadmapPath)) {
 
 ### UX Improvements`
   );
-  
+
   fs.writeFileSync(uiUxRoadmapPath, roadmapDoc);
   console.log('✓ Updated UI/UX roadmap document');
 }

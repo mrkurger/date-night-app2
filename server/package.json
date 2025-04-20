@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "npx nodemon -r dotenv/config server.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --config=jest.config.mjs",
+    "test": "NODE_ENV=test npx jest --config=jest.config.cjs",
+    "test:esm": "NODE_ENV=test npx jest --config=jest.config.cjs",
     "predev": "node ../scripts/ensure-mongodb.js",
     "start-client": "node ./scripts/start-client.js",
     "audit-fix": "npm audit fix --force",

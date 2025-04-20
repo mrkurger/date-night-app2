@@ -42,6 +42,7 @@
     "@angular/router": "19.2.7",
     "@angular/service-worker": "19.2.7",
     "@ng-bootstrap/ng-bootstrap": "18.0.0",
+    "@popperjs/core": "2.11.8",
     "@swimlane/ngx-charts": "22.0.0-alpha.1",
     "@types/leaflet": "1.9.17",
     "angularx-qrcode": "19.0.0",

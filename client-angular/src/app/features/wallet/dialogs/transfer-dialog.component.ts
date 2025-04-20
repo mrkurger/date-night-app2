@@ -358,7 +358,7 @@ export class TransferDialogComponent implements OnInit {
     this.processingTransfer = true;
 
     this.walletService.transferFunds(recipientUserId, amount, currency, description).subscribe({
-      next: transaction => {
+      next: () => {
         this.processingTransfer = false;
         this.notificationService.success(
           `Successfully transferred ${this.walletService.formatCurrency(amount, currency)}`
