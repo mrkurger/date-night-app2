@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Crypto Wallet</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Wallet specific styles */
+      .wallet-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .wallet-header {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .wallet-balance {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-6);
+      }
+
+      .balance-card {
+        flex: 1;
+        min-width: 250px;
+        padding: var(--spacing-4);
+        border-radius: var(--border-radius-lg);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .balance-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-100%) skewX(-15deg);
+        transition: transform var(--transition-slow);
+      }
+
+      .balance-card:hover::before {
+        transform: translateX(100%) skewX(-15deg);
+      }
+
+      .balance-card.primary {
+        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      }
+
+      .balance-card.secondary {
+        background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+      }
+
+      .balance-card.success {
+        background: linear-gradient(135deg, var(--color-success), #2bb090);
+      }
+
+      .balance-title {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-2);
+        opacity: 0.8;
+      }
+
+      .balance-amount {
+        font-size: var(--font-size-3xl);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .balance-usd {
+        font-size: var(--font-size-sm);
+        opacity: 0.8;
+      }
+
+      .balance-icon {
+        position: absolute;
+        bottom: var(--spacing-4);
+        right: var(--spacing-4);
+        font-size: 3rem;
+        opacity: 0.2;
+      }
+
+      .wallet-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-6);
+      }
+
+      .action-card {
+        flex: 1;
+        min-width: 180px;
+        text-align: center;
+        padding: var(--spacing-4);
+        cursor: pointer;
+        transition:
+          transform var(--transition-normal),
+          box-shadow var(--transition-normal);
+      }
+
+      .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .action-icon {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-3);
+        color: var(--color-primary);
+      }
+
+      .action-title {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .action-desc {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .wallet-tabs {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .wallet-tab-content {
+        display: none;
+      }
+
+      .wallet-tab-content.active {
+        display: block;
+      }
+
+      .crypto-list {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .crypto-item {
+        display: flex;
+        align-items: center;
+        padding: var(--spacing-4);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .crypto-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: var(--spacing-3);
+      }
+
+      .crypto-info {
+        flex: 1;
+      }
+
+      .crypto-name {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-1);
+      }
+
+      .crypto-symbol {
+        font-weight: var(--font-weight-medium);
+        margin-right: var(--spacing-2);
+      }
+
+      .crypto-fullname {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .crypto-balance {
+        font-size: var(--font-size-sm);
+      }
+
+      .crypto-value {
+        text-align: right;
+      }
+
+      .crypto-amount {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .crypto-usd {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .crypto-change {
+        margin-left: var(--spacing-3);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+      }
+
+      .crypto-change.positive {
+        color: var(--color-success);
+      }
+
+      .crypto-change.negative {
+        color: var(--color-error);
+      }
+
+      .transaction-list {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .transaction-item {
+        display: flex;
+        align-items: center;
+        padding: var(--spacing-4);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .transaction-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--border-radius-full);
+        background-color: var(--color-light-gray-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: var(--spacing-3);
+      }
+
+      .transaction-icon.sent {
+        color: var(--color-error);
+      }
+
+      .transaction-icon.received {
+        color: var(--color-success);
+      }
+
+      .transaction-icon.exchange {
+        color: var(--color-info);
+      }
+
+      .transaction-info {
+        flex: 1;
+      }
+
+      .transaction-title {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .transaction-details {
+        display: flex;
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .transaction-date {
+        margin-right: var(--spacing-3);
+      }
+
+      .transaction-id {
+        font-family: monospace;
+      }
+
+      .transaction-amount {
+        text-align: right;
+      }
+
+      .transaction-crypto {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .transaction-crypto.sent {
+        color: var(--color-error);
+      }
+
+      .transaction-crypto.received {
+        color: var(--color-success);
+      }
+
+      .transaction-usd {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .wallet-address {
+        display: flex;
+        align-items: center;
+        padding: var(--spacing-3);
+        background-color: var(--color-light-gray-1);
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .wallet-address-value {
+        font-family: monospace;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .wallet-address-actions {
+        display: flex;
+        gap: var(--spacing-2);
+      }
+
+      .qr-code {
+        display: flex;
+        justify-content: center;
+        margin: var(--spacing-4) 0;
+      }
+
+      .qr-code img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .exchange-form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .exchange-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-4);
+      }
+
+      .exchange-label {
+        width: 100px;
+      }
+
+      .exchange-input {
+        flex: 1;
+      }
+
+      .exchange-arrow {
+        display: flex;
+        justify-content: center;
+        margin: var(--spacing-4) 0;
+        color: var(--color-dark-gray-1);
+        font-size: var(--font-size-xl);
+      }
+
+      .exchange-rate {
+        text-align: center;
+        margin-bottom: var(--spacing-4);
+        color: var(--color-dark-gray-1);
+        font-size: var(--font-size-sm);
+      }
+
+      .exchange-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--spacing-6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li class="active">
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="container">
+          <div class="wallet-container">
+            <div class="wallet-header">
+              <h1>Crypto Wallet</h1>
+              <p>Securely manage your cryptocurrencies for private transactions</p>
+            </div>
+
+            <!-- Wallet Balance -->
+            <div class="wallet-balance">
+              <div class="eui-card balance-card primary">
+                <div class="balance-title">TOTAL BALANCE</div>
+                <div class="balance-amount">$12,458.32</div>
+                <div class="balance-usd">Across all cryptocurrencies</div>
+                <div class="balance-icon">
+                  <i class="fas fa-wallet"></i>
+                </div>
+              </div>
+
+              <div class="eui-card balance-card secondary">
+                <div class="balance-title">BITCOIN (BTC)</div>
+                <div class="balance-amount">0.2145 BTC</div>
+                <div class="balance-usd">≈ $8,245.67</div>
+                <div class="balance-icon">
+                  <i class="fab fa-bitcoin"></i>
+                </div>
+              </div>
+
+              <div class="eui-card balance-card success">
+                <div class="balance-title">ETHEREUM (ETH)</div>
+                <div class="balance-amount">2.3456 ETH</div>
+                <div class="balance-usd">≈ $4,212.65</div>
+                <div class="balance-icon">
+                  <i class="fab fa-ethereum"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wallet Actions -->
+            <div class="wallet-actions">
+              <div class="eui-card action-card" onclick="showTab('receive')">
+                <div class="action-icon">
+                  <i class="fas fa-download"></i>
+                </div>
+                <div class="action-title">Receive</div>
+                <div class="action-desc">Get paid in crypto</div>
+              </div>
+
+              <div class="eui-card action-card" onclick="showTab('send')">
+                <div class="action-icon">
+                  <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="action-title">Send</div>
+                <div class="action-desc">Pay for services</div>
+              </div>
+
+              <div class="eui-card action-card" onclick="showTab('exchange')">
+                <div class="action-icon">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="action-title">Exchange</div>
+                <div class="action-desc">Swap between currencies</div>
+              </div>
+
+              <div class="eui-card action-card" onclick="showTab('history')">
+                <div class="action-icon">
+                  <i class="fas fa-history"></i>
+                </div>
+                <div class="action-title">History</div>
+                <div class="action-desc">View transactions</div>
+              </div>
+            </div>
+
+            <!-- Wallet Tabs -->
+            <div class="wallet-tabs">
+              <ul class="eui-nav eui-nav-tabs">
+                <li class="eui-nav-item">
+                  <a class="eui-nav-link active" href="#" onclick="showTab('assets')">My Assets</a>
+                </li>
+                <li class="eui-nav-item">
+                  <a class="eui-nav-link" href="#" onclick="showTab('receive')">Receive</a>
+                </li>
+                <li class="eui-nav-item">
+                  <a class="eui-nav-link" href="#" onclick="showTab('send')">Send</a>
+                </li>
+                <li class="eui-nav-item">
+                  <a class="eui-nav-link" href="#" onclick="showTab('exchange')">Exchange</a>
+                </li>
+                <li class="eui-nav-item">
+                  <a class="eui-nav-link" href="#" onclick="showTab('history')">History</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Assets Tab -->
+            <div class="wallet-tab-content active" id="assets-tab">
+              <div class="eui-card">
+                <div class="eui-card-body">
+                  <h2>My Cryptocurrencies</h2>
+                  <div class="crypto-list">
+                    <!-- Bitcoin -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+                        alt="Bitcoin"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">BTC</span>
+                          <span class="crypto-fullname">Bitcoin</span>
+                          <span class="crypto-change positive">+2.4%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 0.2145 BTC</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">0.2145 BTC</div>
+                        <div class="crypto-usd">$8,245.67</div>
+                      </div>
+                    </div>
+
+                    <!-- Ethereum -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
+                        alt="Ethereum"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">ETH</span>
+                          <span class="crypto-fullname">Ethereum</span>
+                          <span class="crypto-change positive">+1.8%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 2.3456 ETH</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">2.3456 ETH</div>
+                        <div class="crypto-usd">$4,212.65</div>
+                      </div>
+                    </div>
+
+                    <!-- Litecoin -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/litecoin-ltc-logo.png"
+                        alt="Litecoin"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">LTC</span>
+                          <span class="crypto-fullname">Litecoin</span>
+                          <span class="crypto-change negative">-0.5%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 5.0000 LTC</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">5.0000 LTC</div>
+                        <div class="crypto-usd">$450.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Ripple -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/xrp-xrp-logo.png"
+                        alt="XRP"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">XRP</span>
+                          <span class="crypto-fullname">Ripple</span>
+                          <span class="crypto-change positive">+3.2%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 1,000.0000 XRP</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">1,000.0000 XRP</div>
+                        <div class="crypto-usd">$550.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Cardano -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/cardano-ada-logo.png"
+                        alt="Cardano"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">ADA</span>
+                          <span class="crypto-fullname">Cardano</span>
+                          <span class="crypto-change positive">+5.7%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 1,500.0000 ADA</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">1,500.0000 ADA</div>
+                        <div class="crypto-usd">$750.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Polkadot -->
+                    <div class="crypto-item">
+                      <img
+                        src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png"
+                        alt="Polkadot"
+                        class="crypto-icon"
+                      />
+                      <div class="crypto-info">
+                        <div class="crypto-name">
+                          <span class="crypto-symbol">DOT</span>
+                          <span class="crypto-fullname">Polkadot</span>
+                          <span class="crypto-change negative">-1.2%</span>
+                        </div>
+                        <div class="crypto-balance">Balance: 25.0000 DOT</div>
+                      </div>
+                      <div class="crypto-value">
+                        <div class="crypto-amount">25.0000 DOT</div>
+                        <div class="crypto-usd">$250.00</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Receive Tab -->
+            <div class="wallet-tab-content" id="receive-tab">
+              <div class="eui-card">
+                <div class="eui-card-body">
+                  <h2>Receive Cryptocurrency</h2>
+                  <p>Share your wallet address to receive payments from clients or other users.</p>
+
+                  <div class="eui-form-group">
+                    <label>Select Cryptocurrency</label>
+                    <select class="eui-form-control" id="receive-crypto">
+                      <option value="btc">Bitcoin (BTC)</option>
+                      <option value="eth">Ethereum (ETH)</option>
+                      <option value="ltc">Litecoin (LTC)</option>
+                      <option value="xrp">Ripple (XRP)</option>
+                      <option value="ada">Cardano (ADA)</option>
+                      <option value="dot">Polkadot (DOT)</option>
+                    </select>
+                  </div>
+
+                  <div class="wallet-address">
+                    <div class="wallet-address-value" id="btc-address">
+                      3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5
+                    </div>
+                    <div class="wallet-address-actions">
+                      <button class="eui-btn eui-btn-outline-primary" onclick="copyAddress()">
+                        <i class="far fa-copy"></i>
+                      </button>
+                      <button class="eui-btn eui-btn-outline-primary">
+                        <i class="fas fa-share-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="qr-code">
+                    <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5"
+                      alt="Bitcoin QR Code"
+                      id="qr-code"
+                    />
+                  </div>
+
+                  <div class="text-center">
+                    <p>Scan this QR code to make a payment to this wallet address.</p>
+                    <p class="text-danger">
+                      Always double-check the address before sending any cryptocurrency.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Send Tab -->
+            <div class="wallet-tab-content" id="send-tab">
+              <div class="eui-card">
+                <div class="eui-card-body">
+                  <h2>Send Cryptocurrency</h2>
+                  <p>Send cryptocurrency to pay for services or transfer to another wallet.</p>
+
+                  <div class="eui-form-group">
+                    <label>Select Cryptocurrency</label>
+                    <select class="eui-form-control" id="send-crypto">
+                      <option value="btc">Bitcoin (BTC) - Balance: 0.2145 BTC</option>
+                      <option value="eth">Ethereum (ETH) - Balance: 2.3456 ETH</option>
+                      <option value="ltc">Litecoin (LTC) - Balance: 5.0000 LTC</option>
+                      <option value="xrp">Ripple (XRP) - Balance: 1,000.0000 XRP</option>
+                      <option value="ada">Cardano (ADA) - Balance: 1,500.0000 ADA</option>
+                      <option value="dot">Polkadot (DOT) - Balance: 25.0000 DOT</option>
+                    </select>
+                  </div>
+
+                  <div class="eui-form-group">
+                    <label>Recipient Address</label>
+                    <input
+                      type="text"
+                      class="eui-form-control"
+                      placeholder="Enter wallet address"
+                    />
+                  </div>
+
+                  <div class="eui-form-group">
+                    <label>Amount</label>
+                    <div class="eui-input-group">
+                      <input type="number" class="eui-form-control" placeholder="0.00" />
+                      <div class="eui-input-group-append">
+                        <span class="eui-input-group-text">BTC</span>
+                      </div>
+                    </div>
+                    <small class="eui-form-text">≈ $0.00 USD</small>
+                  </div>
+
+                  <div class="eui-form-group">
+                    <label>Transaction Fee</label>
+                    <select class="eui-form-control">
+                      <option>Low - 0.00001 BTC (≈ $0.38) - Estimated confirmation: 60+ min</option>
+                      <option selected>
+                        Medium - 0.00005 BTC (≈ $1.92) - Estimated confirmation: 30 min
+                      </option>
+                      <option>High - 0.0001 BTC (≈ $3.84) - Estimated confirmation: 10 min</option>
+                    </select>
+                  </div>
+
+                  <div class="eui-form-group">
+                    <label>Note (Optional)</label>
+                    <input
+                      type="text"
+                      class="eui-form-control"
+                      placeholder="Add a note to this transaction"
+                    />
+                  </div>
+
+                  <div class="text-center">
+                    <button class="eui-btn eui-btn-primary">
+                      <i class="fas fa-paper-plane"></i> Send Transaction
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Exchange Tab -->
+            <div class="wallet-tab-content" id="exchange-tab">
+              <div class="eui-card">
+                <div class="eui-card-body">
+                  <h2>Exchange Cryptocurrencies</h2>
+                  <p>Swap between different cryptocurrencies at competitive rates.</p>
+
+                  <div class="exchange-form">
+                    <div class="exchange-row">
+                      <div class="exchange-label">From</div>
+                      <div class="exchange-input">
+                        <div class="eui-input-group">
+                          <input
+                            type="number"
+                            class="eui-form-control"
+                            placeholder="0.00"
+                            value="0.1"
+                          />
+                          <div class="eui-input-group-append">
+                            <select class="eui-form-control">
+                              <option selected>BTC</option>
+                              <option>ETH</option>
+                              <option>LTC</option>
+                              <option>XRP</option>
+                              <option>ADA</option>
+                              <option>DOT</option>
+                            </select>
+                          </div>
+                        </div>
+                        <small class="eui-form-text">Available: 0.2145 BTC</small>
+                      </div>
+                    </div>
+
+                    <div class="exchange-arrow">
+                      <i class="fas fa-exchange-alt"></i>
+                    </div>
+
+                    <div class="exchange-row">
+                      <div class="exchange-label">To</div>
+                      <div class="exchange-input">
+                        <div class="eui-input-group">
+                          <input
+                            type="number"
+                            class="eui-form-control"
+                            placeholder="0.00"
+                            value="1.8"
+                            readonly
+                          />
+                          <div class="eui-input-group-append">
+                            <select class="eui-form-control">
+                              <option>BTC</option>
+                              <option selected>ETH</option>
+                              <option>LTC</option>
+                              <option>XRP</option>
+                              <option>ADA</option>
+                              <option>DOT</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="exchange-rate">Exchange Rate: 1 BTC ≈ 18 ETH</div>
+
+                    <div class="eui-form-group">
+                      <label>Exchange Fee</label>
+                      <input
+                        type="text"
+                        class="eui-form-control"
+                        value="0.0005 BTC (≈ $19.22)"
+                        readonly
+                      />
+                    </div>
+
+                    <div class="exchange-actions">
+                      <button class="eui-btn eui-btn-primary">
+                        <i class="fas fa-exchange-alt"></i> Exchange Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="wallet-tab-content" id="history-tab">
+              <div class="eui-card">
+                <div class="eui-card-body">
+                  <h2>Transaction History</h2>
+                  <p>View your past cryptocurrency transactions.</p>
+
+                  <div class="eui-form-group">
+                    <div class="eui-input-group">
+                      <span class="eui-input-group-text">
+                        <i class="fas fa-search"></i>
+                      </span>
+                      <input
+                        type="text"
+                        class="eui-form-control"
+                        placeholder="Search transactions..."
+                      />
+                      <div class="eui-input-group-append">
+                        <select class="eui-form-control">
+                          <option>All Currencies</option>
+                          <option>Bitcoin (BTC)</option>
+                          <option>Ethereum (ETH)</option>
+                          <option>Litecoin (LTC)</option>
+                          <option>Ripple (XRP)</option>
+                          <option>Cardano (ADA)</option>
+                          <option>Polkadot (DOT)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="transaction-list">
+                    <!-- Transaction 1 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon sent">
+                        <i class="fas fa-arrow-up"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Sent to Sophia Martinez</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Today, 12:45 PM</div>
+                          <div class="transaction-id">3FZb...tZc5</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto sent">-0.05 BTC</div>
+                        <div class="transaction-usd">-$1,922.50</div>
+                      </div>
+                    </div>
+
+                    <!-- Transaction 2 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon received">
+                        <i class="fas fa-arrow-down"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Received from Client</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Yesterday, 3:22 PM</div>
+                          <div class="transaction-id">8Hzx...pR2s</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto received">+0.12 BTC</div>
+                        <div class="transaction-usd">+$4,614.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Transaction 3 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon exchange">
+                        <i class="fas fa-exchange-alt"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Exchanged BTC to ETH</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Aug 28, 2023</div>
+                          <div class="transaction-id">Internal</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto">0.1 BTC → 1.8 ETH</div>
+                        <div class="transaction-usd">$3,845.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Transaction 4 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon sent">
+                        <i class="fas fa-arrow-up"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Sent to Emma Johnson</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Aug 25, 2023</div>
+                          <div class="transaction-id">9Kpq...mN7r</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto sent">-0.08 BTC</div>
+                        <div class="transaction-usd">-$3,076.00</div>
+                      </div>
+                    </div>
+
+                    <!-- Transaction 5 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon received">
+                        <i class="fas fa-arrow-down"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Received from Exchange</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Aug 20, 2023</div>
+                          <div class="transaction-id">2Lmn...xZ9t</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto received">+0.35 BTC</div>
+                        <div class="transaction-usd">+$13,457.50</div>
+                      </div>
+                    </div>
+
+                    <!-- Transaction 6 -->
+                    <div class="transaction-item">
+                      <div class="transaction-icon sent">
+                        <i class="fas fa-arrow-up"></i>
+                      </div>
+                      <div class="transaction-info">
+                        <div class="transaction-title">Sent to Natasha Petrova</div>
+                        <div class="transaction-details">
+                          <div class="transaction-date">Aug 15, 2023</div>
+                          <div class="transaction-id">7Rtz...qA3f</div>
+                        </div>
+                      </div>
+                      <div class="transaction-amount">
+                        <div class="transaction-crypto sent">-0.15 ETH</div>
+                        <div class="transaction-usd">-$270.00</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button class="eui-btn eui-btn-outline-primary">Load More Transactions</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="messages.html">
+            <i class="fas fa-comment"></i>
+            <span>Messages</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li class="active">
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Wallet specific functions
+      function showTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll('.wallet-tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+
+        // Show selected tab
+        document.getElementById(tabId + '-tab').classList.add('active');
+
+        // Update active tab in nav
+        document.querySelectorAll('.eui-nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+
+        // Find and mark the clicked tab as active
+        const tabs = document.querySelectorAll('.eui-nav-link');
+        for (let i = 0; i < tabs.length; i++) {
+          if (tabs[i].getAttribute('onclick').includes(tabId)) {
+            tabs[i].classList.add('active');
+            break;
+          }
+        }
+      }
+
+      function copyAddress() {
+        const address = document.getElementById('btc-address').textContent;
+        navigator.clipboard.writeText(address).then(() => {
+          showNotification('Address copied to clipboard!');
+        });
+      }
+
+      // Update QR code and address when crypto is changed
+      document.addEventListener('DOMContentLoaded', function () {
+        const receiveCrypto = document.getElementById('receive-crypto');
+        if (receiveCrypto) {
+          receiveCrypto.addEventListener('change', function () {
+            const crypto = this.value;
+            let address = '';
+
+            // Set address based on selected crypto
+            switch (crypto) {
+              case 'btc':
+                address = '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5';
+                break;
+              case 'eth':
+                address = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+                break;
+              case 'ltc':
+                address = 'LTdsVS8VDw6syvfQADdhf2PHAm3rBpxdnA';
+                break;
+              case 'xrp':
+                address = 'rLW9gnQo7BQhU6igk5keqYnH3TVrCxGRzm';
+                break;
+              case 'ada':
+                address =
+                  'addr1qxck8h7v6ydz5qe0xpnk2hyer895pgrpqzc5tgmh9wf3dj7zl764znj9qrqjyqy5qvk67eth5q2m4wgctwmrqwjk35cqrqpnxc';
+                break;
+              case 'dot':
+                address = '1FRMM8PEiWXYax7rpS6X4XZX1aAAxSWx1CrKTyrVYhV24fg';
+                break;
+            }
+
+            // Update address display
+            document.getElementById('btc-address').textContent = address;
+
+            // Update QR code
+            document.getElementById('qr-code').src =
+              `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}`;
+          });
+        }
+
+        // Update send crypto amount display
+        const sendCrypto = document.getElementById('send-crypto');
+        if (sendCrypto) {
+          sendCrypto.addEventListener('change', function () {
+            const crypto = this.value;
+            const amountInput = document.querySelector('#send-tab .eui-input-group input');
+            const amountAppend = document.querySelector(
+              '#send-tab .eui-input-group-append .eui-input-group-text'
+            );
+
+            if (amountInput && amountAppend) {
+              amountAppend.textContent = crypto.toUpperCase();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

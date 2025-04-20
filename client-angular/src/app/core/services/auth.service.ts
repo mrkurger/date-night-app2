@@ -138,6 +138,14 @@ export class AuthService {
   }
 
   /**
+   * Get current user ID
+   */
+  getCurrentUserId(): string | null {
+    const user = this.currentUserSubject.value;
+    return user ? user._id : null;
+  }
+
+  /**
    * Get stored token
    *
    * Note: This method is kept for compatibility with existing code,

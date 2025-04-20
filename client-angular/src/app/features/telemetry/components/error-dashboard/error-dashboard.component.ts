@@ -24,7 +24,18 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
-import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
+
+// Define ErrorCategory enum locally since it's not exported from http-error.interceptor
+export enum ErrorCategory {
+  NETWORK = 'network',
+  SERVER = 'server',
+  CLIENT = 'client',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  TIMEOUT = 'timeout',
+  UNKNOWN = 'unknown',
+}
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
 /**

@@ -70,7 +70,8 @@ export class ReviewsListComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.getCurrentUserId();
+    const currentUser = this.authService.getCurrentUser();
+    this.currentUserId = currentUser?.id || null;
   }
 
   /**

@@ -1,5 +1,20 @@
 # Change Log
 
+## 2025-04-23: Angular Component and Style Fixes
+
+### Fixed
+
+- **Button Component**: Added missing IconComponent import to ButtonComponent
+- **SASS Division Warnings**: Fixed SASS division deprecation warnings in main.scss by using calc()
+- **Chat Message Component**: Fixed missing dependencies and methods
+  - Added missing LinkifyPipe and FileSizePipe imports
+  - Added missing methods: openAttachment, downloadAttachment, getExpiryDate, getSenderProfileImage
+  - Fixed issue with expiresAt property in template
+  - Fixed issue with profileImage property in template
+- **Leaflet CSS**: Updated Leaflet CSS to use correct paths for images
+  - Fixed image paths for layers.png, layers-2x.png, and marker-icon.png
+  - Created proper directory structure for Leaflet images
+
 ## 2025-04-22: Angular Client Fixes
 
 ### Fixed

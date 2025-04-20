@@ -1,4 +1,4 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 .breadcrumbs {
   padding: $spacing-3 0;

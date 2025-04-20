@@ -64,7 +64,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptions: Subscription[] = [];
   private scrollToBottom = true;
   private oldestMessageId: string | null = null;
-  private hasMoreMessages = true;
+  hasMoreMessages = true; // Made public for template access // Made public for template access // Made public for template access // Made public for template access // Made public for template access
 
   constructor(
     private route: ActivatedRoute,

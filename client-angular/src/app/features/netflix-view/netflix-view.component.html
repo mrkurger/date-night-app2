@@ -4,7 +4,7 @@
     <emerald-page-header
       *ngIf="featuredAd"
       [title]="featuredAd.title"
-      [subtitle]="featuredAd.location"
+      [subtitle]="getLocationString(featuredAd)"
       [backgroundImage]="getMediaUrl(featuredAd)"
       [avatarUrl]="getAdvertiserImage(featuredAd)"
       [avatarName]="getAdvertiserName(featuredAd)"
@@ -14,7 +14,7 @@
         { id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart' },
         { id: 'chat', label: 'Start Chat', icon: 'fas fa-comment' },
       ]"
-      (actionClick)="onHeroAction($event, featuredAd._id)"
+      (actionClick)="onHeroAction($event, getAdIdAsString(featuredAd._id))"
     >
       <!-- Custom hero content -->
       <div class="hero-content">

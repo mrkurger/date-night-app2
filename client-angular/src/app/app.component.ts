@@ -41,10 +41,6 @@ import { NgIf } from '@angular/common';
     NotificationComponent,
     DebugInfoComponent,
     AlertNotificationsComponent,
-    OnboardingComponent,
-    FeatureTourComponent,
-    ContextualHelpComponent,
-    BreadcrumbsComponent,
     NgIf,
   ],
 })

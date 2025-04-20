@@ -202,9 +202,13 @@ export class ChatMessageComponent implements OnInit {
       return new Date(this.message.expiresAt);
     }
 
-    // If it's already a Date, return it
-    if (this.message.expiresAt instanceof Date) {
-      return this.message.expiresAt;
+    // Check if it's a Date object by checking if it has a getTime method
+    if (
+      typeof this.message.expiresAt === 'object' &&
+      this.message.expiresAt !== null &&
+      typeof (this.message.expiresAt as Date).getTime === 'function'
+    ) {
+      return this.message.expiresAt as Date;
     }
 
     // If it's a string, parse it

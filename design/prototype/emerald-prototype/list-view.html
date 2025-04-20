@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - List View</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li class="active">
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="container">
+          <!-- Search and Filters -->
+          <div class="search-filters">
+            <div class="search-bar">
+              <div class="eui-input-group">
+                <span class="eui-input-group-text">
+                  <i class="fas fa-search"></i>
+                </span>
+                <input
+                  type="text"
+                  class="eui-form-control"
+                  placeholder="Search for experiences..."
+                />
+              </div>
+            </div>
+
+            <div class="filters">
+              <div class="filter-item">
+                <select class="eui-form-control">
+                  <option>All Categories</option>
+                  <option>Massage</option>
+                  <option>Escort</option>
+                  <option>Dance</option>
+                  <option>Events</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <select class="eui-form-control">
+                  <option>All Locations</option>
+                  <option>Oslo</option>
+                  <option>Stockholm</option>
+                  <option>Copenhagen</option>
+                  <option>New York</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <select class="eui-form-control">
+                  <option>Sort: Newest</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Rating: High to Low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Tabs -->
+          <div class="view-tabs">
+            <a href="netflix-view.html" class="tab"> <i class="fas fa-th-large"></i> Grid </a>
+            <a href="tinder-view.html" class="tab"> <i class="fas fa-fire"></i> Swipe </a>
+            <a href="list-view.html" class="tab active"> <i class="fas fa-list"></i> List </a>
+          </div>
+
+          <!-- List View -->
+          <div class="list-view">
+            <div class="eui-card">
+              <div class="eui-card-body">
+                <table class="eui-table eui-table-hover">
+                  <thead>
+                    <tr>
+                      <th>Profile</th>
+                      <th>Location</th>
+                      <th>Category</th>
+                      <th>Rating</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Row 1 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=1"
+                            alt="Professional Massage"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Professional Massage</div>
+                            <div class="profile-desc">Relaxation specialist</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Oslo, Norway</td>
+                      <td>Massage</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star-half-alt"></i>
+                          <span>(24)</span>
+                        </div>
+                      </td>
+                      <td>1500 NOK</td>
+                      <td><span class="eui-badge eui-badge-success">Online</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=1" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 2 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=2"
+                            alt="Elegant Escort"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Elegant Escort</div>
+                            <div class="profile-desc">VIP companion</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Stockholm, Sweden</td>
+                      <td>Escort</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(18)</span>
+                        </div>
+                      </td>
+                      <td>2500 SEK</td>
+                      <td><span class="eui-badge eui-badge-secondary">Away</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=2" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 3 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=3"
+                            alt="Exotic Dance"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Exotic Dance</div>
+                            <div class="profile-desc">Professional dancer</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Copenhagen, Denmark</td>
+                      <td>Dance</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <span>(32)</span>
+                        </div>
+                      </td>
+                      <td>2000 DKK</td>
+                      <td><span class="eui-badge eui-badge-success">Online</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=3" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 4 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=4"
+                            alt="Event Planner"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Event Planner</div>
+                            <div class="profile-desc">Special occasions</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>New York, NY</td>
+                      <td>Events</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(27)</span>
+                        </div>
+                      </td>
+                      <td>$300</td>
+                      <td><span class="eui-badge eui-badge-secondary">Away</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=4" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 5 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=5"
+                            alt="Relaxing Massage"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Relaxing Massage</div>
+                            <div class="profile-desc">Stress relief</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Oslo, Norway</td>
+                      <td>Massage</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(19)</span>
+                        </div>
+                      </td>
+                      <td>1200 NOK</td>
+                      <td><span class="eui-badge eui-badge-success">Online</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=5" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 6 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=6"
+                            alt="VIP Companion"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">VIP Companion</div>
+                            <div class="profile-desc">Elite escort service</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>London, UK</td>
+                      <td>Escort</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star-half-alt"></i>
+                          <span>(42)</span>
+                        </div>
+                      </td>
+                      <td>£300</td>
+                      <td><span class="eui-badge eui-badge-success">Online</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=6" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 7 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=7"
+                            alt="Dance Instructor"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Dance Instructor</div>
+                            <div class="profile-desc">Private lessons</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Paris, France</td>
+                      <td>Dance</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(15)</span>
+                        </div>
+                      </td>
+                      <td>€200</td>
+                      <td><span class="eui-badge eui-badge-secondary">Away</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=7" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Row 8 -->
+                    <tr>
+                      <td>
+                        <div class="profile-cell">
+                          <img
+                            src="https://via.placeholder.com/50x50?text=8"
+                            alt="Personal Chef"
+                            class="profile-img"
+                          />
+                          <div class="profile-info">
+                            <div class="profile-name">Personal Chef</div>
+                            <div class="profile-desc">Gourmet experience</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Berlin, Germany</td>
+                      <td>Events</td>
+                      <td>
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <span>(31)</span>
+                        </div>
+                      </td>
+                      <td>€250</td>
+                      <td><span class="eui-badge eui-badge-success">Online</span></td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="ad-detail.html?id=8" class="eui-btn eui-btn-primary eui-btn-sm"
+                            >View</a
+                          >
+                          <button class="eui-btn eui-btn-outline-primary eui-btn-sm favorite-btn">
+                            <i class="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination-container">
+            <ul class="eui-pagination">
+              <li class="eui-page-item disabled">
+                <a class="eui-page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="eui-page-item active">
+                <a class="eui-page-link" href="#">1</a>
+              </li>
+              <li class="eui-page-item">
+                <a class="eui-page-link" href="#">2</a>
+              </li>
+              <li class="eui-page-item">
+                <a class="eui-page-link" href="#">3</a>
+              </li>
+              <li class="eui-page-item">
+                <a class="eui-page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html" class="active">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li class="active">
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>

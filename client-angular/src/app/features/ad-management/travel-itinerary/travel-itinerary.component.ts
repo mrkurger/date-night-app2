@@ -83,12 +83,14 @@ export class TravelItineraryComponent implements OnInit {
    * Handles tab change events
    * @param event The tab change event with index property
    */
-  onTabChange(event: { index: number }): void {
+  onTabChange(event: { index: number } | any): void {
+    this.activeTab = event.index;
+
     // Update maps when switching to map tabs
     setTimeout(() => {
       if (event.index === 0 && this.locationMap) {
         this.locationMap.refreshMap();
-      } else if (event.index === 3 && this.itineraryMap) {
+      } else if ((event.index === 2 || event.index === 3) && this.itineraryMap) {
         this.itineraryMap.refreshMap();
       }
     }, 100);
@@ -514,18 +516,7 @@ export class TravelItineraryComponent implements OnInit {
     }
   }
 
-  onTabChange(event: any): void {
-    this.activeTab = event.index;
-
-    // Refresh maps when tab changes to ensure proper rendering
-    setTimeout(() => {
-      if (this.activeTab === 0 && this.itineraryMap) {
-        this.itineraryMap.refreshMap();
-      } else if (this.activeTab === 2 && this.locationMap) {
-        this.locationMap.refreshMap();
-      }
-    }, 100);
-  }
+  // This duplicate method has been merged with the one above
 
   // Helper to mark all controls in a form group as touched
   private markFormGroupTouched(formGroup: FormGroup): void {

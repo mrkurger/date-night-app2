@@ -151,13 +151,17 @@ export class TinderComponent implements OnInit {
     if (!this.currentAd) return;
 
     const direction = event.direction;
-    const currentAdId = this.currentAd._id;
+    // Convert complex _id to string if needed
+    const currentAdId =
+      typeof this.currentAd._id === 'string'
+        ? this.currentAd._id
+        : JSON.stringify(this.currentAd._id);
 
     // Set card state for animation
     this.cardState = direction === 'right' ? 'like' : 'dislike';
 
     // Record the swipe
-    this.adService.recordSwipe(currentAdId, direction).subscribe({
+    this.adService.recordSwipe(currentAdId as string, direction).subscribe({
       next: () => {
         // Show notification for right swipes (likes)
         if (direction === 'right') {
@@ -201,6 +205,19 @@ export class TinderComponent implements OnInit {
   }
 
   /**
+   * Get a formatted location string from an ad
+   * @param ad The ad object
+   * @returns A formatted location string
+   */
+  getLocationString(ad: Ad): string {
+    if (!ad || !ad.location) {
+      return '';
+    }
+
+    return `${ad.location.city}, ${ad.location.county}`;
+  }
+
+  /**
    * Handle card action click
    * @param event Action event with id and itemId
    */
@@ -238,7 +255,13 @@ export class TinderComponent implements OnInit {
       return;
     }
 
-    this.chatService.createAdRoom(this.currentAd._id).subscribe({
+    // Convert complex _id to string if needed
+    const adId =
+      typeof this.currentAd._id === 'string'
+        ? this.currentAd._id
+        : JSON.stringify(this.currentAd._id);
+
+    this.chatService.createAdRoom(adId as string).subscribe({
       next: room => {
         this.router.navigateByUrl(`/chat/${room._id}`);
       },
@@ -355,5 +378,12 @@ export class TinderComponent implements OnInit {
       location: '',
       touringOnly: false,
     });
+  }
+
+  /**
+   * Convert ad ID to string regardless of its type
+   */
+  getAdIdAsString(adId: string | { city: string; county: string }): string {
+    return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

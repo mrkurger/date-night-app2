@@ -106,9 +106,9 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Output() valueChange = new EventEmitter<boolean>();
 
   /**
-   * The checkbox checked state.
+   * The @Input() checkbox checked state.
    */
-  checked = false;
+  @Input() @Input() @Input() @Input() checked = false;
 
   /**
    * Whether the checkbox is focused.

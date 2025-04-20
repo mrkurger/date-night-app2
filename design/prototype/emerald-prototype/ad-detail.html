@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Ad Detail</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="container">
+          <!-- Back Button -->
+          <div class="back-button">
+            <a href="javascript:history.back()" class="eui-btn eui-btn-outline-secondary">
+              <i class="fas fa-arrow-left"></i> Back to Results
+            </a>
+          </div>
+
+          <!-- Ad Detail -->
+          <div class="ad-detail">
+            <div class="eui-row">
+              <!-- Left Column - Images -->
+              <div class="eui-col-md-6">
+                <div class="eui-card">
+                  <div class="ad-images">
+                    <div class="main-image">
+                      <img
+                        src="https://via.placeholder.com/600x400?text=Professional+Massage"
+                        alt="Professional Massage"
+                        id="main-image"
+                      />
+                      <div class="image-badge">Featured</div>
+                    </div>
+                    <div class="thumbnail-images">
+                      <div
+                        class="thumbnail active"
+                        onclick="changeMainImage('https://via.placeholder.com/600x400?text=Professional+Massage')"
+                      >
+                        <img src="https://via.placeholder.com/100x100?text=1" alt="Thumbnail 1" />
+                      </div>
+                      <div
+                        class="thumbnail"
+                        onclick="changeMainImage('https://via.placeholder.com/600x400?text=Massage+Room')"
+                      >
+                        <img src="https://via.placeholder.com/100x100?text=2" alt="Thumbnail 2" />
+                      </div>
+                      <div
+                        class="thumbnail"
+                        onclick="changeMainImage('https://via.placeholder.com/600x400?text=Massage+Oils')"
+                      >
+                        <img src="https://via.placeholder.com/100x100?text=3" alt="Thumbnail 3" />
+                      </div>
+                      <div
+                        class="thumbnail"
+                        onclick="changeMainImage('https://via.placeholder.com/600x400?text=Massage+Certificate')"
+                      >
+                        <img src="https://via.placeholder.com/100x100?text=4" alt="Thumbnail 4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column - Details -->
+              <div class="eui-col-md-6">
+                <div class="eui-card">
+                  <div class="eui-card-body">
+                    <div class="ad-header">
+                      <h1>Professional Massage</h1>
+                      <div class="ad-status">
+                        <span class="eui-badge eui-badge-success">Online</span>
+                        <span class="eui-badge eui-badge-primary">Verified</span>
+                      </div>
+                    </div>
+
+                    <div class="ad-meta">
+                      <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Oslo, Norway</span>
+                      </div>
+                      <div class="meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>1500 NOK</span>
+                      </div>
+                      <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Posted 3 days ago</span>
+                      </div>
+                    </div>
+
+                    <div class="ad-rating">
+                      <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.5 (24 reviews)</span>
+                      </div>
+                    </div>
+
+                    <div class="ad-actions">
+                      <button class="eui-btn eui-btn-primary">
+                        <i class="fas fa-comment"></i> Contact
+                      </button>
+                      <button class="eui-btn eui-btn-outline-primary favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                      </button>
+                      <button class="eui-btn eui-btn-outline-secondary">
+                        <i class="fas fa-share-alt"></i> Share
+                      </button>
+                    </div>
+
+                    <div class="ad-provider">
+                      <div class="provider-header">
+                        <h3>About the Provider</h3>
+                      </div>
+                      <div class="provider-info">
+                        <div class="provider-avatar">
+                          <img
+                            src="https://via.placeholder.com/80x80?text=Avatar"
+                            alt="Provider Avatar"
+                          />
+                        </div>
+                        <div class="provider-details">
+                          <div class="provider-name">Sarah Johnson</div>
+                          <div class="provider-meta">
+                            <div class="meta-item">
+                              <i class="fas fa-user-check"></i>
+                              <span>Member since 2022</span>
+                            </div>
+                            <div class="meta-item">
+                              <i class="fas fa-ad"></i>
+                              <span>3 active listings</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="eui-card mt-4">
+              <div class="eui-card-body">
+                <div class="ad-description">
+                  <h2>Description</h2>
+                  <p>
+                    Professional massage therapist with 5+ years of experience. Specializing in
+                    Swedish, deep tissue, and aromatherapy massages. I provide a relaxing and
+                    rejuvenating experience tailored to your specific needs.
+                  </p>
+
+                  <p>
+                    My massage studio is located in central Oslo, easily accessible by public
+                    transportation. I also offer outcall services to hotels and residences within
+                    the Oslo area for an additional fee.
+                  </p>
+
+                  <h3>Services Offered</h3>
+                  <ul>
+                    <li>
+                      Swedish Massage - A gentle, relaxing massage that uses long strokes, kneading,
+                      and circular movements.
+                    </li>
+                    <li>
+                      Deep Tissue Massage - Targets deeper layers of muscle and connective tissue,
+                      ideal for chronic pain and tension.
+                    </li>
+                    <li>
+                      Aromatherapy Massage - Combines massage with essential oils for enhanced
+                      relaxation and therapeutic benefits.
+                    </li>
+                    <li>
+                      Hot Stone Massage - Uses heated stones to relax muscles and improve
+                      circulation.
+                    </li>
+                    <li>Couples Massage - Share the experience with a partner in the same room.</li>
+                  </ul>
+
+                  <h3>Pricing</h3>
+                  <ul>
+                    <li>60-minute session: 1500 NOK</li>
+                    <li>90-minute session: 2200 NOK</li>
+                    <li>120-minute session: 2800 NOK</li>
+                    <li>Outcall service: +500 NOK</li>
+                  </ul>
+
+                  <h3>Availability</h3>
+                  <p>
+                    Monday to Friday: 10:00 AM - 8:00 PM<br />
+                    Saturday: 10:00 AM - 6:00 PM<br />
+                    Sunday: Closed
+                  </p>
+
+                  <p>
+                    Please book at least 24 hours in advance to ensure availability. Cancellations
+                    should be made at least 12 hours before the appointment to avoid a cancellation
+                    fee.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="eui-card mt-4">
+              <div class="eui-card-body">
+                <div class="ad-reviews">
+                  <h2>Reviews (24)</h2>
+
+                  <div class="review-summary">
+                    <div class="overall-rating">
+                      <div class="rating-number">4.5</div>
+                      <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                      </div>
+                      <div class="rating-count">24 reviews</div>
+                    </div>
+
+                    <div class="rating-breakdown">
+                      <div class="rating-bar">
+                        <span class="rating-label">5 stars</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 75%"></div>
+                        </div>
+                        <span class="rating-percent">75%</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">4 stars</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 15%"></div>
+                        </div>
+                        <span class="rating-percent">15%</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">3 stars</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 5%"></div>
+                        </div>
+                        <span class="rating-percent">5%</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">2 stars</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 3%"></div>
+                        </div>
+                        <span class="rating-percent">3%</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">1 star</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 2%"></div>
+                        </div>
+                        <span class="rating-percent">2%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Individual Reviews -->
+                  <div class="reviews-list">
+                    <!-- Review 1 -->
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="reviewer-info">
+                          <div class="reviewer-avatar">JD</div>
+                          <div class="reviewer-details">
+                            <div class="reviewer-name">John D.</div>
+                            <div class="review-date">2 days ago</div>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </div>
+                      </div>
+                      <div class="review-content">
+                        <p>
+                          Absolutely amazing experience! Sarah is a true professional who knows
+                          exactly how to target problem areas. The aromatherapy oils she used were
+                          perfect for relaxation. I left feeling completely rejuvenated. Highly
+                          recommend!
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="reviewer-info">
+                          <div class="reviewer-avatar">MS</div>
+                          <div class="reviewer-details">
+                            <div class="reviewer-name">Maria S.</div>
+                            <div class="review-date">1 week ago</div>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                      <div class="review-content">
+                        <p>
+                          Great massage technique and very professional service. The studio was
+                          clean and the ambiance was relaxing. I had a deep tissue massage that
+                          really helped with my back pain. Would definitely book again.
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="reviewer-info">
+                          <div class="reviewer-avatar">TK</div>
+                          <div class="reviewer-details">
+                            <div class="reviewer-name">Thomas K.</div>
+                            <div class="review-date">2 weeks ago</div>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star-half-alt"></i>
+                        </div>
+                      </div>
+                      <div class="review-content">
+                        <p>
+                          I booked a 90-minute Swedish massage and it was worth every penny. Sarah
+                          has magic hands and really knows how to make you feel comfortable. The hot
+                          stones were an excellent addition. My only suggestion would be to offer
+                          more appointment times on weekends.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- More Reviews Button -->
+                  <div class="more-reviews">
+                    <button class="eui-btn eui-btn-outline-primary">Load More Reviews</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Similar Listings -->
+            <div class="similar-listings mt-4">
+              <h2>Similar Listings</h2>
+              <div class="eui-row">
+                <!-- Similar Item 1 -->
+                <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                  <div class="eui-card experience-card">
+                    <img
+                      src="https://via.placeholder.com/300x200?text=Relaxing+Massage"
+                      class="card-img"
+                      alt="Relaxing Massage"
+                    />
+                    <div class="eui-card-body">
+                      <div class="card-header">
+                        <h3>Relaxing Massage</h3>
+                        <span class="eui-badge eui-badge-success">Online</span>
+                      </div>
+                      <div class="card-details">
+                        <div class="detail-item">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>Oslo, Norway</span>
+                        </div>
+                        <div class="detail-item">
+                          <i class="fas fa-tag"></i>
+                          <span>1200 NOK</span>
+                        </div>
+                      </div>
+                      <div class="card-rating">
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(19)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="eui-card-footer">
+                      <a href="ad-detail.html?id=5" class="eui-btn eui-btn-primary">View Details</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Similar Item 2 -->
+                <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                  <div class="eui-card experience-card">
+                    <img
+                      src="https://via.placeholder.com/300x200?text=Therapeutic+Massage"
+                      class="card-img"
+                      alt="Therapeutic Massage"
+                    />
+                    <div class="eui-card-body">
+                      <div class="card-header">
+                        <h3>Therapeutic Massage</h3>
+                        <span class="eui-badge eui-badge-success">Online</span>
+                      </div>
+                      <div class="card-details">
+                        <div class="detail-item">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>Bergen, Norway</span>
+                        </div>
+                        <div class="detail-item">
+                          <i class="fas fa-tag"></i>
+                          <span>1300 NOK</span>
+                        </div>
+                      </div>
+                      <div class="card-rating">
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span>(12)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="eui-card-footer">
+                      <a href="#" class="eui-btn eui-btn-primary">View Details</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Similar Item 3 -->
+                <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                  <div class="eui-card experience-card">
+                    <img
+                      src="https://via.placeholder.com/300x200?text=Sports+Massage"
+                      class="card-img"
+                      alt="Sports Massage"
+                    />
+                    <div class="eui-card-body">
+                      <div class="card-header">
+                        <h3>Sports Massage</h3>
+                        <span class="eui-badge eui-badge-secondary">Away</span>
+                      </div>
+                      <div class="card-details">
+                        <div class="detail-item">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>Stockholm, Sweden</span>
+                        </div>
+                        <div class="detail-item">
+                          <i class="fas fa-tag"></i>
+                          <span>1800 SEK</span>
+                        </div>
+                      </div>
+                      <div class="card-rating">
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <span>(28)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="eui-card-footer">
+                      <a href="#" class="eui-btn eui-btn-primary">View Details</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Similar Item 4 -->
+                <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                  <div class="eui-card experience-card">
+                    <img
+                      src="https://via.placeholder.com/300x200?text=Couples+Massage"
+                      class="card-img"
+                      alt="Couples Massage"
+                    />
+                    <div class="eui-card-body">
+                      <div class="card-header">
+                        <h3>Couples Massage</h3>
+                        <span class="eui-badge eui-badge-success">Online</span>
+                      </div>
+                      <div class="card-details">
+                        <div class="detail-item">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>Copenhagen, Denmark</span>
+                        </div>
+                        <div class="detail-item">
+                          <i class="fas fa-tag"></i>
+                          <span>2500 DKK</span>
+                        </div>
+                      </div>
+                      <div class="card-rating">
+                        <div class="stars">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star-half-alt"></i>
+                          <span>(35)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="eui-card-footer">
+                      <a href="#" class="eui-btn eui-btn-primary">View Details</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html" class="active">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Function to change the main image
+      function changeMainImage(src) {
+        document.getElementById('main-image').src = src;
+
+        // Update active thumbnail
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach(thumb => {
+          thumb.classList.remove('active');
+        });
+
+        event.currentTarget.classList.add('active');
+      }
+
+      // Toggle favorite button
+      document.querySelector('.favorite-btn').addEventListener('click', function () {
+        const icon = this.querySelector('i');
+        if (icon.classList.contains('far')) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+          this.innerHTML = '<i class="fas fa-heart"></i> Added to Favorites';
+          showNotification('Added to favorites!');
+        } else {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+          this.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+          showNotification('Removed from favorites!');
+        }
+      });
+
+      // Show notification
+      function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

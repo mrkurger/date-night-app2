@@ -334,8 +334,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         const query = filters.searchQuery.toLowerCase();
         const matchesTitle = ad.title.toLowerCase().includes(query);
         const matchesDescription = ad.description.toLowerCase().includes(query);
-        const matchesLocation = ad.location?.toLowerCase().includes(query);
-        const matchesTags = ad.tags.some(tag => tag.toLowerCase().includes(query));
+        const matchesLocation =
+          ad.location?.city?.toLowerCase().includes(query) ||
+          ad.location?.county?.toLowerCase().includes(query);
+        const matchesTags = ad.tags?.some(tag => tag.toLowerCase().includes(query));
 
         if (!matchesTitle && !matchesDescription && !matchesLocation && !matchesTags) {
           return false;

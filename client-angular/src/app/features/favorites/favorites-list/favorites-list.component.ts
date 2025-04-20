@@ -178,7 +178,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
             <img
               [src]="
                 favorite.ad.images && favorite.ad.images.length > 0
-                  ? favorite.ad.images[0].url
+                  ? favorite.ad.images[0]
                   : 'assets/images/placeholder.jpg'
               "
               [alt]="favorite.ad.title"
@@ -194,7 +194,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
               <div class="favorite-details">
                 <span class="favorite-location">
                   <mat-icon>location_on</mat-icon>
-                  {{ favorite.ad.location.city }}, {{ favorite.ad.location.county }}
+                  {{ favorite.ad.location }}
                 </span>
 
                 <span class="favorite-price">
@@ -257,7 +257,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
                   }}</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item (click)="removeFavorite(favorite.ad._id)">
+                <button
+                  mat-menu-item
+                  (click)="removeFavorite(this.getAdIdAsString(favorite.ad._id))"
+                >
                   <mat-icon>delete</mat-icon>
                   <span>Remove from Favorites</span>
                 </button>
@@ -297,7 +300,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
               mat-button
               color="accent"
               [routerLink]="['/chat']"
-              [queryParams]="{ userId: favorite.ad.advertiser._id }"
+              [queryParams]="{ userId: favorite.ad.userId }"
             >
               <mat-icon>chat</mat-icon>
               Contact Advertiser
@@ -554,7 +557,7 @@ export class FavoritesListComponent implements OnInit {
   loading = false;
   userTags: FavoriteTag[] = [];
   selectedTagFilters: string[] = [];
-  selectedFavorites: string[] = [];
+  selectedFavorites: (string | { city: string; county: string })[] = [];
 
   filterOptions: FavoriteFilterOptions = {
     sort: 'newest',
@@ -657,7 +660,9 @@ export class FavoritesListComponent implements OnInit {
 
     this.favoriteService.removeFavoritesBatch(adIds).subscribe({
       next: result => {
-        this.favorites = this.favorites.filter(favorite => !adIds.includes(favorite.ad._id));
+        this.favorites = this.favorites.filter(
+          favorite => !adIds.includes(this.getAdIdAsString(favorite.ad._id))
+        );
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
       },
@@ -669,7 +674,7 @@ export class FavoritesListComponent implements OnInit {
   }
 
   toggleNotifications(favorite: Favorite): void {
-    this.favoriteService.toggleNotifications(favorite.ad._id).subscribe({
+    this.favoriteService.toggleNotifications(this.getAdIdAsString(favorite.ad._id)).subscribe({
       next: response => {
         favorite.notificationsEnabled = response.notificationsEnabled;
         this.notificationService.success(
@@ -750,7 +755,7 @@ export class FavoritesListComponent implements OnInit {
   }
 
   updateNotes(favorite: Favorite, notes: string): void {
-    this.favoriteService.updateNotes(favorite.ad._id, notes).subscribe({
+    this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe({
       next: () => {
         favorite.notes = notes;
         this.notificationService.success('Notes updated');
@@ -763,7 +768,7 @@ export class FavoritesListComponent implements OnInit {
   }
 
   updateTags(favorite: Favorite, tags: string[]): void {
-    this.favoriteService.updateTags(favorite.ad._id, tags).subscribe({
+    this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), tags).subscribe({
       next: response => {
         favorite.tags = tags;
         this.notificationService.success('Tags updated');
@@ -819,7 +824,7 @@ export class FavoritesListComponent implements OnInit {
   }
 
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
-    this.favoriteService.updatePriority(favorite.ad._id, priority).subscribe({
+    this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
       next: response => {
         favorite.priority = priority;
         this.notificationService.success(`Priority set to ${priority}`);
@@ -882,7 +887,9 @@ export class FavoritesListComponent implements OnInit {
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
       .filter(favorite => (favorite as any).selected)
-      .map(favorite => (typeof favorite.ad === 'string' ? favorite.ad : favorite.ad._id));
+      .map(favorite =>
+        typeof favorite.ad === 'string' ? favorite.ad : this.getAdIdAsString(favorite.ad._id)
+      );
   }
 
   getPriorityClass(favorite: Favorite): string {
@@ -898,5 +905,12 @@ export class FavoritesListComponent implements OnInit {
       default:
         return 'remove';
     }
+  }
+
+  /**
+   * Convert ad ID to string regardless of its type
+   */
+  getAdIdAsString(adId: string | { city: string; county: string }): string {
+    return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

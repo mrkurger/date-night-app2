@@ -21,9 +21,10 @@ import {
 } from '../../core/services/user-preferences.service';
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 import { Subscription } from 'rxjs';
+import { Ad } from '../../core/models/ad.interface';
 
 // Mock data for demonstration
-const MOCK_ADS = [
+const MOCK_ADS: Ad[] = [
   {
     _id: '1',
     title: 'Professional Photographer',
@@ -31,9 +32,17 @@ const MOCK_ADS = [
       'Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.',
     category: 'Photography',
     price: 200,
-    location: 'New York, NY',
+    location: { city: 'New York', county: 'NY' },
     images: ['/assets/img/sample/photo1.jpg', '/assets/img/sample/photo2.jpg'],
-    advertiser: 'John Smith',
+    media: [
+      { type: 'image', url: '/assets/img/sample/photo1.jpg' },
+      { type: 'image', url: '/assets/img/sample/photo2.jpg' },
+    ],
+    advertiser: {
+      _id: 'user123',
+      username: 'John Smith',
+    },
+    userId: 'user123',
     isActive: true,
     isFeatured: true,
     isTrending: false,
@@ -51,9 +60,23 @@ const MOCK_ADS = [
       'Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.',
     category: 'Beauty',
     price: 150,
-    location: 'Los Angeles, CA',
-    images: ['/assets/img/sample/makeup1.jpg', '/assets/img/sample/makeup2.jpg'],
-    advertiser: 'Sarah Johnson',
+    location: {
+      city: 'Los Angeles',
+      county: 'CA',
+    },
+    images: [
+      { url: '/assets/img/sample/makeup1.jpg', type: 'image' },
+      { url: '/assets/img/sample/makeup2.jpg', type: 'image' },
+    ],
+    media: [
+      { type: 'image', url: '/assets/img/sample/makeup1.jpg' },
+      { type: 'image', url: '/assets/img/sample/makeup2.jpg' },
+    ],
+    advertiser: {
+      _id: 'user456',
+      username: 'Sarah Johnson',
+    },
+    userId: 'user456',
     isActive: true,
     isFeatured: false,
     isTrending: true,
@@ -71,9 +94,23 @@ const MOCK_ADS = [
       'Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&B.',
     category: 'Music',
     price: 800,
-    location: 'Chicago, IL',
-    images: ['/assets/img/sample/band1.jpg', '/assets/img/sample/band2.jpg'],
-    advertiser: 'The Harmonics',
+    location: {
+      city: 'Chicago',
+      county: 'IL',
+    },
+    images: [
+      { url: '/assets/img/sample/band1.jpg', type: 'image' },
+      { url: '/assets/img/sample/band2.jpg', type: 'image' },
+    ],
+    media: [
+      { type: 'image', url: '/assets/img/sample/band1.jpg' },
+      { type: 'image', url: '/assets/img/sample/band2.jpg' },
+    ],
+    advertiser: {
+      _id: 'user789',
+      username: 'The Harmonics',
+    },
+    userId: 'user789',
     isActive: true,
     isFeatured: false,
     isTrending: false,
@@ -96,9 +133,23 @@ const MOCK_ADS = [
       'Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.',
     category: 'Events',
     price: 500,
-    location: 'Miami, FL',
-    images: ['/assets/img/sample/event1.jpg', '/assets/img/sample/event2.jpg'],
-    advertiser: 'Elegant Events',
+    location: {
+      city: 'Miami',
+      county: 'FL',
+    },
+    images: [
+      { url: '/assets/img/sample/event1.jpg', type: 'image' },
+      { url: '/assets/img/sample/event2.jpg', type: 'image' },
+    ],
+    media: [
+      { type: 'image', url: '/assets/img/sample/event1.jpg' },
+      { type: 'image', url: '/assets/img/sample/event2.jpg' },
+    ],
+    advertiser: {
+      _id: 'user101',
+      username: 'Elegant Events',
+    },
+    userId: 'user101',
     isActive: true,
     isFeatured: true,
     isTrending: true,

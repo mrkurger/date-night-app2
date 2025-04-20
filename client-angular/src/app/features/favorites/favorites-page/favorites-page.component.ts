@@ -9,7 +9,7 @@
 // ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -65,6 +65,7 @@ interface FilterPreset {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -400,7 +401,7 @@ interface FilterPreset {
             <img
               [src]="
                 favorite.ad.images && favorite.ad.images.length > 0
-                  ? favorite.ad.images[0].url
+                  ? favorite.ad.images[0]
                   : 'assets/images/placeholder.jpg'
               "
               [alt]="favorite.ad.title"
@@ -416,7 +417,7 @@ interface FilterPreset {
               <div class="favorite-details">
                 <span class="favorite-location">
                   <mat-icon>location_on</mat-icon>
-                  {{ favorite.ad.location?.city }}, {{ favorite.ad.location?.county }}
+                  {{ favorite.ad.location }}
                 </span>
 
                 <span class="favorite-price" *ngIf="favorite.ad.price">
@@ -444,7 +445,7 @@ interface FilterPreset {
 
             <div class="favorite-actions">
               <app-favorite-button
-                [adId]="favorite.ad._id"
+                [adId]="this.getAdIdAsString(favorite.ad._id)"
                 (favoriteChanged)="onFavoriteRemoved($event, favorite)"
               ></app-favorite-button>
 
@@ -479,7 +480,7 @@ interface FilterPreset {
                   }}</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item (click)="removeFavorite(favorite.ad._id)">
+                <button mat-menu-item (click)="removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))">
                   <mat-icon>delete</mat-icon>
                   <span>Remove from Favorites</span>
                 </button>
@@ -519,7 +520,7 @@ interface FilterPreset {
               mat-button
               color="accent"
               [routerLink]="['/chat']"
-              [queryParams]="{ userId: favorite.ad.advertiser._id }"
+              [queryParams]="{ userId: favorite.ad.userId }"
             >
               <mat-icon>chat</mat-icon>
               Contact Advertiser
@@ -1059,8 +1060,8 @@ export class FavoritesPageComponent implements OnInit {
     this.dialogService
       .openNotesDialog({
         title: 'Save Filter Preset',
+        notes: '',
         placeholder: 'Enter a name for this filter preset',
-        existingNotes: '',
       })
       .subscribe(name => {
         if (name) {
@@ -1245,7 +1246,7 @@ export class FavoritesPageComponent implements OnInit {
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
       .filter(favorite => favorite.selected)
-      .map(favorite => favorite.ad._id);
+      .map(favorite => this.getAdIdAsString(favorite.ad._id));
   }
 
   /**
@@ -1254,7 +1255,7 @@ export class FavoritesPageComponent implements OnInit {
   removeFavorite(adId: string): void {
     this.favoriteService.removeFavorite(adId).subscribe(
       () => {
-        this.favorites = this.favorites.filter(favorite => favorite.ad._id !== adId);
+        this.favorites = this.favorites.filter(favorite => this.getAdIdAsString(favorite.ad._id) !== adId);
         this.notificationService.success('Removed from favorites');
       },
       error => {
@@ -1274,7 +1275,7 @@ export class FavoritesPageComponent implements OnInit {
       result => {
         // Remove the favorites from the local array
         this.favorites = this.favorites.filter(
-          favorite => !this.selectedFavorites.includes(favorite.ad._id)
+          favorite => !this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))
         );
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
@@ -1299,7 +1300,7 @@ export class FavoritesPageComponent implements OnInit {
       })
       .subscribe(notes => {
         if (notes !== undefined) {
-          this.favoriteService.updateNotes(favorite.ad._id, notes).subscribe(
+          this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe(
             () => {
               // Update local state
               favorite.notes = notes;
@@ -1331,7 +1332,7 @@ export class FavoritesPageComponent implements OnInit {
         })
         .subscribe(updatedTags => {
           if (updatedTags) {
-            this.favoriteService.updateTags(favorite.ad._id, updatedTags).subscribe(
+            this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), updatedTags).subscribe(
               () => {
                 // Update local state
                 favorite.tags = updatedTags;
@@ -1383,7 +1384,7 @@ export class FavoritesPageComponent implements OnInit {
               .then(() => {
                 // Update local state
                 this.favorites.forEach(favorite => {
-                  if (this.selectedFavorites.includes(favorite.ad._id)) {
+                  if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
                     const existingTags = favorite.tags || [];
                     favorite.tags = [...new Set([...existingTags, ...newTags])];
                   }
@@ -1405,7 +1406,7 @@ export class FavoritesPageComponent implements OnInit {
    * Update priority for a single favorite
    */
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
-    this.favoriteService.updatePriority(favorite.ad._id, priority).subscribe(
+    this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe(
       () => {
         // Update local state
         favorite.priority = priority;
@@ -1432,7 +1433,7 @@ export class FavoritesPageComponent implements OnInit {
       .then(() => {
         // Update local state
         this.favorites.forEach(favorite => {
-          if (this.selectedFavorites.includes(favorite.ad._id)) {
+          if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
             favorite.priority = priority;
           }
         });
@@ -1450,7 +1451,7 @@ export class FavoritesPageComponent implements OnInit {
    * Toggle notifications for a favorite
    */
   toggleNotifications(favorite: Favorite): void {
-    this.favoriteService.toggleNotifications(favorite.ad._id).subscribe(
+    this.favoriteService.toggleNotifications(this.getAdIdAsString(favorite.ad._id)).subscribe(
       () => {
         // Update local state
         favorite.notificationsEnabled = !favorite.notificationsEnabled;
@@ -1493,5 +1494,12 @@ export class FavoritesPageComponent implements OnInit {
       default:
         return 'remove_circle_outline';
     }
+  }
+
+  /**
+   * Convert ad ID to string regardless of its type
+   */
+  this.getAdIdAsString(adId: string | { city: string; county: string }): string {
+    return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

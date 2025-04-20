@@ -399,10 +399,28 @@ export class NetflixViewComponent implements OnInit {
       return '/assets/images/default-profile.jpg';
     }
 
-    if (ad.images && ad.images.length > 0) {
-      return ad.images[0];
+    if (ad.images && Array.isArray(ad.images) && ad.images.length > 0) {
+      // Handle both string[] and object[] formats
+      if (typeof ad.images[0] === 'string') {
+        return ad.images[0] as string;
+      } else if (typeof ad.images[0] === 'object' && 'url' in ad.images[0]) {
+        return (ad.images[0] as { url: string }).url;
+      }
     }
     return '/assets/images/default-profile.jpg';
+  }
+
+  /**
+   * Get a formatted location string from an ad
+   * @param ad The ad object
+   * @returns A formatted location string
+   */
+  getLocationString(ad: Ad): string {
+    if (!ad || !ad.location) {
+      return '';
+    }
+
+    return `${ad.location.city}, ${ad.location.county}`;
   }
 
   /**
@@ -542,5 +560,12 @@ export class NetflixViewComponent implements OnInit {
 
     // Apply the reset filters
     this.applyFilters();
+  }
+
+  /**
+   * Convert ad ID to string regardless of its type
+   */
+  getAdIdAsString(adId: string | { city: string; county: string }): string {
+    return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

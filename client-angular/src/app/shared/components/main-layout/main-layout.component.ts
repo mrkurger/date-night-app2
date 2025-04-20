@@ -87,11 +87,19 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   getMediaUrl(ad: Ad): string {
-    if (ad.media && ad.media.length > 0) {
-      return ad.media[0].url;
+    if (ad.media && Array.isArray(ad.media) && ad.media.length > 0) {
+      if ('url' in ad.media[0]) {
+        return ad.media[0].url;
+      }
     }
-    if (ad.images && ad.images.length > 0) {
-      return ad.images[0];
+
+    if (ad.images && Array.isArray(ad.images) && ad.images.length > 0) {
+      // Handle both string[] and object[] formats
+      if (typeof ad.images[0] === 'string') {
+        return ad.images[0] as string;
+      } else if (typeof ad.images[0] === 'object' && 'url' in ad.images[0]) {
+        return (ad.images[0] as { url: string }).url;
+      }
     }
     return '/assets/images/default-profile.jpg';
   }

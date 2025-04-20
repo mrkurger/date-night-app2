@@ -1,5 +1,6 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@use 'sass:color';
+@use '../../../styles/variables' as vars;
+@use '../../../styles/mixins' as mix;
 
 /* Tinder Component Styles */
 :host {
@@ -11,7 +12,7 @@
 .tinder-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: $spacing-4;
+  padding: vars.$spacing-4;
   position: relative;
   z-index: 1; // Ensure it stays below the navbar
 }
@@ -21,17 +22,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-6;
-  padding: $spacing-2 0;
+  margin-bottom: vars.$spacing-6;
+  padding: vars.$spacing-2 0;
 }
 
 // Title with gradient
 .tinder-title {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
-  color: $neutral-900;
+  font-size: vars.$font-size-3xl;
+  font-weight: vars.$font-weight-bold;
+  color: vars.$neutral-900;
   margin: 0;
-  background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+  background: linear-gradient(90deg, vars.$primary 0%, vars.$secondary 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -40,34 +41,34 @@
 
 // Filter button
 .filter-button {
-  background-color: $neutral-100;
+  background-color: vars.$neutral-100;
   border: none;
-  border-radius: $border-radius-md;
-  padding: $spacing-2 $spacing-4;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-sm;
-  color: $neutral-800;
-  box-shadow: $shadow-sm;
+  border-radius: vars.$border-radius-md;
+  padding: vars.$spacing-2 vars.$spacing-4;
+  font-weight: vars.$font-weight-medium;
+  font-size: vars.$font-size-sm;
+  color: vars.$neutral-800;
+  box-shadow: vars.$shadow-sm;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: $spacing-2;
+  gap: vars.$spacing-2;
   cursor: pointer;
 
   &:hover {
-    box-shadow: $shadow-lg;
+    box-shadow: vars.$shadow-lg;
     transform: translateY(-3px);
-    background-color: $neutral-50;
+    background-color: vars.$neutral-50;
   }
 
   &:active {
     transform: translateY(-1px);
-    box-shadow: $shadow-sm;
+    box-shadow: vars.$shadow-sm;
   }
 
   i {
-    color: $primary;
-    font-size: $font-size-base;
+    color: vars.$primary;
+    font-size: vars.$font-size-base;
   }
 }
 
@@ -81,9 +82,9 @@
   text-align: center;
 
   .loading-text {
-    margin-top: $spacing-4;
-    color: $neutral-600;
-    font-weight: $font-weight-medium;
+    margin-top: vars.$spacing-4;
+    color: vars.$neutral-600;
+    font-weight: vars.$font-weight-medium;
   }
 }
 
@@ -95,37 +96,37 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: $spacing-8;
+  padding: vars.$spacing-8;
 
   .error-icon {
-    font-size: $font-size-4xl;
-    color: $danger;
-    margin-bottom: $spacing-4;
+    font-size: vars.$font-size-4xl;
+    color: vars.$danger;
+    margin-bottom: vars.$spacing-4;
   }
 
   .error-text {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-medium;
-    color: $neutral-900;
-    margin-bottom: $spacing-6;
+    font-size: vars.$font-size-lg;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$neutral-900;
+    margin-bottom: vars.$spacing-6;
   }
 
   .retry-button {
-    padding: $spacing-2 $spacing-6;
-    background-color: $primary;
-    color: $neutral-100;
+    padding: vars.$spacing-2 vars.$spacing-6;
+    background-color: vars.$primary;
+    color: vars.$neutral-100;
     border: none;
-    border-radius: $border-radius-md;
-    font-weight: $font-weight-medium;
+    border-radius: vars.$border-radius-md;
+    font-weight: vars.$font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: darken($primary, 10%);
+      background-color: color.scale(vars.vars.$primary, $lightness: -10%);
     }
 
     i {
-      margin-right: $spacing-2;
+      margin-right: vars.$spacing-2;
     }
   }
 }
@@ -138,23 +139,23 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: $spacing-8;
+  padding: vars.$spacing-8;
 
   .empty-icon {
-    font-size: $font-size-4xl;
-    color: $neutral-500;
-    margin-bottom: $spacing-4;
+    font-size: vars.$font-size-4xl;
+    color: vars.$neutral-500;
+    margin-bottom: vars.$spacing-4;
   }
 
   .empty-text {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-medium;
-    color: $neutral-900;
-    margin-bottom: $spacing-2;
+    font-size: vars.$font-size-lg;
+    font-weight: vars.$font-weight-medium;
+    color: vars.$neutral-900;
+    margin-bottom: vars.$spacing-2;
   }
 
   .empty-subtext {
-    color: $neutral-600;
+    color: vars.$neutral-600;
   }
 }
 
@@ -180,27 +181,27 @@
 
 // Modal styles
 .modal-content {
-  border-radius: $border-radius-lg;
+  border-radius: vars.$border-radius-lg;
   border: none;
-  box-shadow: $shadow-lg;
+  box-shadow: vars.$shadow-lg;
 }
 
 .modal-header {
-  border-bottom: 1px solid rgba($neutral-900, 0.05);
+  border-bottom: 1px solid rgba(vars.$neutral-900, 0.05);
 
   .modal-title {
-    font-weight: $font-weight-semibold;
-    color: $neutral-900;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$neutral-900;
 
     i {
-      margin-right: $spacing-2;
-      color: $primary;
+      margin-right: vars.$spacing-2;
+      color: vars.$primary;
     }
   }
 }
 
 .modal-footer {
-  border-top: 1px solid rgba($neutral-900, 0.05);
+  border-top: 1px solid rgba(vars.$neutral-900, 0.05);
 }
 
 // Responsive adjustments
@@ -210,7 +211,7 @@
   }
 
   .tinder-title {
-    font-size: $font-size-2xl;
+    font-size: vars.$font-size-2xl;
   }
 }
 
@@ -220,6 +221,6 @@
   }
 
   .tinder-container {
-    padding: $spacing-2;
+    padding: vars.$spacing-2;
   }
 }

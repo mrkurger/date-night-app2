@@ -49,6 +49,8 @@ export interface Favorite {
   priority: 'low' | 'normal' | 'high';
   createdAt: string;
   updatedAt: string;
+  selected?: boolean; // Added for UI selection state
+  selected?: boolean; // Added for UI selection state
 }
 
 /**

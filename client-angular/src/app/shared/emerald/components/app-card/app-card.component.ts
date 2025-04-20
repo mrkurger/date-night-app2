@@ -66,15 +66,25 @@ export class AppCardComponent implements OnInit {
     }
 
     // Check for images array
-    if (this.ad.images && this.ad.images.length > 0) {
-      return this.ad.images[0];
+    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
+      // Handle both string[] and object[] formats
+      if (typeof this.ad.images[0] === 'string') {
+        return this.ad.images[0] as string;
+      } else if (typeof this.ad.images[0] === 'object' && 'url' in this.ad.images[0]) {
+        return (this.ad.images[0] as { url: string }).url;
+      }
     }
 
     // Check for media array
-    if (this.ad.media && this.ad.media.length > 0) {
-      const image = this.ad.media.find(m => m.type === 'image');
-      if (image) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
+      // Find an image type media
+      const image = this.ad.media.find(m => 'type' in m && m.type === 'image');
+      if (image && 'url' in image) {
         return image.url;
+      }
+      // If no image type found, just use the first media
+      if ('url' in this.ad.media[0]) {
+        return this.ad.media[0].url;
       }
     }
 
@@ -93,19 +103,29 @@ export class AppCardComponent implements OnInit {
     // Check for media array
     if (
       this.ad.media &&
+      Array.isArray(this.ad.media) &&
       this.ad.media.length > 0 &&
       this.currentMediaIndex < this.ad.media.length
     ) {
-      return this.ad.media[this.currentMediaIndex].url;
+      const media = this.ad.media[this.currentMediaIndex];
+      if ('url' in media) {
+        return media.url;
+      }
     }
 
     // Check for images array
     if (
       this.ad.images &&
+      Array.isArray(this.ad.images) &&
       this.ad.images.length > 0 &&
       this.currentMediaIndex < this.ad.images.length
     ) {
-      return this.ad.images[this.currentMediaIndex];
+      const image = this.ad.images[this.currentMediaIndex];
+      if (typeof image === 'string') {
+        return image;
+      } else if (typeof image === 'object' && 'url' in image) {
+        return image.url;
+      }
     }
 
     return '/assets/img/default-profile.jpg';
@@ -122,10 +142,10 @@ export class AppCardComponent implements OnInit {
       return;
     }
 
-    if (this.ad.media && this.ad.media.length > 0) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
       this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.media.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
-    } else if (this.ad.images && this.ad.images.length > 0) {
+    } else if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
       this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.images.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
     }
@@ -142,11 +162,11 @@ export class AppCardComponent implements OnInit {
       return;
     }
 
-    if (this.ad.media && this.ad.media.length > 0) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
       this.currentMediaIndex =
         (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
-    } else if (this.ad.images && this.ad.images.length > 0) {
+    } else if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
       this.currentMediaIndex =
         (this.currentMediaIndex - 1 + this.ad.images.length) % this.ad.images.length;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
@@ -162,11 +182,11 @@ export class AppCardComponent implements OnInit {
       return 0;
     }
 
-    if (this.ad.media && this.ad.media.length > 0) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
       return this.ad.media.length;
     }
 
-    if (this.ad.images && this.ad.images.length > 0) {
+    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
       return this.ad.images.length;
     }
 
@@ -211,12 +231,18 @@ export class AppCardComponent implements OnInit {
    */
   getTruncatedDescription(maxLength = 120): string {
     // Check if ad is defined
-    if (!this.ad || !this.ad.description) {
+    if (!this.ad) {
       return '';
     }
 
-    if (this.ad.description.length <= maxLength) {
-      return this.ad.description;
+    // Check if description exists and is a string
+    const description = this.ad.description;
+    if (!description || typeof description !== 'string') {
+      return '';
+    }
+
+    if (description.length <= maxLength) {
+      return description;
     }
 
     // Special case for test expectations
@@ -227,12 +253,12 @@ export class AppCardComponent implements OnInit {
     }
 
     // For other cases, truncate at word boundary
-    const truncated = this.ad.description.substring(0, maxLength);
+    const truncated = description.substring(0, maxLength);
     const lastSpaceIndex = truncated.lastIndexOf(' ');
 
     // If we found a space, truncate at that position, otherwise use the full length
     const finalLength = lastSpaceIndex > 0 ? lastSpaceIndex : maxLength;
-    return this.ad.description.substring(0, finalLength) + '...';
+    return description.substring(0, finalLength) + '...';
   }
 
   /**
@@ -241,7 +267,9 @@ export class AppCardComponent implements OnInit {
   onViewDetails(event?: Event): void {
     if (event) event.stopPropagation();
     if (this.ad && this.ad._id) {
-      this.viewDetails.emit(this.ad._id);
+      // Convert complex _id to string if needed
+      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      this.viewDetails.emit(adId);
     }
   }
 
@@ -251,7 +279,9 @@ export class AppCardComponent implements OnInit {
   onLike(event: Event): void {
     event.stopPropagation();
     if (this.ad && this.ad._id) {
-      this.like.emit(this.ad._id);
+      // Convert complex _id to string if needed
+      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      this.like.emit(adId);
     }
   }
 
@@ -261,7 +291,9 @@ export class AppCardComponent implements OnInit {
   onChat(event: Event): void {
     event.stopPropagation();
     if (this.ad && this.ad._id) {
-      this.chat.emit(this.ad._id);
+      // Convert complex _id to string if needed
+      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      this.chat.emit(adId);
     }
   }
 
@@ -271,7 +303,9 @@ export class AppCardComponent implements OnInit {
   onShare(event: Event): void {
     event.stopPropagation();
     if (this.ad && this.ad._id) {
-      this.share.emit(this.ad._id);
+      // Convert complex _id to string if needed
+      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      this.share.emit(adId);
     }
   }
 
@@ -281,7 +315,9 @@ export class AppCardComponent implements OnInit {
   onSwipe(direction: 'left' | 'right', event?: Event): void {
     if (event) event.stopPropagation();
     if (this.ad && this.ad._id) {
-      this.swiped.emit({ direction, adId: this.ad._id });
+      // Convert complex _id to string if needed
+      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      this.swiped.emit({ direction, adId });
     }
   }
 }

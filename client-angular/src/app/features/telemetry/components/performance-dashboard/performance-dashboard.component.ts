@@ -130,7 +130,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-value">
-                {{ (performanceStats$ | async)?.avgDuration | number: '1.0-0' || 0 }} ms
+                {{ ((performanceStats$ | async)?.avgDuration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">Average Duration</div>
             </mat-card-content>
@@ -139,7 +139,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-value">
-                {{ (performanceStats$ | async)?.p95Duration | number: '1.0-0' || 0 }} ms
+                {{ ((performanceStats$ | async)?.p95Duration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">95th Percentile</div>
             </mat-card-content>
@@ -148,7 +148,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-value">
-                {{ (performanceStats$ | async)?.maxDuration | number: '1.0-0' || 0 }} ms
+                {{ ((performanceStats$ | async)?.maxDuration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">Max Duration</div>
             </mat-card-content>
@@ -196,7 +196,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
               <ng-container matColumnDef="ttfb">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>TTFB (ms)</th>
-                <td mat-cell *matCellDef="let item">{{ item.ttfb | number: '1.0-0' || '-' }}</td>
+                <td mat-cell *matCellDef="let item">{{ (item.ttfb | number: '1.0-0') || '-' }}</td>
               </ng-container>
 
               <ng-container matColumnDef="responseSize">

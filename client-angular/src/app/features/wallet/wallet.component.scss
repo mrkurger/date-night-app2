@@ -1,4 +1,4 @@
-@import '../../../app/core/design/design-tokens.scss';
+@use '../../../app/core/design/design-tokens.scss' as tokens;
 
 .wallet-container {
   max-width: 1200px;

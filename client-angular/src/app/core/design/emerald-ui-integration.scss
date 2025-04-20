@@ -1,0 +1,343 @@
+/**
+ * Emerald UI Integration Stylesheet
+ * 
+ * This file integrates the emerald-ui library with the DateNight.io design system.
+ * It overrides emerald-ui default styles to match our design tokens and styling guidelines.
+ */
+
+@use 'sass:map';
+@use 'emerald-tokens' as tokens;
+
+// Import emerald-ui base styles
+@import 'node_modules/emerald-ui/lib/styles/emerald-ui.min.css';
+
+// Override emerald-ui variables with our design tokens
+:root {
+  // Colors
+  --eui-primary: #{tokens.$color-primary};
+  --eui-primary-light: #{tokens.$color-primary-light};
+  --eui-primary-dark: #{tokens.$color-primary-dark};
+
+  --eui-secondary: #{tokens.$color-secondary};
+  --eui-secondary-light: #{tokens.$color-secondary-light};
+  --eui-secondary-dark: #{tokens.$color-secondary-dark};
+
+  // Neutral colors
+  --eui-white: #{tokens.$color-white};
+  --eui-light-gray: #{tokens.$color-light-gray-1};
+  --eui-medium-gray: #{tokens.$color-medium-gray-1};
+  --eui-dark-gray: #{tokens.$color-dark-gray-2};
+
+  // Semantic colors
+  --eui-success: #{tokens.$color-success};
+  --eui-warning: #{tokens.$color-warning};
+  --eui-error: #{tokens.$color-error};
+  --eui-info: #{tokens.$color-info};
+
+  // Typography
+  --eui-font-family: #{tokens.$font-family-base};
+  --eui-font-family-heading: #{tokens.$font-family-heading};
+
+  // Spacing
+  --eui-spacing-xs: #{tokens.$spacing-1};
+  --eui-spacing-sm: #{tokens.$spacing-2};
+  --eui-spacing-md: #{tokens.$spacing-4};
+  --eui-spacing-lg: #{tokens.$spacing-6};
+  --eui-spacing-xl: #{tokens.$spacing-8};
+
+  // Border radius
+  --eui-border-radius-sm: #{tokens.$border-radius-sm};
+  --eui-border-radius-md: #{tokens.$border-radius-md};
+  --eui-border-radius-lg: #{tokens.$border-radius-lg};
+
+  // Shadows
+  --eui-shadow-sm: #{tokens.$shadow-sm};
+  --eui-shadow-md: #{tokens.$shadow-md};
+  --eui-shadow-lg: #{tokens.$shadow-lg};
+
+  // Transitions
+  --eui-transition-fast: #{tokens.$transition-fast};
+  --eui-transition-normal: #{tokens.$transition-normal};
+  --eui-transition-slow: #{tokens.$transition-slow};
+}
+
+// Button overrides
+.eui-btn {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-weight-semibold;
+  border-radius: tokens.$border-radius-md;
+  transition: all tokens.$transition-normal tokens.$transition-timing-default;
+
+  &.eui-btn-primary {
+    background-color: tokens.$color-primary;
+    border-color: tokens.$color-primary;
+
+    &:hover,
+    &:focus {
+      background-color: tokens.$color-primary-dark;
+      border-color: tokens.$color-primary-dark;
+    }
+  }
+
+  &.eui-btn-secondary {
+    background-color: tokens.$color-secondary;
+    border-color: tokens.$color-secondary;
+
+    &:hover,
+    &:focus {
+      background-color: tokens.$color-secondary-dark;
+      border-color: tokens.$color-secondary-dark;
+    }
+  }
+
+  &.eui-btn-outline-primary {
+    color: tokens.$color-primary;
+    border-color: tokens.$color-primary;
+
+    &:hover,
+    &:focus {
+      background-color: tokens.$color-primary;
+      color: tokens.$color-white;
+    }
+  }
+
+  &.eui-btn-sm {
+    height: tokens.$button-height-sm;
+    padding: 0 tokens.$button-padding-sm;
+    font-size: tokens.$font-size-sm;
+  }
+
+  &.eui-btn-md {
+    height: tokens.$button-height-md;
+    padding: 0 tokens.$button-padding-md;
+    font-size: tokens.$font-size-base;
+  }
+
+  &.eui-btn-lg {
+    height: tokens.$button-height-lg;
+    padding: 0 tokens.$button-padding-lg;
+    font-size: tokens.$font-size-lg;
+  }
+}
+
+// Card overrides
+.eui-card {
+  border-radius: tokens.$border-radius-md;
+  box-shadow: tokens.$shadow-sm;
+  border: none;
+
+  .eui-card-header {
+    font-family: tokens.$font-family-heading;
+    font-weight: tokens.$font-weight-semibold;
+    padding: tokens.$spacing-4;
+    border-bottom: 1px solid tokens.$color-light-gray-2;
+  }
+
+  .eui-card-body {
+    padding: tokens.$spacing-4;
+  }
+
+  .eui-card-footer {
+    padding: tokens.$spacing-4;
+    border-top: 1px solid tokens.$color-light-gray-2;
+  }
+}
+
+// Form controls
+.eui-form-control {
+  font-family: tokens.$font-family-base;
+  border-radius: tokens.$border-radius-md;
+  border: 1px solid tokens.$color-medium-gray-1;
+  padding: tokens.$spacing-3;
+  height: tokens.$input-height-md;
+
+  &:focus {
+    border-color: tokens.$color-primary;
+    box-shadow: tokens.$shadow-focus;
+  }
+}
+
+// Dropdown
+.eui-dropdown-menu {
+  border-radius: tokens.$border-radius-md;
+  box-shadow: tokens.$shadow-md;
+  border: none;
+
+  .eui-dropdown-item {
+    font-family: tokens.$font-family-base;
+    padding: tokens.$spacing-2 tokens.$spacing-4;
+
+    &:hover,
+    &:focus {
+      background-color: tokens.$color-light-gray-1;
+      color: tokens.$color-primary;
+    }
+
+    &.active {
+      background-color: tokens.$color-primary;
+      color: tokens.$color-white;
+    }
+  }
+}
+
+// Modal
+.eui-modal {
+  .eui-modal-content {
+    border-radius: tokens.$border-radius-lg;
+    border: none;
+    box-shadow: tokens.$shadow-lg;
+  }
+
+  .eui-modal-header {
+    border-bottom: 1px solid tokens.$color-light-gray-2;
+    padding: tokens.$spacing-4;
+
+    .eui-modal-title {
+      font-family: tokens.$font-family-heading;
+      font-weight: tokens.$font-weight-semibold;
+    }
+  }
+
+  .eui-modal-body {
+    padding: tokens.$spacing-4;
+  }
+
+  .eui-modal-footer {
+    border-top: 1px solid tokens.$color-light-gray-2;
+    padding: tokens.$spacing-4;
+  }
+}
+
+// Alerts
+.eui-alert {
+  border-radius: tokens.$border-radius-md;
+  padding: tokens.$spacing-3 tokens.$spacing-4;
+
+  &.eui-alert-primary {
+    background-color: rgba(tokens.$color-primary, 0.1);
+    color: tokens.$color-primary-dark;
+  }
+
+  &.eui-alert-success {
+    background-color: rgba(tokens.$color-success, 0.1);
+    color: tokens.$color-success;
+  }
+
+  &.eui-alert-warning {
+    background-color: rgba(tokens.$color-warning, 0.1);
+    color: tokens.$color-warning;
+  }
+
+  &.eui-alert-danger {
+    background-color: rgba(tokens.$color-error, 0.1);
+    color: tokens.$color-error;
+  }
+
+  &.eui-alert-info {
+    background-color: rgba(tokens.$color-info, 0.1);
+    color: tokens.$color-info;
+  }
+}
+
+// Badges
+.eui-badge {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-weight-medium;
+  border-radius: tokens.$border-radius-full;
+
+  &.eui-badge-primary {
+    background-color: tokens.$color-primary;
+  }
+
+  &.eui-badge-secondary {
+    background-color: tokens.$color-secondary;
+  }
+
+  &.eui-badge-success {
+    background-color: tokens.$color-success;
+  }
+
+  &.eui-badge-warning {
+    background-color: tokens.$color-warning;
+  }
+
+  &.eui-badge-danger {
+    background-color: tokens.$color-error;
+  }
+
+  &.eui-badge-info {
+    background-color: tokens.$color-info;
+  }
+}
+
+// Tables
+.eui-table {
+  font-family: tokens.$font-family-base;
+
+  th {
+    font-weight: tokens.$font-weight-semibold;
+    border-bottom: 2px solid tokens.$color-light-gray-2;
+  }
+
+  td {
+    border-top: 1px solid tokens.$color-light-gray-2;
+  }
+
+  &.eui-table-striped tbody tr:nth-of-type(odd) {
+    background-color: tokens.$color-light-gray-1;
+  }
+
+  &.eui-table-hover tbody tr:hover {
+    background-color: rgba(tokens.$color-primary, 0.05);
+  }
+}
+
+// Pagination
+.eui-pagination {
+  .eui-page-item {
+    .eui-page-link {
+      border-radius: tokens.$border-radius-md;
+      color: tokens.$color-dark-gray-2;
+
+      &:hover {
+        background-color: tokens.$color-light-gray-1;
+        color: tokens.$color-primary;
+      }
+    }
+
+    &.active .eui-page-link {
+      background-color: tokens.$color-primary;
+      border-color: tokens.$color-primary;
+    }
+  }
+}
+
+// Progress bars
+.eui-progress {
+  border-radius: tokens.$border-radius-full;
+  height: 8px;
+
+  .eui-progress-bar {
+    background-color: tokens.$color-primary;
+  }
+}
+
+// Tooltips
+.eui-tooltip {
+  font-family: tokens.$font-family-base;
+  font-size: tokens.$font-size-sm;
+  border-radius: tokens.$border-radius-md;
+}
+
+// Popovers
+.eui-popover {
+  border-radius: tokens.$border-radius-md;
+  border: none;
+  box-shadow: tokens.$shadow-md;
+
+  .eui-popover-header {
+    font-family: tokens.$font-family-heading;
+    font-weight: tokens.$font-weight-semibold;
+    border-bottom: 1px solid tokens.$color-light-gray-2;
+  }
+}

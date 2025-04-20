@@ -89,8 +89,20 @@ export class ReviewsPageComponent implements OnInit {
       )
       .subscribe(ad => {
         if (ad) {
-          this.adTitle = ad.title;
-          this.adImage = ad.images && ad.images.length > 0 ? ad.images[0] : '';
+          this.adTitle = ad.title || '';
+
+          // Handle images safely
+          if (ad.images && Array.isArray(ad.images) && ad.images.length > 0) {
+            if (typeof ad.images[0] === 'string') {
+              this.adImage = ad.images[0];
+            } else if (typeof ad.images[0] === 'object' && 'url' in ad.images[0]) {
+              this.adImage = (ad.images[0] as { url: string }).url;
+            } else {
+              this.adImage = '';
+            }
+          } else {
+            this.adImage = '';
+          }
         }
       });
   }

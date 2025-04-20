@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Favorites</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li class="active">
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="container">
+          <div class="favorites-header">
+            <h1>My Favorites</h1>
+            <div class="favorites-actions">
+              <button class="eui-btn eui-btn-primary" id="batch-actions-btn" disabled>
+                Batch Actions (0)
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty state (shown when no favorites) -->
+          <div class="empty-state" id="empty-favorites" style="display: none">
+            <div class="eui-card">
+              <div class="eui-card-body text-center">
+                <div class="empty-icon">
+                  <i class="far fa-heart"></i>
+                </div>
+                <h2>No Favorites Yet</h2>
+                <p>Browse experiences and click the heart icon to add them to your favorites.</p>
+                <a href="netflix-view.html" class="eui-btn eui-btn-primary">Browse Experiences</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Favorites list -->
+          <div class="favorites-list">
+            <!-- Favorite Item 1 -->
+            <div class="eui-card favorite-item">
+              <div class="favorite-checkbox">
+                <input type="checkbox" class="favorite-select" onchange="updateBatchActions()" />
+              </div>
+              <div class="favorite-content">
+                <div class="favorite-image">
+                  <img
+                    src="https://via.placeholder.com/150x150?text=Profile+1"
+                    alt="Professional Massage"
+                  />
+                </div>
+                <div class="favorite-details">
+                  <div class="favorite-header">
+                    <h3>Professional Massage</h3>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="favorite-meta">
+                    <div class="meta-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Oslo, Norway</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-tag"></i>
+                      <span>1500 NOK</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-calendar-alt"></i>
+                      <span>Added 3 days ago</span>
+                    </div>
+                  </div>
+                  <div class="favorite-rating">
+                    <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <span>4.5 (24 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="favorite-notes">
+                    <p>
+                      <i class="fas fa-sticky-note"></i> Great massage, remember to book in advance!
+                    </p>
+                  </div>
+                </div>
+                <div class="favorite-actions">
+                  <a href="ad-detail.html?id=1" class="eui-btn eui-btn-primary eui-btn-sm"
+                    >View Details</a
+                  >
+                  <button class="eui-btn eui-btn-outline-primary eui-btn-sm edit-notes-btn">
+                    <i class="fas fa-edit"></i> Edit Notes
+                  </button>
+                  <button class="eui-btn eui-btn-outline-danger eui-btn-sm remove-favorite-btn">
+                    <i class="fas fa-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Favorite Item 2 -->
+            <div class="eui-card favorite-item">
+              <div class="favorite-checkbox">
+                <input type="checkbox" class="favorite-select" onchange="updateBatchActions()" />
+              </div>
+              <div class="favorite-content">
+                <div class="favorite-image">
+                  <img
+                    src="https://via.placeholder.com/150x150?text=Profile+3"
+                    alt="Exotic Dance"
+                  />
+                </div>
+                <div class="favorite-details">
+                  <div class="favorite-header">
+                    <h3>Exotic Dance</h3>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="favorite-meta">
+                    <div class="meta-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Copenhagen, Denmark</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-tag"></i>
+                      <span>2000 DKK</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-calendar-alt"></i>
+                      <span>Added 1 week ago</span>
+                    </div>
+                  </div>
+                  <div class="favorite-rating">
+                    <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <span>5.0 (32 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="favorite-tags">
+                    <span class="tag">High Priority</span>
+                    <span class="tag">Weekend</span>
+                  </div>
+                </div>
+                <div class="favorite-actions">
+                  <a href="ad-detail.html?id=3" class="eui-btn eui-btn-primary eui-btn-sm"
+                    >View Details</a
+                  >
+                  <button class="eui-btn eui-btn-outline-primary eui-btn-sm edit-notes-btn">
+                    <i class="fas fa-edit"></i> Edit Notes
+                  </button>
+                  <button class="eui-btn eui-btn-outline-danger eui-btn-sm remove-favorite-btn">
+                    <i class="fas fa-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Favorite Item 3 -->
+            <div class="eui-card favorite-item">
+              <div class="favorite-checkbox">
+                <input type="checkbox" class="favorite-select" onchange="updateBatchActions()" />
+              </div>
+              <div class="favorite-content">
+                <div class="favorite-image">
+                  <img
+                    src="https://via.placeholder.com/150x150?text=Profile+6"
+                    alt="VIP Companion"
+                  />
+                </div>
+                <div class="favorite-details">
+                  <div class="favorite-header">
+                    <h3>VIP Companion</h3>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="favorite-meta">
+                    <div class="meta-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>London, UK</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-tag"></i>
+                      <span>£300</span>
+                    </div>
+                    <div class="meta-item">
+                      <i class="fas fa-calendar-alt"></i>
+                      <span>Added 2 weeks ago</span>
+                    </div>
+                  </div>
+                  <div class="favorite-rating">
+                    <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <span>4.5 (42 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="favorite-notes">
+                    <p>
+                      <i class="fas fa-sticky-note"></i> Available for travel, check availability
+                      for next month.
+                    </p>
+                  </div>
+                </div>
+                <div class="favorite-actions">
+                  <a href="ad-detail.html?id=6" class="eui-btn eui-btn-primary eui-btn-sm"
+                    >View Details</a
+                  >
+                  <button class="eui-btn eui-btn-outline-primary eui-btn-sm edit-notes-btn">
+                    <i class="fas fa-edit"></i> Edit Notes
+                  </button>
+                  <button class="eui-btn eui-btn-outline-danger eui-btn-sm remove-favorite-btn">
+                    <i class="fas fa-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="favorites.html" class="active">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li class="active">
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div class="modal-overlay" id="notes-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Notes</h2>
+          <button class="close-modal" onclick="hideNotesModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="eui-form-group">
+            <label for="notes-textarea">Add your personal notes about this experience:</label>
+            <textarea
+              id="notes-textarea"
+              class="eui-form-control"
+              rows="5"
+              placeholder="Enter your notes here..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="eui-btn eui-btn-primary" onclick="saveNotes()">Save Notes</button>
+          <button class="eui-btn eui-btn-outline-secondary" onclick="hideNotesModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Batch Actions Modal -->
+    <div class="modal-overlay" id="batch-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Batch Actions</h2>
+          <button class="close-modal" onclick="hideBatchModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="batch-actions-list">
+            <button
+              class="eui-btn eui-btn-outline-danger eui-btn-block mb-4"
+              onclick="removeSelectedFavorites()"
+            >
+              <i class="fas fa-trash"></i> Remove Selected Favorites
+            </button>
+
+            <h3>Add Tags to Selected</h3>
+            <div class="eui-form-group">
+              <div class="tag-options">
+                <div class="tag-option">
+                  <input type="checkbox" id="tag-high-priority" />
+                  <label for="tag-high-priority">High Priority</label>
+                </div>
+                <div class="tag-option">
+                  <input type="checkbox" id="tag-weekend" />
+                  <label for="tag-weekend">Weekend</label>
+                </div>
+                <div class="tag-option">
+                  <input type="checkbox" id="tag-special" />
+                  <label for="tag-special">Special Occasion</label>
+                </div>
+                <div class="tag-option">
+                  <input type="checkbox" id="tag-followup" />
+                  <label for="tag-followup">Follow Up</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="eui-form-group">
+              <label for="new-tag-input">Add New Tag:</label>
+              <div class="eui-input-group">
+                <input
+                  type="text"
+                  id="new-tag-input"
+                  class="eui-form-control"
+                  placeholder="Enter new tag"
+                />
+                <div class="eui-input-group-append">
+                  <button class="eui-btn eui-btn-outline-primary">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="eui-btn eui-btn-primary" onclick="applyBatchActions()">
+            Apply to Selected
+          </button>
+          <button class="eui-btn eui-btn-outline-secondary" onclick="hideBatchModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Favorites specific functions
+      function updateBatchActions() {
+        const checkboxes = document.querySelectorAll('.favorite-select');
+        const batchButton = document.getElementById('batch-actions-btn');
+
+        let selectedCount = 0;
+        checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            selectedCount++;
+          }
+        });
+
+        batchButton.textContent = `Batch Actions (${selectedCount})`;
+        batchButton.disabled = selectedCount === 0;
+      }
+
+      function showNotesModal() {
+        const notesModal = document.getElementById('notes-modal');
+        notesModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hideNotesModal() {
+        const notesModal = document.getElementById('notes-modal');
+        notesModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function saveNotes() {
+        const notesTextarea = document.getElementById('notes-textarea');
+        const notes = notesTextarea.value;
+
+        // In a real app, we would save the notes to the server
+        console.log('Saving notes:', notes);
+
+        // Show notification
+        showNotification('Notes saved successfully!');
+
+        // Close modal
+        hideNotesModal();
+      }
+
+      function showBatchModal() {
+        const batchModal = document.getElementById('batch-modal');
+        batchModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hideBatchModal() {
+        const batchModal = document.getElementById('batch-modal');
+        batchModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function applyBatchActions() {
+        // In a real app, we would apply the batch actions to the selected favorites
+        console.log('Applying batch actions');
+
+        // Show notification
+        showNotification('Batch actions applied successfully!');
+
+        // Close modal
+        hideBatchModal();
+      }
+
+      function removeSelectedFavorites() {
+        const checkboxes = document.querySelectorAll('.favorite-select:checked');
+
+        checkboxes.forEach(checkbox => {
+          const favoriteItem = checkbox.closest('.favorite-item');
+          favoriteItem.remove();
+        });
+
+        // Update batch actions button
+        updateBatchActions();
+
+        // Show notification
+        showNotification(`${checkboxes.length} favorites removed successfully!`);
+
+        // Close modal
+        hideBatchModal();
+
+        // Check if there are any favorites left
+        checkEmptyState();
+      }
+
+      function checkEmptyState() {
+        const favoriteItems = document.querySelectorAll('.favorite-item');
+        const emptyState = document.getElementById('empty-favorites');
+
+        if (favoriteItems.length === 0) {
+          emptyState.style.display = 'block';
+        } else {
+          emptyState.style.display = 'none';
+        }
+      }
+
+      // Initialize favorites page
+      document.addEventListener('DOMContentLoaded', function () {
+        // Add event listeners to edit notes buttons
+        const editNotesButtons = document.querySelectorAll('.edit-notes-btn');
+        editNotesButtons.forEach(button => {
+          button.addEventListener('click', showNotesModal);
+        });
+
+        // Add event listeners to remove favorite buttons
+        const removeFavoriteButtons = document.querySelectorAll('.remove-favorite-btn');
+        removeFavoriteButtons.forEach(button => {
+          button.addEventListener('click', function () {
+            const favoriteItem = this.closest('.favorite-item');
+            favoriteItem.remove();
+
+            // Show notification
+            showNotification('Favorite removed successfully!');
+
+            // Check if there are any favorites left
+            checkEmptyState();
+          });
+        });
+
+        // Add event listener to batch actions button
+        const batchActionsButton = document.getElementById('batch-actions-btn');
+        batchActionsButton.addEventListener('click', showBatchModal);
+
+        // Initialize batch actions button
+        updateBatchActions();
+
+        // Check if there are any favorites
+        checkEmptyState();
+      });
+    </script>
+  </body>
+</html>

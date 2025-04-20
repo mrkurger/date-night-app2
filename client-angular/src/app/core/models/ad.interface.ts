@@ -6,20 +6,24 @@
  */
 export interface Ad {
   // Core properties
-  _id: string;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  location: string;
-  images: string[];
-  media: {
+  _id: string | { city: string; county: string };
+  title?: string;
+  description?: string;
+  category?: string;
+  price?: number;
+  location?: {
+    city: string;
+    county: string;
+  };
+  images?: string[] | { url: string; type?: string }[];
+  media?: {
     type: string; // 'image' or 'video'
     url: string;
   }[];
-  advertiser:
+  advertiser?:
     | string
     | {
+        _id: string;
         username: string;
         profileImage?: string;
       };
@@ -80,9 +84,16 @@ export interface AdCreateDTO {
   description: string;
   category: string;
   price: number;
-  location: string;
+  location: {
+    city: string;
+    county: string;
+  };
   isActive: boolean;
   age?: number;
+  images?: {
+    url: string;
+    type?: string;
+  }[];
   media?: {
     type: string; // 'image' or 'video'
     url: string;
@@ -104,7 +115,8 @@ export interface AdUpdateDTO extends Partial<AdCreateDTO> {
 // Interface for filtering ads
 export interface AdFilters {
   category?: string;
-  location?: string;
+  city?: string;
+  county?: string;
   minPrice?: number;
   maxPrice?: number;
   minAge?: number;

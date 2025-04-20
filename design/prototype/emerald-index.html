@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io Interactive Prototype - Emerald UI</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="../../client-angular/node_modules/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* DESIGN TOKENS - Based on emerald-tokens.scss */
+      :root {
+        /* Primary colors */
+        --color-primary: #ff3366;
+        --color-primary-light: #ff6b99;
+        --color-primary-dark: #cc295a;
+
+        /* Secondary colors */
+        --color-secondary: #6c63ff;
+        --color-secondary-light: #9e97ff;
+        --color-secondary-dark: #4a43cc;
+
+        /* Neutral colors */
+        --color-white: #ffffff;
+        --color-light-gray-1: #f8f9fc;
+        --color-light-gray-2: #eef1f8;
+        --color-medium-gray-1: #d1d5e0;
+        --color-medium-gray-2: #a0a8c0;
+        --color-dark-gray-1: #6e7a94;
+        --color-dark-gray-2: #4a5568;
+        --color-dark-gray-3: #2d3748;
+        --color-black: #1a202c;
+
+        /* Semantic colors */
+        --color-success: #38d9a9;
+        --color-warning: #ffab2e;
+        --color-error: #ff4757;
+        --color-info: #54a0ff;
+
+        /* Typography */
+        --font-family-base: 'Inter', sans-serif;
+        --font-family-heading: 'Poppins', sans-serif;
+
+        /* Spacing */
+        --spacing-1: 0.25rem;
+        --spacing-2: 0.5rem;
+        --spacing-3: 0.75rem;
+        --spacing-4: 1rem;
+        --spacing-5: 1.25rem;
+        --spacing-6: 1.5rem;
+        --spacing-8: 2rem;
+        --spacing-10: 2.5rem;
+        --spacing-12: 3rem;
+
+        /* Border radius */
+        --border-radius-sm: 0.25rem;
+        --border-radius-md: 0.5rem;
+        --border-radius-lg: 0.75rem;
+        --border-radius-xl: 1rem;
+
+        /* Shadows */
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Reset and base styles */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-family: var(--font-family-base);
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-family-base);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--color-dark-gray-2);
+        background-color: var(--color-light-gray-1);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Emerald UI Overrides */
+      .eui-btn {
+        font-family: var(--font-family-base);
+        font-weight: 600;
+        border-radius: var(--border-radius-md);
+      }
+
+      .eui-btn-primary {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+      }
+
+      .eui-btn-primary:hover,
+      .eui-btn-primary:focus {
+        background-color: var(--color-primary-dark);
+        border-color: var(--color-primary-dark);
+      }
+
+      .eui-card {
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+        border: none;
+      }
+
+      .eui-table th {
+        font-weight: 600;
+        background-color: var(--color-light-gray-1);
+      }
+
+      .eui-table-hover tbody tr:hover {
+        background-color: rgba(var(--color-primary), 0.05);
+      }
+
+      /* Layout */
+      .app-container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      header {
+        background: var(--color-white);
+        padding: var(--spacing-4) var(--spacing-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      header .logo {
+        font-family: var(--font-family-heading);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-dark-gray-3);
+      }
+
+      nav.top-nav a {
+        margin: 0 var(--spacing-3);
+        text-decoration: none;
+        color: var(--color-dark-gray-1);
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      nav.top-nav a.active {
+        color: var(--color-primary);
+      }
+
+      nav.top-nav a:hover {
+        color: var(--color-primary-light);
+      }
+
+      .container {
+        padding: var(--spacing-8);
+        flex: 1;
+      }
+
+      section {
+        display: none;
+      }
+
+      section.active {
+        display: block;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 240px;
+        background: var(--color-white);
+        box-shadow: var(--shadow-sm);
+        padding-top: var(--spacing-16);
+      }
+
+      .sidebar a {
+        display: flex;
+        align-items: center;
+        padding: var(--spacing-3) var(--spacing-4);
+        color: var(--color-dark-gray-2);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .sidebar a i {
+        margin-right: var(--spacing-3);
+        width: 20px;
+        text-align: center;
+      }
+
+      .sidebar a.active {
+        background: var(--color-light-gray-1);
+        color: var(--color-primary);
+        border-left: 3px solid var(--color-primary);
+      }
+
+      .sidebar a:hover:not(.active) {
+        background: var(--color-light-gray-2);
+      }
+
+      /* Main content */
+      .main-content {
+        flex: 1;
+      }
+
+      /* Card styles */
+      .hero-card {
+        max-width: 500px;
+        margin: 0 auto var(--spacing-8) auto;
+      }
+
+      .hero-card h2 {
+        font-family: var(--font-family-heading);
+        font-weight: 600;
+        margin-bottom: var(--spacing-2);
+      }
+
+      .hero-card p {
+        color: var(--color-dark-gray-1);
+        margin-bottom: var(--spacing-4);
+      }
+
+      /* Category cards */
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-8);
+      }
+
+      .category-card {
+        text-align: center;
+        padding: var(--spacing-4);
+        transition: transform 0.2s ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .category-card i {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-2);
+        color: var(--color-dark-gray-1);
+      }
+
+      .category-card.active i {
+        color: var(--color-primary);
+      }
+
+      /* Tinder view */
+      .card-stack {
+        position: relative;
+        width: 320px;
+        height: 480px;
+        margin: var(--spacing-8) auto;
+      }
+
+      .tinder-card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+      }
+
+      .tinder-card img {
+        width: 100%;
+        height: 70%;
+        object-fit: cover;
+      }
+
+      .tinder-card .info {
+        padding: var(--spacing-4);
+        background: var(--color-white);
+        height: 30%;
+      }
+
+      .tinder-card .info h4 {
+        margin: 0 0 var(--spacing-2) 0;
+        font-family: var(--font-family-heading);
+      }
+
+      .tinder-card .info p {
+        margin: 0;
+        color: var(--color-dark-gray-1);
+      }
+
+      .swipe-actions {
+        display: flex;
+        justify-content: center;
+        gap: var(--spacing-4);
+        margin-top: var(--spacing-4);
+      }
+
+      .swipe-actions button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .swipe-actions button:hover {
+        transform: scale(1.1);
+      }
+
+      .swipe-actions .btn-dislike {
+        background-color: var(--color-error);
+        color: var(--color-white);
+      }
+
+      .swipe-actions .btn-like {
+        background-color: var(--color-success);
+        color: var(--color-white);
+      }
+
+      .swipe-actions .btn-favorite {
+        background-color: var(--color-warning);
+        color: var(--color-white);
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+
+        .container {
+          padding: var(--spacing-4);
+        }
+
+        header {
+          padding: var(--spacing-3) var(--spacing-4);
+        }
+
+        .category-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="sidebar">
+        <a href="#" data-section="netflix" class="active"> <i class="fas fa-home"></i> Home </a>
+        <a href="#" data-section="tinder"> <i class="fas fa-fire"></i> Tinder View </a>
+        <a href="#" data-section="list"> <i class="fas fa-list"></i> List View </a>
+        <a href="#" data-section="messages"> <i class="fas fa-comment"></i> Messages </a>
+        <a href="#" data-section="favorites"> <i class="fas fa-heart"></i> Favorites </a>
+        <a href="#" data-section="settings"> <i class="fas fa-cog"></i> Settings </a>
+        <a href="#" data-section="preferences"> <i class="fas fa-sliders-h"></i> Preferences </a>
+        <a href="#" data-section="profile"> <i class="fas fa-user"></i> Profile </a>
+      </div>
+
+      <div class="main-content">
+        <header>
+          <div class="logo">DateNight.io</div>
+          <nav class="top-nav">
+            <a href="#" data-section="netflix" class="active">Netflix</a>
+            <a href="#" data-section="tinder">Tinder</a>
+            <a href="#" data-section="list">List</a>
+          </nav>
+          <div class="user-actions">
+            <button class="eui-btn eui-btn-outline-primary eui-btn-sm">
+              <i class="fas fa-plus"></i> Create Ad
+            </button>
+          </div>
+        </header>
+
+        <div class="container">
+          <!-- Netflix/Home Section -->
+          <section id="netflix" class="active">
+            <div class="eui-card hero-card">
+              <div class="eui-card-body text-center">
+                <h2>Welcome to DateNight.io</h2>
+                <p>Find your perfect date night experience</p>
+                <button class="eui-btn eui-btn-primary">Browse Now</button>
+              </div>
+            </div>
+
+            <h3 style="font-family: var(--font-family-heading); margin-bottom: var(--spacing-4)">
+              Featured Categories
+            </h3>
+            <div class="category-grid">
+              <div class="eui-card category-card active">
+                <i class="fas fa-spa"></i>
+                <p style="font-weight: 500; margin: 0">Massage</p>
+              </div>
+              <div class="eui-card category-card">
+                <i class="fas fa-glass-cheers"></i>
+                <p style="font-weight: 500; margin: 0">Escort</p>
+              </div>
+              <div class="eui-card category-card">
+                <i class="fas fa-music"></i>
+                <p style="font-weight: 500; margin: 0">Dance</p>
+              </div>
+              <div class="eui-card category-card">
+                <i class="fas fa-calendar-alt"></i>
+                <p style="font-weight: 500; margin: 0">Events</p>
+              </div>
+            </div>
+
+            <h3 style="font-family: var(--font-family-heading); margin-bottom: var(--spacing-4)">
+              Trending Now
+            </h3>
+            <div class="eui-row">
+              <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                <div class="eui-card">
+                  <img
+                    src="https://via.placeholder.com/300x200"
+                    class="eui-card-img-top"
+                    alt="Professional Massage"
+                  />
+                  <div class="eui-card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h5 class="eui-card-title" style="margin: 0; font-size: 1rem">
+                        Professional Massage
+                      </h5>
+                      <span class="eui-badge eui-badge-success">Online</span>
+                    </div>
+                    <p
+                      class="eui-card-text"
+                      style="
+                        color: var(--color-dark-gray-1);
+                        font-size: 0.875rem;
+                        margin-bottom: var(--spacing-2);
+                      "
+                    >
+                      Oslo, Norway
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div style="color: var(--color-warning)">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                          >(24)</span
+                        >
+                      </div>
+                      <span style="font-weight: 600">1500 NOK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                <div class="eui-card">
+                  <img
+                    src="https://via.placeholder.com/300x200"
+                    class="eui-card-img-top"
+                    alt="Elegant Escort"
+                  />
+                  <div class="eui-card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h5 class="eui-card-title" style="margin: 0; font-size: 1rem">
+                        Elegant Escort
+                      </h5>
+                      <span class="eui-badge eui-badge-secondary">Away</span>
+                    </div>
+                    <p
+                      class="eui-card-text"
+                      style="
+                        color: var(--color-dark-gray-1);
+                        font-size: 0.875rem;
+                        margin-bottom: var(--spacing-2);
+                      "
+                    >
+                      Stockholm, Sweden
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div style="color: var(--color-warning)">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                          >(18)</span
+                        >
+                      </div>
+                      <span style="font-weight: 600">2500 SEK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                <div class="eui-card">
+                  <img
+                    src="https://via.placeholder.com/300x200"
+                    class="eui-card-img-top"
+                    alt="Exotic Dance"
+                  />
+                  <div class="eui-card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h5 class="eui-card-title" style="margin: 0; font-size: 1rem">
+                        Exotic Dance
+                      </h5>
+                      <span class="eui-badge eui-badge-success">Online</span>
+                    </div>
+                    <p
+                      class="eui-card-text"
+                      style="
+                        color: var(--color-dark-gray-1);
+                        font-size: 0.875rem;
+                        margin-bottom: var(--spacing-2);
+                      "
+                    >
+                      Copenhagen, Denmark
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div style="color: var(--color-warning)">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                          >(32)</span
+                        >
+                      </div>
+                      <span style="font-weight: 600">2000 DKK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="eui-col-md-3 eui-col-sm-6 mb-4">
+                <div class="eui-card">
+                  <img
+                    src="https://via.placeholder.com/300x200"
+                    class="eui-card-img-top"
+                    alt="Event Planner"
+                  />
+                  <div class="eui-card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h5 class="eui-card-title" style="margin: 0; font-size: 1rem">
+                        Event Planner
+                      </h5>
+                      <span class="eui-badge eui-badge-secondary">Away</span>
+                    </div>
+                    <p
+                      class="eui-card-text"
+                      style="
+                        color: var(--color-dark-gray-1);
+                        font-size: 0.875rem;
+                        margin-bottom: var(--spacing-2);
+                      "
+                    >
+                      Miami, FL
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div style="color: var(--color-warning)">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                          >(27)</span
+                        >
+                      </div>
+                      <span style="font-weight: 600">$300</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tinder Section -->
+          <section id="tinder">
+            <div class="card-stack">
+              <div class="eui-card tinder-card">
+                <img src="https://via.placeholder.com/400x300" alt="Massage Therapy" />
+                <div class="info">
+                  <h4>Professional Massage</h4>
+                  <p>Oslo, Norway</p>
+                  <div style="display: flex; align-items: center; margin-top: var(--spacing-2)">
+                    <div style="color: var(--color-warning); margin-right: var(--spacing-2)">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                    </div>
+                    <span style="color: var(--color-dark-gray-1); font-size: 0.875rem"
+                      >(24 reviews)</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe-actions">
+              <button class="btn-dislike">
+                <i class="fas fa-times"></i>
+              </button>
+              <button class="btn-favorite">
+                <i class="fas fa-star"></i>
+              </button>
+              <button class="btn-like">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </section>
+
+          <!-- List Section -->
+          <section id="list">
+            <div class="eui-card mb-4">
+              <div class="eui-card-body">
+                <h3
+                  style="font-family: var(--font-family-heading); margin-bottom: var(--spacing-4)"
+                >
+                  Browse Experiences
+                </h3>
+                <div class="eui-row mb-4">
+                  <div class="eui-col-md-6">
+                    <div class="eui-input-group">
+                      <span class="eui-input-group-text">
+                        <i class="fas fa-search"></i>
+                      </span>
+                      <input
+                        type="text"
+                        class="eui-form-control"
+                        placeholder="Search experiences..."
+                      />
+                    </div>
+                  </div>
+                  <div class="eui-col-md-3">
+                    <select class="eui-form-control">
+                      <option>All Categories</option>
+                      <option>Massage</option>
+                      <option>Escort</option>
+                      <option>Dance</option>
+                      <option>Events</option>
+                    </select>
+                  </div>
+                  <div class="eui-col-md-3">
+                    <select class="eui-form-control">
+                      <option>Sort by: Relevance</option>
+                      <option>Price: Low to High</option>
+                      <option>Price: High to Low</option>
+                      <option>Rating: High to Low</option>
+                      <option>Newest First</option>
+                    </select>
+                  </div>
+                </div>
+
+                <table class="eui-table eui-table-hover">
+                  <thead>
+                    <tr>
+                      <th>Profile</th>
+                      <th>Location</th>
+                      <th>Rating</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Professional Massage</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Massage Therapy
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Oslo, Norway</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(24)</span
+                          >
+                        </div>
+                      </td>
+                      <td>1500 NOK</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Elegant Escort</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Companion Services
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Stockholm, Sweden</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(18)</span
+                          >
+                        </div>
+                      </td>
+                      <td>2500 SEK</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Exotic Dance</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Entertainment
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Copenhagen, Denmark</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(32)</span
+                          >
+                        </div>
+                      </td>
+                      <td>2000 DKK</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Event Planner</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Event Services
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Miami, FL</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(27)</span
+                          >
+                        </div>
+                      </td>
+                      <td>$300</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Photographer</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Photography
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>New York, NY</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(21)</span
+                          >
+                        </div>
+                      </td>
+                      <td>$250</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <img
+                            src="https://via.placeholder.com/40x40"
+                            style="border-radius: 50%; margin-right: var(--spacing-2)"
+                            alt="Profile"
+                          />
+                          <div>
+                            <div style="font-weight: 500">Makeup Artist</div>
+                            <div style="font-size: 0.75rem; color: var(--color-dark-gray-1)">
+                              Beauty Services
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Los Angeles, CA</td>
+                      <td>
+                        <div style="color: var(--color-warning)">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <span style="color: var(--color-dark-gray-1); font-size: 0.75rem"
+                            >(19)</span
+                          >
+                        </div>
+                      </td>
+                      <td>$200</td>
+                      <td>
+                        <button class="eui-btn eui-btn-outline-primary eui-btn-sm">View</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="eui-pagination mt-4" style="display: flex; justify-content: center">
+                  <ul class="eui-pagination">
+                    <li class="eui-page-item disabled">
+                      <a class="eui-page-link" href="#" tabindex="-1" aria-disabled="true"
+                        >Previous</a
+                      >
+                    </li>
+                    <li class="eui-page-item active"><a class="eui-page-link" href="#">1</a></li>
+                    <li class="eui-page-item"><a class="eui-page-link" href="#">2</a></li>
+                    <li class="eui-page-item"><a class="eui-page-link" href="#">3</a></li>
+                    <li class="eui-page-item">
+                      <a class="eui-page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Placeholder Sections -->
+          <section id="messages">
+            <div class="eui-card">
+              <div class="eui-card-header">
+                <h3 style="margin: 0; font-family: var(--font-family-heading)">Messages</h3>
+              </div>
+              <div class="eui-card-body">
+                <p>Chat interface preview will be implemented here.</p>
+                <div class="eui-alert eui-alert-info">
+                  <i class="fas fa-info-circle"></i> This section is under development.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="favorites">
+            <div class="eui-card">
+              <div class="eui-card-header">
+                <h3 style="margin: 0; font-family: var(--font-family-heading)">Favorites</h3>
+              </div>
+              <div class="eui-card-body">
+                <p>Saved items preview will be implemented here.</p>
+                <div class="eui-alert eui-alert-info">
+                  <i class="fas fa-info-circle"></i> This section is under development.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="settings">
+            <div class="eui-card">
+              <div class="eui-card-header">
+                <h3 style="margin: 0; font-family: var(--font-family-heading)">Settings</h3>
+              </div>
+              <div class="eui-card-body">
+                <p>Account & preferences controls will be implemented here.</p>
+                <div class="eui-alert eui-alert-info">
+                  <i class="fas fa-info-circle"></i> This section is under development.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="preferences">
+            <div class="eui-card">
+              <div class="eui-card-header">
+                <h3 style="margin: 0; font-family: var(--font-family-heading)">Preferences</h3>
+              </div>
+              <div class="eui-card-body">
+                <p>Filter & preferences panel will be implemented here.</p>
+                <div class="eui-alert eui-alert-info">
+                  <i class="fas fa-info-circle"></i> This section is under development.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="profile">
+            <div class="eui-card">
+              <div class="eui-card-header">
+                <h3 style="margin: 0; font-family: var(--font-family-heading)">Profile</h3>
+              </div>
+              <div class="eui-card-body">
+                <p>User profile overview will be implemented here.</p>
+                <div class="eui-alert eui-alert-info">
+                  <i class="fas fa-info-circle"></i> This section is under development.
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emerald UI JavaScript (for components that require JS) -->
+    <script src="../../client-angular/node_modules/emerald-ui/lib/js/emerald-ui.min.js"></script>
+
+    <script>
+      const links = document.querySelectorAll('nav.top-nav a, .sidebar a');
+      const sections = document.querySelectorAll('section');
+
+      links.forEach(link =>
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = link.getAttribute('data-section');
+
+          sections.forEach(s =>
+            s.id === target ? s.classList.add('active') : s.classList.remove('active')
+          );
+
+          links.forEach(l => l.classList.remove('active'));
+          links.forEach(l => {
+            if (l.getAttribute('data-section') === target) l.classList.add('active');
+          });
+        })
+      );
+    </script>
+  </body>
+</html>

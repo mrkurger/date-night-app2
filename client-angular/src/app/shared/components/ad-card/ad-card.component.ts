@@ -80,13 +80,18 @@ export class AdCardComponent implements OnInit, OnDestroy {
    * Get the primary image URL for the ad
    */
   getPrimaryImage(): string {
-    if (this.ad.images && this.ad.images.length > 0) {
-      return this.ad.images[0];
+    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
+      // Handle both string[] and object[] formats
+      if (typeof this.ad.images[0] === 'string') {
+        return this.ad.images[0] as string;
+      } else if (typeof this.ad.images[0] === 'object' && 'url' in this.ad.images[0]) {
+        return (this.ad.images[0] as { url: string }).url;
+      }
     }
 
-    if (this.ad.media && this.ad.media.length > 0) {
-      const image = this.ad.media.find(m => m.type === 'image');
-      if (image) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
+      const image = this.ad.media.find(m => 'type' in m && m.type === 'image');
+      if (image && 'url' in image) {
         return image.url;
       }
     }
@@ -98,13 +103,18 @@ export class AdCardComponent implements OnInit, OnDestroy {
    * Get the secondary image URL for the ad
    */
   getSecondaryImage(): string | null {
-    if (this.ad.images && this.ad.images.length > 1) {
-      return this.ad.images[1];
+    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 1) {
+      // Handle both string[] and object[] formats
+      if (typeof this.ad.images[1] === 'string') {
+        return this.ad.images[1] as string;
+      } else if (typeof this.ad.images[1] === 'object' && 'url' in this.ad.images[1]) {
+        return (this.ad.images[1] as { url: string }).url;
+      }
     }
 
-    if (this.ad.media && this.ad.media.length > 1) {
-      const images = this.ad.media.filter(m => m.type === 'image');
-      if (images.length > 1) {
+    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 1) {
+      const images = this.ad.media.filter(m => 'type' in m && m.type === 'image');
+      if (images.length > 1 && 'url' in images[1]) {
         return images[1].url;
       }
     }
@@ -116,12 +126,12 @@ export class AdCardComponent implements OnInit, OnDestroy {
    * Get the total number of images for the ad
    */
   getImageCount(): number {
-    if (this.ad.images && this.ad.images.length > 0) {
+    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
       return this.ad.images.length;
     }
 
-    if (this.ad.media) {
-      return this.ad.media.filter(m => m.type === 'image').length;
+    if (this.ad.media && Array.isArray(this.ad.media)) {
+      return this.ad.media.filter(m => 'type' in m && m.type === 'image').length;
     }
 
     return 0;
@@ -211,7 +221,9 @@ export class AdCardComponent implements OnInit, OnDestroy {
    * Handle view details click
    */
   onViewDetails(): void {
-    this.viewDetails.emit(this.ad._id);
+    // Convert complex _id to string if needed
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+    this.viewDetails.emit(adId);
   }
 
   /**
@@ -219,7 +231,9 @@ export class AdCardComponent implements OnInit, OnDestroy {
    */
   onLike(event: Event): void {
     event.stopPropagation();
-    this.like.emit(this.ad._id);
+    // Convert complex _id to string if needed
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+    this.like.emit(adId);
   }
 
   /**
@@ -227,7 +241,9 @@ export class AdCardComponent implements OnInit, OnDestroy {
    */
   onChat(event: Event): void {
     event.stopPropagation();
-    this.chat.emit(this.ad._id);
+    // Convert complex _id to string if needed
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+    this.chat.emit(adId);
   }
 
   /**
@@ -235,6 +251,8 @@ export class AdCardComponent implements OnInit, OnDestroy {
    */
   onShare(event: Event): void {
     event.stopPropagation();
-    this.share.emit(this.ad._id);
+    // Convert complex _id to string if needed
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+    this.share.emit(adId);
   }
 }

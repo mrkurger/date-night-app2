@@ -1,12 +1,12 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 .ad-card {
   display: flex;
   flex-direction: column;
-  background-color: $neutral-100;
-  border-radius: $border-radius-lg;
+  background-color: tokens.$neutral-100;
+  border-radius: tokens.$border-radius-lg;
   overflow: hidden;
-  box-shadow: $shadow-sm;
+  box-shadow: tokens.$shadow-sm;
   transition:
     transform $transition-normal $transition-ease,
     box-shadow $transition-normal $transition-ease;
@@ -15,7 +15,7 @@
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-md;
+    box-shadow: tokens.$shadow-md;
 
     .ad-card-image {
       transform: scale(1.05);
@@ -29,7 +29,7 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-base;
+      font-size: tokens.$font-size-base;
     }
 
     &.ad-card-list {
@@ -48,7 +48,7 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-lg;
+      font-size: tokens.$font-size-lg;
     }
 
     &.ad-card-list {
@@ -67,7 +67,7 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-xl;
+      font-size: tokens.$font-size-xl;
     }
 
     &.ad-card-list {
@@ -83,60 +83,60 @@
   // Content Density Variations
   &.ad-card-density-comfortable {
     .ad-card-content {
-      padding: $spacing-4;
+      padding: tokens.$spacing-4;
     }
 
     .ad-card-description {
-      margin-bottom: $spacing-4;
+      margin-bottom: tokens.$spacing-4;
       -webkit-line-clamp: 3;
     }
 
     .ad-card-footer {
-      margin-top: $spacing-3;
+      margin-top: tokens.$spacing-3;
     }
   }
 
   &.ad-card-density-compact {
     .ad-card-content {
-      padding: $spacing-3;
+      padding: tokens.$spacing-3;
     }
 
     .ad-card-description {
-      margin-bottom: $spacing-3;
-      font-size: $font-size-xs;
+      margin-bottom: tokens.$spacing-3;
+      font-size: tokens.$font-size-xs;
       -webkit-line-clamp: 2;
     }
 
     .ad-card-footer {
-      margin-top: $spacing-2;
+      margin-top: tokens.$spacing-2;
     }
 
     .ad-card-meta {
-      font-size: $font-size-xs;
+      font-size: tokens.$font-size-xs;
     }
   }
 
   &.ad-card-density-condensed {
     .ad-card-content {
-      padding: $spacing-2;
+      padding: tokens.$spacing-2;
     }
 
     .ad-card-title {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
     }
 
     .ad-card-description {
-      margin-bottom: $spacing-2;
-      font-size: $font-size-xs;
+      margin-bottom: tokens.$spacing-2;
+      font-size: tokens.$font-size-xs;
       -webkit-line-clamp: 1;
     }
 
     .ad-card-footer {
-      margin-top: $spacing-1;
+      margin-top: tokens.$spacing-1;
     }
 
     .ad-card-meta {
-      font-size: $font-size-xs;
+      font-size: tokens.$font-size-xs;
     }
 
     .ad-card-actions button {
@@ -181,7 +181,7 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-md;
+      font-size: tokens.$font-size-md;
     }
 
     .ad-card-description {
@@ -204,25 +204,25 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-sm;
+      font-size: tokens.$font-size-sm;
     }
 
     .ad-card-description {
-      font-size: $font-size-xs;
+      font-size: tokens.$font-size-xs;
       max-height: 2.4em;
     }
 
     .ad-card-content {
-      padding: $spacing-2;
+      padding: tokens.$spacing-2;
     }
 
     .ad-card-footer {
-      padding-top: $spacing-2;
+      padding-top: tokens.$spacing-2;
     }
 
     .tag {
-      font-size: $font-size-xs;
-      padding: $spacing-1 $spacing-2;
+      font-size: tokens.$font-size-xs;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
     }
 
     &.ad-card-list {
@@ -245,25 +245,25 @@
     }
 
     .ad-card-title {
-      font-size: $font-size-lg;
+      font-size: tokens.$font-size-lg;
     }
 
     .ad-card-description {
-      font-size: $font-size-md;
+      font-size: tokens.$font-size-md;
       max-height: 4.8em;
     }
 
     .ad-card-content {
-      padding: $spacing-4;
+      padding: tokens.$spacing-4;
     }
 
     .ad-card-footer {
-      padding-top: $spacing-4;
+      padding-top: tokens.$spacing-4;
     }
 
     .tag {
-      font-size: $font-size-sm;
-      padding: $spacing-1 $spacing-3;
+      font-size: tokens.$font-size-sm;
+      padding: tokens.$spacing-1 tokens.$spacing-3;
     }
 
     &.ad-card-list {
@@ -283,72 +283,72 @@
 
   &.ad-card-density-compact {
     .ad-card-content {
-      padding: $spacing-2;
+      padding: tokens.$spacing-2;
     }
 
     .ad-card-title {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
     }
 
     .ad-card-description {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
     }
 
     .ad-card-footer {
-      padding-top: $spacing-1;
+      padding-top: tokens.$spacing-1;
     }
 
     .ad-card-tags {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
     }
   }
 
   &.ad-card-density-condensed {
     .ad-card-content {
-      padding: $spacing-1;
+      padding: tokens.$spacing-1;
     }
 
     .ad-card-title {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
       line-height: 1.2;
     }
 
     .ad-card-description {
-      margin-bottom: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
       line-height: 1.2;
     }
 
     .ad-card-footer {
-      padding-top: $spacing-1;
+      padding-top: tokens.$spacing-1;
     }
 
     .ad-card-tags {
-      margin-bottom: $spacing-1;
-      gap: $spacing-1;
+      margin-bottom: tokens.$spacing-1;
+      gap: tokens.$spacing-1;
     }
 
     .ad-card-meta {
-      font-size: $font-size-xs;
+      font-size: tokens.$font-size-xs;
     }
   }
 
   // Featured card
   &.ad-card-featured {
-    border: 2px solid $primary-300;
+    border: 2px solid tokens.$primary-300;
     box-shadow:
-      0 0 0 1px $primary-300,
-      $shadow-md;
+      0 0 0 1px tokens.$primary-300,
+      tokens.$shadow-md;
 
     &::before {
       content: 'Featured';
       position: absolute;
-      top: $spacing-3;
-      right: -$spacing-8;
-      background-color: $primary-500;
-      color: $neutral-100;
-      padding: $spacing-1 $spacing-6;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-bold;
+      top: tokens.$spacing-3;
+      right: -tokens.$spacing-8;
+      background-color: tokens.$primary-500;
+      color: tokens.$neutral-100;
+      padding: tokens.$spacing-1 tokens.$spacing-6;
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-bold;
       text-transform: uppercase;
       transform: rotate(45deg);
       z-index: 2;
@@ -360,15 +360,15 @@
     &::after {
       content: 'New';
       position: absolute;
-      top: $spacing-3;
-      left: $spacing-3;
+      top: tokens.$spacing-3;
+      left: tokens.$spacing-3;
       background-color: $success;
-      color: $neutral-100;
-      padding: $spacing-1 $spacing-2;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-bold;
+      color: tokens.$neutral-100;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-bold;
       text-transform: uppercase;
-      border-radius: $border-radius-sm;
+      border-radius: tokens.$border-radius-sm;
       z-index: 2;
     }
   }
@@ -378,15 +378,15 @@
     &::after {
       content: 'Trending';
       position: absolute;
-      top: $spacing-3;
-      left: $spacing-3;
+      top: tokens.$spacing-3;
+      left: tokens.$spacing-3;
       background-color: $warning;
-      color: $neutral-900;
-      padding: $spacing-1 $spacing-2;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-bold;
+      color: tokens.$neutral-900;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-bold;
       text-transform: uppercase;
-      border-radius: $border-radius-sm;
+      border-radius: tokens.$border-radius-sm;
       z-index: 2;
     }
   }
@@ -408,60 +408,60 @@
   // Image count badge
   .image-count {
     position: absolute;
-    top: $spacing-3;
-    right: $spacing-3;
-    background-color: rgba($neutral-900, 0.7);
-    color: $neutral-100;
-    padding: $spacing-1 $spacing-2;
-    border-radius: $border-radius-md;
+    top: tokens.$spacing-3;
+    right: tokens.$spacing-3;
+    background-color: rgba(tokens.$neutral-900, 0.7);
+    color: tokens.$neutral-100;
+    padding: tokens.$spacing-1 tokens.$spacing-2;
+    border-radius: tokens.$border-radius-md;
     display: flex;
     align-items: center;
-    font-size: $font-size-sm;
+    font-size: tokens.$font-size-sm;
     z-index: 1;
 
     mat-icon {
       font-size: 16px;
       width: 16px;
       height: 16px;
-      margin-right: $spacing-1;
+      margin-right: tokens.$spacing-1;
     }
   }
 
   // Status badges
   .status-badges {
     position: absolute;
-    bottom: $spacing-3;
-    left: $spacing-3;
+    bottom: tokens.$spacing-3;
+    left: tokens.$spacing-3;
     display: flex;
     flex-wrap: wrap;
-    gap: $spacing-1;
+    gap: tokens.$spacing-1;
     z-index: 1;
 
     .badge {
-      padding: $spacing-1 $spacing-2;
-      border-radius: $border-radius-sm;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-semibold;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
+      border-radius: tokens.$border-radius-sm;
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-semibold;
       text-transform: uppercase;
 
       &.badge-featured {
-        background-color: $primary-500;
-        color: $neutral-100;
+        background-color: tokens.$primary-500;
+        color: tokens.$neutral-100;
       }
 
       &.badge-new {
         background-color: $success;
-        color: $neutral-100;
+        color: tokens.$neutral-100;
       }
 
       &.badge-trending {
         background-color: $warning;
-        color: $neutral-900;
+        color: tokens.$neutral-900;
       }
 
       &.badge-touring {
         background-color: $info;
-        color: $neutral-100;
+        color: tokens.$neutral-100;
       }
     }
   }
@@ -469,41 +469,41 @@
   // Category badge
   .category-badge {
     position: absolute;
-    top: $spacing-3;
-    left: $spacing-3;
+    top: tokens.$spacing-3;
+    left: tokens.$spacing-3;
     z-index: 1;
 
     .badge {
-      background-color: rgba($neutral-900, 0.7);
-      color: $neutral-100;
-      padding: $spacing-1 $spacing-2;
-      border-radius: $border-radius-sm;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-semibold;
+      background-color: rgba(tokens.$neutral-900, 0.7);
+      color: tokens.$neutral-100;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
+      border-radius: tokens.$border-radius-sm;
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-semibold;
     }
   }
 
   // Price badge
   .price-badge {
     position: absolute;
-    bottom: $spacing-3;
-    right: $spacing-3;
+    bottom: tokens.$spacing-3;
+    right: tokens.$spacing-3;
     z-index: 1;
 
     .badge-price {
       background-color: $secondary-500;
-      color: $neutral-900;
-      padding: $spacing-1 $spacing-2;
-      border-radius: $border-radius-sm;
-      font-size: $font-size-sm;
-      font-weight: $font-weight-bold;
+      color: tokens.$neutral-900;
+      padding: tokens.$spacing-1 tokens.$spacing-2;
+      border-radius: tokens.$border-radius-sm;
+      font-size: tokens.$font-size-sm;
+      font-weight: tokens.$font-weight-bold;
     }
   }
 }
 
 // Content section
 .ad-card-content {
-  padding: $spacing-4;
+  padding: tokens.$spacing-4;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -511,16 +511,16 @@
 
 // Card header
 .ad-card-header {
-  margin-bottom: $spacing-3;
+  margin-bottom: tokens.$spacing-3;
 }
 
 // Card title
 .ad-card-title {
-  margin: 0 0 $spacing-2;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
+  margin: 0 0 tokens.$spacing-2;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
   line-height: $line-height-tight;
-  color: $neutral-900;
+  color: tokens.$neutral-900;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -533,22 +533,22 @@
   display: flex;
   align-items: center;
   margin: 0;
-  color: $neutral-600;
-  font-size: $font-size-sm;
+  color: tokens.$neutral-600;
+  font-size: tokens.$font-size-sm;
 
   mat-icon {
     font-size: 16px;
     width: 16px;
     height: 16px;
-    margin-right: $spacing-1;
+    margin-right: tokens.$spacing-1;
   }
 }
 
 // Card description
 .ad-card-description {
-  margin: 0 0 $spacing-3;
-  color: $neutral-700;
-  font-size: $font-size-sm;
+  margin: 0 0 tokens.$spacing-3;
+  color: tokens.$neutral-700;
+  font-size: tokens.$font-size-sm;
   line-height: $line-height-normal;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -561,19 +561,19 @@
 .ad-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-1;
-  margin-bottom: $spacing-3;
+  gap: tokens.$spacing-1;
+  margin-bottom: tokens.$spacing-3;
 
   .tag {
-    background-color: $neutral-200;
-    color: $neutral-700;
-    padding: $spacing-1 $spacing-2;
-    border-radius: $border-radius-full;
-    font-size: $font-size-xs;
+    background-color: tokens.$neutral-200;
+    color: tokens.$neutral-700;
+    padding: tokens.$spacing-1 tokens.$spacing-2;
+    border-radius: tokens.$border-radius-full;
+    font-size: tokens.$font-size-xs;
 
     &.more-tag {
-      background-color: $neutral-300;
-      color: $neutral-800;
+      background-color: tokens.$neutral-300;
+      color: tokens.$neutral-800;
     }
   }
 }
@@ -584,28 +584,28 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: $spacing-3;
-  border-top: 1px solid $neutral-200;
+  padding-top: tokens.$spacing-3;
+  border-top: 1px solid tokens.$neutral-200;
 }
 
 // Card meta
 .ad-card-meta {
   display: flex;
   align-items: center;
-  gap: $spacing-3;
+  gap: tokens.$spacing-3;
 
   .ad-card-date,
   .ad-card-views {
     display: flex;
     align-items: center;
-    color: $neutral-600;
-    font-size: $font-size-xs;
+    color: tokens.$neutral-600;
+    font-size: tokens.$font-size-xs;
 
     mat-icon {
       font-size: 14px;
       width: 14px;
       height: 14px;
-      margin-right: $spacing-1;
+      margin-right: tokens.$spacing-1;
     }
   }
 }
@@ -613,7 +613,7 @@
 // Card actions
 .ad-card-actions {
   display: flex;
-  gap: $spacing-1;
+  gap: tokens.$spacing-1;
 
   button {
     width: 32px;
@@ -647,17 +647,17 @@
   }
 
   .ad-card-title {
-    font-size: $font-size-base;
+    font-size: tokens.$font-size-base;
   }
 
   .ad-card-content {
-    padding: $spacing-3;
+    padding: tokens.$spacing-3;
   }
 
   .ad-card-footer {
     flex-direction: column;
     align-items: flex-start;
-    gap: $spacing-2;
+    gap: tokens.$spacing-2;
   }
 
   .ad-card-actions {

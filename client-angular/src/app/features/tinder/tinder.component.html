@@ -41,11 +41,11 @@
       <!-- Current Card -->
       <emerald-tinder-card
         [title]="currentAd.title"
-        [subtitle]="currentAd.location"
+        [subtitle]="getLocationString(currentAd)"
         [description]="currentAd.description"
         [media]="getCardMedia(currentAd)"
         [tags]="currentAd.tags"
-        [itemId]="currentAd._id"
+        [itemId]="getAdIdAsString(currentAd._id)"
         [age]="currentAd.age.toString()"
         [state]="cardState"
         [swipeable]="true"
@@ -60,11 +60,11 @@
     <div class="next-card-preview" *ngIf="nextAd">
       <emerald-tinder-card
         [title]="nextAd.title"
-        [subtitle]="nextAd.location"
+        [subtitle]="getLocationString(nextAd)"
         [description]="nextAd.description"
         [media]="getCardMedia(nextAd)"
         [tags]="nextAd.tags"
-        [itemId]="nextAd._id"
+        [itemId]="getAdIdAsString(nextAd._id)"
         [age]="nextAd.age.toString()"
         [swipeable]="false"
       >

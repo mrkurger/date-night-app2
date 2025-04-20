@@ -1,3 +1,6 @@
+@use 'sass:math';
+@use 'sass:color';
+
 // ===================================================
 // CORE DESIGN SYSTEM
 // ===================================================
@@ -36,6 +39,9 @@
   $color-secondary-dark, $color-white, $color-light-gray-1, $color-light-gray-2,
   $color-medium-gray-1, $color-medium-gray-2, $color-dark-gray-1, $color-dark-gray-2,
   $color-dark-gray-3, $font-family-base, $font-family-heading;
+
+// Import emerald-ui integration
+@forward 'emerald-ui-integration';
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono&display=swap');
@@ -273,18 +279,19 @@ td {
 
 @for $i from 1 through $grid-columns {
   .col-#{$i} {
-    flex: 0 0 percentage($i / $grid-columns);
-    max-width: percentage($i / $grid-columns);
-    padding-right: ($grid-gutter-width / 2);
-    padding-left: ($grid-gutter-width / 2);
+    flex: 0 0 math.percentage(math.div($i, $grid-columns));
+    max-width: math.percentage(math.div($i, $grid-columns));
+    padding-right: calc($grid-gutter-width / 2);
+    padding-left: calc($grid-gutter-width / 2);
   }
 }
 
 @media (min-width: $breakpoint-mobile) {
   @for $i from 1 through $grid-columns {
     .col-sm-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      $percentage: math.div($i, $grid-columns) * 100%;
+      flex: 0 0 $percentage;
+      max-width: $percentage;
     }
   }
 }
@@ -292,8 +299,9 @@ td {
 @media (min-width: $breakpoint-tablet) {
   @for $i from 1 through $grid-columns {
     .col-md-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      $percentage: math.div($i, $grid-columns) * 100%;
+      flex: 0 0 $percentage;
+      max-width: $percentage;
     }
   }
 }
@@ -301,8 +309,9 @@ td {
 @media (min-width: $breakpoint-desktop) {
   @for $i from 1 through $grid-columns {
     .col-lg-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      $percentage: math.div($i, $grid-columns) * 100%;
+      flex: 0 0 $percentage;
+      max-width: $percentage;
     }
   }
 }
@@ -310,8 +319,9 @@ td {
 @media (min-width: $breakpoint-desktop-large) {
   @for $i from 1 through $grid-columns {
     .col-xl-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      $percentage: math.div($i, $grid-columns) * 100%;
+      flex: 0 0 $percentage;
+      max-width: $percentage;
     }
   }
 }
@@ -808,7 +818,7 @@ td {
       color: $color-primary-light;
 
       &:hover {
-        color: lighten($color-primary-light, 10%);
+        color: color.adjust($color-primary-light, $lightness: 10%);
       }
     }
 

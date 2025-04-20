@@ -1,4 +1,5 @@
 @import '../../../../../app/core/design/design-tokens';
+@use 'sass:color';
 
 // Emerald AppCard Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/AppCard
@@ -234,7 +235,7 @@ $danger-dark: $error-dark;
       background-color: $danger;
 
       &:hover {
-        background-color: darken($danger, 10%);
+        background-color: color.adjust($danger, $lightness: -10%);
       }
     }
 
@@ -243,7 +244,7 @@ $danger-dark: $error-dark;
       background-color: $primary;
 
       &:hover {
-        background-color: darken($primary, 10%);
+        background-color: color.adjust($primary, $lightness: -10%);
       }
     }
   }
@@ -280,7 +281,7 @@ $danger-dark: $error-dark;
       color: $neutral-100;
 
       &:hover {
-        background-color: darken($danger, 10%);
+        background-color: color.adjust($danger, $lightness: -10%);
       }
 
       i {
@@ -293,7 +294,7 @@ $danger-dark: $error-dark;
       color: $neutral-100;
 
       &:hover {
-        background-color: darken($success, 10%);
+        background-color: color.adjust($success, $lightness: -10%);
       }
 
       i {
