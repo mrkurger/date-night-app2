@@ -1,12 +1,12 @@
 /**
- * Jest configuration for server tests (CommonJS version)
+ * Jest configuration for server tests (ES Module version)
  */
-module.exports = {
+export default {
   // Use Node.js as the test environment
   testEnvironment: 'node',
 
   // Test patterns
-  testMatch: ['**/tests/**/*.test.js', '**/tests/**/*.test.cjs', '**/tests/**/*.spec.js'],
+  testMatch: ['**/tests/**/*.test.js', '**/tests/**/*.spec.js'],
 
   // Setup files
   setupFilesAfterEnv: ['jest-extended/all'],

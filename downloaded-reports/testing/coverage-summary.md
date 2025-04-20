@@ -1,1 +1,3 @@
-# Latest Test Results\n\nNo test results available yet.
+# Latest Test Results
+
+No test results available yet.
