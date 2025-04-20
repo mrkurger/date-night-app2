@@ -14,7 +14,7 @@
 // Helmet is imported in server.js and used there for comprehensive security
 // This middleware adds additional custom security headers
 // eslint-disable-next-line no-unused-vars
-const helmet = require('helmet');
+import helmet from 'helmet';
 
 // Create a middleware function that applies all security headers
 const securityHeaders = (req, res, next) => {

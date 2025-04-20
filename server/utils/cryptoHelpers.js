@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * Crypto utilities for end-to-end encryption

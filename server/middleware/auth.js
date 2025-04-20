@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
-const TokenBlacklist = require('../models/token-blacklist.model');
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model';
+import TokenBlacklist from '../models/token-blacklist.model';
 
 /**
  * Middleware to authenticate users

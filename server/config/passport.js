@@ -7,17 +7,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const GitHubStrategy = require('passport-github2').Strategy;
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const RedditStrategy = require('passport-reddit').Strategy;
-const AppleStrategy = require('passport-apple');
-const bcrypt = require('bcrypt');
-const { User } = require('../components/users');
-const config = require('./environment');
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as GitHubStrategy } from 'passport-github2';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as RedditStrategy } from 'passport-reddit';
+import AppleStrategy from 'passport-apple';
+import bcrypt from 'bcrypt';
+import { User } from '../components/users';
+import config from './environment';
 
 // Local Strategy (username/password)
 passport.use(

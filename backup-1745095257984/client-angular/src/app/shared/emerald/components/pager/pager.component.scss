@@ -1,0 +1,161 @@
+@import '../../../../core/design/design-tokens';
+
+// Emerald Pager Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/Pager
+
+.emerald-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $spacing-4 0;
+  font-family: $font-primary;
+
+  // Alignment variants
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  // Page size selector
+  &__size-selector {
+    display: flex;
+    align-items: center;
+    margin-right: $spacing-4;
+
+    label {
+      margin-right: $spacing-2;
+      font-size: $font-size-sm;
+      color: $neutral-700;
+    }
+
+    select {
+      padding: $spacing-1 $spacing-2;
+      border: 1px solid $neutral-300;
+      border-radius: $border-radius-md;
+      background-color: $neutral-100;
+      font-size: $font-size-sm;
+      color: $neutral-800;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-500;
+        box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
+      }
+    }
+  }
+
+  // Pagination controls
+  &__controls {
+    display: flex;
+    align-items: center;
+  }
+
+  // Page numbers container
+  &__pages {
+    display: flex;
+    align-items: center;
+  }
+
+  // Current page indicator for simple style
+  &__current {
+    margin: 0 $spacing-2;
+    font-size: $font-size-sm;
+    color: $neutral-800;
+
+    .emerald-pager--large & {
+      font-size: $font-size-base;
+    }
+
+    .emerald-pager--small & {
+      font-size: $font-size-xs;
+    }
+  }
+
+  // Pagination buttons
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    margin: 0 $spacing-1;
+    padding: 0 $spacing-2;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius-md;
+    background-color: $neutral-100;
+    color: $neutral-800;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: $neutral-200;
+      border-color: $neutral-400;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    // Active page button
+    &--active {
+      background-color: $primary-500;
+      border-color: $primary-500;
+      color: $neutral-100;
+
+      &:hover {
+        background-color: $primary-600;
+        border-color: $primary-600;
+      }
+    }
+
+    // Size variants
+    .emerald-pager--large & {
+      min-width: 44px;
+      height: 44px;
+      font-size: $font-size-base;
+    }
+
+    .emerald-pager--small & {
+      min-width: 28px;
+      height: 28px;
+      font-size: $font-size-xs;
+      padding: 0 $spacing-1;
+    }
+
+    // Style variants
+    .emerald-pager--compact & {
+      min-width: 32px;
+      margin: 0 $spacing-1;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .emerald-pager {
+    flex-direction: column;
+
+    &__size-selector {
+      margin-right: 0;
+      margin-bottom: $spacing-2;
+    }
+
+    &__button {
+      min-width: 32px;
+      height: 32px;
+      margin: 0 $spacing-1;
+    }
+  }
+}

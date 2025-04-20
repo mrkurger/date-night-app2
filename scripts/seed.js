@@ -1,8 +1,8 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const User = require('../server/models/user.model');
-const Ad = require('../server/models/ad.model');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import User from '../server/models/user.model';
+import Ad from '../server/models/ad.model';
 
 const COUNTIES = [
   'Oslo', 'Viken', 'Innlandet', 'Vestfold og Telemark', 

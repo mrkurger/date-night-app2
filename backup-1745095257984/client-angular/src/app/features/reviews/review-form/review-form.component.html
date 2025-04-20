@@ -1,0 +1,104 @@
+<div class="review-form-container">
+  <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>
+
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+    <!-- Rating -->
+    <div class="form-group">
+      <label class="form-label">Rating</label>
+      <div class="star-rating">
+        <span
+          *ngFor="let star of ratingOptions"
+          class="star"
+          [ngClass]="getStarClass(star)"
+          (click)="setRating(star)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="star + ' star' + (star > 1 ? 's' : '')"
+        ></span>
+      </div>
+      <div
+        class="validation-error"
+        *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched"
+      >
+        Please select a rating
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': reviewForm.get('title')?.invalid && reviewForm.get('title')?.touched,
+        }"
+        placeholder="Summarize your experience"
+      />
+      <div
+        class="validation-error"
+        *ngIf="reviewForm.get('title')?.invalid && reviewForm.get('title')?.touched"
+      >
+        <span *ngIf="reviewForm.get('title')?.errors?.['required']">Title is required</span>
+        <span *ngIf="reviewForm.get('title')?.errors?.['maxlength']"
+          >Title cannot exceed 100 characters</span
+        >
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="content" class="form-label">Review</label>
+      <textarea
+        id="content"
+        formControlName="content"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched,
+        }"
+        placeholder="Share details of your experience"
+        rows="5"
+      ></textarea>
+      <div
+        class="validation-error"
+        *ngIf="reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched"
+      >
+        <span *ngIf="reviewForm.get('content')?.errors?.['required']"
+          >Review content is required</span
+        >
+        <span *ngIf="reviewForm.get('content')?.errors?.['minlength']"
+          >Review must be at least 10 characters</span
+        >
+        <span *ngIf="reviewForm.get('content')?.errors?.['maxlength']"
+          >Review cannot exceed 1000 characters</span
+        >
+      </div>
+      <div
+        class="char-count"
+        [ngClass]="{ 'text-danger': reviewForm.get('content')?.value?.length > 950 }"
+      >
+        {{ reviewForm.get('content')?.value?.length || 0 }}/1000
+      </div>
+    </div>
+
+    <!-- Anonymous -->
+    <div class="form-group form-check">
+      <input type="checkbox" id="anonymous" formControlName="anonymous" class="form-check-input" />
+      <label for="anonymous" class="form-check-label">Post anonymously</label>
+      <div class="form-text text-muted">
+        Your name and profile picture will not be displayed with this review
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid || submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+        {{ isEditMode ? 'Update Review' : 'Submit Review' }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,225 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+/* Tinder Component Styles */
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Main container
+.tinder-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-4;
+  position: relative;
+  z-index: 1; // Ensure it stays below the navbar
+}
+
+// Header section
+.tinder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-6;
+  padding: $spacing-2 0;
+}
+
+// Title with gradient
+.tinder-title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $neutral-900;
+  margin: 0;
+  background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent; // Standard property instead of text-fill-color
+}
+
+// Filter button
+.filter-button {
+  background-color: $neutral-100;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: $spacing-2 $spacing-4;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  color: $neutral-800;
+  box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-3px);
+    background-color: $neutral-50;
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  i {
+    color: $primary;
+    font-size: $font-size-base;
+  }
+}
+
+// Loading state
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+
+  .loading-text {
+    margin-top: $spacing-4;
+    color: $neutral-600;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Error state
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8;
+
+  .error-icon {
+    font-size: $font-size-4xl;
+    color: $danger;
+    margin-bottom: $spacing-4;
+  }
+
+  .error-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $neutral-900;
+    margin-bottom: $spacing-6;
+  }
+
+  .retry-button {
+    padding: $spacing-2 $spacing-6;
+    background-color: $primary;
+    color: $neutral-100;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
+
+    i {
+      margin-right: $spacing-2;
+    }
+  }
+}
+
+// Empty state
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8;
+
+  .empty-icon {
+    font-size: $font-size-4xl;
+    color: $neutral-500;
+    margin-bottom: $spacing-4;
+  }
+
+  .empty-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $neutral-900;
+    margin-bottom: $spacing-2;
+  }
+
+  .empty-subtext {
+    color: $neutral-600;
+  }
+}
+
+// Swipe area
+.swipe-area {
+  position: relative;
+  height: 600px;
+  max-height: 70vh;
+  perspective: 1000px;
+}
+
+// Next card preview
+.next-card-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Modal styles
+.modal-content {
+  border-radius: $border-radius-lg;
+  border: none;
+  box-shadow: $shadow-lg;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba($neutral-900, 0.05);
+
+  .modal-title {
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+
+    i {
+      margin-right: $spacing-2;
+      color: $primary;
+    }
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid rgba($neutral-900, 0.05);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .swipe-area {
+    height: 500px;
+  }
+
+  .tinder-title {
+    font-size: $font-size-2xl;
+  }
+}
+
+@media (max-width: 576px) {
+  .swipe-area {
+    height: 450px;
+  }
+
+  .tinder-container {
+    padding: $spacing-2;
+  }
+}

@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const travelController = require('../controllers/travel.controller');
-const { authenticateToken } = require('../middleware/authenticateToken');
-const { isAdvertiser } = require('../middleware/roles');
-const travelValidator = require('../middleware/validators/travel.validator');
+import travelController from '../controllers/travel.controller';
+import { authenticateToken } from '../middleware/authenticateToken';
+import { isAdvertiser } from '../middleware/roles';
+import travelValidator from '../middleware/validators/travel.validator';
 
 // Protected routes requiring authentication
 router.use(authenticateToken);

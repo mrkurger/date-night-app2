@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const passport = require('passport');
-const authController = require('./auth.controller');
-const { protect } = require('../../middleware/auth');
-const { registrationLimiter, passwordResetLimiter } = require('../../middleware/rateLimiter');
+import passport from 'passport';
+import authController from './auth.controller';
+import { protect } from '../../middleware/auth';
+import { registrationLimiter, passwordResetLimiter } from '../../middleware/rateLimiter';
 
 // Local authentication with rate limiting
 router.post('/register', registrationLimiter, authController.register);

@@ -9,7 +9,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 
-module.exports = {
+export default {
   routes: require('./user.routes'),
   controller: require('./user.controller'),
   model: require('../../models/user.model'), // Export the model directly if needed

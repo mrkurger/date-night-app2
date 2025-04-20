@@ -1,0 +1,230 @@
+<div class="location-matching-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Location-Based Matching</h2>
+      <p class="text-muted">
+        Find date night opportunities near a specific location or your current position.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Search Criteria</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <!-- Use Current Location -->
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                id="useCurrentLocation"
+                formControlName="useCurrentLocation"
+                class="form-check-input"
+              />
+              <label class="form-check-label" for="useCurrentLocation">
+                Use my current location
+              </label>
+            </div>
+
+            <!-- Location -->
+            <div formGroupName="location">
+              <h4>Location</h4>
+
+              <div class="form-group">
+                <label for="county">County *</label>
+                <select
+                  id="county"
+                  formControlName="county"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      searchForm.get('location.county')?.invalid &&
+                      searchForm.get('location.county')?.touched,
+                  }"
+                >
+                  <option value="">Select a county</option>
+                  <option *ngFor="let county of counties" [value]="county">
+                    {{ county }}
+                  </option>
+                </select>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="
+                    searchForm.get('location.county')?.invalid &&
+                    searchForm.get('location.county')?.touched
+                  "
+                >
+                  County is required
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="city">City *</label>
+                <select
+                  id="city"
+                  formControlName="city"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      searchForm.get('location.city')?.invalid &&
+                      searchForm.get('location.city')?.touched,
+                  }"
+                >
+                  <option value="">Select a city</option>
+                  <option *ngFor="let city of filteredCities" [value]="city.name">
+                    {{ city.name }}
+                  </option>
+                </select>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="
+                    searchForm.get('location.city')?.invalid &&
+                    searchForm.get('location.city')?.touched
+                  "
+                >
+                  City is required
+                </div>
+              </div>
+
+              <div class="form-text text-muted mb-3">
+                You can also select a location directly on the map.
+              </div>
+            </div>
+
+            <!-- Search Radius -->
+            <div class="form-group">
+              <label for="radius">Search Radius (km)</label>
+              <input
+                type="range"
+                id="radius"
+                formControlName="radius"
+                class="form-range"
+                min="1"
+                max="500"
+              />
+              <div class="d-flex justify-content-between">
+                <span>1 km</span>
+                <span>{{ searchForm.get('radius')?.value }} km</span>
+                <span>500 km</span>
+              </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="form-group">
+              <label for="categories">Categories</label>
+              <select id="categories" formControlName="categories" class="form-control" multiple>
+                <option value="restaurant">Restaurants</option>
+                <option value="cafe">Cafés</option>
+                <option value="bar">Bars</option>
+                <option value="activity">Activities</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="outdoor">Outdoor</option>
+              </select>
+              <div class="form-text text-muted">Leave empty to search all categories</div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Search
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary ml-2"
+                (click)="clearSearch()"
+                [disabled]="loading"
+              >
+                Clear
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3>Map</h3>
+        </div>
+        <div class="card-body">
+          <app-map
+            [height]="'400px'"
+            [initialLatitude]="59.9139"
+            [initialLongitude]="10.7522"
+            [initialZoom]="6"
+            [selectable]="true"
+            [markers]="mapMarkers"
+            (locationSelected)="onMapLocationSelected($event)"
+            (markerClick)="onMarkerClick($event)"
+          ></app-map>
+
+          <div *ngIf="selectedLocation" class="mt-3">
+            <p>
+              <strong>Selected Location:</strong><br />
+              Latitude: {{ selectedLocation.latitude | number: '1.6-6' }}<br />
+              Longitude: {{ selectedLocation.longitude | number: '1.6-6' }}<br />
+              <span *ngIf="selectedLocation.address">Address: {{ selectedLocation.address }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="card mt-4" *ngIf="results.length > 0">
+        <div class="card-header">
+          <h3>Results</h3>
+        </div>
+        <div class="card-body">
+          <div class="results-list">
+            <div class="result-item" *ngFor="let result of results" [id]="'result-' + result._id">
+              <div class="result-card">
+                <div class="result-image" *ngIf="result.imageUrl">
+                  <img [src]="result.imageUrl" [alt]="result.title" />
+                </div>
+                <div class="result-content">
+                  <h4>{{ result.title }}</h4>
+                  <p class="location">{{ result.city }}, {{ result.county }}</p>
+                  <p class="distance">
+                    <i class="fas fa-map-marker-alt"></i> {{ formatDistance(result.distance) }}
+                  </p>
+                  <p class="description">{{ result.description }}</p>
+                  <div class="rating" *ngIf="result.rating">
+                    <span class="stars">
+                      <i
+                        class="fas fa-star"
+                        *ngFor="let star of [1, 2, 3, 4, 5].slice(0, result.rating)"
+                      ></i>
+                      <i
+                        class="far fa-star"
+                        *ngFor="let star of [1, 2, 3, 4, 5].slice(result.rating)"
+                      ></i>
+                    </span>
+                  </div>
+                  <div class="actions">
+                    <a [routerLink]="['/ads', result._id]" class="btn btn-primary btn-sm"
+                      >View Details</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="card mt-4" *ngIf="results.length === 0 && !loading && searchForm.dirty">
+        <div class="card-body text-center">
+          <p>No matches found for your search criteria.</p>
+          <p>Try adjusting your search radius or selecting different categories.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

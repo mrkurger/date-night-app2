@@ -8,16 +8,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const User = require('../models/user.model');
-const Ad = require('../models/ad.model');
-const ChatMessage = require('../models/chat-message.model');
+import User from '../models/user.model';
+import Ad from '../models/ad.model';
+import ChatMessage from '../models/chat-message.model';
 
 // TODO: Add model validation schemas
 // TODO: Add model lifecycle hooks
 // TODO: Add model access control
 // TODO: Add model caching layer
 
-module.exports = {
+export default {
   // Models (imported from models directory)
   User,
   Ad,

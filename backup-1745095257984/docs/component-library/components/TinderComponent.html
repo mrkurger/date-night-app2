@@ -1,0 +1,2221 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TinderComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/tinder/tinder.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tinder</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterModule</code>
+                            <code>ReactiveFormsModule</code>
+                                <code><a href="../components/MainLayoutComponent.html" target="_self" >MainLayoutComponent</a></code>
+                                <code><a href="../modules/EmeraldModule.html" target="_self" >EmeraldModule</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tinder.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tinder.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ads" >ads</a>
+                            </li>
+                            <li>
+                                <a href="#cardState" >cardState</a>
+                            </li>
+                            <li>
+                                <a href="#counties" >counties</a>
+                            </li>
+                            <li>
+                                <a href="#currentAd" >currentAd</a>
+                            </li>
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#isAuthenticated" >isAuthenticated</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#nextAd" >nextAd</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilters" >applyFilters</a>
+                            </li>
+                            <li>
+                                <a href="#closeFilters" >closeFilters</a>
+                            </li>
+                            <li>
+                                <a href="#getCardMedia" >getCardMedia</a>
+                            </li>
+                            <li>
+                                <a href="#loadSwipeAds" >loadSwipeAds</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onCardAction" >onCardAction</a>
+                            </li>
+                            <li>
+                                <a href="#onMediaChange" >onMediaChange</a>
+                            </li>
+                            <li>
+                                <a href="#onSwipe" >onSwipe</a>
+                            </li>
+                            <li>
+                                <a href="#openFilters" >openFilters</a>
+                            </li>
+                            <li>
+                                <a href="#resetFilters" >resetFilters</a>
+                            </li>
+                            <li>
+                                <a href="#startChat" >startChat</a>
+                            </li>
+                            <li>
+                                <a href="#viewAdDetails" >viewAdDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(adService: <a href="../injectables/AdService.html" target="_self">AdService</a>, notificationService: <a href="../injectables/NotificationService.html" target="_self">NotificationService</a>, chatService: <a href="../injectables/ChatService.html" target="_self">ChatService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, fb: FormBuilder, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/features/tinder/tinder.component.ts:80</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructor</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>adService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AdService.html" target="_self" >AdService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>chatService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChatService.html" target="_self" >ChatService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilters"></a>
+                    <span class="name">
+                        <span ><b>applyFilters</b></span>
+                        <a href="#applyFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="343"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:343</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Apply filters and reload ads</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeFilters"></a>
+                    <span class="name">
+                        <span ><b>closeFilters</b></span>
+                        <a href="#closeFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Close filters modal</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCardMedia"></a>
+                    <span class="name">
+                        <span ><b>getCardMedia</b></span>
+                        <a href="#getCardMedia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCardMedia(ad: <a href="../interfaces/Ad.html" target="_self">Ad</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="257"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:257</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Convert ad media to TinderCardMedia format</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>ad</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Ad.html" target="_self" >Ad</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The ad to convert media from</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>TinderCardMedia[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Array of TinderCardMedia objects</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadSwipeAds"></a>
+                    <span class="name">
+                        <span ><b>loadSwipeAds</b></span>
+                        <a href="#loadSwipeAds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadSwipeAds()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load ads for swiping</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:104</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initialize component</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCardAction"></a>
+                    <span class="name">
+                        <span ><b>onCardAction</b></span>
+                        <a href="#onCardAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCardAction(event: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="207"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:207</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle card action click</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Action event with id and itemId</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMediaChange"></a>
+                    <span class="name">
+                        <span ><b>onMediaChange</b></span>
+                        <a href="#onMediaChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onMediaChange(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="198"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle media change event from TinderCard component</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New media index</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSwipe"></a>
+                    <span class="name">
+                        <span ><b>onSwipe</b></span>
+                        <a href="#onSwipe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSwipe(event: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle swipe event from TinderCard component</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Swipe event with direction and itemId</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openFilters"></a>
+                    <span class="name">
+                        <span ><b>openFilters</b></span>
+                        <a href="#openFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open filters modal</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFilters"></a>
+                    <span class="name">
+                        <span ><b>resetFilters</b></span>
+                        <a href="#resetFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="352"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset filters to default values</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startChat"></a>
+                    <span class="name">
+                        <span ><b>startChat</b></span>
+                        <a href="#startChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startChat()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Start a chat with the advertiser</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewAdDetails"></a>
+                    <span class="name">
+                        <span ><b>viewAdDetails</b></span>
+                        <a href="#viewAdDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewAdDetails()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="225"
+                                    class="link-to-prism">src/app/features/tinder/tinder.component.ts:225</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigate to ad details page</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ads"></a>
+                    <span class="name">
+                        <span ><b>ads</b></span>
+                        <a href="#ads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Ad.html" target="_self" >Ad[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/features/tinder/tinder.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Array of all ads available for swiping</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardState"></a>
+                    <span class="name">
+                        <span ><b>cardState</b></span>
+                        <a href="#cardState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | &quot;like&quot; | &quot;dislike&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/features/tinder/tinder.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current state of the card (&#39;&#39;, &#39;like&#39;, &#39;dislike&#39;)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="counties"></a>
+                    <span class="name">
+                        <span ><b>counties</b></span>
+                        <a href="#counties"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;Oslo&#x27;, &#x27;Bergen&#x27;, &#x27;Trondheim&#x27;, &#x27;Stavanger&#x27;, &#x27;Kristiansand&#x27;, &#x27;Tromsø&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/features/tinder/tinder.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available counties for location filter</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentAd"></a>
+                    <span class="name">
+                        <span ><b>currentAd</b></span>
+                        <a href="#currentAd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Ad.html" target="_self" >Ad | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/features/tinder/tinder.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current ad being displayed</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/features/tinder/tinder.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Error message</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/features/tinder/tinder.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Filter form</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAuthenticated"></a>
+                    <span class="name">
+                        <span ><b>isAuthenticated</b></span>
+                        <a href="#isAuthenticated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/features/tinder/tinder.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Authentication state</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/features/tinder/tinder.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loading state</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextAd"></a>
+                    <span class="name">
+                        <span ><b>nextAd</b></span>
+                        <a href="#nextAd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Ad.html" target="_self" >Ad | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/features/tinder/tinder.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Next ad in the queue (for preloading)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, NO_ERRORS_SCHEMA } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule, Router } from &#x27;@angular/router&#x27;;
+import { FormBuilder, FormGroup, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { AdService } from &#x27;../../core/services/ad.service&#x27;;
+import { NotificationService } from &#x27;../../core/services/notification.service&#x27;;
+import { ChatService } from &#x27;../../core/services/chat.service&#x27;;
+import { AuthService } from &#x27;../../core/services/auth.service&#x27;;
+import { Ad } from &#x27;../../core/models/ad.interface&#x27;;
+import { MainLayoutComponent } from &#x27;../../shared/components/main-layout/main-layout.component&#x27;;
+
+// Import Emerald components
+import { EmeraldModule } from &#x27;../../shared/emerald/emerald.module&#x27;;
+import {
+  TinderCardMedia,
+  TinderCardAction,
+} from &#x27;../../shared/emerald/tinder-card/tinder-card.component&#x27;;
+
+@Component({
+  selector: &#x27;app-tinder&#x27;,
+  templateUrl: &#x27;./tinder.component.html&#x27;,
+  styleUrls: [&#x27;./tinder.component.scss&#x27;],
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, EmeraldModule],
+  schemas: [NO_ERRORS_SCHEMA],
+})
+export class TinderComponent implements OnInit {
+  /**
+   * Array of all ads available for swiping
+   */
+  ads: Ad[] &#x3D; [];
+
+  /**
+   * Current ad being displayed
+   */
+  currentAd: Ad | null &#x3D; null;
+
+  /**
+   * Next ad in the queue (for preloading)
+   */
+  nextAd: Ad | null &#x3D; null;
+
+  /**
+   * Current state of the card (&#x27;&#x27;, &#x27;like&#x27;, &#x27;dislike&#x27;)
+   */
+  cardState: &#x27;&#x27; | &#x27;like&#x27; | &#x27;dislike&#x27; &#x3D; &#x27;&#x27;;
+
+  /**
+   * Loading state
+   */
+  loading &#x3D; true;
+
+  /**
+   * Error message
+   */
+  error: string | null &#x3D; null;
+
+  /**
+   * Filter form
+   */
+  filterForm: FormGroup;
+
+  /**
+   * Available counties for location filter
+   */
+  counties: string[] &#x3D; [&#x27;Oslo&#x27;, &#x27;Bergen&#x27;, &#x27;Trondheim&#x27;, &#x27;Stavanger&#x27;, &#x27;Kristiansand&#x27;, &#x27;Tromsø&#x27;];
+
+  /**
+   * Authentication state
+   */
+  isAuthenticated &#x3D; false;
+
+  /**
+   * Constructor
+   */
+  constructor(
+    private adService: AdService,
+    private notificationService: NotificationService,
+    private chatService: ChatService,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    // Initialize filter form
+    this.filterForm &#x3D; this.fb.group({
+      category: [&#x27;&#x27;],
+      location: [&#x27;&#x27;],
+      touringOnly: [false],
+    });
+  }
+
+  /**
+   * Initialize component
+   */
+  ngOnInit(): void {
+    // Load ads
+    this.loadSwipeAds();
+
+    // Check authentication status
+    this.authService.currentUser$.subscribe(user &#x3D;&gt; {
+      this.isAuthenticated &#x3D; !!user;
+    });
+  }
+
+  /**
+   * Load ads for swiping
+   */
+  loadSwipeAds(): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+    this.cardState &#x3D; &#x27;&#x27;;
+
+    // Get filter values
+    const filters &#x3D; this.filterForm.value;
+
+    this.adService.getSwipeAds(filters).subscribe({
+      next: ads &#x3D;&gt; {
+        if (ads &amp;&amp; ads.length &gt; 0) {
+          this.ads &#x3D; ads;
+          this.currentAd &#x3D; ads[0];
+          this.nextAd &#x3D; ads.length &gt; 1 ? ads[1] : null;
+        } else {
+          this.currentAd &#x3D; null;
+          this.nextAd &#x3D; null;
+          this.ads &#x3D; [];
+        }
+        this.loading &#x3D; false;
+      },
+      error: err &#x3D;&gt; {
+        this.error &#x3D; &#x27;Failed to load ads. Please try again.&#x27;;
+        this.loading &#x3D; false;
+        console.error(&#x27;Error loading swipe ads:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Handle swipe event from TinderCard component
+   * @param event Swipe event with direction and itemId
+   */
+  onSwipe(event: { direction: &#x27;left&#x27; | &#x27;right&#x27;; itemId: string }): void {
+    if (!this.currentAd) return;
+
+    const direction &#x3D; event.direction;
+    const currentAdId &#x3D; this.currentAd._id;
+
+    // Set card state for animation
+    this.cardState &#x3D; direction &#x3D;&#x3D;&#x3D; &#x27;right&#x27; ? &#x27;like&#x27; : &#x27;dislike&#x27;;
+
+    // Record the swipe
+    this.adService.recordSwipe(currentAdId, direction).subscribe({
+      next: () &#x3D;&gt; {
+        // Show notification for right swipes (likes)
+        if (direction &#x3D;&#x3D;&#x3D; &#x27;right&#x27;) {
+          this.notificationService.success(&#x27;Added to your favorites&#x27;);
+        }
+      },
+      error: err &#x3D;&gt; {
+        console.error(&#x27;Error recording swipe:&#x27;, err);
+      },
+    });
+
+    // Move to the next card after animation
+    setTimeout(() &#x3D;&gt; {
+      // Remove the current ad from the array
+      this.ads &#x3D; this.ads.filter(ad &#x3D;&gt; ad._id !&#x3D;&#x3D; currentAdId);
+
+      // Set the next ad as current
+      this.currentAd &#x3D; this.nextAd;
+
+      // Set the next ad in queue
+      this.nextAd &#x3D; this.ads.length &gt; 1 ? this.ads[1] : null;
+
+      // Reset card state
+      this.cardState &#x3D; &#x27;&#x27;;
+
+      // If we&#x27;re out of ads, show empty state
+      if (this.ads.length &#x3D;&#x3D;&#x3D; 0) {
+        this.currentAd &#x3D; null;
+        this.nextAd &#x3D; null;
+      }
+    }, 500);
+  }
+
+  /**
+   * Handle media change event from TinderCard component
+   * @param index New media index
+   */
+  onMediaChange(index: number): void {
+    // This method can be used to track media changes if needed
+    console.log(&#x27;Media changed to index:&#x27;, index);
+  }
+
+  /**
+   * Handle card action click
+   * @param event Action event with id and itemId
+   */
+  onCardAction(event: { id: string; itemId: string }): void {
+    if (!this.currentAd) return;
+
+    switch (event.id) {
+      case &#x27;info&#x27;:
+        this.viewAdDetails();
+        break;
+      case &#x27;chat&#x27;:
+        this.startChat();
+        break;
+      default:
+        console.warn(&#x27;Unknown action:&#x27;, event.id);
+    }
+  }
+
+  /**
+   * Navigate to ad details page
+   */
+  viewAdDetails(): void {
+    if (!this.currentAd) return;
+    this.router.navigateByUrl(&#x60;/ad-details/${this.currentAd._id}&#x60;);
+  }
+
+  /**
+   * Start a chat with the advertiser
+   */
+  startChat(): void {
+    if (!this.currentAd) return;
+
+    if (!this.isAuthenticated) {
+      this.notificationService.error(&#x27;Please log in to start a chat&#x27;);
+      return;
+    }
+
+    this.chatService.createAdRoom(this.currentAd._id).subscribe({
+      next: room &#x3D;&gt; {
+        this.router.navigateByUrl(&#x60;/chat/${room._id}&#x60;);
+      },
+      error: err &#x3D;&gt; {
+        this.notificationService.error(&#x27;Failed to start chat&#x27;);
+        console.error(&#x27;Error starting chat:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Convert ad media to TinderCardMedia format
+   * @param ad The ad to convert media from
+   * @returns Array of TinderCardMedia objects
+   */
+  getCardMedia(ad: Ad): TinderCardMedia[] {
+    if (!ad.media || ad.media.length &#x3D;&#x3D;&#x3D; 0) {
+      // If no media, return a default image
+      return [{ url: &#x27;/assets/images/default-profile.jpg&#x27;, type: &#x27;image&#x27; }];
+    }
+
+    // Convert ad.media to TinderCardMedia format
+    return ad.media.map(item &#x3D;&gt; ({
+      url: item.url,
+      type: item.type &#x3D;&#x3D;&#x3D; &#x27;image&#x27; || item.type &#x3D;&#x3D;&#x3D; &#x27;video&#x27; ? item.type : &#x27;image&#x27;,
+    }));
+  }
+
+  /**
+   * Open filters modal
+   */
+  openFilters(): void {
+    const modal &#x3D; document.getElementById(&#x27;filtersModal&#x27;);
+    if (modal) {
+      try {
+        // Try to use Bootstrap&#x27;s modal API if available
+        // @ts-expect-error - Bootstrap is loaded globally and not via import
+        if (typeof bootstrap !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; bootstrap.Modal) {
+          // @ts-expect-error - Bootstrap is loaded globally and not via import
+          const bsModal &#x3D; new bootstrap.Modal(modal);
+          bsModal.show();
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.add(&#x27;show&#x27;);
+          modal.style.display &#x3D; &#x27;block&#x27;;
+          document.body.classList.add(&#x27;modal-open&#x27;);
+
+          // Create backdrop if it doesn&#x27;t exist
+          let backdrop &#x3D; document.querySelector(&#x27;.modal-backdrop&#x27;);
+          if (!backdrop) {
+            backdrop &#x3D; document.createElement(&#x27;div&#x27;);
+            backdrop.className &#x3D; &#x27;modal-backdrop fade show&#x27;;
+            document.body.appendChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error(&#x27;Error opening modal:&#x27;, error);
+        // Simple fallback
+        modal.style.display &#x3D; &#x27;block&#x27;;
+      }
+    }
+  }
+
+  /**
+   * Close filters modal
+   */
+  closeFilters(): void {
+    const modal &#x3D; document.getElementById(&#x27;filtersModal&#x27;);
+    if (modal) {
+      try {
+        // Try to use Bootstrap&#x27;s modal API if available
+        // @ts-expect-error - Bootstrap is loaded globally and not via import
+        if (typeof bootstrap !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; bootstrap.Modal) {
+          // @ts-expect-error - Bootstrap is loaded globally and not via import
+          const bsModal &#x3D; bootstrap.Modal.getInstance(modal);
+          if (bsModal) {
+            bsModal.hide();
+          }
+        } else {
+          // Fallback implementation if Bootstrap is not available
+          modal.classList.remove(&#x27;show&#x27;);
+          modal.style.display &#x3D; &#x27;none&#x27;;
+          document.body.classList.remove(&#x27;modal-open&#x27;);
+
+          // Remove backdrop
+          const backdrop &#x3D; document.querySelector(&#x27;.modal-backdrop&#x27;);
+          if (backdrop) {
+            backdrop.parentNode?.removeChild(backdrop);
+          }
+        }
+      } catch (error) {
+        console.error(&#x27;Error closing modal:&#x27;, error);
+        // Simple fallback
+        modal.style.display &#x3D; &#x27;none&#x27;;
+      }
+    }
+  }
+
+  /**
+   * Apply filters and reload ads
+   */
+  applyFilters(): void {
+    this.loadSwipeAds();
+    this.closeFilters();
+    this.notificationService.success(&#x27;Filters applied&#x27;);
+  }
+
+  /**
+   * Reset filters to default values
+   */
+  resetFilters(): void {
+    this.filterForm.reset({
+      category: &#x27;&#x27;,
+      location: &#x27;&#x27;,
+      touringOnly: false,
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;app-main-layout activeView&#x3D;&quot;tinder&quot;&gt;
+  &lt;div class&#x3D;&quot;tinder-container&quot;&gt;
+    &lt;div class&#x3D;&quot;tinder-header&quot;&gt;
+      &lt;h1 class&#x3D;&quot;tinder-title&quot;&gt;Discover&lt;/h1&gt;
+      &lt;div class&#x3D;&quot;tinder-filters&quot;&gt;
+        &lt;button class&#x3D;&quot;filter-button&quot; (click)&#x3D;&quot;openFilters()&quot;&gt;
+          &lt;i class&#x3D;&quot;fas fa-sliders-h&quot;&gt;&lt;/i&gt; Filters
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Loading State with Emerald SkeletonLoader --&gt;
+    &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;loading&quot;&gt;
+      &lt;emerald-skeleton-loader type&#x3D;&quot;card&quot; [count]&#x3D;&quot;1&quot; [animated]&#x3D;&quot;true&quot; [layout]&#x3D;&quot;&#x27;tinder&#x27;&quot;&gt;
+      &lt;/emerald-skeleton-loader&gt;
+      &lt;p class&#x3D;&quot;loading-text&quot;&gt;Finding matches for you...&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Error State --&gt;
+    &lt;div class&#x3D;&quot;error-container&quot; *ngIf&#x3D;&quot;error &amp;&amp; !loading&quot;&gt;
+      &lt;div class&#x3D;&quot;error-icon&quot;&gt;
+        &lt;i class&#x3D;&quot;fas fa-exclamation-circle&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;p class&#x3D;&quot;error-text&quot;&gt;{{ error }}&lt;/p&gt;
+      &lt;button class&#x3D;&quot;retry-button&quot; (click)&#x3D;&quot;loadSwipeAds()&quot;&gt;
+        &lt;i class&#x3D;&quot;fas fa-redo&quot;&gt;&lt;/i&gt; Try Again
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Empty State --&gt;
+    &lt;div class&#x3D;&quot;empty-container&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; !error &amp;&amp; (!ads || ads.length &#x3D;&#x3D;&#x3D; 0)&quot;&gt;
+      &lt;div class&#x3D;&quot;empty-icon&quot;&gt;
+        &lt;i class&#x3D;&quot;fas fa-search&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;p class&#x3D;&quot;empty-text&quot;&gt;No more profiles to show&lt;/p&gt;
+      &lt;p class&#x3D;&quot;empty-subtext&quot;&gt;Try adjusting your filters or check back later&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Tinder Card Area --&gt;
+    &lt;div class&#x3D;&quot;swipe-area&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; !error &amp;&amp; currentAd&quot;&gt;
+      &lt;!-- Current Card --&gt;
+      &lt;emerald-tinder-card
+        [title]&#x3D;&quot;currentAd.title&quot;
+        [subtitle]&#x3D;&quot;currentAd.location&quot;
+        [description]&#x3D;&quot;currentAd.description&quot;
+        [media]&#x3D;&quot;getCardMedia(currentAd)&quot;
+        [tags]&#x3D;&quot;currentAd.tags&quot;
+        [itemId]&#x3D;&quot;currentAd._id&quot;
+        [age]&#x3D;&quot;currentAd.age.toString()&quot;
+        [state]&#x3D;&quot;cardState&quot;
+        [swipeable]&#x3D;&quot;true&quot;
+        (swipe)&#x3D;&quot;onSwipe($event)&quot;
+        (actionClick)&#x3D;&quot;onCardAction($event)&quot;
+        (mediaChange)&#x3D;&quot;onMediaChange($event)&quot;
+      &gt;
+      &lt;/emerald-tinder-card&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Next Card Preview (for smooth transitions) --&gt;
+    &lt;div class&#x3D;&quot;next-card-preview&quot; *ngIf&#x3D;&quot;nextAd&quot;&gt;
+      &lt;emerald-tinder-card
+        [title]&#x3D;&quot;nextAd.title&quot;
+        [subtitle]&#x3D;&quot;nextAd.location&quot;
+        [description]&#x3D;&quot;nextAd.description&quot;
+        [media]&#x3D;&quot;getCardMedia(nextAd)&quot;
+        [tags]&#x3D;&quot;nextAd.tags&quot;
+        [itemId]&#x3D;&quot;nextAd._id&quot;
+        [age]&#x3D;&quot;nextAd.age.toString()&quot;
+        [swipeable]&#x3D;&quot;false&quot;
+      &gt;
+      &lt;/emerald-tinder-card&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Floating Action Button for Filters --&gt;
+  &lt;emerald-floating-action-button
+    icon&#x3D;&quot;fa-sliders-h&quot;
+    label&#x3D;&quot;Filters&quot;
+    color&#x3D;&quot;primary&quot;
+    position&#x3D;&quot;bottom-right&quot;
+    [showTooltip]&#x3D;&quot;true&quot;
+    tooltipText&#x3D;&quot;Filter Profiles&quot;
+    (buttonClick)&#x3D;&quot;openFilters()&quot;
+  &gt;
+  &lt;/emerald-floating-action-button&gt;
+
+  &lt;!-- Filters Modal --&gt;
+  &lt;div
+    class&#x3D;&quot;modal fade&quot;
+    id&#x3D;&quot;filtersModal&quot;
+    tabindex&#x3D;&quot;-1&quot;
+    aria-labelledby&#x3D;&quot;filtersModalLabel&quot;
+    aria-hidden&#x3D;&quot;true&quot;
+  &gt;
+    &lt;div class&#x3D;&quot;modal-dialog&quot;&gt;
+      &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+        &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+          &lt;h5 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;filtersModalLabel&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-filter&quot;&gt;&lt;/i&gt; Filter Profiles
+          &lt;/h5&gt;
+          &lt;button
+            type&#x3D;&quot;button&quot;
+            class&#x3D;&quot;btn-close&quot;
+            (click)&#x3D;&quot;closeFilters()&quot;
+            aria-label&#x3D;&quot;Close&quot;
+          &gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+          &lt;form [formGroup]&#x3D;&quot;filterForm&quot;&gt;
+            &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+              &lt;label for&#x3D;&quot;category&quot; class&#x3D;&quot;form-label&quot;&gt; &lt;i class&#x3D;&quot;fas fa-tag&quot;&gt;&lt;/i&gt; Category &lt;/label&gt;
+              &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;category&quot; formControlName&#x3D;&quot;category&quot;&gt;
+                &lt;option value&#x3D;&quot;&quot;&gt;All Categories&lt;/option&gt;
+                &lt;option value&#x3D;&quot;Escort&quot;&gt;Escort&lt;/option&gt;
+                &lt;option value&#x3D;&quot;Striptease&quot;&gt;Striptease&lt;/option&gt;
+                &lt;option value&#x3D;&quot;Massage&quot;&gt;Massage&lt;/option&gt;
+                &lt;option value&#x3D;&quot;Companion&quot;&gt;Companion&lt;/option&gt;
+                &lt;option value&#x3D;&quot;Other&quot;&gt;Other&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+              &lt;label for&#x3D;&quot;location&quot; class&#x3D;&quot;form-label&quot;&gt;
+                &lt;i class&#x3D;&quot;fas fa-map-marker-alt&quot;&gt;&lt;/i&gt; Location
+              &lt;/label&gt;
+              &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;location&quot; formControlName&#x3D;&quot;location&quot;&gt;
+                &lt;option value&#x3D;&quot;&quot;&gt;All Locations&lt;/option&gt;
+                &lt;option *ngFor&#x3D;&quot;let county of counties&quot; [value]&#x3D;&quot;county&quot;&gt;{{ county }}&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+              &lt;label class&#x3D;&quot;form-label d-block mb-2&quot;&gt;
+                &lt;i class&#x3D;&quot;fas fa-plane&quot;&gt;&lt;/i&gt; Touring Status
+              &lt;/label&gt;
+              &lt;!-- Using Emerald Toggle --&gt;
+              &lt;emerald-toggle
+                label&#x3D;&quot;Show only touring profiles&quot;
+                labelPosition&#x3D;&quot;right&quot;
+                color&#x3D;&quot;primary&quot;
+                [formControl]&#x3D;&quot;$any(filterForm.get(&#x27;touringOnly&#x27;))&quot;
+              &gt;
+              &lt;/emerald-toggle&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-outline-secondary&quot; (click)&#x3D;&quot;resetFilters()&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-undo&quot;&gt;&lt;/i&gt; Reset
+          &lt;/button&gt;
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;closeFilters()&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-times&quot;&gt;&lt;/i&gt; Cancel
+          &lt;/button&gt;
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-check&quot;&gt;&lt;/i&gt; Apply Filters
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/app-main-layout&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./tinder.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../styles/variables&#x27;;
+@import &#x27;../../../styles/mixins&#x27;;
+
+/* Tinder Component Styles */
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Main container
+.tinder-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-4;
+  position: relative;
+  z-index: 1; // Ensure it stays below the navbar
+}
+
+// Header section
+.tinder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-6;
+  padding: $spacing-2 0;
+}
+
+// Title with gradient
+.tinder-title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $neutral-900;
+  margin: 0;
+  background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent; // Standard property instead of text-fill-color
+}
+
+// Filter button
+.filter-button {
+  background-color: $neutral-100;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: $spacing-2 $spacing-4;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  color: $neutral-800;
+  box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  &amp;:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-3px);
+    background-color: $neutral-50;
+  }
+
+  &amp;:active {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  i {
+    color: $primary;
+    font-size: $font-size-base;
+  }
+}
+
+// Loading state
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+
+  .loading-text {
+    margin-top: $spacing-4;
+    color: $neutral-600;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Error state
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8;
+
+  .error-icon {
+    font-size: $font-size-4xl;
+    color: $danger;
+    margin-bottom: $spacing-4;
+  }
+
+  .error-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $neutral-900;
+    margin-bottom: $spacing-6;
+  }
+
+  .retry-button {
+    padding: $spacing-2 $spacing-6;
+    background-color: $primary;
+    color: $neutral-100;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &amp;:hover {
+      background-color: darken($primary, 10%);
+    }
+
+    i {
+      margin-right: $spacing-2;
+    }
+  }
+}
+
+// Empty state
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8;
+
+  .empty-icon {
+    font-size: $font-size-4xl;
+    color: $neutral-500;
+    margin-bottom: $spacing-4;
+  }
+
+  .empty-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $neutral-900;
+    margin-bottom: $spacing-2;
+  }
+
+  .empty-subtext {
+    color: $neutral-600;
+  }
+}
+
+// Swipe area
+.swipe-area {
+  position: relative;
+  height: 600px;
+  max-height: 70vh;
+  perspective: 1000px;
+}
+
+// Next card preview
+.next-card-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Modal styles
+.modal-content {
+  border-radius: $border-radius-lg;
+  border: none;
+  box-shadow: $shadow-lg;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba($neutral-900, 0.05);
+
+  .modal-title {
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+
+    i {
+      margin-right: $spacing-2;
+      color: $primary;
+    }
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid rgba($neutral-900, 0.05);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .swipe-area {
+    height: 500px;
+  }
+
+  .tinder-title {
+    font-size: $font-size-2xl;
+  }
+}
+
+@media (max-width: 576px) {
+  .swipe-area {
+    height: 450px;
+  }
+
+  .tinder-container {
+    padding: $spacing-2;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><app-main-layout activeView="tinder">  <div class="tinder-container">    <div class="tinder-header">      <h1 class="tinder-title">Discover</h1>      <div class="tinder-filters">        <button class="filter-button" (click)="openFilters()">          <i class="fas fa-sliders-h"></i> Filters        </button>      </div>    </div>    <!-- Loading State with Emerald SkeletonLoader -->    <div class="loading-container" *ngIf="loading">      <emerald-skeleton-loader type="card" [count]="1" [animated]="true" [layout]="\'tinder\'">      </emerald-skeleton-loader>      <p class="loading-text">Finding matches for you...</p>    </div>    <!-- Error State -->    <div class="error-container" *ngIf="error && !loading">      <div class="error-icon">        <i class="fas fa-exclamation-circle"></i>      </div>      <p class="error-text">{{ error }}</p>      <button class="retry-button" (click)="loadSwipeAds()">        <i class="fas fa-redo"></i> Try Again      </button>    </div>    <!-- Empty State -->    <div class="empty-container" *ngIf="!loading && !error && (!ads || ads.length === 0)">      <div class="empty-icon">        <i class="fas fa-search"></i>      </div>      <p class="empty-text">No more profiles to show</p>      <p class="empty-subtext">Try adjusting your filters or check back later</p>    </div>    <!-- Tinder Card Area -->    <div class="swipe-area" *ngIf="!loading && !error && currentAd">      <!-- Current Card -->      <emerald-tinder-card        [title]="currentAd.title"        [subtitle]="currentAd.location"        [description]="currentAd.description"        [media]="getCardMedia(currentAd)"        [tags]="currentAd.tags"        [itemId]="currentAd._id"        [age]="currentAd.age.toString()"        [state]="cardState"        [swipeable]="true"        (swipe)="onSwipe($event)"        (actionClick)="onCardAction($event)"        (mediaChange)="onMediaChange($event)"      >      </emerald-tinder-card>    </div>    <!-- Next Card Preview (for smooth transitions) -->    <div class="next-card-preview" *ngIf="nextAd">      <emerald-tinder-card        [title]="nextAd.title"        [subtitle]="nextAd.location"        [description]="nextAd.description"        [media]="getCardMedia(nextAd)"        [tags]="nextAd.tags"        [itemId]="nextAd._id"        [age]="nextAd.age.toString()"        [swipeable]="false"      >      </emerald-tinder-card>    </div>  </div>  <!-- Floating Action Button for Filters -->  <emerald-floating-action-button    icon="fa-sliders-h"    label="Filters"    color="primary"    position="bottom-right"    [showTooltip]="true"    tooltipText="Filter Profiles"    (buttonClick)="openFilters()"  >  </emerald-floating-action-button>  <!-- Filters Modal -->  <div    class="modal fade"    id="filtersModal"    tabindex="-1"    aria-labelledby="filtersModalLabel"    aria-hidden="true"  >    <div class="modal-dialog">      <div class="modal-content">        <div class="modal-header">          <h5 class="modal-title" id="filtersModalLabel">            <i class="fas fa-filter"></i> Filter Profiles          </h5>          <button            type="button"            class="btn-close"            (click)="closeFilters()"            aria-label="Close"          ></button>        </div>        <div class="modal-body">          <form [formGroup]="filterForm">            <div class="mb-3">              <label for="category" class="form-label"> <i class="fas fa-tag"></i> Category </label>              <select class="form-select" id="category" formControlName="category">                <option value="">All Categories</option>                <option value="Escort">Escort</option>                <option value="Striptease">Striptease</option>                <option value="Massage">Massage</option>                <option value="Companion">Companion</option>                <option value="Other">Other</option>              </select>            </div>            <div class="mb-3">              <label for="location" class="form-label">                <i class="fas fa-map-marker-alt"></i> Location              </label>              <select class="form-select" id="location" formControlName="location">                <option value="">All Locations</option>                <option *ngFor="let county of counties" [value]="county">{{ county }}</option>              </select>            </div>            <div class="mb-3">              <label class="form-label d-block mb-2">                <i class="fas fa-plane"></i> Touring Status              </label>              <!-- Using Emerald Toggle -->              <emerald-toggle                label="Show only touring profiles"                labelPosition="right"                color="primary"                [formControl]="$any(filterForm.get(\'touringOnly\'))"              >              </emerald-toggle>            </div>          </form>        </div>        <div class="modal-footer">          <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">            <i class="fas fa-undo"></i> Reset          </button>          <button type="button" class="btn btn-secondary" (click)="closeFilters()">            <i class="fas fa-times"></i> Cancel          </button>          <button type="button" class="btn btn-primary" (click)="applyFilters()">            <i class="fas fa-check"></i> Apply Filters          </button>        </div>      </div>    </div>  </div></app-main-layout></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TinderComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TinderComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

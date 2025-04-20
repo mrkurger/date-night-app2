@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const adController = require('./ad.controller');
+import adController from './ad.controller';
 
 /**
  * @swagger

@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const crypto = require('crypto');
-const { fileTypeFromBuffer } = require('file-type');
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs/promises';
+import crypto from 'crypto';
+import { fileTypeFromBuffer } from 'file-type';
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, '..', 'uploads');
@@ -156,7 +156,7 @@ const uploadSingle = fieldName => validateAndSave(fieldName);
 // maxCount is handled internally in validateAndSave
 const uploadMultiple = fieldName => validateAndSave(fieldName);
 
-module.exports = {
+export default {
   uploadSingle,
   uploadMultiple,
   validateAndSave,

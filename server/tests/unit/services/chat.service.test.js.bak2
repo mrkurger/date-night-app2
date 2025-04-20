@@ -1,0 +1,280 @@
+/**
+ * Chat Service Unit Tests
+ *
+ * Tests the functionality of the chat service, which handles chat messages,
+ * chat rooms, and real-time communication.
+ */
+
+import mongoose from 'mongoose';
+import { jest } from '@jest/globals';
+import chatService from '../../../services/chat.service';
+import ChatMessage from '../../../models/chat-message.model';
+import ChatRoom from '../../../models/chat-room.model';
+import User from '../../../models/user.model';
+import Ad from '../../../models/ad.model';
+import socketService from '../../../services/socket.service';
+import cryptoHelpers from '../../../utils/cryptoHelpers';
+import { AppError } from '../../../middleware/errorHandler';
+
+const { ObjectId } = mongoose.Types;
+
+// Mock dependencies
+jest.mock('../../../models/chat-message.model');
+jest.mock('../../../models/chat-room.model');
+jest.mock('../../../models/user.model');
+jest.mock('../../../models/ad.model');
+jest.mock('../../../services/socket.service');
+jest.mock('../../../utils/cryptoHelpers');
+
+describe('Chat Service', () => {
+  const mockUserId1 = 'mock-user-id-1';
+  const mockUserId2 = 'mock-user-id-2';
+  const mockRoomId = 'mock-room-id';
+  const mockAdId = 'mock-ad-id';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    
+    // Setup ChatMessage mock
+    ChatMessage.mockImplementation((data) => ({
+      ...data,
+      save: jest.fn().mockResolvedValue(true)
+    }));
+    
+    const populateRecipientMock = jest.fn().mockResolvedValue([]);
+    const populateSenderMock = jest.fn().mockReturnValue({ populate: populateRecipientMock });
+    const limitMock = jest.fn().mockReturnValue({ populate: populateSenderMock });
+    const sortMock = jest.fn().mockReturnValue({ limit: limitMock });
+    
+    ChatMessage.find = jest.fn().mockReturnValue({
+      sort: sortMock,
+      limit: limitMock,
+      populate: populateSenderMock
+    });
+    
+    ChatMessage.findById = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValue({})
+      })
+    });
+    
+    ChatMessage.updateMany = jest.fn().mockResolvedValue({ nModified: 1 });
+    ChatMessage.aggregate = jest.fn().mockResolvedValue([{ count: 5 }]);
+    ChatMessage.create = jest.fn().mockResolvedValue({
+      _id: 'mock-message-id',
+      save: jest.fn().mockResolvedValue(true)
+    });
+    
+    // Setup ChatRoom mock
+    const mockRoom = {
+      _id: mockRoomId,
+      participants: [
+        { user: mockUserId1, role: 'member' },
+        { user: mockUserId2, role: 'member' }
+      ],
+      messageExpiryEnabled: false,
+      messageExpiryTime: 0,
+      updateLastMessage: jest.fn().mockResolvedValue({}),
+      updateLastRead: jest.fn().mockResolvedValue({})
+    };
+    
+    ChatRoom.findById = jest.fn().mockResolvedValue(mockRoom);
+    ChatRoom.findOrCreateDirectRoom = jest.fn().mockResolvedValue(mockRoom);
+    ChatRoom.findOrCreateAdRoom = jest.fn().mockResolvedValue(mockRoom);
+    ChatRoom.findOrCreateGroupRoom = jest.fn().mockResolvedValue(mockRoom);
+    ChatRoom.getRoomsForUser = jest.fn().mockResolvedValue([mockRoom]);
+    
+    // Setup User mock
+    User.findById = jest.fn().mockResolvedValue({
+      _id: mockUserId1,
+      username: 'testuser'
+    });
+    
+    User.find = jest.fn().mockResolvedValue([{
+      _id: mockUserId1,
+      username: 'testuser'
+    }]);
+    
+    // Setup Ad mock
+    Ad.findById = jest.fn().mockResolvedValue({
+      _id: mockAdId,
+      advertiser: {
+        _id: mockUserId2
+      }
+    });
+    
+    // Setup socket service mock
+    socketService.sendToRoom = jest.fn().mockResolvedValue(true);
+    socketService.sendToUser = jest.fn().mockResolvedValue(true);
+    socketService.isUserOnline = jest.fn().mockReturnValue(true);
+    
+    // Setup crypto helpers mock
+    cryptoHelpers.encryptMessage = jest.fn().mockReturnValue({ encrypted: 'data' });
+  });
+
+  describe('sendMessage', () => {
+    it('should send a message successfully', async () => {
+      const mockChatMessage = {
+        _id: 'mock-message-id',
+        sender: {
+          _id: mockUserId1,
+          username: 'user1',
+          profileImage: 'profile1.jpg',
+        },
+        roomId: mockRoomId,
+        message: 'Hello',
+        type: 'text',
+        save: jest.fn().mockResolvedValue(true),
+      };
+
+      ChatMessage.create.mockResolvedValue(mockChatMessage);
+      ChatMessage.findById.mockResolvedValue(mockChatMessage);
+
+      const result = await chatService.sendMessage(mockRoomId, mockUserId1, 'Hello', {
+        type: 'text',
+      });
+
+      expect(result).toEqual(mockChatMessage);
+      expect(ChatRoom.findById).toHaveBeenCalledWith(mockRoomId);
+      expect(socketService.sendToRoom).toHaveBeenCalledWith(
+        `chat:${mockRoomId}`,
+        'chat:message',
+        expect.any(Object)
+      );
+    });
+
+    it('should throw error when room not found', async () => {
+      ChatRoom.findById.mockResolvedValue(null);
+
+      await expect(
+        chatService.sendMessage(mockRoomId, mockUserId1, 'Hello', { type: 'text' })
+      ).rejects.toThrow(new AppError('Chat room not found', 404));
+    });
+
+    it('should throw error when user is not a participant', async () => {
+      const mockRoom = {
+        _id: mockRoomId,
+        participants: [{ user: mockUserId2, role: 'member' }],
+      };
+
+      ChatRoom.findById.mockResolvedValue(mockRoom);
+
+      await expect(
+        chatService.sendMessage(mockRoomId, mockUserId1, 'Hello', { type: 'text' })
+      ).rejects.toThrow(new AppError('You are not a participant in this chat room', 403));
+    });
+
+    it('should throw error when message creation fails', async () => {
+      ChatMessage.create.mockRejectedValue(new Error('Database error'));
+
+      await expect(
+        chatService.sendMessage(mockRoomId, mockUserId1, 'Hello', { type: 'text' })
+      ).rejects.toThrow(new AppError('Failed to send message', 500));
+    });
+  });
+
+  describe('getMessages', () => {
+    it('should get messages for a chat room with default options', async () => {
+      const mockMessages = [
+        {
+          _id: 'mock-message-id',
+          sender: {
+            _id: mockUserId1,
+            username: 'user1',
+            profileImage: 'profile1.jpg',
+          },
+          roomId: mockRoomId,
+          message: 'Hello',
+          type: 'text',
+        },
+      ];
+
+      const populateRecipientMock = jest.fn().mockResolvedValue(mockMessages);
+      const populateSenderMock = jest.fn().mockReturnValue({ populate: populateRecipientMock });
+      const limitMock = jest.fn().mockReturnValue({ populate: populateSenderMock });
+      const sortMock = jest.fn().mockReturnValue({ limit: limitMock });
+
+      ChatMessage.find.mockReturnValue({
+        sort: sortMock,
+        limit: limitMock,
+        populate: populateSenderMock,
+      });
+
+      const result = await chatService.getMessages(mockRoomId);
+
+      expect(result).toEqual(mockMessages.reverse());
+      expect(ChatMessage.find).toHaveBeenCalledWith({ roomId: mockRoomId });
+      expect(sortMock).toHaveBeenCalledWith({ createdAt: -1 });
+      expect(limitMock).toHaveBeenCalledWith(50);
+      expect(populateSenderMock).toHaveBeenCalledWith('sender', 'username profileImage');
+      expect(populateRecipientMock).toHaveBeenCalledWith('recipient', 'username profileImage');
+    });
+
+    it('should throw an error if database query fails', async () => {
+      const errorMessage = 'Database error';
+      ChatMessage.find.mockImplementation(() => {
+        throw new Error(errorMessage);
+      });
+
+      await expect(chatService.getMessages(mockRoomId)).rejects.toThrow(
+        'Failed to fetch messages'
+      );
+    });
+  });
+
+  describe('getUnreadCount', () => {
+    it('should get unread message count successfully', async () => {
+      const mockCount = 5;
+      ChatMessage.aggregate.mockResolvedValue([{ count: mockCount }]);
+
+      const result = await chatService.getUnreadCount(mockUserId1);
+
+      expect(result).toBe(mockCount);
+    });
+
+    it('should return 0 when no unread messages', async () => {
+      ChatMessage.aggregate.mockResolvedValue([]);
+
+      const result = await chatService.getUnreadCount(mockUserId1);
+
+      expect(result).toBe(0);
+    });
+
+    it('should throw error when count retrieval fails', async () => {
+      ChatMessage.aggregate.mockRejectedValue(new Error('Database error'));
+
+      await expect(chatService.getUnreadCount(mockUserId1)).rejects.toThrow(
+        new AppError('Failed to get unread message count', 500)
+      );
+    });
+  });
+
+  describe('createDirectRoom', () => {
+    it('should create a direct room successfully', async () => {
+      const mockRoom = {
+        _id: mockRoomId,
+        type: 'direct',
+        participants: [
+          { user: mockUserId1, role: 'member' },
+          { user: mockUserId2, role: 'member' },
+        ],
+      };
+
+      ChatRoom.findOrCreateDirectRoom.mockResolvedValue(mockRoom);
+
+      const result = await chatService.createDirectRoom(mockUserId1, mockUserId2);
+
+      expect(result).toEqual(mockRoom);
+      expect(ChatRoom.findOrCreateDirectRoom).toHaveBeenCalledWith(mockUserId1, mockUserId2);
+    });
+
+    it('should throw error when room creation fails', async () => {
+      User.findById.mockResolvedValue(true); // Ensure users exist
+      ChatRoom.findOrCreateDirectRoom.mockRejectedValue(new Error('Database error'));
+
+      await expect(chatService.createDirectRoom(mockUserId1, mockUserId2)).rejects.toThrow(
+        new AppError('Database error', 500)
+      );
+    });
+  });
+});

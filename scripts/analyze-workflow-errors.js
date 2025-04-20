@@ -7,9 +7,9 @@
  * and provides insights and recommendations for fixing the issues.
  */
 
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
+import fs from 'fs/promises';
+import path from 'path';
+import util from 'util';
 
 const LOGS_DIR = path.join(__dirname, '..', 'workflow-error-logs');
 const REPORT_FILE = path.join(__dirname, '..', 'workflow-error-report.md');

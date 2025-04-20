@@ -1,0 +1,263 @@
+// Define variables locally for testing
+$neutral-100: #f3f4f6;
+$neutral-200: #e5e7eb;
+$neutral-300: #d1d5db;
+$neutral-600: #4b5563;
+$neutral-700: #374151;
+$neutral-900: #111827;
+$border-radius-md: 0.375rem;
+$border-radius-sm: 0.25rem;
+$border-radius-full: 9999px;
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-weight-semibold: 600;
+$primary: #3b82f6;
+$primary-100: #dbeafe;
+$primary-700: #1d4ed8;
+$success: #10b981;
+$success-100: #dcfce7;
+$success-700: #15803d;
+$warning: #f59e0b;
+$warning-100: #fef3c7;
+$warning-700: #b45309;
+$danger: #ef4444;
+$danger-100: #fee2e2;
+$danger-700: #b91c1c;
+$info: #0ea5e9;
+$info-100: #e0f2fe;
+$info-700: #0369a1;
+
+// Emerald InfoPanel Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+
+.emerald-info-panel {
+  background-color: $neutral-100;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  // Panel Variants
+  &--bordered {
+    border: 1px solid $neutral-300;
+  }
+
+  &--shadowed {
+    box-shadow: $shadow-md;
+  }
+
+  // Panel Header
+  &__header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $neutral-200;
+
+    .emerald-info-panel--collapsible & {
+      cursor: pointer;
+
+      &:hover {
+        background-color: $neutral-100;
+      }
+    }
+  }
+
+  &__title-container {
+    flex: 1;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+  }
+
+  &__subtitle {
+    margin: 4px 0 0;
+    font-size: $font-size-sm;
+    color: $neutral-600;
+  }
+
+  // Collapse Toggle
+  &__toggle {
+    background: none;
+    border: none;
+    color: $neutral-600;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      color: $neutral-900;
+    }
+  }
+
+  // Panel Content
+  &__content {
+    transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
+
+    .emerald-info-panel--collapsed & {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+
+  &__items {
+    padding: 16px;
+  }
+
+  // Panel Item
+  &__item {
+    display: flex;
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__item-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: $neutral-700;
+    font-size: $font-size-sm;
+  }
+
+  &__item-icon {
+    margin-right: 8px;
+    color: $neutral-600;
+    width: 16px;
+    text-align: center;
+  }
+
+  &__item-value {
+    flex: 1;
+    text-align: right;
+    font-weight: $font-weight-semibold;
+    color: $neutral-900;
+    font-size: $font-size-sm;
+  }
+
+  // Badge Value
+  &__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+
+    &--primary {
+      background-color: #dbeafe; /* primary-100 */
+      color: #1d4ed8; /* primary-700 */
+    }
+
+    &--success {
+      background-color: #dcfce7; /* success-100 */
+      color: #15803d; /* success-700 */
+    }
+
+    &--warning {
+      background-color: #fef3c7; /* warning-100 */
+      color: #b45309; /* warning-700 */
+    }
+
+    &--danger {
+      background-color: #fee2e2; /* danger-100 */
+      color: #b91c1c; /* danger-700 */
+    }
+
+    &--info {
+      background-color: #e0f2fe; /* info-100 */
+      color: #0369a1; /* info-700 */
+    }
+
+    &--neutral {
+      background-color: #e5e7eb; /* neutral-200 */
+      color: #374151; /* neutral-700 */
+    }
+  }
+
+  // Progress Value
+  &__progress {
+    position: relative;
+    height: 8px;
+    width: 100px;
+    background-color: $neutral-200;
+    border-radius: $border-radius-full;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  &__progress-bar {
+    height: 100%;
+    border-radius: $border-radius-full;
+
+    &--primary {
+      background-color: $primary;
+    }
+
+    &--success {
+      background-color: $success;
+    }
+
+    &--warning {
+      background-color: $warning;
+    }
+
+    &--danger {
+      background-color: $danger;
+    }
+
+    &--info {
+      background-color: $info;
+    }
+
+    &--neutral {
+      background-color: $neutral-600;
+    }
+  }
+
+  &__progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $font-size-xs;
+    color: $neutral-900;
+    text-shadow: 0 0 2px rgba($neutral-100, 0.8);
+  }
+
+  // Boolean Value
+  &__boolean {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    &--true {
+      background-color: $success-100;
+      color: $success;
+    }
+
+    &--false {
+      background-color: $danger-100;
+      color: $danger;
+    }
+  }
+}

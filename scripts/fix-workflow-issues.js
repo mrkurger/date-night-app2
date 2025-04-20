@@ -5,19 +5,19 @@
  * 3. Reinstalls dependencies to apply the overrides
  */
 
-const { execSync } = require('child_process');
-const path = require('path');
+import { execSync } from 'child_process';
+import path from 'path';
 
 console.log('🔧 Starting workflow issues fix script...');
 
 try {
   // Run the update-deprecated-packages.js script
   console.log('\n📦 Updating deprecated packages...');
-  require('./update-deprecated-packages');
+  import './update-deprecated-packages';
 
   // Run the increase-node-memory.js script
   console.log('\n💾 Increasing Node.js heap memory for Angular tests...');
-  require('./increase-node-memory');
+  import './increase-node-memory';
 
   // Reinstall dependencies to apply the overrides
   console.log('\n🔄 Reinstalling dependencies to apply overrides...');

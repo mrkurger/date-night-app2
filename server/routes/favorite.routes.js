@@ -7,10 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const favoriteController = require('../controllers/favorite.controller');
-const { authenticate } = require('../middleware/auth');
+import favoriteController from '../controllers/favorite.controller';
+import { authenticate } from '../middleware/auth';
 
 /**
  * Favorites routes

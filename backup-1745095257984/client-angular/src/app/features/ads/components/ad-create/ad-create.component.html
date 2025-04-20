@@ -1,0 +1,104 @@
+<div class="form-container">
+  <form [formGroup]="adForm" (ngSubmit)="createAd()" class="ad-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter ad title" />
+      <mat-error *ngIf="adForm.get('title')?.hasError('required')"> Title is required </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="4"
+        placeholder="Enter ad description"
+      ></textarea>
+      <mat-error *ngIf="adForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="adForm.get('category')?.hasError('required')">
+        Please select a category
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" formControlName="price" placeholder="Enter price" />
+      <span matPrefix>$&nbsp;</span>
+      <mat-error *ngIf="adForm.get('price')?.hasError('required')"> Price is required </mat-error>
+      <mat-error *ngIf="adForm.get('price')?.hasError('min')">
+        Price must be greater than 0
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" placeholder="Enter location" />
+      <mat-error *ngIf="adForm.get('location')?.hasError('required')">
+        Location is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="image-upload-section">
+      <label class="file-upload-label">
+        <button type="button" mat-raised-button color="accent" (click)="fileInput.click()">
+          <mat-icon>add_photo_alternate</mat-icon>
+          Add Images
+        </button>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          multiple
+          (change)="onFileSelected($event)"
+          style="display: none"
+        />
+      </label>
+      <mat-hint>Maximum 5 images, each up to 5MB</mat-hint>
+
+      <div class="image-preview-container" *ngIf="selectedImages.length > 0">
+        <div class="image-preview" *ngFor="let image of selectedImages; let i = index">
+          <img [src]="image.preview" [alt]="'Preview ' + (i + 1)" />
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="removeImage(i)"
+            class="remove-image"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <mat-error *ngIf="imageError" class="image-error">
+        {{ imageError }}
+      </mat-error>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+
+    <div class="button-container">
+      <button mat-button type="button" routerLink="/ads">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="adForm.invalid || loading || imageError"
+      >
+        <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+        <span *ngIf="!loading">Create Ad</span>
+      </button>
+    </div>
+  </form>
+</div>

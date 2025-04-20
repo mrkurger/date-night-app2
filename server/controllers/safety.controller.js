@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const SafetyCheckin = require('../models/safety-checkin.model');
-const User = require('../models/user.model');
-const crypto = require('crypto');
+import SafetyCheckin from '../models/safety-checkin.model';
+import User from '../models/user.model';
+import crypto from 'crypto';
 
 // Create a new safety check-in
 exports.createSafetyCheckin = async (req, res) => {

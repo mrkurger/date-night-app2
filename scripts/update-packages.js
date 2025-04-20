@@ -5,9 +5,9 @@
  * This script runs npm update in the root, server, and client directories
  */
 
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
 
 // Define directories
 const rootDir = path.join(__dirname, '..');

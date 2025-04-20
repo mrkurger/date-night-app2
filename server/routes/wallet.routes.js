@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const walletController = require('../controllers/wallet.controller');
-const { authenticateToken } = require('../middleware/authenticateToken');
-const { asyncHandler } = require('../middleware/asyncHandler');
+import walletController from '../controllers/wallet.controller';
+import { authenticateToken } from '../middleware/authenticateToken';
+import { asyncHandler } from '../middleware/asyncHandler';
 
 // Protect all wallet routes except webhook
 router.use(authenticateToken);

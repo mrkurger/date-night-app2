@@ -1,50 +1,48 @@
 /**
- * Jest configuration for server tests
- * This file uses .cjs extension to ensure it's treated as CommonJS
+ * Jest configuration for server tests (CommonJS version)
  */
 module.exports = {
   // Use Node.js as the test environment
   testEnvironment: 'node',
 
   // Test patterns
-  testMatch: [
-    '<rootDir>/tests/unit/**/*.test.js',
-    '<rootDir>/tests/integration/**/*.test.js',
-    '<rootDir>/**/*.test.js',
-  ],
+  testMatch: ['**/tests/**/*.test.js', '**/tests/**/*.spec.js'],
 
   // Setup files
   setupFilesAfterEnv: ['jest-extended/all'],
 
   // Coverage collection
-  collectCoverageFrom: ['<rootDir>/**/*.js', '!<rootDir>/tests/**', '!<rootDir>/scripts/**'],
+  collectCoverageFrom: ['**/*.js', '!**/node_modules/**', '!**/tests/**', '!**/scripts/**'],
 
   // Coverage thresholds
   coverageThreshold: {
     global: {
-      statements: 70,
-      branches: 60,
-      functions: 70,
-      lines: 70,
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80,
     },
   },
 
   // Use babel-jest for transforming
   transform: {
-    '^.+\\.js$': ['babel-jest', { configFile: './babel.config.cjs' }],
+    '^.+\\.js$': ['babel-jest', { rootMode: 'upward' }],
   },
 
   // Module name mapping for imports
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^@/(.*)$': '<rootDir>/$1',
   },
-
-  // Tell Jest to treat these patterns as CommonJS
-  transformIgnorePatterns: ['/node_modules/', 'tests/'],
 
   // Verbose output for test results
   verbose: true,
 
   // Ensure proper handling of ES modules
   moduleFileExtensions: ['js', 'json', 'node'],
+
+  // Required for proper ES modules support
+  testRunner: 'jest-circus/runner',
+
+  // Transform ignore patterns
+  transformIgnorePatterns: ['node_modules/(?!(mongoose|@babel/runtime|@jest/globals)/)'],
 };

@@ -181,39 +181,8 @@ describe('Wallet Service', () => {
     }));
   });
 
-  describe('getWallet', () => {
-    it('should return a wallet for a valid user ID', async () => {
-      // Mock Wallet.findOne
-      Wallet.findOne.mockResolvedValue(mockWallet);
-
-      const result = await walletService.getWallet(mockUserId);
-
-      expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUserId });
-      expect(result).toEqual(mockWallet);
-    });
-
-    it('should return null if wallet is not found', async () => {
-      // Mock Wallet.findOne to return null
-      Wallet.findOne.mockResolvedValue(null);
-
-      const result = await walletService.getWallet(mockUserId);
-
-      expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUserId });
-      expect(result).toBeNull();
-    });
-
-    it('should throw an error if database query fails', async () => {
-      // Mock Wallet.findOne to throw an error
-      const errorMessage = 'Database error';
-      Wallet.findOne.mockRejectedValue(new Error(errorMessage));
-
-      await expect(walletService.getWallet(mockUserId)).rejects.toThrow(
-        'Error fetching wallet: ' + errorMessage
-      );
-
-      expect(Wallet.findOne).toHaveBeenCalledWith({ userId: mockUserId });
-    });
-  });
+  // The getWallet method doesn't exist in the implementation
+  // Instead, we have getOrCreateWallet, getWalletBalance, getWalletTransactions, and getWalletPaymentMethods
 
   describe('getOrCreateWallet', () => {
     it('should return an existing wallet if one exists', async () => {

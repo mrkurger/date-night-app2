@@ -9,11 +9,11 @@
 // - DEFAULT_COORDINATES: Default coordinates to use when geocoding fails (default: Oslo)
 //   Related to: travel.service.js:geocodeLocation
 // ===================================================
-const axios = require('axios');
-const Location = require('../models/location.model');
-const { AppError } = require('../middleware/errorHandler');
-const logger = require('../utils/logger').logger;
-const NodeCache = require('node-cache');
+import axios from 'axios';
+import Location from '../models/location.model';
+import { AppError } from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
+import NodeCache from 'node-cache';
 
 // Initialize cache with 1 day TTL and check period of 1 hour
 const cache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 });

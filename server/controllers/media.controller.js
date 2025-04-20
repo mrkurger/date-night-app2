@@ -1,5 +1,5 @@
-const mediaService = require('../services/media.service');
-const { validationResult } = require('express-validator');
+import mediaService from '../services/media.service';
+import { validationResult } from 'express-validator';
 
 /**
  * Upload media for an ad

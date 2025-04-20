@@ -13,12 +13,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const encryptionController = require('./encryption.controller');
-const { protect } = require('../../middleware/auth');
-const { validate } = require('../../middleware/validation');
-const { body, param } = require('express-validator');
+import encryptionController from './encryption.controller';
+import { protect } from '../../middleware/auth';
+import { validate } from '../../middleware/validation';
+import { body, param } from 'express-validator';
 
 // Debug log to check if the controller is properly imported
 console.log('Encryption controller methods:', Object.keys(encryptionController));

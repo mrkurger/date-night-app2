@@ -139,7 +139,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param next The next handler
    * @returns An observable of the HTTP event
    */
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<never>> {
     // Temporarily disable error handling to fix compatibility issues
     return next.handle(request);
 
@@ -212,7 +212,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param request The original HTTP request
    * @returns A function that applies retry logic to an observable
    */
-  private retryWithBackoff(request: HttpRequest<any>) {
+  private retryWithBackoff(request: HttpRequest<never>) {
     // Return a function that takes an observable and returns a new observable with the same type
     // Using generic type parameter to ensure type compatibility across different RxJS versions
     return <T>(source: Observable<T>): Observable<T> => {
@@ -296,7 +296,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else if (response.body) {
       try {
         responseSize = new Blob([JSON.stringify(response.body)]).size;
-      } catch {
+      } catch (_) {
         // Ignore if we can't calculate size
       }
     }

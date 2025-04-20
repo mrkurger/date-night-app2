@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const verificationController = require('../controllers/verification.controller');
-const { authenticate } = require('../middleware/auth');
-const { isAdmin } = require('../middleware/roles');
+import verificationController from '../controllers/verification.controller';
+import { authenticate } from '../middleware/auth';
+import { isAdmin } from '../middleware/roles';
 
 // Get verification status for current user
 router.get('/status', authenticate, verificationController.getVerificationStatus);

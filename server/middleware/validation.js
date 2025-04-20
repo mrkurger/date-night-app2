@@ -12,8 +12,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { validationResult } = require('express-validator');
-const { validationErrorResponse } = require('../utils/response');
+import { validationResult } from 'express-validator';
+import { validationErrorResponse } from '../utils/response';
 
 /**
  * Middleware to validate request data using express-validator
@@ -71,7 +71,7 @@ const sanitizeRequest = (req, res, next) => {
   next();
 };
 
-module.exports = {
+export default {
   validate,
   sanitizeRequest,
 };

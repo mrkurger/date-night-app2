@@ -112,7 +112,7 @@ const sanitizeString = str => {
   return str.replace(/<[^>]*>/g, '');
 };
 
-module.exports = {
+export default {
   isValidEmail,
   isNotEmpty,
   isValidNumber,

@@ -18,12 +18,9 @@ const { combine, timestamp, printf, colorize, json } = format;
 import 'winston-daily-rotate-file';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
 
-// Get current directory (equivalent to __dirname in CommonJS)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const logsDir = path.join(__dirname, '..', 'logs');
+// Get current directory (works in both CommonJS and ES modules)
+const logsDir = path.join(process.cwd(), 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }

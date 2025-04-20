@@ -1,0 +1,44 @@
+<div class="ad-detail-container">
+  <mat-spinner *ngIf="loading" diameter="40"></mat-spinner>
+
+  <mat-card *ngIf="error" class="error-card">
+    <mat-card-content>
+      <p class="error-message">{{ error }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="ad">
+    <mat-card-header>
+      <mat-card-title>{{ ad.title }}</mat-card-title>
+      <mat-card-subtitle>{{ ad.category }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="ad-images" *ngIf="ad.images?.length">
+        <img [src]="ad.images[0]" [alt]="ad.title" />
+      </div>
+
+      <div class="ad-info">
+        <p>{{ ad.description }}</p>
+        <p><strong>Price:</strong> ${{ ad.price }}</p>
+        <p><strong>Location:</strong> {{ ad.location }}</p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="startChat()">Contact Advertiser</button>
+      <div class="favorite-action">
+        <app-favorite-button
+          [adId]="ad._id"
+          [adTitle]="ad.title"
+          [large]="true"
+          (favoriteChanged)="onFavoriteChanged($event)"
+        >
+        </app-favorite-button>
+        <span class="favorite-label">{{
+          isFavorite() ? 'Remove from Favorites' : 'Add to Favorites'
+        }}</span>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

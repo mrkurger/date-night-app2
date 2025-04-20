@@ -8,8 +8,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const authController = require('./auth.controller');
+import authController from './auth.controller';
 
-module.exports = {
+export default {
   authController,
 };

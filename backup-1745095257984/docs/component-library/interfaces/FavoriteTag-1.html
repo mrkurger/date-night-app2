@@ -1,0 +1,619 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  FavoriteTag</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/favorite.service.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#count" 
+>
+                                            count
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#tag" 
+>
+                                            tag
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="count"></a>
+                                        <span class="name "><b>count</b>
+                                            <a href="#count">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>count:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="tag"></a>
+                                        <span class="name "><b>tag</b>
+                                            <a href="#tag">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>tag:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpParams } from &#x27;@angular/common/http&#x27;;
+import { Observable, BehaviorSubject } from &#x27;rxjs&#x27;;
+import { tap, map } from &#x27;rxjs/operators&#x27;;
+import { environment } from &#x27;../../../environments/environment&#x27;;
+import { Ad } from &#x27;../models/ad.interface&#x27;;
+
+export interface FavoriteTag {
+  tag: string;
+  count: number;
+}
+
+export interface FavoriteFilterOptions {
+  sort?:
+    | &#x27;newest&#x27;
+    | &#x27;oldest&#x27;
+    | &#x27;price-asc&#x27;
+    | &#x27;price-desc&#x27;
+    | &#x27;title-asc&#x27;
+    | &#x27;title-desc&#x27;
+    | &#x27;priority-high&#x27;
+    | &#x27;priority-low&#x27;;
+  category?: string;
+  county?: string;
+  city?: string;
+  search?: string;
+}
+
+export interface FavoriteBatchResult {
+  message: string;
+  added?: number;
+  alreadyFavorited?: number;
+  removed?: number;
+}
+
+export interface Favorite {
+  _id: string;
+  user: string;
+  ad: Ad;
+  notes: string;
+  notificationsEnabled: boolean;
+  tags: string[];
+  priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27;;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Service for managing user favorites
+ * Provides methods for adding, removing, and managing favorite ads
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class FavoriteService {
+  private apiUrl &#x3D; &#x60;${environment.apiUrl}/favorites&#x60;;
+  private favoritesSubject &#x3D; new BehaviorSubject&lt;string[]&gt;([]);
+  private favoritesLoaded &#x3D; false;
+
+  // Observable of favorite ad IDs
+  favorites$ &#x3D; this.favoritesSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  /**
+   * Load all favorite IDs for the current user
+   * This is used to efficiently check if an ad is favorited
+   */
+  loadFavoriteIds(): Observable&lt;string[]&gt; {
+    return this.http.get&lt;string[]&gt;(&#x60;${this.apiUrl}/ids&#x60;).pipe(
+      tap(ids &#x3D;&gt; {
+        this.favoritesSubject.next(ids);
+        this.favoritesLoaded &#x3D; true;
+      })
+    );
+  }
+
+  /**
+   * Get all favorites for the current user with full ad details
+   * @param options Optional filter and sort options
+   */
+  getFavorites(options?: FavoriteFilterOptions): Observable&lt;Favorite[]&gt; {
+    let params &#x3D; new HttpParams();
+
+    if (options) {
+      if (options.sort) {
+        params &#x3D; params.set(&#x27;sort&#x27;, options.sort);
+      }
+      if (options.category) {
+        params &#x3D; params.set(&#x27;category&#x27;, options.category);
+      }
+      if (options.county) {
+        params &#x3D; params.set(&#x27;county&#x27;, options.county);
+      }
+      if (options.city) {
+        params &#x3D; params.set(&#x27;city&#x27;, options.city);
+      }
+      if (options.search) {
+        params &#x3D; params.set(&#x27;search&#x27;, options.search);
+      }
+      if (options.priority) {
+        params &#x3D; params.set(&#x27;priority&#x27;, options.priority);
+      }
+      if (options.priceMin !&#x3D;&#x3D; undefined) {
+        params &#x3D; params.set(&#x27;priceMin&#x27;, options.priceMin.toString());
+      }
+      if (options.priceMax !&#x3D;&#x3D; undefined) {
+        params &#x3D; params.set(&#x27;priceMax&#x27;, options.priceMax.toString());
+      }
+      if (options.dateFrom) {
+        params &#x3D; params.set(&#x27;dateFrom&#x27;, new Date(options.dateFrom).toISOString());
+      }
+      if (options.dateTo) {
+        params &#x3D; params.set(&#x27;dateTo&#x27;, new Date(options.dateTo).toISOString());
+      }
+      if (options.tags &amp;&amp; options.tags.length &gt; 0) {
+        // For multiple tags, we need to handle them specially
+        options.tags.forEach(tag &#x3D;&gt; {
+          params &#x3D; params.append(&#x27;tags&#x27;, tag);
+        });
+      }
+    }
+
+    return this.http.get&lt;Favorite[]&gt;(this.apiUrl, { params });
+  }
+
+  /**
+   * Get all tags used by the current user
+   * @returns Observable of tags with usage counts
+   */
+  getUserTags(): Observable&lt;FavoriteTag[]&gt; {
+    return this.http.get&lt;FavoriteTag[]&gt;(&#x60;${this.apiUrl}/tags&#x60;);
+  }
+
+  /**
+   * Check if an ad is in the user&#x27;s favorites
+   * @param adId Ad ID to check
+   */
+  isFavorite(adId: string): Observable&lt;boolean&gt; {
+    // If we&#x27;ve already loaded favorites, check locally
+    if (this.favoritesLoaded) {
+      return this.favorites$.pipe(map(favorites &#x3D;&gt; favorites.includes(adId)));
+    }
+
+    // Otherwise, check with the server
+    return this.http.get&lt;boolean&gt;(&#x60;${this.apiUrl}/check/${adId}&#x60;);
+  }
+
+  /**
+   * Add an ad to favorites
+   * @param adId Ad ID to add
+   * @param notes Optional notes about this favorite
+   * @param notificationsEnabled Whether to enable notifications for this favorite
+   * @param tags Optional tags for categorizing this favorite
+   * @param priority Optional priority level (low, normal, high)
+   */
+  addFavorite(
+    adId: string,
+    notes &#x3D; &#x27;&#x27;,
+    notificationsEnabled &#x3D; true,
+    tags: string[] &#x3D; [],
+    priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27; &#x3D; &#x27;normal&#x27;
+  ): Observable&lt;any&gt; {
+    return this.http
+      .post(&#x60;${this.apiUrl}/${adId}&#x60;, {
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
+      .pipe(
+        tap(() &#x3D;&gt; {
+          if (this.favoritesLoaded) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            if (!currentFavorites.includes(adId)) {
+              this.favoritesSubject.next([...currentFavorites, adId]);
+            }
+          }
+        })
+      );
+  }
+
+  /**
+   * Add multiple ads to favorites in a batch operation
+   * @param adIds Array of ad IDs to add
+   * @param notes Optional notes to apply to all favorites
+   * @param notificationsEnabled Whether to enable notifications for all favorites
+   * @param tags Optional tags to apply to all favorites
+   * @param priority Optional priority level to apply to all favorites
+   */
+  addFavoritesBatch(
+    adIds: string[],
+    notes &#x3D; &#x27;&#x27;,
+    notificationsEnabled &#x3D; true,
+    tags: string[] &#x3D; [],
+    priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27; &#x3D; &#x27;normal&#x27;
+  ): Observable&lt;FavoriteBatchResult&gt; {
+    return this.http
+      .post&lt;FavoriteBatchResult&gt;(&#x60;${this.apiUrl}/batch&#x60;, {
+        adIds,
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
+      .pipe(
+        tap(result &#x3D;&gt; {
+          if (this.favoritesLoaded &amp;&amp; result.added &amp;&amp; result.added &gt; 0) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            const newFavorites &#x3D; [...currentFavorites];
+
+            // Add only the IDs that aren&#x27;t already in the list
+            adIds.forEach(id &#x3D;&gt; {
+              if (!currentFavorites.includes(id)) {
+                newFavorites.push(id);
+              }
+            });
+
+            this.favoritesSubject.next(newFavorites);
+          }
+        })
+      );
+  }
+
+  /**
+   * Remove an ad from favorites
+   * @param adId Ad ID to remove
+   */
+  removeFavorite(adId: string): Observable&lt;any&gt; {
+    return this.http.delete(&#x60;${this.apiUrl}/${adId}&#x60;).pipe(
+      tap(() &#x3D;&gt; {
+        if (this.favoritesLoaded) {
+          const currentFavorites &#x3D; this.favoritesSubject.value;
+          this.favoritesSubject.next(currentFavorites.filter(id &#x3D;&gt; id !&#x3D;&#x3D; adId));
+        }
+      })
+    );
+  }
+
+  /**
+   * Remove multiple ads from favorites in a batch operation
+   * @param adIds Array of ad IDs to remove
+   */
+  removeFavoritesBatch(adIds: string[]): Observable&lt;FavoriteBatchResult&gt; {
+    return this.http
+      .delete&lt;FavoriteBatchResult&gt;(&#x60;${this.apiUrl}/batch&#x60;, {
+        body: { adIds },
+      })
+      .pipe(
+        tap(() &#x3D;&gt; {
+          if (this.favoritesLoaded) {
+            const currentFavorites &#x3D; this.favoritesSubject.value;
+            this.favoritesSubject.next(currentFavorites.filter(id &#x3D;&gt; !adIds.includes(id)));
+          }
+        })
+      );
+  }
+
+  /**
+   * Update notes for a favorite
+   * @param adId Ad ID
+   * @param notes New notes
+   */
+  updateNotes(adId: string, notes: string): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/notes&#x60;, { notes });
+  }
+
+  /**
+   * Update tags for a favorite
+   * @param adId Ad ID
+   * @param tags New tags array
+   */
+  updateTags(adId: string, tags: string[]): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/tags&#x60;, { tags });
+  }
+
+  /**
+   * Update priority for a favorite
+   * @param adId Ad ID
+   * @param priority New priority (low, normal, high)
+   */
+  updatePriority(adId: string, priority: &#x27;low&#x27; | &#x27;normal&#x27; | &#x27;high&#x27;): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/priority&#x60;, { priority });
+  }
+
+  /**
+   * Toggle notifications for a favorite
+   * @param adId Ad ID
+   */
+  toggleNotifications(adId: string): Observable&lt;any&gt; {
+    return this.http.patch(&#x60;${this.apiUrl}/${adId}/notifications&#x60;, {});
+  }
+
+  /**
+   * Clear the cached favorites (e.g., on logout)
+   */
+  clearCache(): void {
+    this.favoritesSubject.next([]);
+    this.favoritesLoaded &#x3D; false;
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'FavoriteTag-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

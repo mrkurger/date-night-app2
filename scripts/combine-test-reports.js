@@ -24,8 +24,8 @@
  * - docs/latest-test-results.md
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // --- Configuration ---
 const angularCoveragePath = path.join('downloaded-reports', 'angular', 'coverage-summary.json');

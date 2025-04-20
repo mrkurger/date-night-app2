@@ -1,0 +1,205 @@
+/**
+ * Button Component Styles
+ * 
+ * Implements the DateNight.io button styles using the design system.
+ */
+
+@use 'src/app/core/design/main' as ds;
+
+// Base button styles
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: ds.$spacing-2;
+  border: none;
+  border-radius: ds.$border-radius-md;
+  cursor: pointer;
+  font-family: ds.$font-family-base;
+  font-weight: ds.$font-weight-semibold;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  transition: all ds.$transition-fast ds.$transition-timing-default;
+  position: relative;
+  overflow: hidden;
+
+  // Size variants
+  &--small {
+    @include ds.button-text-small;
+    padding: ds.$spacing-1 ds.$spacing-3;
+    min-height: 32px;
+  }
+
+  &--medium {
+    @include ds.button-text;
+    padding: ds.$spacing-2 ds.$spacing-4;
+    min-height: 40px;
+  }
+
+  &--large {
+    @include ds.button-text-large;
+    padding: ds.$spacing-3 ds.$spacing-5;
+    min-height: 48px;
+  }
+
+  // Style variants
+  &--primary {
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+
+    &:hover:not(.button--disabled):not(.button--loading) {
+      background-color: ds.$color-primary-dark;
+    }
+
+    &:active:not(.button--disabled):not(.button--loading) {
+      background-color: darken(ds.$color-primary-dark, 5%);
+      transform: translateY(1px);
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: ds.$color-primary;
+    border: 1px solid ds.$color-primary;
+
+    &:hover:not(.button--disabled):not(.button--loading) {
+      background-color: rgba(ds.$color-primary, 0.05);
+    }
+
+    &:active:not(.button--disabled):not(.button--loading) {
+      background-color: rgba(ds.$color-primary, 0.1);
+      transform: translateY(1px);
+    }
+  }
+
+  &--tertiary {
+    background-color: transparent;
+    color: ds.$color-primary;
+
+    &:hover:not(.button--disabled):not(.button--loading) {
+      background-color: rgba(ds.$color-primary, 0.05);
+    }
+
+    &:active:not(.button--disabled):not(.button--loading) {
+      background-color: rgba(ds.$color-primary, 0.1);
+      transform: translateY(1px);
+    }
+  }
+
+  &--danger {
+    background-color: ds.$color-error;
+    color: ds.$color-white;
+
+    &:hover:not(.button--disabled):not(.button--loading) {
+      background-color: darken(ds.$color-error, 10%);
+    }
+
+    &:active:not(.button--disabled):not(.button--loading) {
+      background-color: darken(ds.$color-error, 15%);
+      transform: translateY(1px);
+    }
+  }
+
+  // States
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &--loading {
+    cursor: wait;
+    pointer-events: none;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  // Focus styles
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(ds.$color-primary, 0.4);
+  }
+
+  // Button elements
+  &__text {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+
+    &--left {
+      margin-right: ds.$spacing-1;
+    }
+
+    &--right {
+      margin-left: ds.$spacing-1;
+    }
+  }
+
+  // Loading spinner
+  &__spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: ds.$spacing-2;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__spinner-icon {
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+  }
+
+  &__spinner-track {
+    stroke: rgba(255, 255, 255, 0.3);
+  }
+
+  &__spinner-progress {
+    stroke: currentColor;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 60;
+    transform-origin: center;
+  }
+}
+
+// Spinner animation
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .button {
+      &--secondary {
+        border-color: ds.$color-primary-light;
+        color: ds.$color-primary-light;
+      }
+
+      &--tertiary {
+        color: ds.$color-primary-light;
+      }
+
+      &--primary,
+      &--danger {
+        // These already have light text on dark backgrounds
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 /**
  * Connect to MongoDB database
@@ -64,4 +64,4 @@ const closeDB = async () => {
   }
 };
 
-module.exports = { connectDB, closeDB };
+export default { connectDB, closeDB };

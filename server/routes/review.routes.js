@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const reviewController = require('../controllers/review.controller');
-const { authenticate, optionalAuth } = require('../middleware/auth');
-const { isAdmin } = require('../middleware/roles');
+import reviewController from '../controllers/review.controller';
+import { authenticate, optionalAuth } from '../middleware/auth';
+import { isAdmin } from '../middleware/roles';
 
 // Create a new review
 router.post('/', authenticate, reviewController.createReview);

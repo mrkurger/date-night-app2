@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const ChatMessage = require('../models/chat-message.model');
-const cron = require('node-cron');
+import ChatMessage from '../models/chat-message.model';
+import cron from 'node-cron';
 
 /**
  * Message cleanup utility for auto-deleting expired messages

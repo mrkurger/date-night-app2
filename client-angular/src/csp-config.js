@@ -14,8 +14,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Determine if we're in development or production
 const isDevelopment = process.env.NODE_ENV === 'development';

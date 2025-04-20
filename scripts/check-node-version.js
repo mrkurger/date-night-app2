@@ -4,10 +4,10 @@
  * Script to check Node.js version and provide guidance
  */
 
-const semver = require('semver');
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import semver from 'semver';
+import { execSync } from 'child_process';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Get current Node.js version
 const currentVersion = process.version;

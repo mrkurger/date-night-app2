@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { User } = require('../users');
+import { User } from '../users';
 
 module.exports = io => {
   // Store user socket mappings

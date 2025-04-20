@@ -1,0 +1,214 @@
+/**
+ * Design System Demo Component Styles
+ */
+
+@use 'src/app/core/design/main' as ds;
+
+.design-demo {
+  padding: ds.$spacing-8 0;
+
+  &__header {
+    margin-bottom: ds.$spacing-8;
+    text-align: center;
+  }
+
+  &__title {
+    @include ds.heading-1;
+    color: ds.$color-primary;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &__description {
+    @include ds.body-large;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__section {
+    margin-bottom: ds.$spacing-12;
+  }
+
+  &__section-title {
+    @include ds.heading-2;
+    margin-bottom: ds.$spacing-6;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -ds.$spacing-3;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: ds.$color-primary;
+      border-radius: ds.$border-radius-full;
+    }
+  }
+
+  &__card-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: ds.$spacing-4;
+
+    @media (min-width: ds.$breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: ds.$breakpoint-desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: ds.$breakpoint-desktop-large) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+// Typography examples
+.heading-1 {
+  @include ds.heading-1;
+}
+
+.heading-2 {
+  @include ds.heading-2;
+}
+
+.heading-3 {
+  @include ds.heading-3;
+}
+
+.heading-4 {
+  @include ds.heading-4;
+}
+
+.heading-5 {
+  @include ds.heading-5;
+}
+
+.heading-6 {
+  @include ds.heading-6;
+}
+
+.body-large {
+  @include ds.body-large;
+}
+
+.body-default {
+  @include ds.body-default;
+}
+
+.body-small {
+  @include ds.body-small;
+}
+
+.body-xs {
+  @include ds.body-xs;
+}
+
+.caption {
+  @include ds.caption;
+}
+
+.label {
+  @include ds.label;
+}
+
+// Color swatches
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: ds.$spacing-3;
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__sample {
+    width: 60px;
+    height: 60px;
+    border-radius: ds.$border-radius-md;
+    margin-bottom: ds.$spacing-2;
+    border: 1px solid ds.$color-light-gray-2;
+  }
+
+  &__name {
+    @include ds.body-small;
+    text-align: center;
+  }
+}
+
+// Button grid
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  gap: ds.$spacing-3;
+}
+
+// Form grid
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: ds.$spacing-4;
+}
+
+// Icon grid
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: ds.$spacing-4;
+}
+
+.icon-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__label {
+    @include ds.caption;
+    margin-top: ds.$spacing-2;
+    text-align: center;
+  }
+}
+
+// CSS Variables for color swatches
+:root {
+  --color-primary: #{ds.$color-primary};
+  --color-primary-light: #{ds.$color-primary-light};
+  --color-primary-dark: #{ds.$color-primary-dark};
+
+  --color-secondary: #{ds.$color-secondary};
+  --color-secondary-light: #{ds.$color-secondary-light};
+  --color-secondary-dark: #{ds.$color-secondary-dark};
+
+  --color-light-gray-2: #{ds.$color-light-gray-2};
+  --color-medium-gray-1: #{ds.$color-medium-gray-1};
+  --color-medium-gray-2: #{ds.$color-medium-gray-2};
+  --color-dark-gray-1: #{ds.$color-dark-gray-1};
+  --color-dark-gray-2: #{ds.$color-dark-gray-2};
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .design-demo {
+      &__title {
+        color: ds.$color-primary-light;
+      }
+
+      &__section-title {
+        &:after {
+          background-color: ds.$color-primary-light;
+        }
+      }
+    }
+
+    .color-swatch {
+      &__sample {
+        border-color: ds.$color-dark-gray-1;
+      }
+    }
+  }
+}

@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('./user.controller');
-const { protect } = require('../../middleware/auth');
-const { newPasswordValidation } = require('../../middleware/validator');
+import userController from './user.controller';
+import { protect } from '../../middleware/auth';
+import { newPasswordValidation } from '../../middleware/validator';
 
 // Protected routes (require authentication)
 router.get('/me', protect, userController.getCurrentUser);

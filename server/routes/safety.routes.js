@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const safetyController = require('../controllers/safety.controller');
-const { authenticate } = require('../middleware/auth');
-const { isAdmin } = require('../middleware/roles');
+import safetyController from '../controllers/safety.controller';
+import { authenticate } from '../middleware/auth';
+import { isAdmin } from '../middleware/roles';
 
 // Create a new safety check-in
 router.post('/checkin', authenticate, safetyController.createSafetyCheckin);

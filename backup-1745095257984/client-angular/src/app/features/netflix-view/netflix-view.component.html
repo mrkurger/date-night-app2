@@ -1,0 +1,209 @@
+<app-main-layout activeView="netflix">
+  <div class="netflix-container">
+    <!-- Hero Section with Emerald PageHeader -->
+    <emerald-page-header
+      *ngIf="featuredAd"
+      [title]="featuredAd.title"
+      [subtitle]="featuredAd.location"
+      [backgroundImage]="getMediaUrl(featuredAd)"
+      [avatarUrl]="getAdvertiserImage(featuredAd)"
+      [avatarName]="getAdvertiserName(featuredAd)"
+      [avatarIsOnline]="featuredAd.isAdvertiserOnline || false"
+      [actions]="[
+        { id: 'view', label: 'View Profile', icon: 'fas fa-info-circle', primary: true },
+        { id: 'favorite', label: 'Add to Favorites', icon: 'fas fa-heart' },
+        { id: 'chat', label: 'Start Chat', icon: 'fas fa-comment' },
+      ]"
+      (actionClick)="onHeroAction($event, featuredAd._id)"
+    >
+      <!-- Custom hero content -->
+      <div class="hero-content">
+        <p class="hero-description">{{ featuredAd.description }}</p>
+
+        <!-- Additional hero content - can be expanded later -->
+        <div class="hero-tags" *ngIf="featuredAd.tags && featuredAd.tags.length > 0">
+          <emerald-label
+            *ngFor="let tag of featuredAd.tags.slice(0, 5)"
+            [text]="tag"
+            size="small"
+            color="secondary"
+          >
+          </emerald-label>
+        </div>
+      </div>
+    </emerald-page-header>
+
+    <!-- Main Content -->
+    <div class="netflix-content">
+      <!-- Filters Bar -->
+      <div class="filters-bar">
+        <div class="container">
+          <div class="filters-content">
+            <h2 class="section-title">Browse Profiles</h2>
+            <button class="filter-button" (click)="openFilters()">
+              <i class="fas fa-sliders-h"></i> Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State with Emerald SkeletonLoader -->
+      <div class="loading-container" *ngIf="loading">
+        <emerald-skeleton-loader type="card" [count]="5" [animated]="true" [layout]="'netflix'">
+        </emerald-skeleton-loader>
+        <p class="loading-text">Loading profiles...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-container" *ngIf="error && !loading">
+        <div class="error-icon">
+          <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <p class="error-text">{{ error }}</p>
+        <button class="retry-button" (click)="loadAds()">
+          <i class="fas fa-redo"></i> Try Again
+        </button>
+      </div>
+
+      <!-- Netflix-style Rows with Emerald CardGrid and AppCard -->
+      <div class="netflix-rows" *ngIf="!loading && !error">
+        <div class="row-section" *ngFor="let category of categories; let i = index">
+          <div class="container">
+            <h2 class="row-title">{{ category }}</h2>
+
+            <!-- Empty state handling -->
+            <div class="empty-row" *ngIf="adsByCategory[category]?.length === 0">
+              <p class="empty-row-text">No profiles in this category</p>
+            </div>
+
+            <!-- Using Emerald CardGrid for each row -->
+            <emerald-card-grid
+              *ngIf="adsByCategory[category]?.length > 0"
+              [items]="adsByCategory[category]"
+              [layout]="cardGridConfig.layout"
+              [gap]="cardGridConfig.gap"
+              [animated]="cardGridConfig.animated"
+              [itemsPerRow]="cardGridConfig.itemsPerRow"
+              (itemClick)="viewAdDetails($event._id)"
+            >
+              <ng-template #itemTemplate let-ad>
+                <emerald-app-card
+                  [title]="ad.title"
+                  [subtitle]="ad.location"
+                  [description]="ad.shortDescription || ad.description?.substring(0, 100) + '...'"
+                  [imageUrl]="getMediaUrl(ad)"
+                  [avatarUrl]="ad.advertiserImage"
+                  [avatarName]="ad.advertiserName"
+                  [isOnline]="ad.isAdvertiserOnline"
+                  [tags]="ad.tags?.slice(0, 3)"
+                  [layout]="'netflix'"
+                  [itemId]="ad._id"
+                  [actions]="[
+                    { id: 'view', icon: 'fas fa-info-circle', tooltip: 'View Profile' },
+                    { id: 'favorite', icon: 'fas fa-heart', tooltip: 'Add to Favorites' },
+                    { id: 'chat', icon: 'fas fa-comment', tooltip: 'Start Chat' },
+                  ]"
+                  (actionClick)="onCardAction({ id: $event.toString(), itemId: ad._id }, ad._id)"
+                >
+                </emerald-app-card>
+              </ng-template>
+            </emerald-card-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button for Filters -->
+  <emerald-floating-action-button
+    icon="fa-sliders-h"
+    label="Filters"
+    color="primary"
+    position="bottom-right"
+    [showTooltip]="true"
+    tooltipText="Filter Profiles"
+    (buttonClick)="openFilters()"
+  >
+  </emerald-floating-action-button>
+
+  <!-- Filters Modal -->
+  <div
+    class="modal fade"
+    id="filtersModal"
+    tabindex="-1"
+    aria-labelledby="filtersModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filtersModalLabel">
+            <i class="fas fa-filter"></i> Filter Profiles
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeFilters()"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="filterForm">
+            <div class="mb-3">
+              <label for="category" class="form-label"> <i class="fas fa-tag"></i> Category </label>
+              <select class="form-select" id="category" formControlName="category">
+                <option value="">All Categories</option>
+                <option value="Escort">Escort</option>
+                <option value="Striptease">Striptease</option>
+                <option value="Massage">Massage</option>
+                <option value="Companion">Companion</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="location" class="form-label">
+                <i class="fas fa-map-marker-alt"></i> Location
+              </label>
+              <select class="form-select" id="location" formControlName="location">
+                <option value="">All Locations</option>
+                <option value="Oslo">Oslo</option>
+                <option value="Bergen">Bergen</option>
+                <option value="Trondheim">Trondheim</option>
+                <option value="Stavanger">Stavanger</option>
+                <option value="Tromsø">Tromsø</option>
+                <option value="Kristiansand">Kristiansand</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-block mb-2">
+                <i class="fas fa-plane"></i> Touring Status
+              </label>
+              <!-- Using Emerald Toggle -->
+              <emerald-toggle
+                label="Show only touring profiles"
+                labelPosition="right"
+                color="primary"
+                [value]="filterForm.get('touringOnly')?.value"
+                (change)="filterForm.get('touringOnly')?.setValue($event)"
+              >
+              </emerald-toggle>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">
+            <i class="fas fa-undo"></i> Reset
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="closeFilters()">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button type="button" class="btn btn-primary" (click)="applyFilters(); closeFilters()">
+            <i class="fas fa-check"></i> Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-main-layout>

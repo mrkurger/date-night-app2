@@ -3,8 +3,8 @@
  * This script ensures the correct project is specified when running ng serve
  */
 
-const { execSync } = require('child_process');
-const path = require('path');
+import { execSync } from 'child_process';
+import path from 'path';
 
 // Define the client directory
 const clientDir = path.join(__dirname, '..', '..', 'client-angular');

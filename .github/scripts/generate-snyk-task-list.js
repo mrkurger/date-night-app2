@@ -22,8 +22,8 @@
  * - downloaded-reports/snyk/vulnerable-dependencies.md: Analysis of vulnerable dependencies
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Define severity levels and their priority order
 const SEVERITY_LEVELS = {

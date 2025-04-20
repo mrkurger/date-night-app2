@@ -1,0 +1,43 @@
+<div class="browse-container">
+  <!-- View Selector Tabs -->
+  <div class="view-selector">
+    <div class="container">
+      <div class="view-tabs">
+        <button
+          class="view-tab"
+          [class.active]="activeView === 'netflix'"
+          (click)="changeView('netflix')"
+          aria-label="Netflix style view"
+        >
+          <i class="fas fa-th-large"></i>
+          <span>Discover</span>
+        </button>
+        <button
+          class="view-tab"
+          [class.active]="activeView === 'tinder'"
+          (click)="changeView('tinder')"
+          aria-label="Tinder style view"
+        >
+          <i class="fas fa-heart"></i>
+          <span>Swipe</span>
+        </button>
+        <button
+          class="view-tab"
+          [class.active]="activeView === 'list'"
+          (click)="changeView('list')"
+          aria-label="List view"
+        >
+          <i class="fas fa-list"></i>
+          <span>List</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Content -->
+  <div class="view-content">
+    <app-netflix-view *ngIf="activeView === 'netflix'"></app-netflix-view>
+    <app-tinder *ngIf="activeView === 'tinder'"></app-tinder>
+    <app-list-view *ngIf="activeView === 'list'"></app-list-view>
+  </div>
+</div>

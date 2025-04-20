@@ -52,8 +52,8 @@ class AuthService {
    */
   async validateRefreshToken(token) {
     try {
-      const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
-      const user = await User.findById(payload.id);
+      const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+      const user = await User.findById(decoded.id);
 
       if (!user) {
         throw new Error('User not found');
@@ -61,11 +61,9 @@ class AuthService {
 
       return user;
     } catch (error) {
-      // If the error is already 'User not found', rethrow it
       if (error.message === 'User not found') {
         throw error;
       }
-      // Otherwise, throw the generic invalid token error
       throw new Error('Invalid refresh token');
     }
   }
@@ -158,16 +156,18 @@ class AuthService {
    */
   async validateAccessToken(token) {
     try {
-      const payload = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(payload.id);
+      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const user = await User.findById(decoded.id);
 
       if (!user) {
         throw new Error('User not found');
       }
 
-      return this.sanitizeUser(user);
-    } catch (/* eslint-disable-line no-unused-vars */ error) {
-      // Original error details not exposed for security reasons
+      return user;
+    } catch (error) {
+      if (error.message === 'User not found') {
+        throw error;
+      }
       throw new Error('Invalid access token');
     }
   }

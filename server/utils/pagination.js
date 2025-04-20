@@ -73,7 +73,7 @@ const createPaginatedResponse = (data, totalItems, page, limit, baseUrl = '') =>
   };
 };
 
-module.exports = {
+export default {
   getPaginationParams,
   createPaginatedResponse,
 };

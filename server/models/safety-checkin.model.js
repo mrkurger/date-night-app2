@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define the safety check-in schema
 const safetyCheckinSchema = new mongoose.Schema(

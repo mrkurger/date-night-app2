@@ -1,0 +1,537 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  NorwayCounty</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/constants/norway-locations.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#cities" 
+>
+                                            cities
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#name" 
+>
+                                            name
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="cities"></a>
+                                        <span class="name "><b>cities</b>
+                                            <a href="#cities">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>cities:         <code><a href="../interfaces/NorwayCity.html" target="_self" >NorwayCity[]</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../interfaces/NorwayCity.html" target="_self" >NorwayCity[]</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="name"></a>
+                                        <span class="name "><b>name</b>
+                                            <a href="#name">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>name:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface NorwayCity {
+  name: string;
+  postalCodes?: string[]; // Optional postal codes for the city
+  coordinates?: [number, number]; // [longitude, latitude]
+}
+
+export interface NorwayCounty {
+  name: string;
+  cities: NorwayCity[];
+}
+
+/**
+ * List of Norwegian counties with their major cities
+ */
+export const NORWAY_COUNTIES: NorwayCounty[] &#x3D; [
+  {
+    name: &#x27;Oslo&#x27;,
+    cities: [
+      { name: &#x27;Oslo&#x27;, coordinates: [10.7522, 59.9139] },
+      { name: &#x27;Nordstrand&#x27;, coordinates: [10.8007, 59.8651] },
+      { name: &#x27;Frogner&#x27;, coordinates: [10.7113, 59.9208] },
+      { name: &#x27;Grünerløkka&#x27;, coordinates: [10.7584, 59.9236] },
+      { name: &#x27;Sagene&#x27;, coordinates: [10.7507, 59.9372] },
+    ],
+  },
+  {
+    name: &#x27;Viken&#x27;,
+    cities: [
+      { name: &#x27;Drammen&#x27;, coordinates: [10.2052, 59.744] },
+      { name: &#x27;Fredrikstad&#x27;, coordinates: [10.9298, 59.2181] },
+      { name: &#x27;Sarpsborg&#x27;, coordinates: [11.1094, 59.2837] },
+      { name: &#x27;Moss&#x27;, coordinates: [10.66, 59.435] },
+      { name: &#x27;Lillestrøm&#x27;, coordinates: [11.0518, 59.9558] },
+      { name: &#x27;Asker&#x27;, coordinates: [10.4387, 59.8342] },
+      { name: &#x27;Bærum&#x27;, coordinates: [10.5226, 59.8941] },
+      { name: &#x27;Ski&#x27;, coordinates: [10.8364, 59.7194] },
+      { name: &#x27;Jessheim&#x27;, coordinates: [11.1704, 60.141] },
+      { name: &#x27;Sandvika&#x27;, coordinates: [10.5262, 59.8909] },
+    ],
+  },
+  {
+    name: &#x27;Innlandet&#x27;,
+    cities: [
+      { name: &#x27;Hamar&#x27;, coordinates: [11.0628, 60.7945] },
+      { name: &#x27;Lillehammer&#x27;, coordinates: [10.4662, 61.1152] },
+      { name: &#x27;Gjøvik&#x27;, coordinates: [10.6918, 60.7945] },
+      { name: &#x27;Elverum&#x27;, coordinates: [11.5621, 60.8827] },
+      { name: &#x27;Kongsvinger&#x27;, coordinates: [12.005, 60.1918] },
+      { name: &#x27;Brumunddal&#x27;, coordinates: [10.9334, 60.8793] },
+      { name: &#x27;Moelv&#x27;, coordinates: [10.7, 60.9333] },
+      { name: &#x27;Raufoss&#x27;, coordinates: [10.6167, 60.7333] },
+      { name: &#x27;Otta&#x27;, coordinates: [9.5333, 61.7667] },
+      { name: &#x27;Vinstra&#x27;, coordinates: [9.75, 61.5833] },
+    ],
+  },
+  {
+    name: &#x27;Vestfold og Telemark&#x27;,
+    cities: [
+      { name: &#x27;Tønsberg&#x27;, coordinates: [10.4078, 59.2674] },
+      { name: &#x27;Sandefjord&#x27;, coordinates: [10.2167, 59.1333] },
+      { name: &#x27;Larvik&#x27;, coordinates: [10.0333, 59.05] },
+      { name: &#x27;Skien&#x27;, coordinates: [9.61, 59.21] },
+      { name: &#x27;Porsgrunn&#x27;, coordinates: [9.6561, 59.1408] },
+      { name: &#x27;Horten&#x27;, coordinates: [10.4833, 59.4167] },
+      { name: &#x27;Notodden&#x27;, coordinates: [9.25, 59.5667] },
+      { name: &#x27;Kragerø&#x27;, coordinates: [9.4167, 58.8667] },
+      { name: &#x27;Stokke&#x27;, coordinates: [10.3, 59.2333] },
+      { name: &#x27;Holmestrand&#x27;, coordinates: [10.3167, 59.4833] },
+    ],
+  },
+  {
+    name: &#x27;Agder&#x27;,
+    cities: [
+      { name: &#x27;Kristiansand&#x27;, coordinates: [7.9956, 58.1599] },
+      { name: &#x27;Arendal&#x27;, coordinates: [8.7667, 58.4667] },
+      { name: &#x27;Grimstad&#x27;, coordinates: [8.5994, 58.3404] },
+      { name: &#x27;Mandal&#x27;, coordinates: [7.45, 58.0333] },
+      { name: &#x27;Flekkefjord&#x27;, coordinates: [6.6667, 58.3] },
+      { name: &#x27;Lillesand&#x27;, coordinates: [8.3833, 58.25] },
+      { name: &#x27;Risør&#x27;, coordinates: [9.2333, 58.7167] },
+      { name: &#x27;Tvedestrand&#x27;, coordinates: [8.9333, 58.6167] },
+      { name: &#x27;Farsund&#x27;, coordinates: [6.8, 58.0833] },
+      { name: &#x27;Vennesla&#x27;, coordinates: [7.9667, 58.2667] },
+    ],
+  },
+  {
+    name: &#x27;Rogaland&#x27;,
+    cities: [
+      { name: &#x27;Stavanger&#x27;, coordinates: [5.7331, 58.97] },
+      { name: &#x27;Sandnes&#x27;, coordinates: [5.7333, 58.85] },
+      { name: &#x27;Haugesund&#x27;, coordinates: [5.2667, 59.4167] },
+      { name: &#x27;Egersund&#x27;, coordinates: [5.99, 58.45] },
+      { name: &#x27;Bryne&#x27;, coordinates: [5.65, 58.7333] },
+      { name: &#x27;Kopervik&#x27;, coordinates: [5.3, 59.2833] },
+      { name: &#x27;Åkrehamn&#x27;, coordinates: [5.1833, 59.25] },
+      { name: &#x27;Sauda&#x27;, coordinates: [6.35, 59.65] },
+      { name: &#x27;Jørpeland&#x27;, coordinates: [6.0333, 59.0167] },
+      { name: &#x27;Sola&#x27;, coordinates: [5.6333, 58.8833] },
+    ],
+  },
+  {
+    name: &#x27;Vestland&#x27;,
+    cities: [
+      { name: &#x27;Bergen&#x27;, coordinates: [5.322, 60.3913] },
+      { name: &#x27;Førde&#x27;, coordinates: [5.85, 61.45] },
+      { name: &#x27;Florø&#x27;, coordinates: [5.0333, 61.6] },
+      { name: &#x27;Sogndal&#x27;, coordinates: [7.1, 61.2333] },
+      { name: &#x27;Voss&#x27;, coordinates: [6.4167, 60.6333] },
+      { name: &#x27;Odda&#x27;, coordinates: [6.55, 60.0667] },
+      { name: &#x27;Leirvik&#x27;, coordinates: [5.5, 59.7833] },
+      { name: &#x27;Askøy&#x27;, coordinates: [5.2, 60.4667] },
+      { name: &#x27;Knarvik&#x27;, coordinates: [5.2833, 60.55] },
+      { name: &#x27;Straume&#x27;, coordinates: [5.1167, 60.3667] },
+    ],
+  },
+  {
+    name: &#x27;Møre og Romsdal&#x27;,
+    cities: [
+      { name: &#x27;Ålesund&#x27;, coordinates: [6.15, 62.4667] },
+      { name: &#x27;Molde&#x27;, coordinates: [7.16, 62.7375] },
+      { name: &#x27;Kristiansund&#x27;, coordinates: [7.7333, 63.1167] },
+      { name: &#x27;Ulsteinvik&#x27;, coordinates: [5.8833, 62.3333] },
+      { name: &#x27;Volda&#x27;, coordinates: [6.0667, 62.15] },
+      { name: &#x27;Ørsta&#x27;, coordinates: [6.1333, 62.2] },
+      { name: &#x27;Sunndalsøra&#x27;, coordinates: [8.55, 62.6667] },
+      { name: &#x27;Spjelkavik&#x27;, coordinates: [6.3333, 62.45] },
+      { name: &#x27;Åndalsnes&#x27;, coordinates: [7.6833, 62.5667] },
+      { name: &#x27;Stranda&#x27;, coordinates: [6.95, 62.3] },
+    ],
+  },
+  {
+    name: &#x27;Trøndelag&#x27;,
+    cities: [
+      { name: &#x27;Trondheim&#x27;, coordinates: [10.3951, 63.4305] },
+      { name: &#x27;Steinkjer&#x27;, coordinates: [11.5, 64.0167] },
+      { name: &#x27;Stjørdalshalsen&#x27;, coordinates: [11.1667, 63.4667] },
+      { name: &#x27;Levanger&#x27;, coordinates: [11.3, 63.75] },
+      { name: &#x27;Namsos&#x27;, coordinates: [11.5, 64.4667] },
+      { name: &#x27;Verdalsøra&#x27;, coordinates: [11.5, 63.8] },
+      { name: &#x27;Orkanger&#x27;, coordinates: [9.85, 63.3] },
+      { name: &#x27;Røros&#x27;, coordinates: [11.3833, 62.5833] },
+      { name: &#x27;Brekstad&#x27;, coordinates: [10.0, 63.6833] },
+      { name: &#x27;Oppdal&#x27;, coordinates: [9.6833, 62.6] },
+    ],
+  },
+  {
+    name: &#x27;Nordland&#x27;,
+    cities: [
+      { name: &#x27;Bodø&#x27;, coordinates: [14.4042, 67.2804] },
+      { name: &#x27;Narvik&#x27;, coordinates: [17.4272, 68.4384] },
+      { name: &#x27;Mo i Rana&#x27;, coordinates: [14.1333, 66.3167] },
+      { name: &#x27;Mosjøen&#x27;, coordinates: [13.1833, 65.8333] },
+      { name: &#x27;Fauske&#x27;, coordinates: [15.3833, 67.2667] },
+      { name: &#x27;Brønnøysund&#x27;, coordinates: [12.2167, 65.4667] },
+      { name: &#x27;Sandnessjøen&#x27;, coordinates: [12.6333, 66.0167] },
+      { name: &#x27;Leknes&#x27;, coordinates: [13.6167, 68.15] },
+      { name: &#x27;Svolvær&#x27;, coordinates: [14.5667, 68.2333] },
+      { name: &#x27;Sortland&#x27;, coordinates: [15.4167, 68.7] },
+    ],
+  },
+  {
+    name: &#x27;Troms og Finnmark&#x27;,
+    cities: [
+      { name: &#x27;Tromsø&#x27;, coordinates: [18.9553, 69.6489] },
+      { name: &#x27;Alta&#x27;, coordinates: [23.2712, 69.9689] },
+      { name: &#x27;Harstad&#x27;, coordinates: [16.5333, 68.8] },
+      { name: &#x27;Hammerfest&#x27;, coordinates: [23.6833, 70.6633] },
+      { name: &#x27;Kirkenes&#x27;, coordinates: [30.0458, 69.7267] },
+      { name: &#x27;Finnsnes&#x27;, coordinates: [17.9833, 69.2333] },
+      { name: &#x27;Vadsø&#x27;, coordinates: [29.75, 70.0833] },
+      { name: &#x27;Honningsvåg&#x27;, coordinates: [25.9667, 70.9833] },
+      { name: &#x27;Bardufoss&#x27;, coordinates: [18.5333, 69.0667] },
+      { name: &#x27;Lakselv&#x27;, coordinates: [24.95, 70.05] },
+    ],
+  },
+];
+
+/**
+ * Get a flat list of all Norwegian counties
+ */
+export const getAllCounties &#x3D; (): string[] &#x3D;&gt; NORWAY_COUNTIES.map(county &#x3D;&gt; county.name);
+
+/**
+ * Get a flat list of all Norwegian cities
+ */
+export const getAllCities &#x3D; (): string[] &#x3D;&gt;
+  NORWAY_COUNTIES.flatMap(county &#x3D;&gt; county.cities.map(city &#x3D;&gt; city.name));
+
+/**
+ * Get all cities for a specific county
+ * @param countyName The name of the county
+ */
+export const getCitiesByCounty &#x3D; (countyName: string): NorwayCity[] &#x3D;&gt; {
+  const county &#x3D; NORWAY_COUNTIES.find(c &#x3D;&gt; c.name &#x3D;&#x3D;&#x3D; countyName);
+  return county ? county.cities : [];
+};
+
+/**
+ * Get the county for a specific city
+ * @param cityName The name of the city
+ */
+export const getCountyByCity &#x3D; (cityName: string): string | null &#x3D;&gt; {
+  const county &#x3D; NORWAY_COUNTIES.find(c &#x3D;&gt; c.cities.some(city &#x3D;&gt; city.name &#x3D;&#x3D;&#x3D; cityName));
+  return county ? county.name : null;
+};
+
+/**
+ * Get coordinates for a specific city
+ * @param cityName The name of the city
+ */
+export const getCityCoordinates &#x3D; (cityName: string): [number, number] | null &#x3D;&gt; {
+  for (const county of NORWAY_COUNTIES) {
+    const city &#x3D; county.cities.find(c &#x3D;&gt; c.name &#x3D;&#x3D;&#x3D; cityName);
+    if (city &amp;&amp; city.coordinates) {
+      return city.coordinates;
+    }
+  }
+  return null;
+};
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'NorwayCounty.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

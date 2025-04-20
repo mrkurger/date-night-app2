@@ -12,8 +12,8 @@
  * - GITHUB_REPOSITORY: Repository in format "owner/repo"
  */
 
-const fs = require('fs');
-const { Octokit } = require('@octokit/rest');
+import fs from 'fs/promises';
+import { Octokit } from '@octokit/rest';
 
 async function generateInsightsReport() {
   try {
@@ -259,4 +259,4 @@ if (require.main === module) {
 }
 
 // Export the function for use in other scripts
-module.exports = { generateInsightsReport };
+export default { generateInsightsReport };

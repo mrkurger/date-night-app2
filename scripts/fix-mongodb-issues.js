@@ -4,10 +4,10 @@
  * Script to diagnose and fix common MongoDB issues
  */
 
-const { exec, execSync, spawn } = require('child_process');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
+import { exec, execSync, spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
+import os from 'os';
 require('dotenv').config();
 
 // Get MongoDB data path from .env or use default

@@ -9,7 +9,7 @@
 // - COVERAGE_THRESHOLDS: Minimum code coverage requirements
 // ===================================================
 
-module.exports = {
+export default {
   projects: [
     // Server-side tests
     {

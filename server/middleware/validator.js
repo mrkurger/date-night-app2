@@ -12,8 +12,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { body, query, param, validationResult } = require('express-validator');
-const mongoose = require('mongoose');
+import { body, query, param, validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 
 // Helper function to check if a string is a valid MongoDB ObjectId
 const isValidObjectId = value => mongoose.Types.ObjectId.isValid(value);
@@ -331,7 +331,7 @@ const travelPlanValidation = [
   validate,
 ];
 
-module.exports = {
+export default {
   validate,
   validators,
   registerValidation,

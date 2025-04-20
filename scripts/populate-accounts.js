@@ -1,10 +1,10 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
-const argon2 = require('argon2');
-const User = require('../server/models/user.model');
-const Ad = require('../server/models/ad.model');
-const fs = require('fs');
-const path = require('path');
+import mongoose from 'mongoose';
+import argon2 from 'argon2';
+import User from '../server/models/user.model';
+import Ad from '../server/models/ad.model';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Norwegian counties
 const COUNTIES = [

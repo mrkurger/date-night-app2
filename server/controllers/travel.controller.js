@@ -1,10 +1,10 @@
-const travelService = require('../services/travel.service');
-const { asyncHandler } = require('../middleware/asyncHandler');
+import travelService from '../services/travel.service';
+import { asyncHandler } from '../middleware/asyncHandler';
 // AppError is imported but not used directly in this controller
 // It may be needed for future error handling enhancements
 // eslint-disable-next-line no-unused-vars
-const { AppError } = require('../middleware/errorHandler');
-const logger = require('../utils/logger').logger;
+import { AppError } from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 
 /**
  * Get all travel itineraries for an ad

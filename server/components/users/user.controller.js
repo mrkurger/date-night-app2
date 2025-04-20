@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const { User } = require('../');
+import { User } from '../';
 
 exports.getCurrentUser = async (req, res) => {
   try {
@@ -101,7 +101,7 @@ exports.changePassword = async (req, res) => {
     await user.save();
 
     // Blacklist all existing tokens for this user
-    const TokenBlacklist = require('../../models/token-blacklist.model');
+    const TokenBlacklist = (await import('../../models/token-blacklist.model')).default;
 
     // Set expiration date for blacklisted tokens (30 days from now)
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);

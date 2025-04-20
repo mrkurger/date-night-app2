@@ -1,0 +1,163 @@
+@import '../../../core/design/design-tokens';
+
+:host {
+  display: contents;
+}
+
+.help-tooltip {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  &[data-position='top'] {
+    flex-direction: column-reverse;
+
+    .help-content {
+      margin-bottom: $spacing-2;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 8px 8px 0;
+        border-style: solid;
+        border-color: $neutral-100 transparent transparent;
+      }
+    }
+  }
+
+  &[data-position='right'] {
+    flex-direction: row;
+
+    .help-content {
+      margin-left: $spacing-2;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -8px;
+        transform: translateY(-50%);
+        border-width: 8px 8px 8px 0;
+        border-style: solid;
+        border-color: transparent $neutral-100 transparent transparent;
+      }
+    }
+  }
+
+  &[data-position='bottom'] {
+    flex-direction: column;
+
+    .help-content {
+      margin-top: $spacing-2;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 8px 8px;
+        border-style: solid;
+        border-color: transparent transparent $neutral-100;
+      }
+    }
+  }
+
+  &[data-position='left'] {
+    flex-direction: row-reverse;
+
+    .help-content {
+      margin-right: $spacing-2;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -8px;
+        transform: translateY(-50%);
+        border-width: 8px 0 8px 8px;
+        border-style: solid;
+        border-color: transparent transparent transparent $neutral-100;
+      }
+    }
+  }
+}
+
+.help-icon {
+  pointer-events: auto;
+
+  button {
+    background-color: rgba($primary-500, 0.1);
+
+    &:hover {
+      background-color: rgba($primary-500, 0.2);
+    }
+  }
+}
+
+.help-content {
+  position: relative;
+  background-color: $neutral-100;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-lg;
+  width: 250px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.2s ease-in-out;
+
+  .help-tooltip:hover & {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-3 $spacing-4;
+  border-bottom: 1px solid $neutral-200;
+}
+
+.help-title {
+  margin: 0;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $neutral-900;
+}
+
+.help-dismiss {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+  }
+}
+
+.help-body {
+  padding: $spacing-3 $spacing-4;
+
+  p {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $neutral-700;
+    line-height: $line-height-relaxed;
+  }
+}
+
+// Custom tooltip style
+::ng-deep .help-tooltip-preview {
+  background-color: $primary-500;
+  font-size: $font-size-sm;
+}

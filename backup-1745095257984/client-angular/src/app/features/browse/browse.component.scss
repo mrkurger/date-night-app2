@@ -1,0 +1,127 @@
+/* Browse Component Styles */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.browse-container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px); /* Adjust based on your header height */
+  background-color: var(--neutral-100);
+}
+
+/* View Selector Tabs */
+.view-selector {
+  background-color: var(--neutral-100);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: var(--space-4) 0;
+  position: sticky;
+  top: 70px; /* Adjust based on your header height */
+  z-index: var(--z-index-sticky);
+  border-bottom: var(--border-width-thin) solid var(--neutral-300);
+}
+
+.view-tabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--neutral-200);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.view-tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.view-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  background-color: transparent;
+  color: var(--neutral-700);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-lg);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  flex: 1;
+  min-width: 100px;
+}
+
+.view-tab:hover {
+  color: var(--primary);
+  background-color: rgba(255, 51, 102, 0.1);
+  transform: translateY(-2px);
+}
+
+.view-tab.active {
+  color: white;
+  background-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+  transform: translateY(-2px);
+}
+
+.view-tab i {
+  font-size: var(--font-size-lg);
+}
+
+/* View Content */
+.view-content {
+  flex: 1;
+  padding: var(--space-4) 0;
+}
+
+/* Animation for view transitions */
+.view-content > * {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .view-tabs {
+    width: 95%;
+    gap: var(--space-2);
+  }
+
+  .view-tab {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .view-tab span {
+    display: none;
+  }
+
+  .view-tab i {
+    font-size: var(--font-size-xl);
+    margin: 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .view-tab {
+    padding: var(--space-2) var(--space-4);
+  }
+}

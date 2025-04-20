@@ -91,7 +91,7 @@ const serverErrorResponse = (message = 'Internal server error', error = null) =>
   return errorResponse(message, 500, error);
 };
 
-module.exports = {
+export default {
   successResponse,
   errorResponse,
   validationErrorResponse,

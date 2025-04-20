@@ -1,0 +1,459 @@
+@import '../../core/design/design-tokens';
+
+// Netflix View Component Styles with Emerald Integration
+// Variables for customization
+$hero-section-height: 70vh;
+$card-animation-duration: 300ms;
+
+:host {
+  display: block;
+
+  // Override Emerald component variables for consistent styling
+  --primary-500: #{$primary-500};
+  --primary-600: #{$primary-600};
+  --primary-700: #{$primary-700};
+  --neutral-100: #{$neutral-100};
+  --neutral-900: #{$neutral-900};
+}
+
+.netflix-container {
+  margin-bottom: $spacing-16;
+}
+
+// Hero Section Customization
+::ng-deep emerald-page-header {
+  margin-bottom: $spacing-12;
+
+  .emerald-page-header {
+    height: $hero-section-height;
+    min-height: 600px;
+
+    &__background {
+      &::after {
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.1) 0%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+      }
+    }
+
+    &__content {
+      max-width: 800px;
+    }
+
+    &__title {
+      font-size: $font-size-3xl;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-4;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    &__subtitle {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-4;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: '\f3c5'; // Map marker icon
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        margin-right: $spacing-2;
+        color: $primary-500;
+      }
+    }
+
+    &__actions {
+      margin-top: $spacing-6;
+    }
+  }
+}
+
+// Hero content styling
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+// Hero description styling
+.hero-description {
+  font-size: $font-size-lg;
+  margin: $spacing-6 0;
+  line-height: $line-height-relaxed;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; // Standard property for compatibility
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: $neutral-100;
+}
+
+// Hero tags styling
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-top: $spacing-2;
+
+  ::ng-deep emerald-label {
+    margin-bottom: $spacing-2;
+
+    .emerald-label {
+      background-color: rgba($neutral-900, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba($neutral-100, 0.2);
+
+      &:hover {
+        background-color: rgba($neutral-900, 0.8);
+      }
+    }
+  }
+}
+
+// Main Content
+.netflix-content {
+  padding-bottom: $spacing-16;
+}
+
+// Filters Bar
+.filters-bar {
+  margin-bottom: $spacing-8;
+  position: relative;
+  z-index: 1;
+}
+
+.filters-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-4 0;
+}
+
+.section-title {
+  font-family: $font-primary;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  margin: 0;
+  color: $neutral-900;
+}
+
+.filter-button {
+  background-color: $neutral-100;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: $spacing-2 $spacing-4;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  color: $neutral-700;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal $transition-ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+    color: $primary-500;
+  }
+
+  i {
+    margin-right: $spacing-2;
+    color: $primary-500;
+  }
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8 0;
+}
+
+.loading-text {
+  margin-top: $spacing-4;
+  color: $neutral-600;
+  font-weight: $font-weight-medium;
+}
+
+// Error State
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-8;
+}
+
+.error-icon {
+  font-size: $font-size-4xl;
+  color: $error;
+  margin-bottom: $spacing-4;
+}
+
+.error-text {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  color: $neutral-800;
+  margin-bottom: $spacing-6;
+}
+
+.retry-button {
+  padding: $spacing-2 $spacing-6;
+  background-color: $primary-500;
+  color: $neutral-100;
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: $font-weight-medium;
+  transition: all $transition-normal $transition-ease;
+
+  &:hover {
+    background-color: $primary-600;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  i {
+    margin-right: $spacing-2;
+  }
+}
+
+// Netflix-style Rows
+.netflix-rows {
+  margin-top: $spacing-8;
+}
+
+.row-section {
+  margin-bottom: $spacing-12;
+}
+
+.row-title {
+  font-family: $font-primary;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-4;
+  color: $neutral-800;
+}
+
+// Empty state
+.empty-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: $neutral-200;
+  border-radius: $border-radius-lg;
+  margin: $spacing-4 0;
+}
+
+.empty-row-text {
+  color: $neutral-600;
+  font-weight: $font-weight-medium;
+}
+
+// CardGrid customization
+::ng-deep emerald-card-grid {
+  .emerald-card-grid {
+    &__netflix-row {
+      position: relative;
+      overflow: visible;
+
+      // Add navigation arrows
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      &::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+      }
+
+      &::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+      }
+    }
+  }
+}
+
+// AppCard customization
+::ng-deep emerald-app-card {
+  .emerald-app-card {
+    transition:
+      transform $card-animation-duration $transition-ease,
+      box-shadow $card-animation-duration $transition-ease;
+
+    &:hover {
+      transform: translateY(-8px) scale(1.05);
+      z-index: 5;
+      box-shadow: $shadow-lg;
+    }
+
+    &--netflix {
+      height: 280px;
+
+      .emerald-app-card__content-overlay {
+        background: linear-gradient(to top, rgba($neutral-900, 0.8), rgba($neutral-900, 0));
+      }
+    }
+
+    &__title {
+      font-weight: $font-weight-bold;
+    }
+
+    &__fab {
+      &--left {
+        background-color: $error;
+      }
+
+      &--right {
+        background-color: $primary-500;
+      }
+    }
+  }
+}
+
+// Modal Styles
+.modal-content {
+  border-radius: $border-radius-lg;
+  border: none;
+  box-shadow: $shadow-xl;
+}
+
+.modal-header {
+  border-bottom: 1px solid $neutral-300;
+  padding: $spacing-4 $spacing-6;
+}
+
+.modal-title {
+  font-family: $font-primary;
+  font-weight: $font-weight-semibold;
+  color: $neutral-800;
+}
+
+.modal-body {
+  padding: $spacing-6;
+}
+
+.modal-footer {
+  border-top: 1px solid $neutral-300;
+  padding: $spacing-4 $spacing-6;
+}
+
+// Floating Action Button customization
+::ng-deep emerald-floating-action-button {
+  .emerald-floating-action-button {
+    &__button {
+      background-color: $primary-500;
+
+      &:hover {
+        background-color: $primary-600;
+      }
+    }
+  }
+}
+
+// Toggle customization
+::ng-deep emerald-toggle {
+  .emerald-toggle {
+    &__switch {
+      &--checked {
+        background-color: $primary-500;
+      }
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: $breakpoint-lg) {
+  ::ng-deep emerald-page-header {
+    .emerald-page-header {
+      height: 60vh;
+      min-height: 500px;
+
+      &__title {
+        font-size: $font-size-2xl;
+      }
+    }
+  }
+
+  .hero-description {
+    font-size: $font-size-md;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  ::ng-deep emerald-page-header {
+    .emerald-page-header {
+      height: 50vh;
+      min-height: 400px;
+
+      &__actions {
+        flex-wrap: wrap;
+        gap: $spacing-2;
+      }
+    }
+  }
+
+  .hero-description {
+    font-size: $font-size-base;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .section-title {
+    font-size: $font-size-xl;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  ::ng-deep emerald-page-header {
+    .emerald-page-header {
+      height: 40vh;
+      min-height: 300px;
+
+      &__title {
+        font-size: $font-size-xl;
+      }
+
+      &__subtitle {
+        font-size: $font-size-base;
+      }
+    }
+  }
+
+  .hero-description {
+    font-size: $font-size-sm;
+    margin: $spacing-4 0;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .section-title {
+    font-size: $font-size-lg;
+  }
+
+  .filters-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
+
+  .filter-button {
+    margin-top: $spacing-2;
+  }
+}

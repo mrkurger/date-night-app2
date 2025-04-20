@@ -7,7 +7,7 @@
  * primarily for key management and validation.
  */
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * Generate a random key

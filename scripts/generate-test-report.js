@@ -6,8 +6,8 @@
  * human-readable test reports that can be committed to the repository.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Simple XML parser for JUnit format
 function parseJUnitXML(xmlString) {

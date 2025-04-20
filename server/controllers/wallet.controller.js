@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const walletService = require('../services/wallet.service');
-const { AppError } = require('../middleware/errorHandler');
+import walletService from '../services/wallet.service';
+import { AppError } from '../middleware/errorHandler';
 
 /**
  * Wallet Controller for handling wallet-related API endpoints

@@ -5,9 +5,9 @@
  * while being cautious about build/test tools that might be used indirectly.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs/promises';
+import path from 'path';
+import { execSync } from 'child_process';
 
 // ANSI color codes for better output
 const colors = {

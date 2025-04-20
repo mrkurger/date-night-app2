@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const sharp = require('sharp');
-const { v4: uuidv4 } = require('uuid');
-const Ad = require('../components/ads/ad.model');
+import fs from 'fs/promises';
+import path from 'path';
+import { promisify } from 'util';
+import sharp from 'sharp';
+import { v4 as uuidv4 } from 'uuid';
+import Ad from '../components/ads/ad.model';
 
 // Convert fs functions to promise-based
 const mkdir = promisify(fs.mkdir);

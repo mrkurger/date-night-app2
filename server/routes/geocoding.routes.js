@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const geocodingController = require('../controllers/geocoding.controller');
-const { authenticateToken, optionalAuth } = require('../middleware/authenticateToken');
-const { roles } = require('../middleware/roles');
-const asyncHandler = require('../middleware/asyncHandler');
+import geocodingController from '../controllers/geocoding.controller';
+import { authenticateToken, optionalAuth } from '../middleware/authenticateToken';
+import { roles } from '../middleware/roles';
+import asyncHandler from '../middleware/asyncHandler';
 
 /**
  * @route GET /api/geocoding/forward

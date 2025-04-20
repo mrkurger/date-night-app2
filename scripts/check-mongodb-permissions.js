@@ -4,10 +4,10 @@
  * Script to check and fix MongoDB data directory permissions
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
-const os = require('os');
+import fs from 'fs/promises';
+import path from 'path';
+import { execSync } from 'child_process';
+import os from 'os';
 require('dotenv').config();
 
 // Colors for console output

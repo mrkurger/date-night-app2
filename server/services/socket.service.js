@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
-const ChatMessage = require('../models/chat-message.model');
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model';
+import ChatMessage from '../models/chat-message.model';
 
 class SocketService {
   constructor() {
@@ -22,8 +22,9 @@ class SocketService {
    * Initialize Socket.IO server
    * @param {Object} server - HTTP server instance
    */
-  initialize(server) {
-    const socketIo = require('socket.io');
+  async initialize(server) {
+    const socketIoModule = await import('socket.io');
+    const socketIo = socketIoModule.default;
     this.io = socketIo(server, {
       cors: {
         origin: process.env.CLIENT_URL || 'http://localhost:4200',

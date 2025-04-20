@@ -1,0 +1,74 @@
+<div [ngClass]="containerClasses">
+  <!-- Label -->
+  @if (label) {
+    <label class="input__label" [attr.for]="id || name">
+      {{ label }}
+      @if (required) {
+        <span class="input__required-indicator">*</span>
+      }
+    </label>
+  }
+
+  <div class="input__container">
+    <!-- Left Icon -->
+    @if (iconLeft) {
+      <span class="input__icon input__icon--left">
+        <app-icon [name]="iconLeft" size="small"></app-icon>
+      </span>
+    }
+
+    <!-- Input Element -->
+    <input
+      class="input__field"
+      [type]="inputType"
+      [value]="value"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [attr.maxlength]="maxLength"
+      [attr.minlength]="minLength"
+      [attr.pattern]="pattern"
+      [attr.autocomplete]="autocomplete"
+      [attr.name]="name"
+      [attr.id]="id || name"
+      [attr.aria-invalid]="!!errorMessage"
+      [attr.aria-describedby]="errorMessage || helperText ? (id || name) + '-helper' : null"
+      (input)="onInputChange($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+      (click)="onClick($event)"
+    />
+
+    <!-- Password Toggle Icon -->
+    @if (type === 'password') {
+      <button
+        type="button"
+        class="input__icon input__icon--right input__password-toggle"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
+        tabindex="-1"
+      >
+        <app-icon [name]="passwordVisible ? 'eye-off' : 'eye'" size="small"> </app-icon>
+      </button>
+    }
+
+    <!-- Right Icon (if not password) -->
+    @if (iconRight && type !== 'password') {
+      <span class="input__icon input__icon--right">
+        <app-icon [name]="iconRight" size="small"></app-icon>
+      </span>
+    }
+  </div>
+
+  <!-- Helper Text or Error Message -->
+  @if (errorMessage || helperText) {
+    <div
+      class="input__helper-text"
+      [class.input__helper-text--error]="!!errorMessage"
+      [attr.id]="(id || name) + '-helper'"
+    >
+      {{ errorMessage || helperText }}
+    </div>
+  }
+</div>

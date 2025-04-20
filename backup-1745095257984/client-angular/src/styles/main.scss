@@ -1,0 +1,134 @@
+// Main Stylesheet
+// This is the main entry point for all styles in the application
+
+// Import design system
+@use 'design-system/index';
+
+// Import themes
+@use 'themes/light';
+@use 'themes/dark';
+// Use @import for CSS files only (not SCSS)
+@import 'theme.css';
+// Import Leaflet CSS
+@import 'leaflet/dist/leaflet.css';
+
+// Global styles
+html {
+  font-size: 16px;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  overflow-x: hidden;
+  min-height: 100%;
+
+  /* Apply theme transition to body */
+  &.theme-transition,
+  &.light-theme,
+  &.dark-theme {
+    transition:
+      background-color var(--transition-normal) var(--transition-ease),
+      color var(--transition-normal) var(--transition-ease);
+  }
+}
+
+// Main layout
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem;
+}
+
+// Header
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-sticky);
+  background-color: var(--navbar-bg);
+  border-bottom: 1px solid var(--navbar-border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+// Footer
+.app-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-color);
+  padding: 1.5rem 0;
+}
+
+// Responsive font sizes
+@media (max-width: 576px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-200);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-500);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-600);
+}
+
+// Focus visible utility
+.focus-visible-only:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Print styles
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  .app-header,
+  .app-footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .main-content {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  a[href]:after {
+    content: ' (' attr(href) ')';
+    font-size: 90%;
+    color: #333;
+  }
+}

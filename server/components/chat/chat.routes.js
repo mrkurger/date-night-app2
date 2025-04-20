@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const chatController = require('./chat.controller');
-const encryptionRoutes = require('./encryption.routes');
-const { protect } = require('../../middleware/auth');
+import chatController from './chat.controller';
+import encryptionRoutes from './encryption.routes';
+import { protect } from '../../middleware/auth';
 
 // Apply authentication middleware to all chat routes
 router.use(protect);

@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const Location = require('../models/location.model');
-const { AppError } = require('../middleware/errorHandler');
-const logger = require('../utils/logger').logger;
+import Location from '../models/location.model';
+import { AppError } from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 
 /**
  * Controller for managing locations

@@ -1,0 +1,214 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'assets/styles/design-system.scss';
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background-color: var(--neutral-200);
+  color: var(--neutral-700);
+}
+
+/* Snackbar styles */
+.success-snackbar {
+  background: var(--success);
+  color: white;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.error-snackbar {
+  background: var(--error);
+  color: white;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.warning-snackbar {
+  background: var(--warning);
+  color: white;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.info-snackbar {
+  background: var(--info);
+  color: white;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.mat-mdc-snack-bar-action .mdc-button__label {
+  color: white;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Form styles */
+.mat-mdc-form-field {
+  width: 100%;
+  font-family: var(--font-family-base);
+}
+
+.mat-mdc-form-field-infix {
+  font-family: var(--font-family-base);
+}
+
+.mat-mdc-form-field-label {
+  font-family: var(--font-family-base);
+  color: var(--neutral-600);
+}
+
+.mat-mdc-form-field-error {
+  color: var(--error);
+  font-size: var(--font-size-xs);
+}
+
+.mat-mdc-form-field-hint {
+  color: var(--neutral-600);
+  font-size: var(--font-size-xs);
+}
+
+.mat-mdc-snack-bar-container {
+  margin: 1rem !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Button styles */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  font-family: var(--font-family-base) !important;
+  font-weight: var(--font-weight-medium) !important;
+  border-radius: var(--border-radius-md) !important;
+  transition: all var(--transition-normal) var(--transition-timing-default) !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background-color: var(--primary) !important;
+}
+
+.mat-mdc-raised-button.mat-accent {
+  background-color: var(--secondary) !important;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.mat-mdc-outlined-button.mat-accent {
+  color: var(--secondary) !important;
+  border-color: var(--secondary) !important;
+}
+
+/* Card styles */
+.mat-mdc-card {
+  border-radius: var(--border-radius-lg) !important;
+  box-shadow: var(--shadow-md) !important;
+  transition:
+    transform var(--transition-normal) var(--transition-timing-default),
+    box-shadow var(--transition-normal) var(--transition-timing-default) !important;
+}
+
+.mat-mdc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Dialog styles */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: var(--border-radius-lg) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+.mat-mdc-dialog-title {
+  font-family: var(--font-family-heading) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  color: var(--neutral-900) !important;
+}
+
+/* Tab styles */
+.mat-mdc-tab-header {
+  border-bottom: var(--border-width-thin) solid var(--neutral-300);
+}
+
+.mat-mdc-tab {
+  font-family: var(--font-family-base) !important;
+  font-weight: var(--font-weight-medium) !important;
+  transition: all var(--transition-normal) var(--transition-timing-default) !important;
+}
+
+.mat-mdc-tab.mat-mdc-tab-active {
+  color: var(--primary) !important;
+}
+
+.mat-mdc-tab-header-pagination-chevron {
+  border-color: var(--neutral-700) !important;
+}
+
+.mat-mdc-tab-header-pagination-disabled .mat-mdc-tab-header-pagination-chevron {
+  border-color: var(--neutral-400) !important;
+}
+
+/* Checkbox styles */
+.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Radio button styles */
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__outer-circle {
+  border-color: var(--primary) !important;
+}
+
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__inner-circle {
+  background-color: var(--primary) !important;
+}
+
+/* Select styles */
+.mat-mdc-select-panel {
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.mat-mdc-option {
+  font-family: var(--font-family-base) !important;
+}
+
+.mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-multiple) {
+  background-color: rgba(255, 51, 102, 0.1) !important;
+  color: var(--primary) !important;
+}
+
+/* Tooltip styles */
+.mat-mdc-tooltip {
+  background-color: var(--neutral-800) !important;
+  border-radius: var(--border-radius-md) !important;
+  font-family: var(--font-family-base) !important;
+  font-size: var(--font-size-xs) !important;
+  padding: var(--space-2) var(--space-3) !important;
+}

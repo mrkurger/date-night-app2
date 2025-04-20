@@ -18,11 +18,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const User = require('../../models/user.model');
-const ChatRoom = require('../../models/chat-room.model');
-const logger = require('../../utils/logger');
-const { validateObjectId } = require('../../utils/validation');
-const { errorResponse, successResponse } = require('../../utils/response');
+import User from '../../models/user.model';
+import ChatRoom from '../../models/chat-room.model';
+import logger from '../../utils/logger';
+import { validateObjectId } from '../../utils/validation';
+import { errorResponse, successResponse } from '../../utils/response';
 
 /**
  * Register a user's public key

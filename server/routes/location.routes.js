@@ -7,14 +7,14 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { asyncHandler } = require('../middleware/asyncHandler');
-const { authenticate, restrictTo } = require('../middleware/auth');
-const locationController = require('../controllers/location.controller');
+import { asyncHandler } from '../middleware/asyncHandler';
+import { authenticate, restrictTo } from '../middleware/auth';
+import locationController from '../controllers/location.controller';
 
 // Import the Norway locations data
-const norwayLocations = require('../data/norway-locations');
+import norwayLocations from '../data/norway-locations';
 
 /**
  * @route   GET /api/v1/locations/counties

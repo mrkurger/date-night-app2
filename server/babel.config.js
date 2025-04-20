@@ -12,8 +12,16 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 export default {
-  presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
-  plugins: [
-    // Add any plugins needed for your specific ES module features
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          node: 'current',
+        },
+        modules: 'auto',
+      },
+    ],
   ],
+  plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-modules-commonjs'],
 };

@@ -7,14 +7,14 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const Ad = require('../models/ad.model');
-const User = require('../models/user.model');
-const { AppError } = require('../middleware/errorHandler');
-const socketService = require('./socket.service');
-const logger = require('../utils/logger').logger;
-const NodeCache = require('node-cache');
-const axios = require('axios');
-const config = require('../config');
+import Ad from '../models/ad.model';
+import User from '../models/user.model';
+import { AppError } from '../middleware/errorHandler';
+import socketService from './socket.service';
+import { logger } from '../utils/logger';
+import NodeCache from 'node-cache';
+import axios from 'axios';
+import config from '../config';
 
 // Initialize cache with 5 minute TTL and check period of 10 minutes
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });
@@ -615,4 +615,4 @@ class TravelService {
   }
 }
 
-module.exports = new TravelService();
+export default new TravelService();

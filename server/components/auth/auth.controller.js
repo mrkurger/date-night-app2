@@ -7,10 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { User } = require('../users');
-const passport = require('passport');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { User } from '../users';
+import passport from 'passport';
 
 exports.register = async (req, res) => {
   try {
@@ -119,7 +119,7 @@ exports.logout = async (req, res) => {
 
       // Blacklist the current token
       if (req.token) {
-        const TokenBlacklist = require('../../models/token-blacklist.model');
+        const TokenBlacklist = (await import('../../models/token-blacklist.model')).default;
 
         // Get token expiration from decoded token
         const expiresAt = new Date(req.tokenDecoded.exp * 1000);

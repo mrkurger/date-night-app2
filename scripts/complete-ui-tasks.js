@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs/promises';
+import path from 'path';
+import { execSync } from 'child_process';
 
 // Define paths
 const clientPath = path.join(__dirname, '../client-angular');
@@ -2589,8 +2589,8 @@ if (fs.existsSync(indexHtmlPath)) {
 // Create a script to update the UI/UX implementation status
 const updateUiUxStatusScript = `
 // Update the UI/UX implementation status in the documentation
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 const uiUxImplementationPath = path.join(__dirname, '../docs/ui-ux-implementation.md');
 const uiUxRoadmapPath = path.join(__dirname, '../docs/ui-ux-roadmap.md');

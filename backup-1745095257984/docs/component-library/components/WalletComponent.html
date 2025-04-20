@@ -1,0 +1,3842 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  WalletComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/wallet/wallet.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-wallet</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>RouterModule</code>
+                            <code>MatTabsModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatCheckboxModule</code>
+                            <code>MatRadioModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatPaginatorModule</code>
+                            <code>MatSortModule</code>
+                            <code>MatDialogModule</code>
+                            <code>MatSnackBarModule</code>
+                            <code>MatProgressSpinnerModule</code>
+                            <code>MatTooltipModule</code>
+                            <code>MatChipsModule</code>
+                            <code>MatExpansionModule</code>
+                            <code>MatDividerModule</code>
+                            <code>MatBadgeModule</code>
+                            <code>MatMenuModule</code>
+                            <code>MatSlideToggleModule</code>
+                                <code><a href="../modules/QRCodeModule.html" target="_self" >QRCodeModule</a></code>
+                            <code>ClipboardModule</code>
+                                <code><a href="../components/CardGridComponent.html" target="_self" >CardGridComponent</a></code>
+                                <code><a href="../components/PagerComponent.html" target="_self" >PagerComponent</a></code>
+                                <code><a href="../components/AppCardComponent.html" target="_self" >AppCardComponent</a></code>
+                                <code><a href="../components/FloatingActionButtonComponent.html" target="_self" >FloatingActionButtonComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./wallet.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./wallet.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#balances" >balances</a>
+                            </li>
+                            <li>
+                                <a href="#currentPage" >currentPage</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#paymentMethods" >paymentMethods</a>
+                            </li>
+                            <li>
+                                <a href="#selectedCurrency" >selectedCurrency</a>
+                            </li>
+                            <li>
+                                <a href="#settingsForm" >settingsForm</a>
+                            </li>
+                            <li>
+                                <a href="#totalPages" >totalPages</a>
+                            </li>
+                            <li>
+                                <a href="#totalTransactions" >totalTransactions</a>
+                            </li>
+                            <li>
+                                <a href="#transactionFilters" >transactionFilters</a>
+                            </li>
+                            <li>
+                                <a href="#transactions" >transactions</a>
+                            </li>
+                            <li>
+                                <a href="#transactionStatuses" >transactionStatuses</a>
+                            </li>
+                            <li>
+                                <a href="#transactionTypes" >transactionTypes</a>
+                            </li>
+                            <li>
+                                <a href="#wallet" >wallet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#walletService" >walletService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilters" >applyFilters</a>
+                            </li>
+                            <li>
+                                <a href="#formatTransactionAmount" >formatTransactionAmount</a>
+                            </li>
+                            <li>
+                                <a href="#getPaymentMethodDisplayName" >getPaymentMethodDisplayName</a>
+                            </li>
+                            <li>
+                                <a href="#getPaymentMethodIcon" >getPaymentMethodIcon</a>
+                            </li>
+                            <li>
+                                <a href="#getTotalBalance" >getTotalBalance</a>
+                            </li>
+                            <li>
+                                <a href="#getTransactionStatusClass" >getTransactionStatusClass</a>
+                            </li>
+                            <li>
+                                <a href="#getTransactionTypeClass" >getTransactionTypeClass</a>
+                            </li>
+                            <li>
+                                <a href="#hasPaymentMethods" >hasPaymentMethods</a>
+                            </li>
+                            <li>
+                                <a href="#hasTransactions" >hasTransactions</a>
+                            </li>
+                            <li>
+                                <a href="#loadPaymentMethods" >loadPaymentMethods</a>
+                            </li>
+                            <li>
+                                <a href="#loadTransactions" >loadTransactions</a>
+                            </li>
+                            <li>
+                                <a href="#loadWallet" >loadWallet</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onPageChange" >onPageChange</a>
+                            </li>
+                            <li>
+                                <a href="#onPageSizeChange" >onPageSizeChange</a>
+                            </li>
+                            <li>
+                                <a href="#openAddPaymentMethodDialog" >openAddPaymentMethodDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openDepositDialog" >openDepositDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openTransactionDetailsDialog" >openTransactionDetailsDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openTransferDialog" >openTransferDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openWithdrawDialog" >openWithdrawDialog</a>
+                            </li>
+                            <li>
+                                <a href="#removePaymentMethod" >removePaymentMethod</a>
+                            </li>
+                            <li>
+                                <a href="#resetFilters" >resetFilters</a>
+                            </li>
+                            <li>
+                                <a href="#saveSettings" >saveSettings</a>
+                            </li>
+                            <li>
+                                <a href="#setDefaultPaymentMethod" >setDefaultPaymentMethod</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(walletService: <a href="../injectables/WalletService.html" target="_self">WalletService</a>, paymentService: <a href="../injectables/PaymentService.html" target="_self">PaymentService</a>, notificationService: <a href="../injectables/NotificationService.html" target="_self">NotificationService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, dialog: MatDialog, snackBar: MatSnackBar, fb: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/app/features/wallet/wallet.component.ts:159</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>walletService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/WalletService.html" target="_self" >WalletService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>paymentService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PaymentService.html" target="_self" >PaymentService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilters"></a>
+                    <span class="name">
+                        <span ><b>applyFilters</b></span>
+                        <a href="#applyFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="271"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:271</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Apply transaction filters</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatTransactionAmount"></a>
+                    <span class="name">
+                        <span ><b>formatTransactionAmount</b></span>
+                        <a href="#formatTransactionAmount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatTransactionAmount(transaction: <a href="../interfaces/WalletTransaction.html" target="_self">WalletTransaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="503"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:503</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Format transaction amount with sign</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../interfaces/WalletTransaction.html" target="_self" >WalletTransaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPaymentMethodDisplayName"></a>
+                    <span class="name">
+                        <span ><b>getPaymentMethodDisplayName</b></span>
+                        <a href="#getPaymentMethodDisplayName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPaymentMethodDisplayName(paymentMethod: <a href="../interfaces/PaymentMethod.html" target="_self">PaymentMethod</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="512"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:512</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get payment method display name</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paymentMethod</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PaymentMethod.html" target="_self" >PaymentMethod</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Payment method</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPaymentMethodIcon"></a>
+                    <span class="name">
+                        <span ><b>getPaymentMethodIcon</b></span>
+                        <a href="#getPaymentMethodIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPaymentMethodIcon(paymentMethod: <a href="../interfaces/PaymentMethod.html" target="_self">PaymentMethod</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="541"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:541</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get payment method icon</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paymentMethod</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PaymentMethod.html" target="_self" >PaymentMethod</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Payment method</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTotalBalance"></a>
+                    <span class="name">
+                        <span ><b>getTotalBalance</b></span>
+                        <a href="#getTotalBalance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTotalBalance()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="582"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:582</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get total balance in default currency</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTransactionStatusClass"></a>
+                    <span class="name">
+                        <span ><b>getTransactionStatusClass</b></span>
+                        <a href="#getTransactionStatusClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTransactionStatusClass(status: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="484"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:484</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get CSS class for transaction status</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction status</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTransactionTypeClass"></a>
+                    <span class="name">
+                        <span ><b>getTransactionTypeClass</b></span>
+                        <a href="#getTransactionTypeClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTransactionTypeClass(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="461"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:461</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get CSS class for transaction type</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction type</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasPaymentMethods"></a>
+                    <span class="name">
+                        <span ><b>hasPaymentMethods</b></span>
+                        <a href="#hasPaymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasPaymentMethods()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="601"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:601</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if user has any payment methods</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasTransactions"></a>
+                    <span class="name">
+                        <span ><b>hasTransactions</b></span>
+                        <a href="#hasTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasTransactions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="608"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:608</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if user has any transactions</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPaymentMethods"></a>
+                    <span class="name">
+                        <span ><b>loadPaymentMethods</b></span>
+                        <a href="#loadPaymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPaymentMethods()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="252"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load payment methods</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTransactions"></a>
+                    <span class="name">
+                        <span ><b>loadTransactions</b></span>
+                        <a href="#loadTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadTransactions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="229"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:229</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load transactions with current filters</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadWallet"></a>
+                    <span class="name">
+                        <span ><b>loadWallet</b></span>
+                        <a href="#loadWallet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadWallet()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="200"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:200</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load wallet data</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:193</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageChange"></a>
+                    <span class="name">
+                        <span ><b>onPageChange</b></span>
+                        <a href="#onPageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageChange(page: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:289</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle page change</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>page</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page number</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageSizeChange"></a>
+                    <span class="name">
+                        <span ><b>onPageSizeChange</b></span>
+                        <a href="#onPageSizeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageSizeChange(size: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="298"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:298</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle page size change</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>size</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page size</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAddPaymentMethodDialog"></a>
+                    <span class="name">
+                        <span ><b>openAddPaymentMethodDialog</b></span>
+                        <a href="#openAddPaymentMethodDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openAddPaymentMethodDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="368"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open add payment method dialog</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDepositDialog"></a>
+                    <span class="name">
+                        <span ><b>openDepositDialog</b></span>
+                        <a href="#openDepositDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDepositDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="307"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:307</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open deposit dialog</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openTransactionDetailsDialog"></a>
+                    <span class="name">
+                        <span ><b>openTransactionDetailsDialog</b></span>
+                        <a href="#openTransactionDetailsDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openTransactionDetailsDialog(transaction: <a href="../interfaces/WalletTransaction.html" target="_self">WalletTransaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="388"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:388</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open transaction details dialog</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../interfaces/WalletTransaction.html" target="_self" >WalletTransaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction to view</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openTransferDialog"></a>
+                    <span class="name">
+                        <span ><b>openTransferDialog</b></span>
+                        <a href="#openTransferDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openTransferDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="349"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:349</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open transfer dialog</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openWithdrawDialog"></a>
+                    <span class="name">
+                        <span ><b>openWithdrawDialog</b></span>
+                        <a href="#openWithdrawDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openWithdrawDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="329"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:329</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open withdraw dialog</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePaymentMethod"></a>
+                    <span class="name">
+                        <span ><b>removePaymentMethod</b></span>
+                        <a href="#removePaymentMethod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removePaymentMethod(paymentMethodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="399"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:399</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Remove payment method</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paymentMethodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Payment method ID</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFilters"></a>
+                    <span class="name">
+                        <span ><b>resetFilters</b></span>
+                        <a href="#resetFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="279"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:279</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset transaction filters</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveSettings"></a>
+                    <span class="name">
+                        <span ><b>saveSettings</b></span>
+                        <a href="#saveSettings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveSettings()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="434"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:434</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Save wallet settings</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setDefaultPaymentMethod"></a>
+                    <span class="name">
+                        <span ><b>setDefaultPaymentMethod</b></span>
+                        <a href="#setDefaultPaymentMethod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setDefaultPaymentMethod(paymentMethodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="418"
+                                    class="link-to-prism">src/app/features/wallet/wallet.component.ts:418</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Set default payment method</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paymentMethodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Payment method ID</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="balances"></a>
+                    <span class="name">
+                        <span ><b>balances</b></span>
+                        <a href="#balances"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>WalletBalance[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/features/wallet/wallet.component.ts:114</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentPage"></a>
+                    <span class="name">
+                        <span ><b>currentPage</b></span>
+                        <a href="#currentPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/features/wallet/wallet.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;date&#x27;, &#x27;type&#x27;, &#x27;amount&#x27;, &#x27;status&#x27;, &#x27;actions&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/app/features/wallet/wallet.component.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    wallet: true,
+    transactions: false,
+    paymentMethods: false,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">src/app/features/wallet/wallet.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/app/features/wallet/wallet.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paymentMethods"></a>
+                    <span class="name">
+                        <span ><b>paymentMethods</b></span>
+                        <a href="#paymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>PaymentMethod[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/app/features/wallet/wallet.component.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedCurrency"></a>
+                    <span class="name">
+                        <span ><b>selectedCurrency</b></span>
+                        <a href="#selectedCurrency"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;NOK&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/app/features/wallet/wallet.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="settingsForm"></a>
+                    <span class="name">
+                        <span ><b>settingsForm</b></span>
+                        <a href="#settingsForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="156" class="link-to-prism">src/app/features/wallet/wallet.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalPages"></a>
+                    <span class="name">
+                        <span ><b>totalPages</b></span>
+                        <a href="#totalPages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/features/wallet/wallet.component.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalTransactions"></a>
+                    <span class="name">
+                        <span ><b>totalTransactions</b></span>
+                        <a href="#totalTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/features/wallet/wallet.component.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactionFilters"></a>
+                    <span class="name">
+                        <span ><b>transactionFilters</b></span>
+                        <a href="#transactionFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TransactionFilters.html" target="_self" >TransactionFilters</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/app/features/wallet/wallet.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactions"></a>
+                    <span class="name">
+                        <span ><b>transactions</b></span>
+                        <a href="#transactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>WalletTransaction[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/app/features/wallet/wallet.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactionStatuses"></a>
+                    <span class="name">
+                        <span ><b>transactionStatuses</b></span>
+                        <a href="#transactionStatuses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: &#x27;&#x27;, label: &#x27;All Statuses&#x27; },
+    { value: &#x27;pending&#x27;, label: &#x27;Pending&#x27; },
+    { value: &#x27;completed&#x27;, label: &#x27;Completed&#x27; },
+    { value: &#x27;failed&#x27;, label: &#x27;Failed&#x27; },
+    { value: &#x27;cancelled&#x27;, label: &#x27;Cancelled&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/app/features/wallet/wallet.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactionTypes"></a>
+                    <span class="name">
+                        <span ><b>transactionTypes</b></span>
+                        <a href="#transactionTypes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: &#x27;&#x27;, label: &#x27;All Types&#x27; },
+    { value: &#x27;deposit&#x27;, label: &#x27;Deposits&#x27; },
+    { value: &#x27;withdrawal&#x27;, label: &#x27;Withdrawals&#x27; },
+    { value: &#x27;transfer&#x27;, label: &#x27;Transfers&#x27; },
+    { value: &#x27;payment&#x27;, label: &#x27;Payments&#x27; },
+    { value: &#x27;refund&#x27;, label: &#x27;Refunds&#x27; },
+    { value: &#x27;fee&#x27;, label: &#x27;Fees&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/app/features/wallet/wallet.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="wallet"></a>
+                    <span class="name">
+                        <span ><b>wallet</b></span>
+                        <a href="#wallet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Wallet.html" target="_self" >Wallet | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/app/features/wallet/wallet.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="walletService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>walletService</b></span>
+                        <a href="#walletService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/WalletService.html" target="_self" >WalletService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="162" class="link-to-prism">src/app/features/wallet/wallet.component.ts:162</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatCheckboxModule } from &#x27;@angular/material/checkbox&#x27;;
+import { MatRadioModule } from &#x27;@angular/material/radio&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { MatPaginatorModule } from &#x27;@angular/material/paginator&#x27;;
+import { MatSortModule } from &#x27;@angular/material/sort&#x27;;
+import { MatDialogModule, MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { MatSnackBar, MatSnackBarModule } from &#x27;@angular/material/snack-bar&#x27;;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;;
+import { MatChipsModule } from &#x27;@angular/material/chips&#x27;;
+import { MatExpansionModule } from &#x27;@angular/material/expansion&#x27;;
+import { MatDividerModule } from &#x27;@angular/material/divider&#x27;;
+import { MatBadgeModule } from &#x27;@angular/material/badge&#x27;;
+import { MatMenuModule } from &#x27;@angular/material/menu&#x27;;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;;
+
+import {
+  WalletService,
+  Wallet,
+  WalletBalance,
+  WalletTransaction,
+  PaymentMethod,
+  TransactionFilters,
+} from &#x27;../../core/services/wallet.service&#x27;;
+import { PaymentService } from &#x27;../../core/services/payment.service&#x27;;
+import { NotificationService } from &#x27;../../core/services/notification.service&#x27;;
+import { AuthService } from &#x27;../../core/services/auth.service&#x27;;
+
+import { ClipboardModule } from &#x27;@angular/cdk/clipboard&#x27;;
+import { QRCodeModule } from &#x27;../../shared/qrcode/qrcode.module&#x27;;
+
+// Import Emerald components
+import { CardGridComponent } from &#x27;../../shared/emerald/components/card-grid/card-grid.component&#x27;;
+import { PagerComponent } from &#x27;../../shared/emerald/components/pager/pager.component&#x27;;
+import { AppCardComponent } from &#x27;../../shared/emerald/components/app-card/app-card.component&#x27;;
+import { FloatingActionButtonComponent } from &#x27;../../shared/emerald/components/floating-action-button/floating-action-button.component&#x27;;
+
+// Import dialogs
+import { DepositDialogComponent } from &#x27;./dialogs/deposit-dialog.component&#x27;;
+import { WithdrawDialogComponent } from &#x27;./dialogs/withdraw-dialog.component&#x27;;
+import { TransferDialogComponent } from &#x27;./dialogs/transfer-dialog.component&#x27;;
+import { AddPaymentMethodDialogComponent } from &#x27;./dialogs/add-payment-method-dialog.component&#x27;;
+import { TransactionDetailsDialogComponent } from &#x27;./dialogs/transaction-details-dialog.component&#x27;;
+
+@Component({
+  selector: &#x27;app-wallet&#x27;,
+  templateUrl: &#x27;./wallet.component.html&#x27;,
+  styleUrls: [&#x27;./wallet.component.scss&#x27;],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatDividerModule,
+    MatBadgeModule,
+    MatMenuModule,
+    MatSlideToggleModule,
+    QRCodeModule,
+    ClipboardModule,
+    // Emerald components
+    CardGridComponent,
+    PagerComponent,
+    AppCardComponent,
+    FloatingActionButtonComponent,
+  ],
+})
+export class WalletComponent implements OnInit {
+  wallet: Wallet | null &#x3D; null;
+  balances: WalletBalance[] &#x3D; [];
+  transactions: WalletTransaction[] &#x3D; [];
+  paymentMethods: PaymentMethod[] &#x3D; [];
+
+  // Transaction filters
+  transactionFilters: TransactionFilters &#x3D; {};
+  currentPage &#x3D; 1;
+  pageSize &#x3D; 10;
+  totalTransactions &#x3D; 0;
+  totalPages &#x3D; 1;
+
+  // Loading states
+  loading &#x3D; {
+    wallet: true,
+    transactions: false,
+    paymentMethods: false,
+  };
+
+  // Selected currency for operations
+  selectedCurrency &#x3D; &#x27;NOK&#x27;;
+
+  // Transaction types for filtering
+  transactionTypes &#x3D; [
+    { value: &#x27;&#x27;, label: &#x27;All Types&#x27; },
+    { value: &#x27;deposit&#x27;, label: &#x27;Deposits&#x27; },
+    { value: &#x27;withdrawal&#x27;, label: &#x27;Withdrawals&#x27; },
+    { value: &#x27;transfer&#x27;, label: &#x27;Transfers&#x27; },
+    { value: &#x27;payment&#x27;, label: &#x27;Payments&#x27; },
+    { value: &#x27;refund&#x27;, label: &#x27;Refunds&#x27; },
+    { value: &#x27;fee&#x27;, label: &#x27;Fees&#x27; },
+  ];
+
+  // Transaction statuses for filtering
+  transactionStatuses &#x3D; [
+    { value: &#x27;&#x27;, label: &#x27;All Statuses&#x27; },
+    { value: &#x27;pending&#x27;, label: &#x27;Pending&#x27; },
+    { value: &#x27;completed&#x27;, label: &#x27;Completed&#x27; },
+    { value: &#x27;failed&#x27;, label: &#x27;Failed&#x27; },
+    { value: &#x27;cancelled&#x27;, label: &#x27;Cancelled&#x27; },
+  ];
+
+  // Settings form
+  settingsForm: FormGroup;
+
+  // Display columns for transactions table
+  displayedColumns: string[] &#x3D; [&#x27;date&#x27;, &#x27;type&#x27;, &#x27;amount&#x27;, &#x27;status&#x27;, &#x27;actions&#x27;];
+
+  constructor(
+    public walletService: WalletService,
+    private paymentService: PaymentService,
+    private notificationService: NotificationService,
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder
+  ) {
+    // Initialize settings form
+    this.settingsForm &#x3D; this.fb.group({
+      defaultCurrency: [&#x27;NOK&#x27;, Validators.required],
+      autoWithdrawal: this.fb.group({
+        enabled: [false],
+        threshold: [100000, [Validators.required, Validators.min(10000)]],
+        paymentMethodId: [&#x27;&#x27;],
+      }),
+      notificationPreferences: this.fb.group({
+        email: this.fb.group({
+          deposit: [true],
+          withdrawal: [true],
+          payment: [true],
+        }),
+        push: this.fb.group({
+          deposit: [true],
+          withdrawal: [true],
+          payment: [true],
+        }),
+      }),
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadWallet();
+  }
+
+  /**
+   * Load wallet data
+   */
+  loadWallet(): void {
+    this.loading.wallet &#x3D; true;
+
+    this.walletService.getWallet().subscribe({
+      next: wallet &#x3D;&gt; {
+        this.wallet &#x3D; wallet;
+        this.balances &#x3D; wallet.balances;
+        this.selectedCurrency &#x3D; wallet.settings.defaultCurrency;
+
+        // Update settings form
+        this.settingsForm.patchValue(wallet.settings);
+
+        this.loading.wallet &#x3D; false;
+
+        // Load transactions and payment methods
+        this.loadTransactions();
+        this.loadPaymentMethods();
+      },
+      error: error &#x3D;&gt; {
+        console.error(&#x27;Error loading wallet:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to load wallet data&#x27;);
+        this.loading.wallet &#x3D; false;
+      },
+    });
+  }
+
+  /**
+   * Load transactions with current filters
+   */
+  loadTransactions(): void {
+    this.loading.transactions &#x3D; true;
+
+    this.walletService
+      .getWalletTransactions(this.transactionFilters, this.currentPage, this.pageSize)
+      .subscribe({
+        next: response &#x3D;&gt; {
+          this.transactions &#x3D; response.transactions;
+          this.totalTransactions &#x3D; response.pagination.total;
+          this.totalPages &#x3D; response.pagination.pages;
+          this.loading.transactions &#x3D; false;
+        },
+        error: error &#x3D;&gt; {
+          console.error(&#x27;Error loading transactions:&#x27;, error);
+          this.notificationService.error(&#x27;Failed to load transactions&#x27;);
+          this.loading.transactions &#x3D; false;
+        },
+      });
+  }
+
+  /**
+   * Load payment methods
+   */
+  loadPaymentMethods(): void {
+    this.loading.paymentMethods &#x3D; true;
+
+    this.walletService.getWalletPaymentMethods().subscribe({
+      next: paymentMethods &#x3D;&gt; {
+        this.paymentMethods &#x3D; paymentMethods;
+        this.loading.paymentMethods &#x3D; false;
+      },
+      error: error &#x3D;&gt; {
+        console.error(&#x27;Error loading payment methods:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to load payment methods&#x27;);
+        this.loading.paymentMethods &#x3D; false;
+      },
+    });
+  }
+
+  /**
+   * Apply transaction filters
+   */
+  applyFilters(): void {
+    this.currentPage &#x3D; 1;
+    this.loadTransactions();
+  }
+
+  /**
+   * Reset transaction filters
+   */
+  resetFilters(): void {
+    this.transactionFilters &#x3D; {};
+    this.currentPage &#x3D; 1;
+    this.loadTransactions();
+  }
+
+  /**
+   * Handle page change
+   * @param page New page number
+   */
+  onPageChange(page: number): void {
+    this.currentPage &#x3D; page;
+    this.loadTransactions();
+  }
+
+  /**
+   * Handle page size change
+   * @param size New page size
+   */
+  onPageSizeChange(size: number): void {
+    this.pageSize &#x3D; size;
+    this.currentPage &#x3D; 1;
+    this.loadTransactions();
+  }
+
+  /**
+   * Open deposit dialog
+   */
+  openDepositDialog(): void {
+    const dialogRef &#x3D; this.dialog.open(DepositDialogComponent, {
+      width: &#x27;500px&#x27;,
+      data: {
+        currencies: this.walletService.SUPPORTED_CURRENCIES.concat(
+          this.walletService.SUPPORTED_CRYPTOCURRENCIES
+        ),
+        paymentMethods: this.paymentMethods,
+        selectedCurrency: this.selectedCurrency,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      if (result) {
+        this.loadWallet();
+      }
+    });
+  }
+
+  /**
+   * Open withdraw dialog
+   */
+  openWithdrawDialog(): void {
+    const dialogRef &#x3D; this.dialog.open(WithdrawDialogComponent, {
+      width: &#x27;500px&#x27;,
+      data: {
+        balances: this.balances,
+        paymentMethods: this.paymentMethods,
+        selectedCurrency: this.selectedCurrency,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      if (result) {
+        this.loadWallet();
+      }
+    });
+  }
+
+  /**
+   * Open transfer dialog
+   */
+  openTransferDialog(): void {
+    const dialogRef &#x3D; this.dialog.open(TransferDialogComponent, {
+      width: &#x27;500px&#x27;,
+      data: {
+        balances: this.balances,
+        selectedCurrency: this.selectedCurrency,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      if (result) {
+        this.loadWallet();
+      }
+    });
+  }
+
+  /**
+   * Open add payment method dialog
+   */
+  openAddPaymentMethodDialog(): void {
+    const dialogRef &#x3D; this.dialog.open(AddPaymentMethodDialogComponent, {
+      width: &#x27;500px&#x27;,
+      data: {
+        currencies: this.walletService.SUPPORTED_CURRENCIES,
+        cryptocurrencies: this.walletService.SUPPORTED_CRYPTOCURRENCIES,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      if (result) {
+        this.loadPaymentMethods();
+      }
+    });
+  }
+
+  /**
+   * Open transaction details dialog
+   * @param transaction Transaction to view
+   */
+  openTransactionDetailsDialog(transaction: WalletTransaction): void {
+    this.dialog.open(TransactionDetailsDialogComponent, {
+      width: &#x27;600px&#x27;,
+      data: { transaction },
+    });
+  }
+
+  /**
+   * Remove payment method
+   * @param paymentMethodId Payment method ID
+   */
+  removePaymentMethod(paymentMethodId: string): void {
+    if (confirm(&#x27;Are you sure you want to remove this payment method?&#x27;)) {
+      this.walletService.removePaymentMethod(paymentMethodId).subscribe({
+        next: () &#x3D;&gt; {
+          this.notificationService.success(&#x27;Payment method removed&#x27;);
+          this.loadPaymentMethods();
+        },
+        error: error &#x3D;&gt; {
+          console.error(&#x27;Error removing payment method:&#x27;, error);
+          this.notificationService.error(&#x27;Failed to remove payment method&#x27;);
+        },
+      });
+    }
+  }
+
+  /**
+   * Set default payment method
+   * @param paymentMethodId Payment method ID
+   */
+  setDefaultPaymentMethod(paymentMethodId: string): void {
+    this.walletService.setDefaultPaymentMethod(paymentMethodId).subscribe({
+      next: () &#x3D;&gt; {
+        this.notificationService.success(&#x27;Default payment method updated&#x27;);
+        this.loadPaymentMethods();
+      },
+      error: error &#x3D;&gt; {
+        console.error(&#x27;Error setting default payment method:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to update default payment method&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Save wallet settings
+   */
+  saveSettings(): void {
+    if (this.settingsForm.invalid) {
+      return;
+    }
+
+    const settings &#x3D; this.settingsForm.value;
+
+    this.walletService.updateWalletSettings(settings).subscribe({
+      next: updatedSettings &#x3D;&gt; {
+        this.notificationService.success(&#x27;Wallet settings updated&#x27;);
+
+        // Update local wallet settings
+        if (this.wallet) {
+          this.wallet.settings &#x3D; updatedSettings;
+        }
+      },
+      error: error &#x3D;&gt; {
+        console.error(&#x27;Error updating wallet settings:&#x27;, error);
+        this.notificationService.error(&#x27;Failed to update wallet settings&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Get CSS class for transaction type
+   * @param type Transaction type
+   */
+  getTransactionTypeClass(type: string): string {
+    switch (type) {
+      case &#x27;deposit&#x27;:
+        return &#x27;transaction-deposit&#x27;;
+      case &#x27;withdrawal&#x27;:
+        return &#x27;transaction-withdrawal&#x27;;
+      case &#x27;transfer&#x27;:
+        return &#x27;transaction-transfer&#x27;;
+      case &#x27;payment&#x27;:
+        return &#x27;transaction-payment&#x27;;
+      case &#x27;refund&#x27;:
+        return &#x27;transaction-refund&#x27;;
+      case &#x27;fee&#x27;:
+        return &#x27;transaction-fee&#x27;;
+      default:
+        return &#x27;&#x27;;
+    }
+  }
+
+  /**
+   * Get CSS class for transaction status
+   * @param status Transaction status
+   */
+  getTransactionStatusClass(status: string): string {
+    switch (status) {
+      case &#x27;pending&#x27;:
+        return &#x27;status-pending&#x27;;
+      case &#x27;completed&#x27;:
+        return &#x27;status-completed&#x27;;
+      case &#x27;failed&#x27;:
+        return &#x27;status-failed&#x27;;
+      case &#x27;cancelled&#x27;:
+        return &#x27;status-cancelled&#x27;;
+      default:
+        return &#x27;&#x27;;
+    }
+  }
+
+  /**
+   * Format transaction amount with sign
+   * @param transaction Transaction
+   */
+  formatTransactionAmount(transaction: WalletTransaction): string {
+    const sign &#x3D; transaction.amount &gt;&#x3D; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+    return &#x60;${sign}${this.walletService.formatCurrency(transaction.amount, transaction.currency)}&#x60;;
+  }
+
+  /**
+   * Get payment method display name
+   * @param paymentMethod Payment method
+   */
+  getPaymentMethodDisplayName(paymentMethod: PaymentMethod): string {
+    switch (paymentMethod.type) {
+      case &#x27;card&#x27;:
+        if (paymentMethod.cardDetails) {
+          return &#x60;${paymentMethod.cardDetails.brand} •••• ${paymentMethod.cardDetails.lastFour}&#x60;;
+        }
+        return &#x27;Card&#x27;;
+
+      case &#x27;bank_account&#x27;:
+        if (paymentMethod.bankDetails) {
+          return &#x60;${paymentMethod.bankDetails.bankName} •••• ${paymentMethod.bankDetails.lastFour}&#x60;;
+        }
+        return &#x27;Bank Account&#x27;;
+
+      case &#x27;crypto_address&#x27;:
+        if (paymentMethod.cryptoDetails) {
+          return &#x60;${paymentMethod.cryptoDetails.currency} Address&#x60;;
+        }
+        return &#x27;Crypto Address&#x27;;
+
+      default:
+        return &#x27;Unknown Payment Method&#x27;;
+    }
+  }
+
+  /**
+   * Get payment method icon
+   * @param paymentMethod Payment method
+   */
+  getPaymentMethodIcon(paymentMethod: PaymentMethod): string {
+    switch (paymentMethod.type) {
+      case &#x27;card&#x27;:
+        if (paymentMethod.cardDetails) {
+          switch (paymentMethod.cardDetails.brand.toLowerCase()) {
+            case &#x27;visa&#x27;:
+              return &#x27;cc-visa&#x27;;
+            case &#x27;mastercard&#x27;:
+              return &#x27;cc-mastercard&#x27;;
+            case &#x27;amex&#x27;:
+              return &#x27;cc-amex&#x27;;
+            default:
+              return &#x27;credit_card&#x27;;
+          }
+        }
+        return &#x27;credit_card&#x27;;
+
+      case &#x27;bank_account&#x27;:
+        return &#x27;account_balance&#x27;;
+
+      case &#x27;crypto_address&#x27;:
+        if (paymentMethod.cryptoDetails) {
+          switch (paymentMethod.cryptoDetails.currency) {
+            case &#x27;BTC&#x27;:
+              return &#x27;currency_bitcoin&#x27;;
+            case &#x27;ETH&#x27;:
+              return &#x27;currency_ethereum&#x27;;
+            default:
+              return &#x27;currency_exchange&#x27;;
+          }
+        }
+        return &#x27;currency_exchange&#x27;;
+
+      default:
+        return &#x27;payment&#x27;;
+    }
+  }
+
+  /**
+   * Get total balance in default currency
+   */
+  getTotalBalance(): string {
+    if (!this.balances.length) {
+      return this.walletService.formatCurrency(0, this.selectedCurrency);
+    }
+
+    // Find balance in default currency
+    const defaultBalance &#x3D; this.balances.find(b &#x3D;&gt; b.currency &#x3D;&#x3D;&#x3D; this.selectedCurrency);
+
+    if (defaultBalance) {
+      return this.walletService.formatCurrency(defaultBalance.available, this.selectedCurrency);
+    }
+
+    // If no balance in default currency, return 0
+    return this.walletService.formatCurrency(0, this.selectedCurrency);
+  }
+
+  /**
+   * Check if user has any payment methods
+   */
+  hasPaymentMethods(): boolean {
+    return this.paymentMethods.length &gt; 0;
+  }
+
+  /**
+   * Check if user has any transactions
+   */
+  hasTransactions(): boolean {
+    return this.totalTransactions &gt; 0;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;wallet-container&quot;&gt;
+  &lt;div class&#x3D;&quot;wallet-header&quot;&gt;
+    &lt;h1 class&#x3D;&quot;wallet-title&quot;&gt;My Wallet&lt;/h1&gt;
+    &lt;div class&#x3D;&quot;wallet-actions&quot;&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;primary&quot;
+        (click)&#x3D;&quot;openDepositDialog()&quot;
+        [disabled]&#x3D;&quot;loading.wallet&quot;
+      &gt;
+        &lt;mat-icon&gt;add&lt;/mat-icon&gt; Deposit
+      &lt;/button&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;accent&quot;
+        (click)&#x3D;&quot;openWithdrawDialog()&quot;
+        [disabled]&#x3D;&quot;loading.wallet&quot;
+      &gt;
+        &lt;mat-icon&gt;remove&lt;/mat-icon&gt; Withdraw
+      &lt;/button&gt;
+      &lt;button
+        mat-raised-button
+        color&#x3D;&quot;basic&quot;
+        (click)&#x3D;&quot;openTransferDialog()&quot;
+        [disabled]&#x3D;&quot;loading.wallet&quot;
+      &gt;
+        &lt;mat-icon&gt;swap_horiz&lt;/mat-icon&gt; Transfer
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Loading spinner --&gt;
+  &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;loading.wallet&quot;&gt;
+    &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+    &lt;p&gt;Loading wallet data...&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Wallet content --&gt;
+  &lt;div class&#x3D;&quot;wallet-content&quot; *ngIf&#x3D;&quot;!loading.wallet&quot;&gt;
+    &lt;!-- Balance overview --&gt;
+    &lt;div class&#x3D;&quot;balance-overview&quot;&gt;
+      &lt;mat-card class&#x3D;&quot;total-balance-card&quot;&gt;
+        &lt;mat-card-header&gt;
+          &lt;mat-card-title&gt;Total Balance&lt;/mat-card-title&gt;
+          &lt;mat-card-subtitle&gt;Available funds&lt;/mat-card-subtitle&gt;
+        &lt;/mat-card-header&gt;
+        &lt;mat-card-content&gt;
+          &lt;h2 class&#x3D;&quot;total-balance&quot;&gt;{{ getTotalBalance() }}&lt;/h2&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+
+      &lt;!-- Individual balances --&gt;
+      &lt;div class&#x3D;&quot;currency-balances&quot;&gt;
+        &lt;mat-card *ngFor&#x3D;&quot;let balance of balances&quot; class&#x3D;&quot;currency-balance-card&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;{{ balance.currency }}&lt;/mat-card-title&gt;
+            &lt;mat-card-subtitle&gt;
+              &lt;span *ngIf&#x3D;&quot;balance.pending &gt; 0&quot;
+                &gt;{{ walletService.formatCurrency(balance.pending, balance.currency) }} pending&lt;/span
+              &gt;
+            &lt;/mat-card-subtitle&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;h3&gt;{{ walletService.formatCurrency(balance.available, balance.currency) }}&lt;/h3&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Tabs for different wallet sections --&gt;
+    &lt;mat-tab-group animationDuration&#x3D;&quot;0ms&quot; class&#x3D;&quot;wallet-tabs&quot;&gt;
+      &lt;!-- Transactions tab --&gt;
+      &lt;mat-tab label&#x3D;&quot;Transactions&quot;&gt;
+        &lt;div class&#x3D;&quot;transactions-container&quot;&gt;
+          &lt;!-- Filters --&gt;
+          &lt;div class&#x3D;&quot;transactions-filters&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Type&lt;/mat-label&gt;
+              &lt;mat-select [(ngModel)]&#x3D;&quot;transactionFilters.type&quot; (selectionChange)&#x3D;&quot;applyFilters()&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let type of transactionTypes&quot; [value]&#x3D;&quot;type.value&quot;&gt;
+                  {{ type.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Status&lt;/mat-label&gt;
+              &lt;mat-select
+                [(ngModel)]&#x3D;&quot;transactionFilters.status&quot;
+                (selectionChange)&#x3D;&quot;applyFilters()&quot;
+              &gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let status of transactionStatuses&quot; [value]&#x3D;&quot;status.value&quot;&gt;
+                  {{ status.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Currency&lt;/mat-label&gt;
+              &lt;mat-select
+                [(ngModel)]&#x3D;&quot;transactionFilters.currency&quot;
+                (selectionChange)&#x3D;&quot;applyFilters()&quot;
+              &gt;
+                &lt;mat-option value&#x3D;&quot;&quot;&gt;All Currencies&lt;/mat-option&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let balance of balances&quot; [value]&#x3D;&quot;balance.currency&quot;&gt;
+                  {{ balance.currency }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;button mat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;resetFilters()&quot;&gt;
+              &lt;mat-icon&gt;clear&lt;/mat-icon&gt; Clear Filters
+            &lt;/button&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Transactions table --&gt;
+          &lt;div class&#x3D;&quot;transactions-table-container&quot;&gt;
+            &lt;div class&#x3D;&quot;loading-overlay&quot; *ngIf&#x3D;&quot;loading.transactions&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+            &lt;/div&gt;
+
+            &lt;table mat-table [dataSource]&#x3D;&quot;transactions&quot; class&#x3D;&quot;transactions-table&quot;&gt;
+              &lt;!-- Date Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;date&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Date&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let transaction&quot;&gt;
+                  {{ transaction.createdAt | date: &#x27;medium&#x27; }}
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Type Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;type&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Type&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let transaction&quot;&gt;
+                  &lt;span
+                    class&#x3D;&quot;transaction-type&quot;
+                    [ngClass]&#x3D;&quot;getTransactionTypeClass(transaction.type)&quot;
+                  &gt;
+                    {{ transaction.type | titlecase }}
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Amount Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;amount&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Amount&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let transaction&quot;&gt;
+                  &lt;span
+                    [ngClass]&#x3D;&quot;{
+                      &#x27;positive-amount&#x27;: transaction.amount &gt; 0,
+                      &#x27;negative-amount&#x27;: transaction.amount &lt; 0,
+                    }&quot;
+                  &gt;
+                    {{ formatTransactionAmount(transaction) }}
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Status Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Status&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let transaction&quot;&gt;
+                  &lt;span
+                    class&#x3D;&quot;transaction-status&quot;
+                    [ngClass]&#x3D;&quot;getTransactionStatusClass(transaction.status)&quot;
+                  &gt;
+                    {{ transaction.status | titlecase }}
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Actions Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Actions&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let transaction&quot;&gt;
+                  &lt;button
+                    mat-icon-button
+                    color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;openTransactionDetailsDialog(transaction)&quot;
+                    matTooltip&#x3D;&quot;View Details&quot;
+                  &gt;
+                    &lt;mat-icon&gt;info&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+
+            &lt;!-- No transactions message --&gt;
+            &lt;div class&#x3D;&quot;no-data-message&quot; *ngIf&#x3D;&quot;!loading.transactions &amp;&amp; transactions.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+              &lt;mat-icon&gt;account_balance_wallet&lt;/mat-icon&gt;
+              &lt;p&gt;No transactions found&lt;/p&gt;
+              &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openDepositDialog()&quot;&gt;
+                Make Your First Deposit
+              &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Pagination --&gt;
+            &lt;div class&#x3D;&quot;pagination-container&quot; *ngIf&#x3D;&quot;totalPages &gt; 1&quot;&gt;
+              &lt;emerald-pager
+                [currentPage]&#x3D;&quot;currentPage&quot;
+                [totalPages]&#x3D;&quot;totalPages&quot;
+                [showPageSize]&#x3D;&quot;true&quot;
+                [pageSize]&#x3D;&quot;pageSize&quot;
+                [pageSizes]&#x3D;&quot;[10, 20, 50, 100]&quot;
+                style&#x3D;&quot;default&quot;
+                size&#x3D;&quot;medium&quot;
+                align&#x3D;&quot;center&quot;
+                (pageChange)&#x3D;&quot;onPageChange($event)&quot;
+                (pageSizeChange)&#x3D;&quot;onPageSizeChange($event)&quot;
+              &gt;
+              &lt;/emerald-pager&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/mat-tab&gt;
+
+      &lt;!-- Payment Methods tab --&gt;
+      &lt;mat-tab label&#x3D;&quot;Payment Methods&quot;&gt;
+        &lt;div class&#x3D;&quot;payment-methods-container&quot;&gt;
+          &lt;div class&#x3D;&quot;payment-methods-header&quot;&gt;
+            &lt;h2&gt;Payment Methods&lt;/h2&gt;
+            &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openAddPaymentMethodDialog()&quot;&gt;
+              &lt;mat-icon&gt;add&lt;/mat-icon&gt; Add Payment Method
+            &lt;/button&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Loading spinner --&gt;
+          &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;loading.paymentMethods&quot;&gt;
+            &lt;mat-spinner diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+            &lt;p&gt;Loading payment methods...&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Payment methods list --&gt;
+          &lt;div class&#x3D;&quot;payment-methods-list&quot; *ngIf&#x3D;&quot;!loading.paymentMethods&quot;&gt;
+            &lt;!-- No payment methods message --&gt;
+            &lt;div class&#x3D;&quot;no-data-message&quot; *ngIf&#x3D;&quot;paymentMethods.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+              &lt;mat-icon&gt;credit_card&lt;/mat-icon&gt;
+              &lt;p&gt;No payment methods found&lt;/p&gt;
+              &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openAddPaymentMethodDialog()&quot;&gt;
+                Add Payment Method
+              &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Payment methods cards --&gt;
+            &lt;mat-card *ngFor&#x3D;&quot;let method of paymentMethods&quot; class&#x3D;&quot;payment-method-card&quot;&gt;
+              &lt;mat-card-header&gt;
+                &lt;mat-icon mat-card-avatar&gt;{{ getPaymentMethodIcon(method) }}&lt;/mat-icon&gt;
+                &lt;mat-card-title&gt;{{ getPaymentMethodDisplayName(method) }}&lt;/mat-card-title&gt;
+                &lt;mat-card-subtitle&gt;
+                  {{ method.type | titlecase }}
+                  &lt;span *ngIf&#x3D;&quot;method.isDefault&quot; class&#x3D;&quot;default-badge&quot;&gt;Default&lt;/span&gt;
+                &lt;/mat-card-subtitle&gt;
+              &lt;/mat-card-header&gt;
+
+              &lt;mat-card-content&gt;
+                &lt;!-- Card details --&gt;
+                &lt;div *ngIf&#x3D;&quot;method.type &#x3D;&#x3D;&#x3D; &#x27;card&#x27; &amp;&amp; method.cardDetails&quot;&gt;
+                  &lt;p&gt;
+                    Expires: {{ method.cardDetails.expiryMonth }}/{{
+                      method.cardDetails.expiryYear
+                    }}
+                  &lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Bank account details --&gt;
+                &lt;div *ngIf&#x3D;&quot;method.type &#x3D;&#x3D;&#x3D; &#x27;bank_account&#x27; &amp;&amp; method.bankDetails&quot;&gt;
+                  &lt;p&gt;{{ method.bankDetails.accountType }} - {{ method.bankDetails.country }}&lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Crypto address details --&gt;
+                &lt;div *ngIf&#x3D;&quot;method.type &#x3D;&#x3D;&#x3D; &#x27;crypto_address&#x27; &amp;&amp; method.cryptoDetails&quot;&gt;
+                  &lt;p class&#x3D;&quot;crypto-address&quot;&gt;
+                    {{ method.cryptoDetails.address | slice: 0 : 10 }}...{{
+                      method.cryptoDetails.address | slice: -10
+                    }}
+                    &lt;button
+                      mat-icon-button
+                      [cdkCopyToClipboard]&#x3D;&quot;method.cryptoDetails.address&quot;
+                      matTooltip&#x3D;&quot;Copy Address&quot;
+                    &gt;
+                      &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                  &lt;/p&gt;
+                  &lt;p&gt;Network: {{ method.cryptoDetails.network }}&lt;/p&gt;
+                  &lt;div *ngIf&#x3D;&quot;method.cryptoDetails.memo&quot;&gt;
+                    &lt;p&gt;Memo: {{ method.cryptoDetails.memo }}&lt;/p&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/mat-card-content&gt;
+
+              &lt;mat-card-actions align&#x3D;&quot;end&quot;&gt;
+                &lt;button mat-button color&#x3D;&quot;warn&quot; (click)&#x3D;&quot;removePaymentMethod(method._id)&quot;&gt;
+                  &lt;mat-icon&gt;delete&lt;/mat-icon&gt; Remove
+                &lt;/button&gt;
+                &lt;button
+                  mat-button
+                  color&#x3D;&quot;primary&quot;
+                  (click)&#x3D;&quot;setDefaultPaymentMethod(method._id)&quot;
+                  [disabled]&#x3D;&quot;method.isDefault&quot;
+                &gt;
+                  &lt;mat-icon&gt;star&lt;/mat-icon&gt; Set as Default
+                &lt;/button&gt;
+              &lt;/mat-card-actions&gt;
+            &lt;/mat-card&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/mat-tab&gt;
+
+      &lt;!-- Settings tab --&gt;
+      &lt;mat-tab label&#x3D;&quot;Settings&quot;&gt;
+        &lt;div class&#x3D;&quot;settings-container&quot;&gt;
+          &lt;h2&gt;Wallet Settings&lt;/h2&gt;
+
+          &lt;form [formGroup]&#x3D;&quot;settingsForm&quot; (ngSubmit)&#x3D;&quot;saveSettings()&quot;&gt;
+            &lt;!-- Default Currency --&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+              &lt;mat-label&gt;Default Currency&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;defaultCurrency&quot;&gt;
+                &lt;mat-option
+                  *ngFor&#x3D;&quot;let currency of walletService.SUPPORTED_CURRENCIES&quot;
+                  [value]&#x3D;&quot;currency&quot;
+                &gt;
+                  {{ currency }}
+                &lt;/mat-option&gt;
+                &lt;mat-option
+                  *ngFor&#x3D;&quot;let currency of walletService.SUPPORTED_CRYPTOCURRENCIES&quot;
+                  [value]&#x3D;&quot;currency&quot;
+                &gt;
+                  {{ currency }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+              &lt;mat-hint&gt;This currency will be used as the default for all transactions&lt;/mat-hint&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;!-- Auto Withdrawal Settings --&gt;
+            &lt;div formGroupName&#x3D;&quot;autoWithdrawal&quot; class&#x3D;&quot;settings-section&quot;&gt;
+              &lt;h3&gt;Automatic Withdrawal&lt;/h3&gt;
+
+              &lt;mat-slide-toggle formControlName&#x3D;&quot;enabled&quot; color&#x3D;&quot;primary&quot;&gt;
+                Enable Automatic Withdrawal
+              &lt;/mat-slide-toggle&gt;
+
+              &lt;div *ngIf&#x3D;&quot;settingsForm.get(&#x27;autoWithdrawal.enabled&#x27;)?.value&quot;&gt;
+                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                  &lt;mat-label&gt;Threshold Amount (NOK)&lt;/mat-label&gt;
+                  &lt;input matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;threshold&quot; min&#x3D;&quot;10000&quot; /&gt;
+                  &lt;mat-hint
+                    &gt;Withdrawal will be triggered when your balance exceeds this amount&lt;/mat-hint
+                  &gt;
+                  &lt;mat-error *ngIf&#x3D;&quot;settingsForm.get(&#x27;autoWithdrawal.threshold&#x27;)?.hasError(&#x27;min&#x27;)&quot;&gt;
+                    Minimum threshold is 100 NOK
+                  &lt;/mat-error&gt;
+                &lt;/mat-form-field&gt;
+
+                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                  &lt;mat-label&gt;Payment Method&lt;/mat-label&gt;
+                  &lt;mat-select formControlName&#x3D;&quot;paymentMethodId&quot;&gt;
+                    &lt;mat-option *ngFor&#x3D;&quot;let method of paymentMethods&quot; [value]&#x3D;&quot;method._id&quot;&gt;
+                      {{ getPaymentMethodDisplayName(method) }}
+                    &lt;/mat-option&gt;
+                  &lt;/mat-select&gt;
+                  &lt;mat-hint&gt;Select the payment method to use for automatic withdrawals&lt;/mat-hint&gt;
+                &lt;/mat-form-field&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Notification Preferences --&gt;
+            &lt;div formGroupName&#x3D;&quot;notificationPreferences&quot; class&#x3D;&quot;settings-section&quot;&gt;
+              &lt;h3&gt;Notification Preferences&lt;/h3&gt;
+
+              &lt;div formGroupName&#x3D;&quot;email&quot; class&#x3D;&quot;notification-group&quot;&gt;
+                &lt;h4&gt;Email Notifications&lt;/h4&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;deposit&quot; color&#x3D;&quot;primary&quot;&gt; Deposits &lt;/mat-checkbox&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;withdrawal&quot; color&#x3D;&quot;primary&quot;&gt;
+                  Withdrawals
+                &lt;/mat-checkbox&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;payment&quot; color&#x3D;&quot;primary&quot;&gt; Payments &lt;/mat-checkbox&gt;
+              &lt;/div&gt;
+
+              &lt;div formGroupName&#x3D;&quot;push&quot; class&#x3D;&quot;notification-group&quot;&gt;
+                &lt;h4&gt;Push Notifications&lt;/h4&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;deposit&quot; color&#x3D;&quot;primary&quot;&gt; Deposits &lt;/mat-checkbox&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;withdrawal&quot; color&#x3D;&quot;primary&quot;&gt;
+                  Withdrawals
+                &lt;/mat-checkbox&gt;
+
+                &lt;mat-checkbox formControlName&#x3D;&quot;payment&quot; color&#x3D;&quot;primary&quot;&gt; Payments &lt;/mat-checkbox&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+              &lt;button
+                mat-raised-button
+                color&#x3D;&quot;primary&quot;
+                type&#x3D;&quot;submit&quot;
+                [disabled]&#x3D;&quot;settingsForm.invalid&quot;
+              &gt;
+                Save Settings
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/mat-tab&gt;
+    &lt;/mat-tab-group&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Floating action button for quick actions --&gt;
+&lt;emerald-floating-action-button
+  icon&#x3D;&quot;account_balance_wallet&quot;
+  position&#x3D;&quot;bottom-right&quot;
+  color&#x3D;&quot;primary&quot;
+  [menuItems]&#x3D;&quot;[
+    { icon: &#x27;add&#x27;, label: &#x27;Deposit&#x27;, action: openDepositDialog.bind(this) },
+    { icon: &#x27;remove&#x27;, label: &#x27;Withdraw&#x27;, action: openWithdrawDialog.bind(this) },
+    { icon: &#x27;swap_horiz&#x27;, label: &#x27;Transfer&#x27;, action: openTransferDialog.bind(this) },
+  ]&quot;
+&gt;
+&lt;/emerald-floating-action-button&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./wallet.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../app/core/design/design-tokens.scss&#x27;;
+
+.wallet-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .wallet-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .wallet-actions {
+    display: flex;
+    gap: 12px;
+
+    button {
+      min-width: 100px;
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+
+  p {
+    margin-top: 16px;
+    color: $neutral-600;
+  }
+}
+
+.balance-overview {
+  margin-bottom: 32px;
+
+  .total-balance-card {
+    background-color: $primary-500;
+    color: white;
+    margin-bottom: 24px;
+
+    mat-card-title,
+    mat-card-subtitle {
+      color: white;
+    }
+
+    .total-balance {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 16px 0;
+    }
+  }
+
+  .currency-balances {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+
+    .currency-balance-card {
+      h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+    }
+  }
+}
+
+.wallet-tabs {
+  .mat-mdc-tab-body-wrapper {
+    padding: 24px 0;
+  }
+}
+
+.transactions-container {
+  .transactions-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    mat-form-field {
+      width: 200px;
+    }
+  }
+
+  .transactions-table-container {
+    position: relative;
+    min-height: 200px;
+
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .transactions-table {
+      width: 100%;
+
+      .transaction-type {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &amp;.transaction-deposit {
+          background-color: $success-100;
+          color: $success-700;
+        }
+
+        &amp;.transaction-withdrawal {
+          background-color: $warning-100;
+          color: $warning-700;
+        }
+
+        &amp;.transaction-transfer {
+          background-color: $info-100;
+          color: $info-700;
+        }
+
+        &amp;.transaction-payment {
+          background-color: $primary-100;
+          color: $primary-700;
+        }
+
+        &amp;.transaction-refund {
+          background-color: $success-100;
+          color: $success-700;
+        }
+
+        &amp;.transaction-fee {
+          background-color: $neutral-100;
+          color: $neutral-700;
+        }
+      }
+
+      .transaction-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &amp;.status-pending {
+          background-color: $warning-100;
+          color: $warning-700;
+        }
+
+        &amp;.status-completed {
+          background-color: $success-100;
+          color: $success-700;
+        }
+
+        &amp;.status-failed {
+          background-color: $error-100;
+          color: $error-700;
+        }
+
+        &amp;.status-cancelled {
+          background-color: $neutral-100;
+          color: $neutral-700;
+        }
+      }
+
+      .positive-amount {
+        color: $success-500;
+        font-weight: 500;
+      }
+
+      .negative-amount {
+        color: $error-500;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .pagination-container {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.payment-methods-container {
+  .payment-methods-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .payment-methods-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+
+    .payment-method-card {
+      .default-badge {
+        background-color: $primary-500;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-left: 8px;
+      }
+
+      .crypto-address {
+        display: flex;
+        align-items: center;
+        font-family: monospace;
+        background-color: $neutral-100;
+        padding: 8px;
+        border-radius: 4px;
+
+        button {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 24px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .settings-section {
+    margin-bottom: 32px;
+
+    h3 {
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    h4 {
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+  }
+
+  .notification-group {
+    margin-bottom: 24px;
+
+    mat-checkbox {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  .form-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: $neutral-400;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin-bottom: 24px;
+    color: $neutral-600;
+    font-size: 18px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .wallet-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .wallet-title {
+      margin-bottom: 16px;
+    }
+
+    .wallet-actions {
+      width: 100%;
+
+      button {
+        flex: 1;
+      }
+    }
+  }
+
+  .transactions-filters {
+    flex-direction: column;
+
+    mat-form-field {
+      width: 100% !important;
+    }
+  }
+
+  .currency-balances {
+    grid-template-columns: 1fr !important;
+  }
+
+  .payment-methods-list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+// Define variables for colors
+$primary-100: #e8f0fe;
+$primary-500: #4285f4;
+$primary-700: #1a73e8;
+
+$success-100: #e6f4ea;
+$success-500: #34a853;
+$success-700: #137333;
+
+$warning-100: #fef7e0;
+$warning-500: #fbbc04;
+$warning-700: #ea8600;
+
+$error-100: #fce8e6;
+$error-500: #ea4335;
+$error-700: #c5221f;
+
+$info-100: #e8f0fe;
+$info-500: #4285f4;
+$info-700: #1a73e8;
+
+$neutral-100: #f8f9fa;
+$neutral-400: #dadce0;
+$neutral-600: #70757a;
+$neutral-700: #5f6368;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="wallet-container">  <div class="wallet-header">    <h1 class="wallet-title">My Wallet</h1>    <div class="wallet-actions">      <button        mat-raised-button        color="primary"        (click)="openDepositDialog()"        [disabled]="loading.wallet"      >        <mat-icon>add</mat-icon> Deposit      </button>      <button        mat-raised-button        color="accent"        (click)="openWithdrawDialog()"        [disabled]="loading.wallet"      >        <mat-icon>remove</mat-icon> Withdraw      </button>      <button        mat-raised-button        color="basic"        (click)="openTransferDialog()"        [disabled]="loading.wallet"      >        <mat-icon>swap_horiz</mat-icon> Transfer      </button>    </div>  </div>  <!-- Loading spinner -->  <div class="loading-container" *ngIf="loading.wallet">    <mat-spinner diameter="40"></mat-spinner>    <p>Loading wallet data...</p>  </div>  <!-- Wallet content -->  <div class="wallet-content" *ngIf="!loading.wallet">    <!-- Balance overview -->    <div class="balance-overview">      <mat-card class="total-balance-card">        <mat-card-header>          <mat-card-title>Total Balance</mat-card-title>          <mat-card-subtitle>Available funds</mat-card-subtitle>        </mat-card-header>        <mat-card-content>          <h2 class="total-balance">{{ getTotalBalance() }}</h2>        </mat-card-content>      </mat-card>      <!-- Individual balances -->      <div class="currency-balances">        <mat-card *ngFor="let balance of balances" class="currency-balance-card">          <mat-card-header>            <mat-card-title>{{ balance.currency }}</mat-card-title>            <mat-card-subtitle>              <span *ngIf="balance.pending > 0"                >{{ walletService.formatCurrency(balance.pending, balance.currency) }} pending</span              >            </mat-card-subtitle>          </mat-card-header>          <mat-card-content>            <h3>{{ walletService.formatCurrency(balance.available, balance.currency) }}</h3>          </mat-card-content>        </mat-card>      </div>    </div>    <!-- Tabs for different wallet sections -->    <mat-tab-group animationDuration="0ms" class="wallet-tabs">      <!-- Transactions tab -->      <mat-tab label="Transactions">        <div class="transactions-container">          <!-- Filters -->          <div class="transactions-filters">            <mat-form-field appearance="outline">              <mat-label>Type</mat-label>              <mat-select [(ngModel)]="transactionFilters.type" (selectionChange)="applyFilters()">                <mat-option *ngFor="let type of transactionTypes" [value]="type.value">                  {{ type.label }}                </mat-option>              </mat-select>            </mat-form-field>            <mat-form-field appearance="outline">              <mat-label>Status</mat-label>              <mat-select                [(ngModel)]="transactionFilters.status"                (selectionChange)="applyFilters()"              >                <mat-option *ngFor="let status of transactionStatuses" [value]="status.value">                  {{ status.label }}                </mat-option>              </mat-select>            </mat-form-field>            <mat-form-field appearance="outline">              <mat-label>Currency</mat-label>              <mat-select                [(ngModel)]="transactionFilters.currency"                (selectionChange)="applyFilters()"              >                <mat-option value="">All Currencies</mat-option>                <mat-option *ngFor="let balance of balances" [value]="balance.currency">                  {{ balance.currency }}                </mat-option>              </mat-select>            </mat-form-field>            <button mat-button color="primary" (click)="resetFilters()">              <mat-icon>clear</mat-icon> Clear Filters            </button>          </div>          <!-- Transactions table -->          <div class="transactions-table-container">            <div class="loading-overlay" *ngIf="loading.transactions">              <mat-spinner diameter="30"></mat-spinner>            </div>            <table mat-table [dataSource]="transactions" class="transactions-table">              <!-- Date Column -->              <ng-container matColumnDef="date">                <th mat-header-cell *matHeaderCellDef>Date</th>                <td mat-cell *matCellDef="let transaction">                  {{ transaction.createdAt | date: \'medium\' }}                </td>              </ng-container>              <!-- Type Column -->              <ng-container matColumnDef="type">                <th mat-header-cell *matHeaderCellDef>Type</th>                <td mat-cell *matCellDef="let transaction">                  <span                    class="transaction-type"                    [ngClass]="getTransactionTypeClass(transaction.type)"                  >                    {{ transaction.type | titlecase }}                  </span>                </td>              </ng-container>              <!-- Amount Column -->              <ng-container matColumnDef="amount">                <th mat-header-cell *matHeaderCellDef>Amount</th>                <td mat-cell *matCellDef="let transaction">                  <span                    [ngClass]="{                      \'positive-amount\': transaction.amount > 0,                      \'negative-amount\': transaction.amount < 0,                    }"                  >                    {{ formatTransactionAmount(transaction) }}                  </span>                </td>              </ng-container>              <!-- Status Column -->              <ng-container matColumnDef="status">                <th mat-header-cell *matHeaderCellDef>Status</th>                <td mat-cell *matCellDef="let transaction">                  <span                    class="transaction-status"                    [ngClass]="getTransactionStatusClass(transaction.status)"                  >                    {{ transaction.status | titlecase }}                  </span>                </td>              </ng-container>              <!-- Actions Column -->              <ng-container matColumnDef="actions">                <th mat-header-cell *matHeaderCellDef>Actions</th>                <td mat-cell *matCellDef="let transaction">                  <button                    mat-icon-button                    color="primary"                    (click)="openTransactionDetailsDialog(transaction)"                    matTooltip="View Details"                  >                    <mat-icon>info</mat-icon>                  </button>                </td>              </ng-container>              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>            </table>            <!-- No transactions message -->            <div class="no-data-message" *ngIf="!loading.transactions && transactions.length === 0">              <mat-icon>account_balance_wallet</mat-icon>              <p>No transactions found</p>              <button mat-raised-button color="primary" (click)="openDepositDialog()">                Make Your First Deposit              </button>            </div>            <!-- Pagination -->            <div class="pagination-container" *ngIf="totalPages > 1">              <emerald-pager                [currentPage]="currentPage"                [totalPages]="totalPages"                [showPageSize]="true"                [pageSize]="pageSize"                [pageSizes]="[10, 20, 50, 100]"                style="default"                size="medium"                align="center"                (pageChange)="onPageChange($event)"                (pageSizeChange)="onPageSizeChange($event)"              >              </emerald-pager>            </div>          </div>        </div>      </mat-tab>      <!-- Payment Methods tab -->      <mat-tab label="Payment Methods">        <div class="payment-methods-container">          <div class="payment-methods-header">            <h2>Payment Methods</h2>            <button mat-raised-button color="primary" (click)="openAddPaymentMethodDialog()">              <mat-icon>add</mat-icon> Add Payment Method            </button>          </div>          <!-- Loading spinner -->          <div class="loading-container" *ngIf="loading.paymentMethods">            <mat-spinner diameter="30"></mat-spinner>            <p>Loading payment methods...</p>          </div>          <!-- Payment methods list -->          <div class="payment-methods-list" *ngIf="!loading.paymentMethods">            <!-- No payment methods message -->            <div class="no-data-message" *ngIf="paymentMethods.length === 0">              <mat-icon>credit_card</mat-icon>              <p>No payment methods found</p>              <button mat-raised-button color="primary" (click)="openAddPaymentMethodDialog()">                Add Payment Method              </button>            </div>            <!-- Payment methods cards -->            <mat-card *ngFor="let method of paymentMethods" class="payment-method-card">              <mat-card-header>                <mat-icon mat-card-avatar>{{ getPaymentMethodIcon(method) }}</mat-icon>                <mat-card-title>{{ getPaymentMethodDisplayName(method) }}</mat-card-title>                <mat-card-subtitle>                  {{ method.type | titlecase }}                  <span *ngIf="method.isDefault" class="default-badge">Default</span>                </mat-card-subtitle>              </mat-card-header>              <mat-card-content>                <!-- Card details -->                <div *ngIf="method.type === \'card\' && method.cardDetails">                  <p>                    Expires: {{ method.cardDetails.expiryMonth }}/{{                      method.cardDetails.expiryYear                    }}                  </p>                </div>                <!-- Bank account details -->                <div *ngIf="method.type === \'bank_account\' && method.bankDetails">                  <p>{{ method.bankDetails.accountType }} - {{ method.bankDetails.country }}</p>                </div>                <!-- Crypto address details -->                <div *ngIf="method.type === \'crypto_address\' && method.cryptoDetails">                  <p class="crypto-address">                    {{ method.cryptoDetails.address | slice: 0 : 10 }}...{{                      method.cryptoDetails.address | slice: -10                    }}                    <button                      mat-icon-button                      [cdkCopyToClipboard]="method.cryptoDetails.address"                      matTooltip="Copy Address"                    >                      <mat-icon>content_copy</mat-icon>                    </button>                  </p>                  <p>Network: {{ method.cryptoDetails.network }}</p>                  <div *ngIf="method.cryptoDetails.memo">                    <p>Memo: {{ method.cryptoDetails.memo }}</p>                  </div>                </div>              </mat-card-content>              <mat-card-actions align="end">                <button mat-button color="warn" (click)="removePaymentMethod(method._id)">                  <mat-icon>delete</mat-icon> Remove                </button>                <button                  mat-button                  color="primary"                  (click)="setDefaultPaymentMethod(method._id)"                  [disabled]="method.isDefault"                >                  <mat-icon>star</mat-icon> Set as Default                </button>              </mat-card-actions>            </mat-card>          </div>        </div>      </mat-tab>      <!-- Settings tab -->      <mat-tab label="Settings">        <div class="settings-container">          <h2>Wallet Settings</h2>          <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">            <!-- Default Currency -->            <mat-form-field appearance="outline" class="full-width">              <mat-label>Default Currency</mat-label>              <mat-select formControlName="defaultCurrency">                <mat-option                  *ngFor="let currency of walletService.SUPPORTED_CURRENCIES"                  [value]="currency"                >                  {{ currency }}                </mat-option>                <mat-option                  *ngFor="let currency of walletService.SUPPORTED_CRYPTOCURRENCIES"                  [value]="currency"                >                  {{ currency }}                </mat-option>              </mat-select>              <mat-hint>This currency will be used as the default for all transactions</mat-hint>            </mat-form-field>            <!-- Auto Withdrawal Settings -->            <div formGroupName="autoWithdrawal" class="settings-section">              <h3>Automatic Withdrawal</h3>              <mat-slide-toggle formControlName="enabled" color="primary">                Enable Automatic Withdrawal              </mat-slide-toggle>              <div *ngIf="settingsForm.get(\'autoWithdrawal.enabled\')?.value">                <mat-form-field appearance="outline" class="full-width">                  <mat-label>Threshold Amount (NOK)</mat-label>                  <input matInput type="number" formControlName="threshold" min="10000" />                  <mat-hint                    >Withdrawal will be triggered when your balance exceeds this amount</mat-hint                  >                  <mat-error *ngIf="settingsForm.get(\'autoWithdrawal.threshold\')?.hasError(\'min\')">                    Minimum threshold is 100 NOK                  </mat-error>                </mat-form-field>                <mat-form-field appearance="outline" class="full-width">                  <mat-label>Payment Method</mat-label>                  <mat-select formControlName="paymentMethodId">                    <mat-option *ngFor="let method of paymentMethods" [value]="method._id">                      {{ getPaymentMethodDisplayName(method) }}                    </mat-option>                  </mat-select>                  <mat-hint>Select the payment method to use for automatic withdrawals</mat-hint>                </mat-form-field>              </div>            </div>            <!-- Notification Preferences -->            <div formGroupName="notificationPreferences" class="settings-section">              <h3>Notification Preferences</h3>              <div formGroupName="email" class="notification-group">                <h4>Email Notifications</h4>                <mat-checkbox formControlName="deposit" color="primary"> Deposits </mat-checkbox>                <mat-checkbox formControlName="withdrawal" color="primary">                  Withdrawals                </mat-checkbox>                <mat-checkbox formControlName="payment" color="primary"> Payments </mat-checkbox>              </div>              <div formGroupName="push" class="notification-group">                <h4>Push Notifications</h4>                <mat-checkbox formControlName="deposit" color="primary"> Deposits </mat-checkbox>                <mat-checkbox formControlName="withdrawal" color="primary">                  Withdrawals                </mat-checkbox>                <mat-checkbox formControlName="payment" color="primary"> Payments </mat-checkbox>              </div>            </div>            <div class="form-actions">              <button                mat-raised-button                color="primary"                type="submit"                [disabled]="settingsForm.invalid"              >                Save Settings              </button>            </div>          </form>        </div>      </mat-tab>    </mat-tab-group>  </div></div><!-- Floating action button for quick actions --><emerald-floating-action-button  icon="account_balance_wallet"  position="bottom-right"  color="primary"  [menuItems]="[    { icon: \'add\', label: \'Deposit\', action: openDepositDialog.bind(this) },    { icon: \'remove\', label: \'Withdraw\', action: openWithdrawDialog.bind(this) },    { icon: \'swap_horiz\', label: \'Transfer\', action: openTransferDialog.bind(this) },  ]"></emerald-floating-action-button></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'WalletComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'WalletComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

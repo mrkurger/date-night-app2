@@ -5,9 +5,9 @@
  * This script checks for and installs commonly missing dependencies for all components
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Define directories
 const rootDir = path.join(__dirname, '..');

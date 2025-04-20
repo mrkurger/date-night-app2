@@ -7,10 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const Favorite = require('../models/favorite.model');
-const Ad = require('../models/ad.model');
-const { AppError } = require('../middleware/errorHandler');
-const logger = require('../utils/logger').logger;
+import Favorite from '../models/favorite.model';
+import Ad from '../models/ad.model';
+import { AppError } from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 
 /**
  * Controller for managing user favorites

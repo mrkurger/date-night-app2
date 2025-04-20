@@ -3,8 +3,8 @@
  * to prevent "JavaScript heap out of memory" errors during testing.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Path to the client-angular package.json
 const packageJsonPath = path.join(__dirname, '..', 'client-angular', 'package.json');

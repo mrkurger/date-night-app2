@@ -1,0 +1,194 @@
+@import '../../../core/design/design-tokens';
+
+.feature-tour-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.spotlight-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($neutral-900, 0.7);
+  backdrop-filter: blur(2px);
+
+  .spotlight {
+    position: absolute;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 0 0 9999px rgba($neutral-900, 0.7);
+    background-color: transparent;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.tour-tooltip {
+  position: fixed;
+  z-index: 1001;
+  max-width: 350px;
+  pointer-events: auto;
+  transition: all 0.3s ease-in-out;
+
+  &[data-position='top']::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: $neutral-100 transparent transparent;
+  }
+
+  &[data-position='right']::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent $neutral-100 transparent transparent;
+  }
+
+  &[data-position='bottom']::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent $neutral-100;
+  }
+
+  &[data-position='left']::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent $neutral-100;
+  }
+}
+
+.tooltip-content {
+  background-color: $neutral-100;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+  padding: $spacing-6;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tooltip-title {
+  font-family: $font-primary;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $neutral-900;
+  margin: 0 0 $spacing-2 0;
+}
+
+.tooltip-description {
+  font-size: $font-size-base;
+  line-height: $line-height-relaxed;
+  color: $neutral-700;
+  margin-bottom: $spacing-4;
+}
+
+.tooltip-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-4;
+
+  .btn-previous {
+    color: $neutral-700;
+  }
+
+  .btn-skip {
+    margin-left: auto;
+    margin-right: $spacing-2;
+    color: $neutral-600;
+  }
+
+  .btn-next {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+}
+
+.tooltip-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .progress-text {
+    font-size: $font-size-sm;
+    color: $neutral-600;
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: $spacing-1;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: $neutral-300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active {
+        background-color: $primary-500;
+        transform: scale(1.2);
+      }
+
+      &:hover {
+        background-color: $primary-300;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .tour-tooltip {
+    max-width: 300px;
+  }
+
+  .tooltip-title {
+    font-size: $font-size-lg;
+  }
+
+  .tooltip-description {
+    font-size: $font-size-sm;
+  }
+
+  .tooltip-actions {
+    flex-wrap: wrap;
+    gap: $spacing-2;
+  }
+}

@@ -53,9 +53,11 @@ class TestHostComponent {
 
   @ViewChild('itemTemplate') itemTemplate!: TemplateRef<unknown>;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onCardClick(_itemId: string): void {
     // Implementation not needed for test component
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onActionClick(_event: { id: string; itemId: string }): void {
     // Implementation not needed for test component
   }

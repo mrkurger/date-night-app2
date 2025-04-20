@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -36,4 +36,4 @@ const authorizeRole = roles => {
   };
 };
 
-module.exports = { authenticateToken, authorizeRole };
+export default { authenticateToken, authorizeRole };

@@ -7,9 +7,9 @@
  * of the fetch-workflow-logs.js script.
  */
 
-const fs = require('fs-extra');
-const path = require('path');
-const AdmZip = require('adm-zip');
+import fs from 'fs-extra';
+import path from 'path';
+import AdmZip from 'adm-zip';
 
 // Create a test directory
 const testDir = path.join(__dirname, '..', 'test-workflow-logs');

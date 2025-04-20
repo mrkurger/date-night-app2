@@ -1,0 +1,13 @@
+@if (iconPath) {
+  <svg
+    [ngClass]="iconClasses"
+    [attr.viewBox]="viewBox"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path [attr.d]="iconPath" fill="currentColor"></path>
+  </svg>
+} @else {
+  <span class="icon icon--placeholder" [ngClass]="iconClasses"></span>
+}

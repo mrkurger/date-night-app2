@@ -4,8 +4,8 @@
  * This script installs missing dependencies identified by depcheck
  */
 
-const { execSync } = require('child_process');
-const path = require('path');
+import { execSync } from 'child_process';
+import path from 'path';
 
 // ANSI color codes for better output
 const colors = {

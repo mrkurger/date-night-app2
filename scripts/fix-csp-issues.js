@@ -5,9 +5,9 @@
  * This script updates both server and client CSP configurations
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs/promises';
+import path from 'path';
+import { execSync } from 'child_process';
 
 console.log('Starting CSP fix script...');
 

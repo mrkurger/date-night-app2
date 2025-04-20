@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { body } = require('express-validator');
-const multer = require('multer');
-const mediaController = require('../controllers/media.controller');
-const { protect } = require('../middleware/auth');
+import { body } from 'express-validator';
+import multer from 'multer';
+import mediaController from '../controllers/media.controller';
+import { protect } from '../middleware/auth';
 
 // Configure multer for memory storage
 const storage = multer.memoryStorage();

@@ -1,6 +1,6 @@
-const Review = require('../models/review.model');
-const User = require('../models/user.model');
-const Ad = require('../models/ad.model');
+import Review from '../models/review.model';
+import User from '../models/user.model';
+import Ad from '../models/ad.model';
 
 // Create a new review
 exports.createReview = async (req, res) => {

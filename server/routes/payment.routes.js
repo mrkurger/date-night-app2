@@ -7,11 +7,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const paymentController = require('../controllers/payment.controller');
-const { protect } = require('../middleware/auth');
-const bodyParser = require('body-parser');
+import paymentController from '../controllers/payment.controller';
+import { protect } from '../middleware/auth';
+import bodyParser from 'body-parser';
 
 // Special raw body parser for Stripe webhooks
 const stripeWebhookParser = bodyParser.raw({ type: 'application/json' });

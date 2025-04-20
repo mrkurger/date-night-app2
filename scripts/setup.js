@@ -1,7 +1,7 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
-const Ad = require('../server/models/ad.model');
-const User = require('../server/models/user.model');
+import mongoose from 'mongoose';
+import Ad from '../server/models/ad.model';
+import User from '../server/models/user.model';
 
 async function verifySetup() {
   // TODO: Check required environment variables

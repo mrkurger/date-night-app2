@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const User = require('../models/user.model');
+import User from '../models/user.model';
 
 async function normalizeProfile(profile, provider) {
   let username, email;
@@ -49,7 +49,7 @@ async function createUniqueUsername(baseUsername) {
   return username;
 }
 
-module.exports = {
+export default {
   normalizeProfile,
   createUniqueUsername,
 };

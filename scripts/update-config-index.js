@@ -7,9 +7,9 @@
  * a comprehensive index in docs/CONFIG_INDEX.MD.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs/promises';
+import path from 'path';
+import { execSync } from 'child_process';
 
 // Configuration
 const ROOT_DIR = path.resolve(__dirname, '..');

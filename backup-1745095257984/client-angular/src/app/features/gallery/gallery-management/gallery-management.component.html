@@ -1,0 +1,128 @@
+<div class="gallery-management">
+  <div class="upload-section">
+    <h3>Upload Media</h3>
+    <div class="file-upload">
+      <input
+        type="file"
+        id="fileUpload"
+        multiple
+        (change)="onFileSelected($event)"
+        accept="image/*,video/*"
+        [disabled]="uploading"
+      />
+      <label for="fileUpload" class="btn btn-outline-primary">
+        <i class="fa fa-cloud-upload"></i> Select Files
+      </label>
+    </div>
+
+    <div *ngIf="selectedFiles.length > 0" class="selected-files">
+      <h4>Selected Files ({{ selectedFiles.length }})</h4>
+      <div class="preview-container">
+        <div *ngFor="let preview of previewUrls; let i = index" class="preview-item">
+          <img [src]="preview" alt="Preview" />
+          <div class="file-name">{{ selectedFiles[i].name }}</div>
+        </div>
+      </div>
+
+      <div class="upload-actions">
+        <button class="btn btn-primary" (click)="uploadFiles()" [disabled]="uploading">
+          <i class="fa fa-upload"></i> Upload
+        </button>
+        <button class="btn btn-secondary" (click)="cancelUpload()" [disabled]="uploading">
+          Cancel
+        </button>
+      </div>
+
+      <div *ngIf="uploading" class="progress-container">
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            [style.width.%]="progress"
+            [attr.aria-valuenow]="progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            {{ progress }}%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="media-gallery">
+    <h3>Media Gallery</h3>
+
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error && media.length === 0" class="no-media">
+      <p>No media uploaded yet. Upload some images or videos to get started.</p>
+    </div>
+
+    <div *ngIf="!loading && media.length > 0" class="media-grid">
+      <div
+        *ngFor="let item of media"
+        class="media-item"
+        [class.featured]="item._id === featuredMediaId"
+      >
+        <div class="media-content">
+          <div *ngIf="item.type === 'image'" class="image-container">
+            <img [src]="item.url" alt="Media" />
+          </div>
+          <div *ngIf="item.type === 'video'" class="video-container">
+            <video controls>
+              <source [src]="item.url" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+        <div class="media-info">
+          <div class="media-status" [ngClass]="getMediaStatusClass(item.moderationStatus)">
+            {{ item.moderationStatus }}
+          </div>
+
+          <div class="media-actions">
+            <button
+              class="btn btn-sm"
+              [ngClass]="{
+                'btn-success': item._id !== featuredMediaId,
+                'btn-secondary': item._id === featuredMediaId,
+              }"
+              (click)="setFeaturedMedia(item._id)"
+              [disabled]="item._id === featuredMediaId || item.moderationStatus !== 'approved'"
+            >
+              <i
+                class="fa"
+                [ngClass]="{
+                  'fa-star-o': item._id !== featuredMediaId,
+                  'fa-star': item._id === featuredMediaId,
+                }"
+              ></i>
+              {{ item._id === featuredMediaId ? 'Featured' : 'Set as Featured' }}
+            </button>
+
+            <button class="btn btn-sm btn-danger" (click)="deleteMedia(item._id)">
+              <i class="fa fa-trash"></i> Delete
+            </button>
+          </div>
+
+          <div
+            *ngIf="item.moderationStatus === 'rejected' && item.moderationNotes"
+            class="moderation-notes"
+          >
+            <strong>Rejection reason:</strong> {{ item.moderationNotes }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

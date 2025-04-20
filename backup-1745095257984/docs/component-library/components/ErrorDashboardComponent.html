@@ -1,0 +1,3109 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ErrorDashboardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/admin/components/error-dashboard/error-dashboard.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-error-dashboard</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatTabsModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatPaginatorModule</code>
+                            <code>MatSortModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatDatepickerModule</code>
+                            <code>MatNativeDateModule</code>
+                            <code>MatProgressSpinnerModule</code>
+                            <code>MatChipsModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatSlideToggleModule</code>
+                            <code>MatTooltipModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>NgxChartsModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .filter-section {
+        flex: 1;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .realtime-toggle {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        margin-left: 20px;
+      }
+
+      .connection-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f44336;
+        transition: background-color 0.3s ease;
+      }
+
+      .status-indicator.connected {
+        background-color: #4caf50;
+      }
+
+      .dashboard-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 400px;
+      }
+
+      .chart-container {
+        height: 320px;
+      }
+
+      .error-list-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .url-cell {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 320px;
+      }
+
+      .category-network {
+        background-color: #ff9800;
+      }
+
+      .category-authentication {
+        background-color: #f44336;
+      }
+
+      .category-authorization {
+        background-color: #e91e63;
+      }
+
+      .category-validation {
+        background-color: #9c27b0;
+      }
+
+      .category-server {
+        background-color: #673ab7;
+      }
+
+      .category-client {
+        background-color: #3f51b5;
+      }
+
+      .category-timeout {
+        background-color: #2196f3;
+      }
+
+      .category-rate_limit {
+        background-color: #03a9f4;
+      }
+
+      .category-not_found {
+        background-color: #00bcd4;
+      }
+
+      .category-conflict {
+        background-color: #009688;
+      }
+
+      .category-unknown {
+        background-color: #607d8b;
+      }
+
+      .error-details-dialog {
+        padding: 20px;
+      }
+
+      .error-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .error-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .error-messages,
+      .error-request,
+      .error-response {
+        margin-bottom: 20px;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+        max-height: 200px;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+  &lt;h1&gt;Error Monitoring Dashboard&lt;/h1&gt;
+
+  &lt;div class&#x3D;&quot;dashboard-header&quot;&gt;
+    &lt;div class&#x3D;&quot;filter-section&quot;&gt;
+      &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+          &lt;mat-select formControlName&#x3D;&quot;category&quot;&gt;
+            &lt;mat-option value&#x3D;&quot;&quot;&gt;All Categories&lt;/mat-option&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let category of errorCategories&quot; [value]&#x3D;&quot;category.value&quot;&gt;
+              {{ category.label }}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+          &lt;input matInput formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g. 404, 500&quot; /&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Date Range&lt;/mat-label&gt;
+          &lt;mat-date-range-input [rangePicker]&#x3D;&quot;picker&quot;&gt;
+            &lt;input matStartDate formControlName&#x3D;&quot;startDate&quot; placeholder&#x3D;&quot;Start date&quot; /&gt;
+            &lt;input matEndDate formControlName&#x3D;&quot;endDate&quot; placeholder&#x3D;&quot;End date&quot; /&gt;
+          &lt;/mat-date-range-input&gt;
+          &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;picker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+          &lt;mat-date-range-picker #picker&gt;&lt;/mat-date-range-picker&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;
+          Apply Filters
+        &lt;/button&gt;
+
+        &lt;button mat-button (click)&#x3D;&quot;resetFilters()&quot;&gt;Reset&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;realtime-toggle&quot;&gt;
+      &lt;mat-slide-toggle
+        [checked]&#x3D;&quot;realtimeEnabled&quot;
+        (change)&#x3D;&quot;toggleRealtime($event.checked)&quot;
+        color&#x3D;&quot;primary&quot;
+        matTooltip&#x3D;&quot;Enable real-time updates&quot;
+      &gt;
+        Real-time Updates
+      &lt;/mat-slide-toggle&gt;
+
+      &lt;div class&#x3D;&quot;connection-status&quot; *ngIf&#x3D;&quot;realtimeEnabled&quot;&gt;
+        &lt;div class&#x3D;&quot;status-indicator&quot; [ngClass]&#x3D;&quot;{ connected: isConnected }&quot;&gt;&lt;/div&gt;
+        &lt;span&gt;{{ isConnected ? &#x27;Connected&#x27; : &#x27;Connecting...&#x27; }}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;dashboard-content&quot;&gt;
+    &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+      &lt;mat-card-header&gt;
+        &lt;mat-card-title&gt;Errors by Category&lt;/mat-card-title&gt;
+      &lt;/mat-card-header&gt;
+      &lt;mat-card-content&gt;
+        &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+          &lt;ngx-charts-pie-chart
+            [results]&#x3D;&quot;errorsByCategory&quot;
+            [gradient]&#x3D;&quot;true&quot;
+            [legend]&#x3D;&quot;true&quot;
+            [labels]&#x3D;&quot;true&quot;
+            [doughnut]&#x3D;&quot;true&quot;
+          &gt;
+          &lt;/ngx-charts-pie-chart&gt;
+        &lt;/div&gt;
+      &lt;/mat-card-content&gt;
+    &lt;/mat-card&gt;
+
+    &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+      &lt;mat-card-header&gt;
+        &lt;mat-card-title&gt;Errors by Status Code&lt;/mat-card-title&gt;
+      &lt;/mat-card-header&gt;
+      &lt;mat-card-content&gt;
+        &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+          &lt;ngx-charts-bar-vertical
+            [results]&#x3D;&quot;errorsByStatusCode&quot;
+            [gradient]&#x3D;&quot;true&quot;
+            [xAxis]&#x3D;&quot;true&quot;
+            [yAxis]&#x3D;&quot;true&quot;
+            [showXAxisLabel]&#x3D;&quot;true&quot;
+            [showYAxisLabel]&#x3D;&quot;true&quot;
+            xAxisLabel&#x3D;&quot;Status Code&quot;
+            yAxisLabel&#x3D;&quot;Count&quot;
+          &gt;
+          &lt;/ngx-charts-bar-vertical&gt;
+        &lt;/div&gt;
+      &lt;/mat-card-content&gt;
+    &lt;/mat-card&gt;
+
+    &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+      &lt;mat-card-header&gt;
+        &lt;mat-card-title&gt;Errors Over Time&lt;/mat-card-title&gt;
+      &lt;/mat-card-header&gt;
+      &lt;mat-card-content&gt;
+        &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+          &lt;ngx-charts-line-chart
+            [results]&#x3D;&quot;errorsOverTime&quot;
+            [gradient]&#x3D;&quot;true&quot;
+            [xAxis]&#x3D;&quot;true&quot;
+            [yAxis]&#x3D;&quot;true&quot;
+            [showXAxisLabel]&#x3D;&quot;true&quot;
+            [showYAxisLabel]&#x3D;&quot;true&quot;
+            xAxisLabel&#x3D;&quot;Date&quot;
+            yAxisLabel&#x3D;&quot;Count&quot;
+          &gt;
+          &lt;/ngx-charts-line-chart&gt;
+        &lt;/div&gt;
+      &lt;/mat-card-content&gt;
+    &lt;/mat-card&gt;
+  &lt;/div&gt;
+
+  &lt;mat-card class&#x3D;&quot;error-list-card&quot;&gt;
+    &lt;mat-card-header&gt;
+      &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+    &lt;/mat-card-header&gt;
+    &lt;mat-card-content&gt;
+      &lt;div class&#x3D;&quot;table-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+        &lt;table mat-table [dataSource]&#x3D;&quot;recentErrors&quot; matSort (matSortChange)&#x3D;&quot;sortData($event)&quot;&gt;
+          &lt;!-- Timestamp Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- Error Code Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- Status Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- Category Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;category&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Category&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+              &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + error.category&quot;&gt;
+                {{ getCategoryLabel(error.category) }}
+              &lt;/mat-chip&gt;
+            &lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- URL Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;URL&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot; class&#x3D;&quot;url-cell&quot;&gt;{{ error.url }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- Message Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;message&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;Message&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;!-- Actions Column --&gt;
+          &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+              &lt;button mat-icon-button (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/ng-container&gt;
+
+          &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+          &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+
+        &lt;mat-paginator
+          [length]&#x3D;&quot;totalErrors&quot;
+          [pageSize]&#x3D;&quot;pageSize&quot;
+          [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+          (page)&#x3D;&quot;onPageChange($event)&quot;
+        &gt;
+        &lt;/mat-paginator&gt;
+      &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+  &lt;/mat-card&gt;
+&lt;/div&gt;
+
+&lt;ng-template #loadingTemplate&gt;
+  &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+    &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+    &lt;p&gt;Loading data...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #errorDetailsTemplate&gt;
+  &lt;div class&#x3D;&quot;error-details-dialog&quot;&gt;
+    &lt;h2&gt;Error Details&lt;/h2&gt;
+    &lt;div class&#x3D;&quot;error-details-content&quot;&gt;
+      &lt;div class&#x3D;&quot;error-header&quot;&gt;
+        &lt;div class&#x3D;&quot;error-title&quot;&gt;
+          &lt;h3&gt;{{ selectedError?.errorCode }}&lt;/h3&gt;
+          &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + selectedError?.category&quot;&gt;
+            {{ getCategoryLabel(selectedError?.category) }}
+          &lt;/mat-chip&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;error-meta&quot;&gt;
+          &lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; {{ selectedError?.statusCode }}&lt;/p&gt;
+          &lt;p&gt;&lt;strong&gt;Timestamp:&lt;/strong&gt; {{ selectedError?.timestamp | date: &#x27;medium&#x27; }}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;error-messages&quot;&gt;
+        &lt;p&gt;&lt;strong&gt;User Message:&lt;/strong&gt; {{ selectedError?.userMessage }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Technical Message:&lt;/strong&gt; {{ selectedError?.technicalMessage }}&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;error-request&quot;&gt;
+        &lt;h4&gt;Request Details&lt;/h4&gt;
+        &lt;p&gt;&lt;strong&gt;URL:&lt;/strong&gt; {{ selectedError?.url }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Method:&lt;/strong&gt; {{ selectedError?.method }}&lt;/p&gt;
+        &lt;div *ngIf&#x3D;&quot;selectedError?.context?.requestDetails&quot;&gt;
+          &lt;h5&gt;Headers&lt;/h5&gt;
+          &lt;pre&gt;{{ selectedError?.context?.requestDetails?.headers | json }}&lt;/pre&gt;
+
+          &lt;h5&gt;Body&lt;/h5&gt;
+          &lt;pre&gt;{{ selectedError?.context?.requestDetails?.body | json }}&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;error-response&quot; *ngIf&#x3D;&quot;selectedError?.response&quot;&gt;
+        &lt;h4&gt;Response&lt;/h4&gt;
+        &lt;pre&gt;{{ selectedError?.response | json }}&lt;/pre&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#destroy$" >destroy$</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#errorCategories" >errorCategories</a>
+                            </li>
+                            <li>
+                                <a href="#errorsByCategory" >errorsByCategory</a>
+                            </li>
+                            <li>
+                                <a href="#errorsByStatusCode" >errorsByStatusCode</a>
+                            </li>
+                            <li>
+                                <a href="#errorsOverTime" >errorsOverTime</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#isConnected" >isConnected</a>
+                            </li>
+                            <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <a href="#pageIndex" >pageIndex</a>
+                            </li>
+                            <li>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <a href="#realtimeEnabled" >realtimeEnabled</a>
+                            </li>
+                            <li>
+                                <a href="#recentErrors" >recentErrors</a>
+                            </li>
+                            <li>
+                                <a href="#selectedError" >selectedError</a>
+                            </li>
+                            <li>
+                                <a href="#totalErrors" >totalErrors</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilters" >applyFilters</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#formatDate" >formatDate</a>
+                            </li>
+                            <li>
+                                <a href="#getCategoryLabel" >getCategoryLabel</a>
+                            </li>
+                            <li>
+                                <a href="#loadDashboardData" >loadDashboardData</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onPageChange" >onPageChange</a>
+                            </li>
+                            <li>
+                                <a href="#resetFilters" >resetFilters</a>
+                            </li>
+                            <li>
+                                <a href="#sortData" >sortData</a>
+                            </li>
+                            <li>
+                                <a href="#toggleRealtime" >toggleRealtime</a>
+                            </li>
+                            <li>
+                                <a href="#transformCategoryData" >transformCategoryData</a>
+                            </li>
+                            <li>
+                                <a href="#transformStatusCodeData" >transformStatusCodeData</a>
+                            </li>
+                            <li>
+                                <a href="#transformTimeSeriesData" >transformTimeSeriesData</a>
+                            </li>
+                            <li>
+                                <a href="#viewErrorDetails" >viewErrorDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(telemetryService: <a href="../injectables/TelemetryService.html" target="_self">TelemetryService</a>, telemetrySocketService: <a href="../injectables/TelemetrySocketService.html" target="_self">TelemetrySocketService</a>, fb: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="519" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:519</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>telemetryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TelemetryService.html" target="_self" >TelemetryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>telemetrySocketService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TelemetrySocketService.html" target="_self" >TelemetrySocketService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilters"></a>
+                    <span class="name">
+                        <span ><b>applyFilters</b></span>
+                        <a href="#applyFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="698"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:698</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatDate"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>formatDate</b></span>
+                        <a href="#formatDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>formatDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="735"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:735</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>date</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategoryLabel"></a>
+                    <span class="name">
+                        <span ><b>getCategoryLabel</b></span>
+                        <a href="#getCategoryLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategoryLabel(categoryValue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="730"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:730</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryValue</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadDashboardData"></a>
+                    <span class="name">
+                        <span ><b>loadDashboardData</b></span>
+                        <a href="#loadDashboardData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadDashboardData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="606"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:606</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Load dashboard data from the REST API</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="545"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:545</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="534"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:534</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageChange"></a>
+                    <span class="name">
+                        <span ><b>onPageChange</b></span>
+                        <a href="#onPageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageChange(event: PageEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="709"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:709</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>PageEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFilters"></a>
+                    <span class="name">
+                        <span ><b>resetFilters</b></span>
+                        <a href="#resetFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="703"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:703</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortData"></a>
+                    <span class="name">
+                        <span ><b>sortData</b></span>
+                        <a href="#sortData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortData(sort: Sort)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="715"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:715</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sort</td>
+                                            <td>
+                                                        <code>Sort</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleRealtime"></a>
+                    <span class="name">
+                        <span ><b>toggleRealtime</b></span>
+                        <a href="#toggleRealtime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleRealtime(enabled: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="559"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:559</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggle real-time updates</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>enabled</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Whether real-time updates should be enabled</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transformCategoryData"></a>
+                    <span class="name">
+                        <span ><b>transformCategoryData</b></span>
+                        <a href="#transformCategoryData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transformCategoryData(data: any[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="653"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:653</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>any[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transformStatusCodeData"></a>
+                    <span class="name">
+                        <span ><b>transformStatusCodeData</b></span>
+                        <a href="#transformStatusCodeData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transformStatusCodeData(data: any[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="660"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:660</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>any[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transformTimeSeriesData"></a>
+                    <span class="name">
+                        <span ><b>transformTimeSeriesData</b></span>
+                        <a href="#transformTimeSeriesData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transformTimeSeriesData(data: any[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="667"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:667</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>any[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewErrorDetails"></a>
+                    <span class="name">
+                        <span ><b>viewErrorDetails</b></span>
+                        <a href="#viewErrorDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewErrorDetails(error: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="724"
+                                    class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:724</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroy$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>destroy$</b></span>
+                        <a href="#destroy$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="519" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:519</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;timestamp&#x27;,
+    &#x27;errorCode&#x27;,
+    &#x27;status&#x27;,
+    &#x27;category&#x27;,
+    &#x27;url&#x27;,
+    &#x27;message&#x27;,
+    &#x27;actions&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="494" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:494</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorCategories"></a>
+                    <span class="name">
+                        <span ><b>errorCategories</b></span>
+                        <a href="#errorCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: ErrorCategory.NETWORK, label: &#x27;Network&#x27; },
+    { value: ErrorCategory.AUTHENTICATION, label: &#x27;Authentication&#x27; },
+    { value: ErrorCategory.AUTHORIZATION, label: &#x27;Authorization&#x27; },
+    { value: ErrorCategory.VALIDATION, label: &#x27;Validation&#x27; },
+    { value: ErrorCategory.SERVER, label: &#x27;Server&#x27; },
+    { value: ErrorCategory.CLIENT, label: &#x27;Client&#x27; },
+    { value: ErrorCategory.TIMEOUT, label: &#x27;Timeout&#x27; },
+    { value: ErrorCategory.RATE_LIMIT, label: &#x27;Rate Limit&#x27; },
+    { value: ErrorCategory.NOT_FOUND, label: &#x27;Not Found&#x27; },
+    { value: ErrorCategory.CONFLICT, label: &#x27;Conflict&#x27; },
+    { value: ErrorCategory.UNKNOWN, label: &#x27;Unknown&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="473" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:473</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsByCategory"></a>
+                    <span class="name">
+                        <span ><b>errorsByCategory</b></span>
+                        <a href="#errorsByCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="488" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:488</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsByStatusCode"></a>
+                    <span class="name">
+                        <span ><b>errorsByStatusCode</b></span>
+                        <a href="#errorsByStatusCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="489" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:489</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsOverTime"></a>
+                    <span class="name">
+                        <span ><b>errorsOverTime</b></span>
+                        <a href="#errorsOverTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="490" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:490</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="510" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:510</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isConnected"></a>
+                    <span class="name">
+                        <span ><b>isConnected</b></span>
+                        <a href="#isConnected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="518" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:518</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="513" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:513</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageIndex"></a>
+                    <span class="name">
+                        <span ><b>pageIndex</b></span>
+                        <a href="#pageIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="506" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:506</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="505" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:505</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="realtimeEnabled"></a>
+                    <span class="name">
+                        <span ><b>realtimeEnabled</b></span>
+                        <a href="#realtimeEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="517" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:517</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="recentErrors"></a>
+                    <span class="name">
+                        <span ><b>recentErrors</b></span>
+                        <a href="#recentErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="493" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:493</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedError"></a>
+                    <span class="name">
+                        <span ><b>selectedError</b></span>
+                        <a href="#selectedError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="514" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:514</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalErrors"></a>
+                    <span class="name">
+                        <span ><b>totalErrors</b></span>
+                        <a href="#totalErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="507" class="link-to-prism">src/app/features/admin/components/error-dashboard/error-dashboard.component.ts:507</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { MatPaginatorModule, PageEvent } from &#x27;@angular/material/paginator&#x27;;
+import { MatSortModule, Sort } from &#x27;@angular/material/sort&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatDatepickerModule } from &#x27;@angular/material/datepicker&#x27;;
+import { MatNativeDateModule } from &#x27;@angular/material/core&#x27;;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;;
+import { MatChipsModule } from &#x27;@angular/material/chips&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;;
+import { MatTooltipModule } from &#x27;@angular/material/tooltip&#x27;;
+import { ReactiveFormsModule, FormGroup, FormBuilder } from &#x27;@angular/forms&#x27;;
+import { TelemetryService } from &#x27;../../../../core/services/telemetry.service&#x27;;
+import { TelemetrySocketService } from &#x27;../../../../core/services/telemetry-socket.service&#x27;;
+import { ErrorCategory } from &#x27;../../../../core/interceptors/http-error.interceptor&#x27;;
+import { NgxChartsModule } from &#x27;@swimlane/ngx-charts&#x27;;
+import { catchError, finalize, takeUntil } from &#x27;rxjs/operators&#x27;;
+import { of, Subject } from &#x27;rxjs&#x27;;
+
+@Component({
+  selector: &#x27;app-error-dashboard&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    NgxChartsModule,
+  ],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+      &lt;h1&gt;Error Monitoring Dashboard&lt;/h1&gt;
+
+      &lt;div class&#x3D;&quot;dashboard-header&quot;&gt;
+        &lt;div class&#x3D;&quot;filter-section&quot;&gt;
+          &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Error Category&lt;/mat-label&gt;
+              &lt;mat-select formControlName&#x3D;&quot;category&quot;&gt;
+                &lt;mat-option value&#x3D;&quot;&quot;&gt;All Categories&lt;/mat-option&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let category of errorCategories&quot; [value]&#x3D;&quot;category.value&quot;&gt;
+                  {{ category.label }}
+                &lt;/mat-option&gt;
+              &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Status Code&lt;/mat-label&gt;
+              &lt;input matInput formControlName&#x3D;&quot;statusCode&quot; placeholder&#x3D;&quot;e.g. 404, 500&quot; /&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Date Range&lt;/mat-label&gt;
+              &lt;mat-date-range-input [rangePicker]&#x3D;&quot;picker&quot;&gt;
+                &lt;input matStartDate formControlName&#x3D;&quot;startDate&quot; placeholder&#x3D;&quot;Start date&quot; /&gt;
+                &lt;input matEndDate formControlName&#x3D;&quot;endDate&quot; placeholder&#x3D;&quot;End date&quot; /&gt;
+              &lt;/mat-date-range-input&gt;
+              &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;picker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+              &lt;mat-date-range-picker #picker&gt;&lt;/mat-date-range-picker&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;
+              Apply Filters
+            &lt;/button&gt;
+
+            &lt;button mat-button (click)&#x3D;&quot;resetFilters()&quot;&gt;Reset&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;realtime-toggle&quot;&gt;
+          &lt;mat-slide-toggle
+            [checked]&#x3D;&quot;realtimeEnabled&quot;
+            (change)&#x3D;&quot;toggleRealtime($event.checked)&quot;
+            color&#x3D;&quot;primary&quot;
+            matTooltip&#x3D;&quot;Enable real-time updates&quot;
+          &gt;
+            Real-time Updates
+          &lt;/mat-slide-toggle&gt;
+
+          &lt;div class&#x3D;&quot;connection-status&quot; *ngIf&#x3D;&quot;realtimeEnabled&quot;&gt;
+            &lt;div class&#x3D;&quot;status-indicator&quot; [ngClass]&#x3D;&quot;{ connected: isConnected }&quot;&gt;&lt;/div&gt;
+            &lt;span&gt;{{ isConnected ? &#x27;Connected&#x27; : &#x27;Connecting...&#x27; }}&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;dashboard-content&quot;&gt;
+        &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Errors by Category&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+              &lt;ngx-charts-pie-chart
+                [results]&#x3D;&quot;errorsByCategory&quot;
+                [gradient]&#x3D;&quot;true&quot;
+                [legend]&#x3D;&quot;true&quot;
+                [labels]&#x3D;&quot;true&quot;
+                [doughnut]&#x3D;&quot;true&quot;
+              &gt;
+              &lt;/ngx-charts-pie-chart&gt;
+            &lt;/div&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+
+        &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Errors by Status Code&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+              &lt;ngx-charts-bar-vertical
+                [results]&#x3D;&quot;errorsByStatusCode&quot;
+                [gradient]&#x3D;&quot;true&quot;
+                [xAxis]&#x3D;&quot;true&quot;
+                [yAxis]&#x3D;&quot;true&quot;
+                [showXAxisLabel]&#x3D;&quot;true&quot;
+                [showYAxisLabel]&#x3D;&quot;true&quot;
+                xAxisLabel&#x3D;&quot;Status Code&quot;
+                yAxisLabel&#x3D;&quot;Count&quot;
+              &gt;
+              &lt;/ngx-charts-bar-vertical&gt;
+            &lt;/div&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+
+        &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Errors Over Time&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;chart-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+              &lt;ngx-charts-line-chart
+                [results]&#x3D;&quot;errorsOverTime&quot;
+                [gradient]&#x3D;&quot;true&quot;
+                [xAxis]&#x3D;&quot;true&quot;
+                [yAxis]&#x3D;&quot;true&quot;
+                [showXAxisLabel]&#x3D;&quot;true&quot;
+                [showYAxisLabel]&#x3D;&quot;true&quot;
+                xAxisLabel&#x3D;&quot;Date&quot;
+                yAxisLabel&#x3D;&quot;Count&quot;
+              &gt;
+              &lt;/ngx-charts-line-chart&gt;
+            &lt;/div&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+
+      &lt;mat-card class&#x3D;&quot;error-list-card&quot;&gt;
+        &lt;mat-card-header&gt;
+          &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+        &lt;/mat-card-header&gt;
+        &lt;mat-card-content&gt;
+          &lt;div class&#x3D;&quot;table-container&quot; *ngIf&#x3D;&quot;!isLoading; else loadingTemplate&quot;&gt;
+            &lt;table mat-table [dataSource]&#x3D;&quot;recentErrors&quot; matSort (matSortChange)&#x3D;&quot;sortData($event)&quot;&gt;
+              &lt;!-- Timestamp Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.timestamp | date: &#x27;medium&#x27; }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Error Code Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Status Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Category Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;category&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Category&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                  &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + error.category&quot;&gt;
+                    {{ getCategoryLabel(error.category) }}
+                  &lt;/mat-chip&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- URL Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;URL&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot; class&#x3D;&quot;url-cell&quot;&gt;{{ error.url }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Message Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;message&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;Message&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Actions Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                  &lt;button mat-icon-button (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                    &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+                  &lt;/button&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+
+            &lt;mat-paginator
+              [length]&#x3D;&quot;totalErrors&quot;
+              [pageSize]&#x3D;&quot;pageSize&quot;
+              [pageSizeOptions]&#x3D;&quot;[5, 10, 25, 50]&quot;
+              (page)&#x3D;&quot;onPageChange($event)&quot;
+            &gt;
+            &lt;/mat-paginator&gt;
+          &lt;/div&gt;
+        &lt;/mat-card-content&gt;
+      &lt;/mat-card&gt;
+    &lt;/div&gt;
+
+    &lt;ng-template #loadingTemplate&gt;
+      &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+        &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+        &lt;p&gt;Loading data...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/ng-template&gt;
+
+    &lt;ng-template #errorDetailsTemplate&gt;
+      &lt;div class&#x3D;&quot;error-details-dialog&quot;&gt;
+        &lt;h2&gt;Error Details&lt;/h2&gt;
+        &lt;div class&#x3D;&quot;error-details-content&quot;&gt;
+          &lt;div class&#x3D;&quot;error-header&quot;&gt;
+            &lt;div class&#x3D;&quot;error-title&quot;&gt;
+              &lt;h3&gt;{{ selectedError?.errorCode }}&lt;/h3&gt;
+              &lt;mat-chip [ngClass]&#x3D;&quot;&#x27;category-&#x27; + selectedError?.category&quot;&gt;
+                {{ getCategoryLabel(selectedError?.category) }}
+              &lt;/mat-chip&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;error-meta&quot;&gt;
+              &lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; {{ selectedError?.statusCode }}&lt;/p&gt;
+              &lt;p&gt;&lt;strong&gt;Timestamp:&lt;/strong&gt; {{ selectedError?.timestamp | date: &#x27;medium&#x27; }}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;error-messages&quot;&gt;
+            &lt;p&gt;&lt;strong&gt;User Message:&lt;/strong&gt; {{ selectedError?.userMessage }}&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Technical Message:&lt;/strong&gt; {{ selectedError?.technicalMessage }}&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;error-request&quot;&gt;
+            &lt;h4&gt;Request Details&lt;/h4&gt;
+            &lt;p&gt;&lt;strong&gt;URL:&lt;/strong&gt; {{ selectedError?.url }}&lt;/p&gt;
+            &lt;p&gt;&lt;strong&gt;Method:&lt;/strong&gt; {{ selectedError?.method }}&lt;/p&gt;
+            &lt;div *ngIf&#x3D;&quot;selectedError?.context?.requestDetails&quot;&gt;
+              &lt;h5&gt;Headers&lt;/h5&gt;
+              &lt;pre&gt;{{ selectedError?.context?.requestDetails?.headers | json }}&lt;/pre&gt;
+
+              &lt;h5&gt;Body&lt;/h5&gt;
+              &lt;pre&gt;{{ selectedError?.context?.requestDetails?.body | json }}&lt;/pre&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;error-response&quot; *ngIf&#x3D;&quot;selectedError?.response&quot;&gt;
+            &lt;h4&gt;Response&lt;/h4&gt;
+            &lt;pre&gt;{{ selectedError?.response | json }}&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/ng-template&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .filter-section {
+        flex: 1;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .realtime-toggle {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        margin-left: 20px;
+      }
+
+      .connection-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f44336;
+        transition: background-color 0.3s ease;
+      }
+
+      .status-indicator.connected {
+        background-color: #4caf50;
+      }
+
+      .dashboard-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 400px;
+      }
+
+      .chart-container {
+        height: 320px;
+      }
+
+      .error-list-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .url-cell {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 320px;
+      }
+
+      .category-network {
+        background-color: #ff9800;
+      }
+
+      .category-authentication {
+        background-color: #f44336;
+      }
+
+      .category-authorization {
+        background-color: #e91e63;
+      }
+
+      .category-validation {
+        background-color: #9c27b0;
+      }
+
+      .category-server {
+        background-color: #673ab7;
+      }
+
+      .category-client {
+        background-color: #3f51b5;
+      }
+
+      .category-timeout {
+        background-color: #2196f3;
+      }
+
+      .category-rate_limit {
+        background-color: #03a9f4;
+      }
+
+      .category-not_found {
+        background-color: #00bcd4;
+      }
+
+      .category-conflict {
+        background-color: #009688;
+      }
+
+      .category-unknown {
+        background-color: #607d8b;
+      }
+
+      .error-details-dialog {
+        padding: 20px;
+      }
+
+      .error-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .error-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .error-messages,
+      .error-request,
+      .error-response {
+        margin-bottom: 20px;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+        max-height: 200px;
+      }
+    &#x60;,
+  ],
+})
+export class ErrorDashboardComponent implements OnInit, OnDestroy {
+  // Error categories for dropdown
+  errorCategories &#x3D; [
+    { value: ErrorCategory.NETWORK, label: &#x27;Network&#x27; },
+    { value: ErrorCategory.AUTHENTICATION, label: &#x27;Authentication&#x27; },
+    { value: ErrorCategory.AUTHORIZATION, label: &#x27;Authorization&#x27; },
+    { value: ErrorCategory.VALIDATION, label: &#x27;Validation&#x27; },
+    { value: ErrorCategory.SERVER, label: &#x27;Server&#x27; },
+    { value: ErrorCategory.CLIENT, label: &#x27;Client&#x27; },
+    { value: ErrorCategory.TIMEOUT, label: &#x27;Timeout&#x27; },
+    { value: ErrorCategory.RATE_LIMIT, label: &#x27;Rate Limit&#x27; },
+    { value: ErrorCategory.NOT_FOUND, label: &#x27;Not Found&#x27; },
+    { value: ErrorCategory.CONFLICT, label: &#x27;Conflict&#x27; },
+    { value: ErrorCategory.UNKNOWN, label: &#x27;Unknown&#x27; },
+  ];
+
+  // Chart data
+  errorsByCategory: any[] &#x3D; [];
+  errorsByStatusCode: any[] &#x3D; [];
+  errorsOverTime: any[] &#x3D; [];
+
+  // Table data
+  recentErrors: any[] &#x3D; [];
+  displayedColumns: string[] &#x3D; [
+    &#x27;timestamp&#x27;,
+    &#x27;errorCode&#x27;,
+    &#x27;status&#x27;,
+    &#x27;category&#x27;,
+    &#x27;url&#x27;,
+    &#x27;message&#x27;,
+    &#x27;actions&#x27;,
+  ];
+
+  // Pagination
+  pageSize &#x3D; 10;
+  pageIndex &#x3D; 0;
+  totalErrors &#x3D; 0;
+
+  // Filtering
+  filterForm: FormGroup;
+
+  // State
+  isLoading &#x3D; false;
+  selectedError: any &#x3D; null;
+
+  // Real-time updates
+  realtimeEnabled &#x3D; false;
+  isConnected &#x3D; false;
+  private destroy$ &#x3D; new Subject&lt;void&gt;();
+
+  constructor(
+    private telemetryService: TelemetryService,
+    private telemetrySocketService: TelemetrySocketService,
+    private fb: FormBuilder
+  ) {
+    this.filterForm &#x3D; this.fb.group({
+      category: [&#x27;&#x27;],
+      statusCode: [&#x27;&#x27;],
+      startDate: [null],
+      endDate: [null],
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadDashboardData();
+
+    // Subscribe to connection status changes
+    this.telemetrySocketService.connectionStatus$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(status &#x3D;&gt; {
+        this.isConnected &#x3D; status;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    // Disconnect from WebSocket if connected
+    if (this.realtimeEnabled) {
+      this.telemetrySocketService.disconnect();
+    }
+  }
+
+  /**
+   * Toggle real-time updates
+   * @param enabled Whether real-time updates should be enabled
+   */
+  toggleRealtime(enabled: boolean): void {
+    this.realtimeEnabled &#x3D; enabled;
+
+    if (enabled) {
+      // Connect to WebSocket and subscribe to error updates
+      this.telemetrySocketService.connect();
+
+      // Subscribe to error statistics updates
+      this.telemetrySocketService.errorStatisticsUpdate$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(data &#x3D;&gt; {
+          // Update charts with new data
+          this.errorsByCategory &#x3D; this.transformCategoryData(data.byCategory);
+          this.errorsByStatusCode &#x3D; this.transformStatusCodeData(data.byStatusCode);
+          this.errorsOverTime &#x3D; this.transformTimeSeriesData(data.byDate);
+
+          // Update total count if available
+          if (data.totalCount !&#x3D;&#x3D; undefined) {
+            this.totalErrors &#x3D; data.totalCount;
+          }
+        });
+
+      // Subscribe to individual error updates
+      this.telemetrySocketService.errorTelemetry$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(error &#x3D;&gt; {
+          // Add new error to the top of the list
+          this.recentErrors &#x3D; [error, ...this.recentErrors.slice(0, this.pageSize - 1)];
+
+          // Increment total count
+          this.totalErrors++;
+        });
+
+      // Subscribe to the errors channel
+      this.telemetrySocketService.subscribe(&#x27;errors&#x27;);
+    } else {
+      // Disconnect from WebSocket
+      this.telemetrySocketService.disconnect();
+
+      // Reload data from REST API
+      this.loadDashboardData();
+    }
+  }
+
+  /**
+   * Load dashboard data from the REST API
+   */
+  loadDashboardData(): void {
+    this.isLoading &#x3D; true;
+
+    // Get filter values
+    const filters &#x3D; {
+      category: this.filterForm.get(&#x27;category&#x27;)?.value,
+      statusCode: this.filterForm.get(&#x27;statusCode&#x27;)?.value,
+      startDate: this.filterForm.get(&#x27;startDate&#x27;)?.value
+        ? this.formatDate(this.filterForm.get(&#x27;startDate&#x27;)?.value)
+        : undefined,
+      endDate: this.filterForm.get(&#x27;endDate&#x27;)?.value
+        ? this.formatDate(this.filterForm.get(&#x27;endDate&#x27;)?.value)
+        : undefined,
+      page: this.pageIndex,
+      pageSize: this.pageSize,
+    };
+
+    // Load error statistics
+    this.telemetryService
+      .getErrorStatistics(filters)
+      .pipe(
+        catchError(error &#x3D;&gt; {
+          console.error(&#x27;Failed to load error statistics:&#x27;, error);
+          return of({
+            byCategory: [],
+            byStatusCode: [],
+            byDate: [],
+            recentErrors: [],
+            totalCount: 0,
+          });
+        }),
+        finalize(() &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+        })
+      )
+      .subscribe(data &#x3D;&gt; {
+        // Transform data for charts
+        this.errorsByCategory &#x3D; this.transformCategoryData(data.byCategory);
+        this.errorsByStatusCode &#x3D; this.transformStatusCodeData(data.byStatusCode);
+        this.errorsOverTime &#x3D; this.transformTimeSeriesData(data.byDate);
+
+        // Set table data
+        this.recentErrors &#x3D; data.recentErrors;
+        this.totalErrors &#x3D; data.totalCount;
+      });
+  }
+
+  transformCategoryData(data: any[]): any[] {
+    return data.map(item &#x3D;&gt; ({
+      name: this.getCategoryLabel(item.category),
+      value: item.count,
+    }));
+  }
+
+  transformStatusCodeData(data: any[]): any[] {
+    return data.map(item &#x3D;&gt; ({
+      name: item.statusCode.toString(),
+      value: item.count,
+    }));
+  }
+
+  transformTimeSeriesData(data: any[]): any[] {
+    // Group by day and create time series
+    const groupedByDay &#x3D; data.reduce((acc, item) &#x3D;&gt; {
+      const date &#x3D; new Date(item.date);
+      const day &#x3D; date.toISOString().split(&#x27;T&#x27;)[0];
+
+      if (!acc[day]) {
+        acc[day] &#x3D; 0;
+      }
+
+      acc[day] +&#x3D; item.count;
+      return acc;
+    }, {});
+
+    // Convert to series format
+    const series &#x3D; Object.keys(groupedByDay).map(day &#x3D;&gt; ({
+      name: day,
+      value: groupedByDay[day],
+    }));
+
+    // Sort by date
+    series.sort((a, b) &#x3D;&gt; a.name.localeCompare(b.name));
+
+    return [
+      {
+        name: &#x27;Errors&#x27;,
+        series,
+      },
+    ];
+  }
+
+  applyFilters(): void {
+    this.pageIndex &#x3D; 0; // Reset to first page
+    this.loadDashboardData();
+  }
+
+  resetFilters(): void {
+    this.filterForm.reset();
+    this.pageIndex &#x3D; 0;
+    this.loadDashboardData();
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize &#x3D; event.pageSize;
+    this.pageIndex &#x3D; event.pageIndex;
+    this.loadDashboardData();
+  }
+
+  sortData(sort: Sort): void {
+    // Implement sorting logic
+    if (!sort.active || sort.direction &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+      return;
+    }
+
+    this.loadDashboardData();
+  }
+
+  viewErrorDetails(error: any): void {
+    this.selectedError &#x3D; error;
+    // In a real implementation, you might open a dialog or navigate to a details page
+    console.log(&#x27;Error details:&#x27;, error);
+  }
+
+  getCategoryLabel(categoryValue: string): string {
+    const category &#x3D; this.errorCategories.find(c &#x3D;&gt; c.value &#x3D;&#x3D;&#x3D; categoryValue);
+    return category ? category.label : &#x27;Unknown&#x27;;
+  }
+
+  private formatDate(date: Date): string {
+    return date.toISOString().split(&#x27;T&#x27;)[0];
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .filter-section {
+        flex: 1;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .realtime-toggle {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        margin-left: 20px;
+      }
+
+      .connection-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f44336;
+        transition: background-color 0.3s ease;
+      }
+
+      .status-indicator.connected {
+        background-color: #4caf50;
+      }
+
+      .dashboard-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 400px;
+      }
+
+      .chart-container {
+        height: 320px;
+      }
+
+      .error-list-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .url-cell {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 320px;
+      }
+
+      .category-network {
+        background-color: #ff9800;
+      }
+
+      .category-authentication {
+        background-color: #f44336;
+      }
+
+      .category-authorization {
+        background-color: #e91e63;
+      }
+
+      .category-validation {
+        background-color: #9c27b0;
+      }
+
+      .category-server {
+        background-color: #673ab7;
+      }
+
+      .category-client {
+        background-color: #3f51b5;
+      }
+
+      .category-timeout {
+        background-color: #2196f3;
+      }
+
+      .category-rate_limit {
+        background-color: #03a9f4;
+      }
+
+      .category-not_found {
+        background-color: #00bcd4;
+      }
+
+      .category-conflict {
+        background-color: #009688;
+      }
+
+      .category-unknown {
+        background-color: #607d8b;
+      }
+
+      .error-details-dialog {
+        padding: 20px;
+      }
+
+      .error-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .error-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .error-messages,
+      .error-request,
+      .error-response {
+        margin-bottom: 20px;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+        max-height: 200px;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="dashboard-container">  <h1>Error Monitoring Dashboard</h1>  <div class="dashboard-header">    <div class="filter-section">      <form [formGroup]="filterForm" class="filter-form">        <mat-form-field appearance="outline">          <mat-label>Error Category</mat-label>          <mat-select formControlName="category">            <mat-option value="">All Categories</mat-option>            <mat-option *ngFor="let category of errorCategories" [value]="category.value">              {{ category.label }}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>Status Code</mat-label>          <input matInput formControlName="statusCode" placeholder="e.g. 404, 500" />        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>Date Range</mat-label>          <mat-date-range-input [rangePicker]="picker">            <input matStartDate formControlName="startDate" placeholder="Start date" />            <input matEndDate formControlName="endDate" placeholder="End date" />          </mat-date-range-input>          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>          <mat-date-range-picker #picker></mat-date-range-picker>        </mat-form-field>        <button mat-raised-button color="primary" (click)="applyFilters()">          Apply Filters        </button>        <button mat-button (click)="resetFilters()">Reset</button>      </form>    </div>    <div class="realtime-toggle">      <mat-slide-toggle        [checked]="realtimeEnabled"        (change)="toggleRealtime($event.checked)"        color="primary"        matTooltip="Enable real-time updates"      >        Real-time Updates      </mat-slide-toggle>      <div class="connection-status" *ngIf="realtimeEnabled">        <div class="status-indicator" [ngClass]="{ connected: isConnected }"></div>        <span>{{ isConnected ? \'Connected\' : \'Connecting...\' }}</span>      </div>    </div>  </div>  <div class="dashboard-content">    <mat-card class="chart-card">      <mat-card-header>        <mat-card-title>Errors by Category</mat-card-title>      </mat-card-header>      <mat-card-content>        <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">          <ngx-charts-pie-chart            [results]="errorsByCategory"            [gradient]="true"            [legend]="true"            [labels]="true"            [doughnut]="true"          >          </ngx-charts-pie-chart>        </div>      </mat-card-content>    </mat-card>    <mat-card class="chart-card">      <mat-card-header>        <mat-card-title>Errors by Status Code</mat-card-title>      </mat-card-header>      <mat-card-content>        <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">          <ngx-charts-bar-vertical            [results]="errorsByStatusCode"            [gradient]="true"            [xAxis]="true"            [yAxis]="true"            [showXAxisLabel]="true"            [showYAxisLabel]="true"            xAxisLabel="Status Code"            yAxisLabel="Count"          >          </ngx-charts-bar-vertical>        </div>      </mat-card-content>    </mat-card>    <mat-card class="chart-card">      <mat-card-header>        <mat-card-title>Errors Over Time</mat-card-title>      </mat-card-header>      <mat-card-content>        <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">          <ngx-charts-line-chart            [results]="errorsOverTime"            [gradient]="true"            [xAxis]="true"            [yAxis]="true"            [showXAxisLabel]="true"            [showYAxisLabel]="true"            xAxisLabel="Date"            yAxisLabel="Count"          >          </ngx-charts-line-chart>        </div>      </mat-card-content>    </mat-card>  </div>  <mat-card class="error-list-card">    <mat-card-header>      <mat-card-title>Recent Errors</mat-card-title>    </mat-card-header>    <mat-card-content>      <div class="table-container" *ngIf="!isLoading; else loadingTemplate">        <table mat-table [dataSource]="recentErrors" matSort (matSortChange)="sortData($event)">          <!-- Timestamp Column -->          <ng-container matColumnDef="timestamp">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>            <td mat-cell *matCellDef="let error">{{ error.timestamp | date: \'medium\' }}</td>          </ng-container>          <!-- Error Code Column -->          <ng-container matColumnDef="errorCode">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>            <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>          </ng-container>          <!-- Status Column -->          <ng-container matColumnDef="status">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>            <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>          </ng-container>          <!-- Category Column -->          <ng-container matColumnDef="category">            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>            <td mat-cell *matCellDef="let error">              <mat-chip [ngClass]="\'category-\' + error.category">                {{ getCategoryLabel(error.category) }}              </mat-chip>            </td>          </ng-container>          <!-- URL Column -->          <ng-container matColumnDef="url">            <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>            <td mat-cell *matCellDef="let error" class="url-cell">{{ error.url }}</td>          </ng-container>          <!-- Message Column -->          <ng-container matColumnDef="message">            <th mat-header-cell *matHeaderCellDef>Message</th>            <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>          </ng-container>          <!-- Actions Column -->          <ng-container matColumnDef="actions">            <th mat-header-cell *matHeaderCellDef></th>            <td mat-cell *matCellDef="let error">              <button mat-icon-button (click)="viewErrorDetails(error)">                <mat-icon>visibility</mat-icon>              </button>            </td>          </ng-container>          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>        </table>        <mat-paginator          [length]="totalErrors"          [pageSize]="pageSize"          [pageSizeOptions]="[5, 10, 25, 50]"          (page)="onPageChange($event)"        >        </mat-paginator>      </div>    </mat-card-content>  </mat-card></div><ng-template #loadingTemplate>  <div class="loading-container">    <mat-spinner diameter="40"></mat-spinner>    <p>Loading data...</p>  </div></ng-template><ng-template #errorDetailsTemplate>  <div class="error-details-dialog">    <h2>Error Details</h2>    <div class="error-details-content">      <div class="error-header">        <div class="error-title">          <h3>{{ selectedError?.errorCode }}</h3>          <mat-chip [ngClass]="\'category-\' + selectedError?.category">            {{ getCategoryLabel(selectedError?.category) }}          </mat-chip>        </div>        <div class="error-meta">          <p><strong>Status:</strong> {{ selectedError?.statusCode }}</p>          <p><strong>Timestamp:</strong> {{ selectedError?.timestamp | date: \'medium\' }}</p>        </div>      </div>      <div class="error-messages">        <p><strong>User Message:</strong> {{ selectedError?.userMessage }}</p>        <p><strong>Technical Message:</strong> {{ selectedError?.technicalMessage }}</p>      </div>      <div class="error-request">        <h4>Request Details</h4>        <p><strong>URL:</strong> {{ selectedError?.url }}</p>        <p><strong>Method:</strong> {{ selectedError?.method }}</p>        <div *ngIf="selectedError?.context?.requestDetails">          <h5>Headers</h5>          <pre>{{ selectedError?.context?.requestDetails?.headers | json }}</pre>          <h5>Body</h5>          <pre>{{ selectedError?.context?.requestDetails?.body | json }}</pre>        </div>      </div>      <div class="error-response" *ngIf="selectedError?.response">        <h4>Response</h4>        <pre>{{ selectedError?.response | json }}</pre>      </div>    </div>  </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ErrorDashboardComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ErrorDashboardComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

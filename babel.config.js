@@ -2,7 +2,7 @@
  * Babel configuration for Jest tests
  * Configured to handle ES modules in the server codebase
  */
-module.exports = {
+export default {
   presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
   plugins: [
     // Add any plugins needed for your specific ES module features

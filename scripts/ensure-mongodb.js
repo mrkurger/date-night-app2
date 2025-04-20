@@ -1,8 +1,11 @@
-const { exec, spawn } = require('child_process');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
-require('dotenv').config();
+import { exec, spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs';
+import { promises as fsPromises } from 'fs';
+import os from 'os';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Get MongoDB data path from .env or use default
 const dbPath = process.env.DB_PATH || './data/db';
@@ -14,7 +17,7 @@ const colors = {
   red: '\x1b[31m',
   green: '\x1b[32m',
   yellow: '\x1b[33m',
-  blue: '\x1b[34m'
+  blue: '\x1b[34m',
 };
 
 /**
@@ -45,7 +48,9 @@ function ensureDataDirectory() {
       if (os.platform() !== 'win32') {
         exec(`chmod -R 755 "${absoluteDbPath}"`);
       } else {
-        console.log(`${colors.yellow}On Windows, please ensure you have proper permissions to the data directory${colors.reset}`);
+        console.log(
+          `${colors.yellow}On Windows, please ensure you have proper permissions to the data directory${colors.reset}`
+        );
       }
     } catch (permErr) {
       console.error(`${colors.red}Failed to fix permissions: ${permErr.message}${colors.reset}`);
@@ -68,8 +73,9 @@ function ensureDataDirectory() {
  * Check if MongoDB is already running
  */
 function checkMongoDBRunning() {
-  return new Promise((resolve) => {
-    const cmd = os.platform() === 'win32' ? 'tasklist /FI "IMAGENAME eq mongod.exe"' : 'pgrep mongod';
+  return new Promise(resolve => {
+    const cmd =
+      os.platform() === 'win32' ? 'tasklist /FI "IMAGENAME eq mongod.exe"' : 'pgrep mongod';
 
     exec(cmd, (error, stdout, stderr) => {
       if (os.platform() === 'win32') {
@@ -103,8 +109,10 @@ function startMongoDB() {
 
     // MongoDB command-line options
     const mongoOptions = [
-      '--dbpath', absoluteDbPath,
-      '--bind_ip', '127.0.0.1'  // Only bind to localhost for security
+      '--dbpath',
+      absoluteDbPath,
+      '--bind_ip',
+      '127.0.0.1', // Only bind to localhost for security
     ];
 
     // Add fork option on Unix-like systems
@@ -116,7 +124,7 @@ function startMongoDB() {
     // Start MongoDB process
     const mongod = spawn('mongod', mongoOptions, {
       detached: os.platform() !== 'win32', // Only detach on Unix-like systems
-      stdio: os.platform() !== 'win32' ? 'ignore' : 'pipe' // Pipe output on Windows
+      stdio: os.platform() !== 'win32' ? 'ignore' : 'pipe', // Pipe output on Windows
     });
 
     // Handle process events
@@ -124,7 +132,7 @@ function startMongoDB() {
       // On Windows, we need to capture output
       let output = '';
 
-      mongod.stdout.on('data', (data) => {
+      mongod.stdout.on('data', data => {
         output += data.toString();
         // Check for successful startup message
         if (output.includes('waiting for connections')) {
@@ -133,16 +141,16 @@ function startMongoDB() {
         }
       });
 
-      mongod.stderr.on('data', (data) => {
+      mongod.stderr.on('data', data => {
         console.error(`${colors.red}MongoDB error: ${data.toString()}${colors.reset}`);
       });
 
-      mongod.on('error', (err) => {
+      mongod.on('error', err => {
         console.error(`${colors.red}Failed to start MongoDB: ${err.message}${colors.reset}`);
         reject(err);
       });
 
-      mongod.on('close', (code) => {
+      mongod.on('close', code => {
         if (code !== 0) {
           console.error(`${colors.red}MongoDB exited with code ${code}${colors.reset}`);
           reject(new Error(`MongoDB exited with code ${code}`));
@@ -152,7 +160,9 @@ function startMongoDB() {
       // Set a timeout to resolve if we don't get a "waiting for connections" message
       setTimeout(() => {
         if (!output.includes('waiting for connections')) {
-          console.log(`${colors.yellow}MongoDB may have started, but we didn't detect the startup message.${colors.reset}`);
+          console.log(
+            `${colors.yellow}MongoDB may have started, but we didn't detect the startup message.${colors.reset}`
+          );
           resolve(true);
         }
       }, 5000);
@@ -168,7 +178,9 @@ function startMongoDB() {
             console.log(`${colors.green}MongoDB started successfully.${colors.reset}`);
             resolve(true);
           } else {
-            console.error(`${colors.red}MongoDB may have failed to start. Check mongodb.log for details.${colors.reset}`);
+            console.error(
+              `${colors.red}MongoDB may have failed to start. Check mongodb.log for details.${colors.reset}`
+            );
             reject(new Error('MongoDB failed to start'));
           }
         });
@@ -196,23 +208,25 @@ async function ensureMongoDB() {
     return true;
   } catch (err) {
     console.error(`${colors.red}Error ensuring MongoDB is running: ${err.message}${colors.reset}`);
-    console.log(`${colors.yellow}Try running the MongoDB repair script: node scripts/fix-mongodb-issues.js${colors.reset}`);
+    console.log(
+      `${colors.yellow}Try running the MongoDB repair script: node scripts/fix-mongodb-issues.js${colors.reset}`
+    );
     throw err;
   }
 }
 
-// If this script is run directly
-if (require.main === module) {
-  ensureMongoDB()
-    .then(() => {
-      console.log(`${colors.green}MongoDB is ready.${colors.reset}`);
-      process.exit(0);
-    })
-    .catch(err => {
-      console.error(`${colors.red}Failed to ensure MongoDB is running: ${err.message}${colors.reset}`);
-      process.exit(1);
-    });
-} else {
-  // Export for use in other scripts
-  module.exports = ensureMongoDB;
-}
+// Run the function
+ensureMongoDB()
+  .then(() => {
+    console.log(`${colors.green}MongoDB is ready.${colors.reset}`);
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(
+      `${colors.red}Failed to ensure MongoDB is running: ${err.message}${colors.reset}`
+    );
+    process.exit(1);
+  });
+
+// Export for use in other scripts
+export default ensureMongoDB;

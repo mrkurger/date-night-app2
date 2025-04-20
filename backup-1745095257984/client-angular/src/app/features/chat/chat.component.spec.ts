@@ -1,0 +1,653 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains tests for the chat component
+//
+// COMMON CUSTOMIZATIONS:
+// - MOCK_DATA: Test data for chat component tests
+//   Related to: client-angular/src/app/testing/test-utils.ts
+// - TEST_COVERAGE: Areas to focus testing on
+//   Related to: docs/UnitTestingLessons.md
+// ===================================================
+
+import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import { ChatComponent } from './chat.component';
+import { ChatService } from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
+import { of, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
+import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
+
+describe('ChatComponent', () => {
+  let component: ChatComponent;
+  let fixture: ComponentFixture<ChatComponent>;
+  let chatServiceSpy: jasmine.SpyObj<ChatService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let messageListEl: DebugElement;
+  let messageInputEl: DebugElement;
+  let sendButtonEl: DebugElement;
+
+  // Mock data
+  const mockUser = { _id: 'user1', username: 'testuser', email: 'test@example.com' };
+  const mockContacts = [
+    {
+      id: 'contact1',
+      name: 'John Doe',
+      imageUrl: 'assets/images/avatar1.jpg',
+      lastMessage: 'Hello there!',
+      lastMessageTime: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
+      unreadCount: 2,
+      online: true,
+    },
+    {
+      id: 'contact2',
+      name: 'Jane Smith',
+      imageUrl: 'assets/images/avatar2.jpg',
+      lastMessage: 'See you tomorrow',
+      lastMessageTime: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
+      unreadCount: 0,
+      online: false,
+    },
+  ];
+
+  const mockMessages = [
+    {
+      _id: 'msg1',
+      sender: { id: 'user1', username: 'testuser' },
+      message: 'Hi Jane, how are you?',
+      timestamp: new Date(Date.now() - 1000 * 60 * 10), // 10 minutes ago
+      read: true,
+    },
+    {
+      _id: 'msg2',
+      sender: { id: 'contact2', username: 'Jane Smith' },
+      message: "I'm good, thanks! How about you?",
+      timestamp: new Date(Date.now() - 1000 * 60 * 8), // 8 minutes ago
+      read: true,
+    },
+    {
+      _id: 'msg3',
+      sender: { id: 'user1', username: 'testuser' },
+      message: 'Doing well. See you tomorrow?',
+      timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
+      read: true,
+    },
+    {
+      _id: 'msg4',
+      sender: { id: 'contact2', username: 'Jane Smith' },
+      message: 'See you tomorrow',
+      timestamp: new Date(Date.now() - 1000 * 60 * 3), // 3 minutes ago
+      read: false,
+    },
+  ];
+
+  // Mock socket events
+  const newMessageSubject = new Subject<any>();
+  const messageReadSubject = new Subject<any>();
+  const typingIndicatorSubject = new Subject<any>();
+
+  beforeEach(async () => {
+    // Create spies for all required services
+    chatServiceSpy = jasmine.createSpyObj('ChatService', [
+      'getContacts',
+      'getMessages',
+      'sendMessage',
+      'markAsRead',
+      'setupSocketListeners',
+      'onNewMessage',
+      'onMessageRead',
+      'onTypingIndicator',
+      'sendTypingIndicator',
+      'getMessageAutoDeletionSettings',
+      'updateMessageAutoDeletionSettings',
+      'getMockContacts',
+      'convertHoursToMilliseconds',
+    ]);
+
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['getCurrentUser']);
+    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [
+      'info',
+      'error',
+      'success',
+      'warning',
+    ]);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+
+    // Set up mock return values
+    chatServiceSpy.getContacts.and.returnValue(of(mockContacts));
+    chatServiceSpy.getMessages.and.returnValue(of(mockMessages));
+    chatServiceSpy.sendMessage.and.returnValue(
+      of({
+        _id: 'new-msg-id',
+        timestamp: new Date(),
+        sender: { id: 'user1', username: 'testuser' },
+      })
+    );
+    chatServiceSpy.markAsRead.and.returnValue(of({ count: 1 }));
+    chatServiceSpy.onNewMessage.and.returnValue(newMessageSubject.asObservable());
+    chatServiceSpy.onMessageRead.and.returnValue(messageReadSubject.asObservable());
+    chatServiceSpy.onTypingIndicator.and.returnValue(typingIndicatorSubject.asObservable());
+    chatServiceSpy.getMessageAutoDeletionSettings.and.returnValue({
+      enabled: true,
+      ttl: 7 * 24 * 60 * 60 * 1000,
+    });
+    chatServiceSpy.getMockContacts.and.returnValue(mockContacts);
+    chatServiceSpy.convertHoursToMilliseconds.and.callFake(hours => hours * 60 * 60 * 1000);
+
+    authServiceSpy.getCurrentUser.and.returnValue(mockUser);
+
+    dialogSpy.open.and.returnValue({
+      afterClosed: () => of(true),
+    } as MatDialogRef<any>);
+
+    await TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        CommonModule,
+        MatDialogModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatMenuModule,
+        MatTooltipModule,
+        MatTabsModule,
+        BrowserAnimationsModule,
+      ],
+      providers: [
+        { provide: ChatService, useValue: chatServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: NotificationService, useValue: notificationServiceSpy },
+        { provide: Router, useValue: routerSpy },
+        { provide: MatDialog, useValue: dialogSpy },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ userId: 'contact2' }),
+            queryParamMap: of(convertToParamMap({})),
+          },
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements like app-avatar
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ChatComponent);
+    component = fixture.componentInstance;
+
+    // Set up component properties
+    component.currentUserId = 'user1';
+
+    // Get important elements
+    fixture.detectChanges();
+
+    // Wait for async operations
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  describe('Initialization', () => {
+    it('should load contacts on init', () => {
+      expect(chatServiceSpy.getContacts).toHaveBeenCalled();
+      expect(component.contacts.length).toBe(2);
+      expect(component.filteredContacts.length).toBe(2);
+    });
+
+    it('should load messages for the selected contact from route params', () => {
+      expect(chatServiceSpy.getMessages).toHaveBeenCalledWith('contact2');
+      expect(component.selectedContactId).toBe('contact2');
+      expect(component.messages.length).toBe(4);
+    });
+
+    it('should set up socket listeners', () => {
+      expect(chatServiceSpy.onNewMessage).toHaveBeenCalled();
+      expect(chatServiceSpy.onMessageRead).toHaveBeenCalled();
+      expect(chatServiceSpy.onTypingIndicator).toHaveBeenCalled();
+    });
+
+    it('should load message auto-deletion settings', () => {
+      expect(chatServiceSpy.getMessageAutoDeletionSettings).toHaveBeenCalledWith('contact2');
+      expect(component.messageAutoDeletionEnabled).toBeTrue();
+      expect(component.messageExpiryTime).toBe(7 * 24 * 60 * 60 * 1000);
+    });
+  });
+
+  describe('Message Handling', () => {
+    it('should send a message', fakeAsync(() => {
+      component.newMessage = 'Hello, this is a test message';
+      component.sendMessage();
+      tick();
+
+      expect(chatServiceSpy.sendMessage).toHaveBeenCalledWith(
+        'contact2',
+        'Hello, this is a test message',
+        expect.any(Object)
+      );
+      expect(component.newMessage).toBe('');
+    }));
+
+    it('should not send empty messages', fakeAsync(() => {
+      component.newMessage = '   ';
+      component.sendMessage();
+      tick();
+
+      expect(chatServiceSpy.sendMessage).not.toHaveBeenCalled();
+    }));
+
+    it('should handle new incoming messages', fakeAsync(() => {
+      const initialMessageCount = component.messages.length;
+
+      // Simulate a new message from the socket
+      const newMessage = {
+        _id: 'new-msg-id',
+        sender: { id: 'contact2', username: 'Jane Smith' },
+        message: 'This is a new message',
+        timestamp: new Date(),
+        read: false,
+      };
+
+      newMessageSubject.next(newMessage);
+      tick();
+      fixture.detectChanges();
+
+      expect(component.messages.length).toBe(initialMessageCount + 1);
+      expect(component.messages[component.messages.length - 1].message).toBe(
+        'This is a new message'
+      );
+    }));
+
+    it('should mark messages as read when selecting a contact', fakeAsync(() => {
+      // Select a different contact first
+      component.selectContact('contact1');
+      tick();
+
+      // Then select the original contact again
+      chatServiceSpy.markAsRead.calls.reset();
+      component.selectContact('contact2');
+      tick();
+
+      expect(chatServiceSpy.markAsRead).toHaveBeenCalledWith('contact2');
+    }));
+
+    it('should handle typing indicators', fakeAsync(() => {
+      // Simulate typing indicator from contact
+      typingIndicatorSubject.next({ userId: 'contact2' });
+      tick();
+      fixture.detectChanges();
+
+      expect(component.isContactTyping).toBeTrue();
+
+      // Typing indicator should disappear after delay
+      tick(5000);
+      expect(component.isContactTyping).toBeFalse();
+    }));
+
+    it('should send typing indicator when user types', fakeAsync(() => {
+      component.onMessageInput('Hello');
+      tick(500); // Debounce time
+
+      expect(chatServiceSpy.sendTypingIndicator).toHaveBeenCalledWith('contact2');
+    }));
+  });
+
+  describe('Contact Management', () => {
+    it('should filter contacts based on search term', () => {
+      component.searchTerm = 'john';
+      component.filterContacts();
+
+      expect(component.filteredContacts.length).toBe(1);
+      expect(component.filteredContacts[0].name).toBe('John Doe');
+
+      component.searchTerm = '';
+      component.filterContacts();
+
+      expect(component.filteredContacts.length).toBe(2);
+    });
+
+    it('should filter contacts by unread messages', () => {
+      component.currentFilter = 'unread';
+      component.filterContacts();
+
+      expect(component.filteredContacts.length).toBe(1);
+      expect(component.filteredContacts[0].id).toBe('contact1');
+      expect(component.filteredContacts[0].unreadCount).toBe(2);
+    });
+
+    it('should select a contact and load messages', fakeAsync(() => {
+      chatServiceSpy.getMessages.calls.reset();
+      component.selectContact('contact1');
+      tick();
+
+      expect(component.selectedContactId).toBe('contact1');
+      expect(chatServiceSpy.getMessages).toHaveBeenCalledWith('contact1');
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/chat', 'contact1']);
+    }));
+  });
+
+  describe('UI Interactions', () => {
+    it('should toggle emoji picker', () => {
+      expect(component.showEmojiPicker).toBeFalse();
+
+      component.toggleEmojiPicker();
+      expect(component.showEmojiPicker).toBeTrue();
+
+      component.toggleEmojiPicker();
+      expect(component.showEmojiPicker).toBeFalse();
+    });
+
+    it('should add emoji to message', () => {
+      component.newMessage = 'Hello ';
+      component.addEmoji('😊');
+
+      expect(component.newMessage).toBe('Hello 😊');
+      expect(component.showEmojiPicker).toBeFalse();
+    });
+
+    it('should open new message dialog', () => {
+      component.openNewMessageDialog();
+
+      expect(dialogSpy.open).toHaveBeenCalled();
+    });
+
+    it('should toggle message auto-deletion', () => {
+      const initialState = component.messageAutoDeletionEnabled;
+
+      component.toggleMessageAutoDeletion();
+
+      expect(component.messageAutoDeletionEnabled).toBe(!initialState);
+      expect(chatServiceSpy.updateMessageAutoDeletionSettings).toHaveBeenCalledWith(
+        'contact2',
+        !initialState,
+        component.messageExpiryTime
+      );
+    });
+  });
+
+  describe('Temporary Messages', () => {
+    it('should toggle temporary message mode', () => {
+      // Initial state should be false
+      expect(component.temporaryMessageMode).toBeFalse();
+
+      // Toggle on
+      component.toggleTemporaryMessageMode();
+      expect(component.temporaryMessageMode).toBeTrue();
+
+      // Toggle off
+      component.toggleTemporaryMessageMode();
+      expect(component.temporaryMessageMode).toBeFalse();
+    });
+
+    it('should set temporary message TTL', () => {
+      // Default TTL should be 24 hours
+      expect(component.temporaryMessageTTL).toBe(24);
+
+      // Set to 1 hour
+      component.setTemporaryMessageTTL(1);
+      expect(component.temporaryMessageTTL).toBe(1);
+
+      // Set to 7 days (168 hours)
+      component.setTemporaryMessageTTL(168);
+      expect(component.temporaryMessageTTL).toBe(168);
+    });
+
+    it('should format TTL correctly', () => {
+      expect(component.formatTTL(1)).toBe('1 hour');
+      expect(component.formatTTL(2)).toBe('2 hours');
+      expect(component.formatTTL(24)).toBe('24 hours');
+    });
+
+    it('should calculate remaining time correctly', () => {
+      const now = new Date();
+
+      // Test expired message
+      const expiredDate = new Date(now.getTime() - 1000); // 1 second ago
+      expect(component.getRemainingTime(expiredDate)).toBe('Expired');
+
+      // Test message expiring in 30 seconds
+      const seconds30 = new Date(now.getTime() + 30 * 1000);
+      expect(component.getRemainingTime(seconds30)).toContain('s remaining');
+
+      // Test message expiring in 5 minutes
+      const minutes5 = new Date(now.getTime() + 5 * 60 * 1000);
+      expect(component.getRemainingTime(minutes5)).toContain('m remaining');
+
+      // Test message expiring in 2 hours
+      const hours2 = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+      expect(component.getRemainingTime(hours2)).toContain('h remaining');
+
+      // Test message expiring in 3 days
+      const days3 = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+      expect(component.getRemainingTime(days3)).toContain('d remaining');
+    });
+
+    it('should send temporary message with TTL', fakeAsync(() => {
+      // Set up component for sending a message
+      component.selectedContactId = 'contact1';
+      component.newMessage = 'This is a temporary message';
+      component.temporaryMessageMode = true;
+      component.temporaryMessageTTL = 4; // 4 hours
+
+      // Send the message
+      component.sendMessage();
+      tick();
+
+      // Verify the message was sent with the correct TTL
+      expect(chatServiceSpy.convertHoursToMilliseconds).toHaveBeenCalledWith(4);
+      expect(chatServiceSpy.sendMessage).toHaveBeenCalled();
+
+      // Temporary message mode should be reset after sending
+      expect(component.temporaryMessageMode).toBeFalse();
+    }));
+
+    it('should check for expired messages', () => {
+      const now = new Date().getTime();
+
+      // Set up messages with different expiration times
+      component.messages = [
+        {
+          _id: 'msg1',
+          sender: { id: 'user1', username: 'User 1' },
+          message: 'Message 1 - not expired',
+          timestamp: new Date(),
+          read: false,
+          expiresAt: new Date(now + 1000 * 60 * 60), // 1 hour from now
+        },
+        {
+          _id: 'msg2',
+          sender: { id: 'user1', username: 'User 1' },
+          message: 'Message 2 - expired',
+          timestamp: new Date(),
+          read: false,
+          expiresAt: new Date(now - 1000), // 1 second ago
+        },
+        {
+          _id: 'msg3',
+          sender: { id: 'user2', username: 'User 2' },
+          message: 'Message 3 - no expiration',
+          timestamp: new Date(),
+          read: false,
+        },
+      ];
+
+      // Mock the groupMessagesByDate method
+      spyOn(component, 'groupMessagesByDate');
+
+      // Check for expired messages
+      component.checkExpiredMessages();
+
+      // Verify that the expired message was removed
+      expect(component.messages.length).toBe(2);
+      expect(component.messages.find(m => m._id === 'msg2')).toBeUndefined();
+      expect(component.groupMessagesByDate).toHaveBeenCalled();
+    });
+
+    it('should clean up interval on component destruction', () => {
+      // Set up a spy on clearInterval
+      spyOn(window, 'clearInterval');
+
+      // Set a fake interval ID
+      component.expiryCheckInterval = 123;
+
+      // Destroy the component
+      component.ngOnDestroy();
+
+      // Verify clearInterval was called with the correct ID
+      expect(window.clearInterval).toHaveBeenCalledWith(123);
+    });
+
+    it('should check for messages about to expire and show warnings', () => {
+      const now = new Date().getTime();
+
+      // Set up messages with different expiration times
+      component.messages = [
+        {
+          _id: 'msg1',
+          sender: { id: 'user1', username: 'User 1' },
+          message: 'Message 1 - not expired',
+          timestamp: new Date(),
+          read: false,
+          expiresAt: new Date(now + 1000 * 60 * 60), // 1 hour from now
+        },
+        {
+          _id: 'msg4',
+          sender: { id: 'user2', username: 'User 2' },
+          message: 'Message 4 - about to expire',
+          timestamp: new Date(),
+          read: false,
+          expiresAt: new Date(now + 1000 * 60 * 3), // 3 minutes from now
+        },
+      ];
+
+      // Check for expired messages
+      component.checkExpiredMessages();
+
+      // Verify that notifications were shown
+      expect(notificationServiceSpy.info).toHaveBeenCalledWith('A message will expire soon');
+
+      // Verify that the about-to-expire message was marked
+      const aboutToExpireMsg = component.messages.find(m => m._id === 'msg4');
+      expect(aboutToExpireMsg.expiryWarningShown).toBeTrue();
+    });
+
+    it('should detect messages about to expire', () => {
+      const now = new Date().getTime();
+
+      // Test with various expiration times
+      expect(component.isAboutToExpire(new Date(now + 1000 * 60 * 2))).toBeTrue(); // 2 minutes from now
+      expect(component.isAboutToExpire(new Date(now + 1000 * 60 * 10))).toBeFalse(); // 10 minutes from now
+      expect(component.isAboutToExpire(new Date(now - 1000))).toBeFalse(); // Already expired
+      expect(component.isAboutToExpire(null)).toBeFalse(); // No expiration
+    });
+  });
+
+  describe('Message Organization', () => {
+    it('should group messages by date', () => {
+      // Call the method to group messages
+      component.groupMessagesByDate();
+
+      // Should have at least one group
+      expect(component.messageGroups.length).toBeGreaterThan(0);
+
+      // Each group should have a date and messages array
+      component.messageGroups.forEach(group => {
+        expect(group.date).toBeDefined();
+        expect(Array.isArray(group.messages)).toBeTrue();
+        expect(group.messages.length).toBeGreaterThan(0);
+      });
+    });
+
+    it('should extract media from messages', () => {
+      // Add a message with attachments
+      component.messages.push({
+        _id: 'msg-with-image',
+        sender: { id: 'user1', username: 'testuser' },
+        message: 'Check out this image',
+        timestamp: new Date(),
+        read: true,
+        attachments: [
+          {
+            id: 'att1',
+            name: 'image.jpg',
+            type: 'image/jpeg',
+            size: 1024,
+            url: 'https://example.com/image.jpg',
+            timestamp: new Date(),
+          },
+        ],
+      });
+
+      // Extract media
+      component.extractMediaFromMessages();
+
+      // Should have the image in the gallery
+      expect(component.galleryImages.length).toBe(1);
+      expect(component.galleryImages[0].name).toBe('image.jpg');
+    });
+  });
+
+  describe('Error Handling', () => {
+    it('should handle errors when loading contacts', fakeAsync(() => {
+      // Reset the component
+      fixture = TestBed.createComponent(ChatComponent);
+      component = fixture.componentInstance;
+
+      // Make the getContacts method throw an error
+      chatServiceSpy.getContacts.and.returnValue(
+        throwError(() => new Error('Failed to load contacts'))
+      );
+
+      // Initialize the component
+      component.ngOnInit();
+      tick();
+
+      // Should fall back to mock contacts
+      expect(chatServiceSpy.getMockContacts).toHaveBeenCalled();
+      expect(component.contacts.length).toBeGreaterThan(0);
+    }));
+
+    it('should handle errors when loading messages', fakeAsync(() => {
+      // Reset the component
+      fixture = TestBed.createComponent(ChatComponent);
+      component = fixture.componentInstance;
+      component.currentUserId = 'user1';
+      component.selectedContactId = 'contact2';
+
+      // Make the getMessages method throw an error
+      chatServiceSpy.getMessages.and.returnValue(
+        throwError(() => new Error('Failed to load messages'))
+      );
+
+      // Load messages
+      component.loadMessages();
+      tick();
+
+      // Should create dummy messages
+      spyOn(component, 'createDummyMessages');
+      component.loadMessages();
+      tick();
+
+      expect(component.createDummyMessages).toHaveBeenCalled();
+    }));
+  });
+});

@@ -1,0 +1,2433 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>client-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">client-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TelemetryDashboardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-telemetry-dashboard</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatTabsModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatPaginatorModule</code>
+                            <code>MatSortModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatSelectModule</code>
+                            <code>MatDatepickerModule</code>
+                            <code>MatNativeDateModule</code>
+                            <code>MatProgressSpinnerModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .filter-section {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .tab-content {
+        padding: 20px 0;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .charts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 350px;
+      }
+
+      .table-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+    </code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+  &lt;h1&gt;Telemetry Dashboard&lt;/h1&gt;
+
+  &lt;div class&#x3D;&quot;filter-section&quot;&gt;
+    &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+      &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+        &lt;mat-label&gt;Date Range&lt;/mat-label&gt;
+        &lt;mat-select formControlName&#x3D;&quot;dateRange&quot;&gt;
+          &lt;mat-option value&#x3D;&quot;today&quot;&gt;Today&lt;/mat-option&gt;
+          &lt;mat-option value&#x3D;&quot;yesterday&quot;&gt;Yesterday&lt;/mat-option&gt;
+          &lt;mat-option value&#x3D;&quot;last7days&quot;&gt;Last 7 Days&lt;/mat-option&gt;
+          &lt;mat-option value&#x3D;&quot;last30days&quot;&gt;Last 30 Days&lt;/mat-option&gt;
+          &lt;mat-option value&#x3D;&quot;custom&quot;&gt;Custom Range&lt;/mat-option&gt;
+        &lt;/mat-select&gt;
+      &lt;/mat-form-field&gt;
+
+      &lt;ng-container *ngIf&#x3D;&quot;filterForm.get(&#x27;dateRange&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;custom&#x27;&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;Start Date&lt;/mat-label&gt;
+          &lt;input matInput [matDatepicker]&#x3D;&quot;startPicker&quot; formControlName&#x3D;&quot;startDate&quot; /&gt;
+          &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;startPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+          &lt;mat-datepicker #startPicker&gt;&lt;/mat-datepicker&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;mat-label&gt;End Date&lt;/mat-label&gt;
+          &lt;input matInput [matDatepicker]&#x3D;&quot;endPicker&quot; formControlName&#x3D;&quot;endDate&quot; /&gt;
+          &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;endPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+          &lt;mat-datepicker #endPicker&gt;&lt;/mat-datepicker&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/ng-container&gt;
+
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;Apply Filters&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;mat-tabs&gt;
+    &lt;mat-tab label&#x3D;&quot;Error Analysis&quot;&gt;
+      &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+        &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;isLoadingErrors&quot;&gt;
+          &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+          &lt;p&gt;Loading error data...&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;charts-container&quot; *ngIf&#x3D;&quot;!isLoadingErrors&quot;&gt;
+          &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+            &lt;mat-card-header&gt;
+              &lt;mat-card-title&gt;Errors by Type&lt;/mat-card-title&gt;
+            &lt;/mat-card-header&gt;
+            &lt;mat-card-content&gt;
+              &lt;canvas #errorsByTypeChart&gt;&lt;/canvas&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+
+          &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+            &lt;mat-card-header&gt;
+              &lt;mat-card-title&gt;Errors Over Time&lt;/mat-card-title&gt;
+            &lt;/mat-card-header&gt;
+            &lt;mat-card-content&gt;
+              &lt;canvas #errorsOverTimeChart&gt;&lt;/canvas&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+        &lt;/div&gt;
+
+        &lt;mat-card class&#x3D;&quot;table-card&quot; *ngIf&#x3D;&quot;!isLoadingErrors&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;table-container&quot;&gt;
+              &lt;table mat-table [dataSource]&#x3D;&quot;errorDataSource&quot; matSort&gt;
+                &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                    {{ error.timestamp | date: &#x27;medium&#x27; }}
+                  &lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;statusCode&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;URL&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.url }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;userMessage&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef&gt;User Message&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                    &lt;button mat-icon-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                      &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                  &lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;errorColumns&quot;&gt;&lt;/tr&gt;
+                &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: errorColumns&quot;&gt;&lt;/tr&gt;
+              &lt;/table&gt;
+
+              &lt;mat-paginator
+                [pageSizeOptions]&#x3D;&quot;[10, 25, 50]&quot;
+                showFirstLastButtons
+              &gt;&lt;/mat-paginator&gt;
+            &lt;/div&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/mat-tab&gt;
+
+    &lt;mat-tab label&#x3D;&quot;Performance Metrics&quot;&gt;
+      &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+        &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;isLoadingPerformance&quot;&gt;
+          &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+          &lt;p&gt;Loading performance data...&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;charts-container&quot; *ngIf&#x3D;&quot;!isLoadingPerformance&quot;&gt;
+          &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+            &lt;mat-card-header&gt;
+              &lt;mat-card-title&gt;Average Response Time by Endpoint&lt;/mat-card-title&gt;
+            &lt;/mat-card-header&gt;
+            &lt;mat-card-content&gt;
+              &lt;canvas #responseTimeByEndpointChart&gt;&lt;/canvas&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+
+          &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+            &lt;mat-card-header&gt;
+              &lt;mat-card-title&gt;Response Time Trends&lt;/mat-card-title&gt;
+            &lt;/mat-card-header&gt;
+            &lt;mat-card-content&gt;
+              &lt;canvas #responseTimeTrendsChart&gt;&lt;/canvas&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/mat-card&gt;
+        &lt;/div&gt;
+
+        &lt;mat-card class&#x3D;&quot;table-card&quot; *ngIf&#x3D;&quot;!isLoadingPerformance&quot;&gt;
+          &lt;mat-card-header&gt;
+            &lt;mat-card-title&gt;Endpoint Performance&lt;/mat-card-title&gt;
+          &lt;/mat-card-header&gt;
+          &lt;mat-card-content&gt;
+            &lt;div class&#x3D;&quot;table-container&quot;&gt;
+              &lt;table mat-table [dataSource]&#x3D;&quot;performanceDataSource&quot; matSort&gt;
+                &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Endpoint&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.url }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;method&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Method&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.method }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;avgDuration&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Avg. Duration (ms)&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;
+                    {{ perf.avgDuration | number: &#x27;1.0-0&#x27; }}
+                  &lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;p95Duration&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;P95 Duration (ms)&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;
+                    {{ perf.p95Duration | number: &#x27;1.0-0&#x27; }}
+                  &lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;ng-container matColumnDef&#x3D;&quot;count&quot;&gt;
+                  &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Request Count&lt;/th&gt;
+                  &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.count }}&lt;/td&gt;
+                &lt;/ng-container&gt;
+
+                &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;performanceColumns&quot;&gt;&lt;/tr&gt;
+                &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: performanceColumns&quot;&gt;&lt;/tr&gt;
+              &lt;/table&gt;
+
+              &lt;mat-paginator
+                [pageSizeOptions]&#x3D;&quot;[10, 25, 50]&quot;
+                showFirstLastButtons
+              &gt;&lt;/mat-paginator&gt;
+            &lt;/div&gt;
+          &lt;/mat-card-content&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/mat-tab&gt;
+  &lt;/mat-tabs&gt;
+&lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#errorColumns" >errorColumns</a>
+                            </li>
+                            <li>
+                                <a href="#errorDataSource" >errorDataSource</a>
+                            </li>
+                            <li>
+                                <a href="#errorsByTypeChart" >errorsByTypeChart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#errorsByTypeChartRef" >errorsByTypeChartRef</a>
+                            </li>
+                            <li>
+                                <a href="#errorsOverTimeChart" >errorsOverTimeChart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#errorsOverTimeChartRef" >errorsOverTimeChartRef</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#isLoadingErrors" >isLoadingErrors</a>
+                            </li>
+                            <li>
+                                <a href="#isLoadingPerformance" >isLoadingPerformance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#paginator" >paginator</a>
+                            </li>
+                            <li>
+                                <a href="#performanceColumns" >performanceColumns</a>
+                            </li>
+                            <li>
+                                <a href="#performanceDataSource" >performanceDataSource</a>
+                            </li>
+                            <li>
+                                <a href="#responseTimeByEndpointChart" >responseTimeByEndpointChart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#responseTimeByEndpointChartRef" >responseTimeByEndpointChartRef</a>
+                            </li>
+                            <li>
+                                <a href="#responseTimeTrendsChart" >responseTimeTrendsChart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#responseTimeTrendsChartRef" >responseTimeTrendsChartRef</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#sort" >sort</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilters" >applyFilters</a>
+                            </li>
+                            <li>
+                                <a href="#getFiltersFromForm" >getFiltersFromForm</a>
+                            </li>
+                            <li>
+                                <a href="#initErrorCharts" >initErrorCharts</a>
+                            </li>
+                            <li>
+                                <a href="#initPerformanceCharts" >initPerformanceCharts</a>
+                            </li>
+                            <li>
+                                <a href="#loadErrorData" >loadErrorData</a>
+                            </li>
+                            <li>
+                                <a href="#loadPerformanceData" >loadPerformanceData</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#viewErrorDetails" >viewErrorDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(telemetryService: <a href="../injectables/TelemetryService.html" target="_self">TelemetryService</a>, fb: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="330" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:330</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>telemetryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TelemetryService.html" target="_self" >TelemetryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilters"></a>
+                    <span class="name">
+                        <span ><b>applyFilters</b></span>
+                        <a href="#applyFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilters()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="352"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFiltersFromForm"></a>
+                    <span class="name">
+                        <span ><b>getFiltersFromForm</b></span>
+                        <a href="#getFiltersFromForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFiltersFromForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="401"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:401</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initErrorCharts"></a>
+                    <span class="name">
+                        <span ><b>initErrorCharts</b></span>
+                        <a href="#initErrorCharts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initErrorCharts(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="423"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:423</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initPerformanceCharts"></a>
+                    <span class="name">
+                        <span ><b>initPerformanceCharts</b></span>
+                        <a href="#initPerformanceCharts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initPerformanceCharts(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="525"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:525</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadErrorData"></a>
+                    <span class="name">
+                        <span ><b>loadErrorData</b></span>
+                        <a href="#loadErrorData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadErrorData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="357"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPerformanceData"></a>
+                    <span class="name">
+                        <span ><b>loadPerformanceData</b></span>
+                        <a href="#loadPerformanceData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPerformanceData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="379"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:379</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="348"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:348</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="343"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:343</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewErrorDetails"></a>
+                    <span class="name">
+                        <span ><b>viewErrorDetails</b></span>
+                        <a href="#viewErrorDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewErrorDetails(error: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="642"
+                                    class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:642</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorColumns"></a>
+                    <span class="name">
+                        <span ><b>errorColumns</b></span>
+                        <a href="#errorColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;timestamp&#x27;, &#x27;errorCode&#x27;, &#x27;statusCode&#x27;, &#x27;url&#x27;, &#x27;userMessage&#x27;, &#x27;actions&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="323" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorDataSource"></a>
+                    <span class="name">
+                        <span ><b>errorDataSource</b></span>
+                        <a href="#errorDataSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="320" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:320</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsByTypeChart"></a>
+                    <span class="name">
+                        <span ><b>errorsByTypeChart</b></span>
+                        <a href="#errorsByTypeChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Chart | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="327" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:327</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsByTypeChartRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>errorsByTypeChartRef</b></span>
+                        <a href="#errorsByTypeChartRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;errorsByTypeChart&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="308" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsOverTimeChart"></a>
+                    <span class="name">
+                        <span ><b>errorsOverTimeChart</b></span>
+                        <a href="#errorsOverTimeChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Chart | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="328" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:328</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorsOverTimeChartRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>errorsOverTimeChartRef</b></span>
+                        <a href="#errorsOverTimeChartRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;errorsOverTimeChart&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:309</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingErrors"></a>
+                    <span class="name">
+                        <span ><b>isLoadingErrors</b></span>
+                        <a href="#isLoadingErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="317" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:317</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingPerformance"></a>
+                    <span class="name">
+                        <span ><b>isLoadingPerformance</b></span>
+                        <a href="#isLoadingPerformance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="318" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:318</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginator"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>paginator</b></span>
+                        <a href="#paginator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatPaginator</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(MatPaginator)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="312" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="performanceColumns"></a>
+                    <span class="name">
+                        <span ><b>performanceColumns</b></span>
+                        <a href="#performanceColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;url&#x27;, &#x27;method&#x27;, &#x27;avgDuration&#x27;, &#x27;p95Duration&#x27;, &#x27;count&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="324" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:324</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="performanceDataSource"></a>
+                    <span class="name">
+                        <span ><b>performanceDataSource</b></span>
+                        <a href="#performanceDataSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:321</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="responseTimeByEndpointChart"></a>
+                    <span class="name">
+                        <span ><b>responseTimeByEndpointChart</b></span>
+                        <a href="#responseTimeByEndpointChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Chart | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="329" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:329</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="responseTimeByEndpointChartRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>responseTimeByEndpointChartRef</b></span>
+                        <a href="#responseTimeByEndpointChartRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;responseTimeByEndpointChart&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="310" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:310</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="responseTimeTrendsChart"></a>
+                    <span class="name">
+                        <span ><b>responseTimeTrendsChart</b></span>
+                        <a href="#responseTimeTrendsChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Chart | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="330" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:330</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="responseTimeTrendsChartRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>responseTimeTrendsChartRef</b></span>
+                        <a href="#responseTimeTrendsChartRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;responseTimeTrendsChart&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="311" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:311</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sort"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>sort</b></span>
+                        <a href="#sort"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatSort</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(MatSort)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="313" class="link-to-prism">src/app/admin/telemetry-dashboard/telemetry-dashboard.component.ts:313</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { MatTabsModule } from &#x27;@angular/material/tabs&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { MatPaginatorModule, MatPaginator } from &#x27;@angular/material/paginator&#x27;;
+import { MatSortModule, MatSort } from &#x27;@angular/material/sort&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatDatepickerModule } from &#x27;@angular/material/datepicker&#x27;;
+import { MatNativeDateModule } from &#x27;@angular/material/core&#x27;;
+import { MatProgressSpinnerModule } from &#x27;@angular/material/progress-spinner&#x27;;
+import { ReactiveFormsModule, FormGroup, FormBuilder } from &#x27;@angular/forms&#x27;;
+import { TelemetryService } from &#x27;../../core/services/telemetry.service&#x27;;
+import { Chart, registerables } from &#x27;chart.js&#x27;;
+
+// Register Chart.js components
+Chart.register(...registerables);
+
+@Component({
+  selector: &#x27;app-telemetry-dashboard&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+  ],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;dashboard-container&quot;&gt;
+      &lt;h1&gt;Telemetry Dashboard&lt;/h1&gt;
+
+      &lt;div class&#x3D;&quot;filter-section&quot;&gt;
+        &lt;form [formGroup]&#x3D;&quot;filterForm&quot; class&#x3D;&quot;filter-form&quot;&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+            &lt;mat-label&gt;Date Range&lt;/mat-label&gt;
+            &lt;mat-select formControlName&#x3D;&quot;dateRange&quot;&gt;
+              &lt;mat-option value&#x3D;&quot;today&quot;&gt;Today&lt;/mat-option&gt;
+              &lt;mat-option value&#x3D;&quot;yesterday&quot;&gt;Yesterday&lt;/mat-option&gt;
+              &lt;mat-option value&#x3D;&quot;last7days&quot;&gt;Last 7 Days&lt;/mat-option&gt;
+              &lt;mat-option value&#x3D;&quot;last30days&quot;&gt;Last 30 Days&lt;/mat-option&gt;
+              &lt;mat-option value&#x3D;&quot;custom&quot;&gt;Custom Range&lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;ng-container *ngIf&#x3D;&quot;filterForm.get(&#x27;dateRange&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;custom&#x27;&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;Start Date&lt;/mat-label&gt;
+              &lt;input matInput [matDatepicker]&#x3D;&quot;startPicker&quot; formControlName&#x3D;&quot;startDate&quot; /&gt;
+              &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;startPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+              &lt;mat-datepicker #startPicker&gt;&lt;/mat-datepicker&gt;
+            &lt;/mat-form-field&gt;
+
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+              &lt;mat-label&gt;End Date&lt;/mat-label&gt;
+              &lt;input matInput [matDatepicker]&#x3D;&quot;endPicker&quot; formControlName&#x3D;&quot;endDate&quot; /&gt;
+              &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;endPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+              &lt;mat-datepicker #endPicker&gt;&lt;/mat-datepicker&gt;
+            &lt;/mat-form-field&gt;
+          &lt;/ng-container&gt;
+
+          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;applyFilters()&quot;&gt;Apply Filters&lt;/button&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+
+      &lt;mat-tabs&gt;
+        &lt;mat-tab label&#x3D;&quot;Error Analysis&quot;&gt;
+          &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+            &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;isLoadingErrors&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+              &lt;p&gt;Loading error data...&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;charts-container&quot; *ngIf&#x3D;&quot;!isLoadingErrors&quot;&gt;
+              &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+                &lt;mat-card-header&gt;
+                  &lt;mat-card-title&gt;Errors by Type&lt;/mat-card-title&gt;
+                &lt;/mat-card-header&gt;
+                &lt;mat-card-content&gt;
+                  &lt;canvas #errorsByTypeChart&gt;&lt;/canvas&gt;
+                &lt;/mat-card-content&gt;
+              &lt;/mat-card&gt;
+
+              &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+                &lt;mat-card-header&gt;
+                  &lt;mat-card-title&gt;Errors Over Time&lt;/mat-card-title&gt;
+                &lt;/mat-card-header&gt;
+                &lt;mat-card-content&gt;
+                  &lt;canvas #errorsOverTimeChart&gt;&lt;/canvas&gt;
+                &lt;/mat-card-content&gt;
+              &lt;/mat-card&gt;
+            &lt;/div&gt;
+
+            &lt;mat-card class&#x3D;&quot;table-card&quot; *ngIf&#x3D;&quot;!isLoadingErrors&quot;&gt;
+              &lt;mat-card-header&gt;
+                &lt;mat-card-title&gt;Recent Errors&lt;/mat-card-title&gt;
+              &lt;/mat-card-header&gt;
+              &lt;mat-card-content&gt;
+                &lt;div class&#x3D;&quot;table-container&quot;&gt;
+                  &lt;table mat-table [dataSource]&#x3D;&quot;errorDataSource&quot; matSort&gt;
+                    &lt;ng-container matColumnDef&#x3D;&quot;timestamp&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Timestamp&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                        {{ error.timestamp | date: &#x27;medium&#x27; }}
+                      &lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;errorCode&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Error Code&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.errorCode }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;statusCode&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Status&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.statusCode }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;URL&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.url }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;userMessage&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef&gt;User Message&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;{{ error.userMessage }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;actions&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let error&quot;&gt;
+                        &lt;button mat-icon-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;viewErrorDetails(error)&quot;&gt;
+                          &lt;mat-icon&gt;visibility&lt;/mat-icon&gt;
+                        &lt;/button&gt;
+                      &lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;errorColumns&quot;&gt;&lt;/tr&gt;
+                    &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: errorColumns&quot;&gt;&lt;/tr&gt;
+                  &lt;/table&gt;
+
+                  &lt;mat-paginator
+                    [pageSizeOptions]&#x3D;&quot;[10, 25, 50]&quot;
+                    showFirstLastButtons
+                  &gt;&lt;/mat-paginator&gt;
+                &lt;/div&gt;
+              &lt;/mat-card-content&gt;
+            &lt;/mat-card&gt;
+          &lt;/div&gt;
+        &lt;/mat-tab&gt;
+
+        &lt;mat-tab label&#x3D;&quot;Performance Metrics&quot;&gt;
+          &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+            &lt;div class&#x3D;&quot;loading-container&quot; *ngIf&#x3D;&quot;isLoadingPerformance&quot;&gt;
+              &lt;mat-spinner diameter&#x3D;&quot;40&quot;&gt;&lt;/mat-spinner&gt;
+              &lt;p&gt;Loading performance data...&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;charts-container&quot; *ngIf&#x3D;&quot;!isLoadingPerformance&quot;&gt;
+              &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+                &lt;mat-card-header&gt;
+                  &lt;mat-card-title&gt;Average Response Time by Endpoint&lt;/mat-card-title&gt;
+                &lt;/mat-card-header&gt;
+                &lt;mat-card-content&gt;
+                  &lt;canvas #responseTimeByEndpointChart&gt;&lt;/canvas&gt;
+                &lt;/mat-card-content&gt;
+              &lt;/mat-card&gt;
+
+              &lt;mat-card class&#x3D;&quot;chart-card&quot;&gt;
+                &lt;mat-card-header&gt;
+                  &lt;mat-card-title&gt;Response Time Trends&lt;/mat-card-title&gt;
+                &lt;/mat-card-header&gt;
+                &lt;mat-card-content&gt;
+                  &lt;canvas #responseTimeTrendsChart&gt;&lt;/canvas&gt;
+                &lt;/mat-card-content&gt;
+              &lt;/mat-card&gt;
+            &lt;/div&gt;
+
+            &lt;mat-card class&#x3D;&quot;table-card&quot; *ngIf&#x3D;&quot;!isLoadingPerformance&quot;&gt;
+              &lt;mat-card-header&gt;
+                &lt;mat-card-title&gt;Endpoint Performance&lt;/mat-card-title&gt;
+              &lt;/mat-card-header&gt;
+              &lt;mat-card-content&gt;
+                &lt;div class&#x3D;&quot;table-container&quot;&gt;
+                  &lt;table mat-table [dataSource]&#x3D;&quot;performanceDataSource&quot; matSort&gt;
+                    &lt;ng-container matColumnDef&#x3D;&quot;url&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Endpoint&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.url }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;method&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Method&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.method }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;avgDuration&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Avg. Duration (ms)&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;
+                        {{ perf.avgDuration | number: &#x27;1.0-0&#x27; }}
+                      &lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;p95Duration&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;P95 Duration (ms)&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;
+                        {{ perf.p95Duration | number: &#x27;1.0-0&#x27; }}
+                      &lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;ng-container matColumnDef&#x3D;&quot;count&quot;&gt;
+                      &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt;Request Count&lt;/th&gt;
+                      &lt;td mat-cell *matCellDef&#x3D;&quot;let perf&quot;&gt;{{ perf.count }}&lt;/td&gt;
+                    &lt;/ng-container&gt;
+
+                    &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;performanceColumns&quot;&gt;&lt;/tr&gt;
+                    &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: performanceColumns&quot;&gt;&lt;/tr&gt;
+                  &lt;/table&gt;
+
+                  &lt;mat-paginator
+                    [pageSizeOptions]&#x3D;&quot;[10, 25, 50]&quot;
+                    showFirstLastButtons
+                  &gt;&lt;/mat-paginator&gt;
+                &lt;/div&gt;
+              &lt;/mat-card-content&gt;
+            &lt;/mat-card&gt;
+          &lt;/div&gt;
+        &lt;/mat-tab&gt;
+      &lt;/mat-tabs&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styles: [
+    &#x60;
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .filter-section {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .tab-content {
+        padding: 20px 0;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .charts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 350px;
+      }
+
+      .table-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+    &#x60;,
+  ],
+})
+export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
+  @ViewChild(&#x27;errorsByTypeChart&#x27;) errorsByTypeChartRef!: ElementRef;
+  @ViewChild(&#x27;errorsOverTimeChart&#x27;) errorsOverTimeChartRef!: ElementRef;
+  @ViewChild(&#x27;responseTimeByEndpointChart&#x27;) responseTimeByEndpointChartRef!: ElementRef;
+  @ViewChild(&#x27;responseTimeTrendsChart&#x27;) responseTimeTrendsChartRef!: ElementRef;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  filterForm: FormGroup;
+
+  isLoadingErrors &#x3D; true;
+  isLoadingPerformance &#x3D; true;
+
+  errorDataSource: any[] &#x3D; [];
+  performanceDataSource: any[] &#x3D; [];
+
+  errorColumns &#x3D; [&#x27;timestamp&#x27;, &#x27;errorCode&#x27;, &#x27;statusCode&#x27;, &#x27;url&#x27;, &#x27;userMessage&#x27;, &#x27;actions&#x27;];
+  performanceColumns &#x3D; [&#x27;url&#x27;, &#x27;method&#x27;, &#x27;avgDuration&#x27;, &#x27;p95Duration&#x27;, &#x27;count&#x27;];
+
+  // Chart instances
+  errorsByTypeChart: Chart | null &#x3D; null;
+  errorsOverTimeChart: Chart | null &#x3D; null;
+  responseTimeByEndpointChart: Chart | null &#x3D; null;
+  responseTimeTrendsChart: Chart | null &#x3D; null;
+
+  constructor(
+    private telemetryService: TelemetryService,
+    private fb: FormBuilder
+  ) {
+    this.filterForm &#x3D; this.fb.group({
+      dateRange: [&#x27;last7days&#x27;],
+      startDate: [null],
+      endDate: [null],
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadErrorData();
+    this.loadPerformanceData();
+  }
+
+  ngAfterViewInit(): void {
+    // Charts will be initialized after data is loaded
+  }
+
+  applyFilters(): void {
+    this.loadErrorData();
+    this.loadPerformanceData();
+  }
+
+  loadErrorData(): void {
+    this.isLoadingErrors &#x3D; true;
+
+    const filters &#x3D; this.getFiltersFromForm();
+
+    this.telemetryService.getErrorStatistics(filters).subscribe({
+      next: data &#x3D;&gt; {
+        this.isLoadingErrors &#x3D; false;
+
+        // Process data for charts and tables
+        this.errorDataSource &#x3D; data.recentErrors || [];
+
+        // Initialize charts
+        this.initErrorCharts(data);
+      },
+      error: err &#x3D;&gt; {
+        console.error(&#x27;Failed to load error data:&#x27;, err);
+        this.isLoadingErrors &#x3D; false;
+      },
+    });
+  }
+
+  loadPerformanceData(): void {
+    this.isLoadingPerformance &#x3D; true;
+
+    const filters &#x3D; this.getFiltersFromForm();
+
+    this.telemetryService.getPerformanceStatistics(filters).subscribe({
+      next: data &#x3D;&gt; {
+        this.isLoadingPerformance &#x3D; false;
+
+        // Process data for charts and tables
+        this.performanceDataSource &#x3D; data.byEndpoint || [];
+
+        // Initialize charts
+        this.initPerformanceCharts(data);
+      },
+      error: err &#x3D;&gt; {
+        console.error(&#x27;Failed to load performance data:&#x27;, err);
+        this.isLoadingPerformance &#x3D; false;
+      },
+    });
+  }
+
+  getFiltersFromForm(): any {
+    const filters: any &#x3D; {};
+    const dateRange &#x3D; this.filterForm.get(&#x27;dateRange&#x27;)?.value;
+
+    if (dateRange &#x3D;&#x3D;&#x3D; &#x27;custom&#x27;) {
+      const startDate &#x3D; this.filterForm.get(&#x27;startDate&#x27;)?.value;
+      const endDate &#x3D; this.filterForm.get(&#x27;endDate&#x27;)?.value;
+
+      if (startDate) {
+        filters.startDate &#x3D; startDate.toISOString();
+      }
+
+      if (endDate) {
+        filters.endDate &#x3D; endDate.toISOString();
+      }
+    } else {
+      filters.dateRange &#x3D; dateRange;
+    }
+
+    return filters;
+  }
+
+  initErrorCharts(data: any): void {
+    // Destroy existing charts
+    if (this.errorsByTypeChart) {
+      this.errorsByTypeChart.destroy();
+    }
+
+    if (this.errorsOverTimeChart) {
+      this.errorsOverTimeChart.destroy();
+    }
+
+    // Errors by Type chart
+    if (data.byErrorCode &amp;&amp; this.errorsByTypeChartRef) {
+      const labels &#x3D; Object.keys(data.byErrorCode);
+      const values &#x3D; Object.values(data.byErrorCode) as number[];
+
+      this.errorsByTypeChart &#x3D; new Chart(this.errorsByTypeChartRef.nativeElement, {
+        type: &#x27;pie&#x27;,
+        data: {
+          labels,
+          datasets: [
+            {
+              data: values,
+              backgroundColor: [
+                &#x27;#FF6384&#x27;,
+                &#x27;#36A2EB&#x27;,
+                &#x27;#FFCE56&#x27;,
+                &#x27;#4BC0C0&#x27;,
+                &#x27;#9966FF&#x27;,
+                &#x27;#FF9F40&#x27;,
+                &#x27;#8AC249&#x27;,
+                &#x27;#EA5545&#x27;,
+                &#x27;#F46A9B&#x27;,
+                &#x27;#EF9B20&#x27;,
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: &#x27;right&#x27;,
+            },
+            title: {
+              display: true,
+              text: &#x27;Errors by Type&#x27;,
+            },
+          },
+        },
+      });
+    }
+
+    // Errors Over Time chart
+    if (data.byTimeRange &amp;&amp; this.errorsOverTimeChartRef) {
+      const labels &#x3D; data.byTimeRange.map((item: any) &#x3D;&gt; item.date);
+      const values &#x3D; data.byTimeRange.map((item: any) &#x3D;&gt; item.count);
+
+      this.errorsOverTimeChart &#x3D; new Chart(this.errorsOverTimeChartRef.nativeElement, {
+        type: &#x27;line&#x27;,
+        data: {
+          labels,
+          datasets: [
+            {
+              label: &#x27;Error Count&#x27;,
+              data: values,
+              borderColor: &#x27;#FF6384&#x27;,
+              backgroundColor: &#x27;rgba(255, 99, 132, 0.1)&#x27;,
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: &#x27;Errors Over Time&#x27;,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: &#x27;Error Count&#x27;,
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: &#x27;Date&#x27;,
+              },
+            },
+          },
+        },
+      });
+    }
+  }
+
+  initPerformanceCharts(data: any): void {
+    // Destroy existing charts
+    if (this.responseTimeByEndpointChart) {
+      this.responseTimeByEndpointChart.destroy();
+    }
+
+    if (this.responseTimeTrendsChart) {
+      this.responseTimeTrendsChart.destroy();
+    }
+
+    // Response Time by Endpoint chart
+    if (data.byEndpoint &amp;&amp; this.responseTimeByEndpointChartRef) {
+      const endpoints &#x3D; data.byEndpoint.map((item: any) &#x3D;&gt; item.url);
+      const avgDurations &#x3D; data.byEndpoint.map((item: any) &#x3D;&gt; item.avgDuration);
+      const p95Durations &#x3D; data.byEndpoint.map((item: any) &#x3D;&gt; item.p95Duration);
+
+      this.responseTimeByEndpointChart &#x3D; new Chart(
+        this.responseTimeByEndpointChartRef.nativeElement,
+        {
+          type: &#x27;bar&#x27;,
+          data: {
+            labels: endpoints,
+            datasets: [
+              {
+                label: &#x27;Average Duration (ms)&#x27;,
+                data: avgDurations,
+                backgroundColor: &#x27;rgba(54, 162, 235, 0.5)&#x27;,
+                borderColor: &#x27;rgb(54, 162, 235)&#x27;,
+                borderWidth: 1,
+              },
+              {
+                label: &#x27;P95 Duration (ms)&#x27;,
+                data: p95Durations,
+                backgroundColor: &#x27;rgba(255, 159, 64, 0.5)&#x27;,
+                borderColor: &#x27;rgb(255, 159, 64)&#x27;,
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: &#x27;Response Time by Endpoint&#x27;,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: &#x27;Duration (ms)&#x27;,
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: &#x27;Endpoint&#x27;,
+                },
+              },
+            },
+          },
+        }
+      );
+    }
+
+    // Response Time Trends chart
+    if (data.byTimeRange &amp;&amp; this.responseTimeTrendsChartRef) {
+      const dates &#x3D; data.byTimeRange.map((item: any) &#x3D;&gt; item.date);
+      const avgDurations &#x3D; data.byTimeRange.map((item: any) &#x3D;&gt; item.avgDuration);
+
+      this.responseTimeTrendsChart &#x3D; new Chart(this.responseTimeTrendsChartRef.nativeElement, {
+        type: &#x27;line&#x27;,
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: &#x27;Average Response Time (ms)&#x27;,
+              data: avgDurations,
+              borderColor: &#x27;#4BC0C0&#x27;,
+              backgroundColor: &#x27;rgba(75, 192, 192, 0.1)&#x27;,
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: &#x27;Response Time Trends&#x27;,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: &#x27;Duration (ms)&#x27;,
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: &#x27;Date&#x27;,
+              },
+            },
+          },
+        },
+      });
+    }
+  }
+
+  viewErrorDetails(error: any): void {
+    // Open a dialog or navigate to a details page
+    console.log(&#x27;Error details:&#x27;, error);
+    // Implement dialog or navigation logic
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+            <pre class="line-numbers"><code class="language-scss">
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .filter-section {
+        margin-bottom: 20px;
+      }
+
+      .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .tab-content {
+        padding: 20px 0;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .charts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        height: 350px;
+      }
+
+      .table-card {
+        margin-bottom: 20px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+      }
+    
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="dashboard-container">  <h1>Telemetry Dashboard</h1>  <div class="filter-section">    <form [formGroup]="filterForm" class="filter-form">      <mat-form-field appearance="outline">        <mat-label>Date Range</mat-label>        <mat-select formControlName="dateRange">          <mat-option value="today">Today</mat-option>          <mat-option value="yesterday">Yesterday</mat-option>          <mat-option value="last7days">Last 7 Days</mat-option>          <mat-option value="last30days">Last 30 Days</mat-option>          <mat-option value="custom">Custom Range</mat-option>        </mat-select>      </mat-form-field>      <ng-container *ngIf="filterForm.get(\'dateRange\')?.value === \'custom\'">        <mat-form-field appearance="outline">          <mat-label>Start Date</mat-label>          <input matInput [matDatepicker]="startPicker" formControlName="startDate" />          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>          <mat-datepicker #startPicker></mat-datepicker>        </mat-form-field>        <mat-form-field appearance="outline">          <mat-label>End Date</mat-label>          <input matInput [matDatepicker]="endPicker" formControlName="endDate" />          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>          <mat-datepicker #endPicker></mat-datepicker>        </mat-form-field>      </ng-container>      <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>    </form>  </div>  <mat-tabs>    <mat-tab label="Error Analysis">      <div class="tab-content">        <div class="loading-container" *ngIf="isLoadingErrors">          <mat-spinner diameter="40"></mat-spinner>          <p>Loading error data...</p>        </div>        <div class="charts-container" *ngIf="!isLoadingErrors">          <mat-card class="chart-card">            <mat-card-header>              <mat-card-title>Errors by Type</mat-card-title>            </mat-card-header>            <mat-card-content>              <canvas #errorsByTypeChart></canvas>            </mat-card-content>          </mat-card>          <mat-card class="chart-card">            <mat-card-header>              <mat-card-title>Errors Over Time</mat-card-title>            </mat-card-header>            <mat-card-content>              <canvas #errorsOverTimeChart></canvas>            </mat-card-content>          </mat-card>        </div>        <mat-card class="table-card" *ngIf="!isLoadingErrors">          <mat-card-header>            <mat-card-title>Recent Errors</mat-card-title>          </mat-card-header>          <mat-card-content>            <div class="table-container">              <table mat-table [dataSource]="errorDataSource" matSort>                <ng-container matColumnDef="timestamp">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>                  <td mat-cell *matCellDef="let error">                    {{ error.timestamp | date: \'medium\' }}                  </td>                </ng-container>                <ng-container matColumnDef="errorCode">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>                  <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>                </ng-container>                <ng-container matColumnDef="statusCode">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>                  <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>                </ng-container>                <ng-container matColumnDef="url">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>                  <td mat-cell *matCellDef="let error">{{ error.url }}</td>                </ng-container>                <ng-container matColumnDef="userMessage">                  <th mat-header-cell *matHeaderCellDef>User Message</th>                  <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>                </ng-container>                <ng-container matColumnDef="actions">                  <th mat-header-cell *matHeaderCellDef></th>                  <td mat-cell *matCellDef="let error">                    <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">                      <mat-icon>visibility</mat-icon>                    </button>                  </td>                </ng-container>                <tr mat-header-row *matHeaderRowDef="errorColumns"></tr>                <tr mat-row *matRowDef="let row; columns: errorColumns"></tr>              </table>              <mat-paginator                [pageSizeOptions]="[10, 25, 50]"                showFirstLastButtons              ></mat-paginator>            </div>          </mat-card-content>        </mat-card>      </div>    </mat-tab>    <mat-tab label="Performance Metrics">      <div class="tab-content">        <div class="loading-container" *ngIf="isLoadingPerformance">          <mat-spinner diameter="40"></mat-spinner>          <p>Loading performance data...</p>        </div>        <div class="charts-container" *ngIf="!isLoadingPerformance">          <mat-card class="chart-card">            <mat-card-header>              <mat-card-title>Average Response Time by Endpoint</mat-card-title>            </mat-card-header>            <mat-card-content>              <canvas #responseTimeByEndpointChart></canvas>            </mat-card-content>          </mat-card>          <mat-card class="chart-card">            <mat-card-header>              <mat-card-title>Response Time Trends</mat-card-title>            </mat-card-header>            <mat-card-content>              <canvas #responseTimeTrendsChart></canvas>            </mat-card-content>          </mat-card>        </div>        <mat-card class="table-card" *ngIf="!isLoadingPerformance">          <mat-card-header>            <mat-card-title>Endpoint Performance</mat-card-title>          </mat-card-header>          <mat-card-content>            <div class="table-container">              <table mat-table [dataSource]="performanceDataSource" matSort>                <ng-container matColumnDef="url">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Endpoint</th>                  <td mat-cell *matCellDef="let perf">{{ perf.url }}</td>                </ng-container>                <ng-container matColumnDef="method">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Method</th>                  <td mat-cell *matCellDef="let perf">{{ perf.method }}</td>                </ng-container>                <ng-container matColumnDef="avgDuration">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Avg. Duration (ms)</th>                  <td mat-cell *matCellDef="let perf">                    {{ perf.avgDuration | number: \'1.0-0\' }}                  </td>                </ng-container>                <ng-container matColumnDef="p95Duration">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>P95 Duration (ms)</th>                  <td mat-cell *matCellDef="let perf">                    {{ perf.p95Duration | number: \'1.0-0\' }}                  </td>                </ng-container>                <ng-container matColumnDef="count">                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Request Count</th>                  <td mat-cell *matCellDef="let perf">{{ perf.count }}</td>                </ng-container>                <tr mat-header-row *matHeaderRowDef="performanceColumns"></tr>                <tr mat-row *matRowDef="let row; columns: performanceColumns"></tr>              </table>              <mat-paginator                [pageSizeOptions]="[10, 25, 50]"                showFirstLastButtons              ></mat-paginator>            </div>          </mat-card-content>        </mat-card>      </div>    </mat-tab>  </mat-tabs></div></div>'
+    var COMPONENTS = [{'name': 'AdBrowserComponent', 'selector': 'app-ad-browser'},{'name': 'AdCardComponent', 'selector': 'app-ad-card'},{'name': 'AdCreateComponent', 'selector': 'app-ad-create'},{'name': 'AdDetailComponent', 'selector': 'app-ad-detail'},{'name': 'AdDetailsComponent', 'selector': 'app-ad-details'},{'name': 'AddPaymentMethodDialogComponent', 'selector': 'app-add-payment-method-dialog'},{'name': 'AdFormComponent', 'selector': 'app-ad-form'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdListComponent', 'selector': 'app-ad-list'},{'name': 'AdManagementComponent', 'selector': 'app-ad-management'},{'name': 'AdStatsComponent', 'selector': 'app-ad-stats'},{'name': 'AdvertiserProfileComponent', 'selector': 'app-advertiser-profile'},{'name': 'AlertFormDialogComponent', 'selector': 'app-alert-form-dialog'},{'name': 'AlertManagementComponent', 'selector': 'app-alert-management'},{'name': 'AlertNotificationsComponent', 'selector': 'app-alert-notifications'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppCardComponent', 'selector': 'emerald-app-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'emerald-avatar'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'BrowseComponent', 'selector': 'app-browse'},{'name': 'ButtonComponent', 'selector': 'app-button'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CardGridComponent', 'selector': 'emerald-card-grid'},{'name': 'CarouselComponent', 'selector': 'emerald-carousel'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ChatListComponent', 'selector': 'app-chat-list'},{'name': 'ChatMessageComponent', 'selector': 'app-chat-message'},{'name': 'ChatRoomComponent', 'selector': 'app-chat-room'},{'name': 'ChatSettingsComponent', 'selector': 'app-chat-settings'},{'name': 'CheckboxComponent', 'selector': 'app-checkbox'},{'name': 'ComponentNameComponent', 'selector': 'app-component-name'},{'name': 'ContentModerationComponent', 'selector': 'app-content-moderation'},{'name': 'ContextualHelpComponent', 'selector': 'app-contextual-help'},{'name': 'CreateErrorAlertComponent', 'selector': 'app-create-error-alert'},{'name': 'DebugInfoComponent', 'selector': 'app-debug-info'},{'name': 'DepositDialogComponent', 'selector': 'app-deposit-dialog'},{'name': 'DesignSystemDemoComponent', 'selector': 'app-design-system-demo'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorDashboardComponent', 'selector': 'app-error-dashboard'},{'name': 'ErrorMessageComponent', 'selector': 'app-error-message'},{'name': 'FavoriteButtonComponent', 'selector': 'app-favorite-button'},{'name': 'FavoriteDialogComponent', 'selector': 'app-favorite-dialog'},{'name': 'FavoritesComponent', 'selector': 'app-favorites'},{'name': 'FavoritesListComponent', 'selector': 'app-favorites-list'},{'name': 'FavoritesPageComponent', 'selector': 'app-favorites-page'},{'name': 'FeatureTourComponent', 'selector': 'app-feature-tour'},{'name': 'FloatingActionButtonComponent', 'selector': 'emerald-floating-action-button'},{'name': 'GalleryComponent', 'selector': 'app-gallery'},{'name': 'GalleryManagementComponent', 'selector': 'app-gallery-management'},{'name': 'IconComponent', 'selector': 'app-icon'},{'name': 'ImageGalleryComponent', 'selector': 'app-image-gallery'},{'name': 'InfoPanelComponent', 'selector': 'emerald-info-panel'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LabelComponent', 'selector': 'emerald-label'},{'name': 'ListViewComponent', 'selector': 'app-list-view'},{'name': 'LoadingSpinnerComponent', 'selector': 'app-loading-spinner'},{'name': 'LocationMatchingComponent', 'selector': 'app-location-matching'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'MockAppCardComponent', 'selector': 'emerald-app-card'},{'name': 'MockMainLayoutComponent', 'selector': 'app-main-layout'},{'name': 'MockSkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'ModerationModalComponent', 'selector': 'app-moderation-modal'},{'name': 'NetflixViewComponent', 'selector': 'app-netflix-view'},{'name': 'NotesDialogComponent', 'selector': 'app-notes-dialog'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OnboardingChecklistComponent', 'selector': 'app-onboarding-checklist'},{'name': 'OnboardingComponent', 'selector': 'app-onboarding'},{'name': 'OptimizedImageComponent', 'selector': 'app-optimized-image'},{'name': 'PageHeaderComponent', 'selector': 'emerald-page-header'},{'name': 'PagerComponent', 'selector': 'emerald-pager'},{'name': 'PaymentComponent', 'selector': 'app-payment'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PerformanceDashboardComponent', 'selector': 'app-performance-dashboard'},{'name': 'PreferencesDemoComponent', 'selector': 'app-preferences-demo'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ReportDialogComponent', 'selector': 'app-report-dialog'},{'name': 'ResponseDialogComponent', 'selector': 'app-response-dialog'},{'name': 'ReviewDialogComponent', 'selector': 'app-review-dialog'},{'name': 'ReviewDisplayComponent', 'selector': 'app-review-display'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewFormComponent', 'selector': 'app-review-form'},{'name': 'ReviewListComponent', 'selector': 'app-review-list'},{'name': 'ReviewsListComponent', 'selector': 'app-reviews-list'},{'name': 'ReviewsPageComponent', 'selector': 'app-reviews-page'},{'name': 'ReviewSummaryComponent', 'selector': 'app-review-summary'},{'name': 'SelectComponent', 'selector': 'app-select'},{'name': 'SkeletonLoaderComponent', 'selector': 'emerald-skeleton-loader'},{'name': 'StarRatingComponent', 'selector': 'app-star-rating'},{'name': 'SwipeViewComponent', 'selector': 'app-swipe-view'},{'name': 'TagsDialogComponent', 'selector': 'app-tags-dialog'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'TelemetryDashboardComponent', 'selector': 'app-telemetry-dashboard'},{'name': 'ThemeToggleComponent', 'selector': 'app-theme-toggle'},{'name': 'TinderCardComponent', 'selector': 'app-tinder-card'},{'name': 'TinderCardComponent', 'selector': 'emerald-tinder-card'},{'name': 'TinderComponent', 'selector': 'app-tinder'},{'name': 'ToggleComponent', 'selector': 'emerald-toggle'},{'name': 'TouringComponent', 'selector': 'app-touring'},{'name': 'TransactionDetailsDialogComponent', 'selector': 'app-transaction-details-dialog'},{'name': 'TransferDialogComponent', 'selector': 'app-transfer-dialog'},{'name': 'TravelItineraryComponent', 'selector': 'app-travel-itinerary'},{'name': 'UserSettingsComponent', 'selector': 'app-user-settings'},{'name': 'WalletComponent', 'selector': 'app-wallet'},{'name': 'WithdrawDialogComponent', 'selector': 'app-withdraw-dialog'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TelemetryDashboardComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TelemetryDashboardComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

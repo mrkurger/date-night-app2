@@ -1,0 +1,284 @@
+.travel-itinerary-container {
+  padding: 20px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+h4 {
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  padding: 15px 20px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-control {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  transition: border-color 0.15s ease-in-out;
+
+  &:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+  }
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.form-check {
+  padding-left: 1.5rem;
+  margin-top: 10px;
+}
+
+.form-check-input {
+  margin-left: -1.5rem;
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &.btn-primary {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+
+    &:hover:not(:disabled) {
+      background-color: #138496;
+      border-color: #117a8b;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+
+    &:hover:not(:disabled) {
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+  }
+
+  &.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+
+    &:hover:not(:disabled) {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+  }
+
+  &.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+
+    &:hover:not(:disabled) {
+      background-color: #138496;
+      border-color: #117a8b;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+
+  th,
+  td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+  }
+
+  tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+
+  &.badge-info {
+    color: #fff;
+    background-color: #17a2b8;
+  }
+
+  &.badge-success {
+    color: #fff;
+    background-color: #28a745;
+  }
+
+  &.badge-secondary {
+    color: #fff;
+    background-color: #6c757d;
+  }
+
+  &.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+  }
+
+  &.badge-light {
+    color: #212529;
+    background-color: #f8f9fa;
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.2em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+/* Map marker legend */
+.marker-legend {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.marker-planned {
+  background-color: #17a2b8;
+}
+
+.marker-active {
+  background-color: #28a745;
+}
+
+.marker-completed {
+  background-color: #6c757d;
+}
+
+.marker-cancelled {
+  background-color: #dc3545;
+}
+
+/* Tab styling */
+::ng-deep .mat-mdc-tab-header {
+  margin-bottom: 20px;
+}
+
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+/* Card styling for active itineraries */
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}

@@ -7,10 +7,10 @@
  * It properly handles zip files by extracting the text content.
  */
 
-const { Octokit } = require('@octokit/rest');
-const fs = require('fs-extra');
-const path = require('path');
-const AdmZip = require('adm-zip');
+import { Octokit } from '@octokit/rest';
+import fs from 'fs-extra';
+import path from 'path';
+import AdmZip from 'adm-zip';
 
 async function main() {
   const owner = process.env.REPO_OWNER;

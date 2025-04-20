@@ -3,8 +3,8 @@
  * to ensure that the project uses newer, non-deprecated versions.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Path to the root package.json
 const packageJsonPath = path.join(__dirname, '..', 'package.json');

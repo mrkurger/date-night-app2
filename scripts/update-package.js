@@ -4,8 +4,8 @@
  * Script to update package.json with missing dependencies
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 // Define the server directory and package.json path
 const serverDir = path.join(__dirname, '..', 'server');

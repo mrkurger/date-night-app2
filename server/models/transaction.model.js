@@ -7,7 +7,7 @@
 // - TRANSACTION_TYPES: List of supported transaction types (default: ['deposit', 'withdrawal', 'transfer', 'payment', 'refund', 'fee'])
 // - TRANSACTION_STATUSES: List of supported transaction statuses (default: ['pending', 'completed', 'failed', 'cancelled'])
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define the transaction schema
 const transactionSchema = new mongoose.Schema(

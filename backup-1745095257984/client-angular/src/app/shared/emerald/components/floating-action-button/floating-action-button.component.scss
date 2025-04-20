@@ -1,0 +1,425 @@
+@import '../../../../core/design/design-tokens';
+
+// Emerald FloatingActionButton Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
+
+// Container for positioning the FAB
+.emerald-fab-container {
+  position: fixed;
+  z-index: $z-index-50;
+
+  // Position variants
+  &--bottom-right {
+    right: $spacing-6;
+    bottom: $spacing-6;
+  }
+
+  &--bottom-left {
+    left: $spacing-6;
+    bottom: $spacing-6;
+  }
+
+  &--top-right {
+    right: $spacing-6;
+    top: $spacing-6;
+  }
+
+  &--top-left {
+    left: $spacing-6;
+    top: $spacing-6;
+  }
+
+  &--center {
+    left: 50%;
+    bottom: $spacing-6;
+    transform: translateX(-50%);
+  }
+}
+
+// Main FAB button
+.emerald-fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  box-shadow: $shadow-lg;
+  cursor: pointer;
+  transition:
+    transform $transition-normal $transition-ease,
+    background-color $transition-normal $transition-ease,
+    box-shadow $transition-normal $transition-ease;
+  position: relative;
+  z-index: $z-index-30;
+
+  // Default size (medium)
+  width: 56px;
+  height: 56px;
+
+  i {
+    font-size: $font-size-xl;
+    color: $neutral-100;
+  }
+
+  // Size variants
+  &--small {
+    width: 40px;
+    height: 40px;
+
+    i {
+      font-size: $font-size-base;
+    }
+  }
+
+  &--large {
+    width: 72px;
+    height: 72px;
+
+    i {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  // Color variants
+  &--primary {
+    background-color: $primary-500;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-600;
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary-500;
+
+    &:hover:not(:disabled) {
+      background-color: $secondary-600;
+    }
+  }
+
+  &--success {
+    background-color: $success;
+
+    &:hover:not(:disabled) {
+      background-color: $success-dark;
+    }
+  }
+
+  &--danger {
+    background-color: $error;
+
+    &:hover:not(:disabled) {
+      background-color: $error-dark;
+    }
+  }
+
+  &--warning {
+    background-color: $warning;
+
+    &:hover:not(:disabled) {
+      background-color: $warning-dark;
+
+      i {
+        color: $neutral-900;
+      }
+    }
+
+    i {
+      color: $neutral-900;
+    }
+  }
+
+  &--info {
+    background-color: $info;
+
+    &:hover:not(:disabled) {
+      background-color: $info-dark;
+    }
+  }
+
+  // Hover and focus states
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-xl;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba($primary-500, 0.3),
+      $shadow-lg;
+  }
+
+  // Disabled state
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: $shadow-md;
+  }
+
+  // Open state (when menu is open)
+  &--open {
+    transform: rotate(45deg);
+
+    &:hover {
+      transform: rotate(45deg) translateY(-2px);
+    }
+  }
+
+  // Tooltip
+  &__tooltip {
+    position: absolute;
+    background-color: $neutral-800;
+    color: $neutral-100;
+    padding: $spacing-1 $spacing-2;
+    border-radius: $border-radius-md;
+    font-size: $font-size-xs;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      opacity $transition-fast $transition-ease,
+      transform $transition-fast $transition-ease;
+
+    // Position the tooltip based on the FAB position
+    .emerald-fab-container--bottom-right &,
+    .emerald-fab-container--bottom-left &,
+    .emerald-fab-container--center & {
+      bottom: 100%;
+      margin-bottom: $spacing-2;
+      transform: translateY(5px);
+    }
+
+    .emerald-fab-container--top-right &,
+    .emerald-fab-container--top-left & {
+      top: 100%;
+      margin-top: $spacing-2;
+      transform: translateY(-5px);
+    }
+
+    .emerald-fab-container--bottom-right &,
+    .emerald-fab-container--top-right & {
+      right: 0;
+    }
+
+    .emerald-fab-container--bottom-left &,
+    .emerald-fab-container--top-left & {
+      left: 0;
+    }
+
+    .emerald-fab-container--center & {
+      left: 50%;
+      transform: translateX(-50%) translateY(5px);
+    }
+  }
+
+  &:hover &__tooltip {
+    opacity: 1;
+    transform: translateY(0);
+
+    .emerald-fab-container--center & {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
+
+// FAB Menu
+.emerald-fab-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  z-index: $z-index-20;
+  pointer-events: none;
+
+  // Position variants
+  &--bottom-right,
+  &--top-right {
+    right: 0;
+  }
+
+  &--bottom-left,
+  &--top-left {
+    left: 0;
+  }
+
+  &--bottom-right,
+  &--bottom-left {
+    bottom: 72px; // Position above the main FAB
+  }
+
+  &--top-right,
+  &--top-left {
+    top: 72px; // Position below the main FAB
+  }
+
+  &--center {
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  // Menu items
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: $spacing-2 $spacing-3;
+    border-radius: $border-radius-full;
+    border: none;
+    background-color: $neutral-100;
+    color: $neutral-800;
+    box-shadow: $shadow-md;
+    cursor: pointer;
+    transition:
+      transform $transition-fast $transition-ease,
+      background-color $transition-fast $transition-ease;
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    pointer-events: none;
+
+    i {
+      margin-right: $spacing-2;
+    }
+
+    // Color variants
+    &--primary {
+      i {
+        color: $primary-500;
+      }
+
+      &:hover {
+        background-color: rgba($primary-500, 0.1);
+      }
+    }
+
+    &--secondary {
+      i {
+        color: $secondary-500;
+      }
+
+      &:hover {
+        background-color: rgba($secondary-500, 0.1);
+      }
+    }
+
+    &--success {
+      i {
+        color: $success;
+      }
+
+      &:hover {
+        background-color: rgba($success, 0.1);
+      }
+    }
+
+    &--danger {
+      i {
+        color: $error;
+      }
+
+      &:hover {
+        background-color: rgba($error, 0.1);
+      }
+    }
+
+    &--warning {
+      i {
+        color: $warning-dark;
+      }
+
+      &:hover {
+        background-color: rgba($warning, 0.1);
+      }
+    }
+
+    &--info {
+      i {
+        color: $info;
+      }
+
+      &:hover {
+        background-color: rgba($info, 0.1);
+      }
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px rgba($primary-500, 0.3),
+        $shadow-md;
+    }
+  }
+
+  // Menu item label
+  &__item-label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+  }
+
+  // Open state
+  &--open {
+    pointer-events: auto;
+
+    .emerald-fab-menu__item {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+
+      // Staggered animation for menu items
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          transition-delay: #{$i * 0.05}s;
+        }
+      }
+    }
+  }
+}
+
+// Backdrop for closing menu when clicking outside
+.emerald-fab-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-10;
+  background-color: transparent;
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .emerald-fab-container {
+    &--bottom-right,
+    &--bottom-left,
+    &--top-right,
+    &--top-left {
+      margin: $spacing-2;
+    }
+  }
+
+  .emerald-fab {
+    &--large {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  .emerald-fab-menu {
+    &__item-label {
+      display: none;
+    }
+
+    &__item {
+      padding: $spacing-2;
+
+      i {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -7,13 +7,13 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const ChatMessage = require('../models/chat-message.model');
-const ChatRoom = require('../models/chat-room.model');
-const User = require('../models/user.model');
-const Ad = require('../models/ad.model');
-const socketService = require('./socket.service');
-const cryptoHelpers = require('../utils/cryptoHelpers');
-const { AppError } = require('../middleware/errorHandler');
+import ChatMessage from '../models/chat-message.model';
+import ChatRoom from '../models/chat-room.model';
+import User from '../models/user.model';
+import Ad from '../models/ad.model';
+import socketService from './socket.service';
+import cryptoHelpers from '../utils/cryptoHelpers';
+import { AppError } from '../middleware/errorHandler';
 
 class ChatService {
   // TODO: Add message queue for reliable delivery
@@ -173,7 +173,10 @@ class ChatService {
       return populatedMessage;
     } catch (error) {
       console.error('Error sending message:', error);
-      throw new AppError(error.message || 'Failed to send message', 500);
+      if (error instanceof AppError) {
+        throw error;
+      }
+      throw new AppError('Failed to send message', 500);
     }
   }
 

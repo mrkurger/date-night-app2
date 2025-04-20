@@ -1,0 +1,156 @@
+@import '../../../../core/design/design-tokens';
+
+// Emerald CardGrid Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/CardGrid
+
+.emerald-card-grid {
+  display: grid;
+  width: 100%;
+
+  // Animation for grid items
+  &__item {
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+
+    &--animated {
+      animation: fadeIn 0.5s ease forwards;
+
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
+      }
+    }
+
+    &--masonry {
+      break-inside: avoid;
+      margin-bottom: $spacing-4;
+    }
+  }
+
+  // Netflix layout styles
+  &--netflix {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__netflix-row {
+    margin-bottom: $spacing-6;
+  }
+
+  &__netflix-items {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: $spacing-4; // Space for scrollbar
+
+    // Hide scrollbar but keep functionality
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $neutral-200;
+      border-radius: $border-radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $neutral-400;
+      border-radius: $border-radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $neutral-500;
+    }
+  }
+
+  &__item--netflix {
+    flex: 0 0 auto;
+    width: 200px;
+  }
+
+  // Masonry layout styles
+  &--masonry {
+    columns: 3;
+    column-gap: $spacing-4;
+
+    @media (max-width: $breakpoint-lg) {
+      columns: 2;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      columns: 1;
+    }
+  }
+
+  // Default item style when no template is provided
+  &__default-item {
+    background-color: $neutral-100;
+    border-radius: $border-radius-lg;
+    padding: $spacing-4;
+    box-shadow: $shadow-sm;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: $font-weight-medium;
+    color: $neutral-800;
+  }
+
+  // Empty state styles
+  &__empty {
+    width: 100%;
+    padding: $spacing-8 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__empty-content {
+    text-align: center;
+    color: $neutral-500;
+
+    i {
+      font-size: $font-size-3xl;
+      margin-bottom: $spacing-4;
+    }
+
+    p {
+      font-size: $font-size-lg;
+      margin: 0;
+    }
+  }
+}
+
+// Keyframes for fade-in animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-md) {
+  .emerald-card-grid {
+    &__item--netflix {
+      width: 160px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .emerald-card-grid {
+    &__item--netflix {
+      width: 140px;
+    }
+  }
+}

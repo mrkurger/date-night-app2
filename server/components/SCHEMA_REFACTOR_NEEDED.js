@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const adSchema = new mongoose.Schema({
   title: String,
@@ -55,7 +55,7 @@ const getModel = (name, schema) => {
   return mongoose.models[name] ? mongoose.model(name) : mongoose.model(name, schema);
 };
 
-module.exports = {
+export default {
   Ad: getModel('Ad', adSchema),
   User: getModel('User', userSchema),
   ChatMessage: getModel('ChatMessage', chatMessageSchema),

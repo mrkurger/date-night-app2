@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Definitions for reusable elements -->
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    
+    <!-- Button styles -->
+    <linearGradient id="primaryButtonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d13654;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Avatar placeholder -->
+    <circle id="avatarCircle" cx="20" cy="20" r="20" fill="#ccc"/>
+    <clipPath id="avatarClip">
+      <use xlink:href="#avatarCircle"/>
+    </clipPath>
+    
+    <!-- Star rating -->
+    <symbol id="star" viewBox="0 0 24 24">
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#ffc107"/>
+    </symbol>
+    
+    <!-- Tinder action buttons -->
+    <symbol id="tinderDislike" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#ffffff"/>
+      <path d="M40 20L20 40M20 20L40 40" stroke="#ff4d4f" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    
+    <symbol id="tinderLike" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#ffffff"/>
+      <path d="M30 45l-1.45-1.32C23.4 38.36 20 35.28 20 31.5 20 28.42 22.42 26 25.5 26c1.74 0 3.41.81 4.5 2.09C31.09 26.81 32.76 26 34.5 26 37.58 26 40 28.42 40 31.5c0 3.78-3.4 6.86-8.55 11.54L30 45z" fill="#e94560"/>
+    </symbol>
+    
+    <symbol id="tinderSuperLike" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#ffffff"/>
+      <path d="M30 20l2.5 7.5H40l-6 5 2.5 7.5-6.5-5-6.5 5 2.5-7.5-6-5h7.5z" fill="#2196f3"/>
+    </symbol>
+    
+    <symbol id="tinderBoost" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#ffffff"/>
+      <path d="M30 20v15M25 30l5 5 5-5M20 40h20" stroke="#9c27b0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    
+    <symbol id="tinderRewind" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#ffffff"/>
+      <path d="M35 25H25l-5 5 5 5h10" stroke="#ffb300" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1024" height="768" fill="url(#backgroundGradient)"/>
+  
+  <!-- Left sidebar -->
+  <g id="leftSidebar">
+    <rect x="0" y="0" width="220" height="768" fill="#0f3460" />
+    
+    <!-- Logo -->
+    <text x="20" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff">DateNight.io</text>
+    
+    <!-- Navigation items -->
+    <g id="navItems" fill="#ffffff">
+      <!-- Netflix View -->
+      <g transform="translate(20, 100)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 5h18v14H3V5zm9 12h8v-4H12v4zm0-6h8V7h-8v4zm-8 6h6V7H4v10z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Netflix View</text>
+      </g>
+      
+      <!-- Tinder View -->
+      <g transform="translate(20, 150)">
+        <rect x="0" y="0" width="180" height="40" rx="4" fill="#e94560" opacity="0.8"/>
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Tinder View</text>
+      </g>
+      
+      <!-- List View -->
+      <g transform="translate(20, 200)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">List View</text>
+      </g>
+      
+      <!-- Messages -->
+      <g transform="translate(20, 250)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Messages</text>
+      </g>
+      
+      <!-- Favorites -->
+      <g transform="translate(20, 300)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Favorites</text>
+      </g>
+      
+      <!-- Settings -->
+      <g transform="translate(20, 350)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Settings</text>
+      </g>
+      
+      <!-- Preferences Demo -->
+      <g transform="translate(20, 400)">
+        <svg x="10" y="8" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" fill="#ffffff"/>
+        </svg>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14">Preferences</text>
+      </g>
+    </g>
+    
+    <!-- Theme toggle at bottom -->
+    <g transform="translate(20, 700)">
+      <rect x="0" y="0" width="180" height="40" rx="20" fill="#2d4263" />
+      <circle cx="40" cy="20" r="16" fill="#e94560" />
+      <text x="70" y="25" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">Dark Mode</text>
+    </g>
+  </g>
+  
+  <!-- Top header -->
+  <g id="topHeader">
+    <rect x="220" y="0" width="804" height="60" fill="#0f3460" />
+    
+    <!-- View type selector -->
+    <g transform="translate(240, 15)">
+      <rect x="0" y="0" width="300" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+      
+      <!-- Netflix option -->
+      <rect x="0" y="0" width="100" height="30" rx="0" fill="#ffffff" opacity="0.0" />
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7" text-anchor="middle">Netflix</text>
+      
+      <!-- Tinder option (selected) -->
+      <rect x="100" y="0" width="100" height="30" rx="0" fill="#e94560" />
+      <text x="150" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Tinder</text>
+      
+      <!-- List option -->
+      <rect x="200" y="0" width="100" height="30" rx="0" fill="#ffffff" opacity="0.0" />
+      <text x="250" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7" text-anchor="middle">List</text>
+    </g>
+    
+    <!-- Filter button -->
+    <g transform="translate(560, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+      <svg x="10" y="3" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" fill="#ffffff"/>
+      </svg>
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Filter</text>
+    </g>
+    
+    <!-- Search bar -->
+    <rect x="650" y="15" width="200" height="30" rx="15" fill="#ffffff" opacity="0.1" />
+    <svg x="660" y="18" width="24" height="24" viewBox="0 0 24 24">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#ffffff"/>
+    </svg>
+    <text x="690" y="35" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" opacity="0.7">Search...</text>
+    
+    <!-- User profile -->
+    <g transform="translate(950, 15)">
+      <circle cx="15" cy="15" r="15" fill="#e94560" />
+      <text x="15" y="20" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">OL</text>
+    </g>
+  </g>
+  
+  <!-- Main content area -->
+  <g id="mainContent">
+    <!-- Tinder card stack -->
+    <g transform="translate(512, 384)" filter="url(#cardShadow)">
+      <!-- Card 3 (bottom of stack) -->
+      <g transform="translate(-175, -250) rotate(-5)">
+        <rect x="0" y="0" width="350" height="500" rx="10" fill="#1a1a2e" stroke="#333" stroke-width="1" />
+        <rect x="0" y="0" width="350" height="350" rx="10 10 0 0" fill="#333" />
+        <image x="0" y="0" width="350" height="350" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgZmlsbD0iIzMzNjY5OSIvPjx0ZXh0IHg9IjE3NSIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkV4b3RpYyBEYW5jZTwvdGV4dD48L3N2Zz4=" preserveAspectRatio="xMidYMid slice" />
+      </g>
+      
+      <!-- Card 2 (middle of stack) -->
+      <g transform="translate(-175, -250) rotate(3)">
+        <rect x="0" y="0" width="350" height="500" rx="10" fill="#1a1a2e" stroke="#333" stroke-width="1" />
+        <rect x="0" y="0" width="350" height="350" rx="10 10 0 0" fill="#333" />
+        <image x="0" y="0" width="350" height="350" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgZmlsbD0iIzMzMzM2NiIvPjx0ZXh0IHg9IjE3NSIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVsZWdhbnQgRXNjb3J0PC90ZXh0Pjwvc3ZnPg==" preserveAspectRatio="xMidYMid slice" />
+      </g>
+      
+      <!-- Card 1 (top of stack) -->
+      <g transform="translate(-175, -250)">
+        <rect x="0" y="0" width="350" height="500" rx="10" fill="#1a1a2e" stroke="#333" stroke-width="1" />
+        <rect x="0" y="0" width="350" height="350" rx="10 10 0 0" fill="#333" />
+        <image x="0" y="0" width="350" height="350" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgZmlsbD0iIzMzMzMzMyIvPjx0ZXh0IHg9IjE3NSIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk1hc3NhZ2UgVGhlcmFweTwvdGV4dD48L3N2Zz4=" preserveAspectRatio="xMidYMid slice" />
+        
+        <!-- Badges -->
+        <rect x="20" y="20" width="80" height="30" rx="15" fill="#e94560" opacity="0.9" />
+        <text x="60" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Featured</text>
+        
+        <!-- Card content -->
+        <text x="20" y="370" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff">Professional Massage</text>
+        <text x="20" y="400" font-family="Arial, sans-serif" font-size="16" fill="#ffffff" opacity="0.7">Oslo, Norway</text>
+        
+        <g transform="translate(20, 420)">
+          <use xlink:href="#star" x="0" y="0" width="20" height="20" />
+          <use xlink:href="#star" x="22" y="0" width="20" height="20" />
+          <use xlink:href="#star" x="44" y="0" width="20" height="20" />
+          <use xlink:href="#star" x="66" y="0" width="20" height="20" />
+          <use xlink:href="#star" x="88" y="0" width="20" height="20" opacity="0.3" />
+          <text x="120" y="15" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.7">(24)</text>
+        </g>
+        
+        <text x="20" y="450" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.9">Relaxing and rejuvenating massage therapy by a certified professional. Available for in-calls and out-calls.</text>
+        
+        <!-- Price -->
+        <text x="20" y="480" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#e94560">1500 NOK</text>
+      </g>
+    </g>
+    
+    <!-- Tinder action buttons -->
+    <g transform="translate(512, 650)">
+      <g transform="translate(-180, 0)">
+        <use xlink:href="#tinderRewind" x="0" y="0" width="60" height="60" />
+      </g>
+      
+      <g transform="translate(-90, 0)">
+        <use xlink:href="#tinderDislike" x="0" y="0" width="60" height="60" />
+      </g>
+      
+      <g transform="translate(0, 0)">
+        <use xlink:href="#tinderSuperLike" x="0" y="0" width="60" height="60" />
+      </g>
+      
+      <g transform="translate(90, 0)">
+        <use xlink:href="#tinderLike" x="0" y="0" width="60" height="60" />
+      </g>
+      
+      <g transform="translate(180, 0)">
+        <use xlink:href="#tinderBoost" x="0" y="0" width="60" height="60" />
+      </g>
+    </g>
+    
+    <!-- Match counter -->
+    <g transform="translate(512, 100)">
+      <rect x="-100" y="0" width="200" height="40" rx="20" fill="#0f3460" />
+      <text x="0" y="25" font-family="Arial, sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">12 Matches Available</text>
+    </g>
+  </g>
+</svg>

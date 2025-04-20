@@ -12,12 +12,20 @@ import User from '../models/user.model.js';
 import Ad from '../models/ad.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 /**
  * Payment Service for handling subscriptions and one-time payments
  */
 class PaymentService {
+  constructor(
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY),
+    userModel = User,
+    adModel = Ad
+  ) {
+    this.stripe = stripeClient;
+    this.user = userModel;
+    this.ad = adModel;
+  }
+
   /**
    * Create a payment intent for Stripe
    * @param {number} amount - Amount in smallest currency unit (e.g., cents)
@@ -27,7 +35,7 @@ class PaymentService {
    */
   async createPaymentIntent(amount, currency = 'nok', metadata = {}) {
     try {
-      const paymentIntent = await stripe.paymentIntents.create({
+      const paymentIntent = await this.stripe.paymentIntents.create({
         amount,
         currency,
         metadata,
@@ -50,7 +58,7 @@ class PaymentService {
    */
   async createSubscription(userId, priceId, paymentMethodId) {
     try {
-      const user = await User.findById(userId);
+      const user = await this.user.findById(userId);
 
       if (!user) {
         throw new AppError('User not found', 404);
@@ -61,7 +69,7 @@ class PaymentService {
 
       // If not, create a new customer
       if (!customerId) {
-        const customer = await stripe.customers.create({
+        const customer = await this.stripe.customers.create({
           email: user.email,
           name: user.username || 'User',
           metadata: {
@@ -81,19 +89,19 @@ class PaymentService {
       }
 
       // Attach payment method to customer
-      await stripe.paymentMethods.attach(paymentMethodId, {
+      await this.stripe.paymentMethods.attach(paymentMethodId, {
         customer: customerId,
       });
 
       // Set as default payment method
-      await stripe.customers.update(customerId, {
+      await this.stripe.customers.update(customerId, {
         invoice_settings: {
           default_payment_method: paymentMethodId,
         },
       });
 
       // Create subscription
-      const subscription = await stripe.subscriptions.create({
+      const subscription = await this.stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: priceId }],
         expand: ['latest_invoice.payment_intent'],
@@ -159,7 +167,7 @@ class PaymentService {
    */
   async cancelSubscription(userId) {
     try {
-      const user = await User.findById(userId);
+      const user = await this.user.findById(userId);
 
       if (!user) {
         throw new AppError('User not found', 404);
@@ -174,7 +182,7 @@ class PaymentService {
       const subscriptionId = user.stripeSubscriptionId || user.subscription.id;
 
       // Cancel at period end to allow user to use the subscription until it expires
-      const subscription = await stripe.subscriptions.update(subscriptionId, {
+      const subscription = await this.stripe.subscriptions.update(subscriptionId, {
         cancel_at_period_end: true,
       });
 
@@ -204,8 +212,8 @@ class PaymentService {
    */
   async boostAd(adId, userId, days = 7, paymentMethodId) {
     try {
-      const ad = await Ad.findById(adId);
-      const user = await User.findById(userId);
+      const ad = await this.ad.findById(adId);
+      const user = await this.user.findById(userId);
 
       if (!ad) {
         throw new AppError('Ad not found', 404);
@@ -232,7 +240,7 @@ class PaymentService {
       });
 
       // Confirm payment with payment method
-      await stripe.paymentIntents.confirm(paymentIntent.id, {
+      await this.stripe.paymentIntents.confirm(paymentIntent.id, {
         payment_method: paymentMethodId,
       });
 
@@ -265,8 +273,8 @@ class PaymentService {
    */
   async featureAd(adId, userId, paymentMethodId) {
     try {
-      const ad = await Ad.findById(adId);
-      const user = await User.findById(userId);
+      const ad = await this.ad.findById(adId);
+      const user = await this.user.findById(userId);
 
       if (!ad) {
         throw new AppError('Ad not found', 404);
@@ -292,7 +300,7 @@ class PaymentService {
       });
 
       // Confirm payment with payment method
-      await stripe.paymentIntents.confirm(paymentIntent.id, {
+      await this.stripe.paymentIntents.confirm(paymentIntent.id, {
         payment_method: paymentMethodId,
       });
 
@@ -383,7 +391,7 @@ class PaymentService {
         case 'ad_boost':
           // Revert ad boost if payment failed
           if (metadata.adId) {
-            const ad = await Ad.findById(metadata.adId);
+            const ad = await this.ad.findById(metadata.adId);
             if (ad) {
               ad.boosted = false;
               ad.boostExpires = null;
@@ -395,7 +403,7 @@ class PaymentService {
         case 'ad_feature':
           // Revert ad feature if payment failed
           if (metadata.adId) {
-            const ad = await Ad.findById(metadata.adId);
+            const ad = await this.ad.findById(metadata.adId);
             if (ad) {
               ad.featured = false;
               await ad.save();
@@ -420,7 +428,7 @@ class PaymentService {
     const { customer, status, current_period_end, items } = subscription;
 
     // Find user by Stripe customer ID
-    const user = await User.findOne({ stripeCustomerId: customer });
+    const user = await this.user.findOne({ stripeCustomerId: customer });
 
     if (!user) {
       return { received: true, processed: false, error: 'User not found' };
@@ -470,7 +478,7 @@ class PaymentService {
     const { customer } = subscription;
 
     // Find user by Stripe customer ID
-    const user = await User.findOne({ stripeCustomerId: customer });
+    const user = await this.user.findOne({ stripeCustomerId: customer });
 
     if (!user) {
       return { received: true, processed: false, error: 'User not found' };
@@ -496,37 +504,19 @@ class PaymentService {
    */
   async getSubscriptionPrices() {
     try {
-      const prices = await stripe.prices.list({
+      const prices = await this.stripe.prices.list({
         active: true,
         type: 'recurring',
-        limit: 10,
         expand: ['data.product'],
       });
 
-      if (!prices || !prices.data) {
-        return [];
-      }
-
-      return prices.data.map(price => {
-        // Ensure product exists and has required properties
-        const product = price.product || {};
-
-        return {
-          id: price.id,
-          productId: product.id || '',
-          productName: product.name || 'Unknown Product',
-          description: product.description || '',
-          unitAmount: price.unit_amount || 0,
-          currency: price.currency || 'nok',
-          interval: price.recurring?.interval || 'month',
-          intervalCount: price.recurring?.interval_count || 1,
-        };
-      });
+      return prices.data;
     } catch (error) {
       console.error('Error fetching subscription prices:', error);
-      throw new AppError('Failed to fetch subscription prices', 500);
+      throw new AppError('Failed to fetch prices', 500);
     }
   }
 }
 
+// Export a singleton instance
 export default new PaymentService();

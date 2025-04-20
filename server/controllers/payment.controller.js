@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-const paymentService = require('../services/payment.service');
-const { AppError } = require('../middleware/errorHandler');
+import paymentService from '../services/payment.service';
+import { AppError } from '../middleware/errorHandler';
 
 /**
  * Payment Controller for handling payment-related API endpoints
@@ -160,7 +160,8 @@ class PaymentController {
       let event;
 
       try {
-        const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+        const stripeModule = await import('stripe');
+        const stripe = stripeModule.default(process.env.STRIPE_SECRET_KEY);
         event = stripe.webhooks.constructEvent(
           req.rawBody, // Raw request body
           sig,

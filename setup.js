@@ -5,9 +5,9 @@
  * This script will set up the entire application without relying on npm scripts
  */
 
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
 
 // Define directories
 const rootDir = __dirname;

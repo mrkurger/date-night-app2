@@ -1,8 +1,8 @@
 /**
  * Validation middleware for travel-related routes
  */
-const { body, param, query, validationResult } = require('express-validator');
-const { AppError } = require('../errorHandler');
+import { body, param, query, validationResult } from 'express-validator';
+import { AppError } from '../errorHandler';
 
 // Helper function to check validation results
 const validateResults = (req, res, next) => {
