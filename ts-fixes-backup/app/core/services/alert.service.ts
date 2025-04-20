@@ -4,14 +4,7 @@ import { Observable, BehaviorSubject, interval, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 // map and switchMap are not used in this file
 import { environment } from '../../../environments/environment';
-import {
-  Alert,
-  AlertEvent,
-  AlertConditionType,
-  AlertSeverity,
-  AlertTimeWindow,
-  AlertChannel,
-} from '../models/alert.model';
+import { Alert, AlertEvent, AlertConditionType, AlertSeverity } from '../models/alert.model';
 import { TelemetrySocketService } from './telemetry-socket.service';
 import { ErrorCategory } from '../interceptors/error-category.enum';
 
@@ -175,7 +168,7 @@ export class AlertService {
     name: string,
     description: string,
     threshold = 5,
-    timeWindow = AlertTimeWindow.HOURS_1
+    timeWindow = AlertTimeWindow.1h
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -214,7 +207,7 @@ export class AlertService {
     threshold: number,
     name: string,
     description: string,
-    timeWindow = AlertTimeWindow.MINUTES_15
+    timeWindow = AlertTimeWindow.15m
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -254,7 +247,7 @@ export class AlertService {
     name: string,
     description: string,
     endpoint?: string,
-    timeWindow = AlertTimeWindow.MINUTES_30
+    timeWindow = AlertTimeWindow.30m
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -295,7 +288,7 @@ export class AlertService {
     name: string,
     description: string,
     threshold = 1,
-    timeWindow = AlertTimeWindow.HOURS_24
+    timeWindow = AlertTimeWindow.24h
   ): Observable<Alert> {
     const alert: Alert = {
       name,

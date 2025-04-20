@@ -12,6 +12,8 @@
 $font-primary: 'Poppins', sans-serif;
 $font-secondary: 'Roboto', sans-serif;
 $font-monospace: 'Roboto Mono', monospace;
+$font-family-base: tokens.$font-family-base;
+$font-family-heading: tokens.$font-family-heading;
 
 // Font weights
 $font-weight-light: tokens.$font-weight-light;

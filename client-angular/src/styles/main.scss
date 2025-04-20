@@ -8,9 +8,9 @@
 @use 'themes/light';
 @use 'themes/dark';
 // Use @import for CSS files only (not SCSS)
-@import 'theme.css';
+@use 'theme.css' as theme;
 // Import Leaflet CSS
-@import 'leaflet/dist/leaflet.css';
+@use 'leaflet/dist/leaflet.css' as leaflet;
 
 // Global styles
 html {

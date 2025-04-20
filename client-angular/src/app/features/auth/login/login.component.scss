@@ -1,4 +1,5 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/main' as ds;
+@use 'sass:color';
 
 // Login Component Styles
 .login-container {
@@ -218,21 +219,21 @@
 }
 
 .alert {
-  padding: $spacing-3;
-  margin-bottom: $spacing-4;
-  border-radius: $border-radius-md;
-  font-size: $font-size-sm;
+  padding: ds.$spacing-3;
+  margin-bottom: ds.$spacing-4;
+  border-radius: ds.$border-radius-md;
+  font-size: ds.$font-size-sm;
 
   &-danger {
-    background-color: rgba($error, 0.1);
-    color: $error-dark;
-    border: 1px solid rgba($error, 0.2);
+    background-color: rgba(ds.$color-error, 0.1);
+    color: color.adjust(ds.$color-error, $lightness: -10%);
+    border: 1px solid rgba(ds.$color-error, 0.2);
   }
 
   &-success {
-    background-color: rgba($success, 0.1);
-    color: darken($success, 10%);
-    border: 1px solid rgba($success, 0.2);
+    background-color: rgba(ds.$color-success, 0.1);
+    color: color.adjust(ds.$color-success, $lightness: -10%);
+    border: 1px solid rgba(ds.$color-success, 0.2);
   }
 }
 

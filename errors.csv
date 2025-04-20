@@ -1,0 +1,13 @@
+Error Code,Message,Location,File Path
+TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",173:20,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",210:20,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",250:20,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertTimeWindow'.",291:20,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",186:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",189:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",224:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",227:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",265:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",268:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",306:18,[1] src/app/core/services/alert.service.ts
+TS2322,"Type 'string' is not assignable to type 'AlertChannel'.",309:18,[1] src/app/core/services/alert.service.ts

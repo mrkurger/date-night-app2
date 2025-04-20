@@ -4,7 +4,7 @@
  * Implements the DateNight.io select styles using the design system.
  */
 
-@use 'src/app/core/design/main' as ds;
+@use '../../../core/design/main' as ds;
 
 .select {
   display: flex;

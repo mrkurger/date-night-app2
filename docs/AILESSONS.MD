@@ -12,6 +12,7 @@ This document serves as a log of key insights, patterns, and solutions discovere
   - [Performance Optimization](#performance-optimization)
   - [Security Practices](#security-practices)
   - [UI/UX Patterns](#uiux-patterns)
+  - [TypeScript Type Safety](#typescript-type-safety)
 - [Technical Solutions](#technical-solutions)
   - [MongoDB Service Patterns](#mongodb-service-patterns)
   - [Angular Build Optimization](#angular-build-optimization)
@@ -52,6 +53,63 @@ This document serves as a log of key insights, patterns, and solutions discovere
   - [Purpose-Specific Documentation](#purpose-specific-documentation)
   - [Implementation vs. Verification](#implementation-vs-verification)
 - [Favorites System Implementation](#favorites-system-implementation)
+- [SCSS Import Patterns](#scss-import-patterns)
+  - [Design System Import Best Practices](#design-system-import-best-practices)
+  - [Benefits of Centralized Design System Imports](#benefits-of-centralized-design-system-imports)
+  - [Modern SCSS Import Syntax](#modern-scss-import-syntax)
+  - [Handling Variable Conflicts](#handling-variable-conflicts)
+- [TypeScript Error Fixing](#typescript-error-fixing)
+  - [Automated TypeScript Error Resolution](#automated-typescript-error-resolution)
+  - [Enum Usage in TypeScript](#enum-usage-in-typescript)
+
+## TypeScript Error Fixing
+
+### Automated TypeScript Error Resolution
+
+We created a three-tiered approach to fixing TypeScript errors:
+
+1. **Comprehensive Fixer**: Handles multiple error types in a single pass
+2. **Basic Fixer**: Uses simple string replacement for common errors
+3. **Advanced Fixer**: Uses ts-morph for more complex AST-based transformations
+
+These scripts work together to automatically fix common TypeScript errors such as:
+
+- Missing imports (TS2307)
+- Export name mismatches (TS2724)
+- Missing properties in interfaces (TS2339)
+- Type assignment errors (TS2322)
+- Type comparison errors (TS2678)
+- Property name errors (TS2551)
+- Object literal property errors (TS2353)
+
+### Key Implementation Patterns
+
+1. **Error Grouping Strategy**:
+
+   - Group errors by file for efficient processing
+   - Group errors by type within each file
+   - Process similar errors together
+
+2. **Backup System**:
+
+   - Create backups of all modified files
+   - Use separate backup directories for each fixer
+   - Allow easy recovery of original files
+
+3. **Fix Application Strategy**:
+
+   - Apply simple fixes first
+   - Use AST-based transformations for complex cases
+   - Verify fixes with incremental builds
+
+4. **Common Fix Patterns**:
+   - Add missing imports at the top of the file
+   - Convert string literals to enum values
+   - Add missing properties to interfaces
+   - Use bracket notation for dynamic property access
+   - Add type assertions for comparison operations
+
+For detailed implementation, see [TYPESCRIPT_ERROR_FIXING.md](/docs/TYPESCRIPT_ERROR_FIXING.md).
 
 ## Stable Patterns
 
@@ -177,10 +235,179 @@ For UI component documentation, see [COMPONENT_LIBRARY.MD](/docs/COMPONENT_LIBRA
   - [Dialog Service Pattern](#dialog-service-pattern)
   - [Form Validation](#form-validation)
 - [Design System Implementation](#design-system-implementation)
-  - [Form Component Integration](#form-component-integration)
-  - [Component Demo Page](#component-demo-page)
-  - [Design System Documentation](#design-system-documentation)
-  - [Theme System Implementation](#theme-system-implementation)
+
+### TypeScript Type Safety
+
+When working with TypeScript in Angular services, we've established these effective patterns for maintaining type safety:
+
+1. **String Literal Types for Constants**:
+
+   - Use string literal types for constants with specific allowed values
+   - Example: `const API_PROVIDER: 'nominatim' | 'mapbox' | 'google' = 'nominatim';`
+   - This ensures type checking when comparing values and prevents invalid assignments
+
+2. **Tuple Types for Coordinates**:
+
+   - Use tuple types for coordinates to ensure the correct number of elements
+   - Example: `coordinates: [number, number]` instead of `coordinates: number[]`
+   - Use type assertions with `as [number, number]` when converting from arrays
+
+3. **Interface Hierarchies**:
+
+   - Create specific interfaces for related data structures
+   - Use composition to build complex interfaces from simpler ones
+   - Example: Create a `GeocodingComponents` interface and reuse it in `ReverseGeocodingResult`
+
+4. **Type-Safe Object Mapping**:
+
+   - Use `keyof` operator with interfaces to ensure type safety in object mappings
+   - Example: `const componentMap: { [key: string]: keyof GeocodingComponents } = {...}`
+   - This ensures that property assignments use valid keys from the target interface
+
+5. **Helper Functions for Type Conversion**:
+
+   - Create helper functions that handle type conversions safely
+   - Example: `createQueryString` function to handle parameter encoding
+   - Include proper JSDoc comments to document parameter types and return values
+
+6. **Const Assertions for Literal Types**:
+
+   - Use `as const` to create readonly literal types
+   - Example: `type: 'Point' as const` ensures the type is exactly 'Point'
+   - This is particularly useful for API responses with specific format requirements
+
+7. **Safe Type Narrowing**:
+
+   - Check for existence of properties before accessing them
+   - Use type guards to narrow types in conditional blocks
+   - Handle null and undefined values explicitly
+
+8. **Consistent Error Handling**:
+   - Return null or empty arrays for failed operations rather than undefined
+   - Use RxJS operators like catchError to handle errors in observables
+   - Provide meaningful error messages with context information
+
+- [Form Component Integration](#form-component-integration)
+- [Component Demo Page](#component-demo-page)
+- [Design System Documentation](#design-system-documentation)
+- [Theme System Implementation](#theme-system-implementation)
+- [SCSS Import Patterns](#scss-import-patterns)
+
+## SCSS Import Patterns
+
+### Design System Import Best Practices
+
+When importing design system styles in SCSS files, always use the centralized design system entry point:
+
+```scss
+// CORRECT: Use the centralized design system entry point
+@use 'src/styles/design-system' as ds;
+
+// INCORRECT: Don't import directly from core/design
+@use 'src/app/core/design/main' as ds; // AVOID THIS
+```
+
+### Benefits of Centralized Design System Imports
+
+1. **Consistency**: All components use the same design tokens and variables
+2. **Maintainability**: Changes to the design system structure only need to be updated in one place
+3. **Prevents Conflicts**: Avoids variable name conflicts and duplicate imports
+4. **Future-Proofing**: Makes it easier to migrate to new design systems or update existing ones
+
+### Modern SCSS Import Syntax
+
+Always use the modern `@use` syntax instead of the deprecated `@import`:
+
+```scss
+// CORRECT: Modern syntax
+@use 'path/to/file' as namespace;
+
+// INCORRECT: Deprecated syntax
+@import 'path/to/file'; // AVOID THIS
+```
+
+### Handling Variable Conflicts
+
+When forwarding multiple SCSS modules that might have conflicting variable names, use the `hide` directive:
+
+```scss
+@forward 'module-a' hide $conflicting-variable;
+@forward 'module-b' hide $conflicting-variable;
+```
+
+This prevents "Two forwarded modules both define a variable named X" errors.
+
+## TypeScript Error Fixing
+
+### Automated TypeScript Error Resolution
+
+When implementing automated TypeScript error fixing in Angular applications, we discovered several effective patterns:
+
+1. **Error Classification and Handling**:
+
+   - Categorize TypeScript errors by their error codes (e.g., TS2307, TS2322)
+   - Implement specific handlers for each error type
+   - Use a modular approach where each error type has its own handling function
+   - Prioritize fixing errors that block compilation first
+
+2. **Common Error Patterns and Solutions**:
+
+   - **TS2307: Cannot find module** - Usually fixed by adding missing imports
+   - **TS2322: Type assignment errors** - Often resolved by using proper enum values instead of string literals
+   - **TS2724: Export name mismatch** - Fixed by updating import statements to match actual exports
+   - **TS2339: Property does not exist** - Resolved by adding missing properties to interfaces
+   - **TS2353: Object literal property errors** - Fixed by updating property names to match interface definitions
+   - **TS2304: Cannot find name** - Addressed by adding missing type imports
+   - **TS2345: Argument type errors** - Fixed by adding proper type conversions
+
+3. **Implementation Approaches**:
+
+   - **String-based replacement** - Simple but effective for straightforward errors
+   - **AST-based transformation** - More robust for complex code structures
+   - **Backup strategy** - Always create backups before modifying files
+   - **Incremental fixing** - Process one error type at a time to avoid conflicts
+
+4. **Error Fixing Workflow**:
+
+   - Extract errors from TypeScript compiler output
+   - Group errors by file for efficient processing
+   - Apply fixes in a deterministic order
+   - Verify fixes with a subsequent compilation
+   - Document patterns of fixed errors for future reference
+
+5. **Best Practices**:
+   - Use dedicated tools like ts-morph for AST manipulation
+   - Implement dry-run mode for previewing changes
+   - Create comprehensive test cases for error fixing logic
+   - Document common error patterns and their solutions
+   - Maintain a changelog of automated fixes
+
+### Enum Usage in TypeScript
+
+When working with enums in Angular applications, we found these effective patterns:
+
+1. **String Enum Pattern**:
+
+   - Use string enums for better readability in runtime values
+   - Example: `enum AlertTimeWindow { MINUTES_15 = '15m', MINUTES_30 = '30m', HOURS_1 = '1h', HOURS_24 = '24h' }`
+   - Ensures type safety while maintaining readable values in API calls
+
+2. **Enum Type Safety**:
+
+   - Always use the enum type in function parameters and properties
+   - Replace string literals with enum values to leverage TypeScript's type checking
+   - Use union types when only specific enum values are valid
+
+3. **Enum Import Strategy**:
+
+   - Import enums directly from their source files
+   - Include enums in barrel files for easier importing
+   - Ensure consistent naming conventions for enum imports
+
+4. **Enum Documentation**:
+   - Document the purpose and valid values of each enum
+   - Include examples of proper enum usage in comments
+   - Explain the significance of each enum value
 
 ## Design System Implementation
 

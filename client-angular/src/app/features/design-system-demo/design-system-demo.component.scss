@@ -2,7 +2,7 @@
  * Design System Demo Component Styles
  */
 
-@use 'src/app/core/design/main' as ds;
+@use '../../core/design/main' as ds;
 
 .design-demo {
   padding: ds.$spacing-8 0;

@@ -1,5 +1,23 @@
 # Change Log
 
+## 2025-04-21: Geocoding Service TypeScript Fixes
+
+### Fixed
+
+- **Geocoding Service**: Fixed TypeScript errors in the geocoding service
+  - Added proper type definitions for API_PROVIDER to support 'nominatim', 'mapbox', and 'google'
+  - Fixed type issues with coordinates by using proper tuple type annotations
+  - Added missing GoogleMapsApiKey to environment.ts
+  - Created a helper function createQueryString to safely handle parameter encoding
+  - Fixed return types in geocodeWithNominatim and other methods
+  - Added proper type definitions for GeocodingComponents interface
+  - Improved type safety in extractMapboxComponents and extractGoogleComponents methods
+
+### Added
+
+- **Helper Functions**: Added createQueryString helper function to handle parameter encoding consistently
+- **Documentation**: Added detailed JSDoc comments to explain parameter types and return values
+
 ## 2025-04-20: Wallet Service Implementation
 
 ### Added

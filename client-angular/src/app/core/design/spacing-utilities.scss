@@ -5,7 +5,7 @@
  * Use these classes instead of custom margins and paddings to maintain consistency.
  */
 
-@import 'emerald-tokens';
+@use 'emerald-tokens' as *;
 
 // Margin utilities
 .m-0 {
