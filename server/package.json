@@ -64,7 +64,7 @@
     "@eslint/eslintrc": "3.3.1",
     "babel-jest": "29.7.0",
     "core-js": "3.41.0",
-    "eslint": "8.57.0",
+    "eslint": "9.25.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "5.2.6",
