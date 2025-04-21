@@ -1,6 +1,6 @@
 # Security Alerts and Dependency Report
 
-*Generated on: 2025-04-20*
+*Generated on: 2025-04-21*
 
 This report provides an overview of dependencies and potential security issues in the project.
 
@@ -38,6 +38,8 @@ This report provides an overview of dependencies and potential security issues i
 
 @ng-bootstrap/ng-bootstrap          NPM ERR!  Registry error got is not a function
 
+@popperjs/core                      NPM ERR!  Registry error got is not a function
+
 @swimlane/ngx-charts                NPM ERR!  Registry error got is not a function
 
 @types/leaflet                      NPM ERR!  Registry error got is not a function
@@ -54,6 +56,8 @@ bootstrap                           NOTUSED?  Still using bootstrap?
                                     NPM ERR!  Registry error got is not a function
 
 chart.js                            NPM ERR!  Registry error got is not a function
+
+emerald-ui                          NPM ERR!  Registry error got is not a function
 
 leaflet                             NPM ERR!  Registry error got is not a function
 
@@ -74,11 +78,11 @@ tslib                               NOTUSED?  Still using tslib?
 
 zone.js                             NPM ERR!  Registry error got is not a function
 
-src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/checkbox/checkbox.component.scss, /src/app/shared/components/card/card.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/design-system-demo/design-system-demo.component.scss
+src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/emerald-example/emerald-example.component.scss, /src/app/shared/components/checkbox/checkbox.component.scss, /src/app/shared/components/card/card.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/list-view/list-view.component.scss, /src/app/features/chat/chat-list/chat-list.component.scss, /src/app/features/auth/login/login.component.scss
                                     PKG ERR!  A package.json was not found at /home/runner/work/date-night-app2/date-night-app2/client-angular/src/package.json
                                     NPM ERR!  Registry error got is not a function
 
-sass                                PKG ERR!  Not in the package.json. Found in: /src/app/core/design/design-tokens.scss
+sass                                PKG ERR!  Not in the package.json. Found in: /src/app/shared/emerald/components/app-card/app-card.component.scss, /src/app/features/tinder/tinder.component.scss, /src/app/features/auth/login/login.component.scss, /src/app/core/design/design-tokens.scss, /src/app/core/design/emerald-ui-integration.scss, /src/app/core/design/main.scss
                                     NPM ERR!  Registry error got is not a function
 
 Use npm-check -u for interactive update.
@@ -173,7 +177,7 @@ xss-clean                   NPM ERR!  Registry error got is not a function
 swagger-ui-express          PKG ERR!  Not in the package.json. Found in: /server.js
                             NPM ERR!  Registry error got is not a function
 
-@jest/globals               PKG ERR!  Not in the package.json. Found in: /tests/helpers.js, /tests/unit/simple.test.cjs, /tests/unit/simple.test.js, /tests/unit/services/ad.service.test.js, /tests/unit/services/auth.service.test.js, /tests/unit/services/payment.service.test.js, /tests/unit/services/wallet.service.test.js, /tests/unit/middleware/auth.middleware.test.js, /tests/unit/middleware/security.test.js, /tests/performance/api.performance.test.js, /tests/integration/controllers/auth.controller.test.js, /tests/integration/controllers/payment.controller.test.js
+@jest/globals               PKG ERR!  Not in the package.json. Found in: /tests/helpers.js, /tests/unit/simple.test.cjs, /tests/unit/simple.test.js, /tests/unit/services/ad.service.test.js, /tests/unit/services/auth.service.test.js, /tests/unit/services/chat.service.test.js, /tests/unit/services/payment.service.test.js, /tests/unit/services/wallet.service.test.js, /tests/unit/middleware/auth.middleware.test.js, /tests/unit/middleware/security.test.js, /tests/performance/api.performance.test.js, /tests/integration/controllers/auth.controller.test.js, /tests/integration/controllers/payment.controller.test.js
                             NPM ERR!  Registry error got is not a function
 
 swagger-jsdoc               PKG ERR!  Not in the package.json. Found in: /config/swagger.js
