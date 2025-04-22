@@ -1,5 +1,6 @@
+@use '../../core/design/design-tokens' as tokens;
 @use 'sass:color';
-@use '../../../styles/variables' as vars;
+@use '../../core/design/design-tokens' as vars;
 @use '../../../styles/mixins' as mix;
 
 /* Tinder Component Styles */
@@ -32,7 +33,7 @@
   font-weight: vars.$font-weight-bold;
   color: vars.$neutral-900;
   margin: 0;
-  background: linear-gradient(90deg, vars.$primary 0%, vars.$secondary 100%);
+  background: linear-gradient(90deg, tokens.$color-primary 0%, tokens.$color-secondary 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -67,7 +68,7 @@
   }
 
   i {
-    color: vars.$primary;
+    color: tokens.$color-primary;
     font-size: vars.$font-size-base;
   }
 }
@@ -100,7 +101,7 @@
 
   .error-icon {
     font-size: vars.$font-size-4xl;
-    color: vars.$danger;
+    color: #ef4444;
     margin-bottom: vars.$spacing-4;
   }
 
@@ -113,7 +114,7 @@
 
   .retry-button {
     padding: vars.$spacing-2 vars.$spacing-6;
-    background-color: vars.$primary;
+    background-color: tokens.$color-primary;
     color: vars.$neutral-100;
     border: none;
     border-radius: vars.$border-radius-md;
@@ -122,7 +123,7 @@
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: color.scale(vars.vars.$primary, $lightness: -10%);
+      background-color: color.scale(tokens.$color-primary, $lightness: -10%);
     }
 
     i {
@@ -195,7 +196,7 @@
 
     i {
       margin-right: vars.$spacing-2;
-      color: vars.$primary;
+      color: tokens.$color-primary;
     }
   }
 }

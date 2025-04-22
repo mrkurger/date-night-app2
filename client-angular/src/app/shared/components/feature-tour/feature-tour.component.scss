@@ -1,4 +1,4 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 .feature-tour-overlay {
   position: fixed;
@@ -16,13 +16,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba($neutral-900, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
 
   .spotlight {
     position: absolute;
-    border-radius: $border-radius-lg;
-    box-shadow: 0 0 0 9999px rgba($neutral-900, 0.7);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
     background-color: transparent;
     pointer-events: none;
     transition: all 0.3s ease-in-out;
@@ -83,7 +83,7 @@
 
 .tooltip-content {
   background-color: $neutral-100;
-  border-radius: $border-radius-lg;
+  border-radius: 0.5rem;
   box-shadow: $shadow-xl;
   padding: $spacing-6;
   animation: fadeIn 0.3s ease-in-out;

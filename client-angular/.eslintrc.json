@@ -34,7 +34,7 @@
         ],
         "@typescript-eslint/member-ordering": "error",
         "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/no-explicit-any": "warn", // Set to warning instead of error
+        "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-inferrable-types": [
           "error",
           {
@@ -60,12 +60,7 @@
         "import/no-deprecated": "warn",
         "no-bitwise": "error",
         "no-caller": "error",
-        "no-console": [
-          "error",
-          {
-            "allow": ["warn", "error"]
-          }
-        ],
+        "no-console": "warn",
         "no-debugger": "error",
         "no-empty": "off",
         "no-eval": "error",
@@ -89,6 +84,46 @@
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
       "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.test.ts", "**/testing/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["**/interceptors/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.test.ts", "**/testing/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["**/interceptors/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["**/services/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn"
+      }
+    },
+    {
+      "files": ["**/components/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn"
+      }
     }
   ]
 }

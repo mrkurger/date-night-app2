@@ -1,4 +1,4 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 :host {
   display: contents;
@@ -15,7 +15,7 @@
     flex-direction: column-reverse;
 
     .help-content {
-      margin-bottom: $spacing-2;
+      margin-bottom: tokens.$spacing-2;
 
       &::after {
         content: '';
@@ -25,7 +25,7 @@
         transform: translateX(-50%);
         border-width: 8px 8px 0;
         border-style: solid;
-        border-color: $neutral-100 transparent transparent;
+        border-color: white transparent transparent;
       }
     }
   }
@@ -34,7 +34,7 @@
     flex-direction: row;
 
     .help-content {
-      margin-left: $spacing-2;
+      margin-left: tokens.$spacing-2;
 
       &::after {
         content: '';
@@ -44,7 +44,7 @@
         transform: translateY(-50%);
         border-width: 8px 8px 8px 0;
         border-style: solid;
-        border-color: transparent $neutral-100 transparent transparent;
+        border-color: transparent white transparent transparent;
       }
     }
   }
@@ -53,7 +53,7 @@
     flex-direction: column;
 
     .help-content {
-      margin-top: $spacing-2;
+      margin-top: tokens.$spacing-2;
 
       &::after {
         content: '';
@@ -63,7 +63,7 @@
         transform: translateX(-50%);
         border-width: 0 8px 8px;
         border-style: solid;
-        border-color: transparent transparent $neutral-100;
+        border-color: transparent transparent white;
       }
     }
   }
@@ -72,7 +72,7 @@
     flex-direction: row-reverse;
 
     .help-content {
-      margin-right: $spacing-2;
+      margin-right: tokens.$spacing-2;
 
       &::after {
         content: '';
@@ -82,7 +82,7 @@
         transform: translateY(-50%);
         border-width: 8px 0 8px 8px;
         border-style: solid;
-        border-color: transparent transparent transparent $neutral-100;
+        border-color: transparent transparent transparent white;
       }
     }
   }
@@ -102,7 +102,7 @@
 
 .help-content {
   position: relative;
-  background-color: $neutral-100;
+  background-color: white;
   border-radius: $border-radius-md;
   box-shadow: $shadow-lg;
   width: 250px;

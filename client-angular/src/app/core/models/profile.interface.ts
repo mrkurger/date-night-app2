@@ -1,3 +1,5 @@
+import { User } from './user.interface';
+
 export interface Profile extends User {
   phone?: string;
   avatar?: string;

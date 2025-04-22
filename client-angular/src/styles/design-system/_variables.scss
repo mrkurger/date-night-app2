@@ -1,3 +1,4 @@
+@use 'sass:color';
 // Design System Variables
 // A unified set of design tokens for the DateNight.io application
 
@@ -33,32 +34,32 @@ $error-200: rgba($color-error, 0.2);
 $error-300: rgba($color-error, 0.3);
 $error-400: rgba($color-error, 0.4);
 $error-500: $color-error;
-$error-600: darken($color-error, 10%);
-$error-700: darken($color-error, 20%);
+$error-600: color.adjust($color-error, $lightness: -10%);
+$error-700: color.adjust($color-error, $lightness: -20%);
 
 $success-100: rgba($color-success, 0.1);
 $success-200: rgba($color-success, 0.2);
 $success-300: rgba($color-success, 0.3);
 $success-400: rgba($color-success, 0.4);
 $success-500: $color-success;
-$success-600: darken($color-success, 10%);
-$success-700: darken($color-success, 20%);
+$success-600: color.adjust($color-success, $lightness: -10%);
+$success-700: color.adjust($color-success, $lightness: -20%);
 
 $warning-100: rgba($color-warning, 0.1);
 $warning-200: rgba($color-warning, 0.2);
 $warning-300: rgba($color-warning, 0.3);
 $warning-400: rgba($color-warning, 0.4);
 $warning-500: $color-warning;
-$warning-600: darken($color-warning, 10%);
-$warning-700: darken($color-warning, 20%);
+$warning-600: color.adjust($color-warning, $lightness: -10%);
+$warning-700: color.adjust($color-warning, $lightness: -20%);
 
 $info-100: rgba($color-info, 0.1);
 $info-200: rgba($color-info, 0.2);
 $info-300: rgba($color-info, 0.3);
 $info-400: rgba($color-info, 0.4);
 $info-500: $color-info;
-$info-600: darken($color-info, 10%);
-$info-700: darken($color-info, 20%);
+$info-600: color.adjust($color-info, $lightness: -10%);
+$info-700: color.adjust($color-info, $lightness: -20%);
 
 // Typography
 $font-family-base:

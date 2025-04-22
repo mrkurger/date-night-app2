@@ -14,7 +14,7 @@ import { CsrfService } from '../services/csrf.service';
 export class CsrfInterceptor implements HttpInterceptor {
   constructor(private csrfService: CsrfService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // Only add CSRF token for API requests that modify data
     if (request.url.includes(environment.apiUrl) && this.isModifyingRequest(request)) {
       const csrfToken = this.csrfService.getCsrfToken();
@@ -34,7 +34,7 @@ export class CsrfInterceptor implements HttpInterceptor {
   /**
    * Check if the request is modifying data (POST, PUT, DELETE, PATCH)
    */
-  private isModifyingRequest(request: HttpRequest<any>): boolean {
+  private isModifyingRequest(request: HttpRequest<unknown>): boolean {
     const method = request.method.toUpperCase();
     return method === 'POST' || method === 'PUT' || method === 'DELETE' || method === 'PATCH';
   }

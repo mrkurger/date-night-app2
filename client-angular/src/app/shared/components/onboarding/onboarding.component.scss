@@ -1,4 +1,4 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 .onboarding-overlay {
   position: fixed;
@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba($neutral-900, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@
 }
 
 .onboarding-modal {
-  background-color: $neutral-100;
+  background-color: white;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-xl;
   width: 90%;

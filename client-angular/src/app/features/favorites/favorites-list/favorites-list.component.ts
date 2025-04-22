@@ -222,7 +222,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
             <div class="favorite-actions">
               <app-favorite-button
-                [adId]="favorite.ad._id"
+                [adId]="this.getAdIdAsString(favorite.ad._id)"
                 (favoriteChanged)="onFavoriteRemoved($event, favorite)"
               ></app-favorite-button>
 
@@ -566,6 +566,13 @@ export class FavoritesListComponent implements OnInit {
 
   private searchSubject = new Subject<string>();
 
+  /**
+   * Convert ad ID to string regardless of its type
+   */
+  getAdIdAsString(adId: string | { city: string; county: string }): string {
+    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  }
+
   get isFiltered(): boolean {
     return (
       !!this.filterOptions.search ||
@@ -603,8 +610,7 @@ export class FavoritesListComponent implements OnInit {
         }));
         this.loading = false;
       },
-      error: error => {
-        console.error('Error loading favorites:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to load favorites');
         this.loading = false;
       },
@@ -616,8 +622,8 @@ export class FavoritesListComponent implements OnInit {
       next: tags => {
         this.userTags = tags;
       },
-      error: error => {
-        console.error('Error loading user tags:', error);
+      error: (error: Error) => {
+        this.notificationService.error('Failed to load tags');
       },
     });
   }
@@ -646,8 +652,7 @@ export class FavoritesListComponent implements OnInit {
         this.favorites = this.favorites.filter(favorite => favorite.ad._id !== adId);
         this.notificationService.success('Removed from favorites');
       },
-      error: error => {
-        console.error('Error removing favorite:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to remove from favorites');
       },
     });
@@ -666,8 +671,7 @@ export class FavoritesListComponent implements OnInit {
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
       },
-      error: error => {
-        console.error('Error removing favorites batch:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to remove selected favorites');
       },
     });
@@ -681,8 +685,7 @@ export class FavoritesListComponent implements OnInit {
           `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`
         );
       },
-      error: error => {
-        console.error('Error toggling notifications:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to update notification settings');
       },
     });
@@ -760,8 +763,7 @@ export class FavoritesListComponent implements OnInit {
         favorite.notes = notes;
         this.notificationService.success('Notes updated');
       },
-      error: error => {
-        console.error('Error updating notes:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to update notes');
       },
     });
@@ -774,8 +776,7 @@ export class FavoritesListComponent implements OnInit {
         this.notificationService.success('Tags updated');
         this.loadUserTags(); // Refresh tag list
       },
-      error: error => {
-        console.error('Error updating tags:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to update tags');
       },
     });
@@ -794,7 +795,7 @@ export class FavoritesListComponent implements OnInit {
           completed++;
 
           // Find and update the favorite in the list
-          const favorite = this.favorites.find(f => f.ad._id === adId);
+          const favorite = this.favorites.find(f => this.getAdIdAsString(f.ad._id) === adId);
           if (favorite) {
             favorite.tags = [...tags];
           }
@@ -829,8 +830,7 @@ export class FavoritesListComponent implements OnInit {
         favorite.priority = priority;
         this.notificationService.success(`Priority set to ${priority}`);
       },
-      error: error => {
-        console.error('Error updating priority:', error);
+      error: (error: Error) => {
         this.notificationService.error('Failed to update priority');
       },
     });
@@ -849,7 +849,7 @@ export class FavoritesListComponent implements OnInit {
           completed++;
 
           // Find and update the favorite in the list
-          const favorite = this.favorites.find(f => f.ad._id === adId);
+          const favorite = this.favorites.find(f => this.getAdIdAsString(f.ad._id) === adId);
           if (favorite) {
             favorite.priority = priority;
           }
@@ -886,7 +886,7 @@ export class FavoritesListComponent implements OnInit {
 
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
-      .filter(favorite => (favorite as any).selected)
+      .filter(favorite => favorite.selected)
       .map(favorite =>
         typeof favorite.ad === 'string' ? favorite.ad : this.getAdIdAsString(favorite.ad._id)
       );
@@ -905,12 +905,5 @@ export class FavoritesListComponent implements OnInit {
       default:
         return 'remove';
     }
-  }
-
-  /**
-   * Convert ad ID to string regardless of its type
-   */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

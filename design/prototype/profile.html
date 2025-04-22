@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Profile</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Profile specific styles */
+      .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .profile-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-6);
+        margin-bottom: var(--spacing-6);
+      }
+
+      .profile-avatar-container {
+        position: relative;
+        width: 150px;
+        height: 150px;
+      }
+
+      .profile-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius-full);
+        object-fit: cover;
+        border: 4px solid var(--color-white);
+        box-shadow: var(--shadow-md);
+      }
+
+      .profile-avatar-edit {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        width: 36px;
+        height: 36px;
+        border-radius: var(--border-radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .profile-info {
+        flex: 1;
+      }
+
+      .profile-name {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--spacing-2);
+        display: flex;
+        align-items: center;
+      }
+
+      .profile-verified {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--color-success-light);
+        color: var(--color-success-dark);
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        margin-left: var(--spacing-2);
+      }
+
+      .profile-verified i {
+        margin-right: var(--spacing-1);
+      }
+
+      .profile-location {
+        display: flex;
+        align-items: center;
+        color: var(--color-dark-gray-1);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .profile-location i {
+        margin-right: var(--spacing-2);
+      }
+
+      .profile-stats {
+        display: flex;
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-stat-value {
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-lg);
+      }
+
+      .profile-stat-label {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .profile-actions {
+        display: flex;
+        gap: var(--spacing-3);
+      }
+
+      .profile-tabs {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-tab-content {
+        display: none;
+      }
+
+      .profile-tab-content.active {
+        display: block;
+      }
+
+      .profile-section {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .profile-section-title {
+        margin-bottom: var(--spacing-4);
+        padding-bottom: var(--spacing-2);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .profile-about {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-detail {
+        display: flex;
+        align-items: center;
+      }
+
+      .profile-detail-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--border-radius-full);
+        background-color: var(--color-light-gray-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: var(--spacing-3);
+        color: var(--color-primary);
+      }
+
+      .profile-detail-info {
+        flex: 1;
+      }
+
+      .profile-detail-label {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .profile-detail-value {
+        font-weight: var(--font-weight-medium);
+      }
+
+      .profile-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-tag {
+        background-color: var(--color-light-gray-1);
+        color: var(--color-dark-gray-2);
+        padding: var(--spacing-1) var(--spacing-3);
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-sm);
+      }
+
+      .profile-ads {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-4);
+      }
+
+      .profile-ad-card {
+        height: 100%;
+        transition:
+          transform var(--transition-normal),
+          box-shadow var(--transition-normal);
+      }
+
+      .profile-ad-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .profile-ad-image {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: var(--border-radius-md);
+        border-top-right-radius: var(--border-radius-md);
+      }
+
+      .profile-ad-title {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .profile-ad-price {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .profile-ad-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .profile-reviews {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-review {
+        padding: var(--spacing-4);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .profile-review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-3);
+      }
+
+      .profile-review-author {
+        display: flex;
+        align-items: center;
+      }
+
+      .profile-review-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--border-radius-full);
+        margin-right: var(--spacing-3);
+      }
+
+      .profile-review-name {
+        font-weight: var(--font-weight-medium);
+      }
+
+      .profile-review-date {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .profile-review-rating {
+        color: var(--color-warning);
+      }
+
+      .profile-review-content {
+        margin-bottom: var(--spacing-3);
+      }
+
+      .profile-review-service {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+        font-style: italic;
+      }
+
+      .profile-activity {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .profile-activity-item {
+        display: flex;
+        padding: var(--spacing-3) 0;
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .profile-activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--border-radius-full);
+        background-color: var(--color-light-gray-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: var(--spacing-3);
+      }
+
+      .profile-activity-info {
+        flex: 1;
+      }
+
+      .profile-activity-text {
+        margin-bottom: var(--spacing-1);
+      }
+
+      .profile-activity-date {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .profile-edit-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li class="active">
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="profile-container">
+          <!-- Profile Header -->
+          <div class="profile-header">
+            <div class="profile-avatar-container">
+              <img
+                src="https://via.placeholder.com/150x150?text=JD"
+                alt="John Doe"
+                class="profile-avatar"
+              />
+              <div class="profile-avatar-edit">
+                <i class="fas fa-camera"></i>
+              </div>
+            </div>
+
+            <div class="profile-info">
+              <div class="profile-name">
+                John Doe
+                <span class="profile-verified"> <i class="fas fa-check-circle"></i> Verified </span>
+              </div>
+
+              <div class="profile-location">
+                <i class="fas fa-map-marker-alt"></i> New York, USA
+              </div>
+
+              <div class="profile-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value">12</div>
+                  <div class="profile-stat-label">Ads</div>
+                </div>
+
+                <div class="profile-stat">
+                  <div class="profile-stat-value">48</div>
+                  <div class="profile-stat-label">Reviews</div>
+                </div>
+
+                <div class="profile-stat">
+                  <div class="profile-stat-value">4.9</div>
+                  <div class="profile-stat-label">Rating</div>
+                </div>
+
+                <div class="profile-stat">
+                  <div class="profile-stat-value">2y</div>
+                  <div class="profile-stat-label">Member</div>
+                </div>
+              </div>
+
+              <div class="profile-actions">
+                <button class="eui-btn eui-btn-primary">
+                  <i class="fas fa-edit"></i> Edit Profile
+                </button>
+                <button class="eui-btn eui-btn-outline-primary">
+                  <i class="fas fa-share-alt"></i> Share Profile
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Tabs -->
+          <div class="profile-tabs">
+            <ul class="eui-nav eui-nav-tabs">
+              <li class="eui-nav-item">
+                <a class="eui-nav-link active" href="#" onclick="showTab('about')">About</a>
+              </li>
+              <li class="eui-nav-item">
+                <a class="eui-nav-link" href="#" onclick="showTab('ads')">My Ads</a>
+              </li>
+              <li class="eui-nav-item">
+                <a class="eui-nav-link" href="#" onclick="showTab('reviews')">Reviews</a>
+              </li>
+              <li class="eui-nav-item">
+                <a class="eui-nav-link" href="#" onclick="showTab('activity')">Activity</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- About Tab -->
+          <div class="profile-tab-content active" id="about-tab">
+            <div class="profile-section">
+              <h2 class="profile-section-title">About Me</h2>
+
+              <div class="profile-about">
+                <p>
+                  Successful entrepreneur with a passion for fine dining, art, and cultural
+                  experiences. I travel frequently for business and enjoy meeting interesting people
+                  during my trips. I value intelligence, elegance, and meaningful conversations.
+                </p>
+                <p>
+                  Looking for companions who can join me for business dinners, cultural events, or
+                  simply engaging conversations over a glass of wine.
+                </p>
+              </div>
+
+              <div class="profile-details">
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-briefcase"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Profession</div>
+                    <div class="profile-detail-value">Entrepreneur</div>
+                  </div>
+                </div>
+
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Education</div>
+                    <div class="profile-detail-value">MBA, Harvard Business School</div>
+                  </div>
+                </div>
+
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-language"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Languages</div>
+                    <div class="profile-detail-value">English, French, Spanish</div>
+                  </div>
+                </div>
+
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-birthday-cake"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Age</div>
+                    <div class="profile-detail-value">42</div>
+                  </div>
+                </div>
+
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-ruler-vertical"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Height</div>
+                    <div class="profile-detail-value">6'1" (185 cm)</div>
+                  </div>
+                </div>
+
+                <div class="profile-detail">
+                  <div class="profile-detail-icon">
+                    <i class="fas fa-globe"></i>
+                  </div>
+                  <div class="profile-detail-info">
+                    <div class="profile-detail-label">Nationality</div>
+                    <div class="profile-detail-value">American</div>
+                  </div>
+                </div>
+              </div>
+
+              <h3>Interests</h3>
+              <div class="profile-tags">
+                <div class="profile-tag">Fine Dining</div>
+                <div class="profile-tag">Art Galleries</div>
+                <div class="profile-tag">Classical Music</div>
+                <div class="profile-tag">Theater</div>
+                <div class="profile-tag">Wine Tasting</div>
+                <div class="profile-tag">Travel</div>
+                <div class="profile-tag">Literature</div>
+                <div class="profile-tag">Philosophy</div>
+                <div class="profile-tag">Jazz</div>
+                <div class="profile-tag">Architecture</div>
+              </div>
+
+              <h3>Looking For</h3>
+              <div class="profile-tags">
+                <div class="profile-tag">Dinner Dates</div>
+                <div class="profile-tag">Cultural Events</div>
+                <div class="profile-tag">Business Events</div>
+                <div class="profile-tag">Travel Companions</div>
+                <div class="profile-tag">Intellectual Conversations</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ads Tab -->
+          <div class="profile-tab-content" id="ads-tab">
+            <div class="profile-section">
+              <h2 class="profile-section-title">My Ads</h2>
+
+              <div class="profile-ads">
+                <!-- Ad 1 -->
+                <div class="eui-card profile-ad-card">
+                  <img
+                    src="https://via.placeholder.com/300x180?text=Business+Dinner"
+                    alt="Business Dinner Companion"
+                    class="profile-ad-image"
+                  />
+                  <div class="eui-card-body">
+                    <div class="profile-ad-title">Business Dinner Companion Needed</div>
+                    <div class="profile-ad-price">$300 - $500</div>
+                    <div class="profile-ad-meta">
+                      <span>New York</span>
+                      <span>Posted 2 days ago</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ad 2 -->
+                <div class="eui-card profile-ad-card">
+                  <img
+                    src="https://via.placeholder.com/300x180?text=Opera+Night"
+                    alt="Opera Night"
+                    class="profile-ad-image"
+                  />
+                  <div class="eui-card-body">
+                    <div class="profile-ad-title">Opera Night at the Met</div>
+                    <div class="profile-ad-price">$400 - $600</div>
+                    <div class="profile-ad-meta">
+                      <span>New York</span>
+                      <span>Posted 1 week ago</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ad 3 -->
+                <div class="eui-card profile-ad-card">
+                  <img
+                    src="https://via.placeholder.com/300x180?text=Weekend+Getaway"
+                    alt="Weekend Getaway"
+                    class="profile-ad-image"
+                  />
+                  <div class="eui-card-body">
+                    <div class="profile-ad-title">Weekend Getaway to Hamptons</div>
+                    <div class="profile-ad-price">$1,500 - $2,000</div>
+                    <div class="profile-ad-meta">
+                      <span>Hamptons, NY</span>
+                      <span>Posted 2 weeks ago</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ad 4 -->
+                <div class="eui-card profile-ad-card">
+                  <img
+                    src="https://via.placeholder.com/300x180?text=Art+Gallery"
+                    alt="Art Gallery Opening"
+                    class="profile-ad-image"
+                  />
+                  <div class="eui-card-body">
+                    <div class="profile-ad-title">Art Gallery Opening</div>
+                    <div class="profile-ad-price">$300 - $400</div>
+                    <div class="profile-ad-meta">
+                      <span>New York</span>
+                      <span>Posted 3 weeks ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center" style="margin-top: 20px">
+                <a href="create-ad.html" class="eui-btn eui-btn-primary">
+                  <i class="fas fa-plus"></i> Create New Ad
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews Tab -->
+          <div class="profile-tab-content" id="reviews-tab">
+            <div class="profile-section">
+              <h2 class="profile-section-title">Reviews</h2>
+
+              <div class="profile-reviews">
+                <!-- Review 1 -->
+                <div class="profile-review">
+                  <div class="profile-review-header">
+                    <div class="profile-review-author">
+                      <img
+                        src="https://via.placeholder.com/40x40?text=SM"
+                        alt="Sophia Martinez"
+                        class="profile-review-avatar"
+                      />
+                      <div>
+                        <div class="profile-review-name">Sophia Martinez</div>
+                        <div class="profile-review-date">2 days ago</div>
+                      </div>
+                    </div>
+                    <div class="profile-review-rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      5.0
+                    </div>
+                  </div>
+                  <div class="profile-review-content">
+                    <p>
+                      John was an absolute gentleman throughout our dinner date. He was punctual,
+                      respectful, and engaging in conversation. The restaurant he chose was
+                      exquisite, and he made sure I was comfortable the entire evening. I would
+                      highly recommend him to anyone looking for a sophisticated companion.
+                    </p>
+                  </div>
+                  <div class="profile-review-service">Service: Business Dinner Companion</div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="profile-review">
+                  <div class="profile-review-header">
+                    <div class="profile-review-author">
+                      <img
+                        src="https://via.placeholder.com/40x40?text=EJ"
+                        alt="Emma Johnson"
+                        class="profile-review-avatar"
+                      />
+                      <div>
+                        <div class="profile-review-name">Emma Johnson</div>
+                        <div class="profile-review-date">1 week ago</div>
+                      </div>
+                    </div>
+                    <div class="profile-review-rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      4.5
+                    </div>
+                  </div>
+                  <div class="profile-review-content">
+                    <p>
+                      I accompanied John to an opera at the Metropolitan Opera House. He was
+                      knowledgeable about the performance and made the evening very enjoyable. He
+                      was generous with the compensation and even arranged for a car service to take
+                      me home afterward. A very pleasant experience overall.
+                    </p>
+                  </div>
+                  <div class="profile-review-service">Service: Opera Night at the Met</div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="profile-review">
+                  <div class="profile-review-header">
+                    <div class="profile-review-author">
+                      <img
+                        src="https://via.placeholder.com/40x40?text=NP"
+                        alt="Natasha Petrova"
+                        class="profile-review-avatar"
+                      />
+                      <div>
+                        <div class="profile-review-name">Natasha Petrova</div>
+                        <div class="profile-review-date">3 weeks ago</div>
+                      </div>
+                    </div>
+                    <div class="profile-review-rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      5.0
+                    </div>
+                  </div>
+                  <div class="profile-review-content">
+                    <p>
+                      The weekend in the Hamptons was absolutely delightful. John's beach house is
+                      stunning, and he was a gracious host. We attended a charity gala, spent time
+                      at the beach, and enjoyed some wonderful restaurants. John is respectful,
+                      interesting, and generous. I would definitely accompany him again.
+                    </p>
+                  </div>
+                  <div class="profile-review-service">Service: Weekend Getaway to Hamptons</div>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button class="eui-btn eui-btn-outline-primary">Load More Reviews</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Tab -->
+          <div class="profile-tab-content" id="activity-tab">
+            <div class="profile-section">
+              <h2 class="profile-section-title">Recent Activity</h2>
+
+              <div class="profile-activity">
+                <!-- Activity 1 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-primary)">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">
+                      Posted a new ad: <strong>Business Dinner Companion Needed</strong>
+                    </div>
+                    <div class="profile-activity-date">2 days ago</div>
+                  </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-success)">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">
+                      Completed a date with <strong>Sophia Martinez</strong>
+                    </div>
+                    <div class="profile-activity-date">3 days ago</div>
+                  </div>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-info)">
+                    <i class="fas fa-comment"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">
+                      Started a conversation with <strong>Emma Johnson</strong>
+                    </div>
+                    <div class="profile-activity-date">1 week ago</div>
+                  </div>
+                </div>
+
+                <!-- Activity 4 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-warning)">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">
+                      Received a 5-star review from <strong>Natasha Petrova</strong>
+                    </div>
+                    <div class="profile-activity-date">3 weeks ago</div>
+                  </div>
+                </div>
+
+                <!-- Activity 5 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-primary)">
+                    <i class="fas fa-edit"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">Updated profile information</div>
+                    <div class="profile-activity-date">1 month ago</div>
+                  </div>
+                </div>
+
+                <!-- Activity 6 -->
+                <div class="profile-activity-item">
+                  <div class="profile-activity-icon" style="color: var(--color-success)">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="profile-activity-info">
+                    <div class="profile-activity-text">Verified account</div>
+                    <div class="profile-activity-date">2 months ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="messages.html">
+            <i class="fas fa-comment"></i>
+            <span>Messages</span>
+          </a>
+          <a href="profile.html" class="active">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li class="active">
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Profile specific functions
+      function showTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll('.profile-tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+
+        // Show selected tab
+        document.getElementById(tabId + '-tab').classList.add('active');
+
+        // Update active tab in nav
+        document.querySelectorAll('.eui-nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+
+        // Find and mark the clicked tab as active
+        const tabs = document.querySelectorAll('.eui-nav-link');
+        for (let i = 0; i < tabs.length; i++) {
+          if (tabs[i].getAttribute('onclick').includes(tabId)) {
+            tabs[i].classList.add('active');
+            break;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

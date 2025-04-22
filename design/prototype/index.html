@@ -3,319 +3,345 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DateNight.io Interactive Prototype</title>
-    <style>
-      :root {
-        --pink: #ff2d55;
-        --gray-light: #f5f6fa;
-        --gray-medium: #d1d3e0;
-        --gray-dark: #3a3a3c;
-        --white: #ffffff;
-        --font-sans: 'Helvetica Neue', Arial, sans-serif;
-      }
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        font-family: var(--font-sans);
-        background: var(--gray-light);
-        color: var(--gray-dark);
-      }
-      header {
-        background: var(--white);
-        padding: 1rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
-      header .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--gray-dark);
-      }
-      nav.top-nav a {
-        margin: 0 0.75rem;
-        text-decoration: none;
-        color: var(--gray-medium);
-        font-weight: 500;
-      }
-      nav.top-nav a.active {
-        color: var(--pink);
-      }
-      .container {
-        padding: 2rem;
-      }
-      section {
-        display: none;
-      }
-      section.active {
-        display: block;
-      }
-      /* Section: Netflix view */
-      .hero-card {
-        background: var(--white);
-        padding: 2rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        max-width: 400px;
-        margin: 2rem auto;
-      }
-      .hero-card h2 {
-        margin: 0 0 0.5rem;
-        font-size: 1.25rem;
-      }
-      .btn-primary {
-        background: var(--pink);
-        color: var(--white);
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        font-size: 1rem;
-      }
-      /* Section: Tinder view */
-      .card-stack {
-        position: relative;
-        width: 300px;
-        height: 450px;
-        margin: 2rem auto;
-      }
-      .card {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: var(--white);
-        border-radius: 1rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      .card img {
-        flex: 1;
-        object-fit: cover;
-      }
-      .card .info {
-        padding: 1rem;
-      }
-      .actions {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 1rem;
-      }
-      .actions button {
-        background: var(--white);
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-      /* Section: List view */
-      .list-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-      }
-      .list-table th,
-      .list-table td {
-        padding: 0.75rem;
-        text-align: left;
-        border-bottom: 1px solid var(--gray-medium);
-      }
-      .list-table th {
-        background: var(--white);
-      }
-      .list-table tr:hover {
-        background: var(--white);
-      }
-      /* Responsive nav for sidebar links */
-      @media (min-width: 768px) {
-        .sidebar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 200px;
-          height: 100%;
-          background: var(--white);
-          box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-          padding-top: 4rem;
-        }
-        .sidebar a {
-          display: block;
-          padding: 0.75rem 1rem;
-          color: var(--gray-dark);
-          text-decoration: none;
-        }
-        .sidebar a.active {
-          background: var(--gray-light);
-          color: var(--pink);
-        }
-        .container {
-          margin-left: 220px;
-        }
-      }
-    </style>
+    <title>DateNight.io - Home</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <div class="logo">DateNight.io</div>
-      <nav class="top-nav">
-        <a href="#" data-section="netflix" class="active">Netflix</a>
-        <a href="#" data-section="tinder">Tinder</a>
-        <a href="#" data-section="list">List</a>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li class="active">
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
       </nav>
-    </header>
-    <div class="sidebar">
-      <a href="#" data-section="netflix" class="active">Home</a>
-      <a href="#" data-section="tinder">Tinder View</a>
-      <a href="#" data-section="list">List View</a>
-      <a href="#" data-section="messages">Messages</a>
-      <a href="#" data-section="favorites">Favorites</a>
-      <a href="#" data-section="settings">Settings</a>
-      <a href="#" data-section="preferences">Preferences</a>
-      <a href="#" data-section="profile">Profile</a>
-    </div>
 
-    <div class="container">
-      <!-- Netflix/Home Section -->
-      <section id="netflix" class="active">
-        <div class="hero-card">
-          <h2>Welcome to DateNight.io</h2>
-          <p>Find your perfect date night experience</p>
-          <button class="btn-primary">Browse Now</button>
-        </div>
-        <h3>Featured Categories</h3>
-        <div style="display: flex; gap: 1rem">
-          <div
-            style="
-              flex: 1;
-              background: var(--pink);
-              color: white;
-              padding: 1rem;
-              border-radius: 1rem;
-            "
-          >
-            Massage
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
           </div>
-          <div style="flex: 1; background: white; padding: 1rem; border-radius: 1rem">Escort</div>
-          <div style="flex: 1; background: white; padding: 1rem; border-radius: 1rem">Dance</div>
-          <div style="flex: 1; background: white; padding: 1rem; border-radius: 1rem">Events</div>
-        </div>
-      </section>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
 
-      <!-- Tinder Section -->
-      <section id="tinder">
-        <div class="card-stack">
-          <div class="card">
-            <img src="https://via.placeholder.com/300x300" alt="Massage Therapy" />
-            <div class="info">
-              <strong>Professional Massage</strong><br />
-              Oslo, Norway
+        <div class="container">
+          <!-- Welcome Card -->
+          <div class="eui-card welcome-card">
+            <div class="eui-card-body text-center">
+              <h1>Welcome to DateNight.io</h1>
+              <p>Find your perfect date night experience with our 5,000+ verified providers</p>
+              <div class="online-stats">
+                <span class="online-badge"
+                  ><i class="fas fa-circle"></i> 328 providers online now</span
+                >
+                <span class="online-badge"><i class="fas fa-users"></i> 1,245 active users</span>
+                <span class="online-badge"
+                  ><i class="fas fa-map-marker-alt"></i> 42 cities worldwide</span
+                >
+              </div>
+              <div class="welcome-actions">
+                <a href="netflix-view.html" class="eui-btn eui-btn-primary">Browse Experiences</a>
+                <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">Create Your Ad</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Options -->
+          <div class="view-options">
+            <h2>Choose Your Browsing Style</h2>
+            <div class="view-cards">
+              <a href="netflix-view.html" class="eui-card view-card">
+                <div class="eui-card-body">
+                  <div class="view-icon">
+                    <i class="fas fa-th-large"></i>
+                  </div>
+                  <h3>Netflix View</h3>
+                  <p>Browse experiences in a grid layout</p>
+                </div>
+              </a>
+
+              <a href="tinder-view.html" class="eui-card view-card">
+                <div class="eui-card-body">
+                  <div class="view-icon">
+                    <i class="fas fa-fire"></i>
+                  </div>
+                  <h3>Tinder View</h3>
+                  <p>Swipe through experiences one by one</p>
+                </div>
+              </a>
+
+              <a href="list-view.html" class="eui-card view-card">
+                <div class="eui-card-body">
+                  <div class="view-icon">
+                    <i class="fas fa-list"></i>
+                  </div>
+                  <h3>List View</h3>
+                  <p>See experiences in a detailed list</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Featured Categories -->
+          <div class="featured-section">
+            <h2>Featured Categories</h2>
+            <div class="categories">
+              <a href="netflix-view.html?category=massage" class="eui-card category-card">
+                <div class="eui-card-body">
+                  <i class="fas fa-spa"></i>
+                  <h3>Massage</h3>
+                </div>
+              </a>
+
+              <a href="netflix-view.html?category=escort" class="eui-card category-card">
+                <div class="eui-card-body">
+                  <i class="fas fa-glass-cheers"></i>
+                  <h3>Escort</h3>
+                </div>
+              </a>
+
+              <a href="netflix-view.html?category=dance" class="eui-card category-card">
+                <div class="eui-card-body">
+                  <i class="fas fa-music"></i>
+                  <h3>Dance</h3>
+                </div>
+              </a>
+
+              <a href="netflix-view.html?category=events" class="eui-card category-card">
+                <div class="eui-card-body">
+                  <i class="fas fa-calendar-alt"></i>
+                  <h3>Events</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- How It Works -->
+          <div class="how-it-works">
+            <h2>How DateNight.io Works</h2>
+            <div class="steps">
+              <div class="step">
+                <div class="step-icon">
+                  <i class="fas fa-search"></i>
+                </div>
+                <h3>Browse</h3>
+                <p>Explore a variety of date night experiences from verified providers</p>
+              </div>
+
+              <div class="step">
+                <div class="step-icon">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <h3>Connect</h3>
+                <p>Message providers directly to arrange your perfect date</p>
+              </div>
+
+              <div class="step">
+                <div class="step-icon">
+                  <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Pay Securely</h3>
+                <p>Use our crypto wallet for private, secure transactions</p>
+              </div>
+
+              <div class="step">
+                <div class="step-icon">
+                  <i class="fas fa-star"></i>
+                </div>
+                <h3>Enjoy & Review</h3>
+                <p>Experience your perfect date night and share your feedback</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonials -->
+          <div class="testimonials">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-carousel">
+              <div class="eui-card testimonial-card">
+                <div class="eui-card-body">
+                  <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    DateNight.io completely changed how I find companions. The crypto payment option
+                    gives me the privacy I need, and the verified providers are top-notch.
+                  </p>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar">JM</div>
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">James M.</div>
+                      <div class="testimonial-location">London, UK</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="eui-card testimonial-card">
+                <div class="eui-card-body">
+                  <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    As a provider, I love how easy it is to connect with clients. The messaging
+                    system is secure, and I get paid quickly through the crypto wallet.
+                  </p>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar">SM</div>
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Sophia M.</div>
+                      <div class="testimonial-location">Barcelona, Spain</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="eui-card testimonial-card">
+                <div class="eui-card-body">
+                  <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    I travel frequently for business, and DateNight.io has been a game-changer. I
+                    can find quality companions in any city, and the Tinder-style swiping makes it
+                    fun!
+                  </p>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar">RK</div>
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Robert K.</div>
+                      <div class="testimonial-location">New York, USA</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="actions">
-          <button>&#10006;</button>
-          <button>&#9733;</button>
-          <button>&#10084;</button>
-        </div>
-      </section>
 
-      <!-- List Section -->
-      <section id="list">
-        <h3>Browse Experiences</h3>
-        <table class="list-table">
-          <thead>
-            <tr>
-              <th>Profile</th>
-              <th>Location</th>
-              <th>Rating</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Professional Massage</td>
-              <td>Oslo, Norway</td>
-              <td>★★★★☆ (24)</td>
-              <td>1500 NOK</td>
-            </tr>
-            <tr>
-              <td>Elegant Escort</td>
-              <td>Stockholm, Sweden</td>
-              <td>★★★★☆ (18)</td>
-              <td>2500 SEK</td>
-            </tr>
-            <tr>
-              <td>Exotic Dance</td>
-              <td>Copenhagen, Denmark</td>
-              <td>★★★★★ (32)</td>
-              <td>2000 DKK</td>
-            </tr>
-            <tr>
-              <td>Event Planner</td>
-              <td>Miami, FL</td>
-              <td>★★★★☆ (27)</td>
-              <td>$300</td>
-            </tr>
-            <tr>
-              <td>Photographer</td>
-              <td>New York, NY</td>
-              <td>★★★★☆ (21)</td>
-              <td>$250</td>
-            </tr>
-            <tr>
-              <td>Makeup Artist</td>
-              <td>Los Angeles, CA</td>
-              <td>★★★★☆ (19)</td>
-              <td>$200</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- Placeholder Sections -->
-      <section id="messages">
-        <h3>Messages</h3>
-        <p>Chat interface preview.</p>
-      </section>
-      <section id="favorites">
-        <h3>Favorites</h3>
-        <p>Saved items preview.</p>
-      </section>
-      <section id="settings">
-        <h3>Settings</h3>
-        <p>Account & preferences controls.</p>
-      </section>
-      <section id="preferences">
-        <h3>Preferences</h3>
-        <p>Filter & preferences panel.</p>
-      </section>
-      <section id="profile">
-        <h3>Profile</h3>
-        <p>User profile overview.</p>
-      </section>
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html" class="active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
     </div>
 
-    <script>
-      const links = document.querySelectorAll('nav.top-nav a, .sidebar a');
-      const sections = document.querySelectorAll('section');
-      links.forEach(link =>
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const target = link.getAttribute('data-section');
-          sections.forEach(s =>
-            s.id === target ? s.classList.add('active') : s.classList.remove('active')
-          );
-          links.forEach(l => l.classList.remove('active'));
-          links.forEach(l => {
-            if (l.getAttribute('data-section') === target) l.classList.add('active');
-          });
-        })
-      );
-    </script>
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li class="active">
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>

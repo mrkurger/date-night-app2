@@ -119,7 +119,7 @@
 // Animation Mixins
 @mixin animate(
   $animation,
-  $duration: $transition-normal,
+  $duration: $*.$transition-normal,
   $timing: $transition-timing-default,
   $delay: 0s
 ) {
@@ -180,15 +180,15 @@
 
 // Duration Modifiers
 .duration-fast {
-  animation-duration: $transition-fast;
+  animation-duration: $*.$transition-fast;
 }
 
 .duration-normal {
-  animation-duration: $transition-normal;
+  animation-duration: $*.$transition-normal;
 }
 
 .duration-slow {
-  animation-duration: $transition-slow;
+  animation-duration: $*.$transition-slow;
 }
 
 // Timing Function Modifiers
@@ -239,33 +239,33 @@
 
 // Transition Utilities
 .transition-all {
-  transition: all $transition-normal $transition-timing-default;
+  transition: all $*.$transition-normal $transition-timing-default;
 }
 
 .transition-colors {
   transition:
-    background-color $transition-normal $transition-timing-default,
-    border-color $transition-normal $transition-timing-default,
-    color $transition-normal $transition-timing-default,
-    fill $transition-normal $transition-timing-default,
-    stroke $transition-normal $transition-timing-default;
+    background-color $*.$transition-normal $transition-timing-default,
+    border-color $*.$transition-normal $transition-timing-default,
+    color $*.$transition-normal $transition-timing-default,
+    fill $*.$transition-normal $transition-timing-default,
+    stroke $*.$transition-normal $transition-timing-default;
 }
 
 .transition-opacity {
-  transition: opacity $transition-normal $transition-timing-default;
+  transition: opacity $*.$transition-normal $transition-timing-default;
 }
 
 .transition-shadow {
-  transition: box-shadow $transition-normal $transition-timing-default;
+  transition: box-shadow $*.$transition-normal $transition-timing-default;
 }
 
 .transition-transform {
-  transition: transform $transition-normal $transition-timing-default;
+  transition: transform $*.$transition-normal $transition-timing-default;
 }
 
 // Hover Effect Utilities
 .hover-scale {
-  transition: transform $transition-normal $transition-timing-default;
+  transition: transform $*.$transition-normal $transition-timing-default;
 
   &:hover {
     transform: scale(1.05);
@@ -274,17 +274,17 @@
 
 .hover-lift {
   transition:
-    transform $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    transform $*.$transition-normal $transition-timing-default,
+    box-shadow $*.$transition-normal $transition-timing-default;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-lg;
+    box-shadow: $*.$shadow-lg;
   }
 }
 
 .hover-glow {
-  transition: box-shadow $transition-normal $transition-timing-default;
+  transition: box-shadow $*.$transition-normal $transition-timing-default;
 
   &:hover {
     box-shadow: 0 0 15px rgba($color-primary, 0.5);

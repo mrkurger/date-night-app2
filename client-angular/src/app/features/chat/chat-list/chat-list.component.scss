@@ -1,4 +1,4 @@
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 @use '../../../../styles/mixins' as mix;
 
 .chat-list {

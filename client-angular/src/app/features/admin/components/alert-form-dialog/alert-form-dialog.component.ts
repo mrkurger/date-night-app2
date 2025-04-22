@@ -356,6 +356,9 @@ export class AlertFormDialogComponent implements OnInit {
     { value: AlertChannel.WEBHOOK, label: 'Webhook' },
   ];
 
+  // Available variables for message templates
+  variables = 'errorMessage, timestamp, count, endpoint';
+
   errorCategoryOptions = [
     { value: ErrorCategory.NETWORK, label: 'Network' },
     { value: ErrorCategory.AUTHENTICATION, label: 'Authentication' },

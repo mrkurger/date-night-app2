@@ -5,18 +5,18 @@
   $value
     in (
       '0': 0,
-      '1': $spacing-1,
-      '2': $spacing-2,
-      '3': $spacing-3,
-      '4': $spacing-4,
-      '5': $spacing-5,
-      '6': $spacing-6,
-      '8': $spacing-8,
-      '10': $spacing-10,
-      '12': $spacing-12,
-      '16': $spacing-16,
-      '20': $spacing-20,
-      '24': $spacing-24,
+      '1': $*.$spacing-1,
+      '2': $*.$spacing-2,
+      '3': $*.$spacing-3,
+      '4': $*.$spacing-4,
+      '5': $*.$spacing-5,
+      '6': $*.$spacing-6,
+      '8': $*.$spacing-8,
+      '10': $*.$*.$spacing-10,
+      '12': $*.$*.$spacing-12,
+      '16': $*.$*.$spacing-16,
+      '20': $*.$*.$spacing-20,
+      '24': $*.$*.$spacing-24,
       'auto': auto
     )
 {
@@ -184,28 +184,28 @@
 
 // Gap Utilities
 .gap-1 {
-  gap: $spacing-1;
+  gap: $*.$spacing-1;
 }
 .gap-2 {
-  gap: $spacing-2;
+  gap: $*.$spacing-2;
 }
 .gap-3 {
-  gap: $spacing-3;
+  gap: $*.$spacing-3;
 }
 .gap-4 {
-  gap: $spacing-4;
+  gap: $*.$spacing-4;
 }
 .gap-5 {
-  gap: $spacing-5;
+  gap: $*.$spacing-5;
 }
 .gap-6 {
-  gap: $spacing-6;
+  gap: $*.$spacing-6;
 }
 .gap-8 {
-  gap: $spacing-8;
+  gap: $*.$spacing-8;
 }
 .gap-10 {
-  gap: $spacing-10;
+  gap: $*.$*.$spacing-10;
 }
 
 // Text Utilities
@@ -233,19 +233,19 @@
 }
 
 .font-weight-light {
-  font-weight: $font-weight-light;
+  font-weight: $*.$font-weight-light;
 }
 .font-weight-normal {
   font-weight: $font-weight-normal;
 }
 .font-weight-medium {
-  font-weight: $font-weight-medium;
+  font-weight: $*.$font-weight-medium;
 }
 .font-weight-semibold {
-  font-weight: $font-weight-semibold;
+  font-weight: $*.$font-weight-semibold;
 }
 .font-weight-bold {
-  font-weight: $font-weight-bold;
+  font-weight: $*.$font-weight-bold;
 }
 
 .text-truncate {
@@ -414,22 +414,22 @@
   border-radius: 0;
 }
 .rounded-sm {
-  border-radius: $border-radius-sm;
+  border-radius: $*.$border-radius-sm;
 }
 .rounded-md {
-  border-radius: $border-radius-md;
+  border-radius: $*.$border-radius-md;
 }
 .rounded-lg {
-  border-radius: $border-radius-lg;
+  border-radius: $*.$border-radius-lg;
 }
 .rounded-xl {
-  border-radius: $border-radius-xl;
+  border-radius: $*.$border-radius-xl;
 }
 .rounded-2xl {
-  border-radius: $border-radius-2xl;
+  border-radius: $*.$border-radius-2xl;
 }
 .rounded-full {
-  border-radius: $border-radius-full;
+  border-radius: $*.$border-radius-full;
 }
 
 // Shadow Utilities
@@ -437,22 +437,22 @@
   box-shadow: none;
 }
 .shadow-sm {
-  box-shadow: $shadow-sm;
+  box-shadow: $*.$shadow-sm;
 }
 .shadow-md {
-  box-shadow: $shadow-md;
+  box-shadow: $*.$shadow-md;
 }
 .shadow-lg {
-  box-shadow: $shadow-lg;
+  box-shadow: $*.$shadow-lg;
 }
 .shadow-xl {
-  box-shadow: $shadow-xl;
+  box-shadow: $*.$shadow-xl;
 }
 .shadow-2xl {
-  box-shadow: $shadow-2xl;
+  box-shadow: $*.$shadow-2xl;
 }
 .shadow-inner {
-  box-shadow: $shadow-inner;
+  box-shadow: $*.$shadow-inner;
 }
 
 // Position Utilities

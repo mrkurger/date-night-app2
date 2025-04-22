@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Settings</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Settings specific styles */
+      .settings-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .settings-header {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .settings-section {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .settings-section-title {
+        margin-bottom: var(--spacing-4);
+        padding-bottom: var(--spacing-2);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .settings-card {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .settings-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-4);
+      }
+
+      .settings-label {
+        width: 200px;
+        font-weight: var(--font-weight-medium);
+      }
+
+      .settings-control {
+        flex: 1;
+      }
+
+      .settings-help {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+        margin-top: var(--spacing-1);
+      }
+
+      .settings-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-3);
+        margin-top: var(--spacing-4);
+      }
+
+      .danger-zone {
+        background-color: rgba(var(--color-error-rgb), 0.05);
+        border: 1px solid var(--color-error);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-4);
+        margin-top: var(--spacing-6);
+      }
+
+      .danger-zone-title {
+        color: var(--color-error);
+        margin-bottom: var(--spacing-3);
+      }
+
+      .verification-badge {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--color-success-light);
+        color: var(--color-success-dark);
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        margin-left: var(--spacing-2);
+      }
+
+      .verification-badge i {
+        margin-right: var(--spacing-1);
+      }
+
+      .privacy-level {
+        display: flex;
+        gap: var(--spacing-3);
+        margin-top: var(--spacing-3);
+      }
+
+      .privacy-option {
+        flex: 1;
+        border: 1px solid var(--color-light-gray-2);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-3);
+        cursor: pointer;
+        transition: all var(--transition-normal);
+      }
+
+      .privacy-option:hover {
+        border-color: var(--color-primary);
+      }
+
+      .privacy-option.selected {
+        border-color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.05);
+      }
+
+      .privacy-option-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-2);
+      }
+
+      .privacy-option-icon {
+        margin-right: var(--spacing-2);
+        color: var(--color-primary);
+      }
+
+      .privacy-option-title {
+        font-weight: var(--font-weight-medium);
+      }
+
+      .privacy-option-desc {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li class="active">
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="settings-container">
+          <div class="settings-header">
+            <h1>Account Settings</h1>
+            <p>Manage your account preferences and privacy settings</p>
+          </div>
+
+          <!-- Account Settings -->
+          <div class="settings-section">
+            <h2 class="settings-section-title">Account Information</h2>
+
+            <div class="eui-card settings-card">
+              <div class="eui-card-body">
+                <div class="settings-row">
+                  <div class="settings-label">Email</div>
+                  <div class="settings-control">
+                    <div class="eui-input-group">
+                      <input
+                        type="email"
+                        class="eui-form-control"
+                        value="john.doe@example.com"
+                        readonly
+                      />
+                      <div class="eui-input-group-append">
+                        <button class="eui-btn eui-btn-outline-primary">Change</button>
+                      </div>
+                    </div>
+                    <span class="verification-badge">
+                      <i class="fas fa-check-circle"></i> Verified
+                    </span>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Phone Number</div>
+                  <div class="settings-control">
+                    <div class="eui-input-group">
+                      <input
+                        type="tel"
+                        class="eui-form-control"
+                        value="+1 (555) 123-4567"
+                        readonly
+                      />
+                      <div class="eui-input-group-append">
+                        <button class="eui-btn eui-btn-outline-primary">Change</button>
+                      </div>
+                    </div>
+                    <span class="verification-badge">
+                      <i class="fas fa-check-circle"></i> Verified
+                    </span>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Password</div>
+                  <div class="settings-control">
+                    <button class="eui-btn eui-btn-outline-primary">Change Password</button>
+                    <div class="settings-help">Last changed: 45 days ago</div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Two-Factor Authentication</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="2fa-toggle" checked />
+                      <label for="2fa-toggle">Enabled</label>
+                    </div>
+                    <div class="settings-help">Adds an extra layer of security to your account</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Settings -->
+          <div class="settings-section">
+            <h2 class="settings-section-title">Privacy Settings</h2>
+
+            <div class="eui-card settings-card">
+              <div class="eui-card-body">
+                <h3>Privacy Level</h3>
+                <p>Choose how you want to protect your identity on DateNight.io</p>
+
+                <div class="privacy-level">
+                  <div class="privacy-option">
+                    <div class="privacy-option-header">
+                      <div class="privacy-option-icon">
+                        <i class="fas fa-globe"></i>
+                      </div>
+                      <div class="privacy-option-title">Standard</div>
+                    </div>
+                    <div class="privacy-option-desc">
+                      Your profile is visible to all users. Basic information is shown in search
+                      results.
+                    </div>
+                  </div>
+
+                  <div class="privacy-option selected">
+                    <div class="privacy-option-header">
+                      <div class="privacy-option-icon">
+                        <i class="fas fa-user-shield"></i>
+                      </div>
+                      <div class="privacy-option-title">Enhanced</div>
+                    </div>
+                    <div class="privacy-option-desc">
+                      Your profile is only visible to verified users. Limited information in search
+                      results.
+                    </div>
+                  </div>
+
+                  <div class="privacy-option">
+                    <div class="privacy-option-header">
+                      <div class="privacy-option-icon">
+                        <i class="fas fa-lock"></i>
+                      </div>
+                      <div class="privacy-option-title">Maximum</div>
+                    </div>
+                    <div class="privacy-option-desc">
+                      Your profile is hidden from search. Only visible to users you've messaged.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Profile Visibility</div>
+                  <div class="settings-control">
+                    <select class="eui-form-control">
+                      <option>Everyone</option>
+                      <option selected>Verified Users Only</option>
+                      <option>Premium Users Only</option>
+                      <option>Nobody (Hidden)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Activity Status</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="activity-toggle" checked />
+                      <label for="activity-toggle">Show when I'm online</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Read Receipts</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="read-receipts-toggle" checked />
+                      <label for="read-receipts-toggle">Show when I've read messages</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Location Sharing</div>
+                  <div class="settings-control">
+                    <select class="eui-form-control">
+                      <option>Exact Location</option>
+                      <option selected>City Only</option>
+                      <option>Region/State Only</option>
+                      <option>Country Only</option>
+                      <option>Hidden</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="settings-actions">
+                  <button class="eui-btn eui-btn-primary">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Settings -->
+          <div class="settings-section">
+            <h2 class="settings-section-title">Notification Settings</h2>
+
+            <div class="eui-card settings-card">
+              <div class="eui-card-body">
+                <div class="settings-row">
+                  <div class="settings-label">Email Notifications</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="email-toggle" checked />
+                      <label for="email-toggle">Enabled</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">SMS Notifications</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="sms-toggle" />
+                      <label for="sms-toggle">Disabled</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Push Notifications</div>
+                  <div class="settings-control">
+                    <div class="eui-toggle-switch">
+                      <input type="checkbox" id="push-toggle" checked />
+                      <label for="push-toggle">Enabled</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Notification Types</div>
+                  <div class="settings-control">
+                    <div class="eui-checkbox">
+                      <input type="checkbox" id="messages-check" checked />
+                      <label for="messages-check">New Messages</label>
+                    </div>
+
+                    <div class="eui-checkbox">
+                      <input type="checkbox" id="favorites-check" checked />
+                      <label for="favorites-check">Favorite Updates</label>
+                    </div>
+
+                    <div class="eui-checkbox">
+                      <input type="checkbox" id="matches-check" checked />
+                      <label for="matches-check">New Matches</label>
+                    </div>
+
+                    <div class="eui-checkbox">
+                      <input type="checkbox" id="payments-check" checked />
+                      <label for="payments-check">Payment Confirmations</label>
+                    </div>
+
+                    <div class="eui-checkbox">
+                      <input type="checkbox" id="promotions-check" />
+                      <label for="promotions-check">Promotions and Offers</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-actions">
+                  <button class="eui-btn eui-btn-primary">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Settings -->
+          <div class="settings-section">
+            <h2 class="settings-section-title">Payment Settings</h2>
+
+            <div class="eui-card settings-card">
+              <div class="eui-card-body">
+                <div class="settings-row">
+                  <div class="settings-label">Default Currency</div>
+                  <div class="settings-control">
+                    <select class="eui-form-control">
+                      <option selected>USD - US Dollar</option>
+                      <option>EUR - Euro</option>
+                      <option>GBP - British Pound</option>
+                      <option>JPY - Japanese Yen</option>
+                      <option>BTC - Bitcoin</option>
+                      <option>ETH - Ethereum</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Default Payment Method</div>
+                  <div class="settings-control">
+                    <select class="eui-form-control">
+                      <option>Credit/Debit Card</option>
+                      <option selected>Cryptocurrency</option>
+                      <option>Bank Transfer</option>
+                      <option>PayPal</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Transaction Privacy</div>
+                  <div class="settings-control">
+                    <select class="eui-form-control">
+                      <option>Standard</option>
+                      <option selected>Enhanced (Recommended)</option>
+                      <option>Maximum</option>
+                    </select>
+                    <div class="settings-help">
+                      Enhanced privacy uses additional measures to protect your payment information
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-label">Billing Address</div>
+                  <div class="settings-control">
+                    <button class="eui-btn eui-btn-outline-primary">Add Billing Address</button>
+                  </div>
+                </div>
+
+                <div class="settings-actions">
+                  <button class="eui-btn eui-btn-primary">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="danger-zone">
+            <h3 class="danger-zone-title">Danger Zone</h3>
+            <p>These actions are irreversible. Please proceed with caution.</p>
+
+            <div class="settings-row">
+              <div class="settings-label">Delete All Messages</div>
+              <div class="settings-control">
+                <button class="eui-btn eui-btn-outline-error">Delete All Messages</button>
+              </div>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-label">Clear Payment History</div>
+              <div class="settings-control">
+                <button class="eui-btn eui-btn-outline-error">Clear History</button>
+              </div>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-label">Deactivate Account</div>
+              <div class="settings-control">
+                <button class="eui-btn eui-btn-outline-error">Deactivate Account</button>
+                <div class="settings-help">
+                  Your account will be hidden but can be reactivated later
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-label">Delete Account</div>
+              <div class="settings-control">
+                <button class="eui-btn eui-btn-error">Delete Account Permanently</button>
+                <div class="settings-help">
+                  This action cannot be undone. All your data will be permanently deleted.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="messages.html">
+            <i class="fas fa-comment"></i>
+            <span>Messages</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li class="active">
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>

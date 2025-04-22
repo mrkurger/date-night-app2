@@ -1,14 +1,15 @@
-@import '../../../../../app/core/design/design-tokens';
+@use '../../../../core/design/emerald-tokens' as emerald;
 @use 'sass:color';
+@use '../../../../../app/core/design/design-tokens' as *;
 
 // Emerald AppCard Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/AppCard
 
 // Define missing variables
-$primary: $primary-500;
-$danger: $error;
-$danger-light: $error-light;
-$danger-dark: $error-dark;
+$primary: $color-primary;
+$danger: $color-error;
+$danger-light: color.adjust($color-error, $lightness: 20%);
+$danger-dark: color.adjust($color-error, $lightness: -20%);
 
 .emerald-app-card {
   position: relative;
@@ -22,7 +23,7 @@ $danger-dark: $error-dark;
     box-shadow 0.3s ease;
   cursor: pointer;
   height: 100%;
-  background-color: $neutral-100;
+  background-color: emerald.$color-white;
 
   &:hover {
     transform: translateY(-4px);
@@ -53,13 +54,13 @@ $danger-dark: $error-dark;
     z-index: 2;
 
     &--online {
-      background-color: rgba($success, 0.9);
-      color: $neutral-100;
+      background-color: rgba(emerald.$color-success, 0.9);
+      color: emerald.$color-white;
     }
 
     &--offline {
       background-color: rgba($danger, 0.9);
-      color: $neutral-100;
+      color: emerald.$color-white;
     }
   }
 
@@ -71,11 +72,11 @@ $danger-dark: $error-dark;
     margin-right: 6px;
 
     .emerald-app-card__status-label--online & {
-      background-color: $neutral-100;
+      background-color: emerald.$color-white;
     }
 
     .emerald-app-card__status-label--offline & {
-      background-color: $neutral-100;
+      background-color: emerald.$color-white;
     }
   }
 
@@ -94,14 +95,14 @@ $danger-dark: $error-dark;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: rgba($neutral-100, 0.5);
+    background-color: rgba(emerald.$color-white, 0.5);
     cursor: pointer;
     transition:
       background-color 0.2s ease,
       transform 0.2s ease;
 
     &--active {
-      background-color: $neutral-100;
+      background-color: emerald.$color-white;
       transform: scale(1.2);
     }
   }
@@ -114,8 +115,8 @@ $danger-dark: $error-dark;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: rgba($neutral-900, 0.6);
-    color: $neutral-100;
+    background-color: rgba(emerald.$color-black, 0.6);
+    color: emerald.$color-white;
     border: none;
     display: flex;
     align-items: center;
@@ -125,7 +126,7 @@ $danger-dark: $error-dark;
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba($neutral-900, 0.8);
+      background-color: rgba(emerald.$color-black, 0.8);
     }
 
     &--prev {
@@ -144,7 +145,7 @@ $danger-dark: $error-dark;
     left: 0;
     right: 0;
     height: 30%;
-    background: linear-gradient(to top, rgba($neutral-900, 0.8), rgba($neutral-900, 0));
+    background: linear-gradient(to top, rgba(emerald.$color-black, 0.8), rgba(emerald.$color-black, 0));
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -155,7 +156,7 @@ $danger-dark: $error-dark;
   }
 
   &__content {
-    color: $neutral-100;
+    color: emerald.$color-white;
   }
 
   &__title {
@@ -214,7 +215,7 @@ $danger-dark: $error-dark;
     height: 48px;
     border-radius: 50%;
     background-color: $primary;
-    color: $neutral-100;
+    color: emerald.$color-white;
     border: none;
     display: flex;
     align-items: center;
@@ -278,7 +279,7 @@ $danger-dark: $error-dark;
 
     &--left {
       background-color: $danger;
-      color: $neutral-100;
+      color: emerald.$color-white;
 
       &:hover {
         background-color: color.adjust($danger, $lightness: -10%);
@@ -290,11 +291,11 @@ $danger-dark: $error-dark;
     }
 
     &--right {
-      background-color: $success;
-      color: $neutral-100;
+      background-color: emerald.$color-success;
+      color: emerald.$color-white;
 
       &:hover {
-        background-color: color.adjust($success, $lightness: -10%);
+        background-color: color.adjust(emerald.$color-success, $lightness: -10%);
       }
 
       i {
@@ -355,14 +356,14 @@ $danger-dark: $error-dark;
     .emerald-app-card__content-overlay {
       position: relative;
       height: 100%;
-      background: $neutral-100;
+      background: emerald.$color-white;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       padding: 16px;
     }
 
     .emerald-app-card__content {
-      color: $neutral-900;
+      color: emerald.$color-black;
     }
 
     .emerald-app-card__fab {
@@ -386,13 +387,13 @@ $danger-dark: $error-dark;
       .emerald-app-card__content-overlay {
         position: absolute;
         height: 40%;
-        background: linear-gradient(to top, rgba($neutral-900, 0.8), rgba($neutral-900, 0));
+        background: linear-gradient(to top, rgba(emerald.$color-black, 0.8), rgba(emerald.$color-black, 0));
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
       }
 
       .emerald-app-card__content {
-        color: $neutral-100;
+        color: emerald.$color-white;
       }
     }
   }

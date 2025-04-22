@@ -1,15 +1,16 @@
+@use '../../../core/design/typography-mixins' as typography;
 @use 'src/app/core/design/main' as ds;
 
 .emerald-example {
   padding: ds.$spacing-4;
 
   h2 {
-    @include ds.heading-2;
+    @include typography.heading-2;
     margin-bottom: ds.$spacing-4;
   }
 
   h3 {
-    @include ds.heading-3;
+    @include typography.heading-3;
     margin-bottom: ds.$spacing-3;
     color: ds.$color-dark-gray-3;
   }

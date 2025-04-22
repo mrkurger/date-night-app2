@@ -397,4 +397,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Reload room to get updated settings
     this.loadRoom();
   }
+
+  /**
+   * Navigate back to the chat list
+   */
+  navigateBack(): void {
+    this.router.navigate(['/chat']);
+  }
 }

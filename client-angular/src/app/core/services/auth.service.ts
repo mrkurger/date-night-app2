@@ -10,9 +10,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { User, LoginDTO, RegisterDTO, AuthResponse } from '../models/user.interface';
+import {
+  User,
+  LoginDTO,
+  RegisterDTO,
+  AuthResponse,
+  NotificationSettings,
+  PrivacySettings,
+} from '../models/user.interface';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -21,7 +28,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  private tokenExpirationTimer: any;
+  private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
 
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -160,18 +167,18 @@ export class AuthService {
    * Validate the current token
    */
   private validateToken(): Observable<User> {
-    return this.http.get<any>(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(
-      tap(response => {
+    return this.http.get<{ user: User }>(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(
+      map(response => {
         if (response && response.user) {
           const user = response.user;
           // Add id property as alias to _id for compatibility
           if (user && user._id) {
-            user.id = user._id;
+            (user as any).id = user._id as string;
           }
           this.currentUserSubject.next(user);
           return user;
         }
-        return response;
+        throw new Error('Invalid token');
       }),
       catchError(error =>
         // Don't call logout here to avoid infinite loop
@@ -225,9 +232,12 @@ export class AuthService {
    * Update user profile information
    * @param profileData User profile data to update
    */
-  updateProfile(profileData: any): Observable<any> {
+  updateProfile(profileData: Partial<User>): Observable<{ user: User; message: string }> {
     return this.http
-      .put<any>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
+      .put<{
+        user: User;
+        message: string;
+      }>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
       .pipe(
         tap(response => {
           // Update the current user with new profile data
@@ -247,19 +257,30 @@ export class AuthService {
    * Change user password
    * @param passwordData Object containing currentPassword and newPassword
    */
-  changePassword(passwordData: { currentPassword: string; newPassword: string }): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/password`, passwordData, { withCredentials: true });
+  changePassword(passwordData: {
+    currentPassword: string;
+    newPassword: string;
+  }): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(`${this.apiUrl}/password`, passwordData, {
+      withCredentials: true,
+    });
   }
 
   /**
    * Update user notification settings
    * @param notificationSettings Notification preferences
    */
-  updateNotificationSettings(notificationSettings: any): Observable<any> {
+  updateNotificationSettings(
+    notificationSettings: NotificationSettings
+  ): Observable<{ user: User; message: string }> {
     return this.http
-      .put<any>(`${this.apiUrl}/notification-settings`, notificationSettings, {
-        withCredentials: true,
-      })
+      .put<{ user: User; message: string }>(
+        `${this.apiUrl}/notification-settings`,
+        notificationSettings,
+        {
+          withCredentials: true,
+        }
+      )
       .pipe(
         tap(response => {
           // Update the current user with new notification settings
@@ -282,9 +303,14 @@ export class AuthService {
    * Update user privacy settings
    * @param privacySettings Privacy preferences
    */
-  updatePrivacySettings(privacySettings: any): Observable<any> {
+  updatePrivacySettings(
+    privacySettings: PrivacySettings
+  ): Observable<{ user: User; message: string }> {
     return this.http
-      .put<any>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
+      .put<{
+        user: User;
+        message: string;
+      }>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
       .pipe(
         tap(response => {
           // Update the current user with new privacy settings
@@ -306,15 +332,17 @@ export class AuthService {
   /**
    * Delete user account
    */
-  deleteAccount(): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/account`, { withCredentials: true }).pipe(
-      tap(() => {
-        // Clear user state after successful deletion
-        this.currentUserSubject.next(null);
-        if (this.tokenExpirationTimer) {
-          clearTimeout(this.tokenExpirationTimer);
-        }
-      })
-    );
+  deleteAccount(): Observable<{ message: string }> {
+    return this.http
+      .delete<{ message: string }>(`${this.apiUrl}/account`, { withCredentials: true })
+      .pipe(
+        tap(() => {
+          // Clear user state after successful deletion
+          this.currentUserSubject.next(null);
+          if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+          }
+        })
+      );
   }
 }

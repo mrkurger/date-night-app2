@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Create Ad</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Create Ad specific styles */
+      .create-ad-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .create-ad-header {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .create-ad-section {
+        margin-bottom: var(--spacing-6);
+      }
+
+      .create-ad-section-title {
+        margin-bottom: var(--spacing-4);
+        padding-bottom: var(--spacing-2);
+        border-bottom: 1px solid var(--color-light-gray-2);
+      }
+
+      .create-ad-card {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .form-row {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .form-help {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+        margin-top: var(--spacing-1);
+      }
+
+      .image-upload-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-3);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .image-upload-item {
+        position: relative;
+        height: 150px;
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        background-color: var(--color-light-gray-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .image-upload-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-upload-item.empty {
+        border: 2px dashed var(--color-light-gray-3);
+      }
+
+      .image-upload-icon {
+        font-size: 2rem;
+        color: var(--color-dark-gray-1);
+      }
+
+      .image-upload-actions {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        gap: 5px;
+      }
+
+      .image-upload-action {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--border-radius-full);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: var(--color-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: var(--font-size-sm);
+      }
+
+      .image-upload-action:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .tag-input-container {
+        margin-bottom: var(--spacing-4);
+      }
+
+      .tag-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+        margin-top: var(--spacing-2);
+      }
+
+      .tag-chip {
+        display: flex;
+        align-items: center;
+        background-color: var(--color-light-gray-1);
+        padding: var(--spacing-1) var(--spacing-3);
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-sm);
+      }
+
+      .tag-chip-remove {
+        margin-left: var(--spacing-2);
+        cursor: pointer;
+        color: var(--color-dark-gray-1);
+      }
+
+      .tag-chip-remove:hover {
+        color: var(--color-error);
+      }
+
+      .price-options {
+        display: flex;
+        gap: var(--spacing-3);
+        margin-bottom: var(--spacing-4);
+      }
+
+      .price-option {
+        flex: 1;
+        border: 1px solid var(--color-light-gray-2);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-3);
+        cursor: pointer;
+        transition: all var(--transition-normal);
+      }
+
+      .price-option:hover {
+        border-color: var(--color-primary);
+      }
+
+      .price-option.selected {
+        border-color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.05);
+      }
+
+      .price-option-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-2);
+      }
+
+      .price-option-icon {
+        margin-right: var(--spacing-2);
+        color: var(--color-primary);
+      }
+
+      .price-option-title {
+        font-weight: var(--font-weight-medium);
+      }
+
+      .price-option-desc {
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .price-range-container {
+        display: flex;
+        gap: var(--spacing-3);
+        align-items: center;
+      }
+
+      .price-range-separator {
+        color: var(--color-dark-gray-1);
+      }
+
+      .create-ad-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--spacing-6);
+      }
+
+      .preview-card {
+        margin-top: var(--spacing-4);
+        max-width: 350px;
+      }
+
+      .preview-image {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: var(--border-radius-md);
+        border-top-right-radius: var(--border-radius-md);
+      }
+
+      .preview-title {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .preview-price {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .preview-description {
+        margin-bottom: var(--spacing-3);
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .preview-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .preview-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+        margin-top: var(--spacing-3);
+      }
+
+      .preview-tag {
+        background-color: var(--color-light-gray-1);
+        color: var(--color-dark-gray-2);
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-xs);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="create-ad-container">
+          <div class="create-ad-header">
+            <h1>Create New Ad</h1>
+            <p>Post your date night experience to find the perfect companion</p>
+          </div>
+
+          <!-- Basic Information -->
+          <div class="create-ad-section">
+            <h2 class="create-ad-section-title">Basic Information</h2>
+
+            <div class="eui-card create-ad-card">
+              <div class="eui-card-body">
+                <div class="form-row">
+                  <label for="ad-title" class="eui-form-label">Title</label>
+                  <input
+                    type="text"
+                    id="ad-title"
+                    class="eui-form-control"
+                    placeholder="e.g. Business Dinner Companion Needed"
+                    value="Business Dinner Companion Needed"
+                  />
+                  <div class="form-help">
+                    Create a clear, concise title that describes what you're looking for
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label for="ad-category" class="eui-form-label">Category</label>
+                  <select id="ad-category" class="eui-form-control">
+                    <option>Select a category</option>
+                    <option selected>Dinner Date</option>
+                    <option>Cultural Event</option>
+                    <option>Business Event</option>
+                    <option>Travel Companion</option>
+                    <option>Massage</option>
+                    <option>Escort</option>
+                    <option>Dance</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <label for="ad-description" class="eui-form-label">Description</label>
+                  <textarea
+                    id="ad-description"
+                    class="eui-form-control"
+                    rows="5"
+                    placeholder="Describe what you're looking for in detail..."
+                  >
+I'm looking for an elegant, intelligent companion to join me for an important business dinner with clients next Friday at Le Bernardin in New York. The dinner will last approximately 3 hours (7-10 PM). I need someone who is well-spoken, knowledgeable about fine dining, and can engage in meaningful conversation about art, culture, and current events. Professional attire required.</textarea
+                  >
+                  <div class="form-help">
+                    Be specific about your expectations, timing, and requirements
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label for="ad-location" class="eui-form-label">Location</label>
+                  <input
+                    type="text"
+                    id="ad-location"
+                    class="eui-form-control"
+                    placeholder="e.g. New York, NY"
+                    value="New York, NY"
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label for="ad-date" class="eui-form-label">Date & Time</label>
+                  <div class="eui-row">
+                    <div class="eui-col-md-6">
+                      <input type="date" id="ad-date" class="eui-form-control" value="2023-09-15" />
+                    </div>
+                    <div class="eui-col-md-6">
+                      <input type="time" id="ad-time" class="eui-form-control" value="19:00" />
+                    </div>
+                  </div>
+                  <div class="form-help">When will this date take place?</div>
+                </div>
+
+                <div class="form-row">
+                  <label for="ad-duration" class="eui-form-label">Duration</label>
+                  <select id="ad-duration" class="eui-form-control">
+                    <option>Select duration</option>
+                    <option>1 hour</option>
+                    <option>2 hours</option>
+                    <option selected>3 hours</option>
+                    <option>4 hours</option>
+                    <option>5 hours</option>
+                    <option>6 hours</option>
+                    <option>Full day (8 hours)</option>
+                    <option>Overnight (12 hours)</option>
+                    <option>Weekend (48 hours)</option>
+                    <option>Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Media -->
+          <div class="create-ad-section">
+            <h2 class="create-ad-section-title">Photos & Media</h2>
+
+            <div class="eui-card create-ad-card">
+              <div class="eui-card-body">
+                <p>Add photos of the venue, event, or experience (up to 5 images)</p>
+
+                <div class="image-upload-container">
+                  <!-- Image 1 (with preview) -->
+                  <div class="image-upload-item">
+                    <img
+                      src="https://via.placeholder.com/150x150?text=Restaurant"
+                      alt="Restaurant"
+                    />
+                    <div class="image-upload-actions">
+                      <div class="image-upload-action">
+                        <i class="fas fa-times"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Empty upload slots -->
+                  <div class="image-upload-item empty">
+                    <div class="image-upload-icon">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+
+                  <div class="image-upload-item empty">
+                    <div class="image-upload-icon">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+
+                  <div class="image-upload-item empty">
+                    <div class="image-upload-icon">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+
+                  <div class="image-upload-item empty">
+                    <div class="image-upload-icon">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-help">
+                  Add high-quality images that showcase the experience. First image will be the
+                  cover photo.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details & Preferences -->
+          <div class="create-ad-section">
+            <h2 class="create-ad-section-title">Details & Preferences</h2>
+
+            <div class="eui-card create-ad-card">
+              <div class="eui-card-body">
+                <div class="form-row">
+                  <label class="eui-form-label">Tags</label>
+                  <div class="tag-input-container">
+                    <div class="eui-input-group">
+                      <input
+                        type="text"
+                        class="eui-form-control"
+                        placeholder="Add tags (press Enter after each tag)"
+                      />
+                      <div class="eui-input-group-append">
+                        <button class="eui-btn eui-btn-outline-primary">Add</button>
+                      </div>
+                    </div>
+
+                    <div class="tag-chips">
+                      <div class="tag-chip">
+                        Business
+                        <span class="tag-chip-remove">
+                          <i class="fas fa-times"></i>
+                        </span>
+                      </div>
+                      <div class="tag-chip">
+                        Fine Dining
+                        <span class="tag-chip-remove">
+                          <i class="fas fa-times"></i>
+                        </span>
+                      </div>
+                      <div class="tag-chip">
+                        Professional
+                        <span class="tag-chip-remove">
+                          <i class="fas fa-times"></i>
+                        </span>
+                      </div>
+                      <div class="tag-chip">
+                        Elegant
+                        <span class="tag-chip-remove">
+                          <i class="fas fa-times"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-help">Add relevant tags to help users find your ad</div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Preferred Gender</label>
+                  <div class="eui-radio">
+                    <input type="radio" id="gender-female" name="gender" checked />
+                    <label for="gender-female">Female</label>
+                  </div>
+                  <div class="eui-radio">
+                    <input type="radio" id="gender-male" name="gender" />
+                    <label for="gender-male">Male</label>
+                  </div>
+                  <div class="eui-radio">
+                    <input type="radio" id="gender-any" name="gender" />
+                    <label for="gender-any">Any</label>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Age Range</label>
+                  <div class="eui-row">
+                    <div class="eui-col-md-6">
+                      <input
+                        type="number"
+                        class="eui-form-control"
+                        placeholder="Min Age"
+                        value="25"
+                      />
+                    </div>
+                    <div class="eui-col-md-6">
+                      <input
+                        type="number"
+                        class="eui-form-control"
+                        placeholder="Max Age"
+                        value="35"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Requirements</label>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="req-verified" checked />
+                    <label for="req-verified">Verified Profiles Only</label>
+                  </div>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="req-reviews" checked />
+                    <label for="req-reviews">Has Reviews</label>
+                  </div>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="req-photo" />
+                    <label for="req-photo">Has Profile Photo</label>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Additional Requirements</label>
+                  <textarea
+                    class="eui-form-control"
+                    rows="3"
+                    placeholder="Any specific requirements or preferences..."
+                  >
+Must be comfortable in formal settings and able to engage in conversation about art, business, and current events. Professional attire required (formal dress). Fluent English speaker preferred.</textarea
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing -->
+          <div class="create-ad-section">
+            <h2 class="create-ad-section-title">Pricing</h2>
+
+            <div class="eui-card create-ad-card">
+              <div class="eui-card-body">
+                <div class="form-row">
+                  <label class="eui-form-label">Pricing Type</label>
+
+                  <div class="price-options">
+                    <div class="price-option selected">
+                      <div class="price-option-header">
+                        <div class="price-option-icon">
+                          <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="price-option-title">Fixed Price</div>
+                      </div>
+                      <div class="price-option-desc">Set a specific price for this date</div>
+                    </div>
+
+                    <div class="price-option">
+                      <div class="price-option-header">
+                        <div class="price-option-icon">
+                          <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="price-option-title">Price Range</div>
+                      </div>
+                      <div class="price-option-desc">Set a minimum and maximum price</div>
+                    </div>
+
+                    <div class="price-option">
+                      <div class="price-option-header">
+                        <div class="price-option-icon">
+                          <i class="fas fa-comments-dollar"></i>
+                        </div>
+                        <div class="price-option-title">Negotiable</div>
+                      </div>
+                      <div class="price-option-desc">Discuss price with potential companions</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Price</label>
+                  <div class="eui-input-group">
+                    <div class="eui-input-group-prepend">
+                      <span class="eui-input-group-text">$</span>
+                    </div>
+                    <input type="number" class="eui-form-control" placeholder="0.00" value="300" />
+                  </div>
+                  <div class="form-help">Enter the amount you're willing to pay for this date</div>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Currency</label>
+                  <select class="eui-form-control">
+                    <option selected>USD - US Dollar</option>
+                    <option>EUR - Euro</option>
+                    <option>GBP - British Pound</option>
+                    <option>JPY - Japanese Yen</option>
+                    <option>BTC - Bitcoin</option>
+                    <option>ETH - Ethereum</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <label class="eui-form-label">Payment Methods</label>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="payment-crypto" checked />
+                    <label for="payment-crypto">Cryptocurrency</label>
+                  </div>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="payment-card" checked />
+                    <label for="payment-card">Credit/Debit Card</label>
+                  </div>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="payment-bank" />
+                    <label for="payment-bank">Bank Transfer</label>
+                  </div>
+                  <div class="eui-checkbox">
+                    <input type="checkbox" id="payment-cash" />
+                    <label for="payment-cash">Cash</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="create-ad-section">
+            <h2 class="create-ad-section-title">Preview</h2>
+
+            <div class="eui-card create-ad-card">
+              <div class="eui-card-body">
+                <p>Here's how your ad will appear to others:</p>
+
+                <div class="eui-card preview-card">
+                  <img
+                    src="https://via.placeholder.com/350x200?text=Restaurant"
+                    alt="Restaurant"
+                    class="preview-image"
+                  />
+                  <div class="eui-card-body">
+                    <div class="preview-title">Business Dinner Companion Needed</div>
+                    <div class="preview-price">$300</div>
+                    <div class="preview-description">
+                      I'm looking for an elegant, intelligent companion to join me for an important
+                      business dinner with clients next Friday at Le Bernardin in New York...
+                    </div>
+                    <div class="preview-meta">
+                      <span>New York, NY</span>
+                      <span>Sep 15, 2023</span>
+                    </div>
+                    <div class="preview-tags">
+                      <div class="preview-tag">Business</div>
+                      <div class="preview-tag">Fine Dining</div>
+                      <div class="preview-tag">Professional</div>
+                      <div class="preview-tag">Elegant</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="create-ad-actions">
+            <button class="eui-btn eui-btn-outline-primary">Save as Draft</button>
+            <div>
+              <button class="eui-btn eui-btn-outline-secondary">Preview</button>
+              <button class="eui-btn eui-btn-primary">Publish Ad</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="messages.html">
+            <i class="fas fa-comment"></i>
+            <span>Messages</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Price option selection
+      document.addEventListener('DOMContentLoaded', function () {
+        const priceOptions = document.querySelectorAll('.price-option');
+
+        priceOptions.forEach(option => {
+          option.addEventListener('click', function () {
+            // Remove selected class from all options
+            priceOptions.forEach(opt => {
+              opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            this.classList.add('selected');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

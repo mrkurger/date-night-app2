@@ -1,4 +1,4 @@
-@import '../../../core/design/design-tokens';
+@use '../../../core/design/design-tokens' as tokens;
 
 // Define CSS variables for use in the component
 :host {

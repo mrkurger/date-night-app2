@@ -1,4 +1,4 @@
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 @use 'sass:color';
 
 // Login Component Styles
@@ -7,88 +7,88 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: $spacing-6;
-  background-color: $neutral-100;
+  padding: ds.$spacing-6;
+  background-color: ds.$neutral-100;
 }
 
 .login-card {
   width: 100%;
   max-width: 400px;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-lg;
+  border-radius: ds.$border-radius-lg;
+  box-shadow: ds.$shadow-lg;
   overflow: hidden;
 }
 
 .login-header {
-  padding: $spacing-6;
-  background-color: $primary-500;
-  color: $neutral-100;
+  padding: ds.$spacing-6;
+  background-color: ds.$primary-500;
+  color: ds.$neutral-100;
   text-align: center;
 }
 
 .login-title {
   margin: 0;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
+  font-size: ds.$font-size-xl;
+  font-weight: ds.$font-weight-bold;
 }
 
 .login-subtitle {
-  margin-top: $spacing-2;
-  font-size: $font-size-sm;
+  margin-top: ds.$spacing-2;
+  font-size: ds.$font-size-sm;
   opacity: 0.9;
 }
 
 .login-body {
-  padding: $spacing-6;
+  padding: ds.$spacing-6;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: ds.$spacing-4;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: ds.$spacing-2;
 }
 
 .form-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $neutral-700;
+  font-size: ds.$font-size-sm;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-700;
 }
 
 .form-control {
-  padding: $spacing-3;
-  border: 1px solid $neutral-300;
-  border-radius: $border-radius-md;
-  font-size: $font-size-base;
-  transition: border-color $transition-normal $transition-ease;
+  padding: ds.$spacing-3;
+  border: 1px solid ds.$neutral-300;
+  border-radius: ds.$border-radius-md;
+  font-size: ds.$font-size-base;
+  transition: border-color ds.$transition-normal ds.$transition-ease;
 
   &:focus {
     outline: none;
-    border-color: $primary-500;
-    box-shadow: 0 0 0 2px rgba($primary-500, 0.2);
+    border-color: ds.$primary-500;
+    box-shadow: 0 0 0 2px rgba(ds.$primary-500, 0.2);
   }
 
   &.is-invalid {
-    border-color: $error;
+    border-color: ds.$error;
   }
 }
 
 .invalid-feedback {
-  font-size: $font-size-xs;
-  color: $error;
-  margin-top: $spacing-1;
+  font-size: ds.$font-size-xs;
+  color: ds.$error;
+  margin-top: ds.$spacing-1;
 }
 
 .form-check {
   display: flex;
   align-items: center;
-  gap: $spacing-2;
-  margin-top: $spacing-2;
+  gap: ds.$spacing-2;
+  margin-top: ds.$spacing-2;
 }
 
 .form-check-input {
@@ -98,47 +98,47 @@
 }
 
 .form-check-label {
-  font-size: $font-size-sm;
-  color: $neutral-700;
+  font-size: ds.$font-size-sm;
+  color: ds.$neutral-700;
   cursor: pointer;
 }
 
 .login-button {
-  margin-top: $spacing-4;
-  padding: $spacing-3;
-  background-color: $primary-500;
-  color: $neutral-100;
+  margin-top: ds.$spacing-4;
+  padding: ds.$spacing-3;
+  background-color: ds.$primary-500;
+  color: ds.$neutral-100;
   border: none;
-  border-radius: $border-radius-md;
-  font-weight: $font-weight-semibold;
+  border-radius: ds.$border-radius-md;
+  font-weight: ds.$font-weight-semibold;
   cursor: pointer;
-  transition: background-color $transition-normal $transition-ease;
+  transition: background-color ds.$transition-normal ds.$transition-ease;
 
   &:hover {
-    background-color: $primary-600;
+    background-color: ds.$primary-600;
   }
 
   &:disabled {
-    background-color: $neutral-400;
+    background-color: ds.$neutral-400;
     cursor: not-allowed;
   }
 }
 
 .login-footer {
-  padding: $spacing-4 $spacing-6;
+  padding: ds.$spacing-4 ds.$spacing-6;
   text-align: center;
-  border-top: 1px solid $neutral-200;
-  background-color: $neutral-100;
+  border-top: 1px solid ds.$neutral-200;
+  background-color: ds.$neutral-100;
 }
 
 .register-link {
-  font-size: $font-size-sm;
-  color: $neutral-700;
+  font-size: ds.$font-size-sm;
+  color: ds.$neutral-700;
 
   a {
-    color: $primary-500;
+    color: ds.$primary-500;
     text-decoration: none;
-    font-weight: $font-weight-semibold;
+    font-weight: ds.$font-weight-semibold;
 
     &:hover {
       text-decoration: underline;
@@ -147,15 +147,15 @@
 }
 
 .social-login {
-  margin-top: $spacing-4;
+  margin-top: ds.$spacing-4;
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: ds.$spacing-3;
 }
 
 .social-login-title {
-  font-size: $font-size-sm;
-  color: $neutral-600;
+  font-size: ds.$font-size-sm;
+  color: ds.$neutral-600;
   text-align: center;
   position: relative;
 
@@ -166,7 +166,7 @@
     top: 50%;
     width: 30%;
     height: 1px;
-    background-color: $neutral-300;
+    background-color: ds.$neutral-300;
   }
 
   &::before {
@@ -181,7 +181,7 @@
 .social-buttons {
   display: flex;
   justify-content: center;
-  gap: $spacing-3;
+  gap: ds.$spacing-3;
 }
 
 .social-button {
@@ -191,30 +191,30 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: $neutral-200;
-  color: $neutral-700;
+  background-color: ds.$neutral-200;
+  color: ds.$neutral-700;
   border: none;
   cursor: pointer;
-  transition: all $transition-normal $transition-ease;
+  transition: all ds.$transition-normal ds.$transition-ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: $shadow-md;
+    box-shadow: ds.$shadow-md;
   }
 
   &--google {
     background-color: #db4437;
-    color: $neutral-100;
+    color: ds.$neutral-100;
   }
 
   &--facebook {
     background-color: #4267b2;
-    color: $neutral-100;
+    color: ds.$neutral-100;
   }
 
   &--apple {
     background-color: #000000;
-    color: $neutral-100;
+    color: ds.$neutral-100;
   }
 }
 
@@ -242,11 +242,11 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 2px solid rgba($neutral-100, 0.3);
+  border: 2px solid rgba(ds.$neutral-100, 0.3);
   border-radius: 50%;
-  border-top-color: $neutral-100;
+  border-top-color: ds.$neutral-100;
   animation: spin 1s ease-in-out infinite;
-  margin-right: $spacing-2;
+  margin-right: ds.$spacing-2;
 }
 
 @keyframes spin {
@@ -256,9 +256,9 @@
 }
 
 // Responsive styles
-@media (max-width: $breakpoint-sm) {
+@media (max-width: ds.$breakpoint-sm) {
   .login-container {
-    padding: $spacing-4;
+    padding: ds.$spacing-4;
   }
 
   .login-card {
@@ -266,10 +266,10 @@
   }
 
   .login-header {
-    padding: $spacing-4;
+    padding: ds.$spacing-4;
   }
 
   .login-body {
-    padding: $spacing-4;
+    padding: ds.$spacing-4;
   }
 }

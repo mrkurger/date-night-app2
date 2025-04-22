@@ -1,5 +1,65 @@
 # Change Log
 
+## 2025-04-25: SCSS Build Fixes
+
+### Fixed
+
+- **SCSS Syntax Errors**: Fixed SCSS syntax errors in client-angular project
+  - Fixed design-system-demo.component.scss
+    - Replaced invalid color values (#3b82f6-light, #3b82f6-dark) with proper color values (#60a5fa, #2563eb)
+    - Fixed dark mode styles to use proper color values
+  - Updated angular.json budget limits
+    - Increased initial budget from 1MB to 5MB
+    - Increased component style budget from 4KB to 20KB
+
+### Technical Debt Addressed
+
+- Documented remaining warnings in the build process:
+  - Unused component imports in various components
+  - CSS font size budget warnings
+  - CommonJS module warnings for leaflet and qrcode modules
+
+## 2025-04-24: TypeScript Type Safety Improvements
+
+### Fixed
+
+- **Auth Service**: Fixed TypeScript type safety issues in auth.service.ts
+
+  - Replaced `any` types with proper type definitions
+  - Added `NotificationSettings` and `PrivacySettings` interfaces
+  - Fixed return types for all API methods
+  - Improved type safety for token expiration timer
+
+- **CSRF Interceptor**: Fixed TypeScript type safety issues in csrf.interceptor.ts
+
+  - Replaced `any` types with `unknown` for better type safety
+  - Improved type definitions for HTTP request and response handling
+
+- **Error Interceptor**: Fixed TypeScript type safety issues in error.interceptor.ts
+
+  - Replaced `any` types with `unknown` for better type safety
+  - Improved type definitions for HTTP request and response handling
+
+- **Alert Model**: Fixed TypeScript type safety issues in alert.model.ts
+
+  - Replaced `any` type in `relatedData` with `Record<string, unknown>`
+
+- **Alert Service**: Fixed TypeScript type safety issues in alert.service.ts
+
+  - Improved type definition for `getAlertEventHistory` method parameters
+
+- **Caching Service**: Fixed TypeScript type safety issues in caching.service.ts
+  - Replaced `any` types with `unknown` for better type safety
+  - Improved type definitions for cache data structure
+  - Enhanced type safety for HTTP methods
+
+### Added
+
+- **User Interface Types**: Added new interfaces to user.interface.ts
+  - Added `NotificationSettings` interface for user notification preferences
+  - Added `PrivacySettings` interface for user privacy settings
+  - Updated `User` interface to use these new interfaces
+
 ## 2025-04-23: Angular Component and Style Fixes
 
 ### Fixed

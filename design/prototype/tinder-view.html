@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Tinder View</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (desktop) -->
+      <nav class="side-nav">
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li class="active">
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main column -->
+      <div class="main">
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
+
+        <div class="container">
+          <!-- Search and Filters -->
+          <div class="search-filters">
+            <div class="filters">
+              <div class="filter-item">
+                <select class="eui-form-control">
+                  <option>All Categories</option>
+                  <option>Massage</option>
+                  <option>Escort</option>
+                  <option>Dance</option>
+                  <option>Events</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <select class="eui-form-control">
+                  <option>All Locations</option>
+                  <option>Oslo</option>
+                  <option>Stockholm</option>
+                  <option>Copenhagen</option>
+                  <option>New York</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Tabs -->
+          <div class="view-tabs">
+            <a href="netflix-view.html" class="tab"> <i class="fas fa-th-large"></i> Grid </a>
+            <a href="tinder-view.html" class="tab active"> <i class="fas fa-fire"></i> Swipe </a>
+            <a href="list-view.html" class="tab"> <i class="fas fa-list"></i> List </a>
+          </div>
+
+          <!-- Tinder Card Stack -->
+          <div class="tinder-container">
+            <div class="card-stack">
+              <!-- Current Card -->
+              <div class="tinder-card current" id="card-1">
+                <div class="card-image">
+                  <img src="img/2.jpeg" alt="Sophia Martinez" />
+                  <div class="card-badge">Featured</div>
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Sophia Martinez</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Barcelona, Spain</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>€200/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.9 (37 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      Elite companion with a passion for fine dining and cultural experiences.
+                      Fluent in Spanish, English, and French. Available for dinner dates and weekend
+                      getaways.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">VIP Escort</span>
+                    <span class="tag">Travel</span>
+                    <span class="tag">Multilingual</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Next Card (partially visible) -->
+              <div class="tinder-card next" id="card-2">
+                <div class="card-image">
+                  <img src="img/3.jpeg" alt="Emma Johnson" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Emma Johnson</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>London, UK</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>£250/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.8 (42 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      Professional massage therapist specializing in Swedish and deep tissue
+                      techniques. Luxury in-call location in central London or outcall to 5-star
+                      hotels.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">Massage</span>
+                    <span class="tag">Relaxation</span>
+                    <span class="tag">Wellness</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hidden Cards -->
+              <div class="tinder-card hidden" id="card-3">
+                <div class="card-image">
+                  <img src="img/4.jpeg" alt="Natasha Petrova" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Natasha Petrova</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Moscow, Russia</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>15,000 RUB/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.7 (31 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      Exotic dancer with ballet background. Private performances for special
+                      occasions. Elegant, sophisticated, and highly professional.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">Dance</span>
+                    <span class="tag">Performance</span>
+                    <span class="tag">Events</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tinder-card hidden" id="card-4">
+                <div class="card-image">
+                  <img src="img/5.jpeg" alt="Jasmine Chen" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Jasmine Chen</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Singapore</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>300 SGD/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.9 (28 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      High-class companion offering authentic tantric massage and spiritual
+                      connection. Trained in traditional Asian techniques for holistic wellness.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">Tantric</span>
+                    <span class="tag">Spiritual</span>
+                    <span class="tag">Wellness</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tinder-card hidden" id="card-5">
+                <div class="card-image">
+                  <img src="img/6.jpeg" alt="Olivia Williams" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Olivia Williams</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>New York, USA</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>$400/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.8 (45 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      Luxury companion and event planner. Perfect for business functions, galas, and
+                      exclusive parties. Ivy League educated with impeccable social skills.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">Events</span>
+                    <span class="tag">Social</span>
+                    <span class="tag">Elite</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tinder-card hidden" id="card-6">
+                <div class="card-image">
+                  <img src="img/7.jpeg" alt="Isabella Rossi" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Isabella Rossi</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Milan, Italy</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>€300/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>4.9 (39 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      Fashion model and luxury companion. Available for fashion events, photo
+                      shoots, and private dates. Fluent in Italian, English, and French.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">Model</span>
+                    <span class="tag">Fashion</span>
+                    <span class="tag">Events</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tinder-card hidden" id="card-7">
+                <div class="card-image">
+                  <img src="img/8.jpeg" alt="Amara Okafor" />
+                </div>
+                <div class="card-info">
+                  <div class="card-header">
+                    <h2>Amara Okafor</h2>
+                    <span class="eui-badge eui-badge-success">Online</span>
+                  </div>
+                  <div class="card-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Dubai, UAE</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-tag"></i>
+                      <span>1500 AED/hr</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-star"></i>
+                      <span>5.0 (27 reviews)</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>
+                      VIP international companion based in Dubai. Available for luxury travel
+                      worldwide. Sophisticated, educated, and discreet service for discerning
+                      clients.
+                    </p>
+                  </div>
+                  <div class="card-tags">
+                    <span class="tag">VIP</span>
+                    <span class="tag">Travel</span>
+                    <span class="tag">Luxury</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Swipe Actions -->
+            <div class="swipe-actions">
+              <button class="action-btn dislike-btn" onclick="swipeCard('left')">
+                <i class="fas fa-times"></i>
+              </button>
+              <button class="action-btn info-btn" onclick="showDetails()">
+                <i class="fas fa-info"></i>
+              </button>
+              <button class="action-btn favorite-btn" onclick="favoriteCard()">
+                <i class="fas fa-star"></i>
+              </button>
+              <button class="action-btn like-btn" onclick="swipeCard('right')">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+
+            <!-- Card Counter -->
+            <div class="card-counter">
+              <span id="current-card">1</span> / <span id="total-cards">8</span>
+            </div>
+          </div>
+
+          <!-- Card Details Modal -->
+          <div class="modal-overlay" id="details-modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Professional Massage</h2>
+                <button class="close-modal" onclick="hideDetails()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-image">
+                  <img
+                    src="https://via.placeholder.com/600x400?text=Profile+1"
+                    alt="Professional Massage"
+                  />
+                </div>
+                <div class="modal-details">
+                  <div class="detail-section">
+                    <h3>About</h3>
+                    <p>
+                      Professional massage therapist with 5+ years of experience. Specializing in
+                      Swedish, deep tissue, and aromatherapy massages. I provide a relaxing and
+                      rejuvenating experience tailored to your specific needs.
+                    </p>
+                  </div>
+                  <div class="detail-section">
+                    <h3>Services</h3>
+                    <ul>
+                      <li>Swedish Massage</li>
+                      <li>Deep Tissue Massage</li>
+                      <li>Aromatherapy</li>
+                      <li>Hot Stone Massage</li>
+                      <li>Couples Massage</li>
+                    </ul>
+                  </div>
+                  <div class="detail-section">
+                    <h3>Location</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Oslo, Norway</p>
+                    <p>Available for in-call and out-call services</p>
+                  </div>
+                  <div class="detail-section">
+                    <h3>Pricing</h3>
+                    <p><i class="fas fa-tag"></i> 1500 NOK per session (60 minutes)</p>
+                    <p>Additional services available at extra cost</p>
+                  </div>
+                  <div class="detail-section">
+                    <h3>Reviews</h3>
+                    <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <span>4.5 (24 reviews)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="ad-detail.html?id=1" class="eui-btn eui-btn-primary">View Full Profile</a>
+                <button class="eui-btn eui-btn-outline-primary" onclick="favoriteCard()">
+                  <i class="far fa-heart"></i> Add to Favorites
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile bottom nav -->
+        <nav class="bottom-nav">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html" class="active">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li class="active">
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+      // Tinder view specific functions
+      function swipeCard(direction) {
+        const currentCard = document.querySelector('.tinder-card.current');
+        const nextCard = document.querySelector('.tinder-card.next');
+        const hiddenCards = document.querySelectorAll('.tinder-card.hidden');
+
+        // Add swipe animation class
+        currentCard.classList.add('swipe-' + direction);
+
+        // Update counter
+        const currentCounter = document.getElementById('current-card');
+        const currentCount = parseInt(currentCounter.textContent);
+        const totalCards = parseInt(document.getElementById('total-cards').textContent);
+
+        if (currentCount < totalCards) {
+          currentCounter.textContent = currentCount + 1;
+        } else {
+          // Reset to first card if we've gone through all cards
+          currentCounter.textContent = 1;
+        }
+
+        // After animation completes, reset cards
+        setTimeout(() => {
+          // Move current card to end of stack
+          currentCard.classList.remove('current', 'swipe-' + direction);
+          currentCard.classList.add('hidden');
+
+          // Move next card to current
+          nextCard.classList.remove('next');
+          nextCard.classList.add('current');
+
+          // Move first hidden card to next
+          if (hiddenCards.length > 0) {
+            hiddenCards[0].classList.remove('hidden');
+            hiddenCards[0].classList.add('next');
+          } else {
+            // If no more hidden cards, reset the first card
+            const allCards = document.querySelectorAll('.tinder-card');
+            allCards[0].classList.remove('hidden');
+            allCards[0].classList.add('next');
+          }
+        }, 300);
+      }
+
+      function showDetails() {
+        document.getElementById('details-modal').classList.add('active');
+      }
+
+      function hideDetails() {
+        document.getElementById('details-modal').classList.remove('active');
+      }
+
+      function favoriteCard() {
+        const favoriteBtn = document.querySelector('.favorite-btn i');
+        favoriteBtn.classList.toggle('far');
+        favoriteBtn.classList.toggle('fas');
+
+        // Show notification
+        showNotification('Added to favorites!');
+      }
+
+      function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

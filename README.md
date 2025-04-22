@@ -664,12 +664,13 @@ This section provides links to all documentation files in the project, organized
 
 ### UI/UX Documentation
 
-- [UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD) - Roadmap for UI/UX improvements
-- [UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD) - Implementation details for UI/UX
-- [UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD) - Summary of UI/UX improvements
-- [UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD) - Report on UI/UX completion
-- [UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD) - Technical details of UI components
-- [Styling Guide](/docs/STYLING_GUIDE.MD) - Guide for styling components
+- [UI/UX Documentation Index](/docs/UI_UX_DOCUMENTATION.MD) - Main index for all UI/UX documentation
+- [UI/UX Implementation](/docs/UI_UX_IMPLEMENTATION.MD) - Implementation details for UI/UX components
+- [UI/UX Improvement Summary](/docs/UI_UX_IMPROVEMENT_SUMMARY.MD) - Summary of UI/UX improvements
+- [UI Components Technical](/docs/UI_COMPONENTS_TECHNICAL.MD) - Technical details of UI components
+- [Design Tokens Documentation](/docs/DESIGN_TOKENS_DOCUMENTATION.MD) - Reference for design tokens
+- [BEM Naming Convention](/docs/BEM_NAMING_CONVENTION.MD) - Guidelines for CSS naming convention
+- [Emerald UI Integration Guide](/docs/EMERALD_UI_INTEGRATION_GUIDE.MD) - Guide for Emerald UI components
 
 ### Customization Documentation
 
@@ -690,11 +691,9 @@ This section provides links to all documentation files in the project, organized
 
 ### Emerald Component Documentation
 
-- [Emerald Components](/docs/EMERALD-COMPONENTS.MD) - Documentation for Emerald UI components
-- [Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD) - Changelog for Emerald components
-- [Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD) - Plan for implementing Emerald components
-- [Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD) - Report on Emerald implementation
-- [Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD) - Summary of Emerald implementation
+- [Emerald UI Integration Guide](/docs/EMERALD_UI_INTEGRATION_GUIDE.MD) - Guide for integrating Emerald UI components
+- [Emerald Implementation Summary](/docs/EMERALD_IMPLEMENTATION_SUMMARY.MD) - Summary of the Emerald.js implementation
+- [Emerald Components Changelog](/docs/EMERALD_COMPONENTS_CHANGELOG.MD) - Changelog for Emerald components
 - [Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD) - Guide for testing Emerald components
 
 ### Lessons Learned

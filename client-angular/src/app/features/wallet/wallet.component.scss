@@ -37,7 +37,7 @@
 
   p {
     margin-top: 16px;
-    color: $neutral-600;
+    color: tokens.$neutral-600;
   }
 }
 
@@ -45,7 +45,7 @@
   margin-bottom: 32px;
 
   .total-balance-card {
-    background-color: $primary-500;
+    background-color: tokens.$primary-500;
     color: white;
     margin-bottom: 24px;
 
@@ -122,33 +122,33 @@
         text-transform: uppercase;
 
         &.transaction-deposit {
-          background-color: $success-100;
-          color: $success-700;
+          background-color: tokens.$success-100;
+          color: tokens.$success-700;
         }
 
         &.transaction-withdrawal {
-          background-color: $warning-100;
-          color: $warning-700;
+          background-color: tokens.$warning-100;
+          color: tokens.$warning-700;
         }
 
         &.transaction-transfer {
-          background-color: $info-100;
-          color: $info-700;
+          background-color: tokens.$info-100;
+          color: tokens.$info-700;
         }
 
         &.transaction-payment {
-          background-color: $primary-100;
-          color: $primary-700;
+          background-color: tokens.$primary-100;
+          color: tokens.$primary-700;
         }
 
         &.transaction-refund {
-          background-color: $success-100;
-          color: $success-700;
+          background-color: tokens.$success-100;
+          color: tokens.$success-700;
         }
 
         &.transaction-fee {
-          background-color: $neutral-100;
-          color: $neutral-700;
+          background-color: tokens.$neutral-100;
+          color: tokens.$neutral-700;
         }
       }
 
@@ -160,33 +160,33 @@
         text-transform: uppercase;
 
         &.status-pending {
-          background-color: $warning-100;
-          color: $warning-700;
+          background-color: tokens.$warning-100;
+          color: tokens.$warning-700;
         }
 
         &.status-completed {
-          background-color: $success-100;
-          color: $success-700;
+          background-color: tokens.$success-100;
+          color: tokens.$success-700;
         }
 
         &.status-failed {
-          background-color: $error-100;
-          color: $error-700;
+          background-color: tokens.$error-100;
+          color: tokens.$error-700;
         }
 
         &.status-cancelled {
-          background-color: $neutral-100;
-          color: $neutral-700;
+          background-color: tokens.$neutral-100;
+          color: tokens.$neutral-700;
         }
       }
 
       .positive-amount {
-        color: $success-500;
+        color: tokens.$success-500;
         font-weight: 500;
       }
 
       .negative-amount {
-        color: $error-500;
+        color: tokens.$error-500;
         font-weight: 500;
       }
     }
@@ -218,7 +218,7 @@
 
     .payment-method-card {
       .default-badge {
-        background-color: $primary-500;
+        background-color: tokens.$primary-500;
         color: white;
         padding: 2px 8px;
         border-radius: 12px;
@@ -230,7 +230,7 @@
         display: flex;
         align-items: center;
         font-family: monospace;
-        background-color: $neutral-100;
+        background-color: tokens.$neutral-100;
         padding: 8px;
         border-radius: 4px;
 
@@ -295,13 +295,13 @@
     font-size: 48px;
     height: 48px;
     width: 48px;
-    color: $neutral-400;
+    color: tokens.$neutral-400;
     margin-bottom: 16px;
   }
 
   p {
     margin-bottom: 24px;
-    color: $neutral-600;
+    color: tokens.$neutral-600;
     font-size: 18px;
   }
 }
@@ -343,27 +343,27 @@
 }
 
 // Define variables for colors
-$primary-100: #e8f0fe;
-$primary-500: #4285f4;
-$primary-700: #1a73e8;
+tokens.$primary-100: #e8f0fe;
+tokens.$primary-500: #4285f4;
+tokens.$primary-700: #1a73e8;
 
-$success-100: #e6f4ea;
-$success-500: #34a853;
-$success-700: #137333;
+tokens.$success-100: #e6f4ea;
+tokens.$success-500: #34a853;
+tokens.$success-700: #137333;
 
-$warning-100: #fef7e0;
-$warning-500: #fbbc04;
-$warning-700: #ea8600;
+tokens.$warning-100: #fef7e0;
+tokens.$warning-500: #fbbc04;
+tokens.$warning-700: #ea8600;
 
-$error-100: #fce8e6;
-$error-500: #ea4335;
-$error-700: #c5221f;
+tokens.$error-100: #fce8e6;
+tokens.$error-500: #ea4335;
+tokens.$error-700: #c5221f;
 
-$info-100: #e8f0fe;
-$info-500: #4285f4;
-$info-700: #1a73e8;
+tokens.$info-100: #e8f0fe;
+tokens.$info-500: #4285f4;
+tokens.$info-700: #1a73e8;
 
-$neutral-100: #f8f9fa;
-$neutral-400: #dadce0;
-$neutral-600: #70757a;
-$neutral-700: #5f6368;
+tokens.$neutral-100: #f8f9fa;
+tokens.$neutral-400: #dadce0;
+tokens.$neutral-600: #70757a;
+tokens.$neutral-700: #5f6368;

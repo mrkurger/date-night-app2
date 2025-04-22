@@ -2,428 +2,610 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DateNight.io — Netflix View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io - Netflix View</title>
+    <!-- Import Emerald UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emerald-ui/lib/styles/emerald-ui.min.css"
+    />
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Import Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
     <style>
-      /* DESIGN TOKENS */
-      :root {
-        --color-bg: #f5f6fa;
-        --color-white: #ffffff;
-        --color-primary: #ff3366;
-        --color-text: #2e3a59;
-        --color-muted: #8a9bb8;
-        --font-sans: 'Roboto', sans-serif;
-        --radius: 8px;
-        --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        --container-max: 960px;
+      /* Netflix View specific styles */
+      .netflix-container {
+        padding: 20px;
       }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+
+      .netflix-header {
+        margin-bottom: var(--spacing-6);
       }
-      body {
-        font-family: var(--font-sans);
-        background: var(--color-bg);
-        color: var(--color-text);
+
+      .netflix-search {
+        margin-bottom: var(--spacing-6);
       }
-      a {
-        text-decoration: none;
-        color: inherit;
+
+      .netflix-categories {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: var(--spacing-3);
+        margin-bottom: var(--spacing-6);
+        padding-bottom: var(--spacing-2);
       }
-      button {
-        border: none;
+
+      .netflix-category {
+        flex: 0 0 auto;
+        padding: var(--spacing-2) var(--spacing-4);
+        background-color: var(--color-light-gray-1);
+        border-radius: var(--border-radius-full);
+        white-space: nowrap;
         cursor: pointer;
-        font-family: var(--font-sans);
+        transition: all var(--transition-normal);
       }
 
-      /* LAYOUT */
-      .app {
-        display: flex;
-        min-height: 100vh;
+      .netflix-category:hover {
+        background-color: var(--color-light-gray-2);
       }
 
-      /* SIDEBAR (desktop only) */
-      .side-nav {
-        display: none;
-        width: 240px;
-        background: var(--color-white);
-        box-shadow: var(--shadow);
-        padding: 2rem 1rem;
-      }
-      .side-nav ul {
-        list-style: none;
-      }
-      .side-nav li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-        color: var(--color-muted);
-        font-size: 0.95rem;
-      }
-      .side-nav li.active,
-      .side-nav li:hover {
-        color: var(--color-text);
-      }
-      .side-nav svg {
-        width: 20px;
-        height: 20px;
-        margin-right: 0.75rem;
-        fill: currentColor;
+      .netflix-category.active {
+        background-color: var(--color-primary);
+        color: var(--color-white);
       }
 
-      /* MAIN COLUMN */
-      .main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+      .netflix-section {
+        margin-bottom: var(--spacing-6);
       }
 
-      .container {
-        width: 100%;
-        padding: 1rem;
-        margin: 0 auto;
-      }
-
-      /* HEADER */
-      .header {
-        background: var(--color-white);
-        box-shadow: var(--shadow);
-        padding: 1rem;
+      .netflix-section-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-      }
-      .logo {
-        display: flex;
-        align-items: center;
-      }
-      .logo-square {
-        width: 32px;
-        height: 32px;
-        background: var(--color-primary);
-        border-radius: 6px;
-        margin-right: 0.5rem;
-      }
-      .logo-text {
-        font-size: 1.25rem;
-        font-weight: bold;
-      }
-      .avatar {
-        width: 32px;
-        height: 32px;
-        background: var(--color-muted);
-        border-radius: 50%;
+        margin-bottom: var(--spacing-4);
       }
 
-      /* SEARCH */
-      .search-bar {
-        margin-top: 1rem;
-      }
-      .search-bar input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 1px solid #dde3eb;
-        border-radius: var(--radius);
-        font-size: 0.95rem;
-        outline: none;
+      .netflix-section-title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
       }
 
-      /* TABS */
-      .tabs {
-        display: flex;
-        background: var(--color-white);
-        box-shadow: var(--shadow);
-        border-radius: var(--radius);
-        overflow: hidden;
-        margin: 1rem 0;
-      }
-      .tabs a {
-        flex: 1;
-        text-align: center;
-        padding: 0.75rem 0;
-        color: var(--color-muted);
-        font-weight: 500;
-      }
-      .tabs a.active {
-        background: var(--color-primary);
-        color: var(--color-white);
+      .netflix-section-link {
+        color: var(--color-primary);
+        font-size: var(--font-size-sm);
       }
 
-      /* CONTENT */
-      .content {
-        flex: 1;
-        overflow-y: auto;
-      }
-
-      .welcome-card {
-        background: var(--color-white);
-        padding: 1.5rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        text-align: center;
-        margin-bottom: 1.5rem;
-      }
-      .welcome-card h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0.5rem;
-      }
-      .welcome-card p {
-        color: var(--color-muted);
-        margin-bottom: 1rem;
-      }
-      .welcome-card button {
-        background: var(--color-primary);
-        color: var(--color-white);
-        padding: 0.75rem 1.5rem;
-        border-radius: var(--radius);
-        font-weight: 600;
-      }
-
-      .categories {
+      .netflix-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
-      .cat-card {
-        background: var(--color-white);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 1rem;
-        text-align: center;
-        color: var(--color-text);
-      }
-      .cat-card.active {
-        border: 2px solid var(--color-primary);
-      }
-      .cat-card svg {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 0.5rem;
-        fill: var(--color-primary);
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-4);
       }
 
-      .trending {
-        margin-bottom: 2rem;
+      .netflix-card {
+        transition:
+          transform var(--transition-normal),
+          box-shadow var(--transition-normal);
+        height: 100%;
       }
-      .trending h3 {
-        margin-bottom: 0.75rem;
-        font-size: 1.1rem;
+
+      .netflix-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
       }
-      .trending-list {
+
+      .netflix-card-image {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: var(--border-radius-md);
+        border-top-right-radius: var(--border-radius-md);
+      }
+
+      .netflix-card-title {
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .netflix-card-price {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .netflix-card-meta {
         display: flex;
+        justify-content: space-between;
+        font-size: var(--font-size-sm);
+        color: var(--color-dark-gray-1);
+      }
+
+      .netflix-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+        margin-top: var(--spacing-3);
+      }
+
+      .netflix-card-tag {
+        background-color: var(--color-light-gray-1);
+        color: var(--color-dark-gray-2);
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-xs);
+      }
+
+      .netflix-row {
+        display: flex;
+        flex-wrap: nowrap;
         overflow-x: auto;
-        gap: 1rem;
-        padding-bottom: 0.5rem;
-      }
-      .trending-list::-webkit-scrollbar {
-        display: none;
-      }
-      .trending-item {
-        flex: 0 0 160px;
-        background: var(--color-white);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 0.75rem;
-        text-align: center;
-      }
-      .trending-item svg {
-        width: 100%;
-        height: 80px;
-        background: #dde3eb;
-        border-radius: var(--radius);
-        margin-bottom: 0.5rem;
+        gap: var(--spacing-4);
+        padding-bottom: var(--spacing-2);
+        margin-bottom: var(--spacing-6);
       }
 
-      /* BOTTOM NAV (mobile only) */
-      .bottom-nav {
-        display: flex;
-        justify-content: space-around;
-        background: var(--color-white);
-        box-shadow: var(--shadow);
-        padding: 0.75rem 0;
-      }
-      .bottom-nav a {
-        color: var(--color-muted);
-        font-size: 0.75rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .bottom-nav a.active,
-      .bottom-nav a:hover {
-        color: var(--color-text);
-      }
-      .bottom-nav svg {
-        width: 24px;
-        height: 24px;
-        margin-bottom: 0.25rem;
-        fill: currentColor;
+      .netflix-row-card {
+        flex: 0 0 250px;
+        transition:
+          transform var(--transition-normal),
+          box-shadow var(--transition-normal);
       }
 
-      /* RESPONSIVENESS */
-      /* Tablet up */
-      @media (min-width: 600px) {
-        .search-bar {
-          margin-top: 1.5rem;
-        }
-        .tabs {
-          margin: 1.5rem 0;
-        }
-        .container {
-          padding: 2rem;
-        }
-      }
-      /* Desktop up */
-      @media (min-width: 1024px) {
-        .side-nav {
-          display: block;
-        }
-        .bottom-nav {
-          display: none;
-        }
-        .main {
-          margin-left: 240px;
-        }
-        .container,
-        .header,
-        .search-bar,
-        .tabs,
-        .content > * {
-          margin-left: auto;
-          margin-right: auto;
-          max-width: var(--container-max);
-        }
-        .search-bar input {
-          max-width: 400px;
-        }
+      .netflix-row-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
       }
     </style>
   </head>
   <body>
-    <div class="app">
+    <div class="app-container">
       <!-- Sidebar (desktop) -->
       <nav class="side-nav">
-        <ul>
+        <div class="logo-container">
+          <div class="logo-square"></div>
+          <div class="logo-text">DateNight.io</div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
           <li class="active">
-            <svg viewBox="0 0 24 24"><rect width="24" height="24" /></svg>Netflix
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" /></svg>Tinder
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>List
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><rect width="24" height="24" /></svg>Messages
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" /></svg>Favorites
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>Settings
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><rect width="24" height="24" /></svg>Preferences
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" /></svg>Profile
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
           </li>
         </ul>
       </nav>
 
       <!-- Main column -->
       <div class="main">
-        <div class="container">
-          <!-- Header -->
-          <header class="header">
-            <div class="logo">
-              <div class="logo-square"></div>
-              <div class="logo-text">DateNight.io</div>
-            </div>
-            <div class="avatar"></div>
-          </header>
+        <!-- Header -->
+        <header class="header">
+          <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="logo mobile-logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <div class="user-menu">
+            <a href="create-ad.html" class="eui-btn eui-btn-outline-primary">
+              <i class="fas fa-plus"></i> Create Ad
+            </a>
+            <div class="avatar">JD</div>
+          </div>
+        </header>
 
-          <!-- Search -->
-          <div class="search-bar">
-            <input type="text" placeholder="Search for dates, events, services…" />
+        <div class="netflix-container">
+          <div class="netflix-header">
+            <h1>Browse Experiences</h1>
+            <p>Find your perfect date night companion</p>
           </div>
 
-          <!-- Tabs -->
-          <nav class="tabs">
-            <a href="#" class="active">Netflix</a>
-            <a href="#">Tinder</a>
-            <a href="#">List</a>
-          </nav>
+          <div class="netflix-search">
+            <div class="eui-input-group">
+              <div class="eui-input-group-prepend">
+                <span class="eui-input-group-text">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <input
+                type="text"
+                class="eui-form-control"
+                placeholder="Search for dates, events, services..."
+              />
+            </div>
+          </div>
 
-          <!-- Content -->
-          <div class="content">
-            <div class="welcome-card">
-              <h2>Welcome to DateNight.io</h2>
-              <p>Find your perfect date night experience</p>
-              <button>Browse Now</button>
+          <div class="netflix-categories">
+            <div class="netflix-category active">All</div>
+            <div class="netflix-category">Dinner Date</div>
+            <div class="netflix-category">Cultural Event</div>
+            <div class="netflix-category">Business Event</div>
+            <div class="netflix-category">Travel Companion</div>
+            <div class="netflix-category">Massage</div>
+            <div class="netflix-category">Escort</div>
+            <div class="netflix-category">Dance</div>
+            <div class="netflix-category">Other</div>
+          </div>
+
+          <!-- Featured Section -->
+          <div class="netflix-section">
+            <div class="netflix-section-header">
+              <h2 class="netflix-section-title">Featured</h2>
+              <a href="#" class="netflix-section-link">View All</a>
             </div>
 
-            <div class="categories">
-              <div class="cat-card active">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /></svg>
-                <p>Massage</p>
-              </div>
-              <div class="cat-card">
-                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" /></svg>
-                <p>Escort</p>
-              </div>
-              <div class="cat-card">
-                <svg viewBox="0 0 24 24"><path d="M12 2 L2 22 L22 22 Z" /></svg>
-                <p>Dance</p>
-              </div>
-              <div class="cat-card">
-                <svg viewBox="0 0 24 24"><path d="M2 12 h20" /></svg>
-                <p>Events</p>
-              </div>
+            <div class="netflix-grid">
+              <!-- Card 1 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Business+Dinner"
+                  alt="Business Dinner"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Business Dinner Companion Needed</div>
+                  <div class="netflix-card-price">$300 - $500</div>
+                  <div class="netflix-card-meta">
+                    <span>New York, NY</span>
+                    <span>Tonight</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Business</div>
+                    <div class="netflix-card-tag">Dinner</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 2 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Art+Gallery"
+                  alt="Art Gallery Opening"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Art Gallery Opening Partner</div>
+                  <div class="netflix-card-price">$200 - $300</div>
+                  <div class="netflix-card-meta">
+                    <span>Los Angeles, CA</span>
+                    <span>Tomorrow</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Cultural</div>
+                    <div class="netflix-card-tag">Art</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 3 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Weekend+Getaway"
+                  alt="Weekend Getaway"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Weekend Getaway to Hamptons</div>
+                  <div class="netflix-card-price">$1,500 - $2,000</div>
+                  <div class="netflix-card-meta">
+                    <span>Hamptons, NY</span>
+                    <span>This Weekend</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Travel</div>
+                    <div class="netflix-card-tag">Luxury</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 4 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Opera+Night"
+                  alt="Opera Night"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Opera Night at the Met</div>
+                  <div class="netflix-card-price">$400 - $600</div>
+                  <div class="netflix-card-meta">
+                    <span>New York, NY</span>
+                    <span>Next Week</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Cultural</div>
+                    <div class="netflix-card-tag">Music</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Trending Section -->
+          <div class="netflix-section">
+            <div class="netflix-section-header">
+              <h2 class="netflix-section-title">Trending Now</h2>
+              <a href="#" class="netflix-section-link">View All</a>
             </div>
 
-            <section class="trending">
-              <h3>Trending Now</h3>
-              <div class="trending-list">
-                <div class="trending-item">
-                  <svg viewBox="0 0 100 60"><rect width="100" height="60" /></svg>
-                  <p>Professional Massage</p>
+            <div class="netflix-row">
+              <!-- Card 1 -->
+              <a href="ad-detail.html" class="eui-card netflix-row-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Massage"
+                  alt="Professional Massage"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Professional Massage</div>
+                  <div class="netflix-card-price">$150 - $250</div>
+                  <div class="netflix-card-meta">
+                    <span>Miami, FL</span>
+                    <span>Anytime</span>
+                  </div>
                 </div>
-                <div class="trending-item">
-                  <svg viewBox="0 0 100 60"><rect width="100" height="60" /></svg>
-                  <p>Elegant Escort</p>
+              </a>
+
+              <!-- Card 2 -->
+              <a href="ad-detail.html" class="eui-card netflix-row-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Escort"
+                  alt="Elegant Escort"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Elegant Escort for Gala</div>
+                  <div class="netflix-card-price">$500 - $800</div>
+                  <div class="netflix-card-meta">
+                    <span>Chicago, IL</span>
+                    <span>This Friday</span>
+                  </div>
                 </div>
-                <div class="trending-item">
-                  <svg viewBox="0 0 100 60"><rect width="100" height="60" /></svg>
-                  <p>Exotic Dance</p>
+              </a>
+
+              <!-- Card 3 -->
+              <a href="ad-detail.html" class="eui-card netflix-row-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Dance"
+                  alt="Private Dance"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Private Dance Lessons</div>
+                  <div class="netflix-card-price">$100 - $200</div>
+                  <div class="netflix-card-meta">
+                    <span>Austin, TX</span>
+                    <span>Flexible</span>
+                  </div>
                 </div>
-                <div class="trending-item">
-                  <svg viewBox="0 0 100 60"><rect width="100" height="60" /></svg>
-                  <p>Event Planner</p>
+              </a>
+
+              <!-- Card 4 -->
+              <a href="ad-detail.html" class="eui-card netflix-row-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Charity+Event"
+                  alt="Charity Event"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Charity Gala Companion</div>
+                  <div class="netflix-card-price">$300 - $500</div>
+                  <div class="netflix-card-meta">
+                    <span>San Francisco, CA</span>
+                    <span>Next Month</span>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </a>
+
+              <!-- Card 5 -->
+              <a href="ad-detail.html" class="eui-card netflix-row-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Concert"
+                  alt="Concert Date"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Concert Date</div>
+                  <div class="netflix-card-price">$200 - $350</div>
+                  <div class="netflix-card-meta">
+                    <span>Nashville, TN</span>
+                    <span>Next Week</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- New Arrivals Section -->
+          <div class="netflix-section">
+            <div class="netflix-section-header">
+              <h2 class="netflix-section-title">New Arrivals</h2>
+              <a href="#" class="netflix-section-link">View All</a>
+            </div>
+
+            <div class="netflix-grid">
+              <!-- Card 1 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Wine+Tasting"
+                  alt="Wine Tasting"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Wine Tasting Tour</div>
+                  <div class="netflix-card-price">$250 - $400</div>
+                  <div class="netflix-card-meta">
+                    <span>Napa Valley, CA</span>
+                    <span>This Weekend</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Wine</div>
+                    <div class="netflix-card-tag">Tour</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 2 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Yacht+Party"
+                  alt="Yacht Party"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Yacht Party Companion</div>
+                  <div class="netflix-card-price">$800 - $1,200</div>
+                  <div class="netflix-card-meta">
+                    <span>Miami, FL</span>
+                    <span>Next Saturday</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Party</div>
+                    <div class="netflix-card-tag">Luxury</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 3 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Fashion+Show"
+                  alt="Fashion Show"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Fashion Show VIP Access</div>
+                  <div class="netflix-card-price">$500 - $700</div>
+                  <div class="netflix-card-meta">
+                    <span>New York, NY</span>
+                    <span>Next Month</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Fashion</div>
+                    <div class="netflix-card-tag">VIP</div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 4 -->
+              <a href="ad-detail.html" class="eui-card netflix-card">
+                <img
+                  src="https://via.placeholder.com/300x180?text=Cooking+Class"
+                  alt="Cooking Class"
+                  class="netflix-card-image"
+                />
+                <div class="eui-card-body">
+                  <div class="netflix-card-title">Private Cooking Class</div>
+                  <div class="netflix-card-price">$150 - $250</div>
+                  <div class="netflix-card-meta">
+                    <span>Chicago, IL</span>
+                    <span>Flexible</span>
+                  </div>
+                  <div class="netflix-card-tags">
+                    <div class="netflix-card-tag">Cooking</div>
+                    <div class="netflix-card-tag">Class</div>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
 
         <!-- Mobile bottom nav -->
         <nav class="bottom-nav">
-          <a href="#"
-            ><svg viewBox="0 0 24 24"><rect width="24" height="24" /></svg>Home</a
-          >
-          <a href="#" class="active"
-            ><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" /></svg>Search</a
-          >
-          <a href="#"
-            ><svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>Favorites</a
-          >
-          <a href="#"
-            ><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" /></svg>Profile</a
-          >
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+          <a href="netflix-view.html" class="active">
+            <i class="fas fa-search"></i>
+            <span>Browse</span>
+          </a>
+          <a href="messages.html">
+            <i class="fas fa-comment"></i>
+            <span>Messages</span>
+          </a>
+          <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
         </nav>
       </div>
     </div>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <div class="logo">
+            <div class="logo-square"></div>
+            <div class="logo-text">DateNight.io</div>
+          </div>
+          <button class="close-nav">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <ul class="mobile-nav-links">
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li class="active">
+            <a href="netflix-view.html"><i class="fas fa-th-large"></i>Netflix View</a>
+          </li>
+          <li>
+            <a href="tinder-view.html"><i class="fas fa-fire"></i>Tinder View</a>
+          </li>
+          <li>
+            <a href="list-view.html"><i class="fas fa-list"></i>List View</a>
+          </li>
+          <li>
+            <a href="messages.html"><i class="fas fa-comment"></i>Messages</a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i>Favorites</a>
+          </li>
+          <li>
+            <a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a>
+          </li>
+          <li>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          </li>
+          <li>
+            <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emerald-ui/lib/js/emerald-ui.min.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>

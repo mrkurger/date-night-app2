@@ -480,7 +480,12 @@ interface FilterPreset {
                   }}</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item (click)="removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))">
+                <button
+                  mat-menu-item
+                  (click)="
+                    removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))
+                  "
+                >
                   <mat-icon>delete</mat-icon>
                   <span>Remove from Favorites</span>
                 </button>
@@ -1252,10 +1257,12 @@ export class FavoritesPageComponent implements OnInit {
   /**
    * Remove a single favorite
    */
-  removeFavorite(adId: string): void {
+  removeFavorite(adId: string | { city: string; county: string }): void {
     this.favoriteService.removeFavorite(adId).subscribe(
       () => {
-        this.favorites = this.favorites.filter(favorite => this.getAdIdAsString(favorite.ad._id) !== adId);
+        this.favorites = this.favorites.filter(
+          favorite => this.getAdIdAsString(favorite.ad._id) !== adId
+        );
         this.notificationService.success('Removed from favorites');
       },
       error => {
@@ -1332,17 +1339,19 @@ export class FavoritesPageComponent implements OnInit {
         })
         .subscribe(updatedTags => {
           if (updatedTags) {
-            this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), updatedTags).subscribe(
-              () => {
-                // Update local state
-                favorite.tags = updatedTags;
-                this.notificationService.success('Tags updated successfully');
-              },
-              error => {
-                console.error('Error updating tags:', error);
-                this.notificationService.error('Failed to update tags');
-              }
-            );
+            this.favoriteService
+              .updateTags(this.getAdIdAsString(favorite.ad._id), updatedTags)
+              .subscribe(
+                () => {
+                  // Update local state
+                  favorite.tags = updatedTags;
+                  this.notificationService.success('Tags updated successfully');
+                },
+                error => {
+                  console.error('Error updating tags:', error);
+                  this.notificationService.error('Failed to update tags');
+                }
+              );
           }
         });
     });
@@ -1499,7 +1508,7 @@ export class FavoritesPageComponent implements OnInit {
   /**
    * Convert ad ID to string regardless of its type
    */
-  this.getAdIdAsString(adId: string | { city: string; county: string }): string {
+  getAdIdAsString(adId: string | { city: string; county: string }): string {
     return typeof adId === 'string' ? adId : JSON.stringify(adId);
   }
 }

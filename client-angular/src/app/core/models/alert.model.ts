@@ -104,5 +104,5 @@ export interface AlertEvent {
   acknowledged: boolean;
   acknowledgedBy?: string;
   acknowledgedAt?: Date;
-  relatedData?: any;
+  relatedData?: Record<string, unknown>;
 }

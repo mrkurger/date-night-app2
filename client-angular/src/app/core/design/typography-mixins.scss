@@ -1,3 +1,4 @@
+@use 'sass:color';
 /**
  * DateNight.io Typography Mixins
  * 
@@ -179,7 +180,7 @@
   }
 
   &:active {
-    color: darken($color-primary-dark, 10%);
+    color: color.adjust($color-primary-dark, $lightness: -10%);
   }
 
   &:focus-visible {

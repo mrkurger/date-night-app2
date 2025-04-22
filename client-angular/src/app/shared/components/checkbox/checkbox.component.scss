@@ -1,10 +1,11 @@
+@use '../../../core/design/typography-mixins' as typography;
 /**
  * Checkbox Component Styles
  * 
  * Implements the DateNight.io checkbox styles using the design system.
  */
 
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 
 .checkbox {
   display: inline-flex;
@@ -62,7 +63,7 @@
 
   // Label
   &__label {
-    @include ds.body-default;
+    @include typography.body-default;
     margin-left: ds.$spacing-2;
     user-select: none;
     color: ds.$color-dark-gray-2;
@@ -76,7 +77,7 @@
 
   // Helper text
   &__helper-text {
-    @include ds.body-xs;
+    @include typography.body-xs;
     margin-top: ds.$spacing-1;
     margin-left: calc(var(--checkbox-size) + #{ds.$spacing-2});
     color: ds.$color-dark-gray-1;
@@ -96,7 +97,7 @@
     }
 
     .checkbox__label {
-      @include ds.body-small;
+      @include typography.body-small;
     }
   }
 
@@ -118,7 +119,7 @@
     }
 
     .checkbox__label {
-      @include ds.body-large;
+      @include typography.body-default;
     }
   }
 

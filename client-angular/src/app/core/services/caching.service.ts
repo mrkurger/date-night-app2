@@ -7,7 +7,7 @@ import { tap, shareReplay } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class CachingService {
-  private cache: Map<string, { data: any; timestamp: number }> = new Map();
+  private cache: Map<string, { data: unknown; timestamp: number }> = new Map();
   private readonly DEFAULT_CACHE_TIME = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   constructor(private http: HttpClient) {}
@@ -23,7 +23,7 @@ export class CachingService {
     const now = Date.now();
 
     if (cachedData && now - cachedData.timestamp < cacheTime) {
-      return of(cachedData.data);
+      return of(cachedData.data as T);
     }
 
     return this.http.get<T>(url).pipe(
@@ -44,7 +44,7 @@ export class CachingService {
    * @param invalidateUrls Optional array of URLs to invalidate in cache
    * @returns Observable of the response
    */
-  post<T>(url: string, body: any, invalidateUrls: string[] = []): Observable<T> {
+  post<T>(url: string, body: unknown, invalidateUrls: string[] = []): Observable<T> {
     return this.http.post<T>(url, body).pipe(
       tap(() => {
         // Invalidate specified URLs in cache
@@ -60,7 +60,7 @@ export class CachingService {
    * @param invalidateUrls Optional array of URLs to invalidate in cache
    * @returns Observable of the response
    */
-  put<T>(url: string, body: any, invalidateUrls: string[] = []): Observable<T> {
+  put<T>(url: string, body: unknown, invalidateUrls: string[] = []): Observable<T> {
     return this.http.put<T>(url, body).pipe(
       tap(() => {
         // Invalidate specified URLs in cache

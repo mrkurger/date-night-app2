@@ -1,10 +1,12 @@
+@use '../../../core/design/typography-mixins' as typography;
+@use 'sass:color';
 /**
  * Button Component Styles
  * 
  * Implements the DateNight.io button styles using the design system.
  */
 
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 
 // Base button styles
 .button {
@@ -26,19 +28,19 @@
 
   // Size variants
   &--small {
-    @include ds.button-text-small;
+    @include typography.button-text-small;
     padding: ds.$spacing-1 ds.$spacing-3;
     min-height: 32px;
   }
 
   &--medium {
-    @include ds.button-text;
+    @include typography.button-text;
     padding: ds.$spacing-2 ds.$spacing-4;
     min-height: 40px;
   }
 
   &--large {
-    @include ds.button-text-large;
+    @include typography.button-text-large;
     padding: ds.$spacing-3 ds.$spacing-5;
     min-height: 48px;
   }
@@ -53,7 +55,7 @@
     }
 
     &:active:not(.button--disabled):not(.button--loading) {
-      background-color: darken(ds.$color-primary-dark, 5%);
+      background-color: color.adjust(ds.$color-primary-dark, $lightness: -5%);
       transform: translateY(1px);
     }
   }
@@ -92,11 +94,11 @@
     color: ds.$color-white;
 
     &:hover:not(.button--disabled):not(.button--loading) {
-      background-color: darken(ds.$color-error, 10%);
+      background-color: color.adjust(ds.$color-error, $lightness: -10%);
     }
 
     &:active:not(.button--disabled):not(.button--loading) {
-      background-color: darken(ds.$color-error, 15%);
+      background-color: color.adjust(ds.$color-error, $lightness: -15%);
       transform: translateY(1px);
     }
   }

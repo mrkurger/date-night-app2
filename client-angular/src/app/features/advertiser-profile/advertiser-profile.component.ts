@@ -63,9 +63,19 @@ export class AdvertiserProfileComponent implements OnInit {
     });
   }
 
-  loadAd(adId: string): void {
+  loadAd(adId?: string): void {
     this.loading = true;
-    this.adService.getAdById(adId).subscribe({
+
+    // If adId is not provided, use the one from the route
+    const id = adId || this.route.snapshot.paramMap.get('id');
+
+    if (!id) {
+      this.error = 'Ad ID not provided';
+      this.loading = false;
+      return;
+    }
+
+    this.adService.getAdById(id).subscribe({
       next: ad => {
         this.ad = ad;
         this.loading = false;
@@ -187,7 +197,9 @@ export class AdvertiserProfileComponent implements OnInit {
     }
 
     if (this.ad.images && this.ad.images.length > index) {
-      return this.ad.images[index];
+      const image = this.ad.images[index];
+      // Handle both string and object types
+      return typeof image === 'string' ? image : image.url;
     }
 
     return '/assets/images/default-profile.jpg';

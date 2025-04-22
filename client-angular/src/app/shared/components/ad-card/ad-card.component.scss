@@ -8,8 +8,8 @@
   overflow: hidden;
   box-shadow: tokens.$shadow-sm;
   transition:
-    transform $transition-normal $transition-ease,
-    box-shadow $transition-normal $transition-ease;
+    transform tokens.$transition-normal tokens.$transition-ease,
+    box-shadow tokens.$transition-normal tokens.$transition-ease;
   cursor: pointer;
   height: 100%;
 
@@ -343,7 +343,7 @@
       content: 'Featured';
       position: absolute;
       top: tokens.$spacing-3;
-      right: -tokens.$spacing-8;
+      right: tokens.$spacing-8;
       background-color: tokens.$primary-500;
       color: tokens.$neutral-100;
       padding: tokens.$spacing-1 tokens.$spacing-6;
@@ -362,7 +362,7 @@
       position: absolute;
       top: tokens.$spacing-3;
       left: tokens.$spacing-3;
-      background-color: $success;
+      background-color: tokens.$success;
       color: tokens.$neutral-100;
       padding: tokens.$spacing-1 tokens.$spacing-2;
       font-size: tokens.$font-size-xs;
@@ -380,7 +380,7 @@
       position: absolute;
       top: tokens.$spacing-3;
       left: tokens.$spacing-3;
-      background-color: $warning;
+      background-color: tokens.$warning;
       color: tokens.$neutral-900;
       padding: tokens.$spacing-1 tokens.$spacing-2;
       font-size: tokens.$font-size-xs;
@@ -402,7 +402,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform $transition-normal $transition-ease;
+    transition: transform tokens.$transition-normal tokens.$transition-ease;
   }
 
   // Image count badge
@@ -450,17 +450,17 @@
       }
 
       &.badge-new {
-        background-color: $success;
+        background-color: tokens.$success;
         color: tokens.$neutral-100;
       }
 
       &.badge-trending {
-        background-color: $warning;
+        background-color: tokens.$warning;
         color: tokens.$neutral-900;
       }
 
       &.badge-touring {
-        background-color: $info;
+        background-color: tokens.$info;
         color: tokens.$neutral-100;
       }
     }
@@ -491,7 +491,7 @@
     z-index: 1;
 
     .badge-price {
-      background-color: $secondary-500;
+      background-color: tokens.$secondary-500;
       color: tokens.$neutral-900;
       padding: tokens.$spacing-1 tokens.$spacing-2;
       border-radius: tokens.$border-radius-sm;
@@ -519,7 +519,7 @@
   margin: 0 0 tokens.$spacing-2;
   font-size: tokens.$font-size-lg;
   font-weight: tokens.$font-weight-semibold;
-  line-height: $line-height-tight;
+  line-height: tokens.$line-height-tight;
   color: tokens.$neutral-900;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -549,7 +549,7 @@
   margin: 0 0 tokens.$spacing-3;
   color: tokens.$neutral-700;
   font-size: tokens.$font-size-sm;
-  line-height: $line-height-normal;
+  line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -629,7 +629,7 @@
 }
 
 // Responsive styles
-@media (max-width: $breakpoint-md) {
+@media (max-width: tokens.$breakpoint-md) {
   .ad-card.ad-card-list {
     flex-direction: column;
     height: auto;
@@ -641,7 +641,7 @@
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: tokens.$breakpoint-sm) {
   .ad-card-media {
     height: 180px;
   }

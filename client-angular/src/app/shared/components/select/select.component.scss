@@ -1,10 +1,12 @@
+@use '../../../core/design/typography-mixins' as typography;
+@use 'sass:color';
 /**
  * Select Component Styles
  * 
  * Implements the DateNight.io select styles using the design system.
  */
 
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 
 .select {
   display: flex;
@@ -13,7 +15,7 @@
 
   // Label
   &__label {
-    @include ds.label;
+    @include typography.label;
     margin-bottom: ds.$spacing-1;
     color: ds.$color-dark-gray-2;
   }
@@ -72,7 +74,7 @@
 
   // Helper text
   &__helper-text {
-    @include ds.body-xs;
+    @include typography.body-xs;
     margin-top: ds.$spacing-1;
     color: ds.$color-dark-gray-1;
 
@@ -95,7 +97,7 @@
   // Size variants
   &--small {
     .select__field {
-      @include ds.body-small;
+      @include typography.body-small;
       padding: ds.$spacing-1 ds.$spacing-2;
       height: 32px;
     }
@@ -107,7 +109,7 @@
 
   &--medium {
     .select__field {
-      @include ds.body-default;
+      @include typography.body-default;
       padding: ds.$spacing-2 ds.$spacing-3;
       height: 40px;
     }
@@ -115,7 +117,7 @@
 
   &--large {
     .select__field {
-      @include ds.body-large;
+      @include typography.body-default;
       padding: ds.$spacing-3 ds.$spacing-4;
       height: 48px;
     }
@@ -152,7 +154,7 @@
     }
 
     &.select--focused .select__container {
-      background-color: lighten(ds.$color-light-gray-1, 2%);
+      background-color: color.adjust(ds.$color-light-gray-1, $lightness: 2%);
       border-color: ds.$color-primary;
     }
 
@@ -254,7 +256,7 @@
         }
 
         &.select--focused .select__container {
-          background-color: lighten(ds.$color-dark-gray-3, 5%);
+          background-color: color.adjust(ds.$color-dark-gray-3, $lightness: 5%);
         }
       }
 
@@ -267,7 +269,7 @@
       // State variants in dark mode
       &--disabled {
         .select__container {
-          background-color: darken(ds.$color-dark-gray-2, 3%);
+          background-color: color.adjust(ds.$color-dark-gray-2, $lightness: -3%);
         }
       }
 

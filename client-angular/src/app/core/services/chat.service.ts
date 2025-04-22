@@ -32,6 +32,7 @@ export interface ChatMessage {
   content?: string;
   message?: string; // For compatibility with the component
   timestamp: Date;
+  createdAt?: Date; // Added for compatibility
   read: boolean;
   type?: string;
   attachments?: Attachment[];
@@ -75,6 +76,10 @@ export interface ChatRoom {
   unreadCount: number;
   createdAt: Date;
   updatedAt: Date;
+  pinned?: boolean;
+  messageExpiryEnabled?: boolean;
+  messageExpiryTime?: number;
+  encryptionEnabled?: boolean;
 }
 
 export interface TypingIndicator {

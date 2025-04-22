@@ -1,10 +1,11 @@
+@use 'sass:color';
 /**
  * Icon Component Styles
  * 
  * Implements the DateNight.io icon styles using the design system.
  */
 
-@use 'src/styles/design-system/index' as ds;
+@use '../../../../app/core/design/design-tokens' as ds;
 
 .icon {
   display: inline-block;
@@ -71,7 +72,7 @@
       }
 
       &--secondary {
-        color: lighten(ds.$color-secondary, 10%);
+        color: color.adjust(ds.$color-secondary, $lightness: 10%);
       }
     }
   }

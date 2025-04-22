@@ -10,10 +10,18 @@ import { environment } from '../../../environments/environment';
 export interface ErrorTelemetry {
   /** Unique error ID */
   id: string;
+  /** Error name */
+  name?: string;
+  /** Error message */
+  message?: string;
+  /** Error stack trace */
+  stack?: string;
   /** Error code (e.g., 'network_error', 'server_error') */
   errorCode: string;
   /** HTTP status code */
   statusCode: number;
+  /** HTTP status text */
+  status?: string;
   /** User-friendly error message */
   userMessage: string;
   /** Technical error details */

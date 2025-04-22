@@ -15,7 +15,7 @@ import { TravelService, TravelItinerary } from '../../../core/services/travel.se
 import { AdService } from '../../../core/services/ad.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Observable, of } from 'rxjs';
-import { catchError, finalize, tap, switchMap } from 'rxjs/operators';
+import { catchError, finalize, tap, switchMap, map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';

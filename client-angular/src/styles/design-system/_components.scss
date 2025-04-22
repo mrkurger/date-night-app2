@@ -5,14 +5,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-2 $spacing-4;
-  border-radius: $border-radius-md;
-  font-weight: $font-weight-medium;
+  padding: $*.$spacing-2 $*.$spacing-4;
+  border-radius: $*.$border-radius-md;
+  font-weight: $*.$font-weight-medium;
   font-size: $font-size-md;
   line-height: $line-height-normal;
   text-align: center;
   cursor: pointer;
-  transition: all $transition-normal $transition-timing-default;
+  transition: all $*.$transition-normal $transition-timing-default;
   border: none;
   outline: none;
   white-space: nowrap;
@@ -25,14 +25,14 @@
   &:hover,
   &:focus {
     background-color: $color-primary-dark;
-    box-shadow: $shadow-md;
+    box-shadow: $*.$shadow-md;
     transform: translateY(-1px);
   }
 
   &:active {
     background-color: $color-primary-dark;
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: $*.$shadow-sm;
   }
 }
 
@@ -43,14 +43,14 @@
   &:hover,
   &:focus {
     background-color: $color-secondary-dark;
-    box-shadow: $shadow-md;
+    box-shadow: $*.$shadow-md;
     transform: translateY(-1px);
   }
 
   &:active {
     background-color: $color-secondary-dark;
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: $*.$shadow-sm;
   }
 }
 
@@ -64,7 +64,7 @@
     background-color: $color-primary-light;
     color: $color-neutral-100;
     border-color: $color-primary-light;
-    box-shadow: $shadow-md;
+    box-shadow: $*.$shadow-md;
     transform: translateY(-1px);
   }
 
@@ -73,7 +73,7 @@
     color: $color-neutral-100;
     border-color: $color-primary;
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: $*.$shadow-sm;
   }
 }
 
@@ -87,7 +87,7 @@
     background-color: $color-secondary-light;
     color: $color-neutral-100;
     border-color: $color-secondary-light;
-    box-shadow: $shadow-md;
+    box-shadow: $*.$shadow-md;
     transform: translateY(-1px);
   }
 
@@ -96,7 +96,7 @@
     color: $color-neutral-100;
     border-color: $color-secondary;
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: $*.$shadow-sm;
   }
 }
 
@@ -116,72 +116,72 @@
 }
 
 @mixin button-small {
-  padding: $spacing-1 $spacing-3;
-  font-size: $font-size-sm;
-  border-radius: $border-radius-sm;
+  padding: $*.$spacing-1 $*.$spacing-3;
+  font-size: $*.$font-size-sm;
+  border-radius: $*.$border-radius-sm;
 }
 
 @mixin button-large {
-  padding: $spacing-3 $spacing-6;
-  font-size: $font-size-lg;
-  border-radius: $border-radius-lg;
+  padding: $*.$spacing-3 $*.$spacing-6;
+  font-size: $*.$font-size-lg;
+  border-radius: $*.$border-radius-lg;
 }
 
 // Card Mixins
 @mixin card-base {
   background-color: $color-neutral-100;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
+  border-radius: $*.$border-radius-lg;
+  box-shadow: $*.$shadow-md;
   overflow: hidden;
   transition:
-    transform $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    transform $*.$transition-normal $transition-timing-default,
+    box-shadow $*.$transition-normal $transition-timing-default;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-lg;
+    box-shadow: $*.$shadow-lg;
   }
 }
 
 @mixin card-header {
-  padding: $spacing-4 $spacing-6;
+  padding: $*.$spacing-4 $*.$spacing-6;
   border-bottom: $border-width-thin solid $color-neutral-300;
 }
 
 @mixin card-body {
-  padding: $spacing-6;
+  padding: $*.$spacing-6;
 }
 
 @mixin card-footer {
-  padding: $spacing-4 $spacing-6;
+  padding: $*.$spacing-4 $*.$spacing-6;
   border-top: $border-width-thin solid $color-neutral-300;
 }
 
 // Form Mixins
 @mixin form-group {
-  margin-bottom: $spacing-4;
+  margin-bottom: $*.$spacing-4;
 }
 
 @mixin form-label {
   display: block;
-  margin-bottom: $spacing-2;
-  font-weight: $font-weight-medium;
+  margin-bottom: $*.$spacing-2;
+  font-weight: $*.$font-weight-medium;
   color: $color-neutral-800;
 }
 
 @mixin form-control {
   display: block;
   width: 100%;
-  padding: $spacing-3 $spacing-4;
+  padding: $*.$spacing-3 $*.$spacing-4;
   font-size: $font-size-md;
   line-height: $line-height-normal;
   color: $color-neutral-800;
   background-color: $color-neutral-100;
   border: $border-width-thin solid $color-neutral-400;
-  border-radius: $border-radius-md;
+  border-radius: $*.$border-radius-md;
   transition:
-    border-color $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    border-color $*.$transition-normal $transition-timing-default,
+    box-shadow $*.$transition-normal $transition-timing-default;
 
   &:focus {
     border-color: $color-primary;
@@ -195,28 +195,28 @@
 }
 
 @mixin form-control-small {
-  padding: $spacing-2 $spacing-3;
-  font-size: $font-size-sm;
-  border-radius: $border-radius-sm;
+  padding: $*.$spacing-2 $*.$spacing-3;
+  font-size: $*.$font-size-sm;
+  border-radius: $*.$border-radius-sm;
 }
 
 @mixin form-control-large {
-  padding: $spacing-4 $spacing-5;
-  font-size: $font-size-lg;
-  border-radius: $border-radius-lg;
+  padding: $*.$spacing-4 $*.$spacing-5;
+  font-size: $*.$font-size-lg;
+  border-radius: $*.$border-radius-lg;
 }
 
 // Badge Mixins
 @mixin badge-base {
   display: inline-flex;
   align-items: center;
-  padding: $spacing-1 $spacing-2;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
+  padding: $*.$spacing-1 $*.$spacing-2;
+  font-size: $*.$font-size-xs;
+  font-weight: $*.$font-weight-medium;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
-  border-radius: $border-radius-full;
+  border-radius: $*.$border-radius-full;
 }
 
 @mixin badge-primary {
@@ -255,23 +255,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-full;
+  border-radius: $*.$border-radius-full;
   background-color: $color-neutral-300;
   color: $color-neutral-700;
-  font-weight: $font-weight-medium;
+  font-weight: $*.$font-weight-medium;
   overflow: hidden;
 }
 
 @mixin avatar-small {
   width: 2rem;
   height: 2rem;
-  font-size: $font-size-xs;
+  font-size: $*.$font-size-xs;
 }
 
 @mixin avatar-medium {
   width: 3rem;
   height: 3rem;
-  font-size: $font-size-sm;
+  font-size: $*.$font-size-sm;
 }
 
 @mixin avatar-large {
@@ -283,7 +283,7 @@
 @mixin avatar-xlarge {
   width: 6rem;
   height: 6rem;
-  font-size: $font-size-lg;
+  font-size: $*.$font-size-lg;
 }
 
 // Component Classes

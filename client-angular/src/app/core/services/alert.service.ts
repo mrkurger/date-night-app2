@@ -124,7 +124,9 @@ export class AlertService {
    * Get alert event history
    * @param filters Optional filters for the alert events
    */
-  getAlertEventHistory(filters?: any): Observable<AlertEvent[]> {
+  getAlertEventHistory(
+    filters?: Record<string, string | number | boolean>
+  ): Observable<AlertEvent[]> {
     return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/history`, { params: filters }).pipe(
       catchError(error => {
         console.error('Error fetching alert event history:', error);

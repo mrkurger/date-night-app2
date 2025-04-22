@@ -23,22 +23,10 @@
 @forward 'variables';
 @forward 'components';
 // Prevent duplicate variable definitions by using 'hide' to hide conflicting variables
-@forward 'typography-mixins' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-  $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-  $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-  $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-  $color-secondary-dark, $color-white, $color-light-gray-1, $color-light-gray-2,
-  $color-medium-gray-1, $color-medium-gray-2, $color-dark-gray-1, $color-dark-gray-2,
-  $color-dark-gray-3, $font-family-base, $font-family-heading;
+@forward 'typography-mixins';
 
-// Forward spacing utilities with all conflicting variables hidden
-@forward 'spacing-utilities' hide $font-weight-light, $font-weight-regular, $font-weight-medium,
-  $font-weight-semibold, $font-weight-bold, $line-height-tight, $line-height-snug,
-  $line-height-normal, $line-height-relaxed, $line-height-loose, $color-primary,
-  $color-primary-light, $color-primary-dark, $color-secondary, $color-secondary-light,
-  $color-secondary-dark, $color-white, $color-light-gray-1, $color-light-gray-2,
-  $color-medium-gray-1, $color-medium-gray-2, $color-dark-gray-1, $color-dark-gray-2,
-  $color-dark-gray-3, $font-family-base, $font-family-heading;
+// Forward spacing utilities
+@forward 'spacing-utilities';
 
 // Import emerald-ui integration
 @forward 'emerald-ui-integration';

@@ -16,6 +16,7 @@ This document serves as a log of key insights, patterns, and solutions discovere
 - [Technical Solutions](#technical-solutions)
   - [MongoDB Service Patterns](#mongodb-service-patterns)
   - [Angular Build Optimization](#angular-build-optimization)
+  - [Angular Build Warnings](#angular-build-warnings)
   - [Dependency Management](#dependency-management)
   - [Map Integration](#map-integration)
   - [User Preferences](#user-preferences)
@@ -298,9 +299,35 @@ When working with TypeScript in Angular services, we've established these effect
    - Handle null and undefined values explicitly
 
 8. **Consistent Error Handling**:
+
    - Return null or empty arrays for failed operations rather than undefined
    - Use RxJS operators like catchError to handle errors in observables
    - Provide meaningful error messages with context information
+
+9. **Avoiding `any` Types**:
+
+   - Use `unknown` instead of `any` when the type is truly unknown
+   - Create specific interfaces for API responses and request bodies
+   - Use generics for reusable components and services
+   - Example: `get<T>(url: string): Observable<T>` instead of `get(url: string): Observable<any>`
+
+10. **Type-Safe HTTP Methods**:
+
+    - Specify return types for HTTP methods using generics
+    - Define interfaces for request bodies and response types
+    - Use proper typing for HTTP parameters
+    - Example: `http.get<User[]>(url)` instead of `http.get(url)`
+
+11. **Interface Extraction**:
+
+    - Extract common interface patterns into separate interfaces
+    - Use these interfaces across the application for consistency
+    - Example: Create `NotificationSettings` and `PrivacySettings` interfaces and use them in the `User` interface
+
+12. **Type-Safe Timers**:
+    - Use proper types for setTimeout and setInterval return values
+    - Example: `private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;`
+    - Clear timers properly to prevent memory leaks
 
 - [Form Component Integration](#form-component-integration)
 - [Component Demo Page](#component-demo-page)
@@ -2054,6 +2081,39 @@ When working with large Angular applications, build performance and memory usage
    - CI/CD configuration to ensure consistent builds
 
 For more detailed information on Angular build optimization, see [ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md).
+
+## Angular Build Warnings
+
+When building Angular applications, several types of warnings may appear that don't necessarily prevent the build from completing but should be addressed for optimal performance and maintainability:
+
+### Common Warning Types
+
+1. **Unused Component Imports**:
+
+   - Warnings like `TS-998113: ComponentName is not used within the template of ParentComponent`
+   - These occur when components are imported but not used in the template
+   - Solution: Remove unused imports or use them in the template if needed
+
+2. **CSS Budget Warnings**:
+
+   - Warnings like `css-inline-fonts exceeded maximum budget`
+   - These occur when CSS files exceed the size limits defined in angular.json
+   - Solution: Increase budget limits or optimize CSS by removing unused styles
+
+3. **CommonJS Module Warnings**:
+   - Warnings like `Module 'leaflet' used by 'map.component.ts' is not ESM`
+   - These occur when using CommonJS modules in an ESM environment
+   - Solution: Configure the Angular compiler to handle CommonJS modules or use ESM-compatible alternatives
+
+### Best Practices for Handling Warnings
+
+1. **Regular Auditing**: Review build warnings as part of the development process
+2. **Budget Configuration**: Set realistic budgets based on your application's needs
+3. **Font Optimization**: Use font subsets and limit the number of font weights
+4. **Component Cleanup**: Regularly review components for unused imports
+5. **Module Optimization**: Use ESM-compatible modules when possible
+
+For detailed information on handling Angular build warnings, see [ANGULAR_BUILD_WARNINGS.MD](./ANGULAR_BUILD_WARNINGS.md).
 
 ## Map Integration Patterns
 

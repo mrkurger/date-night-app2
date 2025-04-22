@@ -29,7 +29,8 @@ export class AdDetailsComponent implements OnInit {
   error: string | null = null;
   isOwner = false;
   currentImageIndex = 0;
-  currentImage = '';
+  currentImage: any = null;
+  currentImageUrl = '';
   favorites: string[] = [];
 
   constructor(
@@ -57,9 +58,12 @@ export class AdDetailsComponent implements OnInit {
 
           // Set the current image
           if (ad.media && ad.media.length > 0) {
-            this.currentImage = ad.media[0].url;
+            this.currentImage = ad.media[0];
+            this.currentImageUrl = ad.media[0].url;
           } else if (ad.images && ad.images.length > 0) {
             this.currentImage = ad.images[0];
+            this.currentImageUrl =
+              typeof ad.images[0] === 'string' ? ad.images[0] : ad.images[0].url;
           }
 
           // Check if the current user is the owner
@@ -93,10 +97,13 @@ export class AdDetailsComponent implements OnInit {
   nextImage(): void {
     if (this.ad && this.ad.media && this.ad.media.length > 0) {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.ad.media.length;
-      this.currentImage = this.ad.media[this.currentImageIndex].url;
+      this.currentImage = this.ad.media[this.currentImageIndex];
+      this.currentImageUrl = this.ad.media[this.currentImageIndex].url;
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.ad.images.length;
       this.currentImage = this.ad.images[this.currentImageIndex];
+      this.currentImageUrl =
+        typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
   }
 
@@ -104,11 +111,14 @@ export class AdDetailsComponent implements OnInit {
     if (this.ad && this.ad.media && this.ad.media.length > 0) {
       this.currentImageIndex =
         (this.currentImageIndex - 1 + this.ad.media.length) % this.ad.media.length;
-      this.currentImage = this.ad.media[this.currentImageIndex].url;
+      this.currentImage = this.ad.media[this.currentImageIndex];
+      this.currentImageUrl = this.ad.media[this.currentImageIndex].url;
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
       this.currentImageIndex =
         (this.currentImageIndex - 1 + this.ad.images.length) % this.ad.images.length;
       this.currentImage = this.ad.images[this.currentImageIndex];
+      this.currentImageUrl =
+        typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
   }
 
@@ -154,10 +164,13 @@ export class AdDetailsComponent implements OnInit {
       return;
     }
 
+    // Convert complex ID to string for comparison if needed
+    const adIdStr = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+
     if (this.isFavorite()) {
       this.userService.removeFavorite(this.ad._id).subscribe({
         next: () => {
-          this.favorites = this.favorites.filter(id => id !== this.ad?._id);
+          this.favorites = this.favorites.filter(id => id !== adIdStr);
           this.notificationService.success('Removed from favorites');
         },
         error: err => {
@@ -168,7 +181,7 @@ export class AdDetailsComponent implements OnInit {
     } else {
       this.userService.addFavorite(this.ad._id).subscribe({
         next: () => {
-          this.favorites.push(this.ad?._id || '');
+          this.favorites.push(adIdStr);
           this.notificationService.success('Added to favorites');
         },
         error: err => {
@@ -180,7 +193,12 @@ export class AdDetailsComponent implements OnInit {
   }
 
   isFavorite(): boolean {
-    return this.ad ? this.favorites.includes(this.ad._id) : false;
+    if (!this.ad) return false;
+
+    // Convert complex ID to string for comparison if needed
+    const adIdStr = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+
+    return this.favorites.includes(adIdStr);
   }
 
   reportAd(): void {

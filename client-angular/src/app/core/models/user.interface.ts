@@ -24,18 +24,8 @@ export interface User {
   };
   subscriptionTier?: 'free' | 'premium' | 'vip';
   subscriptionExpires?: Date;
-  notificationSettings?: {
-    emailNotifications?: boolean;
-    chatNotifications?: boolean;
-    marketingEmails?: boolean;
-    newMatchNotifications?: boolean;
-  };
-  privacySettings?: {
-    profileVisibility?: 'public' | 'private' | 'friends';
-    showOnlineStatus?: boolean;
-    allowMessaging?: 'all' | 'friends' | 'none';
-    dataSharing?: boolean;
-  };
+  notificationSettings?: NotificationSettings;
+  privacySettings?: PrivacySettings;
   profileImage?: string;
   avatarUrl?: string; // Alias for profileImage for compatibility
   location?: {
@@ -107,4 +97,18 @@ export interface OAuthProvider {
   name: string;
   url: string;
   icon: string;
+}
+
+export interface NotificationSettings {
+  emailNotifications?: boolean;
+  chatNotifications?: boolean;
+  marketingEmails?: boolean;
+  newMatchNotifications?: boolean;
+}
+
+export interface PrivacySettings {
+  profileVisibility?: 'public' | 'private' | 'friends';
+  showOnlineStatus?: boolean;
+  allowMessaging?: 'all' | 'friends' | 'none';
+  dataSharing?: boolean;
 }

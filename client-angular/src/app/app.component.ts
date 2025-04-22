@@ -21,10 +21,11 @@ import { ThemeService } from './core/services/theme.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
-import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
-import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
-import { ContextualHelpComponent } from './shared/components/contextual-help/contextual-help.component';
-import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
+// These components are used in the template or will be used in future updates
+// import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
+// import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
+// import { ContextualHelpComponent } from './shared/components/contextual-help/contextual-help.component';
+// import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
@@ -51,15 +52,16 @@ export class AppComponent implements OnInit, OnDestroy {
   username = '';
   unreadMessages = 0;
   notificationCount = 0;
-  deferredPrompt: any;
+  deferredPrompt: unknown;
   showInstallPrompt = false;
 
   // Onboarding properties
   showOnboarding = false;
   showFeatureTour = false;
-  onboardingSteps: any[] = [];
-  featureTourSteps: any[] = [];
-  contextualHelpItems: any[] = [];
+  onboardingSteps: Array<{ title: string; content: string; image?: string }> = [];
+  featureTourSteps: Array<{ element: string; title: string; content: string; position?: string }> =
+    [];
+  contextualHelpItems: Array<{ id: string; title: string; content: string }> = [];
 
   private authSubscription: Subscription = new Subscription();
   private chatSubscription: Subscription = new Subscription();
@@ -202,10 +204,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     // Show the prompt
-    this.deferredPrompt.prompt();
+    (this.deferredPrompt as any).prompt();
 
     // Wait for the user to respond to the prompt
-    this.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
+    (this.deferredPrompt as any).userChoice.then((choiceResult: { outcome: string }) => {
       if (choiceResult.outcome === 'accepted') {
         console.warn('User accepted the install prompt');
         this.notificationService.success('App installation started!');

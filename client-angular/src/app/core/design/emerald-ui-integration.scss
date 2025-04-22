@@ -9,7 +9,8 @@
 @use 'emerald-tokens' as tokens;
 
 // Import emerald-ui base styles
-@import 'node_modules/emerald-ui/lib/styles/emerald-ui.min.css';
+// @import 'node_modules/emerald-ui/lib/styles/emerald-ui.min.css';
+// Commented out to fix build issues - we'll need to properly configure this import
 
 // Override emerald-ui variables with our design tokens
 :root {

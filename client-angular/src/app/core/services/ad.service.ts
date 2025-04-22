@@ -134,7 +134,7 @@ export class AdService {
         description: `${description} Located in ${location}. Available for bookings 7 days a week. Contact for more information.`,
         category,
         price: Math.floor(Math.random() * 1000) + 500,
-        location,
+        location: { city: location, county: 'County' },
         images: [profileImage, secondImage],
         media: [
           { type: 'image', url: profileImage },
@@ -161,8 +161,9 @@ export class AdService {
     return mockAds;
   }
 
-  getAdById(id: string): Observable<Ad> {
-    return this.http.get<Ad>(`${this.apiUrl}/${id}`);
+  getAdById(id: string | { city: string; county: string }): Observable<Ad> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.get<Ad>(`${this.apiUrl}/${idStr}`);
   }
 
   getUserAds(userId: string): Observable<Ad[]> {
@@ -177,20 +178,30 @@ export class AdService {
     return this.http.post<Ad>(`${this.apiUrl}/with-images`, formData);
   }
 
-  updateAd(id: string, adData: AdUpdateDTO): Observable<Ad> {
-    return this.http.put<Ad>(`${this.apiUrl}/${id}`, adData);
+  updateAd(id: string | { city: string; county: string }, adData: AdUpdateDTO): Observable<Ad> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.put<Ad>(`${this.apiUrl}/${idStr}`, adData);
   }
 
-  updateAdImages(id: string, formData: FormData): Observable<Ad> {
-    return this.http.put<Ad>(`${this.apiUrl}/${id}/images`, formData);
+  updateAdImages(
+    id: string | { city: string; county: string },
+    formData: FormData
+  ): Observable<Ad> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.put<Ad>(`${this.apiUrl}/${idStr}/images`, formData);
   }
 
-  deleteAd(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteAd(id: string | { city: string; county: string }): Observable<void> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.delete<void>(`${this.apiUrl}/${idStr}`);
   }
 
-  deleteAdImage(adId: string, imageId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${adId}/images/${imageId}`);
+  deleteAdImage(
+    adId: string | { city: string; county: string },
+    imageId: string
+  ): Observable<void> {
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    return this.http.delete<void>(`${this.apiUrl}/${adIdStr}/images/${imageId}`);
   }
 
   getSwipeAds(filters?: any): Observable<Ad[]> {
@@ -227,8 +238,12 @@ export class AdService {
     return this.http.get<Ad[]>(`${this.apiUrl}/category/${categoryId}`);
   }
 
-  recordSwipe(adId: string, direction: 'left' | 'right'): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${adId}/swipe`, { direction });
+  recordSwipe(
+    adId: string | { city: string; county: string },
+    direction: 'left' | 'right'
+  ): Observable<void> {
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    return this.http.post<void>(`${this.apiUrl}/${adIdStr}/swipe`, { direction });
   }
 
   searchNearby(longitude: number, latitude: number, radius: number): Observable<Ad[]> {
@@ -255,12 +270,17 @@ export class AdService {
     });
   }
 
-  reportAd(id: string, reason: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${id}/report`, { reason });
+  reportAd(id: string | { city: string; county: string }, reason: string): Observable<void> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.post<void>(`${this.apiUrl}/${idStr}/report`, { reason });
   }
 
-  toggleActiveStatus(id: string, isActive: boolean): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { isActive });
+  toggleActiveStatus(
+    id: string | { city: string; county: string },
+    isActive: boolean
+  ): Observable<void> {
+    const idStr = typeof id === 'string' ? id : JSON.stringify(id);
+    return this.http.patch<void>(`${this.apiUrl}/${idStr}/status`, { isActive });
   }
 
   /**

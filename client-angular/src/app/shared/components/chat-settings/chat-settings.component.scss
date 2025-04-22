@@ -1,4 +1,3 @@
-
 /* ===================================================
    CUSTOMIZABLE SETTINGS IN THIS FILE
    ===================================================
@@ -8,8 +7,8 @@
    - SETTING_NAME: Description of setting (default: value)
      Related to: other_file.scss:OTHER_SETTING
    =================================================== */
-@import '../../../../styles/variables';
-@import '../../../../styles/mixins';
+@use '../../../core/design/design-tokens' as tokens;
+@use '../../../core/design/typography-mixins' as typography;
 
 .chat-settings {
   padding: 1.5rem;

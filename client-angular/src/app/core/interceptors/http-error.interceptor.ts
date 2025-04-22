@@ -14,6 +14,23 @@ import { AuthService } from '../services/auth.service';
 import { retryWithBackoff } from '../utils/rxjs-operators';
 
 /**
+ * Error categories for classification
+ */
+export enum ErrorCategory {
+  NETWORK = 'network',
+  SERVER = 'server',
+  CLIENT = 'client',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  TIMEOUT = 'timeout',
+  UNKNOWN = 'unknown',
+  RATE_LIMIT = 'rate_limit',
+  NOT_FOUND = 'not_found',
+  CONFLICT = 'conflict',
+}
+
+/**
  * Configuration interface for HttpErrorInterceptor
  */
 export interface HttpErrorInterceptorConfig {
@@ -151,7 +168,7 @@ function handleError(
       name: 'HttpError',
       message: error.message,
       stack: error.error?.stack,
-      status: error.status,
+      status: error.status?.toString(),
       url: config.sanitizeSensitiveData ? sanitizeUrl(request.url) : request.url,
     });
   }

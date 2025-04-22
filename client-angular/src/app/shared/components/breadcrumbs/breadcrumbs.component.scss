@@ -1,8 +1,8 @@
 @use '../../../core/design/design-tokens' as tokens;
 
 .breadcrumbs {
-  padding: $spacing-3 0;
-  margin-bottom: $spacing-4;
+  padding: tokens.$spacing-3 0;
+  margin-bottom: tokens.$spacing-4;
 }
 
 .breadcrumb-list {
@@ -17,24 +17,24 @@
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  font-size: $font-size-sm;
-  color: $neutral-600;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$neutral-600;
 
   &.active {
-    color: $neutral-900;
-    font-weight: $font-weight-medium;
+    color: tokens.$neutral-900;
+    font-weight: tokens.$font-weight-medium;
   }
 }
 
 .breadcrumb-link {
   display: flex;
   align-items: center;
-  color: $neutral-600;
+  color: tokens.$neutral-600;
   text-decoration: none;
-  transition: color $transition-normal $transition-ease;
+  transition: color tokens.$transition-normal tokens.$transition-ease;
 
   &:hover {
-    color: $primary-500;
+    color: tokens.$primary-500;
     text-decoration: underline;
   }
 }
@@ -49,26 +49,26 @@
   font-size: 16px;
   width: 16px;
   height: 16px;
-  margin-right: $spacing-1;
+  margin-right: tokens.$spacing-1;
 }
 
 .breadcrumb-separator {
   font-size: 18px;
   width: 18px;
   height: 18px;
-  margin: 0 $spacing-2;
-  color: $neutral-400;
+  margin: 0 tokens.$spacing-2;
+  color: tokens.$neutral-400;
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
   .breadcrumbs {
-    padding: $spacing-2 0;
-    margin-bottom: $spacing-3;
+    padding: tokens.$spacing-2 0;
+    margin-bottom: tokens.$spacing-3;
   }
 
   .breadcrumb-item {
-    font-size: $font-size-xs;
+    font-size: tokens.$font-size-xs;
   }
 
   .breadcrumb-icon {
@@ -81,6 +81,6 @@
     font-size: 16px;
     width: 16px;
     height: 16px;
-    margin: 0 $spacing-1;
+    margin: 0 tokens.$spacing-1;
   }
 }

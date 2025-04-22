@@ -1,4 +1,5 @@
-@use 'src/styles/design-system/index' as ds;
+@use 'sass:color';
+@use '../../../app/core/design/design-tokens' as ds;
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -8,16 +9,16 @@
 // COMMON CUSTOMIZATIONS:
 // - $filter-sidebar-width: Width of the filter sidebar (default: 320px)
 // - $card-hover-transform: Transform effect on card hover (default: translateY(-8px) scale(1.02))
-// - $active-filter-bg: Background color for active filter chips (default: $primary-100)
+// - $active-filter-bg: Background color for active filter chips (default: ds.$primary-100)
 // ===================================================
 
 // Variables
 $filter-sidebar-width: 320px;
 $card-hover-transform: translateY(-8px) scale(1.02);
-$active-filter-bg: $primary-100;
+$active-filter-bg: color.adjust(ds.$color-primary, $lightness: 35%);
 
 .list-view-container {
-  padding: $spacing-6 0;
+  padding: ds.$spacing-6 0;
   position: relative;
 }
 
@@ -25,14 +26,14 @@ $active-filter-bg: $primary-100;
 .search-filters-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-4;
-  margin: $spacing-6 0;
+  gap: ds.$spacing-4;
+  margin: ds.$spacing-6 0;
   align-items: center;
   justify-content: space-between;
-  background-color: $neutral-100;
-  padding: $spacing-4;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-sm;
+  background-color: ds.$neutral-100;
+  padding: ds.$spacing-4;
+  border-radius: ds.$border-radius-lg;
+  box-shadow: ds.$shadow-sm;
 }
 
 .search-box {
@@ -47,7 +48,7 @@ $active-filter-bg: $primary-100;
 
 .view-controls {
   display: flex;
-  gap: $spacing-2;
+  gap: ds.$spacing-2;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -55,16 +56,16 @@ $active-filter-bg: $primary-100;
 .view-toggle {
   display: flex;
   align-items: center;
-  background-color: $neutral-200;
-  border-radius: $border-radius-md;
-  padding: $spacing-1;
-  margin-right: $spacing-2;
+  background-color: ds.$neutral-200;
+  border-radius: ds.$border-radius-md;
+  padding: ds.$spacing-1;
+  margin-right: ds.$spacing-2;
 
   button {
-    border-radius: $border-radius-md;
+    border-radius: ds.$border-radius-md;
 
     &.active {
-      background-color: $primary-500;
+      background-color: ds.$primary-500;
       color: white;
     }
   }
@@ -73,7 +74,7 @@ $active-filter-bg: $primary-100;
 .sort-button {
   display: flex;
   align-items: center;
-  gap: $spacing-2;
+  gap: ds.$spacing-2;
 }
 
 .filter-badge {
@@ -82,18 +83,18 @@ $active-filter-bg: $primary-100;
   justify-content: center;
   min-width: 20px;
   height: 20px;
-  background-color: $primary-500;
+  background-color: ds.$primary-500;
   color: white;
-  border-radius: $border-radius-full;
-  font-size: $font-size-xs;
-  margin-left: $spacing-2;
-  padding: 0 $spacing-1;
+  border-radius: ds.$border-radius-full;
+  font-size: ds.$font-size-xs;
+  margin-left: ds.$spacing-2;
+  padding: 0 ds.$spacing-1;
 }
 
 /* Content with Sidebar Layout */
 .content-with-sidebar {
   display: flex;
-  gap: $spacing-6;
+  gap: ds.$spacing-6;
   position: relative;
 }
 
@@ -101,14 +102,14 @@ $active-filter-bg: $primary-100;
 .filter-sidebar {
   width: $filter-sidebar-width;
   background-color: white;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
-  padding: $spacing-4;
+  border-radius: ds.$border-radius-lg;
+  box-shadow: ds.$shadow-md;
+  padding: ds.$spacing-4;
   flex-shrink: 0;
   transition: transform 0.3s ease;
   z-index: 10;
 
-  @media (max-width: $breakpoint-lg) {
+  @media (max-width: ds.$breakpoint-lg) {
     position: fixed;
     top: 0;
     left: 0;
@@ -125,13 +126,13 @@ $active-filter-bg: $primary-100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-4;
-  padding-bottom: $spacing-3;
-  border-bottom: 1px solid $neutral-300;
+  margin-bottom: ds.$spacing-4;
+  padding-bottom: ds.$spacing-3;
+  border-bottom: 1px solid ds.$neutral-300;
 
   h3 {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
+    font-size: ds.$font-size-xl;
+    font-weight: ds.$font-weight-semibold;
     margin: 0;
   }
 }
@@ -139,20 +140,20 @@ $active-filter-bg: $primary-100;
 .filter-sidebar-content {
   max-height: calc(100vh - 150px);
   overflow-y: auto;
-  padding-right: $spacing-2;
+  padding-right: ds.$spacing-2;
 
   h4 {
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    margin: $spacing-4 0 $spacing-2;
-    color: $neutral-700;
+    font-size: 1rem;
+    font-weight: ds.$font-weight-semibold;
+    margin: ds.$spacing-4 0 ds.$spacing-2;
+    color: ds.$neutral-700;
   }
 
   .filter-group {
     display: flex;
     flex-direction: column;
-    gap: $spacing-2;
-    margin-bottom: $spacing-4;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-4;
   }
 
   .full-width {
@@ -161,8 +162,8 @@ $active-filter-bg: $primary-100;
 
   .date-range-picker {
     display: flex;
-    gap: $spacing-2;
-    margin-bottom: $spacing-4;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-4;
 
     mat-form-field {
       flex: 1;
@@ -172,8 +173,8 @@ $active-filter-bg: $primary-100;
   .saved-filters {
     display: flex;
     flex-direction: column;
-    gap: $spacing-2;
-    margin-bottom: $spacing-6;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-6;
 
     .saved-filter-btn {
       text-align: left;
@@ -184,9 +185,9 @@ $active-filter-bg: $primary-100;
   .filter-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: $spacing-6;
-    padding-top: $spacing-4;
-    border-top: 1px solid $neutral-300;
+    margin-top: ds.$spacing-6;
+    padding-top: ds.$spacing-4;
+    border-top: 1px solid ds.$neutral-300;
   }
 }
 
@@ -201,31 +202,31 @@ $active-filter-bg: $primary-100;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: $spacing-2;
-  margin-bottom: $spacing-4;
-  padding: $spacing-3;
-  background-color: $neutral-100;
-  border-radius: $border-radius-md;
+  gap: ds.$spacing-2;
+  margin-bottom: ds.$spacing-4;
+  padding: ds.$spacing-3;
+  background-color: ds.$neutral-100;
+  border-radius: ds.$border-radius-md;
 }
 
 .active-filters-label {
-  font-weight: $font-weight-medium;
-  color: $neutral-700;
-  margin-right: $spacing-2;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-700;
+  margin-right: ds.$spacing-2;
 }
 
 .filter-chips {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-2;
+  gap: ds.$spacing-2;
 
   mat-chip {
     background-color: $active-filter-bg;
 
     &[color='warn'] {
-      background-color: $error-100;
-      color: $error;
+      background-color: ds.$error-100;
+      color: ds.$error;
     }
   }
 }
@@ -243,22 +244,22 @@ $active-filter-bg: $primary-100;
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: $spacing-8;
+  padding: ds.$spacing-8;
 }
 
 .error-icon {
-  font-size: $font-size-4xl;
-  color: $error;
-  margin-bottom: $spacing-4;
+  font-size: ds.$font-size-4xl;
+  color: ds.$error;
+  margin-bottom: ds.$spacing-4;
   width: auto;
   height: auto;
 }
 
 .error-text {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-medium;
-  color: $neutral-800;
-  margin-bottom: $spacing-6;
+  font-size: ds.$font-size-xl;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-800;
+  margin-bottom: ds.$spacing-6;
 }
 
 /* Empty State */
@@ -269,37 +270,37 @@ $active-filter-bg: $primary-100;
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: $spacing-8;
-  background-color: $neutral-100;
-  border-radius: $border-radius-lg;
-  border: 1px dashed $neutral-400;
+  padding: ds.$spacing-8;
+  background-color: ds.$neutral-100;
+  border-radius: ds.$border-radius-lg;
+  border: 1px dashed ds.$neutral-400;
 }
 
 .empty-icon {
-  font-size: $font-size-4xl;
-  color: $neutral-500;
-  margin-bottom: $spacing-4;
+  font-size: ds.$font-size-4xl;
+  color: ds.$neutral-500;
+  margin-bottom: ds.$spacing-4;
   width: auto;
   height: auto;
 }
 
 .empty-text {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-medium;
-  color: $neutral-800;
-  margin-bottom: $spacing-2;
+  font-size: ds.$font-size-xl;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-800;
+  margin-bottom: ds.$spacing-2;
 }
 
 .empty-subtext {
-  color: $neutral-600;
-  margin-bottom: $spacing-6;
+  color: ds.$neutral-600;
+  margin-bottom: ds.$spacing-6;
 }
 
 /* Pagination */
 .pagination-container {
-  margin-top: $spacing-8;
-  padding-top: $spacing-6;
-  border-top: 1px solid $neutral-200;
+  margin-top: ds.$spacing-8;
+  padding-top: ds.$spacing-6;
+  border-top: 1px solid ds.$neutral-200;
 }
 
 /* Dialog Styles */
@@ -316,7 +317,7 @@ $active-filter-bg: $primary-100;
 
     &:hover {
       transform: $card-hover-transform;
-      box-shadow: $shadow-lg;
+      box-shadow: ds.$shadow-lg;
     }
   }
 
@@ -329,7 +330,7 @@ $active-filter-bg: $primary-100;
 }
 
 /* Responsive Adjustments */
-@media (max-width: $breakpoint-lg) {
+@media (max-width: ds.$breakpoint-lg) {
   .content-with-sidebar {
     flex-direction: column;
   }
@@ -339,14 +340,14 @@ $active-filter-bg: $primary-100;
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: ds.$breakpoint-md) {
   .search-filters-bar {
     flex-direction: column;
     align-items: stretch;
   }
 
   .view-controls {
-    margin-top: $spacing-4;
+    margin-top: ds.$spacing-4;
     justify-content: space-between;
   }
 
@@ -355,16 +356,16 @@ $active-filter-bg: $primary-100;
     align-items: flex-start;
 
     .active-filters-label {
-      margin-bottom: $spacing-2;
+      margin-bottom: ds.$spacing-2;
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: ds.$breakpoint-sm) {
   .view-toggle {
     width: 100%;
     justify-content: space-between;
-    margin-bottom: $spacing-2;
+    margin-bottom: ds.$spacing-2;
   }
 
   .sort-button {

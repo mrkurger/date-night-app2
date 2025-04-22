@@ -150,15 +150,17 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  addFavorite(adId: string): Observable<void> {
+  addFavorite(adId: string | { city: string; county: string }): Observable<void> {
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http
-      .post<void>(`${this.apiUrl}/favorites/${adId}`, {})
+      .post<void>(`${this.apiUrl}/favorites/${adIdStr}`, {})
       .pipe(catchError(this.handleError));
   }
 
-  removeFavorite(adId: string): Observable<void> {
+  removeFavorite(adId: string | { city: string; county: string }): Observable<void> {
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http
-      .delete<void>(`${this.apiUrl}/favorites/${adId}`)
+      .delete<void>(`${this.apiUrl}/favorites/${adIdStr}`)
       .pipe(catchError(this.handleError));
   }
 
