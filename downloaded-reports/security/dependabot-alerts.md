@@ -1,6 +1,6 @@
 # Security Alerts and Dependency Report
 
-*Generated on: 2025-04-21*
+*Generated on: 2025-04-28*
 
 This report provides an overview of dependencies and potential security issues in the project.
 
@@ -78,11 +78,11 @@ tslib                               NOTUSED?  Still using tslib?
 
 zone.js                             NPM ERR!  Registry error got is not a function
 
-src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/emerald-example/emerald-example.component.scss, /src/app/shared/components/checkbox/checkbox.component.scss, /src/app/shared/components/card/card.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/list-view/list-view.component.scss, /src/app/features/chat/chat-list/chat-list.component.scss, /src/app/features/auth/login/login.component.scss
-                                    PKG ERR!  A package.json was not found at /home/runner/work/date-night-app2/date-night-app2/client-angular/src/package.json
+sass                                PKG ERR!  Not in the package.json. Found in: /src/styles/design-system/_variables.scss, /src/app/shared/emerald/components/toggle/toggle.component.scss, /src/app/shared/emerald/components/skeleton-loader/skeleton-loader.component.scss, /src/app/shared/emerald/components/pager/pager.component.scss, /src/app/shared/emerald/components/page-header/page-header.component.scss, /src/app/shared/emerald/components/label/label.component.scss, /src/app/shared/emerald/components/info-panel/info-panel.component.scss, /src/app/shared/emerald/components/floating-action-button/floating-action-button.component.scss, /src/app/shared/emerald/components/carousel/carousel.component.scss, /src/app/shared/emerald/components/card-grid/card-grid.component.scss, /src/app/shared/emerald/components/avatar/avatar.component.scss, /src/app/shared/emerald/components/app-card/app-card.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/tinder/tinder.component.scss, /src/app/features/netflix-view/netflix-view.component.scss, /src/app/features/list-view/list-view.component.scss, /src/app/features/auth/login/login.component.scss, /src/app/core/design/design-tokens.scss, /src/app/core/design/emerald-ui-integration.scss, /src/app/core/design/main.scss, /src/app/core/design/typography-mixins.scss
                                     NPM ERR!  Registry error got is not a function
 
-sass                                PKG ERR!  Not in the package.json. Found in: /src/app/shared/emerald/components/app-card/app-card.component.scss, /src/app/features/tinder/tinder.component.scss, /src/app/features/auth/login/login.component.scss, /src/app/core/design/design-tokens.scss, /src/app/core/design/emerald-ui-integration.scss, /src/app/core/design/main.scss
+src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/emerald-example/emerald-example.component.scss
+                                    PKG ERR!  A package.json was not found at /home/runner/work/date-night-app2/date-night-app2/client-angular/src/package.json
                                     NPM ERR!  Registry error got is not a function
 
 Use npm-check -u for interactive update.
