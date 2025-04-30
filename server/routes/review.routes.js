@@ -9,9 +9,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import reviewController from '../controllers/review.controller';
-import { authenticate, optionalAuth } from '../middleware/auth';
-import { isAdmin } from '../middleware/roles';
+import reviewController from '../controllers/review.controller.js';
+import { authenticate, optionalAuth } from '../middleware/auth.js';
+import { isAdmin } from '../middleware/roles.js';
 
 // Create a new review
 router.post('/', authenticate, reviewController.createReview);
@@ -45,4 +45,4 @@ router.get('/admin/pending', authenticate, isAdmin, reviewController.getPendingR
 router.post('/admin/approve/:reviewId', authenticate, isAdmin, reviewController.approveReview);
 router.post('/admin/reject/:reviewId', authenticate, isAdmin, reviewController.rejectReview);
 
-module.exports = router;
+export default router;

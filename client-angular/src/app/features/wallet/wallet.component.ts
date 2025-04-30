@@ -56,9 +56,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { QRCodeModule } from '../../shared/qrcode/qrcode.module';
 
 // Import Emerald components
-import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
 import { PagerComponent } from '../../shared/emerald/components/pager/pager.component';
-import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
 import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
 
 // Import dialogs
@@ -103,9 +101,7 @@ import { TransactionDetailsDialogComponent } from './dialogs/transaction-details
     QRCodeModule,
     ClipboardModule,
     // Emerald components
-    CardGridComponent,
     PagerComponent,
-    AppCardComponent,
     FloatingActionButtonComponent,
   ],
 })

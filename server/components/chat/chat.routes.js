@@ -9,9 +9,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import chatController from './chat.controller';
-import encryptionRoutes from './encryption.routes';
-import { protect } from '../../middleware/auth';
+import chatController from './chat.controller.js';
+import encryptionRoutes from './encryption.routes.js';
+import { protect } from '../../middleware/auth.js';
 
 // Apply authentication middleware to all chat routes
 router.use(protect);
@@ -55,4 +55,4 @@ router.post('/rooms/:roomId/expiry', chatController.updateMessageExpiry);
 // Mount encryption routes
 router.use('/encryption', encryptionRoutes);
 
-module.exports = router;
+export default router;

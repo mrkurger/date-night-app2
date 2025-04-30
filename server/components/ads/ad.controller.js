@@ -162,4 +162,4 @@ class AdController {
   }
 }
 
-module.exports = new AdController();
+export default new AdController();

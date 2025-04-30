@@ -15,9 +15,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import encryptionController from './encryption.controller';
-import { protect } from '../../middleware/auth';
-import { validate } from '../../middleware/validation';
+import encryptionController from './encryption.controller.js';
+import { protect } from '../../middleware/auth.js';
+import { validate } from '../../middleware/validation.js';
 import { body, param } from 'express-validator';
 
 // Debug log to check if the controller is properly imported
@@ -159,4 +159,4 @@ router.get(
   encryptionController.getRoomEncryptionStatus
 );
 
-module.exports = router;
+export default router;

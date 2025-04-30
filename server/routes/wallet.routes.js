@@ -9,9 +9,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import walletController from '../controllers/wallet.controller';
-import { authenticateToken } from '../middleware/authenticateToken';
-import { asyncHandler } from '../middleware/asyncHandler';
+import walletController from '../controllers/wallet.controller.js';
+import { authenticateToken } from '../middleware/authenticateToken.js';
+import { asyncHandler } from '../middleware/asyncHandler.js';
 
 // Protect all wallet routes except webhook
 router.use(authenticateToken);
@@ -71,4 +71,4 @@ router.post(
   asyncHandler(walletController.handleCryptoWebhook)
 );
 
-module.exports = router;
+export default router;

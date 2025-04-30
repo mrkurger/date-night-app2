@@ -1,0 +1,144 @@
+/**
+ * Accessibility Utilities
+ * 
+ * This file provides mixins and functions to help implement accessible design.
+ * It follows WCAG 2.1 AA standards.
+ * 
+ * Usage:
+ * @use 'path/to/accessibility-utilities' as a11y;
+ * 
+ * .element {
+ *   @include a11y.visually-hidden;
+ * }
+ * 
+ * .link {
+ *   @include a11y.focus-visible;
+ * }
+ */
+
+@use 'design-tokens' as tokens;
+
+/// Visually hidden
+/// Hides content visually but keeps it accessible to screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// Focus visible
+/// Adds a focus outline that is only visible when using keyboard navigation
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid tokens.$color-primary;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(tokens.$color-primary, 0.3);
+  }
+}
+
+/// Skip link
+/// Creates a skip link that is only visible when focused
+@mixin skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: tokens.$color-white;
+  color: tokens.$color-primary;
+  padding: 8px;
+  z-index: 100;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+/// Screen reader only
+/// Alternative to visually-hidden
+@mixin sr-only {
+  @include visually-hidden;
+}
+
+/// Not for screen readers
+/// Hides content from screen readers but keeps it visually visible
+@mixin not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/// High contrast mode
+/// Adds styles for Windows high contrast mode
+@mixin high-contrast-mode {
+  @media (forced-colors: active) {
+    @content;
+  }
+}
+
+/// Reduced motion (moved to responsive-utilities.scss)
+/// This mixin has been moved to responsive-utilities.scss to avoid duplication
+/// @deprecated Use the mixin from responsive-utilities.scss instead
+
+/// Contrast checker
+/// Checks if the contrast ratio between two colors meets WCAG AA standards
+/// @param {Color} $foreground - Foreground color
+/// @param {Color} $background - Background color
+/// @return {Boolean} Whether the contrast ratio meets WCAG AA standards
+@function meets-contrast($foreground, $background) {
+  $luminance1: luminance($foreground);
+  $luminance2: luminance($background);
+
+  $ratio: ($luminance1 + 0.05) / ($luminance2 + 0.05);
+
+  @if $luminance2 > $luminance1 {
+    $ratio: 1 / $ratio;
+  }
+
+  @return $ratio >= 4.5;
+}
+
+/// Luminance
+/// Calculates the relative luminance of a color
+/// @param {Color} $color - Color
+/// @return {Number} Relative luminance
+@function luminance($color) {
+  $red: red($color) / 255;
+  $green: green($color) / 255;
+  $blue: blue($color) / 255;
+
+  $red: if($red <= 0.03928, $red / 12.92, pow(($red + 0.055) / 1.055, 2.4));
+  $green: if($green <= 0.03928, $green / 12.92, pow(($green + 0.055) / 1.055, 2.4));
+  $blue: if($blue <= 0.03928, $blue / 12.92, pow(($blue + 0.055) / 1.055, 2.4));
+
+  @return 0.2126 * $red + 0.7152 * $green + 0.0722 * $blue;
+}
+
+/// Power function
+/// @param {Number} $base - Base
+/// @param {Number} $exponent - Exponent
+/// @return {Number} Result
+@function pow($base, $exponent) {
+  $result: 1;
+
+  @if $exponent >= 0 {
+    @for $i from 1 through $exponent {
+      $result: $result * $base;
+    }
+  } @else {
+    @for $i from 1 through -$exponent {
+      $result: $result / $base;
+    }
+  }
+
+  @return $result;
+}

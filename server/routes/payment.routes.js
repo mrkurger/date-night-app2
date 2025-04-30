@@ -9,8 +9,8 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import paymentController from '../controllers/payment.controller';
-import { protect } from '../middleware/auth';
+import paymentController from '../controllers/payment.controller.js';
+import { protect } from '../middleware/auth.js';
 import bodyParser from 'body-parser';
 
 // Special raw body parser for Stripe webhooks
@@ -29,4 +29,4 @@ router.post('/cancel-subscription', paymentController.cancelSubscription);
 router.post('/boost-ad', paymentController.boostAd);
 router.post('/feature-ad', paymentController.featureAd);
 
-module.exports = router;
+export default router;

@@ -18,11 +18,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import User from '../../models/user.model';
-import ChatRoom from '../../models/chat-room.model';
-import logger from '../../utils/logger';
-import { validateObjectId } from '../../utils/validation';
-import { errorResponse, successResponse } from '../../utils/response';
+import User from '../../models/user.model.js';
+import ChatRoom from '../../models/chat-room.model.js';
+import logger from '../../utils/logger.js';
+import { validateObjectId } from '../../utils/validation.js';
+import { errorResponse, successResponse } from '../../utils/response.js';
 
 /**
  * Register a user's public key
@@ -30,7 +30,7 @@ import { errorResponse, successResponse } from '../../utils/response';
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.registerPublicKey = async (req, res) => {
+const registerPublicKey = async (req, res) => {
   try {
     const { publicKey } = req.body;
     const userId = req.user.id;
@@ -59,7 +59,7 @@ exports.registerPublicKey = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.setupRoomEncryption = async (req, res) => {
+const setupRoomEncryption = async (req, res) => {
   try {
     const { roomId } = req.body;
     const userId = req.user.id;
@@ -106,7 +106,7 @@ exports.setupRoomEncryption = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.disableRoomEncryption = async (req, res) => {
+const disableRoomEncryption = async (req, res) => {
   try {
     const { roomId } = req.params;
     const userId = req.user.id;
@@ -153,7 +153,7 @@ exports.disableRoomEncryption = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.storeRoomKey = async (req, res) => {
+const storeRoomKey = async (req, res) => {
   try {
     const { roomId, participantId, encryptedKey } = req.body;
     const userId = req.user.id;
@@ -230,7 +230,7 @@ exports.storeRoomKey = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.getRoomKey = async (req, res) => {
+const getRoomKey = async (req, res) => {
   try {
     const { roomId } = req.params;
     const userId = req.user.id;
@@ -280,7 +280,7 @@ exports.getRoomKey = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.getRoomParticipantKeys = async (req, res) => {
+const getRoomParticipantKeys = async (req, res) => {
   try {
     const { roomId } = req.params;
     const userId = req.user.id;
@@ -330,7 +330,7 @@ exports.getRoomParticipantKeys = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.getRoomEncryptionStatus = async (req, res) => {
+const getRoomEncryptionStatus = async (req, res) => {
   try {
     const { roomId } = req.params;
     const userId = req.user.id;
@@ -378,4 +378,14 @@ exports.getRoomEncryptionStatus = async (req, res) => {
     logger.error('Error getting encryption status:', error);
     return errorResponse(res, 'Failed to get encryption status', 500);
   }
+};
+
+export default {
+  registerPublicKey,
+  setupRoomEncryption,
+  disableRoomEncryption,
+  storeRoomKey,
+  getRoomKey,
+  getRoomParticipantKeys,
+  getRoomEncryptionStatus,
 };

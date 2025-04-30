@@ -1,4 +1,29 @@
-# Change Log
+n# Change Log
+
+## 2025-05-01: Documentation Restructuring
+
+### Added
+
+- **HTML-Based Documentation**: Implemented a new HTML-based documentation structure
+  - Created a new documentation framework in `/docs/html-docs/`
+  - Added scripts to convert markdown to HTML and split large files
+  - Migrated key documentation files to the new structure
+  - Created templates for consistent documentation styling
+
+### Changed
+
+- **Documentation Organization**: Reorganized documentation by feature/component
+  - Split large documentation files (AILESSONS.MD, CHANGELOG.MD) into smaller, focused files
+  - Created a central documentation index
+  - Improved navigation between related documentation
+
+### Technical
+
+- **Documentation Scripts**: Added new scripts for documentation management
+  - `restructure_all_documentation.mjs`: Main script for documentation restructuring
+  - `create_html_docs_structure.mjs`: Creates the HTML documentation structure
+  - `split_markdown.mjs`: Splits large markdown files into smaller files
+  - `convert_to_html.mjs`: Converts markdown to HTML
 
 ## 2025-04-25: SCSS Build Fixes
 

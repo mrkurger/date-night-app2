@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import Verification from '../models/verification.model';
-import User from '../models/user.model';
+import Verification from '../models/verification.model.js';
+import User from '../models/user.model.js';
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
@@ -30,7 +30,7 @@ const generateSecureFilename = originalFilename => {
 };
 
 // Get verification status for current user
-exports.getVerificationStatus = async (req, res) => {
+const getVerificationStatus = async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -104,7 +104,7 @@ exports.getVerificationStatus = async (req, res) => {
 };
 
 // Submit identity verification
-exports.submitIdentityVerification = async (req, res) => {
+const submitIdentityVerification = async (req, res) => {
   try {
     const userId = req.user._id;
     const { documentType, documentNumber, expiryDate, notes } = req.body;
@@ -167,7 +167,7 @@ exports.submitIdentityVerification = async (req, res) => {
 };
 
 // Submit photo verification
-exports.submitPhotoVerification = async (req, res) => {
+const submitPhotoVerification = async (req, res) => {
   try {
     const userId = req.user._id;
     const { notes } = req.body;
@@ -219,7 +219,7 @@ exports.submitPhotoVerification = async (req, res) => {
 };
 
 // Submit phone verification
-exports.submitPhoneVerification = async (req, res) => {
+const submitPhoneVerification = async (req, res) => {
   try {
     const userId = req.user._id;
     const { phoneNumber } = req.body;
@@ -266,7 +266,7 @@ exports.submitPhoneVerification = async (req, res) => {
 };
 
 // Verify phone with code
-exports.verifyPhoneWithCode = async (req, res) => {
+const verifyPhoneWithCode = async (req, res) => {
   try {
     const userId = req.user._id;
     const { code } = req.body;
@@ -316,7 +316,7 @@ exports.verifyPhoneWithCode = async (req, res) => {
 };
 
 // Submit email verification
-exports.submitEmailVerification = async (req, res) => {
+const submitEmailVerification = async (req, res) => {
   try {
     const userId = req.user._id;
     const { email } = req.body;
@@ -363,7 +363,7 @@ exports.submitEmailVerification = async (req, res) => {
 };
 
 // Verify email with code
-exports.verifyEmailWithCode = async (req, res) => {
+const verifyEmailWithCode = async (req, res) => {
   try {
     const userId = req.user._id;
     const { code } = req.body;
@@ -414,7 +414,7 @@ exports.verifyEmailWithCode = async (req, res) => {
 };
 
 // Submit address verification
-exports.submitAddressVerification = async (req, res) => {
+const submitAddressVerification = async (req, res) => {
   try {
     const userId = req.user._id;
     const { street, city, postalCode, county, country, notes } = req.body;
@@ -471,7 +471,7 @@ exports.submitAddressVerification = async (req, res) => {
 };
 
 // Admin: Get pending verifications
-exports.getPendingVerifications = async (req, res) => {
+const getPendingVerifications = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -498,7 +498,7 @@ exports.getPendingVerifications = async (req, res) => {
 };
 
 // Admin: Approve verification
-exports.approveVerification = async (req, res) => {
+const approveVerification = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -550,7 +550,7 @@ exports.approveVerification = async (req, res) => {
 };
 
 // Admin: Reject verification
-exports.rejectVerification = async (req, res) => {
+const rejectVerification = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -596,7 +596,7 @@ exports.rejectVerification = async (req, res) => {
 };
 
 // Get verification status for a specific user (public)
-exports.getUserVerificationStatus = async (req, res) => {
+const getUserVerificationStatus = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -632,4 +632,20 @@ exports.getUserVerificationStatus = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+// Export the controller
+export default {
+  getVerificationStatus,
+  submitIdentityVerification,
+  submitPhotoVerification,
+  submitPhoneVerification,
+  verifyPhoneWithCode,
+  submitEmailVerification,
+  verifyEmailWithCode,
+  submitAddressVerification,
+  getUserVerificationStatus,
+  getPendingVerifications,
+  approveVerification,
+  rejectVerification,
 };

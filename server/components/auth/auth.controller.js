@@ -9,10 +9,46 @@
 // ===================================================
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../users';
+import { User } from '../users/index.js';
 import passport from 'passport';
 
-exports.register = async (req, res) => {
+// Helper function to set token cookies
+const setTokenCookies = (res, token, refreshToken) => {
+  // Set access token in HttpOnly cookie
+  res.cookie('access_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  });
+
+  // Set refresh token in HttpOnly cookie
+  res.cookie('refresh_token', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+};
+
+// Helper function to clear token cookies
+const clearTokenCookies = res => {
+  res.cookie('access_token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 0,
+  });
+
+  res.cookie('refresh_token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 0,
+  });
+};
+
+const register = async (req, res) => {
   try {
     const { username, password, role = 'user' } = req.body;
 
@@ -65,7 +101,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err) return res.status(500).json({ message: err.message });
@@ -108,7 +144,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+const logout = async (req, res) => {
   try {
     // Update user status if authenticated
     if (req.user) {
@@ -119,7 +155,7 @@ exports.logout = async (req, res) => {
 
       // Blacklist the current token
       if (req.token) {
-        const TokenBlacklist = (await import('../../models/token-blacklist.model')).default;
+        const TokenBlacklist = (await import('../../models/token-blacklist.model.js')).default;
 
         // Get token expiration from decoded token
         const expiresAt = new Date(req.tokenDecoded.exp * 1000);
@@ -163,7 +199,7 @@ exports.logout = async (req, res) => {
 };
 
 // Social login handlers
-exports.githubCallback = (req, res) => {
+const githubCallback = (req, res) => {
   const token = jwt.sign(
     { id: req.user._id, username: req.user.username, role: req.user.role },
     process.env.JWT_SECRET,
@@ -184,12 +220,12 @@ exports.githubCallback = (req, res) => {
   res.redirect(`${process.env.CLIENT_URL}/auth-callback`);
 };
 
-exports.googleCallback = exports.githubCallback;
-exports.redditCallback = exports.githubCallback;
-exports.appleCallback = exports.githubCallback;
+const googleCallback = githubCallback;
+const redditCallback = githubCallback;
+const appleCallback = githubCallback;
 
 // Refresh token endpoint
-exports.refreshToken = async (req, res) => {
+const refreshToken = async (req, res) => {
   try {
     // Get refresh token from cookie
     const refreshToken = req.cookies.refresh_token;
@@ -260,38 +296,14 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
-// Helper function to set token cookies
-const setTokenCookies = (res, token, refreshToken) => {
-  // Set access token in HttpOnly cookie
-  res.cookie('access_token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-  });
-
-  // Set refresh token in HttpOnly cookie
-  res.cookie('refresh_token', refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
-};
-
-// Helper function to clear token cookies
-const clearTokenCookies = res => {
-  res.cookie('access_token', '', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 0,
-  });
-
-  res.cookie('refresh_token', '', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 0,
-  });
+// Export the controller methods
+export default {
+  register,
+  login,
+  logout,
+  githubCallback,
+  googleCallback,
+  redditCallback,
+  appleCallback,
+  refreshToken
 };

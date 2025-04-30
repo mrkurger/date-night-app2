@@ -114,6 +114,34 @@ export const routes: Routes = [
     data: { title: 'Design System Demo' },
   },
 
+  // Style Guide
+  {
+    path: 'style-guide',
+    loadChildren: () =>
+      import('./features/style-guide/style-guide.module').then(m => m.StyleGuideModule),
+    data: { title: 'Style Guide' },
+  },
+
+  // Accessibility Demo
+  {
+    path: 'accessibility',
+    loadComponent: () =>
+      import('./features/accessibility-demo/accessibility-demo.component').then(
+        m => m.AccessibilityDemoComponent
+      ),
+    data: { title: 'Accessibility Best Practices' },
+  },
+
+  // Micro-interactions Demo
+  {
+    path: 'micro-interactions',
+    loadComponent: () =>
+      import('./features/micro-interactions-demo/micro-interactions-demo.component').then(
+        m => m.MicroInteractionsDemoComponent
+      ),
+    data: { title: 'Micro-interactions' },
+  },
+
   // Preferences Demo
   {
     path: 'preferences-demo',

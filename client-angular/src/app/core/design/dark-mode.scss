@@ -1,0 +1,187 @@
+/**
+ * Dark Mode Utilities
+ * 
+ * This file provides mixins and functions to help implement dark mode.
+ * It uses the design tokens defined in the design system.
+ * 
+ * Usage:
+ * @use 'path/to/dark-mode' as dark;
+ * 
+ * .element {
+ *   color: tokens.$color-dark-gray-3;
+ *   background-color: tokens.$color-white;
+ *   
+ *   @include dark.mode {
+ *     color: tokens.$color-light-gray-1;
+ *     background-color: tokens.$color-dark-gray-3;
+ *   }
+ * }
+ */
+
+@use 'design-tokens' as tokens;
+@use 'sass:color';
+@use 'sass:map';
+
+// Dark mode mixin
+// Applies styles when dark mode is active
+@mixin mode {
+  .dark-mode & {
+    @content;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body:not(.light-mode) & {
+      @content;
+    }
+  }
+}
+
+// Light mode mixin
+// Applies styles when light mode is active
+// Renamed to avoid conflict with responsive-utilities.scss
+@mixin light-theme {
+  body:not(.dark-mode) & {
+    @content;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body:not(.dark-mode) & {
+      @content;
+    }
+  }
+}
+
+// Dark mode color map
+// Maps light mode colors to dark mode colors
+$color-map: (
+  // Background colors
+  tokens.$color-white: tokens.$color-dark-gray-3,
+  tokens.$color-light-gray-1: tokens.$color-dark-gray-2,
+  tokens.$color-light-gray-2: tokens.$color-dark-gray-1,
+
+  // Text colors
+  tokens.$color-dark-gray-3: tokens.$color-light-gray-1,
+  tokens.$color-dark-gray-2: tokens.$color-light-gray-2,
+  tokens.$color-dark-gray-1: tokens.$color-medium-gray-1,
+
+  // Primary colors
+  tokens.$color-primary: color.adjust(tokens.$color-primary, $lightness: 10%),
+  tokens.$color-primary-light: color.adjust(tokens.$color-primary-light, $lightness: 5%),
+  tokens.$color-primary-dark: color.adjust(tokens.$color-primary-dark, $lightness: 15%),
+  // Secondary colors
+  tokens.$color-secondary: color.adjust(tokens.$color-secondary, $lightness: 10%),
+  tokens.$color-secondary-light: color.adjust(tokens.$color-secondary-light, $lightness: 5%),
+  tokens.$color-secondary-dark: color.adjust(tokens.$color-secondary-dark, $lightness: 15%)
+);
+
+// Get dark mode color
+// Returns the dark mode equivalent of a light mode color
+@function color($light-color) {
+  @if map.has-key($color-map, $light-color) {
+    @return map.get($color-map, $light-color);
+  } @else {
+    @return $light-color;
+  }
+}
+
+// Dark mode color mixin
+// Applies a color property in light mode and its dark mode equivalent in dark mode
+@mixin color($property, $light-color) {
+  & {
+    #{$property}: $light-color;
+  }
+
+  @include mode {
+    #{$property}: color($light-color);
+  }
+}
+
+// Dark mode background mixin
+// Applies a background-color in light mode and its dark mode equivalent in dark mode
+@mixin background($light-color) {
+  @include color(background-color, $light-color);
+}
+
+// Dark mode text mixin
+// Applies a color in light mode and its dark mode equivalent in dark mode
+@mixin text($light-color) {
+  @include color(color, $light-color);
+}
+
+// Dark mode border mixin
+// Applies a border-color in light mode and its dark mode equivalent in dark mode
+@mixin border($light-color) {
+  @include color(border-color, $light-color);
+}
+
+// Dark mode shadow mixin
+// Applies a box-shadow in light mode and a darker shadow in dark mode
+@mixin shadow($shadow) {
+  & {
+    box-shadow: $shadow;
+  }
+
+  @include mode {
+    box-shadow: 0 0 0 1px rgba(tokens.$color-white, 0.1);
+  }
+}
+
+// Dark mode root variables
+// Sets CSS variables for dark mode
+@mixin root-variables {
+  :root {
+    // Light mode variables
+    --color-bg-primary: #{tokens.$color-white};
+    --color-bg-secondary: #{tokens.$color-light-gray-1};
+    --color-bg-tertiary: #{tokens.$color-light-gray-2};
+
+    --color-text-primary: #{tokens.$color-dark-gray-3};
+    --color-text-secondary: #{tokens.$color-dark-gray-2};
+    --color-text-tertiary: #{tokens.$color-dark-gray-1};
+
+    --color-border-primary: #{tokens.$color-light-gray-2};
+    --color-border-secondary: #{tokens.$color-medium-gray-1};
+
+    --shadow-card: #{tokens.$shadow-sm};
+    --shadow-dropdown: #{tokens.$shadow-md};
+    --shadow-modal: #{tokens.$shadow-lg};
+  }
+
+  .dark-mode {
+    // Dark mode variables
+    --color-bg-primary: #{tokens.$color-dark-gray-3};
+    --color-bg-secondary: #{tokens.$color-dark-gray-2};
+    --color-bg-tertiary: #{tokens.$color-dark-gray-1};
+
+    --color-text-primary: #{tokens.$color-light-gray-1};
+    --color-text-secondary: #{tokens.$color-light-gray-2};
+    --color-text-tertiary: #{tokens.$color-medium-gray-1};
+
+    --color-border-primary: #{tokens.$color-dark-gray-1};
+    --color-border-secondary: #{tokens.$color-dark-gray-2};
+
+    --shadow-card: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1);
+    --shadow-dropdown: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+      // Dark mode variables
+      --color-bg-primary: #{tokens.$color-dark-gray-3};
+      --color-bg-secondary: #{tokens.$color-dark-gray-2};
+      --color-bg-tertiary: #{tokens.$color-dark-gray-1};
+
+      --color-text-primary: #{tokens.$color-light-gray-1};
+      --color-text-secondary: #{tokens.$color-light-gray-2};
+      --color-text-tertiary: #{tokens.$color-medium-gray-1};
+
+      --color-border-primary: #{tokens.$color-dark-gray-1};
+      --color-border-secondary: #{tokens.$color-dark-gray-2};
+
+      --shadow-card: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1);
+      --shadow-dropdown: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
+      --shadow-modal: 0 0 0 1px rgba(#{tokens.$color-white}, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

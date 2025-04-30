@@ -1,11 +1,20 @@
 @use '../../../core/design/main' as ds;
 @use '../../../../styles/mixins' as mix;
+@use '../../../core/design/animation-utilities' as animation;
+@use '../../../core/design/micro-interactions' as micro;
+@use '../../../core/design/dark-mode' as dark;
 
 .chat-room {
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: var(--color-background);
+
+  // Dark mode support
+  @include dark.background(var(--color-background));
+
+  // Add fade-in animation
+  @include animation.fade-in(0.3s);
 }
 
 // Header
@@ -16,18 +25,39 @@
   background-color: var(--color-background-light);
   border-bottom: 1px solid var(--color-border);
   z-index: 10;
+
+  // Dark mode support
+  @include dark.background(var(--color-background-light));
+  @include dark.border(var(--color-border));
+
+  // Add slide-in animation
+  @include animation.slide-in-top(0.3s);
 }
 
 .chat-room__back {
   margin-right: 1rem;
   cursor: pointer;
 
+  // Add micro-interaction
+  @include micro.hover-scale(1.1, 0.2s);
+
   i {
     font-size: 1.5rem;
     color: var(--color-text-muted);
 
+    // Dark mode support
+    @include dark.text(var(--color-text-muted));
+
+    // Add transition
+    & {
+      transition: color 0.2s ease;
+    }
+
     &:hover {
       color: var(--color-text-dark);
+
+      // Dark mode support
+      @include dark.text(var(--color-text-dark));
     }
   }
 }
@@ -36,17 +66,31 @@
   display: flex;
   align-items: center;
   flex: 1;
+
+  // Add slide-in animation
+  @include animation.slide-in-right(0.3s, ease-out, 0.1s);
 }
 
 .chat-room__avatar {
   position: relative;
   margin-right: 1rem;
 
+  // Add subtle pulse animation on hover
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
+  }
+
   img {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
+    transition: transform 0.2s ease;
+
+    // Add subtle shadow
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -60,8 +104,27 @@
   background-color: var(--color-text-muted);
   border: 2px solid var(--color-background-light);
 
+  // Dark mode support
+  @include dark.background(var(--color-text-muted));
+  @include dark.border(var(--color-background-light));
+
   &.online {
     background-color: var(--color-success);
+
+    // Add subtle pulse animation
+    animation: status-pulse 2s infinite;
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-success-rgb), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(var(--color-success-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--color-success-rgb), 0);
   }
 }
 
@@ -74,17 +137,32 @@
   font-weight: 600;
   font-size: 1rem;
   color: var(--color-text-dark);
+
+  // Dark mode support
+  @include dark.text(var(--color-text-dark));
+
+  // Add slide-in animation
+  @include animation.slide-in-right(0.3s, ease-out, 0.2s);
 }
 
 .chat-room__subtitle {
   font-size: 0.75rem;
   color: var(--color-text-muted);
+
+  // Dark mode support
+  @include dark.text(var(--color-text-muted));
+
+  // Add slide-in animation
+  @include animation.slide-in-right(0.3s, ease-out, 0.3s);
 }
 
 .chat-room__encryption {
   display: flex;
   align-items: center;
   color: var(--color-success);
+
+  // Dark mode support
+  @include dark.text(var(--color-success));
 
   i {
     margin-right: 0.25rem;
@@ -93,10 +171,16 @@
 
   &--disabled {
     color: var(--color-text-muted);
+
+    // Dark mode support
+    @include dark.text(var(--color-text-muted));
   }
 
   &--initializing {
     color: var(--color-warning);
+
+    // Dark mode support
+    @include dark.text(var(--color-warning));
 
     i {
       animation: spin 1s linear infinite;
@@ -106,6 +190,9 @@
 
 .chat-room__actions {
   display: flex;
+
+  // Add slide-in animation
+  @include animation.slide-in-left(0.3s, ease-out, 0.1s);
 }
 
 .chat-room__action-btn {
@@ -116,9 +203,25 @@
   border-radius: 50%;
   color: var(--color-text-muted);
 
+  // Dark mode support
+  @include dark.text(var(--color-text-muted));
+
+  // Add micro-interactions
+  @include micro.hover-scale(1.1, 0.2s);
+  @include micro.click-ripple(var(--color-primary));
+
+  // Add accessibility focus styles
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
     color: var(--color-text-dark);
+
+    // Dark mode support
+    @include dark.text(var(--color-text-dark));
   }
 
   i {
@@ -136,6 +239,30 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   background-color: var(--color-background-light);
+
+  // Dark mode support
+  @include dark.background(var(--color-background-light));
+  @include dark.shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+
+  // Add slide-in animation
+  @include animation.slide-in-top(0.3s, ease-out);
+
+  // Add subtle scale animation
+  & {
+    transform-origin: top right;
+    animation: settings-panel-appear 0.3s ease-out forwards;
+  }
+}
+
+@keyframes settings-panel-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 // Messages
@@ -145,6 +272,31 @@
   padding: 1rem;
   display: flex;
   flex-direction: column-reverse; // For easier scrolling to bottom
+
+  // Add subtle fade-in animation
+  @include animation.fade-in(0.3s, ease-out, 0.2s);
+
+  // Add scroll behavior
+  scroll-behavior: smooth;
+
+  // Add custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--color-primary-rgb), 0.3);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(var(--color-primary-rgb), 0.5);
+    }
+  }
 }
 
 .chat-room__loading,
@@ -156,6 +308,12 @@
   padding: 2rem;
   color: var(--color-text-muted);
   text-align: center;
+
+  // Dark mode support
+  @include dark.text(var(--color-text-muted));
+
+  // Add fade-in animation
+  @include animation.fade-in(0.5s);
 }
 
 .chat-room__loading-more,
@@ -166,6 +324,9 @@
   padding: 1rem;
   margin-bottom: 1rem;
 
+  // Add fade-in animation
+  @include animation.fade-in(0.3s);
+
   button {
     background: none;
     border: none;
@@ -174,6 +335,23 @@
     padding: 0.5rem 1rem;
     border-radius: 1rem;
     font-size: 0.875rem;
+
+    // Dark mode support
+    @include dark.text(var(--color-primary));
+
+    // Add micro-interactions
+    @include micro.hover-scale(1.05);
+    @include micro.hover-color-shift(
+      background-color,
+      transparent,
+      rgba(var(--color-primary-rgb), 0.1)
+    );
+
+    // Add accessibility focus styles
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
 
     &:hover {
       background-color: rgba(var(--color-primary-rgb), 0.1);
@@ -190,6 +368,9 @@
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 
+  // Add subtle shadow
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
   &--small {
     width: 1rem;
     height: 1rem;
@@ -203,12 +384,50 @@
   margin-bottom: 1rem;
   color: var(--color-text-muted);
   opacity: 0.5;
+
+  // Dark mode support
+  @include dark.text(var(--color-text-muted));
+
+  // Add subtle animation
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .chat-room__message-list {
   display: flex;
   flex-direction: column-reverse; // For easier scrolling to bottom
   width: 100%;
+
+  // Add staggered animation for children
+  & > * {
+    animation: message-appear 0.3s ease-out backwards;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: 0.05s * $i;
+      }
+    }
+  }
+}
+
+@keyframes message-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Input
@@ -218,6 +437,13 @@
   padding: 1rem;
   background-color: var(--color-background-light);
   border-top: 1px solid var(--color-border);
+
+  // Dark mode support
+  @include dark.background(var(--color-background-light));
+  @include dark.border(var(--color-border));
+
+  // Add slide-in animation
+  @include animation.slide-in-bottom(0.3s);
 }
 
 .chat-room__attachment {
@@ -239,9 +465,30 @@
   cursor: pointer;
   color: var(--color-text-muted);
 
+  // Dark mode support
+  @include dark.background(var(--color-background));
+  @include dark.text(var(--color-text-muted));
+
+  // Add micro-interactions
+  @include micro.hover-scale(1.05);
+  @include micro.click-ripple;
+
+  // Add accessibility focus styles
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
     color: var(--color-text-dark);
+
+    // Dark mode support
+    @include dark.text(var(--color-text-dark));
+
+    i {
+      animation: rotate 0.5s ease-in-out;
+    }
   }
 
   i {
@@ -251,6 +498,9 @@
 
 .chat-room__message-input {
   flex: 1;
+
+  // Add subtle animation
+  animation: expand 0.3s ease-out;
 
   textarea {
     width: 100%;
@@ -264,10 +514,37 @@
     font-family: inherit;
     font-size: 0.9375rem;
 
+    // Dark mode support
+    @include dark.background(var(--color-background));
+    @include dark.border(var(--color-border));
+    @include dark.text(var(--color-text-dark));
+
+    // Add transition
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
     &:focus {
       outline: none;
       border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
     }
+
+    // Add typing animation
+    &:not(:placeholder-shown) {
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+@keyframes expand {
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 
@@ -287,23 +564,151 @@
   cursor: pointer;
   color: white;
 
+  // Add micro-interactions
+  @include micro.click-ripple(white);
+
+  // Add transition
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  // Add accessibility focus styles
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &:hover {
     background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(var(--color-primary-rgb), 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(var(--color-primary-rgb), 0.3);
   }
 
   &:disabled {
     background-color: var(--color-border);
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   i {
     font-size: 1.25rem;
+
+    // Add animation when not disabled
+    .chat-room__send-btn:not(:disabled) & {
+      animation: send-pulse 2s infinite;
+    }
+  }
+}
+
+@keyframes send-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
   }
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments with animations
+@media (max-width: 768px) {
+  .chat-room__settings-panel {
+    width: calc(100% - 2rem);
+    right: 1rem;
+    left: 1rem;
+  }
+
+  // Optimize animations for smaller screens
+  .chat-room__header {
+    @include animation.slide-in-top(0.2s);
+  }
+
+  .chat-room__messages {
+    @include animation.fade-in(0.2s);
+  }
+
+  .chat-room__input {
+    @include animation.slide-in-bottom(0.2s);
+  }
+
+  .chat-room__message-list > * {
+    animation-duration: 0.2s;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-room__header {
+    padding: 0.75rem;
+  }
+
+  .chat-room__avatar img {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .chat-room__name {
+    font-size: 0.9375rem;
+  }
+
+  .chat-room__subtitle {
+    font-size: 0.6875rem;
+  }
+
+  .chat-room__action-btn i {
+    font-size: 1.125rem;
+  }
+
+  .chat-room__input {
+    padding: 0.75rem;
+  }
+
+  .chat-room__attachment-btn,
+  .chat-room__send-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  // Further optimize animations for mobile
+  @include animation.respect-reduced-motion;
+}
+
+// Respect user's preference for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .chat-room,
+  .chat-room__header,
+  .chat-room__info,
+  .chat-room__name,
+  .chat-room__subtitle,
+  .chat-room__actions,
+  .chat-room__settings-panel,
+  .chat-room__messages,
+  .chat-room__loading,
+  .chat-room__empty,
+  .chat-room__loading-more,
+  .chat-room__load-more,
+  .chat-room__empty-icon,
+  .chat-room__message-list > *,
+  .chat-room__input,
+  .chat-room__message-input,
+  .spinner,
+  .chat-room__status.online,
+  .chat-room__encryption--initializing i,
+  .chat-room__send-btn i {
+    animation: none !important;
+    transition: none !important;
   }
 }
 

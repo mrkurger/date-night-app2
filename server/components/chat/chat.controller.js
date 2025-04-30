@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import ChatService from '../../services/chat.service';
-import { asyncHandler } from '../../middleware/asyncHandler';
+import ChatService from '../../services/chat.service.js';
+import { asyncHandler } from '../../middleware/asyncHandler.js';
 
 class ChatController {
   // TODO: Implement file upload functionality
@@ -203,4 +203,4 @@ class ChatController {
   }
 }
 
-module.exports = new ChatController();
+export default new ChatController();

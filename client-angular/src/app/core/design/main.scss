@@ -28,11 +28,21 @@
 // Forward spacing utilities
 @forward 'spacing-utilities';
 
+// Forward design utilities
+@forward 'bem-utilities';
+@forward 'responsive-utilities';
+@forward 'accessibility-utilities';
+@forward 'css-variable-checker';
+@forward 'animation-utilities';
+@forward 'micro-interactions';
+@forward 'dark-mode';
+
 // Import emerald-ui integration
 @forward 'emerald-ui-integration';
 
-// Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono&display=swap');
+// Import fonts - optimized to reduce size
+// Only import the weights we actually use in the application
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&family=Roboto+Mono&display=swap');
 
 // Reset and base styles
 *,

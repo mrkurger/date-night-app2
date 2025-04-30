@@ -1,0 +1,677 @@
+@use 'src/styles/design-system/variables' as tokens;
+@use 'src/styles/mixins' as mixins;
+@use 'src/styles/design-system/variables' as ds;
+
+.micro-demo {
+  &__header {
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+    padding: ds.$spacing-12 0;
+    margin-bottom: ds.$spacing-12;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-dark;
+    }
+  }
+
+  &__title {
+    font-size: ds.$font-size-4xl;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &__description {
+    font-size: ds.$font-size-lg;
+    max-width: 800px;
+  }
+
+  &__theme-toggle {
+    margin-top: ds.$spacing-6;
+    padding: ds.$spacing-3 ds.$spacing-6;
+    background-color: ds.$color-white;
+    color: ds.$color-primary;
+    border: none;
+    border-radius: ds.$border-radius-md;
+    font-weight: ds.$font-weight-medium;
+    cursor: pointer;
+    transition: all ds.$transition-fast ds.$transition-timing-default;
+
+    &:hover {
+      background-color: rgba(ds.$color-white, 0.9);
+    }
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+      color: ds.$color-light-gray-1;
+
+      &:hover {
+        background-color: ds.$color-dark-gray-2;
+      }
+    }
+  }
+
+  &__section {
+    margin-bottom: ds.$spacing-16;
+    padding-bottom: ds.$spacing-12;
+    border-bottom: 1px solid ds.$color-light-gray-2;
+
+    @include mixins.dark-mode {
+      border-bottom-color: ds.$color-dark-gray-1;
+    }
+  }
+
+  &__section-title {
+    font-size: ds.$font-size-3xl;
+    margin-bottom: ds.$spacing-8;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -ds.$spacing-3;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: ds.$color-primary;
+      border-radius: ds.$border-radius-full;
+
+      @include mixins.dark-mode {
+        background-color: ds.$color-primary-light;
+      }
+    }
+  }
+
+  &__subsection-title {
+    font-size: ds.$font-size-xl;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &__example {
+    background-color: ds.$color-white;
+    border-radius: ds.$border-radius-lg;
+    padding: ds.$spacing-6;
+    margin-bottom: ds.$spacing-6;
+    box-shadow: ds.$shadow-sm;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-2;
+      box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
+    }
+  }
+
+  &__code {
+    background-color: ds.$color-light-gray-1;
+    border-radius: ds.$border-radius-md;
+    padding: ds.$spacing-4;
+    margin: ds.$spacing-4 0;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: ds.$font-size-sm;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-3;
+    }
+  }
+
+  // Hover effects
+  &__hover-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__hover-item {
+    border: 1px solid ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+    padding: ds.$spacing-4;
+    transition: all ds.$transition-normal ds.$transition-timing-default;
+
+    @include mixins.dark-mode {
+      border-color: ds.$color-dark-gray-1;
+    }
+
+    &--hover-scale {
+      @include mixins.hover-scale;
+    }
+
+    &--hover-lift {
+      @include mixins.hover-lift;
+    }
+
+    &--hover-color {
+      @include mixins.hover-color-shift(color, ds.$color-dark-gray-1, ds.$color-primary);
+    }
+
+    &--hover-border {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: ds.$color-primary;
+        transition: width ds.$transition-normal ds.$transition-timing-default;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+    }
+  }
+
+  &__hover-name {
+    font-size: ds.$font-size-lg;
+    font-weight: ds.$font-weight-semibold;
+    margin-bottom: ds.$spacing-2;
+  }
+
+  &__hover-description {
+    margin-bottom: ds.$spacing-4;
+    color: ds.$color-dark-gray-1;
+
+    @include mixins.dark-mode {
+      color: ds.$color-light-gray-2;
+    }
+  }
+
+  // Loading states
+  &__loading-demo {
+    display: flex;
+    gap: ds.$spacing-4;
+    margin-bottom: ds.$spacing-8;
+    flex-wrap: wrap;
+  }
+
+  &__loading-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: ds.$spacing-3 ds.$spacing-6;
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+    border: none;
+    border-radius: ds.$border-radius-md;
+    font-weight: ds.$font-weight-medium;
+    cursor: pointer;
+    transition: all ds.$transition-fast ds.$transition-timing-default;
+    min-width: 150px;
+
+    &:hover:not(:disabled) {
+      background-color: darken(ds.$color-primary, 5%);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    &--loading {
+      background-color: ds.$color-primary;
+    }
+
+    &--success {
+      background-color: ds.$color-success;
+    }
+
+    &--error {
+      background-color: ds.$color-error;
+    }
+
+    &--error-demo {
+      background-color: ds.$color-secondary;
+
+      &:hover:not(:disabled) {
+        background-color: darken(ds.$color-secondary, 5%);
+      }
+    }
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-dark;
+
+      &:hover:not(:disabled) {
+        background-color: lighten(ds.$color-primary-dark, 5%);
+      }
+    }
+  }
+
+  &__loading-button-text {
+    margin-right: ds.$spacing-2;
+  }
+
+  &__spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: ds.$color-white;
+    animation: spin 1s ease-in-out infinite;
+  }
+
+  &__success-icon,
+  &__error-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    animation: scale-in 0.3s ease-out;
+  }
+
+  &__loading-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__loading-item {
+    border: 1px solid ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+    padding: ds.$spacing-4;
+
+    @include mixins.dark-mode {
+      border-color: ds.$color-dark-gray-1;
+    }
+  }
+
+  &__loading-name {
+    font-size: ds.$font-size-lg;
+    font-weight: ds.$font-weight-semibold;
+    margin-bottom: ds.$spacing-2;
+  }
+
+  &__loading-description {
+    margin-bottom: ds.$spacing-4;
+    color: ds.$color-dark-gray-1;
+
+    @include mixins.dark-mode {
+      color: ds.$color-light-gray-2;
+    }
+  }
+
+  &__loading-example {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__demo-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: ds.$spacing-2 ds.$spacing-4;
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+    border: none;
+    border-radius: ds.$border-radius-md;
+    font-weight: ds.$font-weight-medium;
+    cursor: pointer;
+    transition: all ds.$transition-fast ds.$transition-timing-default;
+
+    &:hover {
+      background-color: darken(ds.$color-primary, 5%);
+    }
+
+    &--loading {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+
+    &--ripple {
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%, -50%);
+        transform-origin: 50% 50%;
+      }
+
+      &:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+      }
+    }
+
+    &--shake {
+      &.shake-active {
+        animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      }
+    }
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-dark;
+
+      &:hover {
+        background-color: lighten(ds.$color-primary-dark, 5%);
+      }
+    }
+  }
+
+  &__skeleton {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: ds.$spacing-2;
+  }
+
+  &__skeleton-line {
+    height: 12px;
+    background: linear-gradient(
+      90deg,
+      ds.$color-light-gray-2 25%,
+      ds.$color-light-gray-1 50%,
+      ds.$color-light-gray-2 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: ds.$border-radius-sm;
+
+    &--short {
+      width: 40%;
+    }
+
+    &--medium {
+      width: 75%;
+    }
+
+    &--long {
+      width: 100%;
+    }
+
+    @include mixins.dark-mode {
+      background: linear-gradient(
+        90deg,
+        ds.$color-dark-gray-1 25%,
+        ds.$color-dark-gray-2 50%,
+        ds.$color-dark-gray-1 75%
+      );
+    }
+  }
+
+  &__progress {
+    width: 100%;
+    height: 8px;
+    background-color: ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-full;
+    overflow: hidden;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+    }
+  }
+
+  &__progress-bar {
+    height: 100%;
+    width: 30%;
+    background-color: ds.$color-primary;
+    border-radius: ds.$border-radius-full;
+    animation: progress 2s infinite;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-light;
+    }
+  }
+
+  &__pulse {
+    width: 20px;
+    height: 20px;
+    background-color: ds.$color-primary;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-light;
+    }
+  }
+
+  // Transition effects
+  &__transition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__transition-item {
+    border: 1px solid ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+    padding: ds.$spacing-4;
+
+    @include mixins.dark-mode {
+      border-color: ds.$color-dark-gray-1;
+    }
+
+    &--fade-in {
+      @include mixins.fade-in;
+    }
+
+    &--slide-in-top {
+      @include mixins.slide-in-top;
+    }
+
+    &--slide-in-bottom {
+      @include mixins.slide-in-bottom;
+    }
+
+    &--scale-in {
+      @include mixins.scale-in;
+    }
+  }
+
+  &__transition-name {
+    font-size: ds.$font-size-lg;
+    font-weight: ds.$font-weight-semibold;
+    margin-bottom: ds.$spacing-2;
+  }
+
+  &__transition-description {
+    margin-bottom: ds.$spacing-4;
+    color: ds.$color-dark-gray-1;
+
+    @include mixins.dark-mode {
+      color: ds.$color-light-gray-2;
+    }
+  }
+
+  // Feedback animations
+  &__feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__feedback-item {
+    border: 1px solid ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+    padding: ds.$spacing-4;
+
+    @include mixins.dark-mode {
+      border-color: ds.$color-dark-gray-1;
+    }
+  }
+
+  &__feedback-name {
+    font-size: ds.$font-size-lg;
+    font-weight: ds.$font-weight-semibold;
+    margin-bottom: ds.$spacing-2;
+  }
+
+  &__feedback-description {
+    margin-bottom: ds.$spacing-4;
+    color: ds.$color-dark-gray-1;
+
+    @include mixins.dark-mode {
+      color: ds.$color-light-gray-2;
+    }
+  }
+
+  &__feedback-demo {
+    margin-bottom: ds.$spacing-4;
+  }
+
+  // Best practices and resources
+  &__best-practices-list,
+  &__resources-list {
+    list-style-type: disc;
+    padding-left: ds.$spacing-6;
+
+    li {
+      margin-bottom: ds.$spacing-2;
+    }
+  }
+
+  &__resources-list {
+    a {
+      color: ds.$color-primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid ds.$color-primary;
+        outline-offset: 2px;
+      }
+
+      @include mixins.dark-mode {
+        color: ds.$color-primary-light;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+// Respect prefers-reduced-motion
+@media (prefers-reduced-motion: reduce) {
+  .micro-demo {
+    &__spinner,
+    &__skeleton-line,
+    &__progress-bar,
+    &__pulse {
+      animation: none;
+    }
+
+    &__transition-item {
+      &--fade-in,
+      &--slide-in-top,
+      &--slide-in-bottom,
+      &--scale-in {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    &__demo-button {
+      &--ripple::after {
+        animation: none;
+      }
+
+      &--shake.shake-active {
+        animation: none;
+      }
+    }
+  }
+}

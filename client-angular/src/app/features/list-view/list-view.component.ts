@@ -22,7 +22,6 @@ import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Ad } from '../../core/models/ad.interface';
-import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 
 // Material Imports
 import { MatIconModule } from '@angular/material/icon';
@@ -84,7 +83,6 @@ interface SavedFilter {
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    AdCardComponent,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,

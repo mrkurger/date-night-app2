@@ -1,0 +1,452 @@
+@use 'src/styles/design-system/variables' as tokens;
+@use 'src/styles/mixins' as mixins;
+@use 'src/styles/design-system/variables' as ds;
+
+.style-guide {
+  &__header {
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+    padding: ds.$spacing-12 0;
+    margin-bottom: ds.$spacing-12;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-dark;
+    }
+  }
+
+  &__title {
+    font-size: ds.$font-size-4xl;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &__description {
+    font-size: ds.$font-size-lg;
+    max-width: 800px;
+  }
+
+  &__theme-toggle {
+    margin-top: ds.$spacing-6;
+    padding: ds.$spacing-3 ds.$spacing-6;
+    background-color: ds.$color-white;
+    color: ds.$color-primary;
+    border: none;
+    border-radius: ds.$border-radius-md;
+    font-weight: ds.$font-weight-medium;
+    cursor: pointer;
+    transition: all ds.$transition-fast ds.$transition-timing-default;
+
+    &:hover {
+      background-color: rgba(ds.$color-white, 0.9);
+    }
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+      color: ds.$color-light-gray-1;
+
+      &:hover {
+        background-color: ds.$color-dark-gray-2;
+      }
+    }
+  }
+
+  &__section {
+    margin-bottom: ds.$spacing-16;
+    padding-bottom: ds.$spacing-12;
+    border-bottom: 1px solid ds.$color-light-gray-2;
+
+    @include mixins.dark-mode {
+      border-bottom-color: ds.$color-dark-gray-1;
+    }
+  }
+
+  &__section-title {
+    font-size: ds.$font-size-3xl;
+    margin-bottom: ds.$spacing-8;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -ds.$spacing-3;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: ds.$color-primary;
+      border-radius: ds.$border-radius-full;
+
+      @include mixins.dark-mode {
+        background-color: ds.$color-primary-light;
+      }
+    }
+  }
+
+  &__subsection {
+    margin-bottom: ds.$spacing-8;
+  }
+
+  &__subsection-title {
+    font-size: ds.$font-size-xl;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  &__example {
+    background-color: ds.$color-white;
+    border-radius: ds.$border-radius-lg;
+    padding: ds.$spacing-6;
+    margin-bottom: ds.$spacing-6;
+    box-shadow: ds.$shadow-sm;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-2;
+      box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
+    }
+  }
+
+  // Color showcase
+  &__color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__color-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__color-swatch {
+    height: 100px;
+    border-radius: ds.$border-radius-md;
+    margin-bottom: ds.$spacing-2;
+
+    &--primary {
+      background-color: ds.$color-primary;
+    }
+
+    &--secondary {
+      background-color: ds.$color-secondary;
+    }
+
+    &--success {
+      background-color: ds.$color-success;
+    }
+
+    &--error {
+      background-color: ds.$color-error;
+    }
+
+    &--warning {
+      background-color: ds.$color-warning;
+    }
+
+    &--info {
+      background-color: ds.$color-info;
+    }
+
+    &--light-gray-1 {
+      background-color: ds.$color-light-gray-1;
+      border: 1px solid ds.$color-light-gray-2;
+    }
+
+    &--light-gray-2 {
+      background-color: ds.$color-light-gray-2;
+    }
+
+    &--medium-gray-1 {
+      background-color: ds.$color-medium-gray-1;
+    }
+
+    &--medium-gray-2 {
+      background-color: ds.$color-medium-gray-2;
+    }
+
+    &--dark-gray-1 {
+      background-color: ds.$color-dark-gray-1;
+    }
+
+    &--dark-gray-2 {
+      background-color: ds.$color-dark-gray-2;
+    }
+
+    &--dark-gray-3 {
+      background-color: ds.$color-dark-gray-3;
+    }
+  }
+
+  &__color-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__color-name {
+    font-weight: ds.$font-weight-medium;
+  }
+
+  // Spacing showcase
+  &__spacing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: ds.$spacing-6;
+  }
+
+  &__spacing-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__spacing-example {
+    background-color: ds.$color-primary;
+    border-radius: ds.$border-radius-md;
+    margin-bottom: ds.$spacing-2;
+
+    &--spacing-1 {
+      height: ds.$spacing-1;
+    }
+
+    &--spacing-2 {
+      height: ds.$spacing-2;
+    }
+
+    &--spacing-3 {
+      height: ds.$spacing-3;
+    }
+
+    &--spacing-4 {
+      height: ds.$spacing-4;
+    }
+
+    &--spacing-5 {
+      height: ds.$spacing-5;
+    }
+
+    &--spacing-6 {
+      height: ds.$spacing-6;
+    }
+
+    &--spacing-8 {
+      height: ds.$spacing-8;
+    }
+
+    &--spacing-10 {
+      height: ds.$spacing-10;
+    }
+
+    &--spacing-12 {
+      height: ds.$spacing-12;
+    }
+
+    &--spacing-16 {
+      height: ds.$spacing-16;
+    }
+
+    &--spacing-20 {
+      height: ds.$spacing-20;
+    }
+
+    &--spacing-24 {
+      height: ds.$spacing-24;
+    }
+  }
+
+  &__spacing-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__spacing-name {
+    font-weight: ds.$font-weight-medium;
+  }
+
+  // Breakpoints showcase
+  &__breakpoint-item {
+    padding: ds.$spacing-4;
+    margin-bottom: ds.$spacing-4;
+    background-color: ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+    font-weight: ds.$font-weight-medium;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+    }
+
+    &--mobile {
+      border-left: 4px solid ds.$color-primary;
+    }
+
+    &--tablet {
+      border-left: 4px solid ds.$color-secondary;
+    }
+
+    &--desktop {
+      border-left: 4px solid ds.$color-success;
+    }
+
+    &--desktop-large {
+      border-left: 4px solid ds.$color-warning;
+    }
+
+    &--desktop-xl {
+      border-left: 4px solid ds.$color-info;
+    }
+  }
+
+  // Grid showcase
+  &__grid-item {
+    background-color: ds.$color-primary-light;
+    color: ds.$color-dark-gray-3;
+    padding: ds.$spacing-4;
+    border-radius: ds.$border-radius-md;
+    margin-bottom: ds.$spacing-4;
+    text-align: center;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-primary-dark;
+      color: ds.$color-white;
+    }
+  }
+
+  // Animation showcase
+  &__animation-item {
+    display: inline-block;
+    padding: ds.$spacing-4 ds.$spacing-6;
+    margin: ds.$spacing-2;
+    background-color: ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+    }
+
+    &--fade-in {
+      @include mixins.fade-in;
+    }
+
+    &--slide-in-top {
+      @include mixins.slide-in-top;
+    }
+
+    &--slide-in-bottom {
+      @include mixins.slide-in-bottom;
+    }
+
+    &--slide-in-left {
+      @include mixins.slide-in-left;
+    }
+
+    &--slide-in-right {
+      @include mixins.slide-in-right;
+    }
+
+    &--scale-in {
+      @include mixins.scale-in;
+    }
+  }
+
+  // Micro-interactions showcase
+  &__micro-item {
+    display: inline-block;
+    padding: ds.$spacing-4 ds.$spacing-6;
+    margin: ds.$spacing-2;
+    background-color: ds.$color-light-gray-2;
+    border-radius: ds.$border-radius-md;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+    }
+
+    &--hover-scale {
+      @include mixins.hover-scale;
+    }
+
+    &--hover-lift {
+      @include mixins.hover-lift;
+    }
+
+    &--hover-color {
+      @include mixins.hover-color-shift(color, ds.$color-dark-gray-2, ds.$color-primary);
+    }
+
+    &--click-ripple {
+      @include mixins.click-ripple;
+    }
+  }
+
+  // Accessibility showcase
+  &__focus-example {
+    margin-right: ds.$spacing-4;
+    padding: ds.$spacing-3 ds.$spacing-6;
+    background-color: ds.$color-light-gray-2;
+    border: 1px solid ds.$color-medium-gray-1;
+    border-radius: ds.$border-radius-md;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+      border-color: ds.$color-dark-gray-2;
+    }
+
+    &:focus-visible {
+      outline: 2px solid ds.$color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  &__a11y-example {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: ds.$color-light-gray-2;
+    border: 1px solid ds.$color-medium-gray-1;
+    border-radius: ds.$border-radius-full;
+    font-size: ds.$font-size-xl;
+    cursor: pointer;
+
+    @include mixins.dark-mode {
+      background-color: ds.$color-dark-gray-1;
+      border-color: ds.$color-dark-gray-2;
+    }
+  }
+}
+
+// Special typography classes
+.body-large {
+  font-size: ds.$font-size-lg;
+}
+
+.body-small {
+  font-size: ds.$font-size-sm;
+}
+
+.body-xs {
+  font-size: ds.$font-size-xs;
+}
+
+.caption {
+  font-size: ds.$font-size-sm;
+  color: ds.$color-dark-gray-1;
+}
+
+.label {
+  display: block;
+  font-size: ds.$font-size-sm;
+  font-weight: ds.$font-weight-medium;
+  margin-bottom: ds.$spacing-2;
+}
+
+.button-text {
+  font-weight: ds.$font-weight-semibold;
+}
+
+// Screen reader only class
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

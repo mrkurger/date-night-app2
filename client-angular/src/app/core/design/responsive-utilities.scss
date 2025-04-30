@@ -1,0 +1,155 @@
+/**
+ * Responsive Design Utilities
+ * 
+ * This file provides mixins and functions to help implement responsive design.
+ * It uses the breakpoints defined in the design tokens.
+ * 
+ * Usage:
+ * @use 'path/to/responsive-utilities' as responsive;
+ * 
+ * .element {
+ *   @include responsive.up('tablet') {
+ *     // Styles for tablet and up
+ *   }
+ *   
+ *   @include responsive.down('desktop') {
+ *     // Styles for desktop and down
+ *   }
+ *   
+ *   @include responsive.between('tablet', 'desktop') {
+ *     // Styles between tablet and desktop
+ *   }
+ *   
+ *   @include responsive.only('tablet') {
+ *     // Styles only for tablet
+ *   }
+ * }
+ */
+
+@use 'design-tokens' as tokens;
+
+// Breakpoint map
+$breakpoints: (
+  'mobile': tokens.$breakpoint-mobile,
+  'tablet': tokens.$breakpoint-tablet,
+  'desktop': tokens.$breakpoint-desktop,
+  'desktop-large': tokens.$breakpoint-desktop-large,
+  'desktop-xl': tokens.$breakpoint-desktop-xl,
+);
+
+/// Media query for minimum width
+/// @param {String} $breakpoint - Breakpoint name
+@mixin up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error 'Invalid breakpoint: #{$breakpoint}. Available breakpoints: #{map-keys($breakpoints)}';
+  }
+}
+
+/// Media query for maximum width
+/// @param {String} $breakpoint - Breakpoint name
+@mixin down($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint) - 1px) {
+      @content;
+    }
+  } @else {
+    @error 'Invalid breakpoint: #{$breakpoint}. Available breakpoints: #{map-keys($breakpoints)}';
+  }
+}
+
+/// Media query between two breakpoints
+/// @param {String} $min - Minimum breakpoint name
+/// @param {String} $max - Maximum breakpoint name
+@mixin between($min, $max) {
+  @if map-has-key($breakpoints, $min) and map-has-key($breakpoints, $max) {
+    @media (min-width: map-get($breakpoints, $min)) and (max-width: map-get($breakpoints, $max) - 1px) {
+      @content;
+    }
+  } @else {
+    @error 'Invalid breakpoints: #{$min} or #{$max}. Available breakpoints: #{map-keys($breakpoints)}';
+  }
+}
+
+/// Media query for a specific breakpoint only
+/// @param {String} $breakpoint - Breakpoint name
+@mixin only($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $min: map-get($breakpoints, $breakpoint);
+    $max: null;
+
+    @if $breakpoint == 'mobile' {
+      $max: map-get($breakpoints, 'tablet');
+    } @else if $breakpoint == 'tablet' {
+      $max: map-get($breakpoints, 'desktop');
+    } @else if $breakpoint == 'desktop' {
+      $max: map-get($breakpoints, 'desktop-large');
+    } @else if $breakpoint == 'desktop-large' {
+      $max: map-get($breakpoints, 'desktop-xl');
+    }
+
+    @if $max {
+      @media (min-width: $min) and (max-width: $max - 1px) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $min) {
+        @content;
+      }
+    }
+  } @else {
+    @error 'Invalid breakpoint: #{$breakpoint}. Available breakpoints: #{map-keys($breakpoints)}';
+  }
+}
+
+/// Media query for retina displays
+@mixin retina {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+/// Media query for print
+@mixin print {
+  @media print {
+    @content;
+  }
+}
+
+/// Media query for dark mode
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+/// Media query for light mode
+@mixin light-mode {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+}
+
+/// Media query for reduced motion
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+/// Media query for touch devices
+@mixin touch {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+/// Media query for mouse devices
+@mixin mouse {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}

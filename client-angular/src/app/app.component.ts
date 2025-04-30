@@ -9,8 +9,17 @@
 // ===================================================
 import { Component, OnInit, OnDestroy, Inject, Renderer2 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {
+  Router,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError,
+} from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ChatService } from './core/services/chat.service';
@@ -18,9 +27,11 @@ import { CsrfService } from './core/services/csrf.service';
 import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
 import { ThemeService } from './core/services/theme.service';
+import { PerformanceMonitorService } from './core/services/performance-monitor.service';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
+import { PerformanceMonitorComponent } from './core/components/performance-monitor/performance-monitor.component';
 // These components are used in the template or will be used in future updates
 // import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
 // import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
@@ -69,6 +80,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private onboardingSubscription: Subscription = new Subscription();
   private themeSubscription: Subscription = new Subscription();
 
+  // Track loading state for page transitions
+  isLoading = false;
+  private routerSubscription: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -80,6 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private metaService: Meta,
     private themeService: ThemeService,
+    private performanceMonitor: PerformanceMonitorService,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document
   ) {
@@ -113,6 +129,9 @@ export class AppComponent implements OnInit, OnDestroy {
         this.showInstallPrompt = true;
       });
     });
+
+    // Set up router event listeners for page transitions
+    this.setupRouterEvents();
   }
 
   ngOnInit(): void {
@@ -165,6 +184,52 @@ export class AppComponent implements OnInit, OnDestroy {
     // this.chatService.getUnreadCounts().subscribe();
   }
 
+  /**
+   * Sets up router event listeners for page transitions
+   */
+  private setupRouterEvents(): void {
+    // Track navigation events for page transitions
+    this.routerSubscription = this.router.events
+      .pipe(
+        filter(
+          event =>
+            event instanceof NavigationStart ||
+            event instanceof NavigationEnd ||
+            event instanceof NavigationCancel ||
+            event instanceof NavigationError
+        )
+      )
+      .subscribe(event => {
+        // Show loading indicator on navigation start
+        if (event instanceof NavigationStart) {
+          this.isLoading = true;
+          this.renderer.addClass(this.document.body, 'page-transition');
+        }
+
+        // Hide loading indicator when navigation ends (success, cancel, or error)
+        if (
+          event instanceof NavigationEnd ||
+          event instanceof NavigationCancel ||
+          event instanceof NavigationError
+        ) {
+          // Use setTimeout to ensure the transition effect is visible
+          setTimeout(() => {
+            this.isLoading = false;
+            this.renderer.removeClass(this.document.body, 'page-transition');
+
+            // Measure page load performance
+            if (event instanceof NavigationEnd) {
+              this.performanceMonitor.measureComponentRender('PageNavigation', () => {
+                // Scroll to top on navigation
+                window.scrollTo(0, 0);
+                return true;
+              });
+            }
+          }, 300);
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
@@ -180,6 +245,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe();
+    }
+
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 

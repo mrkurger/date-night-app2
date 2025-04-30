@@ -26,20 +26,11 @@ import { EncryptionService } from '../../../core/services/encryption.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ChatMessageComponent } from '../../../shared/components/chat-message/chat-message.component';
 import { ChatSettingsComponent } from '../../../shared/components/chat-settings/chat-settings.component';
-import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
-import { FileSizePipe } from '../../../shared/pipes/file-size.pipe';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ChatMessageComponent,
-    ChatSettingsComponent,
-    TimeAgoPipe,
-    FileSizePipe,
-  ],
+  imports: [CommonModule, FormsModule, ChatMessageComponent, ChatSettingsComponent],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })

@@ -11,10 +11,7 @@
 import request from 'supertest';
 import express from 'express';
 import securityHeaders from '../../../middleware/securityHeaders.js';
-import {
-  middleware as cspMiddleware,
-  setupReportEndpoint,
-} from '../../../middleware/csp.middleware.js';
+import { cspMiddleware, setupCspReportEndpoint } from '../../../middleware/csp.middleware.js';
 import cspConfig from '../../../config/csp.config.js';
 import helmet from 'helmet';
 import { jest } from '@jest/globals';
@@ -95,8 +92,8 @@ describe('Security Middleware', () => {
       cspConfig.reportOnly = true;
 
       try {
-        const middleware = cspMiddleware();
-        devApp.use(middleware);
+        // Apply middleware directly to the app
+        cspMiddleware(devApp);
 
         devApp.get('/test', (req, res) => {
           res.status(200).json({ message: 'Test endpoint' });
@@ -135,9 +132,8 @@ describe('Security Middleware', () => {
       cspConfig.reportOnly = false;
 
       try {
-        // Apply the actual CSP middleware
-        const middleware = cspMiddleware();
-        prodApp.use(middleware);
+        // Apply the actual CSP middleware directly to the app
+        cspMiddleware(prodApp);
 
         prodApp.get('/test', (req, res) => {
           res.status(200).json({ message: 'Test endpoint' });

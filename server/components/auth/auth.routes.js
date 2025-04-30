@@ -10,9 +10,9 @@
 import express from 'express';
 const router = express.Router();
 import passport from 'passport';
-import authController from './auth.controller';
-import { protect } from '../../middleware/auth';
-import { registrationLimiter, passwordResetLimiter } from '../../middleware/rateLimiter';
+import authController from './auth.controller.js';
+import { protect } from '../../middleware/auth.js';
+import { registrationLimiter, passwordResetLimiter } from '../../middleware/rateLimiter.js';
 
 // Local authentication with rate limiting
 router.post('/register', registrationLimiter, authController.register);
@@ -74,4 +74,4 @@ router.get(
   authController.appleCallback
 );
 
-module.exports = router;
+export default router;

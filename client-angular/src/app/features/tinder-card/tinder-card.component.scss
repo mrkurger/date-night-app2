@@ -1,4 +1,8 @@
 /* Tinder Card Component Styles */
+@use '../../../core/design/animation-utilities' as animation;
+@use '../../../core/design/micro-interactions' as micro;
+@use '../../../core/design/dark-mode' as dark;
+
 :host {
   display: block;
   width: 100%;
@@ -16,26 +20,63 @@
   box-shadow: var(--shadow-lg);
   transition:
     transform var(--transition-normal) var(--transition-timing-default),
-    opacity var(--transition-normal) var(--transition-timing-default);
+    opacity var(--transition-normal) var(--transition-timing-default),
+    box-shadow var(--transition-normal) var(--transition-timing-default);
   transform-origin: center center;
   cursor: grab;
   display: flex;
   flex-direction: column;
   will-change: transform;
-}
 
-.tinder-card:active {
-  cursor: grabbing;
+  // Add entrance animation
+  @include animation.scale-in(0.5s);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+  @include dark.shadow(var(--shadow-lg));
+
+  &:hover {
+    box-shadow: var(--shadow-xl);
+  }
+
+  &:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+  }
 }
 
 .tinder-card.swiped-left {
   transform: translateX(-150%) rotate(-20deg);
   opacity: 0;
+  animation: swipe-left 0.5s var(--transition-timing-default) forwards;
 }
 
 .tinder-card.swiped-right {
   transform: translateX(150%) rotate(20deg);
   opacity: 0;
+  animation: swipe-right 0.5s var(--transition-timing-default) forwards;
+}
+
+@keyframes swipe-left {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-150%) rotate(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-right {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(150%) rotate(20deg);
+    opacity: 0;
+  }
 }
 
 /* Card Media */
@@ -44,6 +85,14 @@
   height: 70%;
   overflow: hidden;
   background-color: var(--neutral-300);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-300));
+
+  // Add subtle zoom effect on hover
+  &:hover .card-image {
+    transform: scale(1.05);
+  }
 }
 
 .card-image {
@@ -51,11 +100,17 @@
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-normal) var(--transition-timing-default);
+
+  // Add fade-in animation
+  @include animation.fade-in(0.3s);
 }
 
 .video-container {
   width: 100%;
   height: 100%;
+
+  // Add fade-in animation
+  @include animation.fade-in(0.3s);
 }
 
 .video-container video {
@@ -74,6 +129,9 @@
   justify-content: center;
   gap: var(--space-2);
   z-index: 10;
+
+  // Add slide-in animation
+  @include animation.slide-in-top(0.3s, ease-out, 0.2s);
 }
 
 .media-dot {
@@ -82,12 +140,21 @@
   border-radius: var(--border-radius-full);
   background-color: rgba(255, 255, 255, 0.5);
   transition: all var(--transition-normal) var(--transition-timing-default);
+
+  // Add pulse effect on hover
+  &:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 0.8);
+  }
 }
 
 .media-dot.active {
   width: 20px;
   border-radius: var(--border-radius-sm);
   background-color: var(--neutral-100);
+
+  // Add subtle pulse animation
+  animation: pulse 2s infinite;
 }
 
 .media-nav-button {
@@ -103,23 +170,63 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
+  opacity: 0;
   transition: all var(--transition-normal) var(--transition-timing-default);
   z-index: 10;
+
+  // Add micro-interaction
+  @include micro.click-ripple(var(--neutral-100));
+
+  // Show buttons on card hover
+  .tinder-card:hover & {
+    opacity: 0.7;
+  }
 }
 
 .media-nav-button:hover {
-  opacity: 1;
+  opacity: 1 !important;
   background-color: rgba(0, 0, 0, 0.5);
   transform: translateY(-50%) scale(1.1);
 }
 
 .prev-button {
   left: var(--space-3);
+
+  // Add slide-in animation
+  .tinder-card:hover & {
+    animation: slide-in-left 0.3s ease-out forwards;
+  }
 }
 
 .next-button {
   right: var(--space-3);
+
+  // Add slide-in animation
+  .tinder-card:hover & {
+    animation: slide-in-right 0.3s ease-out forwards;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-10px) translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(-50%);
+    opacity: 0.7;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(10px) translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(-50%);
+    opacity: 0.7;
+  }
 }
 
 /* Like/Dislike Indicators */
@@ -140,6 +247,12 @@
     all var(--transition-normal) var(--transition-timing-default),
     visibility var(--transition-normal) var(--transition-timing-default);
   z-index: 10;
+
+  // Add shadow for better visibility
+  box-shadow: var(--shadow-md);
+
+  // Add text shadow for better readability
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .like-indicator {
@@ -147,6 +260,12 @@
   color: var(--success);
   border: 4px solid var(--success);
   transform: translateY(-50%) rotate(20deg) scale(0);
+
+  // Add glow effect when visible
+  &[style*='opacity: 1'] {
+    box-shadow: 0 0 15px rgba(var(--success-rgb), 0.5);
+    animation: pulse-success 1s infinite alternate;
+  }
 }
 
 .dislike-indicator {
@@ -154,11 +273,51 @@
   color: var(--error);
   border: 4px solid var(--error);
   transform: translateY(-50%) rotate(-20deg) scale(0);
+
+  // Add glow effect when visible
+  &[style*='opacity: 1'] {
+    box-shadow: 0 0 15px rgba(var(--error-rgb), 0.5);
+    animation: pulse-error 1s infinite alternate;
+  }
 }
 
 .like-indicator i,
 .dislike-indicator i {
   margin-right: var(--space-3);
+
+  // Add subtle rotation animation
+  animation: subtle-rotate 2s ease-in-out infinite;
+}
+
+@keyframes pulse-success {
+  0% {
+    box-shadow: 0 0 5px rgba(var(--success-rgb), 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(var(--success-rgb), 0.7);
+  }
+}
+
+@keyframes pulse-error {
+  0% {
+    box-shadow: 0 0 5px rgba(var(--error-rgb), 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(var(--error-rgb), 0.7);
+  }
+}
+
+@keyframes subtle-rotate {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
 }
 
 /* Card Content */
@@ -167,6 +326,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+
+  // Add slide-in animation
+  @include animation.slide-in-bottom(0.4s, ease-out, 0.1s);
 }
 
 .card-header {
@@ -181,6 +346,12 @@
   display: flex;
   align-items: center;
   color: var(--neutral-800);
+
+  // Dark mode support
+  @include dark.text(var(--neutral-800));
+
+  // Add slide-in animation
+  @include animation.slide-in-right(0.4s, ease-out, 0.2s);
 }
 
 .card-age {
@@ -188,6 +359,9 @@
   font-weight: var(--font-weight-normal);
   margin-left: var(--space-2);
   color: var(--neutral-600);
+
+  // Dark mode support
+  @include dark.text(var(--neutral-600));
 }
 
 .card-location {
@@ -196,11 +370,20 @@
   display: flex;
   align-items: center;
   font-size: var(--font-size-md);
+
+  // Dark mode support
+  @include dark.text(var(--neutral-600));
+
+  // Add slide-in animation
+  @include animation.slide-in-right(0.4s, ease-out, 0.3s);
 }
 
 .card-location i {
   margin-right: var(--space-2);
   color: var(--primary);
+
+  // Add subtle bounce animation
+  animation: subtle-bounce 3s ease-in-out infinite;
 }
 
 .card-body {
@@ -218,6 +401,12 @@
   box-orient: vertical; /* Standard property for compatibility */
   overflow: hidden;
   font-size: var(--font-size-md);
+
+  // Dark mode support
+  @include dark.text(var(--neutral-700));
+
+  // Add fade-in animation
+  @include animation.fade-in(0.5s, ease-out, 0.4s);
 }
 
 .card-tags {
@@ -225,6 +414,9 @@
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-bottom: var(--space-4);
+
+  // Add staggered animation for children
+  @include animation.stagger-children(fade-in, 0.3s, ease-out, 0.05s, '> *');
 }
 
 .card-tag {
@@ -234,6 +426,12 @@
   border-radius: var(--border-radius-full);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+
+  // Dark mode support
+  @include dark.text(var(--secondary));
+
+  // Add hover effect
+  @include micro.hover-scale(1.05);
 }
 
 .card-footer {
@@ -241,6 +439,9 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+
+  // Add slide-in animation
+  @include animation.slide-in-bottom(0.4s, ease-out, 0.5s);
 }
 
 .action-button {
@@ -254,6 +455,16 @@
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal) var(--transition-timing-default);
   cursor: pointer;
+
+  // Add micro-interactions
+  @include micro.click-ripple;
+  @include micro.focus-highlight;
+
+  // Add accessibility focus styles
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
 }
 
 .action-button:hover {
@@ -269,44 +480,140 @@
   background-color: var(--neutral-100);
   color: var(--info);
   border: var(--border-width-thin) solid var(--info);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+  @include dark.text(var(--info));
+  @include dark.border(var(--info));
 }
 
 .dislike-button {
   background-color: var(--neutral-100);
   color: var(--error);
   border: var(--border-width-thin) solid var(--error);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+  @include dark.text(var(--error));
+  @include dark.border(var(--error));
 }
 
 .like-button {
   background-color: var(--neutral-100);
   color: var(--success);
   border: var(--border-width-thin) solid var(--success);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+  @include dark.text(var(--success));
+  @include dark.border(var(--success));
 }
 
 .chat-button {
   background-color: var(--neutral-100);
   color: var(--primary);
   border: var(--border-width-thin) solid var(--primary);
+
+  // Dark mode support
+  @include dark.background(var(--neutral-100));
+  @include dark.text(var(--primary));
+  @include dark.border(var(--primary));
 }
 
 .dislike-button:hover {
   background-color: var(--error);
   color: var(--neutral-100);
+
+  i {
+    animation: shake 0.5s ease-in-out;
+  }
 }
 
 .like-button:hover {
   background-color: var(--success);
   color: var(--neutral-100);
+
+  i {
+    animation: pulse 0.5s ease-in-out;
+  }
 }
 
 .info-button:hover {
   background-color: var(--info);
   color: var(--neutral-100);
+
+  i {
+    animation: rotate 0.5s ease-in-out;
+  }
 }
 
 .chat-button:hover {
   background-color: var(--primary);
   color: var(--neutral-100);
+
+  i {
+    animation: bounce 0.5s ease-in-out;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-3px);
+  }
+  40%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes subtle-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 /* Responsive Adjustments */
@@ -324,6 +631,27 @@
   .action-button {
     width: 45px;
     height: 45px;
+  }
+
+  // Optimize animations for smaller screens
+  .card-content {
+    @include animation.slide-in-bottom(0.3s, ease-out, 0.1s);
+  }
+
+  .card-title {
+    @include animation.slide-in-right(0.3s, ease-out, 0.15s);
+  }
+
+  .card-location {
+    @include animation.slide-in-right(0.3s, ease-out, 0.2s);
+  }
+
+  .card-description {
+    @include animation.fade-in(0.3s, ease-out, 0.25s);
+  }
+
+  .card-footer {
+    @include animation.slide-in-bottom(0.3s, ease-out, 0.3s);
   }
 }
 
@@ -349,5 +677,31 @@
   .dislike-indicator {
     font-size: var(--font-size-xl);
     padding: var(--space-2) var(--space-4);
+  }
+
+  // Further optimize animations for mobile
+  .tinder-card {
+    @include animation.scale-in(0.3s);
+  }
+
+  // Reduce animation complexity for better performance
+  @include animation.respect-reduced-motion;
+}
+
+// Respect user's preference for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .tinder-card,
+  .card-content,
+  .card-title,
+  .card-location,
+  .card-description,
+  .card-footer,
+  .media-dots,
+  .like-indicator,
+  .dislike-indicator,
+  .card-location i,
+  .action-button i {
+    animation: none !important;
+    transition: none !important;
   }
 }

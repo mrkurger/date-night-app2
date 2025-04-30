@@ -9,10 +9,10 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import travelController from '../controllers/travel.controller';
-import { authenticateToken } from '../middleware/authenticateToken';
-import { isAdvertiser } from '../middleware/roles';
-import travelValidator from '../middleware/validators/travel.validator';
+import travelController from '../controllers/travel.controller.js';
+import { authenticateToken } from '../middleware/authenticateToken.js';
+import { isAdvertiser } from '../middleware/roles.js';
+import travelValidator from '../middleware/validators/travel.validator.js';
 
 // Protected routes requiring authentication
 router.use(authenticateToken);
@@ -65,4 +65,4 @@ router.get(
 
 router.get('/location', travelValidator.validateLocationQuery, travelController.getAdsByLocation);
 
-module.exports = router;
+export default router;

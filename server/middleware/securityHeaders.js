@@ -59,4 +59,4 @@ const securityHeaders = (req, res, next) => {
   next();
 };
 
-module.exports = securityHeaders;
+export default securityHeaders;

@@ -12,6 +12,9 @@
 // Import Leaflet CSS
 @use 'leaflet/dist/leaflet.css' as leaflet;
 
+// Import global micro-interactions
+@use 'global-micro-interactions';
+
 // Global styles
 html {
   font-size: 16px;

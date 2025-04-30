@@ -11,8 +11,8 @@ import express from 'express';
 const router = express.Router();
 import { body } from 'express-validator';
 import multer from 'multer';
-import mediaController from '../controllers/media.controller';
-import { protect } from '../middleware/auth';
+import mediaController from '../controllers/media.controller.js';
+import { protect } from '../middleware/auth.js';
 
 // Configure multer for memory storage
 const storage = multer.memoryStorage();
@@ -59,4 +59,4 @@ router.get('/:adId/media', mediaController.getAdMedia);
 // Get all media pending moderation (admin only)
 router.get('/moderation/pending', protect, mediaController.getPendingModerationMedia);
 
-module.exports = router;
+export default router;

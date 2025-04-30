@@ -1,0 +1,374 @@
+/**
+ * Performance Utilities
+ *
+ * This utility provides methods for optimizing and monitoring performance in the application.
+ * It includes functions for lazy loading, debouncing, throttling, and performance monitoring.
+ */
+import { Observable, Subject, timer } from 'rxjs';
+import { debounceTime, throttleTime, takeUntil, finalize, tap } from 'rxjs/operators';
+
+export class PerformanceUtil {
+  private static instance: PerformanceUtil;
+  private performanceMetrics: Map<string, PerformanceMetric> = new Map();
+  private readonly DEFAULT_DEBOUNCE_TIME = 300; // ms
+  private readonly DEFAULT_THROTTLE_TIME = 100; // ms
+
+  /**
+   * Gets the singleton instance of PerformanceUtil
+   * @returns The PerformanceUtil instance
+   */
+  public static getInstance(): PerformanceUtil {
+    if (!PerformanceUtil.instance) {
+      PerformanceUtil.instance = new PerformanceUtil();
+    }
+    return PerformanceUtil.instance;
+  }
+
+  /**
+   * Creates a debounced version of a function
+   * @param fn The function to debounce
+   * @param time The debounce time in milliseconds
+   * @returns A debounced function
+   */
+  public debounce<T extends (...args: any[]) => any>(
+    fn: T,
+    time: number = this.DEFAULT_DEBOUNCE_TIME
+  ): (...args: Parameters<T>) => void {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    return (...args: Parameters<T>): void => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        fn(...args);
+        timeoutId = null;
+      }, time);
+    };
+  }
+
+  /**
+   * Creates a throttled version of a function
+   * @param fn The function to throttle
+   * @param time The throttle time in milliseconds
+   * @returns A throttled function
+   */
+  public throttle<T extends (...args: any[]) => any>(
+    fn: T,
+    time: number = this.DEFAULT_THROTTLE_TIME
+  ): (...args: Parameters<T>) => void {
+    let lastCall = 0;
+
+    return (...args: Parameters<T>): void => {
+      const now = Date.now();
+      if (now - lastCall >= time) {
+        fn(...args);
+        lastCall = now;
+      }
+    };
+  }
+
+  /**
+   * Applies debounce to an Observable
+   * @param time The debounce time in milliseconds
+   * @returns An RxJS operator that debounces the Observable
+   */
+  public debounceObservable<T>(time: number = this.DEFAULT_DEBOUNCE_TIME) {
+    return (source: Observable<T>) => source.pipe(debounceTime(time));
+  }
+
+  /**
+   * Applies throttle to an Observable
+   * @param time The throttle time in milliseconds
+   * @returns An RxJS operator that throttles the Observable
+   */
+  public throttleObservable<T>(time: number = this.DEFAULT_THROTTLE_TIME) {
+    return (source: Observable<T>) => source.pipe(throttleTime(time));
+  }
+
+  /**
+   * Measures the execution time of a function
+   * @param fn The function to measure
+   * @param label A label for the measurement
+   * @returns The result of the function
+   */
+  public measureExecutionTime<T>(fn: () => T, label: string): T {
+    const start = performance.now();
+    const result = fn();
+    const end = performance.now();
+    const duration = end - start;
+
+    this.recordMetric(label, duration);
+
+    console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+
+    return result;
+  }
+
+  /**
+   * Measures the execution time of an async function
+   * @param fn The async function to measure
+   * @param label A label for the measurement
+   * @returns A Promise that resolves to the result of the function
+   */
+  public async measureAsyncExecutionTime<T>(fn: () => Promise<T>, label: string): Promise<T> {
+    const start = performance.now();
+    try {
+      const result = await fn();
+      const end = performance.now();
+      const duration = end - start;
+
+      this.recordMetric(label, duration);
+
+      console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+
+      return result;
+    } catch (error) {
+      const end = performance.now();
+      const duration = end - start;
+
+      this.recordMetric(`${label} (error)`, duration);
+
+      console.debug(`[Performance] ${label} (error): ${duration.toFixed(2)}ms`);
+
+      throw error;
+    }
+  }
+
+  /**
+   * Creates an RxJS operator that measures the execution time of an Observable
+   * @param label A label for the measurement
+   * @returns An RxJS operator that measures the execution time
+   */
+  public measureObservableExecutionTime<T>(label: string) {
+    return (source: Observable<T>) => {
+      const start = performance.now();
+
+      return source.pipe(
+        finalize(() => {
+          const end = performance.now();
+          const duration = end - start;
+
+          this.recordMetric(label, duration);
+
+          console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+        })
+      );
+    };
+  }
+
+  /**
+   * Records a performance metric
+   * @param label The label for the metric
+   * @param duration The duration in milliseconds
+   */
+  private recordMetric(label: string, duration: number): void {
+    if (!this.performanceMetrics.has(label)) {
+      this.performanceMetrics.set(label, {
+        count: 0,
+        totalDuration: 0,
+        minDuration: duration,
+        maxDuration: duration,
+        avgDuration: duration,
+      });
+    }
+
+    const metric = this.performanceMetrics.get(label)!;
+    metric.count++;
+    metric.totalDuration += duration;
+    metric.minDuration = Math.min(metric.minDuration, duration);
+    metric.maxDuration = Math.max(metric.maxDuration, duration);
+    metric.avgDuration = metric.totalDuration / metric.count;
+  }
+
+  /**
+   * Gets all recorded performance metrics
+   * @returns A map of performance metrics
+   */
+  public getMetrics(): Map<string, PerformanceMetric> {
+    return new Map(this.performanceMetrics);
+  }
+
+  /**
+   * Clears all recorded performance metrics
+   */
+  public clearMetrics(): void {
+    this.performanceMetrics.clear();
+  }
+
+  /**
+   * Creates a lazy loaded version of a function
+   * @param factory A factory function that returns the value to be lazy loaded
+   * @returns A function that returns the lazy loaded value
+   */
+  public lazyLoad<T>(factory: () => T): () => T {
+    let instance: T | null = null;
+
+    return () => {
+      if (instance === null) {
+        instance = factory();
+      }
+      return instance;
+    };
+  }
+
+  /**
+   * Creates a lazy loaded version of an async function
+   * @param factory A factory function that returns a Promise for the value to be lazy loaded
+   * @returns A function that returns a Promise for the lazy loaded value
+   */
+  public lazyLoadAsync<T>(factory: () => Promise<T>): () => Promise<T> {
+    let instance: T | null = null;
+    let loading: Promise<T> | null = null;
+
+    return async () => {
+      if (instance !== null) {
+        return instance;
+      }
+
+      if (loading === null) {
+        loading = factory().then(result => {
+          instance = result;
+          loading = null;
+          return result;
+        });
+      }
+
+      return loading;
+    };
+  }
+
+  /**
+   * Creates a function that caches the result of an expensive computation
+   * @param fn The function to memoize
+   * @returns A memoized version of the function
+   */
+  public memoize<T extends (...args: any[]) => any>(fn: T): T {
+    const cache = new Map<string, ReturnType<T>>();
+
+    return ((...args: Parameters<T>): ReturnType<T> => {
+      const key = JSON.stringify(args);
+
+      if (cache.has(key)) {
+        return cache.get(key)!;
+      }
+
+      const result = fn(...args);
+      cache.set(key, result);
+
+      return result;
+    }) as T;
+  }
+
+  /**
+   * Creates a function that caches the result of an expensive async computation
+   * @param fn The async function to memoize
+   * @returns A memoized version of the async function
+   */
+  public memoizeAsync<T extends (...args: any[]) => Promise<any>>(fn: T): T {
+    const cache = new Map<string, ReturnType<T>>();
+
+    return (async (...args: Parameters<T>): Promise<ReturnType<T>> => {
+      const key = JSON.stringify(args);
+
+      if (cache.has(key)) {
+        return cache.get(key)!;
+      }
+
+      const result = await fn(...args);
+      cache.set(key, result as ReturnType<T>);
+
+      return result as ReturnType<T>;
+    }) as T;
+  }
+
+  /**
+   * Creates a function that runs in a web worker
+   * @param fn The function to run in a worker
+   * @returns A function that returns a Promise for the result
+   */
+  public runInWorker<T extends (...args: any[]) => any>(
+    fn: T
+  ): (...args: Parameters<T>) => Promise<ReturnType<T>> {
+    // Create a worker from a blob URL
+    const workerBlob = new Blob(
+      [
+        `self.onmessage = function(e) {
+          const fnStr = e.data.fn;
+          const args = e.data.args;
+          const fn = new Function('return ' + fnStr)();
+          const result = fn.apply(null, args);
+          self.postMessage({ result });
+        }`,
+      ],
+      { type: 'application/javascript' }
+    );
+
+    const workerUrl = URL.createObjectURL(workerBlob);
+    const worker = new Worker(workerUrl);
+
+    return (...args: Parameters<T>): Promise<ReturnType<T>> =>
+      new Promise((resolve, reject) => {
+        worker.onmessage = e => {
+          resolve(e.data.result);
+        };
+
+        worker.onerror = e => {
+          reject(new Error(`Worker error: ${e}`));
+        };
+
+        worker.postMessage({
+          fn: fn.toString(),
+          args,
+        });
+      });
+  }
+
+  /**
+   * Creates a cancelable version of an async function
+   * @param fn The async function to make cancelable
+   * @returns An object with the async function and a cancel method
+   */
+  public makeCancelable<T extends (...args: any[]) => Promise<any>>(
+    fn: T
+  ): {
+    execute: (...args: Parameters<T>) => Promise<ReturnType<T>>;
+    cancel: () => void;
+  } {
+    const cancelSubject = new Subject<void>();
+
+    return {
+      execute: async (...args: Parameters<T>): Promise<ReturnType<T>> => {
+        try {
+          const result = await Promise.race([
+            fn(...args),
+            new Promise<never>((_, reject) => {
+              cancelSubject.pipe(takeUntil(timer(0))).subscribe(() => {
+                reject(new Error('Operation canceled'));
+              });
+            }),
+          ]);
+
+          return result as ReturnType<T>;
+        } catch (error) {
+          throw error;
+        }
+      },
+      cancel: () => {
+        cancelSubject.next();
+      },
+    };
+  }
+}
+
+/**
+ * Interface for performance metrics
+ */
+export interface PerformanceMetric {
+  count: number;
+  totalDuration: number;
+  minDuration: number;
+  maxDuration: number;
+  avgDuration: number;
+}

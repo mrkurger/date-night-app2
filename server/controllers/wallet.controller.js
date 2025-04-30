@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import walletService from '../services/wallet.service';
-import { AppError } from '../middleware/errorHandler';
+import walletService from '../services/wallet.service.js';
+import { AppError } from '../middleware/errorHandler.js';
 
 /**
  * Wallet Controller for handling wallet-related API endpoints
@@ -438,4 +438,4 @@ class WalletController {
   }
 }
 
-module.exports = new WalletController();
+export default new WalletController();

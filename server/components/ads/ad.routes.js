@@ -9,7 +9,7 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import adController from './ad.controller';
+import adController from './ad.controller.js';
 
 /**
  * @swagger
@@ -342,4 +342,4 @@ router.get('/category/:category', adController.getAdsByCategory);
  */
 router.post('/swipes', adController.recordSwipe);
 
-module.exports = router;
+export default router;

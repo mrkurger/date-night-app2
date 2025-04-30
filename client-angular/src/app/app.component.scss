@@ -225,6 +225,49 @@
   padding: var(--space-8) 0;
   background-color: var(--neutral-200);
   min-height: calc(100vh - 70px - 300px); /* Adjust based on header and footer heights */
+  position: relative;
+}
+
+/* Page Transition Styles */
+.page-transition-container {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+body.page-transition .page-transition-container {
+  opacity: 0.6;
+  transform: translateY(10px);
+}
+
+/* Page Loading Indicator */
+.page-loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-index-overlay);
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2);
+}
+
+.spinner {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--border-radius-full);
+  box-shadow:
+    0 -10px 0 1px var(--primary),
+    /* top */ 10px 0 0 1px var(--primary),
+    /* right */ 0 10px 0 1px var(--primary),
+    /* bottom */ -10px 0 0 1px var(--primary); /* left */
+  animation: spinner-rotate 1s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Footer Styles */

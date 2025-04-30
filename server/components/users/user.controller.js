@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import { User } from '../';
+import User from '../../models/user.model.js';
 
-exports.getCurrentUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
     res.json(user);
@@ -18,7 +18,7 @@ exports.getCurrentUser = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const updates = { ...req.body };
     // Prevent updating sensitive fields
@@ -35,7 +35,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.updateTravelPlan = async (req, res) => {
+const updateTravelPlan = async (req, res) => {
   try {
     const { travelPlan } = req.body;
 
@@ -54,7 +54,7 @@ exports.updateTravelPlan = async (req, res) => {
   }
 };
 
-exports.getUserStatus = async (req, res) => {
+const getUserStatus = async (req, res) => {
   try {
     const { userId } = req.params;
     const user = await User.findById(userId).select('online lastActive');
@@ -72,7 +72,7 @@ exports.getUserStatus = async (req, res) => {
   }
 };
 
-exports.changePassword = async (req, res) => {
+const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
@@ -101,7 +101,7 @@ exports.changePassword = async (req, res) => {
     await user.save();
 
     // Blacklist all existing tokens for this user
-    const TokenBlacklist = (await import('../../models/token-blacklist.model')).default;
+    const TokenBlacklist = (await import('../../models/token-blacklist.model.js')).default;
 
     // Set expiration date for blacklisted tokens (30 days from now)
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
@@ -153,4 +153,12 @@ exports.changePassword = async (req, res) => {
       error: err.message,
     });
   }
+};
+
+export default {
+  getCurrentUser,
+  updateUser,
+  updateTravelPlan,
+  getUserStatus,
+  changePassword,
 };

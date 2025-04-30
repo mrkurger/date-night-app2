@@ -1,9 +1,9 @@
-import Review from '../models/review.model';
-import User from '../models/user.model';
-import Ad from '../models/ad.model';
+import Review from '../models/review.model.js';
+import User from '../models/user.model.js';
+import Ad from '../models/ad.model.js';
 
 // Create a new review
-exports.createReview = async (req, res) => {
+const createReview = async (req, res) => {
   try {
     const reviewerId = req.user._id;
     const { advertiserId, adId, rating, title, content, categories, meetingDate } = req.body;
@@ -95,7 +95,7 @@ exports.createReview = async (req, res) => {
 };
 
 // Get reviews for an advertiser
-exports.getAdvertiserReviews = async (req, res) => {
+const getAdvertiserReviews = async (req, res) => {
   try {
     const { advertiserId } = req.params;
     const { page = 1, limit = 10, sort = 'newest' } = req.query;
@@ -180,7 +180,7 @@ exports.getAdvertiserReviews = async (req, res) => {
 };
 
 // Get a specific review
-exports.getReview = async (req, res) => {
+const getReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
 
@@ -227,7 +227,7 @@ exports.getReview = async (req, res) => {
 };
 
 // Update a review (only by the reviewer)
-exports.updateReview = async (req, res) => {
+const updateReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { rating, title, content, categories } = req.body;
@@ -282,7 +282,7 @@ exports.updateReview = async (req, res) => {
 };
 
 // Delete a review (only by the reviewer)
-exports.deleteReview = async (req, res) => {
+const deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
 
@@ -326,7 +326,7 @@ exports.deleteReview = async (req, res) => {
 };
 
 // Mark a review as helpful
-exports.markReviewHelpful = async (req, res) => {
+const markReviewHelpful = async (req, res) => {
   try {
     const { reviewId } = req.params;
 
@@ -371,7 +371,7 @@ exports.markReviewHelpful = async (req, res) => {
 };
 
 // Report a review
-exports.reportReview = async (req, res) => {
+const reportReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { reason } = req.body;
@@ -416,7 +416,7 @@ exports.reportReview = async (req, res) => {
 };
 
 // Respond to a review (only by the advertiser)
-exports.respondToReview = async (req, res) => {
+const respondToReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { content } = req.body;
@@ -469,7 +469,7 @@ exports.respondToReview = async (req, res) => {
 };
 
 // Admin: Get pending reviews
-exports.getPendingReviews = async (req, res) => {
+const getPendingReviews = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -512,7 +512,7 @@ exports.getPendingReviews = async (req, res) => {
 };
 
 // Admin: Approve a review
-exports.approveReview = async (req, res) => {
+const approveReview = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -558,7 +558,7 @@ exports.approveReview = async (req, res) => {
 };
 
 // Admin: Reject a review
-exports.rejectReview = async (req, res) => {
+const rejectReview = async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -606,7 +606,7 @@ exports.rejectReview = async (req, res) => {
 };
 
 // Get top-rated advertisers
-exports.getTopRatedAdvertisers = async (req, res) => {
+const getTopRatedAdvertisers = async (req, res) => {
   try {
     const { limit = 10, minReviews = 3 } = req.query;
 
@@ -624,4 +624,19 @@ exports.getTopRatedAdvertisers = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+export default {
+  createReview,
+  getAdvertiserReviews,
+  getReview,
+  updateReview,
+  deleteReview,
+  markReviewHelpful,
+  reportReview,
+  respondToReview,
+  getPendingReviews,
+  approveReview,
+  rejectReview,
+  getTopRatedAdvertisers,
 };

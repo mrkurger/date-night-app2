@@ -18,6 +18,7 @@ import { SharedModule } from './shared/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
+import { PerformanceModule } from './core/performance/performance.module';
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.
@@ -39,6 +40,13 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
     SharedModule,
     AppRoutingModule,
     SocketIoModule.forRoot(socketConfig),
+    PerformanceModule.forRoot({
+      enableMonitoring: true,
+      enableApiCache: true,
+      monitorLongTasks: true,
+      monitorMemoryUsage: true,
+      monitorWebVitals: true,
+    }),
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

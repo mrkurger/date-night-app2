@@ -32,8 +32,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 
 // Pipes
-import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
-import { FileSizePipe } from '../../shared/pipes/file-size.pipe';
 import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 
 // Routes
@@ -64,8 +62,6 @@ import { CHAT_ROUTES } from './chat.routes';
     ChatSettingsComponent,
 
     // Pipes
-    TimeAgoPipe,
-    FileSizePipe,
     LinkifyPipe,
   ],
 })

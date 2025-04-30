@@ -14,7 +14,6 @@ import { AuthService } from '../../../core/services/auth.service';
 import { AdService } from '../../../core/services/ad.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Ad } from '../../../core/models/ad.interface';
-import { ToggleComponent as EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
 
@@ -23,7 +22,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, EmeraldToggleComponent, ThemeToggleComponent],
+  imports: [CommonModule, RouterModule, ThemeToggleComponent],
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

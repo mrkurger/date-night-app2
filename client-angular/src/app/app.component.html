@@ -180,7 +180,10 @@
 </header>
 
 <main class="app-main" role="main">
-  <div class="container">
+  <div class="page-loading-indicator" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
+  <div class="container page-transition-container">
     <router-outlet></router-outlet>
   </div>
 </main>
@@ -188,6 +191,7 @@
 <!-- Notification and Debug Components -->
 <app-notification></app-notification>
 <app-debug-info></app-debug-info>
+<!-- <app-performance-monitor></app-performance-monitor> -->
 
 <footer class="app-footer" role="contentinfo">
   <div class="container">

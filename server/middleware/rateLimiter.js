@@ -8,7 +8,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import rateLimit from 'express-rate-limit';
-import { logger } from '../utils/logger';
+import { logger } from '../utils/logger.js';
 
 /**
  * Create a rate limiter with the specified window and max requests

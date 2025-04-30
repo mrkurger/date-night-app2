@@ -9,9 +9,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import userController from './user.controller';
-import { protect } from '../../middleware/auth';
-import { newPasswordValidation } from '../../middleware/validator';
+import userController from './user.controller.js';
+import { protect } from '../../middleware/auth.js';
+import { newPasswordValidation } from '../../middleware/validator.js';
 
 // Protected routes (require authentication)
 router.get('/me', protect, userController.getCurrentUser);
@@ -22,4 +22,4 @@ router.post('/change-password', protect, newPasswordValidation, userController.c
 // Public routes
 router.get('/:userId/status', userController.getUserStatus);
 
-module.exports = router;
+export default router;

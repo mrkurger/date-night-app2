@@ -9,9 +9,9 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import verificationController from '../controllers/verification.controller';
-import { authenticate } from '../middleware/auth';
-import { isAdmin } from '../middleware/roles';
+import verificationController from '../controllers/verification.controller.js';
+import { authenticate } from '../middleware/auth.js';
+import { isAdmin } from '../middleware/roles.js';
 
 // Get verification status for current user
 router.get('/status', authenticate, verificationController.getVerificationStatus);
@@ -45,4 +45,4 @@ router.get('/admin/pending', authenticate, isAdmin, verificationController.getPe
 router.post('/admin/approve', authenticate, isAdmin, verificationController.approveVerification);
 router.post('/admin/reject', authenticate, isAdmin, verificationController.rejectVerification);
 
-module.exports = router;
+export default router;
