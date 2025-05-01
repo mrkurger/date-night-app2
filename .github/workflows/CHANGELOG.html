@@ -38,6 +38,14 @@
           package-lock.json files in the repository
         </li>
         <li>Added comments explaining why caching was disabled to improve maintainability</li>
+        <li>
+          Added <code>if-no-files-found: warn</code> to artifact upload steps to prevent failures
+          when test coverage files don't exist yet
+        </li>
+        <li>
+          Ensured all file copy commands use <code>|| true</code> to handle cases where source files
+          don't exist yet
+        </li>
       </ul>
 
       <h2>2025-04-XX</h2>

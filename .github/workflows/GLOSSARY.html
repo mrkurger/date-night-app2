@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Actions Workflows Glossary</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>GitHub Actions Workflows Glossary</h1>
+
+      <p>
+        This glossary contains definitions and explanations for key terms and concepts related to
+        GitHub Actions workflows in the Date Night App project.
+      </p>
+
+      <h2>Workflow Files</h2>
+
+      <dl>
+        <dt id="angular-tests-yml">angular-tests.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that runs tests for the Angular client application. It
+            includes three jobs: unit tests, end-to-end tests, and linting.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes and pull requests to main and develop branches</li>
+            <li>Only triggers when changes are made to client-angular files</li>
+            <li>Uses Node.js 22.x</li>
+            <li>Installs dependencies with npm install</li>
+            <li>Runs unit tests with Karma and Jasmine</li>
+            <li>Runs end-to-end tests with Cypress</li>
+            <li>Runs ESLint for code quality checks</li>
+            <li>Uploads test results as artifacts</li>
+          </ul>
+        </dd>
+
+        <dt id="server-tests-yml">server-tests.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that runs tests for the server application. It includes
+            two jobs: tests (unit and integration) and linting.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes and pull requests to main and develop branches</li>
+            <li>Only triggers when changes are made to server files</li>
+            <li>Uses Node.js 22.x</li>
+            <li>Sets up a MongoDB service container for tests</li>
+            <li>Installs dependencies with npm install</li>
+            <li>Runs unit and integration tests</li>
+            <li>Runs ESLint for code quality checks</li>
+            <li>Uploads test results as artifacts</li>
+          </ul>
+        </dd>
+
+        <dt id="docs-generation-and-deployment-yml">docs-generation-and-deployment.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that generates documentation and deploys it to GitHub
+            Pages. It combines functionality from the previous generate-docs.yml and
+            github-pages.yml workflows.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes to the main branch</li>
+            <li>Generates documentation using custom scripts</li>
+            <li>Deploys the generated documentation to GitHub Pages</li>
+            <li>Updates the documentation index and glossary</li>
+          </ul>
+        </dd>
+
+        <dt id="security-reporting-yml">security-reporting.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that runs security scans and generates reports. It
+            combines functionality from the previous security-alerts-report.yml and
+            sync-snyk-issues.yml workflows.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on a schedule (daily)</li>
+            <li>Scans for vulnerabilities using npm audit and Snyk</li>
+            <li>Generates comprehensive security reports</li>
+            <li>Uploads reports as artifacts</li>
+          </ul>
+        </dd>
+      </dl>
+
+      <h2>GitHub Actions Concepts</h2>
+
+      <dl>
+        <dt id="actions-checkout">actions/checkout</dt>
+        <dd>
+          <p>
+            A GitHub Action that checks out your repository under $GITHUB_WORKSPACE, so your
+            workflow can access it. It's typically the first step in most workflows.
+          </p>
+        </dd>
+
+        <dt id="actions-setup-node">actions/setup-node</dt>
+        <dd>
+          <p>
+            A GitHub Action that sets up a Node.js environment for use in actions. It installs the
+            specified version of Node.js and can optionally cache dependencies.
+          </p>
+        </dd>
+
+        <dt id="actions-upload-artifact">actions/upload-artifact</dt>
+        <dd>
+          <p>
+            A GitHub Action that uploads artifacts from your workflow for storage in GitHub.
+            Artifacts can be used to share data between jobs and store data once a workflow is
+            complete.
+          </p>
+        </dd>
+
+        <dt id="npm-ci">npm ci</dt>
+        <dd>
+          <p>
+            An npm command that installs dependencies from package-lock.json, providing faster and
+            more reliable builds for CI environments. It requires a package-lock.json file.
+          </p>
+        </dd>
+
+        <dt id="npm-install">npm install</dt>
+        <dd>
+          <p>
+            An npm command that installs dependencies from package.json. Unlike npm ci, it doesn't
+            require a package-lock.json file and can be used when package-lock.json doesn't exist.
+          </p>
+        </dd>
+      </dl>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

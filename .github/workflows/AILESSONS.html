@@ -65,6 +65,19 @@
           <strong>Standardize output directories</strong>: Save all generated files to a consistent
           directory structure (e.g., downloaded-reports/) to maintain organization.
         </li>
+        <li>
+          <strong>Handle missing files gracefully</strong>: Use the
+          <code>if-no-files-found: warn</code>
+          option with artifact uploads to prevent workflow failures when files don't exist yet.
+        </li>
+        <li>
+          <strong>Adapt to repository structure</strong>: Use <code>npm install</code> instead of
+          <code>npm ci</code> when package-lock.json files don't exist in the repository.
+        </li>
+        <li>
+          <strong>Use appropriate error handling</strong>: Add <code>|| true</code> to commands that
+          might fail in expected ways (like copying files that don't exist yet).
+        </li>
       </ul>
 
       <h2>Implementation Patterns</h2>
