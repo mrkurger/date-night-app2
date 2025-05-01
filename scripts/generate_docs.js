@@ -9,9 +9,11 @@
  * 3. Extracting function/method signatures and documentation
  * 4. Generating glossary entries
  * 5. Building documentation indexes
+ * 6. Converting Markdown documentation to HTML
+ * 7. Adding tooltips and links to function references
  *
  * Usage:
- *   node generate_docs.js [--scan-only] [--update-only] [--verbose]
+ *   node generate_docs.js [--scan-only] [--update-only] [--verbose] [--migrate-docs]
  */
 
 import fs from 'fs';
@@ -72,6 +74,7 @@ const args = process.argv.slice(2);
 const scanOnly = args.includes('--scan-only');
 const updateOnly = args.includes('--update-only');
 const verbose = args.includes('--verbose');
+const migrateDocs = args.includes('--migrate-docs');
 
 /**
  * Logs a message if verbose mode is enabled
@@ -870,6 +873,68 @@ async function main() {
     }
 
     console.log('\nDocumentation generation completed successfully.');
+
+    // Migrate Markdown documentation to HTML if requested
+    if (migrateDocs) {
+      console.log('\nMigrating Markdown documentation to HTML...');
+
+      try {
+        // Run the doc_migration_analyzer.js script to analyze the codebase
+        console.log('Analyzing codebase...');
+        execSync('node scripts/doc_migration_analyzer.js analyze', { stdio: 'inherit' });
+
+        // Create missing documentation files
+        console.log('\nCreating missing documentation files...');
+        execSync('node scripts/doc_migration_analyzer.js create-missing-docs', {
+          stdio: 'inherit',
+        });
+
+        // Generate mapping of Markdown files to HTML destinations
+        console.log('\nGenerating mapping of Markdown files to HTML destinations...');
+        execSync('node scripts/doc_migration_analyzer.js generate-mapping', { stdio: 'inherit' });
+
+        // Get prioritized list of files to migrate
+        console.log('\nGetting prioritized list of files to migrate...');
+        const prioritizedOutput = execSync(
+          'node scripts/doc_migration_analyzer.js prioritize'
+        ).toString();
+
+        // Extract the top 5 files to migrate
+        const filesToMigrate = [];
+        const lines = prioritizedOutput.split('\n');
+        for (const line of lines) {
+          const match = line.match(/\d+\.\s+([^\s]+)\s+->\s+([^\s]+)/);
+          if (match) {
+            filesToMigrate.push({
+              markdownFile: match[1],
+              htmlFile: match[2],
+            });
+
+            if (filesToMigrate.length >= 5) {
+              break;
+            }
+          }
+        }
+
+        // Migrate the top 5 files
+        console.log('\nMigrating the top 5 files...');
+        for (const file of filesToMigrate) {
+          console.log(`\nMigrating ${file.markdownFile} to ${file.htmlFile}...`);
+          try {
+            execSync(
+              `node scripts/doc_migration_executor.js ${file.markdownFile} ${file.htmlFile}`,
+              { stdio: 'inherit' }
+            );
+          } catch (error) {
+            console.error(`Error migrating ${file.markdownFile} to ${file.htmlFile}:`, error);
+          }
+        }
+
+        console.log('\nMarkdown migration completed successfully.');
+      } catch (error) {
+        console.error('Error migrating Markdown documentation:', error);
+      }
+    }
   } catch (error) {
     console.error('Error generating documentation:', error);
     process.exit(1);

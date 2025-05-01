@@ -18,6 +18,7 @@
 - [OAuth Setup Instructions](#oauth-setup-instructions)
 - [TODOs Summary](#todos-summary)
 - [Documentation](#documentation)
+  - [HTML Documentation System](#html-documentation-system)
   - [Project Documentation](#project-documentation)
   - [Development Guides](#development-guides)
   - [Testing Documentation](#testing-documentation)
@@ -612,6 +613,37 @@ This document provides a comprehensive list of all TODOs identified in the codeb
 ## Documentation
 
 This section provides links to all documentation files in the project, organized by category.
+
+### HTML Documentation System
+
+The project uses a decentralized HTML-based documentation system that places documentation directly in the code folders it describes:
+
+- **Main Entry Points:**
+
+  - [Documentation Index](/_docs_index.html) - Complete index of all documentation
+  - [Global Glossary](/_glossary.html) - Comprehensive glossary of all functions and methods
+
+- **How to Access Documentation:**
+
+  1. **Local Browsing:**
+     - Open `_docs_index.html` in your browser from the project root
+     - Navigate through the documentation using the links provided
+  2. **GitHub Pages (if enabled):**
+     - Access at `https://[username].github.io/date-night-app/`
+  3. **Raw HTML Viewing:**
+     - When viewing HTML files in GitHub, click the "Raw" button
+     - Use [htmlpreview.github.io](https://htmlpreview.github.io/) by pasting the raw URL
+
+- **Documentation Structure:**
+
+  - Each code folder contains three HTML files:
+    - `CHANGELOG.html` - History of changes to the component
+    - `AILESSONS.html` - AI-learned patterns and insights
+    - `GLOSSARY.html` - Component-specific function/method documentation
+
+- **Automatic Updates:**
+  - Documentation is automatically updated by GitHub Actions when code changes
+  - The system extracts function signatures and updates glossary entries
 
 ### Project Documentation
 

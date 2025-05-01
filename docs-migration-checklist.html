@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Decentralization Project Checklist - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .checklist-item {
+        margin-bottom: 0.5rem;
+      }
+      .checklist-item input[type='checkbox'] {
+        margin-right: 0.5rem;
+      }
+      .section {
+        margin-bottom: 2rem;
+      }
+      .subsection {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .progress-bar {
+        width: 100%;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .progress {
+        height: 20px;
+        background-color: #4caf50;
+        border-radius: 4px;
+        text-align: center;
+        color: white;
+        line-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Decentralization Project Checklist</h1>
+
+      <p>
+        This checklist tracks the progress of the Documentation Decentralization Project for the
+        Date Night App.
+      </p>
+
+      <div class="progress-bar">
+        <div class="progress" style="width: 0%">0%</div>
+      </div>
+
+      <div class="section">
+        <h2>Phase 1: Audit and Planning</h2>
+
+        <div class="subsection">
+          <h3>1.1 Audit Existing Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-1" />
+            <label for="task-1-1-1">Create inventory of all files in `/docs` directory</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-2" />
+            <label for="task-1-1-2"
+              >Map documentation files to their corresponding code folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-3" />
+            <label for="task-1-1-3">Identify documentation gaps and redundancies</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-4" />
+            <label for="task-1-1-4">Document file relationships and dependencies</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>1.2 Analyze Code Structure</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-1" />
+            <label for="task-1-2-1"
+              >Map Angular features in `/client-angular/src/app/features/`</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-2" />
+            <label for="task-1-2-2"
+              >Map shared components in `/client-angular/src/app/shared/components/`</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-3" />
+            <label for="task-1-2-3"
+              >Map core services in `/client-angular/src/app/core/services/`</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-4" />
+            <label for="task-1-2-4">Map server modules in `/server/`</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-5" />
+            <label for="task-1-2-5">Create a comprehensive code-to-documentation mapping</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>1.3 Define HTML Documentation Structure</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-3-1" />
+            <label for="task-1-3-1">Analyze existing component-library HTML structure</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-3-2" />
+            <label for="task-1-3-2"
+              >Define HTML templates for CHANGELOG.html, AILESSONS.html, and GLOSSARY.html</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-3-3" />
+            <label for="task-1-3-3">Define CSS styling consistent with component-library</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-3-4" />
+            <label for="task-1-3-4">Create navigation patterns for cross-document linking</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>1.4 Design Glossary System</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-4-1" />
+            <label for="task-1-4-1">Define schema for function/method documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-4-2" />
+            <label for="task-1-4-2">Design tooltip implementation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-4-3" />
+            <label for="task-1-4-3">Create template for glossary entries</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-4-4" />
+            <label for="task-1-4-4"
+              >Define linking strategy between code references and glossary entries</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Phase 2: Content Migration</h2>
+
+        <div class="subsection">
+          <h3>2.1 Migrate Angular Feature Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-1" />
+            <label for="task-2-1-1"
+              >Move relevant content from `/docs/features/` to corresponding feature folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-2" />
+            <label for="task-2-1-2">Convert Markdown to HTML using established templates</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-3" />
+            <label for="task-2-1-3">Update internal links to point to new locations</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-4" />
+            <label for="task-2-1-4"
+              >Create feature-specific CHANGELOG.html and AILESSONS.html</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>2.2 Migrate Shared Component Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-1" />
+            <label for="task-2-2-1"
+              >Move relevant content from `/docs/COMPONENT_LIBRARY.MD` to component folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-2" />
+            <label for="task-2-2-2">Convert Markdown to HTML using established templates</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-3" />
+            <label for="task-2-2-3">Update internal links to point to new locations</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-4" />
+            <label for="task-2-2-4"
+              >Create component-specific CHANGELOG.html and AILESSONS.html</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>2.3 Migrate Core Service Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-1" />
+            <label for="task-2-3-1"
+              >Move relevant content from service-related docs to service folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-2" />
+            <label for="task-2-3-2">Convert Markdown to HTML using established templates</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-3" />
+            <label for="task-2-3-3">Update internal links to point to new locations</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-4" />
+            <label for="task-2-3-4"
+              >Create service-specific CHANGELOG.html and AILESSONS.html</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>2.4 Migrate Server Module Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-4-1" />
+            <label for="task-2-4-1"
+              >Move relevant content from `/docs` and `/server/docs` to server module folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-4-2" />
+            <label for="task-2-4-2">Convert Markdown to HTML using established templates</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-4-3" />
+            <label for="task-2-4-3">Update internal links to point to new locations</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-4-4" />
+            <label for="task-2-4-4">Create module-specific CHANGELOG.html and AILESSONS.html</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>2.5 Migrate General Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-5-1" />
+            <label for="task-2-5-1"
+              >Identify general documentation that doesn't map to specific code</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-5-2" />
+            <label for="task-2-5-2">Create appropriate locations for general documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-5-3" />
+            <label for="task-2-5-3">Convert to HTML and update links</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-5-4" />
+            <label for="task-2-5-4">Update _docs_index.html to include general documentation</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Phase 3: Glossary Implementation</h2>
+
+        <div class="subsection">
+          <h3>3.1 Extract Code Signatures</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-1" />
+            <label for="task-3-1-1"
+              >Parse TypeScript files to extract function/method signatures</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-2" />
+            <label for="task-3-1-2"
+              >Parse JavaScript files to extract function/method signatures</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-3" />
+            <label for="task-3-1-3">Extract documentation comments (JSDoc/TSDoc)</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-4" />
+            <label for="task-3-1-4">Create structured data for glossary entries</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>3.2 Generate Local Glossaries</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-1" />
+            <label for="task-3-2-1">Generate GLOSSARY.html for each Angular feature</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-2" />
+            <label for="task-3-2-2">Generate GLOSSARY.html for shared components</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-3" />
+            <label for="task-3-2-3">Generate GLOSSARY.html for core services</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-4" />
+            <label for="task-3-2-4">Generate GLOSSARY.html for server modules</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>3.3 Generate Global Glossary</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-1" />
+            <label for="task-3-3-1">Aggregate all local glossary entries</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-2" />
+            <label for="task-3-3-2">Organize by module/folder</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-3" />
+            <label for="task-3-3-3">Create cross-references between related entries</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-4" />
+            <label for="task-3-3-4">Generate _glossary.html in repository root</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>3.4 Implement Tooltips and Hyperlinks</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-4-1" />
+            <label for="task-3-4-1"
+              >Add tooltips to function/method references in documentation</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-4-2" />
+            <label for="task-3-4-2">Create hyperlinks from references to glossary entries</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-4-3" />
+            <label for="task-3-4-3">Implement tooltip JavaScript/CSS</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-4-4" />
+            <label for="task-3-4-4">Test tooltip functionality in GitHub environment</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Phase 4: Integration and Finalization</h2>
+
+        <div class="subsection">
+          <h3>4.1 Create Central Indexes</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-1-1" />
+            <label for="task-4-1-1">Update _docs_index.html with links to all documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-1-2" />
+            <label for="task-4-1-2"
+              >Create section indexes for features, components, services, etc.</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-1-3" />
+            <label for="task-4-1-3">Implement search functionality</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-1-4" />
+            <label for="task-4-1-4">Add documentation summaries to indexes</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>4.2 Implement Redirects</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-2-1" />
+            <label for="task-4-2-1">Create redirects from old `/docs` files to new locations</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-2-2" />
+            <label for="task-4-2-2">Update README.md with links to new documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-2-3" />
+            <label for="task-4-2-3"
+              >Create index.html in `/docs` pointing to _docs_index.html</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-2-4" />
+            <label for="task-4-2-4">Update any external references to documentation</label>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>4.3 Test and Validate</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-3-1" />
+            <label for="task-4-3-1">Verify all documentation is accessible via GitHub</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-3-2" />
+            <label for="task-4-3-2">Test navigation between documents</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-3-3" />
+            <label for="task-4-3-3">Validate tooltip functionality</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-3-4" />
+            <label for="task-4-3-4">Check for broken links or missing content</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-3-5" />
+            <label for="task-4-3-5"
+              >Verify GitHub Actions workflow correctly updates documentation</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>4.4 Documentation and Training</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-4-1" />
+            <label for="task-4-4-1">Create guide for maintaining decentralized documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-4-2" />
+            <label for="task-4-4-2">Document GitHub Actions workflow</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-4-3" />
+            <label for="task-4-4-3">Create templates for new documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-4-4-4" />
+            <label for="task-4-4-4">Train team on documentation maintenance process</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Documentation Files to Migrate</h2>
+        <p>
+          This section lists all Markdown files that need to be migrated to HTML, organized by
+          category.
+        </p>
+
+        <div class="subsection">
+          <h3>Angular Features</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-ad-browser" />
+            <label for="file-features-ad-browser"
+              >/docs/features/AD-BROWSER.MD → /client-angular/src/app/features/ad-browser/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-ad-details" />
+            <label for="file-features-ad-details"
+              >/docs/features/AD-DETAILS.MD → /client-angular/src/app/features/ad-details/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-ad-management" />
+            <label for="file-features-ad-management"
+              >/docs/features/AD-MANAGEMENT.MD →
+              /client-angular/src/app/features/ad-management/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-admin" />
+            <label for="file-features-admin"
+              >/docs/features/ADMIN.MD → /client-angular/src/app/features/admin/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-ads" />
+            <label for="file-features-ads"
+              >/docs/features/ADS.MD → /client-angular/src/app/features/ads/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-advertiser-profile" />
+            <label for="file-features-advertiser-profile"
+              >/docs/features/ADVERTISER-PROFILE.MD →
+              /client-angular/src/app/features/advertiser-profile/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-auth" />
+            <label for="file-features-auth"
+              >/docs/features/AUTH.MD → /client-angular/src/app/features/auth/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-browse" />
+            <label for="file-features-browse"
+              >/docs/features/BROWSE.MD → /client-angular/src/app/features/browse/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-chat" />
+            <label for="file-features-chat"
+              >/docs/features/CHAT.MD → /client-angular/src/app/features/chat/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-design-system-demo" />
+            <label for="file-features-design-system-demo"
+              >/docs/features/DESIGN-SYSTEM-DEMO.MD →
+              /client-angular/src/app/features/design-system-demo/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-favorites" />
+            <label for="file-features-favorites"
+              >/docs/features/FAVORITES.MD → /client-angular/src/app/features/favorites/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-gallery" />
+            <label for="file-features-gallery"
+              >/docs/features/GALLERY.MD → /client-angular/src/app/features/gallery/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-list-view" />
+            <label for="file-features-list-view"
+              >/docs/features/LIST-VIEW.MD → /client-angular/src/app/features/list-view/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-location-matching" />
+            <label for="file-features-location-matching"
+              >/docs/features/LOCATION-MATCHING.MD →
+              /client-angular/src/app/features/location-matching/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-netflix-view" />
+            <label for="file-features-netflix-view"
+              >/docs/features/NETFLIX-VIEW.MD →
+              /client-angular/src/app/features/netflix-view/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-payment" />
+            <label for="file-features-payment"
+              >/docs/features/PAYMENT.MD → /client-angular/src/app/features/payment/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-preferences-demo" />
+            <label for="file-features-preferences-demo"
+              >/docs/features/PREFERENCES-DEMO.MD →
+              /client-angular/src/app/features/preferences-demo/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-profile" />
+            <label for="file-features-profile"
+              >/docs/features/PROFILE.MD → /client-angular/src/app/features/profile/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-reviews" />
+            <label for="file-features-reviews"
+              >/docs/features/REVIEWS.MD → /client-angular/src/app/features/reviews/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-telemetry" />
+            <label for="file-features-telemetry"
+              >/docs/features/TELEMETRY.MD → /client-angular/src/app/features/telemetry/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-tinder" />
+            <label for="file-features-tinder"
+              >/docs/features/TINDER.MD → /client-angular/src/app/features/tinder/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-tinder-card" />
+            <label for="file-features-tinder-card"
+              >/docs/features/TINDER-CARD.MD → /client-angular/src/app/features/tinder-card/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-touring" />
+            <label for="file-features-touring"
+              >/docs/features/TOURING.MD → /client-angular/src/app/features/touring/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-user-settings" />
+            <label for="file-features-user-settings"
+              >/docs/features/USER-SETTINGS.MD →
+              /client-angular/src/app/features/user-settings/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-features-wallet" />
+            <label for="file-features-wallet"
+              >/docs/features/WALLET.MD → /client-angular/src/app/features/wallet/</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Shared Components</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-component-library" />
+            <label for="file-component-library"
+              >/docs/COMPONENT_LIBRARY.MD → Multiple component folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-emerald-components" />
+            <label for="file-emerald-components"
+              >/docs/EMERALD_COMPONENTS.MD → /client-angular/src/app/shared/components/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-ui-components-technical" />
+            <label for="file-ui-components-technical"
+              >/docs/UI_COMPONENTS_TECHNICAL.MD → /client-angular/src/app/shared/components/</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Core Services</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-authentication-flow" />
+            <label for="file-authentication-flow"
+              >/docs/AUTHENTICATION_FLOW.MD →
+              /client-angular/src/app/core/services/auth.service.ts</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-end-to-end-encryption" />
+            <label for="file-end-to-end-encryption"
+              >/docs/END_TO_END_ENCRYPTION.MD →
+              /client-angular/src/app/core/services/encryption.service.ts</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-errorhandlingtelemetry" />
+            <label for="file-errorhandlingtelemetry"
+              >/docs/ERRORHANDLINGTELEMETRY.MD →
+              /client-angular/src/app/core/services/telemetry.service.ts</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-user-preferences" />
+            <label for="file-user-preferences"
+              >/docs/USER_PREFERENCES.MD →
+              /client-angular/src/app/core/services/user-preferences.service.ts</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Server Modules</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-server-api-documentation" />
+            <label for="file-server-api-documentation">/docs/API_DOCUMENTATION.MD → /server/</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-server-travel-module" />
+            <label for="file-server-travel-module"
+              >/server/docs/travel-module.md → /server/components/travel/</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-server-database-schema" />
+            <label for="file-server-database-schema"
+              >/docs/DATABASE_SCHEMA_DETAIL.MD → /server/models/</label
+            >
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>General Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-architecture" />
+            <label for="file-architecture">/docs/ARCHITECTURE.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-security-best-practices" />
+            <label for="file-security-best-practices">/docs/SECURITY_BEST_PRACTICES.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-testing-guide" />
+            <label for="file-testing-guide">/docs/TESTING_GUIDE.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-deployment" />
+            <label for="file-deployment">/docs/DEPLOYMENT.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-ci-cd-guide" />
+            <label for="file-ci-cd-guide">/docs/CI_CD_GUIDE.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-styling-guide" />
+            <label for="file-styling-guide">/docs/STYLING_GUIDE.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-theming-guide" />
+            <label for="file-theming-guide">/docs/THEMING_GUIDE.MD → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-design-system-usage-guide" />
+            <label for="file-design-system-usage-guide"
+              >/docs/DESIGN_SYSTEM_USAGE_GUIDE.MD → /</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-performance-optimization" />
+            <label for="file-performance-optimization">/docs/PERFORMANCE_OPTIMIZATION.md → /</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="file-accessibility-checklist" />
+            <label for="file-accessibility-checklist">/docs/ACCESSIBILITY_CHECKLIST.md → /</label>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Update progress bar based on checked items
+      function updateProgress() {
+        const totalItems = document.querySelectorAll(
+          '.checklist-item input[type="checkbox"]'
+        ).length;
+        const checkedItems = document.querySelectorAll(
+          '.checklist-item input[type="checkbox"]:checked'
+        ).length;
+        const progressPercent = Math.round((checkedItems / totalItems) * 100);
+
+        const progressBar = document.querySelector('.progress');
+        progressBar.style.width = progressPercent + '%';
+        progressBar.textContent = progressPercent + '%';
+      }
+
+      // Add event listeners to checkboxes
+      const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateProgress);
+      });
+
+      // Initial progress update
+      updateProgress();
+    </script>
+  </body>
+</html>

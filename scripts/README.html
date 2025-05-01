@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Migration Scripts - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .script-section {
+        margin-bottom: 2rem;
+      }
+      .code-block {
+        background-color: #f6f8fa;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+      }
+      .file-path {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Migration Scripts</h1>
+
+      <p>
+        This directory contains scripts for migrating Markdown documentation to HTML as part of the
+        documentation decentralization project.
+      </p>
+
+      <div class="script-section">
+        <h2>Scripts Overview</h2>
+
+        <ul>
+          <li><span class="file-path">manual_doc_migration.js</span> - General migration helper</li>
+          <li>
+            <span class="file-path">markdown_to_html_converter.js</span> - Converts Markdown to HTML
+          </li>
+          <li>
+            <span class="file-path">create_folder_docs.js</span> - Creates folder documentation
+            structure
+          </li>
+          <li>
+            <span class="file-path">update_migration_checklist.js</span> - Updates migration
+            checklist
+          </li>
+          <li>
+            <span class="file-path">tooltip_helper.js</span> - Adds tooltips and links to function
+            references
+          </li>
+        </ul>
+      </div>
+
+      <div class="script-section">
+        <h2>Usage</h2>
+
+        <p>
+          The recommended way to use these scripts is through the
+          <span class="file-path">migrate-docs.sh</span>
+          shell script in the root directory. This script provides a convenient interface to the
+          migration tools.
+        </p>
+
+        <h3>Creating Folder Documentation</h3>
+        <div class="code-block">
+          <pre>./migrate-docs.sh create-folder-docs &lt;folder-path&gt;</pre>
+        </div>
+
+        <h3>Converting Markdown to HTML</h3>
+        <div class="code-block">
+          <pre>
+./migrate-docs.sh convert-md-to-html &lt;markdown-file&gt; &lt;output-html-file&gt;</pre
+          >
+        </div>
+
+        <h3>Updating the Migration Checklist</h3>
+        <div class="code-block">
+          <pre>
+./migrate-docs.sh update-checklist &lt;markdown-file&gt; &lt;html-file&gt; &lt;status&gt;</pre
+          >
+        </div>
+
+        <h3>Auditing Documentation</h3>
+        <div class="code-block">
+          <pre>./migrate-docs.sh audit-docs</pre>
+        </div>
+      </div>
+
+      <div class="script-section">
+        <h2>Direct Script Usage</h2>
+
+        <p>If you need to use the scripts directly, you can do so as follows:</p>
+
+        <h3>manual_doc_migration.js</h3>
+        <div class="code-block">
+          <pre>
+node manual_doc_migration.js --create-folder-docs &lt;folder-path&gt;
+node manual_doc_migration.js --convert-md-to-html &lt;markdown-file&gt; &lt;output-html-file&gt;
+node manual_doc_migration.js --update-index</pre
+          >
+        </div>
+
+        <h3>markdown_to_html_converter.js</h3>
+        <div class="code-block">
+          <pre>
+node markdown_to_html_converter.js &lt;markdown-file&gt; &lt;output-html-file&gt; [--add-tooltips]</pre
+          >
+        </div>
+
+        <h3>create_folder_docs.js</h3>
+        <div class="code-block">
+          <pre>node create_folder_docs.js &lt;folder-path&gt;</pre>
+        </div>
+
+        <h3>update_migration_checklist.js</h3>
+        <div class="code-block">
+          <pre>
+node update_migration_checklist.js &lt;markdown-file&gt; &lt;html-file&gt; &lt;status&gt;</pre
+          >
+        </div>
+      </div>
+
+      <div class="script-section">
+        <h2>Templates</h2>
+
+        <p>
+          The <span class="file-path">templates</span> directory contains HTML templates used by the
+          migration scripts:
+        </p>
+
+        <ul>
+          <li>
+            <span class="file-path">doc_template.html</span> - Template for HTML documentation files
+          </li>
+        </ul>
+      </div>
+
+      <div class="script-section">
+        <h2>Dependencies</h2>
+
+        <p>These scripts require the following dependencies:</p>
+
+        <ul>
+          <li><span class="file-path">marked</span> - For converting Markdown to HTML</li>
+        </ul>
+
+        <p>You can install the dependencies with:</p>
+
+        <div class="code-block">
+          <pre>npm install marked</pre>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

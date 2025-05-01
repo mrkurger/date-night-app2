@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual Migration Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .step {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .command {
+        background-color: var(--background-alt);
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+      .note {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+      .tip {
+        background-color: #d1ecf1;
+        border-left: 4px solid #17a2b8;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Manual Migration Guide for Documentation Decentralization</h1>
+
+      <p>
+        This guide provides step-by-step instructions for manually migrating Markdown documentation
+        to the new decentralized HTML-based documentation system.
+      </p>
+
+      <div class="step">
+        <h2>Step 1: Create Documentation Structure</h2>
+        <p>
+          First, create the basic documentation structure for each code folder. This will create
+          stub HTML files for CHANGELOG.html, AILESSONS.html, and GLOSSARY.html.
+        </p>
+
+        <div class="command">node scripts/create_doc_structure.js</div>
+
+        <p>To create documentation for a specific folder:</p>
+
+        <div class="command">node scripts/create_doc_structure.js --folder path/to/folder</div>
+
+        <div class="note">
+          <strong>Note:</strong> This script will not overwrite existing files, so it's safe to run
+          multiple times.
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Step 2: Identify Markdown Files to Migrate</h2>
+        <p>
+          Identify the Markdown files that need to be migrated to each code folder. Use the
+          docs-migration-checklist.html file to track your progress.
+        </p>
+
+        <p>
+          For Angular features, map files from <code>/docs/features/</code> to their corresponding
+          feature folders:
+        </p>
+        <ul>
+          <li>
+            <code>/docs/features/CHAT.MD</code> →
+            <code>/client-angular/src/app/features/chat/</code>
+          </li>
+          <li>
+            <code>/docs/features/AUTH.MD</code> →
+            <code>/client-angular/src/app/features/auth/</code>
+          </li>
+          <li>etc.</li>
+        </ul>
+
+        <p>
+          For shared components, map files from <code>/docs/COMPONENT_LIBRARY.MD</code> to their
+          component folders:
+        </p>
+        <ul>
+          <li>
+            Component sections →
+            <code>/client-angular/src/app/shared/components/[component-name]/</code>
+          </li>
+        </ul>
+
+        <p>For core services, map service-related documentation to service folders:</p>
+        <ul>
+          <li>Service sections → <code>/client-angular/src/app/core/services/</code></li>
+        </ul>
+
+        <p>
+          For server modules, map files from <code>/docs</code> and <code>/server/docs</code> to
+          server module folders:
+        </p>
+        <ul>
+          <li>Server module sections → <code>/server/components/[module-name]/</code></li>
+          <li>Controller sections → <code>/server/controllers/</code></li>
+          <li>Model sections → <code>/server/models/</code></li>
+          <li>etc.</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <h2>Step 3: Convert Markdown to HTML</h2>
+        <p>Use the markdown_to_html_helper.js script to convert Markdown files to HTML:</p>
+
+        <div class="command">
+          node scripts/markdown_to_html_helper.js --input /docs/features/CHAT.MD --output
+          /client-angular/src/app/features/chat/chat.html --template GENERIC.html.template
+        </div>
+
+        <p>Available templates:</p>
+        <ul>
+          <li><code>GENERIC.html.template</code> - For general documentation</li>
+          <li><code>CHANGELOG.html.template</code> - For changelog files</li>
+          <li><code>AILESSONS.html.template</code> - For AI lessons files</li>
+          <li><code>GLOSSARY.html.template</code> - For glossary files</li>
+        </ul>
+
+        <div class="tip">
+          <strong>Tip:</strong> For large Markdown files, consider splitting them into multiple HTML
+          files, each focused on a specific aspect of the component/module.
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Step 4: Update Internal Links</h2>
+        <p>
+          After converting Markdown to HTML, update all internal links to point to the new
+          locations. Replace links like:
+        </p>
+
+        <ul>
+          <li>
+            <code>/docs/features/CHAT.MD</code> →
+            <code>/client-angular/src/app/features/chat/chat.html</code>
+          </li>
+          <li>
+            <code>/docs/COMPONENT_LIBRARY.MD</code> →
+            <code>/client-angular/src/app/shared/components/[component-name]/index.html</code>
+          </li>
+        </ul>
+
+        <p>Also, update links to point to the new HTML files:</p>
+
+        <ul>
+          <li><code>CHANGELOG.MD</code> → <code>CHANGELOG.html</code></li>
+          <li><code>AILESSONS.MD</code> → <code>AILESSONS.html</code></li>
+          <li><code>GLOSSARY.MD</code> → <code>GLOSSARY.html</code></li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <h2>Step 5: Add Tooltips for Function/Method References</h2>
+        <p>
+          Use the implement_tooltips.js script to add tooltips to function and method references in
+          the HTML files:
+        </p>
+
+        <div class="command">
+          node scripts/implement_tooltips.js /client-angular/src/app/features/chat/chat.html
+          /client-angular/src/app/features/chat/GLOSSARY.html
+        </div>
+
+        <div class="note">
+          <strong>Note:</strong> This script requires that the GLOSSARY.html file has been populated
+          with function/method entries.
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Step 6: Update the Global Documentation Index</h2>
+        <p>
+          After migrating documentation for a component/module, update the global documentation
+          index (_docs_index.html) to include links to the new documentation:
+        </p>
+
+        <ol>
+          <li>Open <code>_docs_index.html</code> in the repository root</li>
+          <li>Find the appropriate section (Features, Components, Services, etc.)</li>
+          <li>Add or update the entry for the component/module</li>
+          <li>Include links to CHANGELOG.html, AILESSONS.html, and GLOSSARY.html</li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <h2>Step 7: Test the Documentation</h2>
+        <p>After migrating documentation, test it to ensure everything works correctly:</p>
+
+        <ol>
+          <li>Verify that all links work correctly</li>
+          <li>Check that tooltips appear on function/method references</li>
+          <li>Ensure that the documentation is accessible via the global index</li>
+          <li>Test navigation between related documentation files</li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <h2>Step 8: Update the Migration Checklist</h2>
+        <p>
+          After completing the migration for a component/module, update the
+          docs-migration-checklist.html file to track your progress:
+        </p>
+
+        <ol>
+          <li>Open <code>docs-migration-checklist.html</code> in the repository root</li>
+          <li>Check off the completed tasks</li>
+          <li>Add any notes or issues encountered during migration</li>
+        </ol>
+      </div>
+
+      <h2>Example Migration Workflow</h2>
+
+      <p>Here's an example workflow for migrating the Chat feature documentation:</p>
+
+      <ol>
+        <li>
+          Create documentation structure for the chat feature:
+          <div class="command">
+            node scripts/create_doc_structure.js --folder /client-angular/src/app/features/chat
+          </div>
+        </li>
+        <li>
+          Convert the Markdown documentation to HTML:
+          <div class="command">
+            node scripts/markdown_to_html_helper.js --input /docs/features/CHAT.MD --output
+            /client-angular/src/app/features/chat/chat.html --template GENERIC.html.template
+          </div>
+        </li>
+        <li>Update internal links in the HTML file</li>
+        <li>
+          Add tooltips for function/method references:
+          <div class="command">
+            node scripts/implement_tooltips.js /client-angular/src/app/features/chat/chat.html
+            /client-angular/src/app/features/chat/GLOSSARY.html
+          </div>
+        </li>
+        <li>Update the global documentation index</li>
+        <li>Test the documentation</li>
+        <li>Update the migration checklist</li>
+      </ol>
+
+      <h2>Troubleshooting</h2>
+
+      <h3>Missing Templates</h3>
+      <p>
+        If you encounter errors about missing templates, ensure that the templates exist in the
+        <code>scripts/templates</code> directory.
+      </p>
+
+      <h3>Broken Links</h3>
+      <p>
+        If you find broken links after migration, check that the target files exist and that the
+        paths are correct.
+      </p>
+
+      <h3>Tooltip Issues</h3>
+      <p>
+        If tooltips don't appear, ensure that the GLOSSARY.html file has been populated with
+        function/method entries and that the implement_tooltips.js script has been run.
+      </p>
+
+      <h3>HTML Rendering Issues</h3>
+      <p>
+        If the HTML doesn't render correctly, check for syntax errors in the HTML file and ensure
+        that all tags are properly closed.
+      </p>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Migration Plan - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .migration-section {
+        margin-bottom: 2rem;
+      }
+      .migration-step {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+      }
+      .checklist-item {
+        margin-bottom: 0.5rem;
+      }
+      .checklist-item input[type='checkbox'] {
+        margin-right: 0.5rem;
+      }
+      .progress-bar {
+        width: 100%;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .progress {
+        height: 20px;
+        background-color: #4caf50;
+        border-radius: 4px;
+        text-align: center;
+        color: white;
+        line-height: 20px;
+      }
+      .file-mapping {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+      }
+      .file-mapping th,
+      .file-mapping td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .file-mapping th {
+        background-color: #f2f2f2;
+      }
+      .file-mapping tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Migration Plan</h1>
+
+      <p>
+        This document outlines the plan for migrating Markdown documentation from the
+        <code>/docs</code> directory to a decentralized HTML-based documentation system, co-located
+        with the components it describes.
+      </p>
+
+      <div class="progress-bar">
+        <div class="progress" style="width: 0%">0%</div>
+      </div>
+
+      <div class="migration-section">
+        <h2>1. Preparation</h2>
+
+        <div class="migration-step">
+          <h3>1.1 Create Migration Tools</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-1" checked />
+            <label for="task-1-1-1">Create HTML documentation template</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-2" checked />
+            <label for="task-1-1-2">Create manual migration helper script</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-1-3" />
+            <label for="task-1-1-3">Create tooltip and linking functionality</label>
+          </div>
+        </div>
+
+        <div class="migration-step">
+          <h3>1.2 Audit Existing Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-1" />
+            <label for="task-1-2-1"
+              >Create inventory of all files in <code>/docs</code> directory</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-2" />
+            <label for="task-1-2-2"
+              >Map documentation files to their corresponding code folders</label
+            >
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-1-2-3" />
+            <label for="task-1-2-3">Identify documentation gaps and redundancies</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="migration-section">
+        <h2>2. Migration Process</h2>
+
+        <div class="migration-step">
+          <h3>2.1 Create Folder Structure</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-1" />
+            <label for="task-2-1-1">Create documentation files for Angular features</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-2" />
+            <label for="task-2-1-2">Create documentation files for shared components</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-3" />
+            <label for="task-2-1-3">Create documentation files for core services</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-1-4" />
+            <label for="task-2-1-4">Create documentation files for server modules</label>
+          </div>
+        </div>
+
+        <div class="migration-step">
+          <h3>2.2 Migrate Content</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-1" />
+            <label for="task-2-2-1">Migrate feature-specific documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-2" />
+            <label for="task-2-2-2">Migrate component documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-3" />
+            <label for="task-2-2-3">Migrate service documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-4" />
+            <label for="task-2-2-4">Migrate server module documentation</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-2-5" />
+            <label for="task-2-2-5">Migrate general documentation</label>
+          </div>
+        </div>
+
+        <div class="migration-step">
+          <h3>2.3 Implement Tooltips and Links</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-1" />
+            <label for="task-2-3-1">Add tooltips for functions and methods</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-2" />
+            <label for="task-2-3-2">Add links to glossary entries</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-2-3-3" />
+            <label for="task-2-3-3">Update cross-references between documents</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="migration-section">
+        <h2>3. Verification and Cleanup</h2>
+
+        <div class="migration-step">
+          <h3>3.1 Verify Documentation</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-1" />
+            <label for="task-3-1-1">Verify all content has been migrated</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-2" />
+            <label for="task-3-1-2">Check links and references</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-1-3" />
+            <label for="task-3-1-3">Test tooltips and navigation</label>
+          </div>
+        </div>
+
+        <div class="migration-step">
+          <h3>3.2 Update Central Index</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-1" />
+            <label for="task-3-2-1">Update <code>_docs_index.html</code></label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-2-2" />
+            <label for="task-3-2-2">Update <code>_glossary.html</code></label>
+          </div>
+        </div>
+
+        <div class="migration-step">
+          <h3>3.3 Cleanup</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-1" />
+            <label for="task-3-3-1">Archive Markdown files</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="task-3-3-2" />
+            <label for="task-3-3-2">Update documentation references in code</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="migration-section">
+        <h2>4. Documentation File Mapping</h2>
+
+        <p>This section will be populated as we map Markdown files to their HTML destinations.</p>
+
+        <table class="file-mapping">
+          <thead>
+            <tr>
+              <th>Markdown File</th>
+              <th>HTML Destination</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>docs/ACCESSIBILITY_CHECKLIST.md</code></td>
+              <td><code>docs-html/general/accessibility-checklist.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/AILESSONS.MD</code></td>
+              <td><code>docs-html/general/ailessons.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ANGULAR_BUILD_OPTIMIZATION.MD</code></td>
+              <td><code>docs-html/general/angular-build-optimization.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ANGULAR_BUILD_WARNINGS.md</code></td>
+              <td><code>docs-html/general/angular-build-warnings.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ANGULAR_TESTING_LESSONS.MD</code></td>
+              <td><code>docs-html/general/angular-testing-lessons.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/API_DOCUMENTATION.MD</code></td>
+              <td><code>docs-html/general/api-documentation.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ARCHITECTURE.MD</code></td>
+              <td><code>docs-html/general/architecture.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/AUTHENTICATION_FLOW.MD</code></td>
+              <td><code>docs-html/general/authentication-flow.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/BEM_NAMING_CONVENTION.MD</code></td>
+              <td><code>docs-html/general/bem-naming-convention.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CHANGELOG.MD</code></td>
+              <td><code>docs-html/general/changelog.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CI_CD_GUIDE.MD</code></td>
+              <td><code>docs-html/general/ci-cd-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CODEBASE_ANALYSIS.MD</code></td>
+              <td><code>docs-html/general/codebase-analysis.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CODE_FORMATTING.MD</code></td>
+              <td><code>docs-html/general/code-formatting.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/COMPLETION_PLAN_2024.MD</code></td>
+              <td><code>docs-html/general/completion-plan-2024.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/COMPONENT_DOCUMENTATION_TEMPLATE.MD</code></td>
+              <td><code>docs-html/general/component-documentation-template.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/COMPONENT_LIBRARY.MD</code></td>
+              <td><code>docs-html/general/component-library.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CONFIG_INDEX.MD</code></td>
+              <td><code>docs-html/general/config-index.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CSP_CONFIGURATION.MD</code></td>
+              <td><code>docs-html/general/csp-configuration.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/CUSTOMIZATION_GUIDE.MD</code></td>
+              <td><code>docs-html/general/customization-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DATABASE_SCHEMA_DETAIL.MD</code></td>
+              <td><code>docs-html/general/database-schema-detail.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DATA_PROTECTION.MD</code></td>
+              <td><code>docs-html/general/data-protection.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DECENTRALIZED_DOCUMENTATION_GUIDE.MD</code></td>
+              <td><code>docs-html/general/decentralized-documentation-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DECENTRALIZED_DOCUMENTATION_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/decentralized-documentation-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DEPENDENCY_MANAGEMENT.MD</code></td>
+              <td><code>docs-html/general/dependency-management.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DEPLOYMENT.MD</code></td>
+              <td><code>docs-html/general/deployment.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DEPRECATED.MD</code></td>
+              <td><code>docs-html/general/deprecated.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DESIGN_SYSTEM_IMPLEMENTATION_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/design-system-implementation-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DESIGN_SYSTEM_USAGE_GUIDE.MD</code></td>
+              <td><code>docs-html/general/design-system-usage-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DESIGN_TOKENS_DOCUMENTATION.MD</code></td>
+              <td><code>docs-html/general/design-tokens-documentation.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCS_IMPROVEMENT_PLAN.MD</code></td>
+              <td><code>docs-html/general/docs-improvement-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_AUDIT.md</code></td>
+              <td><code>docs-html/general/documentation-audit.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_DECENTRALIZATION_GUIDE.md</code></td>
+              <td><code>docs-html/general/documentation-decentralization-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_DECENTRALIZATION_ROADMAP.md</code></td>
+              <td><code>docs-html/general/documentation-decentralization-roadmap.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_DECENTRALIZATION_SUMMARY.md</code></td>
+              <td><code>docs-html/general/documentation-decentralization-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD</code></td>
+              <td><code>docs-html/general/documentation-improvement-action-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.MD</code></td>
+              <td><code>docs-html/general/documentation-improvement-checklist.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_IMPROVEMENT_REVIEW.MD</code></td>
+              <td><code>docs-html/general/documentation-improvement-review.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_IMPROVEMENT_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/documentation-improvement-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_INDEX.MD</code></td>
+              <td><code>docs-html/general/documentation-index.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_LINK_CHECK_REPORT.MD</code></td>
+              <td><code>docs-html/general/documentation-link-check-report.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_RESTRUCTURING_PLAN.MD</code></td>
+              <td><code>docs-html/general/documentation-restructuring-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_RESTRUCTURING_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/documentation-restructuring-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_STATUS_REPORT.MD</code></td>
+              <td><code>docs-html/general/documentation-status-report.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DOCUMENTATION_STYLE_GUIDE.MD</code></td>
+              <td><code>docs-html/general/documentation-style-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/DUPLICATES.MD</code></td>
+              <td><code>docs-html/general/duplicates.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/EMERALD_COMPONENTS.MD</code></td>
+              <td><code>docs-html/general/emerald-components.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/EMERALD_COMPONENTS_CHANGELOG.MD</code></td>
+              <td><code>docs-html/general/emerald-components-changelog.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/EMERALD_IMPLEMENTATION_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/emerald-implementation-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/EMERALD_UI_INTEGRATION_GUIDE.MD</code></td>
+              <td><code>docs-html/general/emerald-ui-integration-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/END_TO_END_ENCRYPTION.MD</code></td>
+              <td><code>docs-html/general/end-to-end-encryption.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ERRORHANDLINGTELEMETRY.MD</code></td>
+              <td><code>docs-html/general/errorhandlingtelemetry.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/FEATURE_DOCUMENTATION_TEMPLATE.MD</code></td>
+              <td><code>docs-html/general/feature-documentation-template.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/FIXES.MD</code></td>
+              <td><code>docs-html/general/fixes.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/FIXES_SUMMARY.md</code></td>
+              <td><code>docs-html/general/fixes-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/IMPLEMENTATION_PLAN.MD</code></td>
+              <td><code>docs-html/general/implementation-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/IMPLEMENTATION_STATUS.MD</code></td>
+              <td><code>docs-html/general/implementation-status.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/IMPLEMENTATION_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/implementation-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/LOCATION_DATA.MD</code></td>
+              <td><code>docs-html/general/location-data.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/LintingIssues.md</code></td>
+              <td><code>docs-html/general/lintingissues.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/MIGRATION.MD</code></td>
+              <td><code>docs-html/general/migration.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/MIGRATION_COMPLETION_PLAN.MD</code></td>
+              <td><code>docs-html/general/migration-completion-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/MONGODB_TROUBLESHOOTING.MD</code></td>
+              <td><code>docs-html/general/mongodb-troubleshooting.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/NODEJS-INSTALLATION-GUIDE.MD</code></td>
+              <td><code>docs-html/general/nodejs-installation-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/PERFORMANCE_OPTIMIZATION.md</code></td>
+              <td><code>docs-html/general/performance-optimization.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/REPORTS_MIGRATION_GUIDE.MD</code></td>
+              <td><code>docs-html/general/reports-migration-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/REQUIREMENTS.MD</code></td>
+              <td><code>docs-html/general/requirements.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/REVIEW_COMPONENTS.MD</code></td>
+              <td><code>docs-html/general/review-components.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SCRIPT_IMPROVEMENTS.MD</code></td>
+              <td><code>docs-html/general/script-improvements.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SECURITY_ALERTS_WORKFLOW.MD</code></td>
+              <td><code>docs-html/general/security-alerts-workflow.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SECURITY_BEST_PRACTICES.MD</code></td>
+              <td><code>docs-html/general/security-best-practices.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SECURITY_FIXES_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/security-fixes-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SETUP.MD</code></td>
+              <td><code>docs-html/general/setup.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SNYK_TOKEN_SETUP.MD</code></td>
+              <td><code>docs-html/general/snyk-token-setup.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SNYK_WORKFLOW_IMPROVEMENTS.MD</code></td>
+              <td><code>docs-html/general/snyk-workflow-improvements.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></td>
+              <td><code>docs-html/general/specific-version-installation-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/STYLING_GUIDE.MD</code></td>
+              <td><code>docs-html/general/styling-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/TASK_LIST.MD</code></td>
+              <td><code>docs-html/general/task-list.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/TESTING_GUIDE.MD</code></td>
+              <td><code>docs-html/general/testing-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/TEST_IMPROVEMENT_PLAN.md</code></td>
+              <td><code>docs-html/general/test-improvement-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/THEME_SYSTEM.MD</code></td>
+              <td><code>docs-html/general/theme-system.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/THEME_TOGGLE_IMPLEMENTATION.MD</code></td>
+              <td><code>docs-html/general/theme-toggle-implementation.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/THEMING_GUIDE.MD</code></td>
+              <td><code>docs-html/general/theming-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/TYPESCRIPT_ERROR_FIXING.md</code></td>
+              <td><code>docs-html/general/typescript-error-fixing.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_COMPONENTS_TECHNICAL.MD</code></td>
+              <td><code>docs-html/general/ui-components-technical.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_DOCUMENTATION.MD</code></td>
+              <td><code>docs-html/general/ui-ux-documentation.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_DOCUMENTATION_CLEANUP.MD</code></td>
+              <td><code>docs-html/general/ui-ux-documentation-cleanup.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_IMPLEMENTATION.MD</code></td>
+              <td><code>docs-html/general/ui-ux-implementation.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_IMPLEMENTATION_PLAN.MD</code></td>
+              <td><code>docs-html/general/ui-ux-implementation-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_IMPLEMENTATION_STATUS.MD</code></td>
+              <td><code>docs-html/general/ui-ux-implementation-status.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UI_UX_IMPROVEMENT_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/ui-ux-improvement-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/UNITTESTINGLESSONS.MD</code></td>
+              <td><code>docs-html/general/unittestinglessons.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/USER_PREFERENCES.MD</code></td>
+              <td><code>docs-html/general/user-preferences.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/USER_PREFERENCES_IMPLEMENTATION_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/user-preferences-implementation-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/WORKFLOW_ERROR_MONITORING.MD</code></td>
+              <td><code>docs-html/general/workflow-error-monitoring.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/WORKFLOW_FIXES.MD</code></td>
+              <td><code>docs-html/general/workflow-fixes.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/WORKFLOW_LOGS_CHANGES.MD</code></td>
+              <td><code>docs-html/general/workflow-logs-changes.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/analysis/CHATANALYSIS.MD</code></td>
+              <td><code>docs-html/general/chatanalysis.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/analysis/STYLINGCODEREVIEW.MD</code></td>
+              <td><code>docs-html/general/stylingcodereview.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/analysis/TB9PROJECTAUDIT.MD</code></td>
+              <td><code>docs-html/general/tb9projectaudit.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/analysis/UIUX.MD</code></td>
+              <td><code>docs-html/general/uiux.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/design_system/FORM_COMPONENTS.MD</code></td>
+              <td><code>docs-html/general/form-components.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/design_system/FORM_COMPONENTS_USAGE.MD</code></td>
+              <td><code>docs-html/general/form-components-usage.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/design_system/FORM_LAYOUT_PATTERNS.MD</code></td>
+              <td><code>docs-html/general/form-layout-patterns.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/design_system/FORM_VALIDATION_PATTERNS.MD</code></td>
+              <td><code>docs-html/general/form-validation-patterns.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/design_system/README.md</code></td>
+              <td><code>docs-html/general/readme.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/AD-BROWSER.MD</code></td>
+              <td><code>client-angular/src/app/features/ad-browser/ad-browser.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/AD-DETAILS.MD</code></td>
+              <td><code>client-angular/src/app/features/ad-details/ad-details.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/AD-MANAGEMENT.MD</code></td>
+              <td><code>client-angular/src/app/features/ad-management/ad-management.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/ADMIN.MD</code></td>
+              <td><code>client-angular/src/app/features/admin/admin.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/ADS.MD</code></td>
+              <td><code>client-angular/src/app/features/ads/ads.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/ADVERTISER-PROFILE.MD</code></td>
+              <td><code>client-angular/src/app/features/advertiser-profile/advertiser-profile.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/AUTH.MD</code></td>
+              <td><code>client-angular/src/app/features/auth/auth.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/BROWSE.MD</code></td>
+              <td><code>client-angular/src/app/features/browse/browse.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/CHAT.MD</code></td>
+              <td><code>client-angular/src/app/features/chat/chat.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/DESIGN-SYSTEM-DEMO.MD</code></td>
+              <td><code>client-angular/src/app/features/design-system-demo/design-system-demo.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/FAVORITES.MD</code></td>
+              <td><code>client-angular/src/app/features/favorites/favorites.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/FEATURE-NAME.md</code></td>
+              <td><code>docs-html/features/feature-name.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/GALLERY.MD</code></td>
+              <td><code>client-angular/src/app/features/gallery/gallery.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/LIST-VIEW.MD</code></td>
+              <td><code>client-angular/src/app/features/list-view/list-view.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/LOCATION-MATCHING.MD</code></td>
+              <td><code>client-angular/src/app/features/location-matching/location-matching.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/NETFLIX-VIEW.MD</code></td>
+              <td><code>client-angular/src/app/features/netflix-view/netflix-view.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/PAYMENT.MD</code></td>
+              <td><code>client-angular/src/app/features/payment/payment.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/PREFERENCES-DEMO.MD</code></td>
+              <td><code>client-angular/src/app/features/preferences-demo/preferences-demo.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/PROFILE.MD</code></td>
+              <td><code>client-angular/src/app/features/profile/profile.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/REVIEWS.MD</code></td>
+              <td><code>client-angular/src/app/features/reviews/reviews.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TELEMETRY.MD</code></td>
+              <td><code>client-angular/src/app/features/telemetry/telemetry.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TEMPORARY_MESSAGES.MD</code></td>
+              <td><code>docs-html/features/temporary-messages.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TINDER-CARD.MD</code></td>
+              <td><code>client-angular/src/app/features/tinder-card/tinder-card.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TINDER.MD</code></td>
+              <td><code>client-angular/src/app/features/tinder/tinder.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TOURING.MD</code></td>
+              <td><code>client-angular/src/app/features/touring/touring.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/TRAVEL-ITINERARY.MD</code></td>
+              <td><code>docs-html/features/travel-itinerary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/USER-SETTINGS.MD</code></td>
+              <td><code>client-angular/src/app/features/user-settings/user-settings.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/USERS.MD</code></td>
+              <td><code>docs-html/features/users.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/USER_PREFS.MD</code></td>
+              <td><code>docs-html/features/user-prefs.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/features/WALLET.MD</code></td>
+              <td><code>client-angular/src/app/features/wallet/wallet.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/images/API_ENDPOINTS.MD</code></td>
+              <td><code>docs-html/general/api-endpoints.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/images/ARCHITECTURE.MD</code></td>
+              <td><code>docs-html/general/architecture.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/images/COMPONENT_HIERARCHY.MD</code></td>
+              <td><code>docs-html/general/component-hierarchy.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/images/DATABASE_SCHEMA.MD</code></td>
+              <td><code>docs-html/general/database-schema.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/images/DATA_FLOW.MD</code></td>
+              <td><code>docs-html/general/data-flow.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/AILESSONS-SECURITY-FIXES.MD</code></td>
+              <td><code>docs-html/general/ailessons-security-fixes.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/CHANGELOG_REPORTS_MIGRATION.MD</code></td>
+              <td><code>docs-html/general/changelog-reports-migration.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/DEPENDENCY_UPDATE_SUMMARY.MD</code></td>
+              <td><code>docs-html/general/dependency-update-summary.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/DOCUMENTATION-IMPROVEMENTS.MD</code></td>
+              <td><code>docs-html/general/documentation-improvements.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/EXAMPLE_UNITSTRAT.MD</code></td>
+              <td><code>docs-html/general/example-unitstrat.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/HTTP_ERROR_HANDLING.MD</code></td>
+              <td><code>docs-html/general/http-error-handling.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/README.md</code></td>
+              <td><code>docs-html/general/readme.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/outdated/UNITTESTLESSONS.MD</code></td>
+              <td><code>docs-html/general/unittestlessons.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/plans/CYPRESS_GITHUB_WORKFLOWS.MD</code></td>
+              <td><code>docs-html/general/cypress-github-workflows.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/plans/CYPRESS_TESTING.MD</code></td>
+              <td><code>docs-html/general/cypress-testing.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/plans/CYPRESS_UI_SCREENSHOTS.MD</code></td>
+              <td><code>docs-html/general/cypress-ui-screenshots.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/temp_docs/DOCS_TMP.MD</code></td>
+              <td><code>docs-html/general/docs-tmp.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/temp_docs/WFLOW_TMP.MD</code></td>
+              <td><code>docs-html/general/wflow-tmp.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/temp_docs/WFLOW_TMP1.MD</code></td>
+              <td><code>docs-html/general/wflow-tmp1.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/temp_docs/WFLOW_TMP2.MD</code></td>
+              <td><code>docs-html/general/wflow-tmp2.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/IMPLEMENTATION_GUIDE.md</code></td>
+              <td><code>docs-html/general/implementation-guide.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/IMPLEMENTATION_STATUS.md</code></td>
+              <td><code>docs-html/general/implementation-status.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/README.md</code></td>
+              <td><code>docs-html/general/readme.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/UI_CHECKLIST.md</code></td>
+              <td><code>docs-html/general/ui-checklist.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/components/FAVORITES_PAGE_COMPONENT.MD</code></td>
+              <td><code>docs-html/components/favorites-page-component.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/guidelines/ACCESSIBILITY_GUIDELINES.MD</code></td>
+              <td><code>docs-html/general/accessibility-guidelines.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/guidelines/RESPONSIVE_DESIGN_GUIDELINES.MD</code></td>
+              <td><code>docs-html/general/responsive-design-guidelines.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/guidelines/UI_UX_GUIDELINES.MD</code></td>
+              <td><code>docs-html/general/ui-ux-guidelines.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/implementation/UI_UX_IMPLEMENTATION_PLAN.MD</code></td>
+              <td><code>docs-html/general/ui-ux-implementation-plan.html</code></td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td><code>docs/ui-docs/implementation/UI_UX_IMPLEMENTATION_STATUS.MD</code></td>
+              <td><code>docs-html/general/ui-ux-implementation-status.html</code></td>
+              <td>Pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
