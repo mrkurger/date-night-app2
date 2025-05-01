@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glossary: Emerald - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Emerald</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+          </ul>
+        </aside>
+
+        <article class="content">
+          <h1>Glossary: Emerald</h1>
+
+          <p>
+            This glossary contains definitions for components, functions, and concepts related to
+            the Emerald module.
+          </p>
+
+          <h2>Components</h2>
+
+          <dl>
+            <dt id="AppCardComponent">AppCardComponent</dt>
+            <dd>
+              <p>
+                A card component for displaying ads in various layouts. It supports different
+                display modes, image galleries, and interactive actions.
+              </p>
+              <p><strong>Selector:</strong> emerald-app-card</p>
+              <p><strong>Inputs:</strong> ad, layout, showActions, showDescription, isOnline</p>
+              <p><strong>Outputs:</strong> viewDetails, like, chat, share, swiped</p>
+            </dd>
+
+            <dt id="AvatarComponent">AvatarComponent</dt>
+            <dd>
+              <p>A component for displaying user avatars with optional online status indicator.</p>
+              <p><strong>Selector:</strong> emerald-avatar</p>
+              <p><strong>Inputs:</strong> src, alt, size, isOnline, showStatus</p>
+            </dd>
+
+            <dt id="CarouselComponent">CarouselComponent</dt>
+            <dd>
+              <p>A component for displaying image galleries with navigation controls.</p>
+              <p><strong>Selector:</strong> emerald-carousel</p>
+              <p>
+                <strong>Inputs:</strong> images, autoPlay, interval, showIndicators, showControls
+              </p>
+              <p><strong>Outputs:</strong> slideChange</p>
+            </dd>
+
+            <dt id="InfoPanelComponent">InfoPanelComponent</dt>
+            <dd>
+              <p>A component for displaying structured information in a panel format.</p>
+              <p><strong>Selector:</strong> emerald-info-panel</p>
+              <p><strong>Inputs:</strong> title, items, layout</p>
+            </dd>
+
+            <dt id="LabelComponent">LabelComponent</dt>
+            <dd>
+              <p>A component for displaying status labels and categories.</p>
+              <p><strong>Selector:</strong> emerald-label</p>
+              <p><strong>Inputs:</strong> text, type, size, icon</p>
+            </dd>
+
+            <dt id="PageHeaderComponent">PageHeaderComponent</dt>
+            <dd>
+              <p>A header component with breadcrumbs and action buttons.</p>
+              <p><strong>Selector:</strong> emerald-page-header</p>
+              <p><strong>Inputs:</strong> title, subtitle, breadcrumbs, actions</p>
+              <p><strong>Outputs:</strong> actionClick</p>
+            </dd>
+
+            <dt id="SkeletonLoaderComponent">SkeletonLoaderComponent</dt>
+            <dd>
+              <p>A loading skeleton for content placeholders during data fetching.</p>
+              <p><strong>Selector:</strong> emerald-skeleton-loader</p>
+              <p><strong>Inputs:</strong> layout, count, animation</p>
+            </dd>
+
+            <dt id="ToggleComponent">ToggleComponent</dt>
+            <dd>
+              <p>A toggle switch component for boolean settings.</p>
+              <p><strong>Selector:</strong> emerald-toggle</p>
+              <p><strong>Inputs:</strong> checked, disabled, label, size</p>
+              <p><strong>Outputs:</strong> change</p>
+            </dd>
+
+            <dt id="CardGridComponent">CardGridComponent</dt>
+            <dd>
+              <p>A grid layout component for displaying multiple cards.</p>
+              <p><strong>Selector:</strong> emerald-card-grid</p>
+              <p><strong>Inputs:</strong> items, itemsPerRow, gap, responsive</p>
+              <p><strong>Outputs:</strong> itemClick</p>
+            </dd>
+
+            <dt id="PagerComponent">PagerComponent</dt>
+            <dd>
+              <p>A pagination component for navigating through results.</p>
+              <p><strong>Selector:</strong> emerald-pager</p>
+              <p><strong>Inputs:</strong> currentPage, totalPages, visiblePages</p>
+              <p><strong>Outputs:</strong> pageChange</p>
+            </dd>
+
+            <dt id="FloatingActionButtonComponent">FloatingActionButtonComponent</dt>
+            <dd>
+              <p>A floating action button for primary actions.</p>
+              <p><strong>Selector:</strong> emerald-fab</p>
+              <p><strong>Inputs:</strong> icon, color, size, position</p>
+              <p><strong>Outputs:</strong> click</p>
+            </dd>
+
+            <dt id="TinderCardComponent">TinderCardComponent</dt>
+            <dd>
+              <p>A card component for Tinder-style swiping interfaces with gesture support.</p>
+              <p><strong>Selector:</strong> emerald-tinder-card</p>
+              <p>
+                <strong>Inputs:</strong> title, subtitle, description, media, tags, itemId, age,
+                swipeable, actions, state
+              </p>
+              <p><strong>Outputs:</strong> swipe, actionClick, mediaChange</p>
+            </dd>
+          </dl>
+
+          <h2>Modules</h2>
+
+          <dl>
+            <dt id="EmeraldModule">EmeraldModule</dt>
+            <dd>
+              <p>
+                A module that provides Angular wrappers for Emerald.js UI components. In Angular
+                19+, all components are standalone and can be imported directly where needed.
+              </p>
+            </dd>
+
+            <dt id="QRCodeModule">QRCodeModule</dt>
+            <dd>
+              <p>
+                A module that provides the QR code component from angularx-qrcode. In Angular 19+,
+                QRCodeComponent is a standalone component and should be imported directly in
+                components that need it.
+              </p>
+            </dd>
+          </dl>
+
+          <h2>Interfaces</h2>
+
+          <dl>
+            <dt id="TinderCardMedia">TinderCardMedia</dt>
+            <dd>
+              <p>Interface for media items in the Tinder card.</p>
+              <p><strong>Properties:</strong> url: string, type: 'image' | 'video'</p>
+            </dd>
+
+            <dt id="TinderCardAction">TinderCardAction</dt>
+            <dd>
+              <p>Interface for action buttons in the Tinder card.</p>
+              <p>
+                <strong>Properties:</strong> id: string, icon: string, tooltip?: string, color?:
+                string
+              </p>
+            </dd>
+          </dl>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

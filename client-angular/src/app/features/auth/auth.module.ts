@@ -49,5 +49,6 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
   ],
+  // No exports needed for standalone components
 })
 export class AuthModule {}

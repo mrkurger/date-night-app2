@@ -35,7 +35,12 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./client-angular
-        run: npm ci
+        run: |
+          npm ci
+          # Ensure specific dependencies are installed
+          npm list angularx-qrcode || npm install angularx-qrcode@19.0.0
+          npm list @swimlane/ngx-charts || npm install @swimlane/ngx-charts@22.0.0-alpha.1
+          npm list chart.js || npm install chart.js@4.4.9
 
       - name: Run unit tests
         working-directory: ./client-angular

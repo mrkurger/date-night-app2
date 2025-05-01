@@ -35,34 +35,168 @@
         
         <p>This file contains lessons learned and best practices for the Emerald component/module.</p>
         
-        <h2>Best Practices</h2>
+        <h2>Angular 19 Standalone Components</h2>
         
-        <ul>
-          <li>Add best practices specific to this component/module</li>
-        </ul>
+        <div class="section">
+          <h3>Understanding Standalone Components in Angular 19</h3>
+          <p>
+            Angular 19 has fully embraced standalone components as the preferred way to build applications.
+            This represents a shift from the traditional NgModule-based architecture to a more component-focused approach.
+          </p>
+          
+          <h4>Key Lessons:</h4>
+          <ul>
+            <li>Standalone components are self-contained and don't need to be declared in an NgModule</li>
+            <li>They explicitly list their dependencies in their own imports array</li>
+            <li>They can be imported directly where needed, rather than through module exports</li>
+            <li>This reduces the "module tax" and makes the dependency graph more explicit</li>
+          </ul>
+          
+          <h4>Common Errors:</h4>
+          <ul>
+            <li><code>TS-996008</code>: Component is standalone, and cannot be declared in an NgModule</li>
+            <li><code>TS-996004</code>: Can't be exported from this NgModule, as it must be imported first</li>
+          </ul>
+          
+          <pre>
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    // Other dependencies...
+  ]
+})
+export class ExampleComponent { }
+          </pre>
+        </div>
         
-        <h2>Common Patterns</h2>
+        <div class="warning-section">
+          <h3>Migrating from NgModules to Standalone Components</h3>
+          <p>
+            When migrating from NgModules to standalone components, be careful about these common pitfalls:
+          </p>
+          <ul>
+            <li>Don't declare standalone components in NgModule declarations array</li>
+            <li>Don't export standalone components from NgModules - they should be imported directly</li>
+            <li>Make sure to include all necessary imports in the component's imports array</li>
+            <li>Update any lazy-loading routes to use the new loadComponent syntax instead of loadChildren</li>
+          </ul>
+        </div>
         
-        <ul>
-          <li>Add common patterns used in this component/module</li>
-        </ul>
+        <h2>Dependency Management</h2>
         
-        <h2>Known Issues</h2>
+        <div class="section">
+          <h3>Managing External Dependencies</h3>
+          <p>
+            The Emerald module integrates with several external libraries, including:
+          </p>
+          
+          <table>
+            <tr>
+              <th>Library</th>
+              <th>Version</th>
+              <th>Purpose</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>emerald-ui</td>
+              <td>2.14.3</td>
+              <td>Core UI component library</td>
+              <td>Base library that our Angular components wrap</td>
+            </tr>
+            <tr>
+              <td>angularx-qrcode</td>
+              <td>19.0.0</td>
+              <td>QR code generation</td>
+              <td>Standalone component in Angular 19+</td>
+            </tr>
+            <tr>
+              <td>@swimlane/ngx-charts</td>
+              <td>22.0.0-alpha.1</td>
+              <td>Data visualization</td>
+              <td>Used in dashboard components</td>
+            </tr>
+          </table>
+          
+          <h4>Key Lessons:</h4>
+          <ul>
+            <li>Always specify exact versions in package.json to ensure consistency</li>
+            <li>Be aware of breaking changes when upgrading dependencies</li>
+            <li>Check if libraries have been updated for Angular 19 compatibility</li>
+            <li>Some libraries may have changed their module structure in newer versions</li>
+          </ul>
+        </div>
         
-        <ul>
-          <li>Add known issues or challenges with this component/module</li>
-        </ul>
+        <h2>Testing Strategies</h2>
         
-        <h2>Implementation Notes</h2>
+        <div class="section">
+          <h3>Testing Standalone Components</h3>
+          <p>
+            Testing standalone components requires a slightly different approach than testing NgModule-based components:
+          </p>
+          
+          <pre>
+describe('ExampleComponent', () => {
+  let component: ExampleComponent;
+  let fixture: ComponentFixture<ExampleComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ExampleComponent,
+        // Additional dependencies needed for testing
+      ],
+      providers: [
+        // Mock services
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ExampleComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+          </pre>
+          
+          <h4>Key Testing Lessons:</h4>
+          <ul>
+            <li>Import the component directly in the TestBed configuration</li>
+            <li>Include any additional dependencies needed for testing</li>
+            <li>Mock external services and dependencies</li>
+            <li>Test component inputs, outputs, and lifecycle methods</li>
+          </ul>
+        </div>
         
-        <ul>
-          <li>Add implementation notes or decisions made for this component/module</li>
-        </ul>
+        <h2>Performance Considerations</h2>
         
-        <h2>How to use this file</h2>
-        
-        <p>When discovering new patterns, best practices, or lessons related to this component, add them to this file.
-        This helps maintain knowledge about the component and guides future development.</p>
+        <div class="section">
+          <h3>Optimizing Standalone Components</h3>
+          <p>
+            Standalone components can lead to better performance through:
+          </p>
+          <ul>
+            <li>More efficient tree-shaking (unused code elimination)</li>
+            <li>Reduced bundle size by only including what's needed</li>
+            <li>More explicit dependency management</li>
+            <li>Better lazy-loading capabilities</li>
+          </ul>
+          
+          <h4>Performance Tips:</h4>
+          <ul>
+            <li>Use OnPush change detection strategy for better performance</li>
+            <li>Implement trackBy functions for ngFor loops</li>
+            <li>Lazy load components and features when possible</li>
+            <li>Use pure pipes for transformations instead of methods in templates</li>
+          </ul>
+        </div>
       </article>
     </div>
   </main>

@@ -43,7 +43,7 @@ import { AddPaymentMethodDialogComponent } from './dialogs/add-payment-method-di
 import { TransactionDetailsDialogComponent } from './dialogs/transaction-details-dialog.component';
 
 import { EmeraldModule } from '../../shared/emerald/emerald.module';
-import { QRCodeModule } from '../../shared/qrcode/qrcode.module';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
@@ -87,7 +87,7 @@ const routes: Routes = [
     MatSlideToggleModule,
     ClipboardModule,
     EmeraldModule,
-    QRCodeModule,
+    QRCodeComponent,
     // Standalone components
     WalletComponent,
     DepositDialogComponent,

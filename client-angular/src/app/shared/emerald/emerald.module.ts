@@ -71,20 +71,6 @@ import { TinderCardComponent } from './tinder-card/tinder-card.component';
     FloatingActionButtonComponent,
     TinderCardComponent,
   ],
-  exports: [
-    // Export all components for use in other modules
-    AppCardComponent,
-    AvatarComponent,
-    CarouselComponent,
-    InfoPanelComponent,
-    LabelComponent,
-    PageHeaderComponent,
-    SkeletonLoaderComponent,
-    ToggleComponent,
-    PagerComponent,
-    CardGridComponent,
-    FloatingActionButtonComponent,
-    TinderCardComponent,
-  ],
+  // No exports needed for standalone components - they are imported directly where needed
 })
 export class EmeraldModule {}
