@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Actions Workflows Changelog</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>GitHub Actions Workflows Changelog</h1>
+
+      <h2>2025-04-XX</h2>
+      <h3>Added</h3>
+      <ul>
+        <li>
+          Created new consolidated <code>security-reporting.yml</code> workflow that combines
+          functionality from <code>security-alerts-report.yml</code> and
+          <code>sync-snyk-issues.yml</code>
+        </li>
+        <li>
+          Created new <code>docs-generation-and-deployment.yml</code> workflow that combines
+          documentation generation and GitHub Pages deployment
+        </li>
+        <li>Added this CHANGELOG.html file to track workflow changes</li>
+      </ul>
+
+      <h3>Changed</h3>
+      <ul>
+        <li>
+          Updated <code>sync-workflow-errors.yml</code> to run daily instead of every 6 hours to
+          reduce redundancy
+        </li>
+        <li>Standardized Node.js version to 22.x across all workflows</li>
+        <li>
+          Updated GitHub Actions to use the latest versions (v4 for checkout, setup-node, etc.)
+        </li>
+      </ul>
+
+      <h3>Deprecated</h3>
+      <ul>
+        <li>
+          Marked <code>security-alerts-report.yml</code> for removal (replaced by
+          <code>security-reporting.yml</code>)
+        </li>
+        <li>
+          Marked <code>sync-snyk-issues.yml</code> for removal (replaced by
+          <code>security-reporting.yml</code>)
+        </li>
+        <li>
+          Marked <code>generate-docs.yml</code> for removal (replaced by
+          <code>docs-generation-and-deployment.yml</code>)
+        </li>
+        <li>
+          Marked <code>github-pages.yml</code> for removal (replaced by
+          <code>docs-generation-and-deployment.yml</code>)
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

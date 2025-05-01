@@ -1,0 +1,226 @@
+name: Security Reporting
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Run weekly on Monday
+  workflow_dispatch: # Allow manual triggering
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      security-events: read
+    timeout-minutes: 45 # Add timeout to prevent runaway jobs
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          cd server && npm install
+          cd ../client-angular && npm install
+          # Install dependencies for reporting
+          npm install --save-dev npm-audit-html npm-check snyk
+
+      # NPM Audit Reports
+      - name: Check Client Dependencies
+        id: check-client
+        continue-on-error: true
+        run: |
+          if [ -d "client-angular" ]; then
+            cd client-angular
+            echo "## Client Dependencies" > ../client-deps-report.md
+            echo "" >> ../client-deps-report.md
+            npx npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
+            npm audit --json | npx npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
+            cd ..
+          else
+            echo "Client directory not found, skipping"
+          fi
+
+      - name: Check Server Dependencies
+        id: check-server
+        continue-on-error: true
+        run: |
+          if [ -d "server" ]; then
+            cd server
+            echo "## Server Dependencies" > ../server-deps-report.md
+            echo "" >> ../server-deps-report.md
+            npx npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
+            npm audit --json | npx npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
+            cd ..
+          else
+            echo "Server directory not found, skipping"
+          fi
+
+      # Snyk Security Scans
+      - name: Authenticate with Snyk
+        if: ${{ env.SNYK_TOKEN != '' }}
+        run: npx snyk auth ${{ secrets.SNYK_TOKEN }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan root project with Snyk
+        if: ${{ env.SNYK_TOKEN != '' }}
+        run: npx snyk test --json > snyk-root-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan server project with Snyk
+        if: ${{ env.SNYK_TOKEN != '' }}
+        run: cd server && npx snyk test --json > ../snyk-server-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan client project with Snyk
+        if: ${{ env.SNYK_TOKEN != '' }}
+        run: cd client-angular && npx snyk test --json > ../snyk-client-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # Generate dependency trees
+      - name: Generate dependency trees
+        run: |
+          npm ls --json --depth=2 > npm-root-deps-tree.json || true
+          cd server && npm ls --json --depth=2 > ../npm-server-deps-tree.json || true
+          cd ../client-angular && npm ls --json --depth=2 > ../npm-client-deps-tree.json || true
+
+      # Generate combined reports
+      - name: Generate Combined Security Report
+        run: |
+          # Create directories
+          mkdir -p downloaded-reports/security downloaded-reports/security/html-reports
+          mkdir -p downloaded-reports/snyk
+
+          # Create report header
+          cat > downloaded-reports/security/security-report.md << EOL
+          # Security Alerts and Dependency Report
+
+          *Generated on: $(date +%Y-%m-%d)*
+
+          This report provides an overview of dependencies and potential security issues in the project.
+
+          EOL
+
+          # Add client dependencies report if it exists
+          if [ -f "client-deps-report.md" ]; then
+            cat client-deps-report.md >> downloaded-reports/security/security-report.md
+            echo "" >> downloaded-reports/security/security-report.md
+          fi
+
+          # Add server dependencies report if it exists
+          if [ -f "server-deps-report.md" ]; then
+            cat server-deps-report.md >> downloaded-reports/security/security-report.md
+            echo "" >> downloaded-reports/security/security-report.md
+          fi
+
+          # Create security audit section
+          cat >> downloaded-reports/security/security-report.md << EOL
+
+          ## Security Audit Results
+
+          Detailed HTML reports have been generated for:
+
+          EOL
+
+          # Add links to HTML reports if they exist
+          if [ -f "client-audit.html" ]; then
+            cp client-audit.html downloaded-reports/security/html-reports/
+            echo "- [Client Security Audit](./html-reports/client-audit.html)" >> downloaded-reports/security/security-report.md
+          fi
+
+          if [ -f "server-audit.html" ]; then
+            cp server-audit.html downloaded-reports/security/html-reports/
+            echo "- [Server Security Audit](./html-reports/server-audit.html)" >> downloaded-reports/security/security-report.md
+          fi
+
+          # Generate Snyk report if available
+          if [ -f "snyk-root-results.json" ] || [ -f "snyk-server-results.json" ] || [ -f "snyk-client-results.json" ]; then
+            # Run the script to generate Snyk task list if it exists
+            if [ -f ".github/scripts/generate-snyk-task-list.js" ]; then
+              node .github/scripts/generate-snyk-task-list.js
+            fi
+            
+            # Add Snyk section to the report
+            cat >> downloaded-reports/security/security-report.md << EOL
+
+          ## Snyk Security Analysis
+
+          Detailed Snyk security analysis is available in the [Snyk Report](../snyk/snyk-issues.md).
+
+          EOL
+          fi
+
+          # Add manual check instructions
+          cat >> downloaded-reports/security/security-report.md << EOL
+
+          ## Manual Security Checks
+
+          For a complete security assessment, please also check:
+
+          1. GitHub Security tab for Dependabot alerts
+          2. npm audit reports for each package
+          3. Known vulnerabilities in third-party libraries
+
+          EOL
+
+      # Upload JSON files as artifacts instead of committing them
+      - name: Upload Security JSON results as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-json-results-${{ github.run_id }}
+          path: |
+            snyk-*.json
+            npm-*.json
+          retention-days: 7
+          if-no-files-found: warn
+
+      # Clean up JSON files to avoid committing them
+      - name: Remove JSON files
+        run: |
+          # Remove all JSON files after they've been uploaded as artifacts
+          rm -f snyk-*.json npm-*.json
+
+      - name: Commit Report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Handle any unstaged changes by stashing them
+          git stash -u || true
+
+          # Pull the latest changes with rebase strategy to avoid merge conflicts
+          git pull --rebase origin main || true
+
+          # Pop the stash if we stashed anything
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+
+          # Add only the report files
+          git add downloaded-reports/security/
+          git add downloaded-reports/snyk/
+
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update security reports [skip ci]"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

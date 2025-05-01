@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Lessons: GitHub Actions Workflows</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>AI Lessons: GitHub Actions Workflows</h1>
+
+      <p>
+        This file contains lessons learned and best practices for GitHub Actions workflows in the
+        Date Night App project.
+      </p>
+
+      <h2>Best Practices</h2>
+      <ul>
+        <li>
+          <strong>Consolidate related workflows</strong>: Combine workflows with similar purposes to
+          reduce maintenance overhead and improve efficiency.
+        </li>
+        <li>
+          <strong>Standardize environment versions</strong>: Use consistent Node.js versions across
+          all workflows to prevent environment-related issues.
+        </li>
+        <li>
+          <strong>Add concurrency controls</strong>: Prevent multiple instances of the same workflow
+          from running simultaneously to avoid conflicts.
+        </li>
+        <li>
+          <strong>Set appropriate timeouts</strong>: Add timeout limits to prevent runaway jobs that
+          could consume GitHub Actions minutes.
+        </li>
+        <li>
+          <strong>Use conditional execution</strong>: Only run steps when they're needed using if
+          conditions.
+        </li>
+        <li>
+          <strong>Optimize scheduled runs</strong>: Schedule workflows at appropriate intervals to
+          balance freshness of data with resource usage.
+        </li>
+        <li>
+          <strong>Use artifact uploads</strong>: Upload large JSON files as artifacts instead of
+          committing them to the repository.
+        </li>
+        <li>
+          <strong>Handle conflicts gracefully</strong>: Implement strategies for handling git
+          conflicts in automated workflows.
+        </li>
+      </ul>
+
+      <h2>Implementation Patterns</h2>
+      <ul>
+        <li>
+          <strong>Security reporting pattern</strong>: Combine multiple security tools (npm audit,
+          Snyk) into a single comprehensive report.
+        </li>
+        <li>
+          <strong>Documentation generation and deployment pattern</strong>: Generate documentation
+          and deploy it to GitHub Pages in a single workflow.
+        </li>
+        <li>
+          <strong>Error tracking pattern</strong>: Collect and organize workflow error logs to
+          facilitate troubleshooting.
+        </li>
+        <li>
+          <strong>Test reporting pattern</strong>: Aggregate test results from multiple workflows
+          into a single report.
+        </li>
+        <li>
+          <strong>Dependency management pattern</strong>: Track and report on dependencies across
+          different parts of the application.
+        </li>
+      </ul>
+
+      <h2>Workflow Organization</h2>
+      <p>GitHub Actions workflows in this project are organized into several categories:</p>
+      <ul>
+        <li>
+          <strong>Testing workflows</strong>: Run tests for different parts of the application
+          (<code>angular-tests.yml</code>, <code>server-tests.yml</code>)
+        </li>
+        <li>
+          <strong>Documentation workflows</strong>: Generate and deploy documentation
+          (<code>docs-generation-and-deployment.yml</code>)
+        </li>
+        <li>
+          <strong>Security workflows</strong>: Scan for security vulnerabilities and generate
+          reports (<code>security-reporting.yml</code>)
+        </li>
+        <li>
+          <strong>Monitoring workflows</strong>: Track errors and insights
+          (<code>sync-workflow-errors.yml</code>, <code>sync-github-insights.yml</code>)
+        </li>
+        <li>
+          <strong>Reporting workflows</strong>: Aggregate and present data from other workflows
+          (<code>sync-test-reports.yml</code>)
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

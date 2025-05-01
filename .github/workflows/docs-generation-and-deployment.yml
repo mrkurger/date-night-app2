@@ -1,4 +1,4 @@
-name: Generate Documentation
+name: Documentation Generation and Deployment
 
 on:
   push:
@@ -8,8 +8,11 @@ on:
       - 'client-angular/src/**/*.js'
       - 'server/**/*.js'
       - 'docs/**/*.md'
+      - '_docs_index.html'
+      - '_glossary.html'
+      - '**/*.html'
       - 'scripts/generate_docs.js'
-      - '.github/workflows/generate-docs.yml'
+      - '.github/workflows/docs-generation-and-deployment.yml'
   pull_request:
     branches: [main]
     paths:
@@ -18,12 +21,14 @@ on:
       - 'server/**/*.js'
       - 'docs/**/*.md'
       - 'scripts/generate_docs.js'
-      - '.github/workflows/generate-docs.yml'
+      - '.github/workflows/docs-generation-and-deployment.yml'
   workflow_dispatch:
 
 jobs:
   generate-docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -52,3 +57,33 @@ jobs:
           git add .
           git diff --quiet && git diff --staged --quiet || git commit -m "Update documentation [skip ci]"
           git push
+
+  deploy-to-pages:
+    needs: generate-docs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main # Ensure we have the latest changes after documentation generation
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
