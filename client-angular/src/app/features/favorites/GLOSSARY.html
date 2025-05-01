@@ -3360,6 +3360,473 @@
   
 </div>
 </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadFavorites">
+  <h3>loadFavorites</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Interface for saved filter presets / interface FilterPreset { name: string; filters: FavoriteFilterOptions; dateFrom: Date | null; dateTo: Date | null; selectedTagFilters: string[]; } /** Enhanced favorites page component with filtering, sorting, and batch operations / @Component({ selector: 'app-favorites-page', standalone: true, imports: [ CommonModule, FormsModule, ReactiveFormsModule, RouterModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatChipsModule, MatProgressSpinnerModule, MatTabsModule, MatCardModule, MatDividerModule, MatMenuModule, MatCheckboxModule, MatSlideToggleModule, MatTooltipModule, MatSnackBarModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, FavoriteButtonComponent, LoadingSpinnerComponent, ], template: ` <div class="favorites-page"> <div class="favorites-header"> <h1 class="page-title">My Favorites</h1> <div class="favorites-actions" *ngIf="favorites && favorites.length > 0"> <button mat-raised-button color="primary" [disabled]="selectedFavorites.length === 0" [matMenuTriggerFor]="batchMenu" > Batch Actions ({{ selectedFavorites.length }}) </button> <mat-menu #batchMenu="matMenu"> <button mat-menu-item (click)="removeFavoritesBatch()"> <mat-icon>delete</mat-icon> <span>Remove Selected</span> </button> <button mat-menu-item (click)="openTagsDialog()"> <mat-icon>label</mat-icon> <span>Add Tags to Selected</span> </button> <button mat-menu-item (click)="setPriorityBatch('high')"> <mat-icon>priority_high</mat-icon> <span>Set High Priority</span> </button> <button mat-menu-item (click)="setPriorityBatch('normal')"> <mat-icon>remove_circle_outline</mat-icon> <span>Set Normal Priority</span> </button> <button mat-menu-item (click)="setPriorityBatch('low')"> <mat-icon>arrow_downward</mat-icon> <span>Set Low Priority</span> </button> </mat-menu> </div> </div> <div class="filters-container" *ngIf="favorites && favorites.length > 0"> <div class="filters-header"> <h3>Filters</h3> <button mat-button color="primary" (click)="toggleAdvancedFilters()"> {{ showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters' }} <mat-icon>{{ showAdvancedFilters ? 'expand_less' : 'expand_more' }}</mat-icon> </button> </div> <div class="basic-filters"> <mat-form-field appearance="outline" class="search-field"> <mat-label>Search favorites</mat-label> <input matInput [(ngModel)]="filterOptions.search" (input)="onSearchChange($event)" placeholder="Search by title, description, or notes" /> <mat-icon matSuffix>search</mat-icon> </mat-form-field> <mat-form-field appearance="outline"> <mat-label>Sort by</mat-label> <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()"> <mat-option value="newest">Newest first</mat-option> <mat-option value="oldest">Oldest first</mat-option> <mat-option value="price-asc">Price: Low to High</mat-option> <mat-option value="price-desc">Price: High to Low</mat-option> <mat-option value="title-asc">Title: A to Z</mat-option> <mat-option value="title-desc">Title: Z to A</mat-option> <mat-option value="priority-high">Priority: High to Low</mat-option> <mat-option value="priority-low">Priority: Low to High</mat-option> </mat-select> </mat-form-field> <div class="tags-filter" *ngIf="userTags && userTags.length > 0"> <div class="tags-label">Filter by tag:</div> <div class="tags-chips"> <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()"> <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag"> {{ tag.tag }} ({{ tag.count }}) </mat-chip-option> </mat-chip-listbox> </div> </div> </div> <div class="advanced-filters" *ngIf="showAdvancedFilters"> <div class="filter-row"> <mat-form-field appearance="outline"> <mat-label>Priority</mat-label> <mat-select [(ngModel)]="filterOptions.priority" (selectionChange)="applyFilters()"> <mat-option [value]="undefined">Any</mat-option> <mat-option value="high">High</mat-option> <mat-option value="normal">Normal</mat-option> <mat-option value="low">Low</mat-option> </mat-select> </mat-form-field> <mat-form-field appearance="outline"> <mat-label>Category</mat-label> <mat-select [(ngModel)]="filterOptions.category" (selectionChange)="applyFilters()"> <mat-option [value]="undefined">Any</mat-option> <mat-option *ngFor="let category of categories" [value]="category.value"> {{ category.label }} </mat-option> </mat-select> </mat-form-field> </div> <div class="filter-row"> <mat-form-field appearance="outline"> <mat-label>County</mat-label> <mat-select [(ngModel)]="filterOptions.county" (selectionChange)="onCountyChange()"> <mat-option [value]="undefined">Any</mat-option> <mat-option *ngFor="let county of counties" [value]="county"> {{ county }} </mat-option> </mat-select> </mat-form-field> <mat-form-field appearance="outline"> <mat-label>City</mat-label> <mat-select [(ngModel)]="filterOptions.city" (selectionChange)="applyFilters()"> <mat-option [value]="undefined">Any</mat-option> <mat-option *ngFor="let city of cities" [value]="city"> {{ city }} </mat-option> </mat-select> </mat-form-field> </div> <div class="filter-row"> <div class="price-range"> <span class="range-label">Price Range:</span> <div class="price-inputs"> <mat-form-field appearance="outline"> <mat-label>Min</mat-label> <input matInput type="number" [(ngModel)]="filterOptions.priceMin" (change)="applyFilters()" min="0" /> </mat-form-field> <span class="range-separator">to</span> <mat-form-field appearance="outline"> <mat-label>Max</mat-label> <input matInput type="number" [(ngModel)]="filterOptions.priceMax" (change)="applyFilters()" min="0" /> </mat-form-field> </div> </div> </div> <div class="filter-row"> <div class="date-range"> <span class="range-label">Date Added:</span> <div class="date-inputs"> <mat-form-field appearance="outline"> <mat-label>From</mat-label> <input matInput [matDatepicker]="fromPicker" [(ngModel)]="dateFrom" (dateChange)="onDateChange()" /> <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle> <mat-datepicker #fromPicker></mat-datepicker> </mat-form-field> <span class="range-separator">to</span> <mat-form-field appearance="outline"> <mat-label>To</mat-label> <input matInput [matDatepicker]="toPicker" [(ngModel)]="dateTo" (dateChange)="onDateChange()" /> <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle> <mat-datepicker #toPicker></mat-datepicker> </mat-form-field> </div> </div> </div> <div class="filter-actions"> <button mat-button color="primary" (click)="saveFilterPreset()"> <mat-icon>save</mat-icon> Save Filter Preset </button> <button mat-button [matMenuTriggerFor]="presetMenu" *ngIf="filterPresets.length > 0"> <mat-icon>filter_list</mat-icon> Load Preset </button> <mat-menu #presetMenu="matMenu"> <button mat-menu-item ngFor="let preset of filterPresets" (click)="loadFilterPreset(preset)" > {{ preset.name }} </button> </mat-menu> </div> </div> <div class="filter-summary" *ngIf="isFiltered"> <div class="active-filters"> <span class="filter-label">Active filters:</span> <mat-chip-set> <mat-chip *ngIf="filterOptions.search" (removed)="clearSearchFilter()"> Search: {{ filterOptions.search }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip *ngIf="filterOptions.priority" (removed)="clearPriorityFilter()"> Priority: {{ filterOptions.priority | titlecase }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip *ngIf="filterOptions.category" (removed)="clearCategoryFilter()"> Category: {{ getCategoryLabel(filterOptions.category) }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip *ngIf="filterOptions.county" (removed)="clearCountyFilter()"> County: {{ filterOptions.county }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip *ngIf="filterOptions.city" (removed)="clearCityFilter()"> City: {{ filterOptions.city }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip ngIf="filterOptions.priceMin !== undefined || filterOptions.priceMax !== undefined" (removed)="clearPriceFilter()" > Price: {{ getPriceRangeLabel() }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip ngIf="filterOptions.dateFrom || filterOptions.dateTo" (removed)="clearDateFilter()" > Date: {{ getDateRangeLabel() }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> <mat-chip *ngFor="let tag of selectedTagFilters" (removed)="removeTagFilter(tag)"> Tag: {{ tag }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip> </mat-chip-set> </div> <button mat-button color="primary" (click)="resetFilters()"> <mat-icon>clear</mat-icon> Clear All Filters </button> </div> </div> <div class="loading-container" *ngIf="loading"> <app-loading-spinner></app-loading-spinner> <p>Loading your favorites...</p> </div> <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)"> <mat-card> <mat-card-content> <mat-icon class="empty-icon">favorite_border</mat-icon> <h3>No favorites yet</h3> <p>Browse ads and click the heart icon to add them to your favorites.</p> <button mat-raised-button color="primary" routerLink="/ads">Browse Ads</button> </mat-card-content> </mat-card> </div> <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0"> <mat-card ngFor="let favorite of favorites" class="favorite-card" [ngClass]="getPriorityClass(favorite)" > <div class="favorite-header"> <div class="favorite-select"> <mat-checkbox [(ngModel)]="favorite.selected" (change)="updateSelectedFavorites()" color="primary" ></mat-checkbox> </div> <img [src]=" favorite.ad.images && favorite.ad.images.length > 0 ? favorite.ad.images[0] : 'assets/images/placeholder.jpg' " [alt]="favorite.ad.title" class="favorite-image" [routerLink]="['/ads', favorite.ad._id]" /> <div class="favorite-info"> <h3 class="favorite-title" [routerLink]="['/ads', favorite.ad._id]"> {{ favorite.ad.title }} </h3> <div class="favorite-details"> <span class="favorite-location"> <mat-icon>location_on</mat-icon> {{ favorite.ad.location }} </span> <span class="favorite-price" *ngIf="favorite.ad.price"> <mat-icon>attach_money</mat-icon> {{ favorite.ad.price | currency: 'NOK' : 'symbol' : '1.0-0' }} </span> <span class="favorite-date"> <mat-icon>event</mat-icon> Added {{ favorite.createdAt | date: 'mediumDate' }} </span> <span class="favorite-priority" [ngClass]="'priority-' + favorite.priority"> <mat-icon>{{ getPriorityIcon(favorite.priority) }}</mat-icon> {{ favorite.priority | titlecase }} Priority </span> </div> <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0"> <mat-chip-listbox> <mat-chip *ngFor="let tag of favorite.tags">{{ tag }}</mat-chip> </mat-chip-listbox> </div> </div> <div class="favorite-actions"> <app-favorite-button [adId]="this.getAdIdAsString(favorite.ad._id)" (favoriteChanged)="onFavoriteRemoved($event, favorite)" ></app-favorite-button> <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options"> <mat-icon>more_vert</mat-icon> </button> <mat-menu #menu="matMenu"> <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]"> <mat-icon>visibility</mat-icon> <span>View Ad</span> </button> <button mat-menu-item (click)="openNotesDialog(favorite)"> <mat-icon>note</mat-icon> <span>Edit Notes</span> </button> <button mat-menu-item (click)="openTagsDialogForSingle(favorite)"> <mat-icon>label</mat-icon> <span>Edit Tags</span> </button> <mat-divider></mat-divider> <button mat-menu-item [matMenuTriggerFor]="priorityMenu"> <mat-icon>priority_high</mat-icon> <span>Set Priority</span> </button> <button mat-menu-item (click)="toggleNotifications(favorite)"> <mat-icon>{{ favorite.notificationsEnabled ? 'notifications' : 'notifications_off' }}</mat-icon> <span>{{ favorite.notificationsEnabled ? 'Disable Notifications' : 'Enable Notifications' }}</span> </button> <mat-divider></mat-divider> <button mat-menu-item (click)=" removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id))) " > <mat-icon>delete</mat-icon> <span>Remove from Favorites</span> </button> </mat-menu> <mat-menu #priorityMenu="matMenu"> <button mat-menu-item (click)="updatePriority(favorite, 'high')"> <mat-icon>arrow_upward</mat-icon> <span>High</span> </button> <button mat-menu-item (click)="updatePriority(favorite, 'normal')"> <mat-icon>remove</mat-icon> <span>Normal</span> </button> <button mat-menu-item (click)="updatePriority(favorite, 'low')"> <mat-icon>arrow_downward</mat-icon> <span>Low</span> </button> </mat-menu> </div> </div> <mat-divider *ngIf="favorite.notes"></mat-divider> <div class="favorite-notes" *ngIf="favorite.notes"> <mat-icon>note</mat-icon> <p>{{ favorite.notes }}</p> </div> <mat-card-actions> <button mat-button color="primary" [routerLink]="['/ads', favorite.ad._id]"> <mat-icon>visibility</mat-icon> View Ad </button> <button mat-button color="accent" [routerLink]="['/chat']" [queryParams]="{ userId: favorite.ad.userId }" > <mat-icon>chat</mat-icon> Contact Advertiser </button> <mat-slide-toggle [checked]="favorite.notificationsEnabled" (change)="toggleNotifications(favorite)" color="primary" class="notifications-toggle" > Notifications </mat-slide-toggle> </mat-card-actions> </mat-card> </div> </div> `, styles: [ ` .favorites-page { max-width: 1200px; margin: 0 auto; padding: 20px; } .favorites-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; } .page-title { margin: 0; color: #333; font-size: 2rem; } .filters-container { margin-bottom: 24px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; background-color: #f9f9f9; } .filters-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; } .filters-header h3 { margin: 0; font-size: 18px; color: #333; } .basic-filters { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; align-items: flex-start; } .advanced-filters { background-color: #f0f0f0; border-radius: 4px; padding: 16px; margin-bottom: 16px; } .filter-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; } .filter-row mat-form-field { flex: 1; min-width: 200px; } .price-range, .date-range { display: flex; flex-direction: column; width: 100%; } .range-label { font-weight: 500; color: #666; margin-bottom: 8px; } .price-inputs, .date-inputs { display: flex; align-items: center; gap: 8px; } .price-inputs mat-form-field, .date-inputs mat-form-field { flex: 1; } .range-separator { color: #666; margin: 0 8px; } .filter-actions { display: flex; gap: 16px; margin-top: 16px; } .filter-summary { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e0e0e0; } .active-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .filter-label { font-weight: 500; color: #666; } .search-field { flex: 1; min-width: 250px; } .tags-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .tags-label { font-weight: 500; color: #666; } .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; } .loading-container p { margin-top: 20px; color: #666; } .no-favorites { text-align: center; padding: 40px 0; } .no-favorites mat-card { max-width: 500px; margin: 0 auto; padding: 30px; } .empty-icon { font-size: 64px; height: 64px; width: 64px; color: #ccc; margin-bottom: 20px; } .no-favorites h3 { margin-bottom: 10px; color: #333; } .no-favorites p { margin-bottom: 20px; color: #666; } .favorite-card { margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); } .favorite-card.priority-high { border-left: 4px solid #f44336; } .favorite-card.priority-normal { border-left: 4px solid #2196f3; } .favorite-card.priority-low { border-left: 4px solid #4caf50; } .favorite-header { display: flex; padding: 16px; } .favorite-select { display: flex; align-items: center; margin-right: 16px; } .favorite-image { width: 120px; height: 120px; object-fit: cover; border-radius: 4px; cursor: pointer; } .favorite-info { flex: 1; margin-left: 16px; display: flex; flex-direction: column; } .favorite-title { margin: 0 0 10px 0; font-size: 1.2rem; cursor: pointer; } .favorite-title:hover { color: #3f51b5; } .favorite-details { display: flex; flex-wrap: wrap; gap: 16px; color: #666; font-size: 0.9rem; margin-bottom: 8px; } .favorite-location, .favorite-price, .favorite-date, .favorite-priority { display: flex; align-items: center; } .favorite-priority.priority-high { color: #f44336; } .favorite-priority.priority-normal { color: #2196f3; } .favorite-priority.priority-low { color: #4caf50; } .favorite-details mat-icon { font-size: 16px; height: 16px; width: 16px; margin-right: 4px; } .favorite-tags { margin-top: 8px; } .favorite-actions { display: flex; align-items: flex-start; } .favorite-notes { display: flex; padding: 16px; background-color: #f9f9f9; border-radius: 0 0 8px 8px; } .favorite-notes mat-icon { margin-right: 8px; color: #666; } .favorite-notes p { margin: 0; color: #555; white-space: pre-line; } .notifications-toggle { margin-left: auto; } @media (max-width: 768px) { .favorite-header { flex-direction: column; } .favorite-image { width: 100%; height: 200px; margin-bottom: 16px; } .favorite-info { margin-left: 0; } .favorite-actions { margin-top: 16px; justify-content: flex-end; width: 100%; } } `, ], }) export class FavoritesPageComponent implements OnInit { favorites: (Favorite & { selected?: boolean })[] = []; loading = true; error = false; userTags: FavoriteTag[] = []; selectedFavorites: string[] = []; filterOptions: FavoriteFilterOptions = { sort: 'newest', }; selectedTagFilters: string[] = []; showAdvancedFilters = false; dateFrom: Date | null = null; dateTo: Date | null = null; counties: string[] = []; cities: string[] = []; filterPresets: FilterPreset[] = []; categories = [ { value: 'escort', label: 'Escort' }, { value: 'massage', label: 'Massage' }, { value: 'companion', label: 'Companion' }, { value: 'dancer', label: 'Dancer' }, { value: 'other', label: 'Other' }, ]; private searchSubject = new Subject<string>(); constructor( private favoriteService: FavoriteService, private dialogService: DialogService, private notificationService: NotificationService, private router: Router ) {} ngOnInit(): void { this.loadFavorites(); this.loadUserTags(); this.loadLocationData(); this.loadFilterPresets(); // Set up search debounce this.searchSubject .pipe(debounceTime(300), distinctUntilChanged()) .subscribe(() => this.applyFilters()); } /** Load user's favorites with optional filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadUserTags">
+  <h3>loadUserTags</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Load user's tags for filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onSearchChange">
+  <h3>onSearchChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle search input changes</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply current filters and reload favorites</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters to default values</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="toggleAdvancedFilters">
+  <h3>toggleAdvancedFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Toggle advanced filters visibility</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadLocationData">
+  <h3>loadLocationData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Load location data for filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onCountyChange">
+  <h3>onCountyChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle county selection change</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onDateChange">
+  <h3>onDateChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle date range change</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="saveFilterPreset">
+  <h3>saveFilterPreset</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Save current filter settings as a preset</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadFilterPresets">
+  <h3>loadFilterPresets</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Load saved filter presets</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadFilterPreset">
+  <h3>loadFilterPreset</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply a saved filter preset</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getCategoryLabel">
+  <h3>getCategoryLabel</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get the label for a category value</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPriceRangeLabel">
+  <h3>getPriceRangeLabel</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get a formatted label for the price range</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getDateRangeLabel">
+  <h3>getDateRangeLabel</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get a formatted label for the date range</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearSearchFilter">
+  <h3>clearSearchFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the search filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearPriorityFilter">
+  <h3>clearPriorityFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the priority filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearCategoryFilter">
+  <h3>clearCategoryFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the category filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearCountyFilter">
+  <h3>clearCountyFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the county filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearCityFilter">
+  <h3>clearCityFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the city filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearPriceFilter">
+  <h3>clearPriceFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the price filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="clearDateFilter">
+  <h3>clearDateFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clear the date filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeTagFilter">
+  <h3>removeTagFilter</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a specific tag filter</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="updateSelectedFavorites">
+  <h3>updateSelectedFavorites</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Check if any filters are currently applied / get isFiltered(): boolean { return ( !!this.filterOptions.search || !!this.filterOptions.category || !!this.filterOptions.county || !!this.filterOptions.city || !!this.filterOptions.priority || this.filterOptions.priceMin !== undefined || this.filterOptions.priceMax !== undefined || !!this.filterOptions.dateFrom || !!this.filterOptions.dateTo || this.selectedTagFilters.length > 0 || this.filterOptions.sort !== 'newest' ); } /** Update the selected favorites array when checkboxes change</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeFavorite">
+  <h3>removeFavorite</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a single favorite</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeFavoritesBatch">
+  <h3>removeFavoritesBatch</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove multiple favorites in a batch operation</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="openNotesDialog">
+  <h3>openNotesDialog</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Open dialog to edit notes for a favorite</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="openTagsDialogForSingle">
+  <h3>openTagsDialogForSingle</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Open dialog to edit tags for a single favorite</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="openTagsDialog">
+  <h3>openTagsDialog</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Open dialog to add tags to multiple favorites</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="updatePriority">
+  <h3>updatePriority</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Update priority for a single favorite</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="setPriorityBatch">
+  <h3>setPriorityBatch</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Set priority for multiple favorites in a batch operation</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="toggleNotifications">
+  <h3>toggleNotifications</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Toggle notifications for a favorite</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onFavoriteRemoved">
+  <h3>onFavoriteRemoved</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle favorite removal from the favorite button component</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPriorityClass">
+  <h3>getPriorityClass</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get CSS class based on favorite priority</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPriorityIcon">
+  <h3>getPriorityIcon</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get icon name based on priority</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getAdIdAsString">
+  <h3>getAdIdAsString</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Convert ad ID to string regardless of its type</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadFavorites">
+  <h3>loadFavorites</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Load user's favorites</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFavorites">
+  <h3>getFavorites</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get user's favorites from the API</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onCardClick">
+  <h3>onCardClick</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle card click event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onRemoveFavorite">
+  <h3>onRemoveFavorite</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle remove favorite action</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onToggleNotifications">
+  <h3>onToggleNotifications</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle toggle notifications action</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onUpdateNotes">
+  <h3>onUpdateNotes</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/favorites/favorites.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle update notes action</p>
+  </div>
+  
+  
+  
+</div>
+</div>
       </article>
     </div>
   </main>

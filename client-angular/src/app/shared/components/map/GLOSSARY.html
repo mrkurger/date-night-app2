@@ -3087,6 +3087,434 @@ Initialize component</code></pre>
   
 </div>
 </div>
+  
+  
+  
+<h4>Example</h4>
+<pre><code><app-map
+[height]="'400px'"
+[initialLatitude]="59.9139"
+[initialLongitude]="10.7522"
+[initialZoom]="10"
+[selectable]="true"
+[markers]="mapMarkers"
+[showCurrentLocation]="true"
+(locationSelected)="onLocationSelected($event)"
+(markerClick)="onMarkerClick($event)"
+></app-map>
+/
+@Component({
+selector: 'app-map',
+templateUrl: './map.component.html',
+styleUrls: ['./map.component.scss'],
+standalone: true,
+imports: [CommonModule],
+})
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+@ViewChild('map') mapElement?: ElementRef;
+/**
+Height of the map container (CSS value)
+@default '400px'
+/
+@Input() height = '400px';
+/**
+Initial latitude for map center
+@default 59.9139 (Oslo, Norway)
+/
+@Input() initialLatitude = 59.9139; // Oslo, Norway
+/**
+Initial longitude for map center
+@default 10.7522 (Oslo, Norway)
+/
+@Input() initialLongitude = 10.7522; // Oslo, Norway
+/**
+Initial zoom level
+@default 6
+/
+@Input() initialZoom = 6;
+/**
+Array of markers to display on the map
+@default []
+/
+@Input() markers: MapMarker[] = [];
+/**
+Whether the map allows location selection via clicking
+@default false
+/
+@Input() selectable = false;
+/**
+Whether to show the user's current location on the map
+@default false
+/
+@Input() showCurrentLocation = false;
+/**
+Event emitted when a marker is clicked
+Emits the marker object that was clicked
+/
+@Output() markerClick = new EventEmitter<MapMarker>();
+/**
+Event emitted when the map is clicked
+Emits the coordinates of the click
+/
+@Output() mapClick = new EventEmitter<{ latitude: number; longitude: number }>();
+/**
+Event emitted when a location is selected on the map
+Emits an object with latitude, longitude, and optional address
+/
+@Output() locationSelected = new EventEmitter<{
+latitude: number;
+longitude: number;
+address?: string;
+}>();
+// Leaflet map instance
+private map: L.Map | null = null;
+private markerLayer: L.LayerGroup | null = null;
+private currentLocationMarker: L.Marker | null = null;
+private selectedLocationMarker: L.Marker | null = null;
+// Tracking state
+private isInitialized = false;
+private keyboardControlActive = false;
+private keyboardControlStep = 0.0001; // Step size for keyboard navigation
+private initStartTime = 0;
+constructor(
+private geocodingService: GeocodingService,
+private mapMonitoringService: MapMonitoringService,
+private ngZone: NgZone
+) {}
+/**
+Initialize component</code></pre>
+</div>
+
+<div class="glossary-entry" id="ngAfterViewInit">
+  <h3>ngAfterViewInit</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Initialize the map after the view is initialized</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="ngOnDestroy">
+  <h3>ngOnDestroy</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Clean up resources when component is destroyed</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="ngOnChanges">
+  <h3>ngOnChanges</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle changes to input properties</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>changes</td>
+      <td><code></code></td>
+      <td>- SimpleChanges object containing changed properties</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="initMap">
+  <h3>initMap</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Initialize the Leaflet map</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="handleMapClick">
+  <h3>handleMapClick</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle map click events</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>latitude</td>
+      <td><code></code></td>
+      <td>- Latitude coordinate</td>
+    </tr>
+    
+    <tr>
+      <td>longitude</td>
+      <td><code></code></td>
+      <td>- Longitude coordinate</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="addMarkers">
+  <h3>addMarkers</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Add markers to the map</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="createMarkerIcon">
+  <h3>createMarkerIcon</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Create a marker icon</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>color</td>
+      <td><code></code></td>
+      <td>- Color name for the marker</td>
+    </tr>
+    
+    <tr>
+      <td>iconName</td>
+      <td><code></code></td>
+      <td>- Optional custom icon name</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+<h4>Returns</h4>
+<p><code></code> - Leaflet Icon instance</p>
+  
+</div>
+
+<div class="glossary-entry" id="showUserLocation">
+  <h3>showUserLocation</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Show the user's current position on the map</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="setupKeyboardAccessibility">
+  <h3>setupKeyboardAccessibility</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Set up keyboard accessibility features</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeKeyboardAccessibility">
+  <h3>removeKeyboardAccessibility</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove keyboard accessibility event listeners</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="announceToScreenReader">
+  <h3>announceToScreenReader</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle keyboard navigation events / private handleKeyboardNavigation = (e: KeyboardEvent): void => { if (!this.map || !this.keyboardControlActive) return; // Only handle events when map is focused const mapContainer = this.map.getContainer(); if (document.activeElement !== mapContainer) return; const center = this.map.getCenter(); let lat = center.lat; let lng = center.lng; let handled = false; // Adjust step size based on zoom level const zoomFactor = Math.pow(2, 16 - this.map.getZoom()); const step = this.keyboardControlStep * zoomFactor; switch (e.key) { case 'ArrowUp': lat += step; handled = true; break; case 'ArrowDown': lat -= step; handled = true; break; case 'ArrowLeft': lng -= step; handled = true; break; case 'ArrowRight': lng += step; handled = true; break; case ' ': // Space key if (this.selectable) { this.handleMapClick(lat, lng); this.announceToScreenReader( `Location selected at latitude ${lat.toFixed(6)}, longitude ${lng.toFixed(6)}` ); handled = true; } break; case '+': this.map.zoomIn(); this.announceToScreenReader(`Zoomed in to level ${this.map.getZoom()}`); handled = true; break; case '-': this.map.zoomOut(); this.announceToScreenReader(`Zoomed out to level ${this.map.getZoom()}`); handled = true; break; } if (handled) { e.preventDefault(); if (e.key !== ' ' && e.key !== '+' && e.key !== '-') { this.map.panTo([lat, lng]); } } }; /** Announce a message to screen readers</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>message</td>
+      <td><code></code></td>
+      <td>- Message to announce</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="updateMarkers">
+  <h3>updateMarkers</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Update the markers on the map</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>markers</td>
+      <td><code></code></td>
+      <td>- Array of MapMarker objects to display</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="setSelectedLocation">
+  <h3>setSelectedLocation</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Set the selected location on the map</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>latitude</td>
+      <td><code></code></td>
+      <td>- Latitude coordinate</td>
+    </tr>
+    
+    <tr>
+      <td>longitude</td>
+      <td><code></code></td>
+      <td>- Longitude coordinate</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="centerMap">
+  <h3>centerMap</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Center the map on a specific location</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>latitude</td>
+      <td><code></code></td>
+      <td>- Latitude coordinate</td>
+    </tr>
+    
+    <tr>
+      <td>longitude</td>
+      <td><code></code></td>
+      <td>- Longitude coordinate</td>
+    </tr>
+    
+    <tr>
+      <td>zoom</td>
+      <td><code></code></td>
+      <td>- Optional zoom level</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="refreshMap">
+  <h3>refreshMap</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/map/map.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Refresh the map (useful when container size changes)</p>
+  </div>
+  
+  
+  
+</div>
+</div>
       </article>
     </div>
   </main>
