@@ -57,12 +57,17 @@ jobs:
           NODE_ENV: test
           MONGODB_URI: mongodb://localhost:27017/date-night-test
 
+      - name: Prepare test results directory
+        run: |
+          mkdir -p downloaded-reports/server
+          cp -r ./server/coverage/* downloaded-reports/server/ || true
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: server-test-results
-          path: ./server/coverage
+          path: downloaded-reports/server
 
   lint:
     runs-on: ubuntu-latest

@@ -46,8 +46,12 @@ jobs:
       - name: Install marked
         run: npm install marked
 
+      - name: Create documentation directories
+        run: |
+          mkdir -p downloaded-reports/docs
+
       - name: Generate documentation
-        run: node scripts/generate_docs.js --verbose --migrate-docs
+        run: node scripts/generate_docs.js --verbose --migrate-docs --output-dir=downloaded-reports/docs
 
       - name: Commit changes
         if: github.event_name != 'pull_request'
@@ -82,7 +86,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: '.'
+          path: 'downloaded-reports/docs'
 
       - name: Deploy to GitHub Pages
         id: deployment

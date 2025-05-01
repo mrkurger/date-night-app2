@@ -41,12 +41,17 @@ jobs:
         working-directory: ./client-angular
         run: npm test -- --watch=false --browsers=ChromeHeadless --no-progress
 
+      - name: Prepare test results directory
+        run: |
+          mkdir -p downloaded-reports/angular
+          cp -r ./client-angular/coverage/* downloaded-reports/angular/ || true
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results
-          path: ./client-angular/coverage
+          path: downloaded-reports/angular
 
   e2e:
     runs-on: ubuntu-latest
@@ -82,12 +87,18 @@ jobs:
           browser: chrome
           headless: true
 
+      - name: Prepare Cypress screenshots directory
+        if: failure()
+        run: |
+          mkdir -p downloaded-reports/angular/cypress-screenshots
+          cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress-screenshots/ || true
+
       - name: Upload Cypress screenshots
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
-          path: ./client-angular/cypress/screenshots
+          path: downloaded-reports/angular/cypress-screenshots
 
   lint:
     runs-on: ubuntu-latest
