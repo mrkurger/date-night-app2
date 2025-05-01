@@ -1,76 +1,192 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Lessons: Services - Date Night App</title>
-  <link rel="stylesheet" href="/docs/component-library/styles/style.css">
-</head>
-<body>
-  <header>
-    <div class="container">
-      <h1>Date Night App Documentation</h1>
-      <nav>
-        <ul>
-          <li><a href="/_docs_index.html">Home</a></li>
-          <li><a href="/_glossary.html">Glossary</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  
-  <main class="container">
-    <div class="page-content">
-      <aside class="sidebar">
-        <h3>Services</h3>
-        <ul>
-          <li><a href="./CHANGELOG.html">Changelog</a></li>
-          <li><a href="./AILESSONS.html">AI Lessons</a></li>
-          <li><a href="./GLOSSARY.html">Glossary</a></li>
-        </ul>
-      </aside>
-      
-      <article class="content">
-        <h1>AI Lessons: Services</h1>
-        
-        <p>This file contains lessons learned and best practices for the Services component/module.</p>
-        
-        <h2>Best Practices</h2>
-        
-        <ul>
-          <li>Add best practices specific to this component/module</li>
-        </ul>
-        
-        <h2>Common Patterns</h2>
-        
-        <ul>
-          <li>Add common patterns used in this component/module</li>
-        </ul>
-        
-        <h2>Known Issues</h2>
-        
-        <ul>
-          <li>Add known issues or challenges with this component/module</li>
-        </ul>
-        
-        <h2>Implementation Notes</h2>
-        
-        <ul>
-          <li>Add implementation notes or decisions made for this component/module</li>
-        </ul>
-        
-        <h2>How to use this file</h2>
-        
-        <p>When discovering new patterns, best practices, or lessons related to this component, add them to this file.
-        This helps maintain knowledge about the component and guides future development.</p>
-      </article>
-    </div>
-  </main>
-  
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Date Night App. All rights reserved.</p>
-    </div>
-  </footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Lessons: Services - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+          </ul>
+        </aside>
+
+        <article class="content">
+          <h1>AI Lessons: Services</h1>
+
+          <p>
+            This file contains lessons learned and best practices for the Services component/module.
+          </p>
+
+          <h2>Interface Consistency in Tests</h2>
+
+          <p>
+            When working with complex interfaces like <code>Ad</code> and <code>Favorite</code>,
+            it's crucial to ensure that mock objects in tests fully implement the required interface
+            properties. Missing properties can lead to subtle type errors that may not be
+            immediately apparent.
+          </p>
+
+          <h3>Problem Encountered</h3>
+          <p>
+            In the
+            <a href="./GLOSSARY.html#FavoriteService" title="Service for managing user favorites"
+              >FavoriteService</a
+            >
+            tests, mock objects were missing required properties from the <code>Ad</code> interface,
+            causing type errors.
+          </p>
+
+          <h3>Solution</h3>
+          <p>
+            Always create complete mock objects that satisfy all required properties of the
+            interface:
+          </p>
+
+          <pre><code>// Complete mock object
+const mockAd = {
+  _id: 'ad1',
+  title: 'Test Ad',
+  userId: 'user1',
+  isActive: true,
+  isFeatured: false,
+  isTrending: false,
+  isTouring: false,
+  viewCount: 0,
+  clickCount: 0,
+  inquiryCount: 0,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  location: {
+    city: 'Test City',
+    county: 'Test County'
+  }
+};</code></pre>
+
+          <div class="tip">
+            <strong>Tip:</strong> Consider creating factory functions for generating test data to
+            ensure consistency across tests.
+          </div>
+
+          <h2>Observable Properties vs. Methods in Tests</h2>
+
+          <p>
+            When testing components that use services with observable streams, it's often better to
+            mock the observable properties directly rather than methods that return observables.
+          </p>
+
+          <h3>Problem Encountered</h3>
+          <p>In the chat component tests, we were mocking methods that return observables:</p>
+
+          <pre><code>chatServiceSpy.onNewMessage.and.returnValue(newMessageSubject.asObservable());
+chatServiceSpy.onMessageRead.and.returnValue(messageReadSubject.asObservable());
+chatServiceSpy.onTypingIndicator.and.returnValue(typingIndicatorSubject.asObservable());</code></pre>
+
+          <h3>Solution</h3>
+          <p>A more maintainable approach is to directly set the observable properties:</p>
+
+          <pre><code>// Set up the socket event handlers as properties instead of methods
+chatServiceSpy.newMessage$ = newMessageSubject.asObservable();
+chatServiceSpy.messageRead$ = messageReadSubject.asObservable();
+chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();</code></pre>
+
+          <p>
+            This approach better reflects the actual service implementation and makes the tests more
+            resilient to implementation changes.
+          </p>
+
+          <h2>Specific vs. Generic Assertions</h2>
+
+          <p>
+            When testing complex objects, using specific assertions for critical properties rather
+            than exact equality checks can make tests more maintainable.
+          </p>
+
+          <h3>Problem Encountered</h3>
+          <p>
+            In the
+            <a href="./GLOSSARY.html#FavoriteService" title="Service for managing user favorites"
+              >FavoriteService</a
+            >
+            tests, we were using exact equality checks for complex objects:
+          </p>
+
+          <pre><code>service.getFavorites().subscribe(favorites => {
+  expect(favorites).toEqual(mockFavorites);
+});</code></pre>
+
+          <h3>Solution</h3>
+          <p>
+            A more maintainable approach is to assert on specific properties that are critical to
+            the test:
+          </p>
+
+          <pre><code>service.getFavorites().subscribe(favorites => {
+  expect(favorites.length).toEqual(mockFavorites.length);
+  expect(favorites[0]._id).toEqual(mockFavorites[0]._id);
+  expect(favorites[1]._id).toEqual(mockFavorites[1]._id);
+});</code></pre>
+
+          <p>
+            This approach makes tests less brittle when the object structure changes in ways that
+            don't affect the core functionality being tested.
+          </p>
+
+          <h2>CSS Integration Strategies</h2>
+
+          <p>
+            When integrating external CSS frameworks like Emerald UI, it's important to choose the
+            right integration strategy to avoid conflicts with existing styles.
+          </p>
+
+          <h3>Approach Used</h3>
+          <p>
+            We integrated Emerald UI CSS by importing it in component-specific SCSS files rather
+            than globally:
+          </p>
+
+          <pre><code>@use '../../../styles/design-system/index.scss' as ds;
+@import '../../../assets/styles/emerald-ui.min.css';</code></pre>
+
+          <p>
+            This approach allows for more granular control over which components use the Emerald UI
+            styles, reducing the risk of style conflicts.
+          </p>
+
+          <h3>Benefits</h3>
+          <ul>
+            <li>Component-specific styling control</li>
+            <li>Reduced risk of global style conflicts</li>
+            <li>Easier to remove or replace the framework in the future</li>
+            <li>Better performance as styles are only loaded where needed</li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
 </html>

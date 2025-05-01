@@ -28,7 +28,10 @@ describe('AppCardComponent', () => {
       'This is a test ad description that is long enough to test truncation functionality in the component.',
     category: 'Test Category',
     price: 100,
-    location: 'Test Location',
+    location: {
+      city: 'Test City',
+      county: 'Test County',
+    },
     images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
     media: [
       { type: 'image', url: 'https://example.com/media1.jpg' },

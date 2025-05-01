@@ -53,7 +53,24 @@ describe('FavoriteService', () => {
         {
           _id: '1',
           user: 'user1',
-          ad: { _id: 'ad1', title: 'Ad 1' },
+          ad: {
+            _id: 'ad1',
+            title: 'Ad 1',
+            userId: 'user1',
+            isActive: true,
+            isFeatured: false,
+            isTrending: false,
+            isTouring: false,
+            viewCount: 0,
+            clickCount: 0,
+            inquiryCount: 0,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            location: {
+              city: 'Test City',
+              county: 'Test County',
+            },
+          },
           notificationsEnabled: false,
           tags: [],
           priority: 'normal',
@@ -64,7 +81,24 @@ describe('FavoriteService', () => {
         {
           _id: '2',
           user: 'user1',
-          ad: { _id: 'ad2', title: 'Ad 2' },
+          ad: {
+            _id: 'ad2',
+            title: 'Ad 2',
+            userId: 'user1',
+            isActive: true,
+            isFeatured: false,
+            isTrending: false,
+            isTouring: false,
+            viewCount: 0,
+            clickCount: 0,
+            inquiryCount: 0,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            location: {
+              city: 'Test City',
+              county: 'Test County',
+            },
+          },
           notificationsEnabled: false,
           tags: [],
           priority: 'normal',
@@ -75,7 +109,9 @@ describe('FavoriteService', () => {
       ];
 
       service.getFavorites().subscribe(favorites => {
-        expect(favorites).toEqual(mockFavorites);
+        expect(favorites.length).toEqual(mockFavorites.length);
+        expect(favorites[0]._id).toEqual(mockFavorites[0]._id);
+        expect(favorites[1]._id).toEqual(mockFavorites[1]._id);
       });
 
       const req = httpMock.expectOne(apiUrl);

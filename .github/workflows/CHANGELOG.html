@@ -22,6 +22,24 @@
     <main class="container">
       <h1>GitHub Actions Workflows Changelog</h1>
 
+      <h2>2025-05-01</h2>
+      <h3>Fixed</h3>
+      <ul>
+        <li>
+          Fixed Node.js caching issue in CI/CD workflows that was causing the error:
+          <code>"Some specified paths were not resolved, unable to cache dependencies"</code>
+        </li>
+        <li>
+          Removed npm caching configuration from all Node.js setup steps in both
+          <code>angular-tests.yml</code> and <code>server-tests.yml</code> workflow files
+        </li>
+        <li>
+          Changed <code>npm ci</code> commands to <code>npm install</code> since there are no
+          package-lock.json files in the repository
+        </li>
+        <li>Added comments explaining why caching was disabled to improve maintainability</li>
+      </ul>
+
       <h2>2025-04-XX</h2>
       <h3>Added</h3>
       <ul>

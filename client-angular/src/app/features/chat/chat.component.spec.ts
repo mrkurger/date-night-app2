@@ -71,6 +71,7 @@ describe('ChatComponent', () => {
   const mockMessages = [
     {
       _id: 'msg1',
+      roomId: 'room1',
       sender: { id: 'user1', username: 'testuser' },
       message: 'Hi Jane, how are you?',
       timestamp: new Date(Date.now() - 1000 * 60 * 10), // 10 minutes ago
@@ -78,6 +79,7 @@ describe('ChatComponent', () => {
     },
     {
       _id: 'msg2',
+      roomId: 'room1',
       sender: { id: 'contact2', username: 'Jane Smith' },
       message: "I'm good, thanks! How about you?",
       timestamp: new Date(Date.now() - 1000 * 60 * 8), // 8 minutes ago
@@ -85,6 +87,7 @@ describe('ChatComponent', () => {
     },
     {
       _id: 'msg3',
+      roomId: 'room1',
       sender: { id: 'user1', username: 'testuser' },
       message: 'Doing well. See you tomorrow?',
       timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
@@ -92,6 +95,7 @@ describe('ChatComponent', () => {
     },
     {
       _id: 'msg4',
+      roomId: 'room1',
       sender: { id: 'contact2', username: 'Jane Smith' },
       message: 'See you tomorrow',
       timestamp: new Date(Date.now() - 1000 * 60 * 3), // 3 minutes ago
@@ -138,14 +142,19 @@ describe('ChatComponent', () => {
     chatServiceSpy.sendMessage.and.returnValue(
       of({
         _id: 'new-msg-id',
+        roomId: 'room1',
         timestamp: new Date(),
         sender: { id: 'user1', username: 'testuser' },
+        message: 'Test message',
+        read: false,
       })
     );
     chatServiceSpy.markAsRead.and.returnValue(of({ count: 1 }));
-    chatServiceSpy.onNewMessage.and.returnValue(newMessageSubject.asObservable());
-    chatServiceSpy.onMessageRead.and.returnValue(messageReadSubject.asObservable());
-    chatServiceSpy.onTypingIndicator.and.returnValue(typingIndicatorSubject.asObservable());
+
+    // Set up the socket event handlers as properties instead of methods
+    chatServiceSpy.newMessage$ = newMessageSubject.asObservable();
+    chatServiceSpy.messageRead$ = messageReadSubject.asObservable();
+    chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();
     chatServiceSpy.getMessageAutoDeletionSettings.and.returnValue({
       enabled: true,
       ttl: 7 * 24 * 60 * 60 * 1000,

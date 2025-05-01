@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services Glossary - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+          </ul>
+        </aside>
+
+        <article class="content">
+          <h1>Services Glossary</h1>
+
+          <p>
+            This glossary contains definitions and explanations for all services and related
+            functions in the core services module.
+          </p>
+
+          <section id="AdService">
+            <h2>AdService</h2>
+            <p>Service responsible for managing advertisements in the application.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>getAds(filters?: AdFilters)</strong>: Retrieves a list of ads based on
+                optional filters
+              </li>
+              <li><strong>getAdById(id: string)</strong>: Retrieves a specific ad by its ID</li>
+              <li><strong>createAd(ad: AdCreateDTO)</strong>: Creates a new advertisement</li>
+              <li>
+                <strong>updateAd(id: string, ad: AdUpdateDTO)</strong>: Updates an existing
+                advertisement
+              </li>
+              <li><strong>deleteAd(id: string)</strong>: Deletes an advertisement</li>
+              <li>
+                <strong>getAdStats(id: string)</strong>: Retrieves statistics for a specific ad
+              </li>
+            </ul>
+          </section>
+
+          <section id="AuthService">
+            <h2>AuthService</h2>
+            <p>Service responsible for user authentication and authorization.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>login(email: string, password: string)</strong>: Authenticates a user and
+                creates a session
+              </li>
+              <li><strong>register(user: UserRegistrationData)</strong>: Registers a new user</li>
+              <li><strong>logout()</strong>: Ends the current user session</li>
+              <li><strong>getCurrentUser()</strong>: Retrieves the currently authenticated user</li>
+              <li>
+                <strong>isAuthenticated()</strong>: Checks if a user is currently authenticated
+              </li>
+              <li>
+                <strong>hasRole(role: string)</strong>: Checks if the current user has a specific
+                role
+              </li>
+            </ul>
+          </section>
+
+          <section id="ChatService">
+            <h2>ChatService</h2>
+            <p>Service responsible for real-time messaging functionality.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li><strong>getContacts()</strong>: Retrieves the user's chat contacts</li>
+              <li>
+                <strong>getMessages(roomId: string)</strong>: Retrieves messages for a specific chat
+                room
+              </li>
+              <li>
+                <strong
+                  >sendMessage(roomId: string, content: string, replyToId?: string, ttl?:
+                  number)</strong
+                >: Sends a message to a chat room
+              </li>
+              <li>
+                <strong>markAsRead(roomId: string, messageIds: string[])</strong>: Marks messages as
+                read
+              </li>
+              <li>
+                <strong>createOrGetChatRoom(userId: string)</strong>: Creates or retrieves a direct
+                chat room with another user
+              </li>
+              <li>
+                <strong>deleteMessage(roomId: string, messageId: string)</strong>: Deletes a message
+              </li>
+            </ul>
+
+            <h3>Observables</h3>
+            <ul>
+              <li>
+                <strong>newMessage$</strong>: Observable that emits when a new message is received
+              </li>
+              <li>
+                <strong>messageRead$</strong>: Observable that emits when messages are marked as
+                read
+              </li>
+              <li>
+                <strong>typingIndicator$</strong>: Observable that emits when a user is typing
+              </li>
+              <li>
+                <strong>onlineUsers$</strong>: Observable that emits when users' online status
+                changes
+              </li>
+            </ul>
+          </section>
+
+          <section id="FavoriteService">
+            <h2>FavoriteService</h2>
+            <p>Service responsible for managing user favorites.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li><strong>getFavorites()</strong>: Retrieves all favorites for the current user</li>
+              <li><strong>loadFavoriteIds()</strong>: Loads just the IDs of favorited ads</li>
+              <li>
+                <strong>isFavorite(adId: string)</strong>: Checks if an ad is in the user's
+                favorites
+              </li>
+              <li>
+                <strong
+                  >addFavorite(adId: string, notes?: string, notificationsEnabled?: boolean)</strong
+                >: Adds an ad to favorites
+              </li>
+              <li><strong>removeFavorite(adId: string)</strong>: Removes an ad from favorites</li>
+              <li>
+                <strong>updateNotes(adId: string, notes: string)</strong>: Updates notes for a
+                favorited ad
+              </li>
+              <li>
+                <strong>toggleNotifications(adId: string)</strong>: Toggles notifications for a
+                favorited ad
+              </li>
+              <li><strong>clearCache()</strong>: Clears the cached favorites</li>
+            </ul>
+
+            <h3>Observables</h3>
+            <ul>
+              <li>
+                <strong>favorites$</strong>: Observable that emits the current list of favorite ad
+                IDs
+              </li>
+            </ul>
+          </section>
+
+          <section id="NotificationService">
+            <h2>NotificationService</h2>
+            <p>Service responsible for displaying notifications to users.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>success(message: string, action?: string, duration?: number)</strong>:
+                Displays a success notification
+              </li>
+              <li>
+                <strong>error(message: string, action?: string, duration?: number)</strong>:
+                Displays an error notification
+              </li>
+              <li>
+                <strong>info(message: string, action?: string, duration?: number)</strong>: Displays
+                an informational notification
+              </li>
+              <li>
+                <strong>warning(message: string, action?: string, duration?: number)</strong>:
+                Displays a warning notification
+              </li>
+            </ul>
+          </section>
+
+          <section id="EncryptionService">
+            <h2>EncryptionService</h2>
+            <p>Service responsible for end-to-end encryption of messages.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li><strong>initialize()</strong>: Initializes the encryption service</li>
+              <li><strong>isEncryptionAvailable()</strong>: Checks if encryption is available</li>
+              <li>
+                <strong>setupRoomEncryption(roomId: string)</strong>: Sets up encryption for a chat
+                room
+              </li>
+              <li>
+                <strong>encryptMessage(roomId: string, content: string, ttl?: number)</strong>:
+                Encrypts a message
+              </li>
+              <li>
+                <strong>decryptMessage(roomId: string, encryptedData: EncryptedData)</strong>:
+                Decrypts a message
+              </li>
+              <li>
+                <strong
+                  >setMessageExpirySettings(roomId: string, settings: MessageExpirySettings)</strong
+                >: Configures message auto-deletion settings
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

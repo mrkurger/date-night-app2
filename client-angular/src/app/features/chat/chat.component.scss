@@ -1,4 +1,5 @@
 @use '../../../app/core/design/design-tokens' as tokens;
+@import '../../../assets/styles/emerald-ui.min.css';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -14,11 +15,11 @@
 
 // Variables
 $sidebar-width: 320px;
-$message-bubble-sent: tokens.$color-primary;
-$message-bubble-received: tokens.$color-light-gray-1;
-$typing-indicator-color: tokens.$color-primary;
-$temporary-message-color: tokens.$color-warning;
-$temporary-message-bg: rgba(tokens.$color-warning-light, 0.3);
+$message-bubble-sent: #2c7be5;
+$message-bubble-received: #f8f9fa;
+$typing-indicator-color: #2c7be5;
+$temporary-message-color: #ffc107;
+$temporary-message-bg: rgba(255, 193, 7, 0.3);
 
 // Animations
 @keyframes pulse {
