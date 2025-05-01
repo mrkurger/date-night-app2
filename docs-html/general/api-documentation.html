@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Documentation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>API Documentation</h1>
+
+      <h1>API Documentation</h1>
+<h2>Overview</h2>
+<p>DateNight.io provides a comprehensive RESTful API that allows developers to interact with the platform programmatically. The API is documented using the OpenAPI 3.0 specification and is accessible through Swagger UI.</p>
+<h2>Accessing the API Documentation</h2>
+<p>The API documentation is available at the following endpoints:</p>
+<ul>
+<li><strong>Swagger UI</strong>: <code>/api-docs</code></li>
+<li><strong>OpenAPI JSON</strong>: <code>/swagger.json</code></li>
+</ul>
+<h2>Authentication</h2>
+<p>Most API endpoints require authentication using JSON Web Tokens (JWT). To authenticate:</p>
+<ol>
+<li>Obtain a token by calling the <code>/api/v1/auth/login</code> endpoint with valid credentials</li>
+<li>Include the token in the <code>Authorization</code> header of subsequent requests:<pre><code>Authorization: Bearer &lt;your_token&gt;
+</code></pre>
+</li>
+</ol>
+<h2>Rate Limiting</h2>
+<p>To ensure fair usage and system stability, the API implements rate limiting:</p>
+<ul>
+<li><strong>General API endpoints</strong>: 100 requests per 15 minutes per IP address</li>
+<li><strong>Authentication endpoints</strong>: 10 requests per 15 minutes per IP address</li>
+<li><strong>Ad creation endpoints</strong>: 20 requests per hour per user</li>
+<li><strong>Media upload endpoints</strong>: 50 requests per hour per user</li>
+</ul>
+<h2>API Versioning</h2>
+<p>The API uses URL versioning. All endpoints are prefixed with <code>/api/v1/</code>.</p>
+<h2>Common Response Formats</h2>
+<h3>Success Response</h3>
+<pre><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;data&quot;: { ... }
+}
+</code></pre>
+<h3>Error Response</h3>
+<pre><code class="language-json">{
+  &quot;success&quot;: false,
+  &quot;error&quot;: &quot;Error code&quot;,
+  &quot;message&quot;: &quot;Detailed error message&quot;
+}
+</code></pre>
+<h2>API Resources</h2>
+<p>The API provides access to the following resources:</p>
+<h3>Advertisements</h3>
+<p>Endpoints for creating, retrieving, updating, and deleting advertisements.</p>
+<ul>
+<li><code>GET /api/v1/ads</code>: Get all ads with pagination and filtering</li>
+<li><code>GET /api/v1/ads/:adId</code>: Get ad by ID</li>
+<li><code>POST /api/v1/ads</code>: Create a new ad</li>
+<li><code>PUT /api/v1/ads/:adId</code>: Update an existing ad</li>
+<li><code>DELETE /api/v1/ads/:adId</code>: Delete an ad</li>
+<li><code>GET /api/v1/ads/swipe</code>: Get ads for swipe interface</li>
+<li><code>GET /api/v1/ads/categories</code>: Get all ad categories</li>
+<li><code>GET /api/v1/ads/category/:category</code>: Get ads by category</li>
+<li><code>POST /api/v1/ads/swipes</code>: Record a swipe action</li>
+</ul>
+<h3>Authentication</h3>
+<p>Endpoints for user authentication and authorization.</p>
+<ul>
+<li><code>POST /api/v1/auth/register</code>: Register a new user</li>
+<li><code>POST /api/v1/auth/login</code>: Login and get access token</li>
+<li><code>POST /api/v1/auth/refresh</code>: Refresh access token</li>
+<li><code>POST /api/v1/auth/logout</code>: Logout and invalidate token</li>
+<li><code>POST /api/v1/auth/forgot-password</code>: Request password reset</li>
+<li><code>POST /api/v1/auth/reset-password</code>: Reset password with token</li>
+</ul>
+<h3>Users</h3>
+<p>Endpoints for user management.</p>
+<ul>
+<li><code>GET /api/v1/users/me</code>: Get current user profile</li>
+<li><code>PUT /api/v1/users/me</code>: Update current user profile</li>
+<li><code>GET /api/v1/users/:userId</code>: Get user by ID</li>
+<li><code>PUT /api/v1/users/:userId/settings</code>: Update user settings</li>
+</ul>
+<h3>Chat</h3>
+<p>Endpoints for messaging between users.</p>
+<ul>
+<li><code>GET /api/v1/chat/rooms</code>: Get all chat rooms for current user</li>
+<li><code>POST /api/v1/chat/rooms</code>: Create a new chat room</li>
+<li><code>GET /api/v1/chat/rooms/:roomId</code>: Get chat room by ID</li>
+<li><code>GET /api/v1/chat/rooms/:roomId/messages</code>: Get messages in a chat room</li>
+<li><code>POST /api/v1/chat/rooms/:roomId/messages</code>: Send a message to a chat room</li>
+</ul>
+<h3>Travel Itineraries</h3>
+<p>Endpoints for managing travel itineraries.</p>
+<ul>
+<li><code>GET /api/v1/travel/ads/:adId/itineraries</code>: Get all itineraries for an ad</li>
+<li><code>POST /api/v1/travel/ads/:adId/itineraries</code>: Create a new itinerary</li>
+<li><code>GET /api/v1/travel/ads/:adId/itineraries/:id</code>: Get itinerary by ID</li>
+<li><code>PUT /api/v1/travel/ads/:adId/itineraries/:id</code>: Update an itinerary</li>
+<li><code>PATCH /api/v1/travel/ads/:adId/itineraries/:id/cancel</code>: Cancel an itinerary</li>
+<li><code>DELETE /api/v1/travel/ads/:adId/itineraries/:id</code>: Delete an itinerary</li>
+</ul>
+<h3>Wallet</h3>
+<p>Endpoints for managing user wallets and transactions.</p>
+<ul>
+<li><code>GET /api/v1/wallet</code>: Get wallet details</li>
+<li><code>POST /api/v1/wallet/deposit</code>: Deposit funds</li>
+<li><code>POST /api/v1/wallet/withdraw</code>: Withdraw funds</li>
+<li><code>POST /api/v1/wallet/transfer</code>: Transfer funds</li>
+<li><code>GET /api/v1/wallet/transactions</code>: Get transaction history</li>
+</ul>
+<h3>Media</h3>
+<p>Endpoints for managing media files.</p>
+<ul>
+<li><code>POST /api/v1/media/upload</code>: Upload media files</li>
+<li><code>DELETE /api/v1/media/:mediaId</code>: Delete a media file</li>
+<li><code>PATCH /api/v1/media/:mediaId/moderate</code>: Moderate a media file</li>
+</ul>
+<h2>Implementing Swagger Documentation</h2>
+<p>To document new API endpoints, add JSDoc-style comments to your route files. Here&#39;s an example:</p>
+<pre><code class="language-javascript">/**
+ * @swagger
+ * /api/v1/resource:
+ *   get:
+ *     summary: Get resources
+ *     description: Retrieve a list of resources
+ *     tags: [ResourceTag]
+ *     parameters:
+ *       - in: query
+ *         name: param
+ *         schema:
+ *           type: string
+ *         description: Parameter description
+ *     responses:
+ *       200:
+ *         description: Success response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: &#39;#/components/schemas/Resource&#39;
+ */
+router.get(&#39;/&#39;, resourceController.getResources);
+</code></pre>
+<h2>Adding New Schemas</h2>
+<p>To add new schemas to the Swagger documentation, update the <code>server/config/swagger.js</code> file:</p>
+<pre><code class="language-javascript">// Add to components.schemas object
+MyNewResource: {
+  type: &#39;object&#39;,
+  properties: {
+    id: {
+      type: &#39;string&#39;,
+      example: &#39;60d21b4667d0d8992e610c85&#39;,
+    },
+    name: {
+      type: &#39;string&#39;,
+      example: &#39;Resource name&#39;,
+    },
+    // Add other properties
+  },
+},
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Keep documentation up-to-date</strong>: Update the Swagger documentation whenever you change an API endpoint</li>
+<li><strong>Use meaningful descriptions</strong>: Provide clear and concise descriptions for endpoints, parameters, and responses</li>
+<li><strong>Include examples</strong>: Add examples for request bodies and responses to make the documentation more useful</li>
+<li><strong>Document error responses</strong>: Include documentation for possible error responses and their meanings</li>
+<li><strong>Group related endpoints</strong>: Use tags to group related endpoints together</li>
+</ol>
+<h2>Related Documentation</h2>
+<ul>
+<li><a href="/docs/IMPLEMENTATION_SUMMARY.MD">IMPLEMENTATION_SUMMARY.MD</a></li>
+<li><a href="/docs/SECURITY_CONSIDERATIONS.MD">SECURITY_CONSIDERATIONS.MD</a></li>
+<li><a href="/docs/DEVELOPMENT_GUIDE.MD">DEVELOPMENT_GUIDE.MD</a></li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

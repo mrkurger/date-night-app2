@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication Flow - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Authentication Flow</h1>
+
+      <h1>Authentication Flow</h1>
+<p>This document describes the authentication flow in the DateNight.io application, including registration, login, session management, and security features.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#registration-process">Registration Process</a></li>
+<li><a href="#login-process">Login Process</a></li>
+<li><a href="#oauth-integration">OAuth Integration</a></li>
+<li><a href="#session-management">Session Management</a></li>
+<li><a href="#password-management">Password Management</a></li>
+<li><a href="#multi-factor-authentication">Multi-factor Authentication</a></li>
+<li><a href="#security-considerations">Security Considerations</a></li>
+</ul>
+<h2>Overview</h2>
+<p>DateNight.io uses a token-based authentication system with JWT (JSON Web Tokens) for managing user sessions. The system supports both traditional email/password authentication and OAuth integration with multiple providers.</p>
+<h2>Registration Process</h2>
+<h3>Email/Password Registration</h3>
+<ol>
+<li>User submits registration form with email, password, and required profile information</li>
+<li>Server validates the input and checks for existing accounts</li>
+<li>Password is hashed using Argon2id with appropriate parameters</li>
+<li>Verification email is sent to the user&#39;s email address</li>
+<li>User account is created in a pending state</li>
+<li>User clicks the verification link in the email</li>
+<li>Account is activated and user is redirected to the login page</li>
+</ol>
+<h3>Security Measures</h3>
+<ul>
+<li>Rate limiting on registration attempts</li>
+<li>CAPTCHA for preventing automated registrations</li>
+<li>Password strength requirements</li>
+<li>Email verification to prevent fake accounts</li>
+<li>Input validation and sanitization</li>
+</ul>
+<h2>Login Process</h2>
+<h3>Standard Login</h3>
+<ol>
+<li>User submits login form with email and password</li>
+<li>Server validates the credentials</li>
+<li>If valid, server generates JWT access token and refresh token</li>
+<li>Access token is returned to the client</li>
+<li>Refresh token is stored in an HTTP-only, secure cookie</li>
+<li>Client stores the access token in memory (not in localStorage)</li>
+<li>Client includes the access token in the Authorization header for API requests</li>
+</ol>
+<h3>Failed Login Handling</h3>
+<ul>
+<li>Rate limiting after multiple failed attempts</li>
+<li>Account lockout after excessive failed attempts</li>
+<li>Notification to user about failed login attempts</li>
+<li>Generic error messages to prevent username enumeration</li>
+</ul>
+<h2>OAuth Integration</h2>
+<h3>Supported Providers</h3>
+<ul>
+<li>Google</li>
+<li>GitHub</li>
+<li>Reddit</li>
+<li>Apple</li>
+</ul>
+<h3>OAuth Flow</h3>
+<ol>
+<li>User clicks on OAuth provider button</li>
+<li>User is redirected to the provider&#39;s authentication page</li>
+<li>User authorizes the application</li>
+<li>Provider redirects back to the application with an authorization code</li>
+<li>Server exchanges the code for an access token</li>
+<li>Server verifies the token and retrieves user information</li>
+<li>If the user exists, they are logged in</li>
+<li>If the user doesn&#39;t exist, a new account is created</li>
+<li>JWT tokens are generated and returned as in the standard login flow</li>
+</ol>
+<h2>Session Management</h2>
+<h3>Token Structure</h3>
+<ul>
+<li><strong>Access Token</strong>: Short-lived JWT (15 minutes) containing user ID and roles</li>
+<li><strong>Refresh Token</strong>: Longer-lived token (7 days) for obtaining new access tokens</li>
+</ul>
+<h3>Token Refresh Flow</h3>
+<ol>
+<li>When the access token expires, the client makes a request to the refresh endpoint</li>
+<li>Server validates the refresh token from the HTTP-only cookie</li>
+<li>If valid, server generates a new access token and optionally rotates the refresh token</li>
+<li>New tokens are returned to the client</li>
+</ol>
+<h3>Session Termination</h3>
+<ul>
+<li>User-initiated logout</li>
+<li>Automatic logout after inactivity</li>
+<li>Server-side session invalidation</li>
+<li>Refresh token rotation for security</li>
+</ul>
+<h2>Password Management</h2>
+<h3>Password Storage</h3>
+<ul>
+<li>Passwords are hashed using Argon2id</li>
+<li>Legacy passwords use bcrypt (for backward compatibility)</li>
+<li>No plaintext passwords are ever stored or logged</li>
+</ul>
+<h3>Password Reset Flow</h3>
+<ol>
+<li>User requests a password reset</li>
+<li>Server generates a time-limited reset token</li>
+<li>Reset link is sent to the user&#39;s email</li>
+<li>User clicks the link and enters a new password</li>
+<li>Server validates the token and updates the password</li>
+<li>All active sessions for the user are invalidated</li>
+</ol>
+<h3>Password Change Flow</h3>
+<ol>
+<li>User provides current password and new password</li>
+<li>Server validates the current password</li>
+<li>New password is hashed and stored</li>
+<li>User remains logged in, but other sessions are optionally invalidated</li>
+</ol>
+<h2>Multi-factor Authentication</h2>
+<h3>Available Methods</h3>
+<ul>
+<li>Time-based One-Time Password (TOTP)</li>
+<li>Email verification codes</li>
+<li>SMS verification codes (where available)</li>
+</ul>
+<h3>MFA Flow</h3>
+<ol>
+<li>User enables MFA in account settings</li>
+<li>User sets up their preferred MFA method</li>
+<li>On subsequent logins, after password verification, MFA challenge is required</li>
+<li>User provides the MFA code</li>
+<li>Server validates the code</li>
+<li>If valid, authentication proceeds as normal</li>
+</ol>
+<h3>Recovery Options</h3>
+<ul>
+<li>Backup codes generated when MFA is enabled</li>
+<li>Alternative verification methods</li>
+<li>Account recovery process requiring identity verification</li>
+</ul>
+<h2>Security Considerations</h2>
+<h3>Token Security</h3>
+<ul>
+<li>Access tokens are short-lived to minimize risk</li>
+<li>Refresh tokens are stored in HTTP-only, secure cookies</li>
+<li>CSRF protection for token endpoints</li>
+<li>Token validation includes signature and expiration checks</li>
+</ul>
+<h3>Account Protection</h3>
+<ul>
+<li>Rate limiting on authentication attempts</li>
+<li>Account lockout policies</li>
+<li>Suspicious activity detection</li>
+<li>Login notifications for new devices or locations</li>
+</ul>
+<h3>Infrastructure Security</h3>
+<ul>
+<li>TLS/SSL for all authentication traffic</li>
+<li>Secure headers (HSTS, X-Content-Type-Options, etc.)</li>
+<li>Regular security audits and penetration testing</li>
+<li>Monitoring and alerting for authentication anomalies</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

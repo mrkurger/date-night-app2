@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BEM Naming Convention Guide for DateNight.io - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>BEM Naming Convention Guide for DateNight.io</h1>
+
+      <h1>BEM Naming Convention Guide for DateNight.io</h1>
+<p>This document provides guidelines for implementing the BEM (Block, Element, Modifier) naming convention in the DateNight.io application. Following these guidelines will ensure consistent and maintainable CSS across the application.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#introduction-to-bem">Introduction to BEM</a></li>
+<li><a href="#bem-structure">BEM Structure</a></li>
+<li><a href="#naming-rules">Naming Rules</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#integration-with-emerald-ui">Integration with Emerald UI</a></li>
+<li><a href="#common-mistakes-to-avoid">Common Mistakes to Avoid</a></li>
+</ol>
+<h2>Introduction to BEM</h2>
+<p>BEM (Block, Element, Modifier) is a naming convention for CSS classes that helps create reusable components and code sharing in front-end development. It provides a clear structure that is easy to understand and scale.</p>
+<p>The main benefits of BEM include:</p>
+<ul>
+<li><strong>Modularity</strong>: Each block is independent, allowing for code reuse</li>
+<li><strong>Reusability</strong>: Blocks can be composed of other blocks</li>
+<li><strong>Structure</strong>: Clear naming structure makes CSS more readable and maintainable</li>
+<li><strong>Scope</strong>: Reduces style conflicts and specificity issues</li>
+</ul>
+<h2>BEM Structure</h2>
+<p>BEM consists of three parts:</p>
+<ol>
+<li><strong>Block</strong>: A standalone entity that is meaningful on its own</li>
+<li><strong>Element</strong>: A part of a block that has no standalone meaning</li>
+<li><strong>Modifier</strong>: A flag on a block or element that changes appearance or behavior</li>
+</ol>
+<h3>Syntax</h3>
+<pre><code>.block {}
+.block__element {}
+.block--modifier {}
+.block__element--modifier {}
+</code></pre>
+<h2>Naming Rules</h2>
+<ol>
+<li><p><strong>Block Names</strong>:</p>
+<ul>
+<li>Use lowercase letters</li>
+<li>Use hyphens to separate words (kebab-case)</li>
+<li>Should represent the component&#39;s purpose</li>
+<li>Example: <code>.card</code>, <code>.user-profile</code>, <code>.search-form</code></li>
+</ul>
+</li>
+<li><p><strong>Element Names</strong>:</p>
+<ul>
+<li>Connected to the block with double underscores (<code>__</code>)</li>
+<li>Use lowercase letters</li>
+<li>Use hyphens to separate words</li>
+<li>Should represent the element&#39;s purpose within the block</li>
+<li>Example: <code>.card__image</code>, <code>.user-profile__avatar</code>, <code>.search-form__input</code></li>
+</ul>
+</li>
+<li><p><strong>Modifier Names</strong>:</p>
+<ul>
+<li>Connected to the block or element with double hyphens (<code>--</code>)</li>
+<li>Use lowercase letters</li>
+<li>Use hyphens to separate words</li>
+<li>Should represent the modification</li>
+<li>Example: <code>.card--featured</code>, <code>.button--primary</code>, <code>.search-form__input--disabled</code></li>
+</ul>
+</li>
+</ol>
+<h2>Examples</h2>
+<h3>Basic Example</h3>
+<p>HTML:</p>
+<pre><code class="language-html">&lt;div class=&quot;card&quot;&gt;
+  &lt;img class=&quot;card__image&quot; src=&quot;image.jpg&quot; alt=&quot;Card image&quot; /&gt;
+  &lt;div class=&quot;card__content&quot;&gt;
+    &lt;h2 class=&quot;card__title&quot;&gt;Card Title&lt;/h2&gt;
+    &lt;p class=&quot;card__text&quot;&gt;Card description text&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card__actions&quot;&gt;
+    &lt;button class=&quot;card__button card__button--primary&quot;&gt;Primary Action&lt;/button&gt;
+    &lt;button class=&quot;card__button card__button--secondary&quot;&gt;Secondary Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>SCSS:</p>
+<pre><code class="language-scss">.card {
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  background-color: $color-white;
+
+  &amp;__image {
+    width: 100%;
+    border-top-left-radius: $border-radius-lg;
+    border-top-right-radius: $border-radius-lg;
+  }
+
+  &amp;__content {
+    padding: $spacing-4;
+  }
+
+  &amp;__title {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-2;
+  }
+
+  &amp;__text {
+    color: $color-dark-gray-1;
+  }
+
+  &amp;__actions {
+    display: flex;
+    padding: $spacing-3 $spacing-4;
+    border-top: 1px solid $color-light-gray-2;
+  }
+
+  &amp;__button {
+    padding: $spacing-2 $spacing-4;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-semibold;
+
+    &amp;--primary {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+
+    &amp;--secondary {
+      background-color: transparent;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+    }
+  }
+
+  // Block modifier
+  &amp;--featured {
+    border: 2px solid $color-primary;
+    box-shadow: $shadow-lg;
+  }
+}
+</code></pre>
+<h3>Profile Card Example</h3>
+<p>HTML:</p>
+<pre><code class="language-html">&lt;div class=&quot;profile-card profile-card--online&quot;&gt;
+  &lt;div class=&quot;profile-card__header&quot;&gt;
+    &lt;img class=&quot;profile-card__avatar&quot; src=&quot;avatar.jpg&quot; alt=&quot;User avatar&quot; /&gt;
+    &lt;div class=&quot;profile-card__status&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;profile-card__body&quot;&gt;
+    &lt;h3 class=&quot;profile-card__name&quot;&gt;John Doe&lt;/h3&gt;
+    &lt;p class=&quot;profile-card__bio&quot;&gt;Frontend Developer&lt;/p&gt;
+    &lt;div class=&quot;profile-card__stats&quot;&gt;
+      &lt;div class=&quot;profile-card__stat&quot;&gt;
+        &lt;span class=&quot;profile-card__stat-value&quot;&gt;42&lt;/span&gt;
+        &lt;span class=&quot;profile-card__stat-label&quot;&gt;Posts&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;profile-card__stat&quot;&gt;
+        &lt;span class=&quot;profile-card__stat-value&quot;&gt;1.5k&lt;/span&gt;
+        &lt;span class=&quot;profile-card__stat-label&quot;&gt;Followers&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;profile-card__footer&quot;&gt;
+    &lt;button class=&quot;profile-card__button profile-card__button--primary&quot;&gt;Follow&lt;/button&gt;
+    &lt;button class=&quot;profile-card__button profile-card__button--secondary&quot;&gt;Message&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li><p><strong>Keep blocks independent</strong>:</p>
+<ul>
+<li>A block should not depend on other blocks/elements on a page</li>
+<li>Avoid using tag or ID selectors</li>
+</ul>
+</li>
+<li><p><strong>Keep elements within their block</strong>:</p>
+<ul>
+<li>Elements should always be part of a block, not another element</li>
+<li>Avoid creating elements of elements (e.g., <code>.block__element1__element2</code>)</li>
+</ul>
+</li>
+<li><p><strong>Use modifiers appropriately</strong>:</p>
+<ul>
+<li>Use modifiers to change appearance, behavior, or state</li>
+<li>Apply modifiers to both blocks and elements as needed</li>
+</ul>
+</li>
+<li><p><strong>Maintain flat structure</strong>:</p>
+<ul>
+<li>Avoid deep nesting of elements</li>
+<li>If you need more than one level of elements, consider creating a new block</li>
+</ul>
+</li>
+<li><p><strong>Use mixins for common styles</strong>:</p>
+<ul>
+<li>Extract common styles into mixins to avoid duplication</li>
+<li>Use the design system&#39;s typography and spacing mixins</li>
+</ul>
+</li>
+</ol>
+<h2>Integration with Emerald UI</h2>
+<p>When working with Emerald UI components, follow these guidelines:</p>
+<ol>
+<li><p><strong>Wrapper Classes</strong>:</p>
+<ul>
+<li>Use BEM naming for wrapper elements around Emerald components</li>
+<li>Example: <code>.user-profile__avatar-wrapper</code> containing an <code>&lt;emerald-avatar&gt;</code> component</li>
+</ul>
+</li>
+<li><p><strong>Component Host Elements</strong>:</p>
+<ul>
+<li>Apply BEM classes to component host elements</li>
+<li>Example: <code>&lt;emerald-card class=&quot;featured-content__card&quot;&gt;</code></li>
+</ul>
+</li>
+<li><p><strong>Custom Properties</strong>:</p>
+<ul>
+<li>Use BEM naming for custom properties passed to Emerald components</li>
+<li>Example: <code>.user-card__custom-styles</code></li>
+</ul>
+</li>
+<li><p><strong>Component Extensions</strong>:</p>
+<ul>
+<li>When extending Emerald components, follow BEM naming for the extended class</li>
+<li>Example: <code>.emerald-button--custom</code></li>
+</ul>
+</li>
+</ol>
+<h2>Common Mistakes to Avoid</h2>
+<ol>
+<li><p><strong>Excessive nesting</strong>:</p>
+<ul>
+<li>Avoid: <code>.card__header__title</code></li>
+<li>Better: <code>.card__header-title</code> or create a new block</li>
+</ul>
+</li>
+<li><p><strong>Overly generic names</strong>:</p>
+<ul>
+<li>Avoid: <code>.block__item</code></li>
+<li>Better: <code>.block__description</code></li>
+</ul>
+</li>
+<li><p><strong>Inconsistent naming</strong>:</p>
+<ul>
+<li>Avoid mixing different naming conventions</li>
+<li>Stick to kebab-case for all parts of BEM names</li>
+</ul>
+</li>
+<li><p><strong>Leaking styles</strong>:</p>
+<ul>
+<li>Avoid styling elements based on their context</li>
+<li>Each block should be independent</li>
+</ul>
+</li>
+<li><p><strong>Overusing modifiers</strong>:</p>
+<ul>
+<li>Don&#39;t create a modifier for every small variation</li>
+<li>Consider if a new block would be more appropriate</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>By following these BEM naming conventions, we&#39;ll create a more maintainable and consistent codebase for DateNight.io. This approach aligns with our UI/UX implementation plan and supports the integration of Emerald UI components.</p>
+<p>Last Updated: 2025-05-15</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

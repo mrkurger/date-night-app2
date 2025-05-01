@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Night App Architecture - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Date Night App Architecture</h1>
+
+      <h1>Date Night App Architecture</h1>
+<p>This document provides an overview of the Date Night App architecture, including the system architecture, component hierarchy, data flow, and database schema.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#system-architecture">System Architecture</a></li>
+<li><a href="#component-hierarchy">Component Hierarchy</a></li>
+<li><a href="#data-flow">Data Flow</a></li>
+<li><a href="#database-schema">Database Schema</a></li>
+<li><a href="#api-endpoints">API Endpoints</a></li>
+<li><a href="#technology-stack">Technology Stack</a></li>
+<li><a href="#deployment-architecture">Deployment Architecture</a></li>
+<li><a href="#security-architecture">Security Architecture</a></li>
+<li><a href="#performance-considerations">Performance Considerations</a></li>
+<li><a href="#scalability-considerations">Scalability Considerations</a></li>
+</ul>
+<h2>System Architecture</h2>
+<p>The Date Night App uses a modern, microservices-based architecture with the following components:</p>
+<ul>
+<li><strong>Client</strong>: Angular-based web application</li>
+<li><strong>API Server</strong>: Node.js/Express.js REST API</li>
+<li><strong>Database</strong>: MongoDB for data storage</li>
+<li><strong>Authentication Service</strong>: JWT-based authentication</li>
+<li><strong>Media Service</strong>: Handles image and file uploads</li>
+<li><strong>Payment Service</strong>: Integrates with Stripe for payments</li>
+<li><strong>Notification Service</strong>: Handles email and push notifications</li>
+</ul>
+<p><img src="/docs/images/ARCHITECTURE.MD" alt="System Architecture"></p>
+<h2>Component Hierarchy</h2>
+<p>The Angular client is organized into modules and components following Angular best practices:</p>
+<ul>
+<li><strong>App Component</strong>: Root component</li>
+<li><strong>Navigation Component</strong>: Main navigation</li>
+<li><strong>Router Outlet</strong>: Dynamic content based on routes</li>
+<li><strong>Feature Modules</strong>:<ul>
+<li>Auth Module: Login, Register, Forgot Password</li>
+<li>Ads Module: Ad List, Ad Detail, Ad Form, Ad Search</li>
+<li>Profile Module: User Profile, Edit Profile, User Ads</li>
+<li>Chat Module: Conversation List, Message List, Message Form</li>
+<li>Travel Module: Travel List, Travel Form, Travel Map</li>
+<li>Payment Module: Payment Methods, Add Payment Method, Payment History</li>
+</ul>
+</li>
+</ul>
+<p><img src="/docs/images/COMPONENT_HIERARCHY.MD" alt="Component Hierarchy"></p>
+<h2>Data Flow</h2>
+<p>The data flow in the Date Night App follows a standard client-server architecture:</p>
+<ol>
+<li>User interacts with the UI</li>
+<li>UI sends HTTP requests to the API server</li>
+<li>API server processes requests and interacts with the database</li>
+<li>API server returns HTTP responses to the UI</li>
+<li>UI updates the display based on the responses</li>
+</ol>
+<p>Additional data flows include:</p>
+<ul>
+<li>Event-based notifications via an event bus</li>
+<li>Payment processing via the payment service</li>
+<li>Media uploads and downloads via the media service</li>
+</ul>
+<p><img src="/docs/images/DATA_FLOW.MD" alt="Data Flow"></p>
+<h2>Database Schema</h2>
+<p>The Date Night App uses MongoDB as its primary database. The main collections are:</p>
+<ul>
+<li><strong>Users</strong>: User accounts and profiles</li>
+<li><strong>Advertisements</strong>: Dating service advertisements</li>
+<li><strong>TravelLocations</strong>: User travel itineraries</li>
+<li><strong>Conversations</strong>: Chat conversations between users</li>
+<li><strong>Messages</strong>: Individual chat messages</li>
+<li><strong>PaymentMethods</strong>: User payment methods</li>
+<li><strong>Payments</strong>: Payment records</li>
+</ul>
+<p><img src="/docs/images/DATABASE_SCHEMA.MD" alt="Database Schema"></p>
+<h2>API Endpoints</h2>
+<p>The Date Night App API is organized into the following groups:</p>
+<ul>
+<li><strong>Authentication</strong>: Login, Register, Refresh Token, Logout</li>
+<li><strong>User Management</strong>: Get Profile, Update Profile, Delete User</li>
+<li><strong>Advertisement Management</strong>: Create Ad, Get Ads, Get Ad by ID, Update Ad, Delete Ad</li>
+<li><strong>Travel Itinerary</strong>: Add Location, Get Locations, Update Location, Delete Location</li>
+<li><strong>Chat</strong>: Get Conversations, Get Messages, Send Message</li>
+<li><strong>Media Management</strong>: Upload Media, Delete Media</li>
+<li><strong>Payment</strong>: Create Payment Intent, Get Payment Methods, Add Payment Method</li>
+</ul>
+<p><img src="/docs/images/API_ENDPOINTS.MD" alt="API Endpoints"></p>
+<h2>Technology Stack</h2>
+<p>The Date Night App uses the following technology stack:</p>
+<h3>Frontend</h3>
+<ul>
+<li><strong>Framework</strong>: Angular</li>
+<li><strong>State Management</strong>: NgRx</li>
+<li><strong>UI Components</strong>: Angular Material</li>
+<li><strong>CSS Preprocessor</strong>: SCSS</li>
+<li><strong>HTTP Client</strong>: Angular HttpClient</li>
+<li><strong>Testing</strong>: Jasmine, Karma</li>
+</ul>
+<h3>Backend</h3>
+<ul>
+<li><strong>Runtime</strong>: Node.js</li>
+<li><strong>Framework</strong>: Express.js</li>
+<li><strong>Database</strong>: MongoDB</li>
+<li><strong>ODM</strong>: Mongoose</li>
+<li><strong>Authentication</strong>: JWT</li>
+<li><strong>API Documentation</strong>: Swagger/OpenAPI</li>
+<li><strong>Testing</strong>: Jest, Supertest</li>
+</ul>
+<h3>DevOps</h3>
+<ul>
+<li><strong>Version Control</strong>: Git</li>
+<li><strong>CI/CD</strong>: GitHub Actions</li>
+<li><strong>Containerization</strong>: Docker</li>
+<li><strong>Deployment</strong>: AWS/GCP/Azure</li>
+<li><strong>Monitoring</strong>: Prometheus, Grafana</li>
+</ul>
+<h2>Deployment Architecture</h2>
+<p>The Date Night App can be deployed in various environments:</p>
+<h3>Development</h3>
+<ul>
+<li>Local development environment with hot reloading</li>
+<li>MongoDB running locally or in a Docker container</li>
+<li>Node.js API server running locally</li>
+</ul>
+<h3>Staging</h3>
+<ul>
+<li>Containerized deployment with Docker Compose</li>
+<li>MongoDB running in a container</li>
+<li>Node.js API server running in a container</li>
+<li>Angular client served from a static file server</li>
+</ul>
+<h3>Production</h3>
+<ul>
+<li>Kubernetes-based deployment</li>
+<li>MongoDB running in a managed service (e.g., MongoDB Atlas)</li>
+<li>Node.js API server running in multiple pods</li>
+<li>Angular client served from a CDN</li>
+<li>Load balancer for API server</li>
+<li>Separate services for authentication, media, payment, and notifications</li>
+</ul>
+<h2>Security Architecture</h2>
+<p>The Date Night App implements the following security measures:</p>
+<h3>Authentication and Authorization</h3>
+<ul>
+<li>JWT-based authentication</li>
+<li>Role-based access control</li>
+<li>Secure password storage with bcrypt</li>
+<li>Token refresh mechanism</li>
+<li>CSRF protection</li>
+</ul>
+<h3>Data Security</h3>
+<ul>
+<li>HTTPS for all communications</li>
+<li>Input validation and sanitization</li>
+<li>MongoDB security best practices</li>
+<li>Secure handling of sensitive data</li>
+<li>Payment information stored securely with Stripe</li>
+</ul>
+<h3>Infrastructure Security</h3>
+<ul>
+<li>Firewall rules</li>
+<li>Network segmentation</li>
+<li>Regular security updates</li>
+<li>Vulnerability scanning</li>
+<li>Penetration testing</li>
+</ul>
+<h2>Performance Considerations</h2>
+<p>The Date Night App is designed for optimal performance:</p>
+<h3>Frontend</h3>
+<ul>
+<li>Lazy loading of modules</li>
+<li>AOT compilation</li>
+<li>Minification and bundling</li>
+<li>Image optimization</li>
+<li>Caching strategies</li>
+</ul>
+<h3>Backend</h3>
+<ul>
+<li>Database indexing</li>
+<li>Query optimization</li>
+<li>Connection pooling</li>
+<li>Response caching</li>
+<li>Rate limiting</li>
+</ul>
+<h3>Infrastructure</h3>
+<ul>
+<li>CDN for static assets</li>
+<li>Load balancing</li>
+<li>Horizontal scaling</li>
+<li>Database sharding</li>
+<li>Caching layers</li>
+</ul>
+<h2>Scalability Considerations</h2>
+<p>The Date Night App is designed to scale horizontally:</p>
+<h3>Frontend</h3>
+<ul>
+<li>Stateless design</li>
+<li>CDN distribution</li>
+<li>Progressive web app capabilities</li>
+</ul>
+<h3>Backend</h3>
+<ul>
+<li>Stateless API design</li>
+<li>Microservices architecture</li>
+<li>Message queues for asynchronous processing</li>
+<li>Database scaling strategies</li>
+<li>Caching strategies</li>
+</ul>
+<h3>Infrastructure</h3>
+<ul>
+<li>Auto-scaling groups</li>
+<li>Container orchestration</li>
+<li>Database replication</li>
+<li>Load balancing</li>
+<li>Geographic distribution</li>
+</ul>
+<h2>Design Patterns</h2>
+<p>The Date Night App implements several design patterns to ensure maintainability, scalability, and code quality:</p>
+<h3>Frontend Patterns</h3>
+<ol>
+<li><p><strong>Component-Based Architecture</strong></p>
+<ul>
+<li>Reusable UI components with clear interfaces</li>
+<li>Smart/Container and Presentational/Dumb component separation</li>
+<li>Component composition for complex UIs</li>
+</ul>
+</li>
+<li><p><strong>Reactive Programming</strong></p>
+<ul>
+<li>Observable-based data flow with RxJS</li>
+<li>Reactive forms for user input</li>
+<li>State management with NgRx (Store, Effects, Selectors)</li>
+</ul>
+</li>
+<li><p><strong>Dependency Injection</strong></p>
+<ul>
+<li>Service-based architecture</li>
+<li>Hierarchical injector system</li>
+<li>Testing facilitation through DI</li>
+</ul>
+</li>
+<li><p><strong>Module Organization</strong></p>
+<ul>
+<li>Feature modules for domain-specific functionality</li>
+<li>Shared module for common components</li>
+<li>Core module for singleton services</li>
+</ul>
+</li>
+</ol>
+<h3>Backend Patterns</h3>
+<ol>
+<li><p><strong>MVC Architecture</strong></p>
+<ul>
+<li>Controllers for handling HTTP requests</li>
+<li>Services for business logic</li>
+<li>Models for data representation</li>
+</ul>
+</li>
+<li><p><strong>Repository Pattern</strong></p>
+<ul>
+<li>Data access abstraction</li>
+<li>Query encapsulation</li>
+<li>Database independence</li>
+</ul>
+</li>
+<li><p><strong>Middleware Pattern</strong></p>
+<ul>
+<li>Request processing pipeline</li>
+<li>Cross-cutting concerns (logging, authentication, error handling)</li>
+<li>Request/response transformation</li>
+</ul>
+</li>
+<li><p><strong>Factory Pattern</strong></p>
+<ul>
+<li>Object creation abstraction</li>
+<li>Configuration-based instantiation</li>
+<li>Testing facilitation</li>
+</ul>
+</li>
+</ol>
+<h3>Cross-Cutting Patterns</h3>
+<ol>
+<li><p><strong>Observer Pattern</strong></p>
+<ul>
+<li>Event-based communication</li>
+<li>Loose coupling between components</li>
+<li>Real-time updates with Socket.IO</li>
+</ul>
+</li>
+<li><p><strong>Strategy Pattern</strong></p>
+<ul>
+<li>Pluggable algorithms</li>
+<li>Runtime behavior selection</li>
+<li>Configuration-based behavior</li>
+</ul>
+</li>
+<li><p><strong>Adapter Pattern</strong></p>
+<ul>
+<li>Third-party service integration</li>
+<li>API normalization</li>
+<li>Legacy code integration</li>
+</ul>
+</li>
+<li><p><strong>Decorator Pattern</strong></p>
+<ul>
+<li>Dynamic behavior extension</li>
+<li>Cross-cutting concerns</li>
+<li>Non-invasive feature addition</li>
+</ul>
+</li>
+</ol>
+<h2>Implementation Details</h2>
+<h3>Authentication Flow</h3>
+<p>The authentication system uses JWT tokens with a refresh token mechanism:</p>
+<ol>
+<li>User logs in with credentials</li>
+<li>Server validates credentials and issues access and refresh tokens</li>
+<li>Client stores tokens securely</li>
+<li>Access token is used for API requests</li>
+<li>When access token expires, refresh token is used to obtain a new access token</li>
+<li>Refresh tokens can be revoked for security</li>
+</ol>
+<h3>Real-Time Communication</h3>
+<p>The chat system uses Socket.IO for real-time communication:</p>
+<ol>
+<li>Client establishes Socket.IO connection</li>
+<li>Connection is authenticated using JWT</li>
+<li>Client joins rooms for conversations</li>
+<li>Messages are sent and received in real-time</li>
+<li>Offline messages are stored and delivered when user comes online</li>
+<li>End-to-end encryption ensures message privacy</li>
+</ol>
+<h3>Data Flow Optimization</h3>
+<p>The application optimizes data flow for performance:</p>
+<ol>
+<li>Pagination for large data sets</li>
+<li>Lazy loading of data and components</li>
+<li>Caching strategies for frequently accessed data</li>
+<li>Optimistic UI updates for better user experience</li>
+<li>Debouncing and throttling for user input</li>
+<li>Batch processing for multiple operations</li>
+</ol>
+<p>See <a href="DATABASE_SCHEMA_DETAIL.MD">Database Schema Detail</a> for more details on the data model.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
