@@ -78,6 +78,16 @@
           <strong>Use appropriate error handling</strong>: Add <code>|| true</code> to commands that
           might fail in expected ways (like copying files that don't exist yet).
         </li>
+        <li>
+          <strong>Use multiple artifact paths</strong>: When uploading artifacts, include both the
+          original source directories and any copied files to ensure artifacts are found even if one
+          path doesn't exist.
+        </li>
+        <li>
+          <strong>Avoid duplicate files</strong>: When fixing workflows, modify existing files
+          rather than creating new ones to prevent confusion and maintain a clean repository
+          structure.
+        </li>
       </ul>
 
       <h2>Implementation Patterns</h2>
