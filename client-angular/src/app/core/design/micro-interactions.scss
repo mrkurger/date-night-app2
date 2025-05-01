@@ -198,7 +198,7 @@
     height: $size;
     background-color: $color;
     border-radius: 50%;
-    animation: pulse $duration tokens.$transition-timing-default infinite;
+    animation: pulse-effect $duration tokens.$transition-timing-default infinite;
   }
 
   @include animation.respect-reduced-motion;
@@ -330,9 +330,9 @@
   @include animation.respect-reduced-motion;
 }
 
-// Pulse animation
+// Pulse animation (renamed to avoid conflict with animation-utilities)
 // Adds a pulsing effect to an element
-@mixin pulse($scale: 1.05, $duration: 1.5s, $color: tokens.$color-primary) {
+@mixin pulse-effect($scale: 1.05, $duration: 1.5s, $color: tokens.$color-primary) {
   animation: pulse $duration tokens.$transition-timing-default infinite;
 
   @include animation.respect-reduced-motion;
@@ -420,7 +420,7 @@
   }
 }
 
-@keyframes pulse {
+@keyframes pulse-effect {
   0% {
     transform: scale(0.95);
     opacity: 1;

@@ -159,6 +159,31 @@ This document serves as a central reference for all documentation in the Date Ni
 | Database Schema            | Documentation for the database schema          | [/docs/DATABASE_SCHEMA_DETAIL.MD](/docs/DATABASE_SCHEMA_DETAIL.MD) |
 | Deployment Guide           | Guide for deploying the application            | [/docs/DEPLOYMENT.MD](/docs/DEPLOYMENT.MD)                         |
 
+## Decentralized Documentation
+
+The Date Night App uses a decentralized documentation approach where each component has its own documentation files stored alongside the code. These files are then aggregated into a central HTML documentation system.
+
+### Component Documentation Files
+
+Each component directory contains:
+
+- **CHANGELOG.md** - History of changes to the component
+- **AILESSONS.md** - Lessons learned and best practices for the component
+
+### HTML Documentation
+
+The component documentation is aggregated into a central HTML documentation system located in `/docs/html-docs/`. This documentation is organized by component type:
+
+- `/docs/html-docs/server/` - Server components
+- `/docs/html-docs/client/` - Client components
+- `/docs/html-docs/features/` - Features
+- `/docs/html-docs/components/` - UI components
+- `/docs/html-docs/services/` - Services
+- `/docs/html-docs/models/` - Data models
+- `/docs/html-docs/design/` - Design system
+
+For more information, see [DECENTRALIZED_DOCUMENTATION_GUIDE.MD](/docs/DECENTRALIZED_DOCUMENTATION_GUIDE.MD).
+
 ## Documentation Standards
 
 When creating or updating documentation, follow these standards:
@@ -167,6 +192,7 @@ When creating or updating documentation, follow these standards:
 
    - Use `.md` extension for all documentation files
    - Use UPPERCASE with underscores for all documentation files (e.g., README.MD, SETUP.MD, UI_UX_ROADMAP.MD)
+   - For component documentation files, use CHANGELOG.md and AILESSONS.md
    - This ensures consistency and makes documentation files easily identifiable
 
 2. **Structure**: Include the following sections in all documentation files
@@ -201,6 +227,7 @@ When creating or updating documentation, follow these standards:
    - Add new documentation for new features
    - Remove documentation for removed features
    - Update the Documentation Index when adding or removing documentation files
+   - For component documentation, update the CHANGELOG.md and AILESSONS.md files
 
 ## Documentation Maintenance
 
@@ -210,6 +237,13 @@ To maintain the documentation:
 2. **Documentation Testing**: Test documentation links to ensure they're valid
 3. **User Feedback**: Collect and incorporate user feedback on documentation
 4. **Documentation Metrics**: Track documentation usage and identify areas for improvement
+5. **HTML Documentation Updates**: Run the update script after changing component documentation:
+
+   ```bash
+   node scripts/update_html_docs.mjs
+   ```
+
+6. **Component Documentation**: Ensure all components have up-to-date CHANGELOG.md and AILESSONS.md files
 
 ## Contributing to Documentation
 
@@ -220,9 +254,20 @@ When contributing to documentation:
 3. **Include Examples**: Include examples to illustrate concepts
 4. **Update Related Documents**: Update related documents when making changes
 5. **Update the Documentation Index**: Update this document when adding or removing documentation files
+6. **Component Documentation**: When working on a component:
+   - Update the CHANGELOG.md file with changes made
+   - Add lessons learned to the AILESSONS.md file
+   - Run the HTML documentation update script after making changes
+7. **New Components**: For new components:
+   - Run the decentralized documentation script to create template files
+   - Update the template files with component-specific information
+   - Run the HTML documentation update script to include the new component
+
+For more information on the decentralized documentation approach, see [DECENTRALIZED_DOCUMENTATION_GUIDE.MD](/docs/DECENTRALIZED_DOCUMENTATION_GUIDE.MD).
 
 ## Document History
 
-- **2025-05-20**: Updated all documentation references to follow the new naming convention
+- **2025-05-02**: Added decentralized documentation approach with component-specific files
+- **2025-05-01**: Implemented HTML-based documentation structure
 - **2025-04-15**: Added new sections for Feature Documentation and Implementation Documentation
 - **2025-03-10**: Initial version of the documentation index

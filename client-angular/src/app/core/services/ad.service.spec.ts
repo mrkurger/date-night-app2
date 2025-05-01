@@ -27,7 +27,7 @@ describe('AdService', () => {
       description: 'Test description 1',
       category: 'Escort',
       price: 1000,
-      location: 'Oslo',
+      location: { city: 'Oslo', county: 'Oslo' },
       images: ['/assets/img/profile1.jpg'],
       media: [{ type: 'image', url: '/assets/img/profile1.jpg' }],
       advertiser: 'advertiser-1',
@@ -49,7 +49,7 @@ describe('AdService', () => {
       description: 'Test description 2',
       category: 'Massage',
       price: 800,
-      location: 'Bergen',
+      location: { city: 'Bergen', county: 'Vestland' },
       images: ['/assets/img/profile2.jpg'],
       media: [{ type: 'image', url: '/assets/img/profile2.jpg' }],
       advertiser: 'advertiser-2',
@@ -71,7 +71,7 @@ describe('AdService', () => {
       description: 'Test description 3',
       category: 'Striptease',
       price: 1200,
-      location: 'Trondheim',
+      location: { city: 'Trondheim', county: 'Trøndelag' },
       images: ['/assets/img/profile3.jpg'],
       media: [{ type: 'image', url: '/assets/img/profile3.jpg' }],
       advertiser: 'advertiser-3',
@@ -119,13 +119,15 @@ describe('AdService', () => {
     });
 
     it('should fetch ads with filters', () => {
-      const filters = { category: 'Escort', location: 'Oslo' };
+      const filters = { category: 'Escort', city: 'Oslo', county: 'Oslo' };
 
       service.getAds(filters).subscribe(ads => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads?category=Escort&location=Oslo`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/ads?category=Escort&city=Oslo&county=Oslo`
+      );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
     });
@@ -158,7 +160,7 @@ describe('AdService', () => {
         description: 'New description',
         category: 'Escort',
         price: 1200,
-        location: 'Oslo',
+        location: { city: 'Oslo', county: 'Oslo' },
         isActive: true,
       };
 
@@ -317,7 +319,8 @@ describe('AdService', () => {
     it('should fetch swipe ads with filters', () => {
       const filters = {
         category: 'Escort',
-        location: 'Oslo',
+        city: 'Oslo',
+        county: 'Oslo',
         touringOnly: true,
       };
 
@@ -326,7 +329,7 @@ describe('AdService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/ads/swipe?category=Escort&location=Oslo&touringOnly=true`
+        `${environment.apiUrl}/ads/swipe?category=Escort&city=Oslo&county=Oslo&touringOnly=true`
       );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);

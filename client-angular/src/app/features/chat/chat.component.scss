@@ -14,11 +14,11 @@
 
 // Variables
 $sidebar-width: 320px;
-$message-bubble-sent: $primary-500;
-$message-bubble-received: $neutral-100;
-$typing-indicator-color: $primary-500;
-$temporary-message-color: $warning-500;
-$temporary-message-bg: rgba($warning-100, 0.3);
+$message-bubble-sent: tokens.$color-primary;
+$message-bubble-received: tokens.$color-light-gray-1;
+$typing-indicator-color: tokens.$color-primary;
+$temporary-message-color: tokens.$color-warning;
+$temporary-message-bg: rgba(tokens.$color-warning-light, 0.3);
 
 // Animations
 @keyframes pulse {

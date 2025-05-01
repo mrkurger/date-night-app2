@@ -41,7 +41,7 @@ describe('AdvertiserProfileComponent', () => {
     _id: 'ad1',
     title: 'Test Ad',
     description: 'Test description',
-    location: 'Oslo',
+    location: { city: 'Oslo', county: 'Oslo' },
     price: 100,
     category: 'Dinner',
     isTouring: false,
@@ -138,7 +138,7 @@ describe('AdvertiserProfileComponent', () => {
       expect(component.adForm.value).toEqual({
         title: 'Test Ad',
         description: 'Test description',
-        location: 'Oslo',
+        location: { city: 'Oslo', county: 'Oslo' },
         price: 100,
         category: 'Dinner',
         isTouring: false,

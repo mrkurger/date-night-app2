@@ -3983,6 +3983,52 @@ Creating a dedicated demo component provides several benefits:
 
 This approach of creating dedicated demo components can be applied to other complex features to improve understanding and adoption.
 
+## Documentation Restructuring
+
+When implementing a decentralized documentation approach for the Date Night App project, we've established these effective patterns:
+
+1. **Component-Specific Documentation**:
+
+   - Place documentation files (CHANGELOG.md, AILESSONS.md) in the component directory
+   - Keep documentation close to the code it documents
+   - Make documentation specific to the component, not general
+   - Update documentation when the component changes
+   - Use consistent templates for all component documentation
+
+2. **HTML Documentation Generation**:
+
+   - Automatically generate HTML documentation from component documentation files
+   - Use a consistent HTML template for all documentation
+   - Organize HTML documentation by component type
+   - Provide navigation between related components
+   - Update HTML documentation when component documentation changes
+
+3. **Documentation Organization**:
+
+   - Group components by type (server, client, features, etc.)
+   - Create index pages for each component type
+   - Provide links to all documentation for a component
+   - Use consistent naming conventions for all documentation files
+   - Include both technical and user-focused documentation
+
+4. **Documentation Maintenance**:
+
+   - Run the update script after changing component documentation
+   - Review documentation regularly for accuracy
+   - Remove documentation for removed components
+   - Update documentation templates when needed
+   - Ensure all components have up-to-date documentation
+
+5. **Documentation Templates**:
+
+   - Use consistent templates for all documentation files
+   - Include placeholders for component-specific information
+   - Provide clear sections for different types of information
+   - Include examples and usage instructions
+   - Make templates easy to use and understand
+
+For detailed implementation, see the `create_decentralized_docs.mjs` script and the generated HTML documentation.
+
 ## Historical Notes
 
 This section contains notes on approaches that have been superseded by better implementations or issues that have been fixed. They are kept for historical reference.

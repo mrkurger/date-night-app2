@@ -88,7 +88,7 @@ describe('GeocodingService', () => {
     longitude: 10.7522,
     components: {
       city: 'Oslo',
-      county: 'Oslo',
+      state: 'Oslo',
       country: 'Norway',
       countryCode: 'no',
     },
@@ -270,6 +270,7 @@ describe('GeocodingService', () => {
       const mockCityResult = {
         city: 'Oslo',
         county: 'Oslo',
+        distance: 0.5,
       };
 
       locationServiceSpy.findNearestCity.and.returnValue(of(mockCityResult));

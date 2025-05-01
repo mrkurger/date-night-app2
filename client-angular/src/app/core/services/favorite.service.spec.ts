@@ -50,8 +50,28 @@ describe('FavoriteService', () => {
   describe('getFavorites', () => {
     it('should return favorites', () => {
       const mockFavorites = [
-        { _id: '1', ad: { _id: 'ad1', title: 'Ad 1' } },
-        { _id: '2', ad: { _id: 'ad2', title: 'Ad 2' } },
+        {
+          _id: '1',
+          user: 'user1',
+          ad: { _id: 'ad1', title: 'Ad 1' },
+          notificationsEnabled: false,
+          tags: [],
+          priority: 'normal',
+          notes: '',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          _id: '2',
+          user: 'user1',
+          ad: { _id: 'ad2', title: 'Ad 2' },
+          notificationsEnabled: false,
+          tags: [],
+          priority: 'normal',
+          notes: '',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
       ];
 
       service.getFavorites().subscribe(favorites => {

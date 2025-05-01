@@ -1,4 +1,27 @@
-n# Change Log
+# Change Log
+
+## 2025-05-02: Decentralized Documentation Implementation
+
+### Added
+
+- **Decentralized Documentation System**: Implemented a decentralized documentation approach
+  - Added CHANGELOG.md and AILESSONS.md files to each component directory
+  - Created a central HTML documentation system that aggregates these files
+  - Organized documentation by component type (server, client, features, etc.)
+  - Added templates for consistent documentation styling
+
+### Changed
+
+- **Documentation Organization**: Reorganized documentation by component
+  - Each component has its own changelog and AI lessons files
+  - Documentation is stored alongside the code it documents
+  - Changes to component documentation are reflected in the HTML documentation
+
+### Technical
+
+- **Documentation Scripts**: Added new scripts for documentation management
+  - `create_decentralized_docs.mjs`: Creates the decentralized documentation structure
+  - `update_html_docs.mjs`: Updates the HTML documentation based on changes to component docs
 
 ## 2025-05-01: Documentation Restructuring
 

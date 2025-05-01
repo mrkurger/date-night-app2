@@ -32,7 +32,7 @@ describe('AppCardComponent (Unit Tests)', () => {
     description: 'This is a test ad description',
     category: 'test',
     price: 1234.56,
-    location: 'Test Location',
+    location: { city: 'Test Location', county: 'Test County' },
     advertiser: 'Test Advertiser',
     isActive: true,
     isFeatured: false,
