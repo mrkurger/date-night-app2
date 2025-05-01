@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Testing Lessons Learned - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Angular Testing Lessons Learned</h1>
+
+      <h1>Angular Testing Lessons Learned</h1>
+<h2>Overview</h2>
+<p>This document captures key lessons learned while working with Angular unit tests in the Date Night App. It serves as a reference for developers to avoid common pitfalls and follow best practices when writing and maintaining tests.</p>
+<h2>Common Issues and Solutions</h2>
+<h3>1. Standalone Components vs. NgModule-based Components</h3>
+<p><strong>Issue</strong>: Angular 15+ supports standalone components, but many tests were written for NgModule-based components.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>For standalone components, use <code>imports</code> array in the TestBed configuration instead of <code>declarations</code></p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG (for standalone components)
+TestBed.configureTestingModule({
+  declarations: [MyStandaloneComponent],
+  // ...
+});
+
+// CORRECT (for standalone components)
+TestBed.configureTestingModule({
+  imports: [MyStandaloneComponent],
+  // ...
+});
+</code></pre>
+</li>
+</ul>
+<h3>2. Angular Material Component Testing</h3>
+<p><strong>Issue</strong>: Tests fail with errors like <code>&#39;mat-card&#39; is not a known element</code> when using Angular Material components.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Import all required Angular Material modules in the test configuration</li>
+<li>For standalone components, include Material modules in the component&#39;s <code>imports</code> array</li>
+<li>Example:<pre><code class="language-typescript">TestBed.configureTestingModule({
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    // other required modules
+  ],
+});
+</code></pre>
+</li>
+</ul>
+<h3>3. Service Testing with HTTP</h3>
+<p><strong>Issue</strong>: Tests for services that use HttpClient often fail because the HTTP requests are not properly mocked.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Use HttpClientTestingModule and HttpTestingController</p>
+</li>
+<li><p>Flush mock responses for each request</p>
+</li>
+<li><p>Verify that no unexpected requests were made</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">let httpMock: HttpTestingController;
+
+beforeEach(() =&gt; {
+  TestBed.configureTestingModule({
+    imports: [HttpClientTestingModule],
+    providers: [MyService],
+  });
+
+  service = TestBed.inject(MyService);
+  httpMock = TestBed.inject(HttpTestingController);
+});
+
+afterEach(() =&gt; {
+  httpMock.verify(); // Verify no outstanding requests
+});
+
+it(&#39;should fetch data&#39;, () =&gt; {
+  const mockData = { id: 1, name: &#39;Test&#39; };
+
+  service.getData().subscribe(data =&gt; {
+    expect(data).toEqual(mockData);
+  });
+
+  const req = httpMock.expectOne(&#39;api/data&#39;);
+  expect(req.request.method).toBe(&#39;GET&#39;);
+  req.flush(mockData);
+});
+</code></pre>
+</li>
+</ul>
+<h4>3.1 HTTP Error Handling in Tests</h4>
+<p><strong>Issue</strong>: Tests for error handling in HTTP services often fail with &quot;Expected error, not success&quot; because the error callbacks are not properly triggered or captured.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Use proper error handling in test callbacks</li>
+<li>Explicitly capture error objects for verification</li>
+<li>Use error spy functions to track error handling</li>
+<li>Example:<pre><code class="language-typescript">it(&#39;should handle HTTP errors&#39;, () =&gt; {
+  const errorResponse = { status: 404, statusText: &#39;Not Found&#39; };
+  const errorSpy = jasmine.createSpy(&#39;error&#39;);
+
+  service.getData().subscribe({
+    next: () =&gt; fail(&#39;Expected error, not success&#39;),
+    error: error =&gt; {
+      errorSpy(error);
+    },
+  });
+
+  const req = httpMock.expectOne(&#39;api/data&#39;);
+  req.error(new ErrorEvent(&#39;Not Found&#39;), errorResponse);
+
+  expect(errorSpy).toHaveBeenCalled();
+  const errorArg = errorSpy.calls.mostRecent().args[0];
+  expect(errorArg.status).toBe(404);
+});
+</code></pre>
+</li>
+</ul>
+<h4>3.2 Browser-specific URL Validation</h4>
+<p><strong>Issue</strong>: URL validation tests can be inconsistent across browsers because different browsers have different URL parsing rules.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Use reliably invalid URL formats for testing</p>
+</li>
+<li><p>Avoid edge cases that might be valid in some browsers</p>
+</li>
+<li><p>Test with clearly valid and clearly invalid URLs</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG - Some browsers consider this valid
+expect(service.isValidUrl(&#39;http:example.com&#39;)).toBeFalse();
+
+// BETTER - More reliably invalid across browsers
+expect(service.isValidUrl(&#39;http:///example&#39;)).toBeFalse();
+</code></pre>
+</li>
+</ul>
+<h3>4. Testing Asynchronous Operations</h3>
+<p><strong>Issue</strong>: Tests involving timers, promises, or observables often fail due to timing issues.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Use <code>fakeAsync</code> and <code>tick()</code> for timer-based tests</li>
+<li>Use <code>async/await</code> for promise-based tests</li>
+<li>Properly subscribe to and complete observables</li>
+<li>Example:<pre><code class="language-typescript">it(&#39;should handle delayed operations&#39;, fakeAsync(() =&gt; {
+  let value = false;
+
+  service.delayedOperation().subscribe(() =&gt; {
+    value = true;
+  });
+
+  expect(value).toBe(false); // Not changed yet
+  tick(1000); // Fast-forward time
+  expect(value).toBe(true); // Now it should be changed
+}));
+</code></pre>
+</li>
+</ul>
+<h3>5. Component Input/Output Testing</h3>
+<p><strong>Issue</strong>: Difficulty testing components that use @Input() and @Output() decorators.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Set input properties directly on the component instance</li>
+<li>Subscribe to output EventEmitters to capture emitted values</li>
+<li>Example:<pre><code class="language-typescript">it(&#39;should emit when button is clicked&#39;, () =&gt; {
+  // Set up input
+  component.inputValue = &#39;test&#39;;
+
+  // Set up output capture
+  let emittedValue: string | null = null;
+  component.outputEvent.subscribe((value: string) =&gt; {
+    emittedValue = value;
+  });
+
+  // Trigger the event
+  component.onButtonClick();
+
+  // Check the result
+  expect(emittedValue).toBe(&#39;test&#39;);
+});
+</code></pre>
+</li>
+</ul>
+<h3>6. Mock Data Consistency</h3>
+<p><strong>Issue</strong>: Mock data not matching the actual interface requirements, causing type errors.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Create shared mock data factories that follow the interface definitions</p>
+</li>
+<li><p>Use TypeScript&#39;s type checking to ensure mock data is valid</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// Define a mock factory
+function createMockAd(): Ad {
+  return {
+    _id: &#39;ad123&#39;,
+    title: &#39;Test Ad&#39;,
+    description: &#39;Test description&#39;,
+    category: &#39;test&#39;,
+    price: 100,
+    location: &#39;Test Location&#39;,
+    advertiser: &#39;Test Advertiser&#39;,
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 0,
+    clickCount: 0,
+    inquiryCount: 0,
+    media: [],
+    images: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    userId: &#39;user123&#39;,
+  };
+}
+
+// Use the factory in tests
+const mockAd = createMockAd();
+</code></pre>
+</li>
+</ul>
+<h3>7. Testing Components with Child Components</h3>
+<p><strong>Issue</strong>: Tests fail when a component includes child components that are not part of the test setup.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Create stub components for child components</p>
+</li>
+<li><p>Use NO_ERRORS_SCHEMA to ignore unknown elements (use sparingly)</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">@Component({
+  selector: &#39;app-child&#39;,
+  template: &#39;&lt;div&gt;Mock Child&lt;/div&gt;&#39;,
+})
+class MockChildComponent {}
+
+TestBed.configureTestingModule({
+  declarations: [ParentComponent, MockChildComponent],
+  // Alternatively: schemas: [NO_ERRORS_SCHEMA]
+});
+</code></pre>
+</li>
+</ul>
+<h3>8. SCSS Import Path Issues</h3>
+<p><strong>Issue</strong>: SCSS imports fail in component tests due to incorrect paths or missing design tokens.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure SCSS import paths are correct and consistent</p>
+</li>
+<li><p>Create fallback variables for missing design tokens</p>
+</li>
+<li><p>Fix import paths to point to the correct location</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-scss">// WRONG
+@import &#39;../../../../../core/design/design-tokens&#39;;
+
+// CORRECT
+@import &#39;../../../../../app/core/design/design-tokens&#39;;
+
+// Add fallback variables if needed
+$primary: $primary-500;
+$danger: $error;
+</code></pre>
+</li>
+</ul>
+<h3>9. RxJS Compatibility Issues</h3>
+<p><strong>Issue</strong>: Tests fail due to RxJS compatibility issues between different versions.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Use consistent RxJS import paths</p>
+</li>
+<li><p>Avoid mixing pipe operators from different RxJS versions</p>
+</li>
+<li><p>Simplify RxJS usage in tests when possible</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG (mixing styles)
+import { Observable } from &#39;rxjs/Observable&#39;;
+import { of } from &#39;rxjs&#39;;
+
+// CORRECT
+import { Observable, of } from &#39;rxjs&#39;;
+import { map, filter } from &#39;rxjs/operators&#39;;
+</code></pre>
+</li>
+</ul>
+<h3>10. Window Location Testing</h3>
+<p><strong>Issue</strong>: Tests that modify window.location fail with &quot;Cannot assign to read only property &#39;href&#39;&quot;.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Use spyOn with property getters instead of direct assignment</p>
+</li>
+<li><p>Create a spy object for window.location</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG
+spyOn(window.location, &#39;href&#39;, &#39;set&#39;);
+
+// CORRECT
+const locationSpy = jasmine.createSpyObj(&#39;location&#39;, [], {
+  href: &#39;&#39;,
+});
+spyOnProperty(window, &#39;location&#39;, &#39;get&#39;).and.returnValue(locationSpy);
+
+component.navigateToPage();
+expect(locationSpy.href).toBe(&#39;/expected-page&#39;);
+</code></pre>
+</li>
+</ul>
+<h3>11. Component Path Mismatches</h3>
+<p><strong>Issue</strong>: Tests import components from incorrect paths, causing mismatches between test expectations and actual component behavior.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure imports in test files match the actual component paths</p>
+</li>
+<li><p>Check for duplicate component implementations in different directories</p>
+</li>
+<li><p>Verify that the test is importing the correct version of the component</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG
+import { CardGridComponent } from &#39;./card-grid.component&#39;;
+
+// CORRECT (if component is in a different directory)
+import { CardGridComponent } from &#39;../components/card-grid/card-grid.component&#39;;
+</code></pre>
+</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>1. Test Structure</h3>
+<ul>
+<li>Follow the AAA pattern: Arrange, Act, Assert</li>
+<li>Group related tests using nested <code>describe</code> blocks</li>
+<li>Use clear, descriptive test names that explain the expected behavior</li>
+</ul>
+<h3>2. Test Isolation</h3>
+<ul>
+<li>Reset state between tests using <code>beforeEach</code></li>
+<li>Mock external dependencies</li>
+<li>Avoid test interdependence</li>
+</ul>
+<h3>3. Coverage Goals</h3>
+<ul>
+<li>Aim for comprehensive coverage of:<ul>
+<li>Component initialization</li>
+<li>User interactions</li>
+<li>Edge cases and error handling</li>
+<li>Business logic</li>
+</ul>
+</li>
+</ul>
+<h3>4. Performance</h3>
+<ul>
+<li>Keep tests fast by minimizing unnecessary setup</li>
+<li>Use <code>fdescribe</code> and <code>fit</code> for focused testing during development</li>
+<li>Avoid excessive use of <code>beforeEach</code> for operations needed only in specific tests</li>
+</ul>
+<h3>5. Test File Organization</h3>
+<ul>
+<li>Keep test files alongside the components they test</li>
+<li>Use consistent naming patterns (e.g., <code>*.component.spec.ts</code>)</li>
+<li>Add clear comments at the top of test files explaining what&#39;s being tested</li>
+</ul>
+<h3>6. Design System Integration</h3>
+<ul>
+<li>When testing components that use a design system:<ul>
+<li>Ensure design tokens are properly imported</li>
+<li>Test that styling classes are correctly applied</li>
+<li>Verify responsive behavior works as expected</li>
+</ul>
+</li>
+</ul>
+<h2>Specific Component Testing Patterns</h2>
+<h3>1. Reactive Forms Testing</h3>
+<pre><code class="language-typescript">it(&#39;should validate form correctly&#39;, () =&gt; {
+  // Set form values
+  component.form.patchValue({
+    email: &#39;invalid-email&#39;,
+    password: &#39;123&#39;,
+  });
+
+  // Check validation results
+  expect(component.form.get(&#39;email&#39;)?.valid).toBeFalse();
+  expect(component.form.get(&#39;password&#39;)?.hasError(&#39;minlength&#39;)).toBeTrue();
+
+  // Fix the values
+  component.form.patchValue({
+    email: &#39;valid@example.com&#39;,
+    password: &#39;password123&#39;,
+  });
+
+  // Verify form is now valid
+  expect(component.form.valid).toBeTrue();
+});
+</code></pre>
+<h3>2. Router Testing</h3>
+<pre><code class="language-typescript">it(&#39;should navigate when button is clicked&#39;, () =&gt; {
+  const routerSpy = spyOn(router, &#39;navigate&#39;);
+
+  component.navigateToDetails(123);
+
+  expect(routerSpy).toHaveBeenCalledWith([&#39;/details&#39;, 123]);
+});
+</code></pre>
+<h3>3. Testing DOM Interactions</h3>
+<pre><code class="language-typescript">it(&#39;should update UI when button is clicked&#39;, () =&gt; {
+  // Find button element
+  const button = fixture.debugElement.query(By.css(&#39;.action-button&#39;));
+
+  // Simulate click
+  button.triggerEventHandler(&#39;click&#39;, null);
+  fixture.detectChanges();
+
+  // Check result in the DOM
+  const resultElement = fixture.debugElement.query(By.css(&#39;.result&#39;));
+  expect(resultElement.nativeElement.textContent).toContain(&#39;Success&#39;);
+});
+</code></pre>
+<h3>4. Testing Emerald Components</h3>
+<p>When testing Emerald components, follow these additional guidelines:</p>
+<pre><code class="language-typescript">// 1. Use a test host component for complex scenarios
+@Component({
+  template: `
+    &lt;emerald-card-grid [items]=&quot;items&quot; [layout]=&quot;layout&quot; (cardClick)=&quot;onCardClick($event)&quot;&gt;
+    &lt;/emerald-card-grid&gt;
+  `,
+})
+class TestHostComponent {
+  items = MOCK_ITEMS;
+  layout = &#39;default&#39;;
+  onCardClick(id: string) {}
+}
+
+// 2. Test component initialization with default values
+it(&#39;should initialize with default values&#39;, () =&gt; {
+  const newComponent = new CardGridComponent();
+  expect(newComponent.layout).toBe(&#39;default&#39;);
+  expect(newComponent.items).toEqual([]);
+});
+
+// 3. Test layout variations
+it(&#39;should apply correct layout class&#39;, () =&gt; {
+  component.layout = &#39;masonry&#39;;
+  fixture.detectChanges();
+
+  const element = fixture.debugElement.query(By.css(&#39;.emerald-card-grid--masonry&#39;));
+  expect(element).toBeTruthy();
+});
+</code></pre>
+<h2>Troubleshooting Guide</h2>
+<h3>Common Error Messages and Solutions</h3>
+<ol>
+<li><p><strong>&quot;No provider for X&quot;</strong></p>
+<ul>
+<li>Add the missing service to the <code>providers</code> array in TestBed configuration</li>
+<li>Create a mock service if the real one has dependencies you don&#39;t want to include</li>
+</ul>
+</li>
+<li><p><strong>&quot;X is not a known element&quot;</strong></p>
+<ul>
+<li>Import the module that declares the component</li>
+<li>For Angular Material components, import the specific Material module</li>
+<li>For custom components, add them to declarations or use a stub</li>
+</ul>
+</li>
+<li><p><strong>&quot;Cannot read property X of undefined&quot;</strong></p>
+<ul>
+<li>Check component initialization</li>
+<li>Ensure all required inputs are provided</li>
+<li>Verify service dependencies are properly mocked</li>
+</ul>
+</li>
+<li><p><strong>&quot;Expected X to be Y&quot;</strong></p>
+<ul>
+<li>Check for async operations that haven&#39;t completed</li>
+<li>Ensure detectChanges() is called after state changes</li>
+<li>Verify the initial state matches your expectations</li>
+</ul>
+</li>
+<li><p><strong>&quot;Failed to compile node_modules/...&quot;</strong></p>
+<ul>
+<li>Check for version mismatches between dependencies</li>
+<li>Ensure TypeScript version is compatible with Angular version</li>
+<li>Try clearing node_modules and reinstalling dependencies</li>
+</ul>
+</li>
+<li><p><strong>&quot;No specs found&quot;</strong></p>
+<ul>
+<li>Check that test files follow the correct naming pattern (*.spec.ts)</li>
+<li>Verify that the test configuration is correctly set up</li>
+<li>Check for syntax errors in test files that might prevent them from being recognized</li>
+</ul>
+</li>
+<li><p><strong>&quot;SASS/SCSS compilation error&quot;</strong></p>
+<ul>
+<li>Check import paths in SCSS files</li>
+<li>Ensure design tokens are properly defined</li>
+<li>Add fallback variables for missing design tokens</li>
+</ul>
+</li>
+</ol>
+<h3>12. Component File Structure Mismatches</h3>
+<p><strong>Issue</strong>: Tests fail because component files are not in the expected locations or have incorrect import paths.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure component files and their tests are in the same directory structure</p>
+</li>
+<li><p>Update import paths in test files to match the actual component locations</p>
+</li>
+<li><p>Create missing component files in the correct locations</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG
+import { AppCardComponent } from &#39;../app-card/app-card.component&#39;;
+
+// CORRECT (if component is in a different directory)
+import { AppCardComponent } from &#39;../components/app-card/app-card.component&#39;;
+</code></pre>
+</li>
+</ul>
+<h3>13. Type Export Syntax in TypeScript</h3>
+<p><strong>Issue</strong>: Type exports cause errors in newer TypeScript versions due to changes in how types are exported.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Use <code>export type</code> syntax for interfaces and types</p>
+</li>
+<li><p>Update import statements to match the export style</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG
+export { DropdownItem } from &#39;./components/avatar/avatar.component&#39;;
+
+// CORRECT
+export type { DropdownItem } from &#39;./components/avatar/avatar.component&#39;;
+</code></pre>
+</li>
+</ul>
+<h3>14. RxJS Version Conflicts</h3>
+<p><strong>Issue</strong>: Different versions of RxJS in the same project cause type incompatibilities and runtime errors.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure consistent RxJS versions across the project</p>
+</li>
+<li><p>Update package.json to specify exact versions</p>
+</li>
+<li><p>Clean npm cache and reinstall dependencies when updating versions</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-bash"># Check for inconsistent versions
+npm ls rxjs
+
+# Update to a consistent version
+npm install rxjs@7.8.1 --save-exact
+
+# Clean cache and reinstall
+npm cache clean --force
+rm -rf node_modules
+npm install
+</code></pre>
+</li>
+</ul>
+<h3>15. Component Property Name Mismatches</h3>
+<p><strong>Issue</strong>: Tests fail because component property names in tests don&#39;t match the actual component implementation.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure property names are consistent between components and tests</p>
+</li>
+<li><p>Update tests when component properties are renamed</p>
+</li>
+<li><p>Use interfaces to enforce property name consistency</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// WRONG
+// Component uses &#39;isLoading&#39; but test checks &#39;loading&#39;
+expect(component.loading).toBeTrue();
+
+// CORRECT
+expect(component.isLoading).toBeTrue();
+</code></pre>
+</li>
+</ul>
+<h3>16. Missing Component Files</h3>
+<p><strong>Issue</strong>: Tests fail because component files referenced in imports don&#39;t exist.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Create missing component files in the correct locations</li>
+<li>Ensure component files follow the Angular naming conventions</li>
+<li>Update import paths to match the actual file structure</li>
+<li>Example:<pre><code class="language-typescript">// Create missing component files
+// app-card.component.ts
+@Component({
+  selector: &#39;emerald-app-card&#39;,
+  templateUrl: &#39;./app-card.component.html&#39;,
+  styleUrls: [&#39;./app-card.component.scss&#39;],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class AppCardComponent {
+  // Component implementation
+}
+</code></pre>
+</li>
+</ul>
+<h3>17. Testing Components with Rendering Issues</h3>
+<p><strong>Issue</strong>: Tests fail with errors like <code>TypeError: ctx.getMediaCount is not a function</code> when a component&#39;s template tries to use methods that don&#39;t exist or have dependencies that aren&#39;t properly mocked.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Use spies to avoid actual rendering of problematic components</li>
+<li>Skip detectChanges calls that trigger template rendering</li>
+<li>Mock child components that cause rendering issues</li>
+<li>Example:<pre><code class="language-typescript">beforeEach(() =&gt; {
+  // Spy on component methods to avoid template rendering issues
+  spyOn(component, &#39;getGridStyle&#39;).and.returnValue({
+    display: &#39;grid&#39;,
+    &#39;grid-template-columns&#39;: &#39;repeat(4, 1fr)&#39;,
+    gap: &#39;16px&#39;,
+  });
+
+  // Skip actual rendering by spying on detectChanges
+  spyOn(fixture, &#39;detectChanges&#39;).and.callFake(() =&gt; {});
+});
+</code></pre>
+</li>
+</ul>
+<h3>18. Standalone vs. NgModule Component Mismatch</h3>
+<p><strong>Issue</strong>: Tests fail with errors like <code>Unexpected &quot;PagerComponent&quot; found in the &quot;declarations&quot; array of the &quot;TestBed.configureTestingModule&quot; call, &quot;PagerComponent&quot; is marked as standalone and can&#39;t be declared in any NgModule</code>.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li><p>Ensure component is consistently defined as either standalone or NgModule-based</p>
+</li>
+<li><p>For standalone components, use imports array instead of declarations</p>
+</li>
+<li><p>Update module imports to match component definition</p>
+</li>
+<li><p>Example:</p>
+<pre><code class="language-typescript">// For standalone components
+@Component({
+  selector: &#39;emerald-pager&#39;,
+  templateUrl: &#39;./pager.component.html&#39;,
+  styleUrls: [&#39;./pager.component.scss&#39;],
+  standalone: true,
+  imports: [CommonModule],
+})
+export class PagerComponent {}
+
+// In test file
+TestBed.configureTestingModule({
+  imports: [CommonModule, FormsModule, PagerComponent],
+}).compileComponents();
+
+// In module file
+@NgModule({
+  imports: [
+    CommonModule,
+    PagerComponent, // Import standalone component
+  ],
+  exports: [
+    PagerComponent, // Export for use in other modules
+  ],
+})
+export class EmeraldModule {}
+</code></pre>
+</li>
+</ul>
+<h2>References</h2>
+<ul>
+<li><a href="https://angular.io/guide/testing">Angular Testing Guide</a></li>
+<li><a href="https://jasmine.github.io/">Jasmine Documentation</a></li>
+<li><a href="https://material.angular.io/guide/testing">Angular Material Testing</a></li>
+<li><a href="https://rxjs.dev/guide/testing">RxJS Testing</a></li>
+</ul>
+<h2>Integration with Other Documentation</h2>
+<p>This document complements the following guides:</p>
+<ul>
+<li><a href="./TESTING_GUIDE.md">TESTING_GUIDE.MD</a> - General testing strategy</li>
+<li><a href="./CUSTOMIZATION_GUIDE.md">CUSTOMIZATION_GUIDE.MD</a> - How to customize components</li>
+<li><a href="./emerald-testing-guide.md">EMERALD-TESTING-GUIDE.MD</a> - Testing Emerald components</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

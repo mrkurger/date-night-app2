@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Build Optimization Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Angular Build Optimization Guide</h1>
+
+      <h1>Angular Build Optimization Guide</h1>
+<h2>JavaScript Heap Out of Memory Error</h2>
+<p>When building large Angular applications, you may encounter JavaScript heap out of memory errors. This document provides solutions and best practices to resolve these issues.</p>
+<h2>Implemented Solutions</h2>
+<h3>1. Increased Node.js Memory Limit</h3>
+<p>We&#39;ve updated the package.json scripts to include the <code>NODE_OPTIONS=--max_old_space_size=8192</code> flag for all build and serve commands. This increases the memory allocation for Node.js processes to 8GB.</p>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;start&quot;: &quot;NODE_OPTIONS=--max_old_space_size=8192 ng serve client-angular&quot;,
+  &quot;build&quot;: &quot;NODE_OPTIONS=--max_old_space_size=8192 ng build client-angular&quot;,
+  &quot;build:prod&quot;: &quot;NODE_OPTIONS=--max_old_space_size=8192 ng build client-angular --configuration production&quot;
+}
+</code></pre>
+<h3>2. Clean Build Scripts</h3>
+<p>We&#39;ve added convenience scripts to clean the environment before rebuilding:</p>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;clean&quot;: &quot;rm -rf node_modules &amp;&amp; rm -f package-lock.json &amp;&amp; rm -rf .angular/cache &amp;&amp; rm -rf dist&quot;,
+  &quot;clean:install&quot;: &quot;npm run clean &amp;&amp; npm install&quot;,
+  &quot;clean:build&quot;: &quot;npm run clean:install &amp;&amp; npm run build&quot;
+}
+</code></pre>
+<h2>Troubleshooting Steps</h2>
+<p>If you still encounter memory issues, try the following steps in order:</p>
+<ol>
+<li><p><strong>Clean Your Environment</strong></p>
+<pre><code class="language-bash">npm run clean:install
+</code></pre>
+</li>
+<li><p><strong>Check Node.js Version Compatibility</strong></p>
+<ul>
+<li>Current project uses Node.js 22.14.0 with Angular 19.2.5</li>
+<li>If you need to switch Node.js versions, use nvm:<pre><code class="language-bash">nvm install 22.14.0
+nvm use 22.14.0
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>Adjust Memory Limit</strong></p>
+<ul>
+<li>If 8GB is not enough, you can increase the limit further:<pre><code class="language-bash">export NODE_OPTIONS=--max_old_space_size=12288  # 12GB
+ng build client-angular
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>Optimize Your Build</strong></p>
+<ul>
+<li>Consider using production build with AOT compilation:<pre><code class="language-bash">npm run build:prod
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>Check System Resources</strong></p>
+<ul>
+<li>Ensure you have sufficient free RAM</li>
+<li>Close other memory-intensive applications</li>
+<li>Ensure enough free disk space</li>
+</ul>
+</li>
+</ol>
+<h2>Best Practices</h2>
+<ol>
+<li><p><strong>Regular Dependency Updates</strong></p>
+<ul>
+<li>Keep Angular CLI and core packages updated</li>
+<li>Check for memory leak fixes in newer versions</li>
+</ul>
+</li>
+<li><p><strong>Code Splitting</strong></p>
+<ul>
+<li>Use lazy loading for routes</li>
+<li>Consider breaking up large modules</li>
+</ul>
+</li>
+<li><p><strong>Asset Optimization</strong></p>
+<ul>
+<li>Optimize images and other assets</li>
+<li>Consider using a CDN for large assets</li>
+</ul>
+</li>
+<li><p><strong>Development vs. Production</strong></p>
+<ul>
+<li>Use development configuration during development</li>
+<li>Use production configuration for final builds</li>
+</ul>
+</li>
+</ol>
+<h2>Changelog</h2>
+<ul>
+<li><strong>2025-05-20</strong>: Updated documentation to reflect current tech stack (Angular 19.2, Node 22.14.0)<ul>
+<li>Verified all optimization techniques with latest Angular version</li>
+<li>Updated memory settings for modern Node.js environment</li>
+</ul>
+</li>
+<li><strong>2025-04-15</strong>: Added memory optimization settings to package.json scripts<ul>
+<li>Increased Node.js memory limit to 8GB</li>
+<li>Added clean build scripts for easier environment reset</li>
+</ul>
+</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

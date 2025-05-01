@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Build Warnings - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Angular Build Warnings</h1>
+
+      <h1>Angular Build Warnings</h1>
+<p>This document outlines common Angular build warnings encountered in the Date Night App project and provides guidance on how to address them.</p>
+<h2>Types of Build Warnings</h2>
+<h3>1. Unused Component Imports</h3>
+<p><strong>Warning Example:</strong></p>
+<pre><code>TS-998113: TimeAgoPipe is not used within the template of ChatRoomComponent
+</code></pre>
+<p><strong>Cause:</strong><br>Components, pipes, or directives are imported and declared in a component but not used in its template.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Remove unused imports if they&#39;re truly not needed</li>
+<li>Use the imported components in the template if they should be used</li>
+<li>If the component is needed for future use, add a comment explaining why it&#39;s imported but not used</li>
+</ul>
+<p><strong>Common Unused Components in Our Project:</strong></p>
+<ul>
+<li>TimeAgoPipe in ChatRoomComponent</li>
+<li>FileSizePipe in ChatRoomComponent</li>
+<li>AdCardComponent in ListViewComponent</li>
+<li>CardGridComponent in WalletComponent</li>
+<li>AppCardComponent in WalletComponent</li>
+<li>EmeraldToggleComponent in MainLayoutComponent</li>
+</ul>
+<h3>2. CSS Budget Warnings</h3>
+<p><strong>Warning Example:</strong></p>
+<pre><code>css-inline-fonts:https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@300;400;500;600;700&amp;family=Roboto+Mono&amp;display=swap exceeded maximum budget. Budget 50.00 kB was not met by 15.71 kB with a total of 65.71 kB.
+</code></pre>
+<p><strong>Cause:</strong><br>CSS files, particularly font imports, exceed the size limits defined in angular.json.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Increase budget limits in angular.json (as we&#39;ve done)</li>
+<li>Optimize font imports by using font subsets</li>
+<li>Self-host fonts instead of using Google Fonts</li>
+<li>Limit the number of font weights and styles</li>
+</ul>
+<p><strong>Current Budget Configuration:</strong></p>
+<pre><code class="language-json">&quot;budgets&quot;: [
+  {
+    &quot;type&quot;: &quot;initial&quot;,
+    &quot;maximumWarning&quot;: &quot;2MB&quot;,
+    &quot;maximumError&quot;: &quot;5MB&quot;
+  },
+  {
+    &quot;type&quot;: &quot;anyComponentStyle&quot;,
+    &quot;maximumWarning&quot;: &quot;10KB&quot;,
+    &quot;maximumError&quot;: &quot;20KB&quot;
+  }
+]
+</code></pre>
+<h3>3. CommonJS Module Warnings</h3>
+<p><strong>Warning Example:</strong></p>
+<pre><code>Module &#39;leaflet&#39; used by &#39;src/app/shared/components/map/map.component.ts&#39; is not ESM
+</code></pre>
+<p><strong>Cause:</strong><br>The application is using CommonJS modules in an ESM environment, which can cause optimization bailouts.</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Configure the Angular compiler to handle CommonJS modules</li>
+<li>Use ESM-compatible alternatives when available</li>
+<li>Add the module to the <code>allowedCommonJsDependencies</code> array in angular.json</li>
+</ul>
+<p><strong>Common Modules Causing This Warning:</strong></p>
+<ul>
+<li>leaflet</li>
+<li>qrcode (via angularx-qrcode)</li>
+</ul>
+<p><strong>Note:</strong> As per project requirements, we should not convert files to CommonJS unless specifically instructed to do so.</p>
+<h2>Best Practices for Handling Build Warnings</h2>
+<h3>1. Regular Auditing</h3>
+<ul>
+<li>Regularly review build warnings as part of the development process</li>
+<li>Address warnings before they accumulate</li>
+<li>Document known warnings that cannot be fixed immediately</li>
+</ul>
+<h3>2. Budget Configuration</h3>
+<ul>
+<li>Set realistic budgets based on your application&#39;s needs</li>
+<li>Use different budgets for development and production builds</li>
+<li>Consider separate budgets for initial, lazy-loaded chunks, and component styles</li>
+</ul>
+<h3>3. Font Optimization</h3>
+<ul>
+<li>Use font subsets instead of full font families</li>
+<li>Consider self-hosting fonts instead of using Google Fonts</li>
+<li>Use font-display: swap for better performance</li>
+<li>Limit the number of font weights and styles</li>
+</ul>
+<h3>4. Component Cleanup</h3>
+<ul>
+<li>Regularly review components for unused imports</li>
+<li>Remove or use imported components</li>
+<li>Document why certain components are imported but not used</li>
+</ul>
+<h3>5. Module Optimization</h3>
+<ul>
+<li>Use ESM-compatible modules when possible</li>
+<li>Configure Angular to handle CommonJS modules properly</li>
+<li>Consider using dynamic imports for large modules</li>
+</ul>
+<h2>Conclusion</h2>
+<p>While build warnings don&#39;t prevent the application from compiling, they can indicate potential performance issues or unused code that should be addressed. By systematically addressing these warnings, we can maintain a clean, performant application.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

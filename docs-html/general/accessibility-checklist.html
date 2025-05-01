@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessibility Checklist for DateNight.io - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Accessibility Checklist for DateNight.io</h1>
+
+      <h1>Accessibility Checklist for DateNight.io</h1>
+<p>This checklist helps ensure that all components and features in the DateNight.io application meet accessibility standards. Use this checklist when developing new components or reviewing existing ones.</p>
+<h2>Keyboard Accessibility</h2>
+<ul>
+<li><input disabled="" type="checkbox"> All interactive elements are keyboard accessible</li>
+<li><input disabled="" type="checkbox"> Focus order follows a logical sequence</li>
+<li><input disabled="" type="checkbox"> Focus indicators are clearly visible</li>
+<li><input disabled="" type="checkbox"> No keyboard traps (except for modals with proper focus management)</li>
+<li><input disabled="" type="checkbox"> Custom components implement appropriate keyboard interactions:<ul>
+<li><input disabled="" type="checkbox"> Buttons and links are activated with Enter or Space</li>
+<li><input disabled="" type="checkbox"> Dropdowns can be navigated with arrow keys</li>
+<li><input disabled="" type="checkbox"> Escape key closes modals and dropdowns</li>
+<li><input disabled="" type="checkbox"> Tab key navigates between focusable elements</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> Skip links are provided for navigation</li>
+<li><input disabled="" type="checkbox"> Focus is properly managed in modals and dialogs:<ul>
+<li><input disabled="" type="checkbox"> Focus is trapped within the modal when open</li>
+<li><input disabled="" type="checkbox"> Focus returns to the trigger element when closed</li>
+</ul>
+</li>
+</ul>
+<h2>Semantic HTML</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Appropriate HTML elements are used for their intended purpose</li>
+<li><input disabled="" type="checkbox"> Headings are used in the correct hierarchical order (h1, h2, h3, etc.)</li>
+<li><input disabled="" type="checkbox"> Lists are marked up as <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or <code>&lt;dl&gt;</code> as appropriate</li>
+<li><input disabled="" type="checkbox"> Tables are used for tabular data, not for layout</li>
+<li><input disabled="" type="checkbox"> Form elements are properly labeled</li>
+<li><input disabled="" type="checkbox"> Landmarks are used appropriately (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>, etc.)</li>
+</ul>
+<h2>ARIA Attributes</h2>
+<ul>
+<li><input disabled="" type="checkbox"> ARIA attributes are used only when necessary</li>
+<li><input disabled="" type="checkbox"> ARIA roles match the visual and functional purpose of elements</li>
+<li><input disabled="" type="checkbox"> Interactive elements have accessible names (via labels, aria-label, or aria-labelledby)</li>
+<li><input disabled="" type="checkbox"> Elements that expand/collapse use aria-expanded</li>
+<li><input disabled="" type="checkbox"> Custom controls use aria-controls to associate them with their target</li>
+<li><input disabled="" type="checkbox"> Live regions use aria-live for dynamic content updates</li>
+<li><input disabled="" type="checkbox"> Error messages are associated with form fields using aria-describedby</li>
+<li><input disabled="" type="checkbox"> Required fields use aria-required=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Invalid fields use aria-invalid=&quot;true&quot;</li>
+</ul>
+<h2>Images and Media</h2>
+<ul>
+<li><input disabled="" type="checkbox"> All images have appropriate alt text</li>
+<li><input disabled="" type="checkbox"> Decorative images have empty alt text (alt=&quot;&quot;)</li>
+<li><input disabled="" type="checkbox"> Complex images have extended descriptions</li>
+<li><input disabled="" type="checkbox"> SVG elements have appropriate accessibility attributes</li>
+<li><input disabled="" type="checkbox"> Videos have captions and audio descriptions</li>
+<li><input disabled="" type="checkbox"> Audio content has transcripts</li>
+<li><input disabled="" type="checkbox"> Autoplay is avoided or can be easily disabled</li>
+</ul>
+<h2>Color and Contrast</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Text has sufficient contrast against its background (4.5:1 for normal text, 3:1 for large text)</li>
+<li><input disabled="" type="checkbox"> Information is not conveyed by color alone</li>
+<li><input disabled="" type="checkbox"> Focus indicators have sufficient contrast (3:1)</li>
+<li><input disabled="" type="checkbox"> UI components have sufficient contrast against adjacent colors (3:1)</li>
+<li><input disabled="" type="checkbox"> Text remains legible when zoomed to 200%</li>
+<li><input disabled="" type="checkbox"> Dark mode implementation maintains sufficient contrast</li>
+</ul>
+<h2>Forms</h2>
+<ul>
+<li><input disabled="" type="checkbox"> All form controls have associated labels</li>
+<li><input disabled="" type="checkbox"> Required fields are clearly indicated</li>
+<li><input disabled="" type="checkbox"> Error messages are clear and descriptive</li>
+<li><input disabled="" type="checkbox"> Error messages are programmatically associated with form fields</li>
+<li><input disabled="" type="checkbox"> Form validation provides clear feedback</li>
+<li><input disabled="" type="checkbox"> Form submission is possible using keyboard only</li>
+<li><input disabled="" type="checkbox"> Autocomplete attributes are used where appropriate</li>
+</ul>
+<h2>Dynamic Content</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Status messages are announced to screen readers</li>
+<li><input disabled="" type="checkbox"> Loading states are properly indicated</li>
+<li><input disabled="" type="checkbox"> Timeouts can be paused, stopped, or extended</li>
+<li><input disabled="" type="checkbox"> Animations can be disabled via prefers-reduced-motion</li>
+<li><input disabled="" type="checkbox"> Modals and dialogs are properly implemented:<ul>
+<li><input disabled="" type="checkbox"> Modal has role=&quot;dialog&quot; or role=&quot;alertdialog&quot;</li>
+<li><input disabled="" type="checkbox"> Modal has aria-modal=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Modal has an accessible name via aria-labelledby</li>
+<li><input disabled="" type="checkbox"> Focus is trapped within the modal</li>
+<li><input disabled="" type="checkbox"> Focus returns to the trigger element when closed</li>
+</ul>
+</li>
+</ul>
+<h2>Navigation</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Current page/location is clearly indicated</li>
+<li><input disabled="" type="checkbox"> Navigation is consistent across pages</li>
+<li><input disabled="" type="checkbox"> Links have descriptive text</li>
+<li><input disabled="" type="checkbox"> Skip links are provided to bypass navigation</li>
+<li><input disabled="" type="checkbox"> Breadcrumbs are provided for complex navigation structures</li>
+</ul>
+<h2>Responsive Design</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Content is accessible at all viewport sizes</li>
+<li><input disabled="" type="checkbox"> Text remains readable at smaller viewport sizes</li>
+<li><input disabled="" type="checkbox"> Touch targets are at least 44x44 pixels</li>
+<li><input disabled="" type="checkbox"> Hover/focus states are usable on touch devices</li>
+<li><input disabled="" type="checkbox"> Pinch-to-zoom is not disabled</li>
+</ul>
+<h2>Testing</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Component has been tested with keyboard navigation</li>
+<li><input disabled="" type="checkbox"> Component has been tested with screen readers (NVDA, JAWS, VoiceOver)</li>
+<li><input disabled="" type="checkbox"> Component has been tested with high contrast mode</li>
+<li><input disabled="" type="checkbox"> Component has been tested with zoom (up to 200%)</li>
+<li><input disabled="" type="checkbox"> Component has been tested with automated tools (axe, Lighthouse)</li>
+<li><input disabled="" type="checkbox"> Component has been tested with prefers-reduced-motion enabled</li>
+</ul>
+<h2>Documentation</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Accessibility features are documented</li>
+<li><input disabled="" type="checkbox"> Known accessibility issues are documented</li>
+<li><input disabled="" type="checkbox"> Keyboard shortcuts are documented</li>
+<li><input disabled="" type="checkbox"> Alternative ways to access functionality are documented</li>
+</ul>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG 2.1 Quick Reference</a></li>
+<li><a href="https://www.w3.org/WAI/ARIA/apg/">ARIA Authoring Practices Guide</a></li>
+<li><a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a></li>
+<li><a href="https://www.deque.com/axe/">axe Accessibility Testing Tools</a></li>
+<li><a href="/accessibility">Accessibility Demo Page</a></li>
+</ul>
+<h2>Component-Specific Checklists</h2>
+<h3>Buttons</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Has a clear, descriptive label</li>
+<li><input disabled="" type="checkbox"> Can be activated with Enter or Space key</li>
+<li><input disabled="" type="checkbox"> Has visible focus state</li>
+<li><input disabled="" type="checkbox"> Has sufficient color contrast</li>
+<li><input disabled="" type="checkbox"> Icon-only buttons have aria-label or tooltip</li>
+<li><input disabled="" type="checkbox"> Disabled state is visually distinct and has aria-disabled=&quot;true&quot;</li>
+</ul>
+<h3>Form Inputs</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Has associated label</li>
+<li><input disabled="" type="checkbox"> Required state is indicated visually and with aria-required=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Error state is indicated visually and with aria-invalid=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Error messages are associated with the input using aria-describedby</li>
+<li><input disabled="" type="checkbox"> Has visible focus state</li>
+<li><input disabled="" type="checkbox"> Has sufficient color contrast</li>
+<li><input disabled="" type="checkbox"> Placeholder text is not used as a replacement for labels</li>
+</ul>
+<h3>Modals</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Has role=&quot;dialog&quot; or role=&quot;alertdialog&quot;</li>
+<li><input disabled="" type="checkbox"> Has aria-modal=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Has an accessible name via aria-labelledby</li>
+<li><input disabled="" type="checkbox"> Focus is trapped within the modal</li>
+<li><input disabled="" type="checkbox"> Can be closed with Escape key</li>
+<li><input disabled="" type="checkbox"> Focus returns to the trigger element when closed</li>
+<li><input disabled="" type="checkbox"> Has a visible close button with an accessible name</li>
+</ul>
+<h3>Tabs</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Tab list has role=&quot;tablist&quot;</li>
+<li><input disabled="" type="checkbox"> Tab buttons have role=&quot;tab&quot; and are in a single tabindex</li>
+<li><input disabled="" type="checkbox"> Tab panels have role=&quot;tabpanel&quot;</li>
+<li><input disabled="" type="checkbox"> Active tab has aria-selected=&quot;true&quot;</li>
+<li><input disabled="" type="checkbox"> Tab panels are associated with their tabs using aria-controls and aria-labelledby</li>
+<li><input disabled="" type="checkbox"> Arrow keys navigate between tabs</li>
+<li><input disabled="" type="checkbox"> Has visible focus state</li>
+<li><input disabled="" type="checkbox"> Has sufficient color contrast</li>
+</ul>
+<h3>Dropdowns</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Trigger button has aria-expanded and aria-controls</li>
+<li><input disabled="" type="checkbox"> Menu has role=&quot;menu&quot; or appropriate role</li>
+<li><input disabled="" type="checkbox"> Menu items have role=&quot;menuitem&quot; or appropriate role</li>
+<li><input disabled="" type="checkbox"> Arrow keys navigate between menu items</li>
+<li><input disabled="" type="checkbox"> Enter or Space activates menu items</li>
+<li><input disabled="" type="checkbox"> Escape closes the menu</li>
+<li><input disabled="" type="checkbox"> Focus is properly managed when opening and closing</li>
+<li><input disabled="" type="checkbox"> Has visible focus state</li>
+<li><input disabled="" type="checkbox"> Has sufficient color contrast</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
