@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wallet System - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">wallet Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Wallet System</h1>
+
+      <h1>Wallet System</h1>
+<h2>Overview</h2>
+<p>The Wallet System provides users with a comprehensive financial management solution within the application. It enables users to deposit, withdraw, and transfer funds, manage payment methods, and track transaction history. The system supports both fiat currencies and cryptocurrencies, offering a flexible and secure way to handle financial operations.</p>
+<h2>User Experience</h2>
+<p>Users interact with the Wallet System through several interfaces:</p>
+<ul>
+<li><strong>Wallet Dashboard</strong>: Displays balances, recent transactions, and quick action buttons</li>
+<li><strong>Transaction History</strong>: Shows detailed transaction records with filtering options</li>
+<li><strong>Payment Methods</strong>: Allows management of various payment methods (cards, bank accounts, crypto)</li>
+<li><strong>Deposit Interface</strong>: Provides options to add funds to the wallet</li>
+<li><strong>Withdrawal Interface</strong>: Enables users to withdraw funds to their preferred payment method</li>
+<li><strong>Transfer Interface</strong>: Allows sending funds to other users</li>
+<li><strong>Settings Panel</strong>: Controls wallet preferences and notification settings</li>
+</ul>
+<h2>Architecture</h2>
+<h3>Client-Side Components</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WalletComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/wallet.component.ts</code></td>
+<td>Main wallet dashboard</td>
+</tr>
+<tr>
+<td><code>DepositDialogComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/dialogs/deposit-dialog.component.ts</code></td>
+<td>Dialog for depositing funds</td>
+</tr>
+<tr>
+<td><code>WithdrawDialogComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/dialogs/withdraw-dialog.component.ts</code></td>
+<td>Dialog for withdrawing funds</td>
+</tr>
+<tr>
+<td><code>TransferDialogComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/dialogs/transfer-dialog.component.ts</code></td>
+<td>Dialog for transferring funds</td>
+</tr>
+<tr>
+<td><code>AddPaymentMethodDialogComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/dialogs/add-payment-method-dialog.component.ts</code></td>
+<td>Dialog for adding payment methods</td>
+</tr>
+<tr>
+<td><code>TransactionDetailsDialogComponent</code></td>
+<td><code>/client-angular/src/app/features/wallet/dialogs/transaction-details-dialog.component.ts</code></td>
+<td>Dialog for transaction details</td>
+</tr>
+</tbody></table>
+<h3>Client-Side Services</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WalletService</code></td>
+<td><code>/client-angular/src/app/core/services/wallet.service.ts</code></td>
+<td>Manages wallet operations</td>
+</tr>
+<tr>
+<td><code>PaymentService</code></td>
+<td><code>/client-angular/src/app/core/services/payment.service.ts</code></td>
+<td>Handles payment processing</td>
+</tr>
+</tbody></table>
+<h3>Server-Side Controllers</h3>
+<table>
+<thead>
+<tr>
+<th>Controller</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WalletController</code></td>
+<td><code>/server/controllers/wallet.controller.js</code></td>
+<td>Handles wallet-related HTTP requests</td>
+</tr>
+</tbody></table>
+<h3>Server-Side Services</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WalletService</code></td>
+<td><code>/server/services/wallet.service.js</code></td>
+<td>Implements wallet business logic</td>
+</tr>
+</tbody></table>
+<h3>Server-Side Models</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Wallet</code></td>
+<td><code>/server/models/wallet.model.js</code></td>
+<td>Mongoose schema for wallet data</td>
+</tr>
+</tbody></table>
+<h2>API Endpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+<th>Request Body</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/api/wallet</code></td>
+<td>GET</td>
+<td>Get user wallet</td>
+<td>N/A</td>
+<td>Wallet object</td>
+</tr>
+<tr>
+<td><code>/api/wallet/balance</code></td>
+<td>GET</td>
+<td>Get wallet balance</td>
+<td>Query param: <code>currency</code> (optional)</td>
+<td>Balance object(s)</td>
+</tr>
+<tr>
+<td><code>/api/wallet/transactions</code></td>
+<td>GET</td>
+<td>Get wallet transactions</td>
+<td>Query params: filters, pagination</td>
+<td>Transactions with pagination</td>
+</tr>
+<tr>
+<td><code>/api/wallet/payment-methods</code></td>
+<td>GET</td>
+<td>Get payment methods</td>
+<td>N/A</td>
+<td>Array of payment methods</td>
+</tr>
+<tr>
+<td><code>/api/wallet/payment-methods</code></td>
+<td>POST</td>
+<td>Add payment method</td>
+<td>Payment method data</td>
+<td>Created payment method</td>
+</tr>
+<tr>
+<td><code>/api/wallet/payment-methods/:id</code></td>
+<td>DELETE</td>
+<td>Remove payment method</td>
+<td>N/A</td>
+<td>Success message</td>
+</tr>
+<tr>
+<td><code>/api/wallet/payment-methods/:id/default</code></td>
+<td>PATCH</td>
+<td>Set default payment method</td>
+<td>N/A</td>
+<td>Updated payment method</td>
+</tr>
+<tr>
+<td><code>/api/wallet/deposit/stripe</code></td>
+<td>POST</td>
+<td>Deposit funds with Stripe</td>
+<td><code>{amount, currency, paymentMethodId, description}</code></td>
+<td>Transaction and client secret</td>
+</tr>
+<tr>
+<td><code>/api/wallet/deposit/crypto/:currency</code></td>
+<td>GET</td>
+<td>Get crypto deposit address</td>
+<td>N/A</td>
+<td>Crypto address details</td>
+</tr>
+<tr>
+<td><code>/api/wallet/withdraw</code></td>
+<td>POST</td>
+<td>Withdraw funds</td>
+<td><code>{amount, currency, paymentMethodId, description}</code></td>
+<td>Transaction object</td>
+</tr>
+<tr>
+<td><code>/api/wallet/withdraw/crypto</code></td>
+<td>POST</td>
+<td>Withdraw cryptocurrency</td>
+<td><code>{amount, currency, address, network, memo, description}</code></td>
+<td>Transaction object</td>
+</tr>
+<tr>
+<td><code>/api/wallet/transfer</code></td>
+<td>POST</td>
+<td>Transfer funds to another user</td>
+<td><code>{recipientUserId, amount, currency, description}</code></td>
+<td>Transaction object</td>
+</tr>
+<tr>
+<td><code>/api/wallet/settings</code></td>
+<td>PATCH</td>
+<td>Update wallet settings</td>
+<td>Settings object</td>
+<td>Updated settings</td>
+</tr>
+<tr>
+<td><code>/api/wallet/exchange-rates</code></td>
+<td>GET</td>
+<td>Get exchange rates</td>
+<td>Query params: <code>fromCurrency</code>, <code>toCurrency</code></td>
+<td>Exchange rate object</td>
+</tr>
+</tbody></table>
+<h2>Data Flow</h2>
+<p>The wallet system follows these data flows:</p>
+<ol>
+<li><p><strong>Wallet Initialization</strong>:</p>
+<ul>
+<li>When a user first accesses the wallet, WalletComponent is loaded</li>
+<li>WalletComponent calls WalletService.getWallet()</li>
+<li>The request goes to the server&#39;s /api/wallet endpoint</li>
+<li>WalletController.getWallet() handles the request</li>
+<li>Server-side WalletService.getOrCreateWallet() is called</li>
+<li>If the user doesn&#39;t have a wallet, one is created with default settings</li>
+<li>The wallet data is returned to the client</li>
+<li>Client-side WalletService updates its state with the wallet data</li>
+<li>WalletComponent displays the wallet information</li>
+</ul>
+</li>
+<li><p><strong>Depositing Funds</strong>:</p>
+<ul>
+<li>User clicks &quot;Deposit&quot; button in WalletComponent</li>
+<li>DepositDialogComponent opens with deposit options</li>
+<li>User selects currency, amount, and payment method</li>
+<li>For fiat deposits:<ul>
+<li>WalletService.depositFundsWithStripe() is called</li>
+<li>Request goes to /api/wallet/deposit/stripe</li>
+<li>Server processes the payment intent with Stripe</li>
+<li>Transaction is created with &quot;pending&quot; status</li>
+<li>Client receives transaction data and Stripe client secret</li>
+<li>Client completes the payment using Stripe.js</li>
+<li>Stripe webhook notifies the server when payment succeeds</li>
+<li>Server updates transaction status to &quot;completed&quot;</li>
+<li>User&#39;s balance is updated</li>
+</ul>
+</li>
+<li>For crypto deposits:<ul>
+<li>WalletService.getCryptoDepositAddress() is called</li>
+<li>Request goes to /api/wallet/deposit/crypto/:currency</li>
+<li>Server generates or retrieves a deposit address</li>
+<li>Client displays the address with a QR code</li>
+<li>User sends crypto to the address</li>
+<li>Crypto provider webhook notifies the server when deposit is received</li>
+<li>Server creates a transaction and updates user&#39;s balance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Viewing Transactions</strong>:</p>
+<ul>
+<li>WalletComponent calls WalletService.getWalletTransactions()</li>
+<li>Request goes to /api/wallet/transactions with filter parameters</li>
+<li>Server retrieves transactions matching the filters</li>
+<li>Transactions are returned with pagination data</li>
+<li>WalletComponent displays the transactions in a table</li>
+<li>User can click on a transaction to view details</li>
+<li>TransactionDetailsDialogComponent shows detailed information</li>
+</ul>
+</li>
+<li><p><strong>Managing Payment Methods</strong>:</p>
+<ul>
+<li>WalletComponent calls WalletService.getWalletPaymentMethods()</li>
+<li>Server returns the user&#39;s payment methods</li>
+<li>WalletComponent displays the payment methods</li>
+<li>User can add a new payment method via AddPaymentMethodDialogComponent</li>
+<li>WalletService.addPaymentMethod() sends the data to the server</li>
+<li>Server stores the payment method and returns it</li>
+<li>WalletComponent updates the displayed payment methods</li>
+</ul>
+</li>
+</ol>
+<h2>State Management</h2>
+<p>The wallet system uses a combination of service-based state management:</p>
+<ul>
+<li><p><strong>WalletService</strong>: Maintains wallet state with BehaviorSubject</p>
+<ul>
+<li><code>walletSubject</code>: Stores the current wallet data</li>
+<li><code>balancesSubject</code>: Stores the current balances</li>
+<li>Exposes observables: <code>wallet$</code> and <code>balances$</code></li>
+<li>Components subscribe to these observables to react to changes</li>
+</ul>
+</li>
+<li><p><strong>Component-level state</strong>: Each component maintains its own UI state</p>
+<ul>
+<li>Loading states</li>
+<li>Form values</li>
+<li>Selected filters</li>
+<li>Pagination state</li>
+</ul>
+</li>
+</ul>
+<h2>Data Models</h2>
+<h3>Client-Side Models</h3>
+<pre><code class="language-typescript">// Wallet balance
+interface WalletBalance {
+  currency: string;
+  available: number;
+  pending: number;
+  reserved: number;
+}
+
+// Wallet transaction
+interface WalletTransaction {
+  _id: string;
+  type: &#39;deposit&#39; | &#39;withdrawal&#39; | &#39;transfer&#39; | &#39;payment&#39; | &#39;refund&#39; | &#39;fee&#39;;
+  amount: number;
+  currency: string;
+  status: &#39;pending&#39; | &#39;completed&#39; | &#39;failed&#39; | &#39;cancelled&#39;;
+  description: string;
+  metadata: {
+    paymentIntentId?: string;
+    paymentMethodId?: string;
+    transactionId?: string;
+    txHash?: string;
+    blockConfirmations?: number;
+    provider?: string;
+    senderWalletId?: string;
+    recipientWalletId?: string;
+    adId?: string;
+    serviceType?: string;
+    address?: string;
+    network?: string;
+    memo?: string;
+  };
+  fee?: {
+    amount: number;
+    currency: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Payment method
+interface PaymentMethod {
+  _id: string;
+  type: &#39;card&#39; | &#39;bank_account&#39; | &#39;crypto_address&#39;;
+  provider: string;
+  isDefault: boolean;
+  cardDetails?: {
+    lastFour: string;
+    brand: string;
+    expiryMonth: number;
+    expiryYear: number;
+    tokenId: string;
+  };
+  bankDetails?: {
+    accountType: string;
+    lastFour: string;
+    bankName: string;
+    country: string;
+    currency: string;
+    tokenId: string;
+  };
+  cryptoDetails?: {
+    currency: string;
+    address: string;
+    network: string;
+    memo?: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Wallet settings
+interface WalletSettings {
+  autoWithdrawal: {
+    enabled: boolean;
+    threshold: number;
+    paymentMethodId: string;
+  };
+  defaultCurrency: string;
+  notificationPreferences: {
+    email: {
+      deposit: boolean;
+      withdrawal: boolean;
+      payment: boolean;
+    };
+    push: {
+      deposit: boolean;
+      withdrawal: boolean;
+      payment: boolean;
+    };
+  };
+}
+
+// Complete wallet
+interface Wallet {
+  _id: string;
+  balances: WalletBalance[];
+  paymentMethods: PaymentMethod[];
+  settings: WalletSettings;
+}
+</code></pre>
+<h3>Server-Side Models</h3>
+<p>The server uses Mongoose schemas that closely mirror the client-side interfaces:</p>
+<ul>
+<li><code>walletSchema</code>: Main wallet schema with user reference, balances, transactions, payment methods, and settings</li>
+<li><code>balanceSchema</code>: Schema for currency balances</li>
+<li><code>transactionSchema</code>: Schema for wallet transactions</li>
+<li><code>paymentMethodSchema</code>: Schema for payment methods</li>
+</ul>
+<h2>Key Features</h2>
+<ol>
+<li><p><strong>Multi-Currency Support</strong>:</p>
+<ul>
+<li>Fiat currencies: NOK, USD, EUR, GBP</li>
+<li>Cryptocurrencies: BTC, ETH, USDT, USDC</li>
+<li>Currency conversion via exchange rates</li>
+</ul>
+</li>
+<li><p><strong>Payment Method Management</strong>:</p>
+<ul>
+<li>Credit/debit cards via Stripe</li>
+<li>Bank accounts</li>
+<li>Cryptocurrency addresses</li>
+<li>Default payment method selection</li>
+</ul>
+</li>
+<li><p><strong>Transaction Types</strong>:</p>
+<ul>
+<li>Deposits (fiat and crypto)</li>
+<li>Withdrawals (fiat and crypto)</li>
+<li>Transfers between users</li>
+<li>Payments for services</li>
+<li>Refunds</li>
+<li>Fee transactions</li>
+</ul>
+</li>
+<li><p><strong>Wallet Settings</strong>:</p>
+<ul>
+<li>Default currency preference</li>
+<li>Auto-withdrawal configuration</li>
+<li>Notification preferences</li>
+</ul>
+</li>
+<li><p><strong>Security Features</strong>:</p>
+<ul>
+<li>Transaction verification</li>
+<li>Withdrawal confirmations</li>
+<li>Payment method validation</li>
+<li>Balance checks before transactions</li>
+</ul>
+</li>
+</ol>
+<h2>Security Considerations</h2>
+<ol>
+<li><p><strong>Transaction Validation</strong>:</p>
+<ul>
+<li>Server-side validation of all transactions</li>
+<li>Balance checks before withdrawals and transfers</li>
+<li>Minimum and maximum transaction limits</li>
+</ul>
+</li>
+<li><p><strong>Payment Provider Integration</strong>:</p>
+<ul>
+<li>Secure integration with Stripe for card payments</li>
+<li>Secure integration with crypto providers</li>
+<li>Webhook verification for payment confirmations</li>
+</ul>
+</li>
+<li><p><strong>Access Control</strong>:</p>
+<ul>
+<li>Authentication required for all wallet operations</li>
+<li>Users can only access their own wallet</li>
+<li>Rate limiting on sensitive operations</li>
+</ul>
+</li>
+<li><p><strong>Data Protection</strong>:</p>
+<ul>
+<li>Payment method details are tokenized</li>
+<li>Sensitive data is not stored directly</li>
+<li>Transactions are immutable once completed</li>
+</ul>
+</li>
+</ol>
+<h2>Testing</h2>
+<h3>Unit Tests</h3>
+<table>
+<thead>
+<tr>
+<th>Test File</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wallet.service.spec.ts</code></td>
+<td><code>/client-angular/src/app/core/services/wallet.service.spec.ts</code></td>
+<td>Tests for wallet service</td>
+</tr>
+<tr>
+<td><code>wallet.component.spec.ts</code></td>
+<td><code>/client-angular/src/app/features/wallet/wallet.component.spec.ts</code></td>
+<td>Tests for wallet component</td>
+</tr>
+</tbody></table>
+<h3>Integration Tests</h3>
+<table>
+<thead>
+<tr>
+<th>Test File</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wallet.controller.test.js</code></td>
+<td><code>/server/tests/integration/wallet/wallet.controller.test.js</code></td>
+<td>API integration tests</td>
+</tr>
+<tr>
+<td><code>wallet.service.test.js</code></td>
+<td><code>/server/tests/integration/wallet/wallet.service.test.js</code></td>
+<td>Service integration tests</td>
+</tr>
+<tr>
+<td><code>wallet.model.test.js</code></td>
+<td><code>/server/tests/integration/wallet/wallet.model.test.js</code></td>
+<td>Database model tests</td>
+</tr>
+</tbody></table>
+<h2>Performance Considerations</h2>
+<ol>
+<li><p><strong>Pagination</strong>:</p>
+<ul>
+<li>Transaction history is paginated</li>
+<li>Default limit of 20 transactions per page</li>
+<li>Filtering to reduce result set size</li>
+</ul>
+</li>
+<li><p><strong>Indexing</strong>:</p>
+<ul>
+<li>MongoDB indexes on frequently queried fields</li>
+<li>Compound indexes for complex queries</li>
+<li>Index on userId for quick wallet lookup</li>
+</ul>
+</li>
+<li><p><strong>Caching</strong>:</p>
+<ul>
+<li>Exchange rates are cached</li>
+<li>Wallet data is cached in the client service</li>
+<li>Balance updates trigger cache invalidation</li>
+</ul>
+</li>
+</ol>
+<h2>Future Enhancements</h2>
+<ol>
+<li><p><strong>Advanced Analytics</strong>:</p>
+<ul>
+<li>Spending patterns visualization</li>
+<li>Income/expense categorization</li>
+<li>Financial reports and exports</li>
+</ul>
+</li>
+<li><p><strong>Enhanced Crypto Support</strong>:</p>
+<ul>
+<li>Additional cryptocurrencies</li>
+<li>Cross-chain transactions</li>
+<li>DeFi integrations</li>
+</ul>
+</li>
+<li><p><strong>Recurring Payments</strong>:</p>
+<ul>
+<li>Scheduled transfers</li>
+<li>Subscription management</li>
+<li>Automatic top-ups</li>
+</ul>
+</li>
+<li><p><strong>Multi-Wallet Support</strong>:</p>
+<ul>
+<li>Multiple wallets per user</li>
+<li>Purpose-specific wallets</li>
+<li>Shared wallets for teams</li>
+</ul>
+</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
