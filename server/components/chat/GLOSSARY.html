@@ -3493,6 +3493,384 @@
   
 </div>
 </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getRoom">
+  <h3>getRoom</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get a specific chat room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getMessages">
+  <h3>getMessages</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get messages for a chat room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="sendMessage">
+  <h3>sendMessage</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Send a message to a chat room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="createDirectRoom">
+  <h3>createDirectRoom</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Create or get a direct message room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="createAdRoom">
+  <h3>createAdRoom</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Create or get a chat room for an ad</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="createGroupRoom">
+  <h3>createGroupRoom</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Create a group chat room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="markMessagesAsRead">
+  <h3>markMessagesAsRead</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Mark messages as read in a room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getUnreadCounts">
+  <h3>getUnreadCounts</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get unread message counts</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="leaveRoom">
+  <h3>leaveRoom</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Leave a group chat room</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="setupRoomEncryption">
+  <h3>setupRoomEncryption</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Setup room encryption</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="updateMessageExpiry">
+  <h3>updateMessageExpiry</h3>
+  <p class="entry-meta">method | <a href="/server/components/chat/chat.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Update message expiry settings</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="registerPublicKey">
+  <h3>registerPublicKey</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Chat Encryption Controller Handles the server-side operations for end-to-end encryption in the chat system. This controller manages public key registration, room key distribution, and other encryption-related operations. Note: The server never has access to the actual decryption keys or plaintext messages. It only stores and distributes encrypted keys and messages. / // =================================================== // CUSTOMIZABLE SETTINGS IN THIS FILE // =================================================== // This file contains settings for component configuration (encryption.controller) // // COMMON CUSTOMIZATIONS: // - SETTING_NAME: Description of setting (default: value) //   Related to: other_file.js:OTHER_SETTING // =================================================== import User from '../../models/user.model.js'; import ChatRoom from '../../models/chat-room.model.js'; import logger from '../../utils/logger.js'; import { validateObjectId } from '../../utils/validation.js'; import { errorResponse, successResponse } from '../../utils/response.js'; /** Register a user's public key</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="setupRoomEncryption">
+  <h3>setupRoomEncryption</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Set up encryption for a chat room</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="disableRoomEncryption">
+  <h3>disableRoomEncryption</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Disable encryption for a chat room</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="storeRoomKey">
+  <h3>storeRoomKey</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Store an encrypted room key for a participant</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="getRoomKey">
+  <h3>getRoomKey</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get the encrypted room key for the current user</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="getRoomParticipantKeys">
+  <h3>getRoomParticipantKeys</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get the public keys of all participants in a room</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="getRoomEncryptionStatus">
+  <h3>getRoomEncryptionStatus</h3>
+  <p class="entry-meta">function | <a href="/server/components/chat/encryption.controller.js">Source</a></p>
+  <div class="entry-description">
+    <p>Get the encryption status of a room</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>req</td>
+      <td><code>Object</code></td>
+      <td>- Express request object</td>
+    </tr>
+    
+    <tr>
+      <td>res</td>
+      <td><code>Object</code></td>
+      <td>- Express response object</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+</div>
       </article>
     </div>
   </main>

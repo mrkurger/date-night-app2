@@ -566,6 +566,59 @@
 <p><code></code> - The styles object</p>
   
 </div>
+</div> </ng-container> <!-- Text skeleton with multiple lines --> <ng-container *ngSwitchCase="'text'"> <div class="skeleton-loader__line" ngFor="let line of getLinesArray(); let i = index" [ngStyle]="getLineStyles(i)" ></div> </ng-container> <!-- Card skeleton with image and text --> <ng-container *ngSwitchCase="'card'"> <div class="skeleton-loader__image" [ngStyle]="{ 'height.px': imageHeight }"></div> <div class="skeleton-loader__card-content"> <div class="skeleton-loader__title"></div> <div class="skeleton-loader__text"></div> <div class="skeleton-loader__text" [ngStyle]="{ 'width.%': 70 }"></div> </div> </ng-container> <!-- Avatar skeleton --> <ng-container *ngSwitchCase="'avatar'"> <div class="skeleton-loader__avatar"></div> </ng-container> <!-- Button skeleton --> <ng-container *ngSwitchCase="'button'"> <div class="skeleton-loader__button"></div> </ng-container> </ng-container> </div> `, styles: [ ` .skeleton-loader { display: block; position: relative; overflow: hidden; background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); border-radius: var(--border-radius-md); } .skeleton-loader--circle { border-radius: 50%; } .skeleton-loader--rounded { border-radius: var(--border-radius-full); } .skeleton-loader--animated { &::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); animation: skeleton-loading 1.5s infinite; } } .skeleton-loader__line { height: 12px; margin-bottom: 8px; border-radius: var(--border-radius-sm); background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); &:last-child { margin-bottom: 0; } } .skeleton-loader__image { width: 100%; height: 200px; background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; } .skeleton-loader__card-content { padding: 16px; } .skeleton-loader__title { height: 24px; margin-bottom: 16px; border-radius: var(--border-radius-sm); background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); } .skeleton-loader__text { height: 12px; margin-bottom: 8px; border-radius: var(--border-radius-sm); background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); &:last-child { margin-bottom: 0; } } .skeleton-loader__avatar { width: 100%; height: 100%; border-radius: 50%; background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); } .skeleton-loader__button { width: 100%; height: 100%; border-radius: var(--border-radius-md); background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08)); } @keyframes skeleton-loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } } /* Dark mode support */ :host-context(.dark-theme) .skeleton-loader { background-color: var(--skeleton-bg-dark, rgba(255, 255, 255, 0.08)); } `, ], }) export class SkeletonLoaderComponent { /** Width of the skeleton loader / @Input() width?: number | string; /** Height of the skeleton loader / @Input() height?: number | string; /** Type of skeleton loader / @Input() type: 'basic' | 'text' | 'card' | 'avatar' | 'button' = 'basic'; /** Shape of the skeleton loader / @Input() shape: 'rectangle' | 'circle' | 'rounded' = 'rectangle'; /** Number of lines for text type / @Input() lines: number = 3; /** Whether to animate the skeleton loader / @Input() animated: boolean = true; /** Height of the image for card type / @Input() imageHeight: number = 200; /** Gets the styles for the skeleton loader</p>
+  </div>
+  
+  
+<h4>Returns</h4>
+<p><code></code> - The styles object</p>
+  
+</div>
+
+<div class="glossary-entry" id="getLinesArray">
+  <h3>getLinesArray</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/skeleton-loader/skeleton-loader.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Gets an array of the specified number of lines</p>
+  </div>
+  
+  
+<h4>Returns</h4>
+<p><code></code> - An array with the specified number of elements</p>
+  
+</div>
+
+<div class="glossary-entry" id="getLineStyles">
+  <h3>getLineStyles</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/skeleton-loader/skeleton-loader.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Gets the styles for a specific line in text type</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>index</td>
+      <td><code></code></td>
+      <td>The index of the line</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+<h4>Returns</h4>
+<p><code></code> - The styles object</p>
+  
+</div>
 </div>
       </article>
     </div>

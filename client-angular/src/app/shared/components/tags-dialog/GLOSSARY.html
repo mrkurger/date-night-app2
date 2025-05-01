@@ -1376,6 +1376,149 @@
   
   
 </div>
+</div> <mat-dialog-content> <mat-form-field appearance="outline" class="full-width"> <mat-label>Tags</mat-label> <mat-chip-grid #chipGrid> <mat-chip-row ngFor="let tag of tags" (removed)="removeTag(tag)" [editable]="true" (edited)="editTag(tag, $event)" > {{ tag }} <button matChipRemove> <mat-icon>cancel</mat-icon> </button> </mat-chip-row> <input placeholder="Add tags..." [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTag($event)" /> </mat-chip-grid> <mat-hint> Press Enter to add a tag. {{ maxTagsMessage }} </mat-hint> </mat-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <button mat-chip ngFor="let tag of data.suggestedTags" (click)="addSuggestedTag(tag)" [disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" > {{ tag }} </button> </div> </div> <div class="form-actions"> <button mat-button type="button" (click)="onClose()">Cancel</button> <button mat-raised-button color="primary" (click)="onSave()">Save</button> </div> </mat-dialog-content> </div> `, styles: [ ` .tags-dialog-container { min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #eee; } h2 { margin: 0; font-size: 20px; font-weight: 500; } mat-dialog-content { padding: 24px; } .full-width { width: 100%; margin-bottom: 20px; } .suggested-tags { margin-bottom: 24px; } .suggested-tags h3 { font-size: 16px; margin-bottom: 8px; color: #555; } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 8px; } .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; } `, ], }) export class TagsDialogComponent { tags: string[] = []; readonly separatorKeysCodes = [ENTER, COMMA] as const; constructor( public dialogRef: MatDialogRef<TagsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TagsDialogData ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>event</td>
+      <td><code></code></td>
+      <td>Chip input event</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="addSuggestedTag">
+  <h3>addSuggestedTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Add a suggested tag</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>tag</td>
+      <td><code></code></td>
+      <td>Tag to add</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeTag">
+  <h3>removeTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a tag</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>tag</td>
+      <td><code></code></td>
+      <td>Tag to remove</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="editTag">
+  <h3>editTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Edit an existing tag</p>
+  </div>
+  
+<h4>Parameters</h4>
+<table class="params-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>tag</td>
+      <td><code></code></td>
+      <td>Tag to edit</td>
+    </tr>
+    
+    <tr>
+      <td>event</td>
+      <td><code></code></td>
+      <td>Edit event</td>
+    </tr>
+    
+  </tbody>
+</table>
+  
+  
+</div>
+
+<div class="glossary-entry" id="onSave">
+  <h3>onSave</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Save tags and close dialog</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onClose">
+  <h3>onClose</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Close dialog without saving</p>
+  </div>
+  
+  
+  
+</div>
 </div>
       </article>
     </div>
