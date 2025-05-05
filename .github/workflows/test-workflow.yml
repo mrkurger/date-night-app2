@@ -14,19 +14,26 @@ concurrency:
 
 jobs:
   lint:
-    uses: ./.github/workflows/base-config.yml
-    with:
-      job: setup-node
-      run: npm run lint
-      continue-on-error: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: npm install
+      - run: npm run lint
+        continue-on-error: false
 
   test:
     needs: lint
-    uses: ./.github/workflows/base-config.yml
-    with:
-    needs: lint
-    uses: ./.github/workflows/base-config.yml
-    with:
-      job: mongodb-service
-      run: npm test
-      timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: npm install
+      - run: npm test
+    timeout-minutes: 15

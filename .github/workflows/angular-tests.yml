@@ -5,38 +5,60 @@ on:
     branches: [main, develop]
     paths:
       - 'client-angular/**'
-      - '.github/workflows/angular-tests.yml'
+      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
   pull_request:
     branches: [main, develop]
     paths:
       - 'client-angular/**'
+      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    env:
+      CI: true
+    timeout-minutes: 20 # Add timeout to prevent runaway jobs
+
+    strategy:
+      matrix:
+        node-version: [22.x]
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: client-angular/package-lock.json
+          node-version: ${{ matrix.node-version }}
+          # Removed caching configuration since package-lock.json doesn't exist
 
-      - run: npm ci
-        working-directory: client-angular
+      - name: Install dependencies
+        working-directory: ./client-angular
+        run: |
+          npm install
+          # Ensure specific dependencies are installed
+          npm list angularx-qrcode || npm install angularx-qrcode@19.0.0
+          npm list @swimlane/ngx-charts || npm install @swimlane/ngx-charts@22.0.0-alpha.1
+          npm list chart.js || npm install chart.js@4.4.9
 
-      - name: Run tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
-        working-directory: client-angular
+      - name: Run unit tests
+        working-directory: ./client-angular
+        run: npm test -- --watch=false --browsers=ChromeHeadless --no-progress
 
-      - uses: actions/upload-artifact@v4
+      - name: Prepare test results directory
+        run: |
+          mkdir -p downloaded-reports/angular
+          cp -r ./client-angular/coverage/* downloaded-reports/angular/ || true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-coverage
-          path: client-angular/coverage
+          name: test-results
+          path: |
+            ./client-angular/coverage
+            downloaded-reports/angular
+          if-no-files-found: warn
 
   e2e:
     runs-on: ubuntu-latest
@@ -69,7 +91,6 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:4200'
           browser: chrome
-          headless: true
 
       - name: Prepare Cypress screenshots directory
         if: failure()

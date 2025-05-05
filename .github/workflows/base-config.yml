@@ -2,6 +2,9 @@
 # Add this shared configuration file for reusable properties
 name: Base Workflow Configuration
 
+on:
+  workflow_call:
+
 # Reusable job definitions
 jobs:
   setup-node:

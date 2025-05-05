@@ -6,9 +6,6 @@ on:
     workflows: ['*']
     types:
       - completed
-    conclusions:
-      - failure
-      - timed_out
 
 jobs:
   monitor:
