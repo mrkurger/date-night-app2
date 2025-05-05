@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Formatting Guidelines - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Code Formatting Guidelines</h1>
+
+      <h1>Code Formatting Guidelines</h1>
+<p>This document outlines the code formatting standards and tools used in the Date Night App project.</p>
+<h2>Tools and Configuration</h2>
+<p>The project uses the following tools to ensure consistent code formatting and quality:</p>
+<ul>
+<li><strong>ESLint</strong>: For static code analysis and enforcing coding standards</li>
+<li><strong>Prettier</strong>: For automatic code formatting</li>
+<li><strong>Husky</strong>: For Git hooks to enforce standards before commits</li>
+<li><strong>lint-staged</strong>: For running linters on staged files</li>
+</ul>
+<h2>Setup</h2>
+<p>The formatting tools are already configured in the project. Here&#39;s what&#39;s included:</p>
+<h3>Server (Node.js)</h3>
+<ul>
+<li>ESLint configuration in <code>server/.eslintrc.json</code></li>
+<li>Prettier configuration in <code>server/.prettierrc</code></li>
+<li>npm scripts for linting and formatting</li>
+</ul>
+<h3>Client (Angular)</h3>
+<ul>
+<li>ESLint configuration in <code>client-angular/.eslintrc.json</code></li>
+<li>Prettier configuration in <code>client-angular/.prettierrc</code></li>
+<li>npm scripts for linting and formatting</li>
+</ul>
+<h3>Root Project</h3>
+<ul>
+<li>Git hooks with Husky in <code>.husky/</code></li>
+<li>lint-staged configuration in <code>.lintstagedrc.json</code></li>
+<li>VSCode settings in <code>.vscode/settings.json</code></li>
+</ul>
+<h2>Available Commands</h2>
+<h3>Server Commands</h3>
+<pre><code class="language-bash"># In the server directory
+npm run lint           # Check for linting issues
+npm run lint:fix       # Fix linting issues
+npm run format         # Format code with Prettier
+npm run format:check   # Check if code is formatted correctly
+</code></pre>
+<h3>Client Commands</h3>
+<pre><code class="language-bash"># In the client-angular directory
+npm run lint           # Check and fix linting issues
+npm run lint:check     # Check for linting issues without fixing
+npm run format         # Format code with Prettier
+npm run format:check   # Check if code is formatted correctly
+npm run format:all     # Run both formatting and linting
+</code></pre>
+<h3>Root Project Commands</h3>
+<pre><code class="language-bash"># In the root directory
+npm run lint           # Run linting for both server and client
+npm run lint:fix       # Fix linting issues for both server and client
+npm run format         # Format code for both server and client
+npm run format:check   # Check formatting for both server and client
+npm run format:all     # Run both formatting and linting for the entire project
+</code></pre>
+<h2>Git Hooks</h2>
+<p>The project uses Husky to set up Git hooks:</p>
+<ul>
+<li><strong>pre-commit</strong>: Runs lint-staged to check and format staged files before committing</li>
+</ul>
+<h2>VSCode Integration</h2>
+<p>If you&#39;re using VSCode, the project includes settings for automatic formatting:</p>
+<ul>
+<li>Format on save is enabled</li>
+<li>ESLint and Prettier extensions are configured</li>
+<li>Language-specific formatters are set</li>
+</ul>
+<h2>Coding Standards</h2>
+<h3>JavaScript/Node.js</h3>
+<ul>
+<li>Follow the ESLint recommended rules</li>
+<li>Use single quotes for strings</li>
+<li>Use semicolons at the end of statements</li>
+<li>Maximum line length of 100 characters</li>
+<li>2 spaces for indentation</li>
+</ul>
+<h3>TypeScript/Angular</h3>
+<ul>
+<li>Follow the Angular style guide</li>
+<li>Use explicit member accessibility modifiers</li>
+<li>Use single quotes for strings</li>
+<li>Maximum line length of 100 characters</li>
+<li>2 spaces for indentation</li>
+</ul>
+<h2>Troubleshooting</h2>
+<p>If you encounter issues with the formatting tools:</p>
+<ol>
+<li><p>Make sure all dependencies are installed:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+</li>
+<li><p>If Git hooks aren&#39;t working, try reinstalling Husky:</p>
+<pre><code class="language-bash">npm run prepare
+</code></pre>
+</li>
+<li><p>For VSCode integration issues, make sure you have the ESLint and Prettier extensions installed.</p>
+</li>
+</ol>
+<h2>Customizing the Configuration</h2>
+<p>If you need to customize the formatting rules:</p>
+<ol>
+<li>Edit the <code>.eslintrc.json</code> files for linting rules</li>
+<li>Edit the <code>.prettierrc</code> files for formatting rules</li>
+<li>Update the <code>.lintstagedrc.json</code> file for pre-commit behavior</li>
+<li>Modify the <code>.vscode/settings.json</code> file for editor integration</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CI/CD Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>CI/CD Guide</h1>
+
+      <h1>CI/CD Guide</h1>
+<p>This comprehensive guide outlines the Continuous Integration and Continuous Deployment (CI/CD) practices for the Date Night App project, including GitHub Actions workflows, GitHub integrations, and best practices.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#github-actions-workflows">GitHub Actions Workflows</a><ul>
+<li><a href="#core-workflows">Core Workflows</a></li>
+<li><a href="#ai-powered-workflows">AI-Powered Workflows</a></li>
+<li><a href="#github-insights-workflows">GitHub Insights Workflows</a></li>
+</ul>
+</li>
+<li><a href="#github-integration">GitHub Integration</a><ul>
+<li><a href="#dependabot-integration">Dependabot Integration</a></li>
+<li><a href="#security-scanning">Security Scanning</a></li>
+<li><a href="#test-results-integration">Test Results Integration</a></li>
+<li><a href="#documentation-automation">Documentation Automation</a></li>
+</ul>
+</li>
+<li><a href="#workflow-permissions">Workflow Permissions</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#common-issues">Common Issues</a></li>
+<li><a href="#husky-integration-issues">Husky Integration Issues</a></li>
+</ul>
+</li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#implementation-plan">Implementation Plan</a></li>
+</ul>
+<h2>Overview</h2>
+<h2>AI-Powered GitHub Actions</h2>
+<p>This section outlines AI-powered GitHub Actions that can be integrated into the project workflow to enhance code quality, security, and development efficiency.</p>
+<h2>Code Quality and Review</h2>
+<h3>1. GitHub Copilot for PRs</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/github-copilot-for-pull-requests">github/copilot-for-prs</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Automatically reviews pull requests using AI</li>
+<li>Suggests code improvements and identifies potential issues</li>
+<li>Provides explanations for complex code changes</li>
+<li>Helps identify security vulnerabilities</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: GitHub Copilot for PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  copilot-for-prs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/copilot-for-prs@v0.6.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<h3>2. DeepSource Code Analysis</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/deepsource">DeepSource</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Uses AI to detect bugs, anti-patterns, and security issues</li>
+<li>Provides automated code reviews with explanations</li>
+<li>Supports multiple languages including JavaScript, TypeScript, and Python</li>
+<li>Tracks code quality metrics over time</li>
+</ul>
+<p><strong>Setup</strong>: Requires integration through the DeepSource platform.</p>
+<h2>Security Analysis</h2>
+<h3>3. CodeQL Analysis</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/codeql-analysis">github/codeql-action</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>GitHub&#39;s semantic code analysis engine</li>
+<li>Discovers vulnerabilities and coding errors</li>
+<li>Supports JavaScript, TypeScript, Python, and other languages</li>
+<li>Integrates with GitHub Security dashboard</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: &#39;CodeQL&#39;
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: &#39;0 0 * * 0&#39; # Run weekly
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript, typescript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+</code></pre>
+<h3>4. Snyk Security Scan</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/snyk">snyk/actions</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Scans for vulnerabilities in dependencies</li>
+<li>Provides AI-powered fix recommendations</li>
+<li>Monitors applications continuously for new vulnerabilities</li>
+<li>Integrates with GitHub Security dashboard</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: Snyk Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+</code></pre>
+<h2>Performance Optimization</h2>
+<h3>5. Lighthouse CI</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/lighthouse-ci-action">treosh/lighthouse-ci-action</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Runs Lighthouse performance audits on your web app</li>
+<li>Uses AI to suggest performance improvements</li>
+<li>Tracks performance metrics over time</li>
+<li>Fails builds if performance drops below thresholds</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://staging-url-of-your-app/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+</code></pre>
+<h2>Documentation and Knowledge Management</h2>
+<h3>6. AI Documentation Generator</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/mintlify-writer">mintlify/writer</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Automatically generates documentation from code</li>
+<li>Uses AI to create human-readable explanations</li>
+<li>Keeps documentation in sync with code changes</li>
+<li>Supports multiple programming languages</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: Generate Documentation
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate Documentation
+        uses: mintlify/writer@v2.0.0
+        with:
+          target-directory: &#39;./docs/api&#39;
+</code></pre>
+<h3>7. AI Changelog Generator</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/conventional-changelog-action">TriPSs/conventional-changelog-action</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Automatically generates changelogs from commit messages</li>
+<li>Uses AI to categorize and summarize changes</li>
+<li>Maintains a consistent changelog format</li>
+<li>Integrates with semantic versioning</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: Generate Changelog
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate Changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          git-message: &#39;chore(release): {version}&#39;
+          preset: &#39;angular&#39;
+          tag-prefix: &#39;v&#39;
+          output-file: &#39;CHANGELOG.md&#39;
+</code></pre>
+<h2>Test Analysis and Improvement</h2>
+<h3>8. Test Insights with AI</h3>
+<p><strong>Action</strong>: <a href="https://github.com/marketplace/actions/check-tests">testomatio/check-tests</a></p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Analyzes test coverage and quality</li>
+<li>Uses AI to suggest test improvements</li>
+<li>Identifies untested code paths</li>
+<li>Generates test reports with insights</li>
+</ul>
+<p><strong>Setup Example</strong>:</p>
+<pre><code class="language-yaml">name: Test Insights
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-insights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Tests
+        uses: testomatio/check-tests@master
+        with:
+          framework: jest
+          tests: &#39;**/*.test.js&#39;
+          token: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<h2>Implementation Plan</h2>
+<p>To implement these AI-powered GitHub Actions:</p>
+<ol>
+<li><p><strong>Start with the basics</strong>:</p>
+<ul>
+<li>CodeQL Analysis for security</li>
+<li>GitHub Copilot for PRs for code review</li>
+</ul>
+</li>
+<li><p><strong>Add performance monitoring</strong>:</p>
+<ul>
+<li>Lighthouse CI for web performance</li>
+</ul>
+</li>
+<li><p><strong>Enhance documentation</strong>:</p>
+<ul>
+<li>AI Documentation Generator</li>
+<li>AI Changelog Generator</li>
+</ul>
+</li>
+<li><p><strong>Improve testing</strong>:</p>
+<ul>
+<li>Test Insights with AI</li>
+</ul>
+</li>
+</ol>
+<p>Each of these actions can be implemented incrementally to avoid overwhelming the CI/CD pipeline and to allow time for the team to adapt to the new tools and insights.</p>
+<h2>GitHub Insights Workflows</h2>
+<p>This section explains the two approaches we&#39;ve implemented for generating GitHub insights reports in the project.</p>
+<h2>Approach 1: Using GitHub API (Requires Special Permissions)</h2>
+<p>The first approach uses the GitHub API to fetch repository information, workflow runs, security alerts, and other data directly from GitHub. This is implemented in <code>.github/workflows/sync-github-insights.yml</code>.</p>
+<h3>Requirements</h3>
+<ul>
+<li>A Personal Access Token (PAT) with the following permissions:<ul>
+<li><code>repo</code> (all)</li>
+<li><code>workflow</code></li>
+<li><code>read:packages</code></li>
+</ul>
+</li>
+</ul>
+<h3>How It Works</h3>
+<ol>
+<li>The workflow uses the GitHub API to fetch repository information, workflow runs, pull requests, and issues</li>
+<li>It organizes this information into a comprehensive markdown report</li>
+<li>It also generates a structured data file specifically for AI analysis</li>
+<li>The reports are committed to the repository in <code>docs/github-insights/</code></li>
+</ol>
+<h3>Limitations</h3>
+<ul>
+<li>Requires special permissions that may not be available to all users</li>
+<li>May fail with &quot;Resource not accessible by integration&quot; or &quot;Not Found&quot; errors</li>
+<li>GitHub&#39;s API is subject to rate limiting and permission changes</li>
+</ul>
+<h2>Approach 2: Using Git Commands (Alternative Approach)</h2>
+<p>The second approach uses git commands and shell scripts to gather information about the repository locally. This is implemented in <code>.github/workflows/sync-github-insights-alt.yml</code>.</p>
+<h3>Requirements</h3>
+<ul>
+<li>No special permissions required beyond basic repository access</li>
+<li>Git installed in the workflow environment</li>
+</ul>
+<h3>How It Works</h3>
+<ol>
+<li>The workflow uses git commands like <code>git log</code> and <code>git branch</code> to gather repository information</li>
+<li>It also uses shell commands like <code>find</code> to analyze the repository structure</li>
+<li>It generates both a human-readable markdown report and a structured data file for AI analysis</li>
+<li>The reports are committed to the repository in <code>docs/github-insights/</code></li>
+</ol>
+<h3>Advantages</h3>
+<ul>
+<li>Works without special GitHub API permissions</li>
+<li>Provides detailed information about the repository structure and history</li>
+<li>Less susceptible to API changes and rate limiting</li>
+<li>Can include file statistics and directory structure analysis</li>
+</ul>
+<h2>Which Approach to Use</h2>
+<h3>Use Approach 1 (GitHub API) if:</h3>
+<ul>
+<li>You have the necessary permissions</li>
+<li>You want to include information about workflow runs, pull requests, and issues</li>
+<li>You prefer a more comprehensive report with data from GitHub&#39;s web interface</li>
+</ul>
+<h3>Use Approach 2 (Git Commands) if:</h3>
+<ul>
+<li>You encounter permission issues with the GitHub API</li>
+<li>You want more detailed information about the repository structure</li>
+<li>You want to include file statistics and directory analysis</li>
+<li>You prefer a simpler approach that doesn&#39;t rely on external APIs</li>
+</ul>
+<h2>Setting Up the Workflows</h2>
+<p>Three workflows are available in the repository:</p>
+<ol>
+<li><strong>Sync GitHub Insights</strong> (Original): Uses GitHub API but may encounter permission issues</li>
+<li><strong>Sync GitHub Insights (Fixed)</strong>: An improved version of the original with better error handling</li>
+<li><strong>Sync GitHub Insights (Alternative)</strong>: Uses git commands instead of the GitHub API</li>
+</ol>
+<p>If you encounter permission issues with the first approach:</p>
+<ol>
+<li>Go to your GitHub repository</li>
+<li>Navigate to <strong>Actions</strong> &gt; <strong>Sync GitHub Insights</strong></li>
+<li>Click the three dots menu (⋮) and select <strong>Disable workflow</strong></li>
+<li>Then go to <strong>Sync GitHub Insights (Fixed)</strong> or <strong>Sync GitHub Insights (Alternative)</strong></li>
+<li>If it&#39;s disabled, click <strong>Enable workflow</strong></li>
+</ol>
+<p>We recommend trying the workflows in this order:</p>
+<ol>
+<li>First try <strong>Sync GitHub Insights (Fixed)</strong> as it provides the most comprehensive information if permissions are available</li>
+<li>If that fails, use <strong>Sync GitHub Insights (Alternative)</strong> which works without special permissions</li>
+</ol>
+<h2>Customizing the Reports</h2>
+<h3>Customizing the GitHub API Report</h3>
+<p>Edit <code>.github/workflows/sync-github-insights.yml</code> and modify the JavaScript code in the <code>script</code> section to change:</p>
+<ul>
+<li>The report format</li>
+<li>The information included</li>
+<li>The API endpoints queried</li>
+</ul>
+<h3>Customizing the Git Commands Report</h3>
+<p>Edit <code>.github/workflows/sync-github-insights-alt.yml</code> and modify:</p>
+<ul>
+<li>The shell script in the <code>Generate Basic Repository Info</code> step to change the report format</li>
+<li>The git commands to adjust the information gathered</li>
+<li>The find commands to change the file analysis parameters</li>
+</ul>
+<h2>Troubleshooting</h2>
+<h3>&quot;Not Found&quot; or &quot;Resource not accessible by integration&quot; Errors</h3>
+<p>If you see these errors with the GitHub API approach:</p>
+<ol>
+<li>Check that your PAT has the necessary permissions</li>
+<li>Verify that the repository exists and is accessible</li>
+<li>Consider switching to the alternative approach</li>
+</ol>
+<h3>Empty or Incomplete Reports</h3>
+<p>If the reports are empty or incomplete:</p>
+<ol>
+<li>Check the workflow logs for any errors during the execution</li>
+<li>Verify that the git commands are working correctly</li>
+<li>Check that the workflow can access the necessary files and directories</li>
+</ol>
+<h2>GitHub Integration</h2>
+<p>This section outlines how the Date Night App project can better leverage GitHub features, particularly for integrating Dependabot alerts and GitHub Actions test results into the development workflow.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#current-github-usage">Current GitHub Usage</a></li>
+<li><a href="#improvement-opportunities">Improvement Opportunities</a></li>
+<li><a href="#dependabot-integration">Dependabot Integration</a></li>
+<li><a href="#github-actions-test-results-integration">GitHub Actions Test Results Integration</a></li>
+<li><a href="#automated-documentation-updates">Automated Documentation Updates</a></li>
+<li><a href="#ai-assisted-code-review">AI-Assisted Code Review</a></li>
+<li><a href="#implementation-plan">Implementation Plan</a></li>
+</ul>
+<h2>Current GitHub Usage</h2>
+<p>The project currently uses GitHub for:</p>
+<ol>
+<li><strong>Source Control</strong>: Standard Git repository functionality</li>
+<li><strong>GitHub Actions Workflows</strong>:<ul>
+<li>Angular Tests (<code>angular-tests.yml</code>)</li>
+<li>Server Tests (<code>server-tests.yml</code>)</li>
+</ul>
+</li>
+<li><strong>Artifact Storage</strong>: Test results are uploaded as artifacts</li>
+</ol>
+<p>However, the project is not fully leveraging GitHub&#39;s capabilities for:</p>
+<ul>
+<li>Dependency management and security alerts (Dependabot)</li>
+<li>Automated documentation generation from CI/CD results</li>
+<li>Structured reporting of test results and code quality metrics</li>
+</ul>
+<h2>Improvement Opportunities</h2>
+<h3>1. Dependabot Integration</h3>
+<p>Dependabot can automatically create pull requests to update dependencies when new versions are available or when security vulnerabilities are discovered.</p>
+<h3>2. Enhanced GitHub Actions Workflows</h3>
+<p>The existing workflows can be enhanced to:</p>
+<ul>
+<li>Generate structured reports</li>
+<li>Update documentation automatically</li>
+<li>Provide more detailed insights into test results</li>
+</ul>
+<h3>3. Automated Documentation</h3>
+<p>GitHub Actions can be used to automatically update documentation based on:</p>
+<ul>
+<li>Test results</li>
+<li>Code coverage reports</li>
+<li>Dependency updates</li>
+<li>Performance metrics</li>
+</ul>
+<h3>4. AI-Assisted Development</h3>
+<p>AI tools (like GitHub Copilot) can be better integrated into the workflow to:</p>
+<ul>
+<li>Analyze test results</li>
+<li>Suggest fixes for failing tests</li>
+<li>Review code changes</li>
+<li>Identify potential issues</li>
+</ul>
+<h2>Dependabot Integration</h2>
+<h3>Configuration</h3>
+<p>Create a <code>.github/dependabot.yml</code> file with the following configuration:</p>
+<pre><code class="language-yaml">version: 2
+updates:
+  # Client Angular dependencies
+  - package-ecosystem: &#39;npm&#39;
+    directory: &#39;/client-angular&#39;
+    schedule:
+      interval: &#39;weekly&#39;
+    open-pull-requests-limit: 10
+    groups:
+      angular-dependencies:
+        patterns:
+          - &#39;@angular*&#39;
+    commit-message:
+      prefix: &#39;deps(client)&#39;
+      include: &#39;scope&#39;
+
+  # Server dependencies
+  - package-ecosystem: &#39;npm&#39;
+    directory: &#39;/server&#39;
+    schedule:
+      interval: &#39;weekly&#39;
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: &#39;deps(server)&#39;
+      include: &#39;scope&#39;
+
+  # GitHub Actions
+  - package-ecosystem: &#39;github-actions&#39;
+    directory: &#39;/&#39;
+    schedule:
+      interval: &#39;monthly&#39;
+    commit-message:
+      prefix: &#39;ci&#39;
+      include: &#39;scope&#39;
+</code></pre>
+<h3>Security Alerts Report</h3>
+<p>Create a GitHub Action workflow to generate a report of Dependabot security alerts:</p>
+<pre><code class="language-yaml">name: Security Alerts Report
+
+on:
+  schedule:
+    - cron: &#39;0 0 * * 1&#39; # Run weekly on Monday
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: read
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Dependabot Alerts
+        id: get-alerts
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const alerts = await github.rest.dependabot.listAlertsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: &#39;open&#39;,
+              per_page: 100
+            });
+
+            const fs = require(&#39;fs&#39;);
+
+            let report = &#39;# Dependabot Security Alerts\n\n&#39;;
+            report += `*Generated on: ${new Date().toISOString().split(&#39;T&#39;)[0]}*\n\n`;
+
+            if (alerts.data.length === 0) {
+              report += &#39;✅ No open security alerts found.\n&#39;;
+            } else {
+              report += `## Open Alerts (${alerts.data.length})\n\n`;
+              
+              const severityOrder = [&#39;critical&#39;, &#39;high&#39;, &#39;medium&#39;, &#39;low&#39;];
+              const alertsBySeverity = {};
+              
+              severityOrder.forEach(severity =&gt; {
+                alertsBySeverity[severity] = [];
+              });
+              
+              alerts.data.forEach(alert =&gt; {
+                const severity = alert.security_advisory.severity.toLowerCase();
+                if (alertsBySeverity[severity]) {
+                  alertsBySeverity[severity].push(alert);
+                }
+              });
+              
+              severityOrder.forEach(severity =&gt; {
+                const severityAlerts = alertsBySeverity[severity];
+                if (severityAlerts.length &gt; 0) {
+                  report += `### ${severity.charAt(0).toUpperCase() + severity.slice(1)} Severity (${severityAlerts.length})\n\n`;
+                  
+                  severityAlerts.forEach(alert =&gt; {
+                    report += `#### ${alert.security_advisory.summary}\n\n`;
+                    report += `- **Package**: ${alert.dependency.package.name}\n`;
+                    report += `- **Current Version**: ${alert.dependency.manifest_path}\n`;
+                    report += `- **Vulnerable Versions**: ${alert.security_advisory.vulnerabilities.map(v =&gt; v.vulnerable_version_range).join(&#39;, &#39;)}\n`;
+                    report += `- **Patched Versions**: ${alert.security_advisory.vulnerabilities.map(v =&gt; v.patched_version_range || &#39;None&#39;).join(&#39;, &#39;)}\n`;
+                    report += `- **CVSS Score**: ${alert.security_advisory.cvss.score} (${alert.security_advisory.cvss.vector_string})\n`;
+                    report += `- **Details**: [${alert.security_advisory.ghsa_id}](${alert.security_advisory.html_url})\n\n`;
+                  });
+                }
+              });
+            }
+
+            fs.writeFileSync(&#39;docs/security-alerts.md&#39;, report);
+
+            return { alertCount: alerts.data.length };
+
+      - name: Commit Report
+        run: |
+          git config --local user.email &quot;action@github.com&quot;
+          git config --local user.name &quot;GitHub Action&quot;
+          git add docs/security-alerts.md
+          git commit -m &quot;docs: update security alerts report&quot; || echo &quot;No changes to commit&quot;
+          git push
+</code></pre>
+<h2>GitHub Actions Test Results Integration</h2>
+<h3>Enhanced Test Reporting</h3>
+<p>Modify the existing GitHub Actions workflows to generate detailed test reports:</p>
+<pre><code class="language-yaml"># Add to both angular-tests.yml and server-tests.yml
+- name: Generate Test Report
+  if: always()
+  run: |
+    mkdir -p test-reports
+    # Convert test results to markdown format
+    node scripts/generate-test-report.js
+
+- name: Upload Test Report
+  uses: actions/upload-artifact@v4
+  if: always()
+  with:
+    name: test-reports
+    path: test-reports/
+</code></pre>
+<h3>Test Report Generator Script</h3>
+<p>Create a script to convert test results to markdown:</p>
+<pre><code class="language-javascript">// scripts/generate-test-report.js
+const fs = require(&#39;fs&#39;);
+const path = require(&#39;path&#39;);
+const xml2js = require(&#39;xml2js&#39;);
+
+async function generateTestReport() {
+  // Read JUnit XML test results
+  const xmlData = fs.readFileSync(&#39;test-results/junit.xml&#39;, &#39;utf8&#39;);
+  const parser = new xml2js.Parser({ explicitArray: false });
+  const result = await parser.parseStringPromise(xmlData);
+
+  const testsuites = Array.isArray(result.testsuites.testsuite)
+    ? result.testsuites.testsuite
+    : [result.testsuites.testsuite];
+
+  let report = &#39;# Test Results\n\n&#39;;
+  report += `*Generated on: ${new Date().toISOString().split(&#39;T&#39;)[0]}*\n\n`;
+
+  let totalTests = 0;
+  let totalFailures = 0;
+  let totalErrors = 0;
+  let totalSkipped = 0;
+
+  testsuites.forEach(suite =&gt; {
+    totalTests += parseInt(suite.$.tests || 0);
+    totalFailures += parseInt(suite.$.failures || 0);
+    totalErrors += parseInt(suite.$.errors || 0);
+    totalSkipped += parseInt(suite.$.skipped || 0);
+  });
+
+  const totalPassed = totalTests - totalFailures - totalErrors - totalSkipped;
+  const passRate = totalTests &gt; 0 ? ((totalPassed / totalTests) * 100).toFixed(2) : &#39;0.00&#39;;
+
+  report += &#39;## Summary\n\n&#39;;
+  report += `- **Total Tests**: ${totalTests}\n`;
+  report += `- **Passed**: ${totalPassed} (${passRate}%)\n`;
+  report += `- **Failed**: ${totalFailures}\n`;
+  report += `- **Errors**: ${totalErrors}\n`;
+  report += `- **Skipped**: ${totalSkipped}\n\n`;
+
+  report += &#39;## Test Suites\n\n&#39;;
+
+  testsuites.forEach(suite =&gt; {
+    const suiteName = suite.$.name;
+    const suiteTests = parseInt(suite.$.tests || 0);
+    const suiteFailures = parseInt(suite.$.failures || 0);
+    const suiteErrors = parseInt(suite.$.errors || 0);
+    const suiteSkipped = parseInt(suite.$.skipped || 0);
+    const suitePassed = suiteTests - suiteFailures - suiteErrors - suiteSkipped;
+    const suitePassRate = suiteTests &gt; 0 ? ((suitePassed / suiteTests) * 100).toFixed(2) : &#39;0.00&#39;;
+
+    report += `### ${suiteName}\n\n`;
+    report += `- **Tests**: ${suiteTests}\n`;
+    report += `- **Pass Rate**: ${suitePassRate}%\n`;
+    report += `- **Duration**: ${suite.$.time || 0}s\n\n`;
+
+    if (suiteFailures &gt; 0 || suiteErrors &gt; 0) {
+      report += &#39;#### Failed Tests\n\n&#39;;
+
+      const testcases = Array.isArray(suite.testcase) ? suite.testcase : [suite.testcase];
+
+      testcases.forEach(testcase =&gt; {
+        if (testcase.failure || testcase.error) {
+          report += `- **${testcase.$.name}**: `;
+          if (testcase.failure) {
+            report += `Failed - ${testcase.failure.$.message || &#39;No message&#39;}\n`;
+          } else if (testcase.error) {
+            report += `Error - ${testcase.error.$.message || &#39;No message&#39;}\n`;
+          }
+        }
+      });
+
+      report += &#39;\n&#39;;
+    }
+  });
+
+  // Write report to file
+  fs.mkdirSync(&#39;test-reports&#39;, { recursive: true });
+  fs.writeFileSync(&#39;test-reports/test-results.md&#39;, report);
+
+  // Also create a summary version for the main documentation
+  const summaryReport =
+    `# Latest Test Results\n\n` +
+    `*Generated on: ${new Date().toISOString().split(&#39;T&#39;)[0]}*\n\n` +
+    `## Summary\n\n` +
+    `- **Total Tests**: ${totalTests}\n` +
+    `- **Pass Rate**: ${passRate}%\n` +
+    `- **Failed**: ${totalFailures}\n` +
+    `- **Errors**: ${totalErrors}\n` +
+    `- **Skipped**: ${totalSkipped}\n\n` +
+    `[View Full Report](./TEST-RESULTS.MD)\n`;
+
+  fs.writeFileSync(&#39;docs/latest-test-results.md&#39;, summaryReport);
+}
+
+generateTestReport().catch(console.error);
+</code></pre>
+<h3>Workflow to Sync Reports to Repository</h3>
+<p>Create a new GitHub Action workflow to sync test reports to the repository:</p>
+<pre><code class="language-yaml">name: Sync Test Reports
+
+on:
+  workflow_run:
+    workflows: [&#39;Angular Tests&#39;, &#39;Server Tests&#39;]
+    types:
+      - completed
+
+jobs:
+  sync-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Angular Test Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: angular-tests.yml
+          workflow_conclusion: completed
+          name: test-reports
+          path: downloaded-reports/angular
+
+      - name: Download Server Test Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: server-tests.yml
+          workflow_conclusion: completed
+          name: server-test-reports
+          path: downloaded-reports/server
+
+      - name: Merge Reports
+        run: |
+          mkdir -p docs/test-reports
+          cp -r downloaded-reports/angular/* docs/test-reports/ || true
+          cp -r downloaded-reports/server/* docs/test-reports/ || true
+
+          # Create combined report
+          node scripts/combine-test-reports.js
+
+      - name: Commit Reports
+        run: |
+          git config --local user.email &quot;action@github.com&quot;
+          git config --local user.name &quot;GitHub Action&quot;
+          git add docs/test-reports
+          git add docs/latest-test-results.md
+          git commit -m &quot;docs: update test reports&quot; || echo &quot;No changes to commit&quot;
+          git push
+</code></pre>
+<h2>Automated Documentation Updates</h2>
+<h3>GitHub Actions Status Badge</h3>
+<p>Add GitHub Actions status badges to the README.md:</p>
+<pre><code class="language-markdown"># Date Night App
+
+[![Angular Tests](https://github.com/username/date-night-app/actions/workflows/angular-tests.yml/badge.svg)](https://github.com/username/date-night-app/actions/workflows/angular-tests.yml)
+[![Server Tests](https://github.com/username/date-night-app/actions/workflows/server-tests.yml/badge.svg)](https://github.com/username/date-night-app/actions/workflows/server-tests.yml)
+</code></pre>
+<h3>Dependency Status Report</h3>
+<p>Create a workflow to generate a dependency status report:</p>
+<pre><code class="language-yaml">name: Dependency Status Report
+
+on:
+  schedule:
+    - cron: &#39;0 0 * * 1&#39; # Run weekly on Monday
+  workflow_dispatch:
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: &#39;22&#39;
+
+      - name: Generate Client Dependencies Report
+        run: |
+          cd client-angular
+          npm ci
+          npx npm-check --json &gt; ../client-deps.json
+
+      - name: Generate Server Dependencies Report
+        run: |
+          cd server
+          npm ci
+          npx npm-check --json &gt; ../server-deps.json
+
+      - name: Create Markdown Report
+        run: |
+          node scripts/generate-dependency-report.js
+
+      - name: Commit Report
+        run: |
+          git config --local user.email &quot;action@github.com&quot;
+          git config --local user.name &quot;GitHub Action&quot;
+          git add docs/dependency-status.md
+          git commit -m &quot;docs: update dependency status report&quot; || echo &quot;No changes to commit&quot;
+          git push
+</code></pre>
+<h3>Dependency Report Generator Script</h3>
+<p>Create a script to generate a dependency status report:</p>
+<pre><code class="language-javascript">// scripts/generate-dependency-report.js
+const fs = require(&#39;fs&#39;);
+
+function generateDependencyReport() {
+  const clientDeps = JSON.parse(fs.readFileSync(&#39;client-deps.json&#39;, &#39;utf8&#39;));
+  const serverDeps = JSON.parse(fs.readFileSync(&#39;server-deps.json&#39;, &#39;utf8&#39;));
+
+  let report = &#39;# Dependency Status Report\n\n&#39;;
+  report += `*Generated on: ${new Date().toISOString().split(&#39;T&#39;)[0]}*\n\n`;
+
+  // Client dependencies
+  report += &#39;## Client Dependencies\n\n&#39;;
+  report += &#39;### Outdated Dependencies\n\n&#39;;
+  report += &#39;| Package | Current | Latest | Type |\n&#39;;
+  report += &#39;|---------|---------|--------|------|\n&#39;;
+
+  let hasOutdatedClient = false;
+
+  clientDeps.forEach(dep =&gt; {
+    if (dep.installed &amp;&amp; dep.latest &amp;&amp; dep.installed !== dep.latest) {
+      hasOutdatedClient = true;
+      report += `| ${dep.moduleName} | ${dep.installed} | ${dep.latest} | ${dep.devDependency ? &#39;dev&#39; : &#39;prod&#39;} |\n`;
+    }
+  });
+
+  if (!hasOutdatedClient) {
+    report += &#39;✅ No outdated dependencies\n\n&#39;;
+  } else {
+    report += &#39;\n&#39;;
+  }
+
+  // Server dependencies
+  report += &#39;## Server Dependencies\n\n&#39;;
+  report += &#39;### Outdated Dependencies\n\n&#39;;
+  report += &#39;| Package | Current | Latest | Type |\n&#39;;
+  report += &#39;|---------|---------|--------|------|\n&#39;;
+
+  let hasOutdatedServer = false;
+
+  serverDeps.forEach(dep =&gt; {
+    if (dep.installed &amp;&amp; dep.latest &amp;&amp; dep.installed !== dep.latest) {
+      hasOutdatedServer = true;
+      report += `| ${dep.moduleName} | ${dep.installed} | ${dep.latest} | ${dep.devDependency ? &#39;dev&#39; : &#39;prod&#39;} |\n`;
+    }
+  });
+
+  if (!hasOutdatedServer) {
+    report += &#39;✅ No outdated dependencies\n\n&#39;;
+  } else {
+    report += &#39;\n&#39;;
+  }
+
+  fs.writeFileSync(&#39;docs/dependency-status.md&#39;, report);
+}
+
+generateDependencyReport();
+</code></pre>
+<h2>AI-Assisted Code Review</h2>
+<h3>GitHub Actions for AI Code Review</h3>
+<p>Create a workflow for AI-assisted code review:</p>
+<pre><code class="language-yaml">name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: AI Code Review
+        uses: reviewdog/action-suggester@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tool_name: ai-review
+          level: warning
+          filter_mode: added
+          reporter: github-pr-review
+</code></pre>
+<h2>Implementation Plan</h2>
+<ol>
+<li><p><strong>Phase 1: Basic GitHub Integration</strong></p>
+<ul>
+<li>Add Dependabot configuration</li>
+<li>Add GitHub Actions status badges to README</li>
+<li>Create initial documentation structure</li>
+</ul>
+</li>
+<li><p><strong>Phase 2: Enhanced Test Reporting</strong></p>
+<ul>
+<li>Implement test report generation scripts</li>
+<li>Configure workflows to generate and upload reports</li>
+<li>Create workflow to sync reports to repository</li>
+</ul>
+</li>
+<li><p><strong>Phase 3: Dependency Management</strong></p>
+<ul>
+<li>Implement dependency status report generation</li>
+<li>Configure Dependabot security alerts report</li>
+<li>Create documentation for dependency management</li>
+</ul>
+</li>
+<li><p><strong>Phase 4: AI Integration</strong></p>
+<ul>
+<li>Implement AI-assisted code review workflow</li>
+<li>Create documentation for AI-assisted development</li>
+<li>Integrate AI analysis of test results</li>
+</ul>
+</li>
+<li><p><strong>Phase 5: Advanced Features</strong></p>
+<ul>
+<li>Implement performance tracking and reporting</li>
+<li>Create dashboards for monitoring project health</li>
+<li>Implement automated issue creation for failing tests</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>By implementing these GitHub integrations, the Date Night App project can significantly improve its development workflow, particularly in the areas of:</p>
+<ol>
+<li><strong>Dependency Management</strong>: Automated updates and security alerts</li>
+<li><strong>Test Reporting</strong>: Detailed insights into test results</li>
+<li><strong>Documentation</strong>: Automated updates based on CI/CD results</li>
+<li><strong>AI Assistance</strong>: Leveraging AI for code review and analysis</li>
+</ol>
+<p>These improvements will lead to:</p>
+<ul>
+<li>Reduced manual effort in maintaining documentation</li>
+<li>Better visibility into project health</li>
+<li>Improved security through timely dependency updates</li>
+<li>More efficient development through AI assistance</li>
+</ul>
+<h2>GitHub Repository Setup Guide</h2>
+<p>This section provides instructions for configuring the GitHub repository settings to enable all the integration features we&#39;ve implemented.</p>
+<h2>Enabling Dependabot Alerts</h2>
+<ol>
+<li>Go to your GitHub repository: <a href="https://github.com/mrkurger/date-night-app2">https://github.com/mrkurger/date-night-app2</a></li>
+<li>Navigate to <strong>Settings</strong> &gt; <strong>Security &amp; analysis</strong></li>
+<li>Enable the following features:<ul>
+<li><strong>Dependabot alerts</strong>: Notifies you about vulnerabilities in your dependencies</li>
+<li><strong>Dependabot security updates</strong>: Automatically creates PRs to fix vulnerabilities</li>
+<li><strong>Dependency graph</strong>: Shows dependencies for your project</li>
+</ul>
+</li>
+</ol>
+<h2>Setting Up Branch Protection Rules</h2>
+<ol>
+<li><p>Go to your GitHub repository: <a href="https://github.com/mrkurger/date-night-app2">https://github.com/mrkurger/date-night-app2</a></p>
+</li>
+<li><p>Navigate to <strong>Settings</strong> &gt; <strong>Branches</strong></p>
+</li>
+<li><p>Click on <strong>Add rule</strong> under &quot;Branch protection rules&quot;</p>
+</li>
+<li><p>Configure the following settings:</p>
+<ul>
+<li><strong>Branch name pattern</strong>: <code>main</code> (or your default branch)</li>
+<li><strong>Require a pull request before merging</strong>: Checked</li>
+<li><strong>Require status checks to pass before merging</strong>: Checked<ul>
+<li>Search for and select the following status checks:<ul>
+<li><code>Angular Tests</code></li>
+<li><code>Server Tests</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Require branches to be up to date before merging</strong>: Checked</li>
+<li><strong>Require linear history</strong>: Optional but recommended</li>
+<li><strong>Include administrators</strong>: Recommended for consistency</li>
+</ul>
+</li>
+<li><p>Click <strong>Create</strong> to save the rule</p>
+</li>
+</ol>
+<h2>Configuring GitHub Actions Permissions</h2>
+<ol>
+<li>Go to your GitHub repository: <a href="https://github.com/mrkurger/date-night-app2">https://github.com/mrkurger/date-night-app2</a></li>
+<li>Navigate to <strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>General</strong></li>
+<li>Under &quot;Workflow permissions&quot;:<ul>
+<li>Select <strong>Read and write permissions</strong></li>
+<li>Check <strong>Allow GitHub Actions to create and approve pull requests</strong></li>
+</ul>
+</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<h2>Setting Up Repository Secrets</h2>
+<p>Some workflows require additional permissions that can be provided through a Personal Access Token (PAT):</p>
+<ol>
+<li><p>Create a Personal Access Token:</p>
+<ul>
+<li>Go to your GitHub account settings: <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
+<li>Click <strong>Generate new token</strong> &gt; <strong>Generate new token (classic)</strong></li>
+<li>Give it a descriptive name like &quot;Date Night App Workflow Token&quot;</li>
+<li>Set an expiration date (recommended: 90 days)</li>
+<li>Select the following scopes:<ul>
+<li><code>repo</code> (all)</li>
+<li><code>workflow</code></li>
+<li><code>read:packages</code></li>
+</ul>
+</li>
+<li>Click <strong>Generate token</strong></li>
+<li>Copy the generated token (you won&#39;t be able to see it again)</li>
+</ul>
+</li>
+<li><p>Add the token as a repository secret:</p>
+<ul>
+<li>Go to your GitHub repository: <a href="https://github.com/mrkurger/date-night-app2">https://github.com/mrkurger/date-night-app2</a></li>
+<li>Navigate to <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong></li>
+<li>Click <strong>New repository secret</strong></li>
+<li>Name: <code>WORKFLOW_TOKEN</code></li>
+<li>Value: Paste the Personal Access Token you generated</li>
+<li>Click <strong>Add secret</strong></li>
+</ul>
+</li>
+<li><p>Additional secrets (if needed):</p>
+<ul>
+<li>If your workflows require any other secrets (like API keys), add them here using the same process</li>
+</ul>
+</li>
+</ol>
+<h2>Enabling GitHub Pages (Optional)</h2>
+<p>If you want to publish your test reports and documentation as a website:</p>
+<ol>
+<li>Go to your GitHub repository: <a href="https://github.com/mrkurger/date-night-app2">https://github.com/mrkurger/date-night-app2</a></li>
+<li>Navigate to <strong>Settings</strong> &gt; <strong>Pages</strong></li>
+<li>Under &quot;Source&quot;, select <strong>Deploy from a branch</strong></li>
+<li>Select the branch (e.g., <code>main</code>) and folder (e.g., <code>/docs</code>)</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<h2>Verifying the Setup</h2>
+<p>After configuring these settings:</p>
+<ol>
+<li>Go to the <strong>Actions</strong> tab to ensure workflows are running correctly</li>
+<li>Check the <strong>Security</strong> tab to see Dependabot alerts</li>
+<li>Make a small change and create a pull request to test the branch protection rules</li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you encounter issues with the GitHub integration:</p>
+<ol>
+<li>Check the workflow run logs in the <strong>Actions</strong> tab</li>
+<li>Verify that the repository has the correct permissions</li>
+<li>Ensure all required files (<code>.github/workflows/*.yml</code> and <code>.github/dependabot.yml</code>) are present in the repository</li>
+<li>Check that branch protection rules are correctly configured</li>
+</ol>
+<h2>Workflow Permissions</h2>
+<p>This section explains how to resolve common permission issues with GitHub Actions workflows, particularly when accessing artifacts from other workflows or pushing changes to the repository.</p>
+<h2>Common Permission Issues</h2>
+<h3>1. &quot;Resource not accessible by integration&quot; Error</h3>
+<p>This error typically occurs when a workflow tries to access artifacts from another workflow or when accessing APIs that require special permissions, such as the Dependabot API. By default, GitHub Actions workflows have limited permissions to access these resources.</p>
+<p><strong>Example error message:</strong></p>
+<pre><code>##[error]Resource not accessible by integration
+</code></pre>
+<h3>2. GitHub API Access Issues</h3>
+<p>Several GitHub APIs have stricter permission requirements. Even with a PAT, you might encounter permission issues when trying to access certain APIs.</p>
+<h4>Dependabot API Issues</h4>
+<p><strong>Example error message:</strong></p>
+<pre><code>RequestError [HttpError]: Resource not accessible by integration
+status: 403,
+response: {
+  url: &#39;https://api.github.com/repos/username/repo/dependabot/alerts?state=open&amp;per_page=100&#39;,
+  status: 403,
+  ...
+}
+</code></pre>
+<h4>Repository API Issues</h4>
+<p><strong>Example error message:</strong></p>
+<pre><code>RequestError [HttpError]: Not Found - https://docs.github.com/rest/repos/repos#get-a-repository
+status: 404,
+response: {
+  url: &#39;https://api.github.com/repos/username/repo&#39;,
+  status: 404,
+  ...
+}
+</code></pre>
+<h3>3. Push Permission Issues</h3>
+<p>Sometimes workflows may fail when trying to push changes to the repository, especially when triggered by other workflows.</p>
+<h2>Solutions</h2>
+<h3>Option 1: Using a Personal Access Token (PAT) - Recommended</h3>
+<p>A Personal Access Token (PAT) provides the necessary permissions to access resources across workflows and push changes to the repository.</p>
+<ol>
+<li><p><strong>Create a PAT</strong>:</p>
+<ul>
+<li>Go to your GitHub account settings: <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
+<li>Click <strong>Generate new token</strong> &gt; <strong>Generate new token (classic)</strong></li>
+<li>Give it a descriptive name like &quot;Workflow Token&quot;</li>
+<li>Set an expiration date (recommended: 90 days)</li>
+<li>Select the following scopes:<ul>
+<li><code>repo</code> (all)</li>
+<li><code>workflow</code></li>
+<li><code>read:packages</code></li>
+</ul>
+</li>
+<li>Click <strong>Generate token</strong></li>
+<li>Copy the generated token</li>
+</ul>
+</li>
+<li><p><strong>Add the PAT as a repository secret</strong>:</p>
+<ul>
+<li>Go to your repository settings</li>
+<li>Navigate to <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong></li>
+<li>Click <strong>New repository secret</strong></li>
+<li>Name: <code>WORKFLOW_TOKEN</code></li>
+<li>Value: Paste the PAT you generated</li>
+<li>Click <strong>Add secret</strong></li>
+</ul>
+</li>
+<li><p><strong>Use the PAT in your workflows</strong>:</p>
+<p>For downloading artifacts:</p>
+<pre><code class="language-yaml">- name: Download Artifacts
+  uses: dawidd6/action-download-artifact@v2
+  with:
+    workflow: some-workflow.yml
+    github_token: ${{ secrets.WORKFLOW_TOKEN }}
+</code></pre>
+<p>For pushing changes:</p>
+<pre><code class="language-yaml">- name: Commit and Push
+  run: |
+    git config --local user.email &quot;action@github.com&quot;
+    git config --local user.name &quot;GitHub Action&quot;
+    git add .
+    git commit -m &quot;Update files&quot; || echo &quot;No changes to commit&quot;
+
+    # Use PAT for push
+    git remote set-url origin https://x-access-token:${WORKFLOW_TOKEN}@github.com/username/repo.git
+    git push
+  env:
+    WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+</code></pre>
+</li>
+</ol>
+<h3>Option 2: Configuring Workflow Permissions</h3>
+<p>You can also configure the permissions for the GitHub Actions workflow:</p>
+<pre><code class="language-yaml">jobs:
+  job-name:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # For pushing changes
+      actions: read # For accessing artifacts
+      security-events: read # For accessing security alerts
+</code></pre>
+<p>However, this approach may not be sufficient for all cross-workflow interactions, which is why using a PAT is recommended.</p>
+<h3>Option 3: Alternative Approaches for GitHub API Access</h3>
+<p>If you continue to experience issues accessing GitHub APIs even with a PAT, consider these alternative approaches:</p>
+<h4>For Dependabot Alerts:</h4>
+<ol>
+<li><p><strong>Use npm audit directly</strong>:</p>
+<pre><code class="language-yaml">- name: Run npm audit
+  run: |
+    cd your-package-directory
+    npm audit --json &gt; audit-results.json
+</code></pre>
+</li>
+<li><p><strong>Use third-party security scanning tools</strong> that don&#39;t require special GitHub permissions:</p>
+<ul>
+<li>Snyk (<code>snyk test</code>)</li>
+<li>OWASP Dependency Check</li>
+<li>npm-audit-html for generating reports</li>
+</ul>
+</li>
+</ol>
+<h4>For Repository Information:</h4>
+<ol>
+<li><p><strong>Use git commands directly</strong>:</p>
+<pre><code class="language-yaml">- name: Get repository information
+  run: |
+    # Get recent commits
+    git log --pretty=format:&quot;%h - %an, %ar : %s&quot; -n 10 &gt; recent-commits.txt
+
+    # Get branch information
+    git branch -a &gt; branches.txt
+
+    # Get file statistics
+    find . -type f -not -path &quot;*/node_modules/*&quot; -not -path &quot;*/.git/*&quot; | grep -E &#39;\.[a-zA-Z0-9]+{{CONTENT}}#39; | sed &#39;s/.*\.//&#39; | sort | uniq -c | sort -nr &gt; file-stats.txt
+</code></pre>
+</li>
+<li><p><strong>Create static reports with links</strong> to GitHub web interface:</p>
+<pre><code class="language-yaml">- name: Create static report
+  run: |
+    echo &quot;# Repository Report&quot; &gt; report.md
+    echo &quot;&quot; &gt;&gt; report.md
+    echo &quot;- [Pull Requests](https://github.com/username/repo/pulls)&quot; &gt;&gt; report.md
+    echo &quot;- [Issues](https://github.com/username/repo/issues)&quot; &gt;&gt; report.md
+    echo &quot;- [Actions](https://github.com/username/repo/actions)&quot; &gt;&gt; report.md
+</code></pre>
+</li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you continue to experience permission issues:</p>
+<ol>
+<li><strong>Check the workflow logs</strong> for specific error messages</li>
+<li><strong>Verify the PAT scopes</strong> to ensure they include all necessary permissions</li>
+<li><strong>Check the repository settings</strong> to ensure Actions have the necessary permissions</li>
+<li><strong>Consider using the <code>workflow_dispatch</code> event</strong> to manually trigger workflows for testing</li>
+</ol>
+<h2>References</h2>
+<ul>
+<li><a href="https://docs.github.com/en/actions/security-guides/automatic-token-authentication">GitHub Actions Permissions Documentation</a></li>
+<li><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Tokens Documentation</a></li>
+</ul>
+<h2>Husky Integration Issues</h2>
+<h3>Issue</h3>
+<p>The GitHub Actions workflows were failing with errors related to Husky not being found in CI environments. This was happening because the <code>prepare</code> script in package.json was trying to run Husky in CI environments where it wasn&#39;t needed.</p>
+<h3>Solution</h3>
+<h4>1. Added a preinstall script</h4>
+<p>Added a <code>preinstall</code> script to package.json that runs a custom script to disable Husky in CI environments:</p>
+<pre><code class="language-json">&quot;preinstall&quot;: &quot;node scripts/disable-husky-in-ci.js&quot;
+</code></pre>
+<h4>2. Created a disable-husky-in-ci.js script</h4>
+<p>Created a script that:</p>
+<ul>
+<li>Creates a <code>.huskyrc</code> file that exits early when the CI environment variable is set</li>
+<li>Makes the <code>.huskyrc</code> file executable</li>
+<li>Updates package.json if needed</li>
+</ul>
+<pre><code class="language-javascript">#!/usr/bin/env node
+
+/**
+ * This script disables husky in CI environments by creating a .huskyrc file
+ * that exits early when CI environment variable is set.
+ */
+
+const fs = require(&#39;fs&#39;);
+const path = require(&#39;path&#39;);
+
+const huskyrcPath = path.join(__dirname, &#39;..&#39;, &#39;.huskyrc&#39;);
+const huskyrcContent = `#!/bin/sh
+# Skip husky hooks in CI environments
+if [ -n &quot;$CI&quot; ]; then
+  exit 0
+fi
+`;
+
+// Create .huskyrc file
+fs.writeFileSync(huskyrcPath, huskyrcContent, &#39;utf8&#39;);
+console.log(&#39;.huskyrc file created to disable husky in CI environments&#39;);
+
+// Make it executable
+try {
+  fs.chmodSync(huskyrcPath, &#39;755&#39;);
+  console.log(&#39;.huskyrc file made executable&#39;);
+} catch (error) {
+  console.warn(&#39;Could not make .huskyrc executable:&#39;, error.message);
+}
+
+// Update package.json to run this script before install
+const packageJsonPath = path.join(__dirname, &#39;..&#39;, &#39;package.json&#39;);
+const packageJson = require(packageJsonPath);
+
+if (!packageJson.scripts.preinstall) {
+  packageJson.scripts.preinstall = &#39;node scripts/disable-husky-in-ci.js&#39;;
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), &#39;utf8&#39;);
+  console.log(&#39;Added preinstall script to package.json&#39;);
+}
+</code></pre>
+<h4>3. Created a .huskyrc file</h4>
+<p>Created a <code>.huskyrc</code> file with the following content:</p>
+<pre><code class="language-sh">#!/bin/sh
+# Skip husky hooks in CI environments
+if [ -n &quot;$CI&quot; ]; then
+  exit 0
+fi
+</code></pre>
+<h4>4. Updated documentation</h4>
+<ol>
+<li>Updated the CHANGELOG.md file to document the changes</li>
+<li>Added a new section to AILessons.md about CI/CD and Git Hooks</li>
+<li>Created a dedicated WORKFLOW_FIXES.md file to document the workflow fixes</li>
+<li>Created this HUSKY_CI_FIX.md file with detailed information about the fix</li>
+</ol>
+<h3>Testing</h3>
+<p>The fix was tested by running the analyze-workflow-errors.js script, which confirmed that the error patterns were correctly identified.</p>
+<h3>Future Considerations</h3>
+<ol>
+<li>Consider using a more robust method for detecting CI environments across different CI providers</li>
+<li>Monitor workflow runs to ensure the fixes are working as expected</li>
+<li>Consider adding more comprehensive error handling in the workflow scripts</li>
+<li>Implement a more comprehensive solution for handling Git hooks in CI environments</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
