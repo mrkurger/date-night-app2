@@ -59,7 +59,7 @@ describe('TelemetrySocketService', () => {
 
   it('should update connection status when connected', () => {
     let connectionStatus = false;
-    service.connectionStatus$.subscribe(status => {
+    service.connectionStatus$.subscribe((status) => {
       connectionStatus = status;
     });
 
@@ -71,7 +71,7 @@ describe('TelemetrySocketService', () => {
 
   it('should update connection status when disconnected', () => {
     let connectionStatus = true;
-    service.connectionStatus$.subscribe(status => {
+    service.connectionStatus$.subscribe((status) => {
       connectionStatus = status;
     });
 
@@ -84,7 +84,7 @@ describe('TelemetrySocketService', () => {
 
   it('should emit error telemetry when received', () => {
     let receivedError: any = null;
-    service.errorTelemetry$.subscribe(error => {
+    service.errorTelemetry$.subscribe((error) => {
       receivedError = error;
     });
 
@@ -110,7 +110,7 @@ describe('TelemetrySocketService', () => {
 
   it('should emit performance telemetry when received', () => {
     let receivedPerformance: any = null;
-    service.performanceTelemetry$.subscribe(performance => {
+    service.performanceTelemetry$.subscribe((performance) => {
       receivedPerformance = performance;
     });
 
@@ -136,7 +136,7 @@ describe('TelemetrySocketService', () => {
 
   it('should emit error statistics updates when received', () => {
     let receivedStats: any = null;
-    service.errorStatisticsUpdate$.subscribe(stats => {
+    service.errorStatisticsUpdate$.subscribe((stats) => {
       receivedStats = stats;
     });
 
@@ -163,7 +163,7 @@ describe('TelemetrySocketService', () => {
 
   it('should emit performance statistics updates when received', () => {
     let receivedStats: any = null;
-    service.performanceStatisticsUpdate$.subscribe(stats => {
+    service.performanceStatisticsUpdate$.subscribe((stats) => {
       receivedStats = stats;
     });
 
@@ -199,7 +199,7 @@ describe('TelemetrySocketService', () => {
       JSON.stringify({
         action: 'subscribe',
         channel: 'errors',
-      })
+      }),
     );
   });
 
@@ -213,7 +213,7 @@ describe('TelemetrySocketService', () => {
       JSON.stringify({
         action: 'unsubscribe',
         channel: 'errors',
-      })
+      }),
     );
   });
 
@@ -228,7 +228,7 @@ describe('TelemetrySocketService', () => {
 
   it('should handle WebSocket errors', () => {
     let connectionStatus = true;
-    service.connectionStatus$.subscribe(status => {
+    service.connectionStatus$.subscribe((status) => {
       connectionStatus = status;
     });
 

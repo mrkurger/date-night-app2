@@ -187,7 +187,7 @@ describe('TinderComponent', () => {
 
     it('should handle error when loading ads', fakeAsync(() => {
       spyOn(adService, 'getSwipeAds').and.returnValue(
-        throwError(() => new Error('Failed to load ads'))
+        throwError(() => new Error('Failed to load ads')),
       );
       spyOn(console, 'error').and.callThrough();
 
@@ -486,7 +486,7 @@ describe('TinderComponent', () => {
   describe('error handling', () => {
     it('should handle error when recording swipe', fakeAsync(() => {
       spyOn(adService, 'recordSwipe').and.returnValue(
-        throwError(() => new Error('Failed to record swipe'))
+        throwError(() => new Error('Failed to record swipe')),
       );
       spyOn(console, 'error');
 
@@ -508,7 +508,7 @@ describe('TinderComponent', () => {
 
     it('should handle error when starting chat', () => {
       spyOn(chatService, 'createAdRoom').and.returnValue(
-        throwError(() => new Error('Failed to create chat room'))
+        throwError(() => new Error('Failed to create chat room')),
       );
       spyOn(notificationService, 'error');
       spyOn(console, 'error');

@@ -129,7 +129,7 @@ describe('GeocodingService', () => {
     it('should geocode an address using the backend API', () => {
       const address = 'Oslo, Norway';
 
-      service.geocodeAddress(address).subscribe(result => {
+      service.geocodeAddress(address).subscribe((result) => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
@@ -141,18 +141,18 @@ describe('GeocodingService', () => {
     it('should fall back to Nominatim if backend API fails', () => {
       const address = 'Oslo, Norway';
 
-      service.geocodeAddress(address).subscribe(result => {
+      service.geocodeAddress(address).subscribe((result) => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
       // First, the backend API request fails
       const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?address=${encodeURIComponent(address)}`
+        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,
       );
       backendReq.error(new ErrorEvent('Network error'));
 
       // Then, the Nominatim request succeeds
-      const nominatimReq = httpMock.expectOne(req => req.url.startsWith(nominatimUrl));
+      const nominatimReq = httpMock.expectOne((req) => req.url.startsWith(nominatimUrl));
       expect(nominatimReq.request.method).toBe('GET');
       expect(nominatimReq.request.params.get('q')).toBe(address);
       nominatimReq.flush(mockNominatimResponse);
@@ -161,18 +161,18 @@ describe('GeocodingService', () => {
     it('should return null if both backend and Nominatim fail', () => {
       const address = 'Invalid Address';
 
-      service.geocodeAddress(address).subscribe(result => {
+      service.geocodeAddress(address).subscribe((result) => {
         expect(result).toBeNull();
       });
 
       // First, the backend API request fails
       const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?address=${encodeURIComponent(address)}`
+        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,
       );
       backendReq.error(new ErrorEvent('Network error'));
 
       // Then, the Nominatim request also fails
-      const nominatimReq = httpMock.expectOne(req => req.url.startsWith(nominatimUrl));
+      const nominatimReq = httpMock.expectOne((req) => req.url.startsWith(nominatimUrl));
       nominatimReq.error(new ErrorEvent('Network error'));
     });
   });
@@ -185,7 +185,7 @@ describe('GeocodingService', () => {
 
       locationServiceSpy.getCityCoordinates.and.returnValue(of(mockCoordinates));
 
-      service.geocodeLocation(city, county, country).subscribe(result => {
+      service.geocodeLocation(city, county, country).subscribe((result) => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
@@ -199,17 +199,17 @@ describe('GeocodingService', () => {
       const country = 'Norway';
 
       locationServiceSpy.getCityCoordinates.and.returnValue(
-        throwError(() => new Error('Not found'))
+        throwError(() => new Error('Not found')),
       );
 
-      service.geocodeLocation(city, county, country).subscribe(result => {
+      service.geocodeLocation(city, county, country).subscribe((result) => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
       expect(locationServiceSpy.getCityCoordinates).toHaveBeenCalledWith(city);
 
       const req = httpMock.expectOne(
-        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`
+        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockGeocodingResult);
@@ -221,10 +221,10 @@ describe('GeocodingService', () => {
       const country = 'Norway';
 
       locationServiceSpy.getCityCoordinates.and.returnValue(
-        throwError(() => new Error('Not found'))
+        throwError(() => new Error('Not found')),
       );
 
-      service.geocodeLocation(city, county, country).subscribe(result => {
+      service.geocodeLocation(city, county, country).subscribe((result) => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
@@ -233,12 +233,12 @@ describe('GeocodingService', () => {
 
       // Then, the backend API request fails
       const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`
+        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,
       );
       backendReq.error(new ErrorEvent('Network error'));
 
       // Finally, the Nominatim request succeeds
-      const nominatimReq = httpMock.expectOne(req => req.url.startsWith(nominatimUrl));
+      const nominatimReq = httpMock.expectOne((req) => req.url.startsWith(nominatimUrl));
       expect(nominatimReq.request.method).toBe('GET');
       nominatimReq.flush(mockNominatimResponse);
     });
@@ -254,12 +254,12 @@ describe('GeocodingService', () => {
         address: 'Oslo, Oslo, Norway',
       };
 
-      service.reverseGeocode(longitude, latitude).subscribe(result => {
+      service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual(mockResponse);
       });
 
       const req = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -275,7 +275,7 @@ describe('GeocodingService', () => {
 
       locationServiceSpy.findNearestCity.and.returnValue(of(mockCityResult));
 
-      service.reverseGeocode(longitude, latitude).subscribe(result => {
+      service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual({
           city: 'Oslo',
           county: 'Oslo',
@@ -286,7 +286,7 @@ describe('GeocodingService', () => {
 
       // First, the backend API request fails
       const backendReq = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -299,7 +299,7 @@ describe('GeocodingService', () => {
 
       locationServiceSpy.findNearestCity.and.returnValue(throwError(() => new Error('Not found')));
 
-      service.reverseGeocode(longitude, latitude).subscribe(result => {
+      service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual({
           city: 'Oslo',
           county: 'Oslo',
@@ -310,7 +310,7 @@ describe('GeocodingService', () => {
 
       // First, the backend API request fails
       const backendReq = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -318,7 +318,7 @@ describe('GeocodingService', () => {
       expect(locationServiceSpy.findNearestCity).toHaveBeenCalledWith(latitude, longitude);
 
       // Finally, the Nominatim request succeeds
-      const nominatimReq = httpMock.expectOne(req => req.url.startsWith(reverseNominatimUrl));
+      const nominatimReq = httpMock.expectOne((req) => req.url.startsWith(reverseNominatimUrl));
       expect(nominatimReq.request.method).toBe('GET');
       nominatimReq.flush(mockReverseNominatimResponse);
     });
@@ -331,25 +331,25 @@ describe('GeocodingService', () => {
       // Add a result to the cache
       (service as any).addToCache(`enhanced:${address}`, mockEnhancedGeocodingResult);
 
-      service.enhancedGeocode(address).subscribe(result => {
+      service.enhancedGeocode(address).subscribe((result) => {
         expect(result).toEqual(mockEnhancedGeocodingResult);
       });
 
       // No HTTP requests should be made
-      httpMock.expectNone(req => true);
+      httpMock.expectNone((req) => true);
     });
 
     it('should use Nominatim for enhanced geocoding if not cached', () => {
       const address = 'Oslo, Norway';
 
-      service.enhancedGeocode(address).subscribe(result => {
+      service.enhancedGeocode(address).subscribe((result) => {
         expect(result).toBeTruthy();
         expect(result.city).toBe('Oslo');
         expect(result.country).toBe('Norway');
         expect(result.provider).toBe('nominatim');
       });
 
-      const req = httpMock.expectOne(req => req.url.startsWith(nominatimUrl));
+      const req = httpMock.expectOne((req) => req.url.startsWith(nominatimUrl));
       expect(req.request.method).toBe('GET');
       req.flush(mockNominatimResponse);
     });
@@ -362,28 +362,28 @@ describe('GeocodingService', () => {
       // Add a result to the cache
       (service as any).addToCache(
         `enhanced-reverse:${latitude},${longitude}`,
-        mockReverseGeocodingResult
+        mockReverseGeocodingResult,
       );
 
-      service.enhancedReverseGeocode(latitude, longitude).subscribe(result => {
+      service.enhancedReverseGeocode(latitude, longitude).subscribe((result) => {
         expect(result).toEqual(mockReverseGeocodingResult);
       });
 
       // No HTTP requests should be made
-      httpMock.expectNone(req => true);
+      httpMock.expectNone((req) => true);
     });
 
     it('should use Nominatim for enhanced reverse geocoding if not cached', () => {
       const [longitude, latitude] = mockCoordinates;
 
-      service.enhancedReverseGeocode(latitude, longitude).subscribe(result => {
+      service.enhancedReverseGeocode(latitude, longitude).subscribe((result) => {
         expect(result).toBeTruthy();
         expect(result.components.city).toBe('Oslo');
         expect(result.components.country).toBe('Norway');
         expect(result.provider).toBe('nominatim');
       });
 
-      const req = httpMock.expectOne(req => req.url.startsWith(reverseNominatimUrl));
+      const req = httpMock.expectOne((req) => req.url.startsWith(reverseNominatimUrl));
       expect(req.request.method).toBe('GET');
       req.flush(mockReverseNominatimResponse);
     });
@@ -423,24 +423,24 @@ describe('GeocodingService', () => {
       // Add results to the cache
       (service as any).addToCache(`nearby:${latitude},${longitude},${radius},`, mockPlaces);
 
-      service.getNearbyPlaces(latitude, longitude, radius).subscribe(results => {
+      service.getNearbyPlaces(latitude, longitude, radius).subscribe((results) => {
         expect(results).toEqual(mockPlaces);
       });
 
       // No HTTP requests should be made
-      httpMock.expectNone(req => true);
+      httpMock.expectNone((req) => true);
     });
 
     it('should use Nominatim for nearby places if not cached', () => {
       const [longitude, latitude] = mockCoordinates;
       const radius = 5; // 5 km
 
-      service.getNearbyPlaces(latitude, longitude, radius).subscribe(results => {
+      service.getNearbyPlaces(latitude, longitude, radius).subscribe((results) => {
         expect(results.length).toBe(1);
         expect(results[0].city).toBe('Oslo');
       });
 
-      const req = httpMock.expectOne(req => req.url.startsWith(nominatimUrl));
+      const req = httpMock.expectOne((req) => req.url.startsWith(nominatimUrl));
       expect(req.request.method).toBe('GET');
       req.flush(mockNominatimResponse);
     });
@@ -453,10 +453,10 @@ describe('GeocodingService', () => {
       service.getNearbyPlaces(latitude, longitude, radius, type).subscribe();
 
       const req = httpMock.expectOne(
-        req =>
+        (req) =>
           req.url.startsWith(nominatimUrl) &&
           req.params.has('amenity') &&
-          req.params.get('amenity') === type
+          req.params.get('amenity') === type,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockNominatimResponse);

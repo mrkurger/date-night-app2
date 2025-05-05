@@ -161,7 +161,7 @@ export class WalletComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     // Initialize settings form
     this.settingsForm = this.fb.group({
@@ -197,7 +197,7 @@ export class WalletComponent implements OnInit {
     this.loading.wallet = true;
 
     this.walletService.getWallet().subscribe({
-      next: wallet => {
+      next: (wallet) => {
         this.wallet = wallet;
         this.balances = wallet.balances;
         this.selectedCurrency = wallet.settings.defaultCurrency;
@@ -211,7 +211,7 @@ export class WalletComponent implements OnInit {
         this.loadTransactions();
         this.loadPaymentMethods();
       },
-      error: error => {
+      error: (error) => {
         console.error('Error loading wallet:', error);
         this.notificationService.error('Failed to load wallet data');
         this.loading.wallet = false;
@@ -228,13 +228,13 @@ export class WalletComponent implements OnInit {
     this.walletService
       .getWalletTransactions(this.transactionFilters, this.currentPage, this.pageSize)
       .subscribe({
-        next: response => {
+        next: (response) => {
           this.transactions = response.transactions;
           this.totalTransactions = response.pagination.total;
           this.totalPages = response.pagination.pages;
           this.loading.transactions = false;
         },
-        error: error => {
+        error: (error) => {
           console.error('Error loading transactions:', error);
           this.notificationService.error('Failed to load transactions');
           this.loading.transactions = false;
@@ -249,11 +249,11 @@ export class WalletComponent implements OnInit {
     this.loading.paymentMethods = true;
 
     this.walletService.getWalletPaymentMethods().subscribe({
-      next: paymentMethods => {
+      next: (paymentMethods) => {
         this.paymentMethods = paymentMethods;
         this.loading.paymentMethods = false;
       },
-      error: error => {
+      error: (error) => {
         console.error('Error loading payment methods:', error);
         this.notificationService.error('Failed to load payment methods');
         this.loading.paymentMethods = false;
@@ -305,14 +305,14 @@ export class WalletComponent implements OnInit {
       width: '500px',
       data: {
         currencies: this.walletService.SUPPORTED_CURRENCIES.concat(
-          this.walletService.SUPPORTED_CRYPTOCURRENCIES
+          this.walletService.SUPPORTED_CRYPTOCURRENCIES,
         ),
         paymentMethods: this.paymentMethods,
         selectedCurrency: this.selectedCurrency,
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadWallet();
       }
@@ -332,7 +332,7 @@ export class WalletComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadWallet();
       }
@@ -351,7 +351,7 @@ export class WalletComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadWallet();
       }
@@ -370,7 +370,7 @@ export class WalletComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadPaymentMethods();
       }
@@ -399,7 +399,7 @@ export class WalletComponent implements OnInit {
           this.notificationService.success('Payment method removed');
           this.loadPaymentMethods();
         },
-        error: error => {
+        error: (error) => {
           console.error('Error removing payment method:', error);
           this.notificationService.error('Failed to remove payment method');
         },
@@ -417,7 +417,7 @@ export class WalletComponent implements OnInit {
         this.notificationService.success('Default payment method updated');
         this.loadPaymentMethods();
       },
-      error: error => {
+      error: (error) => {
         console.error('Error setting default payment method:', error);
         this.notificationService.error('Failed to update default payment method');
       },
@@ -435,7 +435,7 @@ export class WalletComponent implements OnInit {
     const settings = this.settingsForm.value;
 
     this.walletService.updateWalletSettings(settings).subscribe({
-      next: updatedSettings => {
+      next: (updatedSettings) => {
         this.notificationService.success('Wallet settings updated');
 
         // Update local wallet settings
@@ -443,7 +443,7 @@ export class WalletComponent implements OnInit {
           this.wallet.settings = updatedSettings;
         }
       },
-      error: error => {
+      error: (error) => {
         console.error('Error updating wallet settings:', error);
         this.notificationService.error('Failed to update wallet settings');
       },
@@ -581,7 +581,7 @@ export class WalletComponent implements OnInit {
     }
 
     // Find balance in default currency
-    const defaultBalance = this.balances.find(b => b.currency === this.selectedCurrency);
+    const defaultBalance = this.balances.find((b) => b.currency === this.selectedCurrency);
 
     if (defaultBalance) {
       return this.walletService.formatCurrency(defaultBalance.available, this.selectedCurrency);

@@ -148,7 +148,7 @@ describe('AdvertiserProfileComponent', () => {
 
     it('should handle error when loading ad', fakeAsync(() => {
       spyOn(adService, 'getAdById').and.returnValue(
-        throwError(() => new Error('Failed to load ad'))
+        throwError(() => new Error('Failed to load ad')),
       );
       spyOn(console, 'error').and.callThrough();
 
@@ -207,7 +207,7 @@ describe('AdvertiserProfileComponent', () => {
       component.saveChanges();
 
       expect(notificationService.error).toHaveBeenCalledWith(
-        'Please fix the form errors before submitting'
+        'Please fix the form errors before submitting',
       );
     });
 

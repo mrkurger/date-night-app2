@@ -32,7 +32,7 @@ import { Component, Input, Type } from '@angular/core';
 export function createMockComponent(
   selector: string,
   inputs: string[] = [],
-  template = '<ng-content></ng-content>'
+  template = '<ng-content></ng-content>',
 ): Type<any> {
   @Component({
     selector,
@@ -43,14 +43,14 @@ export function createMockComponent(
   class MockComponent {
     // Dynamically add inputs
     constructor() {
-      inputs.forEach(input => {
+      inputs.forEach((input) => {
         this[input] = null;
       });
     }
   }
 
   // Add Input decorators
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     Input()(MockComponent.prototype, input);
   });
 

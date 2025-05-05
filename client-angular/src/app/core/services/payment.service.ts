@@ -86,7 +86,7 @@ export class PaymentService {
       script.async = true;
       document.body.appendChild(script);
 
-      await new Promise<void>(resolve => {
+      await new Promise<void>((resolve) => {
         script.onload = () => resolve();
       });
     }
@@ -113,7 +113,7 @@ export class PaymentService {
   createPaymentIntent(
     amount: number,
     currency = 'nok',
-    metadata: any = {}
+    metadata: any = {},
   ): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(`${this.apiUrl}/create-payment-intent`, {
       amount,

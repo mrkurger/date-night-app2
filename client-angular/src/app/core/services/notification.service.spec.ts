@@ -47,15 +47,15 @@ describe('NotificationService', () => {
       expect(service).toBeTruthy();
     });
 
-    it('should initialize with zero unread notifications', done => {
-      service.unreadCount$.subscribe(count => {
+    it('should initialize with zero unread notifications', (done) => {
+      service.unreadCount$.subscribe((count) => {
         expect(count).toBe(0);
         done();
       });
     });
 
-    it('should initialize with empty toasts array', done => {
-      service.toasts$.subscribe(toasts => {
+    it('should initialize with empty toasts array', (done) => {
+      service.toasts$.subscribe((toasts) => {
         expect(toasts).toEqual([]);
         done();
       });
@@ -78,7 +78,7 @@ describe('NotificationService', () => {
           verticalPosition: 'top',
           panelClass: ['success-snackbar'],
           duration: 2000,
-        })
+        }),
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -98,7 +98,7 @@ describe('NotificationService', () => {
           verticalPosition: 'top',
           panelClass: ['error-snackbar'],
           duration: 2000,
-        })
+        }),
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -118,7 +118,7 @@ describe('NotificationService', () => {
           verticalPosition: 'top',
           panelClass: ['warning-snackbar'],
           duration: 2000,
-        })
+        }),
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -138,19 +138,19 @@ describe('NotificationService', () => {
           verticalPosition: 'top',
           panelClass: ['info-snackbar'],
           duration: 2000,
-        })
+        }),
       );
       expect(result).toBe(snackBarRefSpy);
     });
   });
 
   describe('Toast Management', () => {
-    it('should add toast when showing notification', done => {
+    it('should add toast when showing notification', (done) => {
       const message = 'Test message';
 
       service.success(message);
 
-      service.toasts$.subscribe(toasts => {
+      service.toasts$.subscribe((toasts) => {
         expect(toasts.length).toBe(1);
         expect(toasts[0].message).toBe(message);
         expect(toasts[0].type).toBe(NotificationType.SUCCESS);
@@ -168,7 +168,7 @@ describe('NotificationService', () => {
 
       // Verify toast was added
       let toasts: ToastNotification[] = [];
-      const subscription = service.toasts$.subscribe(t => (toasts = t));
+      const subscription = service.toasts$.subscribe((t) => (toasts = t));
       expect(toasts.length).toBe(1);
 
       // Get the toast ID
@@ -187,13 +187,13 @@ describe('NotificationService', () => {
       subscription.unsubscribe();
     }));
 
-    it('should remove specific toast by id', done => {
+    it('should remove specific toast by id', (done) => {
       // Add two toasts
       service.success('Success message');
       service.error('Error message');
 
       // Get the toasts
-      service.toasts$.subscribe(toasts => {
+      service.toasts$.subscribe((toasts) => {
         if (toasts.length === 2) {
           const toastId = toasts[0].id;
 
@@ -201,7 +201,7 @@ describe('NotificationService', () => {
           service.removeToast(toastId);
 
           // Check that only the second toast remains
-          service.toasts$.subscribe(updatedToasts => {
+          service.toasts$.subscribe((updatedToasts) => {
             expect(updatedToasts.length).toBe(1);
             expect(updatedToasts[0].message).toBe('Error message');
             done();
@@ -218,10 +218,10 @@ describe('NotificationService', () => {
 
       // Get the toasts
       let toasts: ToastNotification[] = [];
-      service.toasts$.subscribe(t => (toasts = t));
+      service.toasts$.subscribe((t) => (toasts = t));
 
       // Check that all IDs are unique
-      const ids = toasts.map(toast => toast.id);
+      const ids = toasts.map((toast) => toast.id);
       const uniqueIds = new Set(ids);
 
       expect(uniqueIds.size).toBe(ids.length);
@@ -232,7 +232,7 @@ describe('NotificationService', () => {
     it('should get unread notifications count from server', () => {
       const mockCount = 5;
 
-      service.getUnreadNotificationsCount().subscribe(count => {
+      service.getUnreadNotificationsCount().subscribe((count) => {
         expect(count).toBe(mockCount);
       });
 
@@ -241,12 +241,12 @@ describe('NotificationService', () => {
       req.flush(mockCount);
     });
 
-    it('should update unread count', done => {
+    it('should update unread count', (done) => {
       const newCount = 10;
 
       service.updateUnreadCount(newCount);
 
-      service.unreadCount$.subscribe(count => {
+      service.unreadCount$.subscribe((count) => {
         expect(count).toBe(newCount);
         done();
       });
@@ -259,7 +259,7 @@ describe('NotificationService', () => {
 
       service.getUnreadNotificationsCount().subscribe({
         next: () => fail('should have failed with a 500 error'),
-        error: error => {
+        error: (error) => {
           expect(error.status).toBe(500);
         },
       });

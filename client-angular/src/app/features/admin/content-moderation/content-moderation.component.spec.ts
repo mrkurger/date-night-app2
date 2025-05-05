@@ -73,7 +73,7 @@ describe('ContentModerationComponent', () => {
         toasts$: of([]),
         // Mock the unreadCount$ observable
         unreadCount$: of(0),
-      }
+      },
     );
     contentSanitizerServiceSpy = jasmine.createSpyObj('ContentSanitizerService', [
       'sanitizeUrl',
@@ -148,7 +148,7 @@ describe('ContentModerationComponent', () => {
 
       // Mock the API response with our test data
       mediaServiceSpy.getPendingModerationMedia.and.returnValue(
-        of(mediaWithStringDates as PendingMedia[])
+        of(mediaWithStringDates as PendingMedia[]),
       );
 
       // Before loading, replace the date with a string to test conversion
@@ -166,7 +166,7 @@ describe('ContentModerationComponent', () => {
   describe('Error Handling', () => {
     it('should handle error when loading pending media', fakeAsync(() => {
       mediaServiceSpy.getPendingModerationMedia.and.returnValue(
-        throwError(() => new Error('Test error'))
+        throwError(() => new Error('Test error')),
       );
 
       // We need to handle the error in the test since the component re-throws it
@@ -197,7 +197,7 @@ describe('ContentModerationComponent', () => {
 
       expect(component.error).toContain('permission');
       expect(notificationServiceSpy.error).toHaveBeenCalledWith(
-        jasmine.stringMatching(/permission/)
+        jasmine.stringMatching(/permission/),
       );
       expect(console.error).toHaveBeenCalled();
     }));
@@ -209,7 +209,7 @@ describe('ContentModerationComponent', () => {
       mediaServiceSpy.getPendingModerationMedia.and.returnValues(
         throwError(() => new Error('Network error')),
         throwError(() => new Error('Network error')),
-        of(mockPendingMedia)
+        of(mockPendingMedia),
       );
 
       // We need to handle the error in the test since the component re-throws it
@@ -231,7 +231,7 @@ describe('ContentModerationComponent', () => {
       fixture.detectChanges();
 
       expect(component.filteredMedia.length).toBe(2);
-      expect(component.filteredMedia.every(media => media.type === 'image')).toBeTrue();
+      expect(component.filteredMedia.every((media) => media.type === 'image')).toBeTrue();
     });
 
     it('should filter media by search term', () => {
@@ -301,7 +301,7 @@ describe('ContentModerationComponent', () => {
       // Directly set filter values
       component.mediaTypeFilter = 'image';
       component.applyFilters();
-      expect(component.filteredMedia.every(media => media.type === 'image')).toBeTrue();
+      expect(component.filteredMedia.every((media) => media.type === 'image')).toBeTrue();
 
       component.sortOrder = 'title';
       component.applyFilters();
@@ -475,10 +475,10 @@ describe('ContentModerationComponent', () => {
         mockPendingMedia[0].adId,
         mockPendingMedia[0]._id,
         'approved',
-        'Content meets guidelines'
+        'Content meets guidelines',
       );
       expect(notificationServiceSpy.success).toHaveBeenCalledWith(
-        jasmine.stringMatching(/approved/i)
+        jasmine.stringMatching(/approved/i),
       );
       expect(modalServiceSpy.dismissAll).toHaveBeenCalled();
     }));
@@ -497,10 +497,10 @@ describe('ContentModerationComponent', () => {
         mockPendingMedia[0].adId,
         mockPendingMedia[0]._id,
         'rejected',
-        'Content violates guidelines'
+        'Content violates guidelines',
       );
       expect(notificationServiceSpy.success).toHaveBeenCalledWith(
-        jasmine.stringMatching(/rejected/i)
+        jasmine.stringMatching(/rejected/i),
       );
       expect(modalServiceSpy.dismissAll).toHaveBeenCalled();
     }));
@@ -516,7 +516,7 @@ describe('ContentModerationComponent', () => {
 
       expect(mediaServiceSpy.moderateMedia).not.toHaveBeenCalled();
       expect(notificationServiceSpy.error).toHaveBeenCalledWith(
-        jasmine.stringMatching(/required/i)
+        jasmine.stringMatching(/required/i),
       );
     });
 
@@ -531,7 +531,7 @@ describe('ContentModerationComponent', () => {
 
       expect(mediaServiceSpy.moderateMedia).not.toHaveBeenCalled();
       expect(notificationServiceSpy.error).toHaveBeenCalledWith(
-        jasmine.stringMatching(/no media/i)
+        jasmine.stringMatching(/no media/i),
       );
     });
 
@@ -572,7 +572,7 @@ describe('ContentModerationComponent', () => {
       tick();
 
       expect(notificationServiceSpy.error).toHaveBeenCalledWith(
-        jasmine.stringMatching(/permission/i)
+        jasmine.stringMatching(/permission/i),
       );
     }));
   });

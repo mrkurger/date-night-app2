@@ -183,7 +183,7 @@ export class CreateErrorAlertComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.alertForm = this.fb.group({
       name: ['', Validators.required],
@@ -215,10 +215,10 @@ export class CreateErrorAlertComponent implements OnInit {
         formValues.name,
         formValues.description,
         formValues.threshold,
-        formValues.timeWindow
+        formValues.timeWindow,
       )
       .subscribe({
-        next: alert => {
+        next: (alert) => {
           this.isSubmitting = false;
           this.snackBar.open(`Alert "${alert.name}" created successfully`, 'Close', {
             duration: 5000,
@@ -226,7 +226,7 @@ export class CreateErrorAlertComponent implements OnInit {
           });
           this.resetForm();
         },
-        error: error => {
+        error: (error) => {
           this.isSubmitting = false;
           this.snackBar.open(`Error creating alert: ${error.message || 'Unknown error'}`, 'Close', {
             duration: 5000,

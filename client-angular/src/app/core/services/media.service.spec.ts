@@ -102,7 +102,7 @@ describe('MediaService', () => {
 
       let receivedResponse: any = null;
 
-      service.uploadMedia(mockAdId, mockFile).subscribe(event => {
+      service.uploadMedia(mockAdId, mockFile).subscribe((event) => {
         if (event instanceof HttpResponse) {
           receivedResponse = event.body;
         }
@@ -128,7 +128,7 @@ describe('MediaService', () => {
   describe('Media Management', () => {
     it('should delete media from an ad', () => {
       // The API returns void/null, so we should expect undefined or null
-      service.deleteMedia(mockAdId, mockMediaId).subscribe(response => {
+      service.deleteMedia(mockAdId, mockMediaId).subscribe((response) => {
         // Accept either undefined or null as valid responses
         expect(response === undefined || response === null).toBeTrue();
       });
@@ -140,7 +140,7 @@ describe('MediaService', () => {
 
     it('should set featured media for an ad', () => {
       // The API returns void/null, so we should expect undefined or null
-      service.setFeaturedMedia(mockAdId, mockMediaId).subscribe(response => {
+      service.setFeaturedMedia(mockAdId, mockMediaId).subscribe((response) => {
         // Accept either undefined or null as valid responses
         expect(response === undefined || response === null).toBeTrue();
       });
@@ -154,7 +154,7 @@ describe('MediaService', () => {
     it('should get all media for an ad using caching service', () => {
       cachingServiceSpy.get.and.returnValue(of(mockAdMedia));
 
-      service.getAdMedia(mockAdId).subscribe(media => {
+      service.getAdMedia(mockAdId).subscribe((media) => {
         expect(media).toEqual(mockAdMedia);
       });
 
@@ -164,7 +164,7 @@ describe('MediaService', () => {
 
   describe('Moderation', () => {
     it('should get all media pending moderation', () => {
-      service.getPendingModerationMedia().subscribe(media => {
+      service.getPendingModerationMedia().subscribe((media) => {
         expect(media).toEqual(mockPendingMedia);
       });
 
@@ -178,7 +178,7 @@ describe('MediaService', () => {
       const notes = 'Content meets guidelines';
 
       // The API returns void/null, so we should expect undefined or null
-      service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe(response => {
+      service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe((response) => {
         // Accept either undefined or null as valid responses
         expect(response === undefined || response === null).toBeTrue();
       });
@@ -194,7 +194,7 @@ describe('MediaService', () => {
       const notes = 'Content violates guidelines';
 
       // The API returns void/null, so we should expect undefined or null
-      service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe(response => {
+      service.moderateMedia(mockAdId, mockMediaId, status, notes).subscribe((response) => {
         // Accept either undefined or null as valid responses
         expect(response === undefined || response === null).toBeTrue();
       });
@@ -209,7 +209,7 @@ describe('MediaService', () => {
       const status = 'approved';
 
       // The API returns void/null, so we should expect undefined or null
-      service.moderateMedia(mockAdId, mockMediaId, status).subscribe(response => {
+      service.moderateMedia(mockAdId, mockMediaId, status).subscribe((response) => {
         // Accept either undefined or null as valid responses
         expect(response === undefined || response === null).toBeTrue();
       });
@@ -233,7 +233,7 @@ describe('MediaService', () => {
       // Subscribe to the service method with proper error handling
       service.uploadMedia(mockAdId, mockFile).subscribe({
         next: () => {},
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });
@@ -259,7 +259,7 @@ describe('MediaService', () => {
 
       service.getPendingModerationMedia().subscribe({
         next: () => fail('should have failed with a 403 error'),
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });
@@ -278,7 +278,7 @@ describe('MediaService', () => {
 
       service.moderateMedia(mockAdId, mockMediaId, 'approved', 'notes').subscribe({
         next: () => fail('should have failed with a 400 error'),
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });

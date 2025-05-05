@@ -36,7 +36,7 @@ export class AdStatsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private adService: AdService
+    private adService: AdService,
   ) {}
 
   getTotalViews(data: any[]): number {
@@ -62,12 +62,12 @@ export class AdStatsComponent implements OnInit {
     if (adId) {
       this.loading = true;
       this.adService.getAdById(adId).subscribe({
-        next: ad => {
+        next: (ad) => {
           this.adTitle = ad.title;
           this.loadSampleData(); // Replace with real data when available
           this.loading = false;
         },
-        error: error => {
+        error: (error) => {
           console.error('Error loading ad:', error);
           this.adTitle = 'Unknown Ad';
           this.loading = false;
@@ -80,7 +80,7 @@ export class AdStatsComponent implements OnInit {
   }
 
   getBarHeight(item: any, data: any[]): string {
-    const maxValue = Math.max(...data.map(d => d.value));
+    const maxValue = Math.max(...data.map((d) => d.value));
     const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
     return `${percentage}%`;
   }
@@ -112,11 +112,11 @@ export class AdStatsComponent implements OnInit {
       if (this.sort) this.dataSource.sort = this.sort;
     });
 
-    this.viewsData = sampleData.map(item => ({
+    this.viewsData = sampleData.map((item) => ({
       name: item.date,
       value: item.views,
     }));
-    this.clicksData = sampleData.map(item => ({
+    this.clicksData = sampleData.map((item) => ({
       name: item.date,
       value: item.clicks,
     }));

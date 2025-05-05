@@ -15,7 +15,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-96x96.png", 
+      "src": "assets/icons/icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any maskable"
@@ -69,7 +69,7 @@
     },
     {
       "name": "My Profile",
-      "short_name": "Profile", 
+      "short_name": "Profile",
       "description": "View your profile",
       "url": "/profile",
       "icons": [{ "src": "assets/icons/profile-72x72.png", "sizes": "72x72" }]

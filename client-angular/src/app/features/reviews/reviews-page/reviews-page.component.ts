@@ -59,13 +59,13 @@ export class ReviewsPageComponent implements OnInit {
     private reviewsService: ReviewsService,
     private adService: AdService,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getCurrentUser()?.id;
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.adId = params['id'];
       this.loadAdDetails();
       this.loadReviews();
@@ -81,13 +81,13 @@ export class ReviewsPageComponent implements OnInit {
     this.adService
       .getAdById(this.adId)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error loading ad details:', error);
           this.notificationService.error('Failed to load ad details');
           return of(null);
-        })
+        }),
       )
-      .subscribe(ad => {
+      .subscribe((ad) => {
         if (ad) {
           this.adTitle = ad.title || '';
 
@@ -118,24 +118,24 @@ export class ReviewsPageComponent implements OnInit {
     this.reviewsService
       .getAdReviews(this.adId, this.currentPage, this.pageSize)
       .pipe(
-        tap(response => {
+        tap((response) => {
           this.reviews = response.reviews;
           this.totalReviews = response.total;
           this.currentPage = response.page;
 
           // Check if the current user has already reviewed this ad
           if (this.currentUserId) {
-            this.hasReviewed = this.reviews.some(review => review.userId === this.currentUserId);
+            this.hasReviewed = this.reviews.some((review) => review.userId === this.currentUserId);
           }
         }),
-        catchError(error => {
+        catchError((error) => {
           console.error('Error loading reviews:', error);
           this.notificationService.error('Failed to load reviews');
           return of(null);
         }),
         tap(() => {
           this.loading = false;
-        })
+        }),
       )
       .subscribe();
   }
@@ -184,11 +184,11 @@ export class ReviewsPageComponent implements OnInit {
             this.editingReview = null;
             this.loadReviews();
           }),
-          catchError(error => {
+          catchError((error) => {
             console.error('Error updating review:', error);
             this.notificationService.error('Failed to update review');
             return of(null);
-          })
+          }),
         )
         .subscribe();
     } else {
@@ -201,11 +201,11 @@ export class ReviewsPageComponent implements OnInit {
             this.showReviewForm = false;
             this.loadReviews();
           }),
-          catchError(error => {
+          catchError((error) => {
             console.error('Error submitting review:', error);
             this.notificationService.error('Failed to submit review');
             return of(null);
-          })
+          }),
         )
         .subscribe();
     }
@@ -222,11 +222,11 @@ export class ReviewsPageComponent implements OnInit {
           this.notificationService.success('Review deleted successfully');
           this.loadReviews();
         }),
-        catchError(error => {
+        catchError((error) => {
           console.error('Error deleting review:', error);
           this.notificationService.error('Failed to delete review');
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -247,11 +247,11 @@ export class ReviewsPageComponent implements OnInit {
           // Update the review in the list
           this.loadReviews();
         }),
-        catchError(error => {
+        catchError((error) => {
           console.error('Error rating review:', error);
           this.notificationService.error('Failed to rate review');
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }

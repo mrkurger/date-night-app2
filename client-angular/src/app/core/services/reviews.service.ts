@@ -30,7 +30,7 @@ export class ReviewsService {
       .set('pageSize', pageSize.toString());
 
     return this.http.get<ReviewsResponse>(`${this.apiUrl}/ad/${adId}`, { params }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching ad reviews:', error);
         return of({
           reviews: this.getMockReviews(adId),
@@ -38,7 +38,7 @@ export class ReviewsService {
           page: 1,
           pageSize: 10,
         });
-      })
+      }),
     );
   }
 
@@ -51,7 +51,7 @@ export class ReviewsService {
       .set('pageSize', pageSize.toString());
 
     return this.http.get<ReviewsResponse>(`${this.apiUrl}/user/${userId}`, { params }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching user reviews:', error);
         return of({
           reviews: [],
@@ -59,7 +59,7 @@ export class ReviewsService {
           page: 1,
           pageSize: 10,
         });
-      })
+      }),
     );
   }
 
@@ -68,7 +68,7 @@ export class ReviewsService {
    */
   createReview(adId: string, reviewData: ReviewData): Observable<Review> {
     return this.http.post<Review>(`${this.apiUrl}/ad/${adId}`, reviewData).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error creating review:', error);
         // Return a mock review for development
         const mockReview: Review = {
@@ -87,7 +87,7 @@ export class ReviewsService {
           unhelpful: 0,
         };
         return of(mockReview);
-      })
+      }),
     );
   }
 
@@ -96,7 +96,7 @@ export class ReviewsService {
    */
   updateReview(reviewId: string, reviewData: ReviewData): Observable<Review> {
     return this.http.put<Review>(`${this.apiUrl}/${reviewId}`, reviewData).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error updating review:', error);
         return of({
           _id: reviewId,
@@ -112,7 +112,7 @@ export class ReviewsService {
           helpful: 0,
           unhelpful: 0,
         } as Review);
-      })
+      }),
     );
   }
 
@@ -121,10 +121,10 @@ export class ReviewsService {
    */
   deleteReview(reviewId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${reviewId}`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error deleting review:', error);
         return of(undefined);
-      })
+      }),
     );
   }
 
@@ -134,18 +134,18 @@ export class ReviewsService {
   rateReview(reviewId: string, reaction: 'helpful' | 'unhelpful' | null): Observable<Review> {
     if (reaction === null) {
       return this.http.delete<Review>(`${this.apiUrl}/${reviewId}/reaction`).pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error removing review reaction:', error);
           return of({} as Review);
-        })
+        }),
       );
     }
 
     return this.http.post<Review>(`${this.apiUrl}/${reviewId}/reaction`, { reaction }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error rating review:', error);
         return of({} as Review);
-      })
+      }),
     );
   }
 

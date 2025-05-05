@@ -31,7 +31,7 @@ export class AdListComponent implements OnInit {
     private adService: AdService,
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -48,11 +48,11 @@ export class AdListComponent implements OnInit {
     this.loading = true;
 
     this.adService.getUserAds(currentUser.id).subscribe({
-      next: ads => {
+      next: (ads) => {
         this.ads = ads;
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
         this.notificationService.error('Failed to load your ads');
@@ -80,7 +80,7 @@ export class AdListComponent implements OnInit {
           this.notificationService.success('Ad deleted successfully');
           this.loadAds(); // Reload the list
         },
-        error: err => {
+        error: (err) => {
           this.notificationService.error('Failed to delete ad');
           console.error(err);
         },

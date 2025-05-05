@@ -64,14 +64,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     private authService: AuthService,
     private encryptionService: EncryptionService,
     private notificationService: NotificationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getCurrentUserId();
 
     // Get room ID from route params
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const roomId = params.get('id');
       if (roomId) {
         this.roomId = roomId;
@@ -94,7 +94,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -104,8 +104,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.loading = true;
 
     this.chatService.getRooms().subscribe(
-      rooms => {
-        const room = rooms.find(r => r._id === this.roomId);
+      (rooms) => {
+        const room = rooms.find((r) => r._id === this.roomId);
         if (room) {
           this.room = room;
           this.determineOtherUser();
@@ -118,11 +118,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
         this.loading = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading room:', error);
         this.notificationService.error('Failed to load chat room');
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -133,7 +133,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.loading = true;
 
     this.chatService.getMessages(this.roomId).subscribe(
-      messages => {
+      (messages) => {
         this.messages = messages;
         this.loading = false;
         this.scrollToBottom = true;
@@ -145,11 +145,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         // If we got fewer messages than requested, there are no more
         this.hasMoreMessages = messages.length >= 50;
       },
-      error => {
+      (error) => {
         console.error('Error loading messages:', error);
         this.notificationService.error('Failed to load messages');
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -164,7 +164,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.loadingMore = true;
 
     this.chatService.getMessages(this.roomId, 50, this.oldestMessageId).subscribe(
-      messages => {
+      (messages) => {
         if (messages.length > 0) {
           // Add messages to the end (they come in reverse chronological order)
           this.messages = [...this.messages, ...messages];
@@ -175,11 +175,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.hasMoreMessages = messages.length >= 50;
         this.loadingMore = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading more messages:', error);
         this.notificationService.error('Failed to load more messages');
         this.loadingMore = false;
-      }
+      },
     );
   }
 
@@ -191,7 +191,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.connectSocket();
 
     // Listen for new messages
-    this.chatService.onNewMessage(message => {
+    this.chatService.onNewMessage((message) => {
       if (message.roomId === this.roomId) {
         this.messages = [message, ...this.messages];
         this.scrollToBottom = true;
@@ -204,9 +204,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
 
     // Listen for message read events
-    this.chatService.onMessageRead(data => {
+    this.chatService.onMessageRead((data) => {
       const { messageId } = data;
-      const message = this.messages.find(m => m._id === messageId);
+      const message = this.messages.find((m) => m._id === messageId);
       if (message) {
         message.read = true;
         this.cdr.detectChanges();
@@ -236,15 +236,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       } else {
         // Try to set up encryption for the room
         this.encryptionService.setupRoomEncryption(this.roomId).subscribe(
-          success => {
+          (success) => {
             this.encryptionStatus = success ? 'enabled' : 'disabled';
             this.isEncryptionEnabled = success;
           },
-          error => {
+          (error) => {
             console.error('Error setting up encryption:', error);
             this.encryptionStatus = 'disabled';
             this.isEncryptionEnabled = false;
-          }
+          },
         );
       }
     } catch (error) {
@@ -263,7 +263,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     // Find the other user in the participants
-    const otherParticipant = this.room.participants.find(p => p !== this.currentUserId);
+    const otherParticipant = this.room.participants.find((p) => p !== this.currentUserId);
     if (otherParticipant) {
       // Get user details (this would be implemented in a real app)
       // For now, we'll just use a placeholder
@@ -292,16 +292,16 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     }, 0);
 
     this.chatService.sendMessage(this.roomId, content).subscribe(
-      message => {
+      (message) => {
         // Message will be added via socket listener
         this.scrollToBottom = true;
       },
-      error => {
+      (error) => {
         console.error('Error sending message:', error);
         this.notificationService.error('Failed to send message');
         // Restore the message if it failed to send
         this.newMessage = content;
-      }
+      },
     );
   }
 
@@ -317,25 +317,25 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     const files = Array.from(input.files);
 
     // Check file size limits
-    const oversizedFiles = files.filter(file => file.size > 10 * 1024 * 1024); // 10MB
+    const oversizedFiles = files.filter((file) => file.size > 10 * 1024 * 1024); // 10MB
     if (oversizedFiles.length > 0) {
       this.notificationService.error(
-        `Some files exceed the 10MB size limit: ${oversizedFiles.map(f => f.name).join(', ')}`
+        `Some files exceed the 10MB size limit: ${oversizedFiles.map((f) => f.name).join(', ')}`,
       );
       return;
     }
 
     // Send message with attachments
     this.chatService.sendMessageWithAttachments(this.roomId, this.newMessage, files).subscribe(
-      message => {
+      (message) => {
         // Message will be added via socket listener
         this.scrollToBottom = true;
         this.newMessage = '';
       },
-      error => {
+      (error) => {
         console.error('Error sending message with attachments:', error);
         this.notificationService.error('Failed to send attachments');
-      }
+      },
     );
 
     // Reset the input

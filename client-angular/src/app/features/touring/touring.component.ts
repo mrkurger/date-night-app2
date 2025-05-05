@@ -61,7 +61,7 @@ export class TouringComponent implements OnInit {
   constructor(
     private travelService: TravelService,
     private notificationService: NotificationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       county: [''],
@@ -86,16 +86,16 @@ export class TouringComponent implements OnInit {
     this.travelService
       .getTouringAdvertisers()
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error('Failed to load touring advertisers');
           console.error('Error loading touring advertisers:', error);
           return of({ success: false, count: 0, data: [] });
         }),
         finalize(() => {
           this.loading = false;
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response.success) {
           this.touringAds = response.data;
         }
@@ -110,16 +110,16 @@ export class TouringComponent implements OnInit {
     this.travelService
       .getUpcomingTours(city, county, days)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error('Failed to load upcoming tours');
           console.error('Error loading upcoming tours:', error);
           return of({ success: false, count: 0, data: [] });
         }),
         finalize(() => {
           this.loading = false;
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response.success) {
           this.upcomingTours = response.data;
         }

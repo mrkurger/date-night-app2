@@ -20,7 +20,7 @@ export class CryptoService {
         length: 256,
       },
       true,
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
 
     const exportedKey = await window.crypto.subtle.exportKey('raw', key);
@@ -40,7 +40,7 @@ export class CryptoService {
         hash: 'SHA-256',
       },
       true,
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
 
     const exportedPublicKey = await window.crypto.subtle.exportKey('spki', keyPair.publicKey);
@@ -69,7 +69,7 @@ export class CryptoService {
         name: 'RSA-OAEP',
       },
       publicKey,
-      data
+      data,
     );
 
     return this.arrayBufferToBase64(encrypted);
@@ -83,7 +83,7 @@ export class CryptoService {
    */
   async decryptWithPrivateKey(
     encryptedMessageBase64: string,
-    privateKeyBase64: string
+    privateKeyBase64: string,
   ): Promise<string> {
     const privateKey = await this.importPrivateKey(privateKeyBase64);
 
@@ -94,7 +94,7 @@ export class CryptoService {
         name: 'RSA-OAEP',
       },
       privateKey,
-      encryptedData
+      encryptedData,
     );
 
     const decoder = new TextDecoder();
@@ -109,7 +109,7 @@ export class CryptoService {
    */
   async encryptWithSymmetricKey(
     message: string,
-    keyBase64: string
+    keyBase64: string,
   ): Promise<{ iv: string; encrypted: string }> {
     const key = await this.importSymmetricKey(keyBase64);
 
@@ -124,7 +124,7 @@ export class CryptoService {
         iv,
       },
       key,
-      data
+      data,
     );
 
     return {
@@ -141,7 +141,7 @@ export class CryptoService {
    */
   async decryptWithSymmetricKey(
     encryptedData: { iv: string; encrypted: string },
-    keyBase64: string
+    keyBase64: string,
   ): Promise<string> {
     const key = await this.importSymmetricKey(keyBase64);
 
@@ -154,7 +154,7 @@ export class CryptoService {
         iv,
       },
       key,
-      encryptedMessage
+      encryptedMessage,
     );
 
     const decoder = new TextDecoder();
@@ -181,7 +181,7 @@ export class CryptoService {
         hash: 'SHA-256',
       },
       false,
-      ['encrypt']
+      ['encrypt'],
     );
 
     this.keyCache.set(publicKeyBase64, publicKey);
@@ -208,7 +208,7 @@ export class CryptoService {
         hash: 'SHA-256',
       },
       false,
-      ['decrypt']
+      ['decrypt'],
     );
 
     this.keyCache.set(privateKeyBase64, privateKey);
@@ -234,7 +234,7 @@ export class CryptoService {
         name: 'AES-GCM',
       },
       false,
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
 
     this.keyCache.set(keyBase64, key);

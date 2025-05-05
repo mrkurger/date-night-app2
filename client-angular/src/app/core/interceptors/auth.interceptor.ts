@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
  */
 export const authInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const userService = inject(UserService);
   const router = inject(Router);
@@ -41,14 +41,14 @@ export const authInterceptor: HttpInterceptorFn = (
   }
 
   return next(request).pipe(
-    catchError(error => {
+    catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
         // Token expired or invalid
         userService.logout();
         router.navigate(['/login']);
       }
       return throwError(() => error);
-    })
+    }),
   );
 };
 

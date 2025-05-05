@@ -47,12 +47,12 @@ export class CsrfService {
         };
 
         xhr.send();
-      })
+      }),
     ).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Failed to initialize CSRF token:', error);
         return of(false);
-      })
+      }),
     );
   }
 

@@ -196,8 +196,8 @@ modal.addEventListener('keydown', (e) => {
 
     return Array.from(
       container.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      ),
     ) as HTMLElement[];
   }
 

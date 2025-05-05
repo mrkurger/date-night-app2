@@ -37,7 +37,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +61,7 @@ export class BreadcrumbsComponent implements OnInit {
   private createBreadcrumbs(
     route: ActivatedRoute,
     url = '',
-    breadcrumbs: Breadcrumb[] = []
+    breadcrumbs: Breadcrumb[] = [],
   ): Breadcrumb[] {
     // Start with home breadcrumb
     if (breadcrumbs.length === 0) {
@@ -76,7 +76,7 @@ export class BreadcrumbsComponent implements OnInit {
 
     // Get the route data
     const routeData = route.snapshot.data;
-    const routeUrl = route.snapshot.url.map(segment => segment.path).join('/');
+    const routeUrl = route.snapshot.url.map((segment) => segment.path).join('/');
 
     // Add URL segment
     if (routeUrl) {

@@ -165,7 +165,7 @@ export class PerformanceMonitorService {
    */
   private measureWebVitals(): void {
     // First Contentful Paint (FCP)
-    this.observePaintTiming('first-contentful-paint', entry => {
+    this.observePaintTiming('first-contentful-paint', (entry) => {
       const metrics = this.metricsSubject.value;
       metrics.firstContentfulPaint = entry.startTime;
 
@@ -175,7 +175,7 @@ export class PerformanceMonitorService {
     });
 
     // Largest Contentful Paint (LCP)
-    this.observePaintTiming('largest-contentful-paint', entry => {
+    this.observePaintTiming('largest-contentful-paint', (entry) => {
       const metrics = this.metricsSubject.value;
       metrics.largestContentfulPaint = entry.startTime;
 
@@ -185,7 +185,7 @@ export class PerformanceMonitorService {
     });
 
     // First Input Delay (FID)
-    this.observeFirstInputDelay(delay => {
+    this.observeFirstInputDelay((delay) => {
       const metrics = this.metricsSubject.value;
       metrics.firstInputDelay = delay;
 
@@ -195,7 +195,7 @@ export class PerformanceMonitorService {
     });
 
     // Cumulative Layout Shift (CLS)
-    this.observeLayoutShift(cls => {
+    this.observeLayoutShift((cls) => {
       const metrics = this.metricsSubject.value;
       metrics.cumulativeLayoutShift = cls;
 
@@ -213,7 +213,7 @@ export class PerformanceMonitorService {
   private observePaintTiming(entryType: string, callback: (entry: PerformanceEntry) => void): void {
     if (window.PerformanceObserver) {
       try {
-        const observer = new PerformanceObserver(list => {
+        const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (entry.entryType === 'paint' && entry.name === entryType) {
               callback(entry);
@@ -237,7 +237,7 @@ export class PerformanceMonitorService {
   private observeFirstInputDelay(callback: (delay: number) => void): void {
     if (window.PerformanceObserver) {
       try {
-        const observer = new PerformanceObserver(list => {
+        const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (entry.entryType === 'first-input') {
               // @ts-ignore - TypeScript doesn't know about the processingStart property
@@ -265,7 +265,7 @@ export class PerformanceMonitorService {
       try {
         let cumulativeLayoutShift = 0;
 
-        const observer = new PerformanceObserver(list => {
+        const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (entry.entryType === 'layout-shift') {
               // Layout shift entries have additional properties not in the PerformanceEntry type
@@ -317,7 +317,7 @@ export class PerformanceMonitorService {
   private monitorLongTasks(): void {
     if (window.PerformanceObserver) {
       try {
-        const observer = new PerformanceObserver(list => {
+        const observer = new PerformanceObserver((list) => {
           const entries = list.getEntries();
 
           if (entries.length > 0) {

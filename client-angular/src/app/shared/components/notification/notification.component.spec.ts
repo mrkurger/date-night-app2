@@ -35,7 +35,7 @@ describe('NotificationComponent', () => {
       {
         // Mock the toasts$ observable
         toasts$: toastsSubject.asObservable(),
-      }
+      },
     );
 
     await TestBed.configureTestingModule({

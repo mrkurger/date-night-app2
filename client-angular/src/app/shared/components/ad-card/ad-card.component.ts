@@ -64,16 +64,16 @@ export class AdCardComponent implements OnInit, OnDestroy {
 
     // Subscribe to preference changes
     this.subscriptions.push(
-      this.userPreferencesService.preferences$.subscribe(prefs => {
+      this.userPreferencesService.preferences$.subscribe((prefs) => {
         this.cardSize = prefs.cardSize;
         this.contentDensity = prefs.contentDensity;
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -90,7 +90,7 @@ export class AdCardComponent implements OnInit, OnDestroy {
     }
 
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      const image = this.ad.media.find(m => 'type' in m && m.type === 'image');
+      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image');
       if (image && 'url' in image) {
         return image.url;
       }
@@ -113,7 +113,7 @@ export class AdCardComponent implements OnInit, OnDestroy {
     }
 
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 1) {
-      const images = this.ad.media.filter(m => 'type' in m && m.type === 'image');
+      const images = this.ad.media.filter((m) => 'type' in m && m.type === 'image');
       if (images.length > 1 && 'url' in images[1]) {
         return images[1].url;
       }
@@ -131,7 +131,7 @@ export class AdCardComponent implements OnInit, OnDestroy {
     }
 
     if (this.ad.media && Array.isArray(this.ad.media)) {
-      return this.ad.media.filter(m => 'type' in m && m.type === 'image').length;
+      return this.ad.media.filter((m) => 'type' in m && m.type === 'image').length;
     }
 
     return 0;

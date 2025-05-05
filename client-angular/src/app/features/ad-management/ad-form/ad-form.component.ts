@@ -40,7 +40,7 @@ export class AdFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {
     this.adForm = this.createForm();
   }
@@ -48,14 +48,14 @@ export class AdFormComponent implements OnInit {
   ngOnInit(): void {
     // Load counties
     this.loading = true;
-    this.locationService.getCounties().subscribe(counties => {
+    this.locationService.getCounties().subscribe((counties) => {
       this.counties = counties;
       this.loading = false;
     });
 
     this.route.paramMap
       .pipe(
-        switchMap(params => {
+        switchMap((params) => {
           this.adId = params.get('id');
           this.isEditMode = !!this.adId;
 
@@ -75,7 +75,7 @@ export class AdFormComponent implements OnInit {
           }
           return of(null);
         }),
-        tap(ad => {
+        tap((ad) => {
           if (ad) {
             this.adForm.patchValue(ad);
 
@@ -85,7 +85,7 @@ export class AdFormComponent implements OnInit {
             }
           }
           this.loading = false;
-        })
+        }),
       )
       .subscribe();
   }
@@ -105,7 +105,7 @@ export class AdFormComponent implements OnInit {
    * Load cities for a specific county
    */
   private loadCitiesForCounty(county: string): void {
-    this.locationService.getCitiesByCounty(county).subscribe(cities => {
+    this.locationService.getCitiesByCounty(county).subscribe((cities) => {
       this.cities = cities;
     });
   }

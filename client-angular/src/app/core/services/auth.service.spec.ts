@@ -59,7 +59,7 @@ describe('AuthService', () => {
     // Handle any pending refresh token requests
     const refreshRequests = httpMock.match(`${apiUrl}/refresh-token`);
     if (refreshRequests.length > 0) {
-      refreshRequests.forEach(req => {
+      refreshRequests.forEach((req) => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
     }
@@ -79,7 +79,7 @@ describe('AuthService', () => {
         password: 'password123',
       };
 
-      service.login(mockCredentials).subscribe(response => {
+      service.login(mockCredentials).subscribe((response) => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
         expect(service.isAuthenticated()).toBeTrue();
@@ -105,7 +105,7 @@ describe('AuthService', () => {
         acceptTerms: true,
       };
 
-      service.register(mockUserData).subscribe(response => {
+      service.register(mockUserData).subscribe((response) => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
         expect(service.isAuthenticated()).toBeTrue();
@@ -151,7 +151,7 @@ describe('AuthService', () => {
   describe('handleOAuthCallback', () => {
     it('should validate token and update user state', () => {
       let userResult: any;
-      service.handleOAuthCallback().subscribe(user => {
+      service.handleOAuthCallback().subscribe((user) => {
         userResult = user;
       });
 
@@ -171,11 +171,11 @@ describe('AuthService', () => {
     it('should send refresh token request and update user state', () => {
       // Clear any pending refresh token requests
       const pendingRequests = httpMock.match(`${apiUrl}/refresh-token`);
-      pendingRequests.forEach(req => {
+      pendingRequests.forEach((req) => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
 
-      service.refreshToken().subscribe(response => {
+      service.refreshToken().subscribe((response) => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
       });
@@ -217,7 +217,7 @@ describe('AuthService', () => {
         bio: 'New bio information',
       };
 
-      service.updateProfile(profileData).subscribe(response => {
+      service.updateProfile(profileData).subscribe((response) => {
         expect(response.user).toEqual(updatedUser);
         expect(service.getCurrentUser()).toEqual(updatedUser);
       });
@@ -240,7 +240,7 @@ describe('AuthService', () => {
 
       service.login(mockCredentials).subscribe({
         next: () => fail('Should have failed with network error'),
-        error: error => {
+        error: (error) => {
           expect(error.status).toBe(500);
           expect(service.isAuthenticated()).toBeFalse();
         },
@@ -253,7 +253,7 @@ describe('AuthService', () => {
     it('should handle refresh token errors', () => {
       // First, clear any pending refresh token requests
       const pendingRequests = httpMock.match(`${apiUrl}/refresh-token`);
-      pendingRequests.forEach(req => {
+      pendingRequests.forEach((req) => {
         req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
       });
 
@@ -262,7 +262,7 @@ describe('AuthService', () => {
 
       service.refreshToken().subscribe({
         next: () => fail('Should have failed with token error'),
-        error: error => {
+        error: (error) => {
           expect(error.status).toBe(401);
           expect(service.isAuthenticated()).toBeFalse();
         },

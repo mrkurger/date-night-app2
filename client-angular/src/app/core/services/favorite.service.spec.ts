@@ -30,7 +30,7 @@ describe('FavoriteService', () => {
       const mockIds = ['id1', 'id2', 'id3'];
       let result: string[] | undefined;
 
-      service.loadFavoriteIds().subscribe(ids => {
+      service.loadFavoriteIds().subscribe((ids) => {
         result = ids;
       });
 
@@ -41,7 +41,7 @@ describe('FavoriteService', () => {
       expect(result).toEqual(mockIds);
 
       // Check that the subject was updated
-      service.favorites$.subscribe(ids => {
+      service.favorites$.subscribe((ids) => {
         expect(ids).toEqual(mockIds);
       });
     });
@@ -108,7 +108,7 @@ describe('FavoriteService', () => {
         },
       ];
 
-      service.getFavorites().subscribe(favorites => {
+      service.getFavorites().subscribe((favorites) => {
         expect(favorites.length).toEqual(mockFavorites.length);
         expect(favorites[0]._id).toEqual(mockFavorites[0]._id);
         expect(favorites[1]._id).toEqual(mockFavorites[1]._id);
@@ -125,7 +125,7 @@ describe('FavoriteService', () => {
       const adId = 'ad1';
       const isFavorite = true;
 
-      service.isFavorite(adId).subscribe(result => {
+      service.isFavorite(adId).subscribe((result) => {
         expect(result).toBe(isFavorite);
       });
 
@@ -144,7 +144,7 @@ describe('FavoriteService', () => {
       loadReq.flush(mockIds);
 
       // Then check if ad is favorite
-      service.isFavorite(adId).subscribe(result => {
+      service.isFavorite(adId).subscribe((result) => {
         expect(result).toBe(true);
       });
 
@@ -173,7 +173,7 @@ describe('FavoriteService', () => {
       req.flush({});
 
       // Check that the subject was updated
-      service.favorites$.subscribe(ids => {
+      service.favorites$.subscribe((ids) => {
         expect(ids).toContain(adId);
         expect(ids.length).toBe(2);
       });
@@ -197,7 +197,7 @@ describe('FavoriteService', () => {
       req.flush({});
 
       // Check that the subject was updated
-      service.favorites$.subscribe(ids => {
+      service.favorites$.subscribe((ids) => {
         expect(ids).not.toContain(adId);
         expect(ids.length).toBe(1);
       });
@@ -241,7 +241,7 @@ describe('FavoriteService', () => {
       loadReq.flush(mockIds);
 
       // Check that favorites are loaded
-      service.favorites$.subscribe(ids => {
+      service.favorites$.subscribe((ids) => {
         expect(ids).toEqual(mockIds);
       });
 
@@ -249,7 +249,7 @@ describe('FavoriteService', () => {
       service.clearCache();
 
       // Check that favorites are cleared
-      service.favorites$.subscribe(ids => {
+      service.favorites$.subscribe((ids) => {
         expect(ids).toEqual([]);
       });
     });

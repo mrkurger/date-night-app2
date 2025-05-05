@@ -80,7 +80,7 @@ export interface ReviewDialogData {
 export class ReviewDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ReviewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReviewDialogData
+    @Inject(MAT_DIALOG_DATA) public data: ReviewDialogData,
   ) {}
 
   onReviewSubmitted(review: any): void {

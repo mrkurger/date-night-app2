@@ -388,7 +388,7 @@ export class TransactionDetailsDialogComponent {
       transaction: WalletTransaction;
     },
     public walletService: WalletService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   get transaction(): WalletTransaction {

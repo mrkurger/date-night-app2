@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
         next: () => {
           this.router.navigate([this.returnUrl]);
         },
-        error: error => {
+        error: (error) => {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
         },
       });

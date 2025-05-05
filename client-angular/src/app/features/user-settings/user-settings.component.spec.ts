@@ -253,7 +253,7 @@ describe('UserSettingsComponent', () => {
       component.saveProfile();
 
       expect(notificationService.error).toHaveBeenCalledWith(
-        'Please fix the form errors before submitting'
+        'Please fix the form errors before submitting',
       );
     });
 
@@ -284,7 +284,7 @@ describe('UserSettingsComponent', () => {
       component.saveNotificationSettings();
 
       expect(authService.updateNotificationSettings).toHaveBeenCalledWith(
-        component.notificationForm.value
+        component.notificationForm.value,
       );
       expect(notificationService.success).toHaveBeenCalledWith('Notification settings updated');
       expect(component.loading).toBeFalse();
@@ -334,7 +334,7 @@ describe('UserSettingsComponent', () => {
     it('should handle error when deleting account fails', fakeAsync(() => {
       spyOn(window, 'confirm').and.returnValue(true);
       spyOn(authService, 'deleteAccount').and.returnValue(
-        throwError(() => new Error('Delete failed'))
+        throwError(() => new Error('Delete failed')),
       );
       spyOn(notificationService, 'error').and.callThrough();
       spyOn(console, 'error').and.callThrough();
@@ -408,7 +408,7 @@ describe('UserSettingsComponent', () => {
         cardSize: 'large',
       });
       expect(notificationService.success).toHaveBeenCalledWith(
-        'Display settings saved successfully'
+        'Display settings saved successfully',
       );
     });
 

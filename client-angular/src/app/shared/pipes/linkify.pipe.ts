@@ -22,7 +22,7 @@ export class LinkifyPipe implements PipeTransform {
     }
 
     // Replace URLs with anchor tags
-    const replacedText = text.replace(this.urlRegex, url => {
+    const replacedText = text.replace(this.urlRegex, (url) => {
       // Create a safe URL
       let displayUrl = url;
       if (url.length > 30) {

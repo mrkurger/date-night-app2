@@ -87,7 +87,7 @@ describe('PaymentService', () => {
       const currency = 'nok';
       const metadata = { orderId: '123' };
 
-      service.createPaymentIntent(amount, currency, metadata).subscribe(result => {
+      service.createPaymentIntent(amount, currency, metadata).subscribe((result) => {
         expect(result).toEqual(mockPaymentIntent);
       });
 
@@ -113,7 +113,7 @@ describe('PaymentService', () => {
         },
       ];
 
-      service.getSubscriptionPrices().subscribe(result => {
+      service.getSubscriptionPrices().subscribe((result) => {
         expect(result).toEqual({ prices: mockPrices });
       });
 
@@ -133,7 +133,7 @@ describe('PaymentService', () => {
       const priceId = 'price_123';
       const paymentMethodId = 'pm_123';
 
-      service.createSubscription(priceId, paymentMethodId).subscribe(result => {
+      service.createSubscription(priceId, paymentMethodId).subscribe((result) => {
         expect(result).toEqual(mockSubscription);
       });
 
@@ -146,7 +146,7 @@ describe('PaymentService', () => {
     it('should cancel a subscription', () => {
       const mockResponse = { canceled: true };
 
-      service.cancelSubscription().subscribe(result => {
+      service.cancelSubscription().subscribe((result) => {
         expect(result).toEqual(mockResponse);
       });
 
@@ -170,7 +170,7 @@ describe('PaymentService', () => {
       const days = 7;
       const paymentMethodId = 'pm_123';
 
-      service.boostAd(adId, days, paymentMethodId).subscribe(result => {
+      service.boostAd(adId, days, paymentMethodId).subscribe((result) => {
         expect(result).toEqual(mockBoostResult);
       });
 
@@ -190,7 +190,7 @@ describe('PaymentService', () => {
       const adId = 'ad_123';
       const paymentMethodId = 'pm_123';
 
-      service.featureAd(adId, paymentMethodId).subscribe(result => {
+      service.featureAd(adId, paymentMethodId).subscribe((result) => {
         expect(result).toEqual(mockFeatureResult);
       });
 
@@ -259,7 +259,7 @@ describe('PaymentService', () => {
       });
 
       await expectAsync(service.confirmCardSetup(clientSecret, cardElement)).toBeRejectedWithError(
-        errorMessage
+        errorMessage,
       );
 
       expect(mockStripe.confirmCardSetup).toHaveBeenCalled();

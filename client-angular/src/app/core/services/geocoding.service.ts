@@ -104,7 +104,7 @@ export class GeocodingService {
 
   constructor(
     private http: HttpClient,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {}
 
   /**
@@ -119,8 +119,8 @@ export class GeocodingService {
       .pipe(
         catchError(() =>
           // If backend fails, try Nominatim directly
-          this.geocodeWithNominatim(address)
-        )
+          this.geocodeWithNominatim(address),
+        ),
       );
   }
 
@@ -134,11 +134,11 @@ export class GeocodingService {
   geocodeLocation(
     city: string,
     county: string,
-    country = 'Norway'
+    country = 'Norway',
   ): Observable<GeocodingResult | null> {
     // First check if we have the coordinates in our local database
     return this.locationService.getCityCoordinates(city).pipe(
-      map(coordinates => {
+      map((coordinates) => {
         if (coordinates) {
           return {
             type: 'Point' as const,
@@ -154,16 +154,16 @@ export class GeocodingService {
         return this.http
           .get<GeocodingResult>(
             `${this.apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(
-              county
-            )}&country=${encodeURIComponent(country)}`
+              county,
+            )}&country=${encodeURIComponent(country)}`,
           )
           .pipe(
             catchError(() =>
               // If backend fails, try Nominatim directly
-              this.geocodeWithNominatim(address)
-            )
+              this.geocodeWithNominatim(address),
+            ),
           );
-      })
+      }),
     );
   }
 
@@ -175,7 +175,7 @@ export class GeocodingService {
    */
   reverseGeocode(
     longitude: number,
-    latitude: number
+    latitude: number,
   ): Observable<{
     city: string;
     county: string;
@@ -194,7 +194,7 @@ export class GeocodingService {
         catchError(() =>
           // If backend fails, try to find the nearest city from our local database
           this.locationService.findNearestCity(latitude, longitude).pipe(
-            map(result => {
+            map((result) => {
               if (result) {
                 return {
                   city: result.city,
@@ -207,10 +207,10 @@ export class GeocodingService {
             }),
             catchError(() =>
               // If local database fails, try Nominatim directly
-              this.reverseGeocodeWithNominatim(longitude, latitude)
-            )
-          )
-        )
+              this.reverseGeocodeWithNominatim(longitude, latitude),
+            ),
+          ),
+        ),
       );
   }
 
@@ -229,7 +229,7 @@ export class GeocodingService {
     const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
-      map(response => {
+      map((response) => {
         if (response && response.length > 0) {
           const result = response[0];
           const lon = parseFloat(result.lon);
@@ -241,7 +241,7 @@ export class GeocodingService {
         }
         return null;
       }),
-      catchError(() => of(null))
+      catchError(() => of(null)),
     );
   }
 
@@ -253,7 +253,7 @@ export class GeocodingService {
    */
   private reverseGeocodeWithNominatim(
     longitude: number,
-    latitude: number
+    latitude: number,
   ): Observable<{
     city: string;
     county: string;
@@ -270,7 +270,7 @@ export class GeocodingService {
     const queryString = this.createQueryString(params);
 
     return this.http.get<any>(`${this.reverseNominatimUrl}?${queryString}`).pipe(
-      map(response => {
+      map((response) => {
         if (response && response.address) {
           const address = response.address;
           return {
@@ -282,7 +282,7 @@ export class GeocodingService {
         }
         return null;
       }),
-      catchError(() => of(null))
+      catchError(() => of(null)),
     );
   }
 
@@ -303,27 +303,27 @@ export class GeocodingService {
     switch (API_PROVIDER) {
       case 'nominatim':
         return this.enhancedNominatimGeocode(address).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       case 'mapbox':
         return this.mapboxGeocode(address).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       case 'google':
         return this.googleGeocode(address).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       default:
         throw new Error(`Unsupported geocoding provider: ${API_PROVIDER}`);
@@ -338,7 +338,7 @@ export class GeocodingService {
    */
   enhancedReverseGeocode(
     latitude: number,
-    longitude: number
+    longitude: number,
   ): Observable<ReverseGeocodingResult | null> {
     // Check cache first
     const cacheKey = `enhanced-reverse:${latitude},${longitude}`;
@@ -351,27 +351,27 @@ export class GeocodingService {
     switch (API_PROVIDER) {
       case 'nominatim':
         return this.enhancedNominatimReverseGeocode(latitude, longitude).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       case 'mapbox':
         return this.mapboxReverseGeocode(latitude, longitude).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       case 'google':
         return this.googleReverseGeocode(latitude, longitude).pipe(
-          tap(result => {
+          tap((result) => {
             if (result) {
               this.addToCache(cacheKey, result);
             }
-          })
+          }),
         );
       default:
         throw new Error(`Unsupported geocoding provider: ${API_PROVIDER}`);
@@ -414,7 +414,7 @@ export class GeocodingService {
     latitude: number,
     longitude: number,
     radius: number,
-    type?: string
+    type?: string,
   ): Observable<EnhancedGeocodingResult[]> {
     // Check cache first
     const cacheKey = `nearby:${latitude},${longitude},${radius},${type || ''}`;
@@ -427,15 +427,15 @@ export class GeocodingService {
     switch (API_PROVIDER) {
       case 'nominatim':
         return this.nominatimNearbyPlaces(latitude, longitude, radius, type).pipe(
-          tap(results => this.addToCache(cacheKey, results))
+          tap((results) => this.addToCache(cacheKey, results)),
         );
       case 'mapbox':
         return this.mapboxNearbyPlaces(latitude, longitude, radius, type).pipe(
-          tap(results => this.addToCache(cacheKey, results))
+          tap((results) => this.addToCache(cacheKey, results)),
         );
       case 'google':
         return this.googleNearbyPlaces(latitude, longitude, radius, type).pipe(
-          tap(results => this.addToCache(cacheKey, results))
+          tap((results) => this.addToCache(cacheKey, results)),
         );
       default:
         throw new Error(`Unsupported provider for nearby places: ${API_PROVIDER}`);
@@ -454,16 +454,16 @@ export class GeocodingService {
       }
 
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           resolve({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           });
         },
-        error => {
+        (error) => {
           reject(error);
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
       );
     });
   }
@@ -534,7 +534,7 @@ export class GeocodingService {
     const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
-      map(response => {
+      map((response) => {
         if (response && response.length > 0) {
           const result = response[0];
           const address = result.address || {};
@@ -557,10 +557,10 @@ export class GeocodingService {
         }
         return null;
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error geocoding with Nominatim:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -569,7 +569,7 @@ export class GeocodingService {
    */
   private enhancedNominatimReverseGeocode(
     latitude: number,
-    longitude: number
+    longitude: number,
   ): Observable<ReverseGeocodingResult | null> {
     const params = {
       lat: latitude.toString(),
@@ -582,7 +582,7 @@ export class GeocodingService {
     const queryString = this.createQueryString(params);
 
     return this.http.get<any>(`${this.reverseNominatimUrl}?${queryString}`).pipe(
-      map(response => {
+      map((response) => {
         if (response && response.address) {
           const address = response.address;
 
@@ -606,10 +606,10 @@ export class GeocodingService {
         }
         return null;
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error reverse geocoding with Nominatim:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -620,7 +620,7 @@ export class GeocodingService {
     latitude: number,
     longitude: number,
     radius: number,
-    type?: string
+    type?: string,
   ): Observable<EnhancedGeocodingResult[]> {
     // Nominatim doesn't have a direct "nearby" API, so we'll use a bounding box approach
     // Convert radius to a bounding box (approximate)
@@ -648,20 +648,20 @@ export class GeocodingService {
     const queryString = this.createQueryString(params);
 
     return this.http.get<any[]>(`${this.nominatimUrl}?${queryString}`).pipe(
-      map(results => {
+      map((results) => {
         if (!results || !Array.isArray(results)) {
           return [];
         }
 
         return results
-          .filter(result => {
+          .filter((result) => {
             // Filter by actual distance (not just bounding box)
             const resultLat = parseFloat(result.lat);
             const resultLon = parseFloat(result.lon);
             const distance = this.getDistance(latitude, longitude, resultLat, resultLon);
             return distance <= radius;
           })
-          .map(result => {
+          .map((result) => {
             const address = result.address || {};
 
             return {
@@ -681,10 +681,10 @@ export class GeocodingService {
             };
           });
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting nearby places with Nominatim:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -701,7 +701,7 @@ export class GeocodingService {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${MAPBOX_ACCESS_TOKEN}&limit=1`;
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (!response.features || response.features.length === 0) {
           return null;
         }
@@ -726,10 +726,10 @@ export class GeocodingService {
           timestamp: Date.now(),
         };
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error geocoding with Mapbox:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -738,7 +738,7 @@ export class GeocodingService {
    */
   private mapboxReverseGeocode(
     latitude: number,
-    longitude: number
+    longitude: number,
   ): Observable<ReverseGeocodingResult | null> {
     if (!MAPBOX_ACCESS_TOKEN) {
       console.error('Mapbox access token not provided');
@@ -748,7 +748,7 @@ export class GeocodingService {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${MAPBOX_ACCESS_TOKEN}&limit=1`;
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (!response.features || response.features.length === 0) {
           return null;
         }
@@ -765,10 +765,10 @@ export class GeocodingService {
           timestamp: Date.now(),
         };
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error reverse geocoding with Mapbox:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -779,7 +779,7 @@ export class GeocodingService {
     latitude: number,
     longitude: number,
     radius: number,
-    type?: string
+    type?: string,
   ): Observable<EnhancedGeocodingResult[]> {
     if (!MAPBOX_ACCESS_TOKEN) {
       console.error('Mapbox access token not provided');
@@ -797,7 +797,7 @@ export class GeocodingService {
     }
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (!response.features) {
           return [];
         }
@@ -833,10 +833,10 @@ export class GeocodingService {
             };
           });
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting nearby places with Mapbox:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -893,7 +893,7 @@ export class GeocodingService {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${GOOGLE_MAPS_API_KEY}`;
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (response.status !== 'OK' || !response.results || response.results.length === 0) {
           return null;
         }
@@ -918,10 +918,10 @@ export class GeocodingService {
           timestamp: Date.now(),
         };
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error geocoding with Google Maps:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -930,7 +930,7 @@ export class GeocodingService {
    */
   private googleReverseGeocode(
     latitude: number,
-    longitude: number
+    longitude: number,
   ): Observable<ReverseGeocodingResult | null> {
     if (!GOOGLE_MAPS_API_KEY) {
       console.error('Google Maps API key not provided');
@@ -940,7 +940,7 @@ export class GeocodingService {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`;
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (response.status !== 'OK' || !response.results || response.results.length === 0) {
           return null;
         }
@@ -957,10 +957,10 @@ export class GeocodingService {
           timestamp: Date.now(),
         };
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error reverse geocoding with Google Maps:', error);
         return of(null);
-      })
+      }),
     );
   }
 
@@ -971,7 +971,7 @@ export class GeocodingService {
     latitude: number,
     longitude: number,
     radius: number,
-    type?: string
+    type?: string,
   ): Observable<EnhancedGeocodingResult[]> {
     if (!GOOGLE_MAPS_API_KEY) {
       console.error('Google Maps API key not provided');
@@ -989,7 +989,7 @@ export class GeocodingService {
     }
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (response.status !== 'OK' || !response.results) {
           return [];
         }
@@ -1008,10 +1008,10 @@ export class GeocodingService {
           };
         });
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting nearby places with Google Maps:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -1038,10 +1038,10 @@ export class GeocodingService {
     };
 
     // Extract each component
-    addressComponents.forEach(component => {
+    addressComponents.forEach((component) => {
       const types = component.types || [];
 
-      types.forEach(type => {
+      types.forEach((type) => {
         if (componentMap[type]) {
           const key = componentMap[type];
           components[key] = component.long_name;

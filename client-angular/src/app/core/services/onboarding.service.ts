@@ -248,7 +248,7 @@ export class OnboardingService {
   }
 
   resetHelpItems(): void {
-    this.contextualHelpItems.forEach(item => {
+    this.contextualHelpItems.forEach((item) => {
       localStorage.removeItem(`help-dismissed-${itemId}`);
     });
   }
@@ -260,7 +260,7 @@ export class OnboardingService {
     if (savedState) {
       const completedItems = JSON.parse(savedState) as string[];
 
-      return this.onboardingChecklistItems.map(item => ({
+      return this.onboardingChecklistItems.map((item) => ({
         ...item,
         completed: completedItems.includes(item.id),
       }));

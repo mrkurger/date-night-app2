@@ -147,7 +147,7 @@ describe('ChatComponent', () => {
         sender: { id: 'user1', username: 'testuser' },
         message: 'Test message',
         read: false,
-      })
+      }),
     );
     chatServiceSpy.markAsRead.and.returnValue(of({ count: 1 }));
 
@@ -160,7 +160,7 @@ describe('ChatComponent', () => {
       ttl: 7 * 24 * 60 * 60 * 1000,
     });
     chatServiceSpy.getMockContacts.and.returnValue(mockContacts);
-    chatServiceSpy.convertHoursToMilliseconds.and.callFake(hours => hours * 60 * 60 * 1000);
+    chatServiceSpy.convertHoursToMilliseconds.and.callFake((hours) => hours * 60 * 60 * 1000);
 
     authServiceSpy.getCurrentUser.and.returnValue(mockUser);
 
@@ -251,7 +251,7 @@ describe('ChatComponent', () => {
       expect(chatServiceSpy.sendMessage).toHaveBeenCalledWith(
         'contact2',
         'Hello, this is a test message',
-        expect.any(Object)
+        expect.any(Object),
       );
       expect(component.newMessage).toBe('');
     }));
@@ -282,7 +282,7 @@ describe('ChatComponent', () => {
 
       expect(component.messages.length).toBe(initialMessageCount + 1);
       expect(component.messages[component.messages.length - 1].message).toBe(
-        'This is a new message'
+        'This is a new message',
       );
     }));
 
@@ -388,7 +388,7 @@ describe('ChatComponent', () => {
       expect(chatServiceSpy.updateMessageAutoDeletionSettings).toHaveBeenCalledWith(
         'contact2',
         !initialState,
-        component.messageExpiryTime
+        component.messageExpiryTime,
       );
     });
   });
@@ -507,7 +507,7 @@ describe('ChatComponent', () => {
 
       // Verify that the expired message was removed
       expect(component.messages.length).toBe(2);
-      expect(component.messages.find(m => m._id === 'msg2')).toBeUndefined();
+      expect(component.messages.find((m) => m._id === 'msg2')).toBeUndefined();
       expect(component.groupMessagesByDate).toHaveBeenCalled();
     });
 
@@ -555,7 +555,7 @@ describe('ChatComponent', () => {
       expect(notificationServiceSpy.info).toHaveBeenCalledWith('A message will expire soon');
 
       // Verify that the about-to-expire message was marked
-      const aboutToExpireMsg = component.messages.find(m => m._id === 'msg4');
+      const aboutToExpireMsg = component.messages.find((m) => m._id === 'msg4');
       expect(aboutToExpireMsg.expiryWarningShown).toBeTrue();
     });
 
@@ -579,7 +579,7 @@ describe('ChatComponent', () => {
       expect(component.messageGroups.length).toBeGreaterThan(0);
 
       // Each group should have a date and messages array
-      component.messageGroups.forEach(group => {
+      component.messageGroups.forEach((group) => {
         expect(group.date).toBeDefined();
         expect(Array.isArray(group.messages)).toBeTrue();
         expect(group.messages.length).toBeGreaterThan(0);
@@ -623,7 +623,7 @@ describe('ChatComponent', () => {
 
       // Make the getContacts method throw an error
       chatServiceSpy.getContacts.and.returnValue(
-        throwError(() => new Error('Failed to load contacts'))
+        throwError(() => new Error('Failed to load contacts')),
       );
 
       // Initialize the component
@@ -644,7 +644,7 @@ describe('ChatComponent', () => {
 
       // Make the getMessages method throw an error
       chatServiceSpy.getMessages.and.returnValue(
-        throwError(() => new Error('Failed to load messages'))
+        throwError(() => new Error('Failed to load messages')),
       );
 
       // Load messages

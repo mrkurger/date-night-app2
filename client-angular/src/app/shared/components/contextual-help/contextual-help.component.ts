@@ -48,7 +48,7 @@ export class ContextualHelpComponent implements OnInit {
     this.activeHelpItems = {};
 
     // Check which items should be shown (not dismissed)
-    this.helpItems.forEach(item => {
+    this.helpItems.forEach((item) => {
       const isDismissed = localStorage.getItem(`${this.storageKeyPrefix}${item.id}`) === 'true';
       this.activeHelpItems[item.id] = !isDismissed;
     });
@@ -60,7 +60,7 @@ export class ContextualHelpComponent implements OnInit {
   }
 
   resetAllHelpItems(): void {
-    this.helpItems.forEach(item => {
+    this.helpItems.forEach((item) => {
       localStorage.removeItem(`${this.storageKeyPrefix}${item.id}`);
     });
     this.attachHelpItems();

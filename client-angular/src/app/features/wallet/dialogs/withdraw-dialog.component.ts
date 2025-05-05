@@ -367,15 +367,15 @@ export class WithdrawDialogComponent implements OnInit {
     },
     private fb: FormBuilder,
     public walletService: WalletService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     // Filter balances
     this.balances = data.balances.filter(
-      b => this.walletService.SUPPORTED_CURRENCIES.includes(b.currency) && b.available > 0
+      (b) => this.walletService.SUPPORTED_CURRENCIES.includes(b.currency) && b.available > 0,
     );
 
     this.cryptoBalances = data.balances.filter(
-      b => this.walletService.SUPPORTED_CRYPTOCURRENCIES.includes(b.currency) && b.available > 0
+      (b) => this.walletService.SUPPORTED_CRYPTOCURRENCIES.includes(b.currency) && b.available > 0,
     );
 
     // Initialize fiat withdrawal form
@@ -400,7 +400,7 @@ export class WithdrawDialogComponent implements OnInit {
     });
 
     // Update validators for memo field based on selected currency
-    this.cryptoWithdrawForm.get('currency')?.valueChanges.subscribe(currency => {
+    this.cryptoWithdrawForm.get('currency')?.valueChanges.subscribe((currency) => {
       const memoControl = this.cryptoWithdrawForm.get('memo');
       if (this.requiresMemo(currency)) {
         memoControl?.setValidators([Validators.required]);
@@ -411,7 +411,7 @@ export class WithdrawDialogComponent implements OnInit {
     });
 
     // Filter payment methods based on selected currency
-    this.withdrawForm.get('currency')?.valueChanges.subscribe(currency => {
+    this.withdrawForm.get('currency')?.valueChanges.subscribe((currency) => {
       this.updateFilteredPaymentMethods(currency);
       this.updateMaxAmount();
     });
@@ -430,7 +430,7 @@ export class WithdrawDialogComponent implements OnInit {
   updateFilteredPaymentMethods(currency: string): void {
     if (!currency) return;
 
-    this.filteredPaymentMethods = this.data.paymentMethods.filter(method => {
+    this.filteredPaymentMethods = this.data.paymentMethods.filter((method) => {
       if (method.type === 'card') {
         return true; // Cards can be used for any currency
       } else if (method.type === 'bank_account' && method.bankDetails) {
@@ -441,7 +441,7 @@ export class WithdrawDialogComponent implements OnInit {
 
     // Update payment method selection
     if (this.filteredPaymentMethods.length > 0) {
-      const defaultMethod = this.filteredPaymentMethods.find(m => m.isDefault);
+      const defaultMethod = this.filteredPaymentMethods.find((m) => m.isDefault);
       this.withdrawForm.patchValue({
         paymentMethodId: defaultMethod ? defaultMethod._id : this.filteredPaymentMethods[0]._id,
       });
@@ -460,7 +460,7 @@ export class WithdrawDialogComponent implements OnInit {
       return;
     }
 
-    const balance = this.balances.find(b => b.currency === currency);
+    const balance = this.balances.find((b) => b.currency === currency);
     this.maxAmount = balance ? balance.available : 0;
 
     // Update amount validator
@@ -484,7 +484,7 @@ export class WithdrawDialogComponent implements OnInit {
       return;
     }
 
-    const balance = this.cryptoBalances.find(b => b.currency === currency);
+    const balance = this.cryptoBalances.find((b) => b.currency === currency);
     this.cryptoMaxAmount = balance ? balance.available : 0;
 
     // Update amount validator
@@ -538,11 +538,11 @@ export class WithdrawDialogComponent implements OnInit {
       next: () => {
         this.processingWithdrawal = false;
         this.notificationService.success(
-          `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`
+          `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`,
         );
         this.dialogRef.close(true);
       },
-      error: error => {
+      error: (error) => {
         this.processingWithdrawal = false;
         console.error('Error withdrawing funds:', error);
         this.notificationService.error('Failed to withdraw funds. Please try again.');
@@ -568,11 +568,11 @@ export class WithdrawDialogComponent implements OnInit {
         next: () => {
           this.processingCryptoWithdrawal = false;
           this.notificationService.success(
-            `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`
+            `Withdrawal of ${this.walletService.formatCurrency(amount, currency)} initiated`,
           );
           this.dialogRef.close(true);
         },
-        error: error => {
+        error: (error) => {
           this.processingCryptoWithdrawal = false;
           console.error('Error withdrawing cryptocurrency:', error);
           this.notificationService.error('Failed to withdraw cryptocurrency. Please try again.');

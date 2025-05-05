@@ -107,7 +107,7 @@ export class ChatService {
 
   constructor(
     private http: HttpClient,
-    private encryptionService: EncryptionService
+    private encryptionService: EncryptionService,
   ) {
     this.socket = io(environment.apiUrl, {
       autoConnect: false,
@@ -207,13 +207,13 @@ export class ChatService {
    */
   createOrGetChatRoom(userId: string): Observable<ChatRoom> {
     return this.http.post<ChatRoom>(`${this.apiUrl}/rooms/direct`, { userId }).pipe(
-      switchMap(room => {
+      switchMap((room) => {
         // Setup encryption for the room if available
         if (this.encryptionService.isEncryptionAvailable()) {
           return this.encryptionService.setupRoomEncryption(room._id).pipe(map(() => room));
         }
         return of(room);
-      })
+      }),
     );
   }
 
@@ -256,7 +256,7 @@ export class ChatService {
     }
 
     return this.http.get<ChatMessage[]>(url).pipe(
-      switchMap(async messages => {
+      switchMap(async (messages) => {
         // Check if encryption is available
         if (!this.encryptionService.isEncryptionAvailable()) {
           return messages;
@@ -264,7 +264,7 @@ export class ChatService {
 
         // Process each message to decrypt if needed
         const processedMessages = await Promise.all(
-          messages.map(async message => {
+          messages.map(async (message) => {
             // Skip if not encrypted
             if (!message.isEncrypted || !message.encryptionData) {
               return message;
@@ -281,7 +281,7 @@ export class ChatService {
               // Decrypt the message
               const decryptedContent = await this.encryptionService.decryptMessage(
                 message.roomId,
-                encryptedData
+                encryptedData,
               );
 
               if (decryptedContent) {
@@ -303,11 +303,11 @@ export class ChatService {
               message: '[Encrypted message - unable to decrypt]',
               content: '[Encrypted message - unable to decrypt]',
             };
-          })
+          }),
         );
 
         return processedMessages;
-      })
+      }),
     );
   }
 
@@ -322,12 +322,12 @@ export class ChatService {
     roomId: string,
     content: string,
     replyToId?: string,
-    ttl?: number
+    ttl?: number,
   ): Observable<ChatMessage> {
     // Check if encryption is available
     if (this.encryptionService.isEncryptionAvailable()) {
       return from(this.encryptionService.encryptMessage(roomId, content, ttl)).pipe(
-        switchMap(encryptedData => {
+        switchMap((encryptedData) => {
           if (!encryptedData) {
             // Fall back to unencrypted message if encryption fails
             return this.sendUnencryptedMessage(roomId, content, replyToId, ttl);
@@ -344,7 +344,7 @@ export class ChatService {
             },
             expiresAt: encryptedData.expiresAt || (ttl ? Date.now() + ttl : undefined),
           });
-        })
+        }),
       );
     } else {
       // Send unencrypted message
@@ -363,7 +363,7 @@ export class ChatService {
     roomId: string,
     content: string,
     replyToId?: string,
-    ttl?: number
+    ttl?: number,
   ): Observable<ChatMessage> {
     // Calculate expiry time if ttl is provided
     const expiresAt = ttl ? Date.now() + ttl : undefined;
@@ -389,7 +389,7 @@ export class ChatService {
     content: string,
     files: File[],
     replyToId?: string,
-    ttl?: number
+    ttl?: number,
   ): Observable<ChatMessage> {
     const formData = new FormData();
     formData.append('message', content);
@@ -415,7 +415,7 @@ export class ChatService {
 
     return this.http.post<ChatMessage>(
       `${this.apiUrl}/rooms/${roomId}/messages/attachments`,
-      formData
+      formData,
     );
   }
 
@@ -432,7 +432,7 @@ export class ChatService {
     content: string,
     files: File[],
     ttl: number,
-    replyToId?: string
+    replyToId?: string,
   ): Observable<ChatMessage> {
     return this.sendMessageWithAttachments(roomId, content, files, replyToId, ttl);
   }
@@ -463,7 +463,7 @@ export class ChatService {
    */
   getUnreadCounts(): Observable<{ total: number; rooms: { [roomId: string]: number } }> {
     return this.http.get<{ total: number; rooms: { [roomId: string]: number } }>(
-      `${this.apiUrl}/unread`
+      `${this.apiUrl}/unread`,
     );
   }
 
@@ -508,7 +508,7 @@ export class ChatService {
           // Decrypt the message
           const decryptedContent = await this.encryptionService.decryptMessage(
             message.roomId,
-            encryptedData
+            encryptedData,
           );
 
           if (decryptedContent) {
@@ -578,10 +578,10 @@ export class ChatService {
    */
   getContacts(): Observable<Contact[]> {
     return this.http.get<Contact[]>(`${this.apiUrl}/contacts`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching contacts:', error);
         return of(this.getMockContacts());
-      })
+      }),
     );
   }
 
@@ -615,7 +615,7 @@ export class ChatService {
   configureMessageAutoDeletion(
     roomId: string,
     enabled: boolean,
-    ttl: number = DEFAULT_MESSAGE_TTL
+    ttl: number = DEFAULT_MESSAGE_TTL,
   ): Observable<boolean> {
     if (!this.encryptionService.isEncryptionAvailable()) {
       console.warn('Encryption service not available, cannot configure message auto-deletion');
@@ -631,11 +631,11 @@ export class ChatService {
         success: boolean;
       }>(`${this.apiUrl}/rooms/${roomId}/expiry-settings`, { enabled, ttl })
       .pipe(
-        map(response => response.success),
-        catchError(error => {
+        map((response) => response.success),
+        catchError((error) => {
           console.error('Error configuring message auto-deletion:', error);
           return of(false);
-        })
+        }),
       );
   }
 
@@ -663,7 +663,7 @@ export class ChatService {
     roomId: string,
     content: string,
     ttl: number,
-    replyToId?: string
+    replyToId?: string,
   ): Observable<ChatMessage> {
     return this.sendMessage(roomId, content, replyToId, ttl);
   }
@@ -680,7 +680,7 @@ export class ChatService {
    */
   searchMessages(roomId: string, query: string): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(
-      `${this.apiUrl}/rooms/${roomId}/search?q=${encodeURIComponent(query)}`
+      `${this.apiUrl}/rooms/${roomId}/search?q=${encodeURIComponent(query)}`,
     );
   }
 

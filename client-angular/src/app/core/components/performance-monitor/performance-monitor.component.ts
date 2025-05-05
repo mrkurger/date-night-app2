@@ -268,7 +268,7 @@ export class PerformanceMonitorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe to performance metrics
-    this.subscription = this.performanceMonitor.getMetrics().subscribe(metrics => {
+    this.subscription = this.performanceMonitor.getMetrics().subscribe((metrics) => {
       this.metrics = metrics;
     });
 

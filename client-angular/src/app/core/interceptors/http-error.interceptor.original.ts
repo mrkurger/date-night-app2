@@ -117,7 +117,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private router: Router,
     private notificationService: NotificationService,
     private telemetryService: TelemetryService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.config = DEFAULT_CONFIG;
 
@@ -221,7 +221,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }
 
       return source.pipe(
-        retryWhen(errors =>
+        retryWhen((errors) =>
           errors.pipe(
             concatMap((error, index) => {
               const attemptNumber = index + 1;
@@ -238,7 +238,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
               if (this.config.logErrors) {
                 console.warn(
-                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`
+                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`,
                 );
               }
 
@@ -262,9 +262,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               }
 
               return timer(totalDelay);
-            })
-          )
-        )
+            }),
+          ),
+        ),
       );
     };
   }
@@ -339,7 +339,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           requestDetails: this.config.includeRequestDetails
             ? {
                 headers: this.getHeadersMap(
-                  request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
+                  request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
                 ),
                 body: this.config.sanitizeSensitiveData
                   ? this.sanitizeRequestBody(request.body)
@@ -551,7 +551,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         url: request.url,
         method: request.method,
         headers: this.getHeadersMap(
-          request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
+          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
         ),
         body: this.config.sanitizeSensitiveData
           ? this.sanitizeRequestBody(request.body)
@@ -691,7 +691,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @returns Headers map
    */
   private getHeadersMap(
-    headers: Array<{ key: string; value: string | null }>
+    headers: Array<{ key: string; value: string | null }>,
   ): Record<string, string> {
     const result: Record<string, string> = {};
 
@@ -823,7 +823,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     if (Array.isArray(obj)) {
       // Recursively sanitize array items
-      obj.forEach(item => {
+      obj.forEach((item) => {
         if (item && typeof item === 'object') {
           this.sanitizeObject(item, sensitiveFields);
         }
@@ -832,9 +832,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }
 
     // Process each property in the object
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       // Check if this is a sensitive field
-      if (sensitiveFields.some(field => key.toLowerCase().includes(field.toLowerCase()))) {
+      if (sensitiveFields.some((field) => key.toLowerCase().includes(field.toLowerCase()))) {
         obj[key] = '********';
       }
       // Recursively sanitize nested objects
@@ -850,6 +850,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @returns Whether to skip error handling
    */
   private shouldSkipErrorHandling(url: string): boolean {
-    return this.config.skipUrls.some(skipUrl => url.includes(skipUrl));
+    return this.config.skipUrls.some((skipUrl) => url.includes(skipUrl));
   }
 }

@@ -173,7 +173,7 @@ export class ResponseDialogComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ResponseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ResponseDialogData
+    @Inject(MAT_DIALOG_DATA) public data: ResponseDialogData,
   ) {
     this.responseForm = this.fb.group({
       response: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],

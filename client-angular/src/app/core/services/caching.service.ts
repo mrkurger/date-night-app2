@@ -27,13 +27,13 @@ export class CachingService {
     }
 
     return this.http.get<T>(url).pipe(
-      tap(response => {
+      tap((response) => {
         this.cache.set(url, {
           data: response,
           timestamp: now,
         });
       }),
-      shareReplay(1)
+      shareReplay(1),
     );
   }
 
@@ -48,8 +48,8 @@ export class CachingService {
     return this.http.post<T>(url, body).pipe(
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach(url => this.clearCacheItem(url));
-      })
+        invalidateUrls.forEach((url) => this.clearCacheItem(url));
+      }),
     );
   }
 
@@ -64,8 +64,8 @@ export class CachingService {
     return this.http.put<T>(url, body).pipe(
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach(url => this.clearCacheItem(url));
-      })
+        invalidateUrls.forEach((url) => this.clearCacheItem(url));
+      }),
     );
   }
 
@@ -79,8 +79,8 @@ export class CachingService {
     return this.http.delete<T>(url).pipe(
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach(url => this.clearCacheItem(url));
-      })
+        invalidateUrls.forEach((url) => this.clearCacheItem(url));
+      }),
     );
   }
 

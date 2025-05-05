@@ -37,7 +37,7 @@ export class GalleryManagementComponent implements OnInit {
     private mediaService: MediaService,
     private notificationService: NotificationService,
     private authService: AuthService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class GalleryManagementComponent implements OnInit {
   loadMedia(): void {
     this.loading = true;
     this.mediaService.getAdMedia(this.adId).subscribe({
-      next: media => {
+      next: (media) => {
         this.media = media;
         // Find featured media
         const ad = media.find((m: any) => m.featuredMedia);
@@ -58,7 +58,7 @@ export class GalleryManagementComponent implements OnInit {
         }
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load media';
         this.loading = false;
         this.notificationService.error('Failed to load media');
@@ -72,7 +72,7 @@ export class GalleryManagementComponent implements OnInit {
     this.previewUrls = [];
 
     // Create previews for selected files
-    this.selectedFiles.forEach(file => {
+    this.selectedFiles.forEach((file) => {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
@@ -96,12 +96,12 @@ export class GalleryManagementComponent implements OnInit {
     this.progress = 0;
 
     // Upload each file
-    const uploadObservables = this.selectedFiles.map(file =>
-      this.mediaService.uploadMedia(this.adId, file)
+    const uploadObservables = this.selectedFiles.map((file) =>
+      this.mediaService.uploadMedia(this.adId, file),
     );
 
     forkJoin(uploadObservables).subscribe({
-      next: results => {
+      next: (results) => {
         this.uploading = false;
         this.progress = 100;
         this.selectedFiles = [];
@@ -110,7 +110,7 @@ export class GalleryManagementComponent implements OnInit {
         this.loadMedia();
         this.mediaUpdated.emit();
       },
-      error: err => {
+      error: (err) => {
         this.uploading = false;
         this.notificationService.error('Failed to upload one or more files');
         console.error(err);
@@ -126,7 +126,7 @@ export class GalleryManagementComponent implements OnInit {
           this.loadMedia();
           this.mediaUpdated.emit();
         },
-        error: err => {
+        error: (err) => {
           this.notificationService.error('Failed to delete media');
           console.error(err);
         },
@@ -141,7 +141,7 @@ export class GalleryManagementComponent implements OnInit {
         this.notificationService.success('Featured media updated');
         this.mediaUpdated.emit();
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to update featured media');
         console.error(err);
       },

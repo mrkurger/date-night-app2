@@ -230,7 +230,7 @@ export class FavoriteDialogComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FavoriteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: FavoriteDialogData
+    @Inject(MAT_DIALOG_DATA) public data: FavoriteDialogData,
   ) {
     this.isEdit = !!(data.existingNotes || data.existingTags || data.existingPriority);
 

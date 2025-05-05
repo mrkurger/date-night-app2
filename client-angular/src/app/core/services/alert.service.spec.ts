@@ -44,7 +44,7 @@ describe('AlertService', () => {
         alertEvents$: mockAlertEvents.asObservable(),
         connectionStatus$: mockConnectionStatus.asObservable(),
         isConnected: false,
-      }
+      },
     );
 
     TestBed.configureTestingModule({
@@ -95,7 +95,7 @@ describe('AlertService', () => {
       },
     ];
 
-    service.getAlerts().subscribe(alerts => {
+    service.getAlerts().subscribe((alerts) => {
       expect(alerts).toEqual(mockAlerts);
     });
 
@@ -118,7 +118,7 @@ describe('AlertService', () => {
       notifications: [{ channel: AlertChannel.UI }],
     };
 
-    service.getAlert('1').subscribe(alert => {
+    service.getAlert('1').subscribe((alert) => {
       expect(alert).toEqual(mockAlert);
     });
 
@@ -147,7 +147,7 @@ describe('AlertService', () => {
       updatedAt: new Date(),
     };
 
-    service.createAlert(newAlert).subscribe(alert => {
+    service.createAlert(newAlert).subscribe((alert) => {
       expect(alert).toEqual(createdAlert);
     });
 
@@ -174,7 +174,7 @@ describe('AlertService', () => {
       ],
     };
 
-    service.updateAlert('1', updatedAlert).subscribe(alert => {
+    service.updateAlert('1', updatedAlert).subscribe((alert) => {
       expect(alert).toEqual(updatedAlert);
     });
 
@@ -185,7 +185,7 @@ describe('AlertService', () => {
   });
 
   it('should delete an alert', () => {
-    service.deleteAlert('1').subscribe(response => {
+    service.deleteAlert('1').subscribe((response) => {
       expect(response).toBeUndefined();
     });
 
@@ -208,7 +208,7 @@ describe('AlertService', () => {
       notifications: [{ channel: AlertChannel.UI }],
     };
 
-    service.toggleAlert('1', false).subscribe(alert => {
+    service.toggleAlert('1', false).subscribe((alert) => {
       expect(alert.enabled).toBe(false);
     });
 
@@ -240,7 +240,7 @@ describe('AlertService', () => {
       },
     ];
 
-    service.getActiveAlertEvents().subscribe(events => {
+    service.getActiveAlertEvents().subscribe((events) => {
       expect(events).toEqual(mockAlertEvents);
     });
 
@@ -262,7 +262,7 @@ describe('AlertService', () => {
       acknowledgedAt: new Date(),
     };
 
-    service.acknowledgeAlertEvent('1').subscribe(event => {
+    service.acknowledgeAlertEvent('1').subscribe((event) => {
       expect(event).toEqual(mockAlertEvent);
     });
 
@@ -289,7 +289,7 @@ describe('AlertService', () => {
       message: 'Alert would trigger based on current data',
     };
 
-    service.testAlert(testAlert).subscribe(result => {
+    service.testAlert(testAlert).subscribe((result) => {
       expect(result).toEqual(testResult);
     });
 
@@ -319,7 +319,7 @@ describe('AlertService', () => {
 
     // Get the active alerts
     let activeAlerts: AlertEvent[] = [];
-    service.activeAlerts$.subscribe(alerts => {
+    service.activeAlerts$.subscribe((alerts) => {
       activeAlerts = alerts;
     });
 
@@ -332,7 +332,7 @@ describe('AlertService', () => {
 
     // Verify that the unacknowledged count was updated
     let unacknowledgedCount = 0;
-    service.unacknowledgedCount$.subscribe(count => {
+    service.unacknowledgedCount$.subscribe((count) => {
       unacknowledgedCount = count;
     });
     expect(unacknowledgedCount).toBe(1);
@@ -357,7 +357,7 @@ describe('AlertService', () => {
 
     // Verify initial unacknowledged count
     let unacknowledgedCount = 0;
-    service.unacknowledgedCount$.subscribe(count => {
+    service.unacknowledgedCount$.subscribe((count) => {
       unacknowledgedCount = count;
     });
     expect(unacknowledgedCount).toBe(1);

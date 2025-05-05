@@ -72,8 +72,8 @@ export class UserService {
    */
   login(credentials: LoginCredentials): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.authUrl}/login`, credentials).pipe(
-      tap(response => this.handleAuthentication(response)),
-      catchError(this.handleError)
+      tap((response) => this.handleAuthentication(response)),
+      catchError(this.handleError),
     );
   }
 
@@ -83,8 +83,8 @@ export class UserService {
    */
   register(userData: RegisterData): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.authUrl}/register`, userData).pipe(
-      tap(response => this.handleAuthentication(response)),
-      catchError(this.handleError)
+      tap((response) => this.handleAuthentication(response)),
+      catchError(this.handleError),
     );
   }
 
@@ -113,13 +113,13 @@ export class UserService {
    */
   updateProfile(formData: FormData): Observable<UserProfile> {
     return this.http.put<UserProfile>(`${this.apiUrl}/profile`, formData).pipe(
-      tap(user => {
+      tap((user) => {
         // Update current user if it's the logged-in user
         if (this.currentUser && this.currentUser._id === user._id) {
           this.currentUserSubject.next(user);
         }
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -228,8 +228,8 @@ export class UserService {
    */
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/me`).pipe(
-      tap(user => this.currentUserSubject.next(user)),
-      catchError(this.handleError)
+      tap((user) => this.currentUserSubject.next(user)),
+      catchError(this.handleError),
     );
   }
 }

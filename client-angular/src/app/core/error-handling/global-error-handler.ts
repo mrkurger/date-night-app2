@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(
     private zone: NgZone,
-    private router: Router
+    private router: Router,
   ) {}
 
   handleError(error: Error | HttpErrorResponse): void {
@@ -35,7 +35,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       case 0:
         // Connection error
         this.showErrorMessage(
-          'Could not connect to the server. Please check your internet connection.'
+          'Could not connect to the server. Please check your internet connection.',
         );
         break;
       case 401:

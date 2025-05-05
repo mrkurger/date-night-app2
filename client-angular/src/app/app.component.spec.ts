@@ -68,7 +68,7 @@ describe('AppComponent', () => {
         toasts$: of([]),
         // Mock the unreadCount$ observable
         unreadCount$: of(0),
-      }
+      },
     );
     mockChatService = jasmine.createSpyObj('ChatService', ['getRooms', 'getUnreadCounts']);
     mockCsrfService = jasmine.createSpyObj('CsrfService', ['initializeCsrf']);
@@ -88,9 +88,9 @@ describe('AppComponent', () => {
       of({
         total: 5,
         rooms: { room1: 3, room2: 2 },
-      })
+      }),
     );
-    mockPlatformService.runInBrowser.and.callFake(callback => callback());
+    mockPlatformService.runInBrowser.and.callFake((callback) => callback());
     mockPlatformService.isBrowser.and.returnValue(true);
 
     // Create a mock component for testing routes
@@ -150,7 +150,7 @@ describe('AppComponent', () => {
   it('should set page title and meta tags on initialization', () => {
     fixture.detectChanges();
     expect(mockTitleService.setTitle).toHaveBeenCalledWith(
-      'Date Night App - Find Your Perfect Match'
+      'Date Night App - Find Your Perfect Match',
     );
     expect(mockMetaService.addTags).toHaveBeenCalled();
 
@@ -161,13 +161,13 @@ describe('AppComponent', () => {
         name: 'description',
         content:
           'Date Night App helps you find your perfect match for a memorable date night experience.',
-      })
+      }),
     );
     expect(metaTags).toContain(
       jasmine.objectContaining({
         property: 'og:title',
         content: 'Date Night App - Find Your Perfect Match',
-      })
+      }),
     );
   });
 
@@ -248,7 +248,7 @@ describe('AppComponent', () => {
     expect(mockAuthService.logout).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
     expect(mockNotificationService.success).toHaveBeenCalledWith(
-      'You have been logged out successfully'
+      'You have been logged out successfully',
     );
 
     // Verify counters are reset

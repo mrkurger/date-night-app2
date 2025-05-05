@@ -26,7 +26,7 @@ export class PwaService {
    */
   private showUpdateNotification() {
     const notification = this.notificationService.info(
-      'A new version of the app is available. Reload the page to update.'
+      'A new version of the app is available. Reload the page to update.',
     );
 
     // If the notification service supports actions, subscribe to them
@@ -47,13 +47,13 @@ export class PwaService {
 
     return this.swUpdate
       .checkForUpdate()
-      .then(hasUpdate => {
+      .then((hasUpdate) => {
         if (hasUpdate) {
           this.showUpdateNotification();
         }
         return hasUpdate;
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Failed to check for updates:', err);
         return false;
       });
@@ -66,7 +66,7 @@ export class PwaService {
     // This is a placeholder for push notification registration
     // Implementation will depend on your backend push notification service
     if ('Notification' in window && Notification.permission !== 'granted') {
-      Notification.requestPermission().then(permission => {
+      Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
           this.notificationService.success('Push notifications enabled!');
           // Here you would register the push subscription with your server

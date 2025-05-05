@@ -257,7 +257,7 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
    * Remove all event listeners
    */
   private removeEventListeners(): void {
-    this.touchListeners.forEach(remove => remove());
+    this.touchListeners.forEach((remove) => remove());
   }
 
   /**

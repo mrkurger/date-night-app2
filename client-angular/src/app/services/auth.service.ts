@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: any): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.http.post(`${this.apiUrl}/login`, credentials).subscribe({
         next: (response: any) => {
           // Store token and user in localStorage
@@ -21,7 +21,7 @@ export class AuthService {
           observer.next(response);
           observer.complete();
         },
-        error: error => {
+        error: (error) => {
           observer.error(error);
         },
       });
@@ -29,16 +29,16 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.http.post(`${this.apiUrl}/logout`, {}).subscribe({
-        next: response => {
+        next: (response) => {
           // Clear token and user from localStorage
           localStorage.removeItem('token');
           localStorage.removeItem('currentUser');
           observer.next(response);
           observer.complete();
         },
-        error: error => {
+        error: (error) => {
           observer.error(error);
         },
       });

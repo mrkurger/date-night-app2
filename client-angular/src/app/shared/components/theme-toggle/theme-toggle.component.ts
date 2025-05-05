@@ -59,7 +59,7 @@ export class ThemeToggleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe to theme changes
-    this.subscription = this.themeService.isDarkMode$.subscribe(isDarkMode => {
+    this.subscription = this.themeService.isDarkMode$.subscribe((isDarkMode) => {
       this.isDarkMode = isDarkMode;
     });
   }

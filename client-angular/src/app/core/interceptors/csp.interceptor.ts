@@ -9,7 +9,7 @@ import { HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/h
  */
 export const cspInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ) => {
   // Only add CSP headers to same-origin requests
   if (isSameOrigin(request.url)) {

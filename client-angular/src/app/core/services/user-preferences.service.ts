@@ -166,7 +166,9 @@ export class UserPreferencesService {
    */
   public addToRecentlyViewed(id: string, maxItems: number = 10): void {
     // Remove the item if it already exists
-    const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(item => item !== id);
+    const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(
+      (item) => item !== id,
+    );
 
     // Add the item to the beginning of the array
     recentlyViewed.unshift(id);

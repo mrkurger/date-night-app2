@@ -67,7 +67,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -81,7 +81,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.auth.register(this.registerForm.value).subscribe({
         next: () => this.router.navigate(['/ads']),
-        error: err => (this.error = err.error.message || 'Registration failed'),
+        error: (err) => (this.error = err.error.message || 'Registration failed'),
       });
     }
   }

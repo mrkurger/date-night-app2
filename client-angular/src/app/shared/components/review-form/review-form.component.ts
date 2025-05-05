@@ -256,7 +256,7 @@ export class ReviewFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private reviewService: ReviewService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.reviewForm = this.fb.group({
       rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -273,7 +273,7 @@ export class ReviewFormComponent implements OnInit {
     });
 
     // Add conditional validation for meeting date
-    this.reviewForm.get('isVerifiedMeeting')?.valueChanges.subscribe(isVerified => {
+    this.reviewForm.get('isVerifiedMeeting')?.valueChanges.subscribe((isVerified) => {
       const meetingDateControl = this.reviewForm.get('meetingDate');
       if (isVerified) {
         meetingDateControl?.setValidators([Validators.required]);
@@ -316,14 +316,14 @@ export class ReviewFormComponent implements OnInit {
     };
 
     this.reviewService.createReview(reviewData).subscribe({
-      next: review => {
+      next: (review) => {
         this.notificationService.success('Review submitted successfully');
         this.reviewSubmitted.emit(review);
         this.submitted.emit(review);
         this.loading = false;
         this.resetForm();
       },
-      error: error => {
+      error: (error) => {
         console.error('Error submitting review:', error);
         this.notificationService.error('Failed to submit review');
         this.loading = false;

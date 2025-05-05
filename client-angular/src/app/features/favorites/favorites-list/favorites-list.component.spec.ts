@@ -172,7 +172,7 @@ describe('FavoritesListComponent', () => {
     expect(favoriteServiceSpy.toggleNotifications).toHaveBeenCalledWith('ad1');
     expect(mockFavorites[0].notificationsEnabled).toBeFalse();
     expect(notificationServiceSpy.success).toHaveBeenCalledWith(
-      'Notifications disabled for this favorite'
+      'Notifications disabled for this favorite',
     );
   });
 

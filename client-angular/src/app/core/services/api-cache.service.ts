@@ -40,7 +40,7 @@ export class ApiCacheService {
   public get<T>(
     url: string,
     options: any = {},
-    maxAge: number = this.DEFAULT_MAX_AGE
+    maxAge: number = this.DEFAULT_MAX_AGE,
   ): Observable<T> {
     const cacheKey = this.createCacheKey(url, options);
 
@@ -62,7 +62,7 @@ export class ApiCacheService {
         // Cache the response
         this.addToCache(cacheKey, response.body as T, maxAge);
       }),
-      catchError(error => {
+      catchError((error) => {
         this.inFlightRequests.delete(cacheKey);
         return throwError(() => error);
       }),
@@ -70,9 +70,9 @@ export class ApiCacheService {
         this.inFlightRequests.delete(cacheKey);
       }),
       // Extract the response body
-      tap(response => response.body),
+      tap((response) => response.body),
       // Share the same response with multiple subscribers
-      shareReplay(1)
+      shareReplay(1),
     );
 
     // Store the in-flight request
@@ -137,11 +137,11 @@ export class ApiCacheService {
       return params
         .keys()
         .sort()
-        .map(key => {
+        .map((key) => {
           const values = params.getAll(key);
           return values
             .sort()
-            .map(value => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .map((value) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
             .join('&');
         })
         .join('&');
@@ -150,7 +150,7 @@ export class ApiCacheService {
     // Handle plain object
     return Object.keys(params)
       .sort()
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
       .join('&');
   }
 

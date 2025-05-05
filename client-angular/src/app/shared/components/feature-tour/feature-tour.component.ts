@@ -57,7 +57,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
   ) {}
 
   get currentStep(): TourStep {

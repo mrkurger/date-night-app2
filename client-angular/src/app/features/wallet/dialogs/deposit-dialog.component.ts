@@ -335,7 +335,7 @@ export class DepositDialogComponent implements OnInit {
     private walletService: WalletService,
     private paymentService: PaymentService,
     private notificationService: NotificationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     // Initialize form
     this.depositForm = this.fb.group({
@@ -349,10 +349,10 @@ export class DepositDialogComponent implements OnInit {
     this.cryptocurrencies = this.walletService.SUPPORTED_CRYPTOCURRENCIES;
 
     // Filter payment methods (only cards for fiat deposits)
-    this.cardPaymentMethods = data.paymentMethods.filter(method => method.type === 'card');
+    this.cardPaymentMethods = data.paymentMethods.filter((method) => method.type === 'card');
 
     // Set default payment method if available
-    const defaultCard = this.cardPaymentMethods.find(method => method.isDefault);
+    const defaultCard = this.cardPaymentMethods.find((method) => method.isDefault);
     if (defaultCard) {
       this.depositForm.patchValue({ paymentMethodId: defaultCard._id });
     } else if (this.cardPaymentMethods.length > 0) {
@@ -378,11 +378,11 @@ export class DepositDialogComponent implements OnInit {
       next: () => {
         this.processingDeposit = false;
         this.notificationService.success(
-          `Successfully deposited ${this.walletService.formatCurrency(amount, currency)}`
+          `Successfully deposited ${this.walletService.formatCurrency(amount, currency)}`,
         );
         this.dialogRef.close(true);
       },
-      error: error => {
+      error: (error) => {
         this.processingDeposit = false;
         console.error('Error depositing funds:', error);
         this.notificationService.error('Failed to deposit funds. Please try again.');
@@ -398,11 +398,11 @@ export class DepositDialogComponent implements OnInit {
     this.cryptoDepositAddress = null;
 
     this.walletService.getCryptoDepositAddress(this.selectedCrypto).subscribe({
-      next: address => {
+      next: (address) => {
         this.cryptoDepositAddress = address;
         this.loadingCryptoAddress = false;
       },
-      error: error => {
+      error: (error) => {
         this.loadingCryptoAddress = false;
         console.error('Error getting crypto deposit address:', error);
         this.notificationService.error('Failed to generate deposit address. Please try again.');

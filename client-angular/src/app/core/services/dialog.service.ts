@@ -149,7 +149,7 @@ export class DialogService {
   respondToReview(
     reviewId: string,
     reviewTitle: string,
-    reviewContent: string
+    reviewContent: string,
   ): Observable<string | undefined> {
     return this.openResponseDialog({
       title: 'Respond to Review',
@@ -199,7 +199,7 @@ export class DialogService {
     notes?: string,
     tags?: string[],
     priority?: 'low' | 'normal' | 'high',
-    notificationsEnabled?: boolean
+    notificationsEnabled?: boolean,
   ): Observable<FavoriteDialogResult | undefined> {
     return this.openFavoriteDialog({
       adId,

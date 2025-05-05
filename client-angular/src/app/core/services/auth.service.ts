@@ -34,7 +34,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) {
     this.checkAuthStatus();
   }
@@ -69,7 +69,7 @@ export class AuthService {
   login(credentials: LoginDTO): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
-      .pipe(tap(response => this.handleAuthResponse(response)));
+      .pipe(tap((response) => this.handleAuthResponse(response)));
   }
 
   /**
@@ -78,7 +78,7 @@ export class AuthService {
   register(userData: RegisterDTO): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
-      .pipe(tap(response => this.handleAuthResponse(response)));
+      .pipe(tap((response) => this.handleAuthResponse(response)));
   }
 
   /**
@@ -95,7 +95,7 @@ export class AuthService {
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
       },
-      error: err => {
+      error: (err) => {
         console.error('Logout error:', err);
         // Still clear local state even if server request fails
         this.currentUserSubject.next(null);
@@ -121,12 +121,12 @@ export class AuthService {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })
       .pipe(
-        tap(response => this.handleAuthResponse(response)),
-        catchError(error => {
+        tap((response) => this.handleAuthResponse(response)),
+        catchError((error) => {
           // Don't call logout here to avoid infinite loop
           this.currentUserSubject.next(null);
           return throwError(() => error);
-        })
+        }),
       );
   }
 
@@ -168,7 +168,7 @@ export class AuthService {
    */
   private validateToken(): Observable<User> {
     return this.http.get<{ user: User }>(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(
-      map(response => {
+      map((response) => {
         if (response && response.user) {
           const user = response.user;
           // Add id property as alias to _id for compatibility
@@ -180,10 +180,10 @@ export class AuthService {
         }
         throw new Error('Invalid token');
       }),
-      catchError(error =>
+      catchError((error) =>
         // Don't call logout here to avoid infinite loop
-        throwError(() => error)
-      )
+        throwError(() => error),
+      ),
     );
   }
 
@@ -239,7 +239,7 @@ export class AuthService {
         message: string;
       }>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
       .pipe(
-        tap(response => {
+        tap((response) => {
           // Update the current user with new profile data
           if (response && response.user) {
             // Add id property as alias to _id for compatibility
@@ -249,7 +249,7 @@ export class AuthService {
             this.currentUserSubject.next(response.user);
           }
           return response;
-        })
+        }),
       );
   }
 
@@ -271,7 +271,7 @@ export class AuthService {
    * @param notificationSettings Notification preferences
    */
   updateNotificationSettings(
-    notificationSettings: NotificationSettings
+    notificationSettings: NotificationSettings,
   ): Observable<{ user: User; message: string }> {
     return this.http
       .put<{ user: User; message: string }>(
@@ -279,10 +279,10 @@ export class AuthService {
         notificationSettings,
         {
           withCredentials: true,
-        }
+        },
       )
       .pipe(
-        tap(response => {
+        tap((response) => {
           // Update the current user with new notification settings
           if (response && response.user) {
             const currentUser = this.currentUserSubject.value;
@@ -295,7 +295,7 @@ export class AuthService {
             }
           }
           return response;
-        })
+        }),
       );
   }
 
@@ -304,7 +304,7 @@ export class AuthService {
    * @param privacySettings Privacy preferences
    */
   updatePrivacySettings(
-    privacySettings: PrivacySettings
+    privacySettings: PrivacySettings,
   ): Observable<{ user: User; message: string }> {
     return this.http
       .put<{
@@ -312,7 +312,7 @@ export class AuthService {
         message: string;
       }>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
       .pipe(
-        tap(response => {
+        tap((response) => {
           // Update the current user with new privacy settings
           if (response && response.user) {
             const currentUser = this.currentUserSubject.value;
@@ -325,7 +325,7 @@ export class AuthService {
             }
           }
           return response;
-        })
+        }),
       );
   }
 
@@ -342,7 +342,7 @@ export class AuthService {
           if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
           }
-        })
+        }),
       );
   }
 }

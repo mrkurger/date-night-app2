@@ -81,15 +81,17 @@
       <h1>Icon Documentation</h1>
 
       <p>This is the documentation index for the Icon module/component.</p>
-    <h2>Documentation Files</h2>
-    <ul>
-      <li><a href="CHANGELOG.html">Changelog</a> - History of changes to this module/component</li>
-      <li><a href="AILESSONS.html">AI Lessons</a> - Insights and patterns learned by AI</li>
-      <li><a href="GLOSSARY.html">Glossary</a> - Definitions of functions and methods</li>
-    </ul>
-    
-    <h2>Module/Component Documentation</h2>
-    <p>Add specific documentation for this module/component here.</p>
+      <h2>Documentation Files</h2>
+      <ul>
+        <li>
+          <a href="CHANGELOG.html">Changelog</a> - History of changes to this module/component
+        </li>
+        <li><a href="AILESSONS.html">AI Lessons</a> - Insights and patterns learned by AI</li>
+        <li><a href="GLOSSARY.html">Glossary</a> - Definitions of functions and methods</li>
+      </ul>
+
+      <h2>Module/Component Documentation</h2>
+      <p>Add specific documentation for this module/component here.</p>
     </main>
 
     <footer>
@@ -102,7 +104,7 @@
       // Add click handlers to function links
       document.addEventListener('DOMContentLoaded', function () {
         const functionLinks = document.querySelectorAll('.function-link');
-        functionLinks.forEach(link => {
+        functionLinks.forEach((link) => {
           link.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (href) {

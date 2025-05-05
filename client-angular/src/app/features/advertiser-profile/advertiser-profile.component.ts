@@ -38,7 +38,7 @@ export class AdvertiserProfileComponent implements OnInit {
     private adService: AdService,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.adForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -52,7 +52,7 @@ export class AdvertiserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const adId = params.get('id');
       if (adId) {
         this.loadAd(adId);
@@ -76,12 +76,12 @@ export class AdvertiserProfileComponent implements OnInit {
     }
 
     this.adService.getAdById(id).subscribe({
-      next: ad => {
+      next: (ad) => {
         this.ad = ad;
         this.loading = false;
 
         // Check if current user is the owner
-        this.authService.currentUser$.subscribe(user => {
+        this.authService.currentUser$.subscribe((user) => {
           if (user && ad.userId === user._id) {
             this.isOwner = true;
           }
@@ -98,7 +98,7 @@ export class AdvertiserProfileComponent implements OnInit {
           tags: ad.tags ? ad.tags.join(', ') : '',
         });
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ad details';
         this.loading = false;
         console.error('Error loading ad:', err);
@@ -129,13 +129,13 @@ export class AdvertiserProfileComponent implements OnInit {
 
     this.loading = true;
     this.adService.updateAd(this.ad._id, updatedAd).subscribe({
-      next: ad => {
+      next: (ad) => {
         this.ad = ad;
         this.loading = false;
         this.editMode = false;
         this.notificationService.success('Ad updated successfully');
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to update ad';
         this.loading = false;
         console.error('Error updating ad:', err);
@@ -172,7 +172,7 @@ export class AdvertiserProfileComponent implements OnInit {
           // Navigate to my ads page
           this.router.navigateByUrl('/my-ads');
         },
-        error: err => {
+        error: (err) => {
           this.error = 'Failed to delete ad';
           this.loading = false;
           console.error('Error deleting ad:', err);

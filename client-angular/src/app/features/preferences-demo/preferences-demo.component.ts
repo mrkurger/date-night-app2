@@ -326,17 +326,17 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
 
     // Subscribe to preference changes
     this.subscriptions.push(
-      this.userPreferencesService.preferences$.subscribe(prefs => {
+      this.userPreferencesService.preferences$.subscribe((prefs) => {
         this.defaultViewType = prefs.defaultViewType;
         this.contentDensity = prefs.contentDensity;
         this.cardSize = prefs.cardSize;
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -371,7 +371,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
    * Get the label for the current content density
    */
   getContentDensityLabel(): string {
-    const option = this.contentDensityOptions.find(opt => opt.value === this.contentDensity);
+    const option = this.contentDensityOptions.find((opt) => opt.value === this.contentDensity);
     return option ? option.label : '';
   }
 
@@ -379,7 +379,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
    * Get the label for the current card size
    */
   getCardSizeLabel(): string {
-    const option = this.cardSizeOptions.find(opt => opt.value === this.cardSize);
+    const option = this.cardSizeOptions.find((opt) => opt.value === this.cardSize);
     return option ? option.label : '';
   }
 

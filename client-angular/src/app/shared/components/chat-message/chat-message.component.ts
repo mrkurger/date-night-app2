@@ -43,7 +43,7 @@ export class ChatMessageComponent implements OnInit {
   constructor(
     private encryptionService: EncryptionService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

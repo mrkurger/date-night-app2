@@ -75,10 +75,10 @@ export class FavoriteService {
    */
   loadFavoriteIds(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/ids`).pipe(
-      tap(ids => {
+      tap((ids) => {
         this.favoritesSubject.next(ids);
         this.favoritesLoaded = true;
-      })
+      }),
     );
   }
 
@@ -122,7 +122,7 @@ export class FavoriteService {
       }
       if (options.tags && options.tags.length > 0) {
         // For multiple tags, we need to handle them specially
-        options.tags.forEach(tag => {
+        options.tags.forEach((tag) => {
           params = params.append('tags', tag);
         });
       }
@@ -148,7 +148,7 @@ export class FavoriteService {
 
     // If we've already loaded favorites, check locally
     if (this.favoritesLoaded) {
-      return this.favorites$.pipe(map(favorites => favorites.includes(adIdStr)));
+      return this.favorites$.pipe(map((favorites) => favorites.includes(adIdStr)));
     }
 
     // Otherwise, check with the server
@@ -168,7 +168,7 @@ export class FavoriteService {
     notes = '',
     notificationsEnabled = true,
     tags: string[] = [],
-    priority: 'low' | 'normal' | 'high' = 'normal'
+    priority: 'low' | 'normal' | 'high' = 'normal',
   ): Observable<Favorite> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
 
@@ -187,7 +187,7 @@ export class FavoriteService {
               this.favoritesSubject.next([...currentFavorites, adIdStr]);
             }
           }
-        })
+        }),
       );
   }
 
@@ -204,10 +204,10 @@ export class FavoriteService {
     notes = '',
     notificationsEnabled = true,
     tags: string[] = [],
-    priority: 'low' | 'normal' | 'high' = 'normal'
+    priority: 'low' | 'normal' | 'high' = 'normal',
   ): Observable<FavoriteBatchResult> {
     // Convert complex IDs to strings
-    const adIdsStr = adIds.map(id => (typeof id === 'string' ? id : JSON.stringify(id)));
+    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
 
     return this.http
       .post<FavoriteBatchResult>(`${this.apiUrl}/batch`, {
@@ -218,13 +218,13 @@ export class FavoriteService {
         priority,
       })
       .pipe(
-        tap(result => {
+        tap((result) => {
           if (this.favoritesLoaded && result.added && result.added > 0) {
             const currentFavorites = this.favoritesSubject.value;
             const newFavorites = [...currentFavorites];
 
             // Add only the IDs that aren't already in the list
-            adIdsStr.forEach(id => {
+            adIdsStr.forEach((id) => {
               if (!currentFavorites.includes(id)) {
                 newFavorites.push(id);
               }
@@ -232,7 +232,7 @@ export class FavoriteService {
 
             this.favoritesSubject.next(newFavorites);
           }
-        })
+        }),
       );
   }
 
@@ -247,9 +247,9 @@ export class FavoriteService {
       tap(() => {
         if (this.favoritesLoaded) {
           const currentFavorites = this.favoritesSubject.value;
-          this.favoritesSubject.next(currentFavorites.filter(id => id !== adIdStr));
+          this.favoritesSubject.next(currentFavorites.filter((id) => id !== adIdStr));
         }
-      })
+      }),
     );
   }
 
@@ -258,10 +258,10 @@ export class FavoriteService {
    * @param adIds Array of ad IDs to remove
    */
   removeFavoritesBatch(
-    adIds: (string | { city: string; county: string })[]
+    adIds: (string | { city: string; county: string })[],
   ): Observable<FavoriteBatchResult> {
     // Convert complex IDs to strings
-    const adIdsStr = adIds.map(id => (typeof id === 'string' ? id : JSON.stringify(id)));
+    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
 
     return this.http
       .delete<FavoriteBatchResult>(`${this.apiUrl}/batch`, {
@@ -271,9 +271,9 @@ export class FavoriteService {
         tap(() => {
           if (this.favoritesLoaded) {
             const currentFavorites = this.favoritesSubject.value;
-            this.favoritesSubject.next(currentFavorites.filter(id => !adIdsStr.includes(id)));
+            this.favoritesSubject.next(currentFavorites.filter((id) => !adIdsStr.includes(id)));
           }
-        })
+        }),
       );
   }
 
@@ -284,7 +284,7 @@ export class FavoriteService {
    */
   updateNotes(
     adId: string | { city: string; county: string },
-    notes: string
+    notes: string,
   ): Observable<{ message: string }> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.patch<{ message: string }>(`${this.apiUrl}/${adIdStr}/notes`, { notes });
@@ -297,7 +297,7 @@ export class FavoriteService {
    */
   updateTags(
     adId: string | { city: string; county: string },
-    tags: string[]
+    tags: string[],
   ): Observable<{ message: string; tags: string[] }> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.patch<{ message: string; tags: string[] }>(`${this.apiUrl}/${adIdStr}/tags`, {
@@ -312,12 +312,12 @@ export class FavoriteService {
    */
   updatePriority(
     adId: string | { city: string; county: string },
-    priority: 'low' | 'normal' | 'high'
+    priority: 'low' | 'normal' | 'high',
   ): Observable<{ message: string; priority: 'low' | 'normal' | 'high' }> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.patch<{ message: string; priority: 'low' | 'normal' | 'high' }>(
       `${this.apiUrl}/${adIdStr}/priority`,
-      { priority }
+      { priority },
     );
   }
 
@@ -326,12 +326,12 @@ export class FavoriteService {
    * @param adId Ad ID
    */
   toggleNotifications(
-    adId: string | { city: string; county: string }
+    adId: string | { city: string; county: string },
   ): Observable<{ message: string; notificationsEnabled: boolean }> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.patch<{ message: string; notificationsEnabled: boolean }>(
       `${this.apiUrl}/${adIdStr}/notifications`,
-      {}
+      {},
     );
   }
 

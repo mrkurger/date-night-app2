@@ -354,7 +354,7 @@ export class PerformanceDashboardComponent implements OnInit {
 
   constructor(
     private telemetryService: TelemetryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       url: [''],
@@ -389,13 +389,13 @@ export class PerformanceDashboardComponent implements OnInit {
         order: this.sortDirection,
       })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error loading performance data:', error);
           this.loading = false;
           return of({ data: [], total: 0 });
-        })
+        }),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.performanceData = data.data || [];
         this.totalItems = data.total || 0;
         this.loading = false;
@@ -417,13 +417,13 @@ export class PerformanceDashboardComponent implements OnInit {
           })
           .pipe(
             map(
-              data =>
+              (data) =>
                 data.statistics || {
                   totalRequests: 0,
                   avgDuration: 0,
                   p95Duration: 0,
                   maxDuration: 0,
-                }
+                },
             ),
             catchError(() =>
               of({
@@ -431,10 +431,10 @@ export class PerformanceDashboardComponent implements OnInit {
                 avgDuration: 0,
                 p95Duration: 0,
                 maxDuration: 0,
-              })
-            )
+              }),
+            ),
           );
-      })
+      }),
     );
   }
 

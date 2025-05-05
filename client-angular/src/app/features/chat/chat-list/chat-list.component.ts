@@ -35,7 +35,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
 
     // Disconnect from socket
     this.chatService.disconnectSocket();
@@ -60,16 +60,16 @@ export class ChatListComponent implements OnInit, OnDestroy {
     this.error = false;
 
     this.chatService.getRooms().subscribe(
-      rooms => {
+      (rooms) => {
         this.rooms = this.sortRooms(rooms);
         this.loading = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading rooms:', error);
         this.notificationService.error('Failed to load chat rooms');
         this.loading = false;
         this.error = true;
-      }
+      },
     );
   }
 
@@ -81,10 +81,10 @@ export class ChatListComponent implements OnInit, OnDestroy {
     this.chatService.connectSocket();
 
     // Listen for new messages
-    this.chatService.onNewMessage(message => {
+    this.chatService.onNewMessage((message) => {
       // Find the room for this message
       const roomId = message.roomId;
-      const room = this.rooms.find(r => r._id === roomId);
+      const room = this.rooms.find((r) => r._id === roomId);
 
       if (room) {
         // Update last message
@@ -104,14 +104,14 @@ export class ChatListComponent implements OnInit, OnDestroy {
     });
 
     // Subscribe to unread count updates
-    const unreadSub = this.chatService.unreadCount$.subscribe(count => {
+    const unreadSub = this.chatService.unreadCount$.subscribe((count) => {
       // This is a total count, individual room counts are handled above
     });
 
     this.subscriptions.push(unreadSub);
 
     // Subscribe to online users updates
-    const onlineSub = this.chatService.onlineUsers$.subscribe(users => {
+    const onlineSub = this.chatService.onlineUsers$.subscribe((users) => {
       // Update online status for users in rooms
       // This would require mapping user IDs to rooms
     });
@@ -162,7 +162,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
 
     // In a real app, you would have user details in the room object
     // For now, we'll just use a placeholder
-    const otherParticipant = room.participants.find(p => p !== this.currentUserId);
+    const otherParticipant = room.participants.find((p) => p !== this.currentUserId);
     return otherParticipant ? `User ${otherParticipant.substring(0, 5)}` : 'Chat Room';
   }
 
@@ -226,15 +226,15 @@ export class ChatListComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     this.chatService.archiveRoom(room._id, true).subscribe(
-      updatedRoom => {
+      (updatedRoom) => {
         // Remove from list
-        this.rooms = this.rooms.filter(r => r._id !== room._id);
+        this.rooms = this.rooms.filter((r) => r._id !== room._id);
         this.notificationService.success('Chat archived');
       },
-      error => {
+      (error) => {
         console.error('Error archiving room:', error);
         this.notificationService.error('Failed to archive chat');
-      }
+      },
     );
   }
 
@@ -247,17 +247,17 @@ export class ChatListComponent implements OnInit, OnDestroy {
     const newPinned = !room.pinned;
 
     this.chatService.pinRoom(room._id, newPinned).subscribe(
-      updatedRoom => {
+      (updatedRoom) => {
         // Update local state
         room.pinned = newPinned;
         // Re-sort rooms
         this.rooms = this.sortRooms(this.rooms);
         this.notificationService.success(newPinned ? 'Chat pinned' : 'Chat unpinned');
       },
-      error => {
+      (error) => {
         console.error('Error pinning room:', error);
         this.notificationService.error('Failed to update chat');
-      }
+      },
     );
   }
 }

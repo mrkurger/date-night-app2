@@ -99,7 +99,7 @@ export class ReviewDisplayComponent {
       categories.appearance,
       categories.location,
       categories.value,
-    ].filter(val => val !== undefined && val > 0) as number[];
+    ].filter((val) => val !== undefined && val > 0) as number[];
 
     if (values.length === 0) {
       return this.review.rating;

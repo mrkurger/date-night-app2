@@ -384,7 +384,7 @@ export class ErrorDashboardComponent implements OnInit {
 
   constructor(
     private telemetryService: TelemetryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -418,13 +418,13 @@ export class ErrorDashboardComponent implements OnInit {
         order: this.sortDirection,
       })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error loading error data:', error);
           this.loading = false;
           return of({ errors: [], total: 0 });
-        })
+        }),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.errors = data.errors || [];
         this.totalErrors = data.total || 0;
         this.loading = false;
@@ -446,13 +446,13 @@ export class ErrorDashboardComponent implements OnInit {
           })
           .pipe(
             map(
-              data =>
+              (data) =>
                 data.statistics || {
                   totalErrors: 0,
                   uniqueErrors: 0,
                   serverErrors: 0,
                   clientErrors: 0,
-                }
+                },
             ),
             catchError(() =>
               of({
@@ -460,10 +460,10 @@ export class ErrorDashboardComponent implements OnInit {
                 uniqueErrors: 0,
                 serverErrors: 0,
                 clientErrors: 0,
-              })
-            )
+              }),
+            ),
           );
-      })
+      }),
     );
   }
 

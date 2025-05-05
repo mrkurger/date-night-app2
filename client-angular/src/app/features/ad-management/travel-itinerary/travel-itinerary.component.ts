@@ -72,7 +72,7 @@ export class TravelItineraryComponent implements OnInit {
    * Used in template to avoid filter operations in template bindings
    */
   getActiveItineraries(): TravelItinerary[] {
-    return this.itineraries.filter(i => i.status === 'active');
+    return this.itineraries.filter((i) => i.status === 'active');
   }
 
   // For location tracking
@@ -116,7 +116,7 @@ export class TravelItineraryComponent implements OnInit {
     private notificationService: NotificationService,
     private locationService: LocationService,
     private geocodingService: GeocodingService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.adId = this.route.snapshot.paramMap.get('id') || '';
 
@@ -151,14 +151,14 @@ export class TravelItineraryComponent implements OnInit {
     this.loadLocations();
 
     // Listen for county changes to update cities
-    this.itineraryForm.get('destination.county')?.valueChanges.subscribe(county => {
+    this.itineraryForm.get('destination.county')?.valueChanges.subscribe((county) => {
       if (county) {
         this.loadCitiesByCounty(county);
       }
     });
 
     // Listen for city changes to update coordinates
-    this.itineraryForm.get('destination.city')?.valueChanges.subscribe(city => {
+    this.itineraryForm.get('destination.city')?.valueChanges.subscribe((city) => {
       if (city && typeof city === 'string') {
         this.updateCityCoordinates(city);
       }
@@ -167,13 +167,13 @@ export class TravelItineraryComponent implements OnInit {
 
   loadLocations(): void {
     // Load counties
-    this.locationService.getCounties().subscribe(counties => {
+    this.locationService.getCounties().subscribe((counties) => {
       this.counties = counties;
     });
   }
 
   loadCitiesByCounty(county: string): void {
-    this.locationService.getCitiesByCounty(county).subscribe(cities => {
+    this.locationService.getCitiesByCounty(county).subscribe((cities) => {
       this.cities = cities;
       this.filteredCities = cities;
     });
@@ -183,7 +183,7 @@ export class TravelItineraryComponent implements OnInit {
     const county = this.itineraryForm.get('destination.county')?.value;
     if (!county) return;
 
-    this.locationService.getCityCoordinates(city).subscribe(coordinates => {
+    this.locationService.getCityCoordinates(city).subscribe((coordinates) => {
       if (coordinates) {
         this.itineraryForm.get('destination.location.coordinates')?.setValue(coordinates);
 
@@ -194,7 +194,7 @@ export class TravelItineraryComponent implements OnInit {
         }
       } else {
         // If coordinates not found in local database, try geocoding
-        this.geocodingService.geocodeLocation(city, county).subscribe(result => {
+        this.geocodingService.geocodeLocation(city, county).subscribe((result) => {
           if (result && result.coordinates) {
             this.itineraryForm
               .get('destination.location.coordinates')
@@ -217,16 +217,16 @@ export class TravelItineraryComponent implements OnInit {
     this.travelService
       .getItineraries(this.adId)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error('Failed to load travel itineraries');
           console.error('Error loading itineraries:', error);
           return of([]);
         }),
         finalize(() => {
           this.loading = false;
-        })
+        }),
       )
-      .subscribe(itineraries => {
+      .subscribe((itineraries) => {
         this.itineraries = itineraries;
         this.updateMapMarkers();
       });
@@ -236,10 +236,10 @@ export class TravelItineraryComponent implements OnInit {
     // Create markers for each itinerary
     this.mapMarkers = this.itineraries
       .filter(
-        itinerary =>
-          itinerary.destination?.location?.coordinates && itinerary.status !== 'cancelled'
+        (itinerary) =>
+          itinerary.destination?.location?.coordinates && itinerary.status !== 'cancelled',
       )
-      .map(itinerary => {
+      .map((itinerary) => {
         const [longitude, latitude] = itinerary.destination.location!.coordinates;
         return {
           id: itinerary._id || '',
@@ -301,7 +301,7 @@ export class TravelItineraryComponent implements OnInit {
           tap(() => {
             this.notificationService.success('Travel itinerary updated successfully');
             this.resetForm();
-          })
+          }),
         );
     } else {
       // Add new itinerary
@@ -309,20 +309,20 @@ export class TravelItineraryComponent implements OnInit {
         tap(() => {
           this.notificationService.success('Travel itinerary added successfully');
           this.resetForm();
-        })
+        }),
       );
     }
 
     action$
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error(error.error?.message || 'Failed to save travel itinerary');
           console.error('Error saving itinerary:', error);
           return of(null);
         }),
         finalize(() => {
           this.submitting = false;
-        })
+        }),
       )
       .subscribe(() => {
         this.loadItineraries();
@@ -363,13 +363,13 @@ export class TravelItineraryComponent implements OnInit {
     this.travelService
       .cancelItinerary(this.adId, itinerary._id)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error(
-            error.error?.message || 'Failed to cancel travel itinerary'
+            error.error?.message || 'Failed to cancel travel itinerary',
           );
           console.error('Error cancelling itinerary:', error);
           return of(null);
-        })
+        }),
       )
       .subscribe(() => {
         this.notificationService.success('Travel itinerary cancelled successfully');
@@ -413,7 +413,7 @@ export class TravelItineraryComponent implements OnInit {
     this.trackingLocation = true;
 
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         this.currentPosition = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -427,7 +427,7 @@ export class TravelItineraryComponent implements OnInit {
 
         this.updateLocation();
       },
-      error => {
+      (error) => {
         this.trackingLocation = false;
 
         switch (error.code) {
@@ -444,7 +444,7 @@ export class TravelItineraryComponent implements OnInit {
             this.notificationService.error('An unknown error occurred');
             break;
         }
-      }
+      },
     );
   }
 
@@ -454,7 +454,7 @@ export class TravelItineraryComponent implements OnInit {
     this.travelService
       .updateLocation(this.adId, this.currentPosition.longitude, this.currentPosition.latitude)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error(error.error?.message || 'Failed to update location');
           console.error('Error updating location:', error);
           return of(null);
@@ -463,17 +463,17 @@ export class TravelItineraryComponent implements OnInit {
           this.trackingLocation = false;
         }),
         // Get address information for the current location
-        switchMap(response => {
+        switchMap((response) => {
           if (response && this.currentPosition) {
             return this.geocodingService
               .reverseGeocode(this.currentPosition.longitude, this.currentPosition.latitude)
               .pipe(
-                map(addressInfo => ({ response, addressInfo })),
-                catchError(() => of({ response, addressInfo: null }))
+                map((addressInfo) => ({ response, addressInfo })),
+                catchError(() => of({ response, addressInfo: null })),
               );
           }
           return of({ response: null, addressInfo: null });
-        })
+        }),
       )
       .subscribe(({ response, addressInfo }) => {
         if (response) {
@@ -498,7 +498,7 @@ export class TravelItineraryComponent implements OnInit {
     // Try to get city and county information
     this.geocodingService
       .reverseGeocode(location.longitude, location.latitude)
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.itineraryForm.get('destination.city')?.setValue(result.city);
           this.itineraryForm.get('destination.county')?.setValue(result.county);
@@ -509,7 +509,7 @@ export class TravelItineraryComponent implements OnInit {
 
   onMarkerClick(marker: MapMarker): void {
     // Find the corresponding itinerary
-    const itinerary = this.itineraries.find(i => i._id === marker.id);
+    const itinerary = this.itineraries.find((i) => i._id === marker.id);
     if (itinerary) {
       // Show details or edit the itinerary
       this.editItinerary(itinerary);
@@ -520,7 +520,7 @@ export class TravelItineraryComponent implements OnInit {
 
   // Helper to mark all controls in a form group as touched
   private markFormGroupTouched(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach(control => {
+    Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
 
       if (control instanceof FormGroup) {

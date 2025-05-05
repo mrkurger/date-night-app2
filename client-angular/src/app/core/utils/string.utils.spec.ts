@@ -82,7 +82,7 @@ describe('String Utilities', () => {
     it('should remove HTML tags from a string', () => {
       expect(stripHtml('<p>Hello <strong>World</strong></p>')).toBe('Hello World');
       expect(stripHtml('<div>Test <span>with <em>nested</em> tags</span></div>')).toBe(
-        'Test with nested tags'
+        'Test with nested tags',
       );
     });
 
@@ -107,11 +107,11 @@ describe('String Utilities', () => {
 
       // Test with different locales and formats
       expect(
-        formatDate(testDate, 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        formatDate(testDate, 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       ).toBe('January 15, 2023');
 
       expect(
-        formatDate(testDate, 'en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })
+        formatDate(testDate, 'en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
       ).toBe('01/15/23');
     });
   });

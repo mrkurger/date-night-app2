@@ -185,20 +185,20 @@ export const NORWAY_COUNTIES: NorwayCounty[] = [
 /**
  * Get a flat list of all Norwegian counties
  */
-export const getAllCounties = (): string[] => NORWAY_COUNTIES.map(county => county.name);
+export const getAllCounties = (): string[] => NORWAY_COUNTIES.map((county) => county.name);
 
 /**
  * Get a flat list of all Norwegian cities
  */
 export const getAllCities = (): string[] =>
-  NORWAY_COUNTIES.flatMap(county => county.cities.map(city => city.name));
+  NORWAY_COUNTIES.flatMap((county) => county.cities.map((city) => city.name));
 
 /**
  * Get all cities for a specific county
  * @param countyName The name of the county
  */
 export const getCitiesByCounty = (countyName: string): NorwayCity[] => {
-  const county = NORWAY_COUNTIES.find(c => c.name === countyName);
+  const county = NORWAY_COUNTIES.find((c) => c.name === countyName);
   return county ? county.cities : [];
 };
 
@@ -207,7 +207,7 @@ export const getCitiesByCounty = (countyName: string): NorwayCity[] => {
  * @param cityName The name of the city
  */
 export const getCountyByCity = (cityName: string): string | null => {
-  const county = NORWAY_COUNTIES.find(c => c.cities.some(city => city.name === cityName));
+  const county = NORWAY_COUNTIES.find((c) => c.cities.some((city) => city.name === cityName));
   return county ? county.name : null;
 };
 
@@ -217,7 +217,7 @@ export const getCountyByCity = (cityName: string): string | null => {
  */
 export const getCityCoordinates = (cityName: string): [number, number] | null => {
   for (const county of NORWAY_COUNTIES) {
-    const city = county.cities.find(c => c.name === cityName);
+    const city = county.cities.find((c) => c.name === cityName);
     if (city && city.coordinates) {
       return city.coordinates;
     }

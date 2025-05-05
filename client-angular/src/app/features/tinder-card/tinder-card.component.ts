@@ -65,14 +65,14 @@ export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
       const hammer = new Hammer(this.cardElement.nativeElement);
       hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
-      hammer.on('panstart', event => {
+      hammer.on('panstart', (event) => {
         this.isDragging = true;
         this.cardState = 'swiping';
         this.initialX = event.center.x;
         this.initialY = event.center.y;
       });
 
-      hammer.on('panmove', event => {
+      hammer.on('panmove', (event) => {
         if (!this.isDragging) return;
 
         const card = this.cardElement.nativeElement;
@@ -92,7 +92,7 @@ export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-      hammer.on('panend', event => {
+      hammer.on('panend', (event) => {
         if (!this.isDragging) return;
         this.isDragging = false;
 

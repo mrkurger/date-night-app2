@@ -29,7 +29,7 @@ export class AdBrowserComponent implements OnInit {
 
   constructor(
     private adService: AdService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -43,11 +43,11 @@ export class AdBrowserComponent implements OnInit {
   loadAds(): void {
     this.loading = true;
     this.adService.getAds().subscribe({
-      next: data => {
+      next: (data) => {
         this.ads = data;
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
       },
@@ -72,7 +72,7 @@ export class AdBrowserComponent implements OnInit {
   }
 
   toggleFavorite(ad: any): void {
-    const index = this.favorites.findIndex(fav => fav._id === ad._id);
+    const index = this.favorites.findIndex((fav) => fav._id === ad._id);
     if (index === -1) {
       this.favorites.push(ad);
     } else {
@@ -82,7 +82,7 @@ export class AdBrowserComponent implements OnInit {
   }
 
   isFavorite(ad: any): boolean {
-    return this.favorites.some(fav => fav._id === ad._id);
+    return this.favorites.some((fav) => fav._id === ad._id);
   }
 
   searchNearby(): void {
@@ -91,24 +91,24 @@ export class AdBrowserComponent implements OnInit {
       return;
     }
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         this.loading = true;
         this.adService.searchNearby(lon, lat, 10000).subscribe({
-          next: data => {
+          next: (data) => {
             this.ads = data;
             this.loading = false;
           },
-          error: err => {
+          error: (err) => {
             this.error = 'Failed to find nearby ads';
             this.loading = false;
           },
         });
       },
-      error => {
+      (error) => {
         this.error = 'Unable to retrieve your location';
-      }
+      },
     );
   }
 

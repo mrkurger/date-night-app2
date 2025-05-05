@@ -89,7 +89,7 @@ export function isValidPassword(
     requireLowercase?: boolean;
     requireNumbers?: boolean;
     requireSpecialChars?: boolean;
-  } = {}
+  } = {},
 ): boolean {
   if (!password) {
     return false;
@@ -141,7 +141,7 @@ export function isValidPassword(
 export function matchingFieldsValidator(
   controlName: string,
   matchingControlName: string,
-  errorKey = 'fieldsMismatch'
+  errorKey = 'fieldsMismatch',
 ): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     if (!(formGroup instanceof FormGroup)) {
@@ -185,12 +185,12 @@ export function matchingFieldsValidator(
  */
 export function passwordMatchValidator(
   passwordControlName = 'password',
-  confirmPasswordControlName = 'confirmPassword'
+  confirmPasswordControlName = 'confirmPassword',
 ): ValidatorFn {
   return matchingFieldsValidator(
     passwordControlName,
     confirmPasswordControlName,
-    'passwordMismatch'
+    'passwordMismatch',
   );
 }
 

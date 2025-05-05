@@ -81,18 +81,20 @@ export class MockTelemetryService {
     let filteredErrors = this.errors;
     if (filters) {
       if (filters.category) {
-        filteredErrors = filteredErrors.filter(e => e.context?.category === filters.category);
+        filteredErrors = filteredErrors.filter((e) => e.context?.category === filters.category);
       }
       if (filters.statusCode) {
-        filteredErrors = filteredErrors.filter(e => e.statusCode.toString() === filters.statusCode);
+        filteredErrors = filteredErrors.filter(
+          (e) => e.statusCode.toString() === filters.statusCode,
+        );
       }
       if (filters.startDate) {
         const startDate = new Date(filters.startDate);
-        filteredErrors = filteredErrors.filter(e => new Date(e.timestamp) >= startDate);
+        filteredErrors = filteredErrors.filter((e) => new Date(e.timestamp) >= startDate);
       }
       if (filters.endDate) {
         const endDate = new Date(filters.endDate);
-        filteredErrors = filteredErrors.filter(e => new Date(e.timestamp) <= endDate);
+        filteredErrors = filteredErrors.filter((e) => new Date(e.timestamp) <= endDate);
       }
     }
 
@@ -109,7 +111,7 @@ export class MockTelemetryService {
     const recentErrors = filteredErrors
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
       .slice(start, end)
-      .map(error => ({
+      .map((error) => ({
         errorCode: error.errorCode,
         statusCode: error.statusCode,
         userMessage: error.userMessage,
@@ -140,23 +142,23 @@ export class MockTelemetryService {
     let filteredPerformance = this.performance;
     if (filters) {
       if (filters.url) {
-        filteredPerformance = filteredPerformance.filter(p => p.url.includes(filters.url));
+        filteredPerformance = filteredPerformance.filter((p) => p.url.includes(filters.url));
       }
       if (filters.method) {
-        filteredPerformance = filteredPerformance.filter(p => p.method === filters.method);
+        filteredPerformance = filteredPerformance.filter((p) => p.method === filters.method);
       }
       if (filters.minDuration) {
         filteredPerformance = filteredPerformance.filter(
-          p => p.duration >= parseInt(filters.minDuration, 10)
+          (p) => p.duration >= parseInt(filters.minDuration, 10),
         );
       }
       if (filters.startDate) {
         const startDate = new Date(filters.startDate);
-        filteredPerformance = filteredPerformance.filter(p => new Date(p.timestamp) >= startDate);
+        filteredPerformance = filteredPerformance.filter((p) => new Date(p.timestamp) >= startDate);
       }
       if (filters.endDate) {
         const endDate = new Date(filters.endDate);
-        filteredPerformance = filteredPerformance.filter(p => new Date(p.timestamp) <= endDate);
+        filteredPerformance = filteredPerformance.filter((p) => new Date(p.timestamp) <= endDate);
       }
     }
 
@@ -190,13 +192,13 @@ export class MockTelemetryService {
    */
   private calculateErrorsByCategory(errors: ErrorTelemetry[]): any[] {
     const categories = Object.values(ErrorCategory);
-    const counts = categories.map(category => ({
+    const counts = categories.map((category) => ({
       category,
-      count: errors.filter(e => e.context?.category === category).length,
+      count: errors.filter((e) => e.context?.category === category).length,
     }));
 
     // Filter out categories with zero errors
-    return counts.filter(c => c.count > 0);
+    return counts.filter((c) => c.count > 0);
   }
 
   /**
@@ -205,10 +207,10 @@ export class MockTelemetryService {
    * @returns Array of status code counts
    */
   private calculateErrorsByStatusCode(errors: ErrorTelemetry[]): any[] {
-    const statusCodes = [...new Set(errors.map(e => e.statusCode))];
-    return statusCodes.map(statusCode => ({
+    const statusCodes = [...new Set(errors.map((e) => e.statusCode))];
+    return statusCodes.map((statusCode) => ({
       statusCode,
-      count: errors.filter(e => e.statusCode === statusCode).length,
+      count: errors.filter((e) => e.statusCode === statusCode).length,
     }));
   }
 
@@ -218,10 +220,10 @@ export class MockTelemetryService {
    * @returns Array of date counts
    */
   private calculateErrorsByDate(errors: ErrorTelemetry[]): any[] {
-    const dates = [...new Set(errors.map(e => e.timestamp.split('T')[0]))];
-    return dates.map(date => ({
+    const dates = [...new Set(errors.map((e) => e.timestamp.split('T')[0]))];
+    return dates.map((date) => ({
       date,
-      count: errors.filter(e => e.timestamp.startsWith(date)).length,
+      count: errors.filter((e) => e.timestamp.startsWith(date)).length,
     }));
   }
 
@@ -245,11 +247,11 @@ export class MockTelemetryService {
         acc[key].durations.push(p.duration);
         return acc;
       },
-      {} as Record<string, { url: string; method: string; durations: number[] }>
+      {} as Record<string, { url: string; method: string; durations: number[] }>,
     );
 
     // Calculate statistics for each endpoint
-    return Object.values(endpoints).map(endpoint => {
+    return Object.values(endpoints).map((endpoint) => {
       const durations = endpoint.durations;
       const count = durations.length;
       const avgDuration = durations.reduce((sum, d) => sum + d, 0) / count;
@@ -289,9 +291,9 @@ export class MockTelemetryService {
     ];
 
     // Count records in each bucket
-    return buckets.map(bucket => ({
+    return buckets.map((bucket) => ({
       duration: bucket.label,
-      count: performance.filter(p => p.duration >= bucket.min && p.duration < bucket.max).length,
+      count: performance.filter((p) => p.duration >= bucket.min && p.duration < bucket.max).length,
     }));
   }
 
@@ -301,9 +303,9 @@ export class MockTelemetryService {
    * @returns Array of date performance statistics
    */
   private calculatePerformanceByDate(performance: PerformanceTelemetry[]): any[] {
-    const dates = [...new Set(performance.map(p => p.timestamp.split('T')[0]))];
-    return dates.map(date => {
-      const recordsOnDate = performance.filter(p => p.timestamp.startsWith(date));
+    const dates = [...new Set(performance.map((p) => p.timestamp.split('T')[0]))];
+    return dates.map((date) => {
+      const recordsOnDate = performance.filter((p) => p.timestamp.startsWith(date));
       const count = recordsOnDate.length;
       const avgDuration = recordsOnDate.reduce((sum, p) => sum + p.duration, 0) / count;
 

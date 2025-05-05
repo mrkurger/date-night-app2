@@ -32,7 +32,7 @@ export class PerformanceUtil {
    */
   public debounce<T extends (...args: any[]) => any>(
     fn: T,
-    time: number = this.DEFAULT_DEBOUNCE_TIME
+    time: number = this.DEFAULT_DEBOUNCE_TIME,
   ): (...args: Parameters<T>) => void {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -56,7 +56,7 @@ export class PerformanceUtil {
    */
   public throttle<T extends (...args: any[]) => any>(
     fn: T,
-    time: number = this.DEFAULT_THROTTLE_TIME
+    time: number = this.DEFAULT_THROTTLE_TIME,
   ): (...args: Parameters<T>) => void {
     let lastCall = 0;
 
@@ -153,7 +153,7 @@ export class PerformanceUtil {
           this.recordMetric(label, duration);
 
           console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
-        })
+        }),
       );
     };
   }
@@ -228,7 +228,7 @@ export class PerformanceUtil {
       }
 
       if (loading === null) {
-        loading = factory().then(result => {
+        loading = factory().then((result) => {
           instance = result;
           loading = null;
           return result;
@@ -289,7 +289,7 @@ export class PerformanceUtil {
    * @returns A function that returns a Promise for the result
    */
   public runInWorker<T extends (...args: any[]) => any>(
-    fn: T
+    fn: T,
   ): (...args: Parameters<T>) => Promise<ReturnType<T>> {
     // Create a worker from a blob URL
     const workerBlob = new Blob(
@@ -302,7 +302,7 @@ export class PerformanceUtil {
           self.postMessage({ result });
         }`,
       ],
-      { type: 'application/javascript' }
+      { type: 'application/javascript' },
     );
 
     const workerUrl = URL.createObjectURL(workerBlob);
@@ -310,11 +310,11 @@ export class PerformanceUtil {
 
     return (...args: Parameters<T>): Promise<ReturnType<T>> =>
       new Promise((resolve, reject) => {
-        worker.onmessage = e => {
+        worker.onmessage = (e) => {
           resolve(e.data.result);
         };
 
-        worker.onerror = e => {
+        worker.onerror = (e) => {
           reject(new Error(`Worker error: ${e}`));
         };
 
@@ -331,7 +331,7 @@ export class PerformanceUtil {
    * @returns An object with the async function and a cancel method
    */
   public makeCancelable<T extends (...args: any[]) => Promise<any>>(
-    fn: T
+    fn: T,
   ): {
     execute: (...args: Parameters<T>) => Promise<ReturnType<T>>;
     cancel: () => void;

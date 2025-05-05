@@ -229,7 +229,7 @@ describe('MainLayoutComponent', () => {
       expect(component.getMediaUrl(adWithMedia as any)).toBe('media-url');
       expect(component.getMediaUrl(adWithImages as any)).toBe('image-url');
       expect(component.getMediaUrl(adWithoutMedia as any)).toBe(
-        '/assets/images/default-profile.jpg'
+        '/assets/images/default-profile.jpg',
       );
     });
   });

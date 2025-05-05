@@ -50,7 +50,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private themeService: ThemeService,
     private userPreferencesService: UserPreferencesService,
-    private router: Router
+    private router: Router,
   ) {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -65,7 +65,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         newPassword: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
       },
-      { validators: this.passwordMatchValidator }
+      { validators: this.passwordMatchValidator },
     );
 
     this.notificationForm = this.fb.group({
@@ -101,13 +101,13 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   loadUserData(): void {
     this.loading = true;
     this.subscriptions.push(
-      this.authService.currentUser$.subscribe(user => {
+      this.authService.currentUser$.subscribe((user) => {
         if (user) {
           this.user = user;
 
@@ -140,7 +140,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
           }
         }
         this.loading = false;
-      })
+      }),
     );
   }
 
@@ -150,9 +150,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
     // Subscribe to theme changes
     this.subscriptions.push(
-      this.themeService.theme$.subscribe(theme => {
+      this.themeService.theme$.subscribe((theme) => {
         this.currentTheme = theme;
-      })
+      }),
     );
   }
 
@@ -169,16 +169,16 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
     // Subscribe to preference changes
     this.subscriptions.push(
-      this.userPreferencesService.preferences$.subscribe(prefs => {
+      this.userPreferencesService.preferences$.subscribe((prefs) => {
         this.displayForm.patchValue(
           {
             defaultViewType: prefs.defaultViewType,
             contentDensity: prefs.contentDensity,
             cardSize: prefs.cardSize,
           },
-          { emitEvent: false }
+          { emitEvent: false },
         );
-      })
+      }),
     );
   }
 
@@ -208,11 +208,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     const profileData = this.profileForm.value;
 
     this.authService.updateProfile(profileData).subscribe({
-      next: response => {
+      next: (response) => {
         this.loading = false;
         this.notificationService.success('Profile updated successfully');
       },
-      error: error => {
+      error: (error) => {
         this.loading = false;
         this.notificationService.error('Failed to update profile');
         console.error('Error updating profile:', error);
@@ -233,12 +233,12 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     };
 
     this.authService.changePassword(passwordData).subscribe({
-      next: response => {
+      next: (response) => {
         this.loading = false;
         this.notificationService.success('Password changed successfully');
         this.passwordForm.reset();
       },
-      error: error => {
+      error: (error) => {
         this.loading = false;
         this.notificationService.error('Failed to change password');
         console.error('Error changing password:', error);
@@ -251,11 +251,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     const notificationSettings = this.notificationForm.value;
 
     this.authService.updateNotificationSettings(notificationSettings).subscribe({
-      next: response => {
+      next: (response) => {
         this.loading = false;
         this.notificationService.success('Notification settings updated');
       },
-      error: error => {
+      error: (error) => {
         this.loading = false;
         this.notificationService.error('Failed to update notification settings');
         console.error('Error updating notification settings:', error);
@@ -268,11 +268,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     const privacySettings = this.privacyForm.value;
 
     this.authService.updatePrivacySettings(privacySettings).subscribe({
-      next: response => {
+      next: (response) => {
         this.loading = false;
         this.notificationService.success('Privacy settings updated');
       },
-      error: error => {
+      error: (error) => {
         this.loading = false;
         this.notificationService.error('Failed to update privacy settings');
         console.error('Error updating privacy settings:', error);
@@ -291,7 +291,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
           // Redirect to home page
           this.router.navigateByUrl('/');
         },
-        error: error => {
+        error: (error) => {
           this.loading = false;
           this.notificationService.error('Failed to delete account');
           console.error('Error deleting account:', error);

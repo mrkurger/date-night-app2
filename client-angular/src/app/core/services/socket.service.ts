@@ -12,7 +12,7 @@ export class SocketService {
   private connected = false;
 
   constructor(private authService: AuthService) {
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       if (user) {
         this.connect();
       } else {
@@ -56,7 +56,7 @@ export class SocketService {
       this.connected = false;
     });
 
-    this.socket.on('connect_error', error => {
+    this.socket.on('connect_error', (error) => {
       console.error('Socket connection error:', error);
       this.connected = false;
     });
@@ -86,7 +86,7 @@ export class SocketService {
    * @returns Observable that emits when the event occurs
    */
   on<T>(eventName: string): Observable<T> {
-    return new Observable<T>(observer => {
+    return new Observable<T>((observer) => {
       if (!this.socket) {
         observer.error('Socket not connected');
         return;
@@ -174,7 +174,7 @@ export class SocketService {
    * @returns Observable that emits when the event occurs
    */
   private handleEvent(event: string): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       if (!this.socket) {
         observer.error('Socket not connected');
         return; // Add proper return value

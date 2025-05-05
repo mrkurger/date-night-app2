@@ -128,7 +128,7 @@ export class EditProfileComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -153,7 +153,7 @@ export class EditProfileComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.userService.getUserProfile(currentUser._id).subscribe({
-        next: user => {
+        next: (user) => {
           this.profileForm.patchValue({
             username: user.username,
             email: user.email,
@@ -163,7 +163,7 @@ export class EditProfileComponent implements OnInit {
             phone: user.phone || '',
           });
         },
-        error: error => {
+        error: (error) => {
           this.notificationService.error('Failed to load user data');
           console.error('Error loading user data:', error);
         },
@@ -189,7 +189,7 @@ export class EditProfileComponent implements OnInit {
           this.notificationService.success('Profile updated successfully');
           this.router.navigate(['/profile']);
         },
-        error: error => {
+        error: (error) => {
           this.loading = false;
           this.notificationService.error('Failed to update profile');
           console.error('Error updating profile:', error);

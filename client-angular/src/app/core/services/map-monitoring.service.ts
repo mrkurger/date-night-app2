@@ -132,7 +132,7 @@ export class MapMonitoringService {
    * Reset metrics
    */
   resetMetrics(): void {
-    Object.keys(this.metrics).forEach(key => {
+    Object.keys(this.metrics).forEach((key) => {
       (this.metrics as any)[key] = 0;
     });
   }

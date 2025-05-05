@@ -77,7 +77,7 @@ export class LocationMatchingComponent implements OnInit {
     private adService: AdService,
     private geocodingService: GeocodingService,
     private locationService: LocationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.searchForm = this.fb.group({
       location: this.fb.group({
@@ -96,21 +96,21 @@ export class LocationMatchingComponent implements OnInit {
     this.loadLocations();
 
     // Listen for county changes to update cities
-    this.searchForm.get('location.county')?.valueChanges.subscribe(county => {
+    this.searchForm.get('location.county')?.valueChanges.subscribe((county) => {
       if (county) {
         this.loadCitiesByCounty(county);
       }
     });
 
     // Listen for city changes to update coordinates
-    this.searchForm.get('location.city')?.valueChanges.subscribe(city => {
+    this.searchForm.get('location.city')?.valueChanges.subscribe((city) => {
       if (city && typeof city === 'string') {
         this.updateCityCoordinates(city);
       }
     });
 
     // Listen for useCurrentLocation changes
-    this.searchForm.get('useCurrentLocation')?.valueChanges.subscribe(useCurrentLocation => {
+    this.searchForm.get('useCurrentLocation')?.valueChanges.subscribe((useCurrentLocation) => {
       if (useCurrentLocation) {
         this.getCurrentLocation();
       }
@@ -119,13 +119,13 @@ export class LocationMatchingComponent implements OnInit {
 
   loadLocations(): void {
     // Load counties
-    this.locationService.getCounties().subscribe(counties => {
+    this.locationService.getCounties().subscribe((counties) => {
       this.counties = counties;
     });
   }
 
   loadCitiesByCounty(county: string): void {
-    this.locationService.getCitiesByCounty(county).subscribe(cities => {
+    this.locationService.getCitiesByCounty(county).subscribe((cities) => {
       this.cities = cities;
       this.filteredCities = cities;
     });
@@ -135,7 +135,7 @@ export class LocationMatchingComponent implements OnInit {
     const county = this.searchForm.get('location.county')?.value;
     if (!county) return;
 
-    this.locationService.getCityCoordinates(city).subscribe(coordinates => {
+    this.locationService.getCityCoordinates(city).subscribe((coordinates) => {
       if (coordinates) {
         this.searchForm.get('location.coordinates')?.setValue(coordinates);
         this.selectedLocation = {
@@ -145,7 +145,7 @@ export class LocationMatchingComponent implements OnInit {
         this.updateMapMarkers();
       } else {
         // If coordinates not found in local database, try geocoding
-        this.geocodingService.geocodeLocation(city, county).subscribe(result => {
+        this.geocodingService.geocodeLocation(city, county).subscribe((result) => {
           if (result && result.coordinates) {
             this.searchForm.get('location.coordinates')?.setValue(result.coordinates);
             this.selectedLocation = {
@@ -167,7 +167,7 @@ export class LocationMatchingComponent implements OnInit {
     }
 
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         const { latitude, longitude } = position.coords;
 
         // Update form with coordinates
@@ -175,7 +175,7 @@ export class LocationMatchingComponent implements OnInit {
         this.selectedLocation = { latitude, longitude };
 
         // Get city and county from coordinates
-        this.geocodingService.reverseGeocode(longitude, latitude).subscribe(result => {
+        this.geocodingService.reverseGeocode(longitude, latitude).subscribe((result) => {
           if (result) {
             this.searchForm.get('location.city')?.setValue(result.city);
             this.searchForm.get('location.county')?.setValue(result.county);
@@ -189,7 +189,7 @@ export class LocationMatchingComponent implements OnInit {
           }
         });
       },
-      error => {
+      (error) => {
         this.searchForm.get('useCurrentLocation')?.setValue(false);
 
         switch (error.code) {
@@ -206,7 +206,7 @@ export class LocationMatchingComponent implements OnInit {
             this.notificationService.error('An unknown error occurred');
             break;
         }
-      }
+      },
     );
   }
 
@@ -220,7 +220,7 @@ export class LocationMatchingComponent implements OnInit {
     // Try to get city and county information
     this.geocodingService
       .reverseGeocode(location.longitude, location.latitude)
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.searchForm.get('location.city')?.setValue(result.city);
           this.searchForm.get('location.county')?.setValue(result.county);
@@ -246,7 +246,7 @@ export class LocationMatchingComponent implements OnInit {
     }
 
     // Add result markers
-    this.results.forEach(result => {
+    this.results.forEach((result) => {
       if (result.location && result.location.coordinates) {
         this.mapMarkers.push({
           id: result._id,
@@ -263,7 +263,7 @@ export class LocationMatchingComponent implements OnInit {
   onSearch(): void {
     if (this.searchForm.invalid) {
       // Mark all fields as touched to trigger validation messages
-      Object.keys(this.searchForm.controls).forEach(key => {
+      Object.keys(this.searchForm.controls).forEach((key) => {
         const control = this.searchForm.get(key);
         control?.markAsTouched();
       });
@@ -284,19 +284,19 @@ export class LocationMatchingComponent implements OnInit {
       coordinates[0],
       coordinates[1],
       formValue.radius,
-      formValue.categories
+      formValue.categories,
     )
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.notificationService.error('Failed to find location matches');
           console.error('Error searching for location matches:', error);
           return of([]);
         }),
         finalize(() => {
           this.loading = false;
-        })
+        }),
       )
-      .subscribe(results => {
+      .subscribe((results) => {
         this.results = results;
         this.updateMapMarkers();
 
@@ -310,7 +310,7 @@ export class LocationMatchingComponent implements OnInit {
     longitude: number,
     latitude: number,
     radius: number,
-    categories?: string[]
+    categories?: string[],
   ): Observable<LocationMatchResult[]> {
     // This would be replaced with a real API call to your backend
     return this.adService.searchByLocation(longitude, latitude, radius, categories);
@@ -348,7 +348,7 @@ export class LocationMatchingComponent implements OnInit {
     }
 
     // Find the corresponding result
-    const result = this.results.find(r => r._id === marker.id);
+    const result = this.results.find((r) => r._id === marker.id);
     if (result) {
       // Scroll to the result in the list
       const resultElement = document.getElementById(`result-${result._id}`);

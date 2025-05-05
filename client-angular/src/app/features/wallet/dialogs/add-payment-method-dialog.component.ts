@@ -357,7 +357,7 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private walletService: WalletService,
     private paymentService: PaymentService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     // Initialize card form
     this.cardForm = this.fb.group({
@@ -386,7 +386,7 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
     });
 
     // Update validators for memo field based on selected currency
-    this.cryptoForm.get('currency')?.valueChanges.subscribe(currency => {
+    this.cryptoForm.get('currency')?.valueChanges.subscribe((currency) => {
       const memoControl = this.cryptoForm.get('memo');
       if (this.requiresMemo(currency)) {
         memoControl?.setValidators([Validators.required]);
@@ -516,12 +516,12 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
     }
 
     this.walletService.addPaymentMethod(paymentMethodData).subscribe({
-      next: paymentMethod => {
+      next: (paymentMethod) => {
         this.processingAddPaymentMethod = false;
         this.notificationService.success('Payment method added successfully');
         this.dialogRef.close(true);
       },
-      error: error => {
+      error: (error) => {
         this.processingAddPaymentMethod = false;
         console.error('Error adding payment method:', error);
         this.notificationService.error('Failed to add payment method. Please try again.');

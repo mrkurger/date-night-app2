@@ -97,7 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private themeService: ThemeService,
     private performanceMonitor: PerformanceMonitorService,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
     // Set default meta tags for SEO
     this.titleService.setTitle('Date Night App - Find Your Perfect Match');
@@ -120,7 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Listen for beforeinstallprompt event to enable PWA installation
     this.platformService.runInBrowser(() => {
-      window.addEventListener('beforeinstallprompt', e => {
+      window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
         // Stash the event so it can be triggered later
@@ -144,7 +144,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.csrfService.initializeCsrf().subscribe();
 
       // Check for PWA updates
-      this.pwaService.checkForUpdates().then(hasUpdate => {
+      this.pwaService.checkForUpdates().then((hasUpdate) => {
         if (hasUpdate) {
           console.warn('New version available');
         }
@@ -192,14 +192,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events
       .pipe(
         filter(
-          event =>
+          (event) =>
             event instanceof NavigationStart ||
             event instanceof NavigationEnd ||
             event instanceof NavigationCancel ||
-            event instanceof NavigationError
-        )
+            event instanceof NavigationError,
+        ),
       )
-      .subscribe(event => {
+      .subscribe((event) => {
         // Show loading indicator on navigation start
         if (event instanceof NavigationStart) {
           this.isLoading = true;

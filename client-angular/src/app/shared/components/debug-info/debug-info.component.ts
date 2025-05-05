@@ -180,7 +180,7 @@ export class DebugInfoComponent implements OnInit {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .getRegistrations()
-        .then(registrations => {
+        .then((registrations) => {
           this.hasServiceWorker =
             registrations.length > 0 ? 'Yes (Active)' : 'Supported but not registered';
         })

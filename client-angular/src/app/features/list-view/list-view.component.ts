@@ -168,7 +168,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private userPreferencesService: UserPreferencesService,
     private fb: FormBuilder,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     // Initialize form with nested structure for advanced filtering
     this.filterForm = this.fb.group({
@@ -208,7 +208,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadAds();
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.isAuthenticated = !!user;
     });
 
@@ -218,7 +218,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     });
 
     // Subscribe to user preferences changes
-    this.userPreferencesService.preferences$.subscribe(prefs => {
+    this.userPreferencesService.preferences$.subscribe((prefs) => {
       // Update view mode when preferences change
       if (prefs.defaultViewType === 'list') {
         this.viewMode = 'list';
@@ -245,9 +245,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.error = null;
 
     this.adService.getAds().subscribe({
-      next: ads => {
+      next: (ads) => {
         // Map server data to match template expectations
-        this.ads = ads.map(ad => ({
+        this.ads = ads.map((ad) => ({
           ...ad,
           // Map viewCount to views for template compatibility
           views: ad.viewCount,
@@ -259,7 +259,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         this.applyFilters();
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
         console.error('Error loading ads:', err);
@@ -274,7 +274,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     const filters = this.filterForm.value;
 
     // Apply filters
-    this.filteredAds = this.ads.filter(ad => {
+    this.filteredAds = this.ads.filter((ad) => {
       // Category filters
       if (filters.categories) {
         const categorySelected =
@@ -335,7 +335,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         const matchesLocation =
           ad.location?.city?.toLowerCase().includes(query) ||
           ad.location?.county?.toLowerCase().includes(query);
-        const matchesTags = ad.tags?.some(tag => tag.toLowerCase().includes(query));
+        const matchesTags = ad.tags?.some((tag) => tag.toLowerCase().includes(query));
 
         if (!matchesTitle && !matchesDescription && !matchesLocation && !matchesTags) {
           return false;
@@ -363,12 +363,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     switch (this.currentSort) {
       case 'newest':
         this.filteredAds.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
         break;
       case 'oldest':
         this.filteredAds.sort(
-          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
         );
         break;
       case 'nameAsc':
@@ -395,7 +395,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * Get the label for the current sort option
    */
   getCurrentSortLabel(): string {
-    const option = this.sortOptions.find(opt => opt.value === this.currentSort);
+    const option = this.sortOptions.find((opt) => opt.value === this.currentSort);
     return option ? option.label : 'Sort';
   }
 
@@ -486,7 +486,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
           text: 'I found an interesting profile you might like',
           url: `${window.location.origin}/ad-details/${adId}`,
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error sharing:', err);
         });
     } else {
@@ -497,7 +497,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         .then(() => {
           this.notificationService.success('Link copied to clipboard');
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error copying to clipboard:', err);
           this.notificationService.error('Failed to copy link');
         });
@@ -520,7 +520,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       next: () => {
         this.notificationService.success('Added to your favorites');
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to like ad');
         console.error('Error liking ad:', err);
       },
@@ -539,10 +539,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
 
     this.chatService.createAdRoom(adId).subscribe({
-      next: room => {
+      next: (room) => {
         this.router.navigate(['/chat', room._id]);
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
       },
@@ -791,7 +791,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   saveCurrentFilter(): void {
     const dialogRef = this.dialog.open(this.saveFilterDialog);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newFilter: SavedFilter = {
           id: Date.now().toString(),
@@ -845,7 +845,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
 
     // Fall back to local saved filters
-    const savedFilter = this.savedFilters.find(f => f.id === filterId);
+    const savedFilter = this.savedFilters.find((f) => f.id === filterId);
     if (savedFilter) {
       this.filterForm.patchValue(savedFilter.filter);
       this.applyFilters();
@@ -883,7 +883,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         this.savedFilters = JSON.parse(savedFilters);
 
         // Migrate to user preferences
-        this.savedFilters.forEach(filter => {
+        this.savedFilters.forEach((filter) => {
           this.userPreferencesService.saveFilter(filter.name, filter.filter);
         });
       }

@@ -55,7 +55,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -67,7 +67,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).subscribe({
         next: () => this.router.navigate(['/ads']),
-        error: err => (this.error = err.error.message || 'Login failed'),
+        error: (err) => (this.error = err.error.message || 'Login failed'),
       });
     }
   }

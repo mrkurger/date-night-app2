@@ -34,7 +34,7 @@ export class ThemeService {
     this.applyTheme(this.themeSubject.value);
 
     // Listen for system preference changes
-    this.darkModeMediaQuery.addEventListener('change', e => {
+    this.darkModeMediaQuery.addEventListener('change', (e) => {
       if (this.themeSubject.value === 'system') {
         this.updateThemeClasses(e.matches ? 'dark' : 'light');
         this.isDarkModeSubject.next(e.matches);

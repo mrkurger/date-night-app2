@@ -52,7 +52,7 @@ export function authInterceptorFactory(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userService: UserService,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  router: Router
+  router: Router,
 ) {
   // These services are injected but not directly used in the factory
   // They are needed for the interceptor to work properly
@@ -61,7 +61,7 @@ export function authInterceptorFactory(
 
 export function csrfInterceptorFactory(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  csrfService: CsrfService
+  csrfService: CsrfService,
 ) {
   // The csrfService is injected but not directly used in the factory
   // It is needed for the interceptor to work properly

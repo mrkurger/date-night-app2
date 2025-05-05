@@ -233,10 +233,10 @@ export class TransferDialogComponent implements OnInit {
     private fb: FormBuilder,
     public walletService: WalletService,
     private userService: UserService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     // Filter balances with available funds
-    this.balances = data.balances.filter(b => b.available > 0);
+    this.balances = data.balances.filter((b) => b.available > 0);
 
     // Initialize form
     this.transferForm = this.fb.group({
@@ -259,14 +259,14 @@ export class TransferDialogComponent implements OnInit {
       .get('recipientUsername')
       ?.valueChanges.pipe(
         debounceTime(300),
-        switchMap(value => {
+        switchMap((value) => {
           if (typeof value === 'string' && value.length >= 2) {
             return this.searchUsers(value);
           }
           return of([]);
-        })
+        }),
       )
-      .subscribe(users => {
+      .subscribe((users) => {
         this.filteredUsers = users;
       });
   }
@@ -281,7 +281,7 @@ export class TransferDialogComponent implements OnInit {
       return;
     }
 
-    const balance = this.balances.find(b => b.currency === currency);
+    const balance = this.balances.find((b) => b.currency === currency);
     this.maxAmount = balance ? balance.available : 0;
 
     // Update amount validator
@@ -300,10 +300,10 @@ export class TransferDialogComponent implements OnInit {
    */
   searchUsers(query: string): Observable<UserSearchResult[]> {
     return this.userService.searchUsers(query).pipe(
-      map(results => {
+      map((results) => {
         // Ensure the results are of type UserSearchResult[]
         if (Array.isArray(results)) {
-          return results.map(user => {
+          return results.map((user) => {
             if ('displayName' in user) {
               return user as UserSearchResult;
             } else {
@@ -320,10 +320,10 @@ export class TransferDialogComponent implements OnInit {
         }
         return [] as UserSearchResult[];
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error searching users:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -361,11 +361,11 @@ export class TransferDialogComponent implements OnInit {
       next: () => {
         this.processingTransfer = false;
         this.notificationService.success(
-          `Successfully transferred ${this.walletService.formatCurrency(amount, currency)}`
+          `Successfully transferred ${this.walletService.formatCurrency(amount, currency)}`,
         );
         this.dialogRef.close(true);
       },
-      error: error => {
+      error: (error) => {
         this.processingTransfer = false;
         console.error('Error transferring funds:', error);
         this.notificationService.error('Failed to transfer funds. Please try again.');

@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.profileForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -77,13 +77,13 @@ export class ProfileComponent implements OnInit {
     this.userService
       .getCurrentUser()
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.errorMessage = 'Failed to load profile: ' + error.message;
           return of(null);
         }),
-        finalize(() => (this.isLoading = false))
+        finalize(() => (this.isLoading = false)),
       )
-      .subscribe(user => {
+      .subscribe((user) => {
         if (user) {
           this.userProfile = user as UserProfile;
           this.updateFormValues();
@@ -129,7 +129,7 @@ export class ProfileComponent implements OnInit {
     const formValues = this.profileForm.value;
 
     // Add form values to FormData
-    Object.keys(formValues).forEach(key => {
+    Object.keys(formValues).forEach((key) => {
       if (key.includes('.')) {
         // Handle nested properties
         const [parent, child] = key.split('.');
@@ -163,13 +163,13 @@ export class ProfileComponent implements OnInit {
     this.userService
       .updateProfile(formData)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.errorMessage = 'Failed to update profile: ' + error.message;
           return of(null);
         }),
-        finalize(() => (this.isLoading = false))
+        finalize(() => (this.isLoading = false)),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response) {
           this.successMessage = 'Profile updated successfully';
           this.userProfile = response;

@@ -61,7 +61,7 @@ export class ChatSettingsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class ChatSettingsComponent implements OnInit {
     });
 
     // Disable messageExpiryTime when messageExpiryEnabled is false
-    this.settingsForm.get('messageExpiryEnabled')?.valueChanges.subscribe(enabled => {
+    this.settingsForm.get('messageExpiryEnabled')?.valueChanges.subscribe((enabled) => {
       const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
       if (enabled) {
         expiryTimeControl?.enable();
@@ -114,15 +114,15 @@ export class ChatSettingsComponent implements OnInit {
     this.http
       .put<{ success: boolean }>(
         `${environment.apiUrl}/chat/rooms/${this.roomId}/settings`,
-        settings
+        settings,
       )
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error saving chat settings:', error);
           return of({ success: false });
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         this.isSaving = false;
 
         if (response.success) {

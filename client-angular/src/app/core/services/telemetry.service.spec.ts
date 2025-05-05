@@ -27,7 +27,7 @@ describe('TelemetryService', () => {
 
     // Mock localStorage
     const store: Record<string, string> = {};
-    spyOn(localStorage, 'getItem').and.callFake(key => store[key] || null);
+    spyOn(localStorage, 'getItem').and.callFake((key) => store[key] || null);
     spyOn(localStorage, 'setItem').and.callFake((key, value) => {
       store[key] = value.toString();
     });
@@ -54,7 +54,7 @@ describe('TelemetryService', () => {
       method: 'GET',
     };
 
-    service.trackError(errorData).subscribe(response => {
+    service.trackError(errorData).subscribe((response) => {
       expect(response).toBeTruthy();
     });
 
@@ -84,7 +84,7 @@ describe('TelemetryService', () => {
       responseSize: 5120,
     };
 
-    service.trackPerformance(performanceData).subscribe(response => {
+    service.trackPerformance(performanceData).subscribe((response) => {
       expect(response).toBeTruthy();
     });
 
@@ -116,7 +116,7 @@ describe('TelemetryService', () => {
       method: 'GET',
     };
 
-    service.trackError(errorData).subscribe(response => {
+    service.trackError(errorData).subscribe((response) => {
       expect(response.offline).toBe(true);
     });
 
@@ -142,7 +142,7 @@ describe('TelemetryService', () => {
       ],
     };
 
-    service.getErrorStatistics().subscribe(stats => {
+    service.getErrorStatistics().subscribe((stats) => {
       expect(stats).toEqual(mockStatistics);
     });
 
@@ -166,7 +166,7 @@ describe('TelemetryService', () => {
       ],
     };
 
-    service.getPerformanceStatistics().subscribe(stats => {
+    service.getPerformanceStatistics().subscribe((stats) => {
       expect(stats).toEqual(mockStatistics);
     });
 

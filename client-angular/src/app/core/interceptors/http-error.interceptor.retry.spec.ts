@@ -56,7 +56,7 @@ describe('HTTP Error Interceptor - Retry Functionality', () => {
     httpMock = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     notificationService = TestBed.inject(
-      NotificationService
+      NotificationService,
     ) as jasmine.SpyObj<NotificationService>;
     telemetryService = TestBed.inject(TelemetryService) as jasmine.SpyObj<TelemetryService>;
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
@@ -72,7 +72,7 @@ describe('HTTP Error Interceptor - Retry Functionality', () => {
   it('should handle server errors (500) appropriately', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 500 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(500);
         expect(notificationService.error).toHaveBeenCalled();
         expect(telemetryService.trackError).toHaveBeenCalled();
@@ -86,7 +86,7 @@ describe('HTTP Error Interceptor - Retry Functionality', () => {
   it('should not retry 400 errors', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 400 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(400);
         expect(notificationService.error).toHaveBeenCalled();
       },
@@ -102,7 +102,7 @@ describe('HTTP Error Interceptor - Retry Functionality', () => {
   it('should not retry 401 errors', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 401 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(401);
         expect(authService.logout).toHaveBeenCalled();
         expect(router.navigate).toHaveBeenCalled();

@@ -74,7 +74,7 @@ let config: HttpErrorInterceptorConfig = { ...defaultConfig };
  * @param newConfig Partial configuration to override default settings
  */
 export function configureHttpErrorInterceptor(
-  newConfig: Partial<HttpErrorInterceptorConfig>
+  newConfig: Partial<HttpErrorInterceptorConfig>,
 ): void {
   config = { ...config, ...newConfig };
   // Configuration is applied silently
@@ -88,7 +88,7 @@ export function configureHttpErrorInterceptor(
  */
 export const httpErrorInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ) => {
   const router = inject(Router);
   const notificationService = inject(NotificationService);
@@ -107,14 +107,14 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
           config.maxRetryAttempts,
           config.retryDelay,
           config.retryDelay * Math.pow(2, config.maxRetryAttempts),
-          isRetryable
+          isRetryable,
         )
       : retry(0),
 
     catchError((error: HttpErrorResponse) => {
       handleError(error, request, router, notificationService, telemetryService, authService);
       return throwError(() => error);
-    })
+    }),
   );
 };
 
@@ -144,7 +144,7 @@ function handleError(
   router: Router,
   notificationService: NotificationService,
   telemetryService: TelemetryService,
-  authService: AuthService
+  authService: AuthService,
 ): void {
   // Log error if enabled
   if (config.logErrors) {
@@ -155,7 +155,7 @@ function handleError(
         url: request.url,
         method: request.method,
         headers: sanitizeHeaders(
-          request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
+          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
         ),
         body: sanitizeBody(request.body),
       });
@@ -220,21 +220,21 @@ function getErrorMessage(error: HttpErrorResponse): string {
  * Checks if the URL should be skipped
  */
 function shouldSkipUrl(url: string): boolean {
-  return config.skipUrls.some(skipUrl => url.includes(skipUrl));
+  return config.skipUrls.some((skipUrl) => url.includes(skipUrl));
 }
 
 /**
  * Sanitizes headers to remove sensitive information
  */
 function sanitizeHeaders(
-  headers: Array<{ key: string; value: string | null }>
+  headers: Array<{ key: string; value: string | null }>,
 ): Array<{ key: string; value: string | null }> {
   if (!config.sanitizeSensitiveData) {
     return headers;
   }
 
   const sensitiveHeaders = ['authorization', 'cookie', 'x-auth-token'];
-  return headers.map(header => {
+  return headers.map((header) => {
     if (sensitiveHeaders.includes(header.key.toLowerCase())) {
       return { key: header.key, value: '[REDACTED]' };
     }
@@ -257,8 +257,8 @@ function sanitizeBody(body: unknown): unknown {
   const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn'];
   const sanitized = { ...(body as Record<string, unknown>) };
 
-  Object.keys(sanitized).forEach(key => {
-    if (sensitiveFields.some(field => key.toLowerCase().includes(field))) {
+  Object.keys(sanitized).forEach((key) => {
+    if (sensitiveFields.some((field) => key.toLowerCase().includes(field))) {
       sanitized[key] = '[REDACTED]';
     } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
       sanitized[key] = sanitizeBody(sanitized[key]);
@@ -283,7 +283,7 @@ function sanitizeUrl(url: string): string {
     const params = new URLSearchParams(urlObj.search);
 
     let modified = false;
-    sensitiveParams.forEach(param => {
+    sensitiveParams.forEach((param) => {
       if (params.has(param)) {
         params.set(param, '[REDACTED]');
         modified = true;

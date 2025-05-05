@@ -1,344 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      .function-link:hover {
+        text-decoration: underline;
+      }
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">profile Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Profile</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+          </ul>
+        </aside>
 
-      <!doctype html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Profile - Date Night App</title>
-          <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
-          <style>
-            .tooltip {
-              position: relative;
-              display: inline-block;
-              border-bottom: 1px dotted #333;
-            }
-            .tooltip .tooltip-text {
-              visibility: hidden;
-              width: 300px;
-              background-color: #f8f9fa;
-              color: #333;
-              text-align: left;
-              border-radius: 6px;
-              padding: 10px;
-              position: absolute;
-              z-index: 1;
-              bottom: 125%;
-              left: 50%;
-              margin-left: -150px;
-              opacity: 0;
-              transition: opacity 0.3s;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            }
-            .tooltip:hover .tooltip-text {
-              visibility: visible;
-              opacity: 1;
-            }
-            .function-link {
-              color: #0366d6;
-              text-decoration: none;
-              font-family: monospace;
-              background-color: #f6f8fa;
-              padding: 2px 4px;
-              border-radius: 3px;
-            }
-            .function-link:hover {
-              text-decoration: underline;
-            }
-            code {
-              font-family: monospace;
-              background-color: #f6f8fa;
-              padding: 2px 4px;
-              border-radius: 3px;
-            }
-            pre {
-              background-color: #f6f8fa;
-              padding: 16px;
-              border-radius: 6px;
-              overflow: auto;
-            }
-          </style>
-        </head>
-        <body>
-          <header>
-            <div class="container">
-              <h1>Date Night App Documentation</h1>
-              <nav>
+        <article class="content">
+          <h1>Profile</h1>
+
+          <section id="overview">
+            <h2>Overview</h2>
+            <h2>Overview</h2>
+            <p>
+              The User Profile System allows users to manage their personal information,
+              preferences, and account settings. It supports profile image uploads, personal details
+              management, location information, and user preferences. This feature provides users
+              with control over their identity and experience within the application.
+            </p>
+            <h2>User Experience</h2>
+            <p>Users interact with the Profile System through several interfaces:</p>
+            <ul>
+              <li><strong>Profile Page</strong>: Displays user information and allows editing</li>
+              <li>
+                <strong>Profile Image Upload</strong>: Allows users to update their profile picture
+              </li>
+              <li>
+                <strong>Account Settings</strong>: Manages account-related preferences and security
+                settings
+              </li>
+              <li>
+                <strong>Privacy Controls</strong>: Controls visibility of profile information to
+                other users
+              </li>
+            </ul>
+            <h2>Architecture</h2>
+            <h3>Client-Side Components</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ProfileComponent</code></td>
+                  <td>
+                    <code>/client-angular/src/app/features/profile/profile.component.ts</code>
+                  </td>
+                  <td>Main profile management component</td>
+                </tr>
+                <tr>
+                  <td><code>ProfileEditComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/profile/profile-edit/profile-edit.component.ts</code
+                    >
+                  </td>
+                  <td>Profile editing form</td>
+                </tr>
+                <tr>
+                  <td><code>ProfileImageComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/shared/components/profile-image/profile-image.component.ts</code
+                    >
+                  </td>
+                  <td>Profile image display and upload</td>
+                </tr>
+                <tr>
+                  <td><code>AccountSettingsComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/profile/account-settings/account-settings.component.ts</code
+                    >
+                  </td>
+                  <td>Account settings management</td>
+                </tr>
+                <tr>
+                  <td><code>PrivacySettingsComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/profile/privacy-settings/privacy-settings.component.ts</code
+                    >
+                  </td>
+                  <td>Privacy controls management</td>
+                </tr>
+                <tr>
+                  <td><code>SecuritySettingsComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/profile/security-settings/security-settings.component.ts</code
+                    >
+                  </td>
+                  <td>Security settings management</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Client-Side Services</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>UserService</code></td>
+                  <td><code>/client-angular/src/app/core/services/user.service.ts</code></td>
+                  <td>Manages user data and operations</td>
+                </tr>
+                <tr>
+                  <td><code>AuthService</code></td>
+                  <td><code>/client-angular/src/app/core/services/auth.service.ts</code></td>
+                  <td>Handles authentication</td>
+                </tr>
+                <tr>
+                  <td><code>FileUploadService</code></td>
+                  <td><code>/client-angular/src/app/core/services/file-upload.service.ts</code></td>
+                  <td>Manages file uploads</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Server-Side Controllers</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Controller</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>UserController</code></td>
+                  <td><code>/server/controllers/user.controller.js</code></td>
+                  <td>Handles user-related HTTP requests</td>
+                </tr>
+                <tr>
+                  <td><code>AuthController</code></td>
+                  <td><code>/server/controllers/auth.controller.js</code></td>
+                  <td>Handles authentication requests</td>
+                </tr>
+                <tr>
+                  <td><code>UploadController</code></td>
+                  <td><code>/server/controllers/upload.controller.js</code></td>
+                  <td>Handles file upload requests</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Server-Side Models</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>User</code></td>
+                  <td><code>/server/models/user.model.js</code></td>
+                  <td>Mongoose schema for user data</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section id="api">
+            <h2>API Reference</h2>
+            <h2>API Endpoints</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Endpoint</th>
+                  <th>Method</th>
+                  <th>Description</th>
+                  <th>Request Body</th>
+                  <th>Response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>/api/users/me</code></td>
+                  <td>GET</td>
+                  <td>Get current user profile</td>
+                  <td>N/A</td>
+                  <td>User object</td>
+                </tr>
+                <tr>
+                  <td><code>/api/users/profile</code></td>
+                  <td>PUT</td>
+                  <td>Update user profile</td>
+                  <td>FormData with profile fields</td>
+                  <td>Updated user object</td>
+                </tr>
+                <tr>
+                  <td><code>/api/users/:userId</code></td>
+                  <td>GET</td>
+                  <td>Get user by ID</td>
+                  <td>N/A</td>
+                  <td>User object</td>
+                </tr>
+                <tr>
+                  <td><code>/api/users/:userId/public</code></td>
+                  <td>GET</td>
+                  <td>Get public profile</td>
+                  <td>N/A</td>
+                  <td>Public profile object</td>
+                </tr>
+                <tr>
+                  <td><code>/api/users/search</code></td>
+                  <td>GET</td>
+                  <td>Search users</td>
+                  <td>Query params</td>
+                  <td>Array of user objects</td>
+                </tr>
+                <tr>
+                  <td><code>/api/auth/change-password</code></td>
+                  <td>POST</td>
+                  <td>Change password</td>
+                  <td><code>{currentPassword, newPassword}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/auth/reset-password</code></td>
+                  <td>POST</td>
+                  <td>Request password reset</td>
+                  <td><code>{email}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/auth/reset-password/:token</code></td>
+                  <td>POST</td>
+                  <td>Reset password with token</td>
+                  <td><code>{password}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/uploads/profile-image</code></td>
+                  <td>POST</td>
+                  <td>Upload profile image</td>
+                  <td>FormData with image file</td>
+                  <td>Image URL</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>Data Flow</h2>
+            <p>The profile system follows these data flows:</p>
+            <ol>
+              <li>
+                <p><strong>Viewing Profile</strong>:</p>
                 <ul>
-                  <li><a href="/_docs_index.html">Home</a></li>
-                  <li><a href="/_glossary.html">Glossary</a></li>
-                  <li><a href="index.html">profile Index</a></li>
+                  <li>User navigates to the Profile page</li>
+                  <li>ProfileComponent calls UserService.getCurrentUser()</li>
+                  <li>UserService makes a GET request to /api/users/me</li>
+                  <li>Server returns the user profile data</li>
+                  <li>ProfileComponent displays the user information</li>
                 </ul>
-              </nav>
-            </div>
-          </header>
-          <main class="container">
-            <div class="page-content">
-              
-    <aside class="sidebar">
-      <h3>Profile</h3>
-      <ul>
-        <li><a href="./CHANGELOG.html">Changelog</a></li>
-        <li><a href="./AILESSONS.html">AI Lessons</a></li>
-        <li><a href="./GLOSSARY.html">Glossary</a></li>
-        <li><a href="./profile.html">Profile</a></li>
-      </ul>
-  
-    </aside>
-  
-              <article class="content">
-                <h1>Profile</h1>
-                
-      <section id="overview">
-        <h2>Overview</h2>
-        <h2>Overview</h2>
-<p>The User Profile System allows users to manage their personal information, preferences, and account settings. It supports profile image uploads, personal details management, location information, and user preferences. This feature provides users with control over their identity and experience within the application.</p>
-<h2>User Experience</h2>
-<p>Users interact with the Profile System through several interfaces:</p>
-<ul>
-<li><strong>Profile Page</strong>: Displays user information and allows editing</li>
-<li><strong>Profile Image Upload</strong>: Allows users to update their profile picture</li>
-<li><strong>Account Settings</strong>: Manages account-related preferences and security settings</li>
-<li><strong>Privacy Controls</strong>: Controls visibility of profile information to other users</li>
-</ul>
-<h2>Architecture</h2>
-<h3>Client-Side Components</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>ProfileComponent</code></td>
-<td><code>/client-angular/src/app/features/profile/profile.component.ts</code></td>
-<td>Main profile management component</td>
-</tr>
-<tr>
-<td><code>ProfileEditComponent</code></td>
-<td><code>/client-angular/src/app/features/profile/profile-edit/profile-edit.component.ts</code></td>
-<td>Profile editing form</td>
-</tr>
-<tr>
-<td><code>ProfileImageComponent</code></td>
-<td><code>/client-angular/src/app/shared/components/profile-image/profile-image.component.ts</code></td>
-<td>Profile image display and upload</td>
-</tr>
-<tr>
-<td><code>AccountSettingsComponent</code></td>
-<td><code>/client-angular/src/app/features/profile/account-settings/account-settings.component.ts</code></td>
-<td>Account settings management</td>
-</tr>
-<tr>
-<td><code>PrivacySettingsComponent</code></td>
-<td><code>/client-angular/src/app/features/profile/privacy-settings/privacy-settings.component.ts</code></td>
-<td>Privacy controls management</td>
-</tr>
-<tr>
-<td><code>SecuritySettingsComponent</code></td>
-<td><code>/client-angular/src/app/features/profile/security-settings/security-settings.component.ts</code></td>
-<td>Security settings management</td>
-</tr>
-</tbody></table>
-<h3>Client-Side Services</h3>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>UserService</code></td>
-<td><code>/client-angular/src/app/core/services/user.service.ts</code></td>
-<td>Manages user data and operations</td>
-</tr>
-<tr>
-<td><code>AuthService</code></td>
-<td><code>/client-angular/src/app/core/services/auth.service.ts</code></td>
-<td>Handles authentication</td>
-</tr>
-<tr>
-<td><code>FileUploadService</code></td>
-<td><code>/client-angular/src/app/core/services/file-upload.service.ts</code></td>
-<td>Manages file uploads</td>
-</tr>
-</tbody></table>
-<h3>Server-Side Controllers</h3>
-<table>
-<thead>
-<tr>
-<th>Controller</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>UserController</code></td>
-<td><code>/server/controllers/user.controller.js</code></td>
-<td>Handles user-related HTTP requests</td>
-</tr>
-<tr>
-<td><code>AuthController</code></td>
-<td><code>/server/controllers/auth.controller.js</code></td>
-<td>Handles authentication requests</td>
-</tr>
-<tr>
-<td><code>UploadController</code></td>
-<td><code>/server/controllers/upload.controller.js</code></td>
-<td>Handles file upload requests</td>
-</tr>
-</tbody></table>
-<h3>Server-Side Models</h3>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>User</code></td>
-<td><code>/server/models/user.model.js</code></td>
-<td>Mongoose schema for user data</td>
-</tr>
-</tbody></table>
-
-      </section>
-    
-
-      <section id="api">
-        <h2>API Reference</h2>
-        <h2>API Endpoints</h2>
-<table>
-<thead>
-<tr>
-<th>Endpoint</th>
-<th>Method</th>
-<th>Description</th>
-<th>Request Body</th>
-<th>Response</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/api/users/me</code></td>
-<td>GET</td>
-<td>Get current user profile</td>
-<td>N/A</td>
-<td>User object</td>
-</tr>
-<tr>
-<td><code>/api/users/profile</code></td>
-<td>PUT</td>
-<td>Update user profile</td>
-<td>FormData with profile fields</td>
-<td>Updated user object</td>
-</tr>
-<tr>
-<td><code>/api/users/:userId</code></td>
-<td>GET</td>
-<td>Get user by ID</td>
-<td>N/A</td>
-<td>User object</td>
-</tr>
-<tr>
-<td><code>/api/users/:userId/public</code></td>
-<td>GET</td>
-<td>Get public profile</td>
-<td>N/A</td>
-<td>Public profile object</td>
-</tr>
-<tr>
-<td><code>/api/users/search</code></td>
-<td>GET</td>
-<td>Search users</td>
-<td>Query params</td>
-<td>Array of user objects</td>
-</tr>
-<tr>
-<td><code>/api/auth/change-password</code></td>
-<td>POST</td>
-<td>Change password</td>
-<td><code>{currentPassword, newPassword}</code></td>
-<td>Success message</td>
-</tr>
-<tr>
-<td><code>/api/auth/reset-password</code></td>
-<td>POST</td>
-<td>Request password reset</td>
-<td><code>{email}</code></td>
-<td>Success message</td>
-</tr>
-<tr>
-<td><code>/api/auth/reset-password/:token</code></td>
-<td>POST</td>
-<td>Reset password with token</td>
-<td><code>{password}</code></td>
-<td>Success message</td>
-</tr>
-<tr>
-<td><code>/api/uploads/profile-image</code></td>
-<td>POST</td>
-<td>Upload profile image</td>
-<td>FormData with image file</td>
-<td>Image URL</td>
-</tr>
-</tbody></table>
-<h2>Data Flow</h2>
-<p>The profile system follows these data flows:</p>
-<ol>
-<li><p><strong>Viewing Profile</strong>:</p>
-<ul>
-<li>User navigates to the Profile page</li>
-<li>ProfileComponent calls UserService.getCurrentUser()</li>
-<li>UserService makes a GET request to /api/users/me</li>
-<li>Server returns the user profile data</li>
-<li>ProfileComponent displays the user information</li>
-</ul>
-</li>
-<li><p><strong>Updating Profile</strong>:</p>
-<ul>
-<li>User edits profile information in the form</li>
-<li>On submit, ProfileComponent creates FormData with updated fields</li>
-<li>If a new profile image is selected, it&#39;s added to the FormData</li>
-<li>UserService.updateProfile() sends a PUT request to /api/users/profile</li>
-<li>Server updates the user document and returns updated profile</li>
-<li>UI displays success message and updated information</li>
-</ul>
-</li>
-<li><p><strong>Changing Password</strong>:</p>
-<ul>
-<li>User enters current and new password</li>
-<li>SecuritySettingsComponent calls AuthService.changePassword()</li>
-<li>AuthService sends a POST request to /api/auth/change-password</li>
-<li>Server verifies current password, updates with new hashed password</li>
-<li>UI displays success message</li>
-</ul>
-</li>
-<li><p><strong>Uploading Profile Image</strong>:</p>
-<ul>
-<li>User selects a new profile image</li>
-<li>FileUploadService uploads the image to /api/uploads/profile-image</li>
-<li>Server processes the image (resizing, optimization)</li>
-<li>Server stores the image and returns the URL</li>
-<li>UserService updates the profile with the new image URL</li>
-<li>UI displays the updated profile image</li>
-</ul>
-</li>
-</ol>
-<h2>State Management</h2>
-<p>The profile system uses a combination of service-based state management:</p>
-<ul>
-<li><strong>UserService</strong>: Maintains the current user state with BehaviorSubject</li>
-<li><strong>AuthService</strong>: Manages authentication state</li>
-<li><strong>LocalStorage</strong>: Stores authentication token</li>
-</ul>
-<h2>Data Model</h2>
-<p>The User model includes:</p>
-<pre><code class="language-typescript">interface User {
+              </li>
+              <li>
+                <p><strong>Updating Profile</strong>:</p>
+                <ul>
+                  <li>User edits profile information in the form</li>
+                  <li>On submit, ProfileComponent creates FormData with updated fields</li>
+                  <li>If a new profile image is selected, it&#39;s added to the FormData</li>
+                  <li>UserService.updateProfile() sends a PUT request to /api/users/profile</li>
+                  <li>Server updates the user document and returns updated profile</li>
+                  <li>UI displays success message and updated information</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Changing Password</strong>:</p>
+                <ul>
+                  <li>User enters current and new password</li>
+                  <li>SecuritySettingsComponent calls AuthService.changePassword()</li>
+                  <li>AuthService sends a POST request to /api/auth/change-password</li>
+                  <li>Server verifies current password, updates with new hashed password</li>
+                  <li>UI displays success message</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Uploading Profile Image</strong>:</p>
+                <ul>
+                  <li>User selects a new profile image</li>
+                  <li>FileUploadService uploads the image to /api/uploads/profile-image</li>
+                  <li>Server processes the image (resizing, optimization)</li>
+                  <li>Server stores the image and returns the URL</li>
+                  <li>UserService updates the profile with the new image URL</li>
+                  <li>UI displays the updated profile image</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>State Management</h2>
+            <p>The profile system uses a combination of service-based state management:</p>
+            <ul>
+              <li>
+                <strong>UserService</strong>: Maintains the current user state with BehaviorSubject
+              </li>
+              <li><strong>AuthService</strong>: Manages authentication state</li>
+              <li><strong>LocalStorage</strong>: Stores authentication token</li>
+            </ul>
+            <h2>Data Model</h2>
+            <p>The User model includes:</p>
+            <pre><code class="language-typescript">interface User {
   _id: string;
   username: string;
   email: string;
@@ -368,174 +414,192 @@
   updatedAt: Date;
 }
 </code></pre>
-<h2>Key Features</h2>
-<ol>
-<li><p><strong>Profile Information Management</strong>:</p>
-<ul>
-<li>Users can update personal details (name, bio, location)</li>
-<li>Form validation ensures data integrity</li>
-<li>Changes are immediately reflected across the application</li>
-</ul>
-</li>
-<li><p><strong>Profile Image Upload</strong>:</p>
-<ul>
-<li>Support for image upload from device</li>
-<li>Image processing (resizing, optimization)</li>
-<li>Default avatar for users without custom images</li>
-</ul>
-</li>
-<li><p><strong>Privacy Controls</strong>:</p>
-<ul>
-<li>Users can control profile visibility</li>
-<li>Options for who can message them</li>
-<li>Control over online status visibility</li>
-</ul>
-</li>
-<li><p><strong>Preference Management</strong>:</p>
-<ul>
-<li>Notification preferences</li>
-<li>Language settings</li>
-<li>Dark mode toggle</li>
-</ul>
-</li>
-<li><p><strong>Security Features</strong>:</p>
-<ul>
-<li>Password change functionality</li>
-<li>Password reset via email</li>
-<li>Account verification</li>
-</ul>
-</li>
-</ol>
-<h2>Security Considerations</h2>
-<ol>
-<li><p><strong>Data Protection</strong>:</p>
-<ul>
-<li>Passwords are hashed using Argon2id (with bcrypt fallback)</li>
-<li>Sensitive fields are protected from unauthorized access</li>
-<li>Form data is validated on both client and server</li>
-</ul>
-</li>
-<li><p><strong>Access Control</strong>:</p>
-<ul>
-<li>Authentication required for profile operations</li>
-<li>Users can only modify their own profiles</li>
-<li>Admin-only endpoints for user management</li>
-</ul>
-</li>
-<li><p><strong>Image Upload Security</strong>:</p>
-<ul>
-<li>File type validation</li>
-<li>Size limits</li>
-<li>Content scanning for malicious files</li>
-</ul>
-</li>
-</ol>
-<h2>Testing</h2>
-<h3>Unit Tests</h3>
-<table>
-<thead>
-<tr>
-<th>Test File</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>profile.component.spec.ts</code></td>
-<td><code>/client-angular/src/app/features/profile/profile.component.spec.ts</code></td>
-<td>Tests for profile component</td>
-</tr>
-<tr>
-<td><code>user.service.spec.ts</code></td>
-<td><code>/client-angular/src/app/core/services/user.service.spec.ts</code></td>
-<td>Tests for user service</td>
-</tr>
-<tr>
-<td><code>auth.service.spec.ts</code></td>
-<td><code>/client-angular/src/app/core/services/auth.service.spec.ts</code></td>
-<td>Tests for auth service</td>
-</tr>
-</tbody></table>
-<h3>Integration Tests</h3>
-<table>
-<thead>
-<tr>
-<th>Test File</th>
-<th>Path</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>user.controller.test.js</code></td>
-<td><code>/server/tests/integration/user/user.controller.test.js</code></td>
-<td>API integration tests</td>
-</tr>
-<tr>
-<td><code>user.model.test.js</code></td>
-<td><code>/server/tests/integration/user/user.model.test.js</code></td>
-<td>Database model tests</td>
-</tr>
-</tbody></table>
-<h2>Performance Considerations</h2>
-<ol>
-<li><p><strong>Image Optimization</strong>:</p>
-<ul>
-<li>Profile images are resized and compressed</li>
-<li>Multiple image sizes for different contexts</li>
-<li>Lazy loading for images</li>
-</ul>
-</li>
-<li><p><strong>Form Submission</strong>:</p>
-<ul>
-<li>Debounced form submissions</li>
-<li>Optimistic UI updates</li>
-<li>Progressive form validation</li>
-</ul>
-</li>
-<li><p><strong>Caching</strong>:</p>
-<ul>
-<li>User profile data cached for performance</li>
-<li>Cache invalidation on profile updates</li>
-</ul>
-</li>
-</ol>
-<h2>Future Enhancements</h2>
-<ol>
-<li><p><strong>Social Media Integration</strong>:</p>
-<ul>
-<li>Connect social media accounts</li>
-<li>Import profile data from social platforms</li>
-<li>Share profile on social media</li>
-</ul>
-</li>
-<li><p><strong>Enhanced Verification</strong>:</p>
-<ul>
-<li>Multi-factor authentication</li>
-<li>Identity verification options</li>
-<li>Verification badges</li>
-</ul>
-</li>
-<li><p><strong>Profile Analytics</strong>:</p>
-<ul>
-<li>Profile view statistics</li>
-<li>Interaction metrics</li>
-<li>Profile completion score</li>
-</ul>
-</li>
-<li><p><strong>Advanced Privacy</strong>:</p>
-<ul>
-<li>Granular privacy controls per field</li>
-<li>Temporary profile visibility</li>
-<li>Profile visibility scheduling</li>
-</ul>
-</li>
-</ol>
-
-      </section>
-    
-              </article>
-            </div>
-          </main>
-        </body>
-      </html>
-    
+            <h2>Key Features</h2>
+            <ol>
+              <li>
+                <p><strong>Profile Information Management</strong>:</p>
+                <ul>
+                  <li>Users can update personal details (name, bio, location)</li>
+                  <li>Form validation ensures data integrity</li>
+                  <li>Changes are immediately reflected across the application</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Profile Image Upload</strong>:</p>
+                <ul>
+                  <li>Support for image upload from device</li>
+                  <li>Image processing (resizing, optimization)</li>
+                  <li>Default avatar for users without custom images</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Privacy Controls</strong>:</p>
+                <ul>
+                  <li>Users can control profile visibility</li>
+                  <li>Options for who can message them</li>
+                  <li>Control over online status visibility</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Preference Management</strong>:</p>
+                <ul>
+                  <li>Notification preferences</li>
+                  <li>Language settings</li>
+                  <li>Dark mode toggle</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Security Features</strong>:</p>
+                <ul>
+                  <li>Password change functionality</li>
+                  <li>Password reset via email</li>
+                  <li>Account verification</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Security Considerations</h2>
+            <ol>
+              <li>
+                <p><strong>Data Protection</strong>:</p>
+                <ul>
+                  <li>Passwords are hashed using Argon2id (with bcrypt fallback)</li>
+                  <li>Sensitive fields are protected from unauthorized access</li>
+                  <li>Form data is validated on both client and server</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Access Control</strong>:</p>
+                <ul>
+                  <li>Authentication required for profile operations</li>
+                  <li>Users can only modify their own profiles</li>
+                  <li>Admin-only endpoints for user management</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Image Upload Security</strong>:</p>
+                <ul>
+                  <li>File type validation</li>
+                  <li>Size limits</li>
+                  <li>Content scanning for malicious files</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Testing</h2>
+            <h3>Unit Tests</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test File</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>profile.component.spec.ts</code></td>
+                  <td>
+                    <code>/client-angular/src/app/features/profile/profile.component.spec.ts</code>
+                  </td>
+                  <td>Tests for profile component</td>
+                </tr>
+                <tr>
+                  <td><code>user.service.spec.ts</code></td>
+                  <td><code>/client-angular/src/app/core/services/user.service.spec.ts</code></td>
+                  <td>Tests for user service</td>
+                </tr>
+                <tr>
+                  <td><code>auth.service.spec.ts</code></td>
+                  <td><code>/client-angular/src/app/core/services/auth.service.spec.ts</code></td>
+                  <td>Tests for auth service</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Integration Tests</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test File</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>user.controller.test.js</code></td>
+                  <td><code>/server/tests/integration/user/user.controller.test.js</code></td>
+                  <td>API integration tests</td>
+                </tr>
+                <tr>
+                  <td><code>user.model.test.js</code></td>
+                  <td><code>/server/tests/integration/user/user.model.test.js</code></td>
+                  <td>Database model tests</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>Performance Considerations</h2>
+            <ol>
+              <li>
+                <p><strong>Image Optimization</strong>:</p>
+                <ul>
+                  <li>Profile images are resized and compressed</li>
+                  <li>Multiple image sizes for different contexts</li>
+                  <li>Lazy loading for images</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Form Submission</strong>:</p>
+                <ul>
+                  <li>Debounced form submissions</li>
+                  <li>Optimistic UI updates</li>
+                  <li>Progressive form validation</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Caching</strong>:</p>
+                <ul>
+                  <li>User profile data cached for performance</li>
+                  <li>Cache invalidation on profile updates</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Future Enhancements</h2>
+            <ol>
+              <li>
+                <p><strong>Social Media Integration</strong>:</p>
+                <ul>
+                  <li>Connect social media accounts</li>
+                  <li>Import profile data from social platforms</li>
+                  <li>Share profile on social media</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Enhanced Verification</strong>:</p>
+                <ul>
+                  <li>Multi-factor authentication</li>
+                  <li>Identity verification options</li>
+                  <li>Verification badges</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Profile Analytics</strong>:</p>
+                <ul>
+                  <li>Profile view statistics</li>
+                  <li>Interaction metrics</li>
+                  <li>Profile completion score</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Advanced Privacy</strong>:</p>
+                <ul>
+                  <li>Granular privacy controls per field</li>
+                  <li>Temporary profile visibility</li>
+                  <li>Profile visibility scheduling</li>
+                </ul>
+              </li>
+            </ol>
+          </section>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

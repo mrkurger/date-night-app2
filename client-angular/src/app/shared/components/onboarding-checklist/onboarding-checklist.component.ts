@@ -62,7 +62,7 @@ export class OnboardingChecklistComponent implements OnInit {
   isCollapsed = false;
 
   get completedCount(): number {
-    return this.items.filter(item => item.completed).length;
+    return this.items.filter((item) => item.completed).length;
   }
 
   get progress(): number {
@@ -103,7 +103,7 @@ export class OnboardingChecklistComponent implements OnInit {
   }
 
   resetChecklist(): void {
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       item.completed = false;
     });
     this.saveState();
@@ -114,14 +114,14 @@ export class OnboardingChecklistComponent implements OnInit {
     if (savedState) {
       const completedItems = JSON.parse(savedState) as string[];
 
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.completed = completedItems.includes(item.id);
       });
     }
   }
 
   private saveState(): void {
-    const completedItems = this.items.filter(item => item.completed).map(item => item.id);
+    const completedItems = this.items.filter((item) => item.completed).map((item) => item.id);
 
     localStorage.setItem(this.storageKey, JSON.stringify(completedItems));
   }

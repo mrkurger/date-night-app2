@@ -65,7 +65,7 @@ export class TelemetrySocketService implements OnDestroy {
         this.reconnectAttempts = 0;
       };
 
-      this.socket.onmessage = event => {
+      this.socket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
           this.handleMessage(data);
@@ -81,7 +81,7 @@ export class TelemetrySocketService implements OnDestroy {
         this.attemptReconnect();
       };
 
-      this.socket.onerror = error => {
+      this.socket.onerror = (error) => {
         console.error('Telemetry WebSocket error:', error);
         this.connectionStatus.next(false);
       };
@@ -152,7 +152,7 @@ export class TelemetrySocketService implements OnDestroy {
     const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
 
     console.log(
-      `Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`
+      `Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`,
     );
 
     this.reconnectTimeoutId = setTimeout(() => {
@@ -174,7 +174,7 @@ export class TelemetrySocketService implements OnDestroy {
       JSON.stringify({
         action: 'subscribe',
         channel,
-      })
+      }),
     );
   }
 
@@ -191,7 +191,7 @@ export class TelemetrySocketService implements OnDestroy {
       JSON.stringify({
         action: 'unsubscribe',
         channel,
-      })
+      }),
     );
   }
 

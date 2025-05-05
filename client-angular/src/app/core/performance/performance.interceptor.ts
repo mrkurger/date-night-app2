@@ -24,7 +24,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
   constructor(
     @Inject(PERFORMANCE_MODULE_OPTIONS) private options: PerformanceModuleOptions,
     private performanceMonitor: PerformanceMonitorService,
-    private apiCache: ApiCacheService
+    private apiCache: ApiCacheService,
   ) {}
 
   /**
@@ -51,7 +51,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
     const startTime = performance.now();
 
     return next.handle(request).pipe(
-      tap(event => {
+      tap((event) => {
         // Cache successful GET responses
         if (
           this.options.enableApiCache &&
@@ -73,7 +73,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
           // Log the API response time
           console.debug(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);
         }
-      })
+      }),
     );
   }
 
@@ -86,7 +86,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
     // Skip monitoring for certain URLs
     const skipUrls = ['/assets/', '/api/health', '/api/metrics'];
 
-    return skipUrls.some(url => request.url.includes(url));
+    return skipUrls.some((url) => request.url.includes(url));
   }
 
   /**

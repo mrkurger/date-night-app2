@@ -31,7 +31,7 @@ export class AdManagementComponent implements OnInit {
   constructor(
     private adService: AdService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {

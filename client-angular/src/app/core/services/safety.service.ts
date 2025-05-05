@@ -75,7 +75,7 @@ export class SafetyService {
   recordCheckInResponse(
     checkinId: string,
     response: 'safe' | 'need_more_time' | 'distress',
-    coordinates?: [number, number]
+    coordinates?: [number, number],
   ): Observable<any> {
     return this.http.post(`${this.apiUrl}/checkin/${checkinId}/respond`, {
       response,

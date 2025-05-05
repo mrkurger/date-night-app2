@@ -163,7 +163,7 @@ export class ReportDialogComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ReportDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReportDialogData
+    @Inject(MAT_DIALOG_DATA) public data: ReportDialogData,
   ) {
     this.reportForm = this.fb.group({
       reason: ['', Validators.required],
@@ -174,23 +174,23 @@ export class ReportDialogComponent {
     if (data.contentType === 'review') {
       this.reportReasons.unshift(
         { value: 'inaccurate', label: 'Inaccurate Information' },
-        { value: 'notHelpful', label: 'Not Helpful or Relevant' }
+        { value: 'notHelpful', label: 'Not Helpful or Relevant' },
       );
     } else if (data.contentType === 'profile') {
       this.reportReasons.unshift(
         { value: 'impersonation', label: 'Impersonation' },
-        { value: 'scam', label: 'Scam or Fraud' }
+        { value: 'scam', label: 'Scam or Fraud' },
       );
     } else if (data.contentType === 'ad') {
       this.reportReasons.unshift(
         { value: 'misleading', label: 'Misleading Information' },
         { value: 'prohibited', label: 'Prohibited Content' },
-        { value: 'duplicate', label: 'Duplicate Listing' }
+        { value: 'duplicate', label: 'Duplicate Listing' },
       );
     } else if (data.contentType === 'message') {
       this.reportReasons.unshift(
         { value: 'threats', label: 'Threats or Violence' },
-        { value: 'solicitation', label: 'Unwanted Solicitation' }
+        { value: 'solicitation', label: 'Unwanted Solicitation' },
       );
     }
   }
@@ -205,7 +205,7 @@ export class ReportDialogComponent {
     // Combine reason and details
     const formValue = this.reportForm.value;
     const reasonLabel =
-      this.reportReasons.find(r => r.value === formValue.reason)?.label || formValue.reason;
+      this.reportReasons.find((r) => r.value === formValue.reason)?.label || formValue.reason;
 
     let reportText = reasonLabel;
     if (formValue.details) {

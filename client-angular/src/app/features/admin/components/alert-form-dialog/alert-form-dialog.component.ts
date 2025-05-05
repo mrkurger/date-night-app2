@@ -377,7 +377,7 @@ export class AlertFormDialogComponent implements OnInit {
     private fb: FormBuilder,
     private alertService: AlertService,
     public dialogRef: MatDialogRef<AlertFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { alert?: Alert }
+    @Inject(MAT_DIALOG_DATA) public data: { alert?: Alert },
   ) {
     this.alertForm = this.createAlertForm();
 
@@ -544,7 +544,7 @@ export class AlertFormDialogComponent implements OnInit {
     // Set notifications
     this.notificationsArray.clear();
     if (alert.notifications && alert.notifications.length > 0) {
-      alert.notifications.forEach(notification => {
+      alert.notifications.forEach((notification) => {
         const notificationGroup = this.createNotificationGroup();
         notificationGroup.patchValue({
           channel: notification.channel,
@@ -614,22 +614,22 @@ export class AlertFormDialogComponent implements OnInit {
     if (this.isEditMode && this.data.alert?.id) {
       // Update existing alert
       this.alertService.updateAlert(this.data.alert.id, alert).subscribe(
-        updatedAlert => {
+        (updatedAlert) => {
           this.dialogRef.close(updatedAlert);
         },
-        error => {
+        (error) => {
           console.error('Error updating alert:', error);
-        }
+        },
       );
     } else {
       // Create new alert
       this.alertService.createAlert(alert).subscribe(
-        newAlert => {
+        (newAlert) => {
           this.dialogRef.close(newAlert);
         },
-        error => {
+        (error) => {
           console.error('Error creating alert:', error);
-        }
+        },
       );
     }
   }

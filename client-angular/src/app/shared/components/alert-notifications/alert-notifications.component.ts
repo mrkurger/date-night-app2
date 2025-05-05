@@ -199,12 +199,12 @@ export class AlertNotificationsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe to active alerts
-    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe(alerts => {
+    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe((alerts) => {
       this.activeAlerts = alerts.slice(0, 5); // Show only the 5 most recent alerts
     });
 
     // Subscribe to unacknowledged count
-    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe(count => {
+    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe((count) => {
       this.unacknowledgedCount = count;
     });
 

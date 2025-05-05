@@ -64,7 +64,7 @@ export class FavoritesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -79,16 +79,16 @@ export class FavoritesComponent implements OnInit {
     this.error = false;
 
     this.getFavorites().subscribe(
-      favorites => {
+      (favorites) => {
         this.favorites = favorites;
         this.loading = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading favorites:', error);
         this.error = true;
         this.loading = false;
         this.notificationService.error('Failed to load favorites. Please try again.');
-      }
+      },
     );
   }
 
@@ -97,10 +97,10 @@ export class FavoritesComponent implements OnInit {
    */
   getFavorites(): Observable<Favorite[]> {
     return this.http.get<Favorite[]>(`${environment.apiUrl}/favorites`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching favorites:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -118,16 +118,16 @@ export class FavoritesComponent implements OnInit {
     this.http
       .delete(`${environment.apiUrl}/favorites/${favorite.ad._id}`)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error removing favorite:', error);
           this.notificationService.error('Failed to remove favorite. Please try again.');
           return of(null);
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response !== null) {
           // Remove from local array
-          this.favorites = this.favorites.filter(f => f._id !== favorite._id);
+          this.favorites = this.favorites.filter((f) => f._id !== favorite._id);
           this.notificationService.success('Favorite removed successfully');
         }
       });
@@ -144,20 +144,20 @@ export class FavoritesComponent implements OnInit {
         enabled: newState,
       })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error toggling notifications:', error);
           this.notificationService.error(
-            'Failed to update notification settings. Please try again.'
+            'Failed to update notification settings. Please try again.',
           );
           return of(null);
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response !== null) {
           // Update local state
           favorite.notificationsEnabled = newState;
           this.notificationService.success(
-            `Notifications ${newState ? 'enabled' : 'disabled'} for this favorite`
+            `Notifications ${newState ? 'enabled' : 'disabled'} for this favorite`,
           );
         }
       });
@@ -172,13 +172,13 @@ export class FavoritesComponent implements OnInit {
         notes: data.notes,
       })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error updating notes:', error);
           this.notificationService.error('Failed to update notes. Please try again.');
           return of(null);
-        })
+        }),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response !== null) {
           // Update local state
           data.favorite.notes = data.notes;
@@ -191,7 +191,7 @@ export class FavoritesComponent implements OnInit {
    * Transform favorites to card format for CardGridComponent
    */
   get favoriteCards() {
-    return this.favorites.map(favorite => ({
+    return this.favorites.map((favorite) => ({
       id: favorite.ad._id,
       title: favorite.ad.title,
       subtitle: `${favorite.ad.location.city}, ${favorite.ad.location.county}`,

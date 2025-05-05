@@ -84,7 +84,7 @@ describe('Profile Viewing', () => {
 
   it('should handle profile image error gracefully', () => {
     // Force the image to error
-    cy.get('[data-cy=profile-image]').then($img => {
+    cy.get('[data-cy=profile-image]').then(($img) => {
       // Trigger error event
       $img[0].dispatchEvent(new Event('error'));
     });

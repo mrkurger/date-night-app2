@@ -305,5 +305,5 @@ export default {
   googleCallback,
   redditCallback,
   appleCallback,
-  refreshToken
+  refreshToken,
 };

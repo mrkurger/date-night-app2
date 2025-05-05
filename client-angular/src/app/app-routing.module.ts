@@ -15,22 +15,22 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'profile',
-    loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule),
+    loadChildren: () => import('./features/profile/profile.module').then((m) => m.ProfileModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'ads',
     loadChildren: () =>
-      import('./features/ad-management/ad-management.module').then(m => m.AdManagementModule),
+      import('./features/ad-management/ad-management.module').then((m) => m.AdManagementModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'admin',
-    loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () => import('./features/admin/admin.module').then((m) => m.AdminModule),
     canActivate: [AuthGuard],
     data: { roles: ['admin'] },
   },

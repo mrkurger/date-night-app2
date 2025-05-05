@@ -29,7 +29,7 @@ export class ImageOptimizationService {
     width: number,
     height?: number,
     quality: number = this.defaultQuality,
-    format: string = this.defaultFormat
+    format: string = this.defaultFormat,
   ): string {
     // If URL is already a data URL or SVG, return as is
     if (originalUrl.startsWith('data:') || originalUrl.endsWith('.svg')) {
@@ -53,7 +53,7 @@ export class ImageOptimizationService {
     width: number,
     height?: number,
     quality: number = this.defaultQuality,
-    format: string = this.defaultFormat
+    format: string = this.defaultFormat,
   ): string {
     // Remove leading slash if present
     const cleanUrl = originalUrl.startsWith('/') ? originalUrl.substring(1) : originalUrl;
@@ -80,12 +80,12 @@ export class ImageOptimizationService {
   generateSrcset(
     originalUrl: string,
     widths: number[] = [320, 640, 960, 1280, 1920],
-    format: string = this.defaultFormat
+    format: string = this.defaultFormat,
   ): string {
     return widths
       .map(
-        width =>
-          `${this.getOptimizedUrl(originalUrl, width, undefined, this.defaultQuality, format)} ${width}w`
+        (width) =>
+          `${this.getOptimizedUrl(originalUrl, width, undefined, this.defaultQuality, format)} ${width}w`,
       )
       .join(', ');
   }

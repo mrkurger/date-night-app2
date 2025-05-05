@@ -78,8 +78,8 @@ export class BemUtil {
 
     // Filter out empty modifiers and generate modifier classes
     const modifierClasses = modifiers
-      .filter(modifier => !!modifier)
-      .map(modifier => `${baseClass}--${modifier}`);
+      .filter((modifier) => !!modifier)
+      .map((modifier) => `${baseClass}--${modifier}`);
 
     return [baseClass, ...modifierClasses].join(' ');
   }

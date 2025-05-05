@@ -160,7 +160,7 @@ export class TagsDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<TagsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TagsDialogData
+    @Inject(MAT_DIALOG_DATA) public data: TagsDialogData,
   ) {
     this.tags = [...data.tags];
   }

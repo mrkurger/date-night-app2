@@ -119,7 +119,7 @@ export class AdCreateComponent implements OnInit {
     private fb: FormBuilder,
     private adService: AdService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.adForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -161,7 +161,7 @@ export class AdCreateComponent implements OnInit {
     }
 
     // Create previews
-    files.forEach(file => {
+    files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.selectedImages.push({
@@ -183,8 +183,8 @@ export class AdCreateComponent implements OnInit {
 
   private loadCategories(): void {
     this.adService.getCategories().subscribe({
-      next: categories => (this.categories = categories),
-      error: err => {
+      next: (categories) => (this.categories = categories),
+      error: (err) => {
         this.error = 'Failed to load categories';
         console.error('Error loading categories:', err);
       },
@@ -206,17 +206,17 @@ export class AdCreateComponent implements OnInit {
     });
 
     // Append images
-    this.selectedImages.forEach(image => {
+    this.selectedImages.forEach((image) => {
       formData.append('images', image.file);
     });
 
     this.adService.createAdWithImages(formData).subscribe({
-      next: ad => {
+      next: (ad) => {
         this.loading = false;
         this.notificationService.success('Ad created successfully');
         this.router.navigate(['/ads', ad._id]);
       },
-      error: err => {
+      error: (err) => {
         this.loading = false;
         this.error = 'Failed to create ad';
         this.notificationService.error(this.error);

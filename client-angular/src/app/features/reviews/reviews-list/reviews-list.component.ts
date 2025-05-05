@@ -178,7 +178,7 @@ export class ReviewsListComponent implements OnInit {
    * Handle helpful/unhelpful reaction
    */
   onReactionClick(reviewId: string, reaction: 'helpful' | 'unhelpful'): void {
-    const review = this.reviews.find(r => r._id === reviewId);
+    const review = this.reviews.find((r) => r._id === reviewId);
     if (!review) return;
 
     // Toggle the reaction

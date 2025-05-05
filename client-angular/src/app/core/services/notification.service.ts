@@ -47,7 +47,7 @@ export class NotificationService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     // Initialize with 0 unread notifications
     this.unreadCountSubject.next(0);
@@ -155,7 +155,7 @@ export class NotificationService {
 
   // Remove a toast notification
   removeToast(id: string): void {
-    this.toasts = this.toasts.filter(t => t.id !== id);
+    this.toasts = this.toasts.filter((t) => t.id !== id);
     this.toastsSubject.next([...this.toasts]);
   }
 

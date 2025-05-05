@@ -239,7 +239,7 @@ export class ReviewSummaryComponent implements OnInit {
     this.loading = true;
 
     this.reviewService.getReviewStats(this.advertiserId).subscribe({
-      next: stats => {
+      next: (stats) => {
         this.ratings = {
           averageRating: stats.averageRating,
           communicationAvg: stats.categoryAverages.communication,
@@ -250,7 +250,7 @@ export class ReviewSummaryComponent implements OnInit {
         };
         this.loading = false;
       },
-      error: error => {
+      error: (error) => {
         console.error('Error loading ratings:', error);
         this.loading = false;
       },

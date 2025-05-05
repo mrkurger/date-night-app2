@@ -78,7 +78,7 @@ export class AppCardComponent implements OnInit {
     // Check for media array
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
       // Find an image type media
-      const image = this.ad.media.find(m => 'type' in m && m.type === 'image');
+      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image');
       if (image && 'url' in image) {
         return image.url;
       }

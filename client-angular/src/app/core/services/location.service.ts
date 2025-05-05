@@ -50,9 +50,9 @@ export class LocationService {
   getAllCities(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/cities`).pipe(
       catchError(() => {
-        const cities = NORWAY_COUNTIES.flatMap(county => county.cities.map(city => city.name));
+        const cities = NORWAY_COUNTIES.flatMap((county) => county.cities.map((city) => city.name));
         return of(cities);
-      })
+      }),
     );
   }
 
@@ -64,8 +64,8 @@ export class LocationService {
     return this.http
       .get<{ coordinates: [number, number] }>(`${this.apiUrl}/cities/${cityName}/coordinates`)
       .pipe(
-        map(response => response.coordinates),
-        catchError(() => of(getCityCoordinates(cityName)))
+        map((response) => response.coordinates),
+        catchError(() => of(getCityCoordinates(cityName))),
       );
   }
 
@@ -73,19 +73,19 @@ export class LocationService {
    * Get the user's current location using the browser's geolocation API
    */
   getCurrentLocation(): Observable<GeolocationPosition> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       if (!navigator.geolocation) {
         observer.error('Geolocation is not supported by your browser');
       } else {
         navigator.geolocation.getCurrentPosition(
-          position => {
+          (position) => {
             observer.next(position);
             observer.complete();
           },
-          error => {
+          (error) => {
             observer.error(error);
           },
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
         );
       }
     });
@@ -98,7 +98,7 @@ export class LocationService {
    */
   findNearestCity(
     latitude: number,
-    longitude: number
+    longitude: number,
   ): Observable<{ city: string; county: string; distance: number }> {
     return this.http
       .get<{
@@ -113,8 +113,8 @@ export class LocationService {
           let nearestCounty = '';
           let minDistance = Number.MAX_VALUE;
 
-          NORWAY_COUNTIES.forEach(county => {
-            county.cities.forEach(city => {
+          NORWAY_COUNTIES.forEach((county) => {
+            county.cities.forEach((city) => {
               if (city.coordinates) {
                 const [cityLong, cityLat] = city.coordinates;
                 const distance = this.calculateDistance(latitude, longitude, cityLat, cityLong);
@@ -133,7 +133,7 @@ export class LocationService {
             county: nearestCounty,
             distance: minDistance,
           });
-        })
+        }),
       );
   }
 

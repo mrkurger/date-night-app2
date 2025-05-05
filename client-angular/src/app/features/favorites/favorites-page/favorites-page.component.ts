@@ -903,7 +903,7 @@ export class FavoritesPageComponent implements OnInit {
     private favoriteService: FavoriteService,
     private dialogService: DialogService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -926,19 +926,19 @@ export class FavoritesPageComponent implements OnInit {
     this.error = false;
 
     this.favoriteService.getFavorites(this.filterOptions).subscribe(
-      favorites => {
-        this.favorites = favorites.map(favorite => ({
+      (favorites) => {
+        this.favorites = favorites.map((favorite) => ({
           ...favorite,
           selected: false,
         }));
         this.loading = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading favorites:', error);
         this.error = true;
         this.loading = false;
         this.notificationService.error('Failed to load favorites. Please try again.');
-      }
+      },
     );
   }
 
@@ -947,12 +947,12 @@ export class FavoritesPageComponent implements OnInit {
    */
   loadUserTags(): void {
     this.favoriteService.getUserTags().subscribe(
-      tags => {
+      (tags) => {
         this.userTags = tags;
       },
-      error => {
+      (error) => {
         console.error('Error loading tags:', error);
-      }
+      },
     );
   }
 
@@ -1068,7 +1068,7 @@ export class FavoritesPageComponent implements OnInit {
         notes: '',
         placeholder: 'Enter a name for this filter preset',
       })
-      .subscribe(name => {
+      .subscribe((name) => {
         if (name) {
           const preset: FilterPreset = {
             name,
@@ -1117,7 +1117,7 @@ export class FavoritesPageComponent implements OnInit {
    * Get the label for a category value
    */
   getCategoryLabel(value: string): string {
-    const category = this.categories.find(c => c.value === value);
+    const category = this.categories.find((c) => c.value === value);
     return category ? category.label : value;
   }
 
@@ -1146,7 +1146,7 @@ export class FavoritesPageComponent implements OnInit {
 
     if (this.filterOptions.dateFrom && this.filterOptions.dateTo) {
       return `${formatDate(this.filterOptions.dateFrom as Date)} - ${formatDate(
-        this.filterOptions.dateTo as Date
+        this.filterOptions.dateTo as Date,
       )}`;
     } else if (this.filterOptions.dateFrom) {
       return `After ${formatDate(this.filterOptions.dateFrom as Date)}`;
@@ -1222,7 +1222,7 @@ export class FavoritesPageComponent implements OnInit {
    * Remove a specific tag filter
    */
   removeTagFilter(tag: string): void {
-    this.selectedTagFilters = this.selectedTagFilters.filter(t => t !== tag);
+    this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
     this.applyFilters();
   }
 
@@ -1250,8 +1250,8 @@ export class FavoritesPageComponent implements OnInit {
    */
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
-      .filter(favorite => favorite.selected)
-      .map(favorite => this.getAdIdAsString(favorite.ad._id));
+      .filter((favorite) => favorite.selected)
+      .map((favorite) => this.getAdIdAsString(favorite.ad._id));
   }
 
   /**
@@ -1261,14 +1261,14 @@ export class FavoritesPageComponent implements OnInit {
     this.favoriteService.removeFavorite(adId).subscribe(
       () => {
         this.favorites = this.favorites.filter(
-          favorite => this.getAdIdAsString(favorite.ad._id) !== adId
+          (favorite) => this.getAdIdAsString(favorite.ad._id) !== adId,
         );
         this.notificationService.success('Removed from favorites');
       },
-      error => {
+      (error) => {
         console.error('Error removing favorite:', error);
         this.notificationService.error('Failed to remove from favorites');
-      }
+      },
     );
   }
 
@@ -1279,18 +1279,18 @@ export class FavoritesPageComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     this.favoriteService.removeFavoritesBatch(this.selectedFavorites).subscribe(
-      result => {
+      (result) => {
         // Remove the favorites from the local array
         this.favorites = this.favorites.filter(
-          favorite => !this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))
+          (favorite) => !this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id)),
         );
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
       },
-      error => {
+      (error) => {
         console.error('Error removing favorites batch:', error);
         this.notificationService.error('Failed to remove items from favorites');
-      }
+      },
     );
   }
 
@@ -1305,7 +1305,7 @@ export class FavoritesPageComponent implements OnInit {
         maxLength: 500,
         placeholder: 'Add your personal notes about this ad...',
       })
-      .subscribe(notes => {
+      .subscribe((notes) => {
         if (notes !== undefined) {
           this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe(
             () => {
@@ -1313,10 +1313,10 @@ export class FavoritesPageComponent implements OnInit {
               favorite.notes = notes;
               this.notificationService.success('Notes updated successfully');
             },
-            error => {
+            (error) => {
               console.error('Error updating notes:', error);
               this.notificationService.error('Failed to update notes');
-            }
+            },
           );
         }
       });
@@ -1327,8 +1327,10 @@ export class FavoritesPageComponent implements OnInit {
    */
   openTagsDialogForSingle(favorite: Favorite): void {
     // Get all user tags for suggestions
-    this.favoriteService.getUserTags().subscribe(tags => {
-      const suggestedTags = tags.map(tag => tag.tag).filter(tag => !favorite.tags.includes(tag));
+    this.favoriteService.getUserTags().subscribe((tags) => {
+      const suggestedTags = tags
+        .map((tag) => tag.tag)
+        .filter((tag) => !favorite.tags.includes(tag));
 
       this.dialogService
         .openTagsDialog({
@@ -1337,7 +1339,7 @@ export class FavoritesPageComponent implements OnInit {
           suggestedTags,
           maxTags: 10,
         })
-        .subscribe(updatedTags => {
+        .subscribe((updatedTags) => {
           if (updatedTags) {
             this.favoriteService
               .updateTags(this.getAdIdAsString(favorite.ad._id), updatedTags)
@@ -1347,10 +1349,10 @@ export class FavoritesPageComponent implements OnInit {
                   favorite.tags = updatedTags;
                   this.notificationService.success('Tags updated successfully');
                 },
-                error => {
+                (error) => {
                   console.error('Error updating tags:', error);
                   this.notificationService.error('Failed to update tags');
-                }
+                },
               );
           }
         });
@@ -1364,8 +1366,8 @@ export class FavoritesPageComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     // Get all user tags for suggestions
-    this.favoriteService.getUserTags().subscribe(tags => {
-      const suggestedTags = tags.map(tag => tag.tag);
+    this.favoriteService.getUserTags().subscribe((tags) => {
+      const suggestedTags = tags.map((tag) => tag.tag);
 
       this.dialogService
         .openTagsDialog({
@@ -1374,11 +1376,11 @@ export class FavoritesPageComponent implements OnInit {
           suggestedTags,
           maxTags: 10,
         })
-        .subscribe(newTags => {
+        .subscribe((newTags) => {
           if (newTags && newTags.length > 0) {
             // For each selected favorite, add the new tags
-            const updatePromises = this.selectedFavorites.map(adId => {
-              const favorite = this.favorites.find(f => f.ad._id === adId);
+            const updatePromises = this.selectedFavorites.map((adId) => {
+              const favorite = this.favorites.find((f) => f.ad._id === adId);
               if (!favorite) return null;
 
               // Combine existing tags with new tags, removing duplicates
@@ -1392,17 +1394,17 @@ export class FavoritesPageComponent implements OnInit {
             Promise.all(updatePromises)
               .then(() => {
                 // Update local state
-                this.favorites.forEach(favorite => {
+                this.favorites.forEach((favorite) => {
                   if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
                     const existingTags = favorite.tags || [];
                     favorite.tags = [...new Set([...existingTags, ...newTags])];
                   }
                 });
                 this.notificationService.success(
-                  `Tags added to ${this.selectedFavorites.length} favorites`
+                  `Tags added to ${this.selectedFavorites.length} favorites`,
                 );
               })
-              .catch(error => {
+              .catch((error) => {
                 console.error('Error updating tags batch:', error);
                 this.notificationService.error('Failed to update tags for some favorites');
               });
@@ -1421,10 +1423,10 @@ export class FavoritesPageComponent implements OnInit {
         favorite.priority = priority;
         this.notificationService.success(`Priority set to ${priority}`);
       },
-      error => {
+      (error) => {
         console.error('Error updating priority:', error);
         this.notificationService.error('Failed to update priority');
-      }
+      },
     );
   }
 
@@ -1434,23 +1436,23 @@ export class FavoritesPageComponent implements OnInit {
   setPriorityBatch(priority: 'low' | 'normal' | 'high'): void {
     if (this.selectedFavorites.length === 0) return;
 
-    const updatePromises = this.selectedFavorites.map(adId =>
-      firstValueFrom(this.favoriteService.updatePriority(adId, priority))
+    const updatePromises = this.selectedFavorites.map((adId) =>
+      firstValueFrom(this.favoriteService.updatePriority(adId, priority)),
     );
 
     Promise.all(updatePromises)
       .then(() => {
         // Update local state
-        this.favorites.forEach(favorite => {
+        this.favorites.forEach((favorite) => {
           if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
             favorite.priority = priority;
           }
         });
         this.notificationService.success(
-          `Priority set to ${priority} for ${this.selectedFavorites.length} favorites`
+          `Priority set to ${priority} for ${this.selectedFavorites.length} favorites`,
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error updating priority batch:', error);
         this.notificationService.error('Failed to update priority for some favorites');
       });
@@ -1465,13 +1467,13 @@ export class FavoritesPageComponent implements OnInit {
         // Update local state
         favorite.notificationsEnabled = !favorite.notificationsEnabled;
         this.notificationService.success(
-          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'}`
+          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'}`,
         );
       },
-      error => {
+      (error) => {
         console.error('Error toggling notifications:', error);
         this.notificationService.error('Failed to update notification settings');
-      }
+      },
     );
   }
 
@@ -1480,7 +1482,7 @@ export class FavoritesPageComponent implements OnInit {
    */
   onFavoriteRemoved(removed: boolean, favorite: Favorite): void {
     if (removed) {
-      this.favorites = this.favorites.filter(f => f._id !== favorite._id);
+      this.favorites = this.favorites.filter((f) => f._id !== favorite._id);
     }
   }
 

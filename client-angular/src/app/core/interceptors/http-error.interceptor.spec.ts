@@ -51,7 +51,7 @@ describe('HTTP Error Interceptor', () => {
     httpMock = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     notificationService = TestBed.inject(
-      NotificationService
+      NotificationService,
     ) as jasmine.SpyObj<NotificationService>;
     telemetryService = TestBed.inject(TelemetryService) as jasmine.SpyObj<TelemetryService>;
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
@@ -64,7 +64,7 @@ describe('HTTP Error Interceptor', () => {
   it('should show notification for HTTP errors', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 500 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(500);
         expect(notificationService.error).toHaveBeenCalled();
       },
@@ -77,7 +77,7 @@ describe('HTTP Error Interceptor', () => {
   it('should redirect to login page on 401 errors', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 401 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(401);
         expect(authService.logout).toHaveBeenCalled();
         expect(router.navigate).toHaveBeenCalledWith(['/auth/login'], jasmine.any(Object));
@@ -91,7 +91,7 @@ describe('HTTP Error Interceptor', () => {
   it('should track errors with telemetry service', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 500 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(500);
         expect(telemetryService.trackError).toHaveBeenCalled();
       },
@@ -106,7 +106,7 @@ describe('HTTP Error Interceptor', () => {
 
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 400 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(400);
         expect(notificationService.error).toHaveBeenCalledWith(customErrorMessage);
       },
@@ -119,10 +119,10 @@ describe('HTTP Error Interceptor', () => {
   it('should use default error message if no custom message is available', () => {
     httpClient.get('/api/test').subscribe({
       next: () => fail('should have failed with 404 error'),
-      error: error => {
+      error: (error) => {
         expect(error.status).toBe(404);
         expect(notificationService.error).toHaveBeenCalledWith(
-          'The requested resource was not found.'
+          'The requested resource was not found.',
         );
       },
     });

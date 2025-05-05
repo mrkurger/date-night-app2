@@ -40,7 +40,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
     private notificationService: NotificationService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -98,15 +98,15 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   private loadSubscriptionPrices(): void {
     this.loading = true;
     const sub = this.paymentService.getSubscriptionPrices().subscribe(
-      response => {
+      (response) => {
         this.subscriptionPrices = response.prices;
         this.loading = false;
       },
-      error => {
+      (error) => {
         this.notificationService.error('Failed to load subscription options');
         console.error('Error loading subscription prices:', error);
         this.loading = false;
-      }
+      },
     );
     this.subscriptions.add(sub);
   }
@@ -160,23 +160,23 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
       // Confirm card setup with Stripe
       const paymentMethod = await this.paymentService.confirmCardSetup(
         clientSecret,
-        this.stripeCardElement
+        this.stripeCardElement,
       );
 
       // Create subscription with the payment method
       const sub = this.paymentService
         .createSubscription(this.paymentForm.value.priceId, paymentMethod.id)
         .subscribe(
-          subscription => {
+          (subscription) => {
             this.notificationService.success('Subscription created successfully');
             this.loading = false;
             this.router.navigate(['/profile']);
           },
-          error => {
+          (error) => {
             this.notificationService.error('Failed to create subscription');
             console.error('Subscription error:', error);
             this.loading = false;
-          }
+          },
         );
       this.subscriptions.add(sub);
     } catch (error) {
@@ -196,7 +196,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.loading = true;
     const sub = this.paymentService.cancelSubscription().subscribe(
-      result => {
+      (result) => {
         this.notificationService.success('Subscription cancelled successfully');
         this.loading = false;
         this.currentSubscription = {
@@ -205,11 +205,11 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
           currentPeriodEnd: result.currentPeriodEnd,
         };
       },
-      error => {
+      (error) => {
         this.notificationService.error('Failed to cancel subscription');
         console.error('Cancellation error:', error);
         this.loading = false;
-      }
+      },
     );
     this.subscriptions.add(sub);
   }

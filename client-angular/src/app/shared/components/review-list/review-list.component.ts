@@ -277,7 +277,7 @@ export class ReviewListComponent implements OnInit {
     private reviewService: ReviewService,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {}
 
   ngOnInit(): void {
@@ -308,7 +308,7 @@ export class ReviewListComponent implements OnInit {
     }
 
     request.subscribe({
-      next: data => {
+      next: (data) => {
         if (this.page === 1) {
           this.reviews = data.reviews;
         } else {
@@ -317,7 +317,7 @@ export class ReviewListComponent implements OnInit {
         this.hasMoreReviews = data.totalPages > this.page;
         this.loading = false;
       },
-      error: error => {
+      error: (error) => {
         console.error('Error loading reviews:', error);
         this.notificationService.error('Failed to load reviews');
         this.loading = false;
@@ -339,7 +339,7 @@ export class ReviewListComponent implements OnInit {
     this.reviewService.markReviewHelpful(reviewId).subscribe({
       next: () => {
         // Update the review in the list
-        const reviewIndex = this.reviews.findIndex(r => r._id === reviewId);
+        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);
         if (reviewIndex !== -1) {
           this.reviews[reviewIndex].helpfulVotes++;
         }
@@ -350,7 +350,7 @@ export class ReviewListComponent implements OnInit {
 
         this.notificationService.success('Review marked as helpful');
       },
-      error: error => {
+      error: (error) => {
         console.error('Error marking review as helpful:', error);
         this.notificationService.error('Failed to mark review as helpful');
       },
@@ -363,7 +363,7 @@ export class ReviewListComponent implements OnInit {
       return;
     }
 
-    this.dialogService.reportReview(reviewId).subscribe(reason => {
+    this.dialogService.reportReview(reviewId).subscribe((reason) => {
       if (reason) {
         this.reportReview(reviewId, reason);
       }
@@ -379,7 +379,7 @@ export class ReviewListComponent implements OnInit {
 
         this.notificationService.success('Review reported successfully');
       },
-      error: error => {
+      error: (error) => {
         console.error('Error reporting review:', error);
         this.notificationService.error('Failed to report review');
       },
@@ -387,12 +387,12 @@ export class ReviewListComponent implements OnInit {
   }
 
   openResponseDialog(reviewId: string): void {
-    const review = this.reviews.find(r => r._id === reviewId);
+    const review = this.reviews.find((r) => r._id === reviewId);
     if (!review) return;
 
     this.dialogService
       .respondToReview(reviewId, review.title, review.content)
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response) {
           this.respondToReview(reviewId, response);
         }
@@ -403,7 +403,7 @@ export class ReviewListComponent implements OnInit {
     this.reviewService.respondToReview(reviewId, response).subscribe({
       next: () => {
         // Update the review in the list
-        const reviewIndex = this.reviews.findIndex(r => r._id === reviewId);
+        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);
         if (reviewIndex !== -1) {
           this.reviews[reviewIndex].advertiserResponse = {
             content: response,
@@ -413,7 +413,7 @@ export class ReviewListComponent implements OnInit {
 
         this.notificationService.success('Response added successfully');
       },
-      error: error => {
+      error: (error) => {
         console.error('Error responding to review:', error);
         this.notificationService.error('Failed to add response');
       },

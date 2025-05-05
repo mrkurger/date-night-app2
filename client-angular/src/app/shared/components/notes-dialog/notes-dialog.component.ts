@@ -71,7 +71,7 @@ export class NotesDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NotesDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: NotesDialogData
+    @Inject(MAT_DIALOG_DATA) public data: NotesDialogData,
   ) {
     this.notes = data.notes || '';
   }

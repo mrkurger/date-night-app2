@@ -61,7 +61,7 @@ describe('ChatService', () => {
       const ttl = 3600000; // 1 hour in milliseconds
 
       // Call the service method
-      service.sendMessage(roomId, content, replyToId, ttl).subscribe(response => {
+      service.sendMessage(roomId, content, replyToId, ttl).subscribe((response) => {
         expect(response).toBeTruthy();
         expect(response._id).toBe('msg789');
         expect(response.expiresAt).toBeDefined();
@@ -108,7 +108,7 @@ describe('ChatService', () => {
       const ttl = 3600000; // 1 hour in milliseconds
 
       // Call the service method
-      service.sendMessage(roomId, content, replyToId, ttl).subscribe(response => {
+      service.sendMessage(roomId, content, replyToId, ttl).subscribe((response) => {
         expect(response).toBeTruthy();
         expect(response._id).toBe('msg789');
         expect(response.expiresAt).toBeDefined();
@@ -158,7 +158,7 @@ describe('ChatService', () => {
       // Call the service method
       service
         .sendMessageWithAttachments(roomId, content, files, replyToId, ttl)
-        .subscribe(response => {
+        .subscribe((response) => {
           expect(response).toBeTruthy();
           expect(response._id).toBe('msg789');
           expect(response.expiresAt).toBeDefined();

@@ -72,7 +72,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private contentSanitizer: ContentSanitizerService
+    private contentSanitizer: ContentSanitizerService,
   ) {
     this.moderationForm = this.fb.group({
       status: ['approved', [Validators.required]],
@@ -100,7 +100,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
       .getPendingModerationMedia()
       .pipe(
         retry(2), // Retry failed requests up to 2 times
-        catchError(err => {
+        catchError((err) => {
           const errorMsg =
             err.status === 403
               ? 'You do not have permission to access moderation features'
@@ -115,14 +115,14 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
         finalize(() => {
           this.loading = false;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.pendingMedia = data || [];
 
           // Process media items to ensure dates are Date objects
-          this.pendingMedia = this.pendingMedia.map(media => ({
+          this.pendingMedia = this.pendingMedia.map((media) => ({
             ...media,
             createdAt:
               media.createdAt instanceof Date ? media.createdAt : new Date(media.createdAt),
@@ -146,13 +146,13 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
 
     // Apply media type filter
     if (this.mediaTypeFilter !== 'all') {
-      result = result.filter(media => media.type === this.mediaTypeFilter);
+      result = result.filter((media) => media.type === this.mediaTypeFilter);
     }
 
     // Apply search term filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase().trim();
-      result = result.filter(media => media.adTitle.toLowerCase().includes(searchLower));
+      result = result.filter((media) => media.adTitle.toLowerCase().includes(searchLower));
     }
 
     // Apply sorting
@@ -177,11 +177,11 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     switch (sortOrder) {
       case 'newest':
         return [...media].sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
       case 'oldest':
         return [...media].sort(
-          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
         );
       case 'title':
         return [...media].sort((a, b) => a.adTitle.localeCompare(b.adTitle));
@@ -317,7 +317,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
       .moderateMedia(this.selectedMedia.adId, this.selectedMedia._id, request.status, request.notes)
       .pipe(
         retry(1), // Retry once if the request fails
-        catchError(err => {
+        catchError((err) => {
           const errorMsg =
             err.status === 403
               ? 'You do not have permission to moderate content'
@@ -332,7 +332,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
         finalize(() => {
           this.loading = false;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe({
         next: () => {

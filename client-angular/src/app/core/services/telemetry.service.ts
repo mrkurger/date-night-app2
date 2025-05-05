@@ -144,12 +144,12 @@ export class TelemetryService {
     }
 
     return this.http.post(`${this.apiUrl}/errors`, errorData).pipe(
-      catchError(err => {
+      catchError((err) => {
         // If API call fails, store in offline queue
         this.offlineErrorQueue.push(errorData);
         this.persistOfflineQueue('errors', this.offlineErrorQueue);
         return of({ success: false, error: err });
-      })
+      }),
     );
   }
 
@@ -182,12 +182,12 @@ export class TelemetryService {
     }
 
     return this.http.post(`${this.apiUrl}/performance`, performanceData).pipe(
-      catchError(err => {
+      catchError((err) => {
         // If API call fails, store in offline queue
         this.offlinePerformanceQueue.push(performanceData);
         this.persistOfflineQueue('performance', this.offlinePerformanceQueue);
         return of({ success: false, error: err });
-      })
+      }),
     );
   }
 
@@ -198,10 +198,10 @@ export class TelemetryService {
    */
   getErrorStatistics(filters?: Record<string, any>): Observable<any> {
     return this.http.get(`${this.apiUrl}/errors/statistics`, { params: filters as any }).pipe(
-      catchError(err => {
+      catchError((err) => {
         console.error('Failed to fetch error statistics:', err);
         return of({ success: false, error: err });
-      })
+      }),
     );
   }
 
@@ -212,10 +212,10 @@ export class TelemetryService {
    */
   getPerformanceStatistics(filters?: Record<string, any>): Observable<any> {
     return this.http.get(`${this.apiUrl}/performance/statistics`, { params: filters as any }).pipe(
-      catchError(err => {
+      catchError((err) => {
         console.error('Failed to fetch performance statistics:', err);
         return of({ success: false, error: err });
-      })
+      }),
     );
   }
 
@@ -302,10 +302,10 @@ export class TelemetryService {
       this.http
         .post(url, { items: chunk })
         .pipe(
-          catchError(err => {
+          catchError((err) => {
             console.error('Failed to send telemetry batch:', err);
             return of({ success: false, error: err });
-          })
+          }),
         )
         .subscribe();
     }

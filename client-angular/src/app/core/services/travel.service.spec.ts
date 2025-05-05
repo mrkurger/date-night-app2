@@ -55,7 +55,7 @@ describe('TravelService', () => {
         },
       ];
 
-      service.getItineraries(adId).subscribe(itineraries => {
+      service.getItineraries(adId).subscribe((itineraries) => {
         expect(itineraries).toEqual(mockItineraries);
       });
 
@@ -89,7 +89,7 @@ describe('TravelService', () => {
         },
       ];
 
-      service.addItinerary(adId, newItinerary).subscribe(itineraries => {
+      service.addItinerary(adId, newItinerary).subscribe((itineraries) => {
         expect(itineraries).toEqual(mockResponse);
       });
 
@@ -125,7 +125,7 @@ describe('TravelService', () => {
         notes: 'Updated notes',
       };
 
-      service.updateItinerary(adId, itineraryId, updates).subscribe(itinerary => {
+      service.updateItinerary(adId, itineraryId, updates).subscribe((itinerary) => {
         expect(itinerary).toEqual(mockResponse);
       });
 
@@ -142,7 +142,7 @@ describe('TravelService', () => {
       const itineraryId = 'itin1';
       const mockResponse = { success: true, message: 'Itinerary cancelled successfully' };
 
-      service.cancelItinerary(adId, itineraryId).subscribe(response => {
+      service.cancelItinerary(adId, itineraryId).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -169,14 +169,14 @@ describe('TravelService', () => {
         },
       };
 
-      service.updateLocation(adId, longitude, latitude).subscribe(response => {
+      service.updateLocation(adId, longitude, latitude).subscribe((response) => {
         expect(response).toEqual(
           jasmine.objectContaining({
             success: true,
             data: jasmine.objectContaining({
               isTouring: true,
             }),
-          })
+          }),
         );
       });
 
@@ -214,7 +214,7 @@ describe('TravelService', () => {
         ],
       };
 
-      service.getTouringAdvertisers().subscribe(response => {
+      service.getTouringAdvertisers().subscribe((response) => {
         expect(response.success).toBe(true);
         expect(response.count).toBe(1);
         expect(response.data.length).toBe(1);
@@ -254,7 +254,7 @@ describe('TravelService', () => {
         ],
       };
 
-      service.getUpcomingTours(city, county, days).subscribe(response => {
+      service.getUpcomingTours(city, county, days).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -295,7 +295,7 @@ describe('TravelService', () => {
         ],
       };
 
-      service.getAdsByLocation(longitude, latitude, distance).subscribe(response => {
+      service.getAdsByLocation(longitude, latitude, distance).subscribe((response) => {
         expect(response.success).toBe(true);
         expect(response.count).toBe(1);
         expect(response.data.length).toBe(1);
@@ -303,7 +303,7 @@ describe('TravelService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${apiUrl}/location?longitude=10.7522&latitude=59.9139&distance=5000`
+        `${apiUrl}/location?longitude=10.7522&latitude=59.9139&distance=5000`,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -319,7 +319,7 @@ describe('TravelService', () => {
 
       service.getItineraries(adId).subscribe({
         next: () => fail('should have failed with a 404 error'),
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });
@@ -353,7 +353,7 @@ describe('TravelService', () => {
 
       service.addItinerary(adId, newItinerary).subscribe({
         next: () => fail('should have failed with a 400 error'),
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });
@@ -376,7 +376,7 @@ describe('TravelService', () => {
 
       service.updateLocation(adId, longitude, latitude).subscribe({
         next: () => fail('should have failed with a 500 error'),
-        error: error => {
+        error: (error) => {
           errorSpy(error);
         },
       });

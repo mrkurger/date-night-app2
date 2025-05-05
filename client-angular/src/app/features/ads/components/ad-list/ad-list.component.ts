@@ -60,11 +60,11 @@ export class AdListComponent implements OnInit {
   loadAds(): void {
     this.loading = true;
     this.adService.getAds().subscribe({
-      next: data => {
+      next: (data) => {
         this.ads = data;
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
       },

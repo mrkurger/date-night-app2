@@ -161,11 +161,11 @@ export class WalletService {
    */
   getWallet(): Observable<Wallet> {
     return this.http.get<{ status: string; data: { wallet: Wallet } }>(`${this.apiUrl}`).pipe(
-      map(response => response.data.wallet),
-      tap(wallet => {
+      map((response) => response.data.wallet),
+      tap((wallet) => {
         this.walletSubject.next(wallet);
         this.balancesSubject.next(wallet.balances);
-      })
+      }),
     );
   }
 
@@ -182,12 +182,12 @@ export class WalletService {
     return this.http
       .get<{ status: string; data: { balance: WalletBalance | WalletBalance[] } }>(url)
       .pipe(
-        map(response => response.data.balance),
-        tap(balance => {
+        map((response) => response.data.balance),
+        tap((balance) => {
           if (Array.isArray(balance)) {
             this.balancesSubject.next(balance);
           }
-        })
+        }),
       );
   }
 
@@ -200,7 +200,7 @@ export class WalletService {
   getWalletTransactions(
     filters?: TransactionFilters,
     page = 1,
-    limit = 20
+    limit = 20,
   ): Observable<TransactionResponse> {
     let url = `${this.apiUrl}/transactions?page=${page}&limit=${limit}`;
 
@@ -214,7 +214,7 @@ export class WalletService {
 
     return this.http
       .get<{ status: string; data: TransactionResponse }>(url)
-      .pipe(map(response => response.data));
+      .pipe(map((response) => response.data));
   }
 
   /**
@@ -226,7 +226,7 @@ export class WalletService {
         status: string;
         data: { paymentMethods: PaymentMethod[] };
       }>(`${this.apiUrl}/payment-methods`)
-      .pipe(map(response => response.data.paymentMethods));
+      .pipe(map((response) => response.data.paymentMethods));
   }
 
   /**
@@ -240,8 +240,8 @@ export class WalletService {
         data: { paymentMethod: PaymentMethod };
       }>(`${this.apiUrl}/payment-methods`, paymentMethodData)
       .pipe(
-        map(response => response.data.paymentMethod),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.paymentMethod),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -254,7 +254,7 @@ export class WalletService {
       .delete<{ status: string; data: null }>(`${this.apiUrl}/payment-methods/${paymentMethodId}`)
       .pipe(
         map(() => undefined),
-        tap(() => this.refreshWallet())
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -269,8 +269,8 @@ export class WalletService {
         data: { paymentMethod: PaymentMethod };
       }>(`${this.apiUrl}/payment-methods/${paymentMethodId}/default`, {})
       .pipe(
-        map(response => response.data.paymentMethod),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.paymentMethod),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -285,7 +285,7 @@ export class WalletService {
     amount: number,
     currency: string,
     paymentMethodId: string,
-    description?: string
+    description?: string,
   ): Observable<{ transaction: WalletTransaction; clientSecret: string }> {
     return this.http
       .post<{
@@ -293,8 +293,8 @@ export class WalletService {
         data: { transaction: WalletTransaction; clientSecret: string };
       }>(`${this.apiUrl}/deposit/stripe`, { amount, currency, paymentMethodId, description })
       .pipe(
-        map(response => response.data),
-        tap(() => this.refreshWallet())
+        map((response) => response.data),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -308,7 +308,7 @@ export class WalletService {
         status: string;
         data: CryptoDepositAddress;
       }>(`${this.apiUrl}/deposit/crypto/${currency}`)
-      .pipe(map(response => response.data));
+      .pipe(map((response) => response.data));
   }
 
   /**
@@ -322,7 +322,7 @@ export class WalletService {
     amount: number,
     currency: string,
     paymentMethodId: string,
-    description?: string
+    description?: string,
   ): Observable<WalletTransaction> {
     return this.http
       .post<{
@@ -330,8 +330,8 @@ export class WalletService {
         data: { transaction: WalletTransaction };
       }>(`${this.apiUrl}/withdraw`, { amount, currency, paymentMethodId, description })
       .pipe(
-        map(response => response.data.transaction),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -350,7 +350,7 @@ export class WalletService {
     address: string,
     network: string,
     memo?: string,
-    description?: string
+    description?: string,
   ): Observable<WalletTransaction> {
     return this.http
       .post<{
@@ -365,8 +365,8 @@ export class WalletService {
         description,
       })
       .pipe(
-        map(response => response.data.transaction),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -381,7 +381,7 @@ export class WalletService {
     recipientUserId: string,
     amount: number,
     currency: string,
-    description?: string
+    description?: string,
   ): Observable<WalletTransaction> {
     return this.http
       .post<{
@@ -389,8 +389,8 @@ export class WalletService {
         data: { transaction: WalletTransaction };
       }>(`${this.apiUrl}/transfer`, { recipientUserId, amount, currency, description })
       .pipe(
-        map(response => response.data.transaction),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -405,8 +405,8 @@ export class WalletService {
         data: { settings: WalletSettings };
       }>(`${this.apiUrl}/settings`, settings)
       .pipe(
-        map(response => response.data.settings),
-        tap(() => this.refreshWallet())
+        map((response) => response.data.settings),
+        tap(() => this.refreshWallet()),
       );
   }
 
@@ -421,7 +421,7 @@ export class WalletService {
         status: string;
         data: ExchangeRate;
       }>(`${this.apiUrl}/exchange-rates?fromCurrency=${fromCurrency}&toCurrency=${toCurrency}`)
-      .pipe(map(response => response.data));
+      .pipe(map((response) => response.data));
   }
 
   /**

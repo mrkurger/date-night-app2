@@ -39,7 +39,7 @@ export class AdDetailsComponent implements OnInit {
     private adService: AdService,
     private userService: UserService,
     private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class AdDetailsComponent implements OnInit {
     if (id) {
       this.loading = true;
       this.adService.getAdById(id).subscribe({
-        next: ad => {
+        next: (ad) => {
           this.ad = ad;
           this.loading = false;
 
@@ -72,7 +72,7 @@ export class AdDetailsComponent implements OnInit {
             this.isOwner = true;
           }
         },
-        error: err => {
+        error: (err) => {
           console.error('Error fetching ad details:', err);
           this.error = 'Failed to load ad details. Please try again.';
           this.loading = false;
@@ -88,8 +88,8 @@ export class AdDetailsComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.userService.getFavorites().subscribe({
-        next: favorites => (this.favorites = favorites),
-        error: err => console.error('Error loading favorites:', err),
+        next: (favorites) => (this.favorites = favorites),
+        error: (err) => console.error('Error loading favorites:', err),
       });
     }
   }
@@ -170,10 +170,10 @@ export class AdDetailsComponent implements OnInit {
     if (this.isFavorite()) {
       this.userService.removeFavorite(this.ad._id).subscribe({
         next: () => {
-          this.favorites = this.favorites.filter(id => id !== adIdStr);
+          this.favorites = this.favorites.filter((id) => id !== adIdStr);
           this.notificationService.success('Removed from favorites');
         },
-        error: err => {
+        error: (err) => {
           console.error('Error removing from favorites:', err);
           this.notificationService.error('Failed to remove from favorites');
         },
@@ -184,7 +184,7 @@ export class AdDetailsComponent implements OnInit {
           this.favorites.push(adIdStr);
           this.notificationService.success('Added to favorites');
         },
-        error: err => {
+        error: (err) => {
           console.error('Error adding to favorites:', err);
           this.notificationService.error('Failed to add to favorites');
         },
@@ -211,7 +211,7 @@ export class AdDetailsComponent implements OnInit {
         next: () => {
           this.notificationService.success('Ad reported successfully');
         },
-        error: err => {
+        error: (err) => {
           console.error('Error reporting ad:', err);
           this.notificationService.error('Failed to report ad');
         },
@@ -238,10 +238,10 @@ export class AdDetailsComponent implements OnInit {
       next: () => {
         if (this.ad) this.ad.isActive = newStatus;
         this.notificationService.success(
-          `Ad ${newStatus ? 'activated' : 'deactivated'} successfully`
+          `Ad ${newStatus ? 'activated' : 'deactivated'} successfully`,
         );
       },
-      error: err => {
+      error: (err) => {
         console.error('Error toggling ad status:', err);
         this.notificationService.error('Failed to update ad status');
       },
@@ -257,7 +257,7 @@ export class AdDetailsComponent implements OnInit {
           this.notificationService.success('Ad deleted successfully');
           this.router.navigate(['/ad-management']);
         },
-        error: err => {
+        error: (err) => {
           console.error('Error deleting ad:', err);
           this.notificationService.error('Failed to delete ad');
         },

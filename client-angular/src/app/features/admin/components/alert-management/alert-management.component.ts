@@ -390,7 +390,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -398,12 +398,12 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
     this.loadActiveAlerts();
 
     // Subscribe to active alerts updates
-    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe(alerts => {
+    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe((alerts) => {
       this.activeAlerts = alerts;
     });
 
     // Subscribe to unacknowledged count updates
-    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe(count => {
+    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe((count) => {
       this.unacknowledgedCount = count;
     });
   }
@@ -417,7 +417,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
    * Load alert definitions
    */
   loadAlerts(): void {
-    this.alertService.getAlerts().subscribe(alerts => {
+    this.alertService.getAlerts().subscribe((alerts) => {
       this.alerts = alerts;
       this.totalAlerts = alerts.length;
     });
@@ -505,7 +505,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
       data: { alert },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadAlerts();
       }
@@ -525,7 +525,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
    * @param alert Alert to test
    */
   testAlert(alert: Alert): void {
-    this.alertService.testAlert(alert).subscribe(result => {
+    this.alertService.testAlert(alert).subscribe((result) => {
       // Show result in a dialog or notification
       console.log('Test result:', result);
     });
@@ -663,6 +663,6 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
    * @param channel Channel to check for
    */
   hasChannel(alert: Alert, channel: string): boolean {
-    return alert.notifications.some(n => n.channel === channel);
+    return alert.notifications.some((n) => n.channel === channel);
   }
 }

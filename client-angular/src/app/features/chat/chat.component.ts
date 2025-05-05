@@ -262,7 +262,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     const currentUser = this.authService.getCurrentUser();
     this.currentUserId = currentUser ? currentUser._id : '';
@@ -270,7 +270,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Set up typing indicator with debounce
     const typingSub = this.typingSubject
       .pipe(debounceTime(TYPING_INDICATOR_DELAY), distinctUntilChanged())
-      .subscribe(message => {
+      .subscribe((message) => {
         if (this.selectedContactId) {
           this.chatService.sendTypingIndicator(this.selectedContactId);
         }
@@ -284,7 +284,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.loadContacts();
 
     // Check if we have a recipient ID in the route
-    const routeSub = this.route.params.subscribe(params => {
+    const routeSub = this.route.params.subscribe((params) => {
       if (params['userId']) {
         this.selectedContactId = params['userId'];
         this.loadMessages();
@@ -312,7 +312,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.messageExpiryTime = settings.ttl;
 
     console.log(
-      `Loaded message auto-deletion settings for room ${this.selectedContactId}: enabled=${settings.enabled}, ttl=${this.formatTTL(settings.ttl)}`
+      `Loaded message auto-deletion settings for room ${this.selectedContactId}: enabled=${settings.enabled}, ttl=${this.formatTTL(settings.ttl)}`,
     );
   }
 
@@ -326,7 +326,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnDestroy(): void {
     // Clean up subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
 
     // Clear the expiry check interval
     if (this.expiryCheckInterval) {
@@ -342,7 +342,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // In a real app, you would load contacts from the service
     this.chatService.getContacts().subscribe({
-      next: contacts => {
+      next: (contacts) => {
         this.contacts = this.enhanceContacts(contacts);
         this.filterContacts();
 
@@ -353,7 +353,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
         this.loadingContacts = false;
       },
-      error: err => {
+      error: (err) => {
         console.error('Error loading contacts:', err);
         // Use mock data if API call fails
         this.contacts = this.enhanceContacts(this.chatService.getMockContacts());
@@ -372,7 +372,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Enhance contacts with additional properties for UI
    */
   enhanceContacts(contacts: any[]): Contact[] {
-    return contacts.map(contact => ({
+    return contacts.map((contact) => ({
       ...contact,
       imageUrl: contact.imageUrl || this.getRandomProfileImage(),
       lastSeen: contact.lastSeen || new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24),
@@ -388,7 +388,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   loadMessages(): void {
     if (this.selectedContactId) {
       this.chatService.getMessages(this.selectedContactId).subscribe({
-        next: messages => {
+        next: (messages) => {
           // Transform the messages from the service format to the component format
           this.messages = this.transformMessages(messages);
 
@@ -404,7 +404,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           // Extract media for gallery
           this.extractMediaFromMessages();
         },
-        error: err => {
+        error: (err) => {
           console.error('Error loading messages:', err);
 
           // If no messages, create dummy messages for demo
@@ -425,7 +425,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Transform messages from API format to component format
    */
   transformMessages(messages: any[]): ChatMessage[] {
-    return messages.map(msg => {
+    return messages.map((msg) => {
       // Create a properly typed sender object
       let senderObj: { id: string; username: string };
       if (typeof msg.sender === 'string') {
@@ -484,7 +484,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Transform attachments from API format to component format
    */
   transformAttachments(attachments: any[]): Attachment[] {
-    return attachments.map(att => ({
+    return attachments.map((att) => ({
       id: att.id || att._id || Date.now().toString(),
       name: att.name || att.filename || 'Attachment',
       type: att.type || att.mimeType || 'application/octet-stream',
@@ -500,7 +500,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   groupMessagesByDate(): void {
     const groups: { [key: string]: MessageGroup } = {};
 
-    this.messages.forEach(message => {
+    this.messages.forEach((message) => {
       const date = new Date(message.timestamp);
       const dateKey = date.toDateString();
 
@@ -525,10 +525,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.galleryFiles = [];
     this.galleryLinks = [];
 
-    this.messages.forEach(message => {
+    this.messages.forEach((message) => {
       // Extract attachments
       if (message.attachments && message.attachments.length > 0) {
-        message.attachments.forEach(attachment => {
+        message.attachments.forEach((attachment) => {
           if (this.isImageAttachment(attachment)) {
             this.galleryImages.push(attachment);
           } else {
@@ -542,7 +542,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       const matches = message.message.match(urlRegex);
 
       if (matches) {
-        matches.forEach(url => {
+        matches.forEach((url) => {
           this.galleryLinks.push({
             url,
             timestamp: message.timestamp,
@@ -573,7 +573,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.chatService
         .sendMessage(this.selectedContactId, this.newMessage, replyToId, ttl)
         .subscribe({
-          next: response => {
+          next: (response) => {
             // Add the message to our list immediately for better UX
             const newMessage: ChatMessage = {
               _id: response._id || Date.now().toString(),
@@ -599,7 +599,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
             // Scroll to bottom
             this.shouldScrollToBottom = true;
           },
-          error: err => {
+          error: (err) => {
             console.error('Error sending message:', err);
             this.notificationService.error('Failed to send message. Please try again.');
           },
@@ -616,7 +616,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     if (this.temporaryMessageMode) {
       this.notificationService.info(
-        `Temporary message mode enabled. Next message will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`
+        `Temporary message mode enabled. Next message will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`,
       );
     } else {
       this.notificationService.info('Temporary message mode disabled.');
@@ -632,7 +632,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     if (this.temporaryMessageMode) {
       this.notificationService.info(
-        `Temporary messages will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`
+        `Temporary messages will auto-delete after ${this.formatTTL(this.temporaryMessageTTL)}.`,
       );
     }
   }
@@ -670,18 +670,18 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.messageExpiryTime = ttl;
 
     this.chatService.configureMessageAutoDeletion(this.selectedContactId, enabled, ttl).subscribe({
-      next: success => {
+      next: (success) => {
         if (success) {
           this.notificationService.success(
             enabled
               ? `Messages will auto-delete after ${days} days.`
-              : 'Message auto-deletion disabled.'
+              : 'Message auto-deletion disabled.',
           );
         } else {
           this.notificationService.error('Failed to update message auto-deletion settings.');
         }
       },
-      error: err => {
+      error: (err) => {
         console.error('Error configuring message auto-deletion:', err);
         this.notificationService.error('Failed to update message auto-deletion settings.');
       },
@@ -737,7 +737,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const warningThreshold = 5 * 60 * 1000; // 5 minutes
 
     // Find expired and about-to-expire messages
-    this.messages.forEach(message => {
+    this.messages.forEach((message) => {
       if (message.expiresAt) {
         const expiryTime = new Date(message.expiresAt).getTime();
 
@@ -763,7 +763,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // Remove expired messages
     if (expiredMessageIds.length > 0) {
-      this.messages = this.messages.filter(message => !expiredMessageIds.includes(message._id));
+      this.messages = this.messages.filter((message) => !expiredMessageIds.includes(message._id));
       this.groupMessagesByDate();
 
       // Notify the user that messages have expired
@@ -771,7 +771,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.notificationService.info('A temporary message has expired and been removed');
       } else {
         this.notificationService.info(
-          `${expiredMessageIds.length} temporary messages have expired and been removed`
+          `${expiredMessageIds.length} temporary messages have expired and been removed`,
         );
       }
     }
@@ -866,17 +866,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const typingSubject = new BehaviorSubject<any>(null);
 
     // Set up the socket listener for new messages
-    this.chatService.onNewMessage(message => {
+    this.chatService.onNewMessage((message) => {
       messageSubject.next(message);
     });
 
     // Set up the socket listener for typing indicators
-    this.chatService.onTypingIndicator(data => {
+    this.chatService.onTypingIndicator((data) => {
       typingSubject.next(data);
     });
 
     // Subscribe to message subject
-    const messageSub = messageSubject.subscribe(message => {
+    const messageSub = messageSubject.subscribe((message) => {
       if (!message) return; // Skip the initial null value
 
       // Update messages array if the message is for the current chat
@@ -907,7 +907,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
 
     // Subscribe to typing indicator subject
-    const typingSub = typingSubject.subscribe(data => {
+    const typingSub = typingSubject.subscribe((data) => {
       if (!data) return; // Skip the initial null value
 
       // Update typing indicator for the contact
@@ -928,7 +928,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Update typing status for a contact
    */
   updateContactTypingStatus(contactId: string, isTyping: boolean): void {
-    this.contacts = this.contacts.map(contact => {
+    this.contacts = this.contacts.map((contact) => {
       if (contact.id === contactId) {
         return {
           ...contact,
@@ -982,7 +982,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Get a contact by ID
    */
   getContactById(contactId: string): Contact | undefined {
-    return this.contacts.find(contact => contact.id === contactId);
+    return this.contacts.find((contact) => contact.id === contactId);
   }
 
   /**
@@ -1005,7 +1005,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   togglePin(): void {
     if (this.selectedContactId) {
-      this.contacts = this.contacts.map(contact => {
+      this.contacts = this.contacts.map((contact) => {
         if (contact.id === this.selectedContactId) {
           return {
             ...contact,
@@ -1019,7 +1019,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
       // In a real app, you would save this to the server
       this.notificationService.success(
-        this.isPinned() ? 'Conversation pinned to the top' : 'Conversation unpinned'
+        this.isPinned() ? 'Conversation pinned to the top' : 'Conversation unpinned',
       );
     }
   }
@@ -1033,7 +1033,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.notificationService.success('Contact blocked');
 
       // Remove from contacts list
-      this.contacts = this.contacts.filter(contact => contact.id !== this.selectedContactId);
+      this.contacts = this.contacts.filter((contact) => contact.id !== this.selectedContactId);
 
       this.filterContacts();
       this.deselectContact();
@@ -1063,14 +1063,14 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.markAsRead(messageId).subscribe({
       next: () => {
         // Update the message in our local array
-        this.messages = this.messages.map(msg =>
-          msg._id === messageId ? { ...msg, read: true } : msg
+        this.messages = this.messages.map((msg) =>
+          msg._id === messageId ? { ...msg, read: true } : msg,
         );
 
         // Update message groups
         this.groupMessagesByDate();
       },
-      error: err => console.error('Error marking message as read:', err),
+      error: (err) => console.error('Error marking message as read:', err),
     });
   }
 
@@ -1080,10 +1080,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   markContactMessagesAsRead(): void {
     if (this.selectedContactId) {
       const unreadMessages = this.messages.filter(
-        msg => msg.sender.id === this.selectedContactId && !msg.read
+        (msg) => msg.sender.id === this.selectedContactId && !msg.read,
       );
 
-      unreadMessages.forEach(msg => {
+      unreadMessages.forEach((msg) => {
         this.markAsRead(msg._id);
       });
 
@@ -1095,7 +1095,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Mark all messages as read
    */
   markAllAsRead(): void {
-    this.contacts.forEach(contact => {
+    this.contacts.forEach((contact) => {
       this.resetUnreadCount(contact.id);
     });
 
@@ -1106,7 +1106,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Archive all chats
    */
   archiveAllChats(): void {
-    this.contacts = this.contacts.map(contact => ({
+    this.contacts = this.contacts.map((contact) => ({
       ...contact,
       archived: true,
     }));
@@ -1119,7 +1119,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Update the last message for a contact
    */
   updateContactLastMessage(contactId: string, message: string): void {
-    this.contacts = this.contacts.map(contact => {
+    this.contacts = this.contacts.map((contact) => {
       if (contact.id === contactId) {
         return {
           ...contact,
@@ -1138,7 +1138,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   incrementUnreadCount(contactId: string): void {
     if (contactId !== this.selectedContactId) {
-      this.contacts = this.contacts.map(contact => {
+      this.contacts = this.contacts.map((contact) => {
         if (contact.id === contactId) {
           return {
             ...contact,
@@ -1156,7 +1156,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Reset the unread count for a contact
    */
   resetUnreadCount(contactId: string): void {
-    this.contacts = this.contacts.map(contact => {
+    this.contacts = this.contacts.map((contact) => {
       if (contact.id === contactId) {
         return {
           ...contact,
@@ -1179,19 +1179,19 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.searchTerm) {
       const search = this.searchTerm.toLowerCase();
       filtered = filtered.filter(
-        contact =>
+        (contact) =>
           contact.name.toLowerCase().includes(search) ||
-          contact.lastMessage.toLowerCase().includes(search)
+          contact.lastMessage.toLowerCase().includes(search),
       );
     }
 
     // Apply current filter
     if (this.currentFilter === 'unread') {
-      filtered = filtered.filter(contact => contact.unreadCount > 0);
+      filtered = filtered.filter((contact) => contact.unreadCount > 0);
     } else if (this.currentFilter === 'archived') {
-      filtered = filtered.filter(contact => contact.archived);
+      filtered = filtered.filter((contact) => contact.archived);
     } else if (this.currentFilter === 'all') {
-      filtered = filtered.filter(contact => !contact.archived);
+      filtered = filtered.filter((contact) => !contact.archived);
     }
 
     // Sort: pinned first, then by last message time
@@ -1218,7 +1218,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   toggleNotifications(): void {
     this.notificationsEnabled = !this.notificationsEnabled;
     this.notificationService.info(
-      this.notificationsEnabled ? 'Notifications enabled' : 'Notifications muted'
+      this.notificationsEnabled ? 'Notifications enabled' : 'Notifications muted',
     );
   }
 
@@ -1237,7 +1237,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       .replace(/>/g, '&gt;')
       .replace(
         /&lt;a href="(.*?)" target="_blank"&gt;(.*?)&lt;\/a&gt;/g,
-        '<a href="$1" target="_blank">$2</a>'
+        '<a href="$1" target="_blank">$2</a>',
       );
 
     return formattedContent;
@@ -1312,7 +1312,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const messageToForward = message;
 
     // When a contact is selected, forward the message
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // In a real app, you would call an API to forward the message
         this.notificationService.success('Message forwarded');
@@ -1329,7 +1329,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       .then(() => {
         this.notificationService.success('Message copied to clipboard');
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error copying message:', err);
         this.notificationService.error('Failed to copy message');
       });
@@ -1340,7 +1340,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   deleteMessage(message: ChatMessage): void {
     // In a real app, you would call an API to delete the message
-    this.messages = this.messages.filter(msg => msg._id !== message._id);
+    this.messages = this.messages.filter((msg) => msg._id !== message._id);
     this.groupMessagesByDate();
     this.extractMediaFromMessages();
 
@@ -1415,7 +1415,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     const dialogRef = this.dialog.open(this.newMessageDialog);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Handle result if needed
       }
@@ -1462,7 +1462,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           title: this.previewImage.name,
           url: this.previewImage.url,
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error sharing image:', err);
         });
     } else {

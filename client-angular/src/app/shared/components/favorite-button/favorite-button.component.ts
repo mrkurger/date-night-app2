@@ -97,7 +97,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private notificationService: NotificationService,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -140,7 +140,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
           this.notificationService.success('Removed from favorites');
           this.loading = false;
         },
-        error: error => {
+        error: (error) => {
           console.error('Error removing favorite:', error);
           this.notificationService.error('Failed to remove from favorites');
           this.loading = false;
@@ -149,7 +149,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
     } else {
       // If we have the ad title, open the dialog to add details
       if (this.adTitle) {
-        this.dialogService.addToFavorites(this.adId, this.adTitle).subscribe(result => {
+        this.dialogService.addToFavorites(this.adId, this.adTitle).subscribe((result) => {
           if (result) {
             this.favoriteService
               .addFavorite(
@@ -157,7 +157,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
                 result.notes,
                 result.notificationsEnabled,
                 result.tags,
-                result.priority
+                result.priority,
               )
               .subscribe({
                 next: () => {
@@ -166,7 +166,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
                   this.notificationService.success('Added to favorites');
                   this.loading = false;
                 },
-                error: error => {
+                error: (error) => {
                   console.error('Error adding favorite:', error);
                   this.notificationService.error('Failed to add to favorites');
                   this.loading = false;
@@ -186,7 +186,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
             this.notificationService.success('Added to favorites');
             this.loading = false;
           },
-          error: error => {
+          error: (error) => {
             console.error('Error adding favorite:', error);
             this.notificationService.error('Failed to add to favorites');
             this.loading = false;
@@ -208,11 +208,11 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
     }
 
     this.subscription = this.favoriteService.isFavorite(this.adId).subscribe({
-      next: isFavorite => {
+      next: (isFavorite) => {
         this.isFavorite = isFavorite;
         this.loading = false;
       },
-      error: error => {
+      error: (error) => {
         console.error('Error checking favorite status:', error);
         this.loading = false;
       },

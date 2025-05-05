@@ -30,13 +30,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userPreferencesService: UserPreferencesService
+    private userPreferencesService: UserPreferencesService,
   ) {}
 
   ngOnInit(): void {
     // Get the view from the route query params
     this.subscriptions.push(
-      this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe((params) => {
         if (params['view']) {
           const view = params['view'];
           if (['netflix', 'tinder', 'list'].includes(view)) {
@@ -57,13 +57,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
             queryParamsHandling: 'merge',
           });
         }
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**

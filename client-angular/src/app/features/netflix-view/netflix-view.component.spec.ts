@@ -178,7 +178,7 @@ describe('NetflixViewComponent', () => {
 
     it('should handle error when loading featured ads fails', fakeAsync(() => {
       spyOn(adService, 'getFeaturedAds').and.returnValue(
-        throwError(() => new Error('Failed to load featured ads'))
+        throwError(() => new Error('Failed to load featured ads')),
       );
       spyOn(adService, 'getTrendingAds').and.callThrough();
       spyOn(adService, 'getAds').and.callThrough();
@@ -363,12 +363,12 @@ describe('NetflixViewComponent', () => {
       expect(shuffled.length).toBe(original.length);
 
       // Check that all elements from original are in shuffled
-      original.forEach(item => {
+      original.forEach((item) => {
         expect(shuffled).toContain(item);
       });
 
       // Check that all elements from shuffled are in original
-      shuffled.forEach(item => {
+      shuffled.forEach((item) => {
         expect(original).toContain(item);
       });
     });

@@ -91,11 +91,11 @@ export class TravelService {
   updateItinerary(
     adId: string,
     itineraryId: string,
-    updates: Partial<TravelItinerary>
+    updates: Partial<TravelItinerary>,
   ): Observable<TravelItinerary> {
     return this.http.put<TravelItinerary>(
       `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,
-      updates
+      updates,
     );
   }
 
@@ -107,10 +107,10 @@ export class TravelService {
    */
   cancelItinerary(
     adId: string,
-    itineraryId: string
+    itineraryId: string,
   ): Observable<{ success: boolean; message: string }> {
     return this.http.delete<{ success: boolean; message: string }>(
-      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`
+      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,
     );
   }
 
@@ -124,7 +124,7 @@ export class TravelService {
   updateLocation(
     adId: string,
     longitude: number,
-    latitude: number
+    latitude: number,
   ): Observable<{
     success: boolean;
     data: {
@@ -144,7 +144,7 @@ export class TravelService {
    */
   getTouringAdvertisers(): Observable<{ success: boolean; count: number; data: TouringAd[] }> {
     return this.http.get<{ success: boolean; count: number; data: TouringAd[] }>(
-      `${this.apiUrl}/touring`
+      `${this.apiUrl}/touring`,
     );
   }
 
@@ -158,7 +158,7 @@ export class TravelService {
   getUpcomingTours(
     city?: string,
     county?: string,
-    days?: number
+    days?: number,
   ): Observable<{
     success: boolean;
     count: number;
@@ -180,7 +180,7 @@ export class TravelService {
 
     return this.http.get<{ success: boolean; count: number; data: TouringAd[] }>(
       `${this.apiUrl}/upcoming`,
-      { params }
+      { params },
     );
   }
 
@@ -194,7 +194,7 @@ export class TravelService {
   getAdsByLocation(
     longitude: number,
     latitude: number,
-    distance?: number
+    distance?: number,
   ): Observable<{
     success: boolean;
     count: number;
@@ -210,7 +210,7 @@ export class TravelService {
 
     return this.http.get<{ success: boolean; count: number; data: TouringAd[] }>(
       `${this.apiUrl}/location`,
-      { params }
+      { params },
     );
   }
 }

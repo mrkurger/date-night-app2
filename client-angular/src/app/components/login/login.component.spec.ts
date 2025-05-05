@@ -167,13 +167,13 @@ describe('LoginComponent', () => {
 
     // Create a delayed observable to simulate network request
     userService.login.and.returnValue(
-      new Observable(observer => {
+      new Observable((observer) => {
         // This will be resolved after a delay
         setTimeout(() => {
           observer.next(mockAuthResponse);
           observer.complete();
         }, 100);
-      })
+      }),
     );
 
     // Submit form

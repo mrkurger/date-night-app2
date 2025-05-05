@@ -145,7 +145,11 @@ $danger-dark: color.adjust($color-error, $lightness: -20%);
     left: 0;
     right: 0;
     height: 30%;
-    background: linear-gradient(to top, rgba(emerald.$color-black, 0.8), rgba(emerald.$color-black, 0));
+    background: linear-gradient(
+      to top,
+      rgba(emerald.$color-black, 0.8),
+      rgba(emerald.$color-black, 0)
+    );
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -387,7 +391,11 @@ $danger-dark: color.adjust($color-error, $lightness: -20%);
       .emerald-app-card__content-overlay {
         position: absolute;
         height: 40%;
-        background: linear-gradient(to top, rgba(emerald.$color-black, 0.8), rgba(emerald.$color-black, 0));
+        background: linear-gradient(
+          to top,
+          rgba(emerald.$color-black, 0.8),
+          rgba(emerald.$color-black, 0)
+        );
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
       }

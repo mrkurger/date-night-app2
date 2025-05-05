@@ -37,7 +37,7 @@ describe('CachingService', () => {
       const testData = { id: 1, name: 'Test' };
       const url = '/api/test';
 
-      service.get(url).subscribe(data => {
+      service.get(url).subscribe((data) => {
         expect(data).toEqual(testData);
       });
 
@@ -55,7 +55,7 @@ describe('CachingService', () => {
       httpMock.expectOne(url).flush(testData);
 
       // Second request should use cached data
-      service.get(url).subscribe(data => {
+      service.get(url).subscribe((data) => {
         expect(data).toEqual(testData);
       });
 
@@ -85,7 +85,7 @@ describe('CachingService', () => {
         httpMock.expectOne(url).flush(testData1);
 
         // Verify data is cached
-        service.get(url, cacheTime).subscribe(data => {
+        service.get(url, cacheTime).subscribe((data) => {
           expect(data).toEqual(testData1);
         });
         httpMock.expectNone(url);
@@ -95,7 +95,7 @@ describe('CachingService', () => {
 
         // Second request should fetch fresh data
         let receivedData: any;
-        service.get(url, cacheTime).subscribe(data => {
+        service.get(url, cacheTime).subscribe((data) => {
           receivedData = data;
         });
 
@@ -129,7 +129,7 @@ describe('CachingService', () => {
 
       // Post data and invalidate cache
       let postResponse: any;
-      service.post(url, testData, [invalidateUrl]).subscribe(response => {
+      service.post(url, testData, [invalidateUrl]).subscribe((response) => {
         postResponse = response;
       });
 
@@ -143,7 +143,7 @@ describe('CachingService', () => {
 
       // Verify the cache was invalidated
       let getResponse: any;
-      service.get(invalidateUrl).subscribe(response => {
+      service.get(invalidateUrl).subscribe((response) => {
         getResponse = response;
       });
 
@@ -226,18 +226,18 @@ describe('CachingService', () => {
       // Verify matching cache items are cleared
       let response1: any, response2: any, response3: any;
 
-      service.get(url1).subscribe(data => (response1 = data));
+      service.get(url1).subscribe((data) => (response1 = data));
       const req1 = httpMock.expectOne(url1);
       req1.flush({ id: 1, name: 'New Test 1' });
       expect(response1).toEqual({ id: 1, name: 'New Test 1' });
 
-      service.get(url2).subscribe(data => (response2 = data));
+      service.get(url2).subscribe((data) => (response2 = data));
       const req2 = httpMock.expectOne(url2);
       req2.flush({ id: 2, name: 'New Test 2' });
       expect(response2).toEqual({ id: 2, name: 'New Test 2' });
 
       // This one should still be cached
-      service.get(url3).subscribe(data => (response3 = data));
+      service.get(url3).subscribe((data) => (response3 = data));
       httpMock.expectNone(url3);
       expect(response3).toEqual(testData);
     });

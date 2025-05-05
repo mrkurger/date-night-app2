@@ -66,7 +66,7 @@ export class EncryptionService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   /**
@@ -248,7 +248,7 @@ export class EncryptionService {
               length: 256,
             },
             true,
-            ['encrypt', 'decrypt']
+            ['encrypt', 'decrypt'],
           );
 
           // Store in memory
@@ -284,7 +284,7 @@ export class EncryptionService {
         hash: 'SHA-256',
       },
       true, // extractable
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
   }
 
@@ -316,7 +316,7 @@ export class EncryptionService {
         hash: 'SHA-256',
       },
       true,
-      ['encrypt']
+      ['encrypt'],
     );
 
     const privateKey = await window.crypto.subtle.importKey(
@@ -327,7 +327,7 @@ export class EncryptionService {
         hash: 'SHA-256',
       },
       true,
-      ['decrypt']
+      ['decrypt'],
     );
 
     return { publicKey, privateKey };
@@ -392,7 +392,7 @@ export class EncryptionService {
 
     // Export our public key for the server
     return from(this.exportKeyPair(this.keyPair)).pipe(
-      switchMap(keys =>
+      switchMap((keys) =>
         this.http.post<{
           success: boolean;
           encryptedKey?: string;
@@ -401,9 +401,9 @@ export class EncryptionService {
         }>(`${this.apiUrl}/setup-room`, {
           roomId,
           publicKey: keys.publicKey,
-        })
+        }),
       ),
-      switchMap(async response => {
+      switchMap(async (response) => {
         if (!response.success) {
           console.error('Server reported failure in room encryption setup');
           return false;
@@ -449,7 +449,7 @@ export class EncryptionService {
               const decryptedKeyBuffer = await window.crypto.subtle.decrypt(
                 { name: KEY_PAIR_ALGORITHM },
                 this.keyPair.privateKey,
-                encryptedKeyBuffer
+                encryptedKeyBuffer,
               );
 
               // Import the symmetric key
@@ -458,7 +458,7 @@ export class EncryptionService {
                 decryptedKeyBuffer,
                 { name: SYMMETRIC_ALGORITHM, length: 256 },
                 true,
-                ['encrypt', 'decrypt']
+                ['encrypt', 'decrypt'],
               );
 
               // Store the key in memory
@@ -482,10 +482,10 @@ export class EncryptionService {
           return false;
         }
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error in room encryption setup process:', error);
         return of(false);
-      })
+      }),
     );
   }
 
@@ -525,7 +525,7 @@ export class EncryptionService {
         length: 256,
       },
       true, // extractable
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
   }
 
@@ -556,7 +556,7 @@ export class EncryptionService {
               length: 256,
             },
             true,
-            ['encrypt', 'decrypt']
+            ['encrypt', 'decrypt'],
           );
 
           // Store in memory for future use
@@ -593,7 +593,7 @@ export class EncryptionService {
           name: KEY_PAIR_ALGORITHM,
         },
         this.keyPair.privateKey,
-        encryptedKeyBuffer
+        encryptedKeyBuffer,
       );
 
       // Import the symmetric key
@@ -605,7 +605,7 @@ export class EncryptionService {
           length: 256,
         },
         true,
-        ['encrypt', 'decrypt']
+        ['encrypt', 'decrypt'],
       );
 
       // Store the key in memory
@@ -744,7 +744,7 @@ export class EncryptionService {
   async encryptMessage(
     roomId: string,
     message: string,
-    ttl?: number
+    ttl?: number,
   ): Promise<EncryptedData | null> {
     if (!this.isEncryptionAvailable()) {
       return null;
@@ -769,7 +769,7 @@ export class EncryptionService {
           tagLength: 128,
         },
         roomKey,
-        encodedMessage
+        encodedMessage,
       );
 
       // Extract ciphertext and auth tag
@@ -829,7 +829,7 @@ export class EncryptionService {
           tagLength: 128,
         },
         roomKey,
-        encryptedBuffer
+        encryptedBuffer,
       );
 
       // Decode the decrypted message
@@ -865,15 +865,15 @@ export class EncryptionService {
     }
 
     return from(this.exportKeyPair(this.keyPair)).pipe(
-      switchMap(keys =>
+      switchMap((keys) =>
         this.http.post<{
           success: boolean;
           roomKeyId?: string;
         }>(`${this.apiUrl}/rotate-key/${roomId}`, {
           publicKey: keys.publicKey,
-        })
+        }),
       ),
-      switchMap(async response => {
+      switchMap(async (response) => {
         if (!response.success) {
           console.error('Server reported failure in key rotation');
           return false;
@@ -909,10 +909,10 @@ export class EncryptionService {
           return false;
         }
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error in key rotation process:', error);
         return of(false);
-      })
+      }),
     );
   }
 
@@ -983,7 +983,7 @@ export class EncryptionService {
           console.warn(`Key rotation needed for room ${roomId}`);
 
           // Perform key rotation
-          this.rotateRoomKey(roomId).subscribe(success => {
+          this.rotateRoomKey(roomId).subscribe((success) => {
             if (success) {
               // Update last rotation time
               rotations[roomId].lastRotation = now;

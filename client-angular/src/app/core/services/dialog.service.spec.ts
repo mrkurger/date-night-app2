@@ -46,7 +46,7 @@ describe('DialogService', () => {
         advertiserName: 'Test Advertiser',
       };
 
-      service.openReviewDialog(data).subscribe(result => {
+      service.openReviewDialog(data).subscribe((result) => {
         expect(result).toBe('result');
       });
 
@@ -72,7 +72,7 @@ describe('DialogService', () => {
         contentType: 'review' as const,
       };
 
-      service.openReportDialog(data).subscribe(result => {
+      service.openReportDialog(data).subscribe((result) => {
         expect(result).toBe('report reason');
       });
 
@@ -98,7 +98,7 @@ describe('DialogService', () => {
         reviewContent: 'Had a wonderful time',
       };
 
-      service.openResponseDialog(data).subscribe(result => {
+      service.openResponseDialog(data).subscribe((result) => {
         expect(result).toBe('response text');
       });
 
@@ -115,7 +115,7 @@ describe('DialogService', () => {
     it('should call openResponseDialog with correct parameters', () => {
       spyOn(service, 'openResponseDialog').and.returnValue(of('response'));
 
-      service.respondToReview('123', 'Review Title', 'Review Content').subscribe(result => {
+      service.respondToReview('123', 'Review Title', 'Review Content').subscribe((result) => {
         expect(result).toBe('response');
       });
 
@@ -131,7 +131,7 @@ describe('DialogService', () => {
     it('should call openReportDialog with correct parameters', () => {
       spyOn(service, 'openReportDialog').and.returnValue(of('report reason'));
 
-      service.reportReview('123').subscribe(result => {
+      service.reportReview('123').subscribe((result) => {
         expect(result).toBe('report reason');
       });
 

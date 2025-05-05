@@ -32,10 +32,10 @@ export class ReviewService {
     advertiserId: string,
     page = 1,
     limit = 10,
-    sort = 'newest'
+    sort = 'newest',
   ): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,
     );
   }
 
@@ -50,10 +50,10 @@ export class ReviewService {
     advertiserId: string,
     page = 1,
     limit = 10,
-    sort = 'newest'
+    sort = 'newest',
   ): Observable<{ reviews: Review[]; totalPages: number; totalReviews: number }> {
     return this.http.get<{ reviews: Review[]; totalPages: number; totalReviews: number }>(
-      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,
     );
   }
 
@@ -68,10 +68,10 @@ export class ReviewService {
     adId: string,
     page = 1,
     limit = 10,
-    sort = 'newest'
+    sort = 'newest',
   ): Observable<{ reviews: Review[]; totalPages: number; totalReviews: number }> {
     return this.http.get<{ reviews: Review[]; totalPages: number; totalReviews: number }>(
-      `${this.apiUrl}/ad/${adId}?page=${page}&limit=${limit}&sort=${sort}`
+      `${this.apiUrl}/ad/${adId}?page=${page}&limit=${limit}&sort=${sort}`,
     );
   }
 
@@ -133,7 +133,7 @@ export class ReviewService {
    */
   getTopRatedAdvertisers(limit = 10, minReviews = 3): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/top-rated/advertisers?limit=${limit}&minReviews=${minReviews}`
+      `${this.apiUrl}/top-rated/advertisers?limit=${limit}&minReviews=${minReviews}`,
     );
   }
 

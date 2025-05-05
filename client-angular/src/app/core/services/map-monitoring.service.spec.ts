@@ -84,7 +84,7 @@ describe('MapMonitoringService', () => {
     expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(
       'Map',
       'location_selection',
-      location
+      location,
     );
   });
 
@@ -92,7 +92,7 @@ describe('MapMonitoringService', () => {
     service.trackCurrentLocation(true);
     expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(
       'Map',
-      'current_location_success'
+      'current_location_success',
     );
   });
 

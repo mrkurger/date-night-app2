@@ -82,7 +82,7 @@ export class ReviewFormComponent implements OnInit {
   onSubmit(): void {
     if (this.reviewForm.invalid) {
       // Mark all fields as touched to trigger validation messages
-      Object.keys(this.reviewForm.controls).forEach(key => {
+      Object.keys(this.reviewForm.controls).forEach((key) => {
         const control = this.reviewForm.get(key);
         control?.markAsTouched();
       });

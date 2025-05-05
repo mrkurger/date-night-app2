@@ -331,7 +331,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private telemetryService: TelemetryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       dateRange: ['last7days'],
@@ -360,7 +360,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
     const filters = this.getFiltersFromForm();
 
     this.telemetryService.getErrorStatistics(filters).subscribe({
-      next: data => {
+      next: (data) => {
         this.isLoadingErrors = false;
 
         // Process data for charts and tables
@@ -369,7 +369,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
         // Initialize charts
         this.initErrorCharts(data);
       },
-      error: err => {
+      error: (err) => {
         console.error('Failed to load error data:', err);
         this.isLoadingErrors = false;
       },
@@ -382,7 +382,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
     const filters = this.getFiltersFromForm();
 
     this.telemetryService.getPerformanceStatistics(filters).subscribe({
-      next: data => {
+      next: (data) => {
         this.isLoadingPerformance = false;
 
         // Process data for charts and tables
@@ -391,7 +391,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
         // Initialize charts
         this.initPerformanceCharts(data);
       },
-      error: err => {
+      error: (err) => {
         console.error('Failed to load performance data:', err);
         this.isLoadingPerformance = false;
       },
@@ -586,7 +586,7 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
               },
             },
           },
-        }
+        },
       );
     }
 

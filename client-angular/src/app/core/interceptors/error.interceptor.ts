@@ -15,7 +15,7 @@ import { AuthService } from '../services/auth.service';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -26,7 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigate(['/auth/login']);
         }
         return throwError(() => error);
-      })
+      }),
     );
   }
 }

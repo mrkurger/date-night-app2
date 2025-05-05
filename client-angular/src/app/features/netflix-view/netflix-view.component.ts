@@ -94,7 +94,7 @@ export class NetflixViewComponent implements OnInit {
     private chatService: ChatService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -113,7 +113,7 @@ export class NetflixViewComponent implements OnInit {
     this.loadAds();
 
     // Subscribe to authentication state
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.isAuthenticated = !!user;
     });
   }
@@ -124,7 +124,7 @@ export class NetflixViewComponent implements OnInit {
 
     // First, try to get featured ads
     this.adService.getFeaturedAds().subscribe({
-      next: featuredAds => {
+      next: (featuredAds) => {
         if (featuredAds && featuredAds.length > 0) {
           this.adsByCategory['Featured'] = featuredAds;
           // Set a featured ad for the hero section
@@ -135,12 +135,12 @@ export class NetflixViewComponent implements OnInit {
 
         // Then get trending ads
         this.adService.getTrendingAds().subscribe({
-          next: trendingAds => {
+          next: (trendingAds) => {
             this.adsByCategory['Most Popular'] = trendingAds;
 
             // Get all ads for other categories
             this.adService.getAds().subscribe({
-              next: allAds => {
+              next: (allAds) => {
                 if (allAds && allAds.length > 0) {
                   // If we don't have a featured ad yet, set one from all ads
                   if (!this.featuredAd && allAds.length > 0) {
@@ -161,14 +161,14 @@ export class NetflixViewComponent implements OnInit {
                   this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
 
                   // Set Touring (filter by isTouring flag)
-                  const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
+                  const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
                   this.adsByCategory['Touring'] =
                     touringAds.length > 0
                       ? touringAds
                       : this.shuffleArray([...allAds]).slice(0, 10);
                 } else {
                   // If no ads found, set empty arrays for remaining categories
-                  this.categories.forEach(category => {
+                  this.categories.forEach((category) => {
                     if (!this.adsByCategory[category]) {
                       this.adsByCategory[category] = [];
                     }
@@ -177,14 +177,14 @@ export class NetflixViewComponent implements OnInit {
 
                 this.loading = false;
               },
-              error: err => {
+              error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
                 console.error('Error loading all ads:', err);
               },
             });
           },
-          error: err => {
+          error: (err) => {
             console.error('Error loading trending ads:', err);
             // Continue loading other categories even if trending fails
             this.adsByCategory['Most Popular'] = [];
@@ -193,7 +193,7 @@ export class NetflixViewComponent implements OnInit {
           },
         });
       },
-      error: err => {
+      error: (err) => {
         console.error('Error loading featured ads:', err);
         // Continue loading other categories even if featured fails
         this.adsByCategory['Featured'] = [];
@@ -204,11 +204,11 @@ export class NetflixViewComponent implements OnInit {
 
   private loadTrendingAndRemainingAds(): void {
     this.adService.getTrendingAds().subscribe({
-      next: trendingAds => {
+      next: (trendingAds) => {
         this.adsByCategory['Most Popular'] = trendingAds;
         this.loadRemainingCategories();
       },
-      error: err => {
+      error: (err) => {
         console.error('Error loading trending ads:', err);
         this.adsByCategory['Most Popular'] = [];
         this.loadRemainingCategories();
@@ -221,10 +221,10 @@ export class NetflixViewComponent implements OnInit {
       this.processAllAds(existingAds);
     } else {
       this.adService.getAds().subscribe({
-        next: allAds => {
+        next: (allAds) => {
           this.processAllAds(allAds);
         },
-        error: err => {
+        error: (err) => {
           this.error = 'Failed to load ads. Please try again.';
           this.loading = false;
           console.error('Error loading all ads:', err);
@@ -254,12 +254,12 @@ export class NetflixViewComponent implements OnInit {
       this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
 
       // Set Touring (filter by isTouring flag)
-      const touringAds = allAds.filter(ad => ad.isTouring).slice(0, 10);
+      const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
       this.adsByCategory['Touring'] =
         touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10);
     } else {
       // If no ads found, set empty arrays for remaining categories
-      this.categories.forEach(category => {
+      this.categories.forEach((category) => {
         if (!this.adsByCategory[category]) {
           this.adsByCategory[category] = [];
         }
@@ -311,7 +311,7 @@ export class NetflixViewComponent implements OnInit {
       next: () => {
         this.notificationService.success('Added to your favorites');
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to like ad');
         console.error('Error liking ad:', err);
       },
@@ -334,10 +334,10 @@ export class NetflixViewComponent implements OnInit {
 
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
-      next: room => {
+      next: (room) => {
         this.router.navigateByUrl(`/chat/${room._id}`);
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
       },

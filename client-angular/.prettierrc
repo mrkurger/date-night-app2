@@ -1,24 +1,9 @@
 {
   "singleQuote": true,
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "printWidth": 100,
   "tabWidth": 2,
   "semi": true,
   "bracketSpacing": true,
-  "arrowParens": "avoid",
-  "endOfLine": "lf",
-  "overrides": [
-    {
-      "files": "*.html",
-      "options": {
-        "parser": "html"
-      }
-    },
-    {
-      "files": "*.component.html",
-      "options": {
-        "parser": "angular"
-      }
-    }
-  ]
+  "endOfLine": "lf"
 }

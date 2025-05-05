@@ -15,10 +15,10 @@ export class AdService {
 
   getAds(filters?: any): Observable<Ad[]> {
     return this.http.get<Ad[]>(this.apiUrl, { params: filters }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching ads from API:', error);
         return of(this.getMockAds());
-      })
+      }),
     );
   }
 
@@ -106,22 +106,22 @@ export class AdService {
         serviceTags.push(
           ...['GFE', 'Dinner Date', 'Overnight', 'Travel Companion'].slice(
             0,
-            Math.floor(Math.random() * 3) + 1
-          )
+            Math.floor(Math.random() * 3) + 1,
+          ),
         );
       } else if (category === 'Massage') {
         serviceTags.push(
           ...['Swedish', 'Deep Tissue', 'Aromatherapy', 'Hot Stone'].slice(
             0,
-            Math.floor(Math.random() * 3) + 1
-          )
+            Math.floor(Math.random() * 3) + 1,
+          ),
         );
       } else if (category === 'Striptease') {
         serviceTags.push(
           ...['Private Show', 'Bachelor Party', 'Birthday', 'Corporate Event'].slice(
             0,
-            Math.floor(Math.random() * 3) + 1
-          )
+            Math.floor(Math.random() * 3) + 1,
+          ),
         );
       }
 
@@ -150,7 +150,7 @@ export class AdService {
         clickCount: Math.floor(Math.random() * 500),
         inquiryCount: Math.floor(Math.random() * 100),
         createdAt: new Date(
-          Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000
+          Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000,
         ).toISOString(),
         updatedAt: new Date().toISOString(),
         tags: [...serviceTags, category, location, isTouring ? 'Touring' : ''],
@@ -185,7 +185,7 @@ export class AdService {
 
   updateAdImages(
     id: string | { city: string; county: string },
-    formData: FormData
+    formData: FormData,
   ): Observable<Ad> {
     const idStr = typeof id === 'string' ? id : JSON.stringify(id);
     return this.http.put<Ad>(`${this.apiUrl}/${idStr}/images`, formData);
@@ -198,7 +198,7 @@ export class AdService {
 
   deleteAdImage(
     adId: string | { city: string; county: string },
-    imageId: string
+    imageId: string,
   ): Observable<void> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.delete<void>(`${this.apiUrl}/${adIdStr}/images/${imageId}`);
@@ -240,7 +240,7 @@ export class AdService {
 
   recordSwipe(
     adId: string | { city: string; county: string },
-    direction: 'left' | 'right'
+    direction: 'left' | 'right',
   ): Observable<void> {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
     return this.http.post<void>(`${this.apiUrl}/${adIdStr}/swipe`, { direction });
@@ -277,7 +277,7 @@ export class AdService {
 
   toggleActiveStatus(
     id: string | { city: string; county: string },
-    isActive: boolean
+    isActive: boolean,
   ): Observable<void> {
     const idStr = typeof id === 'string' ? id : JSON.stringify(id);
     return this.http.patch<void>(`${this.apiUrl}/${idStr}/status`, { isActive });
@@ -295,7 +295,7 @@ export class AdService {
     longitude: number,
     latitude: number,
     radius: number,
-    categories?: string[]
+    categories?: string[],
   ): Observable<any[]> {
     const params: any = {
       longitude: longitude.toString(),
@@ -308,11 +308,11 @@ export class AdService {
     }
 
     return this.http.get<any[]>(`${this.apiUrl}/location-search`, { params }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error searching by location:', error);
         // Return mock data for development
         return of(this.getMockLocationResults(longitude, latitude, radius));
-      })
+      }),
     );
   }
 

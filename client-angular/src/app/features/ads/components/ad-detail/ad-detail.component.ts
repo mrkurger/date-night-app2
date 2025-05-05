@@ -70,7 +70,7 @@ export class AdDetailComponent implements OnInit {
     private router: Router,
     private adService: AdService,
     private userService: UserService,
-    private chatService: ChatService
+    private chatService: ChatService,
   ) {}
 
   ngOnInit(): void {
@@ -87,11 +87,11 @@ export class AdDetailComponent implements OnInit {
 
   private loadAd(adId: string): void {
     this.adService.getAdById(adId).subscribe({
-      next: ad => {
+      next: (ad) => {
         this.ad = ad;
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ad details';
         this.loading = false;
         console.error(err);
@@ -101,8 +101,8 @@ export class AdDetailComponent implements OnInit {
 
   private checkFavoriteStatus(adId: string): void {
     this.userService.checkFavorite(adId).subscribe({
-      next: isFavorited => (this.isFavorited = isFavorited),
-      error: err => console.error('Error checking favorite status:', err),
+      next: (isFavorited) => (this.isFavorited = isFavorited),
+      error: (err) => console.error('Error checking favorite status:', err),
     });
   }
 
@@ -115,8 +115,8 @@ export class AdDetailComponent implements OnInit {
     }
 
     this.chatService.createOrGetChatRoom(this.ad.advertiser).subscribe({
-      next: roomId => this.router.navigate(['/chat', roomId]),
-      error: err => {
+      next: (roomId) => this.router.navigate(['/chat', roomId]),
+      error: (err) => {
         console.error('Error starting chat:', err);
         this.error = 'Failed to start chat';
       },
@@ -146,7 +146,7 @@ export class AdDetailComponent implements OnInit {
     const method = this.isFavorited ? 'removeFavorite' : 'addFavorite';
     this.userService[method](this.ad._id).subscribe({
       next: () => (this.isFavorited = !this.isFavorited),
-      error: err => console.error('Error toggling favorite:', err),
+      error: (err) => console.error('Error toggling favorite:', err),
     });
   }
 

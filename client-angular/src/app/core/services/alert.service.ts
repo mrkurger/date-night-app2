@@ -34,13 +34,13 @@ export class AlertService {
 
   constructor(
     private http: HttpClient,
-    private telemetrySocketService: TelemetrySocketService
+    private telemetrySocketService: TelemetrySocketService,
   ) {
     // Initialize by loading active alerts
     this.loadActiveAlerts();
 
     // Subscribe to real-time alert events if WebSocket is available
-    this.telemetrySocketService.connectionStatus$.subscribe(connected => {
+    this.telemetrySocketService.connectionStatus$.subscribe((connected) => {
       if (connected) {
         this.subscribeToAlertEvents();
       }
@@ -59,10 +59,10 @@ export class AlertService {
    */
   getAlerts(): Observable<Alert[]> {
     return this.http.get<Alert[]>(this.apiUrl).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching alerts:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -113,10 +113,10 @@ export class AlertService {
    */
   getActiveAlertEvents(): Observable<AlertEvent[]> {
     return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/active`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching active alert events:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -125,13 +125,13 @@ export class AlertService {
    * @param filters Optional filters for the alert events
    */
   getAlertEventHistory(
-    filters?: Record<string, string | number | boolean>
+    filters?: Record<string, string | number | boolean>,
   ): Observable<AlertEvent[]> {
     return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/history`, { params: filters }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching alert event history:', error);
         return of([]);
-      })
+      }),
     );
   }
 
@@ -144,14 +144,14 @@ export class AlertService {
       tap(() => {
         // Update the active alerts list
         const currentAlerts = this.activeAlerts.value;
-        const updatedAlerts = currentAlerts.map(alert =>
-          alert.id === eventId ? { ...alert, acknowledged: true } : alert
+        const updatedAlerts = currentAlerts.map((alert) =>
+          alert.id === eventId ? { ...alert, acknowledged: true } : alert,
         );
         this.activeAlerts.next(updatedAlerts);
 
         // Update unacknowledged count
         this.updateUnacknowledgedCount();
-      })
+      }),
     );
   }
 
@@ -177,7 +177,7 @@ export class AlertService {
     name: string,
     description: string,
     threshold = 5,
-    timeWindow = AlertTimeWindow.HOURS_1
+    timeWindow = AlertTimeWindow.HOURS_1,
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -216,7 +216,7 @@ export class AlertService {
     threshold: number,
     name: string,
     description: string,
-    timeWindow = AlertTimeWindow.MINUTES_15
+    timeWindow = AlertTimeWindow.MINUTES_15,
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -256,7 +256,7 @@ export class AlertService {
     name: string,
     description: string,
     endpoint?: string,
-    timeWindow = AlertTimeWindow.MINUTES_30
+    timeWindow = AlertTimeWindow.MINUTES_30,
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -297,7 +297,7 @@ export class AlertService {
     name: string,
     description: string,
     threshold = 1,
-    timeWindow = AlertTimeWindow.HOURS_24
+    timeWindow = AlertTimeWindow.HOURS_24,
   ): Observable<Alert> {
     const alert: Alert = {
       name,
@@ -328,7 +328,7 @@ export class AlertService {
    * Load active alerts from the server
    */
   private loadActiveAlerts(): void {
-    this.getActiveAlertEvents().subscribe(alerts => {
+    this.getActiveAlertEvents().subscribe((alerts) => {
       this.activeAlerts.next(alerts);
       this.updateUnacknowledgedCount();
     });
@@ -341,11 +341,11 @@ export class AlertService {
     this.telemetrySocketService.subscribe('alerts');
 
     // Listen for alert events
-    this.telemetrySocketService.alertEvents$.subscribe(event => {
+    this.telemetrySocketService.alertEvents$.subscribe((event) => {
       const currentAlerts = this.activeAlerts.value;
 
       // Add the new alert if it's not already in the list
-      if (!currentAlerts.some(alert => alert.id === event.id)) {
+      if (!currentAlerts.some((alert) => alert.id === event.id)) {
         this.activeAlerts.next([...currentAlerts, event]);
         this.updateUnacknowledgedCount();
       }
@@ -356,7 +356,7 @@ export class AlertService {
    * Update the count of unacknowledged alerts
    */
   private updateUnacknowledgedCount(): void {
-    const count = this.activeAlerts.value.filter(alert => !alert.acknowledged).length;
+    const count = this.activeAlerts.value.filter((alert) => !alert.acknowledged).length;
     this.unacknowledgedCount.next(count);
   }
 

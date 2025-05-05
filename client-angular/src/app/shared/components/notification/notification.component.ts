@@ -131,14 +131,14 @@ export interface ToastNotification {
         style({
           transform: 'translateX(0)',
           opacity: 1,
-        })
+        }),
       ),
       state(
         'hidden',
         style({
           transform: 'translateX(100%)',
           opacity: 0,
-        })
+        }),
       ),
       transition('hidden => visible', [animate('300ms ease-out')]),
       transition('visible => hidden', [animate('300ms ease-in')]),
@@ -160,25 +160,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.notificationService.toasts$.subscribe(notifications => {
+      this.notificationService.toasts$.subscribe((notifications) => {
         // Handle array of notifications
         if (Array.isArray(notifications)) {
           // Process only new notifications that aren't already displayed
-          const currentIds = this.activeNotifications.map(n => n.id);
-          notifications.forEach(notification => {
+          const currentIds = this.activeNotifications.map((n) => n.id);
+          notifications.forEach((notification) => {
             if (!notification.id || !currentIds.includes(notification.id)) {
               this.showNotification(notification);
             }
           });
         }
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     // Clear any remaining timeouts
-    this.activeNotifications.forEach(notification => {
+    this.activeNotifications.forEach((notification) => {
       if (notification.timeoutId) {
         clearTimeout(notification.timeoutId);
       }

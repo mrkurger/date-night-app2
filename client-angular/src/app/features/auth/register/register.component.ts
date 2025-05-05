@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {
     this.registerForm = this.fb.group(
       {
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
         role: ['user', Validators.required],
         termsAccepted: [false, Validators.requiredTrue],
       },
-      { validators: this.passwordMatchValidator }
+      { validators: this.passwordMatchValidator },
     );
   }
 
@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit {
         next: () => {
           this.router.navigate(['/dashboard']);
         },
-        error: error => {
+        error: (error) => {
           this.errorMessage = error.message || 'Registration failed. Please try again.';
         },
       });

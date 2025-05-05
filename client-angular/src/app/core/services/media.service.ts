@@ -13,7 +13,7 @@ export class MediaService {
 
   constructor(
     private http: HttpClient,
-    private cachingService: CachingService
+    private cachingService: CachingService,
   ) {}
 
   /**
@@ -81,7 +81,7 @@ export class MediaService {
     adId: string,
     mediaId: string,
     status: 'approved' | 'rejected',
-    notes = ''
+    notes = '',
   ): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${adId}/moderate/${mediaId}`, { status, notes });
   }

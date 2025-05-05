@@ -59,11 +59,11 @@ export class SwipeViewComponent implements OnInit {
 
   loadAds(): void {
     this.adService.getSwipeAds().subscribe({
-      next: ads => {
+      next: (ads) => {
         this.ads = ads;
         this.showNextAd();
       },
-      error: err => console.error('Error loading ads:', err),
+      error: (err) => console.error('Error loading ads:', err),
     });
   }
 
@@ -80,7 +80,7 @@ export class SwipeViewComponent implements OnInit {
     if (this.currentAd) {
       this.adService.recordSwipe(this.currentAd._id, direction).subscribe({
         next: () => this.showNextAd(),
-        error: err => console.error('Error recording swipe:', err),
+        error: (err) => console.error('Error recording swipe:', err),
       });
     }
   }

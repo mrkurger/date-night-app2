@@ -59,7 +59,7 @@ describe('LocationService', () => {
     it('should return counties from API when request succeeds', () => {
       const mockCounties = ['Oslo', 'Viken', 'Innlandet'];
 
-      service.getCounties().subscribe(counties => {
+      service.getCounties().subscribe((counties) => {
         expect(counties).toEqual(mockCounties);
       });
 
@@ -71,7 +71,7 @@ describe('LocationService', () => {
     it('should fall back to local data when API request fails', () => {
       const expectedCounties = getAllCounties();
 
-      service.getCounties().subscribe(counties => {
+      service.getCounties().subscribe((counties) => {
         expect(counties).toEqual(expectedCounties);
       });
 
@@ -88,7 +88,7 @@ describe('LocationService', () => {
         { name: 'Nordstrand', coordinates: [10.8007, 59.8651] as [number, number] },
       ];
 
-      service.getCitiesByCounty(countyName).subscribe(cities => {
+      service.getCitiesByCounty(countyName).subscribe((cities) => {
         expect(cities).toEqual(mockCities);
       });
 
@@ -101,7 +101,7 @@ describe('LocationService', () => {
       const countyName = 'Oslo';
       const expectedCities = getCitiesByCounty(countyName);
 
-      service.getCitiesByCounty(countyName).subscribe(cities => {
+      service.getCitiesByCounty(countyName).subscribe((cities) => {
         expect(cities).toEqual(expectedCities);
       });
 
@@ -114,7 +114,7 @@ describe('LocationService', () => {
     it('should return all cities from API when request succeeds', () => {
       const mockCities = ['Oslo', 'Bergen', 'Trondheim'];
 
-      service.getAllCities().subscribe(cities => {
+      service.getAllCities().subscribe((cities) => {
         expect(cities).toEqual(mockCities);
       });
 
@@ -124,7 +124,7 @@ describe('LocationService', () => {
     });
 
     it('should fall back to local data when API request fails', () => {
-      service.getAllCities().subscribe(cities => {
+      service.getAllCities().subscribe((cities) => {
         // Just check that we get a non-empty array of strings
         expect(cities.length).toBeGreaterThan(0);
         expect(typeof cities[0]).toBe('string');
@@ -140,7 +140,7 @@ describe('LocationService', () => {
       const cityName = 'Oslo';
       const mockCoordinates: [number, number] = [10.7522, 59.9139];
 
-      service.getCityCoordinates(cityName).subscribe(coordinates => {
+      service.getCityCoordinates(cityName).subscribe((coordinates) => {
         expect(coordinates).toEqual(mockCoordinates);
       });
 
@@ -153,7 +153,7 @@ describe('LocationService', () => {
       const cityName = 'Oslo';
       const expectedCoordinates = getCityCoordinates(cityName);
 
-      service.getCityCoordinates(cityName).subscribe(coordinates => {
+      service.getCityCoordinates(cityName).subscribe((coordinates) => {
         expect(coordinates).toEqual(expectedCoordinates);
       });
 
@@ -164,7 +164,7 @@ describe('LocationService', () => {
     it('should return null for non-existent city', () => {
       const cityName = 'NonExistentCity';
 
-      service.getCityCoordinates(cityName).subscribe(coordinates => {
+      service.getCityCoordinates(cityName).subscribe((coordinates) => {
         expect(coordinates).toBeNull();
       });
 
@@ -174,7 +174,7 @@ describe('LocationService', () => {
   });
 
   describe('getCurrentLocation', () => {
-    it('should return the current position when geolocation is available', done => {
+    it('should return the current position when geolocation is available', (done) => {
       // Mock the navigator.geolocation
       const mockPosition = {
         coords: {
@@ -189,17 +189,17 @@ describe('LocationService', () => {
         timestamp: Date.now(),
       } as GeolocationPosition;
 
-      spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake(success => {
+      spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success) => {
         success(mockPosition);
       });
 
-      service.getCurrentLocation().subscribe(position => {
+      service.getCurrentLocation().subscribe((position) => {
         expect(position).toBe(mockPosition);
         done();
       });
     });
 
-    it('should handle errors when geolocation fails', done => {
+    it('should handle errors when geolocation fails', (done) => {
       // Mock the navigator.geolocation
       spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success, error) => {
         error(new GeolocationPositionError());
@@ -209,10 +209,10 @@ describe('LocationService', () => {
         () => {
           fail('Should have failed');
         },
-        error => {
+        (error) => {
           expect(error).toBeTruthy();
           done();
-        }
+        },
       );
     });
   });
@@ -227,12 +227,12 @@ describe('LocationService', () => {
         distance: 0.5,
       };
 
-      service.findNearestCity(latitude, longitude).subscribe(result => {
+      service.findNearestCity(latitude, longitude).subscribe((result) => {
         expect(result).toEqual(mockResponse);
       });
 
       const req = httpMock.expectOne(
-        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`
+        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -242,14 +242,14 @@ describe('LocationService', () => {
       const latitude = 59.9139;
       const longitude = 10.7522;
 
-      service.findNearestCity(latitude, longitude).subscribe(result => {
+      service.findNearestCity(latitude, longitude).subscribe((result) => {
         expect(result.city).toBeTruthy();
         expect(result.county).toBeTruthy();
         expect(typeof result.distance).toBe('number');
       });
 
       const req = httpMock.expectOne(
-        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`
+        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,
       );
       req.error(new ErrorEvent('Network error'));
     });

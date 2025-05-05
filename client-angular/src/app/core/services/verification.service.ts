@@ -114,7 +114,7 @@ export class VerificationService {
     verificationId: string,
     type: string,
     reason: string,
-    notes?: string
+    notes?: string,
   ): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/reject`, {
       verificationId,

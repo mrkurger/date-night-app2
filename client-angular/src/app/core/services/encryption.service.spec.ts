@@ -179,7 +179,7 @@ describe('EncryptionService', () => {
 
       // Mock decryption
       spyOn(window.crypto.subtle, 'decrypt').and.resolveTo(
-        new TextEncoder().encode(originalMessage).buffer
+        new TextEncoder().encode(originalMessage).buffer,
       );
       spyOn(service as any, 'base64ToArrayBuffer').and.returnValue(new ArrayBuffer(8));
 
@@ -220,13 +220,13 @@ describe('EncryptionService', () => {
   });
 
   describe('setupRoomEncryption', () => {
-    it('should set up room encryption successfully', done => {
+    it('should set up room encryption successfully', (done) => {
       const roomId = 'test-room-id';
 
       spyOn(service, 'isEncryptionAvailable').and.returnValue(true);
       spyOn(service as any, 'generateSymmetricKey').and.resolveTo({} as CryptoKey);
 
-      service.setupRoomEncryption(roomId).subscribe(result => {
+      service.setupRoomEncryption(roomId).subscribe((result) => {
         expect(result).toBeTrue();
         expect(service['roomKeys'].has(roomId)).toBeTrue();
         done();
@@ -238,19 +238,19 @@ describe('EncryptionService', () => {
       req.flush({ success: true });
     });
 
-    it('should return false if encryption is not available', done => {
+    it('should return false if encryption is not available', (done) => {
       spyOn(service, 'isEncryptionAvailable').and.returnValue(false);
 
-      service.setupRoomEncryption('room-id').subscribe(result => {
+      service.setupRoomEncryption('room-id').subscribe((result) => {
         expect(result).toBeFalse();
         done();
       });
     });
 
-    it('should handle server errors', done => {
+    it('should handle server errors', (done) => {
       spyOn(service, 'isEncryptionAvailable').and.returnValue(true);
 
-      service.setupRoomEncryption('room-id').subscribe(result => {
+      service.setupRoomEncryption('room-id').subscribe((result) => {
         expect(result).toBeFalse();
         done();
       });

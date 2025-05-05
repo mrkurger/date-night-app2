@@ -42,7 +42,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef<HTMLImageElement>,
     private renderer: Renderer2,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
       this.renderer.setAttribute(
         this.el.nativeElement,
         'src',
-        'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+        'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
       );
     }
 
@@ -80,8 +80,8 @@ export class LazyImageDirective implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       if ('IntersectionObserver' in window) {
         this.observer = new IntersectionObserver(
-          entries => {
-            entries.forEach(entry => {
+          (entries) => {
+            entries.forEach((entry) => {
               if (entry.isIntersecting && !this.isLoaded && !this.hasError) {
                 this.loadImage();
               }
@@ -90,7 +90,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
           {
             threshold: this.threshold,
             rootMargin: this.rootMargin,
-          }
+          },
         );
 
         this.observer.observe(this.el.nativeElement);

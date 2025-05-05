@@ -88,7 +88,7 @@ export class TinderComponent implements OnInit {
     private chatService: ChatService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {
     // Initialize filter form
     this.filterForm = this.fb.group({
@@ -106,7 +106,7 @@ export class TinderComponent implements OnInit {
     this.loadSwipeAds();
 
     // Check authentication status
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.isAuthenticated = !!user;
     });
   }
@@ -123,7 +123,7 @@ export class TinderComponent implements OnInit {
     const filters = this.filterForm.value;
 
     this.adService.getSwipeAds(filters).subscribe({
-      next: ads => {
+      next: (ads) => {
         if (ads && ads.length > 0) {
           this.ads = ads;
           this.currentAd = ads[0];
@@ -135,7 +135,7 @@ export class TinderComponent implements OnInit {
         }
         this.loading = false;
       },
-      error: err => {
+      error: (err) => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
         console.error('Error loading swipe ads:', err);
@@ -168,7 +168,7 @@ export class TinderComponent implements OnInit {
           this.notificationService.success('Added to your favorites');
         }
       },
-      error: err => {
+      error: (err) => {
         console.error('Error recording swipe:', err);
       },
     });
@@ -176,7 +176,7 @@ export class TinderComponent implements OnInit {
     // Move to the next card after animation
     setTimeout(() => {
       // Remove the current ad from the array
-      this.ads = this.ads.filter(ad => ad._id !== currentAdId);
+      this.ads = this.ads.filter((ad) => ad._id !== currentAdId);
 
       // Set the next ad as current
       this.currentAd = this.nextAd;
@@ -262,10 +262,10 @@ export class TinderComponent implements OnInit {
         : JSON.stringify(this.currentAd._id);
 
     this.chatService.createAdRoom(adId as string).subscribe({
-      next: room => {
+      next: (room) => {
         this.router.navigateByUrl(`/chat/${room._id}`);
       },
-      error: err => {
+      error: (err) => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
       },
@@ -284,7 +284,7 @@ export class TinderComponent implements OnInit {
     }
 
     // Convert ad.media to TinderCardMedia format
-    return ad.media.map(item => ({
+    return ad.media.map((item) => ({
       url: item.url,
       type: item.type === 'image' || item.type === 'video' ? item.type : 'image',
     }));

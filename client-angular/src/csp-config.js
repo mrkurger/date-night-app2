@@ -1,6 +1,6 @@
 /**
  * Content Security Policy (CSP) Configuration for Angular Client
- * 
+ *
  * This script adds a CSP meta tag to the index.html file at build time.
  * It's used by the Angular build process to inject the appropriate CSP.
  */
@@ -9,7 +9,7 @@
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for configuration settings (csp-config)
-// 
+//
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
@@ -25,16 +25,16 @@ const cspDirectives = [
   "default-src 'self'",
   // In development, we need unsafe-eval for Angular's JIT compilation
   // In production, we use AOT compilation so unsafe-eval is not needed
-  `script-src 'self' ${isDevelopment ? "'unsafe-eval' 'unsafe-inline'" : ""}`,
+  `script-src 'self' ${isDevelopment ? "'unsafe-eval' 'unsafe-inline'" : ''}`,
   // Angular requires unsafe-inline for styles
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://*.googleapis.com",
-  `connect-src 'self' ws: wss: ${isDevelopment ? "http://localhost:* ws://localhost:*" : ""}`,
+  `connect-src 'self' ws: wss: ${isDevelopment ? 'http://localhost:* ws://localhost:*' : ''}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'self'"
+  "frame-ancestors 'self'",
 ].join('; ');
 
 // Path to index.html
@@ -52,9 +52,9 @@ fs.readFile(indexPath, 'utf8', (err, data) => {
     // Update existing CSP meta tag
     const updatedData = data.replace(
       /<meta http-equiv="Content-Security-Policy"[^>]*>/,
-      `<meta http-equiv="Content-Security-Policy" content="${cspDirectives}">`
+      `<meta http-equiv="Content-Security-Policy" content="${cspDirectives}">`,
     );
-    
+
     fs.writeFile(indexPath, updatedData, 'utf8', (err) => {
       if (err) {
         console.error('Error updating CSP in index.html:', err);
@@ -66,9 +66,9 @@ fs.readFile(indexPath, 'utf8', (err, data) => {
     // Add CSP meta tag after the first <head> tag
     const updatedData = data.replace(
       '<head>',
-      `<head>\n  <meta http-equiv="Content-Security-Policy" content="${cspDirectives}">`
+      `<head>\n  <meta http-equiv="Content-Security-Policy" content="${cspDirectives}">`,
     );
-    
+
     fs.writeFile(indexPath, updatedData, 'utf8', (err) => {
       if (err) {
         console.error('Error adding CSP to index.html:', err);

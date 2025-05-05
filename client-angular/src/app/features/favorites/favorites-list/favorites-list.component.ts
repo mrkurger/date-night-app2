@@ -586,7 +586,7 @@ export class FavoritesListComponent implements OnInit {
   constructor(
     private favoriteService: FavoriteService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     // Set up debounced search
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
@@ -603,8 +603,8 @@ export class FavoritesListComponent implements OnInit {
     this.loading = true;
 
     this.favoriteService.getFavorites(this.filterOptions).subscribe({
-      next: favorites => {
-        this.favorites = favorites.map(favorite => ({
+      next: (favorites) => {
+        this.favorites = favorites.map((favorite) => ({
           ...favorite,
           selected: false,
         }));
@@ -619,7 +619,7 @@ export class FavoritesListComponent implements OnInit {
 
   loadUserTags(): void {
     this.favoriteService.getUserTags().subscribe({
-      next: tags => {
+      next: (tags) => {
         this.userTags = tags;
       },
       error: (error: Error) => {
@@ -649,7 +649,7 @@ export class FavoritesListComponent implements OnInit {
   removeFavorite(adId: string): void {
     this.favoriteService.removeFavorite(adId).subscribe({
       next: () => {
-        this.favorites = this.favorites.filter(favorite => favorite.ad._id !== adId);
+        this.favorites = this.favorites.filter((favorite) => favorite.ad._id !== adId);
         this.notificationService.success('Removed from favorites');
       },
       error: (error: Error) => {
@@ -664,9 +664,9 @@ export class FavoritesListComponent implements OnInit {
     const adIds = this.selectedFavorites;
 
     this.favoriteService.removeFavoritesBatch(adIds).subscribe({
-      next: result => {
+      next: (result) => {
         this.favorites = this.favorites.filter(
-          favorite => !adIds.includes(this.getAdIdAsString(favorite.ad._id))
+          (favorite) => !adIds.includes(this.getAdIdAsString(favorite.ad._id)),
         );
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
@@ -679,10 +679,10 @@ export class FavoritesListComponent implements OnInit {
 
   toggleNotifications(favorite: Favorite): void {
     this.favoriteService.toggleNotifications(this.getAdIdAsString(favorite.ad._id)).subscribe({
-      next: response => {
+      next: (response) => {
         favorite.notificationsEnabled = response.notificationsEnabled;
         this.notificationService.success(
-          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`
+          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`,
         );
       },
       error: (error: Error) => {
@@ -702,7 +702,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
         this.updateNotes(favorite, result);
       }
@@ -720,7 +720,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')
@@ -745,7 +745,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')
@@ -771,7 +771,7 @@ export class FavoritesListComponent implements OnInit {
 
   updateTags(favorite: Favorite, tags: string[]): void {
     this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), tags).subscribe({
-      next: response => {
+      next: (response) => {
         favorite.tags = tags;
         this.notificationService.success('Tags updated');
         this.loadUserTags(); // Refresh tag list
@@ -789,13 +789,13 @@ export class FavoritesListComponent implements OnInit {
     let completed = 0;
     let failed = 0;
 
-    this.selectedFavorites.forEach(adId => {
+    this.selectedFavorites.forEach((adId) => {
       this.favoriteService.updateTags(adId, tags).subscribe({
         next: () => {
           completed++;
 
           // Find and update the favorite in the list
-          const favorite = this.favorites.find(f => this.getAdIdAsString(f.ad._id) === adId);
+          const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
           if (favorite) {
             favorite.tags = [...tags];
           }
@@ -826,7 +826,7 @@ export class FavoritesListComponent implements OnInit {
 
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
     this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
-      next: response => {
+      next: (response) => {
         favorite.priority = priority;
         this.notificationService.success(`Priority set to ${priority}`);
       },
@@ -843,13 +843,13 @@ export class FavoritesListComponent implements OnInit {
     let completed = 0;
     let failed = 0;
 
-    this.selectedFavorites.forEach(adId => {
+    this.selectedFavorites.forEach((adId) => {
       this.favoriteService.updatePriority(adId, priority).subscribe({
         next: () => {
           completed++;
 
           // Find and update the favorite in the list
-          const favorite = this.favorites.find(f => this.getAdIdAsString(f.ad._id) === adId);
+          const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
           if (favorite) {
             favorite.priority = priority;
           }
@@ -879,16 +879,16 @@ export class FavoritesListComponent implements OnInit {
 
   onFavoriteRemoved(isFavorite: boolean, favorite: Favorite): void {
     if (!isFavorite) {
-      this.favorites = this.favorites.filter(f => f.ad._id !== favorite.ad._id);
+      this.favorites = this.favorites.filter((f) => f.ad._id !== favorite.ad._id);
       this.updateSelectedFavorites();
     }
   }
 
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
-      .filter(favorite => favorite.selected)
-      .map(favorite =>
-        typeof favorite.ad === 'string' ? favorite.ad : this.getAdIdAsString(favorite.ad._id)
+      .filter((favorite) => favorite.selected)
+      .map((favorite) =>
+        typeof favorite.ad === 'string' ? favorite.ad : this.getAdIdAsString(favorite.ad._id),
       );
   }
 

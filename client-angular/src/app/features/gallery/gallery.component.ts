@@ -99,19 +99,19 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
     // Subscribe to preference changes
     this.subscriptions.push(
-      this.userPreferencesService.preferences$.subscribe(prefs => {
+      this.userPreferencesService.preferences$.subscribe((prefs) => {
         if (prefs.defaultViewType === 'list') {
           this.viewMode = 'list';
         } else {
           this.viewMode = 'grid';
         }
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**

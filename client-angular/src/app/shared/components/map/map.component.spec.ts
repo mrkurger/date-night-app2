@@ -58,11 +58,11 @@ spyOn(L, 'map').and.returnValue(mockMap);
 spyOn(L, 'marker').and.returnValue(mockMarker);
 spyOn(L, 'popup').and.returnValue(mockPopup);
 spyOn(L, 'icon').and.returnValue(
-  jasmine.createSpyObj('Icon', ['addTo', 'createIcon', 'createShadow'], { options: {} })
+  jasmine.createSpyObj('Icon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),
 );
 spyOn(L, 'tileLayer').and.returnValue(jasmine.createSpyObj('TileLayer', ['addTo']));
 spyOn(L, 'divIcon').and.returnValue(
-  jasmine.createSpyObj('DivIcon', ['addTo', 'createIcon', 'createShadow'], { options: {} })
+  jasmine.createSpyObj('DivIcon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),
 );
 
 // Test host component to test @Input and @Output
@@ -178,7 +178,7 @@ describe('MapComponent', () => {
 
     // Simulate map click by calling the callback directly
     // First, find the 'on' call for the click event
-    const clickHandler = mockMap.on.calls.all().find(call => call.args[0] === 'click')?.args[1];
+    const clickHandler = mockMap.on.calls.all().find((call) => call.args[0] === 'click')?.args[1];
     expect(clickHandler).toBeDefined();
 
     // Call the click handler with a mock event
@@ -233,7 +233,7 @@ describe('MapComponent', () => {
     component.updateMarkers([testMarker]);
 
     // Simulate marker click by finding the marker click handler
-    const markerClickHandler = mockMarker.on.calls.all().find(call => call.args[0] === 'click')
+    const markerClickHandler = mockMarker.on.calls.all().find((call) => call.args[0] === 'click')
       ?.args[1];
     expect(markerClickHandler).toBeDefined();
 
@@ -248,7 +248,7 @@ describe('MapComponent', () => {
   it('should show current location when enabled', () => {
     // Mock geolocation API
     const mockGeolocation = {
-      getCurrentPosition: jasmine.createSpy('getCurrentPosition').and.callFake(success => {
+      getCurrentPosition: jasmine.createSpy('getCurrentPosition').and.callFake((success) => {
         success({
           coords: {
             latitude: 60.0,

@@ -92,14 +92,14 @@ describe('Validation Utilities', () => {
           requireLowercase: true,
           requireNumbers: true,
           requireSpecialChars: false,
-        })
+        }),
       ).toBe(true);
 
       // Shorter minimum length
       expect(
         isValidPassword('Pass1!', {
           minLength: 6,
-        })
+        }),
       ).toBe(true);
     });
   });
@@ -117,7 +117,7 @@ describe('Validation Utilities', () => {
         },
         {
           validators: matchingFieldsValidator('field1', 'field2', 'fieldsMismatch'),
-        }
+        },
       );
     });
 
@@ -153,7 +153,7 @@ describe('Validation Utilities', () => {
         },
         {
           validators: passwordMatchValidator(),
-        }
+        },
       );
     });
 

@@ -38,15 +38,15 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private adService: AdService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
   ) {}
 
   ngOnInit(): void {
     // Check authentication status
     this.subscriptions.push(
-      this.authService.currentUser$.subscribe(user => {
+      this.authService.currentUser$.subscribe((user) => {
         this.isAuthenticated = !!user;
-      })
+      }),
     );
 
     // Load premium ads for the sidebar
@@ -54,30 +54,30 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
     // Subscribe to theme changes
     this.subscriptions.push(
-      this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.themeService.isDarkMode$.subscribe((isDarkMode) => {
         this.isDarkMode = isDarkMode;
-      })
+      }),
     );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   loadPremiumAds(): void {
     this.loading = true;
     this.subscriptions.push(
       this.adService.getFeaturedAds().subscribe({
-        next: ads => {
+        next: (ads) => {
           this.premiumAds = ads.slice(0, 5); // Show top 5 premium ads
           this.loading = false;
         },
-        error: err => {
+        error: (err) => {
           console.error('Error loading premium ads:', err);
           this.loading = false;
         },
-      })
+      }),
     );
   }
 

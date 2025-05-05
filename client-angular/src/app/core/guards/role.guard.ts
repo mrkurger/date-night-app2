@@ -9,14 +9,14 @@ import { map, Observable } from 'rxjs';
 export class RoleGuard {
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     const requiredRoles = route.data['roles'] as Array<string>;
 
     return this.auth.currentUser$.pipe(
-      map(user => {
+      map((user) => {
         if (!user) {
           this.router.navigate(['/auth/login']);
           return false;
@@ -24,7 +24,7 @@ export class RoleGuard {
 
         // Check if user has any of the required roles
         if (requiredRoles && requiredRoles.length > 0) {
-          const hasRole = requiredRoles.some(role => user.roles?.includes(role));
+          const hasRole = requiredRoles.some((role) => user.roles?.includes(role));
           if (!hasRole) {
             this.router.navigate(['/']);
             return false;
@@ -32,7 +32,7 @@ export class RoleGuard {
         }
 
         return true;
-      })
+      }),
     );
   }
 }

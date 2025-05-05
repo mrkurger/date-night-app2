@@ -20,13 +20,13 @@ export function retryWithBackoff<T>(
   maxRetries = 3,
   initialDelay = 1000,
   maxDelay = 10000,
-  shouldRetry: (error: any) => boolean = () => true
+  shouldRetry: (error: any) => boolean = () => true,
 ) {
   let retries = 0;
 
   return (source: Observable<T>): Observable<T> =>
     source.pipe(
-      catchError(error => {
+      catchError((error) => {
         if (retries >= maxRetries || !shouldRetry(error)) {
           return throwError(() => error);
         }
@@ -39,7 +39,7 @@ export function retryWithBackoff<T>(
       }),
       finalize(() => {
         retries = 0;
-      })
+      }),
     );
 }
 
@@ -51,7 +51,7 @@ export function retryWithBackoff<T>(
  */
 export function safeMap<T, R>(project: (value: T) => R) {
   return (source: Observable<T>): Observable<R> =>
-    new Observable<R>(subscriber =>
+    new Observable<R>((subscriber) =>
       source.subscribe({
         next(value) {
           try {
@@ -66,6 +66,6 @@ export function safeMap<T, R>(project: (value: T) => R) {
         complete() {
           subscriber.complete();
         },
-      })
+      }),
     );
 }

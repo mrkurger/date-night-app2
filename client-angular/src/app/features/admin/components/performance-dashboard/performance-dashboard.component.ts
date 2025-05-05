@@ -84,7 +84,7 @@ export class PerformanceDashboardComponent implements OnInit {
 
   constructor(
     private telemetryService: TelemetryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       url: [''],
@@ -121,7 +121,7 @@ export class PerformanceDashboardComponent implements OnInit {
     this.telemetryService
       .getPerformanceStatistics(filters)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Failed to load performance statistics:', error);
           return of({
             byEndpoint: [],
@@ -133,9 +133,9 @@ export class PerformanceDashboardComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         // Transform data for charts
         this.responseTimeByEndpoint = this.transformEndpointData(data.byEndpoint);
         this.responseTimeDistribution = this.transformDistributionData(data.distribution);
@@ -149,7 +149,7 @@ export class PerformanceDashboardComponent implements OnInit {
 
   transformEndpointData(data: any[]): any[] {
     return data
-      .map(item => ({
+      .map((item) => ({
         name: this.formatEndpointName(item.url, item.method),
         value: item.avgDuration,
       }))
@@ -170,16 +170,16 @@ export class PerformanceDashboardComponent implements OnInit {
     ];
 
     // Count requests in each bucket
-    data.forEach(item => {
+    data.forEach((item) => {
       const duration = item.duration;
-      const bucket = buckets.find(b => duration >= b.min && duration < b.max);
+      const bucket = buckets.find((b) => duration >= b.min && duration < b.max);
       if (bucket) {
         bucket.count += item.count;
       }
     });
 
     // Format for chart
-    return buckets.map(bucket => ({
+    return buckets.map((bucket) => ({
       name: bucket.name,
       value: bucket.count,
     }));
@@ -201,7 +201,7 @@ export class PerformanceDashboardComponent implements OnInit {
     }, {});
 
     // Convert to series format
-    const series = Object.keys(groupedByDay).map(day => ({
+    const series = Object.keys(groupedByDay).map((day) => ({
       name: day,
       value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
     }));

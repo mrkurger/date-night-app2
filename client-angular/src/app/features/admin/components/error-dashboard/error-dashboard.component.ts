@@ -521,7 +521,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private telemetryService: TelemetryService,
     private telemetrySocketService: TelemetrySocketService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -537,7 +537,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     // Subscribe to connection status changes
     this.telemetrySocketService.connectionStatus$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(status => {
+      .subscribe((status) => {
         this.isConnected = status;
       });
   }
@@ -566,7 +566,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
       // Subscribe to error statistics updates
       this.telemetrySocketService.errorStatisticsUpdate$
         .pipe(takeUntil(this.destroy$))
-        .subscribe(data => {
+        .subscribe((data) => {
           // Update charts with new data
           this.errorsByCategory = this.transformCategoryData(data.byCategory);
           this.errorsByStatusCode = this.transformStatusCodeData(data.byStatusCode);
@@ -581,7 +581,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
       // Subscribe to individual error updates
       this.telemetrySocketService.errorTelemetry$
         .pipe(takeUntil(this.destroy$))
-        .subscribe(error => {
+        .subscribe((error) => {
           // Add new error to the top of the list
           this.recentErrors = [error, ...this.recentErrors.slice(0, this.pageSize - 1)];
 
@@ -624,7 +624,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     this.telemetryService
       .getErrorStatistics(filters)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Failed to load error statistics:', error);
           return of({
             byCategory: [],
@@ -636,9 +636,9 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
         }),
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         // Transform data for charts
         this.errorsByCategory = this.transformCategoryData(data.byCategory);
         this.errorsByStatusCode = this.transformStatusCodeData(data.byStatusCode);
@@ -651,14 +651,14 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   }
 
   transformCategoryData(data: any[]): any[] {
-    return data.map(item => ({
+    return data.map((item) => ({
       name: this.getCategoryLabel(item.category),
       value: item.count,
     }));
   }
 
   transformStatusCodeData(data: any[]): any[] {
-    return data.map(item => ({
+    return data.map((item) => ({
       name: item.statusCode.toString(),
       value: item.count,
     }));
@@ -679,7 +679,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     }, {});
 
     // Convert to series format
-    const series = Object.keys(groupedByDay).map(day => ({
+    const series = Object.keys(groupedByDay).map((day) => ({
       name: day,
       value: groupedByDay[day],
     }));
@@ -728,7 +728,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   }
 
   getCategoryLabel(categoryValue: string): string {
-    const category = this.errorCategories.find(c => c.value === categoryValue);
+    const category = this.errorCategories.find((c) => c.value === categoryValue);
     return category ? category.label : 'Unknown';
   }
 

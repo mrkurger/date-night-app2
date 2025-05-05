@@ -159,7 +159,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   constructor(
     private geocodingService: GeocodingService,
     private mapMonitoringService: MapMonitoringService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {}
 
   /**
@@ -332,13 +332,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
     this.geocodingService
       .reverseGeocode(longitude, latitude)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error getting address information:', error);
           this.mapMonitoringService.trackError('geocoding_error', error);
           return of(null);
-        })
+        }),
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         this.ngZone.run(() => {
           if (result) {
             this.locationSelected.emit({
@@ -383,7 +383,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
     this.markerLayer.clearLayers();
 
     // Add markers
-    this.markers.forEach(marker => {
+    this.markers.forEach((marker) => {
       const icon = this.createMarkerIcon(marker.color || 'blue', marker.icon);
 
       const leafletMarker = L.marker([marker.latitude, marker.longitude], {
@@ -438,7 +438,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
     // Fit bounds if there are markers
     if (this.markers.length > 0) {
       const bounds = L.latLngBounds(
-        this.markers.map(marker => [marker.latitude, marker.longitude])
+        this.markers.map((marker) => [marker.latitude, marker.longitude]),
       );
       this.map.fitBounds(bounds, { padding: [50, 50] });
     }
@@ -481,7 +481,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
       const startTime = performance.now();
 
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           const { latitude, longitude } = position.coords;
 
           // Create a marker for the current location
@@ -518,7 +518,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
           // Track viewport change
           this.mapMonitoringService.trackViewportChange({ lat: latitude, lng: longitude }, 13);
         },
-        error => {
+        (error) => {
           console.error('Error getting current location:', error);
 
           // Handle specific error cases
@@ -562,7 +562,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
           enableHighAccuracy: true,
           timeout: 10000,
           maximumAge: 0,
-        }
+        },
       );
     } else {
       const errorMessage = 'Geolocation is not supported by your browser';
@@ -631,7 +631,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
         if (this.selectable) {
           this.handleMapClick(lat, lng);
           this.announceToScreenReader(
-            `Location selected at latitude ${lat.toFixed(6)}, longitude ${lng.toFixed(6)}`
+            `Location selected at latitude ${lat.toFixed(6)}, longitude ${lng.toFixed(6)}`,
           );
           handled = true;
         }
@@ -733,7 +733,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
 
     // Announce to screen readers
     this.announceToScreenReader(
-      `Location selected at latitude ${latitude.toFixed(6)}, longitude ${longitude.toFixed(6)}`
+      `Location selected at latitude ${latitude.toFixed(6)}, longitude ${longitude.toFixed(6)}`,
     );
 
     // Track location selection
