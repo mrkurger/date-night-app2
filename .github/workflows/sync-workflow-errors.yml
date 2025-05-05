@@ -3,100 +3,41 @@ name: Sync Workflow Error Logs
 on:
   workflow_run:
     workflows: ['*']
-    types:
-      - completed
-    conclusion:
-      - failure
-      - cancelled
-      - timed_out
+    types: [completed]
   schedule:
-    - cron: '0 0 * * *' # Run daily at midnight instead of every 6 hours
-  workflow_dispatch: # Allow manual triggering
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 # Prevent multiple instances from running concurrently
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   sync-error-logs:
     runs-on: ubuntu-latest
-    env:
-      CI: true
-    permissions:
-      contents: write
-      actions: read
-    timeout-minutes: 30 # Add timeout to prevent runaway jobs
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '18'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install @octokit/rest@19.0.13 fs-extra@11.2.0 adm-zip@0.5.10
+        run: npm ci
 
-      - name: Fetch workflow run logs
+      - name: Fetch workflow logs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.event.repository.name || github.repository.name }}
         run: node scripts/fetch-workflow-logs.js
 
-      - name: Create README for logs
-        run: |
-          cat > downloaded-reports/workflow-errors/README.md << 'EOF'
-          # Workflow Error Logs
-
-          This directory contains logs from failed GitHub Actions workflow runs. These logs are automatically collected by the "Sync Workflow Error Logs" workflow.
-
-          ## Directory Structure
-
-          ```
-          workflow-errors/
-          ├── {workflow-name}/
-          │   ├── {date}_{run-id}/
-          │   │   ├── metadata.json       # Run metadata
-          │   │   ├── jobs.json           # Jobs metadata
-          │   │   ├── {job-name}/
-          │   │   │   ├── job-metadata.json  # Job metadata
-          │   │   │   └── logs.txt           # Job logs (extracted from zip if necessary)
-          │   │   │   └── [other extracted files] # Additional files from zip archives
-          │   │   └── ...
-          │   └── ...
-          └── ...
-          ```
-
-          ## Using These Logs
-
-          These logs can be used to diagnose and fix issues with GitHub Actions workflows. Look for error messages, failed steps, and other indicators of problems.
-
-          ## Automatic Collection
-
-          Logs are collected:
-          - After any workflow completes
-          - Every 6 hours via scheduled run
-          - Manually via workflow dispatch
-
-          ## Retention
-
-          Only logs from the past 30 days are collected.
-
-          ## Implementation Details
-
-          The logs are fetched using the GitHub API and processed with the `adm-zip` library to extract text content from zip files when necessary. This ensures that all logs are stored in a readable text format.
-          EOF
-
-      - name: Upload workflow error logs as artifact
+      - name: Upload logs as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: workflow-error-logs-${{ github.event.workflow_run.id || github.run_id }}
-          path: downloaded-reports/workflow-errors/
-          retention-days: 30 # Keep logs for 30 days
-          if-no-files-found: warn
+          name: workflow-error-logs-${{ github.run_id }}
+          path: ./workflow-error-logs-temp/
+          retention-days: 14

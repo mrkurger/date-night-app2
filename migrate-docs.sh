@@ -14,6 +14,10 @@
 #   ./migrate-docs.sh generate-mapping
 #   ./migrate-docs.sh prioritize
 #   ./migrate-docs.sh execute-migration <markdown-file> <output-html-file>
+#   ./migrate-docs.sh enhanced-migrate <feature>
+#   ./migrate-docs.sh batch-migrate [priority]
+#   ./migrate-docs.sh browse
+#   ./migrate-docs.sh install-dependencies
 
 # Set the root directory
 ROOT_DIR="$(pwd)"
@@ -147,6 +151,33 @@ execute_migration() {
   node "$ROOT_DIR/scripts/doc_migration_executor.js" "$1" "$2"
 }
 
+# Function to run enhanced migration for a feature
+enhanced_migrate() {
+  if [ -z "$1" ]; then
+    echo "Error: Feature name is required"
+    echo "Usage: ./migrate-docs.sh enhanced-migrate <feature>"
+    exit 1
+  fi
+  
+  node "$ROOT_DIR/scripts/enhanced_doc_migration.js" --feature "$1" --verbose
+}
+
+# Function to run batch migration
+batch_migrate() {
+  priority=${1:-"all"}
+  node "$ROOT_DIR/scripts/batch_doc_migration.js" --priority "$priority" --verbose
+}
+
+# Function to start the documentation browser
+browse_docs() {
+  node "$ROOT_DIR/browse-docs.js"
+}
+
+# Function to install dependencies
+install_dependencies() {
+  node "$ROOT_DIR/scripts/install_doc_dependencies.js"
+}
+
 # Main script
 case "$1" in
   create-folder-docs)
@@ -176,6 +207,18 @@ case "$1" in
   execute-migration)
     execute_migration "$2" "$3"
     ;;
+  enhanced-migrate)
+    enhanced_migrate "$2"
+    ;;
+  batch-migrate)
+    batch_migrate "$2"
+    ;;
+  browse)
+    browse_docs
+    ;;
+  install-dependencies)
+    install_dependencies
+    ;;
   *)
     echo "Documentation Migration Helper Script"
     echo
@@ -189,6 +232,10 @@ case "$1" in
     echo "  ./migrate-docs.sh generate-mapping"
     echo "  ./migrate-docs.sh prioritize"
     echo "  ./migrate-docs.sh execute-migration <markdown-file> <output-html-file>"
+    echo "  ./migrate-docs.sh enhanced-migrate <feature>"
+    echo "  ./migrate-docs.sh batch-migrate [priority]"
+    echo "  ./migrate-docs.sh browse"
+    echo "  ./migrate-docs.sh install-dependencies"
     exit 1
     ;;
 esac

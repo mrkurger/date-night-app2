@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOCUMENTATION MIGRATION README - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">Date Night App Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>DOCUMENTATION MIGRATION README</h1>
+
+      <h1>Documentation Migration Guide</h1>
+<p>This guide explains how to use the documentation migration tools to convert Markdown documentation to HTML and ensure all code folders have proper documentation.</p>
+<h2>Overview</h2>
+<p>The documentation migration project aims to:</p>
+<ol>
+<li>Migrate all Markdown documentation to HTML</li>
+<li>Ensure each code folder has at least three HTML docs:<ul>
+<li>CHANGELOG.html</li>
+<li>AILESSONS.html</li>
+<li>GLOSSARY.html</li>
+</ul>
+</li>
+<li>Follow the component-library HTML template for consistency</li>
+<li>Maintain a central index and global glossary</li>
+<li>Add tooltips and links to function references</li>
+</ol>
+<h2>Tools Available</h2>
+<p>We have several tools to help with the migration process:</p>
+<h3>1. Documentation Browser</h3>
+<p>The documentation browser allows you to browse, search, and view the HTML documentation:</p>
+<pre><code class="language-bash">./migrate-docs.sh browse
+</code></pre>
+<h3>2. Documentation Analysis</h3>
+<p>To analyze the current state of documentation:</p>
+<pre><code class="language-bash">./migrate-docs.sh analyze
+</code></pre>
+<p>This will show:</p>
+<ul>
+<li>Which folders have documentation</li>
+<li>Which documentation files are missing</li>
+<li>Which Markdown files need to be migrated</li>
+</ul>
+<h3>3. Enhanced Migration</h3>
+<p>To migrate documentation for a specific feature:</p>
+<pre><code class="language-bash">./migrate-docs.sh enhanced-migrate &lt;feature-name&gt;
+</code></pre>
+<p>This will:</p>
+<ul>
+<li>Analyze all source files for the feature</li>
+<li>Merge content from multiple sources</li>
+<li>Format the content according to HTML standards</li>
+<li>Apply the component-library template</li>
+<li>Add tooltips and links to function references</li>
+<li>Update the main index and glossary</li>
+</ul>
+<h3>4. Batch Migration</h3>
+<p>To migrate documentation in batches, prioritized by importance:</p>
+<pre><code class="language-bash">./migrate-docs.sh batch-migrate [priority]
+</code></pre>
+<p>Where <code>priority</code> can be:</p>
+<ul>
+<li><code>high</code> - High-priority features and components</li>
+<li><code>medium</code> - Medium-priority features and components</li>
+<li><code>low</code> - Low-priority features and components</li>
+<li><code>all</code> - All features and components (default)</li>
+</ul>
+<h3>5. Creating Missing Documentation Files</h3>
+<p>To create missing documentation files for all code folders:</p>
+<pre><code class="language-bash">./migrate-docs.sh create-missing-docs
+</code></pre>
+<h3>6. Manual Migration</h3>
+<p>For more control over the migration process:</p>
+<pre><code class="language-bash">./migrate-docs.sh convert-md-to-html &lt;markdown-file&gt; &lt;output-html-file&gt;
+</code></pre>
+<h2>Workflow</h2>
+<p>Here&#39;s a recommended workflow for migrating documentation:</p>
+<ol>
+<li><p><strong>Install required dependencies</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh install-dependencies
+</code></pre>
+</li>
+<li><p><strong>Analyze the current state</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh analyze
+</code></pre>
+</li>
+<li><p><strong>Create missing documentation files</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh create-missing-docs
+</code></pre>
+</li>
+<li><p><strong>Migrate high-priority features</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh batch-migrate high
+</code></pre>
+</li>
+<li><p><strong>Migrate medium-priority features</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh batch-migrate medium
+</code></pre>
+</li>
+<li><p><strong>Migrate low-priority features</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh batch-migrate low
+</code></pre>
+</li>
+<li><p><strong>Browse the documentation</strong>:</p>
+<pre><code class="language-bash">./migrate-docs.sh browse
+</code></pre>
+</li>
+</ol>
+<h2>Automation</h2>
+<p>The documentation migration process is also automated through GitHub Actions:</p>
+<ol>
+<li>The workflow runs on push to the main branch</li>
+<li>It generates documentation for all code folders</li>
+<li>It migrates Markdown documentation to HTML</li>
+<li>It commits the changes back to the repository</li>
+</ol>
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Keep documentation close to code</strong>: Documentation should be in the same folder as the code it documents.</li>
+<li><strong>Use the component-library template</strong>: All HTML documentation should follow the component-library template.</li>
+<li><strong>Add tooltips and links</strong>: Function references should have tooltips and links to their glossary entries.</li>
+<li><strong>Update the changelog</strong>: Keep the CHANGELOG.html file up to date with changes to the code.</li>
+<li><strong>Document AI lessons</strong>: Record insights and lessons learned in the AILESSONS.html file.</li>
+<li><strong>Keep the glossary up to date</strong>: The GLOSSARY.html file should contain all functions and methods in the code.</li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you encounter issues with the migration process:</p>
+<ol>
+<li><strong>Check the logs</strong>: The migration scripts output detailed logs.</li>
+<li><strong>Run with verbose flag</strong>: Add <code>--verbose</code> to see more detailed output.</li>
+<li><strong>Check for missing dependencies</strong>: Make sure all required dependencies are installed.</li>
+<li><strong>Check file permissions</strong>: Make sure the scripts have execute permissions.</li>
+<li><strong>Check for syntax errors</strong>: Make sure the Markdown files have valid syntax.</li>
+</ol>
+<h2>Need Help?</h2>
+<p>If you need help with the documentation migration process, contact the documentation team or open an issue in the repository.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

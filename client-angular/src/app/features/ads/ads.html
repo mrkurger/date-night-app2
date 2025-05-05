@@ -1,87 +1,96 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Advertisement Platform - Date Night App</title>
-    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
-    <style>
-      .tooltip {
-        position: relative;
-        display: inline-block;
-        border-bottom: 1px dotted #333;
-      }
 
-      .tooltip .tooltip-text {
-        visibility: hidden;
-        width: 300px;
-        background-color: #f8f9fa;
-        color: #333;
-        text-align: left;
-        border-radius: 6px;
-        padding: 10px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -150px;
-        opacity: 0;
-        transition: opacity 0.3s;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .tooltip:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .function-link {
-        color: #0366d6;
-        text-decoration: none;
-        font-family: monospace;
-        background-color: #f6f8fa;
-        padding: 2px 4px;
-        border-radius: 3px;
-      }
-
-      .function-link:hover {
-        text-decoration: underline;
-      }
-
-      code {
-        font-family: monospace;
-        background-color: #f6f8fa;
-        padding: 2px 4px;
-        border-radius: 3px;
-      }
-
-      pre {
-        background-color: #f6f8fa;
-        padding: 16px;
-        border-radius: 6px;
-        overflow: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1>Date Night App Documentation</h1>
-        <nav>
-          <ul>
-            <li><a href="/_docs_index.html">Home</a></li>
-            <li><a href="/_glossary.html">Glossary</a></li>
-            <li><a href="index.html">ads Index</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <main class="container">
-      <h1>Advertisement Platform</h1>
-
-      <h1>Advertisement Platform</h1>
-<h2>Overview</h2>
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Ads - Date Night App</title>
+          <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+          <style>
+            .tooltip {
+              position: relative;
+              display: inline-block;
+              border-bottom: 1px dotted #333;
+            }
+            .tooltip .tooltip-text {
+              visibility: hidden;
+              width: 300px;
+              background-color: #f8f9fa;
+              color: #333;
+              text-align: left;
+              border-radius: 6px;
+              padding: 10px;
+              position: absolute;
+              z-index: 1;
+              bottom: 125%;
+              left: 50%;
+              margin-left: -150px;
+              opacity: 0;
+              transition: opacity 0.3s;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            .tooltip:hover .tooltip-text {
+              visibility: visible;
+              opacity: 1;
+            }
+            .function-link {
+              color: #0366d6;
+              text-decoration: none;
+              font-family: monospace;
+              background-color: #f6f8fa;
+              padding: 2px 4px;
+              border-radius: 3px;
+            }
+            .function-link:hover {
+              text-decoration: underline;
+            }
+            code {
+              font-family: monospace;
+              background-color: #f6f8fa;
+              padding: 2px 4px;
+              border-radius: 3px;
+            }
+            pre {
+              background-color: #f6f8fa;
+              padding: 16px;
+              border-radius: 6px;
+              overflow: auto;
+            }
+          </style>
+        </head>
+        <body>
+          <header>
+            <div class="container">
+              <h1>Date Night App Documentation</h1>
+              <nav>
+                <ul>
+                  <li><a href="/_docs_index.html">Home</a></li>
+                  <li><a href="/_glossary.html">Glossary</a></li>
+                  <li><a href="index.html">ads Index</a></li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+          <main class="container">
+            <div class="page-content">
+              
+    <aside class="sidebar">
+      <h3>Ads</h3>
+      <ul>
+        <li><a href="./CHANGELOG.html">Changelog</a></li>
+        <li><a href="./AILESSONS.html">AI Lessons</a></li>
+        <li><a href="./GLOSSARY.html">Glossary</a></li>
+        <li><a href="./ads.html">Ads</a></li>
+      </ul>
+  
+    </aside>
+  
+              <article class="content">
+                <h1>Ads</h1>
+                
+      <section id="overview">
+        <h2>Overview</h2>
+        <h2>Overview</h2>
 <p>The Advertisement Platform is a core feature of DateNight.io that allows service providers to create, manage, and promote their services, while users can browse and search for services that meet their needs. The platform supports multiple viewing modes (List, Grid, Tinder-style, Netflix-style) and provides comprehensive filtering and search capabilities.</p>
 <h2>User Experience</h2>
 <p>Users interact with the Advertisement Platform through several interfaces:</p>
@@ -208,7 +217,13 @@
 <td>Mongoose schema for ads</td>
 </tr>
 </tbody></table>
-<h2>API Endpoints</h2>
+
+      </section>
+    
+
+      <section id="api">
+        <h2>API Reference</h2>
+        <h2>API Endpoints</h2>
 <table>
 <thead>
 <tr>
@@ -532,7 +547,13 @@
 </ul>
 </li>
 </ol>
-<h2>Related Documentation</h2>
+
+      </section>
+    
+
+      <section id="related">
+        <h2>Related Components</h2>
+        <h2>Related Documentation</h2>
 <ul>
 <li><a href="/docs/features/AD-BROWSER.MD">AD-BROWSER.MD</a></li>
 <li><a href="/docs/features/AD-DETAILS.MD">AD-DETAILS.MD</a></li>
@@ -541,27 +562,11 @@
 <li><a href="/docs/API_DOCUMENTATION.MD">API_DOCUMENTATION.MD</a></li>
 </ul>
 
-    </main>
-
-    <footer>
-      <div class="container">
-        <p>&copy; 2025 Date Night App. All rights reserved.</p>
-      </div>
-    </footer>
-
-    <script>
-      // Add click handlers to function links
-      document.addEventListener('DOMContentLoaded', function () {
-        const functionLinks = document.querySelectorAll('.function-link');
-        functionLinks.forEach(link => {
-          link.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href) {
-              window.location.href = href;
-            }
-          });
-        });
-      });
-    </script>
-  </body>
-</html>
+      </section>
+    
+              </article>
+            </div>
+          </main>
+        </body>
+      </html>
+    

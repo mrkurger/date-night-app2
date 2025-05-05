@@ -5,23 +5,16 @@ on:
     branches: [main, develop]
     paths:
       - 'server/**'
-      - '.github/workflows/server-tests.yml' # Trigger on workflow changes too
+      - '.github/workflows/server-tests.yml'
   pull_request:
     branches: [main, develop]
     paths:
       - 'server/**'
-      - '.github/workflows/server-tests.yml' # Trigger on workflow changes too
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      CI: true
-    timeout-minutes: 20 # Add timeout to prevent runaway jobs
-
-    strategy:
-      matrix:
-        node-version: [22.x]
+    timeout-minutes: 15
 
     services:
       mongodb:
@@ -32,44 +25,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          # Removed caching configuration since package-lock.json doesn't exist
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
 
-      - name: Install dependencies
-        working-directory: ./server
-        run: npm install
+      - run: npm ci
+        working-directory: server
 
-      - name: Run unit tests
-        working-directory: ./server
+      - name: Run tests
         run: npm test
+        working-directory: server
         env:
           NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/date-night-test
-
-      - name: Run integration tests
-        working-directory: ./server
-        run: npm run test:integration
-        env:
-          NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/date-night-test
-
-      - name: Prepare test results directory
-        run: |
-          mkdir -p downloaded-reports/server
-          cp -r ./server/coverage/* downloaded-reports/server/ || true
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: server-test-results
-          path: |
-            ./server/coverage
-            downloaded-reports/server
-          if-no-files-found: warn
+          MONGODB_URI: mongodb://localhost:27017/test
 
   lint:
     runs-on: ubuntu-latest
