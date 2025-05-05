@@ -29,6 +29,13 @@ coverage/
 tmp/
 **/tmp/
 
+# Workflow logs
+downloaded-reports/workflow-errors/
+workflow-error-logs-temp/
+workflow-error-logs/
+workflow-reports/
+downloaded-reports/
+
 # Generated JSON files from workflows
 snyk-*.json
 npm-*-deps-tree.json

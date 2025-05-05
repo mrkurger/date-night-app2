@@ -1,0 +1,31 @@
+# .github/workflows/error-monitoring.yml
+name: Error Monitoring
+
+on:
+  workflow_run:
+    workflows: ['*']
+    types:
+      - completed
+    conclusions:
+      - failure
+      - timed_out
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Process Error
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const handleError = require('./.github/scripts/handle-workflow-errors.js')
+            await handleError(context.payload.workflow_run)
+
+      - name: Upload Error Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-report-${{ github.run_id }}
+          path: workflow-error-logs/
+          retention-days: 14

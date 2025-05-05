@@ -1,0 +1,32 @@
+# .github/workflows/test-workflow.yml
+name: Combined Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Use the shared concurrency settings
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: ./.github/workflows/base-config.yml
+    with:
+      job: setup-node
+      run: npm run lint
+      continue-on-error: false
+
+  test:
+    needs: lint
+    uses: ./.github/workflows/base-config.yml
+    with:
+    needs: lint
+    uses: ./.github/workflows/base-config.yml
+    with:
+      job: mongodb-service
+      run: npm test
+      timeout-minutes: 15

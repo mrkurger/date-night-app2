@@ -1,0 +1,6 @@
+# .github/workflows/env-config.yml
+env:
+  NODE_ENV: test
+  CI: true
+MONGODB_URI: mongodb://localhost:27017/test
+# Add other common env vars
