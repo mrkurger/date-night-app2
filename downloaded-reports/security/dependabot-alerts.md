@@ -1,6 +1,6 @@
 # Security Alerts and Dependency Report
 
-*Generated on: 2025-04-28*
+*Generated on: 2025-05-05*
 
 This report provides an overview of dependencies and potential security issues in the project.
 
@@ -57,7 +57,14 @@ bootstrap                           NOTUSED?  Still using bootstrap?
 
 chart.js                            NPM ERR!  Registry error got is not a function
 
-emerald-ui                          NPM ERR!  Registry error got is not a function
+emerald-ui                          NOTUSED?  Still using emerald-ui?
+                                              Depcheck did not find code similar to require('emerald-ui') or import from 'emerald-ui'.
+                                              Check your code before removing as depcheck isn't able to foresee all ways dependencies can be used.
+                                              Use rc file options to remove unused check, but still monitor for outdated version:
+                                                  .npmcheckrc {"depcheck": {"ignoreMatches": ["emerald-ui"]}}
+                                              Use --skip-unused to skip this check.
+                                              To remove this package: npm uninstall emerald-ui --save
+                                    NPM ERR!  Registry error got is not a function
 
 leaflet                             NPM ERR!  Registry error got is not a function
 
@@ -78,10 +85,10 @@ tslib                               NOTUSED?  Still using tslib?
 
 zone.js                             NPM ERR!  Registry error got is not a function
 
-sass                                PKG ERR!  Not in the package.json. Found in: /src/styles/design-system/_variables.scss, /src/app/shared/emerald/components/toggle/toggle.component.scss, /src/app/shared/emerald/components/skeleton-loader/skeleton-loader.component.scss, /src/app/shared/emerald/components/pager/pager.component.scss, /src/app/shared/emerald/components/page-header/page-header.component.scss, /src/app/shared/emerald/components/label/label.component.scss, /src/app/shared/emerald/components/info-panel/info-panel.component.scss, /src/app/shared/emerald/components/floating-action-button/floating-action-button.component.scss, /src/app/shared/emerald/components/carousel/carousel.component.scss, /src/app/shared/emerald/components/card-grid/card-grid.component.scss, /src/app/shared/emerald/components/avatar/avatar.component.scss, /src/app/shared/emerald/components/app-card/app-card.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/tinder/tinder.component.scss, /src/app/features/netflix-view/netflix-view.component.scss, /src/app/features/list-view/list-view.component.scss, /src/app/features/auth/login/login.component.scss, /src/app/core/design/design-tokens.scss, /src/app/core/design/emerald-ui-integration.scss, /src/app/core/design/main.scss, /src/app/core/design/typography-mixins.scss
+sass                                PKG ERR!  Not in the package.json. Found in: /src/styles/design-system/_variables.scss, /src/app/shared/emerald/components/toggle/toggle.component.scss, /src/app/shared/emerald/components/skeleton-loader/skeleton-loader.component.scss, /src/app/shared/emerald/components/pager/pager.component.scss, /src/app/shared/emerald/components/page-header/page-header.component.scss, /src/app/shared/emerald/components/label/label.component.scss, /src/app/shared/emerald/components/info-panel/info-panel.component.scss, /src/app/shared/emerald/components/floating-action-button/floating-action-button.component.scss, /src/app/shared/emerald/components/carousel/carousel.component.scss, /src/app/shared/emerald/components/card-grid/card-grid.component.scss, /src/app/shared/emerald/components/avatar/avatar.component.scss, /src/app/shared/emerald/components/app-card/app-card.component.scss, /src/app/shared/components/select/select.component.scss, /src/app/shared/components/input/input.component.scss, /src/app/shared/components/icon/icon.component.scss, /src/app/shared/components/button/button.component.scss, /src/app/features/tinder/tinder.component.scss, /src/app/features/netflix-view/netflix-view.component.scss, /src/app/features/list-view/list-view.component.scss, /src/app/features/auth/login/login.component.scss, /src/app/core/design/css-variable-checker.scss, /src/app/core/design/dark-mode.scss, /src/app/core/design/design-tokens.scss, /src/app/core/design/emerald-ui-integration.scss, /src/app/core/design/main.scss, /src/app/core/design/typography-mixins.scss
                                     NPM ERR!  Registry error got is not a function
 
-src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/emerald-example/emerald-example.component.scss
+src                                 PKG ERR!  Not in the package.json. Found in: /src/app/shared/templates/component-name.component.scss, /src/app/shared/components/emerald-example/emerald-example.component.scss, /src/app/features/style-guide/style-guide.component.scss, /src/app/features/micro-interactions-demo/micro-interactions-demo.component.scss, /src/app/features/accessibility-demo/accessibility-demo.component.scss, /src/app/core/design/micro-interactions.scss
                                     PKG ERR!  A package.json was not found at /home/runner/work/date-night-app2/date-night-app2/client-angular/src/package.json
                                     NPM ERR!  Registry error got is not a function
 
