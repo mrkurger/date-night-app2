@@ -1,0 +1,20 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "/Users/oivindlund/date-night-app/server/logs/.af0925a34f78b50c4ad63cb7e1b0fa48e92e7e23-audit.json",
+  "files": [
+    {
+      "date": 1744999404106,
+      "name": "/Users/oivindlund/date-night-app/server/logs/error-2025-04-18.log",
+      "hash": "e7c4ee9497ae55837dbf3a5b1ebbf77b2b4353420396545afb232c012a16f606"
+    },
+    {
+      "date": 1745020959877,
+      "name": "/Users/oivindlund/date-night-app/server/logs/error-2025-04-19.log",
+      "hash": "107751531adc541286f84f6b95417829c5a4296afa0c08ab3cde67230ebe8f6b"
+    }
+  ],
+  "hashType": "sha256"
+}

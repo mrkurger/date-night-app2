@@ -2,6 +2,11 @@
 # Add this shared configuration file for reusable properties
 name: Base Configuration
 
+# Import environment configuration
+env:
+  REPORTS_BASE_DIR: downloaded-reports
+  ARTIFACTS_DIR: .github/artifacts
+
 on:
   workflow_call:
 
@@ -23,3 +28,32 @@ jobs:
         image: mongo:6
         ports:
           - 27017:27017
+
+  collect-insights:
+    steps:
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ github.run_id }}
+          path: |
+            ${{ env.REPORTS_DIR }}/workflow-errors/
+            ${{ env.REPORTS_DIR }}/insights/
+            ${{ env.REPORTS_DIR }}/test-results/
+
+  setup-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create report directories
+        run: |
+          mkdir -p \
+            ${{ env.REPORTS_SECURITY }} \
+            ${{ env.REPORTS_TESTING }} \
+            ${{ env.REPORTS_DOCS }} \
+            ${{ env.REPORTS_ANGULAR }} \
+            ${{ env.REPORTS_SERVER }} \
+            ${{ env.REPORTS_SNYK }}
+
+      - name: Configure artifact retention
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: ${{ env.RETENTION_ARTIFACTS }}

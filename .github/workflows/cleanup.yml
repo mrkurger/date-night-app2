@@ -1,0 +1,20 @@
+name: Cleanup Artifacts
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/delete-artifact@v4
+        with:
+          # Delete all artifacts older than retention period
+          age: >7 days
+          
+      - name: Cleanup old reports
+        run: |
+          find ${{ env.REPORTS_BASE_DIR }} -type f -mtime +30 -delete
+          find ${{ env.REPORTS_BASE_DIR }} -type d -empty -delete

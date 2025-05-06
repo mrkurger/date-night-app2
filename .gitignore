@@ -12,39 +12,63 @@ build/
 .env
 **/.env
 *.env
+.env.*
+.env*
+.env.local
+.env.*.local
 
-# Database files and directories
-data/db/
+# Database files
 data/
-
-# Logs and temporary files
-logs/
+data/db/
+mongodb/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-mongodb.log
+mongodb.log*
+WiredTiger*
+*.wt
+
+# Testing and coverage
 coverage/
 **/coverage/
-tmp/
-**/tmp/
+.nyc_output/
+test-results/
+junit.xml
 
-# Workflow logs
-downloaded-reports/workflow-errors/
-workflow-error-logs-temp/
-workflow-error-logs/
-workflow-reports/
+# IDE and editor files
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Workflow and report artifacts
 downloaded-reports/
-
-# Generated JSON files from workflows
-snyk-*.json
-npm-*-deps-tree.json
+!downloaded-reports/.gitkeep
+workflow-error-logs/
+workflow-error-logs-temp/
+workflow-reports/
+reports/
+**/html-reports/
+**/snyk-reports/
+.github/temp/
+.github/artifacts/
+!.github/artifacts/.gitkeep
 
 # Angular specific
-**/.angular/cache
+.angular/
 .sass-cache/
 connect.lock/
 libpeerconnection.log
+
+# Temporary files
+tmp/
+**/tmp/
+temp/
+**/temp/
 
 # User uploads (keep directories but ignore content)
 server/uploads/*
@@ -56,15 +80,10 @@ server/uploads/thumbnails/*
 *.min.js
 *.min.css
 *.map
+*.tsbuildinfo
 
-# OS and editor files
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-data/db/WiredTiger.turtle
-data/db/WiredTiger.wt
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
