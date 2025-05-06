@@ -1,0 +1,40 @@
+name: Tests
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'client/**'
+      - 'server/**'
+      - '.github/workflows/tests.yml'
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  angular:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/base-config.yml@main
+        with:
+          job: node-setup
+      - name: Test Angular
+        run: |
+          cd client
+          npm ci
+          npm test -- --watch=false --browsers=ChromeHeadless
+
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/base-config.yml@main
+        with:
+          job: mongodb-setup
+      - name: Test Server
+        run: |
+          cd server
+          npm ci
+          npm test
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/test

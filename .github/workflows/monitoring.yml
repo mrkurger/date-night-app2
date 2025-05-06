@@ -1,0 +1,32 @@
+name: Monitoring
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_run:
+    workflows: ['Tests']
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  collect-insights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/base-config.yml@main
+        with:
+          job: node-setup
+
+      - name: Generate Reports
+        run: node .github/scripts/generate-reports.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ github.run_id }}
+          path: |
+            ./reports/workflow-errors/
+            ./reports/insights/
+            ./reports/test-results/
+          retention-days: 14

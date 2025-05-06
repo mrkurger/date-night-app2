@@ -53,7 +53,7 @@
     "lint:fix": "npm run lint:server:fix && npm run lint:client:fix",
     "lint:server:fix": "cd server && npm run lint:fix || true",
     "lint:client:fix": "cd client-angular && npm run lint:fix || true",
-    "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
+    "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\" --config ./.prettierrc",
     "format:server": "cd server && npm run format",
     "format:client": "cd client-angular && npm run format",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",

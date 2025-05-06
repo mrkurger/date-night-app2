@@ -1,21 +1,22 @@
 # .github/workflows/base-config.yml
 # Add this shared configuration file for reusable properties
-name: Base Workflow Configuration
+name: Base Configuration
 
 on:
   workflow_call:
 
 # Reusable job definitions
 jobs:
-  setup-node:
+  node-setup:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
-  mongodb-service:
+  mongodb-setup:
     runs-on: ubuntu-latest
     services:
       mongodb:
