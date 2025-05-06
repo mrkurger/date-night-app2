@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Component Documentation Template - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Component Documentation Template</h1>
+
+      <h1>Component Documentation Template</h1>
+<h2>Component Name</h2>
+<p>Brief description of the component&#39;s purpose and main functionality.</p>
+<h3>Import Path</h3>
+<pre><code class="language-typescript">import { ComponentNameComponent } from &#39;@app/path/to/component&#39;;
+</code></pre>
+<h3>Selector</h3>
+<pre><code class="language-html">&lt;app-component-name&gt;&lt;/app-component-name&gt;
+</code></pre>
+<h3>Features</h3>
+<ul>
+<li>List key features of the component</li>
+<li>Focus on what makes this component useful</li>
+<li>Highlight any special behaviors or capabilities</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Describe common scenarios where this component should be used</li>
+<li>Explain when to use this component vs. alternatives</li>
+<li>Provide context for the component&#39;s role in the application</li>
+</ul>
+<h2>API Reference</h2>
+<h3>Inputs</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>inputProperty</code></td>
+<td><code>string</code></td>
+<td><code>&#39;&#39;</code></td>
+<td>Description of what this input does and how it affects the component.</td>
+</tr>
+<tr>
+<td><code>optionalInput</code></td>
+<td><code>string</code></td>
+<td><code>&#39;default-value&#39;</code></td>
+<td>Description of this optional input with its default value.</td>
+</tr>
+<tr>
+<td><code>isEnabled</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Explanation of what happens when this is true vs false.</td>
+</tr>
+</tbody></table>
+<h3>Outputs</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>actionCompleted</code></td>
+<td><code>EventEmitter&lt;string&gt;</code></td>
+<td>Emitted when the primary action is completed. The emitted value contains...</td>
+</tr>
+<tr>
+<td><code>secondaryAction</code></td>
+<td><code>EventEmitter&lt;void&gt;</code></td>
+<td>Emitted when the secondary action is triggered.</td>
+</tr>
+</tbody></table>
+<h3>Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Parameters</th>
+<th>Return Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>handlePrimaryAction</code></td>
+<td>None</td>
+<td><code>void</code></td>
+<td>Triggers the primary action and emits the <code>actionCompleted</code> event.</td>
+</tr>
+<tr>
+<td><code>handleSecondaryAction</code></td>
+<td>None</td>
+<td><code>void</code></td>
+<td>Triggers the secondary action and emits the <code>secondaryAction</code> event.</td>
+</tr>
+</tbody></table>
+<h3>Content Projection</h3>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default (<code>&lt;ng-content&gt;</code>)</td>
+<td>Content projected into the primary content area.</td>
+</tr>
+<tr>
+<td><code>[contentSection]</code></td>
+<td>Content projected into a specific named section (if applicable).</td>
+</tr>
+</tbody></table>
+<h2>Usage Examples</h2>
+<h3>Basic Usage</h3>
+<pre><code class="language-html">&lt;app-component-name
+  inputProperty=&quot;Example Value&quot;
+  [isEnabled]=&quot;true&quot;
+  (actionCompleted)=&quot;onActionComplete($event)&quot;
+&gt;
+  Content to project
+&lt;/app-component-name&gt;
+</code></pre>
+<h3>Advanced Usage</h3>
+<pre><code class="language-html">&lt;app-component-name
+  inputProperty=&quot;Advanced Example&quot;
+  [optionalInput]=&quot;dynamicValue&quot;
+  [isEnabled]=&quot;isFeatureEnabled&quot;
+  (actionCompleted)=&quot;onActionComplete($event)&quot;
+  (secondaryAction)=&quot;onSecondaryAction()&quot;
+&gt;
+  &lt;div&gt;Primary content&lt;/div&gt;
+  &lt;div contentSection&gt;Named section content&lt;/div&gt;
+&lt;/app-component-name&gt;
+</code></pre>
+<pre><code class="language-typescript">// Component controller code
+export class ExampleComponent {
+  dynamicValue = &#39;Dynamic content&#39;;
+  isFeatureEnabled = true;
+
+  onActionComplete(result: string) {
+    console.log(&#39;Action completed with result:&#39;, result);
+  }
+
+  onSecondaryAction() {
+    console.log(&#39;Secondary action triggered&#39;);
+  }
+}
+</code></pre>
+<h2>Styling</h2>
+<h3>CSS Custom Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--component-name-background</code></td>
+<td><code>#ffffff</code></td>
+<td>Background color of the component</td>
+</tr>
+<tr>
+<td><code>--component-name-border-radius</code></td>
+<td><code>8px</code></td>
+<td>Border radius of the component</td>
+</tr>
+<tr>
+<td><code>--component-name-padding</code></td>
+<td><code>16px</code></td>
+<td>Internal padding of the component</td>
+</tr>
+</tbody></table>
+<h3>CSS Classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.component-name</code></td>
+<td>Main component container</td>
+</tr>
+<tr>
+<td><code>.component-name--enabled</code></td>
+<td>Applied when the component is enabled</td>
+</tr>
+<tr>
+<td><code>.component-name__header</code></td>
+<td>Header section of the component</td>
+</tr>
+<tr>
+<td><code>.component-name__content</code></td>
+<td>Content section of the component</td>
+</tr>
+<tr>
+<td><code>.component-name__actions</code></td>
+<td>Actions section of the component</td>
+</tr>
+</tbody></table>
+<h3>Styling Examples</h3>
+<pre><code class="language-scss">// Customizing the component
+app-component-name {
+  --component-name-background: #f5f5f5;
+  --component-name-border-radius: 12px;
+
+  // Or using direct class selectors
+  .component-name__header {
+    border-bottom: 2px solid #e0e0e0;
+  }
+}
+</code></pre>
+<h2>Accessibility</h2>
+<ul>
+<li><strong>ARIA Roles</strong>: Describes any ARIA roles used in the component</li>
+<li><strong>Keyboard Navigation</strong>: Details how users can navigate the component with a keyboard</li>
+<li><strong>Screen Reader Considerations</strong>: Notes on how the component works with screen readers</li>
+<li><strong>Focus Management</strong>: Explains how focus is handled within the component</li>
+</ul>
+<h2>Design Guidelines</h2>
+<ul>
+<li><strong>Visual Design</strong>: Notes on the component&#39;s visual design principles</li>
+<li><strong>Layout</strong>: Guidelines for component placement and spacing</li>
+<li><strong>Responsive Behavior</strong>: How the component adapts to different screen sizes</li>
+<li><strong>States</strong>: Visual representation of different component states (hover, active, disabled, etc.)</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Do use the component for its intended purpose</li>
+<li>Do provide all required inputs</li>
+<li>Don&#39;t nest this component inside similar components</li>
+<li>Don&#39;t use this component when [alternative] would be more appropriate</li>
+</ul>
+<h2>Related Components</h2>
+<ul>
+<li>[RelatedComponent1] - Used for similar purposes but with different constraints</li>
+<li>[RelatedComponent2] - Often used together with this component</li>
+<li>[ParentComponent] - May contain this component as part of a larger pattern</li>
+</ul>
+<h2>Changelog</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.0.0</td>
+<td>Initial release</td>
+</tr>
+<tr>
+<td>1.1.0</td>
+<td>Added <code>newFeature</code> input property</td>
+</tr>
+<tr>
+<td>1.2.0</td>
+<td>Improved accessibility with ARIA attributes</td>
+</tr>
+<tr>
+<td>2.0.0</td>
+<td>Breaking change: Renamed <code>oldOutput</code> to <code>actionCompleted</code></td>
+</tr>
+</tbody></table>
+<hr>
+<p>Last Updated: [Date]</p>
+<h2>Contributors</h2>
+<ul>
+<li>[Developer Name] - Initial implementation</li>
+<li>[Developer Name] - Added feature X</li>
+<li>[Developer Name] - Accessibility improvements</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

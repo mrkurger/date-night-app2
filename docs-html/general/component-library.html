@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Component Library Documentation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Component Library Documentation</h1>
+
+      <h1>Component Library Documentation</h1>
+<h2>Overview</h2>
+<p>The Date Night App uses a comprehensive component library built with Angular. This documentation provides detailed information about all components, services, modules, and other elements in the application.</p>
+<h2>Accessing the Component Library</h2>
+<p>The component library documentation is generated using <a href="https://compodoc.app/">Compodoc</a>, a documentation tool for Angular applications. The documentation is available in two ways:</p>
+<h3>1. Static Documentation</h3>
+<p>The static documentation is available in the <code>/docs/component-library/</code> directory. You can browse it by opening the <code>index.html</code> file in your browser.</p>
+<h3>2. Interactive Documentation Server</h3>
+<p>You can also run the documentation server locally for an interactive experience:</p>
+<pre><code class="language-bash">cd client-angular
+npm run compodoc
+</code></pre>
+<p>This will start a server at <a href="http://localhost:8080">http://localhost:8080</a> where you can browse the documentation.</p>
+<h2>Documentation Contents</h2>
+<p>The component library documentation includes:</p>
+<ul>
+<li><strong>Components</strong>: Detailed documentation of all UI components, including inputs, outputs, methods, and usage examples</li>
+<li><strong>Services</strong>: Documentation of all services, including methods, properties, and dependencies</li>
+<li><strong>Modules</strong>: Overview of module structure and dependencies</li>
+<li><strong>Interfaces &amp; Classes</strong>: Documentation of data models and type definitions</li>
+<li><strong>Routes</strong>: Application routing structure</li>
+<li><strong>Coverage</strong>: Documentation coverage statistics</li>
+</ul>
+<h2>Key Component Categories</h2>
+<h3>Core Components</h3>
+<p>These components form the foundation of the application&#39;s UI:</p>
+<ul>
+<li><strong>Layout Components</strong>: Main layout, headers, footers, navigation</li>
+<li><strong>Form Components</strong>: Input fields, buttons, selectors, toggles</li>
+<li><strong>Feedback Components</strong>: Notifications, toasts, dialogs, loaders</li>
+</ul>
+<h3>Feature Components</h3>
+<p>These components implement specific application features:</p>
+<ul>
+<li><strong>Authentication</strong>: Login, registration, password reset</li>
+<li><strong>Profile</strong>: User profiles, settings, preferences</li>
+<li><strong>Ads</strong>: Ad creation, editing, display</li>
+<li><strong>Chat</strong>: Messaging interface, conversation list</li>
+<li><strong>Reviews</strong>: Review creation, display, ratings</li>
+<li><strong>Wallet</strong>: Transaction history, balance display, transfers</li>
+</ul>
+<h3>Emerald UI Components</h3>
+<p>The Emerald UI is our custom design system that provides consistent styling and behavior across the application:</p>
+<ul>
+<li><strong>EmeraldButton</strong>: Styled button component with various states</li>
+<li><strong>EmeraldCard</strong>: Card container with consistent styling</li>
+<li><strong>EmeraldInput</strong>: Form input with validation and styling</li>
+<li><strong>EmeraldDialog</strong>: Modal dialog component</li>
+<li><strong>EmeraldToast</strong>: Toast notification component</li>
+</ul>
+<h2>Generating Documentation</h2>
+<p>The documentation is generated from the source code using Compodoc. To regenerate the documentation after code changes:</p>
+<pre><code class="language-bash">cd client-angular
+npm run compodoc:build
+</code></pre>
+<p>This will update the static documentation in the <code>/docs/component-library/</code> directory.</p>
+<h2>Contributing to the Component Library</h2>
+<p>When adding new components or modifying existing ones, please follow these guidelines:</p>
+<ol>
+<li>Add proper JSDoc comments to document inputs, outputs, methods, and usage</li>
+<li>Include example usage in the component&#39;s documentation</li>
+<li>Ensure the component follows the application&#39;s design system</li>
+<li>Regenerate the documentation after changes</li>
+</ol>
+<p>For more information on contributing to the codebase, see <a href="/Users/oivindlund/date-night-app/CONTRIBUTING.MD">CONTRIBUTING.MD</a>.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
