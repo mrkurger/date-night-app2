@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Night App Customization Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Date Night App Customization Guide</h1>
+
+      <h1>Date Night App Customization Guide</h1>
+<h2>Overview</h2>
+<p>This guide explains the standardized customization system implemented across the Date Night App codebase. The system is designed to make it easy for developers to locate, understand, and modify configuration settings without having to search through files manually.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#key-components">Key Components</a><ul>
+<li><a href="#1-customization-documentation">Customization Documentation</a></li>
+<li><a href="#2-standardized-header-system">Standardized Header System</a></li>
+<li><a href="#3-maintenance-utilities">Maintenance Utilities</a></li>
+</ul>
+</li>
+<li><a href="#how-to-use-this-system">How to Use This System</a><ul>
+<li><a href="#finding-settings-to-customize">Finding Settings to Customize</a></li>
+<li><a href="#making-customizations">Making Customizations</a></li>
+<li><a href="#adding-new-customizable-settings">Adding New Customizable Settings</a></li>
+</ul>
+</li>
+<li><a href="#header-format-guidelines">Header Format Guidelines</a><ul>
+<li><a href="#for-javascripttypescript-files">For JavaScript/TypeScript Files</a></li>
+<li><a href="#for-python-files">For Python Files</a></li>
+<li><a href="#for-htmlcss-files">For HTML/CSS Files</a></li>
+</ul>
+</li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#common-customization-scenarios">Common Customization Scenarios</a><ul>
+<li><a href="#changing-api-endpoints">Changing API Endpoints</a></li>
+<li><a href="#modifying-database-connection">Modifying Database Connection</a></li>
+<li><a href="#adjusting-content-security-policy">Adjusting Content Security Policy</a></li>
+<li><a href="#changing-file-upload-limits">Changing File Upload Limits</a></li>
+</ul>
+</li>
+<li><a href="#uiux-customization-with-emeraldjs">UI/UX Customization with Emerald.js</a><ul>
+<li><a href="#emeraldjs-component-library">Emerald.js Component Library</a></li>
+<li><a href="#using-emeraldjs-components">Using Emerald.js Components</a></li>
+<li><a href="#customizing-emeraldjs-components">Customizing Emerald.js Components</a></li>
+<li><a href="#example-customizing-the-netflix-view">Example: Customizing the Netflix View</a></li>
+</ul>
+</li>
+<li><a href="#theming">Theming</a><ul>
+<li><a href="#design-tokens">Design Tokens</a></li>
+<li><a href="#customizing-design-tokens">Customizing Design Tokens</a></li>
+<li><a href="#dark-mode">Dark Mode</a></li>
+</ul>
+</li>
+<li><a href="#testing-customized-components">Testing Customized Components</a><ul>
+<li><a href="#unit-testing-customized-components">Unit Testing Customized Components</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#common-uiux-issues">Common UI/UX Issues</a></li>
+</ul>
+</li>
+</ol>
+<h2>Key Components</h2>
+<h3>1. Customization Documentation</h3>
+<ul>
+<li><strong>CUSTOMIZATION_GUIDE.md</strong> (this file): Central documentation explaining how to use the customization system</li>
+<li><strong>CONFIG_INDEX.md</strong>: A comprehensive catalog of all customizable settings across the codebase</li>
+<li><strong>emerald-components.md</strong>: Detailed documentation for the Emerald.js UI components</li>
+<li><strong>emerald-components-changelog.md</strong>: Changelog for Emerald.js component updates</li>
+</ul>
+<h3>2. Standardized Header System</h3>
+<p>All files containing customizable settings include a standardized header in the following format:</p>
+<pre><code>// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for [module name/purpose]
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// - ANOTHER_SETTING: Description of setting (default: value)
+//   Valid values: [list of valid values or range]
+// ===================================================
+</code></pre>
+<h3>3. Maintenance Utilities</h3>
+<p>The following utilities help maintain the customization system:</p>
+<ul>
+<li><strong>update_customization_headers.py</strong>: Checks and updates headers in files</li>
+<li><strong>update_config_index.py</strong>: Automatically updates the central index based on file headers</li>
+</ul>
+<h2>How to Use This System</h2>
+<h3>Finding Settings to Customize</h3>
+<ol>
+<li>Start by consulting the <strong>CONFIG_INDEX.md</strong> file, which provides a categorized list of all customizable settings</li>
+<li>Use the links in the index to navigate directly to the relevant files</li>
+<li>Each file with customizable settings has a clearly marked header section that explains what can be modified</li>
+</ol>
+<h3>Making Customizations</h3>
+<ol>
+<li>Locate the specific setting you want to modify using the CONFIG_INDEX.md</li>
+<li>Navigate to the file containing the setting</li>
+<li>Review the header documentation to understand the setting&#39;s purpose, default values, and valid options</li>
+<li>Make your changes following the guidelines provided in the header</li>
+<li>If the setting is related to other settings (indicated by &quot;Related to:&quot; references), consider whether those need to be updated as well</li>
+</ol>
+<h3>Adding New Customizable Settings</h3>
+<p>When adding new settings that should be customizable:</p>
+<ol>
+<li>Add the standardized header to the file if it doesn&#39;t already have one</li>
+<li>Document your new setting in the header following the established format</li>
+<li>Include cross-references to related settings if applicable</li>
+<li>Run the maintenance utilities to update the CONFIG_INDEX.md</li>
+</ol>
+<pre><code class="language-bash">python3 scripts/update_customization_headers.py
+python3 scripts/update_config_index.py
+</code></pre>
+<h2>Header Format Guidelines</h2>
+<h3>For JavaScript/TypeScript Files</h3>
+<pre><code class="language-javascript">// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for [module name/purpose]
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// - ANOTHER_SETTING: Description of setting (default: value)
+//   Valid values: [list of valid values or range]
+// ===================================================
+</code></pre>
+<h3>For Python Files</h3>
+<pre><code class="language-python"># ===================================================
+# CUSTOMIZABLE SETTINGS IN THIS FILE
+# ===================================================
+# This file contains settings for [module name/purpose]
+#
+# COMMON CUSTOMIZATIONS:
+# - SETTING_NAME: Description of setting (default: value)
+#   Related to: other_file.py:OTHER_SETTING
+# - ANOTHER_SETTING: Description of setting (default: value)
+#   Valid values: [list of valid values or range]
+# ===================================================
+</code></pre>
+<h3>For HTML/CSS Files</h3>
+<pre><code class="language-html">&lt;!-- ===================================================
+     CUSTOMIZABLE SETTINGS IN THIS FILE
+     ===================================================
+     This file contains settings for [module name/purpose]
+     
+     COMMON CUSTOMIZATIONS:
+     - SETTING_NAME: Description of setting (default: value)
+       Related to: other_file.css:OTHER_SETTING
+     - ANOTHER_SETTING: Description of setting (default: value)
+       Valid values: [list of valid values or range]
+     =================================================== --&gt;
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Be Descriptive</strong>: Provide clear, concise descriptions for each setting</li>
+<li><strong>Include Defaults</strong>: Always document the default value for each setting</li>
+<li><strong>Specify Valid Values</strong>: When applicable, list the valid values or ranges for a setting</li>
+<li><strong>Cross-Reference</strong>: Link related settings across different files</li>
+<li><strong>Group Related Settings</strong>: Keep related settings together in the same file when possible</li>
+<li><strong>Update Documentation</strong>: Run the maintenance utilities after adding or modifying customizable settings</li>
+</ol>
+<h2>Common Customization Scenarios</h2>
+<h3>Changing API Endpoints</h3>
+<ol>
+<li>Navigate to <code>client-angular/src/environments/environment.ts</code> for development or <code>environment.prod.ts</code> for production</li>
+<li>Locate the <code>apiUrl</code>, <code>chatWsUrl</code>, or <code>socketUrl</code> settings</li>
+<li>Update the values as needed</li>
+</ol>
+<h3>Modifying Database Connection</h3>
+<ol>
+<li>Navigate to <code>server/config/database.js</code></li>
+<li>Update the MongoDB connection settings as needed</li>
+<li>Consider environment-specific settings in <code>server/config/environment.js</code></li>
+</ol>
+<h3>Adjusting Content Security Policy</h3>
+<ol>
+<li>Navigate to <code>server/config/csp.config.js</code></li>
+<li>Modify the directives in either <code>baseDirectives</code>, <code>developmentDirectives</code>, or <code>productionDirectives</code></li>
+<li>Be careful to maintain security while making changes</li>
+</ol>
+<h3>Changing File Upload Limits</h3>
+<ol>
+<li>Navigate to <code>client-angular/src/environments/environment.ts</code></li>
+<li>Modify the <code>maxUploadSize</code> or <code>supportedImageTypes</code> settings</li>
+<li>Ensure corresponding server-side settings are updated as well</li>
+</ol>
+<h2>UI/UX Customization with Emerald.js</h2>
+<p>DateNight.io uses the Emerald.js component library for its UI. This section explains how to customize the UI using these components.</p>
+<h3>Emerald.js Component Library</h3>
+<p>The Emerald.js component library provides a set of reusable UI components for building the DateNight.io application. These components are designed to be customizable and responsive.</p>
+<h4>Available Components</h4>
+<ul>
+<li><strong>AppCard</strong>: Card component for displaying ads in various layouts</li>
+<li><strong>Avatar</strong>: Avatar component for user profiles with online status</li>
+<li><strong>Carousel</strong>: Carousel component for image galleries</li>
+<li><strong>InfoPanel</strong>: Panel component for structured information display</li>
+<li><strong>Label</strong>: Label component for displaying status and categories</li>
+<li><strong>PageHeader</strong>: Header component with breadcrumbs and actions</li>
+<li><strong>SkeletonLoader</strong>: Loading skeleton for content placeholders</li>
+<li><strong>Toggle</strong>: Toggle switch for boolean settings</li>
+<li><strong>CardGrid</strong>: Grid layout for displaying multiple cards</li>
+<li><strong>Pager</strong>: Pagination component for navigating through results</li>
+<li><strong>FloatingActionButton</strong>: Floating action button for primary actions</li>
+</ul>
+<p>For detailed documentation on each component, see the <a href="/docs/emerald-components.md">EMERALD-COMPONENTS.MD</a> file.</p>
+<h3>Using Emerald.js Components</h3>
+<p>Emerald.js components can be used in two ways:</p>
+<h4>1. Standalone Components</h4>
+<pre><code class="language-typescript">import { AppCardComponent } from &#39;../../shared/emerald/components/app-card/app-card.component&#39;;
+// or
+import { AppCardComponent } from &#39;../../shared/emerald&#39;; // Using the index.ts barrel file
+
+@Component({
+  // ...
+  imports: [CommonModule, AppCardComponent]
+})
+</code></pre>
+<h4>2. EmeraldModule</h4>
+<pre><code class="language-typescript">import { EmeraldModule } from &#39;../../shared/emerald/emerald.module&#39;;
+
+@NgModule({
+  // ...
+  imports: [CommonModule, EmeraldModule]
+})
+</code></pre>
+<h3>Customizing Emerald.js Components</h3>
+<p>Each Emerald.js component can be customized in several ways:</p>
+<h4>1. Input Properties</h4>
+<p>Most components have input properties that allow you to customize their behavior and appearance:</p>
+<pre><code class="language-html">&lt;emerald-app-card
+  [ad]=&quot;adItem&quot;
+  layout=&quot;netflix&quot;
+  [isOnline]=&quot;adItem.isOnline&quot;
+  [showActions]=&quot;true&quot;
+  [showDescription]=&quot;true&quot;
+  (viewDetails)=&quot;onViewDetails($event)&quot;
+&gt;
+&lt;/emerald-app-card&gt;
+</code></pre>
+<h4>2. CSS Variables</h4>
+<p>Components use CSS variables for styling, which can be overridden in your component&#39;s SCSS file:</p>
+<pre><code class="language-scss">:host {
+  --primary-500: #ff6b93;
+  --primary-600: #e6365f;
+  --primary-700: #c01e45;
+}
+</code></pre>
+<h4>3. Custom CSS Classes</h4>
+<h2>Testing Customized Components</h2>
+<p>When customizing components, it&#39;s important to ensure that your changes don&#39;t break existing functionality. The Date Night App includes a comprehensive testing framework to help you verify your customizations.</p>
+<h3>Unit Testing Customized Components</h3>
+<p>For detailed guidance on testing Angular components, including common issues and solutions, refer to <a href="./ANGULAR_TESTING_LESSONS.md">ANGULAR_TESTING_LESSONS.MD</a>.</p>
+<p>Key considerations when testing customized components:</p>
+<ol>
+<li><strong>Test Input Variations</strong>: Verify that the component behaves correctly with different input values</li>
+<li><strong>Test Event Emissions</strong>: Ensure that output events are emitted correctly</li>
+<li><strong>Test Styling</strong>: Verify that CSS customizations are applied correctly</li>
+<li><strong>Test Edge Cases</strong>: Check behavior with empty, null, or invalid inputs</li>
+</ol>
+<p>Example test for a customized Emerald component:</p>
+<pre><code class="language-typescript">describe(&#39;CustomizedAppCardComponent&#39;, () =&gt; {
+  let component: AppCardComponent;
+  let fixture: ComponentFixture&lt;AppCardComponent&gt;;
+
+  beforeEach(async () =&gt; {
+    await TestBed.configureTestingModule({
+      imports: [CommonModule, AppCardComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AppCardComponent);
+    component = fixture.componentInstance;
+
+    // Set custom inputs
+    component.ad = mockAd;
+    component.layout = &#39;netflix&#39;;
+    component.showActions = true;
+
+    fixture.detectChanges();
+  });
+
+  it(&#39;should apply custom layout&#39;, () =&gt; {
+    const element = fixture.nativeElement;
+    expect(element.querySelector(&#39;.netflix-layout&#39;)).toBeTruthy();
+  });
+
+  it(&#39;should emit viewDetails event when clicked&#39;, () =&gt; {
+    spyOn(component.viewDetails, &#39;emit&#39;);
+
+    const cardElement = fixture.nativeElement.querySelector(&#39;.card-container&#39;);
+    cardElement.click();
+
+    expect(component.viewDetails.emit).toHaveBeenCalledWith(mockAd._id);
+  });
+});
+</code></pre>
+<p>You can add custom CSS classes to components and use them to override the default styles:</p>
+<pre><code class="language-html">&lt;emerald-app-card class=&quot;custom-card&quot; [ad]=&quot;adItem&quot;&gt;&lt;/emerald-app-card&gt;
+</code></pre>
+<pre><code class="language-scss">.custom-card {
+  ::ng-deep {
+    .emerald-app-card {
+      border-radius: 16px;
+
+      &amp;__title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+</code></pre>
+<h4>4. Content Projection</h4>
+<p>Many components support content projection, allowing you to customize the content displayed within the component:</p>
+<pre><code class="language-html">&lt;emerald-card-grid [items]=&quot;ads&quot;&gt;
+  &lt;ng-template #itemTemplate let-ad&gt;
+    &lt;emerald-app-card [ad]=&quot;ad&quot; layout=&quot;netflix&quot;&gt;&lt;/emerald-app-card&gt;
+  &lt;/ng-template&gt;
+&lt;/emerald-card-grid&gt;
+</code></pre>
+<h3>Example: Customizing the Netflix View</h3>
+<pre><code class="language-html">&lt;emerald-card-grid
+  [items]=&quot;featuredAds&quot;
+  layout=&quot;netflix&quot;
+  [gap]=&quot;16&quot;
+  class=&quot;featured-ads&quot;
+  (itemClick)=&quot;viewAdDetails($event._id)&quot;
+&gt;
+  &lt;ng-template #itemTemplate let-ad&gt;
+    &lt;emerald-app-card
+      [ad]=&quot;ad&quot;
+      layout=&quot;netflix&quot;
+      [isOnline]=&quot;ad.isAdvertiserOnline&quot;
+      (viewDetails)=&quot;viewAdDetails($event)&quot;
+      (like)=&quot;likeAd($event)&quot;
+      (chat)=&quot;startChat($event)&quot;
+    &gt;
+    &lt;/emerald-app-card&gt;
+  &lt;/ng-template&gt;
+&lt;/emerald-card-grid&gt;
+</code></pre>
+<pre><code class="language-scss">.featured-ads {
+  margin: $spacing-6 0;
+
+  ::ng-deep {
+    .emerald-card-grid__netflix-row {
+      position: relative;
+
+      &amp;::before {
+        content: &#39;Featured&#39;;
+        position: absolute;
+        top: -$spacing-8;
+        left: 0;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $primary-500;
+      }
+    }
+
+    .emerald-app-card {
+      &amp;:hover {
+        transform: translateY(-8px) scale(1.05);
+      }
+    }
+  }
+}
+</code></pre>
+<h2>Theming</h2>
+<p>DateNight.io supports theming through CSS variables and the design tokens system. The design tokens are defined in <code>/client-angular/src/app/core/design/design-tokens.scss</code>.</p>
+<h3>Design Tokens</h3>
+<p>The design tokens file contains all the design tokens used throughout the application, including:</p>
+<ul>
+<li><strong>Colors</strong>: Primary, secondary, neutral, and semantic colors</li>
+<li><strong>Typography</strong>: Font families, sizes, weights, and line heights</li>
+<li><strong>Spacing</strong>: Spacing values for margins, paddings, and gaps</li>
+<li><strong>Borders</strong>: Border radius values</li>
+<li><strong>Shadows</strong>: Box shadow values</li>
+<li><strong>Breakpoints</strong>: Screen size breakpoints for responsive design</li>
+</ul>
+<h3>Customizing Design Tokens</h3>
+<p>To customize the design tokens, you can:</p>
+<ol>
+<li><strong>Modify the design tokens file directly</strong>: This will affect the entire application.</li>
+<li><strong>Override design tokens in component styles</strong>: This will affect only the specific component.</li>
+</ol>
+<h4>Example: Overriding Design Tokens in a Component</h4>
+<pre><code class="language-scss">:host {
+  --primary-500: #ff6b93;
+  --primary-600: #e6365f;
+  --primary-700: #c01e45;
+  --font-primary: &#39;Montserrat&#39;, sans-serif;
+}
+</code></pre>
+<h3>Dark Mode</h3>
+<p>DateNight.io supports dark mode through CSS variables. To implement dark mode:</p>
+<ol>
+<li>Create a dark theme class that overrides the design tokens:</li>
+</ol>
+<pre><code class="language-scss">.dark-mode {
+  --neutral-100: #121212;
+  --neutral-200: #1e1e1e;
+  --neutral-300: #2a2a2a;
+  --neutral-400: #3a3a3a;
+  --neutral-500: #5a5a5a;
+  --neutral-600: #7a7a7a;
+  --neutral-700: #9a9a9a;
+  --neutral-800: #bababa;
+  --neutral-900: #f5f5f5;
+
+  --primary-100: #1a0033;
+  --primary-200: #2a0052;
+  --primary-300: #3a0070;
+  --primary-400: #4a008f;
+  --primary-500: #5a00ad;
+  --primary-600: #6a00cc;
+  --primary-700: #7a00ea;
+  --primary-800: #8a00ff;
+  --primary-900: #9a1aff;
+}
+</code></pre>
+<ol start="2">
+<li>Add a toggle for dark mode:</li>
+</ol>
+<pre><code class="language-html">&lt;emerald-toggle
+  label=&quot;Dark Mode&quot;
+  labelPosition=&quot;right&quot;
+  color=&quot;primary&quot;
+  [value]=&quot;isDarkMode&quot;
+  (change)=&quot;toggleDarkMode($event)&quot;
+&gt;
+&lt;/emerald-toggle&gt;
+</code></pre>
+<pre><code class="language-typescript">toggleDarkMode(isDarkMode: boolean): void {
+  if (isDarkMode) {
+    document.body.classList.add(&#39;dark-mode&#39;);
+  } else {
+    document.body.classList.remove(&#39;dark-mode&#39;);
+  }
+
+  // Save preference to localStorage
+  localStorage.setItem(&#39;darkMode&#39;, isDarkMode.toString());
+}
+</code></pre>
+<h2>Troubleshooting</h2>
+<p>If you encounter issues with the customization system:</p>
+<ol>
+<li>Verify that you&#39;ve consulted the most recent version of CONFIG_INDEX.md</li>
+<li>Check that the file headers are properly formatted</li>
+<li>Run the maintenance utilities to ensure documentation is up-to-date</li>
+<li>If settings don&#39;t seem to take effect, check for environment variable overrides</li>
+</ol>
+<h3>Common UI/UX Issues</h3>
+<ol>
+<li><p><strong>Component not displaying correctly</strong></p>
+<ul>
+<li>Make sure you&#39;ve imported the component in your module or component imports array</li>
+<li>Check the console for any errors</li>
+<li>Verify that the inputs are correctly bound</li>
+</ul>
+</li>
+<li><p><strong>Styles not applying</strong></p>
+<ul>
+<li>Make sure the component&#39;s SCSS file is being included in the build</li>
+<li>Check for any CSS conflicts in your application</li>
+<li>Verify that the design tokens are correctly imported</li>
+</ul>
+</li>
+<li><p><strong>Events not firing</strong></p>
+<ul>
+<li>Make sure you&#39;ve correctly bound the output event</li>
+<li>Check that the event handler function exists and is correctly implemented</li>
+<li>Verify that the event is being emitted by the component</li>
+</ul>
+</li>
+<li><p><strong>Performance issues</strong></p>
+<ul>
+<li>Use the <code>trackBy</code> function with <code>*ngFor</code> directives</li>
+<li>Implement OnPush change detection for better performance</li>
+<li>Avoid deep nesting of components</li>
+<li>Use lazy loading for large lists</li>
+</ul>
+</li>
+</ol>
+<p>For additional help, consult the project&#39;s main documentation or contact the development team.</p>
+<h2>Document History</h2>
+<ul>
+<li><strong>2025-05-20</strong>: Reviewed and verified all customization processes for accuracy</li>
+<li><strong>2025-04-10</strong>: Added section on performance considerations</li>
+<li><strong>2025-03-15</strong>: Initial version of the customization guide</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

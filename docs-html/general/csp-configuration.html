@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Security Policy (CSP) Configuration - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Content Security Policy (CSP) Configuration</h1>
+
+      <h1>Content Security Policy (CSP) Configuration</h1>
+<p>This document explains the Content Security Policy (CSP) configuration for the DateNight.io application.</p>
+<h2>What is CSP?</h2>
+<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.</p>
+<h2>CSP Configuration in DateNight.io</h2>
+<h3>Server-Side CSP</h3>
+<p>The server-side CSP is configured in <code>server/server.js</code> using the Helmet middleware. The configuration is different for development and production environments:</p>
+<h4>Development Environment</h4>
+<p>In development, we allow <code>unsafe-eval</code> and <code>unsafe-inline</code> to support Angular&#39;s development mode, which uses JIT (Just-In-Time) compilation:</p>
+<pre><code class="language-javascript">// Allow unsafe-eval in development mode for Angular
+const isDevelopment = process.env.NODE_ENV === &#39;development&#39;;
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: [&quot;&#39;self&#39;&quot;],
+      scriptSrc: [
+        &quot;&#39;self&#39;&quot;,
+        (req, res) =&gt; `&#39;nonce-${res.locals.cspNonce}&#39;`,
+        ...(isDevelopment ? [&quot;&#39;unsafe-eval&#39;&quot;, &quot;&#39;unsafe-inline&#39;&quot;] : [])
+      ],
+      // Other directives...
+    }
+  }
+}));
+</code></pre>
+<h4>Production Environment</h4>
+<p>In production, we use a more restrictive CSP that doesn&#39;t allow <code>unsafe-eval</code> or <code>unsafe-inline</code> for scripts:</p>
+<pre><code class="language-javascript">scriptSrc: [
+  &quot;&#39;self&#39;&quot;,
+  (req, res) =&gt; `&#39;nonce-${res.locals.cspNonce}&#39;`
+]
+</code></pre>
+<h3>Client-Side CSP</h3>
+<p>The Angular client also has a CSP configuration in <code>client-angular/src/index.html</code>:</p>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#39;self&#39;; script-src &#39;self&#39; &#39;unsafe-eval&#39; &#39;unsafe-inline&#39;; style-src &#39;self&#39; &#39;unsafe-inline&#39; https://fonts.googleapis.com; font-src &#39;self&#39; https://fonts.gstatic.com; img-src &#39;self&#39; data: blob: https://*.googleapis.com; connect-src &#39;self&#39; ws: wss: http://localhost:* ws://localhost:*; object-src &#39;none&#39;; base-uri &#39;self&#39;; form-action &#39;self&#39;; frame-ancestors &#39;self&#39;&quot;&gt;
+</code></pre>
+<p>This configuration is automatically updated by the <code>csp-config.js</code> script when building or starting the application.</p>
+<h2>Fixing CSP Issues</h2>
+<p>If you encounter CSP issues, you can use the provided script to fix them:</p>
+<pre><code class="language-bash">npm run fix-csp
+</code></pre>
+<p>This script will:</p>
+<ol>
+<li>Update the server-side CSP configuration in <code>server/server.js</code></li>
+<li>Update the client-side CSP configuration in <code>client-angular/src/index.html</code></li>
+</ol>
+<p>To fix CSP issues and restart the application in one command:</p>
+<pre><code class="language-bash">npm run fix-csp:restart
+</code></pre>
+<h2>CSP Directives Explained</h2>
+<p>Here&#39;s an explanation of the CSP directives used in our configuration:</p>
+<ul>
+<li><strong>default-src &#39;self&#39;</strong>: Only allow resources from the same origin by default</li>
+<li><strong>script-src</strong>: Controls which scripts can be executed<ul>
+<li><strong>&#39;self&#39;</strong>: Scripts from the same origin</li>
+<li><strong>&#39;unsafe-eval&#39;</strong>: Allows the use of <code>eval()</code> and similar functions (development only)</li>
+<li><strong>&#39;unsafe-inline&#39;</strong>: Allows inline scripts (development only)</li>
+<li><strong>nonce-{random}</strong>: Allows scripts with a specific nonce attribute</li>
+</ul>
+</li>
+<li><strong>style-src</strong>: Controls which styles can be applied<ul>
+<li><strong>&#39;self&#39;</strong>: Styles from the same origin</li>
+<li><strong>&#39;unsafe-inline&#39;</strong>: Allows inline styles (required for Angular)</li>
+<li><strong><a href="https://fonts.googleapis.com">https://fonts.googleapis.com</a></strong>: Allows loading styles from Google Fonts</li>
+</ul>
+</li>
+<li><strong>font-src</strong>: Controls where fonts can be loaded from<ul>
+<li><strong>&#39;self&#39;</strong>: Fonts from the same origin</li>
+<li><strong><a href="https://fonts.gstatic.com">https://fonts.gstatic.com</a></strong>: Allows loading fonts from Google Fonts</li>
+</ul>
+</li>
+<li><strong>img-src</strong>: Controls where images can be loaded from<ul>
+<li><strong>&#39;self&#39;</strong>: Images from the same origin</li>
+<li><strong>data:</strong>: Allows data: URIs for images</li>
+<li><strong>blob:</strong>: Allows blob: URIs for images</li>
+</ul>
+</li>
+<li><strong>connect-src</strong>: Controls which URLs can be loaded using script interfaces<ul>
+<li><strong>&#39;self&#39;</strong>: Connections to the same origin</li>
+<li><strong>ws:, wss:</strong>: Allows WebSocket connections</li>
+<li><strong><a href="http://localhost">http://localhost</a>:<em>, ws://localhost:</em></strong>: Allows connections to localhost (development only)</li>
+</ul>
+</li>
+<li><strong>object-src &#39;none&#39;</strong>: Prevents loading plugins like Flash</li>
+<li><strong>base-uri &#39;self&#39;</strong>: Restricts the URLs that can be used in a document&#39;s <code>&lt;base&gt;</code> element</li>
+<li><strong>form-action &#39;self&#39;</strong>: Restricts where forms can be submitted to</li>
+<li><strong>frame-ancestors &#39;self&#39;</strong>: Controls which sites can embed this site in an iframe</li>
+</ul>
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Use nonces for inline scripts</strong>: Instead of using <code>unsafe-inline</code>, use nonces for any inline scripts that are required.</li>
+<li><strong>Avoid eval()</strong>: Restructure your code to avoid using <code>eval()</code> and similar functions.</li>
+<li><strong>Use separate CSP for development and production</strong>: Development environments often need more permissive CSP settings.</li>
+<li><strong>Monitor CSP violations</strong>: Set up reporting to track CSP violations in production.</li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you encounter CSP-related errors in the browser console, such as:</p>
+<pre><code>Content Security Policy of your site blocks the use of &#39;eval&#39; in JavaScript
+</code></pre>
+<p>Run the fix-csp script:</p>
+<pre><code class="language-bash">npm run fix-csp
+</code></pre>
+<p>Then restart the application:</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>If you&#39;re still experiencing issues, you may need to modify the CSP configuration to allow specific resources required by your application.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
