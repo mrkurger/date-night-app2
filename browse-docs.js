@@ -12,7 +12,7 @@
  *   node browse-docs.js [--port 8080] [--search "keyword"]
  */
 
-import http from 'http';
+import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -51,7 +51,7 @@ const mimeTypes = {
 };
 
 // Create a simple HTTP server
-const server = http.createServer((req, res) => {
+const server = https.createServer((req, res) => {
   // Parse the URL to get the pathname
   let pathname = req.url;
 

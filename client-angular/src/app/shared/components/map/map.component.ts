@@ -310,14 +310,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   }
 
   /**
-   * Handle map click events
-   * @param latitude - Latitude coordinate
-   * @param longitude - Longitude coordinate
+   * Handle map location selection with enhanced feedback
+   * @param latitude Latitude coordinate
+   * @param longitude Longitude coordinate
    */
   private handleMapClick(latitude: number, longitude: number): void {
-    if (!this.selectable || !this.map) return;
+    if (!this.map) return;
 
-    // Track interaction
+    // Track map click interaction
     this.mapMonitoringService.trackInteraction('map_click', { latitude, longitude });
 
     // Emit map click event
@@ -325,7 +325,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
       this.mapClick.emit({ latitude, longitude });
     });
 
-    // Add a marker at the clicked location
+    // Only handle location selection if the map is in selectable mode
+    if (!this.selectable) return;
+
+    // Add a marker at the clicked location with improved feedback
     this.setSelectedLocation(latitude, longitude);
 
     // Get address information for the clicked location
@@ -335,6 +338,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
         catchError((error) => {
           console.error('Error getting address information:', error);
           this.mapMonitoringService.trackError('geocoding_error', error);
+          this.announceToScreenReader('Unable to get address for selected location');
           return of(null);
         }),
       )
@@ -344,25 +348,26 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
             this.locationSelected.emit({
               latitude,
               longitude,
-              // Use type assertion to add address property
-              ...(result.address ? ({ address: result.address } as any) : {}),
+              address: result.address,
             });
 
-            // Track location selection with address
-            this.mapMonitoringService.trackLocationSelection({
-              latitude,
-              longitude,
-              // Use type assertion to add address property
-              ...(result.address ? ({ address: result.address } as any) : {}),
-            });
+            // Show popup with location details
+            if (this.selectedLocationMarker) {
+              const popupContent = `
+                  <strong>Selected Location</strong><br>
+                  ${result.address || ''}<br>
+                  Latitude: ${latitude.toFixed(6)}<br>
+                  Longitude: ${longitude.toFixed(6)}
+              `;
+              this.selectedLocationMarker.setPopupContent(popupContent).openPopup();
+            }
+
+            // Announce to screen reader
+            this.announceToScreenReader(
+              `Location selected: ${result.address || 'Unknown address'}`,
+            );
           } else {
             this.locationSelected.emit({
-              latitude,
-              longitude,
-            });
-
-            // Track location selection without address
-            this.mapMonitoringService.trackLocationSelection({
               latitude,
               longitude,
             });
@@ -472,109 +477,137 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   }
 
   /**
-   * Show the user's current position on the map
+   * Show the user's current position on the map with enhanced feedback
    */
   private showUserLocation(): void {
     if (!this.map) return;
 
-    if (navigator.geolocation) {
-      const startTime = performance.now();
+    const startTime = performance.now();
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-
-          // Create a marker for the current location
-          if (this.currentLocationMarker) {
-            this.currentLocationMarker.remove();
-          }
-
-          const icon = L.divIcon({
-            className: 'current-location-marker',
-            html: '<div class="pulse" role="presentation" aria-label="Your current location"></div>',
-            iconSize: [20, 20],
-            iconAnchor: [10, 10],
-          });
-
-          this.currentLocationMarker = L.marker([latitude, longitude], {
-            icon,
-            keyboard: true,
-            title: 'Your current location', // For accessibility
-          })
-            .addTo(this.map!)
-            .bindPopup('<strong>Your current location</strong>');
-
-          // Center the map on the current location
-          this.map.setView([latitude, longitude], 13);
-
-          // Announce to screen readers
-          this.announceToScreenReader('Current location detected and displayed on the map');
-
-          // Track successful geolocation
-          const geolocateTime = performance.now() - startTime;
-          this.mapMonitoringService.trackCurrentLocation(true);
-          this.mapMonitoringService.trackPerformance('geolocation', geolocateTime);
-
-          // Track viewport change
-          this.mapMonitoringService.trackViewportChange({ lat: latitude, lng: longitude }, 13);
-        },
-        (error) => {
-          console.error('Error getting current location:', error);
-
-          // Handle specific error cases
-          let errorMessage = 'Unable to determine your location';
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage = 'Location permission denied';
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = 'Location information unavailable';
-              break;
-            case error.TIMEOUT:
-              errorMessage = 'Location request timed out';
-              break;
-          }
-
-          // Show error as popup on map
-          if (this.map) {
-            const popup = L.popup()
-              .setLatLng([this.map.getCenter().lat, this.map.getCenter().lng])
-              .setContent(`<p class="error-message">${errorMessage}</p>`)
-              .openOn(this.map);
-
-            // Auto-close popup after 5 seconds
-            setTimeout(() => {
-              this.map?.closePopup(popup);
-            }, 5000);
-          }
-
-          // Announce to screen readers
-          this.announceToScreenReader(errorMessage);
-
-          // Track geolocation error
-          this.mapMonitoringService.trackCurrentLocation(false, errorMessage);
-          this.mapMonitoringService.trackError('geolocation_error', {
-            code: error.code,
-            message: errorMessage,
-          });
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        },
-      );
-    } else {
-      const errorMessage = 'Geolocation is not supported by your browser';
-      console.error(errorMessage);
-      this.announceToScreenReader(errorMessage);
-
-      // Track geolocation not supported error
-      this.mapMonitoringService.trackCurrentLocation(false, errorMessage);
-      this.mapMonitoringService.trackError('geolocation_not_supported', {
-        message: errorMessage,
-      });
+    if (!navigator.geolocation) {
+      this.announceToScreenReader('Geolocation is not supported by your browser');
+      this.mapMonitoringService.trackCurrentLocation(false, 'geolocation_not_supported');
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Remove existing marker if any
+        if (this.currentLocationMarker) {
+          this.currentLocationMarker.remove();
+        }
+
+        const icon = L.divIcon({
+          className: 'current-location-marker',
+          html: '<div class="pulse" role="presentation" aria-label="Your current location"></div>',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10],
+        });
+
+        this.currentLocationMarker = L.marker([latitude, longitude], {
+          icon,
+          keyboard: true,
+          title: 'Your current location', // For accessibility
+        })
+          .addTo(this.map!)
+          .bindPopup('<strong>Your current location</strong>');
+
+        // Center map with smooth animation
+        this.map.flyTo([latitude, longitude], 13, {
+          duration: 1.5,
+          easeLinearity: 0.25,
+        });
+
+        // Announce to screen readers with more context
+        this.announceToScreenReader(
+          `Current location detected at latitude ${latitude.toFixed(4)}, longitude ${longitude.toFixed(4)}. Map has been centered on your location.`,
+        );
+
+        // Track successful geolocation with accuracy info
+        const geolocateTime = performance.now() - startTime;
+        this.mapMonitoringService.trackCurrentLocation(true, undefined, {
+          accuracy: position.coords.accuracy,
+          time: geolocateTime,
+        });
+
+        // Track viewport change
+        this.mapMonitoringService.trackViewportChange({ lat: latitude, lng: longitude }, 13);
+      },
+      (error) => {
+        console.error('Error getting current location:', error);
+
+        // Enhanced error handling with specific messages
+        let errorMessage: string;
+        let errorType: string;
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage =
+              'Location access was denied. Please enable location services to use this feature.';
+            errorType = 'permission_denied';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information is currently unavailable. Please try again later.';
+            errorType = 'position_unavailable';
+            break;
+          case error.TIMEOUT:
+            errorMessage =
+              'Location request timed out. Please check your connection and try again.';
+            errorType = 'timeout';
+            break;
+          default:
+            errorMessage = 'Unable to determine your location. Please try again.';
+            errorType = 'unknown';
+        }
+
+        // Show error as popup on map with retry button
+        if (this.map) {
+          const popup = L.popup()
+            .setLatLng([this.map.getCenter().lat, this.map.getCenter().lng])
+            .setContent(
+              `
+              <div class="location-error">
+                <p>${errorMessage}</p>
+                <button 
+                  class="btn btn-sm btn-primary retry-location" 
+                  onclick="document.dispatchEvent(new CustomEvent('retryLocation'))"
+                >
+                  Retry
+                </button>
+              </div>
+            `,
+            )
+            .openOn(this.map);
+
+          // Add event listener for retry button
+          document.addEventListener(
+            'retryLocation',
+            () => {
+              popup.remove();
+              this.showUserLocation();
+            },
+            { once: true },
+          );
+        }
+
+        // Announce error to screen reader
+        this.announceToScreenReader(errorMessage);
+
+        // Track error in monitoring service
+        this.mapMonitoringService.trackCurrentLocation(false, errorType);
+        this.mapMonitoringService.trackError('geolocation_error', {
+          type: errorType,
+          message: errorMessage,
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      },
+    );
   }
 
   /**
