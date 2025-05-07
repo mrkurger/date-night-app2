@@ -8,6 +8,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import ChatService from '../../services/chat.service.js';
+import ChatAttachment from '../../models/chat-attachment.schema.js';
 import { asyncHandler } from '../../middleware/asyncHandler.js';
 
 class ChatController {
@@ -199,6 +200,134 @@ class ChatController {
       const room = await ChatService.updateMessageExpiry(roomId, enabled, expiryTime, req.user.id);
 
       res.status(200).json(room);
+    })(req, res);
+  }
+
+  /**
+   * Handle file upload for chat messages
+   */
+  uploadAttachment(req, res) {
+    return asyncHandler(async (req, res) => {
+      const { roomId } = req.params;
+      const files = req.files;
+      const fileMetadata = req.body.fileMetadata ? JSON.parse(req.body.fileMetadata) : [];
+
+      if (!files || files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'No files were uploaded',
+        });
+      }
+
+      const attachments = await Promise.all(
+        files.map(async (file, index) => {
+          // Get corresponding metadata if available
+          const metadata = Array.isArray(fileMetadata) ? fileMetadata[index] : fileMetadata;
+
+          // Store file and get URL (implement your storage logic here)
+          const url = await ChatService.storeFile(file);
+
+          return {
+            name: metadata?.originalName || file.originalname,
+            type: metadata?.originalType || file.mimetype,
+            size: file.size,
+            url,
+            uploadedBy: req.user.id,
+            roomId,
+            isEncrypted: metadata?.isEncrypted || false,
+            encryptionData: metadata?.isEncrypted
+              ? {
+                  iv: metadata.iv,
+                  authTag: metadata.authTag,
+                }
+              : undefined,
+          };
+        })
+      );
+
+      // Create attachments in database
+      const savedAttachments = await ChatAttachment.insertMany(attachments);
+
+      res.status(201).json(savedAttachments);
+    })(req, res);
+  }
+
+  /**
+   * Send a message with attachments to a chat room
+   */
+  sendMessageWithAttachments(req, res) {
+    return asyncHandler(async (req, res) => {
+      const { roomId } = req.params;
+      const { content, replyTo, isEncrypted, encryptionData, expiresAt } = req.body;
+      const files = req.files;
+      const fileMetadata = req.body.fileMetadata ? JSON.parse(req.body.fileMetadata) : [];
+
+      // Upload and process attachments
+      const attachments = await Promise.all(
+        files.map(async (file, index) => {
+          const metadata = Array.isArray(fileMetadata) ? fileMetadata[index] : fileMetadata;
+          const url = await ChatService.storeFile(file);
+
+          return {
+            name: metadata?.originalName || file.originalname,
+            type: metadata?.originalType || file.mimetype,
+            size: file.size,
+            url,
+            uploadedBy: req.user.id,
+            roomId,
+            isEncrypted: metadata?.isEncrypted || false,
+            encryptionData: metadata?.isEncrypted
+              ? {
+                  iv: metadata.iv,
+                  authTag: metadata.authTag,
+                }
+              : undefined,
+          };
+        })
+      );
+
+      // Save attachments
+      const savedAttachments = await ChatAttachment.insertMany(attachments);
+
+      // Create message with attachments
+      const message = await ChatService.sendMessage(roomId, req.user.id, content, {
+        attachments: savedAttachments.map(att => att._id),
+        isEncrypted,
+        encryptionData,
+        expiresAt: expiresAt ? new Date(parseInt(expiresAt)) : undefined,
+        replyTo,
+      });
+
+      res.status(201).json(message);
+    })(req, res);
+  }
+
+  /**
+   * Download an attachment
+   */
+  downloadAttachment(req, res) {
+    return asyncHandler(async (req, res) => {
+      const { attachmentId } = req.params;
+
+      const attachment = await ChatAttachment.findById(attachmentId);
+      if (!attachment) {
+        return res.status(404).json({
+          success: false,
+          message: 'Attachment not found',
+        });
+      }
+
+      // Verify user has access to this room
+      const canAccess = await ChatService.verifyRoomAccess(attachment.roomId, req.user.id);
+      if (!canAccess) {
+        return res.status(403).json({
+          success: false,
+          message: 'Access denied',
+        });
+      }
+
+      // Stream the file to the response
+      await ChatService.streamFile(attachment.url, res);
     })(req, res);
   }
 }

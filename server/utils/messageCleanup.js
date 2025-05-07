@@ -44,13 +44,40 @@ class MessageCleanup {
         expiresAt: { $lt: now },
       });
 
-      console.log(`Deleted ${result.deletedCount} expired messages`);
+      if (result.deletedCount > 0) {
+        console.log(`Deleted ${result.deletedCount} expired messages`);
+      }
+
       return result.deletedCount;
     } catch (error) {
       console.error('Error cleaning up expired messages:', error);
       throw error;
     }
   }
+
+  /**
+   * Get messages that will expire soon
+   * @param {number} minutesThreshold Minutes threshold (default: 5)
+   * @returns {Promise<Array>} Array of messages about to expire
+   */
+  async getMessagesAboutToExpire(minutesThreshold = 5) {
+    try {
+      const now = new Date();
+      const expiryThreshold = new Date(now.getTime() + minutesThreshold * 60 * 1000);
+
+      const messages = await ChatMessage.find({
+        expiresAt: {
+          $gt: now,
+          $lte: expiryThreshold,
+        },
+      });
+
+      return messages;
+    } catch (error) {
+      console.error('Error getting messages about to expire:', error);
+      throw error;
+    }
+  }
 }
 
-module.exports = new MessageCleanup();
+export default new MessageCleanup();

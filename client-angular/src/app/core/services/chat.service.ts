@@ -15,7 +15,7 @@ import { BehaviorSubject, Observable, of, from } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators'; // Removed tap
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { EncryptionService, EncryptedData } from './encryption.service';
+import { EncryptionService, EncryptedData, EncryptedAttachmentData } from './encryption.service';
 
 // Constants
 export const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
@@ -23,6 +23,19 @@ export const TYPING_INDICATOR_TIMEOUT = 3000; // 3 seconds
 export const ENABLE_MESSAGE_ENCRYPTION = true; // Enable end-to-end encryption for messages
 export const ENABLE_MESSAGE_AUTO_DELETION = true; // Enable automatic message deletion
 export const DEFAULT_MESSAGE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+
+// Constants for file handling
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'text/plain',
+  'application/zip',
+];
 
 export interface ChatMessage {
   _id: string;
@@ -51,6 +64,8 @@ export interface Attachment {
   url: string;
   timestamp: Date;
   thumbnailUrl?: string;
+  isEncrypted?: boolean;
+  encryptionData?: any;
 }
 
 export interface Contact {
@@ -377,46 +392,122 @@ export class ChatService {
   }
 
   /**
-   * Send a message with attachments
-   * @param roomId The ID of the chat room
-   * @param content The message content
-   * @param files Array of files to attach
-   * @param replyToId Optional ID of the message being replied to
-   * @param ttl Optional time-to-live in milliseconds for message auto-deletion
+   * Send a message with attachments (handles encryption if enabled)
    */
-  sendMessageWithAttachments(
+  async sendMessageWithAttachments(
     roomId: string,
     content: string,
     files: File[],
     replyToId?: string,
     ttl?: number,
-  ): Observable<ChatMessage> {
+  ): Promise<ChatMessage> {
     const formData = new FormData();
-    formData.append('message', content);
+
+    // Validate files
+    const invalidFiles = files.filter(
+      (f) => f.size > MAX_FILE_SIZE || !ALLOWED_FILE_TYPES.includes(f.type),
+    );
+    if (invalidFiles.length > 0) {
+      throw new Error(`Invalid files: ${invalidFiles.map((f) => f.name).join(', ')}`);
+    }
+
+    // Encrypt message content if encryption is available
+    if (this.encryptionService.isEncryptionAvailable()) {
+      const encryptedContent = await this.encryptionService.encryptMessage(roomId, content);
+      if (encryptedContent) {
+        formData.append('content', encryptedContent.ciphertext);
+        formData.append('isEncrypted', 'true');
+        formData.append(
+          'encryptionData',
+          JSON.stringify({
+            iv: encryptedContent.iv,
+            authTag: encryptedContent.authTag,
+          }),
+        );
+      } else {
+        formData.append('content', content);
+      }
+    } else {
+      formData.append('content', content);
+    }
+
+    // Handle file encryption and metadata
+    const fileMetadata: any[] = [];
+    for (const file of files) {
+      if (this.encryptionService.isEncryptionAvailable()) {
+        // Encrypt file content
+        const encryptedFile = await this.encryptionService.encryptFile(roomId, file);
+        if (encryptedFile) {
+          formData.append('attachments', encryptedFile.file);
+          fileMetadata.push({
+            originalName: file.name,
+            originalType: file.type,
+            size: file.size,
+            isEncrypted: true,
+            iv: encryptedFile.iv,
+            authTag: encryptedFile.authTag,
+          });
+        } else {
+          formData.append('attachments', file);
+          fileMetadata.push({
+            originalName: file.name,
+            originalType: file.type,
+            size: file.size,
+            isEncrypted: false,
+          });
+        }
+      } else {
+        formData.append('attachments', file);
+        fileMetadata.push({
+          originalName: file.name,
+          originalType: file.type,
+          size: file.size,
+          isEncrypted: false,
+        });
+      }
+    }
+
+    // Add metadata
+    formData.append('fileMetadata', JSON.stringify(fileMetadata));
 
     if (replyToId) {
       formData.append('replyTo', replyToId);
     }
 
-    // Add expiry time if ttl is provided or auto-deletion is enabled
+    // Add expiry time if ttl is provided
     if (ttl) {
       formData.append('expiresAt', (Date.now() + ttl).toString());
-    } else if (ENABLE_MESSAGE_AUTO_DELETION) {
-      // Get room-specific settings or use defaults
-      const settings = this.getMessageAutoDeletionSettings(roomId);
-      if (settings.enabled) {
-        formData.append('expiresAt', (Date.now() + settings.ttl).toString());
-      }
     }
 
-    files.forEach((file, index) => {
-      formData.append('attachments', file, file.name);
-    });
+    // Send request
+    const response = await this.http
+      .post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages/attachments`, formData)
+      .toPromise();
 
-    return this.http.post<ChatMessage>(
-      `${this.apiUrl}/rooms/${roomId}/messages/attachments`,
-      formData,
-    );
+    return response!;
+  }
+
+  /**
+   * Download an attachment (handles decryption if needed)
+   */
+  async downloadAttachment(attachment: Attachment): Promise<Blob> {
+    const response = await this.http
+      .get(`${this.apiUrl}/attachments/${attachment.id}`, { responseType: 'blob' })
+      .toPromise();
+
+    if (!response) {
+      throw new Error('Failed to download attachment');
+    }
+
+    // If attachment is encrypted, decrypt it
+    if (attachment.isEncrypted && this.encryptionService.isEncryptionAvailable()) {
+      return await this.encryptionService.decryptFile(attachment.roomId, response, {
+        iv: attachment.encryptionData?.iv,
+        authTag: attachment.encryptionData?.authTag,
+      });
+    }
+
+    return response;
   }
 
   /**
@@ -434,7 +525,147 @@ export class ChatService {
     ttl: number,
     replyToId?: string,
   ): Observable<ChatMessage> {
-    return this.sendMessageWithAttachments(roomId, content, files, replyToId, ttl);
+    return from(this.sendMessageWithAttachments(roomId, content, files, replyToId, ttl));
+  }
+
+  /**
+   * Send a message with encrypted attachments
+   * @param roomId The ID of the chat room
+   * @param content The message content
+   * @param files Array of files to attach
+   * @param replyToId Optional ID of the message being replied to
+   * @param ttl Optional time-to-live in milliseconds
+   */
+  async sendMessageWithEncryptedAttachments(
+    roomId: string,
+    content: string,
+    files: File[],
+    replyToId?: string,
+    ttl?: number,
+  ): Promise<ChatMessage> {
+    const formData = new FormData();
+
+    // Encrypt the message content if encryption is available
+    if (this.encryptionService.isEncryptionAvailable()) {
+      const encryptedContent = await this.encryptionService.encryptMessage(roomId, content, ttl);
+      if (encryptedContent) {
+        formData.append('content', encryptedContent.ciphertext);
+        formData.append('isEncrypted', 'true');
+        formData.append('iv', encryptedContent.iv);
+        formData.append('authTag', encryptedContent.authTag);
+      } else {
+        formData.append('content', content);
+      }
+    } else {
+      formData.append('content', content);
+    }
+
+    if (replyToId) {
+      formData.append('replyTo', replyToId);
+    }
+
+    // Add expiry time if ttl is provided
+    if (ttl) {
+      formData.append('expiresAt', (Date.now() + ttl).toString());
+    }
+
+    // Encrypt and append each file
+    for (const file of files) {
+      if (this.encryptionService.isEncryptionAvailable()) {
+        const encryptedData = await this.encryptionService.encryptFile(roomId, file);
+        if (encryptedData) {
+          // Create a new form entry for the encrypted file
+          formData.append('files', encryptedData.file);
+          formData.append(
+            'fileMetadata',
+            JSON.stringify({
+              originalName: encryptedData.metadata.originalName,
+              originalType: encryptedData.metadata.originalType,
+              size: encryptedData.metadata.size,
+              iv: encryptedData.metadata.iv,
+              authTag: encryptedData.metadata.authTag,
+              isEncrypted: true,
+            }),
+          );
+        } else {
+          // Fall back to unencrypted if encryption fails
+          formData.append('files', file);
+          formData.append(
+            'fileMetadata',
+            JSON.stringify({
+              originalName: file.name,
+              originalType: file.type,
+              size: file.size,
+              isEncrypted: false,
+            }),
+          );
+        }
+      } else {
+        // Handle unencrypted file
+        formData.append('files', file);
+        formData.append(
+          'fileMetadata',
+          JSON.stringify({
+            originalName: file.name,
+            originalType: file.type,
+            size: file.size,
+            isEncrypted: false,
+          }),
+        );
+      }
+    }
+
+    return this.http
+      .post<ChatMessage>(`${this.apiUrl}/rooms/${roomId}/messages/attachments`, formData)
+      .toPromise();
+  }
+
+  /**
+   * Download and decrypt an attachment
+   * @param roomId The chat room ID
+   * @param attachment The attachment to download
+   */
+  async downloadEncryptedAttachment(roomId: string, attachment: Attachment): Promise<File | null> {
+    try {
+      // Download the encrypted file
+      const response = await this.http
+        .get(attachment.url, {
+          responseType: 'blob',
+        })
+        .toPromise();
+
+      if (!response) {
+        throw new Error('Failed to download attachment');
+      }
+
+      // If the attachment is not encrypted, return as is
+      if (!attachment.isEncrypted) {
+        return new File([response], attachment.name, {
+          type: attachment.type,
+        });
+      }
+
+      // Decrypt the file
+      if (!attachment.encryptionData) {
+        throw new Error('Missing encryption data for encrypted attachment');
+      }
+
+      const encryptedData: EncryptedAttachmentData = {
+        file: response,
+        metadata: {
+          originalName: attachment.name,
+          originalType: attachment.type,
+          size: attachment.size,
+          iv: attachment.encryptionData.iv,
+          authTag: attachment.encryptionData.authTag,
+        },
+      };
+
+      return this.encryptionService.decryptFile(roomId, encryptedData);
+    } catch (error) {
+      console.error('Error downloading encrypted attachment:', error);
+      return null;
+    }
   }
 
   /**

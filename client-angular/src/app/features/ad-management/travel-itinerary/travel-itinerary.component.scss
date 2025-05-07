@@ -1,5 +1,168 @@
 .travel-itinerary-container {
   padding: 20px;
+
+  .tabs-container {
+    margin-top: 2rem;
+
+    .tabs-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 0.5rem;
+
+      .tab-button {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: none;
+        color: #6c757d;
+        cursor: pointer;
+        font-weight: 500;
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -0.5rem;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: transparent;
+          transition: background-color 0.2s;
+        }
+
+        &.active {
+          color: #007bff;
+
+          &:after {
+            background-color: #007bff;
+          }
+        }
+
+        &:hover:not(.active) {
+          color: #495057;
+
+          &:after {
+            background-color: #dee2e6;
+          }
+        }
+      }
+    }
+
+    .tabs-content {
+      .tab-pane {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+    }
+  }
+
+  .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 1.5rem;
+
+    .card-header {
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 1rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #2c3e50;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+
+  .map-legend {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+
+    h4 {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #495057;
+    }
+
+    .marker-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      display: inline-block;
+    }
+  }
+
+  // Status badges
+  .badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+    border-radius: 4px;
+
+    &.badge-info {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    &.badge-success {
+      background-color: #28a745;
+      color: white;
+    }
+
+    &.badge-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    &.badge-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    &.badge-light {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+  }
+
+  // Form styles
+  .mat-form-field {
+    margin-bottom: 1rem;
+  }
+
+  // Animation
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 768px) {
+    .tabs-header {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .tab-button {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
 }
 
 h2 {

@@ -8,13 +8,25 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import express from 'express';
+import multer from 'multer';
 const router = express.Router();
 import chatController from './chat.controller.js';
 import encryptionRoutes from './encryption.routes.js';
 import { protect } from '../../middleware/auth.js';
+import { authGuard } from '../../middleware/authGuard.js';
+import { validateRequest } from '../../middleware/requestValidator.js';
 
 // Apply authentication middleware to all chat routes
 router.use(protect);
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+});
 
 // Get rooms for current user
 router.get('/rooms', chatController.getRooms);
@@ -51,6 +63,21 @@ router.post('/rooms/:roomId/encryption', chatController.setupRoomEncryption);
 
 // Update message expiry settings
 router.post('/rooms/:roomId/expiry', chatController.updateMessageExpiry);
+
+// Attachment routes
+router.post(
+  '/rooms/:roomId/attachments',
+  upload.array('attachments', 10), // Allow up to 10 files
+  chatController.uploadAttachment
+);
+
+router.post(
+  '/rooms/:roomId/messages/attachments',
+  upload.array('attachments', 10),
+  chatController.sendMessageWithAttachments
+);
+
+router.get('/attachments/:attachmentId', chatController.downloadAttachment);
 
 // Mount encryption routes
 router.use('/encryption', encryptionRoutes);

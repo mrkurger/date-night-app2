@@ -214,126 +214,105 @@
 
       <!-- Message List -->
       <div class="message-list" #messageList>
-        <!-- Date Separator -->
-        <div *ngFor="let group of messageGroups" class="message-group">
-          <div class="date-separator">
-            <span>{{ group.date | date: 'mediumDate' }}</span>
-          </div>
+        <div class="message-group" *ngFor="let group of messageGroups">
+          <div class="date-separator">{{ group.date | date }}</div>
 
-          <!-- Messages -->
           <div
-            *ngFor="let message of group.messages"
             class="message"
-            [class.sent]="message.sender.id === currentUserId"
-            [class.received]="message.sender.id !== currentUserId"
+            *ngFor="let message of group.messages"
+            [id]="'message-' + message._id"
+            [ngClass]="{
+              'message--outgoing': message.sender.id === currentUserId,
+              'message--incoming': message.sender.id !== currentUserId,
+              'message--expiring': message.expiresAt,
+              'message--about-to-expire': isAboutToExpire(message.expiresAt),
+            }"
           >
-            <!-- Sender Avatar (only for received messages) -->
-            <emerald-avatar
-              *ngIf="message.sender.id !== currentUserId"
-              [imageUrl]="getContactById(message.sender.id)?.imageUrl"
-              [name]="message.sender.username"
-              size="small"
-              class="message-avatar"
-            >
-            </emerald-avatar>
-
             <!-- Message Content -->
-            <div
-              class="message-bubble"
-              [class.temporary-message]="message.expiresAt"
-              [class.about-to-expire]="message.expiresAt && isAboutToExpire(message.expiresAt)"
-            >
-              <!-- Temporary Message Indicator -->
+            <div class="message__content">
               <div
-                *ngIf="message.expiresAt"
-                class="temporary-message-indicator"
-                [matTooltip]="getRemainingTime(message.expiresAt)"
+                class="message-bubble"
+                [class.temporary-message]="message.expiresAt"
+                [class.about-to-expire]="message.expiresAt && isAboutToExpire(message.expiresAt)"
               >
-                <mat-icon>timer</mat-icon>
-              </div>
+                <!-- Temporary Message Indicator -->
+                <div
+                  *ngIf="message.expiresAt"
+                  class="temporary-message-indicator"
+                  [matTooltip]="getRemainingTime(message.expiresAt)"
+                >
+                  <mat-icon>timer</mat-icon>
+                </div>
 
-              <!-- Message Text -->
-              <div
-                class="message-content"
-                [innerHTML]="formatMessageContent(message.message)"
-              ></div>
+                <!-- Message Text -->
+                <div
+                  class="message-content"
+                  [innerHTML]="formatMessageContent(message.message)"
+                ></div>
 
-              <!-- Message Attachments -->
-              <div
-                *ngIf="message.attachments && message.attachments.length > 0"
-                class="message-attachments"
-              >
-                <!-- Image Attachment -->
-                <div *ngFor="let attachment of message.attachments" class="attachment">
-                  <img
-                    *ngIf="isImageAttachment(attachment)"
-                    [src]="attachment.url"
-                    [alt]="attachment.name"
-                    (click)="openImagePreview(attachment)"
-                  />
+                <!-- Message Attachments -->
+                <div
+                  *ngIf="message.attachments && message.attachments.length > 0"
+                  class="message-attachments"
+                >
+                  <!-- Image Attachment -->
+                  <div *ngFor="let attachment of message.attachments" class="attachment">
+                    <img
+                      *ngIf="isImageAttachment(attachment)"
+                      [src]="attachment.url"
+                      [alt]="attachment.name"
+                      (click)="openImagePreview(attachment)"
+                    />
 
-                  <!-- File Attachment -->
-                  <div
-                    *ngIf="!isImageAttachment(attachment)"
-                    class="file-attachment"
-                    (click)="downloadAttachment(attachment)"
-                  >
-                    <mat-icon>{{ getFileIcon(attachment) }}</mat-icon>
-                    <div class="file-info">
-                      <div class="file-name">{{ attachment.name }}</div>
-                      <div class="file-size">{{ formatFileSize(attachment.size) }}</div>
+                    <!-- File Attachment -->
+                    <div
+                      *ngIf="!isImageAttachment(attachment)"
+                      class="file-attachment"
+                      (click)="downloadAttachment(attachment)"
+                    >
+                      <mat-icon>{{ getFileIcon(attachment) }}</mat-icon>
+                      <div class="file-info">
+                        <div class="file-name">{{ attachment.name }}</div>
+                        <div class="file-size">{{ formatFileSize(attachment.size) }}</div>
+                      </div>
+                      <button mat-icon-button>
+                        <mat-icon>download</mat-icon>
+                      </button>
                     </div>
-                    <button mat-icon-button>
-                      <mat-icon>download</mat-icon>
-                    </button>
                   </div>
+                </div>
+
+                <!-- Message Metadata -->
+                <div class="message-meta">
+                  <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
+                  <!-- Expiry indicator for temporary messages -->
+                  <span
+                    *ngIf="message.expiresAt"
+                    class="message-expiry"
+                    [matTooltip]="getRemainingTime(message.expiresAt)"
+                  >
+                    <mat-icon class="expiry-icon">timer</mat-icon>
+                  </span>
+                  <span
+                    *ngIf="message.sender.id === currentUserId"
+                    class="message-status"
+                    [class.read]="message.read"
+                  >
+                    <mat-icon class="status-icon">{{
+                      message.read ? 'done_all' : 'done'
+                    }}</mat-icon>
+                  </span>
                 </div>
               </div>
 
-              <!-- Message Metadata -->
-              <div class="message-meta">
-                <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
-                <!-- Expiry indicator for temporary messages -->
-                <span
-                  *ngIf="message.expiresAt"
-                  class="message-expiry"
-                  [matTooltip]="getRemainingTime(message.expiresAt)"
-                >
-                  <mat-icon class="expiry-icon">timer</mat-icon>
-                </span>
-                <span
-                  *ngIf="message.sender.id === currentUserId"
-                  class="message-status"
-                  [class.read]="message.read"
-                >
-                  <mat-icon class="status-icon">{{ message.read ? 'done_all' : 'done' }}</mat-icon>
-                </span>
-              </div>
-            </div>
-
-            <!-- Message Actions -->
-            <div class="message-actions">
-              <button mat-icon-button [matMenuTriggerFor]="messageMenu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #messageMenu="matMenu">
-                <button mat-menu-item (click)="replyToMessage(message)">
-                  <mat-icon>reply</mat-icon>
-                  <span>Reply</span>
-                </button>
-                <button mat-menu-item (click)="forwardMessage(message)">
-                  <mat-icon>forward</mat-icon>
-                  <span>Forward</span>
-                </button>
-                <button mat-menu-item (click)="copyMessage(message)">
-                  <mat-icon>content_copy</mat-icon>
-                  <span>Copy</span>
-                </button>
-                <button mat-menu-item (click)="deleteMessage(message)">
-                  <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
-                </button>
-              </mat-menu>
+              <!-- Expiry Indicator -->
+              <span
+                *ngIf="message.expiresAt"
+                class="message__expiry"
+                [matTooltip]="getRemainingTime(message.expiresAt)"
+              >
+                <mat-icon [class.rotating]="isAboutToExpire(message.expiresAt)">timer</mat-icon>
+              </span>
             </div>
           </div>
         </div>
@@ -378,106 +357,133 @@
       </div>
 
       <!-- Message Input Area -->
-      <div class="message-input-container">
-        <!-- Attachment Button -->
-        <button
-          mat-icon-button
-          matTooltip="Add Attachment"
-          (click)="openAttachmentMenu()"
-          class="attachment-button"
-        >
-          <mat-icon>attach_file</mat-icon>
-        </button>
+      <div class="message-input-area">
+        <!-- Reply Preview -->
+        <div class="reply-preview" *ngIf="replyingTo">
+          <div class="reply-content">
+            <mat-icon>reply</mat-icon>
+            <div class="reply-text">
+              <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
+              <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
+            </div>
+          </div>
+          <button mat-icon-button (click)="cancelReply()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
 
-        <!-- Temporary Message Button -->
-        <button
-          mat-icon-button
-          [matTooltip]="
-            temporaryMessageMode ? 'Temporary message mode enabled' : 'Send temporary message'
-          "
-          (click)="toggleTemporaryMessageMode()"
-          class="temp-message-button"
-          [class.active]="temporaryMessageMode"
-        >
+        <!-- Temporary Message Mode Indicator -->
+        <div class="temp-message-indicator" *ngIf="temporaryMessageMode">
           <mat-icon>timer</mat-icon>
-        </button>
+          <span>Temporary message mode: {{ formatTTL(temporaryMessageTTL) }}</span>
+          <button mat-icon-button (click)="toggleTemporaryMessageMode()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
 
-        <!-- Text Input -->
-        <div class="message-input" [class.temp-message-mode]="temporaryMessageMode">
-          <textarea
-            [(ngModel)]="newMessage"
-            (keyup.enter)="handleEnterKey($event)"
-            (input)="onTyping()"
-            [placeholder]="
-              temporaryMessageMode ? 'Type a temporary message...' : 'Type a message...'
-            "
-            rows="1"
-            #messageInput
-          >
-          </textarea>
+        <!-- Input Controls -->
+        <div class="input-controls">
+          <!-- Attachment Button -->
+          <button mat-icon-button (click)="openAttachmentMenu()" matTooltip="Add attachment">
+            <mat-icon>attach_file</mat-icon>
+          </button>
 
-          <!-- Emoji Picker -->
+          <!-- Temporary Message Toggle -->
           <button
             mat-icon-button
-            matTooltip="Add Emoji"
-            (click)="toggleEmojiPicker()"
-            class="emoji-button"
+            (click)="toggleTemporaryMessageMode()"
+            [class.active]="temporaryMessageMode"
+            [matTooltip]="
+              temporaryMessageMode ? 'Disable temporary message' : 'Enable temporary message'
+            "
           >
+            <mat-icon>timer</mat-icon>
+          </button>
+
+          <!-- Text Input -->
+          <div class="message-input" [class.temp-message-mode]="temporaryMessageMode">
+            <textarea
+              [(ngModel)]="newMessage"
+              (keyup.enter)="handleEnterKey($event)"
+              (input)="onTyping()"
+              [placeholder]="
+                temporaryMessageMode ? 'Type a temporary message...' : 'Type a message...'
+              "
+              #messageInput
+            >
+            </textarea>
+          </div>
+
+          <!-- Emoji Picker -->
+          <button mat-icon-button (click)="toggleEmojiPicker()" matTooltip="Add emoji">
             <mat-icon>sentiment_satisfied_alt</mat-icon>
           </button>
 
-          <!-- Temporary Message Duration (only shown when temp mode is active) -->
-          <div *ngIf="temporaryMessageMode" class="temp-message-duration">
-            <button mat-button [matMenuTriggerFor]="tempDurationMenu">
-              <mat-icon>schedule</mat-icon>
-              <span>{{ formatTTL(temporaryMessageTTL) }}</span>
-            </button>
-            <mat-menu #tempDurationMenu="matMenu">
-              <button mat-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
-              <button mat-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
-            </mat-menu>
-          </div>
-        </div>
-
-        <!-- Send Button -->
-        <button
-          mat-fab
-          [color]="temporaryMessageMode ? 'accent' : 'primary'"
-          class="send-button"
-          (click)="sendMessage()"
-          [disabled]="!canSendMessage()"
-          [matTooltip]="temporaryMessageMode ? 'Send temporary message' : 'Send message'"
-        >
-          <mat-icon>send</mat-icon>
-        </button>
-      </div>
-
-      <!-- Emoji Picker (hidden by default) -->
-      <div *ngIf="showEmojiPicker" class="emoji-picker">
-        <div class="emoji-categories">
+          <!-- Send Button -->
           <button
             mat-icon-button
-            *ngFor="let category of emojiCategories"
-            (click)="selectEmojiCategory(category)"
+            (click)="sendMessage()"
+            [disabled]="!canSendMessage()"
+            matTooltip="Send message"
           >
-            <mat-icon>{{ category.icon }}</mat-icon>
+            <mat-icon>send</mat-icon>
           </button>
         </div>
-        <div class="emoji-list">
-          <button
-            *ngFor="let emoji of currentCategoryEmojis"
-            class="emoji-item"
-            (click)="addEmoji(emoji)"
-          >
-            {{ emoji }}
-          </button>
+
+        <!-- Emoji Picker Panel -->
+        <div class="emoji-picker" *ngIf="showEmojiPicker">
+          <div class="emoji-categories">
+            <button
+              mat-icon-button
+              *ngFor="let category of emojiCategories"
+              (click)="selectEmojiCategory(category)"
+            >
+              <mat-icon>{{ category.icon }}</mat-icon>
+            </button>
+          </div>
+          <div class="emoji-list">
+            <button
+              *ngFor="let emoji of currentCategoryEmojis"
+              class="emoji-item"
+              (click)="addEmoji(emoji)"
+            >
+              {{ emoji }}
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- Message Settings Menu -->
+      <mat-menu #messageSettings="matMenu">
+        <button
+          mat-menu-item
+          (click)="configureMessageAutoDeletion(!messageAutoDeletionEnabled, 7)"
+        >
+          <mat-icon>{{ messageAutoDeletionEnabled ? 'timer_off' : 'timer' }}</mat-icon>
+          <span>{{
+            messageAutoDeletionEnabled ? 'Disable auto-deletion' : 'Enable auto-deletion'
+          }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <!-- Temporary Message Duration Options -->
+        <button mat-menu-item [matMenuTriggerFor]="tempMessageDuration">
+          <mat-icon>schedule</mat-icon>
+          <span>Temporary message duration</span>
+        </button>
+      </mat-menu>
+
+      <!-- Temporary Message Duration Submenu -->
+      <mat-menu #tempMessageDuration="matMenu">
+        <button mat-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
+        <button mat-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
+      </mat-menu>
     </div>
 
     <!-- Empty State (No Conversation Selected) -->

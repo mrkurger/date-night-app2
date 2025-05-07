@@ -14,6 +14,80 @@ import Ad from '../models/ad.model.js';
 import socketService from './socket.service.js';
 import cryptoHelpers from '../utils/cryptoHelpers.js';
 import { AppError } from '../middleware/errorHandler.js';
+import path from 'path';
+import fs from 'fs';
+
+const MAX_RETRY_ATTEMPTS = 3;
+const RETRY_DELAY = 5000; // 5 seconds
+
+class MessageQueue {
+  constructor() {
+    this.queue = new Map(); // messageId -> { message, attempts, timestamp }
+    this.processingInterval = setInterval(() => this.processQueue(), RETRY_DELAY);
+  }
+
+  add(messageId, message) {
+    this.queue.set(messageId, {
+      message,
+      attempts: 0,
+      timestamp: Date.now(),
+    });
+  }
+
+  async processQueue() {
+    for (const [messageId, entry] of this.queue.entries()) {
+      if (entry.attempts >= MAX_RETRY_ATTEMPTS) {
+        // Move to dead letter queue or handle failure
+        await this.handleFailedMessage(messageId, entry.message);
+        this.queue.delete(messageId);
+        continue;
+      }
+
+      try {
+        await this.deliverMessage(messageId, entry.message);
+        this.queue.delete(messageId);
+      } catch (error) {
+        entry.attempts++;
+        console.error(`Failed to deliver message ${messageId}, attempt ${entry.attempts}:`, error);
+      }
+    }
+  }
+
+  async deliverMessage(messageId, message) {
+    // Implement actual message delivery logic
+    const recipient = message.recipientId;
+    if (socketService.isUserOnline(recipient)) {
+      await socketService.sendToUser(recipient, 'chat:message', message);
+      return true;
+    }
+    throw new Error('Recipient offline');
+  }
+
+  async handleFailedMessage(messageId, message) {
+    // Store failed message for offline delivery
+    await ChatMessage.findByIdAndUpdate(messageId, {
+      deliveryStatus: 'failed',
+      lastDeliveryAttempt: Date.now(),
+    });
+
+    // Notify sender about failed delivery
+    if (socketService.isUserOnline(message.senderId)) {
+      socketService.sendToUser(message.senderId, 'chat:delivery-failed', {
+        messageId,
+        error: 'Message delivery failed after maximum retries',
+      });
+    }
+  }
+
+  stop() {
+    if (this.processingInterval) {
+      clearInterval(this.processingInterval);
+    }
+  }
+}
+
+// Initialize message queue
+const messageQueue = new MessageQueue();
 
 class ChatService {
   // TODO: Add message queue for reliable delivery
@@ -169,6 +243,20 @@ class ChatService {
           });
         }
       }
+
+      // Add message to queue for reliable delivery
+      messageQueue.add(chatMessage._id.toString(), {
+        id: chatMessage._id,
+        roomId,
+        senderId,
+        recipientId,
+        message,
+        type,
+        metadata,
+        isEncrypted,
+        encryptionData,
+        timestamp: chatMessage.createdAt,
+      });
 
       return populatedMessage;
     } catch (error) {
@@ -720,6 +808,80 @@ class ChatService {
       console.error('Error leaving room:', error);
       throw new AppError(error.message || 'Failed to leave chat room', 500);
     }
+  }
+
+  /**
+   * Store an uploaded file and return its URL
+   * @param {Object} file The uploaded file object
+   * @returns {Promise<string>} The URL of the stored file
+   */
+  async storeFile(file) {
+    try {
+      // Generate unique filename
+      const fileName = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const fileExt = file.originalname.split('.').pop();
+      const fullFileName = `${fileName}.${fileExt}`;
+      const uploadDir = path.join(process.cwd(), 'uploads', 'chat');
+
+      // Ensure upload directory exists
+      await fs.promises.mkdir(uploadDir, { recursive: true });
+
+      // Write file to disk
+      const filePath = path.join(uploadDir, fullFileName);
+      await fs.promises.writeFile(filePath, file.buffer);
+
+      // Return relative URL
+      return `/uploads/chat/${fullFileName}`;
+    } catch (error) {
+      console.error('Error storing file:', error);
+      throw new AppError('Failed to store file', 500);
+    }
+  }
+
+  /**
+   * Stream a file to the response
+   * @param {string} fileUrl The URL of the file to stream
+   * @param {Object} res The response object
+   */
+  async streamFile(fileUrl, res) {
+    try {
+      // Convert URL to file path
+      const filePath = path.join(process.cwd(), fileUrl);
+
+      // Check if file exists
+      if (!fs.existsSync(filePath)) {
+        throw new AppError('File not found', 404);
+      }
+
+      // Set appropriate headers
+      const stat = fs.statSync(filePath);
+      res.writeHead(200, {
+        'Content-Type': 'application/octet-stream',
+        'Content-Length': stat.size,
+      });
+
+      // Stream file
+      const readStream = fs.createReadStream(filePath);
+      readStream.pipe(res);
+    } catch (error) {
+      console.error('Error streaming file:', error);
+      throw new AppError('Failed to stream file', 500);
+    }
+  }
+
+  /**
+   * Verify if a user has access to a chat room
+   * @param {string} roomId The room ID
+   * @param {string} userId The user ID
+   * @returns {Promise<boolean>} Whether the user has access
+   */
+  async verifyRoomAccess(roomId, userId) {
+    const room = await ChatRoom.findById(roomId);
+    if (!room) {
+      return false;
+    }
+
+    return room.participants.some(p => p.user.toString() === userId);
   }
 }
 

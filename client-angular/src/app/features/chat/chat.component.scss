@@ -43,6 +43,28 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 }
 
+// Animation keyframes
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 // Chat Container
 .chat-container {
   display: grid;
@@ -581,6 +603,40 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   &:hover .message-actions {
     opacity: 1;
   }
+
+  // Message expiry styles
+  &--expiring {
+    .message__content {
+      border-style: dashed;
+    }
+  }
+
+  &--about-to-expire {
+    .message__content {
+      animation: pulse 2s infinite;
+    }
+
+    .message__expiry mat-icon {
+      animation: rotate 2s linear infinite;
+    }
+  }
+
+  &__expiry {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    color: var(--warning-color);
+
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+    }
+
+    &.rotating mat-icon {
+      animation: rotate 2s linear infinite;
+    }
+  }
 }
 
 // Typing Indicator
@@ -755,6 +811,35 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
       width: 16px;
       margin-right: $spacing-1;
     }
+  }
+
+  &.temp-message-mode {
+    textarea {
+      border-color: var(--warning-color);
+      background-color: var(--warning-bg-light);
+
+      &::placeholder {
+        color: var(--warning-color);
+      }
+    }
+  }
+}
+
+.temp-message-indicator {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--warning-bg);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  color: var(--warning-color);
+
+  mat-icon {
+    margin-right: 8px;
+  }
+
+  button {
+    margin-left: auto;
   }
 }
 

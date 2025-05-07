@@ -26,10 +26,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MapComponent, MapMarker } from '../../../shared/components/map/map.component';
+import {
+  MapComponent,
+  MapMarker as ComponentMapMarker,
+} from '../../../shared/components/map/map.component';
 import { LocationService } from '../../../core/services/location.service';
 import { GeocodingService } from '../../../core/services/geocoding.service';
 import { NorwayCity, NorwayCounty } from '../../../core/constants/norway-locations';
+import { MapService, MapMarker as ServiceMapMarker } from '../../../core/services/map.service';
 
 @Component({
   selector: 'app-travel-itinerary',
@@ -97,7 +101,7 @@ export class TravelItineraryComponent implements OnInit {
   }
 
   // For map
-  mapMarkers: MapMarker[] = [];
+  mapMarkers: ComponentMapMarker[] = [];
   selectedLocation: { latitude: number; longitude: number; address?: string } | null = null;
 
   // For location selection
@@ -116,6 +120,7 @@ export class TravelItineraryComponent implements OnInit {
     private notificationService: NotificationService,
     private locationService: LocationService,
     private geocodingService: GeocodingService,
+    private mapService: MapService,
     private snackBar: MatSnackBar,
   ) {
     this.adId = this.route.snapshot.paramMap.get('id') || '';
@@ -161,6 +166,32 @@ export class TravelItineraryComponent implements OnInit {
     this.itineraryForm.get('destination.city')?.valueChanges.subscribe((city) => {
       if (city && typeof city === 'string') {
         this.updateCityCoordinates(city);
+      }
+    });
+
+    // Subscribe to map markers updates
+    this.mapService.markers$.subscribe((markers) => {
+      if (this.itineraryMap) {
+        // Convert service markers to component markers
+        const componentMarkers: ComponentMapMarker[] = markers.map((marker) => ({
+          id: marker.id,
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+          title: marker.title || '',
+          description: marker.description || '',
+          color: this.getStatusColor(marker.status || 'planned'),
+        }));
+        this.itineraryMap.updateMarkers(componentMarkers);
+      }
+    });
+
+    // Subscribe to selected marker updates
+    this.mapService.selectedMarker$.subscribe((marker) => {
+      if (marker) {
+        const itinerary = this.itineraries.find((i) => i._id === marker.id);
+        if (itinerary) {
+          this.editItinerary(itinerary);
+        }
       }
     });
   }
@@ -233,42 +264,57 @@ export class TravelItineraryComponent implements OnInit {
   }
 
   updateMapMarkers(): void {
-    // Create markers for each itinerary
-    this.mapMarkers = this.itineraries
+    const markers = this.itineraries
       .filter(
         (itinerary) =>
           itinerary.destination?.location?.coordinates && itinerary.status !== 'cancelled',
       )
       .map((itinerary) => {
         const [longitude, latitude] = itinerary.destination.location!.coordinates;
-        return {
+        const title = `${itinerary.destination.city}, ${itinerary.destination.county}`;
+        const description = `${this.formatDate(itinerary.arrivalDate)} - ${this.formatDate(itinerary.departureDate)}`;
+        const color = this.getStatusColor(itinerary.status);
+
+        // Create component marker
+        const componentMarker: ComponentMapMarker = {
           id: itinerary._id || '',
           latitude,
           longitude,
-          title: `${itinerary.destination.city}, ${itinerary.destination.county}`,
-          description: `${this.formatDate(itinerary.arrivalDate)} - ${this.formatDate(itinerary.departureDate)}`,
-          color: this.getStatusColor(itinerary.status),
+          title,
+          description,
+          color,
         };
+
+        // Create service marker
+        const serviceMarker: ServiceMapMarker = {
+          ...componentMarker,
+          status: itinerary.status,
+        };
+
+        return { componentMarker, serviceMarker };
       });
 
-    // Update map if available
+    // Update component map
     if (this.itineraryMap) {
-      this.itineraryMap.updateMarkers(this.mapMarkers);
+      this.itineraryMap.updateMarkers(markers.map((m) => m.componentMarker));
     }
+
+    // Update map service
+    this.mapService.updateMarkers(markers.map((m) => m.serviceMarker));
   }
 
   getStatusColor(status: string): string {
     switch (status) {
       case 'planned':
-        return 'blue';
+        return '#17a2b8'; // info blue
       case 'active':
-        return 'green';
+        return '#28a745'; // success green
       case 'completed':
-        return 'gray';
+        return '#6c757d'; // secondary gray
       case 'cancelled':
-        return 'red';
+        return '#dc3545'; // danger red
       default:
-        return 'blue';
+        return '#495057'; // default to dark gray
     }
   }
 
@@ -507,16 +553,9 @@ export class TravelItineraryComponent implements OnInit {
       });
   }
 
-  onMarkerClick(marker: MapMarker): void {
-    // Find the corresponding itinerary
-    const itinerary = this.itineraries.find((i) => i._id === marker.id);
-    if (itinerary) {
-      // Show details or edit the itinerary
-      this.editItinerary(itinerary);
-    }
+  onMarkerClick(marker: ComponentMapMarker): void {
+    this.mapService.selectMarker(marker as ServiceMapMarker);
   }
-
-  // This duplicate method has been merged with the one above
 
   // Helper to mark all controls in a form group as touched
   private markFormGroupTouched(formGroup: FormGroup): void {

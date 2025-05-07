@@ -2,169 +2,117 @@
 
 ## Phase 2: Enhanced Features (Current Focus)
 
-### Travel Itinerary Management
+- A. Travel Itinerary Management
 
-- [ ] **Create Travel Itinerary Model**
-  - Define schema for travel plans (locations, dates, availability)
-  - Add relationships to User model
-  - Implement validation rules
+  - [ ] Data Model & API
+    - [ ] Define TravelItinerary schema (destinations, dates, user link)
+    - [ ] Define TravelPlanItem sub-schema
+    - [ ] Add 2dsphere indices for geo-queries
+    - [ ] CRUD endpoints (Create/Read/Update/Delete)
+    - [ ] Validation middleware (Joi/express-validator)
+  - [ ] Frontend UX
+    - [ ] “My Itineraries” list & detail pages
+    - [ ] Create/edit form (location, date, notes)
+    - [ ] Map view (Leaflet/Google Maps)
+    - [ ] Calendar widget integration
+  - [ ] Location-Based Matching
+    - [ ] “Nearby touring advertisers” API endpoint
+    - [ ] Radius filter in ad browse
+    - [ ] Notification banner when matches found
 
-- [ ] **Develop Backend API**
-  - Create CRUD endpoints for travel itineraries
-  - Implement location-based search functionality
-  - Add validation middleware
+- B. Enhanced Chat System
 
-- [ ] **Build Frontend Components**
-  - Create itinerary management interface for advertisers
-  - Implement map visualization for travel plans
-  - Add calendar integration for scheduling
+  - [ ] End-to-End Encryption (E2EE)
+    - [ ] Pick & integrate library (Olm/OpenPGP.js)
+    - [ ] Key management (generate, store, rotate per room)
+    - [ ] Encrypt/decrypt payloads in ChatService
+    - [ ] Graceful fallback if unsupported
+  - [ ] Message Auto-Deletion
+    - [ ] Extend chat-settings API to store TTL per room
+    - [ ] UI in ChatSettings to toggle & set TTL
+    - [ ] Server purge job (cron/Mongo TTL)
+  - [ ] Advanced Chat Features
+    - [ ] Typing indicators
+    - [ ] Read receipts (backend flag + UI)
+    - [ ] File/image gallery preview
+    - [ ] Emoji reactions picker
 
-- [ ] **Location-Based Matching**
-  - Implement geolocation services
-  - Create matching algorithm based on proximity
-  - Add notification system for nearby advertisers
-
-### Enhanced Chat System
-
-- [ ] **End-to-End Encryption**
-  - Research and select encryption library
-  - Implement client-side encryption/decryption
-  - Update message storage to handle encrypted content
-
-- [ ] **Message Auto-Deletion**
-  - Add expiration settings for messages
-  - Implement automatic deletion mechanism
-  - Create UI for configuring message lifespan
-
-- [ ] **Advanced Chat Features**
-  - Add typing indicators
-  - Implement read receipts
-  - Add file/image sharing capabilities
-  - Create emoji and reaction support
-
-### User Interaction Features
-
-- [ ] **Favorites System**
-  - Create favorites data model
-  - Implement "Add to Favorites" functionality
-  - Build favorites management interface
-
-- [ ] **Reviews and Ratings**
-  - Design review/rating schema
-  - Implement review submission and moderation
-  - Create rating visualization components
-
-- [ ] **Enhanced User Profiles**
-  - Add additional profile fields
-  - Implement profile completion percentage
-  - Create profile verification system
+- C. User Interaction Features
+  - [ ] Favorites System
+    - [ ] Favorites schema & endpoints
+    - [ ] “Add to Favorites” button on ads/users
+    - [ ] Favorites list & remove UI
+  - [ ] Reviews & Ratings
+    - [ ] Review schema & moderation flag
+    - [ ] Submit review form under profiles/ads
+    - [ ] Star-rating component & aggregates
+  - [ ] Enhanced Profiles
+    - [ ] Add bio, socials, skills fields
+    - [ ] Profile completion meter
+    - [ ] Verification badges (email/ID)
 
 ## Phase 3: Monetization (Next Up)
 
-### Premium Ad Features
+- A. Premium Ad Features
 
-- [ ] **Premium Placement System**
-  - Design tiered ad placement options
-  - Implement visibility algorithms for premium ads
-  - Create analytics for ad performance
+  - [ ] Tiered placement packages (bronze/silver/gold)
+  - [ ] Index by tier & adjust sort weighting
+  - [ ] Admin analytics (CTR, views, spend)
 
-- [ ] **Featured Listings**
-  - Design featured ad UI components
-  - Implement rotation system for featured ads
-  - Create management interface for featured status
+- B. Camshow Integration
 
-### Camshow Integration
+  - [ ] WebRTC infra (Janus/mediasoup)
+  - [ ] Token/currency model & Stripe/PayPal hooks
+  - [ ] Live tipping UI overlays
+  - [ ] Private-show booking & payment
 
-- [ ] **Live Streaming Infrastructure**
-  - Research and select streaming technology
-  - Set up streaming servers
-  - Implement WebRTC or similar technology
-
-- [ ] **Tipping System**
-  - Design virtual currency/token system
-  - Implement secure payment processing
-  - Create tipping UI and animations
-
-- [ ] **Private Shows**
-  - Implement private room functionality
-  - Create booking and scheduling system
-  - Add payment processing for private shows
-
-### Subscription Model
-
-- [ ] **Content Creator Profiles**
-  - Enhance advertiser profiles for content creation
-  - Implement content management system
-  - Create subscriber-only content areas
-
-- [ ] **Subscription Management**
-  - Design subscription tiers and pricing
-  - Implement recurring payment processing
-  - Create subscription management interface
-
-- [ ] **Content Selling**
-  - Implement pay-per-view content system
-  - Create secure content delivery mechanism
-  - Add content analytics for creators
+- C. Subscription Model
+  - [ ] Creator profiles & pay-walls
+  - [ ] Stripe subscriptions & webhooks
+  - [ ] Pay-per-view content & DRM
 
 ## Phase 4: Optimization & Scaling
 
-### Performance Optimization
+- A. Performance
 
-- [ ] **Frontend Optimization**
-  - Implement code splitting and lazy loading
-  - Optimize image loading and caching
-  - Reduce bundle sizes
+  - [ ] Frontend code-splitting & lazy loading
+  - [ ] Backend query profiling & Redis cache
+  - [ ] Socket back-pressure & clustering
 
-- [ ] **Backend Optimization**
-  - Optimize database queries
-  - Implement caching strategies
-  - Improve API response times
+- B. Security
 
-### Security Enhancements
+  - [ ] Third-party audit (Snyk/OWASP)
+  - [ ] Multi-factor authentication (TOTP/SMS)
+  - [ ] Anomaly detection & alerts
 
-- [ ] **Security Audit**
-  - Conduct comprehensive security review
-  - Implement security best practices
-  - Address any vulnerabilities
+- C. Analytics & Monitoring
+  - [ ] User behavior (GA/Mixpanel)
+  - [ ] API metrics (Prometheus/Grafana)
+  - [ ] Error tracking (Sentry)
 
-- [ ] **Advanced Authentication**
-  - Implement multi-factor authentication
-  - Enhance password policies
-  - Add login anomaly detection
+## Phase 5: Mobile App
 
-### Analytics and Monitoring
+- A. Planning
 
-- [ ] **User Analytics**
-  - Implement user behavior tracking
-  - Create analytics dashboard
-  - Set up conversion funnels
+  - [ ] Wireframes for core flows (browse, chat, profile)
+  - [ ] Framework selection (React Native/Ionic/NativeScript)
+  - [ ] Define API surface & token auth
 
-- [ ] **System Monitoring**
-  - Set up performance monitoring
-  - Implement error tracking
-  - Create alerting system
-
-### Mobile Development
-
-- [ ] **Mobile App Planning**
-  - Define mobile app requirements
-  - Create mobile app wireframes
-  - Plan development approach (native vs. hybrid)
-
-- [ ] **Mobile App Development**
-  - Set up mobile app project
-  - Implement core features
-  - Create consistent UI with web version
+- B. Implementation
+  - [ ] Scaffold mobile project
+  - [ ] Implement login, ad browse, chat, notifications
+  - [ ] Ensure UI parity & responsive design
 
 ## Ongoing Tasks
 
 - [ ] **Documentation**
+
   - Keep technical documentation up to date
   - Create user guides and help content
   - Document API endpoints
 
 - [ ] **Testing**
+
   - Write unit tests for all components
   - Implement integration tests
   - Conduct regular security testing

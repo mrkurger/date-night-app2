@@ -2,26 +2,42 @@
 # Add this shared configuration file for reusable properties
 name: Base Configuration
 
-# Import environment configuration
-env:
-  REPORTS_BASE_DIR: downloaded-reports
-  ARTIFACTS_DIR: .github/artifacts
-
 on:
   workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: '18'
 
-# Reusable job definitions
+env:
+  REPORTS_DIR: downloaded-reports
+  ARTIFACTS_DIR: .github/artifacts
+  REPORTS_SECURITY: ${{ env.REPORTS_DIR }}/security
+  REPORTS_TESTING: ${{ env.REPORTS_DIR }}/testing
+  REPORTS_DOCS: ${{ env.REPORTS_DIR }}/docs
+  REPORTS_ANGULAR: ${{ env.REPORTS_DIR }}/angular
+  REPORTS_SERVER: ${{ env.REPORTS_DIR }}/server
+  REPORTS_SNYK: ${{ env.REPORTS_DIR }}/snyk
+  RETENTION_ARTIFACTS: 14
+
 jobs:
   node-setup:
+    name: Setup Node.js Environment
     runs-on: ubuntu-latest
+    outputs:
+      node-path: ${{ steps.node-setup.outputs.node-path }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        id: node-setup
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: ${{ inputs.node-version }}
           cache: 'npm'
 
   mongodb-setup:
+    name: Setup MongoDB Service
     runs-on: ubuntu-latest
     services:
       mongodb:
@@ -29,18 +45,8 @@ jobs:
         ports:
           - 27017:27017
 
-  collect-insights:
-    steps:
-      - name: Upload Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports-${{ github.run_id }}
-          path: |
-            ${{ env.REPORTS_DIR }}/workflow-errors/
-            ${{ env.REPORTS_DIR }}/insights/
-            ${{ env.REPORTS_DIR }}/test-results/
-
   setup-reports:
+    name: Setup Report Directories
     runs-on: ubuntu-latest
     steps:
       - name: Create report directories
@@ -57,3 +63,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: ${{ env.RETENTION_ARTIFACTS }}
+          path: ${{ env.REPORTS_DIR }}
+          if-no-files-found: ignore
