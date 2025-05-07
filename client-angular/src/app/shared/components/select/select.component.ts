@@ -147,12 +147,16 @@ export class SelectComponent implements ControlValueAccessor {
   /**
    * Function to call when the select value changes.
    */
-  private onChange: (value: string | number) => void = () => {};
+  onChange = (value: unknown): void => {
+    // Will be overridden by registerOnChange
+  };
 
   /**
    * Function to call when the select is touched.
    */
-  private onTouched: () => void = () => {};
+  onTouched = (): void => {
+    // Will be overridden by registerOnTouched
+  };
 
   /**
    * Gets the CSS classes for the select container based on its properties.

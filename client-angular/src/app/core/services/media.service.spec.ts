@@ -291,4 +291,9 @@ describe('MediaService', () => {
       expect(errorArg.status).toBe(400);
     });
   });
+
+  next(event: HttpEvent<unknown>): void {
+    // Emit the mock event
+    this.events$.next(event);
+  }
 });

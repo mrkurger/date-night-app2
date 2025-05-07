@@ -164,7 +164,7 @@ export class UserPreferencesService {
    * @param id The ID of the item to add
    * @param maxItems Maximum number of items to keep (default: 10)
    */
-  public addToRecentlyViewed(id: string, maxItems: number = 10): void {
+  public addToRecentlyViewed(id: string, maxItems = 10): void {
     // Remove the item if it already exists
     const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(
       (item) => item !== id,

@@ -387,7 +387,17 @@ export class AlertFormDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize form and load any existing alert data if in edit mode
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
+    if (this.data && this.data.alert) {
+      // In edit mode, populate form with existing alert data
+      this.alertForm.patchValue(this.data.alert);
+    }
+  }
 
   /**
    * Create the alert form

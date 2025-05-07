@@ -223,6 +223,31 @@
               </li>
             </ul>
           </section>
+
+          <section id="FileEncryptionService">
+            <h2>FileEncryptionService</h2>
+            <p>Service responsible for encrypting and decrypting files securely.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>encryptFile(file: File)</strong>: Encrypts a file and returns the encrypted
+                data along with the initialization vector (IV) needed for decryption
+              </li>
+              <li>
+                <strong>decryptFile(encryptedData: ArrayBuffer, iv: Uint8Array)</strong>: Decrypts
+                previously encrypted file data using the provided initialization vector
+              </li>
+            </ul>
+
+            <h3>Dependencies</h3>
+            <ul>
+              <li>
+                <a href="#EncryptionService">EncryptionService</a>: Used for the underlying
+                encryption and decryption operations
+              </li>
+            </ul>
+          </section>
         </article>
       </div>
     </main>

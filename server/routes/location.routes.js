@@ -10,7 +10,7 @@
 import express from 'express';
 const router = express.Router();
 import asyncHandler from '../middleware/asyncHandler.js';
-import { protect as protect as authenticate, restrictTo } from '../middleware/auth.js';
+import { protect as authenticate, restrictTo } from '../middleware/auth.js';
 import locationController from '../controllers/location.controller.js';
 
 // Import the Norway locations data

@@ -106,8 +106,17 @@ describe('TinderComponent', () => {
   }
 
   class MockNotificationService {
-    success() {}
-    error() {}
+    messages: { type: string; text: string }[] = [];
+
+    success(message: string): void {
+      // Mock success notification for tests
+      this.messages.push({ type: 'success', text: message });
+    }
+
+    error(message: string): void {
+      // Mock error notification for tests
+      this.messages.push({ type: 'error', text: message });
+    }
   }
 
   class MockChatService {

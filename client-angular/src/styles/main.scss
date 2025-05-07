@@ -10,7 +10,7 @@
 // Use @import for CSS files only (not SCSS)
 @use 'theme.css' as theme;
 // Import Leaflet CSS
-@use 'leaflet/dist/leaflet.css' as leaflet;
+@import '~leaflet/dist/leaflet.css';
 
 // Import global micro-interactions
 @use 'global-micro-interactions';

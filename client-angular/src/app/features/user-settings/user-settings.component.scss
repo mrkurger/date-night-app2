@@ -8,7 +8,7 @@
      Related to: other_file.scss:OTHER_SETTING
    =================================================== */
 @use '../../../styles/design-system/index.scss' as ds;
-@import '../../../assets/styles/emerald-ui.min.css';
+/* Removed emerald-ui import as it's causing build issues */
 
 .settings-container {
   max-width: 1000px;

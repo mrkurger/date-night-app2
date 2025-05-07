@@ -45,7 +45,10 @@ export class TelemetrySocketService implements OnDestroy {
     return this.connectionStatus.value;
   }
 
-  constructor() {}
+  constructor(private socket: Socket) {
+    // Initialize socket connection
+    this.initializeSocketConnection();
+  }
 
   /**
    * Connect to the telemetry WebSocket server

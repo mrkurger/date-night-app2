@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../../../core/models/ad.interface';
 
@@ -45,7 +45,9 @@ export class AppCardComponent implements OnInit {
   // Current media index for carousel
   currentMediaIndex = 0;
 
-  constructor() {}
+  constructor(private readonly elementRef: ElementRef) {
+    // Element reference for DOM manipulation if needed
+  }
 
   ngOnInit(): void {
     // Only set the background image if the ad is defined

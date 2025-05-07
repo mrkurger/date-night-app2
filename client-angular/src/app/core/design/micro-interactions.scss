@@ -70,18 +70,14 @@
   $to: tokens.$color-primary,
   $duration: tokens.$transition-fast
 ) {
-  #{$property}: $from;
-  transition: #{$property} $duration tokens.$transition-timing-default;
+  & {
+    #{$property}: $from;
+    transition: #{$property} $duration tokens.$transition-timing-default;
+  }
 
   &:hover {
     #{$property}: $to;
   }
-
-  // Alternative syntax for future Sass versions:
-  // & {
-  //   #{$property}: $from;
-  //   transition: #{$property} $duration tokens.$transition-timing-default;
-  // }
 
   @include animation.respect-reduced-motion;
 }

@@ -1,5 +1,5 @@
 @use '../../../app/core/design/design-tokens' as tokens;
-@import '../../../assets/styles/emerald-ui.min.css';
+/* Removed emerald-ui import as it's causing build issues */
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -22,7 +22,7 @@ $temporary-message-color: #ffc107;
 $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
 // Animations
-@keyframes pulse {
+@keyframes pulse-shadow {
   0% {
     box-shadow: 0 0 0 0 rgba($warning-500, 0.4);
   }

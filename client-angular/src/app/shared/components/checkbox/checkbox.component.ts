@@ -118,12 +118,16 @@ export class CheckboxComponent implements ControlValueAccessor {
   /**
    * Function to call when the checkbox value changes.
    */
-  private onChange: (value: boolean) => void = () => {};
+  onChange = (value: unknown): void => {
+    // Will be overridden by registerOnChange
+  };
 
   /**
    * Function to call when the checkbox is touched.
    */
-  private onTouched: () => void = () => {};
+  onTouched = (): void => {
+    // Will be overridden by registerOnTouched
+  };
 
   /**
    * Gets the CSS classes for the checkbox container based on its properties.

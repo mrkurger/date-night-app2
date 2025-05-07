@@ -81,4 +81,6 @@ transactionSchema.index({ 'metadata.txHash': 1 });
 transactionSchema.index({ 'metadata.transactionId': 1 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
+
 export default Transaction;
+export { Transaction };

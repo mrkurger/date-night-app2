@@ -15,14 +15,6 @@ import jwt from 'jsonwebtoken';
  * @param {object} res - Express response object
  * @param {function} next - Express next function
  */
-const authenticateToken = (req, res, next)jwt from 'jsonwebtoken';
-
-/**
- * Middleware to authenticate JWT token
- * @param {object} req - Express request object
- * @param {object} res - Express response object
- * @param {function} next - Express next function
- */
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader?.split(' ')[1];
@@ -50,7 +42,7 @@ const authenticateToken = (req, res, next) => {
  * @param {string[]} roles - Array of allowed roles
  * @returns {function} Middleware function
  */
-const authorizeRole = (roles) => {
+const authorizeRole = roles => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
       res.status(403).json({ error: 'Insufficient permissions' });
@@ -61,3 +53,4 @@ const authorizeRole = (roles) => {
 };
 
 export { authenticateToken, authorizeRole };
+export default { authenticateToken, authorizeRole };

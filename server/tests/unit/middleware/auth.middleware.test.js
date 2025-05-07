@@ -10,11 +10,12 @@
 //   Related to: server/tests/helpers.js:TEST_USER_DATA
 // ===================================================
 
+import { jest } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { protect, optionalAuth, restrictTo } from '../../../middleware/auth.js';
 import User from '../../../models/user.model.js';
-import TokenBlacklist from '../../../models/token-blacklist.model.js';
+import { TokenBlacklist } from '../../../models/token-blacklist.model.js';
 import authService from '../../../services/auth.service.js';
 
 // Alias protect as authenticate for backward compatibility with tests
@@ -27,11 +28,17 @@ import {
   TEST_USER_DATA,
 } from '../../helpers.js';
 import { mockModel } from '../../setup.js';
-import { jest } from '@jest/globals';
 
-// Mock the User and TokenBlacklist models
+// Set up mocks before using them
 jest.mock('../../../models/user.model.js');
-jest.mock('../../../models/token-blacklist.model.js');
+
+jest.mock('../../../models/token-blacklist.model.js', () => ({
+  TokenBlacklist: {
+    isBlacklisted: jest.fn().mockResolvedValue(false),
+    blacklist: jest.fn().mockResolvedValue(true),
+  },
+}));
+
 jest.mock('../../../services/auth.service.js');
 
 describe('Auth Middleware', () => {
@@ -61,7 +68,7 @@ describe('Auth Middleware', () => {
     next = mockNext;
 
     // Mock TokenBlacklist.isBlacklisted
-    TokenBlacklist.isBlacklisted = jest.fn().mockResolvedValue(false);
+    TokenBlacklist.isBlacklisted.mockResolvedValue(false);
 
     // Mock User.findById
     User.findById = jest.fn().mockResolvedValue(mockUser);

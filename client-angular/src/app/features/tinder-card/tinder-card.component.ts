@@ -45,9 +45,17 @@ export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
   private initialY = 0;
   private isDragging = false;
 
-  constructor() {}
+  constructor(private elementRef: ElementRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize card position and gesture handling
+    this.initializeGestureHandling();
+  }
+
+  private initializeGestureHandling(): void {
+    // Add gesture handling initialization logic here
+    // Will be implemented when needed
+  }
 
   ngAfterViewInit(): void {
     this.initializeSwipeGesture();

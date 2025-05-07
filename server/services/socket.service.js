@@ -353,6 +353,33 @@ class SocketService {
   isUserOnline(userId) {
     return this.connectedUsers.has(userId);
   }
+
+  /**
+   * Clean up socket connections and event listeners
+   */
+  cleanup() {
+    if (this.io) {
+      // Remove all Socket.IO event listeners
+      this.io.removeAllListeners();
+
+      // Get all connected sockets and remove their listeners
+      const sockets = this.io.sockets.sockets;
+      sockets.forEach(socket => {
+        socket.removeAllListeners();
+        socket.disconnect(true);
+      });
+
+      // Close the Socket.IO server
+      this.io.close();
+
+      // Clear maps
+      this.connectedUsers.clear();
+      this.userSockets.clear();
+
+      // Reset io instance
+      this.io = null;
+    }
+  }
 }
 
 const socketService = new SocketService();

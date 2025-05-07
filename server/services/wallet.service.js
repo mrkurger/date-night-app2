@@ -18,7 +18,7 @@ import Stripe from 'stripe';
 import Wallet from '../models/wallet.model.js';
 import User from '../models/user.model.js';
 // Keeping Transaction import for future use
-import Transaction from '../models/transaction.model.js'; // eslint-disable-line no-unused-vars
+import { Transaction } from '../models/transaction.model.js'; // eslint-disable-line no-unused-vars
 import { AppError } from '../middleware/errorHandler.js';
 import axios from 'axios';
 import crypto from 'crypto';

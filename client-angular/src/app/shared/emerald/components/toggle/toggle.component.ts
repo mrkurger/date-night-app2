@@ -49,8 +49,13 @@ export class ToggleComponent implements ControlValueAccessor {
   value = false;
 
   // ControlValueAccessor methods
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
+  onChange = (value: any): void => {
+    // Will be overridden by registerOnChange
+  };
+
+  onTouched = (value: any): void => {
+    // Will be overridden by registerOnTouched
+  };
 
   /**
    * Toggle the value

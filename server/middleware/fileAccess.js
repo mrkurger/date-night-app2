@@ -120,6 +120,4 @@ const secureFileServing = (req, res, _next) => {
   }
 };
 
-export default {
-  secureFileServing,
-};
+export { secureFileServing };

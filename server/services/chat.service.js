@@ -17,13 +17,21 @@ import { AppError } from '../middleware/errorHandler.js';
 import path from 'path';
 import fs from 'fs';
 
+// Constants
 const MAX_RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 5000; // 5 seconds
 
 class MessageQueue {
   constructor() {
     this.queue = new Map(); // messageId -> { message, attempts, timestamp }
-    this.processingInterval = setInterval(() => this.processQueue(), RETRY_DELAY);
+    this.processingInterval = null; // Initialize as null
+    this.startProcessing(); // Start processing in a separate method
+  }
+
+  startProcessing() {
+    if (!this.processingInterval) {
+      this.processingInterval = setInterval(() => this.processQueue(), RETRY_DELAY);
+    }
   }
 
   add(messageId, message) {
@@ -82,7 +90,9 @@ class MessageQueue {
   stop() {
     if (this.processingInterval) {
       clearInterval(this.processingInterval);
+      this.processingInterval = null;
     }
+    this.queue.clear();
   }
 }
 
@@ -90,6 +100,10 @@ class MessageQueue {
 const messageQueue = new MessageQueue();
 
 class ChatService {
+  constructor() {
+    this.messageQueue = messageQueue;
+  }
+
   // TODO: Add message queue for reliable delivery
   // TODO: Implement presence detection system
   // TODO: Add offline support with message storage
@@ -882,6 +896,16 @@ class ChatService {
     }
 
     return room.participants.some(p => p.user.toString() === userId);
+  }
+
+  /**
+   * Clean up resources used by the service
+   */
+  cleanup() {
+    // Stop message queue
+    if (this.messageQueue) {
+      this.messageQueue.stop();
+    }
   }
 }
 

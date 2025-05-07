@@ -74,11 +74,34 @@ class MockAdService {
 }
 
 class MockNotificationService {
-  success(message: string) {}
-  error(message: string) {}
-  info(message: string) {}
-  warning(message: string) {}
-  removeToast(id: string) {}
+  success(message: string): void {
+    // Mock success notification for tests
+    console.log('Success:', message);
+    this.onSuccess?.(message);
+  }
+
+  error(message: string): void {
+    // Mock error notification for tests
+    console.error('Error:', message);
+    this.onError?.(message);
+  }
+
+  info(message: string): void {
+    // Mock info notification for tests
+    console.info('Info:', message);
+    this.onSuccess?.(message);
+  }
+
+  warning(message: string): void {
+    // Mock warning notification for tests
+    console.warn('Warning:', message);
+    this.onError?.(message);
+  }
+
+  removeToast(id: string): void {
+    // Mock toast removal for tests
+    console.log('Removing toast:', id);
+  }
 
   // Mock observables
   toasts$ = of([]);

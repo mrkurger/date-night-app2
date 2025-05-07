@@ -9,7 +9,13 @@
         <div class="tabs-header">
           <button
             *ngFor="
-              let tab of ['Add/Edit Itinerary', 'Your Itineraries', 'Map View', 'Location Tracking']
+              let tab of [
+                'Add/Edit Itinerary',
+                'Your Itineraries',
+                'Map View',
+                'Location Tracking',
+              ];
+              let i = index
             "
             class="tab-button"
             [class.active]="activeTab === i"

@@ -7,7 +7,7 @@ export class CryptoService {
   private keyCache = new Map<string, CryptoKey>();
   private keyPairCache = new Map<string, CryptoKeyPair>();
 
-  constructor() {}
+  constructor(private readonly window: Window) {}
 
   /**
    * Generate a random encryption key

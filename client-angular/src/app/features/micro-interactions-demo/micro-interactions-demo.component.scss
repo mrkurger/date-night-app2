@@ -1,6 +1,7 @@
-@use '../../../styles/design-system/_variables.scss' as tokens;
+@use 'sass:color';
+@use '../../../styles/design-system/index.scss' as tokens;
 @use '../../../styles/mixins.scss' as mixins;
-@use '../../../styles/design-system/_variables.scss' as ds;
+@use '../../../styles/design-system/index.scss' as ds;
 
 .micro-demo {
   &__header {
@@ -200,7 +201,7 @@
     min-width: 150px;
 
     &:hover:not(:disabled) {
-      background-color: darken(ds.$color-primary, 5%);
+      background-color: color.scale(ds.$color-primary, $lightness: -5%);
     }
 
     &:disabled {
@@ -224,7 +225,7 @@
       background-color: ds.$color-secondary;
 
       &:hover:not(:disabled) {
-        background-color: darken(ds.$color-secondary, 5%);
+        background-color: color.scale(ds.$color-secondary, $lightness: -5%);
       }
     }
 
@@ -232,7 +233,7 @@
       background-color: ds.$color-primary-dark;
 
       &:hover:not(:disabled) {
-        background-color: lighten(ds.$color-primary-dark, 5%);
+        background-color: color.scale(ds.$color-primary-dark, $lightness: 5%);
       }
     }
   }
@@ -314,7 +315,7 @@
     transition: all ds.$transition-fast ds.$transition-timing-default;
 
     &:hover {
-      background-color: darken(ds.$color-primary, 5%);
+      background-color: color.scale(ds.$color-primary, $lightness: -5%);
     }
 
     &--loading {
@@ -355,7 +356,7 @@
       background-color: ds.$color-primary-dark;
 
       &:hover {
-        background-color: lighten(ds.$color-primary-dark, 5%);
+        background-color: color.scale(ds.$color-primary-dark, $lightness: 5%);
       }
     }
   }

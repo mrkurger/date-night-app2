@@ -201,17 +201,17 @@ export class SkeletonLoaderComponent {
   /**
    * Number of lines for text type
    */
-  @Input() lines: number = 3;
+  @Input() lines = 3;
 
   /**
    * Whether to animate the skeleton loader
    */
-  @Input() animated: boolean = true;
+  @Input() animated = true;
 
   /**
    * Height of the image for card type
    */
-  @Input() imageHeight: number = 200;
+  @Input() imageHeight = 200;
 
   /**
    * Gets the styles for the skeleton loader

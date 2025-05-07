@@ -85,8 +85,15 @@ describe('AdvertiserProfileComponent', () => {
   }
 
   class MockNotificationService {
-    success() {}
-    error() {}
+    success(message: string): void {
+      // Mock success notification
+      console.log('Success:', message);
+    }
+
+    error(message: string): void {
+      // Mock error notification
+      console.error('Error:', message);
+    }
   }
 
   beforeEach(async () => {

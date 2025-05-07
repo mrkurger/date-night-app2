@@ -1,3 +1,5 @@
+import { URL } from 'url';
+
 /**
  * Validation utility functions for the application
  * This file provides common validation functions used across the application
@@ -121,6 +123,93 @@ const validateObjectId = id => {
   return id && /^[0-9a-fA-F]{24}$/.test(id);
 };
 
+/**
+ * Checks if a hostname is an IP address
+ * @param {string} hostname - The hostname to check
+ * @returns {boolean} - True if hostname is an IP address
+ */
+const isIpAddress = hostname => {
+  // IPv4
+  const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+  // IPv6
+  const ipv6Pattern = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
+
+  return ipv4Pattern.test(hostname) || ipv6Pattern.test(hostname);
+};
+
+/**
+ * Validates if a string is a valid URL and checks for SSRF vectors
+ * @param {string} url - The URL to validate
+ * @returns {boolean} - True if valid and safe, false otherwise
+ */
+const isValidUrl = url => {
+  if (!url || typeof url !== 'string') {
+    return false;
+  }
+
+  // Allow relative URLs starting with /
+  if (url.startsWith('/')) {
+    return true;
+  }
+
+  try {
+    const parsedUrl = new URL(url);
+
+    // Only allow http and https protocols
+    if (!['http:', 'https:'].includes(parsedUrl.protocol.toLowerCase())) {
+      return false;
+    }
+
+    // Block localhost and internal IP addresses
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const blockedHosts = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
+
+    if (blockedHosts.includes(hostname) || hostname.endsWith('.localhost')) {
+      return false;
+    }
+
+    // Block internal/private IP ranges
+    const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (ipv4Regex.test(hostname)) {
+      const parts = hostname.split('.');
+      const firstOctet = parseInt(parts[0], 10);
+
+      // Check for private/internal IP ranges
+      if (
+        firstOctet === 10 || // 10.0.0.0/8
+        firstOctet === 0 || // 0.0.0.0/8
+        firstOctet === 127 || // 127.0.0.0/8
+        (firstOctet === 172 && parseInt(parts[1], 10) >= 16 && parseInt(parts[1], 10) <= 31) || // 172.16.0.0/12
+        (firstOctet === 192 && parseInt(parts[1], 10) === 168) || // 192.168.0.0/16
+        (firstOctet === 169 && parseInt(parts[1], 10) === 254) // 169.254.0.0/16
+      ) {
+        return false;
+      }
+    }
+
+    // Block IPv6 localhost and private ranges
+    const ipv6Regex = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
+    if (ipv6Regex.test(hostname)) {
+      const blockedIPv6Prefixes = [
+        'fc00:', // Unique local address
+        'fe80:', // Link-local address
+        'ff00:', // Multicast
+        '::1', // Localhost
+        '0000:', // Mapped IPv4
+        '2001:db8:', // Documentation
+      ];
+
+      if (blockedIPv6Prefixes.some(prefix => hostname.toLowerCase().startsWith(prefix))) {
+        return false;
+      }
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export default {
   isValidEmail,
   isNotEmpty,
@@ -133,6 +222,8 @@ export default {
   isInRange,
   sanitizeString,
   validateObjectId,
+  isValidUrl,
+  isIpAddress,
 };
 
 export {
@@ -147,4 +238,6 @@ export {
   isInRange,
   sanitizeString,
   validateObjectId,
+  isValidUrl,
+  isIpAddress,
 };

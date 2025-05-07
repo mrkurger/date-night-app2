@@ -30,8 +30,7 @@
   }
 
   .boundary:active {
-    background: ds.$color-primary; // was darken(#4a90e2, 10%)
-    background: color.adjust(ds.$color-primary, $lightness: -10%);
+    background: color.adjust(ds.$color-primary, $lightness: -10%); // was darken(#4a90e2, 10%)
   }
 }
 

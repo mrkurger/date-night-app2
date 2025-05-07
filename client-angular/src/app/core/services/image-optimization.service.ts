@@ -13,7 +13,9 @@ export class ImageOptimizationService {
   private readonly defaultQuality = 80;
   private readonly defaultFormat = 'webp';
 
-  constructor() {}
+  constructor(private readonly window: Window) {
+    // Window injection for image processing
+  }
 
   /**
    * Get optimized image URL with responsive sizing

@@ -193,12 +193,16 @@ export class InputComponent implements ControlValueAccessor {
   /**
    * Function to call when the input value changes.
    */
-  private onChange: (value: string) => void = () => {};
+  onChange = (_: unknown): void => {
+    // Will be overridden by registerOnChange
+  };
 
   /**
    * Function to call when the input is touched.
    */
-  private onTouched: () => void = () => {};
+  onTouched = (): void => {
+    // Will be overridden by registerOnTouched
+  };
 
   /**
    * Gets the CSS classes for the input container based on its properties.

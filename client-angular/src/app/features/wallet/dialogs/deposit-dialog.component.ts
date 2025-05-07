@@ -360,7 +360,25 @@ export class DepositDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize deposit form and load payment methods if available
+    this.initializeForm();
+    this.loadPaymentMethods();
+  }
+
+  private initializeForm(): void {
+    // Initialize form with validation
+    if (this.depositForm) {
+      this.depositForm.reset();
+    }
+  }
+
+  private loadPaymentMethods(): void {
+    if (!this.paymentMethods?.length) {
+      // Load available payment methods if none are loaded
+      this.loadAvailablePaymentMethods();
+    }
+  }
 
   /**
    * Deposit fiat currency

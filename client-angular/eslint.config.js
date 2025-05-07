@@ -64,6 +64,11 @@ export default [
       },
     },
     rules: {
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': [
+        'warn',
+        { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true },
+      ],
       'prettier/prettier': 'warn',
       // Turn off duplicate rules that conflict with TypeScript-specific versions
       'no-unused-vars': 'off',

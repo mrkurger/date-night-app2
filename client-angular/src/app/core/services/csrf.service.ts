@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
 import { catchError } from 'rxjs/operators'; // Removed tap
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * CSRF Service
@@ -16,7 +17,7 @@ export class CsrfService {
   private apiUrl = `${environment.apiUrl}/csrf-token`;
   private csrfInitialized = false;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   /**
    * Initialize CSRF protection by requesting a token from the server

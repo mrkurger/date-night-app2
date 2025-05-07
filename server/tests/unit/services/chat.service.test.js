@@ -7,35 +7,47 @@
 
 import mongoose from 'mongoose';
 import { jest } from '@jest/globals';
-// Removed unused fail import
-import chatService from '../../../services/chat.service.js'; // Added .js
-import ChatMessage from '../../../models/chat-message.model.js'; // Added .js
-import ChatRoom from '../../../models/chat-room.model.js'; // Added .js
-import User from '../../../models/user.model.js'; // Added .js
-import Ad from '../../../models/ad.model.js'; // Added .js
-import socketService from '../../../services/socket.service.js'; // Added .js
-import cryptoHelpers from '../../../utils/cryptoHelpers.js'; // Added .js
-import { AppError } from '../../../middleware/errorHandler.js'; // Added .js
+import { ObjectId } from 'mongodb';
 
-const { ObjectId } = mongoose.Types;
+// Mock models
+jest.mock('../../../models/chat-message.model.js');
+jest.mock('../../../models/chat-room.model.js');
+jest.mock('../../../models/user.model.js');
+jest.mock('../../../models/ad.model.js');
 
-// Mock dependencies
-jest.mock('../../../models/chat-message.model.js'); // Added .js
-jest.mock('../../../models/chat-room.model.js'); // Added .js
-jest.mock('../../../models/user.model.js'); // Added .js
-jest.mock('../../../models/ad.model.js'); // Added .js
-jest.mock('../../../services/socket.service.js'); // Added .js
-jest.mock('../../../utils/cryptoHelpers.js'); // Added .js
-jest.mock('../../../middleware/errorHandler.js', () => ({
-  // Mock AppError specifically if needed
-  AppError: class extends Error {
-    constructor(message, statusCode) {
-      super(message);
-      this.statusCode = statusCode;
-      this.name = 'AppError';
-    }
-  },
+// Mock services
+jest.mock('../../../services/socket.service.js', () => ({
+  sendToRoom: jest.fn(),
+  sendToUser: jest.fn(),
+  isUserOnline: jest.fn().mockReturnValue(true),
+  cleanup: jest.fn().mockImplementation(() => {
+    return Promise.resolve();
+  }),
 }));
+
+// Mock crypto helpers with factory pattern
+jest.mock('../../../utils/cryptoHelpers.js', () => ({
+  generateEncryptionKey: jest.fn().mockReturnValue('mockRoomKey'),
+  generateKeyPair: jest.fn().mockReturnValue({
+    publicKey: 'newPublicKey',
+    privateKey: 'newPrivateKey',
+  }),
+  encryptWithPublicKey: jest.fn().mockReturnValue('encryptedRoomKey'),
+  encryptMessage: jest.fn().mockReturnValue({ encrypted: 'encryptedData', iv: 'mockIV' }),
+  decryptMessage: jest.fn().mockReturnValue('decryptedData'),
+}));
+
+// Import mocked modules
+import ChatMessage from '../../../models/chat-message.model.js';
+import ChatRoom from '../../../models/chat-room.model.js';
+import User from '../../../models/user.model.js';
+import Ad from '../../../models/ad.model.js';
+import socketService from '../../../services/socket.service.js';
+import * as cryptoHelpers from '../../../utils/cryptoHelpers.js';
+import chatService from '../../../services/chat.service.js';
+import { AppError } from '../../../middleware/errorHandler.js';
+
+const { ObjectId: MongooseObjectId } = mongoose.Types;
 
 // Define mock variables in the global scope for the test file
 const mockUserId1 = 'mock-user-id-1';
@@ -45,101 +57,130 @@ const mockAdId = 'mock-ad-id';
 let mockRoomInstance;
 
 describe('Chat Service', () => {
+  beforeAll(() => {
+    // Use fake timers for all timer-related operations
+    jest.useFakeTimers();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
-
-    // --- Mock Implementations ---
-
-    // ChatMessage Mock
-    ChatMessage.mockImplementation(data => ({
-      ...data,
-      _id: data._id || new ObjectId(),
-      save: jest.fn().mockResolvedValue(this), // Return the instance on save
-    }));
-    const mockChatMessagePopulate = jest.fn().mockReturnThis(); // Chainable populate
-    const mockChatMessageLimit = jest.fn().mockReturnValue({ populate: mockChatMessagePopulate });
-    const mockChatMessageSort = jest.fn().mockReturnValue({ limit: mockChatMessageLimit });
-    ChatMessage.find = jest.fn().mockReturnValue({ sort: mockChatMessageSort });
-    ChatMessage.findById = jest.fn().mockReturnValue({ populate: mockChatMessagePopulate });
-    ChatMessage.updateMany = jest.fn().mockResolvedValue({ modifiedCount: 1 }); // Use modifiedCount
-    ChatMessage.aggregate = jest.fn().mockResolvedValue([{ count: 5 }]);
-    ChatMessage.create = jest.fn().mockImplementation(data =>
-      Promise.resolve({
-        ...data,
-        _id: 'mock-message-id',
-        save: jest.fn().mockResolvedValue(this),
-      })
-    );
-    // Add static methods used in the service
-    ChatMessage.getUnreadCount = jest.fn().mockResolvedValue(5);
-    ChatMessage.getUnreadCountByRoom = jest.fn().mockResolvedValue(2);
-
-    // ChatRoom Mock
-    const mockRoomInstance = {
-      _id: mockRoomId,
-      participants: [
-        { user: mockUserId1, role: 'member', toString: () => mockUserId1 }, // Add toString for comparison
-        { user: mockUserId2, role: 'member', toString: () => mockUserId2 },
-      ],
-      messageExpiryEnabled: false,
-      messageExpiryTime: 0,
-      updateLastMessage: jest.fn().mockResolvedValue(true),
-      updateLastRead: jest.fn().mockResolvedValue(true),
-      removeParticipant: jest.fn().mockResolvedValue(true),
-      save: jest.fn().mockResolvedValue(true),
-      toObject: jest.fn().mockReturnThis(), // Simple toObject for testing
-    };
-    // Mock static methods to return the instance or an array containing it
-    ChatRoom.findById = jest
-      .fn()
-      .mockReturnValue({
-        // Make it chainable for populate
-        populate: jest.fn().mockReturnThis(),
-        exec: jest.fn().mockResolvedValue(mockRoomInstance), // If exec is used
-      })
-      .mockResolvedValue(mockRoomInstance); // Default resolve
-    ChatRoom.findOrCreateDirectRoom = jest.fn().mockResolvedValue(mockRoomInstance);
-    ChatRoom.findOrCreateAdRoom = jest.fn().mockResolvedValue(mockRoomInstance);
-    // ChatRoom.findOrCreateGroupRoom = jest.fn().mockResolvedValue(mockRoomInstance); // Not used in tests below
-    ChatRoom.getRoomsForUser = jest.fn().mockResolvedValue([mockRoomInstance]);
-    ChatRoom.find = jest.fn().mockResolvedValue([mockRoomInstance]); // For getUnreadCounts
-    ChatRoom.mockImplementation(() => mockRoomInstance); // Mock constructor
-
-    // User Mock
-    const mockUserInstance = {
-      _id: mockUserId1,
-      username: 'testuser',
-      publicKey: 'mockPublicKey',
-      save: jest.fn().mockResolvedValue(true),
-    };
-    User.findById = jest.fn().mockResolvedValue(mockUserInstance);
-    User.find = jest.fn().mockResolvedValue([mockUserInstance]);
-
-    // Ad Mock
-    const mockAdInstance = {
-      _id: mockAdId,
-      advertiser: {
-        _id: mockUserId2,
-      },
-    };
-    Ad.findById = jest.fn().mockReturnValue({
-      // Make it chainable for populate
-      populate: jest.fn().mockResolvedValue(mockAdInstance),
-    });
-
-    // Socket Service Mock (already mocked via jest.mock)
-    socketService.sendToRoom = jest.fn();
-    socketService.sendToUser = jest.fn();
-    socketService.isUserOnline = jest.fn().mockReturnValue(true);
-
-    // Crypto Helpers Mock (already mocked via jest.mock)
-    cryptoHelpers.generateEncryptionKey = jest.fn().mockReturnValue('mockRoomKey');
-    cryptoHelpers.generateKeyPair = jest
-      .fn()
-      .mockReturnValue({ publicKey: 'newPublicKey', privateKey: 'newPrivateKey' });
-    cryptoHelpers.encryptWithPublicKey = jest.fn().mockReturnValue('encryptedRoomKey');
-    // cryptoHelpers.encryptMessage = jest.fn().mockReturnValue({ encrypted: 'data' }); // Not directly tested below
   });
+
+  afterEach(() => {
+    // Clear all timers and mocks after each test
+    jest.clearAllTimers();
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    // Clean up services
+    if (chatService.cleanup) {
+      chatService.cleanup();
+    }
+    if (socketService.cleanup) {
+      socketService.cleanup();
+    }
+
+    // Restore real timers
+    jest.useRealTimers();
+
+    // Clear any remaining event listeners
+    process.removeAllListeners();
+  });
+
+  // --- Mock Implementations ---
+
+  // ChatMessage Mock
+  ChatMessage.mockImplementation(data => ({
+    ...data,
+    _id: data._id || new MongooseObjectId(),
+    save: jest.fn().mockResolvedValue(this), // Return the instance on save
+  }));
+  const mockChatMessagePopulate = jest.fn().mockReturnThis(); // Chainable populate
+  const mockChatMessageLimit = jest.fn().mockReturnValue({ populate: mockChatMessagePopulate });
+  const mockChatMessageSort = jest.fn().mockReturnValue({ limit: mockChatMessageLimit });
+  ChatMessage.find = jest.fn().mockReturnValue({ sort: mockChatMessageSort });
+  ChatMessage.findById = jest.fn().mockReturnValue({ populate: mockChatMessagePopulate });
+  ChatMessage.updateMany = jest.fn().mockResolvedValue({ modifiedCount: 1 }); // Use modifiedCount
+  ChatMessage.aggregate = jest.fn().mockResolvedValue([{ count: 5 }]);
+  ChatMessage.create = jest.fn().mockImplementation(data =>
+    Promise.resolve({
+      ...data,
+      _id: 'mock-message-id',
+      save: jest.fn().mockResolvedValue(this),
+    })
+  );
+  // Add static methods used in the service
+  ChatMessage.getUnreadCount = jest.fn().mockResolvedValue(5);
+  ChatMessage.getUnreadCountByRoom = jest.fn().mockResolvedValue(2);
+
+  // ChatRoom Mock
+  const mockRoomInstance = {
+    _id: mockRoomId,
+    participants: [
+      { user: mockUserId1, role: 'member', toString: () => mockUserId1 }, // Add toString for comparison
+      { user: mockUserId2, role: 'member', toString: () => mockUserId2 },
+    ],
+    messageExpiryEnabled: false,
+    messageExpiryTime: 0,
+    updateLastMessage: jest.fn().mockResolvedValue(true),
+    updateLastRead: jest.fn().mockResolvedValue(true),
+    removeParticipant: jest.fn().mockResolvedValue(true),
+    save: jest.fn().mockResolvedValue(true),
+    toObject: jest.fn().mockReturnThis(), // Simple toObject for testing
+  };
+  // Mock static methods to return the instance or an array containing it
+  ChatRoom.findById = jest
+    .fn()
+    .mockReturnValue({
+      // Make it chainable for populate
+      populate: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValue(mockRoomInstance), // If exec is used
+    })
+    .mockResolvedValue(mockRoomInstance); // Default resolve
+  ChatRoom.findOrCreateDirectRoom = jest.fn().mockResolvedValue(mockRoomInstance);
+  ChatRoom.findOrCreateAdRoom = jest.fn().mockResolvedValue(mockRoomInstance);
+  // ChatRoom.findOrCreateGroupRoom = jest.fn().mockResolvedValue(mockRoomInstance); // Not used in tests below
+  ChatRoom.getRoomsForUser = jest.fn().mockResolvedValue([mockRoomInstance]);
+  ChatRoom.find = jest.fn().mockResolvedValue([mockRoomInstance]); // For getUnreadCounts
+  ChatRoom.mockImplementation(() => mockRoomInstance); // Mock constructor
+
+  // User Mock
+  const mockUserInstance = {
+    _id: mockUserId1,
+    username: 'testuser',
+    publicKey: 'mockPublicKey',
+    save: jest.fn().mockResolvedValue(true),
+  };
+  User.findById = jest.fn().mockResolvedValue(mockUserInstance);
+  User.find = jest.fn().mockResolvedValue([mockUserInstance]);
+
+  // Ad Mock
+  const mockAdInstance = {
+    _id: mockAdId,
+    advertiser: {
+      _id: mockUserId2,
+    },
+  };
+  Ad.findById = jest.fn().mockReturnValue({
+    // Make it chainable for populate
+    populate: jest.fn().mockResolvedValue(mockAdInstance),
+  });
+
+  // Socket Service Mock (already mocked via jest.mock)
+  socketService.sendToRoom = jest.fn();
+  socketService.sendToUser = jest.fn();
+  socketService.isUserOnline = jest.fn().mockReturnValue(true);
+
+  // Crypto Helpers Mock (already mocked via jest.mock)
+  cryptoHelpers.generateEncryptionKey.mockReturnValue('mockRoomKey');
+  cryptoHelpers.generateKeyPair.mockReturnValue({
+    publicKey: 'newPublicKey',
+    privateKey: 'newPrivateKey',
+  });
+  cryptoHelpers.encryptWithPublicKey.mockReturnValue('encryptedRoomKey');
+  cryptoHelpers.encryptMessage.mockReturnValue({ encrypted: 'encryptedData', iv: 'mockIV' });
+  cryptoHelpers.decryptMessage.mockReturnValue('decryptedData');
 
   // --- Test Suites ---
 

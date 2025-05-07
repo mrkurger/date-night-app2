@@ -216,4 +216,7 @@ class LocationController {
   }
 }
 
-module.exports = new LocationController();
+const locationController = new LocationController();
+
+export default locationController;
+export { locationController };

@@ -32,7 +32,10 @@ import errorHandler from './middleware/errorHandler.js';
 import { csrfMiddleware } from './middleware/csrf.js';
 import cspNonce from './middleware/cspNonce.js';
 import securityHeaders from './middleware/securityHeaders.js';
-import { middleware as cspMiddleware, setupReportEndpoint } from './middleware/csp.middleware.js';
+import {
+  cspMiddleware,
+  setupCspReportEndpoint as setupReportEndpoint,
+} from './middleware/csp.middleware.js';
 import { conditionalCache, etagCache } from './middleware/cache.js';
 
 // Initialize express
@@ -331,13 +334,13 @@ connectWithRetry()
     });
 
     // Initialize Socket.IO
-    import('./services/socket.service.js').then(socketService => {
+    import('./services/socket.service.js').then(({ default: socketService }) => {
       socketService.initialize(server);
     });
 
     // Initialize message cleanup scheduler
-    import('./utils/messageCleanup.js').then(messageCleanup => {
-      messageCleanup.init();
+    import('./utils/messageCleanup.js').then(module => {
+      module.default.init();
     });
   })
   .catch(err => {

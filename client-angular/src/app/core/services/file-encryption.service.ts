@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Injectable } from '@angular/core';
 import { EncryptionService } from './encryption.service';
 

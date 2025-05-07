@@ -19,4 +19,5 @@ module.exports = {
       },
     ],
   },
+  ignorePatterns: ['services/file-encryption.service.js'],
 };

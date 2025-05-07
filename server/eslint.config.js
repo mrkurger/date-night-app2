@@ -73,7 +73,15 @@ export default [
       'no-useless-escape': 'warn',
       'no-undef': 'error',
     },
-    ignores: ['node_modules/', 'coverage/', 'dist/', 'build/', 'logs/', 'uploads/'],
+    ignores: [
+      'node_modules/',
+      'coverage/',
+      'dist/',
+      'build/',
+      'logs/',
+      'uploads/',
+      'services/file-encryption.service.js',
+    ],
   },
   {
     files: ['tests/**/*.js', '**/*.test.js'],

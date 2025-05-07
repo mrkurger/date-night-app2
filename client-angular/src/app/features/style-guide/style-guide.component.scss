@@ -1,6 +1,6 @@
-@use '../../../styles/design-system/_variables.scss' as tokens;
+@use '../../../styles/design-system/index.scss' as tokens;
 @use '../../../styles/mixins.scss' as mixins;
-@use '../../../styles/design-system/_variables.scss' as ds;
+@use '../../../styles/design-system/index.scss' as ds;
 
 .style-guide {
   &__header {

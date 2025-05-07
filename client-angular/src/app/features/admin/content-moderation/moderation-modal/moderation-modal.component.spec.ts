@@ -407,4 +407,18 @@ describe('ModerationModalComponent', () => {
       expect(submitButton.nativeElement.disabled).toBeFalse();
     });
   });
+
+  success(message: string): void {
+    // Mock success notification with callback
+    if (this.onSuccess) {
+      this.onSuccess(message);
+    }
+  }
+
+  error(message: string): void {
+    // Mock error notification with callback
+    if (this.onError) {
+      this.onError(message);
+    }
+  }
 });

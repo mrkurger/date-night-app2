@@ -91,12 +91,14 @@ const chatAttachmentSchema = new mongoose.Schema(
 );
 
 // Add validation for encryption data
-chatAttachmentSchema.path('encryptionData').validate(function (value) {
-  if (this.isEncrypted) {
-    return value && value.iv && value.authTag;
-  }
-  return true;
-}, 'Encryption data is required when attachment is encrypted');
+if (chatAttachmentSchema.path('encryptionData')) {
+  chatAttachmentSchema.path('encryptionData').validate(function (value) {
+    if (this.isEncrypted) {
+      return value && value.iv && value.authTag;
+    }
+    return true;
+  }, 'Encryption data is required when attachment is encrypted');
+}
 
 // Add method to validate file size
 chatAttachmentSchema.methods.validateFileSize = function () {

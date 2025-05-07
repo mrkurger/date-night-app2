@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -43,7 +43,9 @@ export class InfoPanelComponent implements OnInit {
 
   isCollapsed = false;
 
-  constructor() {}
+  constructor(private readonly cd: ChangeDetectorRef) {
+    // Inject ChangeDetectorRef for better change detection control
+  }
 
   ngOnInit(): void {
     this.isCollapsed = this.initiallyCollapsed;

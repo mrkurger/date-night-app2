@@ -10,7 +10,7 @@
 import express from 'express';
 const router = express.Router();
 import favoriteController from '../controllers/favorite.controller.js';
-import { protect as protect as authenticate } from '../middleware/auth.js';
+import { protect as authenticate } from '../middleware/auth.js';
 
 /**
  * Favorites routes

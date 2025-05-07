@@ -29,15 +29,15 @@ import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2, NgZone } fr
 export class LazyImageDirective implements OnInit, OnDestroy {
   @Input() src!: string;
   @Input() placeholder?: string;
-  @Input() threshold: number = 0.1;
-  @Input() rootMargin: string = '0px';
-  @Input() loadingClass: string = 'lazy-loading';
-  @Input() loadedClass: string = 'lazy-loaded';
-  @Input() errorClass: string = 'lazy-error';
+  @Input() threshold = 0.1;
+  @Input() rootMargin = '0px';
+  @Input() loadingClass = 'lazy-loading';
+  @Input() loadedClass = 'lazy-loaded';
+  @Input() errorClass = 'lazy-error';
 
   private observer: IntersectionObserver | null = null;
-  private isLoaded: boolean = false;
-  private hasError: boolean = false;
+  private isLoaded = false;
+  private hasError = false;
 
   constructor(
     private el: ElementRef<HTMLImageElement>,

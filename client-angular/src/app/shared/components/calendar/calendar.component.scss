@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../../../styles/design-system/variables' as ds;
 
 .calendar {
@@ -110,7 +111,7 @@
     font-weight: bold;
 
     &:hover {
-      background: darken(ds.$color-primary, 5%);
+      background: color.scale(ds.$color-primary, $lightness: -5%);
     }
   }
 

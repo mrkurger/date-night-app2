@@ -77,8 +77,23 @@ describe('UserSettingsComponent', () => {
   }
 
   class MockNotificationService {
-    success() {}
-    error() {}
+    success(message: string): void {
+      // Mock success notification with default implementation
+      this.onSuccess(message);
+    }
+
+    error(message: string): void {
+      // Mock error notification with default implementation
+      this.onError(message);
+    }
+
+    onSuccess(message: string): void {
+      console.log('Success:', message);
+    }
+
+    onError(message: string): void {
+      console.error('Error:', message);
+    }
   }
 
   class MockThemeService {
@@ -88,7 +103,9 @@ describe('UserSettingsComponent', () => {
       return 'system';
     }
 
-    setTheme(theme: string) {}
+    setTheme(theme: string): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
   }
 
   class MockUserPreferencesService {
@@ -124,19 +141,33 @@ describe('UserSettingsComponent', () => {
       };
     }
 
-    updatePreferences() {}
+    updatePreferences(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    setDefaultViewType() {}
+    setDefaultViewType(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    setContentDensity() {}
+    setContentDensity(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    setCardSize() {}
+    setCardSize(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    saveFilter() {}
+    saveFilter(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    getSavedFilter() {}
+    getSavedFilter(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
 
-    deleteSavedFilter() {}
+    deleteSavedFilter(): void {
+      // Keep empty implementation for this test mock method since it is not tested directly
+    }
   }
 
   beforeEach(async () => {

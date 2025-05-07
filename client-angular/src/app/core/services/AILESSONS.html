@@ -165,7 +165,7 @@ chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();</code><
           </p>
 
           <pre><code>@use '../../../styles/design-system/index.scss' as ds;
-@import '../../../assets/styles/emerald-ui.min.css';</code></pre>
+/* Removed emerald-ui import as it's causing build issues */</code></pre>
 
           <p>
             This approach allows for more granular control over which components use the Emerald UI
@@ -178,6 +178,99 @@ chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();</code><
             <li>Reduced risk of global style conflicts</li>
             <li>Easier to remove or replace the framework in the future</li>
             <li>Better performance as styles are only loaded where needed</li>
+          </ul>
+
+          <h2>Modern SASS Practices</h2>
+
+          <p>
+            As SASS evolves, certain functions and practices become deprecated. It's important to stay
+            current with modern SASS practices to ensure compatibility with future versions.
+          </p>
+
+          <h3>Problem Encountered</h3>
+          <p>
+            We encountered several SASS deprecation warnings related to the use of functions like
+            <code>darken()</code> and <code>lighten()</code>, as well as parent selector nesting issues.
+          </p>
+
+          <pre><code>// Old approach with deprecated functions
+&:hover:not(:disabled) {
+  background-color: darken(ds.$color-primary, 5%);
+}</code></pre>
+
+          <h3>Solution</h3>
+          <p>
+            We updated our SCSS files to use the newer <code>color.scale()</code> function and proper
+            parent selector syntax:
+          </p>
+
+          <pre><code>// Import the color module
+@use 'sass:color';
+
+// Modern approach with color.scale()
+&:hover:not(:disabled) {
+  background-color: color.scale(ds.$color-primary, $lightness: -5%);
+}</code></pre>
+
+          <h3>Benefits</h3>
+          <ul>
+            <li>Future-proof code that works with newer SASS versions</li>
+            <li>More explicit and readable color manipulations</li>
+            <li>Better compatibility with SASS modules system</li>
+            <li>Elimination of deprecation warnings</li>
+          </ul>
+
+          <h2>File Encryption Implementation</h2>
+
+          <p>
+            When implementing file encryption in a web application, it's important to leverage the
+            browser's native Web Crypto API for secure operations.
+          </p>
+
+          <h3>Approach Used</h3>
+          <p>
+            We created a dedicated <a href="./GLOSSARY.html#FileEncryptionService">FileEncryptionService</a>
+            that builds on top of our existing <a href="./GLOSSARY.html#EncryptionService">EncryptionService</a>
+            to handle file-specific encryption needs:
+          </p>
+
+          <pre><code>@Injectable({
+  providedIn: 'root',
+})
+export class FileEncryptionService {
+  constructor(private encryptionService: EncryptionService) {}
+
+  async encryptFile(file: File): Promise<{ encryptedData: ArrayBuffer; iv: Uint8Array }> {
+    const fileBuffer = await file.arrayBuffer();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const encryptedData = await this.encryptionService.encrypt(fileBuffer, iv);
+
+    return { encryptedData, iv };
+  }
+
+  async decryptFile(encryptedData: ArrayBuffer, iv: Uint8Array): Promise<ArrayBuffer> {
+    return this.encryptionService.decrypt(encryptedData, iv);
+  }
+}</code></pre>
+
+          <h3>Key Learnings</h3>
+          <ul>
+            <li>Use <code>File.arrayBuffer()</code> to efficiently convert files to binary data</li>
+            <li>Generate cryptographically secure random values for the initialization vector (IV)</li>
+            <li>Separate file-specific encryption logic from the core encryption service</li>
+            <li>Return both the encrypted data and the IV, as both are needed for decryption</li>
+            <li>Use async/await for cleaner handling of Promise-based crypto operations</li>
+          </ul>
+
+          <h3>Testing Considerations</h3>
+          <p>
+            When testing encryption services, it's important to:
+          </p>
+          <ul>
+            <li>Mock the underlying crypto operations to avoid actual encryption in tests</li>
+            <li>Test the full encryption and decryption cycle to ensure data integrity</li>
+            <li>Verify that the service correctly handles different file types and sizes</li>
+            <li>Check error handling for cases like invalid IVs or corrupted data</li>
           </ul>
         </article>
       </div>

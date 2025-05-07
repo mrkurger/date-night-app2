@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import ChatMessage from '../models/chat-message.model';
+import ChatMessage from '../models/chat-message.model.js';
 import cron from 'node-cron';
 
 /**

@@ -46,9 +46,27 @@ export function isValidUrl(url: string): boolean {
       return true;
     }
 
-    // Reject potentially dangerous protocols
-    if (url.toLowerCase().startsWith('javascript:')) {
-      return false;
+    // Reject potentially dangerous protocols that could lead to XSS attacks
+    const dangerousProtocols = [
+      'javascript:',
+      'data:',
+      'vbscript:',
+      'file:',
+      'about:',
+      'blob:',
+      'ftp:',
+      'ws:',
+      'wss:',
+      'mailto:',
+      'tel:',
+      'sms:',
+    ];
+
+    const lowercaseUrl = url.toLowerCase();
+    for (const protocol of dangerousProtocols) {
+      if (lowercaseUrl.startsWith(protocol)) {
+        return false;
+      }
     }
 
     // Otherwise, try to create a URL object
@@ -227,7 +245,7 @@ export function isValidISODate(dateString: string): boolean {
 
   // Check if it's a valid date
   const date = new Date(dateString);
-  return !isNaN(date.getTime());
+  return !Number.isNaN(date.getTime());
 }
 
 /**
