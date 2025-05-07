@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - Changelog</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0066cc;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .changelog-entry {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .changelog-date {
+        font-weight: bold;
+        color: #666;
+      }
+      .changelog-type {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-right: 10px;
+      }
+      .fix {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .feature {
+        background-color: #cce5ff;
+        color: #004085;
+      }
+      .refactor {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      nav {
+        margin-bottom: 20px;
+      }
+      nav a {
+        margin-right: 15px;
+        color: #0066cc;
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="../_docs_index.html">Main Documentation</a>
+        <a href="AILESSONS.html">AI Lessons</a>
+        <a href="GLOSSARY.html">Glossary</a>
+      </nav>
+
+      <h1>Services - Changelog</h1>
+
+      <div class="changelog-entry">
+        <h3>
+          <span class="changelog-date">2023-06-15</span>
+          <span class="changelog-type fix">FIX</span>
+          Fixed PaymentService test initialization
+        </h3>
+        <p>
+          Modified the PaymentService to export both the class and singleton instance to allow
+          proper mocking in tests. This prevents the "Neither apiKey nor config.authenticator
+          provided" error when running tests.
+        </p>
+        <ul>
+          <li>Updated payment.service.js to export the PaymentService class</li>
+          <li>
+            Modified payment.service.test.js to create a new instance with mocked dependencies
+          </li>
+        </ul>
+      </div>
+
+      <div class="changelog-entry">
+        <h3>
+          <span class="changelog-date">2023-05-20</span>
+          <span class="changelog-type feature">FEATURE</span>
+          Added payment service implementation
+        </h3>
+        <p>
+          Implemented the payment service with Stripe integration for handling subscriptions and
+          one-time payments.
+        </p>
+        <ul>
+          <li>Added methods for creating payment intents</li>
+          <li>Implemented subscription management</li>
+          <li>Added ad boosting and featuring functionality</li>
+          <li>Implemented webhook handlers for payment events</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

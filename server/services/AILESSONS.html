@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - AI Lessons</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0066cc;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .lesson {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .tip {
+        background-color: #e6f7ff;
+        border-left: 4px solid #1890ff;
+        padding: 10px 15px;
+        margin: 15px 0;
+      }
+      .warning {
+        background-color: #fff7e6;
+        border-left: 4px solid #fa8c16;
+        padding: 10px 15px;
+        margin: 15px 0;
+      }
+      nav {
+        margin-bottom: 20px;
+      }
+      nav a {
+        margin-right: 15px;
+        color: #0066cc;
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="../_docs_index.html">Main Documentation</a>
+        <a href="CHANGELOG.html">Changelog</a>
+        <a href="GLOSSARY.html">Glossary</a>
+      </nav>
+
+      <h1>Services - AI Lessons</h1>
+
+      <div class="lesson">
+        <h2>Testing External Services</h2>
+        <p>
+          When testing services that depend on external APIs like Stripe, it's important to properly
+          mock these dependencies to avoid making actual API calls during tests.
+        </p>
+
+        <h3>Lesson: Singleton Pattern and Testing</h3>
+        <p>
+          When using the singleton pattern with services that have external dependencies, special
+          care must be taken during testing.
+        </p>
+
+        <div class="tip">
+          <strong>Tip:</strong> Export both the class and the singleton instance to allow for proper
+          mocking in tests.
+        </div>
+
+        <pre>
+// Instead of just:
+export default new PaymentService();
+
+// Do this:
+export { PaymentService };
+export default new PaymentService();
+            </pre
+        >
+
+        <p>
+          This approach allows tests to create a new instance with mocked dependencies while the
+          application can still use the singleton instance.
+        </p>
+
+        <h3>Dependency Injection</h3>
+        <p>
+          The PaymentService uses constructor dependency injection, which makes it easier to test by
+          allowing dependencies to be replaced with mocks.
+        </p>
+
+        <pre>
+class PaymentService {
+  constructor(
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY),
+    userModel = User,
+    adModel = Ad
+  ) {
+    this.stripe = stripeClient;
+    this.user = userModel;
+    this.ad = adModel;
+  }
+  // ...
+}
+            </pre
+        >
+
+        <p>In tests, we can create a new instance with mocked dependencies:</p>
+
+        <pre>
+// In test file
+const mockStripe = { /* mock implementation */ };
+const mockUser = { /* mock implementation */ };
+const mockAd = { /* mock implementation */ };
+
+const paymentService = new PaymentService(mockStripe, mockUser, mockAd);
+            </pre
+        >
+      </div>
+
+      <div class="lesson">
+        <h2>Environment Variables in Tests</h2>
+        <p>
+          Services that rely on environment variables can be problematic in test environments where
+          these variables might not be set.
+        </p>
+
+        <div class="warning">
+          <strong>Warning:</strong> Always provide fallbacks or mock implementations for
+          environment-dependent code in tests.
+        </div>
+
+        <p>Options for handling environment variables in tests:</p>
+
+        <ol>
+          <li>Set up test-specific environment variables in a setup file</li>
+          <li>Use dependency injection to provide mock implementations</li>
+          <li>Use a configuration service that can be easily mocked</li>
+        </ol>
+
+        <p>
+          For the PaymentService, we chose option 2 by allowing the Stripe client to be injected.
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h2>Dependencies</h2>
+        <h3>External Dependencies</h3>
+        <ul>
+          <li><strong>stripe</strong>: Payment processing API client</li>
+        </ul>
+
+        <h3>Internal Dependencies</h3>
+        <ul>
+          <li><strong>User model</strong>: For managing user subscription data</li>
+          <li><strong>Ad model</strong>: For managing ad boosting and featuring</li>
+          <li><strong>AppError</strong>: For consistent error handling</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

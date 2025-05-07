@@ -46,18 +46,15 @@ const mockAd = {
   findById: jest.fn(),
 };
 
-// Import the service class directly
-import PaymentService from '../../../services/payment.service.js';
+// Import the PaymentService class
+import { PaymentService } from '../../../services/payment.service.js';
 
 describe('Payment Service', () => {
   let paymentService;
 
   beforeEach(() => {
-    // Use the imported instance but replace its dependencies
-    paymentService = PaymentService;
-    paymentService.stripe = mockStripe;
-    paymentService.user = mockUser;
-    paymentService.ad = mockAd;
+    // Create a new instance with mocked dependencies
+    paymentService = new PaymentService(mockStripe, mockUser, mockAd);
     jest.clearAllMocks();
   });
 

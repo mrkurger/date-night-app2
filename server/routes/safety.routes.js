@@ -9,60 +9,56 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import safetyController from '../controllers/safety.controller';
-import { authenticate } from '../middleware/auth';
-import { isAdmin } from '../middleware/roles';
+import safetyController from '../controllers/safety.controller.js';
+import { protect } from '../middleware/auth.js';
+import { isAdmin } from '../middleware/roles.js';
 
 // Create a new safety check-in
-router.post('/checkin', authenticate, safetyController.createSafetyCheckin);
+router.post('/checkin', protect, safetyController.createSafetyCheckin);
 
 // Get all safety check-ins for the current user
-router.get('/checkins', authenticate, safetyController.getUserSafetyCheckins);
+router.get('/checkins', protect, safetyController.getUserSafetyCheckins);
 
 // Get a specific safety check-in
-router.get('/checkin/:checkinId', authenticate, safetyController.getSafetyCheckin);
+router.get('/checkin/:checkinId', protect, safetyController.getSafetyCheckin);
 
 // Update a safety check-in
-router.put('/checkin/:checkinId', authenticate, safetyController.updateSafetyCheckin);
+router.put('/checkin/:checkinId', protect, safetyController.updateSafetyCheckin);
 
 // Start a safety check-in
-router.post('/checkin/:checkinId/start', authenticate, safetyController.startSafetyCheckin);
+router.post('/checkin/:checkinId/start', protect, safetyController.startSafetyCheckin);
 
 // Complete a safety check-in
-router.post('/checkin/:checkinId/complete', authenticate, safetyController.completeSafetyCheckin);
+router.post('/checkin/:checkinId/complete', protect, safetyController.completeSafetyCheckin);
 
 // Record a check-in response
-router.post('/checkin/:checkinId/respond', authenticate, safetyController.recordCheckInResponse);
+router.post('/checkin/:checkinId/respond', protect, safetyController.recordCheckInResponse);
 
 // Verify check-in with safety code
-router.post('/checkin/:checkinId/verify', authenticate, safetyController.verifyWithSafetyCode);
+router.post('/checkin/:checkinId/verify', protect, safetyController.verifyWithSafetyCode);
 
 // Add emergency contact to a check-in
-router.post(
-  '/checkin/:checkinId/emergency-contact',
-  authenticate,
-  safetyController.addEmergencyContact
-);
+router.post('/checkin/:checkinId/emergency-contact', protect, safetyController.addEmergencyContact);
 
 // Remove emergency contact from a check-in
 router.delete(
   '/checkin/:checkinId/emergency-contact/:contactId',
-  authenticate,
+  protect,
   safetyController.removeEmergencyContact
 );
 
 // Get user's safety settings
-router.get('/settings', authenticate, safetyController.getUserSafetySettings);
+router.get('/settings', protect, safetyController.getUserSafetySettings);
 
 // Update user's safety settings
-router.put('/settings', authenticate, safetyController.updateSafetySettings);
+router.put('/settings', protect, safetyController.updateSafetySettings);
 
 // Admin routes
 router.get(
   '/admin/attention-required',
-  authenticate,
+  protect,
   isAdmin,
   safetyController.getCheckinsRequiringAttention
 );
 
-module.exports = router;
+export default router;

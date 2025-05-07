@@ -518,5 +518,6 @@ class PaymentService {
   }
 }
 
-// Export a singleton instance
+// Export both the class and a singleton instance
+export { PaymentService };
 export default new PaymentService();

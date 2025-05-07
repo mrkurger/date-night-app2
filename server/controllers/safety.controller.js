@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import SafetyCheckin from '../models/safety-checkin.model';
-import User from '../models/user.model';
+import SafetyCheckin from '../models/safety-checkin.model.js';
+import User from '../models/user.model.js';
 import crypto from 'crypto';
 
 // Create a new safety check-in
-exports.createSafetyCheckin = async (req, res) => {
+const createSafetyCheckin = async (req, res) => {
   try {
     const userId = req.user._id;
     const {
@@ -78,7 +78,7 @@ exports.createSafetyCheckin = async (req, res) => {
 };
 
 // Get all safety check-ins for the current user
-exports.getUserSafetyCheckins = async (req, res) => {
+const getUserSafetyCheckins = async (req, res) => {
   try {
     const userId = req.user._id;
     const { status, page = 1, limit = 10 } = req.query;
@@ -120,7 +120,7 @@ exports.getUserSafetyCheckins = async (req, res) => {
 };
 
 // Get a specific safety check-in
-exports.getSafetyCheckin = async (req, res) => {
+const getSafetyCheckin = async (req, res) => {
   try {
     const { checkinId } = req.params;
 
@@ -165,7 +165,7 @@ exports.getSafetyCheckin = async (req, res) => {
 };
 
 // Update a safety check-in
-exports.updateSafetyCheckin = async (req, res) => {
+const updateSafetyCheckin = async (req, res) => {
   try {
     const { checkinId } = req.params;
     const updates = req.body;
@@ -220,7 +220,7 @@ exports.updateSafetyCheckin = async (req, res) => {
 };
 
 // Start a safety check-in
-exports.startSafetyCheckin = async (req, res) => {
+const startSafetyCheckin = async (req, res) => {
   try {
     const { checkinId } = req.params;
 
@@ -266,7 +266,7 @@ exports.startSafetyCheckin = async (req, res) => {
 };
 
 // Complete a safety check-in
-exports.completeSafetyCheckin = async (req, res) => {
+const completeSafetyCheckin = async (req, res) => {
   try {
     const { checkinId } = req.params;
 
@@ -312,7 +312,7 @@ exports.completeSafetyCheckin = async (req, res) => {
 };
 
 // Record a check-in response
-exports.recordCheckInResponse = async (req, res) => {
+const recordCheckInResponse = async (req, res) => {
   try {
     const { checkinId } = req.params;
     const { response, coordinates } = req.body;
@@ -375,7 +375,7 @@ exports.recordCheckInResponse = async (req, res) => {
 };
 
 // Verify check-in with safety code
-exports.verifyWithSafetyCode = async (req, res) => {
+const verifyWithSafetyCode = async (req, res) => {
   try {
     const { checkinId } = req.params;
     const { code } = req.body;
@@ -448,7 +448,7 @@ exports.verifyWithSafetyCode = async (req, res) => {
 };
 
 // Add emergency contact to a check-in
-exports.addEmergencyContact = async (req, res) => {
+const addEmergencyContact = async (req, res) => {
   try {
     const { checkinId } = req.params;
     const { name, phone, email, relationship } = req.body;
@@ -507,7 +507,7 @@ exports.addEmergencyContact = async (req, res) => {
 };
 
 // Remove emergency contact from a check-in
-exports.removeEmergencyContact = async (req, res) => {
+const removeEmergencyContact = async (req, res) => {
   try {
     const { checkinId, contactId } = req.params;
 
@@ -553,7 +553,7 @@ exports.removeEmergencyContact = async (req, res) => {
 };
 
 // Get user's safety settings
-exports.getUserSafetySettings = async (req, res) => {
+const getUserSafetySettings = async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -580,7 +580,7 @@ exports.getUserSafetySettings = async (req, res) => {
 };
 
 // Update user's safety settings
-exports.updateSafetySettings = async (req, res) => {
+const updateSafetySettings = async (req, res) => {
   try {
     const userId = req.user._id;
     const { emergencyContacts, autoCheckIn } = req.body;

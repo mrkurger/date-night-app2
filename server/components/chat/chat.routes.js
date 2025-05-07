@@ -12,8 +12,7 @@ import multer from 'multer';
 const router = express.Router();
 import chatController from './chat.controller.js';
 import encryptionRoutes from './encryption.routes.js';
-import { protect } from '../../middleware/auth.js';
-import { authGuard } from '../../middleware/authGuard.js';
+import { protect, authGuard } from '../../middleware/auth.js';
 import { validateRequest } from '../../middleware/requestValidator.js';
 
 // Apply authentication middleware to all chat routes

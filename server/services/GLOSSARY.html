@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - Glossary</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0066cc;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .glossary-item {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .glossary-name {
+        font-weight: bold;
+        color: #0066cc;
+      }
+      .glossary-type {
+        color: #666;
+        font-style: italic;
+      }
+      .glossary-params {
+        margin-top: 10px;
+      }
+      .param-name {
+        font-family: monospace;
+        color: #d63384;
+      }
+      .param-type {
+        color: #0d6efd;
+        font-family: monospace;
+      }
+      .return-type {
+        color: #198754;
+        font-family: monospace;
+      }
+      nav {
+        margin-bottom: 20px;
+      }
+      nav a {
+        margin-right: 15px;
+        color: #0066cc;
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #666;
+      }
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: #555;
+        color: #fff;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.9em;
+      }
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="../_docs_index.html">Main Documentation</a>
+        <a href="CHANGELOG.html">Changelog</a>
+        <a href="AILESSONS.html">AI Lessons</a>
+      </nav>
+
+      <h1>Services - Glossary</h1>
+
+      <div class="glossary-item" id="PaymentService">
+        <h3 class="glossary-name">PaymentService</h3>
+        <p class="glossary-type">Class</p>
+        <p>Payment Service for handling subscriptions and one-time payments using Stripe.</p>
+        <p>Constructor parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">stripeClient</span> (<span class="param-type">Stripe</span>):
+            Stripe API client instance
+          </li>
+          <li>
+            <span class="param-name">userModel</span> (<span class="param-type">Model</span>): User
+            model for database operations
+          </li>
+          <li>
+            <span class="param-name">adModel</span> (<span class="param-type">Model</span>): Ad
+            model for database operations
+          </li>
+        </ul>
+      </div>
+
+      <div class="glossary-item" id="createPaymentIntent">
+        <h3 class="glossary-name">createPaymentIntent</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Creates a payment intent for Stripe to process a payment.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">amount</span> (<span class="param-type">number</span>): Amount
+            in smallest currency unit (e.g., cents)
+          </li>
+          <li>
+            <span class="param-name">currency</span> (<span class="param-type">string</span>):
+            Currency code (e.g., 'usd', 'nok')
+          </li>
+          <li>
+            <span class="param-name">metadata</span> (<span class="param-type">Object</span>):
+            Additional metadata for the payment
+          </li>
+        </ul>
+        <p>
+          Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Stripe payment intent
+        </p>
+      </div>
+
+      <div class="glossary-item" id="createSubscription">
+        <h3 class="glossary-name">createSubscription</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Creates a subscription for a user.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">userId</span> (<span class="param-type">string</span>): User ID
+          </li>
+          <li>
+            <span class="param-name">priceId</span> (<span class="param-type">string</span>): Stripe
+            price ID
+          </li>
+          <li>
+            <span class="param-name">paymentMethodId</span> (<span class="param-type">string</span
+            >): Stripe payment method ID
+          </li>
+        </ul>
+        <p>
+          Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Subscription details
+        </p>
+      </div>
+
+      <div class="glossary-item" id="cancelSubscription">
+        <h3 class="glossary-name">cancelSubscription</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Cancels a user's subscription.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">userId</span> (<span class="param-type">string</span>): User ID
+          </li>
+        </ul>
+        <p>
+          Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Cancellation details
+        </p>
+      </div>
+
+      <div class="glossary-item" id="boostAd">
+        <h3 class="glossary-name">boostAd</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Boosts an ad (one-time payment) to increase its visibility.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">adId</span> (<span class="param-type">string</span>): Ad ID
+          </li>
+          <li>
+            <span class="param-name">userId</span> (<span class="param-type">string</span>): User ID
+          </li>
+          <li>
+            <span class="param-name">days</span> (<span class="param-type">number</span>): Number of
+            days to boost
+          </li>
+          <li>
+            <span class="param-name">paymentMethodId</span> (<span class="param-type">string</span
+            >): Stripe payment method ID
+          </li>
+        </ul>
+        <p>Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Payment details</p>
+      </div>
+
+      <div class="glossary-item" id="featureAd">
+        <h3 class="glossary-name">featureAd</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Features an ad (one-time payment) to highlight it in search results.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">adId</span> (<span class="param-type">string</span>): Ad ID
+          </li>
+          <li>
+            <span class="param-name">userId</span> (<span class="param-type">string</span>): User ID
+          </li>
+          <li>
+            <span class="param-name">paymentMethodId</span> (<span class="param-type">string</span
+            >): Stripe payment method ID
+          </li>
+        </ul>
+        <p>Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Payment details</p>
+      </div>
+
+      <div class="glossary-item" id="handleWebhookEvent">
+        <h3 class="glossary-name">handleWebhookEvent</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Handles Stripe webhook events.</p>
+        <p>Parameters:</p>
+        <ul class="glossary-params">
+          <li>
+            <span class="param-name">event</span> (<span class="param-type">Object</span>): Stripe
+            webhook event
+          </li>
+        </ul>
+        <p>Returns: <span class="return-type">Promise&lt;Object&gt;</span> - Processing result</p>
+      </div>
+
+      <div class="glossary-item" id="getSubscriptionPrices">
+        <h3 class="glossary-name">getSubscriptionPrices</h3>
+        <p class="glossary-type">
+          Method of
+          <a href="#PaymentService" class="tooltip"
+            >PaymentService<span class="tooltiptext"
+              >Payment Service for handling subscriptions and one-time payments</span
+            ></a
+          >
+        </p>
+        <p>Gets subscription prices from Stripe.</p>
+        <p>Parameters: None</p>
+        <p>
+          Returns: <span class="return-type">Promise&lt;Array&gt;</span> - List of subscription
+          prices
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,14 +8,14 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model';
-import TokenBlacklist from '../models/token-blacklist.model';
+import User from '../models/user.model.js';
+import TokenBlacklist from '../models/token-blacklist.model.js';
 
 /**
  * Middleware to authenticate users
  * Verifies JWT token and checks if it's blacklisted
  */
-exports.protect = exports.authenticate = async (req, res, next) => {
+export const protect = async (req, res, next) => {
   try {
     let token;
 
@@ -110,7 +110,7 @@ exports.protect = exports.authenticate = async (req, res, next) => {
  * Middleware for optional authentication
  * Verifies JWT token if present but doesn't require it
  */
-exports.optionalAuth = async (req, res, next) => {
+export const optionalAuth = async (req, res, next) => {
   try {
     let token;
 
@@ -173,7 +173,7 @@ exports.optionalAuth = async (req, res, next) => {
  * Middleware to restrict access to specific roles
  * @param {Array} roles - Array of allowed roles
  */
-exports.restrictTo = (...roles) => {
+export const restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({
@@ -191,4 +191,54 @@ exports.restrictTo = (...roles) => {
 
     next();
   };
+};
+
+/**
+ * Middleware to guard routes based on authentication and authorization
+ * This is a simplified version of protect that can be used for specific routes
+ */
+export const authGuard = async (req, res, next) => {
+  try {
+    let token;
+
+    // Check for token in cookie first (preferred method)
+    if (req.cookies && req.cookies.access_token) {
+      token = req.cookies.access_token;
+    }
+    // Fallback to Authorization header for API clients
+    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required. No token provided.',
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Find user
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Add user to request
+    req.user = user;
+
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: 'Authentication failed',
+      error: error.message,
+    });
+  }
 };

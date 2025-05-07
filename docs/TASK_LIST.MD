@@ -4,20 +4,20 @@
 
 - A. Travel Itinerary Management
 
-  - [ ] Data Model & API
-    - [ ] Define TravelItinerary schema (destinations, dates, user link)
-    - [ ] Define TravelPlanItem sub-schema
-    - [ ] Add 2dsphere indices for geo-queries
-    - [ ] CRUD endpoints (Create/Read/Update/Delete)
-    - [ ] Validation middleware (Joi/express-validator)
+  - [x] Data Model & API
+    - [x] Define TravelItinerary schema (destinations, dates, user link)
+    - [x] Define TravelPlanItem sub-schema
+    - [x] Add 2dsphere indices for geo-queries
+    - [x] CRUD endpoints (Create/Read/Update/Delete)
+    - [x] Validation middleware (Joi/express-validator)
   - [ ] Frontend UX
-    - [ ] “My Itineraries” list & detail pages
-    - [ ] Create/edit form (location, date, notes)
-    - [ ] Map view (Leaflet/Google Maps)
+    - [x] “My Itineraries” list & detail pages
+    - [x] Create/edit form (location, date, notes)
+    - [ ] Map view enhancement (Leaflet/Google Maps)
     - [ ] Calendar widget integration
   - [ ] Location-Based Matching
-    - [ ] “Nearby touring advertisers” API endpoint
-    - [ ] Radius filter in ad browse
+    - [x] “Nearby touring advertisers” API endpoint
+    - [x] Radius filter in ad browse
     - [ ] Notification banner when matches found
 
 - B. Enhanced Chat System

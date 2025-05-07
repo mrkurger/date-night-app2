@@ -8,6 +8,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 
 // ANSI color codes for better output
 const colors = {
@@ -19,6 +20,10 @@ const colors = {
   magenta: '\x1b[35m',
   cyan: '\x1b[36m',
 };
+
+// Define paths using ES modules approach
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Paths to package.json files
 const rootPackageJsonPath = path.join(__dirname, '..', 'package.json');

@@ -12,10 +12,13 @@
 
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import { authenticate, optionalAuth, restrictTo } from '../../../middleware/auth.js';
+import { protect, optionalAuth, restrictTo } from '../../../middleware/auth.js';
 import User from '../../../models/user.model.js';
 import TokenBlacklist from '../../../models/token-blacklist.model.js';
 import authService from '../../../services/auth.service.js';
+
+// Alias protect as authenticate for backward compatibility with tests
+const authenticate = protect;
 import {
   mockRequest,
   mockResponse,
