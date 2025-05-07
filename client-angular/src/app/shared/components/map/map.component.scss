@@ -89,12 +89,11 @@
 // Current location marker animation
 .current-location-marker {
   .pulse {
-    width: 16px;
-    height: 16px;
-    background: ds.$color-primary; // was #4a90e2
-    border: 3px solid white;
+    width: 20px;
+    height: 20px;
+    background: rgba(33, 150, 243, 0.4);
+    border: 2px solid #2196f3;
     border-radius: 50%;
-    box-shadow: 0 0 0 rgba(74, 144, 226, 0.4);
     animation: pulse 2s infinite;
 
     @media (prefers-reduced-motion: reduce) {
@@ -105,13 +104,12 @@
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 20px rgba(74, 144, 226, 0);
+    transform: scale(0.5);
+    opacity: 1;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+    transform: scale(2);
+    opacity: 0;
   }
 }
 
@@ -155,7 +153,6 @@
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
   border: 0;
 }
 
@@ -211,5 +208,67 @@
 
   &:hover {
     transform: scale(1.1);
+  }
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.map-focused {
+  outline: 2px solid #2196f3;
+}
+
+.custom-map-controls {
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  .map-control-btn {
+    display: block;
+    margin: 4px 0;
+    padding: 8px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &:active {
+      background: #e0e0e0;
+    }
+  }
+}
+
+.marker-popup {
+  padding: 8px;
+  max-width: 250px;
+
+  h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: #666;
+  }
+
+  .popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
   }
 }

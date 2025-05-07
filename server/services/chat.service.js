@@ -12,7 +12,7 @@ import ChatRoom from '../models/chat-room.model.js';
 import User from '../models/user.model.js';
 import Ad from '../models/ad.model.js';
 import socketService from './socket.service.js';
-import cryptoHelpers from '../utils/cryptoHelpers.js';
+import { cryptoHelpers } from '../utils/cryptoHelpers.js';
 import { AppError } from '../middleware/errorHandler.js';
 import path from 'path';
 import fs from 'fs';

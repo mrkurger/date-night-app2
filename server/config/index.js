@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import environment from './environment';
+import environment from './environment.js';
 
 // Export environment directly to maintain compatibility with existing code
 // Database configuration is imported directly where needed
-module.exports = environment;
+export default environment;

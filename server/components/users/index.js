@@ -8,9 +8,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
+import routes from './user.routes.js';
+import controller from './user.controller.js';
+import User from '../../models/user.model.js';
 
-export default {
-  routes: require('./user.routes'),
-  controller: require('./user.controller'),
-  model: require('../../models/user.model'), // Export the model directly if needed
-};
+export { routes, controller, User };

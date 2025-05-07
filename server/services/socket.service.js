@@ -10,7 +10,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js'; // Added .js
 import ChatMessage from '../models/chat-message.model.js'; // Added .js
-import socketIo from 'socket.io'; // Import default export
+import { Server } from 'socket.io'; // Import Server from socket.io
 
 class SocketService {
   constructor() {
@@ -24,9 +24,8 @@ class SocketService {
    * @param {Object} server - HTTP server instance
    */
   initialize(server) {
-    // Removed async as dynamic import is no longer needed
-    // Use the imported socketIo directly
-    this.io = socketIo(server, {
+    // Use the imported Server class from socket.io
+    this.io = new Server(server, {
       cors: {
         origin: process.env.CLIENT_URL || 'http://localhost:4200', // Keep dynamic origin based on env
         methods: ['GET', 'POST'],

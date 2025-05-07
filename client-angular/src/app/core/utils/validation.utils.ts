@@ -119,7 +119,7 @@ export function isValidPassword(
   }
 
   // Check for numbers
-  if (requireNumbers && !/[0-9]/.test(password)) {
+  if (requireNumbers && !/[\d]/.test(password)) {
     return false;
   }
 

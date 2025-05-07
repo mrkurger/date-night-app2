@@ -7,10 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import Favorite from '../models/favorite.model';
-import Ad from '../models/ad.model';
-import { AppError } from '../middleware/errorHandler';
-import { logger } from '../utils/logger';
+import Favorite from '../models/favorite.model.js';
+import Ad from '../models/ad.model.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * Controller for managing user favorites
@@ -521,4 +521,5 @@ class FavoriteController {
   }
 }
 
-module.exports = new FavoriteController();
+const favoriteController = new FavoriteController();
+export default favoriteController;

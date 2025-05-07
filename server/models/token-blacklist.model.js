@@ -94,4 +94,5 @@ tokenBlacklistSchema.statics.cleanupExpired = async function () {
   return this.deleteMany({ expiresAt: { $lt: now } });
 };
 
-module.exports = mongoose.model('TokenBlacklist', tokenBlacklistSchema);
+const TokenBlacklist = mongoose.model('TokenBlacklist', tokenBlacklistSchema);
+export { TokenBlacklist };

@@ -7,7 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
+import routes from './ad.routes.js';
+import controller from './ad.controller.js';
+
 export default {
-  routes: require('./ad.routes'),
-  controller: require('./ad.controller'),
+  routes,
+  controller,
 };

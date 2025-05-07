@@ -17,6 +17,10 @@ import ChatMessage from '../models/chat-message.model';
 // TODO: Add model access control
 // TODO: Add model caching layer
 
+import ads from './ads/index.js';
+import users from './users/index.js';
+import chat from './chat/index.js';
+
 export default {
   // Models (imported from models directory)
   User,
@@ -24,7 +28,7 @@ export default {
   ChatMessage,
 
   // Feature components
-  ads: require('./ads'),
-  users: require('./users'),
-  chat: require('./chat'),
+  ads,
+  users,
+  chat,
 };

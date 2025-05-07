@@ -10,7 +10,7 @@
 import express from 'express';
 const router = express.Router();
 import verificationController from '../controllers/verification.controller.js';
-import { authenticate } from '../middleware/auth.js';
+import { protect as authenticate } from '../middleware/auth.js';
 import { isAdmin } from '../middleware/roles.js';
 
 // Get verification status for current user

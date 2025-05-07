@@ -30,6 +30,13 @@
       <h2>Best Practices</h2>
       <ul>
         <li>
+          <strong>Explicitly set outputs</strong>: When a job needs to output a value for use in
+          other jobs, add an explicit step to set that output rather than relying on implicit
+          outputs from actions. For example, use
+          <code>echo "node-path=$(which node)" >> $GITHUB_OUTPUT</code> to explicitly set the
+          Node.js path as an output.
+        </li>
+        <li>
           <strong>Consolidate related workflows</strong>: Combine workflows with similar purposes to
           reduce maintenance overhead and improve efficiency.
         </li>

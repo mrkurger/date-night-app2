@@ -212,4 +212,5 @@ favoriteSchema.statics.findByPriority = function (userId, priority) {
     });
 };
 
-module.exports = mongoose.model('Favorite', favoriteSchema);
+const Favorite = mongoose.model('Favorite', favoriteSchema);
+export default Favorite;

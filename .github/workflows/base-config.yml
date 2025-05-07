@@ -26,7 +26,7 @@ jobs:
     name: Setup Node.js Environment
     runs-on: ubuntu-latest
     outputs:
-      node-path: ${{ steps.node-setup.outputs.node-path }}
+      node-path: ${{ steps.get-node-path.outputs.node-path }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           cache: 'npm'
+      - name: Get Node.js path
+        id: get-node-path
+        run: echo "node-path=$(which node)" >> $GITHUB_OUTPUT
 
   mongodb-setup:
     name: Setup MongoDB Service

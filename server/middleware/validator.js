@@ -331,7 +331,7 @@ const travelPlanValidation = [
   validate,
 ];
 
-export default {
+export {
   validate,
   validators,
   registerValidation,

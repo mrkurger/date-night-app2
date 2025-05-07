@@ -9,7 +9,7 @@
 // ===================================================
 import ChatService from '../../services/chat.service.js';
 import ChatAttachment from '../../models/chat-attachment.schema.js';
-import { asyncHandler } from '../../middleware/asyncHandler.js';
+import asyncHandler from '../../middleware/asyncHandler.js';
 
 class ChatController {
   // TODO: Implement file upload functionality

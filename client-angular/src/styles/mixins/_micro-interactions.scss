@@ -1,4 +1,5 @@
 @use '../design-system/variables' as ds;
+@use './_dark-mode.scss' as *;
 
 // Hover Scale
 // Slightly enlarges an element on hover

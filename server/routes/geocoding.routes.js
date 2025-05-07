@@ -9,10 +9,10 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import geocodingController from '../controllers/geocoding.controller';
-import { authenticateToken, optionalAuth } from '../middleware/authenticateToken';
-import { roles } from '../middleware/roles';
-import asyncHandler from '../middleware/asyncHandler';
+import geocodingController from '../controllers/geocoding.controller.js.js';
+import { authenticateToken, optionalAuth } from '../middleware/authenticateToken.js.js';
+import { roles } from '../middleware/roles.js.js';
+import asyncHandler from '../middleware/asyncHandler.js.js';
 
 /**
  * @route GET /api/geocoding/forward
@@ -52,4 +52,4 @@ router.post(
   asyncHandler(geocodingController.clearCache)
 );
 
-module.exports = router;
+export default router;

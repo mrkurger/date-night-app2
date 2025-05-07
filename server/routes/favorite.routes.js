@@ -9,8 +9,8 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import favoriteController from '../controllers/favorite.controller';
-import { authenticate } from '../middleware/auth';
+import favoriteController from '../controllers/favorite.controller.js';
+import { protect as protect as authenticate } from '../middleware/auth.js';
 
 /**
  * Favorites routes
@@ -65,4 +65,4 @@ router.patch('/:adId/priority', authenticate, favoriteController.updateFavoriteP
 // Toggle notifications for a favorite
 router.patch('/:adId/notifications', authenticate, favoriteController.toggleNotifications);
 
-module.exports = router;
+export default router;

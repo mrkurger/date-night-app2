@@ -370,4 +370,5 @@ safetyCheckinSchema.statics.findCheckinsWithPendingReminders = function () {
   });
 };
 
-module.exports = mongoose.model('SafetyCheckin', safetyCheckinSchema);
+const SafetyCheckin = mongoose.model('SafetyCheckin', safetyCheckinSchema);
+export default SafetyCheckin;

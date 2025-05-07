@@ -1,6 +1,5 @@
-@use 'src/styles/design-system/variables' as tokens;
-@use 'src/styles/mixins' as mixins;
-@use 'src/styles/design-system/variables' as ds;
+@use '../../../styles/design-system/_variables.scss' as ds;
+@use '../../../styles/mixins/_dark-mode.scss' as dm;
 
 .a11y-demo {
   &__skip-link {
@@ -24,7 +23,7 @@
     padding: ds.$spacing-12 0;
     margin-bottom: ds.$spacing-12;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       background-color: ds.$color-primary-dark;
     }
   }
@@ -44,7 +43,7 @@
     padding-bottom: ds.$spacing-12;
     border-bottom: 1px solid ds.$color-light-gray-2;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       border-bottom-color: ds.$color-dark-gray-1;
     }
   }
@@ -64,7 +63,7 @@
       background-color: ds.$color-primary;
       border-radius: ds.$border-radius-full;
 
-      @include mixins.dark-mode {
+      @include dm.dark-mode {
         background-color: ds.$color-primary-light;
       }
     }
@@ -86,7 +85,7 @@
     margin-bottom: ds.$spacing-6;
     box-shadow: ds.$shadow-sm;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       background-color: ds.$color-dark-gray-2;
       box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
     }
@@ -101,7 +100,7 @@
     font-family: monospace;
     font-size: ds.$font-size-sm;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       background-color: ds.$color-dark-gray-3;
     }
   }
@@ -118,7 +117,7 @@
     border-radius: ds.$border-radius-md;
     padding: ds.$spacing-4;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       border-color: ds.$color-dark-gray-1;
     }
   }
@@ -133,7 +132,7 @@
     margin-bottom: ds.$spacing-4;
     color: ds.$color-dark-gray-1;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       color: ds.$color-light-gray-2;
     }
   }
@@ -158,7 +157,7 @@
       background-color: ds.$color-light-gray-2;
     }
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       background-color: ds.$color-dark-gray-2;
 
       &:focus-visible {
@@ -179,7 +178,7 @@
     border-radius: ds.$border-radius-md;
     padding: ds.$spacing-4;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       border-color: ds.$color-dark-gray-1;
     }
   }
@@ -195,7 +194,7 @@
     margin-bottom: ds.$spacing-4;
     color: ds.$color-dark-gray-1;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       color: ds.$color-light-gray-2;
     }
   }
@@ -212,7 +211,7 @@
     border-radius: ds.$border-radius-md;
     padding: ds.$spacing-4;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       border-color: ds.$color-dark-gray-1;
     }
   }
@@ -227,7 +226,7 @@
     margin-bottom: ds.$spacing-4;
     color: ds.$color-dark-gray-1;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       color: ds.$color-light-gray-2;
     }
   }
@@ -244,7 +243,7 @@
     border-radius: ds.$border-radius-md;
     padding: ds.$spacing-4;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       border-color: ds.$color-dark-gray-1;
     }
   }
@@ -259,7 +258,7 @@
     margin-bottom: ds.$spacing-4;
     color: ds.$color-dark-gray-1;
 
-    @include mixins.dark-mode {
+    @include dm.dark-mode {
       color: ds.$color-light-gray-2;
     }
   }
@@ -351,7 +350,7 @@
         outline-offset: 2px;
       }
 
-      @include mixins.dark-mode {
+      @include dm.dark-mode {
         color: ds.$color-primary-light;
       }
     }

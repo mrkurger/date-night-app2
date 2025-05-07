@@ -392,4 +392,5 @@ verificationSchema.statics.findVerifiedUsers = function () {
   }).populate('user', 'username email role');
 };
 
-module.exports = mongoose.model('Verification', verificationSchema);
+const Verification = mongoose.model('Verification', verificationSchema);
+export default Verification;

@@ -9,6 +9,8 @@
 // ===================================================
 
 import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_FILE_TYPES = [
@@ -109,8 +111,6 @@ chatAttachmentSchema.methods.validateFileType = function () {
 // Automatically delete file when attachment is deleted
 chatAttachmentSchema.pre('remove', async function (next) {
   try {
-    const fs = require('fs');
-    const path = require('path');
     const filePath = path.join(process.cwd(), this.url);
 
     // Delete file if it exists

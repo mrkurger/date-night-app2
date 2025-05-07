@@ -91,6 +91,16 @@ const serverErrorResponse = (message = 'Internal server error', error = null) =>
   return errorResponse(message, 500, error);
 };
 
+export {
+  successResponse,
+  errorResponse,
+  validationErrorResponse,
+  notFoundResponse,
+  unauthorizedResponse,
+  forbiddenResponse,
+  serverErrorResponse,
+};
+
 export default {
   successResponse,
   errorResponse,

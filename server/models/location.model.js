@@ -133,4 +133,6 @@ locationSchema.statics.getPopular = function (limit = 10) {
   return this.find().sort({ searchCount: -1 }).limit(limit);
 };
 
-module.exports = mongoose.model('Location', locationSchema);
+const Location = mongoose.model('Location', locationSchema);
+
+export default Location;

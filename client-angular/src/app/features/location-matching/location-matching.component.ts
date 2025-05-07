@@ -116,6 +116,15 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Map configuration
+  mapConfig = {
+    showHeatmap: false,
+    enableClustering: true,
+  };
+
+  // Reference to the map component
+  mapComponent: any;
+
   ngOnInit(): void {
     this.loadLocations();
 
@@ -474,14 +483,40 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Search for location matches based on coordinates and radius
+   * @param longitude Longitude coordinate
+   * @param latitude Latitude coordinate
+   * @param radius Search radius in kilometers
+   * @param categories Optional categories to filter by
+   * @returns Observable of location match results
+   */
   searchLocationMatches(
     longitude: number,
     latitude: number,
     radius: number,
     categories?: string[],
   ): Observable<LocationMatchResult[]> {
-    // This would be replaced with a real API call to your backend
-    return this.adService.searchByLocation(longitude, latitude, radius, categories);
+    this.loading = true;
+    return (
+      categories
+        ? this.adService.searchByLocation(longitude, latitude, radius, categories)
+        : this.locationService.searchNearbyLocations(
+            longitude,
+            latitude,
+            radius,
+            this.selectedDateRange,
+          )
+    ).pipe(
+      catchError((error) => {
+        this.notificationService.error('Error searching for locations');
+        console.error('Location search error:', error);
+        return of([]);
+      }),
+      finalize(() => {
+        this.loading = false;
+      }),
+    );
   }
 
   clearSearch(): void {
@@ -498,9 +533,14 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     this.updateMapMarkers();
   }
 
+  /**
+   * Format distance for display
+   * @param distance Distance in kilometers
+   * @returns Formatted distance string
+   */
   formatDistance(distance: number): string {
     if (distance < 1) {
-      return `${(distance * 1000).toFixed(0)} m`;
+      return `${Math.round(distance * 1000)} m`;
     }
     return `${distance.toFixed(1)} km`;
   }
@@ -555,6 +595,63 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
         this.onSearch();
       }
     }
+  }
+
+  /**
+   * Update matches based on current search criteria
+   */
+  updateMatches(): void {
+    if (!this.selectedLocation) {
+      return;
+    }
+
+    const { latitude, longitude } = this.selectedLocation;
+    const radius = this.searchForm.get('radius')?.value || 25;
+
+    this.searchLocationMatches(longitude, latitude, radius).subscribe((matches) => {
+      this.results = matches;
+      this.updateMapMarkers();
+    });
+  }
+
+  /**
+   * Handle location errors
+   */
+  handleLocationError(error: GeolocationPositionError): void {
+    this.searchForm.get('useCurrentLocation')?.setValue(false);
+
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        this.notificationService.error('Location permission denied');
+        break;
+      case error.POSITION_UNAVAILABLE:
+        this.notificationService.error('Location information is unavailable');
+        break;
+      case error.TIMEOUT:
+        this.notificationService.error('Location request timed out');
+        break;
+      default:
+        this.notificationService.error('An unknown error occurred');
+        break;
+    }
+  }
+
+  // Methods moved to avoid duplication
+
+  /**
+   * Fit map to bounds
+   */
+  fitMapToBounds(): void {
+    if (this.mapMarkers.length === 0) return;
+
+    const bounds = {
+      north: Math.max(...this.mapMarkers.map((m) => m.latitude)),
+      south: Math.min(...this.mapMarkers.map((m) => m.latitude)),
+      east: Math.max(...this.mapMarkers.map((m) => m.longitude)),
+      west: Math.min(...this.mapMarkers.map((m) => m.longitude)),
+    };
+
+    this.mapComponent.fitBounds(bounds);
   }
 
   ngOnDestroy(): void {

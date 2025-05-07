@@ -2,7 +2,7 @@
  * Validation middleware for travel-related routes
  */
 import { body, param, query, validationResult } from 'express-validator';
-import { AppError } from '../errorHandler';
+import { AppError } from '../errorHandler.js';
 
 // Helper function to check validation results
 const validateResults = (req, res, next) => {
@@ -22,7 +22,7 @@ const validateResults = (req, res, next) => {
 };
 
 // Validate itinerary creation/update data
-exports.validateItineraryData = [
+const validateItineraryData = [
   body('destination.city')
     .notEmpty()
     .withMessage('City is required')
@@ -97,7 +97,7 @@ exports.validateItineraryData = [
 ];
 
 // Validate location update data
-exports.validateLocationUpdate = [
+const validateLocationUpdate = [
   body('longitude')
     .notEmpty()
     .withMessage('Longitude is required')
@@ -114,7 +114,7 @@ exports.validateLocationUpdate = [
 ];
 
 // Validate parameters for getting ads by location
-exports.validateLocationQuery = [
+const validateLocationQuery = [
   query('longitude')
     .notEmpty()
     .withMessage('Longitude is required')
@@ -136,7 +136,7 @@ exports.validateLocationQuery = [
 ];
 
 // Validate parameters for getting upcoming tours
-exports.validateUpcomingToursQuery = [
+const validateUpcomingToursQuery = [
   query('city').optional().isString().withMessage('City must be a string').trim(),
 
   query('county').optional().isString().withMessage('County must be a string').trim(),
@@ -150,7 +150,7 @@ exports.validateUpcomingToursQuery = [
 ];
 
 // Validate ad ID parameter
-exports.validateAdId = [
+const validateAdId = [
   param('adId')
     .notEmpty()
     .withMessage('Ad ID is required')
@@ -161,7 +161,7 @@ exports.validateAdId = [
 ];
 
 // Validate itinerary ID parameter
-exports.validateItineraryId = [
+const validateItineraryId = [
   param('itineraryId')
     .notEmpty()
     .withMessage('Itinerary ID is required')
@@ -170,3 +170,21 @@ exports.validateItineraryId = [
 
   validateResults,
 ];
+
+export {
+  validateItineraryData,
+  validateLocationUpdate,
+  validateLocationQuery,
+  validateUpcomingToursQuery,
+  validateAdId,
+  validateItineraryId,
+};
+
+export default {
+  validateItineraryData,
+  validateLocationUpdate,
+  validateLocationQuery,
+  validateUpcomingToursQuery,
+  validateAdId,
+  validateItineraryId,
+};

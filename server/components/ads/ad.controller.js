@@ -7,8 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import adService from '../../services/ad.service';
-import { getPaginationParams, createPaginatedResponse } from '../../utils/pagination';
+import adService from '../../services/ad.service.js';
+import { getPaginationParams, createPaginatedResponse } from '../../utils/pagination.js';
 
 class AdController {
   // TODO: Add request validation middleware

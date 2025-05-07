@@ -1,46 +1,28 @@
 <div class="map-container" [style.height]="height">
-  <!-- Map container with accessibility attributes -->
   <div
     #map
     id="map"
-    class="map"
-    role="application"
-    [attr.aria-label]="
-      'Interactive map. Use tab key to focus and arrow keys to navigate.' +
-      (selectable ? ' Press space to select location.' : '')
-    "
+    [attr.aria-label]="'Interactive map. ' + (selectable ? 'Click to select a location.' : '')"
   ></div>
 
-  <!-- Instructions overlay -->
+  <!-- Map Overlay -->
   <div class="map-overlay" *ngIf="selectable">
     <div class="map-instructions">
-      <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-      <span>Click on the map to select a location</span>
+      <i class="fas fa-info-circle"></i>
+      Click on the map to select a location
     </div>
   </div>
 
-  <!-- Keyboard navigation instructions (only visible to screen readers) -->
-  <div class="sr-only" aria-live="polite">
-    Press Tab to focus on the map. Once focused, press Enter to activate keyboard controls. Use
-    arrow keys to navigate, Plus and Minus to zoom, and Space to select a location.
-  </div>
-
-  <!-- Map accessibility controls -->
-  <div class="map-accessibility-controls" *ngIf="selectable">
-    <button class="zoom-in" (click)="map?.zoomIn()" aria-label="Zoom in" title="Zoom in">
-      <i class="fas fa-plus" aria-hidden="true"></i>
+  <!-- Accessibility Controls -->
+  <div class="map-accessibility-controls" aria-label="Map controls">
+    <button (click)="zoomIn()" aria-label="Zoom in">
+      <i class="fas fa-plus"></i>
     </button>
-    <button class="zoom-out" (click)="map?.zoomOut()" aria-label="Zoom out" title="Zoom out">
-      <i class="fas fa-minus" aria-hidden="true"></i>
+    <button (click)="zoomOut()" aria-label="Zoom out">
+      <i class="fas fa-minus"></i>
     </button>
-    <button
-      *ngIf="showCurrentLocation"
-      class="locate"
-      (click)="showUserLocation()"
-      aria-label="Show my location"
-      title="Show my location"
-    >
-      <i class="fas fa-location-arrow" aria-hidden="true"></i>
+    <button *ngIf="showCurrentLocation" (click)="getUserLocation()" aria-label="Show my location">
+      <i class="fas fa-location-arrow"></i>
     </button>
   </div>
 </div>

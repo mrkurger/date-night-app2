@@ -7,9 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import Location from '../models/location.model';
-import { AppError } from '../middleware/errorHandler';
-import { logger } from '../utils/logger';
+import Location from '../models/location.model.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * Controller for managing locations

@@ -30,6 +30,25 @@
       <h2>Workflow Files</h2>
 
       <dl>
+        <dt id="base-config-yml">base-config.yml</dt>
+        <dd>
+          <p>
+            A shared configuration file for GitHub Actions workflows that provides reusable jobs and
+            environment variables. It's designed to be called by other workflows using the
+            workflow_call trigger.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Defines reusable jobs for setting up Node.js and MongoDB</li>
+            <li>Provides a job for creating report directories</li>
+            <li>Sets environment variables for report and artifact paths</li>
+            <li>Configures artifact retention periods</li>
+            <li>Outputs the Node.js path for use in other jobs</li>
+          </ul>
+        </dd>
+
         <dt id="angular-tests-yml">angular-tests.yml</dt>
         <dd>
           <p>
@@ -126,6 +145,16 @@
             A GitHub Action that sets up a Node.js environment for use in actions. It installs the
             specified version of Node.js and can optionally cache dependencies.
           </p>
+        </dd>
+
+        <dt id="github-output">GITHUB_OUTPUT</dt>
+        <dd>
+          <p>
+            An environment file that GitHub Actions provides for workflow commands to set outputs.
+            Values written to this file in the format "name=value" can be accessed in subsequent
+            steps or jobs using the syntax ${{ steps.step-id.outputs.name }}.
+          </p>
+          <p>Example: <code>echo "node-path=$(which node)" >> $GITHUB_OUTPUT</code></p>
         </dd>
 
         <dt id="actions-upload-artifact">actions/upload-artifact</dt>

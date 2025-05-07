@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cluster Module - Changelog</title>
+    <style>
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #2ecc71;
+        --accent-color: #e74c3c;
+        --text-color: #333;
+        --background-color: #f9f9f9;
+        --card-background: #fff;
+        --border-color: #ddd;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--card-background);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--primary-color);
+      }
+
+      h1 {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-top: 0;
+      }
+
+      h2 {
+        margin-top: 30px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 5px;
+      }
+
+      .changelog-entry {
+        margin-bottom: 30px;
+      }
+
+      .changelog-date {
+        font-weight: bold;
+        color: var(--secondary-color);
+      }
+
+      .changelog-version {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+
+      .tag-added {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .tag-fixed {
+        background-color: var(--accent-color);
+        color: white;
+      }
+
+      .tag-changed {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: var(--card-background);
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .navigation a {
+        color: var(--primary-color);
+        text-decoration: none;
+        padding: 5px 10px;
+      }
+
+      .navigation a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <a href="../../../_docs_index.html">Main Documentation</a>
+      <a href="./AILESSONS.html">AI Lessons</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </div>
+
+    <div class="container">
+      <h1>Cluster Module - Changelog</h1>
+
+      <div class="changelog-entry">
+        <h2>
+          <span class="changelog-version">1.0.0</span>
+          <span class="changelog-date">2023-05-24</span>
+        </h2>
+        <ul>
+          <li>
+            <span class="tag tag-added">Added</span> Initial implementation of the ClusterModule
+          </li>
+          <li>
+            <span class="tag tag-added">Added</span> Basic module structure for map marker
+            clustering
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

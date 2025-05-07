@@ -77,6 +77,12 @@
     #{$property}: $to;
   }
 
+  // Alternative syntax for future Sass versions:
+  // & {
+  //   #{$property}: $from;
+  //   transition: #{$property} $duration tokens.$transition-timing-default;
+  // }
+
   @include animation.respect-reduced-motion;
 }
 

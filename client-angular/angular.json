@@ -28,7 +28,10 @@
               "src/favicon.ico"
             ],
             "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -81,7 +84,10 @@
               }
             ],
             "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           }
         }
       }
@@ -111,7 +117,10 @@
               "src/favicon.ico"
             ],
             "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -164,7 +173,10 @@
               }
             ],
             "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           }
         }
       }

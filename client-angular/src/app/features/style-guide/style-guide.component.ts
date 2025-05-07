@@ -56,8 +56,6 @@ export class StyleGuideComponent {
     { name: 'Spacing 24 (96px)', class: 'spacing-24' },
   ];
 
-  constructor(private themeService: ThemeService) {}
-
   toggleDarkMode(): void {
     this.themeService.toggleTheme();
   }

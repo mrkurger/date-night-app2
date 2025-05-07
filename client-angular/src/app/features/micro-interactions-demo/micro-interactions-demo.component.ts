@@ -134,8 +134,6 @@ export class MicroInteractionsDemoComponent {
     },
   ];
 
-  constructor(private themeService: ThemeService) {}
-
   /**
    * Toggles the theme between light and dark mode
    */

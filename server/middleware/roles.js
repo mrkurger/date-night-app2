@@ -1,5 +1,15 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for roles middleware
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.js:OTHER_SETTING
+// ===================================================
+
 // Middleware to check if user is an admin
-exports.isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       success: false,
@@ -18,7 +28,7 @@ exports.isAdmin = (req, res, next) => {
 };
 
 // Middleware to check if user is an advertiser
-exports.isAdvertiser = (req, res, next) => {
+const isAdvertiser = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       success: false,
@@ -37,7 +47,7 @@ exports.isAdvertiser = (req, res, next) => {
 };
 
 // Middleware to check if user is the owner of a resource
-exports.isResourceOwner = resourceField => {
+const isResourceOwner = resourceField => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({
@@ -80,3 +90,6 @@ exports.isResourceOwner = resourceField => {
     });
   };
 };
+
+export { isAdmin, isAdvertiser, isResourceOwner };
+export default { isAdmin, isAdvertiser, isResourceOwner };

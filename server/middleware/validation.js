@@ -13,7 +13,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import { validationResult } from 'express-validator';
-import { validationErrorResponse } from '../utils/response';
+import { validationErrorResponse } from '../utils/response.js';
 
 /**
  * Middleware to validate request data using express-validator
@@ -75,3 +75,5 @@ export default {
   validate,
   sanitizeRequest,
 };
+
+export { validate, sanitizeRequest };

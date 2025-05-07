@@ -9,31 +9,55 @@
 // ===================================================
 import jwt from 'jsonwebtoken';
 
+/**
+ * Middleware to authenticate JWT token
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {function} next - Express next function
+ */
+const authenticateToken = (req, res, next)jwt from 'jsonwebtoken';
+
+/**
+ * Middleware to authenticate JWT token
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {function} next - Express next function
+ */
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = authHeader?.split(' ')[1];
 
-  if (!token) return res.status(401).json({ error: 'Access denied' });
+  if (!token) {
+    res.status(401).json({ error: 'Access denied' });
+    return;
+  }
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
     next();
   } catch (err) {
-    if (err.name === 'TokenExpiredError') {
-      return res.status(401).json({ error: 'Token expired', shouldRefresh: true });
+    if (err instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ error: 'Token expired', shouldRefresh: true });
+      return;
     }
-    return res.status(403).json({ error: 'Invalid token' });
+    res.status(403).json({ error: 'Invalid token' });
   }
 };
 
-const authorizeRole = roles => {
+/**
+ * Middleware to authorize user roles
+ * @param {string[]} roles - Array of allowed roles
+ * @returns {function} Middleware function
+ */
+const authorizeRole = (roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
-      return res.status(403).json({ error: 'Insufficient permissions' });
+      res.status(403).json({ error: 'Insufficient permissions' });
+      return;
     }
     next();
   };
 };
 
-export default { authenticateToken, authorizeRole };
+export { authenticateToken, authorizeRole };

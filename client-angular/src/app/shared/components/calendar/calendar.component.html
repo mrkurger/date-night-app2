@@ -1,0 +1,41 @@
+<div class="calendar">
+  <div class="calendar-header" *ngIf="showControls">
+    <button type="button" class="btn-nav" (click)="prevMonth()" aria-label="Previous month">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="current-month">{{ viewDate | date: 'MMMM yyyy' }}</div>
+    <button type="button" class="btn-nav" (click)="nextMonth()" aria-label="Next month">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="weekdays">
+      <div class="week-number-header" *ngIf="showWeekNumbers">W</div>
+      <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+    </div>
+
+    <div class="weeks">
+      <div class="week" *ngFor="let week of weeks">
+        <div class="week-number" *ngIf="showWeekNumbers">
+          {{ getWeekNumber(week) }}
+        </div>
+        <button
+          type="button"
+          class="day"
+          *ngFor="let date of week"
+          [class.other-month]="!date.isCurrentMonth"
+          [class.today]="date.isToday"
+          [class.selected]="date.isSelected"
+          [class.disabled]="date.isDisabled"
+          [attr.aria-label]="date.date | date: 'fullDate'"
+          [attr.aria-selected]="date.isSelected"
+          [attr.aria-disabled]="date.isDisabled"
+          (click)="selectDate(date)"
+        >
+          {{ date.date | date: 'd' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

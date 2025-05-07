@@ -278,4 +278,5 @@ reviewSchema.statics.findTopRated = async function (limit = 10, minReviews = 3) 
   ]);
 };
 
-module.exports = mongoose.model('Review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
+export default Review;

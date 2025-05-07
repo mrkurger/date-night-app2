@@ -72,8 +72,8 @@ const server = https.createServer((req, res) => {
   // Set the content type based on the file extension
   const contentType = mimeTypes[extname] || 'text/plain';
 
-  // Read the file
-  fs.readFile(filePath, (err, data) => {
+  // Check file size before reading
+  fs.stat(filePath, (err, stats) => {
     if (err) {
       // If the file doesn't exist, return 404
       if (err.code === 'ENOENT') {
@@ -88,9 +88,29 @@ const server = https.createServer((req, res) => {
       return;
     }
 
-    // If the file exists, return it with the correct content type
-    res.writeHead(200, { 'Content-Type': contentType });
-    res.end(data);
+    const fileSizeInMB = stats.size / (1024 * 1024);
+
+    if (fileSizeInMB > 10) {
+      res.writeHead(413, { 'Content-Type': 'text/html' });
+      res.end(
+        `<h1>413 Payload Too Large</h1><p>The requested file ${pathname} exceeds the maximum allowed size of 10 MB.</p>`
+      );
+      return;
+    }
+
+    // Read the file
+    fs.readFile(filePath, { encoding: null, flag: 'r' }, (err, data) => {
+      if (err) {
+        // For other errors, return 500
+        res.writeHead(500, { 'Content-Type': 'text/html' });
+        res.end(`<h1>500 Internal Server Error</h1><p>${err.message}</p>`);
+        return;
+      }
+
+      // If the file exists, return it with the correct content type
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(data);
+    });
   });
 });
 
@@ -196,9 +216,10 @@ function searchDocumentation(term) {
   console.log(`\nSearching for documentation files containing "${term}"...`);
 
   // Use grep to search for the term in HTML files
-  const command = `find ${__dirname} -name "*.html" -type f -exec grep -l "${term}" {} \\;`;
+  const findCommand = 'grep';
+  const findArgs = ['-l', term, path.join(__dirname, '*.html')];
 
-  exec(command, (error, stdout, stderr) => {
+  execFile(findCommand, findArgs, { cwd: __dirname }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error searching for documentation: ${error.message}`);
       return;
@@ -287,14 +308,15 @@ function listDocumentation() {
   // Use find to list all HTML files
   const command = `find ${__dirname} -name "*.html" -type f | sort`;
 
-  exec(command, (error, stdout, stderr) => {
+  console.log('\nListing all documentation files...');
+
+  // Use find to list all HTML files
+  const findCommand = 'find';
+  const findArgs = [__dirname, '-name', '*.html', '-type', 'f'];
+
+  execFile(findCommand, findArgs, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error listing documentation: ${error.message}`);
-      return;
-    }
-
-    if (stderr) {
-      console.error(`Error: ${stderr}`);
       return;
     }
 

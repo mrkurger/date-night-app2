@@ -73,7 +73,4 @@ const createPaginatedResponse = (data, totalItems, page, limit, baseUrl = '') =>
   };
 };
 
-export default {
-  getPaginationParams,
-  createPaginatedResponse,
-};
+export { getPaginationParams, createPaginatedResponse };

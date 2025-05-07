@@ -17,4 +17,5 @@ const chatMessageSchema = new mongoose.Schema({
   read: { type: Boolean, default: false },
 });
 
-module.exports = mongoose.model('ChatMessage', chatMessageSchema);
+const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
+export default ChatMessage;

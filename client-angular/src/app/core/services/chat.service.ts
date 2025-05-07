@@ -142,19 +142,15 @@ export class ChatService {
   private async initializeEncryption(): Promise<void> {
     try {
       // Initialize the encryption service
-      const initialized = await this.encryptionService.initialize();
+      await this.encryptionService.initialize();
 
-      if (initialized) {
-        // Check if any room keys need rotation
-        this.encryptionService.checkAndPerformKeyRotations();
+      // Check if any room keys need rotation
+      this.encryptionService.checkAndPerformKeyRotations();
 
-        // Set up socket listener for encryption events
-        this.setupEncryptionSocketListeners();
+      // Set up socket listener for encryption events
+      this.setupEncryptionSocketListeners();
 
-        console.log('Encryption initialized successfully');
-      } else {
-        console.warn('Encryption initialization failed or is disabled');
-      }
+      console.log('Encryption initialized successfully');
     } catch (error) {
       console.error('Error initializing encryption:', error);
     }
@@ -300,6 +296,16 @@ export class ChatService {
               );
 
               if (decryptedContent) {
+                // Decrypt attachments if present
+                if (message.attachments) {
+                  for (const attachment of message.attachments) {
+                    if (attachment.isEncrypted && attachment.encryptionData) {
+                      attachment.encryptionData.iv = attachment.encryptionData.iv || '';
+                      attachment.encryptionData.authTag = attachment.encryptionData.authTag || '';
+                    }
+                  }
+                }
+
                 // Create a new message object with decrypted content
                 return {
                   ...message,
@@ -438,7 +444,9 @@ export class ChatService {
         // Encrypt file content
         const encryptedFile = await this.encryptionService.encryptFile(roomId, file);
         if (encryptedFile) {
-          formData.append('attachments', encryptedFile.file);
+          // Convert ArrayBuffer to Blob for formData.append
+          const blob = new Blob([encryptedFile.data], { type: 'application/octet-stream' });
+          formData.append('attachments', blob);
           fileMetadata.push({
             originalName: file.name,
             originalType: file.type,
@@ -490,7 +498,7 @@ export class ChatService {
   /**
    * Download an attachment (handles decryption if needed)
    */
-  async downloadAttachment(attachment: Attachment): Promise<Blob> {
+  async downloadAttachment(attachment: Attachment, message: ChatMessage): Promise<Blob> {
     const response = await this.http
       .get(`${this.apiUrl}/attachments/${attachment.id}`, { responseType: 'blob' })
       .toPromise();
@@ -499,15 +507,19 @@ export class ChatService {
       throw new Error('Failed to download attachment');
     }
 
-    // If attachment is encrypted, decrypt it
-    if (attachment.isEncrypted && this.encryptionService.isEncryptionAvailable()) {
-      return await this.encryptionService.decryptFile(attachment.roomId, response, {
-        iv: attachment.encryptionData?.iv,
-        authTag: attachment.encryptionData?.authTag,
-      });
-    }
+    const roomId = message.roomId; // Derive roomId from the message context
 
-    return response;
+    // Ensure the `File` object is created with all required properties
+    const file = new File([response], attachment.name || 'unknown', {
+      type: attachment.type || 'application/octet-stream',
+      lastModified: Date.now(),
+    });
+
+    // Pass the correctly created `File` to decryptFile
+    return this.encryptionService.decryptFile(roomId, file, {
+      iv: attachment.encryptionData?.iv,
+      authTag: attachment.encryptionData?.authTag,
+    });
   }
 
   /**
@@ -574,8 +586,9 @@ export class ChatService {
       if (this.encryptionService.isEncryptionAvailable()) {
         const encryptedData = await this.encryptionService.encryptFile(roomId, file);
         if (encryptedData) {
-          // Create a new form entry for the encrypted file
-          formData.append('files', encryptedData.file);
+          // Convert ArrayBuffer to Blob for formData.append
+          const blob = new Blob([encryptedData.file], { type: 'application/octet-stream' });
+          formData.append('files', blob);
           formData.append(
             'fileMetadata',
             JSON.stringify({
@@ -650,18 +663,17 @@ export class ChatService {
         throw new Error('Missing encryption data for encrypted attachment');
       }
 
-      const encryptedData: EncryptedAttachmentData = {
-        file: response,
-        metadata: {
-          originalName: attachment.name,
-          originalType: attachment.type,
-          size: attachment.size,
-          iv: attachment.encryptionData.iv,
-          authTag: attachment.encryptionData.authTag,
-        },
-      };
+      // Ensure the `File` object is created with all required properties
+      const file = new File([response], attachment.name || 'unknown', {
+        type: attachment.type || 'application/octet-stream',
+        lastModified: Date.now(),
+      });
 
-      return this.encryptionService.decryptFile(roomId, encryptedData);
+      // Pass the correctly created `File` to `decryptFile`
+      return await this.encryptionService.decryptFile(roomId, file, {
+        iv: attachment.encryptionData?.iv,
+        authTag: attachment.encryptionData?.authTag,
+      });
     } catch (error) {
       console.error('Error downloading encrypted attachment:', error);
       return null;

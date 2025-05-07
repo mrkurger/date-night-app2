@@ -23,6 +23,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet.heat';
+import 'leaflet-search';
 import { GeocodingService } from '../../../core/services/geocoding.service';
 import { MapMonitoringService } from '../../../core/services/map-monitoring.service';
 import { catchError, of } from 'rxjs';
@@ -149,6 +152,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   private markerLayer: L.LayerGroup | null = null;
   private currentLocationMarker: L.Marker | null = null;
   private selectedLocationMarker: L.Marker | null = null;
+  private markerClusterGroup: L.MarkerClusterGroup | null = null;
+  private searchControl: L.Control.Search | null = null;
+  private heatLayer: L.HeatLayer | null = null;
 
   // Tracking state
   private isInitialized = false;
@@ -263,6 +269,38 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
       // Create a layer for markers
       this.markerLayer = L.layerGroup().addTo(this.map);
 
+      // Add marker clustering
+      this.markerClusterGroup = L.markerClusterGroup({
+        chunkedLoading: true,
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true,
+      });
+
+      // Add heatmap support if markers density is high
+      if (this.markers.length > 50) {
+        const points = this.markers.map((marker) => [marker.latitude, marker.longitude, 1]);
+        this.heatLayer = L.heatLayer(points as [number, number, number][], {
+          radius: 25,
+          blur: 15,
+          maxZoom: 10,
+        }).addTo(this.map);
+      }
+
+      // Add search control
+      this.searchControl = new L.Control.Search({
+        position: 'topright',
+        layer: this.markerClusterGroup,
+        initial: false,
+        zoom: 12,
+        marker: false,
+      });
+
+      this.map.addControl(this.searchControl);
+
+      // Add custom location controls
+      this.addCustomControls();
+
       // Add click handler if selectable
       if (this.selectable) {
         this.map.on('click', (e: L.LeafletMouseEvent) => {
@@ -307,6 +345,113 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
     } catch (error) {
       console.error('Error initializing map:', error);
     }
+  }
+
+  /**
+   * Add custom controls to the map
+   */
+  private addCustomControls(): void {
+    if (!this.map) return;
+
+    const customControl = L.control({ position: 'bottomright' });
+
+    customControl.onAdd = () => {
+      const container = L.DomUtil.create('div', 'custom-map-controls');
+      container.innerHTML = `
+        <button class="map-control-btn" title="Toggle heatmap">
+          <i class="fas fa-fire"></i>
+        </button>
+        <button class="map-control-btn" title="Toggle clusters">
+          <i class="fas fa-object-group"></i>
+        </button>
+      `;
+
+      // Add event listeners
+      const buttons = container.getElementsByTagName('button');
+      buttons[0].addEventListener('click', () => this.toggleHeatmap());
+      buttons[1].addEventListener('click', () => this.toggleClustering());
+
+      return container;
+    };
+
+    customControl.addTo(this.map);
+  }
+
+  /**
+   * Toggle heatmap visibility
+   */
+  private toggleHeatmap(): void {
+    if (!this.map || !this.heatLayer) return;
+
+    if (this.map.hasLayer(this.heatLayer)) {
+      this.map.removeLayer(this.heatLayer);
+    } else {
+      this.heatLayer.addTo(this.map);
+    }
+  }
+
+  /**
+   * Toggle marker clustering
+   */
+  private toggleClustering(): void {
+    if (!this.map || !this.markerClusterGroup || !this.markerLayer) return;
+
+    if (this.map.hasLayer(this.markerClusterGroup)) {
+      this.markerClusterGroup.clearLayers();
+      this.markerLayer.addTo(this.map);
+    } else {
+      this.markerLayer.remove();
+      this.markers.forEach((marker) => {
+        const leafletMarker = this.createMarker(marker);
+        this.markerClusterGroup?.addLayer(leafletMarker);
+      });
+      this.markerClusterGroup.addTo(this.map);
+    }
+  }
+
+  /**
+   * Create a Leaflet marker
+   * @param marker - MapMarker object
+   * @returns Leaflet Marker instance
+   */
+  private createMarker(marker: MapMarker): L.Marker {
+    const icon = this.createMarkerIcon(marker.color || 'blue', marker.icon);
+    const leafletMarker = L.marker([marker.latitude, marker.longitude], {
+      icon,
+      keyboard: true,
+      title: marker.title,
+    });
+
+    if (marker.title) {
+      leafletMarker.bindPopup(this.createPopupContent(marker));
+    }
+
+    leafletMarker.on('click', () => {
+      this.ngZone.run(() => {
+        this.markerClick.emit(marker);
+      });
+    });
+
+    return leafletMarker;
+  }
+
+  /**
+   * Create popup content for a marker
+   * @param marker - MapMarker object
+   * @returns HTML string for popup content
+   */
+  private createPopupContent(marker: MapMarker): string {
+    return `
+      <div class="marker-popup">
+        <h4>${marker.title}</h4>
+        ${marker.description ? `<p>${marker.description}</p>` : ''}
+        <div class="popup-actions">
+          <button class="btn btn-sm btn-primary" onclick="document.dispatchEvent(new CustomEvent('markerAction', {detail: '${marker.id}'}))">
+            Details
+          </button>
+        </div>
+      </div>
+    `;
   }
 
   /**
@@ -477,6 +622,34 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   }
 
   /**
+   * Zoom in on the map
+   */
+  zoomIn(): void {
+    if (this.map) {
+      const currentZoom = this.map.getZoom();
+      this.map.setZoom(currentZoom + 1);
+    }
+  }
+
+  /**
+   * Zoom out on the map
+   */
+  zoomOut(): void {
+    if (this.map) {
+      const currentZoom = this.map.getZoom();
+      this.map.setZoom(currentZoom - 1);
+    }
+  }
+
+  /**
+   * Show user's current location on the map
+   * Public method to be called from template
+   */
+  getUserLocation(): void {
+    this.showUserLocation();
+  }
+
+  /**
    * Show the user's current position on the map with enhanced feedback
    */
   private showUserLocation(): void {
@@ -527,10 +700,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
 
         // Track successful geolocation with accuracy info
         const geolocateTime = performance.now() - startTime;
-        this.mapMonitoringService.trackCurrentLocation(true, undefined, {
-          accuracy: position.coords.accuracy,
-          time: geolocateTime,
-        });
+        this.mapMonitoringService.trackCurrentLocation(true, undefined);
 
         // Track viewport change
         this.mapMonitoringService.trackViewportChange({ lat: latitude, lng: longitude }, 13);

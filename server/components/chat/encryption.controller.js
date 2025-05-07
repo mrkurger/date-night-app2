@@ -20,7 +20,7 @@
 // ===================================================
 import User from '../../models/user.model.js';
 import ChatRoom from '../../models/chat-room.model.js';
-import logger from '../../utils/logger.js';
+import { logger } from '../../utils/logger.js';
 import { validateObjectId } from '../../utils/validation.js';
 import { errorResponse, successResponse } from '../../utils/response.js';
 

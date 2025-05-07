@@ -159,4 +159,5 @@ class CryptoHelpers {
   }
 }
 
-module.exports = new CryptoHelpers();
+const cryptoHelpers = new CryptoHelpers();
+export { cryptoHelpers };

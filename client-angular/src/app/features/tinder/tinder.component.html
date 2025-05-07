@@ -49,9 +49,9 @@
         [age]="currentAd.age.toString()"
         [state]="cardState"
         [swipeable]="true"
-        (swipe)="onSwipe($event)"
-        (actionClick)="onCardAction($event)"
-        (mediaChange)="onMediaChange($event)"
+        (swipe)="onSwipe($any($event))"
+        (actionClick)="onCardAction($any($event))"
+        (mediaChange)="onMediaChange($any($event))"
       >
       </emerald-tinder-card>
     </div>

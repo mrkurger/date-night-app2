@@ -112,6 +112,15 @@ const sanitizeString = str => {
   return str.replace(/<[^>]*>/g, '');
 };
 
+/**
+ * Validates if a string is a valid MongoDB ObjectId
+ * @param {string} id - The id to validate
+ * @returns {boolean} - True if valid, false otherwise
+ */
+const validateObjectId = id => {
+  return id && /^[0-9a-fA-F]{24}$/.test(id);
+};
+
 export default {
   isValidEmail,
   isNotEmpty,
@@ -123,4 +132,19 @@ export default {
   isValidDate,
   isInRange,
   sanitizeString,
+  validateObjectId,
+};
+
+export {
+  isValidEmail,
+  isNotEmpty,
+  isValidNumber,
+  hasMinLength,
+  hasMaxLength,
+  isAlphanumeric,
+  isStrongPassword,
+  isValidDate,
+  isInRange,
+  sanitizeString,
+  validateObjectId,
 };

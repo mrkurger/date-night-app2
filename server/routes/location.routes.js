@@ -9,12 +9,12 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import { asyncHandler } from '../middleware/asyncHandler';
-import { authenticate, restrictTo } from '../middleware/auth';
-import locationController from '../controllers/location.controller';
+import asyncHandler from '../middleware/asyncHandler.js';
+import { protect as protect as authenticate, restrictTo } from '../middleware/auth.js';
+import locationController from '../controllers/location.controller.js';
 
 // Import the Norway locations data
-import norwayLocations from '../data/norway-locations';
+import norwayLocations from '../data/norway-locations.js';
 
 /**
  * @route   GET /api/v1/locations/counties
@@ -175,4 +175,4 @@ router.delete(
   asyncHandler(locationController.deleteLocation)
 );
 
-module.exports = router;
+export default router;

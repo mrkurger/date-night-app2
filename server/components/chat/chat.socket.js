@@ -9,7 +9,7 @@
 // ===================================================
 import { User } from '../users';
 
-module.exports = io => {
+export default io => {
   // Store user socket mappings
   const userSockets = {};
 
