@@ -17,7 +17,7 @@ import { AppError } from '../middleware/errorHandler.js';
  */
 class PaymentService {
   constructor(
-    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY),
+    stripeClient = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null,
     userModel = User,
     adModel = Ad
   ) {
@@ -520,4 +520,5 @@ class PaymentService {
 
 // Export both the class and a singleton instance
 export { PaymentService };
-export default new PaymentService();
+// Only create a default instance if STRIPE_SECRET_KEY is available
+export default process.env.STRIPE_SECRET_KEY ? new PaymentService() : null;

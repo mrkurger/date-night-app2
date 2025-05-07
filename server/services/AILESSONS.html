@@ -160,11 +160,37 @@ const paymentService = new PaymentService(mockStripe, mockUser, mockAd);
           <li>Set up test-specific environment variables in a setup file</li>
           <li>Use dependency injection to provide mock implementations</li>
           <li>Use a configuration service that can be easily mocked</li>
+          <li>Add conditional checks before using environment variables</li>
         </ol>
 
+        <p>For the PaymentService, we implemented a combination of options 2 and 4:</p>
+
+        <pre>
+// Before:
+stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+// After:
+stripeClient = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null
+        </pre>
+
         <p>
-          For the PaymentService, we chose option 2 by allowing the Stripe client to be injected.
+          This approach prevents the Stripe client from throwing an error when the API key is not
+          available, which is common in test environments. We also updated the default export to
+          only create an instance when the API key is available:
         </p>
+
+        <pre>
+// Before:
+export default new PaymentService();
+
+// After:
+export default process.env.STRIPE_SECRET_KEY ? new PaymentService() : null;
+        </pre>
+
+        <div class="tip">
+          <strong>Tip:</strong> When working with third-party APIs in tests, always check for
+          required configuration before initializing clients to prevent unexpected errors.
+        </div>
       </div>
 
       <div class="lesson">

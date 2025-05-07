@@ -74,6 +74,24 @@
 
       <div class="changelog-entry">
         <h3>
+          <span class="changelog-date">2023-07-10</span>
+          <span class="changelog-type fix">FIX</span>
+          Fixed Stripe initialization in tests
+        </h3>
+        <p>
+          Modified the PaymentService constructor to handle missing Stripe API keys in test
+          environments. This prevents the "Neither apiKey nor config.authenticator provided" error
+          when running tests.
+        </p>
+        <ul>
+          <li>Updated Stripe client initialization to check for API key presence</li>
+          <li>Modified default export to only create instance when API key is available</li>
+          <li>Ensured tests can run without environment variables set</li>
+        </ul>
+      </div>
+
+      <div class="changelog-entry">
+        <h3>
           <span class="changelog-date">2023-06-15</span>
           <span class="changelog-type fix">FIX</span>
           Fixed PaymentService test initialization
