@@ -55,7 +55,7 @@
     "bootstrap": "^5.3.2",
     "chart.js": "4.4.9",
     "date-fns": "4.1.0",
-    "emerald-ui": "2.14.3",
+    "emerald-ui": "3.4.2",
     "leaflet": "1.9.4",
     "leaflet-search": "4.0.0",
     "leaflet.heat": "0.2.0",
