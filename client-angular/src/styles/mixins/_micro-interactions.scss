@@ -121,7 +121,7 @@
       margin-left: -8px;
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      border-top-color: #fff;
+      border-top-color: ds.$color-neutral-100; // was #fff
       animation: spin 1s ease-in-out infinite;
     }
   }
@@ -129,8 +129,8 @@
   @media (prefers-reduced-motion: reduce) {
     &.loading::after {
       animation: none;
-      border-top-color: #fff;
-      border-right-color: #fff;
+      border-top-color: ds.$color-neutral-100; // was #fff
+      border-right-color: ds.$color-neutral-100; // was #fff
     }
   }
 }
@@ -140,9 +140,9 @@
 @mixin skeleton-loading {
   background: linear-gradient(
     90deg,
-    ds.$color-light-gray-2 25%,
-    ds.$color-light-gray-1 50%,
-    ds.$color-light-gray-2 75%
+    ds.$color-neutral-300 25%,
+    ds.$color-neutral-200 50%,
+    ds.$color-neutral-300 75%
   );
   background-size: 200% 100%;
   border-radius: ds.$border-radius-sm;
@@ -154,9 +154,9 @@
   @include dark-mode {
     background: linear-gradient(
       90deg,
-      ds.$color-dark-gray-1 25%,
-      ds.$color-dark-gray-2 50%,
-      ds.$color-dark-gray-1 75%
+      ds.$color-neutral-800 25%,
+      ds.$color-neutral-700 50%,
+      ds.$color-neutral-800 75%
     );
   }
 }

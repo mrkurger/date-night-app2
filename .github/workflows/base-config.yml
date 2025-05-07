@@ -13,12 +13,12 @@ on:
 env:
   REPORTS_DIR: downloaded-reports
   ARTIFACTS_DIR: .github/artifacts
-  REPORTS_SECURITY: ${{ env.REPORTS_DIR }}/security
-  REPORTS_TESTING: ${{ env.REPORTS_DIR }}/testing
-  REPORTS_DOCS: ${{ env.REPORTS_DIR }}/docs
-  REPORTS_ANGULAR: ${{ env.REPORTS_DIR }}/angular
-  REPORTS_SERVER: ${{ env.REPORTS_DIR }}/server
-  REPORTS_SNYK: ${{ env.REPORTS_DIR }}/snyk
+  REPORTS_SECURITY: downloaded-reports/security
+  REPORTS_TESTING: downloaded-reports/testing
+  REPORTS_DOCS: downloaded-reports/docs
+  REPORTS_ANGULAR: downloaded-reports/angular
+  REPORTS_SERVER: downloaded-reports/server
+  REPORTS_SNYK: downloaded-reports/snyk
   RETENTION_ARTIFACTS: 14
 
 jobs:
@@ -60,8 +60,35 @@ jobs:
             ${{ env.REPORTS_SNYK }}
 
       - name: Configure artifact retention
-        uses: actions/upload-artifact@v4
-        with:
-          retention-days: ${{ env.RETENTION_ARTIFACTS }}
-          path: ${{ env.REPORTS_DIR }}
-          if-no-files-found: ignore
+        run: |
+          echo "Uploading reports to artifacts"
+
+          if [ -d "${{ env.REPORTS_DIR }}" ]; then
+            echo "Reports directory exists, proceeding with upload"
+            
+            # Upload the reports directory as an artifact
+            tar -czvf reports.tar.gz "${{ env.REPORTS_DIR }}"
+            
+            echo "Reports directory compressed successfully"
+            
+            mv reports.tar.gz "${{ env.ARTIFACTS_DIR }}"
+            
+            echo "Reports directory moved to artifacts directory"
+            
+            echo "Uploading artifact"
+            
+            # Upload the reports artifact
+            curl -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name": "reports",
+                "path": "${{ env.ARTIFACTS_DIR }}/reports.tar.gz",
+                "retention_days": ${{ env.RETENTION_ARTIFACTS }}
+              }' \
+              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts"
+          else
+            echo "Reports directory does not exist, skipping upload"
+          fi
