@@ -1,15 +1,15 @@
 {
   "server/**/*.js": [
-    "cd server && eslint --fix",
-    "cd server && prettier --write"
+    "cd server && npx eslint --fix",
+    "cd server && npx prettier --write"
   ],
   "client-angular/src/**/*.ts": [
-    "cd client-angular && eslint --fix",
-    "cd client-angular && prettier --write"
+    "cd client-angular && npx eslint --fix",
+    "cd client-angular && npx prettier --write"
   ],
-  "client-angular/src/**/*.html": ["cd client-angular && prettier --write"],
+  "client-angular/src/**/*.html": ["cd client-angular && npx prettier --write"],
   "client-angular/src/**/*.{scss,css}": [
-    "cd client-angular && prettier --write"
+    "cd client-angular && npx prettier --write"
   ],
-  "*.json": ["prettier --write"]
+  "*.json": ["npx prettier --write"]
 }

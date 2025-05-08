@@ -87,6 +87,7 @@
     "jest-resolve": "29.7.0",
     "jest-runtime": "29.7.0",
     "lint-staged": "15.5.1",
+    "prettier": "3.5.3",
     "prisma": "6.7.0",
     "ts-morph": "25.0.1",
     "ts-node": "10.9.2",
@@ -102,6 +103,7 @@
     "cheerio": "1.0.0",
     "child_process": "^1.0.2",
     "dotenv": "^16.5.0",
+    "emerald-ui": "3.4.2",
     "framer-motion": "12.9.7",
     "fs-extra": "^11.3.0",
     "helmet": "^8.1.0",
@@ -114,7 +116,8 @@
     "semver": "^7.7.1",
     "swagger-jsdoc": "6.2.8",
     "swagger-ui-express": "5.0.1",
-    "uri-js": "4.4.1"
+    "uri-js": "4.4.1",
+    "@angular/compiler": "19.2.10"
   },
   "overrides": {
     "semver": "^7.7.1",
