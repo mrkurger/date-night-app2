@@ -83,6 +83,7 @@
     "jest-cli": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "jest-environment-node": "29.7.0",
+    "jest-extended": "4.0.2",
     "jest-haste-map": "29.7.0",
     "jest-resolve": "29.7.0",
     "jest-runtime": "29.7.0",
@@ -94,6 +95,7 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
+    "@angular/compiler": "19.2.10",
     "@chakra-ui/react": "3.17.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
@@ -116,8 +118,7 @@
     "semver": "^7.7.1",
     "swagger-jsdoc": "6.2.8",
     "swagger-ui-express": "5.0.1",
-    "uri-js": "4.4.1",
-    "@angular/compiler": "19.2.10"
+    "uri-js": "4.4.1"
   },
   "overrides": {
     "semver": "^7.7.1",

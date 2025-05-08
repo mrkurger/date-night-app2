@@ -15,10 +15,16 @@ import path from 'path';
 const dependencies = [
   'xml2js',
   'npm-check',
-  'eslint',
-  '@typescript-eslint/parser',
-  '@typescript-eslint/eslint-plugin',
+  'eslint@^9.0.0',
+  '@typescript-eslint/parser@^8.0.0',
+  '@typescript-eslint/eslint-plugin@^8.0.0',
 ];
+
+const overrides = {
+  eslint: '^9.0.0',
+  '@typescript-eslint/parser': '^8.0.0',
+  '@typescript-eslint/eslint-plugin': '^8.0.0',
+};
 
 function installDependencies() {
   console.log('Installing GitHub integration dependencies...');
@@ -36,7 +42,10 @@ function installDependencies() {
 
     // Check if dependencies are already installed
     const devDependencies = packageJson.devDependencies || {};
-    const missingDependencies = dependencies.filter(dep => !devDependencies[dep]);
+    const missingDependencies = dependencies.filter(dep => {
+      const [name, version] = dep.split('@');
+      return !devDependencies[name] || !devDependencies[name].startsWith(version);
+    });
 
     if (missingDependencies.length === 0) {
       console.log('All required dependencies are already installed.');
