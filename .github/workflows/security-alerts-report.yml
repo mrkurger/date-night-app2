@@ -20,14 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: |
-          npm install --save-dev npm-audit-html npm-check
+      - name: Install security tools
+        run: npm install --save-dev npm-audit-html npm-check
 
       - name: Check Client Dependencies
         id: check-client

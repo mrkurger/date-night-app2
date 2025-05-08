@@ -107,7 +107,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/runner/work/date-night-app2/date-night-app2/generated/prisma",
+      "value": "/Users/oivindlund/date-night-app/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -116,16 +116,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/runner/work/date-night-app2/date-night-app2/prisma/schema.prisma",
+    "sourceFilePath": "/Users/oivindlund/date-night-app/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.7.0",
@@ -135,7 +136,6 @@ const config = {
   ],
   "activeProvider": "postgresql",
   "postinstall": true,
-  "ciName": "GitHub Actions",
   "inlineDatasources": {
     "db": {
       "url": {

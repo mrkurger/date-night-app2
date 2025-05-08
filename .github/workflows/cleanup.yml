@@ -8,12 +8,9 @@ on:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    env:
+      REPORTS_BASE_DIR: downloaded-reports
     steps:
-      - uses: actions/delete-artifact@v4
-        with:
-          # Delete all artifacts older than retention period
-          age: >7 days
-          
       - name: Cleanup old reports
         run: |
           find ${{ env.REPORTS_BASE_DIR }} -type f -mtime +30 -delete

@@ -1,0 +1,37 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+.angular
+coverage
+
+# Version control
+.git
+.github
+
+# Logs and uploads
+logs
+uploads
+
+# Documentation (handled separately)
+*.md
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment and config
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.idea
+.vscode
+*.swp
+*.swo

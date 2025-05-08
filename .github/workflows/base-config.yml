@@ -6,9 +6,10 @@ on:
   workflow_call:
     inputs:
       node-version:
+        description: 'Node.js version'
         required: false
         type: string
-        default: '18'
+        default: '22.x'
 
 env:
   REPORTS_DIR: downloaded-reports

@@ -26,17 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          # Removed caching configuration since package-lock.json doesn't exist
 
-      - name: Install dependencies
-        working-directory: ./client-angular
+      - name: Ensure specific dependencies are installed
         run: |
-          npm install
-          # Ensure specific dependencies are installed
+          cd ./client-angular
           npm list angularx-qrcode || npm install angularx-qrcode@19.0.0
           npm list @swimlane/ngx-charts || npm install @swimlane/ngx-charts@22.0.0-alpha.1
           npm list chart.js || npm install chart.js@4.4.9
@@ -73,15 +70,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          # Removed caching configuration since package-lock.json doesn't exist
-
-      - name: Install dependencies
-        working-directory: ./client-angular
-        run: npm install
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -121,15 +113,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          # Removed caching configuration since package-lock.json doesn't exist
-
-      - name: Install dependencies
-        working-directory: ./client-angular
-        run: npm install
 
       - name: Run ESLint
         working-directory: ./client-angular

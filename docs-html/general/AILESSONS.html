@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Lessons - Date Night App Documentation</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>AI Lessons</h1>
+
+      <h2>Code Formatting and Linting</h2>
+
+      <h3>Standardizing Prettier Configuration in Monorepos</h3>
+      <p>
+        When working with monorepos or multi-package repositories, it's important to standardize
+        code formatting across all packages to ensure consistency. Here are the key lessons learned:
+      </p>
+
+      <h4>Lessons Learned</h4>
+      <ul>
+        <li>
+          <strong>Shared Configuration Files</strong>: Place shared configuration files like
+          <code>.prettierrc</code> and <code>.prettierignore</code> at the root level to ensure
+          consistent formatting across all packages.
+        </li>
+        <li>
+          <strong>Local Dependency Installation</strong>: Install formatting tools like Prettier as
+          dev dependencies in the root package.json to ensure they're available to all packages and
+          Git hooks.
+        </li>
+        <li>
+          <strong>Use npx in Scripts</strong>: Always use <code>npx</code> to run locally installed
+          tools in scripts and Git hooks to avoid PATH discrepancies between different environments.
+        </li>
+        <li>
+          <strong>Comprehensive Ignore Files</strong>: Create comprehensive ignore files that
+          exclude build artifacts, dependencies, and other non-source files to improve performance
+          and avoid unnecessary formatting.
+        </li>
+      </ul>
+
+      <h4>Common Issues and Solutions</h4>
+      <ul>
+        <li>
+          <strong>Pre-commit Hook Failures</strong>: Pre-commit hooks may fail to find Prettier if
+          it's not installed locally or if the PATH is different in the Git hook environment.
+          Solution: Install Prettier locally and use npx to run it.
+        </li>
+        <li>
+          <strong>Inconsistent Formatting</strong>: Different packages may use different formatting
+          rules if they have their own configuration files. Solution: Use a shared configuration
+          file at the root level.
+        </li>
+        <li>
+          <strong>Performance Issues</strong>: Formatting large codebases can be slow. Solution: Use
+          a comprehensive ignore file to exclude non-source files and consider using tools like
+          lint-staged to only format changed files.
+        </li>
+        <li>
+          <strong>Dependency Conflicts</strong>: Different packages may depend on different versions
+          of formatting tools. Solution: Use the <code>--legacy-peer-deps</code> flag when
+          installing dependencies to bypass conflicts.
+        </li>
+      </ul>
+
+      <h4>Best Practices</h4>
+      <ul>
+        <li>
+          <strong>Document Configuration</strong>: Document your formatting configuration and any
+          special considerations in a dedicated documentation file.
+        </li>
+        <li>
+          <strong>Automate Formatting</strong>: Use Git hooks and CI/CD pipelines to automatically
+          format code and enforce formatting rules.
+        </li>
+        <li>
+          <strong>Consistent Editor Integration</strong>: Provide editor configuration files (e.g.,
+          <code>.vscode/settings.json</code>) to ensure consistent formatting in different editors.
+        </li>
+        <li>
+          <strong>Regular Updates</strong>: Regularly update formatting tools and configurations to
+          benefit from new features and bug fixes.
+        </li>
+      </ul>
+
+      <h3>Git Hooks and Automation</h3>
+      <p>
+        Git hooks are a powerful way to automate tasks like code formatting and linting. Here are
+        some lessons learned about using Git hooks effectively:
+      </p>
+
+      <h4>Lessons Learned</h4>
+      <ul>
+        <li>
+          <strong>Use Husky for Git Hooks</strong>: Husky provides a simple way to manage Git hooks
+          in a Node.js project.
+        </li>
+        <li>
+          <strong>Use lint-staged for Performance</strong>: lint-staged allows you to run linters
+          and formatters only on staged files, which improves performance.
+        </li>
+        <li>
+          <strong>Make Hooks Executable</strong>: Ensure Git hook scripts are executable by running
+          <code>chmod +x .husky/*</code>.
+        </li>
+        <li>
+          <strong>Handle CI Environments</strong>: Disable Git hooks in CI environments to avoid
+          issues with permissions and performance.
+        </li>
+      </ul>
+
+      <h4>Common Issues and Solutions</h4>
+      <ul>
+        <li>
+          <strong>Hooks Not Running</strong>: Git hooks may not run if they're not executable or if
+          Husky is not properly installed. Solution: Run <code>npm run prepare</code> to reinstall
+          Husky and ensure hooks are executable.
+        </li>
+        <li>
+          <strong>Slow Hooks</strong>: Git hooks that run on all files can be slow. Solution: Use
+          lint-staged to only run on staged files.
+        </li>
+        <li>
+          <strong>Hooks Failing in CI</strong>: Git hooks may fail in CI environments due to
+          different permissions or environments. Solution: Disable hooks in CI environments using
+          environment variables.
+        </li>
+      </ul>
+
+      <h4>Best Practices</h4>
+      <ul>
+        <li>
+          <strong>Keep Hooks Fast</strong>: Git hooks should be fast to avoid disrupting the
+          development workflow.
+        </li>
+        <li>
+          <strong>Provide Skip Options</strong>: Allow developers to skip hooks in certain
+          situations using flags like <code>--no-verify</code>.
+        </li>
+        <li>
+          <strong>Document Hook Behavior</strong>: Document what each hook does and how to
+          troubleshoot issues.
+        </li>
+        <li>
+          <strong>Use Consistent Tooling</strong>: Use the same tools and configurations in hooks,
+          scripts, and CI/CD pipelines.
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

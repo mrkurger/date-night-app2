@@ -27,6 +27,11 @@ jobs:
           retention-days: 14
 
   setup:
-    uses: ./.github/workflows/base-config.yml@main
-    with:
-      node-version: '18'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
+        with:
+          node-version: '22'

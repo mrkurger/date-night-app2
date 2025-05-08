@@ -656,7 +656,7 @@ The project uses a decentralized HTML-based documentation system that places doc
 - [Architecture](docs/ARCHITECTURE.MD) - System architecture documentation
 - [Deprecated Code](/docs/DEPRECATED.MD) - List of deprecated code that should be avoided
 - [Code Duplication](/docs/DUPLICATES.MD) - List of code duplication that should be refactored
-- [Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD) - Summary of documentation improvements
+- [Documentation Improvements](/docs/DOCUMENTATION_IMPROVEMENTS.MD) - Summary of documentation improvements
 - [Documentation Index](/docs/DOCUMENTATION_INDEX.MD) - Comprehensive index of all documentation
 - [Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD) - Guidelines for writing documentation
 

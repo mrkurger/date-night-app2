@@ -25,13 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: server/package-lock.json
-
-      - run: npm ci
+          node-version: '22.x'
         working-directory: server
 
       - name: Run tests
@@ -54,15 +51,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          # Removed caching configuration since package-lock.json doesn't exist
-
-      - name: Install dependencies
         working-directory: ./server
-        run: npm install
 
       - name: Run ESLint
         working-directory: ./server

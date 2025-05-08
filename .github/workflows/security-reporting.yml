@@ -25,18 +25,13 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: |
-          npm install
-          cd server && npm install
-          cd ../client-angular && npm install
-          # Install dependencies for reporting
-          npm install --save-dev npm-audit-html npm-check snyk
+      - name: Install security tools
+        run: npm install --save-dev npm-audit-html npm-check snyk
 
       # NPM Audit Reports
       - name: Check Client Dependencies
