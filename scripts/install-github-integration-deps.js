@@ -4,6 +4,7 @@
  * This script installs the necessary dependencies for GitHub integration features:
  * - xml2js: For parsing XML test results
  * - npm-check: For generating dependency status reports
+ * - eslint, @typescript-eslint/parser, @typescript-eslint/eslint-plugin: For linting TypeScript code
  */
 
 import { execSync } from 'child_process';
@@ -11,7 +12,13 @@ import fs from 'fs/promises';
 import path from 'path';
 
 // Define dependencies to install
-const dependencies = ['xml2js', 'npm-check'];
+const dependencies = [
+  'xml2js',
+  'npm-check',
+  'eslint',
+  '@typescript-eslint/parser',
+  '@typescript-eslint/eslint-plugin',
+];
 
 function installDependencies() {
   console.log('Installing GitHub integration dependencies...');

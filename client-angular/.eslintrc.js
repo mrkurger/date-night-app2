@@ -39,4 +39,9 @@ module.exports = {
       rules: {},
     },
   ],
+  overrides: {
+    eslint: '^9.0.0',
+    '@typescript-eslint/parser': '^8.0.0',
+    '@typescript-eslint/eslint-plugin': '^8.0.0',
+  },
 };
