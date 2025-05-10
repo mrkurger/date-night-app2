@@ -45,9 +45,8 @@ export class TelemetrySocketService implements OnDestroy {
     return this.connectionStatus.value;
   }
 
-  constructor(private socket: Socket) {
-    // Initialize socket connection
-    this.initializeSocketConnection();
+  constructor() {
+    // Initialize socket connection if needed
   }
 
   /**

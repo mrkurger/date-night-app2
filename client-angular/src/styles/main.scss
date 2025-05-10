@@ -9,11 +9,11 @@
 @use 'themes/dark';
 // Use @import for CSS files only (not SCSS)
 @use 'theme.css' as theme;
-// Import Leaflet CSS
-@import '~leaflet/dist/leaflet.css';
-
 // Import global micro-interactions
 @use 'global-micro-interactions';
+
+// Import Leaflet CSS
+@import '../../../node_modules/leaflet/dist/leaflet.css';
 
 // Global styles
 html {

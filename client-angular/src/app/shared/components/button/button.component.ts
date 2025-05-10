@@ -43,7 +43,7 @@ export class ButtonComponent {
    * - 'large': Larger size
    * @default 'medium'
    */
-  @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() size: 'small' | 'medium' | 'large' = 'medium'; // Emerald default is 'xs', 'medium' is our own concept
 
   /**
    * Whether the button is disabled.
@@ -113,15 +113,47 @@ export class ButtonComponent {
    * @returns An object with CSS class names as keys and boolean values
    */
   get buttonClasses(): Record<string, boolean> {
-    return {
-      button: true,
-      [`button--${this.variant}`]: true,
-      [`button--${this.size}`]: true,
-      'button--disabled': this.disabled,
+    let shape: 'classic' | 'outline' | 'flat' = 'classic';
+    let color: 'default' | 'brand' | 'danger' | 'info' | 'success' | 'warning' = 'default';
+
+    // Map our variant to Emerald's shape and color
+    if (this.variant === 'primary') {
+      shape = 'classic';
+      color = 'brand'; // Assuming 'brand' is the primary filled button color
+    } else if (this.variant === 'secondary') {
+      shape = 'outline';
+      color = 'brand'; // Or 'default' if outline should use default text color
+    } else if (this.variant === 'tertiary') {
+      shape = 'flat';
+      color = 'brand'; // Or 'default'
+    } else if (this.variant === 'danger') {
+      shape = 'classic';
+      color = 'danger';
+    }
+
+    // Map our size to Emerald's size concepts (approximate)
+    // Emerald: 'xs' (default), 'sm', 'lg'. Our: 'small', 'medium', 'large'.
+    let sizeClassKey = '';
+    if (this.size === 'small') {
+      sizeClassKey = 'button--size-sm'; // Corresponds to Emerald 'sm'
+    } else if (this.size === 'large') {
+      sizeClassKey = 'button--size-lg'; // Corresponds to Emerald 'lg'
+    } else {
+      sizeClassKey = 'button--size-md'; // Our medium
+    }
+
+    const classes: Record<string, boolean> = {
+      'emerald-button': true, // Base class we expect from Emerald or will style.
+      [`button--shape-${shape}`]: true,
+      [`button--color-${color}`]: true,
       'button--loading': this.loading,
       'button--full-width': this.fullWidth,
-      'button--with-icon-left': !!this.iconLeft,
-      'button--with-icon-right': !!this.iconRight,
     };
+
+    if (sizeClassKey) {
+      classes[sizeClassKey] = true;
+    }
+
+    return classes;
   }
 }

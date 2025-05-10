@@ -20,6 +20,7 @@ import User from '../models/user.model.js';
 // Keeping Transaction import for future use
 import { Transaction } from '../models/transaction.model.js'; // eslint-disable-line no-unused-vars
 import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 import axios from 'axios';
 import crypto from 'crypto';
 
@@ -83,7 +84,7 @@ class WalletService {
 
       return wallet;
     } catch (error) {
-      console.error('Error getting or creating wallet:', error);
+      logger.error('Error getting or creating wallet:', error);
       throw error;
     }
   }
@@ -104,7 +105,7 @@ class WalletService {
 
       return wallet.balances;
     } catch (error) {
-      console.error('Error getting wallet balance:', error);
+      logger.error('Error getting wallet balance:', error);
       throw error;
     }
   }
@@ -227,7 +228,9 @@ class WalletService {
         },
       };
     } catch (error) {
-      console.error('Error getting wallet transactions:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.error('Error getting wallet transactions:', error);
+      }
       throw error;
     }
   }
@@ -249,7 +252,9 @@ class WalletService {
 
       return transaction || null;
     } catch (error) {
-      console.error('Error getting wallet transaction:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.error('Error getting wallet transaction:', error);
+      }
       throw error;
     }
   }
@@ -269,7 +274,9 @@ class WalletService {
 
       return result;
     } catch (error) {
-      console.error('Error adding payment method to wallet:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.error('Error adding payment method to wallet:', error);
+      }
       throw error;
     }
   }
@@ -296,7 +303,9 @@ class WalletService {
 
       return true;
     } catch (error) {
-      console.error('Error removing payment method from wallet:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.error('Error removing payment method from wallet:', error);
+      }
       throw error;
     }
   }
@@ -316,7 +325,9 @@ class WalletService {
 
       return paymentMethod;
     } catch (error) {
-      console.error('Error getting default payment method:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.error('Error getting default payment method:', error);
+      }
       throw error;
     }
   }
@@ -343,7 +354,9 @@ class WalletService {
 
       return paymentMethod;
     } catch (error) {
-      console.error('Error setting default payment method:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        console.error('Error setting default payment method:', error);
+      }
       throw error;
     }
   }
@@ -358,7 +371,9 @@ class WalletService {
       const wallet = await this.getOrCreateWallet(userId);
       return wallet.paymentMethods;
     } catch (error) {
-      console.error('Error getting wallet payment methods:', error);
+      if (process.env.NODE_ENV !== 'test') {
+        console.error('Error getting wallet payment methods:', error);
+      }
       throw error;
     }
   }

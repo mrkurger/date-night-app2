@@ -120,7 +120,7 @@ export class TravelItineraryComponent implements OnInit {
     private notificationService: NotificationService,
     private locationService: LocationService,
     private geocodingService: GeocodingService,
-    private mapService: MapService,
+    public mapService: MapService,
     private snackBar: MatSnackBar,
   ) {
     this.adId = this.route.snapshot.paramMap.get('id') || '';

@@ -106,7 +106,7 @@
     "cheerio": "1.0.0",
     "child_process": "^1.0.2",
     "dotenv": "^16.5.0",
-    "emerald-ui": "3.4.2",
+    "emerald-ui": "2.14.3",
     "framer-motion": "12.9.7",
     "fs-extra": "^11.3.0",
     "helmet": "^8.1.0",

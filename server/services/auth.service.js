@@ -174,7 +174,9 @@ class AuthService {
         throw error; // Re-throw JWT errors or 'User not found'
       }
       // Throw a generic error for other unexpected issues
-      console.error('Unexpected error during access token validation:', error); // Log unexpected errors
+      if (process.env.NODE_ENV !== 'test') {
+        console.error('Unexpected error during access token validation:', error);
+      }
       throw new Error('Invalid access token');
     }
   }

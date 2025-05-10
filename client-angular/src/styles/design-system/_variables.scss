@@ -8,6 +8,7 @@
 $color-primary: dt.$color-primary;
 $color-primary-light: #ff6b99;
 $color-primary-dark: #cc295a;
+$color-white: dt.$color-white;
 
 $color-secondary: dt.$color-secondary;
 $color-secondary-light: #9e97ff;
@@ -23,6 +24,14 @@ $color-neutral-600: #6e7a94;
 $color-neutral-700: #4a5568;
 $color-neutral-800: #2d3748;
 $color-neutral-900: #1a202c;
+
+$color-light-gray-1: dt.$color-light-gray-1;
+$color-light-gray-2: dt.$color-light-gray-2;
+$color-medium-gray-1: dt.$color-medium-gray-1;
+$color-medium-gray-2: dt.$color-medium-gray-2;
+$color-dark-gray-1: dt.$color-dark-gray-1;
+$color-dark-gray-2: dt.$color-dark-gray-2;
+$color-dark-gray-3: dt.$color-dark-gray-3;
 
 // Semantic Colors
 $color-success: dt.$success;
@@ -183,3 +192,6 @@ $card-height-lg: 520px;
 // Gradients
 $gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
 $gradient-dark: linear-gradient(135deg, $color-neutral-900 0%, $color-neutral-700 100%);
+
+@forward 'sass:color';
+@forward '../../app/core/design/design-tokens' as dt-*;

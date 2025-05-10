@@ -11,6 +11,7 @@ import Stripe from 'stripe';
 import User from '../models/user.model.js';
 import Ad from '../models/ad.model.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * Payment Service for handling subscriptions and one-time payments
@@ -44,7 +45,7 @@ class PaymentService {
 
       return paymentIntent;
     } catch (error) {
-      console.error('Error creating payment intent:', error);
+      logger.error('Error creating payment intent:', error);
       throw new AppError('Payment processing failed', 500);
     }
   }
@@ -155,7 +156,7 @@ class PaymentService {
         currentPeriodEnd,
       };
     } catch (error) {
-      console.error('Error creating subscription:', error);
+      logger.error('Error creating subscription:', error);
       throw new AppError(error.message || 'Subscription creation failed', 500);
     }
   }
@@ -197,7 +198,7 @@ class PaymentService {
         subscriptionId: subscription.id,
       };
     } catch (error) {
-      console.error('Error canceling subscription:', error);
+      logger.error('Error canceling subscription:', error);
       throw new AppError(error.message || 'Subscription cancellation failed', 500);
     }
   }
@@ -259,7 +260,7 @@ class PaymentService {
         paymentIntentId: paymentIntent.id,
       };
     } catch (error) {
-      console.error('Error boosting ad:', error);
+      logger.error('Error boosting ad:', error);
       throw new AppError(error.message || 'Ad boost payment failed', 500);
     }
   }
@@ -314,7 +315,7 @@ class PaymentService {
         paymentIntentId: paymentIntent.id,
       };
     } catch (error) {
-      console.error('Error featuring ad:', error);
+      logger.error('Error featuring ad:', error);
       throw new AppError(error.message || 'Ad feature payment failed', 500);
     }
   }
@@ -345,7 +346,7 @@ class PaymentService {
           return { received: true };
       }
     } catch (error) {
-      console.error('Error handling webhook event:', error);
+      logger.error('Error handling webhook event:', error);
       throw new AppError('Webhook processing failed', 500);
     }
   }
@@ -512,7 +513,7 @@ class PaymentService {
 
       return prices.data;
     } catch (error) {
-      console.error('Error fetching subscription prices:', error);
+      logger.error('Error fetching subscription prices:', error);
       throw new AppError('Failed to fetch prices', 500);
     }
   }

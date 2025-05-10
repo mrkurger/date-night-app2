@@ -24,13 +24,13 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 // Animations
 @keyframes pulse-shadow {
   0% {
-    box-shadow: 0 0 0 0 rgba($warning-500, 0.4);
+    box-shadow: 0 0 0 0 rgba(ds.$warning-500, 0.4);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba($warning-500, 0);
+    box-shadow: 0 0 0 10px rgba(ds.$warning-500, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba($warning-500, 0);
+    box-shadow: 0 0 0 0 rgba(ds.$warning-500, 0);
   }
 }
 

@@ -326,17 +326,17 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     // Send message with attachments
-    this.chatService.sendMessageWithAttachments(this.roomId, this.newMessage, files).subscribe(
-      (message) => {
+    this.chatService
+      .sendMessageWithAttachments(this.roomId, this.newMessage, files)
+      .then((message) => {
         // Message will be added via socket listener
         this.scrollToBottom = true;
         this.newMessage = '';
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.error('Error sending message with attachments:', error);
         this.notificationService.error('Failed to send attachments');
-      },
-    );
+      });
 
     // Reset the input
     input.value = '';

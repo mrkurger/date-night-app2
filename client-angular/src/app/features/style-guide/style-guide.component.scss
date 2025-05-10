@@ -1,6 +1,6 @@
-@use '../../../styles/design-system/index.scss' as tokens;
-@use '../../../styles/mixins.scss' as mixins;
-@use '../../../styles/design-system/index.scss' as ds;
+@use 'src/styles/design-system/index.scss' as ds;
+@use '../../../styles/mixins' as mixins;
+@use 'src/styles/mixins/_dark-mode.scss' as darkmode;
 
 .style-guide {
   &__header {
@@ -9,7 +9,7 @@
     padding: ds.$spacing-12 0;
     margin-bottom: ds.$spacing-12;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-primary-dark;
     }
   }
@@ -39,7 +39,7 @@
       background-color: rgba(ds.$color-white, 0.9);
     }
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
       color: ds.$color-light-gray-1;
 
@@ -54,7 +54,7 @@
     padding-bottom: ds.$spacing-12;
     border-bottom: 1px solid ds.$color-light-gray-2;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       border-bottom-color: ds.$color-dark-gray-1;
     }
   }
@@ -67,14 +67,14 @@
     &:after {
       content: '';
       position: absolute;
-      bottom: -ds.$spacing-3;
+      bottom: ds.$spacing-3;
       left: 0;
       width: 60px;
       height: 4px;
       background-color: ds.$color-primary;
       border-radius: ds.$border-radius-full;
 
-      @include mixins.dark-mode {
+      @include darkmode.dark-mode {
         background-color: ds.$color-primary-light;
       }
     }
@@ -96,7 +96,7 @@
     margin-bottom: ds.$spacing-6;
     box-shadow: ds.$shadow-sm;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-2;
       box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
     }
@@ -265,7 +265,7 @@
     border-radius: ds.$border-radius-md;
     font-weight: ds.$font-weight-medium;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
     }
 
@@ -299,7 +299,7 @@
     margin-bottom: ds.$spacing-4;
     text-align: center;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-primary-dark;
       color: ds.$color-white;
     }
@@ -313,7 +313,7 @@
     background-color: ds.$color-light-gray-2;
     border-radius: ds.$border-radius-md;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
     }
 
@@ -321,25 +321,11 @@
       @include mixins.fade-in;
     }
 
-    &--slide-in-top {
-      @include mixins.slide-in-top;
-    }
-
-    &--slide-in-bottom {
-      @include mixins.slide-in-bottom;
-    }
-
-    &--slide-in-left {
-      @include mixins.slide-in-left;
-    }
-
-    &--slide-in-right {
-      @include mixins.slide-in-right;
-    }
-
-    &--scale-in {
-      @include mixins.scale-in;
-    }
+    // @include mixins.slide-in-top; // TODO: Mixin not implemented
+    // @include mixins.slide-in-bottom; // TODO: Mixin not implemented
+    // @include mixins.slide-in-left; // TODO: Mixin not implemented
+    // @include mixins.slide-in-right; // TODO: Mixin not implemented
+    // @include mixins.scale-in; // TODO: Mixin not implemented
   }
 
   // Micro-interactions showcase
@@ -350,7 +336,7 @@
     background-color: ds.$color-light-gray-2;
     border-radius: ds.$border-radius-md;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
     }
 
@@ -362,13 +348,9 @@
       @include mixins.hover-lift;
     }
 
-    &--hover-color {
-      @include mixins.hover-color-shift(color, ds.$color-dark-gray-2, ds.$color-primary);
-    }
+    // @include mixins.hover-color-shift(color, ds.$color-dark-gray-2, ds.$color-primary); // TODO: Mixin not implemented
 
-    &--click-ripple {
-      @include mixins.click-ripple;
-    }
+    // @include mixins.click-ripple; // TODO: Mixin not implemented
   }
 
   // Accessibility showcase
@@ -379,7 +361,7 @@
     border: 1px solid ds.$color-medium-gray-1;
     border-radius: ds.$border-radius-md;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
       border-color: ds.$color-dark-gray-2;
     }
@@ -402,7 +384,7 @@
     font-size: ds.$font-size-xl;
     cursor: pointer;
 
-    @include mixins.dark-mode {
+    @include darkmode.dark-mode {
       background-color: ds.$color-dark-gray-1;
       border-color: ds.$color-dark-gray-2;
     }

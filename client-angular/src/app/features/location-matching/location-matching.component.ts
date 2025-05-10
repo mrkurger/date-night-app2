@@ -35,6 +35,7 @@ import {
   of,
   distinctUntilChanged,
   take,
+  map,
 } from 'rxjs';
 import { NorwayCity, NorwayCounty } from '../../core/constants/norway-locations';
 import { ClusterModule } from '../../shared/modules/cluster/cluster.module';
@@ -498,25 +499,37 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     categories?: string[],
   ): Observable<LocationMatchResult[]> {
     this.loading = true;
-    return (
-      categories
-        ? this.adService.searchByLocation(longitude, latitude, radius, categories)
-        : this.locationService.searchNearbyLocations(
-            longitude,
-            latitude,
-            radius,
-            this.selectedDateRange,
-          )
-    ).pipe(
-      catchError((error) => {
-        this.notificationService.error('Error searching for locations');
-        console.error('Location search error:', error);
-        return of([]);
-      }),
-      finalize(() => {
-        this.loading = false;
-      }),
-    );
+    return categories
+      ? this.adService.searchByLocation(longitude, latitude, radius, categories)
+      : this.locationService.findNearestCity(longitude, latitude).pipe(
+          map((result) =>
+            result
+              ? [
+                  {
+                    ...result,
+                    _id: '',
+                    title: '',
+                    description: '',
+                    location: { type: '', coordinates: [longitude, latitude] },
+                    imageUrl: '',
+                    rating: 0,
+                    availableDates: [],
+                    city: result.city,
+                    county: result.county,
+                    distance: result.distance,
+                  },
+                ]
+              : [],
+          ),
+          catchError((error) => {
+            this.notificationService.error('Error searching for locations');
+            console.error('Location search error:', error);
+            return of([]);
+          }),
+          finalize(() => {
+            this.loading = false;
+          }),
+        );
   }
 
   clearSearch(): void {

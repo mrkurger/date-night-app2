@@ -65,7 +65,7 @@ export class ToggleComponent implements ControlValueAccessor {
 
     this.value = !this.value;
     this.onChange(this.value);
-    this.onTouched();
+    this.onTouched(this.value);
     this.change.emit(this.value);
   }
 

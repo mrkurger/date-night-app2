@@ -374,9 +374,8 @@ export class DepositDialogComponent implements OnInit {
   }
 
   private loadPaymentMethods(): void {
-    if (!this.paymentMethods?.length) {
-      // Load available payment methods if none are loaded
-      this.loadAvailablePaymentMethods();
+    if (!this.cardPaymentMethods?.length) {
+      this.loadPaymentMethods();
     }
   }
 

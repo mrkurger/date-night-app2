@@ -156,6 +156,21 @@
                 </a>
               </li>
               <li>
+                <a class="dropdown-item" routerLink="/design-system">
+                  <i class="fas fa-palette" aria-hidden="true"></i> Design System
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/accessibility">
+                  <i class="fas fa-universal-access" aria-hidden="true"></i> Accessibility Demo
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/micro-interactions">
+                  <i class="fas fa-magic" aria-hidden="true"></i> Micro-interactions
+                </a>
+              </li>
+              <li>
                 <a class="dropdown-item" routerLink="/favorites">
                   <i class="fas fa-heart" aria-hidden="true"></i> My Favorites
                 </a>
@@ -163,6 +178,31 @@
               <li *ngIf="isAdvertiser">
                 <a class="dropdown-item" routerLink="/touring">
                   <i class="fas fa-map-marked-alt" aria-hidden="true"></i> Travel Plans
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/ai-dating-profile-generator">
+                  <i class="fas fa-robot" aria-hidden="true"></i> AI Profile Generator
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/video-chat">
+                  <i class="fas fa-video" aria-hidden="true"></i> Video Chat
+                </a>
+              </li>
+              <li *ngIf="isClient">
+                <a class="dropdown-item" routerLink="/client-dashboard">
+                  <i class="fas fa-tachometer-alt" aria-hidden="true"></i> Client Dashboard
+                </a>
+              </li>
+              <li *ngIf="isAdvertiser">
+                <a class="dropdown-item" routerLink="/escort-dashboard">
+                  <i class="fas fa-briefcase" aria-hidden="true"></i> Escort Dashboard
+                </a>
+              </li>
+              <li *ngIf="isAdmin">
+                <a class="dropdown-item" routerLink="/admin">
+                  <i class="fas fa-user-shield" aria-hidden="true"></i> Admin Dashboard
                 </a>
               </li>
               <li><hr class="dropdown-divider" /></li>

@@ -11,6 +11,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js'; // Added .js
 import ChatMessage from '../models/chat-message.model.js'; // Added .js
 import { Server } from 'socket.io'; // Import Server from socket.io
+import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 
 class SocketService {
   constructor() {
@@ -61,8 +63,8 @@ class SocketService {
 
         next();
       } catch (error) {
-        console.error('Socket authentication error:', error);
-        next(new Error('Authentication error'));
+        logger.error('Socket authentication error:', error);
+        next(new Error('Authentication failed'));
       }
     });
 
@@ -143,7 +145,8 @@ class SocketService {
         lastActive: new Date(),
       });
     } catch (error) {
-      console.error('Error updating user status:', error);
+      logger.error('Error updating user status:', error);
+      throw new AppError('Failed to update user status', 500);
     }
   }
 
@@ -240,8 +243,8 @@ class SocketService {
         }
       }
     } catch (error) {
-      console.error('Error handling chat message:', error);
-      socket.emit('error', { message: 'Failed to send message' });
+      logger.error('Error handling chat message:', error);
+      throw new AppError('Failed to handle chat message', 500);
     }
   }
 
@@ -284,7 +287,8 @@ class SocketService {
       // Emit notification read event to user
       socket.emit('notification:read-confirmed', { id: notificationId });
     } catch (error) {
-      console.error('Error handling notification read:', error);
+      logger.error('Error handling notification read:', error);
+      throw new AppError('Failed to handle notification read', 500);
     }
   }
 

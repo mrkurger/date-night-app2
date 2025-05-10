@@ -17,9 +17,9 @@
 
 // Add any additional design tokens or overrides here
 $transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+$opacity-disabled: 0.5; // Added token for disabled opacity
 
 // Legacy tokens - kept for backward compatibility
-// These will be deprecated in future versions
 
 // Primary colors - Main brand colors (DEPRECATED - use Emerald tokens instead)
 $primary-50: #fff2f6; // Extra lightest

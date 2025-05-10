@@ -76,7 +76,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     // this.toastr.error(message, 'Error');
   }
 
-  private logErrorToService(): void {
+  private logErrorToService(error: Error | HttpErrorResponse): void {
     // In a real application, you would send the error to a logging service
     // For example, using a service like Sentry or a custom API endpoint
     // Example implementation:

@@ -446,11 +446,11 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
    * Add payment method
    */
   addPaymentMethod(): void {
-    if (this.selectedPaymentType === 'card' && this.cardForm.invalid) {
-      return;
-    } else if (this.selectedPaymentType === 'bank_account' && this.bankForm.invalid) {
-      return;
-    } else if (this.selectedPaymentType === 'crypto_address' && this.cryptoForm.invalid) {
+    if (
+      (this.selectedPaymentType === 'card' && this.cardForm.invalid) ||
+      (this.selectedPaymentType === 'bank_account' && this.bankForm.invalid) ||
+      (this.selectedPaymentType === 'crypto_address' && this.cryptoForm.invalid)
+    ) {
       return;
     }
 
@@ -476,15 +476,8 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
         },
       };
     } else if (this.selectedPaymentType === 'bank_account') {
-      const {
-        accountHolderName,
-        bankName,
-        accountNumber,
-        routingNumber,
-        accountType,
-        currency,
-        setAsDefault,
-      } = this.bankForm.value;
+      const { accountHolderName, bankName, accountNumber, accountType, currency, setAsDefault } =
+        this.bankForm.value;
 
       paymentMethodData = {
         type: 'bank_account',
@@ -516,7 +509,7 @@ export class AddPaymentMethodDialogComponent implements OnInit, AfterViewInit {
     }
 
     this.walletService.addPaymentMethod(paymentMethodData).subscribe({
-      next: (paymentMethod) => {
+      next: () => {
         this.processingAddPaymentMethod = false;
         this.notificationService.success('Payment method added successfully');
         this.dialogRef.close(true);

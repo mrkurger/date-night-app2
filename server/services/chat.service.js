@@ -16,6 +16,7 @@ import { cryptoHelpers } from '../utils/cryptoHelpers.js';
 import { AppError } from '../middleware/errorHandler.js';
 import path from 'path';
 import fs from 'fs';
+import { logger } from '../utils/logger.js';
 
 // Constants
 const MAX_RETRY_ATTEMPTS = 3;
@@ -148,7 +149,7 @@ class ChatService {
 
       return messages.reverse(); // Return in chronological order
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      logger.error('Error fetching messages:', error);
       throw new AppError('Failed to fetch messages', 500);
     }
   }
@@ -274,7 +275,7 @@ class ChatService {
 
       return populatedMessage;
     } catch (error) {
-      console.error('Error sending message:', error);
+      logger.error('Error sending message:', error);
       if (error instanceof AppError) {
         throw error;
       }
@@ -307,7 +308,7 @@ class ChatService {
 
       return populatedRoom;
     } catch (error) {
-      console.error('Error creating direct room:', error);
+      logger.error('Error creating direct room:', error);
       throw new AppError(error.message || 'Failed to create direct room', 500);
     }
   }
@@ -350,7 +351,7 @@ class ChatService {
 
       return populatedRoom;
     } catch (error) {
-      console.error('Error creating ad room:', error);
+      logger.error('Error creating ad room:', error);
       throw new AppError(error.message || 'Failed to create ad room', 500);
     }
   }
@@ -419,7 +420,7 @@ class ChatService {
 
       return populatedRoom;
     } catch (error) {
-      console.error('Error creating group room:', error);
+      logger.error('Error creating group room:', error);
       throw new AppError(error.message || 'Failed to create group room', 500);
     }
   }
@@ -471,7 +472,7 @@ class ChatService {
 
       return roomsWithUnreadCounts;
     } catch (error) {
-      console.error('Error getting rooms for user:', error);
+      logger.error('Error getting rooms for user:', error);
       throw new AppError(error.message || 'Failed to get chat rooms', 500);
     }
   }
@@ -523,7 +524,7 @@ class ChatService {
 
       return roomData;
     } catch (error) {
-      console.error('Error getting room by ID:', error);
+      logger.error('Error getting room by ID:', error);
       throw new AppError(error.message || 'Failed to get chat room', 500);
     }
   }
@@ -565,7 +566,7 @@ class ChatService {
         count: result.modifiedCount,
       };
     } catch (error) {
-      console.error('Error marking messages as read:', error);
+      logger.error('Error marking messages as read:', error);
       throw new AppError(error.message || 'Failed to mark messages as read', 500);
     }
   }
@@ -605,7 +606,7 @@ class ChatService {
         rooms: roomsWithUnread,
       };
     } catch (error) {
-      console.error('Error getting unread counts:', error);
+      logger.error('Error getting unread counts:', error);
       throw new AppError(error.message || 'Failed to get unread counts', 500);
     }
   }
@@ -674,7 +675,7 @@ class ChatService {
         message: 'Room encryption set up successfully',
       };
     } catch (error) {
-      console.error('Error setting up room encryption:', error);
+      logger.error('Error setting up room encryption:', error);
       throw new AppError(error.message || 'Failed to set up room encryption', 500);
     }
   }
@@ -730,7 +731,7 @@ class ChatService {
 
       return room;
     } catch (error) {
-      console.error('Error updating message expiry:', error);
+      logger.error('Error updating message expiry:', error);
       throw new AppError(error.message || 'Failed to update message expiry', 500);
     }
   }
@@ -768,7 +769,7 @@ class ChatService {
         message: 'Message encryption should be handled by the client',
       };
     } catch (error) {
-      console.error('Error encrypting message:', error);
+      logger.error('Error encrypting message:', error);
       throw new AppError(error.message || 'Failed to encrypt message', 500);
     }
   }
@@ -819,7 +820,7 @@ class ChatService {
         message: 'You have left the group chat',
       };
     } catch (error) {
-      console.error('Error leaving room:', error);
+      logger.error('Error leaving room:', error);
       throw new AppError(error.message || 'Failed to leave chat room', 500);
     }
   }
@@ -847,7 +848,7 @@ class ChatService {
       // Return relative URL
       return `/uploads/chat/${fullFileName}`;
     } catch (error) {
-      console.error('Error storing file:', error);
+      logger.error('Error storing file:', error);
       throw new AppError('Failed to store file', 500);
     }
   }
@@ -878,7 +879,7 @@ class ChatService {
       const readStream = fs.createReadStream(filePath);
       readStream.pipe(res);
     } catch (error) {
-      console.error('Error streaming file:', error);
+      logger.error('Error streaming file:', error);
       throw new AppError('Failed to stream file', 500);
     }
   }

@@ -10,8 +10,7 @@
 
 // Import emerald-ui base styles
 // Using @import for CSS files since @use can't be used with .css files
-// Commented out as the emerald-ui package is not installed
-// @import '../../../../node_modules/emerald-ui/lib/styles/emerald-ui.min.css';
+@import 'emerald-ui/lib/styles/emerald-ui.min.css';
 
 // Override emerald-ui variables with our design tokens
 :root {

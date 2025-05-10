@@ -23,6 +23,28 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReviewService } from '../../../core/services/review.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { User } from '../../../core/models/user.interface'; // Import the User interface
+
+// Define an interface for the Review data
+interface ReviewData {
+  _id?: string;
+  rating: number;
+  title: string;
+  content: string;
+  categories?: {
+    communication?: number;
+    appearance?: number;
+    location?: number;
+    value?: number;
+  };
+  isVerifiedMeeting?: boolean;
+  meetingDate?: Date | string | null;
+  advertiser: string; // Assuming advertiserId is a string ID
+  ad?: string; // Assuming adId is a string ID
+  user?: User; // Replaced 'any' with the imported User interface
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+}
 
 @Component({
   selector: 'app-review-form',
@@ -182,60 +204,150 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
   `,
   styles: [
     `
-      .review-form-card {
-        margin: 20px 0;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
+      @use '../../../core/design/design-tokens' as ds;
+      @use '../../../core/design/typography-mixins' as typography;
 
-      .full-width {
-        width: 100%;
-        margin-bottom: 15px;
-      }
+      :host {
+        .review-form-card {
+          margin: ds.$spacing-5 0;
+          border-radius: ds.$border-radius-lg;
+          box-shadow: ds.$shadow-md;
+          background-color: ds.$color-surface;
+        }
 
-      .overall-rating {
-        margin-bottom: 20px;
-      }
+        .full-width {
+          width: 100%;
+          margin-bottom: ds.$spacing-4;
+        }
 
-      .overall-rating h3 {
-        margin-bottom: 10px;
-        color: #333;
-      }
+        .overall-rating {
+          margin-bottom: ds.$spacing-5;
+        }
 
-      .rating-error {
-        color: #f44336;
-        font-size: 0.75rem;
-        margin-top: 5px;
-      }
+        .overall-rating h3 {
+          @include typography.heading-xs;
+          margin-bottom: ds.$spacing-3;
+          color: ds.$color-text-primary;
+        }
 
-      .category-ratings {
-        margin-bottom: 20px;
-      }
+        .rating-error {
+          color: ds.$color-error;
+          @include typography.body-xs;
+          margin-top: ds.$spacing-1;
+        }
 
-      .category-rating {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
+        .category-ratings {
+          margin-bottom: ds.$spacing-5;
+          background-color: ds.$color-surface-variant;
+          border-radius: ds.$border-radius-md;
 
-      .category-rating label {
-        min-width: 120px;
-        font-weight: 500;
-      }
+          .mat-expansion-panel-header {
+            padding: ds.$spacing-3 ds.$spacing-4;
+          }
+          .mat-expansion-panel-content {
+            padding: 0 ds.$spacing-4 ds.$spacing-4;
+          }
+        }
 
-      .divider {
-        margin: 20px 0;
-      }
+        .category-rating {
+          display: flex;
+          align-items: center;
+          margin-bottom: ds.$spacing-3;
+        }
 
-      .meeting-details {
-        margin-bottom: 20px;
-      }
+        .category-rating label {
+          min-width: 120px;
+          @include typography.label;
+          color: ds.$color-text-secondary;
+          margin-right: ds.$spacing-3;
+        }
 
-      .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
+        .divider {
+          margin: ds.$spacing-5 0;
+          border-top-color: ds.$color-border;
+        }
+
+        .meeting-details {
+          margin-bottom: ds.$spacing-5;
+          mat-checkbox {
+            margin-bottom: ds.$spacing-3;
+          }
+        }
+
+        .form-actions {
+          display: flex;
+          justify-content: flex-end;
+          gap: ds.$spacing-3;
+          margin-top: ds.$spacing-5;
+        }
+
+        mat-form-field.mat-mdc-form-field {
+          .mdc-text-field--outlined {
+            border-radius: ds.$border-radius-md;
+            background-color: ds.$color-surface;
+
+            .mdc-notched-outline__leading,
+            .mdc-notched-outline__notch,
+            .mdc-notched-outline__trailing {
+              border-color: ds.$color-light-gray-2;
+            }
+          }
+
+          .mat-mdc-input-element {
+            @include typography.body-default;
+            font-family: ds.$font-family-base;
+            color: ds.$color-text-primary;
+
+            &::placeholder {
+              color: ds.$color-medium-gray-2;
+              @include typography.body-default;
+            }
+          }
+
+          .mdc-floating-label {
+            @include typography.label;
+            color: ds.$color-dark-gray-2;
+          }
+
+          &.mat-focused {
+            .mdc-text-field--outlined {
+              .mdc-notched-outline__leading,
+              .mdc-notched-outline__notch,
+              .mdc-notched-outline__trailing {
+                border-width: 1px;
+                border-color: ds.$color-primary;
+              }
+            }
+
+            .mdc-floating-label {
+              color: ds.$color-primary;
+            }
+          }
+
+          &.mat-form-field-invalid {
+            .mdc-text-field--outlined {
+              .mdc-notched-outline__leading,
+              .mdc-notched-outline__notch,
+              .mdc-notched-outline__trailing {
+                border-color: ds.$color-error;
+              }
+            }
+            .mdc-floating-label {
+              color: ds.$color-error;
+            }
+            .mat-mdc-input-element {
+              caret-color: ds.$color-error;
+            }
+          }
+
+          .mdc-text-field__input {
+            padding: ds.$spacing-2 ds.$spacing-3;
+          }
+
+          textarea.mat-mdc-input-element {
+            padding: ds.$spacing-2 ds.$spacing-3;
+          }
+        }
       }
     `,
   ],
@@ -245,9 +357,9 @@ export class ReviewFormComponent implements OnInit {
   @Input() adId = '';
   @Input() title = 'Write a Review';
   @Input() advertiserName = '';
-  @Input() existingReview: any = null;
-  @Output() reviewSubmitted = new EventEmitter<any>();
-  @Output() submitted = new EventEmitter<any>();
+  @Input() existingReview: ReviewData | null = null;
+  @Output() reviewSubmitted = new EventEmitter<ReviewData>();
+  @Output() submitted = new EventEmitter<ReviewData>();
   @Output() cancelled = new EventEmitter<void>();
 
   reviewForm: FormGroup;
@@ -272,7 +384,6 @@ export class ReviewFormComponent implements OnInit {
       meetingDate: [null],
     });
 
-    // Add conditional validation for meeting date
     this.reviewForm.get('isVerifiedMeeting')?.valueChanges.subscribe((isVerified) => {
       const meetingDateControl = this.reviewForm.get('meetingDate');
       if (isVerified) {
@@ -284,9 +395,7 @@ export class ReviewFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // Initialize with default values if needed
-  }
+  ngOnInit(): void {}
 
   onRatingChange(rating: number): void {
     this.reviewForm.get('rating')?.setValue(rating);
@@ -309,7 +418,7 @@ export class ReviewFormComponent implements OnInit {
 
     this.loading = true;
 
-    const reviewData = {
+    const reviewData: ReviewData = {
       ...this.reviewForm.value,
       advertiser: this.advertiserId,
       ad: this.adId || undefined,

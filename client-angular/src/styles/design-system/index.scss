@@ -19,11 +19,10 @@
 // - DO NOT use @use '../../app/core/design/design-tokens' directly
 // ===================================================
 
-// Import new design system - only forward main.scss which already imports design-tokens
-@forward '../../app/core/design/main';
+// Import new design system - only forward _variables.scss which already includes all needed variables and tokens
+@forward '_variables';
 
 // Legacy imports - to be removed after migration
-// @forward 'variables';
 // @forward 'typography';
 // @forward 'components';
 // @forward 'utilities';

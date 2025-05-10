@@ -340,38 +340,72 @@
         </app-card>
 
         <app-card>
-          <h3 class="heading-4 mb-4">Checkboxes</h3>
+          <h3 class="heading-4 mb-4">Checkboxes (now Toggles)</h3>
           <div class="form-grid">
-            <app-checkbox
-              label="Default Checkbox"
+            <emerald-toggle
+              label="Default Toggle"
               [(ngModel)]="checkboxValue"
-              (valueChange)="onCheckboxChange($event, 'Default Checkbox')"
+              (change)="onToggleChange($event, 'Default Toggle')"
             >
-            </app-checkbox>
+            </emerald-toggle>
 
-            <app-checkbox label="Checked Checkbox" [checked]="true"> </app-checkbox>
+            <emerald-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
+            </emerald-toggle>
 
-            <app-checkbox label="Disabled Checkbox" [disabled]="true"> </app-checkbox>
+            <emerald-toggle label="Disabled Toggle" [disabled]="true"> </emerald-toggle>
 
-            <app-checkbox label="Disabled Checked Checkbox" [checked]="true" [disabled]="true">
-            </app-checkbox>
+            <emerald-toggle
+              label="Disabled Checked Toggle"
+              [(ngModel)]="disabledCheckedToggleValue"
+              [disabled]="true"
+            >
+            </emerald-toggle>
 
-            <app-checkbox label="Checkbox with Error" errorMessage="This field is required">
-            </app-checkbox>
+            <emerald-toggle label="Toggle with (conceptual) Error"> </emerald-toggle>
 
-            <app-checkbox label="Checkbox with Helper Text" helperText="This is some helper text">
-            </app-checkbox>
+            <emerald-toggle label="Toggle with (conceptual) Helper Text"> </emerald-toggle>
           </div>
         </app-card>
 
         <app-card>
-          <h3 class="heading-4 mb-4">Checkbox Sizes</h3>
+          <h3 class="heading-4 mb-4">Toggle Sizes</h3>
           <div class="form-grid">
-            <app-checkbox label="Small Checkbox" size="small"> </app-checkbox>
+            <emerald-toggle label="Small Toggle" size="small"> </emerald-toggle>
 
-            <app-checkbox label="Medium Checkbox (Default)" size="medium"> </app-checkbox>
+            <emerald-toggle label="Medium Toggle (Default)" size="medium"> </emerald-toggle>
 
-            <app-checkbox label="Large Checkbox" size="large"> </app-checkbox>
+            <emerald-toggle label="Large Toggle" size="large"> </emerald-toggle>
+          </div>
+        </app-card>
+
+        <app-card>
+          <h3 class="heading-4 mb-4">Toggle Colors (Emerald Specific)</h3>
+          <div class="form-grid">
+            <emerald-toggle
+              label="Primary Toggle"
+              color="primary"
+              [(ngModel)]="primaryToggleValue"
+            ></emerald-toggle>
+            <emerald-toggle
+              label="Success Toggle"
+              color="success"
+              [(ngModel)]="successToggleValue"
+            ></emerald-toggle>
+            <emerald-toggle
+              label="Warning Toggle"
+              color="warning"
+              [(ngModel)]="warningToggleValue"
+            ></emerald-toggle>
+            <emerald-toggle
+              label="Danger Toggle"
+              color="danger"
+              [(ngModel)]="dangerToggleValue"
+            ></emerald-toggle>
+            <emerald-toggle
+              label="Info Toggle"
+              color="info"
+              [(ngModel)]="infoToggleValue"
+            ></emerald-toggle>
           </div>
         </app-card>
 

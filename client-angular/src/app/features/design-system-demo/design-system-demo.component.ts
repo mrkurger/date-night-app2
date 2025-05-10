@@ -14,7 +14,7 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { CardComponent } from '../../shared/components/card/card.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { InputComponent } from '../../shared/components/input/input.component';
-import { CheckboxComponent } from '../../shared/components/checkbox/checkbox.component';
+import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.component';
 import { SelectComponent, SelectOption } from '../../shared/components/select/select.component';
 
 /**
@@ -34,7 +34,7 @@ import { SelectComponent, SelectOption } from '../../shared/components/select/se
     CardComponent,
     IconComponent,
     InputComponent,
-    CheckboxComponent,
+    ToggleComponent,
     SelectComponent,
   ],
   templateUrl: './design-system-demo.component.html',
@@ -44,8 +44,17 @@ export class DesignSystemDemoComponent {
   // Form values
   inputValue = '';
   passwordValue = '';
-  checkboxValue = false;
+  checkboxValue = false; // This will now be used by emerald-toggle
   selectValue = '';
+
+  // Added for toggles previously using [value] binding
+  checkedToggleValue = true;
+  disabledCheckedToggleValue = true;
+  primaryToggleValue = true;
+  successToggleValue = true;
+  warningToggleValue = true;
+  dangerToggleValue = true;
+  infoToggleValue = true;
 
   // Select options
   selectOptions: SelectOption[] = [
@@ -61,7 +70,7 @@ export class DesignSystemDemoComponent {
    * @param buttonName The name of the button that was clicked
    */
   onButtonClick(event: MouseEvent, buttonName: string): void {
-    console.log(`Button clicked: ${buttonName}`, event);
+    console.warn(`Button clicked: ${buttonName}`, event);
   }
 
   /**
@@ -70,16 +79,16 @@ export class DesignSystemDemoComponent {
    * @param inputName The name of the input that changed
    */
   onInputChange(value: string, inputName: string): void {
-    console.log(`Input changed: ${inputName}`, value);
+    console.warn(`Input changed: ${inputName}`, value);
   }
 
   /**
-   * Handles checkbox value change events.
-   * @param value The new checkbox value
-   * @param checkboxName The name of the checkbox that changed
+   * Handles toggle value change events.
+   * @param value The new toggle value
+   * @param toggleName The name of the toggle that changed
    */
-  onCheckboxChange(value: boolean, checkboxName: string): void {
-    console.log(`Checkbox changed: ${checkboxName}`, value);
+  onToggleChange(value: boolean, toggleName: string): void {
+    console.warn(`Toggle changed: ${toggleName}`, value);
   }
 
   /**
@@ -88,6 +97,6 @@ export class DesignSystemDemoComponent {
    * @param selectName The name of the select that changed
    */
   onSelectChange(value: string | number, selectName: string): void {
-    console.log(`Select changed: ${selectName}`, value);
+    console.warn(`Select changed: ${selectName}`, value);
   }
 }

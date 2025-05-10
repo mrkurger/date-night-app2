@@ -5,7 +5,7 @@
  * while being cautious about build/test tools that might be used indirectly.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
@@ -96,13 +96,13 @@ function removeUnusedDependencies(packageJsonPath, unusedDeps, unusedDevDeps) {
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
     console.log(`${colors.green}Successfully updated ${packageJsonPath}${colors.reset}`);
     console.log(
-      `${colors.green}Removed ${depsRemoved} dependencies and ${devDepsRemoved} devDependencies${colors.reset}`
+      `${colors.green}Removed ${depsRemoved} dependencies and ${devDepsRemoved} devDependencies${colors.reset}`,
     );
 
     return true;
   } catch (error) {
     console.error(
-      `${colors.red}Error updating ${packageJsonPath}: ${error.message}${colors.reset}`
+      `${colors.red}Error updating ${packageJsonPath}: ${error.message}${colors.reset}`,
     );
     return false;
   }
@@ -123,7 +123,7 @@ function runNpmInstall(directory) {
     return true;
   } catch (error) {
     console.error(
-      `${colors.red}Error running npm install in ${directory}: ${error.message}${colors.reset}`
+      `${colors.red}Error running npm install in ${directory}: ${error.message}${colors.reset}`,
     );
     return false;
   }
@@ -142,7 +142,7 @@ function main() {
   removeUnusedDependencies(
     clientPackageJsonPath,
     ['@fortawesome/fontawesome-free'],
-    ['eslint-plugin-import', 'typescript-eslint']
+    ['eslint-plugin-import', 'typescript-eslint'],
   );
 
   // Server project
@@ -154,10 +154,10 @@ function main() {
 
   console.log(`${colors.cyan}===== Dependency Cleanup Complete =====${colors.reset}`);
   console.log(
-    `${colors.yellow}Note: Some dependencies were kept even though they appeared unused because they might be used indirectly.${colors.reset}`
+    `${colors.yellow}Note: Some dependencies were kept even though they appeared unused because they might be used indirectly.${colors.reset}`,
   );
   console.log(
-    `${colors.yellow}The following dependencies were kept: ${keepDependencies.join(', ')}${colors.reset}`
+    `${colors.yellow}The following dependencies were kept: ${keepDependencies.join(', ')}${colors.reset}`,
   );
 }
 

@@ -3,6 +3,7 @@
 @use '../../../core/design/animation-utilities' as animation;
 @use '../../../core/design/micro-interactions' as micro;
 @use '../../../core/design/dark-mode' as dark;
+@import 'emerald-ui/lib/css/emerald-ui.min.css';
 
 .chat-room {
   display: flex;

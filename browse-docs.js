@@ -72,10 +72,18 @@ const server = https.createServer((req, res) => {
   // Set the content type based on the file extension
   const contentType = mimeTypes[extname] || 'text/plain';
 
-  // Check file size before reading
-  fs.stat(filePath, (err, stats) => {
-    if (err) {
-      // If the file doesn't exist, return 404
+  // Check if file exists before getting its stats
+  fs.access(filePath, fs.constants.F_OK, (accessErr) => {
+    if (accessErr) {
+      res.writeHead(404, { 'Content-Type': 'text/html' });
+      res.end(`<h1>404 Not Found</h1><p>The requested file ${pathname} was not found.</p>`);
+      return;
+    }
+
+    // Check file size before reading
+    fs.stat(filePath, (err, stats) => {
+      if (err) {
+        // If the file doesn't exist, return 404
       if (err.code === 'ENOENT') {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end(`<h1>404 Not Found</h1><p>The requested file ${pathname} was not found.</p>`);
@@ -113,8 +121,9 @@ const server = https.createServer((req, res) => {
     });
   });
 });
+}
 
-// Start the server
+// Start the server and handle potential errors
 server.listen(port, () => {
   console.log(`Documentation server running at http://localhost:${port}/`);
   console.log(`Main documentation index: http://localhost:${port}/_docs_index.html`);
@@ -253,7 +262,7 @@ function searchDocumentation(term) {
     rl.question('\nEnter the number of the file to open (or press Enter to cancel): ', answer => {
       const fileIndex = parseInt(answer, 10) - 1;
 
-      if (!isNaN(fileIndex) && fileIndex >= 0 && fileIndex < files.length) {
+      if (!Number.isNaN(fileIndex) && fileIndex >= 0 && fileIndex < files.length) {
         const file = files[fileIndex];
         const relativePath = path.relative(__dirname, file);
 

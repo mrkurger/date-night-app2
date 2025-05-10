@@ -1,5 +1,4 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -30,7 +29,7 @@
             "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "src/app/core/design"]
             }
           },
           "configurations": {
@@ -83,10 +82,10 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "src/app/core/design"]
             }
           }
         }
@@ -116,10 +115,10 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "src/app/core/design"]
             }
           },
           "configurations": {
@@ -172,10 +171,10 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css", "node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "src/app/core/design"]
             }
           }
         }

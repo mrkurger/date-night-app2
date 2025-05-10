@@ -62,7 +62,7 @@ export function authInterceptorFactory(
 export function csrfInterceptorFactory(csrfService: CsrfService) {
   // The csrfService is injected but not directly used in the factory
   // It is needed for the interceptor to work properly
-  return csrfInterceptor;
+  return CsrfInterceptor;
 }
 
 export function httpErrorInterceptorFactory() {

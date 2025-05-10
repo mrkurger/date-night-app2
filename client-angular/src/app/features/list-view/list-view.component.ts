@@ -463,7 +463,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       case 'compact':
         return 4;
       default:
-        return 3;
+        return 3; // Default to grid view columns
     }
   }
 

@@ -8,9 +8,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import User from '../models/user.model';
-import Ad from '../models/ad.model';
-import ChatMessage from '../models/chat-message.model';
+import User from '../models/user.model.js';
+import Ad from '../models/ad.model.js';
+import ChatMessage from '../models/chat-message.model.js';
 
 // TODO: Add model validation schemas
 // TODO: Add model lifecycle hooks
