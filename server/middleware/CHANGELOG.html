@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Middleware Changelog</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 30px;
+      }
+      h3 {
+        color: #3498db;
+      }
+      .entry {
+        margin-bottom: 30px;
+        border-left: 4px solid #3498db;
+        padding-left: 20px;
+      }
+      .date {
+        color: #7f8c8d;
+        font-style: italic;
+      }
+      .tag {
+        display: inline-block;
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+      .tag.feature {
+        background-color: #2ecc71;
+      }
+      .tag.fix {
+        background-color: #e74c3c;
+      }
+      .tag.improvement {
+        background-color: #3498db;
+      }
+      code {
+        background-color: #f8f8f8;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+      }
+      pre {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .nav {
+        margin-bottom: 30px;
+      }
+      .nav a {
+        margin-right: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <a href="../../_docs_index.html">Documentation Home</a>
+      <a href="./AILESSONS.html">AI Lessons</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </div>
+
+    <h1>Middleware Changelog</h1>
+
+    <div class="entry">
+      <h2>2025-05-11</h2>
+      <span class="tag fix">FIX</span>
+      <h3>Fixed URL Parsing Issue in Error Handling</h3>
+      <p class="date">May 11, 2025</p>
+
+      <p>
+        Fixed an issue where URLs with colons in error messages were causing the Express router to
+        crash with a <code>TypeError: Missing parameter name</code> error. This was happening
+        because the <code>path-to-regexp</code> library used by Express was interpreting colons in
+        URLs as route parameters.
+      </p>
+
+      <h4>Changes:</h4>
+      <ul>
+        <li>
+          Added URL sanitization in the 404 handler in <code>server.js</code> to prevent
+          path-to-regexp parsing issues
+        </li>
+        <li>
+          Added a <code>sanitizeErrorMessage</code> function in <code>errorHandler.js</code> to
+          sanitize URLs in error messages
+        </li>
+        <li>Modified the error handler to use the sanitization function for all error messages</li>
+      </ul>
+
+      <h4>Technical Details:</h4>
+      <p>
+        The issue was caused by the <code>path-to-regexp</code> library interpreting colons in URLs
+        (like <code>https://example.com</code>) as route parameters. When these URLs appeared in
+        error messages, the Express router would try to parse them as route paths, causing the
+        application to crash.
+      </p>
+
+      <p>
+        The fix replaces <code>http://</code> and <code>https://</code> with
+        <code>http__//</code> and <code>https__//</code> in error messages, which prevents the colon
+        from being interpreted as a route parameter marker.
+      </p>
+
+      <pre><code>// Example of the sanitization function
+const sanitizeErrorMessage = (message) => {
+  if (typeof message !== 'string') return message;
+  // Replace http:// and https:// with a pattern that won't trigger path-to-regexp
+  return message.replace(/https?:\/\//g, 'https__//');
+};</code></pre>
+    </div>
+  </body>
+</html>

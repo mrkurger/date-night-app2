@@ -139,7 +139,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param next The next handler
    * @returns An observable of the HTTP event
    */
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<never>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Temporarily disable error handling to fix compatibility issues
     return next.handle(request);
 
@@ -257,6 +257,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                       delay: totalDelay,
                       maxAttempts: this.config.maxRetryAttempts,
                     },
+                    errorCode: 'retry_attempt',
                   })
                   .subscribe();
               }

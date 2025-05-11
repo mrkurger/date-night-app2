@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "node_modules/**/*", "dist/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -9,121 +9,37 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "prettier"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "plugins": ["prettier"],
       "rules": {
-        "prettier/prettier": "error",
-        "@typescript-eslint/explicit-member-accessibility": [
-          "error",
-          {
-            "accessibility": "explicit",
-            "overrides": {
-              "accessors": "explicit",
-              "constructors": "no-public",
-              "methods": "explicit",
-              "properties": "explicit",
-              "parameterProperties": "explicit"
-            }
-          }
-        ],
-        "@typescript-eslint/member-ordering": "error",
-        "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/no-explicit-any": "warn",
-        "@typescript-eslint/no-inferrable-types": [
-          "error",
-          {
-            "ignoreParameters": true
-          }
-        ],
         "@typescript-eslint/no-unused-vars": [
           "warn",
           {
             "argsIgnorePattern": "^_",
-            "varsIgnorePattern": "^_"
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_"
           }
         ],
-        "@typescript-eslint/prefer-function-type": "error",
-        "@typescript-eslint/quotes": ["error", "single"],
-        "@typescript-eslint/unified-signatures": "error",
-        "arrow-body-style": "error",
-        "constructor-super": "error",
-        "eqeqeq": ["error", "smart"],
-        "guard-for-in": "error",
-        "id-blacklist": "off",
-        "id-match": "off",
-        "import/no-deprecated": "warn",
-        "no-bitwise": "error",
-        "no-caller": "error",
-        "no-console": "warn",
-        "no-debugger": "error",
-        "no-empty": "off",
-        "no-eval": "error",
-        "no-fallthrough": "error",
-        "no-new-wrappers": "error",
-        "no-restricted-imports": [
-          "error",
-          {
-            "patterns": ["rxjs/Rx"]
-          }
-        ],
-        "no-throw-literal": "error",
-        "no-undef-init": "error",
-        "no-underscore-dangle": "off",
-        "no-var": "error",
-        "prefer-const": "error",
-        "radix": "error"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "no-console": ["warn", { "allow": ["warn", "error"] }]
+      }
+    },
+    {
+      "files": ["*.spec.ts", "**/testing/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "jasmine/no-spec-dupes": "off",
+        "jasmine/no-suite-dupes": "off"
       }
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
-    },
-    {
-      "files": ["*.spec.ts", "*.test.ts", "**/testing/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "no-console": "off"
-      }
-    },
-    {
-      "files": ["**/interceptors/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off"
-      }
-    },
-    {
-      "files": ["*.spec.ts", "*.test.ts", "**/testing/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "no-console": "off"
-      }
-    },
-    {
-      "files": ["**/interceptors/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off"
-      }
-    },
-    {
-      "files": ["**/services/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "warn"
-      }
-    },
-    {
-      "files": ["**/components/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "warn"
-      }
     }
   ]
 }

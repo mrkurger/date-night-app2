@@ -1,20 +1,12 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains tests for the moderation modal component
-//
-// COMMON CUSTOMIZATIONS:
-// - MOCK_MEDIA: Mock media data for testing
-//   Related to: client-angular/src/app/core/models/media.interface.ts
-// ===================================================
-
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { SimpleChange, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { By, DomSanitizer } from '@angular/platform-browser';
 
 import { ModerationModalComponent } from './moderation-modal.component';
 import { ContentSanitizerService } from '../../../../core/services/content-sanitizer.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 import { PendingMedia } from '../../../../core/models/media.interface';
 
 describe('ModerationModalComponent', () => {
@@ -23,6 +15,35 @@ describe('ModerationModalComponent', () => {
   let contentSanitizerServiceSpy: jasmine.SpyObj<ContentSanitizerService>;
   let formBuilder: FormBuilder;
   let debugElement: DebugElement;
+
+  class MockNotificationService {
+    onSuccess?: (message: string) => void;
+    onError?: (message: string) => void;
+
+    success(message: string): void {
+      if (this.onSuccess) {
+        this.onSuccess(message);
+      }
+    }
+
+    error(message: string): void {
+      if (this.onError) {
+        this.onError(message);
+      }
+    }
+  }
+
+  const mockNotificationService = new MockNotificationService();
+  
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, ModerationModalComponent],
+      providers: [
+        FormBuilder,
+        { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy },
+        { provide: NotificationService, useValue: mockNotificationService }
+      ],
+    }).compileComponents();
 
   // Mock media data for image type
   const mockImageMedia: PendingMedia = {
@@ -315,9 +336,10 @@ describe('ModerationModalComponent', () => {
 
   describe('DOM Rendering', () => {
     it('should render image element for image type media', () => {
+      const domSanitizer = TestBed.inject(DomSanitizer);
       // Set up component with image media
       component.media = mockImageMedia;
-      component.safeMediaUrl = 'safe-url' as any;
+      component.safeMediaUrl = domSanitizer.bypassSecurityTrustResourceUrl('safe-url');
       fixture.detectChanges();
 
       // Check if image element is rendered
@@ -327,9 +349,10 @@ describe('ModerationModalComponent', () => {
     });
 
     it('should render video element for video type media', () => {
+      const domSanitizer = TestBed.inject(DomSanitizer);
       // Set up component with video media
       component.media = mockVideoMedia;
-      component.safeMediaUrl = 'safe-url' as any;
+      component.safeMediaUrl = domSanitizer.bypassSecurityTrustResourceUrl('safe-url');
       fixture.detectChanges();
 
       // Check if video element is rendered
@@ -407,18 +430,4 @@ describe('ModerationModalComponent', () => {
       expect(submitButton.nativeElement.disabled).toBeFalse();
     });
   });
-
-  success(message: string): void {
-    // Mock success notification with callback
-    if (this.onSuccess) {
-      this.onSuccess(message);
-    }
-  }
-
-  error(message: string): void {
-    // Mock error notification with callback
-    if (this.onError) {
-      this.onError(message);
-    }
-  }
 });

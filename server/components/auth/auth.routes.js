@@ -11,6 +11,7 @@ import express from 'express';
 const router = express.Router();
 import passport from 'passport';
 import authController from './auth.controller.js';
+import { formatServerUrl } from '../../utils/urlHelpers.js';
 import { protect } from '../../middleware/auth.js';
 import { registrationLimiter, passwordResetLimiter } from '../../middleware/rateLimiter.js';
 
@@ -46,7 +47,10 @@ router.get('/validate', protect, (req, res) => {
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
 router.get(
   '/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login', session: false }),
+  passport.authenticate('github', {
+    failureRedirect: formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200') + '/login',
+    session: false,
+  }),
   authController.githubCallback
 );
 
@@ -54,7 +58,10 @@ router.get(
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login', session: false }),
+  passport.authenticate('google', {
+    failureRedirect: formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200') + '/login',
+    session: false,
+  }),
   authController.googleCallback
 );
 
@@ -62,7 +69,10 @@ router.get(
 router.get('/reddit', passport.authenticate('reddit'));
 router.get(
   '/reddit/callback',
-  passport.authenticate('reddit', { failureRedirect: '/login', session: false }),
+  passport.authenticate('reddit', {
+    failureRedirect: formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200') + '/login',
+    session: false,
+  }),
   authController.redditCallback
 );
 
@@ -70,7 +80,10 @@ router.get(
 router.get('/apple', passport.authenticate('apple'));
 router.get(
   '/apple/callback',
-  passport.authenticate('apple', { failureRedirect: '/login', session: false }),
+  passport.authenticate('apple', {
+    failureRedirect: formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200') + '/login',
+    session: false,
+  }),
   authController.appleCallback
 );
 

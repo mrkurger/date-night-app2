@@ -73,7 +73,9 @@
   $timing: tokens.$transition-timing-default,
   $delay: 0s
 ) {
-  animation: slide-in-bottom $duration $timing $delay forwards;
+  & {
+    animation: slide-in-bottom $duration $timing $delay forwards;
+  }
 }
 
 // Slide in from left animation

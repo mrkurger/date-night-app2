@@ -113,8 +113,8 @@ export class PerformanceDashboardComponent implements OnInit {
       endDate: this.filterForm.get('endDate')?.value
         ? this.formatDate(this.filterForm.get('endDate')?.value)
         : undefined,
-      page: this.pageIndex,
-      pageSize: this.pageSize,
+      page: this.pageIndex.toString(), // Convert page to string
+      pageSize: this.pageSize.toString(), // Convert pageSize to string
     };
 
     // Load performance statistics

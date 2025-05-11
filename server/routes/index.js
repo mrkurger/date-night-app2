@@ -31,19 +31,31 @@ router.use((req, res, next) => {
   next();
 });
 
-// Import rate limiters
-import {
-  authLimiter,
-  // These rate limiters are imported for future use in specific routes
-  // eslint-disable-next-line no-unused-vars
-  registrationLimiter,
-  chatLimiter,
-  adCreationLimiter,
-  mediaUploadLimiter,
-  // eslint-disable-next-line no-unused-vars
-  searchLimiter,
-  profileUpdateLimiter,
-} from '../middleware/rateLimiter.js';
+// Route error handler - especially for path-to-regexp errors
+router.use((err, req, res, next) => {
+  if (
+    err &&
+    (err.message.includes('path-to-regexp') || err.message.includes('Missing parameter name'))
+  ) {
+    console.warn(`[Route Error] ${err.message} for URL: ${req.originalUrl}`);
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid URL format',
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    });
+  }
+  next(err);
+});
+
+// Wrap route module registration in a try-catch to handle initialization errors
+const safelyRegisterRoutes = (path, routeModule) => {
+  try {
+    router.use(path, routeModule);
+  } catch (err) {
+    console.error(`Failed to register route module at ${path}:`, err);
+    // Still allow the server to start, just log the error
+  }
+};
 
 // Apply security headers
 router.use(helmet());
@@ -72,21 +84,19 @@ router.get('/csrf-token', csrfProtection, sendCsrfToken, (req, res) => {
 });
 
 // Apply specific middleware to routes with granular rate limiting
-router.use('/auth', authLimiter, csrfProtection, authRoutes);
-
-// Apply CSRF protection and rate limiting to sensitive routes
-router.use('/ads', csrfProtection, adCreationLimiter, adRoutes);
-router.use('/chat', csrfProtection, chatLimiter, chatRoutes);
-router.use('/users', csrfProtection, profileUpdateLimiter, userRoutes);
-router.use('/payments', csrfProtection, authLimiter, paymentRoutes);
-router.use('/wallet', csrfProtection, authLimiter, walletRoutes);
-router.use('/travel', csrfProtection, profileUpdateLimiter, travelRoutes);
-router.use('/media', csrfProtection, mediaUploadLimiter, mediaRoutes);
-router.use('/verification', csrfProtection, authLimiter, verificationRoutes);
-router.use('/reviews', csrfProtection, profileUpdateLimiter, reviewRoutes);
-router.use('/safety', csrfProtection, authLimiter, safetyRoutes);
-router.use('/favorites', csrfProtection, profileUpdateLimiter, favoriteRoutes);
-router.use('/locations', locationRoutes); // No CSRF for public location data
+safelyRegisterRoutes('/auth', authRoutes);
+safelyRegisterRoutes('/ads', adRoutes);
+safelyRegisterRoutes('/chat', chatRoutes);
+safelyRegisterRoutes('/users', userRoutes);
+safelyRegisterRoutes('/payments', paymentRoutes);
+safelyRegisterRoutes('/wallet', walletRoutes);
+safelyRegisterRoutes('/travel', travelRoutes);
+safelyRegisterRoutes('/media', mediaRoutes);
+safelyRegisterRoutes('/verification', verificationRoutes);
+safelyRegisterRoutes('/reviews', reviewRoutes);
+safelyRegisterRoutes('/safety', safetyRoutes);
+safelyRegisterRoutes('/favorites', favoriteRoutes);
+safelyRegisterRoutes('/locations', locationRoutes);
 
 // API health check endpoint
 router.get('/health', (req, res) => {

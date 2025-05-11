@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Middleware Glossary</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 30px;
+      }
+      .term {
+        margin-bottom: 30px;
+        border-left: 4px solid #3498db;
+        padding-left: 20px;
+      }
+      .term h3 {
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      .category {
+        display: inline-block;
+        background-color: #95a5a6;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+      .category.security {
+        background-color: #e74c3c;
+      }
+      .category.auth {
+        background-color: #f39c12;
+      }
+      .category.error {
+        background-color: #c0392b;
+      }
+      .category.utility {
+        background-color: #27ae60;
+      }
+      .category.validation {
+        background-color: #8e44ad;
+      }
+      .category.performance {
+        background-color: #2980b9;
+      }
+      code {
+        background-color: #f8f8f8;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+      }
+      pre {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .nav {
+        margin-bottom: 30px;
+      }
+      .nav a {
+        margin-right: 15px;
+      }
+      .file-path {
+        color: #7f8c8d;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+      .params {
+        margin-top: 10px;
+      }
+      .params h4 {
+        margin-bottom: 5px;
+      }
+      .params ul {
+        margin-top: 0;
+      }
+      .returns {
+        margin-top: 10px;
+      }
+      .returns h4 {
+        margin-bottom: 5px;
+      }
+      .alphabet-nav {
+        margin: 20px 0;
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+      }
+      .alphabet-nav a {
+        margin-right: 10px;
+        font-weight: bold;
+      }
+      .section-header {
+        background-color: #f8f8f8;
+        padding: 5px 10px;
+        margin-top: 40px;
+        border-left: 4px solid #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <a href="../../_docs_index.html">Documentation Home</a>
+      <a href="./CHANGELOG.html">Changelog</a>
+      <a href="./AILESSONS.html">AI Lessons</a>
+    </div>
+
+    <h1>Middleware Glossary</h1>
+
+    <div class="alphabet-nav">
+      <a href="#A">A</a>
+      <a href="#C">C</a>
+      <a href="#E">E</a>
+      <a href="#P">P</a>
+      <a href="#R">R</a>
+      <a href="#S">S</a>
+      <a href="#V">V</a>
+    </div>
+
+    <div class="section-header" id="A">
+      <h2>A</h2>
+    </div>
+
+    <div class="term" id="asyncHandler">
+      <h3>asyncHandler</h3>
+      <span class="category utility">UTILITY</span>
+      <span class="category error">ERROR HANDLING</span>
+      <p class="file-path">File: <code>/server/middleware/asyncHandler.js</code></p>
+
+      <p>
+        A utility function that wraps async route handlers to automatically catch errors and pass
+        them to the Express error handler. This eliminates the need for try/catch blocks in every
+        async route handler.
+      </p>
+
+      <pre><code>const asyncHandler = fn => (req, res, next) => 
+  Promise.resolve(fn(req, res, next)).catch(next);</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>fn</code> (Function): The async route handler function to wrap</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>Function: A middleware function that can be used with Express routes</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.get('/users', asyncHandler(async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+}));</code></pre>
+    </div>
+
+    <div class="term" id="authenticateToken">
+      <h3>authenticateToken</h3>
+      <span class="category auth">AUTHENTICATION</span>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/authenticateToken.js</code></p>
+
+      <p>
+        Middleware that authenticates JWT tokens from the Authorization header. It verifies the
+        token, extracts the user information, and attaches it to the request object.
+      </p>
+
+      <pre><code>const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.split(' ')[1];
+
+  if (!token) {
+    res.status(401).json({ error: 'Access denied' });
+    return;
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = user;
+    next();
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ error: 'Token expired', shouldRefresh: true });
+      return;
+    }
+    res.status(403).json({ error: 'Invalid token' });
+  }
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>req</code> (Object): Express request object</li>
+          <li><code>res</code> (Object): Express response object</li>
+          <li><code>next</code> (Function): Express next function</li>
+        </ul>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.use(authenticateToken);
+router.get('/profile', (req, res) => {
+  res.json(req.user);
+});</code></pre>
+    </div>
+
+    <div class="term" id="authorizeRole">
+      <h3>authorizeRole</h3>
+      <span class="category auth">AUTHENTICATION</span>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/authenticateToken.js</code></p>
+
+      <p>
+        Middleware factory that creates a middleware function to authorize users based on their
+        roles. It checks if the authenticated user has one of the specified roles.
+      </p>
+
+      <pre><code>const authorizeRole = roles => {
+  return (req, res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ error: 'Insufficient permissions' });
+      return;
+    }
+    next();
+  };
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>roles</code> (Array): Array of allowed role strings</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>Function: A middleware function that can be used with Express routes</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.get('/admin-panel', 
+  authenticateToken, 
+  authorizeRole(['admin']), 
+  (req, res) => {
+    res.json({ message: 'Admin panel' });
+  });</code></pre>
+    </div>
+
+    <div class="section-header" id="C">
+      <h2>C</h2>
+    </div>
+
+    <div class="term" id="cspMiddleware">
+      <h3>cspMiddleware</h3>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/csp.middleware.js</code></p>
+
+      <p>
+        Middleware that applies Content Security Policy (CSP) headers to protect against XSS and
+        other code injection attacks. It configures and applies CSP headers based on the
+        environment.
+      </p>
+
+      <pre><code>const cspMiddleware = app => {
+  // Log configuration on first use
+  logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
+
+  // Create middleware function that can be used with app.use()
+  const middleware = (req, res, next) => {
+    // Apply CSP headers based on configuration
+    const headerName = cspConfig.reportOnly
+      ? 'Content-Security-Policy-Report-Only'
+      : 'Content-Security-Policy';
+
+    // Build CSP header value from directives
+    const headerValue = Object.entries(cspConfig.directives)
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return `${key} ${value.join(' ')}`;
+        }
+        return `${key} ${value}`;
+      })
+      .join('; ');
+
+    // Set the header
+    res.setHeader(headerName, headerValue);
+
+    next();
+  };
+
+  // If app is provided, use the middleware
+  if (app && typeof app.use === 'function') {
+    app.use(middleware);
+  }
+
+  return middleware;
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>app</code> (Object): Optional Express app object</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>Function: A middleware function that can be used with Express routes</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply CSP middleware
+app.use(cspMiddleware());</code></pre>
+    </div>
+
+    <div class="term" id="cspNonce">
+      <h3>cspNonce</h3>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/cspNonce.js</code></p>
+
+      <p>
+        Middleware that generates a random nonce (number used once) for each request and attaches it
+        to the response locals. This nonce is used in Content Security Policy headers to allow
+        specific inline scripts.
+      </p>
+
+      <pre><code>// Implementation not shown in the provided code</code></pre>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply CSP nonce middleware
+app.use(cspNonce);
+
+// Use the nonce in CSP headers
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', 
+    `script-src 'self' 'nonce-${res.locals.cspNonce}'`);
+  next();
+});</code></pre>
+    </div>
+
+    <div class="section-header" id="E">
+      <h2>E</h2>
+    </div>
+
+    <div class="term" id="errorHandler">
+      <h3>errorHandler</h3>
+      <span class="category error">ERROR HANDLING</span>
+      <p class="file-path">File: <code>/server/middleware/errorHandler.js</code></p>
+
+      <p>
+        Global error handling middleware that processes errors and sends appropriate responses based
+        on the environment. It handles different types of errors (JWT, MongoDB, validation, etc.)
+        and formats error responses.
+      </p>
+
+      <pre><code>export default (err, req, res, _next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+  
+  // Sanitize error message to prevent path-to-regexp issues
+  if (err.message) {
+    err.message = sanitizeErrorMessage(err.message);
+  }
+
+  // Ensure correlation ID is available
+  if (!req.correlationId) {
+    // Import uuid dynamically
+    import('uuid')
+      .then(uuid => {
+        req.correlationId = uuid.v4();
+      })
+      .catch(() => {
+        req.correlationId = `fallback-${Date.now()}`;
+      });
+  }
+
+  // Different error handling for development and production
+  if (process.env.NODE_ENV === 'development') {
+    sendErrorDev(err, req, res);
+  } else {
+    let error = { ...err };
+    error.message = err.message;
+    error.stack = err.stack;
+    error.name = err.name;
+
+    // Handle specific error types
+    if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
+    if (error.name === 'JsonWebTokenError') error = handleJWTError();
+    if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    if (error.name === 'MulterError') {
+      error = new AppError(`File upload error: ${error.message}`, 400);
+    }
+    if (error.name === 'SyntaxError' && error.message.includes('JSON')) {
+      error = new AppError('Invalid JSON in request body', 400);
+    }
+
+    sendErrorProd(error, req, res);
+  }
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>err</code> (Error): The error object</li>
+          <li><code>req</code> (Object): Express request object</li>
+          <li><code>res</code> (Object): Express response object</li>
+          <li><code>_next</code> (Function): Express next function (not used)</li>
+        </ul>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply error handler middleware
+app.use(errorHandler);</code></pre>
+    </div>
+
+    <div class="section-header" id="P">
+      <h2>P</h2>
+    </div>
+
+    <div class="term" id="protect">
+      <h3>protect</h3>
+      <span class="category auth">AUTHENTICATION</span>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/auth.js</code></p>
+
+      <p>
+        Middleware that authenticates users by verifying JWT tokens from cookies or Authorization
+        headers. It also checks if the token is blacklisted, if the user exists, and if the user's
+        account is locked.
+      </p>
+
+      <pre><code>export const protect = async (req, res, next) => {
+  try {
+    let token;
+
+    // Check for token in cookie first (preferred method)
+    if (req.cookies && req.cookies.access_token) {
+      token = req.cookies.access_token;
+    }
+    // Fallback to Authorization header for API clients
+    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required. No token provided.',
+      });
+    }
+
+    // Check if token is blacklisted
+    const isBlacklisted = await TokenBlacklist.isBlacklisted(token);
+    if (isBlacklisted) {
+      return res.status(401).json({
+        success: false,
+        message: 'Token has been revoked. Please log in again.',
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Find user
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Check if user has a security lockout
+    if (user.securityLockout && user.securityLockout > new Date()) {
+      return res.status(401).json({
+        success: false,
+        message: 'Account locked for security reasons. Please reset your password.',
+      });
+    }
+
+    // Check if user's last password change was after token issuance
+    if (user.passwordChangedAt && decoded.iat < user.passwordChangedAt.getTime() / 1000) {
+      return res.status(401).json({
+        success: false,
+        message: 'Password has been changed. Please log in again.',
+      });
+    }
+
+    // Update last active timestamp
+    user.lastActive = new Date();
+    await user.save({ validateBeforeSave: false });
+
+    // Add user and token info to request
+    req.user = user;
+    req.token = token;
+    req.tokenDecoded = decoded;
+
+    next();
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        success: false,
+        message: 'Token expired',
+      });
+    }
+
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid token',
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Authentication error',
+      error: error.message,
+    });
+  }
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>req</code> (Object): Express request object</li>
+          <li><code>res</code> (Object): Express response object</li>
+          <li><code>next</code> (Function): Express next function</li>
+        </ul>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.get('/profile', protect, (req, res) => {
+  res.json(req.user);
+});</code></pre>
+    </div>
+
+    <div class="section-header" id="R">
+      <h2>R</h2>
+    </div>
+
+    <div class="term" id="restrictTo">
+      <h3>restrictTo</h3>
+      <span class="category auth">AUTHENTICATION</span>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/auth.js</code></p>
+
+      <p>
+        Middleware factory that creates a middleware function to restrict access to specific user
+        roles. It checks if the authenticated user has one of the specified roles.
+      </p>
+
+      <pre><code>export const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required',
+      });
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You do not have permission to perform this action',
+      });
+    }
+
+    next();
+  };
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>roles</code> (Array): Array of allowed role strings</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>Function: A middleware function that can be used with Express routes</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.delete('/users/:id', 
+  protect, 
+  restrictTo('admin'), 
+  userController.deleteUser);</code></pre>
+    </div>
+
+    <div class="section-header" id="S">
+      <h2>S</h2>
+    </div>
+
+    <div class="term" id="sanitizeErrorMessage">
+      <h3>sanitizeErrorMessage</h3>
+      <span class="category utility">UTILITY</span>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/errorHandler.js</code></p>
+
+      <p>
+        A utility function that sanitizes URLs in error messages to prevent path-to-regexp parsing
+        issues. It replaces <code>http://</code> and <code>https://</code> with
+        <code>http__//</code> and <code>https__//</code> to avoid colons being interpreted as route
+        parameter markers.
+      </p>
+
+      <pre><code>const sanitizeErrorMessage = (message) => {
+  if (typeof message !== 'string') return message;
+  // Replace http:// and https:// with a pattern that won't trigger path-to-regexp
+  return message.replace(/https?:\/\//g, 'https__//');
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>message</code> (string): The error message to sanitize</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>string: The sanitized error message</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Sanitize error message
+if (err.message) {
+  err.message = sanitizeErrorMessage(err.message);
+}</code></pre>
+    </div>
+
+    <div class="term" id="securityHeaders">
+      <h3>securityHeaders</h3>
+      <span class="category security">SECURITY</span>
+      <p class="file-path">File: <code>/server/middleware/securityHeaders.js</code></p>
+
+      <p>
+        Middleware that applies additional security headers to protect against common web
+        vulnerabilities. These headers include X-Content-Type-Options, X-Frame-Options,
+        X-XSS-Protection, and more.
+      </p>
+
+      <pre><code>// Implementation not shown in the provided code</code></pre>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply security headers middleware
+app.use(securityHeaders);</code></pre>
+    </div>
+
+    <div class="section-header" id="V">
+      <h2>V</h2>
+    </div>
+
+    <div class="term" id="validate">
+      <h3>validate</h3>
+      <span class="category validation">VALIDATION</span>
+      <p class="file-path">File: <code>/server/middleware/validation.js</code></p>
+
+      <p>
+        Middleware factory that creates a middleware function to validate request data using
+        express-validator. It executes all validations and returns formatted validation errors if
+        any.
+      </p>
+
+      <pre><code>const validate = validations => {
+  return async (req, res, next) => {
+    // Execute all validations
+    await Promise.all(validations.map(validation => validation.run(req)));
+
+    // Check if there are validation errors
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    // Format validation errors
+    const formattedErrors = errors.array().map(error => ({
+      field: error.path,
+      message: error.msg,
+      value: error.value,
+    }));
+
+    // Return validation error response
+    return res.status(422).json(validationErrorResponse(formattedErrors));
+  };
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>validations</code> (Array): Array of express-validator validation chains</li>
+        </ul>
+      </div>
+
+      <div class="returns">
+        <h4>Returns:</h4>
+        <p>Function: A middleware function that can be used with Express routes</p>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>router.post('/users', 
+  validate([
+    body('email').isEmail(),
+    body('password').isLength({ min: 8 })
+  ]), 
+  userController.createUser);</code></pre>
+    </div>
+  </body>
+</html>

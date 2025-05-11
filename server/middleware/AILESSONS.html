@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Middleware AI Lessons</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 30px;
+      }
+      h3 {
+        color: #3498db;
+      }
+      .lesson {
+        margin-bottom: 40px;
+        border-left: 4px solid #3498db;
+        padding-left: 20px;
+      }
+      .date {
+        color: #7f8c8d;
+        font-style: italic;
+      }
+      .tag {
+        display: inline-block;
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+      .tag.security {
+        background-color: #e74c3c;
+      }
+      .tag.performance {
+        background-color: #2ecc71;
+      }
+      .tag.debugging {
+        background-color: #f39c12;
+      }
+      .tag.architecture {
+        background-color: #9b59b6;
+      }
+      code {
+        background-color: #f8f8f8;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+      }
+      pre {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .nav {
+        margin-bottom: 30px;
+      }
+      .nav a {
+        margin-right: 15px;
+      }
+      .warning {
+        background-color: #fcf8e3;
+        border-left: 4px solid #f0ad4e;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      .tip {
+        background-color: #dff0d8;
+        border-left: 4px solid #5cb85c;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <a href="../../_docs_index.html">Documentation Home</a>
+      <a href="./CHANGELOG.html">Changelog</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </div>
+
+    <h1>Middleware AI Lessons</h1>
+
+    <div class="lesson">
+      <h2>URL Parsing in Express and path-to-regexp</h2>
+      <span class="tag security">SECURITY</span>
+      <span class="tag debugging">DEBUGGING</span>
+      <p class="date">May 11, 2025</p>
+
+      <p>
+        Express uses the <code>path-to-regexp</code> library to parse route paths and match them
+        against incoming requests. This library interprets colons (<code>:</code>) in route paths as
+        parameter markers, which can cause issues when URLs appear in error messages or other
+        contexts where they might be parsed as routes.
+      </p>
+
+      <div class="warning">
+        <h3>Potential Issue</h3>
+        <p>
+          When URLs (like <code>https://example.com</code>) appear in error messages or other
+          strings that are later used in route definitions, the colon can be misinterpreted as a
+          route parameter marker, causing the application to crash with a
+          <code>TypeError: Missing parameter name</code> error.
+        </p>
+      </div>
+
+      <h3>How path-to-regexp Works</h3>
+      <p>
+        The <code>path-to-regexp</code> library converts route paths with parameters (like
+        <code>/users/:userId</code>) into regular expressions that can match against request URLs.
+        When it encounters a colon, it expects a parameter name to follow (like
+        <code>userId</code> in the example).
+      </p>
+
+      <p>
+        If a colon appears in a URL that's being parsed as a route path, but isn't followed by a
+        valid parameter name, the library will throw an error.
+      </p>
+
+      <h3>Solution Approaches</h3>
+      <ol>
+        <li>
+          <strong>Sanitize URLs in error messages:</strong> Replace <code>http://</code> and
+          <code>https://</code> with patterns that don't include colons, like
+          <code>http__//</code> and <code>https__//</code>.
+        </li>
+        <li>
+          <strong>Escape colons in route paths:</strong> If you need to include a literal colon in a
+          route path, you can escape it with a backslash: <code>/path/with\\:colon</code>.
+        </li>
+        <li>
+          <strong>Use regular expressions directly:</strong> For complex route matching, you can use
+          regular expressions instead of string paths:
+          <code>app.get(/^\/path\/with:colon$/, handler)</code>.
+        </li>
+      </ol>
+
+      <div class="tip">
+        <h3>Best Practice</h3>
+        <p>
+          Always sanitize or escape user-provided data that might contain URLs before including it
+          in route paths or error messages that might be parsed by <code>path-to-regexp</code>.
+        </p>
+      </div>
+
+      <h3>Implementation Example</h3>
+      <pre><code>// Sanitize URLs in error messages
+const sanitizeErrorMessage = (message) => {
+  if (typeof message !== 'string') return message;
+  // Replace http:// and https:// with a pattern that won't trigger path-to-regexp
+  return message.replace(/https?:\/\//g, 'https__//');
+};
+
+// Use in error handler
+app.use((err, req, res, next) => {
+  // Sanitize error message
+  if (err.message) {
+    err.message = sanitizeErrorMessage(err.message);
+  }
+  
+  // Continue with error handling
+  next(err);
+});</code></pre>
+
+      <h3>Related Resources</h3>
+      <ul>
+        <li>
+          <a href="https://github.com/pillarjs/path-to-regexp" target="_blank"
+            >path-to-regexp GitHub repository</a
+          >
+        </li>
+        <li>
+          <a href="https://expressjs.com/en/guide/routing.html" target="_blank"
+            >Express Routing Guide</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h2>Error Handling Best Practices in Express</h2>
+      <span class="tag security">SECURITY</span>
+      <span class="tag architecture">ARCHITECTURE</span>
+      <p class="date">May 11, 2025</p>
+
+      <p>
+        Proper error handling is crucial for building robust Express applications. This lesson
+        covers best practices for handling errors in Express applications.
+      </p>
+
+      <h3>Centralized Error Handling</h3>
+      <p>
+        Express allows for centralized error handling through error-handling middleware. This
+        middleware should be defined last, after all other <code>app.use()</code> and routes calls.
+      </p>
+
+      <pre><code>// Global error handler
+app.use((err, req, res, next) => {
+  // Log error details
+  console.error(err);
+  
+  // Send appropriate response
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
+});</code></pre>
+
+      <h3>Environment-Specific Error Responses</h3>
+      <p>
+        In development, it's helpful to include detailed error information. In production, you
+        should hide implementation details to prevent information leakage.
+      </p>
+
+      <pre><code>// Environment-specific error handling
+if (process.env.NODE_ENV === 'development') {
+  // Include stack trace and details in development
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message,
+    stack: err.stack
+  });
+} else {
+  // Hide implementation details in production
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.isOperational ? err.message : 'Something went wrong'
+  });
+}</code></pre>
+
+      <h3>Custom Error Classes</h3>
+      <p>
+        Creating custom error classes helps distinguish between operational errors (expected errors)
+        and programming errors (bugs).
+      </p>
+
+      <pre><code>class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.isOperational = true;
+    
+    Error.captureStackTrace(this, this.constructor);
+  }
+}</code></pre>
+
+      <h3>Async Error Handling</h3>
+      <p>
+        For async route handlers, make sure to catch errors and pass them to the
+        <code>next</code> function.
+      </p>
+
+      <pre><code>// Async error handling wrapper
+const asyncHandler = fn => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};</code></pre>
+
+      <div class="tip">
+        <h3>Best Practice</h3>
+        <p>
+          Always include a correlation ID in error responses to help with debugging and tracking
+          issues across multiple services.
+        </p>
+      </div>
+
+      <h3>Related Resources</h3>
+      <ul>
+        <li>
+          <a href="https://expressjs.com/en/guide/error-handling.html" target="_blank"
+            >Express Error Handling Guide</a
+          >
+        </li>
+        <li>
+          <a href="https://nodejs.org/en/docs/guides/debugging-getting-started/" target="_blank"
+            >Node.js Debugging Guide</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

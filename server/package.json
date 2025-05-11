@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "node -r dotenv/config server.js",
     "dev": "npx nodemon -r dotenv/config server.js",
     "test": "NODE_ENV=test npx jest --config=jest.config.cjs",
     "test:esm": "NODE_ENV=test npx jest --config=jest.config.cjs",

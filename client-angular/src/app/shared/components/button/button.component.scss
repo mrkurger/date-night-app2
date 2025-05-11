@@ -1,6 +1,5 @@
 @use '../../../core/design/typography-mixins' as typography;
 @use 'sass:color';
-@use '../../../../app/core/design/design-tokens' as ds;
 
 // Base .emerald-button class is expected to provide some fundamental styling from the Emerald UI library.
 // These styles augment or define specific appearances based on the Emerald Button props (shape, color, size)
@@ -12,23 +11,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ds.$spacing-2; // Default gap between icon and text, can be adjusted per size.
+  gap: tokens.$spacing-2; // Default gap between icon and text, can be adjusted per size.
   border: 1px solid transparent; // Base for classic/flat shapes, overridden by outline.
-  border-radius: ds.$border-radius-md; // Default radius, consider using an Emerald token if available.
+  border-radius: tokens.$border-radius-md; // Default radius, consider using an Emerald token if available.
   cursor: pointer;
-  font-family: ds.$font-family-base;
-  font-weight: ds.$font-weight-semibold;
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-weight-semibold;
   line-height: 1.5; // Ensures good text readability within the button.
   text-align: center;
   text-decoration: none;
   transition:
-    background-color ds.$transition-fast ds.$transition-timing-default,
-    border-color ds.$transition-fast ds.$transition-timing-default,
-    color ds.$transition-fast ds.$transition-timing-default,
-    box-shadow ds.$transition-fast ds.$transition-timing-default;
+    background-color tokens.$transition-fast tokens.$transition-timing-default,
+    border-color tokens.$transition-fast tokens.$transition-timing-default,
+    color tokens.$transition-fast tokens.$transition-timing-default,
+    box-shadow tokens.$transition-fast tokens.$transition-timing-default;
   position: relative; // For potential pseudo-elements or loading spinner positioning.
   overflow: hidden; // Prevents content (like ripple effects or spinners) from spilling out.
-  padding: ds.$spacing-2 ds.$spacing-4; // Default padding, corresponds to 'medium' size.
+  padding: tokens.$spacing-2 tokens.$spacing-4; // Default padding, corresponds to 'medium' size.
 
   &:hover:not([disabled]):not(.button--loading) {
     // No specific generic hover style needed if all variants define their own.
@@ -43,7 +42,7 @@
 
   &[disabled] {
     // Styling for disabled state, should align with Emerald's disabled appearance.
-    opacity: ds.$opacity-disabled; // Using a token for disabled opacity.
+    opacity: tokens.$opacity-disabled; // Using a token for disabled opacity.
     cursor: not-allowed;
     // Emerald UI might apply specific background/border/color for disabled state, which should take precedence.
   }
@@ -69,7 +68,7 @@
     border-color: transparent;
     // Text color is determined by .button--color-*.
     &:hover:not([disabled]):not(.button--loading) {
-      background-color: ds.$color-neutral-background-hover; // Subtle hover for flat buttons.
+      background-color: var(--neutral-200); // Using CSS variable for hover background
     }
   }
 
@@ -79,78 +78,78 @@
   // Default color (e.g., a subtle gray or secondary action button)
   &.button--color-default {
     // Styles for 'classic' shape with 'default' color.
-    background-color: ds.$color-secondary-background;
-    color: ds.$color-secondary-text;
-    border-color: ds.$color-secondary-border;
+    background-color: tokens.$color-secondary-background;
+    color: tokens.$color-secondary-text;
+    border-color: tokens.$color-secondary-border;
 
     &.button--shape-outline {
-      border-color: ds.$color-secondary-border-strong;
-      color: ds.$color-secondary-text-strong;
+      border-color: tokens.$color-secondary-border-strong;
+      color: tokens.$color-secondary-text-strong;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-secondary-background-hover;
+        background-color: tokens.$color-secondary-background-hover;
       }
     }
     &.button--shape-flat {
-      color: ds.$color-secondary-text-strong;
+      color: tokens.$color-secondary-text-strong;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-secondary-background-hover;
+        background-color: tokens.$color-secondary-background-hover;
       }
     }
     &:hover:not([disabled]):not(.button--loading) {
       // Hover for classic default
-      background-color: ds.$color-secondary-background-emphasized;
+      background-color: tokens.$color-secondary-background-emphasized;
     }
   }
 
   // Brand color (primary action)
   &.button--color-brand {
     // Styles for 'classic' shape with 'brand' color.
-    background-color: ds.$color-primary;
-    color: ds.$color-primary-text-inverted; // e.g., white text on brand color
-    border-color: ds.$color-primary;
+    background-color: tokens.$color-primary;
+    color: tokens.$color-primary-text-inverted; // e.g., white text on brand color
+    border-color: tokens.$color-primary;
 
     &.button--shape-outline {
-      border-color: ds.$color-primary;
-      color: ds.$color-primary;
+      border-color: tokens.$color-primary;
+      color: tokens.$color-primary;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-primary-background-hover; // Subtle brand color background
+        background-color: tokens.$color-primary-background-hover; // Subtle brand color background
       }
     }
     &.button--shape-flat {
-      color: ds.$color-primary;
+      color: tokens.$color-primary;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-primary-background-hover; // Subtle brand color background
+        background-color: tokens.$color-primary-background-hover; // Subtle brand color background
       }
     }
     &:hover:not([disabled]):not(.button--loading) {
       // Hover for classic brand
-      background-color: ds.$color-primary-hover;
+      background-color: tokens.$color-primary-hover;
     }
   }
 
   // Danger color
   &.button--color-danger {
     // Styles for 'classic' shape with 'danger' color.
-    background-color: ds.$color-error;
-    color: ds.$color-error-text-inverted; // e.g., white text on error color
-    border-color: ds.$color-error;
+    background-color: tokens.$color-error;
+    color: tokens.$color-error-text-inverted; // e.g., white text on error color
+    border-color: tokens.$color-error;
 
     &.button--shape-outline {
-      border-color: ds.$color-error;
-      color: ds.$color-error;
+      border-color: tokens.$color-error;
+      color: tokens.$color-error;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-error-background-hover; // Subtle error color background
+        background-color: tokens.$color-error-background-hover; // Subtle error color background
       }
     }
     &.button--shape-flat {
-      color: ds.$color-error;
+      color: tokens.$color-error;
       &:hover:not([disabled]):not(.button--loading) {
-        background-color: ds.$color-error-background-hover; // Subtle error color background
+        background-color: tokens.$color-error-background-hover; // Subtle error color background
       }
     }
     &:hover:not([disabled]):not(.button--loading) {
       // Hover for classic danger
-      background-color: ds.$color-error-hover;
+      background-color: tokens.$color-error-hover;
     }
   }
   // TODO: Add info, warning, success colors if needed, following the pattern above, using appropriate design tokens.
@@ -162,24 +161,24 @@
   &.button--size-sm {
     // Corresponds to Emerald 'sm' or similar small size.
     @include typography.button-text-small;
-    padding: ds.$spacing-1 ds.$spacing-3;
-    min-height: ds.$control-height-sm; // Using a token for control height.
-    gap: ds.$spacing-1;
+    padding: tokens.$spacing-1 tokens.$spacing-3;
+    min-height: tokens.$control-height-sm; // Using a token for control height.
+    gap: tokens.$spacing-1;
   }
 
   &.button--size-md {
     // Our 'medium', potentially Emerald's base/default size.
     @include typography.button-text;
-    padding: ds.$spacing-2 ds.$spacing-4; // Default padding, already on .emerald-button.
-    min-height: ds.$control-height-md;
+    padding: tokens.$spacing-2 tokens.$spacing-4; // Default padding, already on .emerald-button.
+    min-height: tokens.$control-height-md;
   }
 
   &.button--size-lg {
     // Corresponds to Emerald 'lg' or similar large size.
     @include typography.button-text-large;
-    padding: ds.$spacing-3 ds.$spacing-5;
-    min-height: ds.$control-height-lg;
-    gap: ds.$spacing-3;
+    padding: tokens.$spacing-3 tokens.$spacing-5;
+    min-height: tokens.$control-height-lg;
+    gap: tokens.$spacing-3;
   }
 
   // --- Loading State ---
@@ -214,8 +213,8 @@
     justify-content: center;
     // The main 'gap' property on .emerald-button should handle spacing between icon and text.
     // If specific adjustments are needed for icons (e.g., if icon size varies):
-    // &.button__icon--left { margin-right: ds.$spacing-1; } // Example, if 'gap' is insufficient.
-    // &.button__icon--right { margin-left: ds.$spacing-1; } // Example.
+    // &.button__icon--left { margin-right: tokens.$spacing-1; } // Example, if 'gap' is insufficient.
+    // &.button__icon--right { margin-left: tokens.$spacing-1; } // Example.
   }
   .button__text {
     // Any specific styles for the button text wrapper, if necessary.
@@ -244,73 +243,73 @@
 
       // Default color in dark mode
       &.button--color-default {
-        background-color: ds.$dm-color-secondary-background;
-        color: ds.$dm-color-secondary-text;
-        border-color: ds.$dm-color-secondary-border;
+        background-color: tokens.$dm-color-secondary-background;
+        color: tokens.$dm-color-secondary-text;
+        border-color: tokens.$dm-color-secondary-border;
 
         &.button--shape-outline {
-          border-color: ds.$dm-color-secondary-border-strong;
-          color: ds.$dm-color-secondary-text-strong;
+          border-color: tokens.$dm-color-secondary-border-strong;
+          color: tokens.$dm-color-secondary-text-strong;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-secondary-background-hover;
+            background-color: tokens.$dm-color-secondary-background-hover;
           }
         }
         &.button--shape-flat {
-          color: ds.$dm-color-secondary-text-strong;
+          color: tokens.$dm-color-secondary-text-strong;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-secondary-background-hover;
+            background-color: tokens.$dm-color-secondary-background-hover;
           }
         }
         &:hover:not([disabled]):not(.button--loading) {
-          background-color: ds.$dm-color-secondary-background-emphasized;
+          background-color: tokens.$dm-color-secondary-background-emphasized;
         }
       }
 
       // Brand color in dark mode
       &.button--color-brand {
-        background-color: ds.$dm-color-primary;
-        color: ds.$dm-color-primary-text-inverted;
-        border-color: ds.$dm-color-primary;
+        background-color: tokens.$dm-color-primary;
+        color: tokens.$dm-color-primary-text-inverted;
+        border-color: tokens.$dm-color-primary;
 
         &.button--shape-outline {
-          border-color: ds.$dm-color-primary;
-          color: ds.$dm-color-primary;
+          border-color: tokens.$dm-color-primary;
+          color: tokens.$dm-color-primary;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-primary-background-hover;
+            background-color: tokens.$dm-color-primary-background-hover;
           }
         }
         &.button--shape-flat {
-          color: ds.$dm-color-primary;
+          color: tokens.$dm-color-primary;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-primary-background-hover;
+            background-color: tokens.$dm-color-primary-background-hover;
           }
         }
         &:hover:not([disabled]):not(.button--loading) {
-          background-color: ds.$dm-color-primary-hover;
+          background-color: tokens.$dm-color-primary-hover;
         }
       }
 
       // Danger color in dark mode
       &.button--color-danger {
-        background-color: ds.$dm-color-error;
-        color: ds.$dm-color-error-text-inverted;
-        border-color: ds.$dm-color-error;
+        background-color: tokens.$dm-color-error;
+        color: tokens.$dm-color-error-text-inverted;
+        border-color: tokens.$dm-color-error;
 
         &.button--shape-outline {
-          border-color: ds.$dm-color-error;
-          color: ds.$dm-color-error;
+          border-color: tokens.$dm-color-error;
+          color: tokens.$dm-color-error;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-error-background-hover;
+            background-color: tokens.$dm-color-error-background-hover;
           }
         }
         &.button--shape-flat {
-          color: ds.$dm-color-error;
+          color: tokens.$dm-color-error;
           &:hover:not([disabled]):not(.button--loading) {
-            background-color: ds.$dm-color-error-background-hover;
+            background-color: tokens.$dm-color-error-background-hover;
           }
         }
         &:hover:not([disabled]):not(.button--loading) {
-          background-color: ds.$dm-color-error-hover;
+          background-color: tokens.$dm-color-error-hover;
         }
       }
     }

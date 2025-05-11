@@ -11,6 +11,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../users/index.js';
 import passport from 'passport';
+import { formatServerUrl } from '../../utils/urlHelpers.js';
 
 // Helper function to set token cookies
 const setTokenCookies = (res, token, refreshToken) => {
@@ -217,7 +218,8 @@ const githubCallback = (req, res) => {
   setTokenCookies(res, token, refreshToken);
 
   // Redirect to frontend without exposing token in URL
-  res.redirect(`${process.env.CLIENT_URL}/auth-callback`);
+  const clientUrl = formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200');
+  res.redirect(`${clientUrl}/auth-callback`);
 };
 
 const googleCallback = githubCallback;

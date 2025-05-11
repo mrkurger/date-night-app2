@@ -1,60 +1,102 @@
-// Safety controller
-import SafetyCheckin from '../models/safety-checkin.model.js';
+import SafetyService from '../services/safety.service.js';
 import User from '../models/user.model.js';
-import crypto from 'crypto';
+import SafetyCheckin from '../models/safety-checkin.model.js';
 
-// Create a new safety check-in
-const createSafetyCheckin = async (req, res) => {
-  // Implementation
+const safetyService = new SafetyService();
+
+// Create safety controller methods
+export const createSafetyPlan = async (req, res, next) => {
+  try {
+    const plan = await safetyService.createSafetyPlan(req.body, req.user.id);
+    res.status(201).json(plan);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Get all safety check-ins for the current user
-const getUserSafetyCheckins = async (req, res) => {
-  // Implementation
+export const updateSafetyPlan = async (req, res, next) => {
+  try {
+    const plan = await safetyService.updateSafetyPlan(req.params.id, req.body, req.user.id);
+    res.status(200).json(plan);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Get a specific safety check-in
-const getSafetyCheckin = async (req, res) => {
-  // Implementation
+export const deleteSafetyPlan = async (req, res, next) => {
+  try {
+    await safetyService.deleteSafetyPlan(req.params.id, req.user.id);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Update a safety check-in
-const updateSafetyCheckin = async (req, res) => {
-  // Implementation
+export const getSafetyPlans = async (req, res, next) => {
+  try {
+    const plans = await safetyService.getSafetyPlans(req.user.id);
+    res.status(200).json(plans);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Start a safety check-in
-const startSafetyCheckin = async (req, res) => {
-  // Implementation
+export const checkIn = async (req, res, next) => {
+  try {
+    const checkin = await safetyService.createCheckin(req.body, req.user.id);
+    res.status(201).json(checkin);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Complete a safety check-in
-const completeSafetyCheckin = async (req, res) => {
-  // Implementation
+export const updateCheckin = async (req, res, next) => {
+  try {
+    const checkin = await safetyService.updateCheckin(req.params.id, req.body, req.user.id);
+    res.status(200).json(checkin);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Record a check-in response
-const recordCheckInResponse = async (req, res) => {
-  // Implementation
+export const deleteCheckin = async (req, res, next) => {
+  try {
+    await safetyService.deleteCheckin(req.params.id, req.user.id);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Verify check-in with safety code
-const verifyWithSafetyCode = async (req, res) => {
-  // Implementation
+export const getCheckins = async (req, res, next) => {
+  try {
+    const checkins = await safetyService.getCheckins(req.user.id);
+    res.status(200).json(checkins);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Add emergency contact to a check-in
-const addEmergencyContact = async (req, res) => {
-  // Implementation
+export const getTrustedContacts = async (req, res, next) => {
+  try {
+    const contacts = await safetyService.getTrustedContacts(req.user.id);
+    res.status(200).json(contacts);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Remove emergency contact from a check-in
-const removeEmergencyContact = async (req, res) => {
-  // Implementation
+export const handleMissedCheckin = async (req, res, next) => {
+  try {
+    await safetyService.handleMissedCheckin(req.params.id);
+    res.status(200).json({ message: 'Missed checkin handled successfully' });
+  } catch (error) {
+    next(error);
+  }
 };
 
 // Get user safety settings
-const getUserSafetySettings = async (req, res) => {
+export const getUserSafetySettings = async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -82,7 +124,7 @@ const getUserSafetySettings = async (req, res) => {
 };
 
 // Update user safety settings
-const updateSafetySettings = async (req, res) => {
+export const updateSafetySettings = async (req, res) => {
   try {
     const userId = req.user._id;
     const updates = req.body;
@@ -119,39 +161,96 @@ const updateSafetySettings = async (req, res) => {
   }
 };
 
-// Admin: Get check-ins requiring attention
-const getCheckinsRequiringAttention = async (req, res) => {
-  // Implementation
-};
-
-export {
-  createSafetyCheckin,
-  getUserSafetyCheckins,
-  getSafetyCheckin,
-  updateSafetyCheckin,
-  startSafetyCheckin,
-  completeSafetyCheckin,
-  recordCheckInResponse,
-  verifyWithSafetyCode,
-  addEmergencyContact,
-  removeEmergencyContact,
+const safetyController = {
+  createSafetyCheckin: checkIn,
+  getUserSafetyCheckins: getCheckins,
+  getSafetyCheckin: async (req, res, next) => {
+    try {
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
+  updateSafetyCheckin: updateCheckin,
+  deleteSafetyCheckin: deleteCheckin,
+  startSafetyCheckin: async (req, res, next) => {
+    try {
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      await checkin.startCheckin();
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
+  completeSafetyCheckin: async (req, res, next) => {
+    try {
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      await checkin.completeCheckin();
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
+  recordCheckInResponse: async (req, res, next) => {
+    try {
+      const { response, coordinates } = req.body;
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      await checkin.recordResponse(response, coordinates);
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
+  verifyWithSafetyCode: async (req, res, next) => {
+    try {
+      const { safetyCode } = req.body;
+      const checkin = await SafetyCheckin.findOne({
+        _id: req.params.checkinId,
+        user: req.user.id,
+      }).select('+safetyCode');
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      if (checkin.safetyCode !== safetyCode)
+        return res.status(400).json({ message: 'Invalid code' });
+      res.status(200).json({ valid: true });
+    } catch (error) {
+      next(error);
+    }
+  },
+  addEmergencyContact: async (req, res, next) => {
+    try {
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      await checkin.addEmergencyContact(req.body);
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
+  removeEmergencyContact: async (req, res, next) => {
+    try {
+      const checkin = await SafetyCheckin.findOne({ _id: req.params.checkinId, user: req.user.id });
+      if (!checkin) return res.status(404).json({ message: 'Check-in not found' });
+      await checkin.removeEmergencyContact(req.params.contactId);
+      res.status(200).json(checkin);
+    } catch (error) {
+      next(error);
+    }
+  },
   getUserSafetySettings,
   updateSafetySettings,
-  getCheckinsRequiringAttention,
+  getCheckinsRequiringAttention: async (req, res, next) => {
+    try {
+      const list = await SafetyCheckin.findCheckinsRequiringAttention();
+      res.status(200).json(list);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
-export default {
-  createSafetyCheckin,
-  getUserSafetyCheckins,
-  getSafetyCheckin,
-  updateSafetyCheckin,
-  startSafetyCheckin,
-  completeSafetyCheckin,
-  recordCheckInResponse,
-  verifyWithSafetyCode,
-  addEmergencyContact,
-  removeEmergencyContact,
-  getUserSafetySettings,
-  updateSafetySettings,
-  getCheckinsRequiringAttention,
-};
+export default safetyController;

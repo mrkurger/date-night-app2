@@ -9,74 +9,41 @@
 // ===================================================
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpEventType, HttpEvent, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
-
 import { MediaService } from './media.service';
-import { CachingService } from './caching.service';
-import { PendingMedia } from '../models/media.interface';
 import { environment } from '../../../environments/environment';
+import { CachingService } from './caching.service';
+import { of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 describe('MediaService', () => {
   let service: MediaService;
   let httpMock: HttpTestingController;
   let cachingServiceSpy: jasmine.SpyObj<CachingService>;
 
-  const apiUrl = `${environment.apiUrl}/media`;
-
-  // Mock data for testing
-  const mockAdId = 'ad123';
-  const mockMediaId = 'media123';
-
-  const mockPendingMedia: PendingMedia[] = [
-    {
-      _id: 'media1',
-      adId: 'ad1',
-      adTitle: 'Test Ad 1',
-      type: 'image',
-      url: 'https://example.com/image1.jpg',
-      createdAt: new Date('2023-01-01'),
-    },
-    {
-      _id: 'media2',
-      adId: 'ad2',
-      adTitle: 'Test Ad 2',
-      type: 'video',
-      url: 'https://example.com/video1.mp4',
-      createdAt: new Date('2023-01-02'),
-    },
-  ];
-
+  const apiUrl = `${environment.apiUrl}/api/v1/ads`;
+  const mockAdId = '123';
+  const mockMediaId = '456';
+  const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+  const mockResponse = { id: mockMediaId, url: 'test-url' };
   const mockAdMedia = [
-    {
-      _id: 'media1',
-      type: 'image',
-      url: 'https://example.com/image1.jpg',
-      isFeatured: true,
-      status: 'approved',
-      createdAt: new Date('2023-01-01'),
-    },
-    {
-      _id: 'media2',
-      type: 'video',
-      url: 'https://example.com/video1.mp4',
-      isFeatured: false,
-      status: 'approved',
-      createdAt: new Date('2023-01-02'),
-    },
+    { id: '1', url: 'url1' },
+    { id: '2', url: 'url2' },
   ];
+  const mockPendingMedia = [{ id: '3', status: 'pending' }];
+  const errorResponse = { status: 400, statusText: 'Bad Request' };
 
   beforeEach(() => {
-    // Create a spy for the CachingService
-    cachingServiceSpy = jasmine.createSpyObj('CachingService', ['get']);
+    const spy = jasmine.createSpyObj('CachingService', ['get', 'set', 'clear']);
+    spy.get.and.returnValue(of(null));
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [MediaService, { provide: CachingService, useValue: cachingServiceSpy }],
+      providers: [MediaService, { provide: CachingService, useValue: spy }],
     });
 
     service = TestBed.inject(MediaService);
     httpMock = TestBed.inject(HttpTestingController);
+    cachingServiceSpy = TestBed.inject(CachingService) as jasmine.SpyObj<CachingService>;
   });
 
   afterEach(() => {
@@ -291,9 +258,4 @@ describe('MediaService', () => {
       expect(errorArg.status).toBe(400);
     });
   });
-
-  next(event: HttpEvent<unknown>): void {
-    // Emit the mock event
-    this.events$.next(event);
-  }
 });

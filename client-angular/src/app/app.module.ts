@@ -19,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { GlobalErrorHandler } from './core/error-handling/global-error-handler';
 import { PerformanceModule } from './core/performance/performance.module';
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.
@@ -47,6 +49,9 @@ const socketConfig: SocketIoConfig = { url: environment.socketUrl, options: {} }
       monitorMemoryUsage: true,
       monitorWebVitals: true,
     }),
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/oivindlund/date-night-app/logs/.b45182f1c088a1dc77e197db9865ea80dc85b9db-audit.json",
+    "files": [
+        {
+            "date": 1746920575646,
+            "name": "/Users/oivindlund/date-night-app/logs/error-2025-05-11.log",
+            "hash": "bb81c6abf878ca08367de4d4ea0c385e483a7484910248868105bd27c5a40204"
+        }
+    ],
+    "hashType": "sha256"
+}

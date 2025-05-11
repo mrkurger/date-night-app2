@@ -286,7 +286,7 @@ router.get('/category/:category', adController.getAdsByCategory);
 
 /**
  * @swagger
- * /api/v1/ads/swipes:
+ * /api/v1/ads/swipes
  *   post:
  *     summary: Record a swipe action
  *     description: Record a left or right swipe on an ad

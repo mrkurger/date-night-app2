@@ -26,7 +26,12 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
+            "styles": [
+              "src/styles.css",
+              "src/styles/main.scss",
+              "src/assets/styles/leaflet.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/core/design"]
@@ -82,7 +87,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
+            "styles": [
+              "src/styles/main.scss",
+              "src/assets/styles/leaflet.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/core/design"]
@@ -115,7 +124,11 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
+            "styles": [
+              "src/styles/main.scss",
+              "src/assets/styles/leaflet.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/core/design"]
@@ -171,7 +184,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles/main.scss", "src/assets/styles/leaflet.css"],
+            "styles": [
+              "src/styles/main.scss",
+              "src/assets/styles/leaflet.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/core/design"]

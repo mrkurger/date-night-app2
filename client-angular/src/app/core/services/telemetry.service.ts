@@ -4,74 +4,101 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
+export interface TelemetryMetadata {
+  appVersion?: string;
+  sessionId?: string;
+  userId?: string | null;
+  [key: string]: unknown;
+}
+
 /**
  * Interface for error telemetry data
  */
 export interface ErrorTelemetry {
-  /** Unique error ID */
-  id: string;
-  /** Error name */
-  name?: string;
-  /** Error message */
-  message?: string;
-  /** Error stack trace */
-  stack?: string;
-  /** Error code (e.g., 'network_error', 'server_error') */
-  errorCode: string;
-  /** HTTP status code */
-  statusCode: number;
-  /** HTTP status text */
-  status?: string;
-  /** User-friendly error message */
-  userMessage: string;
-  /** Technical error details */
-  technicalMessage: string;
-  /** URL where the error occurred */
-  url: string;
-  /** HTTP method that caused the error */
-  method: string;
-  /** Timestamp when the error occurred */
   timestamp: string;
-  /** User ID if available */
-  userId?: string;
-  /** User's session ID */
-  sessionId?: string;
-  /** Application version */
-  appVersion: string;
-  /** Browser information */
-  userAgent: string;
-  /** Additional context information */
-  context?: Record<string, any>;
+  type: string;
+  message: string;
+  url?: string;
+  stackTrace?: string;
+  name?: string;
+  category?: string;
+  statusCode?: number;
+  metadata?: TelemetryMetadata;
 }
 
 /**
  * Interface for performance telemetry data
  */
 export interface PerformanceTelemetry {
-  /** Unique ID for the performance record */
-  id: string;
-  /** URL of the request */
-  url: string;
-  /** HTTP method */
-  method: string;
-  /** Total request duration in milliseconds */
-  duration: number;
-  /** Time to first byte in milliseconds */
-  ttfb?: number;
-  /** Request size in bytes */
-  requestSize?: number;
-  /** Response size in bytes */
-  responseSize?: number;
-  /** Timestamp when the request was made */
   timestamp: string;
-  /** User ID if available */
-  userId?: string;
-  /** User's session ID */
-  sessionId?: string;
-  /** Application version */
-  appVersion: string;
-  /** Additional context information */
-  context?: Record<string, any>;
+  type: string;
+  duration: number;
+  url?: string;
+  metadata?: TelemetryMetadata;
+}
+
+export interface TelemetryFilters {
+  startDate?: string;
+  endDate?: string;
+  type?: string;
+  page?: string;
+  pageSize?: string;
+  category?: string;
+  statusCode?: string;
+  [key: string]: string | undefined;
+}
+
+export interface ErrorStatistics {
+  totalErrors: number;
+  uniqueErrors: number;
+  recentErrors: ErrorTelemetry[];
+  byType: { type: string; count: number }[];
+  byCategory: { category: string; count: number }[];
+  byStatusCode: { statusCode: number; count: number }[];
+  byDate: { date: string; count: number }[];
+  totalCount: number;
+  errors: ErrorTelemetry[];
+  total: number;
+  statistics: {
+    byHour: { hour: number; count: number }[];
+    byDay: { date: string; count: number }[];
+    byCategory: { category: string; count: number }[];
+    byStatusCode: { statusCode: number; count: number }[];
+  };
+}
+
+export interface PerformanceStatistics {
+  avgDuration: number;
+  p95Duration: number;
+  byEndpoint: {
+    url: string;
+    method: string;
+    avgDuration: number;
+    p95Duration: number;
+    count: number;
+  }[];
+  byTimeRange: { date: string; avgDuration: number }[];
+  distribution: { range: string; count: number }[];
+  byDate: { date: string; avgDuration: number }[];
+  slowestEndpoints: {
+    url: string;
+    method: string;
+    avgDuration: number;
+    count: number;
+  }[];
+  totalCount: number;
+  data: PerformanceTelemetry[];
+  total: number;
+  statistics: {
+    byHour: { hour: number; avgDuration: number }[];
+    byDay: { date: string; avgDuration: number }[];
+    byEndpoint: {
+      url: string;
+      method: string;
+      avgDuration: number;
+      count: number;
+    }[];
+  };
 }
 
 /**
@@ -92,18 +119,8 @@ export class TelemetryService {
   private isOnline = navigator.onLine;
 
   constructor(private http: HttpClient) {
-    // Generate a session ID
-    this.sessionId = this.generateId();
-
-    // Listen for online/offline events
-    window.addEventListener('online', () => {
-      this.isOnline = true;
-      this.flushOfflineQueues();
-    });
-
-    window.addEventListener('offline', () => {
-      this.isOnline = false;
-    });
+    this.sessionId = this.generateSessionId();
+    this.setupOnlineListener();
   }
 
   /**
@@ -119,195 +136,245 @@ export class TelemetryService {
    * @param error Error details
    * @returns Observable of the tracking result
    */
-  trackError(error: Partial<ErrorTelemetry>): Observable<any> {
+  trackError(error: Partial<ErrorTelemetry>): Observable<ErrorTelemetry> {
     const errorData: ErrorTelemetry = {
-      id: this.generateId(),
-      errorCode: error.errorCode || 'unknown_error',
-      statusCode: error.statusCode || 0,
-      userMessage: error.userMessage || 'An unknown error occurred',
-      technicalMessage: error.technicalMessage || 'No technical details available',
-      url: error.url || window.location.href,
-      method: error.method || 'UNKNOWN',
       timestamp: new Date().toISOString(),
-      userId: this.userId || undefined,
-      sessionId: this.sessionId,
-      appVersion: this.appVersion,
-      userAgent: navigator.userAgent,
-      context: error.context || {},
+      type: 'error',
+      message: error.message || 'Unknown error',
+      url: error.url && this.sanitizeUrlForTelemetry(error.url),
+      stackTrace: error.stackTrace,
+      name: error.name,
+      category: error.category,
+      statusCode: error.statusCode,
+      metadata: {
+        ...error.metadata,
+        appVersion: this.appVersion,
+        sessionId: this.sessionId,
+        userId: this.userId,
+      },
     };
 
-    // Store in local storage for offline mode
     if (!this.isOnline) {
       this.offlineErrorQueue.push(errorData);
-      this.persistOfflineQueue('errors', this.offlineErrorQueue);
-      return of({ success: true, offline: true });
+      return of(errorData);
     }
 
-    return this.http.post(`${this.apiUrl}/errors`, errorData).pipe(
+    return this.http.post<ErrorTelemetry>(`${this.apiUrl}/errors`, errorData).pipe(
       catchError((err) => {
-        // If API call fails, store in offline queue
+        console.error('Failed to send error telemetry:', err);
         this.offlineErrorQueue.push(errorData);
-        this.persistOfflineQueue('errors', this.offlineErrorQueue);
-        return of({ success: false, error: err });
+        return of(errorData);
       }),
     );
   }
 
   /**
    * Track a performance event
-   * @param performance Performance details
+   * @param data Performance details
    * @returns Observable of the tracking result
    */
-  trackPerformance(performance: Partial<PerformanceTelemetry>): Observable<any> {
-    const performanceData: PerformanceTelemetry = {
-      id: this.generateId(),
-      url: performance.url || window.location.href,
-      method: performance.method || 'UNKNOWN',
-      duration: performance.duration || 0,
-      ttfb: performance.ttfb,
-      requestSize: performance.requestSize,
-      responseSize: performance.responseSize,
+  trackPerformance(data: Partial<PerformanceTelemetry>): Observable<PerformanceTelemetry> {
+    const perfData: PerformanceTelemetry = {
       timestamp: new Date().toISOString(),
-      userId: this.userId || undefined,
-      sessionId: this.sessionId,
-      appVersion: this.appVersion,
-      context: performance.context || {},
+      type: 'performance',
+      duration: data.duration || 0,
+      url: data.url && this.sanitizeUrlForTelemetry(data.url),
+      metadata: {
+        ...data.metadata,
+        appVersion: this.appVersion,
+        sessionId: this.sessionId,
+        userId: this.userId,
+      },
     };
 
-    // Store in local storage for offline mode
     if (!this.isOnline) {
-      this.offlinePerformanceQueue.push(performanceData);
-      this.persistOfflineQueue('performance', this.offlinePerformanceQueue);
-      return of({ success: true, offline: true });
+      this.offlinePerformanceQueue.push(perfData);
+      return of(perfData);
     }
 
-    return this.http.post(`${this.apiUrl}/performance`, performanceData).pipe(
+    return this.http.post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perfData).pipe(
       catchError((err) => {
-        // If API call fails, store in offline queue
-        this.offlinePerformanceQueue.push(performanceData);
-        this.persistOfflineQueue('performance', this.offlinePerformanceQueue);
-        return of({ success: false, error: err });
+        console.error('Failed to send performance telemetry:', err);
+        this.offlinePerformanceQueue.push(perfData);
+        return of(perfData);
       }),
     );
   }
 
   /**
-   * Get error statistics for the dashboard
+   * Get error statistics
    * @param filters Optional filters for the statistics
    * @returns Observable of error statistics
    */
-  getErrorStatistics(filters?: Record<string, any>): Observable<any> {
-    return this.http.get(`${this.apiUrl}/errors/statistics`, { params: filters as any }).pipe(
-      catchError((err) => {
-        console.error('Failed to fetch error statistics:', err);
-        return of({ success: false, error: err });
-      }),
-    );
+  getErrorStatistics(filters?: TelemetryFilters): Observable<ErrorStatistics> {
+    return this.http
+      .get<ErrorStatistics>(`${this.apiUrl}/errors/statistics`, { params: { ...filters } })
+      .pipe(
+        catchError((err) => {
+          console.error('Failed to get error statistics:', err);
+          return of({
+            totalErrors: 0,
+            uniqueErrors: 0,
+            recentErrors: [],
+            byType: [],
+            byCategory: [],
+            byStatusCode: [],
+            byDate: [],
+            totalCount: 0,
+            errors: [],
+            total: 0,
+            statistics: {
+              byHour: [],
+              byDay: [],
+              byCategory: [],
+              byStatusCode: [],
+            },
+          });
+        }),
+      );
   }
 
   /**
-   * Get performance statistics for the dashboard
+   * Get performance statistics
    * @param filters Optional filters for the statistics
    * @returns Observable of performance statistics
    */
-  getPerformanceStatistics(filters?: Record<string, any>): Observable<any> {
-    return this.http.get(`${this.apiUrl}/performance/statistics`, { params: filters as any }).pipe(
-      catchError((err) => {
-        console.error('Failed to fetch performance statistics:', err);
-        return of({ success: false, error: err });
-      }),
-    );
+  getPerformanceStatistics(filters?: TelemetryFilters): Observable<PerformanceStatistics> {
+    return this.http
+      .get<PerformanceStatistics>(`${this.apiUrl}/performance/statistics`, {
+        params: { ...filters },
+      })
+      .pipe(
+        catchError((err) => {
+          console.error('Failed to get performance statistics:', err);
+          return of({
+            avgDuration: 0,
+            p95Duration: 0,
+            byEndpoint: [],
+            byTimeRange: [],
+            distribution: [],
+            byDate: [],
+            slowestEndpoints: [],
+            totalCount: 0,
+            data: [],
+            total: 0,
+            statistics: {
+              byHour: [],
+              byDay: [],
+              byEndpoint: [],
+            },
+          });
+        }),
+      );
   }
 
   /**
-   * Generate a unique ID
-   * @returns A unique ID string
+   * Generates a unique session ID
+   * @returns A unique session ID
    */
-  private generateId(): string {
-    return (
-      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-    );
+  private generateSessionId(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 
   /**
-   * Persist offline queue to local storage
-   * @param queueName Name of the queue
-   * @param queue The queue to persist
+   * Sets up online/offline event listeners
    */
-  private persistOfflineQueue(queueName: string, queue: any[]): void {
-    try {
-      localStorage.setItem(`telemetry_${queueName}`, JSON.stringify(queue));
-    } catch (e) {
-      console.error(`Failed to persist offline ${queueName} queue:`, e);
-    }
+  private setupOnlineListener(): void {
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+      this.flushOfflineQueue();
+    });
+
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+    });
   }
 
   /**
-   * Load offline queues from local storage
+   * Sends queued telemetry data when back online
    */
-  private loadOfflineQueues(): void {
-    try {
-      const errorQueue = localStorage.getItem('telemetry_errors');
-      if (errorQueue) {
-        this.offlineErrorQueue = JSON.parse(errorQueue);
-      }
-
-      const performanceQueue = localStorage.getItem('telemetry_performance');
-      if (performanceQueue) {
-        this.offlinePerformanceQueue = JSON.parse(performanceQueue);
-      }
-    } catch (e) {
-      console.error('Failed to load offline queues:', e);
-    }
-  }
-
-  /**
-   * Flush offline queues when back online
-   */
-  private flushOfflineQueues(): void {
-    // Load any queues from local storage
-    this.loadOfflineQueues();
-
+  private flushOfflineQueue(): void {
     // Process error queue
-    if (this.offlineErrorQueue.length > 0) {
-      const errorQueue = [...this.offlineErrorQueue];
-      this.offlineErrorQueue = [];
-      this.persistOfflineQueue('errors', this.offlineErrorQueue);
-
-      // Send in batches to avoid overwhelming the server
-      this.sendBatch(`${this.apiUrl}/errors/batch`, errorQueue);
+    while (this.offlineErrorQueue.length > 0) {
+      const error = this.offlineErrorQueue.shift();
+      if (error) {
+        this.http.post<ErrorTelemetry>(`${this.apiUrl}/errors`, error).pipe(
+          catchError((err) => {
+            console.error('Failed to send queued error telemetry:', err);
+            this.offlineErrorQueue.unshift(error);
+            return of(null);
+          }),
+        ).subscribe();
+      }
     }
 
     // Process performance queue
-    if (this.offlinePerformanceQueue.length > 0) {
-      const performanceQueue = [...this.offlinePerformanceQueue];
-      this.offlinePerformanceQueue = [];
-      this.persistOfflineQueue('performance', this.offlinePerformanceQueue);
-
-      // Send in batches to avoid overwhelming the server
-      this.sendBatch(`${this.apiUrl}/performance/batch`, performanceQueue);
+    while (this.offlinePerformanceQueue.length > 0) {
+      const perf = this.offlinePerformanceQueue.shift();
+      if (perf) {
+        this.http.post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perf).pipe(
+          catchError((err) => {
+            console.error('Failed to send queued performance telemetry:', err);
+            this.offlinePerformanceQueue.unshift(perf);
+            return of(null);
+          }),
+        ).subscribe();
+      }
     }
   }
 
   /**
-   * Send a batch of telemetry data
-   * @param url API endpoint
-   * @param batch Batch of telemetry data
+   * Sanitizes a URL specifically for telemetry to prevent SSRF and remove sensitive data
+   * @param url The URL to sanitize
+   * @returns A sanitized URL safe for telemetry
    */
-  private sendBatch(url: string, batch: any[]): void {
-    // Split into smaller batches if needed
-    const batchSize = 50;
-    for (let i = 0; i < batch.length; i += batchSize) {
-      const chunk = batch.slice(i, i + batchSize);
-      this.http
-        .post(url, { items: chunk })
-        .pipe(
-          catchError((err) => {
-            console.error('Failed to send telemetry batch:', err);
-            return of({ success: false, error: err });
-          }),
-        )
-        .subscribe();
+  private sanitizeUrlForTelemetry(url: string): string {
+    if (!url) {
+      return '';
+    }
+
+    try {
+      // For relative URLs, consider them safe
+      if (url.startsWith('/')) {
+        return url;
+      }
+
+      // Validate and parse the URL
+      const urlObj = new URL(url);
+
+      // Only allow http and https protocols
+      if (!['http:', 'https:'].includes(urlObj.protocol.toLowerCase())) {
+        return 'invalid-protocol://' + urlObj.hostname;
+      }
+
+      // Remove sensitive query parameters
+      const sensitiveParams = ['token', 'key', 'auth', 'password', 'secret'];
+      const params = new URLSearchParams(urlObj.search);
+      let modified = false;
+
+      sensitiveParams.forEach((param) => {
+        if (params.has(param)) {
+          params.set(param, '[REDACTED]');
+          modified = true;
+        }
+      });
+
+      if (modified) {
+        urlObj.search = params.toString();
+      }
+
+      // Remove basic auth if present
+      urlObj.username = '';
+      urlObj.password = '';
+
+      return urlObj.toString();
+    } catch (error) {
+      console.error('Error sanitizing URL for telemetry:', error);
+      return 'invalid-url';
     }
   }
 }

@@ -167,9 +167,8 @@ function handleError(
     telemetryService.trackError({
       name: 'HttpError',
       message: error.message,
-      stack: error.error?.stack,
-      status: error.status?.toString(),
-      url: config.sanitizeSensitiveData ? sanitizeUrl(request.url) : request.url,
+      statusCode: error.status, // Changed status to statusCode
+      url: request.url,
     });
   }
 

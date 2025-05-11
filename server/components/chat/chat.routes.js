@@ -12,8 +12,7 @@ import multer from 'multer';
 const router = express.Router();
 import chatController from './chat.controller.js';
 import encryptionRoutes from './encryption.routes.js';
-import { protect, authGuard } from '../../middleware/auth.js';
-import { validateRequest } from '../../middleware/requestValidator.js';
+import { protect } from '../../middleware/auth.js';
 
 // Apply authentication middleware to all chat routes
 router.use(protect);
@@ -21,7 +20,7 @@ router.use(protect);
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({
-  storage: storage,
+  storage,
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },

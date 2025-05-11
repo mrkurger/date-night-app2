@@ -1,14 +1,36 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "types": ["jasmine"],
+    "module": "CommonJS",
+    "target": "ES2022",
+    "types": ["jasmine", "node"],
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
-    "noImplicitAny": false,
     "strict": false,
-    "noEmitOnError": false
+    "noImplicitAny": false,
+    "noEmitOnError": false,
+    "moduleResolution": "node"
   },
+  "files": ["src/jasmine.d.ts"],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "noEmitOnError": false,
+    "moduleResolution": "node"
+  },
+  "files": ["src/test.d.ts", "src/typings.d.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

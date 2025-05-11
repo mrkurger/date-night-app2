@@ -31,7 +31,6 @@ import { PerformanceMonitorService } from './core/services/performance-monitor.s
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
-import { PerformanceMonitorComponent } from './core/components/performance-monitor/performance-monitor.component';
 // These components are used in the template or will be used in future updates
 // import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
 // import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
@@ -39,6 +38,7 @@ import { PerformanceMonitorComponent } from './core/components/performance-monit
 // import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
+import { NbIconLibraries } from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
@@ -60,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   isAdvertiser = false;
   isAdmin = false;
+  isClient = false; // Flag to determine if user is a client
   username = '';
   unreadMessages = 0;
   notificationCount = 0;
@@ -98,6 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private performanceMonitor: PerformanceMonitorService,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
+    private iconLibraries: NbIconLibraries,
   ) {
     // Set default meta tags for SEO
     this.titleService.setTitle('Date Night App - Find Your Perfect Match');
@@ -130,8 +132,13 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     });
 
+    // Initialize isClient based on user role or other logic
+    this.isClient = true; // Set this based on your actual user role logic
+
     // Set up router event listeners for page transitions
     this.setupRouterEvents();
+    this.iconLibraries.registerSvgPack('eva', { packClass: 'eva-icons' });
+    this.iconLibraries.setDefaultPack('eva');
   }
 
   ngOnInit(): void {

@@ -3,7 +3,6 @@
 @use '../../../core/design/animation-utilities' as animation;
 @use '../../../core/design/micro-interactions' as micro;
 @use '../../../core/design/dark-mode' as dark;
-@import 'emerald-ui/lib/css/emerald-ui.min.css';
 
 .chat-room {
   display: flex;
@@ -15,7 +14,9 @@
   @include dark.background(var(--color-background));
 
   // Add fade-in animation
-  @include animation.fade-in(0.3s);
+  & {
+    @include animation.fade-in(0.3s);
+  }
 }
 
 // Header
@@ -32,7 +33,9 @@
   @include dark.border(var(--color-border));
 
   // Add slide-in animation
-  @include animation.slide-in-top(0.3s);
+  & {
+    @include animation.slide-in-top(0.3s);
+  }
 }
 
 .chat-room__back {
@@ -69,7 +72,9 @@
   flex: 1;
 
   // Add slide-in animation
-  @include animation.slide-in-right(0.3s, ease-out, 0.1s);
+  & {
+    @include animation.slide-in-right(0.3s, ease-out, 0.1s);
+  }
 }
 
 .chat-room__avatar {
@@ -88,7 +93,9 @@
     height: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.2s ease;
+    & {
+      transition: transform 0.2s ease;
+    }
 
     // Add subtle shadow
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -113,7 +120,9 @@
     background-color: var(--color-success);
 
     // Add subtle pulse animation
-    animation: status-pulse 2s infinite;
+    & {
+      animation: status-pulse 2s infinite;
+    }
   }
 }
 
@@ -143,7 +152,9 @@
   @include dark.text(var(--color-text-dark));
 
   // Add slide-in animation
-  @include animation.slide-in-right(0.3s, ease-out, 0.2s);
+  & {
+    @include animation.slide-in-right(0.3s, ease-out, 0.2s);
+  }
 }
 
 .chat-room__subtitle {
@@ -154,7 +165,9 @@
   @include dark.text(var(--color-text-muted));
 
   // Add slide-in animation
-  @include animation.slide-in-right(0.3s, ease-out, 0.3s);
+  & {
+    @include animation.slide-in-right(0.3s, ease-out, 0.3s);
+  }
 }
 
 .chat-room__encryption {
@@ -184,7 +197,9 @@
     @include dark.text(var(--color-warning));
 
     i {
-      animation: spin 1s linear infinite;
+      & {
+        animation: spin 1s linear infinite;
+      }
     }
   }
 }
@@ -193,7 +208,9 @@
   display: flex;
 
   // Add slide-in animation
-  @include animation.slide-in-left(0.3s, ease-out, 0.1s);
+  & {
+    @include animation.slide-in-left(0.3s, ease-out, 0.1s);
+  }
 }
 
 .chat-room__action-btn {
@@ -246,7 +263,9 @@
   @include dark.shadow(0 4px 12px rgba(0, 0, 0, 0.15));
 
   // Add slide-in animation
-  @include animation.slide-in-top(0.3s, ease-out);
+  & {
+    @include animation.slide-in-top(0.3s, ease-out);
+  }
 
   // Add subtle scale animation
   & {
@@ -275,7 +294,9 @@
   flex-direction: column-reverse; // For easier scrolling to bottom
 
   // Add subtle fade-in animation
-  @include animation.fade-in(0.3s, ease-out, 0.2s);
+  & {
+    @include animation.fade-in(0.3s, ease-out, 0.2s);
+  }
 
   // Add scroll behavior
   scroll-behavior: smooth;
@@ -314,7 +335,9 @@
   @include dark.text(var(--color-text-muted));
 
   // Add fade-in animation
-  @include animation.fade-in(0.5s);
+  & {
+    @include animation.fade-in(0.5s);
+  }
 }
 
 .chat-room__loading-more,
@@ -326,7 +349,9 @@
   margin-bottom: 1rem;
 
   // Add fade-in animation
-  @include animation.fade-in(0.3s);
+  & {
+    @include animation.fade-in(0.3s);
+  }
 
   button {
     background: none;
@@ -366,7 +391,9 @@
   border: 3px solid rgba(var(--color-primary-rgb), 0.2);
   border-top-color: var(--color-primary);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  & {
+    animation: spin 1s linear infinite;
+  }
   margin-bottom: 1rem;
 
   // Add subtle shadow
@@ -390,7 +417,9 @@
   @include dark.text(var(--color-text-muted));
 
   // Add subtle animation
-  animation: float 3s ease-in-out infinite;
+  & {
+    animation: float 3s ease-in-out infinite;
+  }
 }
 
 @keyframes float {
@@ -410,11 +439,15 @@
 
   // Add staggered animation for children
   & > * {
-    animation: message-appear 0.3s ease-out backwards;
+    & {
+      animation: message-appear 0.3s ease-out backwards;
+    }
 
     @for $i from 1 through 10 {
       &:nth-child(#{$i}) {
-        animation-delay: 0.05s * $i;
+        & {
+          animation-delay: 0.05s * $i;
+        }
       }
     }
   }
@@ -444,7 +477,9 @@
   @include dark.border(var(--color-border));
 
   // Add slide-in animation
-  @include animation.slide-in-bottom(0.3s);
+  & {
+    @include animation.slide-in-bottom(0.3s);
+  }
 }
 
 .chat-room__attachment {
@@ -488,7 +523,9 @@
     @include dark.text(var(--color-text-dark));
 
     i {
-      animation: rotate 0.5s ease-in-out;
+      & {
+        animation: rotate 0.5s ease-in-out;
+      }
     }
   }
 
@@ -501,7 +538,9 @@
   flex: 1;
 
   // Add subtle animation
-  animation: expand 0.3s ease-out;
+  & {
+    animation: expand 0.3s ease-out;
+  }
 
   textarea {
     width: 100%;
@@ -521,9 +560,11 @@
     @include dark.text(var(--color-text-dark));
 
     // Add transition
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    & {
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
 
     &:focus {
       outline: none;
@@ -569,10 +610,12 @@
   @include micro.click-ripple(white);
 
   // Add transition
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  & {
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
 
   // Add accessibility focus styles
   &:focus-visible {
@@ -603,7 +646,9 @@
 
     // Add animation when not disabled
     .chat-room__send-btn:not(:disabled) & {
-      animation: send-pulse 2s infinite;
+      & {
+        animation: send-pulse 2s infinite;
+      }
     }
   }
 }
@@ -634,19 +679,27 @@
 
   // Optimize animations for smaller screens
   .chat-room__header {
-    @include animation.slide-in-top(0.2s);
+    & {
+      @include animation.slide-in-top(0.2s);
+    }
   }
 
   .chat-room__messages {
-    @include animation.fade-in(0.2s);
+    & {
+      @include animation.fade-in(0.2s);
+    }
   }
 
   .chat-room__input {
-    @include animation.slide-in-bottom(0.2s);
+    & {
+      @include animation.slide-in-bottom(0.2s);
+    }
   }
 
   .chat-room__message-list > * {
-    animation-duration: 0.2s;
+    & {
+      animation-duration: 0.2s;
+    }
   }
 }
 

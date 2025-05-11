@@ -1,0 +1,104 @@
+/// <reference types="jasmine" />
+declare global {
+  namespace jasmine {
+    interface Matchers<T> {
+      toBe(expected: T): boolean;
+      toBeCloseTo(expected: number, precision?: number): boolean;
+      toBeDefined(): boolean;
+      toBeFalse(): boolean;
+      toBeFalsy(): boolean;
+      toBeGreaterThan(expected: number): boolean;
+      toBeGreaterThanOrEqual(expected: number): boolean;
+      toBeLessThan(expected: number): boolean;
+      toBeLessThanOrEqual(expected: number): boolean;
+      toBeNaN(): boolean;
+      toBeNegativeInfinity(): boolean;
+      toBeNull(): boolean;
+      toBePositiveInfinity(): boolean;
+      toBeTrue(): boolean;
+      toBeTruthy(): boolean;
+      toBeUndefined(): boolean;
+      toContain(expected: any): boolean;
+      toEqual(expected: any): boolean;
+      toHaveBeenCalled(): boolean;
+      toHaveBeenCalledTimes(expected: number): boolean;
+      toHaveBeenCalledWith(...params: any[]): boolean;
+      toMatch(expected: string | RegExp): boolean;
+      toThrow(expected?: any): boolean;
+      toThrowError(expected?: any, message?: string): boolean;
+    }
+    
+    interface Spy {
+      (...params: any[]): any;
+      and: SpyAnd<any>;
+      calls: Calls;
+      identity: string;
+    }
+
+    interface SpyAnd<T> {
+      callThrough(): Spy;
+      returnValue(val: any): Spy;
+      returnValues(...values: any[]): Spy;
+      callFake(fn: Function): Spy;
+      throwError(msg: string): Spy;
+      stub(): Spy;
+    }
+
+    interface Calls {
+      any(): boolean;
+      count(): number;
+      argsFor(index: number): any[];
+      allArgs(): any[];
+      all(): CallInfo[];
+      mostRecent(): CallInfo;
+      first(): CallInfo;
+      reset(): void;
+    }
+
+    interface CallInfo {
+      object: any;
+      args: any[];
+      returnValue: any;
+    }
+
+    interface CustomMatcherFactories {
+      [name: string]: CustomMatcherFactory;
+    }
+
+    interface CustomMatcherFactory {
+      (util: MatchersUtil, customEqualityTesters: CustomEqualityTester[]): CustomMatcher;
+    }
+
+    interface MatchersUtil {
+      equals(a: any, b: any, customTesters?: CustomEqualityTester[]): boolean;
+      contains<T>(haystack: ArrayLike<T> | string, needle: any, customTesters?: CustomEqualityTester[]): boolean;
+      buildFailureMessage(matcherName: string, isNot: boolean, actual: any, ...expected: any[]): string;
+    }
+
+    interface CustomMatcher {
+      compare<T>(actual: T, expected: T, ...args: any[]): CustomMatcherResult;
+      compare(actual: any, ...expected: any[]): CustomMatcherResult;
+    }
+
+    interface CustomMatcherResult {
+      pass: boolean;
+      message: string;
+    }
+
+    interface CustomEqualityTester {
+      (first: any, second: any): boolean | void;
+    }
+
+    interface Env {
+      addMatchers(matchers: CustomMatcherFactories): void;
+    }
+  }
+
+  interface Window {
+    jasmine: {
+      getEnv(): jasmine.Env;
+    };
+  }
+    
+  function expect<T>(actual: T): jasmine.Matchers<T>;
+}

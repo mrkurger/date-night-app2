@@ -240,7 +240,7 @@ export class PerformanceMonitorService {
         const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (entry.entryType === 'first-input') {
-              // @ts-ignore - TypeScript doesn't know about the processingStart property
+              // @ts-expect-error - TypeScript doesn't know about the processingStart property
               const delay = entry.processingStart - entry.startTime;
               callback(delay);
               observer.disconnect();
@@ -290,10 +290,10 @@ export class PerformanceMonitorService {
    */
   private monitorMemoryUsage(): void {
     // Check if the performance.memory API is available (Chrome only)
-    // @ts-ignore - TypeScript doesn't know about the memory property
+    // @ts-expect-error - TypeScript doesn't know about the memory property
     if (window.performance && window.performance.memory) {
       const checkMemory = () => {
-        // @ts-ignore - TypeScript doesn't know about the memory property
+        // @ts-expect-error - TypeScript doesn't know about the memory property
         const memory = window.performance.memory;
         const metrics = this.metricsSubject.value;
 

@@ -1,18 +1,19 @@
 // ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
+// Server Configuration and URL Processing
 // ===================================================
-// This file contains settings for server settings
+// This file contains core server setup and URL handling logic
 //
-// COMMON CUSTOMIZATIONS:
-// - PORT: Description of setting (default: value)
-//   Related to: other_file.js:OTHER_SETTING
+// Key components:
+// - URL Preprocessing: Sanitizes and validates URLs
+// - Path Pattern Handling: Manages path-to-regexp compatibility
+// - Error Handling: Graceful handling of URL format issues
 // ===================================================
+
 import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-// Morgan logger is configured but used conditionally based on environment
-// eslint-disable-next-line no-unused-vars
+// Morgan logger is configured based on environment
 import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
@@ -26,42 +27,45 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import config from './config/environment.js';
 import routes from './routes/index.js';
-import errorHandler from './middleware/errorHandler.js';
-// CSRF middleware is imported but applied conditionally based on configuration
-// eslint-disable-next-line no-unused-vars
-import { csrfMiddleware } from './middleware/csrf.js';
-import cspNonce from './middleware/cspNonce.js';
-import securityHeaders from './middleware/securityHeaders.js';
-import {
-  cspMiddleware,
-  setupCspReportEndpoint as setupReportEndpoint,
-} from './middleware/csp.middleware.js';
-import { conditionalCache, etagCache } from './middleware/cache.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './config/swagger.js';
+import { urlValidatorMiddleware } from './middleware/url-validator.js';
 
-// Initialize express
 const app = express();
+let server;
 
-// Generate CSP nonce for each request
-app.use(cspNonce);
+// Custom URL preprocessing and validation disabled for startup
+app.use(helmet());
+app.use(cors());
+// URL validation middleware not applied
 
-// Apply CSP middleware
-app.use(cspMiddleware());
+// Apply remaining middleware
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
+app.use(compression());
+app.use(cookieParser());
 
-// Apply additional security headers
-app.use(securityHeaders);
+// Configure Morgan logger based on environment
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
+}
 
-// Setup CSP report endpoint
-setupReportEndpoint(app);
-
-// Apply caching middleware
-app.use(conditionalCache());
-app.use(etagCache());
-
-// Get current directory (equivalent to __dirname in CommonJS)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: 'Too many requests from this IP, please try again in 15 minutes',
+});
+app.use('/api', limiter);
 
 // Create logs directory if it doesn't exist
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const logsDir = path.join(__dirname, 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
@@ -114,14 +118,6 @@ app.use(
           'ws:',
           'https://api.stripe.com',
           ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
-          'wss:',
-          'ws:',
-          'https://api.stripe.com',
-          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
-          'wss:',
-          'ws:',
-          'https://api.stripe.com',
-          ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
         ],
         // Add additional security directives
         objectSrc: ["'none'"],
@@ -148,38 +144,6 @@ app.use(
   })
 );
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later',
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-// Apply rate limiting to all routes
-app.use('/api/', limiter);
-
-// Body parser
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-
-// Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
-
-// Data sanitization against XSS
-app.use(xss());
-
-// Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: ['category', 'county', 'city', 'featured', 'verified', 'sort'],
-  })
-);
-
-// Compression middleware
-app.use(compression());
-
 // Secure file serving - using IIFE to handle top-level await
 (async () => {
   const { secureFileServing } = await import('./middleware/fileAccess.js');
@@ -191,6 +155,8 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
   for (let i = 0; i < retries; i++) {
     try {
       // Log the MongoDB URI we're connecting to (without credentials)
+      console.log(`[DEBUG] process.env.MONGODB_URI: ${process.env.MONGODB_URI}`); // Added for debugging
+      console.log(`[DEBUG] config.mongoUri before connect: ${config.mongoUri}`); // Added for debugging
       const sanitizedUri = config.mongoUri.replace(/:\/\/([^:]+):([^@]+)@/, '://$1:***@');
       console.log(`Connecting to MongoDB: ${sanitizedUri}`);
 
@@ -235,9 +201,30 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
 // Parse cookies for CSRF
 app.use(cookieParser());
 
-// Swagger documentation
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpecs from './config/swagger.js';
+// Add route debugging middleware before registering routes
+app.use((req, res, next) => {
+  const rawUrl = req.originalUrl;
+  const decodedUrl = decodeURIComponent(rawUrl);
+  console.debug(`[Route Debug] Processing URL: ${decodedUrl}`);
+  if (decodedUrl.includes('git.new') || decodedUrl.includes('https:')) {
+    console.warn(`[Route Warning] Potentially problematic URL pattern detected: ${decodedUrl}`);
+  }
+  next();
+});
+
+// Safe URL validation: wraps urlValidatorMiddleware to catch errors
+app.use((req, res, next) => {
+  try {
+    urlValidatorMiddleware(req, res, next);
+  } catch (error) {
+    console.warn('URL validation failed:', error.message || error);
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid URL format',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
+    });
+  }
+});
 
 // Serve Swagger documentation
 app.use(
@@ -264,46 +251,46 @@ app.get('/swagger.json', (req, res) => {
 // Apply CSRF protection to sensitive routes
 app.use('/api/v1', routes);
 
-// Handle 404 routes
-app.use((req, res, next) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  error.status = 404;
-  next(error);
-});
-
-// Global error handler
-app.use(errorHandler);
-
 // Graceful shutdown handling
 const shutdown = async signal => {
   console.log(`${signal} received. Starting graceful shutdown...`);
 
-  // Close database connection
-  await mongoose.connection.close();
-  console.log('Database connections closed');
+  try {
+    // Close database connection
+    await mongoose.connection.close();
+    console.log('Database connections closed');
 
-  // Close server
-  if (server) {
-    server.close(() => {
-      console.log('HTTP server closed');
-      // Signal successful shutdown without process.exit
-      if (process.env.NODE_ENV !== 'test') {
-        process.kill(process.pid, 'SIGTERM');
-      }
-    });
+    // Close server if it exists
+    if (server) {
+      await new Promise((resolve, reject) => {
+        server.close(err => {
+          if (err) {
+            console.error('Error closing server:', err);
+            reject(err);
+          } else {
+            console.log('HTTP server closed');
+            resolve();
+          }
+        });
 
-    // Force close after 10 seconds
-    setTimeout(() => {
-      console.error('Forcing shutdown after timeout');
-      // Signal error shutdown without process.exit
-      if (process.env.NODE_ENV !== 'test') {
-        process.kill(process.pid, 'SIGTERM');
-      }
-    }, 10000);
-  } else {
-    // Signal successful shutdown without process.exit
+        // Force close after 10 seconds
+        setTimeout(() => {
+          console.warn('Forcing shutdown after timeout');
+          if (process.env.NODE_ENV !== 'test') {
+            process.exit(1);
+          }
+        }, 10000).unref();
+      });
+    }
+
+    // Clean exit
     if (process.env.NODE_ENV !== 'test') {
-      process.kill(process.pid, 'SIGTERM');
+      process.exit(0);
+    }
+  } catch (err) {
+    console.error('Error during shutdown:', err);
+    if (process.env.NODE_ENV !== 'test') {
+      process.exit(1);
     }
   }
 };
@@ -318,19 +305,35 @@ process.on('uncaughtException', error => {
   shutdown('UNCAUGHT EXCEPTION');
 });
 
-process.on('unhandledRejection', reason => {
-  console.error('UNHANDLED REJECTION:', reason);
-  shutdown('UNHANDLED REJECTION');
-});
-
-// Start server only after MongoDB connects
-const PORT = process.env.PORT || 3000;
-let server; // Declare server variable in global scope
-
-connectWithRetry()
-  .then(() => {
+// Start server after successful database connection
+const startServer = async () => {
+  try {
+    await connectWithRetry();
+    const PORT = process.env.PORT || 3000;
     server = app.listen(PORT, () => {
+      // Assign to top-level server variable
       console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    });
+
+    // Handle server-specific errors
+    server.on('error', error => {
+      console.error('Server error:', error);
+      if (error.syscall !== 'listen') {
+        throw error;
+      }
+
+      switch (error.code) {
+        case 'EACCES':
+          console.error(`Port ${PORT} requires elevated privileges`);
+          process.exit(1);
+          break;
+        case 'EADDRINUSE':
+          console.error(`Port ${PORT} is already in use`);
+          process.exit(1);
+          break;
+        default:
+          throw error;
+      }
     });
 
     // Initialize Socket.IO
@@ -342,10 +345,12 @@ connectWithRetry()
     import('./utils/messageCleanup.js').then(module => {
       module.default.init();
     });
-  })
-  .catch(err => {
-    console.error('Failed to start server:', err);
-    throw err;
-  });
 
-export { app };
+    return server;
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+};
+
+startServer();

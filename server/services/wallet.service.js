@@ -25,11 +25,16 @@ import axios from 'axios';
 import crypto from 'crypto';
 
 // Initialize Stripe with the API key, but allow for testing by checking if it's already defined
-// This helps with mocking in tests
-const stripe =
-  typeof globalThis !== 'undefined' && globalThis.stripe
-    ? globalThis.stripe
-    : new Stripe(process.env.STRIPE_SECRET_KEY);
+// This helps with mocking in tests and allows running without Stripe
+let stripe = null;
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe =
+    typeof globalThis !== 'undefined' && globalThis.stripe
+      ? globalThis.stripe
+      : new Stripe(process.env.STRIPE_SECRET_KEY);
+} else {
+  logger.warn('STRIPE_SECRET_KEY not set - Stripe functionality will be disabled');
+}
 
 // Constants
 const SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP'];
@@ -355,7 +360,7 @@ class WalletService {
       return paymentMethod;
     } catch (error) {
       if (process.env.NODE_ENV !== 'test') {
-        console.error('Error setting default payment method:', error);
+        logger.error('Error setting default payment method:', error);
       }
       throw error;
     }
@@ -372,7 +377,7 @@ class WalletService {
       return wallet.paymentMethods;
     } catch (error) {
       if (process.env.NODE_ENV !== 'test') {
-        console.error('Error getting wallet payment methods:', error);
+        logger.error('Error getting wallet payment methods:', error);
       }
       throw error;
     }
@@ -466,7 +471,7 @@ class WalletService {
         clientSecret: paymentIntent.client_secret,
       };
     } catch (error) {
-      console.error('Error depositing funds with Stripe:', error);
+      logger.error('Error depositing funds with Stripe:', error);
       throw error;
     }
   }
@@ -521,7 +526,7 @@ class WalletService {
         memo: cryptoPaymentMethod.cryptoDetails.memo,
       };
     } catch (error) {
-      console.error('Error generating crypto deposit address:', error);
+      logger.error('Error generating crypto deposit address:', error);
       throw error;
     }
   }
@@ -642,13 +647,13 @@ class WalletService {
             await updatedWallet.save();
           }
         } catch (error) {
-          console.error('Error completing withdrawal:', error);
+          logger.error('Error completing withdrawal:', error);
         }
       }, 5000); // 5 seconds delay
 
       return wallet.transactions[wallet.transactions.length - 1];
     } catch (error) {
-      console.error('Error withdrawing funds:', error);
+      logger.error('Error withdrawing funds:', error);
       throw error;
     }
   }
@@ -775,13 +780,13 @@ class WalletService {
             await updatedWallet.save();
           }
         } catch (error) {
-          console.error('Error completing crypto withdrawal:', error);
+          logger.error('Error completing crypto withdrawal:', error);
         }
       }, 10000); // 10 seconds delay
 
       return wallet.transactions[wallet.transactions.length - 1];
     } catch (error) {
-      console.error('Error withdrawing cryptocurrency:', error);
+      logger.error('Error withdrawing cryptocurrency:', error);
       throw error;
     }
   }
@@ -869,7 +874,7 @@ class WalletService {
 
       return senderWallet.transactions[senderWallet.transactions.length - 1];
     } catch (error) {
-      console.error('Error transferring funds:', error);
+      logger.error('Error transferring funds:', error);
       throw error;
     }
   }
@@ -914,7 +919,7 @@ class WalletService {
 
       return wallet.settings;
     } catch (error) {
-      console.error('Error updating wallet settings:', error);
+      logger.error('Error updating wallet settings:', error);
       throw error;
     }
   }
@@ -994,7 +999,7 @@ class WalletService {
 
       return { received: true, processed: false };
     } catch (error) {
-      console.error('Error processing crypto webhook:', error);
+      logger.error('Error processing crypto webhook:', error);
       throw error;
     }
   }
@@ -1027,7 +1032,7 @@ class WalletService {
 
       return toRate / fromRate;
     } catch (error) {
-      console.error('Error getting exchange rate:', error);
+      logger.error('Error getting exchange rate:', error);
       return 1; // Default to 1:1 exchange rate on error
     }
   }

@@ -60,6 +60,20 @@ const handleCastErrorDB = err => {
   return new AppError(message, 400);
 };
 
+/**
+ * Handle path-to-regexp parsing errors
+ */
+const handlePathToRegexpError = err => {
+  // Log the full error for debugging
+  logger.debug('Path-to-regexp error:', {
+    message: err.message,
+    stack: err.stack,
+    name: err.name,
+  });
+
+  return new AppError('Invalid URL format. Please check the URL and try again.', 400);
+};
+
 // Logger is imported at the top of the file
 
 /**
@@ -137,6 +151,17 @@ const sendErrorProd = (err, req, res) => {
 };
 
 /**
+ * Sanitize URLs in error messages to prevent path-to-regexp parsing issues
+ * @param {string} message - The error message to sanitize
+ * @returns {string} - The sanitized error message
+ */
+const sanitizeErrorMessage = message => {
+  if (typeof message !== 'string') return message;
+  // Replace http:// and https:// with a pattern that won't trigger path-to-regexp
+  return message.replace(/https?:\/\//g, 'https__//');
+};
+
+/**
  * Global error handling middleware
  * @param {Error} err - The error object
  * @param {Request} req - Express request object
@@ -147,6 +172,11 @@ const sendErrorProd = (err, req, res) => {
 export default (err, req, res, _next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
+
+  // Sanitize error message to prevent path-to-regexp issues
+  if (err.message) {
+    err.message = sanitizeErrorMessage(err.message);
+  }
 
   // Ensure correlation ID is available
   if (!req.correlationId) {
@@ -175,6 +205,12 @@ export default (err, req, res, _next) => {
     if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    if (
+      error.message &&
+      (error.message.includes('path-to-regexp') || error.message.includes('Missing parameter name'))
+    ) {
+      error = handlePathToRegexpError(error);
+    }
     if (error.name === 'MulterError') {
       error = new AppError(`File upload error: ${error.message}`, 400);
     }
