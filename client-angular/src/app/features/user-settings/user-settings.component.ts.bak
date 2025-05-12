@@ -1,0 +1,352 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (user-settings.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import {
+  UserPreferencesService,
+  ContentDensity,
+  CardSize,
+} from '../../core/services/user-preferences.service';
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['./user-settings.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class UserSettingsComponent implements OnInit, OnDestroy {
+  profileForm: FormGroup;
+  passwordForm: FormGroup;
+  notificationForm: FormGroup;
+  privacyForm: FormGroup;
+  displayForm: FormGroup;
+  loading = false;
+  user: any = null;
+  activeTab = 'profile';
+  currentTheme: 'light' | 'dark' | 'system' = 'system';
+  contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
+  cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
+
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private themeService: ThemeService,
+    private userPreferencesService: UserPreferencesService,
+    private router: Router,
+  ) {
+    this.profileForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.pattern(/^\+?[0-9]{8,15}$/)],
+      bio: [''],
+    });
+
+    this.passwordForm = this.fb.group(
+      {
+        currentPassword: ['', [Validators.required, Validators.minLength(6)]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      { validators: this.passwordMatchValidator },
+    );
+
+    this.notificationForm = this.fb.group({
+      emailNotifications: [true],
+      chatNotifications: [true],
+      marketingEmails: [false],
+      newMatchNotifications: [true],
+    });
+
+    this.privacyForm = this.fb.group({
+      profileVisibility: ['public'],
+      showOnlineStatus: [true],
+      allowMessaging: ['all'],
+      dataSharing: [false],
+    });
+
+    this.displayForm = this.fb.group({
+      defaultViewType: ['netflix'],
+      contentDensity: ['comfortable'],
+      cardSize: ['medium'],
+    });
+
+    // Get content density and card size options from the service
+    this.contentDensityOptions = this.userPreferencesService.contentDensityOptions;
+    this.cardSizeOptions = this.userPreferencesService.cardSizeOptions;
+  }
+
+  ngOnInit(): void {
+    this.loadUserData();
+    this.loadThemeSettings();
+    this.loadDisplaySettings();
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  loadUserData(): void {
+    this.loading = true;
+    this.subscriptions.push(
+      this.authService.currentUser$.subscribe((user) => {
+        if (user) {
+          this.user = user;
+
+          // Populate profile form
+          this.profileForm.patchValue({
+            name: user.name || '',
+            email: user.email || '',
+            phone: user.phone || '',
+            bio: user.bio || '',
+          });
+
+          // Populate notification settings if available
+          if (user.notificationSettings) {
+            this.notificationForm.patchValue({
+              emailNotifications: user.notificationSettings.emailNotifications ?? true,
+              chatNotifications: user.notificationSettings.chatNotifications ?? true,
+              marketingEmails: user.notificationSettings.marketingEmails ?? false,
+              newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
+            });
+          }
+
+          // Populate privacy settings if available
+          if (user.privacySettings) {
+            this.privacyForm.patchValue({
+              profileVisibility: user.privacySettings.profileVisibility || 'public',
+              showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
+              allowMessaging: user.privacySettings.allowMessaging || 'all',
+              dataSharing: user.privacySettings.dataSharing ?? false,
+            });
+          }
+        }
+        this.loading = false;
+      }),
+    );
+  }
+
+  loadThemeSettings(): void {
+    // Get current theme
+    this.currentTheme = this.themeService.getCurrentTheme();
+
+    // Subscribe to theme changes
+    this.subscriptions.push(
+      this.themeService.theme$.subscribe((theme) => {
+        this.currentTheme = theme;
+      }),
+    );
+  }
+
+  loadDisplaySettings(): void {
+    // Get user preferences
+    const preferences = this.userPreferencesService.getPreferences();
+
+    // Populate display form
+    this.displayForm.patchValue({
+      defaultViewType: preferences.defaultViewType,
+      contentDensity: preferences.contentDensity,
+      cardSize: preferences.cardSize,
+    });
+
+    // Subscribe to preference changes
+    this.subscriptions.push(
+      this.userPreferencesService.preferences$.subscribe((prefs) => {
+        this.displayForm.patchValue(
+          {
+            defaultViewType: prefs.defaultViewType,
+            contentDensity: prefs.contentDensity,
+            cardSize: prefs.cardSize,
+          },
+          { emitEvent: false },
+        );
+      }),
+    );
+  }
+
+  passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
+    const newPassword = form.get('newPassword')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    if (newPassword !== confirmPassword) {
+      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    }
+
+    return null;
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+  }
+
+  saveProfile(): void {
+    if (this.profileForm.invalid) {
+      this.notificationService.error('Please fix the form errors before submitting');
+      return;
+    }
+
+    this.loading = true;
+    const profileData = this.profileForm.value;
+
+    this.authService.updateProfile(profileData).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.notificationService.success('Profile updated successfully');
+      },
+      error: (error) => {
+        this.loading = false;
+        this.notificationService.error('Failed to update profile');
+        console.error('Error updating profile:', error);
+      },
+    });
+  }
+
+  changePassword(): void {
+    if (this.passwordForm.invalid) {
+      this.notificationService.error('Please fix the form errors before submitting');
+      return;
+    }
+
+    this.loading = true;
+    const passwordData = {
+      currentPassword: this.passwordForm.value.currentPassword,
+      newPassword: this.passwordForm.value.newPassword,
+    };
+
+    this.authService.changePassword(passwordData).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.notificationService.success('Password changed successfully');
+        this.passwordForm.reset();
+      },
+      error: (error) => {
+        this.loading = false;
+        this.notificationService.error('Failed to change password');
+        console.error('Error changing password:', error);
+      },
+    });
+  }
+
+  saveNotificationSettings(): void {
+    this.loading = true;
+    const notificationSettings = this.notificationForm.value;
+
+    this.authService.updateNotificationSettings(notificationSettings).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.notificationService.success('Notification settings updated');
+      },
+      error: (error) => {
+        this.loading = false;
+        this.notificationService.error('Failed to update notification settings');
+        console.error('Error updating notification settings:', error);
+      },
+    });
+  }
+
+  savePrivacySettings(): void {
+    this.loading = true;
+    const privacySettings = this.privacyForm.value;
+
+    this.authService.updatePrivacySettings(privacySettings).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.notificationService.success('Privacy settings updated');
+      },
+      error: (error) => {
+        this.loading = false;
+        this.notificationService.error('Failed to update privacy settings');
+        console.error('Error updating privacy settings:', error);
+      },
+    });
+  }
+
+  deleteAccount(): void {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      this.loading = true;
+
+      this.authService.deleteAccount().subscribe({
+        next: () => {
+          this.loading = false;
+          this.notificationService.success('Your account has been deleted');
+          // Redirect to home page
+          this.router.navigateByUrl('/');
+        },
+        error: (error) => {
+          this.loading = false;
+          this.notificationService.error('Failed to delete account');
+          console.error('Error deleting account:', error);
+        },
+      });
+    }
+  }
+
+  /**
+   * Set the theme
+   * @param theme The theme to set
+   */
+  setTheme(theme: 'light' | 'dark' | 'system'): void {
+    this.themeService.setTheme(theme);
+  }
+
+  /**
+   * Save display settings
+   */
+  saveDisplaySettings(): void {
+    this.loading = true;
+
+    try {
+      const displaySettings = this.displayForm.value;
+
+      // Update user preferences
+      this.userPreferencesService.updatePreferences({
+        defaultViewType: displaySettings.defaultViewType,
+        contentDensity: displaySettings.contentDensity,
+        cardSize: displaySettings.cardSize,
+      });
+
+      this.notificationService.success('Display settings saved successfully');
+      this.displayForm.markAsPristine();
+    } catch (error) {
+      console.error('Error saving display settings:', error);
+      this.notificationService.error('Failed to save display settings');
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  /**
+   * Reset display settings to defaults
+   */
+  resetDisplaySettings(): void {
+    // Reset to default values
+    this.displayForm.patchValue({
+      defaultViewType: 'netflix',
+      contentDensity: 'comfortable',
+      cardSize: 'medium',
+    });
+
+    // Save the default values
+    this.saveDisplaySettings();
+  }
+}

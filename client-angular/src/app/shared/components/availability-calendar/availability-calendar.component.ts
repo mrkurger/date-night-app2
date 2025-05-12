@@ -1,5 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  NbDatepickerModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbButtonModule,
+  NbSelectModule,
+  NbIconModule,
+} from '@nebular/theme';
 import {
   FormBuilder,
   FormGroup,
@@ -10,13 +24,6 @@ import {
   AbstractControl,
   Validators,
 } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
 
 export interface TimeSlot {
   dayOfWeek: number;
@@ -83,13 +90,13 @@ const validateTimeSlotOverlap: ValidatorFn = (
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatIconModule,
+    NbDatepickerModule,
+    NbDatepickerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbSelectModule,
+    NbIconModule,
   ],
   template: `
     <div class="availability-calendar">
@@ -132,7 +139,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
               type="button"
               [disabled]="timeSlots.length === 1"
             >
-              <mat-icon>delete</mat-icon>
+              <nb-icon icon="delete"></nb-icon>
             </button>
           </div>
 
@@ -143,7 +150,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
 
         <!-- Add Time Slot Button -->
         <button mat-button color="primary" (click)="addTimeSlot()" type="button">
-          <mat-icon>add</mat-icon>
+          <nb-icon icon="add"></nb-icon>
           Add Time Slot
         </button>
 

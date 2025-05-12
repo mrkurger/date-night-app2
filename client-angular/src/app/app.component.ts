@@ -1,299 +1,97 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (app.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy, Inject, Renderer2 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
 import {
-  Router,
-  RouterOutlet,
-  RouterLink,
-  RouterLinkActive,
-  NavigationStart,
-  NavigationEnd,
-  NavigationCancel,
-  NavigationError,
-} from '@angular/router';
-import { Subscription, filter } from 'rxjs';
-import { AuthService } from './core/services/auth.service';
-import { NotificationService } from './core/services/notification.service';
-import { ChatService } from './core/services/chat.service';
-import { CsrfService } from './core/services/csrf.service';
-import { PlatformService } from './core/services/platform.service';
-import { PwaService } from './core/services/pwa.service';
-import { ThemeService } from './core/services/theme.service';
-import { PerformanceMonitorService } from './core/services/performance-monitor.service';
+  NbIconModule,
+  NbButtonModule,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbContextMenuModule,
+  NbActionsModule,
+  NbUserModule,
+  NbBadgeModule,
+  NbCardModule,
+  NbListModule,
+} from '@nebular/theme';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from './shared/shared.module';
 import { NotificationComponent } from './shared/components/notification/notification.component';
-import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
-import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
-// These components are used in the template or will be used in future updates
-// import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
-// import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
-// import { ContextualHelpComponent } from './shared/components/contextual-help/contextual-help.component';
-// import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
-import { Meta, Title } from '@angular/platform-browser';
-import { NgIf } from '@angular/common';
-import { NbIconLibraries } from '@nebular/theme';
+
+interface NotificationMessage {
+  message: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  duration?: number;
+}
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
+    RouterModule,
+    SharedModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbMenuModule,
+    NbContextMenuModule,
+    NbActionsModule,
+    NbUserModule,
+    NbBadgeModule,
+    NbCardModule,
+    NbListModule,
     NotificationComponent,
-    DebugInfoComponent,
-    AlertNotificationsComponent,
-    NgIf,
   ],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
-  isAuthenticated = false;
-  isAdvertiser = false;
-  isAdmin = false;
-  isClient = false; // Flag to determine if user is a client
-  username = '';
-  unreadMessages = 0;
-  notificationCount = 0;
-  deferredPrompt: unknown;
-  showInstallPrompt = false;
+export class AppComponent implements OnInit {
+  title = 'date-night-app';
+  notifications: NotificationMessage[] = [];
+  username = 'User'; // Replace with actual username from auth service
+  isAuthenticated = false; // Replace with actual auth state
+  isAdmin = false; // Replace with actual admin check
+  isAdvertiser = false; // Replace with actual advertiser check
+  isClient = false; // Replace with actual client check
+  unreadMessages = 0; // Replace with actual unread messages count
+  notificationCount = 0; // Replace with actual notification count
+  showInstallPrompt = false; // Replace with actual PWA install check
 
-  // Onboarding properties
-  showOnboarding = false;
-  showFeatureTour = false;
-  onboardingSteps: Array<{ title: string; content: string; image?: string }> = [];
-  featureTourSteps: Array<{ element: string; title: string; content: string; position?: string }> =
-    [];
-  contextualHelpItems: Array<{ id: string; title: string; content: string }> = [];
+  userMenu = [
+    { title: 'Profile', icon: 'person-outline', link: '/profile' },
+    { title: 'Settings', icon: 'settings-2-outline', link: '/settings' },
+    { title: 'Logout', icon: 'log-out-outline', data: 'logout' },
+  ];
 
-  private authSubscription: Subscription = new Subscription();
-  private chatSubscription: Subscription = new Subscription();
-  private notificationSubscription: Subscription = new Subscription();
-  private onboardingSubscription: Subscription = new Subscription();
-  private themeSubscription: Subscription = new Subscription();
-
-  // Track loading state for page transitions
-  isLoading = false;
-  private routerSubscription: Subscription = new Subscription();
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private notificationService: NotificationService,
-    private chatService: ChatService,
-    private csrfService: CsrfService,
-    private platformService: PlatformService,
-    private pwaService: PwaService,
-    private titleService: Title,
-    private metaService: Meta,
-    private themeService: ThemeService,
-    private performanceMonitor: PerformanceMonitorService,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document,
-    private iconLibraries: NbIconLibraries,
-  ) {
-    // Set default meta tags for SEO
-    this.titleService.setTitle('Date Night App - Find Your Perfect Match');
-    this.metaService.addTags([
-      {
-        name: 'description',
-        content:
-          'Date Night App helps you find your perfect match for a memorable date night experience.',
-      },
-      { name: 'keywords', content: 'dating, date night, match, social, relationships' },
-      { name: 'robots', content: 'index, follow' },
-      { property: 'og:title', content: 'Date Night App - Find Your Perfect Match' },
-      {
-        property: 'og:description',
-        content:
-          'Date Night App helps you find your perfect match for a memorable date night experience.',
-      },
-      { property: 'og:type', content: 'website' },
-    ]);
-
-    // Listen for beforeinstallprompt event to enable PWA installation
-    this.platformService.runInBrowser(() => {
-      window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later
-        this.deferredPrompt = e;
-        // Show the install button
-        this.showInstallPrompt = true;
-      });
-    });
-
-    // Initialize isClient based on user role or other logic
-    this.isClient = true; // Set this based on your actual user role logic
-
-    // Set up router event listeners for page transitions
-    this.setupRouterEvents();
-    this.iconLibraries.registerSvgPack('eva', { packClass: 'eva-icons' });
-    this.iconLibraries.setDefaultPack('eva');
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    // Add theme-transition class to body
-    this.renderer.addClass(this.document.body, 'theme-transition');
-
-    // Only run browser-specific code when in browser environment
-    this.platformService.runInBrowser(() => {
-      // Initialize CSRF protection
-      this.csrfService.initializeCsrf().subscribe();
-
-      // Check for PWA updates
-      this.pwaService.checkForUpdates().then((hasUpdate) => {
-        if (hasUpdate) {
-          console.warn('New version available');
-        }
-      });
-
-      this.authSubscription = this.authService.currentUser$.subscribe((user: unknown) => {
-        this.isAuthenticated = !!user;
-
-        if (user) {
-          const userObj = user as { username: string; role: string };
-          this.username = userObj.username;
-          this.isAdvertiser = userObj.role === 'advertiser' || userObj.role === 'admin';
-          this.isAdmin = userObj.role === 'admin';
-
-          // Initialize chat service if authenticated
-          this.initializeChat();
-
-          // Mock implementation for unread messages until the service is fully implemented
-          // This will be replaced with the actual subscription once the service is ready
-          this.unreadMessages = Math.floor(Math.random() * 5);
-          this.notificationCount = Math.floor(Math.random() * 3);
-        }
-      });
-    });
+    // This could subscribe to a notification service
+    // Example: this.notificationService.notifications$.subscribe(...)
   }
 
-  /**
-   * Initialize chat service
-   * Loads chat rooms and unread counts
-   */
-  private initializeChat(): void {
-    // Load chat rooms
-    this.chatService.getRooms().subscribe();
+  showNotification(notification: NotificationMessage) {
+    this.notifications.push(notification);
 
-    // Mock implementation for unread counts
-    // This will be replaced with the actual call once the service is ready
-    // this.chatService.getUnreadCounts().subscribe();
-  }
-
-  /**
-   * Sets up router event listeners for page transitions
-   */
-  private setupRouterEvents(): void {
-    // Track navigation events for page transitions
-    this.routerSubscription = this.router.events
-      .pipe(
-        filter(
-          (event) =>
-            event instanceof NavigationStart ||
-            event instanceof NavigationEnd ||
-            event instanceof NavigationCancel ||
-            event instanceof NavigationError,
-        ),
-      )
-      .subscribe((event) => {
-        // Show loading indicator on navigation start
-        if (event instanceof NavigationStart) {
-          this.isLoading = true;
-          this.renderer.addClass(this.document.body, 'page-transition');
-        }
-
-        // Hide loading indicator when navigation ends (success, cancel, or error)
-        if (
-          event instanceof NavigationEnd ||
-          event instanceof NavigationCancel ||
-          event instanceof NavigationError
-        ) {
-          // Use setTimeout to ensure the transition effect is visible
-          setTimeout(() => {
-            this.isLoading = false;
-            this.renderer.removeClass(this.document.body, 'page-transition');
-
-            // Measure page load performance
-            if (event instanceof NavigationEnd) {
-              this.performanceMonitor.measureComponentRender('PageNavigation', () => {
-                // Scroll to top on navigation
-                window.scrollTo(0, 0);
-                return true;
-              });
-            }
-          }, 300);
-        }
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
-    }
-
-    if (this.chatSubscription) {
-      this.chatSubscription.unsubscribe();
-    }
-
-    if (this.notificationSubscription) {
-      this.notificationSubscription.unsubscribe();
-    }
-
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
-    }
-
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
+    if (notification.duration) {
+      setTimeout(() => {
+        this.removeNotification(notification);
+      }, notification.duration);
     }
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/auth/login']);
-    this.notificationService.success('You have been logged out successfully');
-
-    // Reset counters
-    this.unreadMessages = 0;
-    this.notificationCount = 0;
+  removeNotification(notification: NotificationMessage) {
+    const index = this.notifications.indexOf(notification);
+    if (index !== -1) {
+      this.notifications.splice(index, 1);
+    }
   }
 
-  /**
-   * Install PWA app
-   * Shows the installation prompt
-   */
-  installPwa(): void {
-    if (!this.deferredPrompt) {
-      console.warn('Installation prompt not available');
-      return;
-    }
+  installPwa() {
+    // Implement PWA installation logic
+  }
 
-    // Show the prompt
-    (this.deferredPrompt as any).prompt();
-
-    // Wait for the user to respond to the prompt
-    (this.deferredPrompt as any).userChoice.then((choiceResult: { outcome: string }) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.warn('User accepted the install prompt');
-        this.notificationService.success('App installation started!');
-      } else {
-        console.warn('User dismissed the install prompt');
-      }
-
-      // Clear the deferred prompt variable
-      this.deferredPrompt = null;
-      this.showInstallPrompt = false;
-    });
+  logout() {
+    // Implement logout logic
   }
 }

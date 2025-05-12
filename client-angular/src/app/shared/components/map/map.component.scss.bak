@@ -1,0 +1,279 @@
+@use 'sass:color';
+@use '../../../../styles/design-system/variables' as ds;
+
+.map-container {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .map-label {
+    color: ds.$color-neutral-600; // was #666
+  }
+
+  .selected {
+    color: ds.$color-primary; // was #4a90e2
+  }
+
+  .error-marker {
+    background: ds.$color-error; // was #dc3545
+  }
+
+  .boundary {
+    border: 1px solid ds.$color-neutral-300; // was #ddd
+  }
+
+  .boundary:hover {
+    outline: 2px solid ds.$color-primary; // was #4a90e2
+  }
+
+  .boundary:active {
+    background: color.adjust(
+      ds.$color-primary,
+      $lightness: -10%
+    ); // was color.adjust(#4a90e2, $lightness: -10%)
+  }
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+
+  // Accessibility focus styles
+  &:focus {
+    outline: 3px solid ds.$color-primary; // was #4a90e2
+    outline-offset: -3px;
+  }
+
+  // High contrast mode support
+  @media (forced-colors: active) {
+    outline: 2px solid CanvasText;
+  }
+}
+
+.map-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  @media (forced-colors: active) {
+    border: 1px solid CanvasText;
+  }
+}
+
+.map-instructions {
+  color: ds.$color-neutral-600; // was #666
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  i {
+    color: ds.$color-primary; // was #4a90e2
+  }
+}
+
+// Current location marker animation
+.current-location-marker {
+  .pulse {
+    width: 20px;
+    height: 20px;
+    background: rgba(33, 150, 243, 0.4);
+    border: 2px solid #2196f3;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+// Error handling styles
+.location-error {
+  padding: 12px;
+  text-align: center;
+
+  p {
+    color: ds.$color-error; // was #dc3545
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
+
+  .retry-location {
+    background: ds.$color-primary; // was #4a90e2
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: color.adjust(
+        ds.$color-primary,
+        $lightness: -10%
+      ); // was color.adjust(#4a90e2, $lightness: -10%)
+    }
+
+    &:focus {
+      outline: 2px solid ds.$color-primary; // was #4a90e2
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Screen reader only content
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// Map control buttons
+.map-accessibility-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid ds.$color-neutral-300; // was #ddd
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f8f9fa;
+      border-color: ds.$color-primary; // was #4a90e2
+    }
+
+    &:focus {
+      outline: 2px solid ds.$color-primary; // was #4a90e2
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    @media (forced-colors: active) {
+      border: 1px solid CanvasText;
+    }
+  }
+}
+
+// Selected location marker customization
+.leaflet-marker-icon {
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.map-focused {
+  outline: 2px solid #2196f3;
+}
+
+.custom-map-controls {
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  .map-control-btn {
+    display: block;
+    margin: 4px 0;
+    padding: 8px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &:active {
+      background: #e0e0e0;
+    }
+  }
+}
+
+.marker-popup {
+  padding: 8px;
+  max-width: 250px;
+
+  h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: #666;
+  }
+
+  .popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}

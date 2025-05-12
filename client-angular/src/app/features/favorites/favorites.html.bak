@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      .function-link:hover {
+        text-decoration: underline;
+      }
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">favorites Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Favorites</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+            <li><a href="./favorites.html">Favorites</a></li>
+          </ul>
+        </aside>
+
+        <article class="content">
+          <h1>Favorites</h1>
+
+          <section id="overview">
+            <h2>Overview</h2>
+            <h2>Overview</h2>
+            <p>
+              The Favorites System allows users to save ads they&#39;re interested in for later
+              viewing. It supports tagging, prioritization, notes, and notification preferences for
+              each favorite. This feature helps users organize and track ads they&#39;re interested
+              in, making it easier to compare options and make decisions.
+            </p>
+            <h2>User Experience</h2>
+            <p>Users interact with the Favorites System through several interfaces:</p>
+            <ul>
+              <li>
+                <strong>Favorites List</strong>: Displays all favorited ads with filtering and
+                sorting options
+              </li>
+              <li>
+                <strong>Favorite Button</strong>: Appears on ad cards and detail pages for quick
+                favoriting
+              </li>
+              <li>
+                <strong>Favorite Details</strong>: Allows users to add notes, tags, and set priority
+                for each favorite
+              </li>
+              <li>
+                <strong>Notification Settings</strong>: Controls which favorites trigger
+                notifications when updated
+              </li>
+            </ul>
+            <h2>Architecture</h2>
+            <h3>Client-Side Components</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>FavoritesModule</code></td>
+                  <td>
+                    <code>/client-angular/src/app/features/favorites/favorites.module.ts</code>
+                  </td>
+                  <td>Main module for favorites feature</td>
+                </tr>
+                <tr>
+                  <td><code>FavoritesListComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/favorites/favorites-list/favorites-list.component.ts</code
+                    >
+                  </td>
+                  <td>Displays list of favorited ads</td>
+                </tr>
+                <tr>
+                  <td><code>FavoriteCardComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/favorites/favorite-card/favorite-card.component.ts</code
+                    >
+                  </td>
+                  <td>Card view for a favorited ad</td>
+                </tr>
+                <tr>
+                  <td><code>FavoriteButtonComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/shared/components/favorite-button/favorite-button.component.ts</code
+                    >
+                  </td>
+                  <td>Button for adding/removing favorites</td>
+                </tr>
+                <tr>
+                  <td><code>FavoriteDialogComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/shared/components/favorite-dialog/favorite-dialog.component.ts</code
+                    >
+                  </td>
+                  <td>Dialog for adding notes and tags</td>
+                </tr>
+                <tr>
+                  <td><code>FavoriteFilterComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/favorites/favorite-filter/favorite-filter.component.ts</code
+                    >
+                  </td>
+                  <td>Filters for favorites list</td>
+                </tr>
+                <tr>
+                  <td><code>TagManagerComponent</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/favorites/tag-manager/tag-manager.component.ts</code
+                    >
+                  </td>
+                  <td>Manages favorite tags</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Client-Side Services</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>FavoriteService</code></td>
+                  <td><code>/client-angular/src/app/core/services/favorite.service.ts</code></td>
+                  <td>Manages favorite data and operations</td>
+                </tr>
+                <tr>
+                  <td><code>DialogService</code></td>
+                  <td><code>/client-angular/src/app/core/services/dialog.service.ts</code></td>
+                  <td>Handles favorite dialogs</td>
+                </tr>
+                <tr>
+                  <td><code>NotificationService</code></td>
+                  <td>
+                    <code>/client-angular/src/app/core/services/notification.service.ts</code>
+                  </td>
+                  <td>Manages favorite notifications</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Server-Side Controllers</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Controller</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>FavoriteController</code></td>
+                  <td><code>/server/controllers/favorite.controller.js</code></td>
+                  <td>Handles favorite-related HTTP requests</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Server-Side Models</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Favorite</code></td>
+                  <td><code>/server/models/favorite.model.js</code></td>
+                  <td>Mongoose schema for favorites</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section id="api">
+            <h2>API Reference</h2>
+            <h2>API Endpoints</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Endpoint</th>
+                  <th>Method</th>
+                  <th>Description</th>
+                  <th>Request Body</th>
+                  <th>Response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>/api/favorites</code></td>
+                  <td>GET</td>
+                  <td>Get all user favorites</td>
+                  <td>N/A</td>
+                  <td>Array of favorite objects</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/ids</code></td>
+                  <td>GET</td>
+                  <td>Get favorite ad IDs</td>
+                  <td>N/A</td>
+                  <td>Array of ad IDs</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/tags</code></td>
+                  <td>GET</td>
+                  <td>Get user&#39;s favorite tags</td>
+                  <td>N/A</td>
+                  <td>Array of tag objects</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/check/:adId</code></td>
+                  <td>GET</td>
+                  <td>Check if ad is favorited</td>
+                  <td>N/A</td>
+                  <td>Boolean</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId</code></td>
+                  <td>POST</td>
+                  <td>Add ad to favorites</td>
+                  <td><code>{notes, tags, priority}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/batch</code></td>
+                  <td>POST</td>
+                  <td>Add multiple ads to favorites</td>
+                  <td><code>{adIds, notes, tags}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId</code></td>
+                  <td>DELETE</td>
+                  <td>Remove ad from favorites</td>
+                  <td>N/A</td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/batch</code></td>
+                  <td>DELETE</td>
+                  <td>Remove multiple favorites</td>
+                  <td><code>{adIds}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId/notes</code></td>
+                  <td>PATCH</td>
+                  <td>Update favorite notes</td>
+                  <td><code>{notes}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId/tags</code></td>
+                  <td>PATCH</td>
+                  <td>Update favorite tags</td>
+                  <td><code>{tags}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId/priority</code></td>
+                  <td>PATCH</td>
+                  <td>Update favorite priority</td>
+                  <td><code>{priority}</code></td>
+                  <td>Success message</td>
+                </tr>
+                <tr>
+                  <td><code>/api/favorites/:adId/notifications</code></td>
+                  <td>PATCH</td>
+                  <td>Toggle notifications</td>
+                  <td>N/A</td>
+                  <td>Updated notification status</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>Data Flow</h2>
+            <p>The favorites system follows these data flows:</p>
+            <ol>
+              <li>
+                <p><strong>Adding a Favorite</strong>:</p>
+                <ul>
+                  <li>User clicks the favorite button on an ad</li>
+                  <li>FavoriteService checks if the ad is already favorited</li>
+                  <li>If not, a dialog may appear for adding notes and tags</li>
+                  <li>FavoriteService sends a POST request to the server</li>
+                  <li>Server creates a new Favorite document</li>
+                  <li>UI updates to show the ad is now favorited</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Viewing Favorites</strong>:</p>
+                <ul>
+                  <li>User navigates to the Favorites page</li>
+                  <li>FavoriteService loads favorites from the server</li>
+                  <li>FavoritesListComponent displays the favorites</li>
+                  <li>User can filter, sort, and search their favorites</li>
+                  <li>Pagination handles large numbers of favorites</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Updating a Favorite</strong>:</p>
+                <ul>
+                  <li>User can add/edit notes, tags, or priority</li>
+                  <li>FavoriteService sends PATCH requests to update specific fields</li>
+                  <li>Server updates the Favorite document</li>
+                  <li>UI reflects the changes immediately</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Removing a Favorite</strong>:</p>
+                <ul>
+                  <li>User clicks the unfavorite button</li>
+                  <li>FavoriteService sends a DELETE request</li>
+                  <li>Server removes the Favorite document</li>
+                  <li>UI updates to show the ad is no longer favorited</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>State Management</h2>
+            <p>The favorites system uses a combination of service-based state management:</p>
+            <ul>
+              <li><strong>FavoriteService</strong>: Maintains the current state of favorites</li>
+              <li><strong>BehaviorSubject</strong>: Provides reactive updates to components</li>
+              <li><strong>LocalStorage</strong>: Caches favorite IDs for quick checking</li>
+            </ul>
+            <h2>Data Model</h2>
+            <p>The Favorite model includes:</p>
+            <pre><code class="language-typescript">interface Favorite {
+  _id: string;
+  user: string; // Reference to User
+  ad: string; // Reference to Ad
+  createdAt: Date; // When the favorite was created
+  notes: string; // User notes about the favorite
+  notificationsEnabled: boolean; // Whether to notify on updates
+  tags: string[]; // User-defined tags for organization
+  priority: &#39;low&#39; | &#39;normal&#39; | &#39;high&#39;; // User-defined priority
+  lastViewed: Date; // When the user last viewed this favorite
+  lastNotified: Date; // When the user was last notified about this favorite
+}
+</code></pre>
+            <h2>Key Features</h2>
+            <ol>
+              <li>
+                <p><strong>Tagging System</strong>:</p>
+                <ul>
+                  <li>Users can add custom tags to favorites</li>
+                  <li>Tags can be used for filtering and organization</li>
+                  <li>The system tracks tag usage for quick access</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Priority Levels</strong>:</p>
+                <ul>
+                  <li>Favorites can be marked as low, normal, or high priority</li>
+                  <li>Priority affects sorting and can be used for filtering</li>
+                  <li>Visual indicators show priority level</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Notes</strong>:</p>
+                <ul>
+                  <li>Users can add private notes to favorites</li>
+                  <li>Notes support formatting and can be updated at any time</li>
+                  <li>Notes are searchable in the favorites list</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Notification Preferences</strong>:</p>
+                <ul>
+                  <li>Users can enable/disable notifications per favorite</li>
+                  <li>Notifications can alert users to price changes, new images, etc.</li>
+                  <li>The system tracks when notifications were last sent</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Batch Operations</strong>:</p>
+                <ul>
+                  <li>Multiple favorites can be added or removed at once</li>
+                  <li>Batch operations improve performance for bulk actions</li>
+                  <li>UI provides selection tools for batch operations</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Security Considerations</h2>
+            <ol>
+              <li>
+                <p><strong>Access Control</strong>:</p>
+                <ul>
+                  <li>Favorites are private to each user</li>
+                  <li>Authentication is required for all favorite operations</li>
+                  <li>Server validates user ownership before operations</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Data Validation</strong>:</p>
+                <ul>
+                  <li>Tags are limited to 30 characters</li>
+                  <li>Notes are limited to 500 characters</li>
+                  <li>Priority values are restricted to predefined options</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Rate Limiting</strong>:</p>
+                <ul>
+                  <li>API endpoints implement rate limiting to prevent abuse</li>
+                  <li>Batch operations have size limits</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Testing</h2>
+            <h3>Unit Tests</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test File</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>favorite.service.spec.ts</code></td>
+                  <td>
+                    <code>/client-angular/src/app/core/services/favorite.service.spec.ts</code>
+                  </td>
+                  <td>Tests for favorite service</td>
+                </tr>
+                <tr>
+                  <td><code>favorite-button.component.spec.ts</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/shared/components/favorite-button/favorite-button.component.spec.ts</code
+                    >
+                  </td>
+                  <td>Tests for favorite button component</td>
+                </tr>
+                <tr>
+                  <td><code>favorites-list.component.spec.ts</code></td>
+                  <td>
+                    <code
+                      >/client-angular/src/app/features/favorites/favorites-list/favorites-list.component.spec.ts</code
+                    >
+                  </td>
+                  <td>Tests for favorites list component</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>Integration Tests</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test File</th>
+                  <th>Path</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>favorite.controller.test.js</code></td>
+                  <td>
+                    <code>/server/tests/integration/favorite/favorite.controller.test.js</code>
+                  </td>
+                  <td>API integration tests</td>
+                </tr>
+                <tr>
+                  <td><code>favorite.model.test.js</code></td>
+                  <td><code>/server/tests/integration/favorite/favorite.model.test.js</code></td>
+                  <td>Database model tests</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>Performance Considerations</h2>
+            <ol>
+              <li>
+                <p><strong>Efficient Querying</strong>:</p>
+                <ul>
+                  <li>Indexes on user, ad, tags, and priority fields</li>
+                  <li>Compound index on user and ad for uniqueness</li>
+                  <li>Pagination for large favorite collections</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Optimistic UI Updates</strong>:</p>
+                <ul>
+                  <li>UI updates immediately before server confirmation</li>
+                  <li>Rollback on error for better user experience</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Caching</strong>:</p>
+                <ul>
+                  <li>Favorite IDs cached client-side for quick checking</li>
+                  <li>Favorites list cached with appropriate invalidation</li>
+                </ul>
+              </li>
+            </ol>
+            <h2>Future Enhancements</h2>
+            <ol>
+              <li>
+                <p><strong>Smart Collections</strong>:</p>
+                <ul>
+                  <li>Automatically group favorites based on common attributes</li>
+                  <li>Suggest tags based on ad content</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Comparison Tools</strong>:</p>
+                <ul>
+                  <li>Side-by-side comparison of multiple favorites</li>
+                  <li>Highlight differences between similar favorites</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Sharing</strong>:</p>
+                <ul>
+                  <li>Share favorites lists with other users</li>
+                  <li>Collaborative favorites for group decision-making</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>Advanced Filtering</strong>:</p>
+                <ul>
+                  <li>Filter by multiple tags simultaneously</li>
+                  <li>Custom saved filters for quick access</li>
+                </ul>
+              </li>
+            </ol>
+          </section>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

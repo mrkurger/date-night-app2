@@ -7,21 +7,20 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbDatepickerModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 import { MapComponent } from '../../shared/components/map/map.component';
 import { GeocodingService } from '../../core/services/geocoding.service';
 import { LocationService } from '../../core/services/location.service';
@@ -65,18 +64,15 @@ interface LocationMatchResult {
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTooltipModule,
-    ClusterModule,
+    NbButtonModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbDatepickerModule,
+    NbTooltipModule,
     MapComponent,
   ],
 })

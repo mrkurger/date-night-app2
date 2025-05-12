@@ -1,6 +1,7 @@
 import SafetyService from '../services/safety.service.js';
 import User from '../models/user.model.js';
 import SafetyCheckin from '../models/safety-checkin.model.js';
+import { sendSuccess, sendError } from '../utils/response.js';
 
 const safetyService = new SafetyService();
 
@@ -252,5 +253,14 @@ const safetyController = {
     }
   },
 };
+
+export async function someHandler(req, res) {
+  try {
+    const result = await doSomething();
+    return sendSuccess(res, result);
+  } catch (err) {
+    return sendError(res, err, err.status || 500);
+  }
+}
 
 export default safetyController;

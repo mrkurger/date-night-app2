@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scripts - AI Lessons</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .lesson {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background-color: #f6f8fa;
+        border-radius: 5px;
+        border-left: 4px solid #3498db;
+      }
+
+      .lesson h3 {
+        color: #3498db;
+        margin-top: 0;
+      }
+
+      .lesson-category {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        background-color: #34495e;
+        color: white;
+      }
+
+      .code-example {
+        background-color: #f8f8f8;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+        overflow-x: auto;
+        font-family: monospace;
+        border: 1px solid #ddd;
+      }
+
+      .best-practice {
+        background-color: #e8f4f8;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+        border-left: 4px solid #2ecc71;
+      }
+
+      .anti-pattern {
+        background-color: #fdeaea;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+        border-left: 4px solid #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Scripts - AI Lessons</h1>
+      <p>
+        This document contains lessons learned and best practices for the scripts in the Date Night
+        App project, as identified by AI analysis.
+      </p>
+
+      <div class="lesson">
+        <h3>Avoiding Hardcoded Paths in Shell Scripts</h3>
+        <span class="lesson-category">Portability</span>
+        <p>
+          Shell scripts should avoid hardcoded absolute paths to ensure portability across different
+          environments. Instead, use relative paths or determine the script's location dynamically.
+        </p>
+
+        <div class="anti-pattern">
+          <strong>Anti-pattern:</strong>
+          <div class="code-example">
+            <pre>
+PROJECT_ROOT="/Users/oivindlund/date-night-app"
+chmod +x /Users/oivindlund/date-night-app/*.sh</pre
+            >
+          </div>
+        </div>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <div class="code-example">
+            <pre>
+# Get the project root directory using the script's location
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+chmod +x "$PROJECT_ROOT"/*.sh</pre
+            >
+          </div>
+        </div>
+
+        <p>
+          Using <code>$(dirname "${BASH_SOURCE[0]}")</code> gets the directory containing the
+          script, making it work regardless of where the repository is cloned.
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h3>Proper Error Handling in Linting Scripts</h3>
+        <span class="lesson-category">CI/CD</span>
+        <p>
+          Linting scripts should properly propagate error codes to ensure CI/CD pipelines can detect
+          issues. Using <code>|| true</code> suppresses errors, which can hide problems.
+        </p>
+
+        <div class="anti-pattern">
+          <strong>Anti-pattern:</strong>
+          <div class="code-example">
+            <pre>
+"lint:server": "cd server && npm run lint || true",
+"lint:client": "cd client-angular && npm run lint || true"</pre
+            >
+          </div>
+        </div>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <div class="code-example">
+            <pre>
+"lint": "npm run lint:server && npm run lint:client",
+"lint:server": "cd server && npm run lint",
+"lint:client": "cd client-angular && npm run lint",
+"lint:check": "npm run lint:server:check && npm run lint:client:check",
+"lint:server:check": "cd server && npm run lint || true",
+"lint:client:check": "cd client-angular && npm run lint || true"</pre
+            >
+          </div>
+        </div>
+
+        <p>
+          This approach provides both strict linting scripts that fail on errors (for CI/CD) and
+          check scripts that don't fail (for development use).
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h3>Cautious Dependency Updates</h3>
+        <span class="lesson-category">Security</span>
+        <p>
+          When fixing security vulnerabilities with npm audit, avoid using --force by default as it
+          can introduce breaking changes. Instead, provide options with different levels of
+          aggressiveness.
+        </p>
+
+        <div class="anti-pattern">
+          <strong>Anti-pattern:</strong>
+          <div class="code-example">
+            <pre>"audit-fix": "npm audit fix --force"</pre>
+          </div>
+        </div>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <div class="code-example">
+            <pre>
+"audit-fix": "npm audit fix",
+"audit-fix:force": "npm audit fix --force",
+"audit-fix:all": "npm run audit-fix && cd server && npm audit fix && cd ../client-angular && npm audit fix"</pre
+            >
+          </div>
+        </div>
+
+        <p>
+          This approach provides a safer default while still allowing for more aggressive fixes when
+          needed. The interactive approach in fix-project.sh is even better as it asks for
+          confirmation before using --force.
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h3>Code Duplication in Scripts</h3>
+        <span class="lesson-category">Maintainability</span>
+        <p>
+          Duplicate scripts with similar functionality should be consolidated to improve
+          maintainability. This reduces the risk of inconsistencies and makes updates easier.
+        </p>
+
+        <div class="anti-pattern">
+          <strong>Anti-pattern:</strong>
+          <p>Having multiple scripts with similar functionality:</p>
+          <ul>
+            <li>install-missing-deps.js</li>
+            <li>install-missing-dependencies.js</li>
+          </ul>
+        </div>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <p>Consolidate functionality into a single script with clear organization:</p>
+          <div class="code-example">
+            <pre>
+// Main function to run the dependency checks and installations
+function main() {
+  // First check and install common dependencies
+  console.log(`${colors.cyan}=== Checking Common Dependencies ===${colors.reset}`);
+  checkAndInstallForComponent(rootDir, 'Root project', commonDependencies.root);
+  checkAndInstallForComponent(serverDir, 'Server', commonDependencies.server);
+  checkAndInstallForComponent(clientDir, 'Client', commonDependencies.client);
+
+  // Then install specific known missing dependencies
+  console.log(`\n${colors.cyan}=== Installing Specific Known Missing Dependencies ===${colors.reset}`);
+  
+  // Client project - specific dependencies
+  console.log(`${colors.magenta}Installing specific dependencies for client...${colors.reset}`);
+  installDependencies(clientDir, ['socket.io-client'], false);
+  
+  // Server project - specific dependencies
+  console.log(`${colors.magenta}Installing specific dependencies for server...${colors.reset}`);
+  installDependencies(serverDir, ['argon2', 'bcrypt'], false);
+}</pre
+            >
+          </div>
+        </div>
+
+        <p>
+          This approach combines the functionality of both scripts while maintaining clear
+          organization and separation of concerns.
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h3>Script Documentation</h3>
+        <span class="lesson-category">Documentation</span>
+        <p>
+          Comprehensive documentation for scripts is essential for maintainability and onboarding
+          new developers. Documentation should include purpose, usage, and any potential issues or
+          notes.
+        </p>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <p>Create dedicated documentation files:</p>
+          <ul>
+            <li>NPM_SCRIPTS.html - Comprehensive documentation for all npm scripts</li>
+            <li>CHANGELOG.html - Documentation of changes to scripts</li>
+            <li>AILESSONS.html - Lessons learned and best practices</li>
+          </ul>
+        </div>
+
+        <p>
+          This approach ensures that knowledge about the scripts is preserved and accessible to all
+          developers.
+        </p>
+      </div>
+
+      <div class="lesson">
+        <h3>ESM Compatibility</h3>
+        <span class="lesson-category">Modernization</span>
+        <p>
+          The project is transitioning to ECMAScript Modules (ESM), which requires careful handling
+          of imports/exports and path resolution.
+        </p>
+
+        <div class="anti-pattern">
+          <strong>Anti-pattern:</strong>
+          <div class="code-example">
+            <pre>const __dirname = path.dirname(__filename); // This won't work in ESM</pre>
+          </div>
+        </div>
+
+        <div class="best-practice">
+          <strong>Best practice:</strong>
+          <div class="code-example">
+            <pre>
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+// Define paths - ES module compatible way
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);</pre
+            >
+          </div>
+        </div>
+
+        <p>
+          This approach ensures compatibility with ESM while maintaining similar functionality to
+          CommonJS.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

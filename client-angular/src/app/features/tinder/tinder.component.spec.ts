@@ -12,7 +12,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 
 import { TinderComponent } from './tinder.component';
 import { AdService } from '../../core/services/ad.service';
@@ -149,7 +148,6 @@ describe('TinderComponent', () => {
         { provide: ChatService, useClass: MockChatService },
         { provide: AuthService, useClass: MockAuthService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle custom elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(TinderComponent);

@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TravelService, TouringAd } from '../../core/services/travel.service';
 import { NotificationService } from '../../core/services/notification.service';

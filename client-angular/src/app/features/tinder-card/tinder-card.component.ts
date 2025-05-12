@@ -21,19 +21,46 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../core/models/ad.model';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbBadgeModule,
+  NbTagModule,
+} from '@nebular/theme';
+
+// Import Hammer types
+declare let Hammer: any;
+
+interface HammerManager {
+  destroy(): void;
+  get(recognizer: string): any;
+  on(event: string, callback: (event: any) => void): void;
+}
 
 @Component({
   selector: 'app-tinder-card',
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbTagModule,
+  ],
 })
 export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;
-  @Output() swiped = new EventEmitter<{ direction: 'left' | 'right'; adId: string }>();
-  @Output() viewDetails = new EventEmitter<string>();
-  @Output() startChat = new EventEmitter<string>();
+  @Output() swiped = new EventEmitter<{
+    direction: 'left' | 'right';
+    adId: string | { city: string; county: string };
+  }>();
+  @Output() viewDetails = new EventEmitter<string | { city: string; county: string }>();
+  @Output() startChat = new EventEmitter<string | { city: string; county: string }>();
 
   @ViewChild('card') cardElement!: ElementRef;
 
@@ -278,9 +305,4 @@ export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
     event.stopPropagation();
     this.startChat.emit(this.ad._id);
   }
-}
-
-// Interface for Hammer.js manager
-interface HammerManager {
-  destroy(): void;
 }

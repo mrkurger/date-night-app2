@@ -7,16 +7,15 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+import { NbTabsetModule } from '@nebular/theme';
 import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+  imports: [CommonModule, NbTabsetModule, ErrorDashboardComponent, PerformanceDashboardComponent],
   template: `
     <div class="telemetry-dashboard-container">
       <h1>Application Telemetry Dashboard</h1>

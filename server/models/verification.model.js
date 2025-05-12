@@ -140,9 +140,6 @@ const verificationSchema = new mongoose.Schema(
   }
 );
 
-// Index for finding verifications by user
-verificationSchema.index({ user: 1 });
-
 // Index for finding verifications by status
 verificationSchema.index({ overallStatus: 1 });
 
@@ -392,5 +389,4 @@ verificationSchema.statics.findVerifiedUsers = function () {
   }).populate('user', 'username email role');
 };
 
-const Verification = mongoose.model('Verification', verificationSchema);
-export default Verification;
+export default mongoose.model('Verification', verificationSchema);

@@ -1,0 +1,417 @@
+@use '../../../../core/design/design-tokens' as ds;
+@use 'sass:color';
+
+// Emerald AppCard Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/AppCard
+
+.emerald-app-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: ds.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: ds.$shadow-md;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  background-color: ds.$color-white;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: ds.$shadow-lg;
+  }
+
+  // Card Media Section
+  &__media {
+    position: relative;
+    height: 100%;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  // Status Label (Online/Offline)
+  &__status-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: ds.$font-size-sm;
+    font-weight: ds.$font-weight-semibold;
+    z-index: 2;
+
+    &--online {
+      background-color: rgba(ds.$color-success, 0.9);
+      color: ds.$color-white;
+    }
+
+    &--offline {
+      background-color: rgba(ds.$color-error, 0.9);
+      color: ds.$color-white;
+    }
+  }
+
+  &__status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+
+    .emerald-app-card__status-label--online & {
+      background-color: ds.$color-white;
+    }
+
+    .emerald-app-card__status-label--offline & {
+      background-color: ds.$color-white;
+    }
+  }
+
+  // Media Navigation Dots
+  &__media-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  &__media-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(ds.$color-white, 0.5);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &--active {
+      background-color: ds.$color-white;
+      transform: scale(1.2);
+    }
+  }
+
+  // Media Navigation Buttons
+  &__media-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(ds.$color-black, 0.6);
+    color: ds.$color-white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(ds.$color-black, 0.8);
+    }
+
+    &--prev {
+      left: 12px;
+    }
+
+    &--next {
+      right: 12px;
+    }
+  }
+
+  // Content Overlay with Blur Effect
+  &__content-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top, rgba(ds.$color-black, 0.8), rgba(ds.$color-black, 0));
+    backdrop-filter: blur(ds.$blur-medium);
+    -webkit-backdrop-filter: blur(ds.$blur-medium);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: ds.$spacing-4;
+    z-index: 1;
+  }
+
+  &__content {
+    color: ds.$color-white;
+  }
+
+  &__title {
+    margin: 0 0 ds.$spacing-2;
+    font-size: ds.$font-size-lg;
+    font-weight: ds.$font-weight-bold;
+    line-height: 1.2;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: ds.$spacing-4;
+    margin-bottom: ds.$spacing-2;
+    font-size: ds.$font-size-sm;
+  }
+
+  &__location,
+  &__price {
+    display: flex;
+    align-items: center;
+
+    i {
+      margin-right: ds.$spacing-1;
+      font-size: 14px;
+    }
+  }
+
+  &__description {
+    margin: 0;
+    font-size: ds.$font-size-sm;
+    line-height: 1.4;
+    opacity: 0.9;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  // Card Actions
+  &__actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: ds.$spacing-4;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  // Floating Action Buttons
+  &__fab {
+    position: absolute;
+    bottom: ds.$spacing-4;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: ds.$color-primary;
+    color: ds.$color-white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: ds.$shadow-md;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+    pointer-events: auto;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &--left {
+      left: ds.$spacing-4;
+      background-color: ds.$color-error;
+
+      &:hover {
+        background-color: color.adjust(ds.$color-error, $lightness: -10%);
+      }
+    }
+
+    &--right {
+      right: ds.$spacing-4;
+      background-color: ds.$color-primary;
+
+      &:hover {
+        background-color: color.adjust(ds.$color-primary, $lightness: -10%);
+      }
+    }
+  }
+
+  // Tinder-specific Swipe Actions
+  &__swipe-actions {
+    display: flex;
+    justify-content: center;
+    gap: ds.$spacing-6;
+    margin-top: ds.$spacing-4;
+    pointer-events: auto;
+  }
+
+  &__swipe-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: ds.$shadow-md;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &--left {
+      background-color: ds.$color-error;
+      color: ds.$color-white;
+
+      &:hover {
+        background-color: color.adjust(ds.$color-error, $lightness: -10%);
+      }
+
+      i {
+        font-size: 24px;
+      }
+    }
+
+    &--right {
+      background-color: ds.$color-success;
+      color: ds.$color-white;
+
+      &:hover {
+        background-color: color.adjust(ds.$color-success, $lightness: -10%);
+      }
+
+      i {
+        font-size: 24px;
+      }
+    }
+  }
+
+  // Layout Variants
+  &--tinder {
+    height: 70vh;
+    max-height: 600px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    .emerald-app-card__media {
+      height: 100%;
+    }
+  }
+
+  &--netflix {
+    height: 280px;
+    width: 200px;
+
+    .emerald-app-card__media {
+      height: 100%;
+    }
+
+    .emerald-app-card__title {
+      font-size: ds.$font-size-base;
+    }
+
+    .emerald-app-card__description {
+      display: none;
+    }
+
+    .emerald-app-card__fab {
+      width: 36px;
+      height: 36px;
+
+      i {
+        font-size: 14px;
+      }
+    }
+  }
+
+  &--list {
+    flex-direction: row;
+    height: 160px;
+
+    .emerald-app-card__media {
+      width: 160px;
+      min-width: 160px;
+      height: 100%;
+    }
+
+    .emerald-app-card__content-overlay {
+      position: relative;
+      height: 100%;
+      background: ds.$color-white;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      padding: ds.$spacing-4;
+    }
+
+    .emerald-app-card__content {
+      color: ds.$color-black;
+    }
+
+    .emerald-app-card__fab {
+      display: none;
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: ds.$breakpoint-md) {
+  .emerald-app-card {
+    &--list {
+      flex-direction: column;
+      height: auto;
+
+      .emerald-app-card__media {
+        width: 100%;
+        height: 200px;
+      }
+
+      .emerald-app-card__content-overlay {
+        position: absolute;
+        height: 40%;
+        background: linear-gradient(to top, rgba(ds.$color-black, 0.8), rgba(ds.$color-black, 0));
+        backdrop-filter: blur(ds.$blur-medium);
+        -webkit-backdrop-filter: blur(ds.$blur-medium);
+      }
+
+      .emerald-app-card__content {
+        color: ds.$color-white;
+      }
+    }
+  }
+}
+
+@media (max-width: ds.$breakpoint-sm) {
+  .emerald-app-card {
+    &--tinder {
+      height: 60vh;
+    }
+
+    &__title {
+      font-size: ds.$font-size-base;
+    }
+
+    &__meta {
+      gap: ds.$spacing-2;
+      font-size: ds.$font-size-xs;
+    }
+
+    &__description {
+      font-size: ds.$font-size-xs;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+    }
+  }
+}

@@ -1,0 +1,105 @@
+/**
+ * Card Component Styles
+ * 
+ * Implements the DateNight.io card styles using the design system.
+ */
+
+@use '../../../../app/core/design/design-tokens' as ds;
+
+.card {
+  display: block;
+  background-color: ds.$color-white;
+  transition: all ds.$transition-normal ds.$transition-timing-default;
+
+  // Border variants
+  &--bordered {
+    border: 1px solid ds.$color-light-gray-2;
+  }
+
+  // Shadow variants
+  &--shadowed {
+    box-shadow: ds.$shadow-md;
+  }
+
+  // Padding variants
+  &--padding-none {
+    padding: 0;
+  }
+
+  &--padding-small {
+    padding: ds.$spacing-2;
+  }
+
+  &--padding-medium {
+    padding: ds.$spacing-4;
+  }
+
+  &--padding-large {
+    padding: ds.$spacing-6;
+  }
+
+  // Border radius variants
+  &--radius-none {
+    border-radius: 0;
+  }
+
+  &--radius-small {
+    border-radius: ds.$border-radius-sm;
+  }
+
+  &--radius-medium {
+    border-radius: ds.$border-radius-md;
+  }
+
+  &--radius-large {
+    border-radius: ds.$border-radius-lg;
+  }
+
+  // State variants
+  &--clickable {
+    cursor: pointer;
+
+    &:hover:not(.card--disabled) {
+      transform: translateY(-2px);
+      box-shadow: ds.$shadow-lg;
+    }
+
+    &:active:not(.card--disabled) {
+      transform: translateY(0);
+      box-shadow: ds.$shadow-md;
+    }
+  }
+
+  &--selected {
+    border-color: ds.$color-primary;
+    box-shadow:
+      0 0 0 1px ds.$color-primary,
+      ds.$shadow-md;
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .card {
+      background-color: ds.$color-dark-gray-2;
+
+      &--bordered {
+        border-color: ds.$color-dark-gray-1;
+      }
+
+      &--selected {
+        border-color: ds.$color-primary-light;
+        box-shadow:
+          0 0 0 1px ds.$color-primary-light,
+          ds.$shadow-md;
+      }
+    }
+  }
+}

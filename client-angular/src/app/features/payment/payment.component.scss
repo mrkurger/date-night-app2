@@ -1,27 +1,29 @@
+@use 'design-tokens' as dt;
+
 .payment-container {
+  padding: var(--padding);
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
 }
 
 .payment-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--margin-lg);
 
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #333;
+    color: var(--text-basic-color);
+    font-size: var(--text-heading-1-font-size);
+    margin-bottom: var(--margin-sm);
   }
 
   p {
-    font-size: 1.2rem;
-    color: #666;
+    color: var(--text-hint-color);
+    font-size: var(--text-subtitle-font-size);
   }
 }
 
 .current-subscription {
-  margin-bottom: 3rem;
+  margin-bottom: var(--margin-lg);
 
   .card {
     border-radius: 10px;
@@ -55,165 +57,140 @@
 }
 
 .subscription-plans {
-  margin-bottom: 3rem;
+  margin-bottom: var(--margin-lg);
+
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing);
+  }
 
   .plan-card {
-    height: 100%;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
 
     &.selected {
-      transform: scale(1.05);
-      border: 2px solid #007bff;
-      box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
+      transform: scale(1.02);
+      border: 2px solid var(--color-primary-500);
     }
 
-    .card-header {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #eee;
-      padding: 1.5rem;
+    nb-card-header {
       text-align: center;
+      padding: var(--card-header-padding);
 
       h3 {
         margin: 0;
-        font-size: 1.8rem;
-        color: #333;
+        color: var(--text-basic-color);
+        font-size: var(--text-heading-4-font-size);
       }
     }
 
-    .card-body {
-      padding: 1.5rem;
-      text-align: center;
+    nb-card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing);
+      padding: var(--card-padding);
 
       .price {
-        margin-bottom: 1.5rem;
+        text-align: center;
+        margin-bottom: var(--margin);
 
         .amount {
-          font-size: 2.5rem;
-          font-weight: bold;
-          color: #333;
+          font-size: var(--text-heading-2-font-size);
+          font-weight: var(--text-heading-2-font-weight);
+          color: var(--text-primary-color);
         }
 
         .period {
-          font-size: 1.2rem;
-          color: #666;
+          color: var(--text-hint-color);
+          font-size: var(--text-subtitle-font-size);
         }
       }
 
       .description {
-        margin-bottom: 1.5rem;
-        color: #666;
+        text-align: center;
+        color: var(--text-basic-color);
+        margin-bottom: var(--margin);
       }
 
-      .features {
-        list-style: none;
-        padding: 0;
-        margin-bottom: 1.5rem;
+      nb-list {
+        width: 100%;
+        margin-bottom: var(--margin);
 
-        li {
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #eee;
+        nb-list-item {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-sm);
+          padding: var(--list-item-padding);
 
-          &:last-child {
-            border-bottom: none;
+          nb-icon {
+            font-size: 1.2rem;
           }
         }
       }
 
-      .btn {
+      button {
         width: 100%;
-        padding: 0.75rem;
-        font-size: 1.1rem;
       }
     }
   }
 }
 
 .payment-form {
-  margin-top: 3rem;
+  max-width: 600px;
+  margin: 0 auto;
 
-  .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  nb-card-body {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
 
-    .card-header {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #eee;
-      padding: 1.5rem;
-
-      h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #333;
-      }
-    }
-
-    .card-body {
-      padding: 1.5rem;
-
-      .form-group {
-        margin-bottom: 1.5rem;
+      nb-form-field {
+        width: 100%;
 
         label {
           display: block;
-          margin-bottom: 0.5rem;
-          font-weight: 500;
-          color: #333;
+          margin-bottom: var(--margin-xs);
+          color: var(--text-hint-color);
         }
 
-        .form-control {
-          padding: 0.75rem;
-          border-radius: 5px;
-          border: 1px solid #ddd;
+        .card-element {
+          padding: var(--input-padding);
+          border: 1px solid var(--border-basic-color-3);
+          border-radius: var(--border-radius);
+          background-color: var(--background-basic-color-2);
+          transition: border-color 0.2s;
 
           &:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            border-color: var(--color-primary-500);
+          }
+
+          &.StripeElement--focus {
+            border-color: var(--color-primary-500);
+          }
+
+          &.StripeElement--invalid {
+            border-color: var(--color-danger-500);
           }
         }
-
-        .invalid-feedback {
-          color: #dc3545;
-          margin-top: 0.25rem;
-        }
       }
 
-      #card-element {
-        padding: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #fff;
-      }
-
-      .card-errors {
-        margin-top: 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: #fff;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-
-        &:hover {
-          background-color: #218838;
-          border-color: #1e7e34;
-        }
+      .form-actions {
+        margin-top: var(--margin);
       }
 
       .payment-details {
-        margin-top: 1.5rem;
         text-align: center;
+        margin-top: var(--margin);
 
         p {
-          margin-bottom: 0.5rem;
+          margin: 0;
+          color: var(--text-basic-color);
 
-          &.text-muted {
-            color: #6c757d;
-            font-size: 0.9rem;
+          &.hint-text {
+            color: var(--text-hint-color);
+            font-size: var(--text-caption-font-size);
           }
         }
       }

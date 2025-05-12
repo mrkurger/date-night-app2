@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
+import { 
   Component,
   ElementRef,
   EventEmitter,
@@ -16,10 +16,10 @@ import {
   OnInit,
   Output,
   Renderer2,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { NbButtonModule, NbIconModule } from '@nebular/theme';
+
+
 
 export interface TourStep {
   id: string;
@@ -32,11 +32,12 @@ export interface TourStep {
 }
 
 @Component({
+  
   selector: 'app-feature-tour',
   templateUrl: './feature-tour.component.html',
   styleUrls: ['./feature-tour.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule],
 })
 export class FeatureTourComponent implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = [];
@@ -155,7 +156,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
       // Scroll element into view if needed
       this.targetElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
+        block: 'center'
       });
 
       // Update position after a short delay to ensure scrolling is complete

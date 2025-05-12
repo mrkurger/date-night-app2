@@ -8,6 +8,8 @@
 //   Related to: config/oauth.js:callbackURL
 // ===================================================
 
+import { URL } from 'url';
+
 /**
  * Ensures a URL is properly formatted with protocol and domain
  * @param {string} url - The URL to format
@@ -21,7 +23,7 @@ export const formatServerUrl = (url, defaultUrl = 'http://localhost:3000') => {
     // Try to parse the URL to validate it
     const urlObject = new URL(url);
     return urlObject.toString();
-  } catch (e) {
+  } catch (_) {
     // If URL is invalid or missing protocol, try to fix it
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       return `http://${url}`;

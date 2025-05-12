@@ -13,38 +13,35 @@
 // - ENABLE_SAVED_FILTERS: Enable saved filter functionality (default: true)
 // ===================================================
 import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+} from '../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  NbIconModule,
+  NbButtonModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbTooltipModule,
+  NbSpinnerModule,
+  NbMenuModule,
+  NbTagModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbDialogService,
+} from '@nebular/theme';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Ad } from '../../core/models/ad.interface';
-
-// Material Imports
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-
-// Import Emerald components
-import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
-import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
-import { PagerComponent } from '../../shared/emerald/components/pager/pager.component';
-import { PageHeaderComponent } from '../../shared/emerald/components/page-header/page-header.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
-import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
 
 // Interfaces
 interface SortOption {
@@ -83,26 +80,20 @@ interface SavedFilter {
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatDialogModule,
-    // Emerald components
-    AppCardComponent,
-    CardGridComponent,
-    PagerComponent,
-    PageHeaderComponent,
-    SkeletonLoaderComponent,
-    FloatingActionButtonComponent,
+    NbIconModule,
+    NbButtonModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbTooltipModule,
+    NbSpinnerModule,
+    NbMenuModule,
+    NbTagModule,
+    NbDatepickerModule,
+    NbDialogModule,
+    NbSortComponent,
+    NbSortHeaderComponent,
   ],
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
@@ -168,7 +159,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private userPreferencesService: UserPreferencesService,
     private fb: FormBuilder,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: NbDialogService,
   ) {
     // Initialize form with nested structure for advanced filtering
     this.filterForm = this.fb.group({
@@ -245,9 +236,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.error = null;
 
     this.adService.getAds().subscribe({
-      next: (ads) => {
-        // Map server data to match template expectations
-        this.ads = ads.map((ad) => ({
+      next: (response) => {
+        // Extract ads array from response and map to template expectations
+        this.ads = response.ads.map((ad) => ({
           ...ad,
           // Map viewCount to views for template compatibility
           views: ad.viewCount,
@@ -357,7 +348,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sort the filtered ads based on the current sort option
+   * NbSortEvent the filtered ads based on the current sort option
    */
   sortAds(): void {
     switch (this.currentSort) {
@@ -396,7 +387,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   getCurrentSortLabel(): string {
     const option = this.sortOptions.find((opt) => opt.value === this.currentSort);
-    return option ? option.label : 'Sort';
+    return option ? option.label : 'NbSortEvent';
   }
 
   /**
@@ -791,7 +782,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   saveCurrentFilter(): void {
     const dialogRef = this.dialog.open(this.saveFilterDialog);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result) {
         const newFilter: SavedFilter = {
           id: Date.now().toString(),

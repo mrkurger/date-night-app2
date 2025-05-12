@@ -1,0 +1,3 @@
+{
+  "styles": ["src/styles.scss", "node_modules/@nebular/theme/styles/prebuilt/default.css"]
+}

@@ -11,20 +11,41 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../../../shared/material.module';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NbToastrService } from '@nebular/theme';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { LocationService } from '../../../core/services/location.service';
 import { NorwayCity } from '../../../core/constants/norway-locations';
+import {
+  NbSpinnerModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbButtonModule,
+  NbIconModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-form',
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MaterialModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NbSpinnerModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbButtonModule,
+    NbIconModule,
+  ],
 })
 export class AdFormComponent implements OnInit {
   adForm: FormGroup;
@@ -39,7 +60,7 @@ export class AdFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private toastrService: NbToastrService,
     private locationService: LocationService,
   ) {
     this.adForm = this.createForm();
@@ -138,9 +159,10 @@ export class AdFormComponent implements OnInit {
     // Simulating API call
     setTimeout(() => {
       this.loading = false;
-      this.snackBar.open(`Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`, 'Close', {
-        duration: 3000,
-      });
+      this.toastrService.success(
+        `Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`,
+        'Success',
+      );
       this.router.navigate(['../list'], { relativeTo: this.route });
     }, 1000);
   }

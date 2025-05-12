@@ -40,19 +40,19 @@
 
         <!-- Review Actions -->
         <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
-          <button mat-icon-button [matMenuTriggerFor]="reviewMenu" aria-label="Review actions">
+          <button nbButton ghost [nbContextMenu]="reviewMenu" aria-label="Review actions">
             <i class="fas fa-ellipsis-v"></i>
           </button>
-          <mat-menu #reviewMenu="matMenu">
-            <button mat-menu-item (click)="onEditReview(review)" *ngIf="isReviewAuthor(review)">
+          <nb-menu #reviewMenu="matMenu">
+            <button nb-menu-item (click)="onEditReview(review)" *ngIf="isReviewAuthor(review)">
               <i class="fas fa-edit"></i>
               <span>Edit Review</span>
             </button>
-            <button mat-menu-item (click)="onDeleteReview(review._id)">
+            <button nb-menu-item (click)="onDeleteReview(review._id)">
               <i class="fas fa-trash-alt"></i>
               <span>Delete Review</span>
             </button>
-          </mat-menu>
+          </nb-menu>
         </div>
       </div>
 

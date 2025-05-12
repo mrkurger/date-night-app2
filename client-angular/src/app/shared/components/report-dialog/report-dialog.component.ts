@@ -7,192 +7,169 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import {
-  FormsModule,
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
+  FormControl,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbIconModule,
+} from '@nebular/theme';
 
 export interface ReportDialogData {
-  title: string;
-  contentType: 'review' | 'profile' | 'ad' | 'message';
+  userId?: string;
+  advertiserId?: string;
+  adId?: string;
+  type?: 'user' | 'ad' | 'message';
+  contentId?: string;
+  title?: string;
+  contentType?: string;
 }
 
 @Component({
   selector: 'app-report-dialog',
-  standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    FormsModule,
     ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbIconModule,
   ],
   template: `
-    <div class="report-dialog-container">
-      <div class="dialog-header">
-        <h2 mat-dialog-title>{{ data.title || 'Report Content' }}</h2>
-        <button mat-icon-button (click)="onClose()">
-          <mat-icon>close</mat-icon>
+    <nb-card class="report-dialog">
+      <nb-card-header class="dialog-header">
+        <h2>Report Issue</h2>
+        <button nbButton ghost (click)="onClose()">
+          <nb-icon icon="close"></nb-icon>
         </button>
-      </div>
-
-      <mat-dialog-content>
+      </nb-card-header>
+      <nb-card-body>
         <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-          <p class="report-intro">
-            Please select a reason for reporting this {{ data.contentType }}. Your report will be
-            reviewed by our moderation team.
-          </p>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Reason for Report</mat-label>
-            <mat-select formControlName="reason">
-              <mat-option *ngFor="let reason of reportReasons" [value]="reason.value">
-                {{ reason.label }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="reportForm.get('reason')?.hasError('required')">
+          <nb-form-field class="full-width">
+            <label class="label">Reason for report *</label>
+            <nb-select formControlName="reason" placeholder="Select a reason" fullWidth>
+              <nb-option value="inappropriate">Inappropriate content</nb-option>
+              <nb-option value="spam">Spam</nb-option>
+              <nb-option value="fake">Fake profile</nb-option>
+              <nb-option value="offensive">Offensive behavior</nb-option>
+              <nb-option value="scam">Scam attempt</nb-option>
+              <nb-option value="other">Other</nb-option>
+            </nb-select>
+            <div
+              class="text-danger"
+              *ngIf="
+                reportForm.get('reason')?.hasError('required') && reportForm.get('reason')?.touched
+              "
+            >
               Please select a reason
-            </mat-error>
-          </mat-form-field>
+            </div>
+          </nb-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Additional Details</mat-label>
+          <nb-form-field class="full-width">
+            <label class="label">Details *</label>
             <textarea
-              matInput
+              nbInput
               formControlName="details"
-              placeholder="Please provide any additional information that might help our moderation team"
-              rows="4"
+              placeholder="Please provide specific details..."
+              rows="5"
+              fullWidth
             ></textarea>
-            <mat-hint align="end">{{ reportForm.get('details')?.value?.length || 0 }}/500</mat-hint>
-            <mat-error *ngIf="reportForm.get('details')?.hasError('maxlength')">
-              Additional details cannot exceed 500 characters
-            </mat-error>
-          </mat-form-field>
+            <div class="text-right">{{ reportForm.get('details')?.value?.length || 0 }}/500</div>
+            <div
+              class="text-danger"
+              *ngIf="
+                reportForm.get('details')?.hasError('required') &&
+                reportForm.get('details')?.touched
+              "
+            >
+              Please provide details
+            </div>
+            <div class="text-danger" *ngIf="reportForm.get('details')?.hasError('maxlength')">
+              Maximum 500 characters
+            </div>
+          </nb-form-field>
 
           <div class="form-actions">
-            <button mat-button type="button" (click)="onClose()">Cancel</button>
+            <button nbButton type="button" status="basic" (click)="onClose()">Cancel</button>
             <button
-              mat-raised-button
-              color="warn"
+              nbButton
               type="submit"
-              [disabled]="reportForm.invalid || submitting"
+              status="danger"
+              [disabled]="reportForm.invalid || submitted"
             >
-              <mat-icon *ngIf="submitting">hourglass_empty</mat-icon>
               Submit Report
             </button>
           </div>
         </form>
-      </mat-dialog-content>
-    </div>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
-      .report-dialog-container {
-        min-width: 400px;
+      .report-dialog {
         max-width: 600px;
+        width: 100%;
       }
 
       .dialog-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #eee;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 500;
-        color: #d32f2f;
-      }
-
-      mat-dialog-content {
-        padding: 24px;
-      }
-
-      .report-intro {
-        margin-top: 0;
-        margin-bottom: 20px;
-        color: #555;
-      }
-
-      .full-width {
-        width: 100%;
-        margin-bottom: 20px;
       }
 
       .form-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .full-width {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .text-right {
+        text-align: right;
+        font-size: 0.875rem;
+        color: #8f9bb3;
+      }
+
+      .text-danger {
+        color: #ff3d71;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
       }
     `,
   ],
 })
 export class ReportDialogComponent {
   reportForm: FormGroup;
-  submitting = false;
-
-  reportReasons = [
-    { value: 'inappropriate', label: 'Inappropriate Content' },
-    { value: 'offensive', label: 'Offensive Language' },
-    { value: 'spam', label: 'Spam or Misleading' },
-    { value: 'fake', label: 'Fake or Fraudulent' },
-    { value: 'harassment', label: 'Harassment or Bullying' },
-    { value: 'privacy', label: 'Privacy Violation' },
-    { value: 'other', label: 'Other' },
-  ];
+  submitted = false;
+  data: ReportDialogData = {};
 
   constructor(
+    private dialogRef: NbDialogRef<ReportDialogComponent>,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<ReportDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReportDialogData,
   ) {
     this.reportForm = this.fb.group({
       reason: ['', Validators.required],
-      details: ['', Validators.maxLength(500)],
+      details: ['', [Validators.required, Validators.maxLength(500)]],
     });
-
-    // Add specific reasons based on content type
-    if (data.contentType === 'review') {
-      this.reportReasons.unshift(
-        { value: 'inaccurate', label: 'Inaccurate Information' },
-        { value: 'notHelpful', label: 'Not Helpful or Relevant' },
-      );
-    } else if (data.contentType === 'profile') {
-      this.reportReasons.unshift(
-        { value: 'impersonation', label: 'Impersonation' },
-        { value: 'scam', label: 'Scam or Fraud' },
-      );
-    } else if (data.contentType === 'ad') {
-      this.reportReasons.unshift(
-        { value: 'misleading', label: 'Misleading Information' },
-        { value: 'prohibited', label: 'Prohibited Content' },
-        { value: 'duplicate', label: 'Duplicate Listing' },
-      );
-    } else if (data.contentType === 'message') {
-      this.reportReasons.unshift(
-        { value: 'threats', label: 'Threats or Violence' },
-        { value: 'solicitation', label: 'Unwanted Solicitation' },
-      );
-    }
   }
 
   onSubmit(): void {
@@ -200,23 +177,12 @@ export class ReportDialogComponent {
       return;
     }
 
-    this.submitting = true;
+    this.submitted = true;
+    const reportData = this.reportForm.value;
 
-    // Combine reason and details
-    const formValue = this.reportForm.value;
-    const reasonLabel =
-      this.reportReasons.find((r) => r.value === formValue.reason)?.label || formValue.reason;
-
-    let reportText = reasonLabel;
-    if (formValue.details) {
-      reportText += ': ' + formValue.details;
-    }
-
-    // Close dialog with report text
     setTimeout(() => {
-      this.dialogRef.close(reportText);
-      this.submitting = false;
-    }, 500);
+      this.dialogRef.close(reportData);
+    }, 1000);
   }
 
   onClose(): void {

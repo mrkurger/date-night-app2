@@ -10,7 +10,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../../shared/material.module';
+import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
@@ -19,9 +19,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-gallery',
   template: `
     <div class="gallery-container mat-elevation-z2">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Photo Gallery</mat-card-title>
+      <nb-card>
+        <nb-card-header>
+          <nb-card-title>Photo Gallery</mat-card-title>
           <div class="view-toggle">
             <button
               mat-icon-button
@@ -29,7 +29,7 @@ import { Subscription } from 'rxjs';
               (click)="setViewMode('grid')"
               aria-label="Grid view"
             >
-              <mat-icon>grid_view</mat-icon>
+              <nb-icon icon="grid_view"></nb-icon>
             </button>
             <button
               mat-icon-button
@@ -37,19 +37,19 @@ import { Subscription } from 'rxjs';
               (click)="setViewMode('list')"
               aria-label="List view"
             >
-              <mat-icon>view_list</mat-icon>
+              <nb-icon icon="view_list"></nb-icon>
             </button>
           </div>
-        </mat-card-header>
-        <mat-card-content>
+        </nb-card-header>
+        <nb-card-content>
           <div
             [ngClass]="{ 'gallery-grid': viewMode === 'grid', 'gallery-list': viewMode === 'list' }"
           >
             <!-- Gallery content will be implemented here -->
             <p>Gallery feature coming soon...</p>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
   styles: [
@@ -78,7 +78,7 @@ import { Subscription } from 'rxjs';
     `,
   ],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, SharedModule, FormsModule, ReactiveFormsModule],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

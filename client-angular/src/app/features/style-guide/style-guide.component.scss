@@ -1,423 +1,497 @@
-@use 'src/styles/design-system/index.scss' as ds;
+@use '@nebular/theme/styles/theming' as *;
 @use '../../../styles/mixins' as mixins;
 @use 'src/styles/mixins/_dark-mode.scss' as darkmode;
 
-.style-guide {
-  &__header {
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
-    padding: ds.$spacing-12 0;
-    margin-bottom: ds.$spacing-12;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
-    }
+@include nb-install() {
+  :host {
+    display: block;
+    padding: var(--padding);
   }
 
-  &__title {
-    font-size: ds.$font-size-4xl;
-    margin-bottom: ds.$spacing-4;
-  }
-
-  &__description {
-    font-size: ds.$font-size-lg;
-    max-width: 800px;
-  }
-
-  &__theme-toggle {
-    margin-top: ds.$spacing-6;
-    padding: ds.$spacing-3 ds.$spacing-6;
-    background-color: ds.$color-white;
-    color: ds.$color-primary;
-    border: none;
-    border-radius: ds.$border-radius-md;
-    font-weight: ds.$font-weight-medium;
-    cursor: pointer;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
-
-    &:hover {
-      background-color: rgba(ds.$color-white, 0.9);
-    }
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-      color: ds.$color-light-gray-1;
-
-      &:hover {
-        background-color: ds.$color-dark-gray-2;
-      }
-    }
-  }
-
-  &__section {
-    margin-bottom: ds.$spacing-16;
-    padding-bottom: ds.$spacing-12;
-    border-bottom: 1px solid ds.$color-light-gray-2;
-
-    @include darkmode.dark-mode {
-      border-bottom-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__section-title {
-    font-size: ds.$font-size-3xl;
-    margin-bottom: ds.$spacing-8;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: ds.$spacing-3;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background-color: ds.$color-primary;
-      border-radius: ds.$border-radius-full;
+  .style-guide {
+    &__header {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--spacing-12) 0;
+      margin-bottom: var(--spacing-12);
 
       @include darkmode.dark-mode {
-        background-color: ds.$color-primary-light;
+        background-color: var(--color-primary-dark);
       }
     }
-  }
 
-  &__subsection {
-    margin-bottom: ds.$spacing-8;
-  }
-
-  &__subsection-title {
-    font-size: ds.$font-size-xl;
-    margin-bottom: ds.$spacing-4;
-  }
-
-  &__example {
-    background-color: ds.$color-white;
-    border-radius: ds.$border-radius-lg;
-    padding: ds.$spacing-6;
-    margin-bottom: ds.$spacing-6;
-    box-shadow: ds.$shadow-sm;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-2;
-      box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
-    }
-  }
-
-  // Color showcase
-  &__color-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__color-item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__color-swatch {
-    height: 100px;
-    border-radius: ds.$border-radius-md;
-    margin-bottom: ds.$spacing-2;
-
-    &--primary {
-      background-color: ds.$color-primary;
+    &__title {
+      margin-bottom: var(--margin);
+      color: var(--text-basic-color);
+      font-weight: bold;
     }
 
-    &--secondary {
-      background-color: ds.$color-secondary;
+    &__subtitle {
+      margin-bottom: var(--margin-sm);
+      color: var(--text-hint-color);
     }
 
-    &--success {
-      background-color: ds.$color-success;
+    &__description {
+      font-size: var(--font-size-lg);
+      max-width: 800px;
     }
 
-    &--error {
-      background-color: ds.$color-error;
+    &__theme-toggle {
+      margin-top: var(--spacing-6);
+      padding: var(--spacing-3) var(--spacing-6);
+      background-color: var(--color-white);
+      color: var(--color-primary);
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: all var(--transition-fast) var(--transition-timing-default);
+
+      &:hover {
+        background-color: rgba(var(--color-white), 0.9);
+      }
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+        color: var(--color-light-gray-1);
+
+        &:hover {
+          background-color: var(--color-dark-gray-2);
+        }
+      }
     }
 
-    &--warning {
-      background-color: ds.$color-warning;
+    &__section {
+      margin-bottom: var(--margin-lg);
+      padding-bottom: var(--spacing-12);
+      border-bottom: 1px solid var(--color-light-gray-2);
+
+      @include darkmode.dark-mode {
+        border-bottom-color: var(--color-dark-gray-1);
+      }
     }
 
-    &--info {
-      background-color: ds.$color-info;
+    &__section-title {
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--spacing-8);
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: var(--spacing-3);
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--color-primary);
+        border-radius: var(--border-radius-full);
+
+        @include darkmode.dark-mode {
+          background-color: var(--color-primary-light);
+        }
+      }
     }
 
-    &--light-gray-1 {
-      background-color: ds.$color-light-gray-1;
-      border: 1px solid ds.$color-light-gray-2;
+    &__subsection {
+      margin-bottom: var(--spacing-8);
     }
 
-    &--light-gray-2 {
-      background-color: ds.$color-light-gray-2;
+    &__subsection-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-4);
     }
 
-    &--medium-gray-1 {
-      background-color: ds.$color-medium-gray-1;
+    &__example {
+      background-color: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-2);
+        box-shadow: 0 0 0 1px rgba(var(--color-white), 0.1);
+      }
     }
 
-    &--medium-gray-2 {
-      background-color: ds.$color-medium-gray-2;
+    &__colors {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--spacing-md);
     }
 
-    &--dark-gray-1 {
-      background-color: ds.$color-dark-gray-1;
+    &__color-item {
+      padding: var(--padding);
+      border-radius: var(--border-radius);
+      background-color: var(--background-basic-color-1);
+      box-shadow: var(--shadow);
+
+      .color-preview {
+        width: 100%;
+        height: 100px;
+        border-radius: var(--border-radius);
+        margin-bottom: var(--margin-sm);
+
+        &--primary {
+          background-color: var(--color-primary-500);
+        }
+
+        &--success {
+          background-color: var(--color-success-500);
+        }
+
+        &--warning {
+          background-color: var(--color-warning-500);
+        }
+
+        &--danger {
+          background-color: var(--color-danger-500);
+        }
+
+        &--info {
+          background-color: var(--color-info-500);
+        }
+      }
+
+      .color-name {
+        font-weight: bold;
+        color: var(--text-basic-color);
+      }
+
+      .color-value {
+        color: var(--text-hint-color);
+        font-family: monospace;
+      }
     }
 
-    &--dark-gray-2 {
-      background-color: ds.$color-dark-gray-2;
+    &__typography {
+      .text-sample {
+        margin-bottom: var(--margin);
+
+        &--h1 {
+          font-size: var(--text-heading-1-font-size);
+          font-weight: var(--text-heading-1-font-weight);
+          line-height: var(--text-heading-1-line-height);
+        }
+
+        &--h2 {
+          font-size: var(--text-heading-2-font-size);
+          font-weight: var(--text-heading-2-font-weight);
+          line-height: var(--text-heading-2-line-height);
+        }
+
+        &--h3 {
+          font-size: var(--text-heading-3-font-size);
+          font-weight: var(--text-heading-3-font-weight);
+          line-height: var(--text-heading-3-line-height);
+        }
+
+        &--h4 {
+          font-size: var(--text-heading-4-font-size);
+          font-weight: var(--text-heading-4-font-weight);
+          line-height: var(--text-heading-4-line-height);
+        }
+
+        &--h5 {
+          font-size: var(--text-heading-5-font-size);
+          font-weight: var(--text-heading-5-font-weight);
+          line-height: var(--text-heading-5-line-height);
+        }
+
+        &--h6 {
+          font-size: var(--text-heading-6-font-size);
+          font-weight: var(--text-heading-6-font-weight);
+          line-height: var(--text-heading-6-line-height);
+        }
+
+        &--body {
+          font-size: var(--text-paragraph-font-size);
+          line-height: var(--text-paragraph-line-height);
+        }
+
+        &--caption {
+          font-size: var(--text-caption-font-size);
+          line-height: var(--text-caption-line-height);
+        }
+      }
     }
 
-    &--dark-gray-3 {
-      background-color: ds.$color-dark-gray-3;
-    }
-  }
-
-  &__color-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__color-name {
-    font-weight: ds.$font-weight-medium;
-  }
-
-  // Spacing showcase
-  &__spacing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__spacing-item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__spacing-example {
-    background-color: ds.$color-primary;
-    border-radius: ds.$border-radius-md;
-    margin-bottom: ds.$spacing-2;
-
-    &--spacing-1 {
-      height: ds.$spacing-1;
+    &__components {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
     }
 
-    &--spacing-2 {
-      height: ds.$spacing-2;
+    &__component-item {
+      padding: var(--padding);
+      border-radius: var(--border-radius);
+      background-color: var(--background-basic-color-1);
+      box-shadow: var(--shadow);
+
+      .component-title {
+        margin-bottom: var(--margin);
+        color: var(--text-basic-color);
+        font-weight: bold;
+      }
+
+      .component-description {
+        margin-bottom: var(--margin);
+        color: var(--text-hint-color);
+      }
+
+      .component-preview {
+        padding: var(--padding);
+        border: 1px solid var(--border-basic-color-3);
+        border-radius: var(--border-radius);
+      }
     }
 
-    &--spacing-3 {
-      height: ds.$spacing-3;
+    // Spacing showcase
+    &__spacing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--spacing-6);
     }
 
-    &--spacing-4 {
-      height: ds.$spacing-4;
+    &__spacing-item {
+      display: flex;
+      flex-direction: column;
     }
 
-    &--spacing-5 {
-      height: ds.$spacing-5;
+    &__spacing-example {
+      background-color: var(--color-primary);
+      border-radius: var(--border-radius-md);
+      margin-bottom: var(--spacing-2);
+
+      &--spacing-1 {
+        height: var(--spacing-1);
+      }
+
+      &--spacing-2 {
+        height: var(--spacing-2);
+      }
+
+      &--spacing-3 {
+        height: var(--spacing-3);
+      }
+
+      &--spacing-4 {
+        height: var(--spacing-4);
+      }
+
+      &--spacing-5 {
+        height: var(--spacing-5);
+      }
+
+      &--spacing-6 {
+        height: var(--spacing-6);
+      }
+
+      &--spacing-8 {
+        height: var(--spacing-8);
+      }
+
+      &--spacing-10 {
+        height: var(--spacing-10);
+      }
+
+      &--spacing-12 {
+        height: var(--spacing-12);
+      }
+
+      &--spacing-16 {
+        height: var(--spacing-16);
+      }
+
+      &--spacing-20 {
+        height: var(--spacing-20);
+      }
+
+      &--spacing-24 {
+        height: var(--spacing-24);
+      }
     }
 
-    &--spacing-6 {
-      height: ds.$spacing-6;
+    &__spacing-info {
+      display: flex;
+      flex-direction: column;
     }
 
-    &--spacing-8 {
-      height: ds.$spacing-8;
+    &__spacing-name {
+      font-weight: var(--font-weight-medium);
     }
 
-    &--spacing-10 {
-      height: ds.$spacing-10;
+    // Breakpoints showcase
+    &__breakpoint-item {
+      padding: var(--spacing-4);
+      margin-bottom: var(--spacing-4);
+      background-color: var(--color-light-gray-2);
+      border-radius: var(--border-radius-md);
+      font-weight: var(--font-weight-medium);
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+      }
+
+      &--mobile {
+        border-left: 4px solid var(--color-primary);
+      }
+
+      &--tablet {
+        border-left: 4px solid var(--color-secondary);
+      }
+
+      &--desktop {
+        border-left: 4px solid var(--color-success);
+      }
+
+      &--desktop-large {
+        border-left: 4px solid var(--color-warning);
+      }
+
+      &--desktop-xl {
+        border-left: 4px solid var(--color-info);
+      }
     }
 
-    &--spacing-12 {
-      height: ds.$spacing-12;
+    // Grid showcase
+    &__grid-item {
+      background-color: var(--color-primary-light);
+      color: var(--color-dark-gray-3);
+      padding: var(--spacing-4);
+      border-radius: var(--border-radius-md);
+      margin-bottom: var(--spacing-4);
+      text-align: center;
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-primary-dark);
+        color: var(--color-white);
+      }
     }
 
-    &--spacing-16 {
-      height: ds.$spacing-16;
+    // Animation showcase
+    &__animation-item {
+      display: inline-block;
+      padding: var(--spacing-4) var(--spacing-6);
+      margin: var(--spacing-2);
+      background-color: var(--color-light-gray-2);
+      border-radius: var(--border-radius-md);
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+      }
+
+      &--fade-in {
+        @include mixins.fade-in;
+      }
+
+      // @include mixins.slide-in-top; // TODO: Mixin not implemented
+      // @include mixins.slide-in-bottom; // TODO: Mixin not implemented
+      // @include mixins.slide-in-left; // TODO: Mixin not implemented
+      // @include mixins.slide-in-right; // TODO: Mixin not implemented
+      // @include mixins.scale-in; // TODO: Mixin not implemented
     }
 
-    &--spacing-20 {
-      height: ds.$spacing-20;
+    // Micro-interactions showcase
+    &__micro-item {
+      display: inline-block;
+      padding: var(--spacing-4) var(--spacing-6);
+      margin: var(--spacing-2);
+      background-color: var(--color-light-gray-2);
+      border-radius: var(--border-radius-md);
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+      }
+
+      &--hover-scale {
+        @include mixins.hover-scale;
+      }
+
+      &--hover-lift {
+        @include mixins.hover-lift;
+      }
+
+      // @include mixins.hover-color-shift(color, var(--color-dark-gray-2), var(--color-primary)); // TODO: Mixin not implemented
+
+      // @include mixins.click-ripple; // TODO: Mixin not implemented
     }
 
-    &--spacing-24 {
-      height: ds.$spacing-24;
-    }
-  }
+    // Accessibility showcase
+    &__focus-example {
+      margin-right: var(--spacing-4);
+      padding: var(--spacing-3) var(--spacing-6);
+      background-color: var(--color-light-gray-2);
+      border: 1px solid var(--color-medium-gray-1);
+      border-radius: var(--border-radius-md);
 
-  &__spacing-info {
-    display: flex;
-    flex-direction: column;
-  }
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+        border-color: var(--color-dark-gray-2);
+      }
 
-  &__spacing-name {
-    font-weight: ds.$font-weight-medium;
-  }
-
-  // Breakpoints showcase
-  &__breakpoint-item {
-    padding: ds.$spacing-4;
-    margin-bottom: ds.$spacing-4;
-    background-color: ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    font-weight: ds.$font-weight-medium;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
+      &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
     }
 
-    &--mobile {
-      border-left: 4px solid ds.$color-primary;
+    &__a11y-example {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-light-gray-2);
+      border: 1px solid var(--color-medium-gray-1);
+      border-radius: var(--border-radius-full);
+      font-size: var(--font-size-xl);
+      cursor: pointer;
+
+      @include darkmode.dark-mode {
+        background-color: var(--color-dark-gray-1);
+        border-color: var(--color-dark-gray-2);
+      }
     }
 
-    &--tablet {
-      border-left: 4px solid ds.$color-secondary;
+    &__color-info {
+      display: flex;
+      flex-direction: column;
     }
 
-    &--desktop {
-      border-left: 4px solid ds.$color-success;
-    }
-
-    &--desktop-large {
-      border-left: 4px solid ds.$color-warning;
-    }
-
-    &--desktop-xl {
-      border-left: 4px solid ds.$color-info;
-    }
-  }
-
-  // Grid showcase
-  &__grid-item {
-    background-color: ds.$color-primary-light;
-    color: ds.$color-dark-gray-3;
-    padding: ds.$spacing-4;
-    border-radius: ds.$border-radius-md;
-    margin-bottom: ds.$spacing-4;
-    text-align: center;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
-      color: ds.$color-white;
-    }
-  }
-
-  // Animation showcase
-  &__animation-item {
-    display: inline-block;
-    padding: ds.$spacing-4 ds.$spacing-6;
-    margin: ds.$spacing-2;
-    background-color: ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-    }
-
-    &--fade-in {
-      @include mixins.fade-in;
-    }
-
-    // @include mixins.slide-in-top; // TODO: Mixin not implemented
-    // @include mixins.slide-in-bottom; // TODO: Mixin not implemented
-    // @include mixins.slide-in-left; // TODO: Mixin not implemented
-    // @include mixins.slide-in-right; // TODO: Mixin not implemented
-    // @include mixins.scale-in; // TODO: Mixin not implemented
-  }
-
-  // Micro-interactions showcase
-  &__micro-item {
-    display: inline-block;
-    padding: ds.$spacing-4 ds.$spacing-6;
-    margin: ds.$spacing-2;
-    background-color: ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-    }
-
-    &--hover-scale {
-      @include mixins.hover-scale;
-    }
-
-    &--hover-lift {
-      @include mixins.hover-lift;
-    }
-
-    // @include mixins.hover-color-shift(color, ds.$color-dark-gray-2, ds.$color-primary); // TODO: Mixin not implemented
-
-    // @include mixins.click-ripple; // TODO: Mixin not implemented
-  }
-
-  // Accessibility showcase
-  &__focus-example {
-    margin-right: ds.$spacing-4;
-    padding: ds.$spacing-3 ds.$spacing-6;
-    background-color: ds.$color-light-gray-2;
-    border: 1px solid ds.$color-medium-gray-1;
-    border-radius: ds.$border-radius-md;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-      border-color: ds.$color-dark-gray-2;
-    }
-
-    &:focus-visible {
-      outline: 2px solid ds.$color-primary;
-      outline-offset: 2px;
-    }
-  }
-
-  &__a11y-example {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: ds.$color-light-gray-2;
-    border: 1px solid ds.$color-medium-gray-1;
-    border-radius: ds.$border-radius-full;
-    font-size: ds.$font-size-xl;
-    cursor: pointer;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-      border-color: ds.$color-dark-gray-2;
+    &__color-name {
+      font-weight: var(--font-weight-medium);
     }
   }
 }
 
 // Special typography classes
 .body-large {
-  font-size: ds.$font-size-lg;
+  font-size: var(--font-size-lg);
 }
 
 .body-small {
-  font-size: ds.$font-size-sm;
+  font-size: var(--font-size-sm);
 }
 
 .body-xs {
-  font-size: ds.$font-size-xs;
+  font-size: var(--font-size-xs);
 }
 
 .caption {
-  font-size: ds.$font-size-sm;
-  color: ds.$color-dark-gray-1;
+  font-size: var(--font-size-sm);
+  color: var(--color-dark-gray-1);
 }
 
 .label {
   display: block;
-  font-size: ds.$font-size-sm;
-  font-weight: ds.$font-weight-medium;
-  margin-bottom: ds.$spacing-2;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-2);
 }
 
 .button-text {
-  font-weight: ds.$font-weight-semibold;
+  font-weight: var(--font-weight-semibold);
 }
 
 // Screen reader only class

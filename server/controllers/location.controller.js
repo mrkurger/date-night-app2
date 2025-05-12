@@ -10,6 +10,7 @@
 import Location from '../models/location.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
+import { sendSuccess, sendError } from '../utils/response.js';
 
 /**
  * Controller for managing locations
@@ -220,3 +221,12 @@ const locationController = new LocationController();
 
 export default locationController;
 export { locationController };
+
+export async function someHandler(req, res) {
+  try {
+    const result = await doSomething();
+    return sendSuccess(res, result);
+  } catch (err) {
+    return sendError(res, err, err.status || 500);
+  }
+}

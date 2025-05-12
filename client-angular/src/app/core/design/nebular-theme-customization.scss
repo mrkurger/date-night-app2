@@ -1,0 +1,20 @@
+/* Import Nebular Theme */
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+/* Define custom theme */
+$theme: (
+  text-basic-color: var(--text-basic-color),
+  text-hint-color: var(--text-hint-color),
+  background-basic-color-1: var(--background-basic-color-1),
+  color-primary-500: var(--color-primary-500),
+  color-success-500: var(--color-success-500),
+  color-warning-500: var(--color-warning-500),
+  color-danger-500: var(--color-danger-500),
+  border-radius: 0.25rem,
+  border-radius-lg: 0.5rem,
+  shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+);
+
+/* Register the theme */
+$nb-themes: nb-register-theme($theme, default, default);

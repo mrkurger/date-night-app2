@@ -7,31 +7,51 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbDialogModule,
+  NbDialogService,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbSpinnerModule,
+} from '@nebular/theme';
+
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-
-// Import Emerald components
-import { EmeraldModule } from '../../shared/emerald/emerald.module';
-import {
-  TinderCardMedia,
-  TinderCardAction,
-} from '../../shared/emerald/tinder-card/tinder-card.component';
+import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-card.component';
 
 @Component({
   selector: 'app-tinder',
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, EmeraldModule],
-  schemas: [NO_ERRORS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbDialogModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbSpinnerModule,
+    MainLayoutComponent,
+    TinderCardComponent,
+  ],
 })
 export class TinderComponent implements OnInit {
   /**
@@ -52,12 +72,12 @@ export class TinderComponent implements OnInit {
   /**
    * Current state of the card ('', 'like', 'dislike')
    */
-  cardState: '' | 'like' | 'dislike' = '';
+  cardState: 'default' | 'like' | 'dislike' | 'superlike' = 'default';
 
   /**
    * Loading state
    */
-  loading = true;
+  loading = false;
 
   /**
    * Error message
@@ -72,7 +92,7 @@ export class TinderComponent implements OnInit {
   /**
    * Available counties for location filter
    */
-  counties: string[] = ['Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Kristiansand', 'Tromsø'];
+  counties: string[] = [];
 
   /**
    * Authentication state
@@ -87,11 +107,12 @@ export class TinderComponent implements OnInit {
     private notificationService: NotificationService,
     private chatService: ChatService,
     private authService: AuthService,
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
+    private dialogService: NbDialogService,
   ) {
     // Initialize filter form
-    this.filterForm = this.fb.group({
+    this.filterForm = this.formBuilder.group({
       category: [''],
       location: [''],
       touringOnly: [false],
@@ -109,6 +130,9 @@ export class TinderComponent implements OnInit {
     this.authService.currentUser$.subscribe((user) => {
       this.isAuthenticated = !!user;
     });
+
+    // Load available counties for location filter
+    this.loadCounties();
   }
 
   /**
@@ -117,260 +141,195 @@ export class TinderComponent implements OnInit {
   loadSwipeAds(): void {
     this.loading = true;
     this.error = null;
-    this.cardState = '';
 
-    // Get filter values
     const filters = this.filterForm.value;
-
-    this.adService.getSwipeAds(filters).subscribe({
-      next: (ads) => {
-        if (ads && ads.length > 0) {
-          this.ads = ads;
-          this.currentAd = ads[0];
-          this.nextAd = ads.length > 1 ? ads[1] : null;
-        } else {
-          this.currentAd = null;
-          this.nextAd = null;
-          this.ads = [];
-        }
+    this.adService.getAds(filters).subscribe({
+      next: (response) => {
+        this.ads = response.ads;
+        this.currentAd = this.ads[0] || null;
+        this.nextAd = this.ads[1] || null;
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Failed to load ads. Please try again.';
+        this.error = 'Failed to load profiles';
         this.loading = false;
-        console.error('Error loading swipe ads:', err);
+        console.error('Error loading ads:', err);
       },
     });
   }
 
   /**
-   * Handle swipe event from TinderCard component
-   * @param event Swipe event with direction and itemId
+   * Load available counties for location filter
    */
-  onSwipe(event: { direction: 'left' | 'right'; itemId: string }): void {
-    if (!this.currentAd) return;
-
-    const direction = event.direction;
-    // Convert complex _id to string if needed
-    const currentAdId =
-      typeof this.currentAd._id === 'string'
-        ? this.currentAd._id
-        : JSON.stringify(this.currentAd._id);
-
-    // Set card state for animation
-    this.cardState = direction === 'right' ? 'like' : 'dislike';
-
-    // Record the swipe
-    this.adService.recordSwipe(currentAdId as string, direction).subscribe({
-      next: () => {
-        // Show notification for right swipes (likes)
-        if (direction === 'right') {
-          this.notificationService.success('Added to your favorites');
-        }
+  private loadCounties(): void {
+    this.adService.getCounties().subscribe({
+      next: (counties) => {
+        this.counties = counties;
       },
       error: (err) => {
-        console.error('Error recording swipe:', err);
+        console.error('Error loading counties:', err);
       },
     });
-
-    // Move to the next card after animation
-    setTimeout(() => {
-      // Remove the current ad from the array
-      this.ads = this.ads.filter((ad) => ad._id !== currentAdId);
-
-      // Set the next ad as current
-      this.currentAd = this.nextAd;
-
-      // Set the next ad in queue
-      this.nextAd = this.ads.length > 1 ? this.ads[1] : null;
-
-      // Reset card state
-      this.cardState = '';
-
-      // If we're out of ads, show empty state
-      if (this.ads.length === 0) {
-        this.currentAd = null;
-        this.nextAd = null;
-      }
-    }, 500);
   }
 
   /**
-   * Handle media change event from TinderCard component
-   * @param index New media index
-   */
-  onMediaChange(index: number): void {
-    // This method can be used to track media changes if needed
-    console.log('Media changed to index:', index);
-  }
-
-  /**
-   * Get a formatted location string from an ad
-   * @param ad The ad object
-   * @returns A formatted location string
+   * Get formatted location string
    */
   getLocationString(ad: Ad): string {
-    if (!ad || !ad.location) {
-      return '';
-    }
-
     return `${ad.location.city}, ${ad.location.county}`;
   }
 
   /**
+   * Get card media array
+   */
+  getCardMedia(ad: Ad): { type: 'image' | 'video'; url: string; thumbnail?: string }[] {
+    return ad.media.map((media) => ({
+      type: media.type as 'image' | 'video',
+      url: media.url,
+      thumbnail: media.thumbnail,
+    }));
+  }
+
+  /**
+   * Get ad ID as string
+   */
+  getAdIdAsString(id: any): string {
+    return id.toString();
+  }
+
+  /**
+   * Handle card swipe
+   */
+  onSwipe(event: { direction: 'left' | 'right' | 'up'; itemId: string }): void {
+    if (!this.currentAd) return;
+
+    switch (event.direction) {
+      case 'right':
+        this.likeAd(this.currentAd._id);
+        break;
+      case 'left':
+        this.dislikeAd(this.currentAd._id);
+        break;
+      case 'up':
+        this.superlikeAd(this.currentAd._id);
+        break;
+    }
+  }
+
+  /**
    * Handle card action click
-   * @param event Action event with id and itemId
    */
-  onCardAction(event: { id: string; itemId: string }): void {
+  onCardAction(event: { action: string; itemId: string }): void {
     if (!this.currentAd) return;
 
-    switch (event.id) {
-      case 'info':
-        this.viewAdDetails();
+    switch (event.action) {
+      case 'like':
+        this.likeAd(this.currentAd._id);
         break;
-      case 'chat':
-        this.startChat();
+      case 'dislike':
+        this.dislikeAd(this.currentAd._id);
         break;
-      default:
-        console.warn('Unknown action:', event.id);
+      case 'superlike':
+        this.superlikeAd(this.currentAd._id);
+        break;
     }
   }
 
   /**
-   * Navigate to ad details page
+   * Handle media change
    */
-  viewAdDetails(): void {
-    if (!this.currentAd) return;
-    this.router.navigateByUrl(`/ad-details/${this.currentAd._id}`);
+  onMediaChange(event: { index: number; media: any }): void {
+    // Handle media change if needed
   }
 
   /**
-   * Start a chat with the advertiser
+   * Like an ad
    */
-  startChat(): void {
-    if (!this.currentAd) return;
-
-    if (!this.isAuthenticated) {
-      this.notificationService.error('Please log in to start a chat');
-      return;
-    }
-
-    // Convert complex _id to string if needed
-    const adId =
-      typeof this.currentAd._id === 'string'
-        ? this.currentAd._id
-        : JSON.stringify(this.currentAd._id);
-
-    this.chatService.createAdRoom(adId as string).subscribe({
-      next: (room) => {
-        this.router.navigateByUrl(`/chat/${room._id}`);
+  private likeAd(adId: string): void {
+    this.cardState = 'like';
+    this.adService.likeAd(adId).subscribe({
+      next: () => {
+        this.notificationService.success('Profile liked!');
+        this.nextCard();
       },
       error: (err) => {
-        this.notificationService.error('Failed to start chat');
-        console.error('Error starting chat:', err);
+        this.notificationService.error('Failed to like profile');
+        console.error('Error liking ad:', err);
+        this.cardState = 'default';
       },
     });
   }
 
   /**
-   * Convert ad media to TinderCardMedia format
-   * @param ad The ad to convert media from
-   * @returns Array of TinderCardMedia objects
+   * Dislike an ad
    */
-  getCardMedia(ad: Ad): TinderCardMedia[] {
-    if (!ad.media || ad.media.length === 0) {
-      // If no media, return a default image
-      return [{ url: '/assets/images/default-profile.jpg', type: 'image' }];
-    }
-
-    // Convert ad.media to TinderCardMedia format
-    return ad.media.map((item) => ({
-      url: item.url,
-      type: item.type === 'image' || item.type === 'video' ? item.type : 'image',
-    }));
+  private dislikeAd(adId: string): void {
+    this.cardState = 'dislike';
+    this.adService.dislikeAd(adId).subscribe({
+      next: () => {
+        this.nextCard();
+      },
+      error: (err) => {
+        console.error('Error disliking ad:', err);
+        this.cardState = 'default';
+      },
+    });
   }
 
   /**
-   * Open filters modal
+   * Superlike an ad
    */
-  openFilters(): void {
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = new bootstrap.Modal(modal);
-          bsModal.show();
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.add('show');
-          modal.style.display = 'block';
-          document.body.classList.add('modal-open');
+  private superlikeAd(adId: string): void {
+    this.cardState = 'superlike';
+    this.adService.superlikeAd(adId).subscribe({
+      next: () => {
+        this.notificationService.success('Profile super liked!');
+        this.nextCard();
+      },
+      error: (err) => {
+        this.notificationService.error('Failed to super like profile');
+        console.error('Error super liking ad:', err);
+        this.cardState = 'default';
+      },
+    });
+  }
 
-          // Create backdrop if it doesn't exist
-          let backdrop = document.querySelector('.modal-backdrop');
-          if (!backdrop) {
-            backdrop = document.createElement('div');
-            backdrop.className = 'modal-backdrop fade show';
-            document.body.appendChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error opening modal:', error);
-        // Simple fallback
-        modal.style.display = 'block';
+  /**
+   * Move to next card
+   */
+  private nextCard(): void {
+    setTimeout(() => {
+      this.ads = this.ads.slice(1);
+      this.currentAd = this.ads[0] || null;
+      this.nextAd = this.ads[1] || null;
+      this.cardState = 'default';
+
+      if (!this.currentAd) {
+        this.loadSwipeAds();
       }
-    }
+    }, 300);
   }
 
   /**
-   * Close filters modal
+   * Open filters dialog
+   */
+  openFilters(dialog: any): void {
+    this.dialogService.open(dialog, {
+      context: {},
+      hasBackdrop: true,
+      closeOnBackdropClick: true,
+    });
+  }
+
+  /**
+   * Close filters dialog
    */
   closeFilters(): void {
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = bootstrap.Modal.getInstance(modal);
-          if (bsModal) {
-            bsModal.hide();
-          }
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.remove('show');
-          modal.style.display = 'none';
-          document.body.classList.remove('modal-open');
-
-          // Remove backdrop
-          const backdrop = document.querySelector('.modal-backdrop');
-          if (backdrop) {
-            backdrop.parentNode?.removeChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error closing modal:', error);
-        // Simple fallback
-        modal.style.display = 'none';
-      }
-    }
+    // Dialog will be closed automatically by Nebular
   }
 
   /**
-   * Apply filters and reload ads
-   */
-  applyFilters(): void {
-    this.loadSwipeAds();
-    this.closeFilters();
-    this.notificationService.success('Filters applied');
-  }
-
-  /**
-   * Reset filters to default values
+   * Reset filters
    */
   resetFilters(): void {
     this.filterForm.reset({
@@ -381,9 +340,10 @@ export class TinderComponent implements OnInit {
   }
 
   /**
-   * Convert ad ID to string regardless of its type
+   * Apply filters
    */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  applyFilters(): void {
+    this.loadSwipeAds();
+    this.closeFilters();
   }
 }

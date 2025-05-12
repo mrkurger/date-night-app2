@@ -1,0 +1,318 @@
+@use 'design-tokens' as dt;
+
+/* Tinder Component Styles */
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background-color: nb-theme(background-basic-color-1);
+}
+
+// Main container
+.tinder-container {
+  padding: nb-theme(padding);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1; // Ensure it stays below the navbar
+}
+
+// Header section
+.tinder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: nb-theme(margin-lg);
+  padding: nb-theme(padding-2) 0;
+
+  .tinder-title {
+    margin: 0;
+    color: nb-theme(text-basic-color);
+    font-size: nb-theme(text-heading-1-font-size);
+  }
+
+  .tinder-filters {
+    button {
+      nb-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// Filter button
+.filter-button {
+  background-color: nb-theme(background-basic-color-2);
+  border: none;
+  border-radius: nb-theme(border-radius-md);
+  padding: nb-theme(padding-2) nb-theme(padding-4);
+  font-weight: nb-theme(font-weight-medium);
+  font-size: nb-theme(font-size-sm);
+  color: nb-theme(text-basic-color);
+  box-shadow: nb-theme(shadow-sm);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: nb-theme(spacing-2);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: nb-theme(shadow-lg);
+    transform: translateY(-3px);
+    background-color: nb-theme(background-basic-color-3);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: nb-theme(shadow-sm);
+  }
+
+  i {
+    color: nb-theme(color-primary);
+    font-size: nb-theme(font-size-base);
+  }
+}
+
+// Loading state
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: nb-theme(padding-lg);
+  text-align: center;
+  min-height: 400px;
+
+  nb-icon {
+    font-size: 4rem;
+    margin-bottom: nb-theme(margin);
+  }
+
+  p {
+    margin: 0;
+    color: nb-theme(text-basic-color);
+    font-size: nb-theme(text-subtitle-font-size);
+
+    &.loading-text {
+      margin-top: nb-theme(margin-4);
+      margin-bottom: nb-theme(margin-sm);
+      font-weight: nb-theme(text-heading-6-font-weight);
+    }
+  }
+}
+
+// Error state
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: nb-theme(padding-lg);
+  text-align: center;
+  min-height: 400px;
+
+  nb-icon {
+    font-size: 4rem;
+    margin-bottom: nb-theme(margin);
+  }
+
+  p {
+    margin: 0;
+    color: nb-theme(text-basic-color);
+    font-size: nb-theme(text-subtitle-font-size);
+
+    &.error-text {
+      margin-bottom: nb-theme(margin-6);
+      font-weight: nb-theme(text-heading-6-font-weight);
+    }
+  }
+
+  button {
+    margin-top: nb-theme(margin);
+    padding: nb-theme(padding-2) nb-theme(padding-6);
+    background-color: nb-theme(color-primary);
+    color: nb-theme(background-basic-color-1);
+    border: none;
+    border-radius: nb-theme(border-radius-md);
+    font-weight: nb-theme(font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: nb-theme(color-primary-hover);
+    }
+
+    nb-icon {
+      margin-right: nb-theme(spacing-2);
+    }
+  }
+}
+
+// Empty state
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: nb-theme(padding-lg);
+  text-align: center;
+  min-height: 400px;
+
+  nb-icon {
+    font-size: 4rem;
+    margin-bottom: nb-theme(margin);
+  }
+
+  p {
+    margin: 0;
+    color: nb-theme(text-basic-color);
+    font-size: nb-theme(text-subtitle-font-size);
+
+    &.empty-text {
+      margin-bottom: nb-theme(margin-2);
+      font-weight: nb-theme(text-heading-6-font-weight);
+    }
+
+    &.empty-subtext {
+      color: nb-theme(text-hint-color);
+    }
+  }
+
+  button {
+    margin-top: nb-theme(margin);
+    padding: nb-theme(padding-2) nb-theme(padding-6);
+    background-color: nb-theme(color-primary);
+    color: nb-theme(background-basic-color-1);
+    border: none;
+    border-radius: nb-theme(border-radius-md);
+    font-weight: nb-theme(font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: nb-theme(color-primary-hover);
+    }
+
+    nb-icon {
+      margin-right: nb-theme(spacing-2);
+    }
+  }
+}
+
+// Swipe area
+.swipe-area {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+// Next card preview
+.next-card-preview {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+}
+
+// Modal styles
+.modal-content {
+  border-radius: nb-theme(border-radius-lg);
+  border: none;
+  box-shadow: nb-theme(shadow-lg);
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(nb-theme(text-basic-color), 0.05);
+
+  .modal-title {
+    font-weight: nb-theme(font-weight-semibold);
+    color: nb-theme(text-basic-color);
+
+    i {
+      margin-right: nb-theme(spacing-2);
+      color: nb-theme(color-primary);
+    }
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(nb-theme(text-basic-color), 0.05);
+}
+
+// Dialog Styles
+::ng-deep {
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h5 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: nb-theme(text-basic-color);
+      font-size: nb-theme(text-heading-6-font-size);
+    }
+  }
+
+  nb-card-body {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: nb-theme(spacing-lg);
+
+      nb-form-field {
+        label {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: nb-theme(margin-xs);
+          color: nb-theme(text-hint-color);
+
+          nb-icon {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: nb-theme(spacing);
+
+    button {
+      nb-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .swipe-area {
+    height: 500px;
+  }
+
+  .tinder-title {
+    font-size: nb-theme(text-heading-2-font-size);
+  }
+}
+
+@media (max-width: 576px) {
+  .swipe-area {
+    height: 450px;
+  }
+
+  .tinder-container {
+    padding: nb-theme(padding-2);
+  }
+}

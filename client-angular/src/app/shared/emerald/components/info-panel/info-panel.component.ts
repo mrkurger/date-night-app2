@@ -1,4 +1,3 @@
-import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**

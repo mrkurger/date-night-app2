@@ -1,0 +1,48 @@
+<div [ngClass]="containerClasses">
+  <div class="checkbox__input-container">
+    <!-- Hidden native checkbox for accessibility -->
+    <input
+      type="checkbox"
+      class="checkbox__input"
+      [checked]="checked"
+      [disabled]="disabled"
+      [required]="required"
+      [attr.name]="name"
+      [attr.id]="id || name"
+      [attr.value]="value"
+      [attr.aria-label]="ariaLabel || label"
+      [attr.aria-invalid]="!!errorMessage"
+      [attr.aria-describedby]="errorMessage || helperText ? (id || name) + '-helper' : null"
+      (change)="onCheckboxChange($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+
+    <!-- Custom checkbox visual -->
+    <div class="checkbox__custom">
+      @if (checked) {
+        <app-icon name="check" size="small"></app-icon>
+      }
+    </div>
+  </div>
+
+  @if (label) {
+    <label class="checkbox__label" [attr.for]="id || name">
+      {{ label }}
+      @if (required) {
+        <span class="checkbox__required-indicator">*</span>
+      }
+    </label>
+  }
+
+  <!-- Helper Text or Error Message -->
+  @if (errorMessage || helperText) {
+    <div
+      class="checkbox__helper-text"
+      [class.checkbox__helper-text--error]="!!errorMessage"
+      [attr.id]="(id || name) + '-helper'"
+    >
+      {{ errorMessage || helperText }}
+    </div>
+  }
+</div>

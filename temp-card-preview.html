@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Component Preview</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .preview-section {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .preview-section h2 {
+        margin-top: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      /* --- Base Card Styles --- */
+      .c-card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 350px; /* Added a fixed width for better preview */
+      }
+
+      .c-card__header {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .c-card__image-wrapper {
+        margin-right: 16px;
+        flex-shrink: 0;
+      }
+
+      .c-card__image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e0e0e0; /* Placeholder background */
+      }
+
+      .c-card__title-group {
+        /* Styles for title group */
+      }
+
+      .c-card__title {
+        margin: 0 0 4px 0;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      .c-card__subtitle {
+        margin: 0;
+        font-size: 0.9em;
+        color: #666;
+      }
+
+      .c-card__body {
+        padding: 16px;
+        flex-grow: 1;
+      }
+
+      .c-card__description {
+        margin-bottom: 16px;
+        font-size: 0.95em;
+        line-height: 1.5;
+      }
+
+      .c-card__custom-content {
+        /* Styles for custom content area, if any */
+      }
+
+      .c-card__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 16px;
+        border-top: 1px solid #eee;
+        background-color: #f9f9f9;
+      }
+
+      /* --- Profile Specific Details --- */
+      .c-profile-details__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .c-profile-details__term {
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #333;
+      }
+      .c-profile-details__description {
+        margin-bottom: 8px;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .c-profile-details__description:last-child {
+        margin-bottom: 0;
+      }
+
+      /* --- Advertiser Specific Details --- */
+      .c-advertiser-details__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .c-advertiser-details__term {
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #333;
+      }
+      .c-advertiser-details__description {
+        margin-bottom: 8px;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .c-advertiser-details__description:last-child {
+        margin-bottom: 0;
+      }
+      .c-advertiser-details__link {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .c-advertiser-details__link:hover {
+        text-decoration: underline;
+      }
+      .c-advertiser-details__address {
+        font-style: normal;
+      }
+      .c-advertiser-details__offer {
+        margin-top: 16px;
+        padding: 12px;
+        background-color: #e6f7ff;
+        border: 1px solid #91d5ff;
+        border-radius: 4px;
+      }
+      .c-advertiser-details__offer-title {
+        margin: 0 0 8px 0;
+        font-size: 1em;
+        font-weight: bold;
+        color: #0056b3;
+      }
+      .c-advertiser-details__offer-description {
+        font-size: 0.9em;
+        color: #333;
+        margin: 0;
+      }
+
+      /* --- Button Styles (assuming a global c-button component) --- */
+      .c-button {
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition:
+          background-color 0.2s ease-in-out,
+          border-color 0.2s ease-in-out;
+      }
+      .c-button--primary {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+      .c-button--primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+      .c-button:not(.c-button--primary) {
+        /* Default/secondary button style */
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+      }
+      .c-button:not(.c-button--primary):hover {
+        background-color: #e0e0e0;
+        border-color: #bbb;
+      }
+      .c-card__action {
+        /* Specific styles for actions within a card, if needed */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-section">
+      <h2>Profile Card Example</h2>
+      <article class="c-card" data-card-type="profile">
+        <header class="c-card__header">
+          <div class="c-card__image-wrapper">
+            <img
+              class="c-card__image"
+              src="https://via.placeholder.com/60"
+              alt="User Profile Picture"
+            />
+          </div>
+          <div class="c-card__title-group">
+            <h3 class="c-card__title">Alex Doe</h3>
+            <p class="c-card__subtitle">Software Engineer</p>
+          </div>
+        </header>
+        <section class="c-card__body">
+          <p class="c-card__description">
+            Passionate developer with a love for creating intuitive and dynamic user experiences.
+            Enjoys hiking and photography in their free time.
+          </p>
+          <div class="c-card__custom-content">
+            <div class="c-profile-details">
+              <dl class="c-profile-details__list">
+                <dt class="c-profile-details__term">Interests:</dt>
+                <dd class="c-profile-details__description">Coding, Hiking, Photography, AI</dd>
+                <dt class="c-profile-details__term">Location:</dt>
+                <dd class="c-profile-details__description">San Francisco, CA</dd>
+                <dt class="c-profile-details__term">Member Since:</dt>
+                <dd class="c-profile-details__description">Jan 2023</dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+        <footer class="c-card__footer">
+          <button class="c-button c-button--primary c-card__action">View Profile</button>
+          <button class="c-button c-card__action">Send Message</button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Advertiser Card Example</h2>
+      <article class="c-card" data-card-type="advertiser">
+        <header class="c-card__header">
+          <div class="c-card__image-wrapper">
+            <img
+              class="c-card__image"
+              src="https://via.placeholder.com/60/FFD700/000000?Text=Logo"
+              alt="Company Logo"
+            />
+          </div>
+          <div class="c-card__title-group">
+            <h3 class="c-card__title">The Cozy Corner Cafe</h3>
+            <p class="c-card__subtitle">Coffee & Pastries</p>
+          </div>
+        </header>
+        <section class="c-card__body">
+          <p class="c-card__description">
+            Your friendly neighborhood cafe, serving freshly brewed coffee and delicious homemade
+            pastries since 2010.
+          </p>
+          <div class="c-card__custom-content">
+            <div class="c-advertiser-details">
+              <dl class="c-advertiser-details__list">
+                <dt class="c-advertiser-details__term">Contact:</dt>
+                <dd class="c-advertiser-details__description">
+                  <a href="tel:555-1234" class="c-advertiser-details__link">555-1234</a>
+                </dd>
+                <dt class="c-advertiser-details__term">Website:</dt>
+                <dd class="c-advertiser-details__description">
+                  <a
+                    href="https://example.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="c-advertiser-details__link"
+                    >cozycorner.com</a
+                  >
+                </dd>
+                <dt class="c-advertiser-details__term">Address:</dt>
+                <dd class="c-advertiser-details__description">
+                  <address class="c-advertiser-details__address">
+                    123 Main Street, Anytown, USA
+                  </address>
+                </dd>
+              </dl>
+              <div class="c-advertiser-details__offer">
+                <h4 class="c-advertiser-details__offer-title">Special Offer!</h4>
+                <p class="c-advertiser-details__offer-description">
+                  Get a free pastry with any large coffee purchase this week!
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="c-card__footer">
+          <button class="c-button c-button--primary c-card__action">Visit Website</button>
+          <button class="c-button c-card__action">Get Directions</button>
+        </footer>
+      </article>
+    </div>
+  </body>
+</html>

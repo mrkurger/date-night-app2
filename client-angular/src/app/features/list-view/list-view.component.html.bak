@@ -1,0 +1,342 @@
+<div class="list-view-container">
+  <div class="container">
+    <!-- Page Header with Emerald Component -->
+    <emerald-page-header
+      title="Browse Profiles"
+      subtitle="Find your perfect match"
+      [actions]="headerActions"
+      (actionClick)="onHeaderActionClick($event)"
+    >
+    </emerald-page-header>
+
+    <!-- Search and Filters Bar -->
+    <div class="search-filters-bar">
+      <div class="search-box">
+        <nb-form-field appearance="outline" class="search-input-field">
+          <nb-form-field-label>Search profiles...</nb-form-field-label>
+          <input
+            nbInput
+            fullWidth
+            [formControl]="$any(filterForm.controls['searchQuery'])"
+            (input)="onSearchChange()"
+          />
+          <nb-icon matPrefix>search"></nb-icon>
+        </nb-form-field>
+      </div>
+
+      <div class="view-controls">
+        <!-- View Mode Toggle -->
+        <div class="view-toggle">
+          <button
+            nbButton
+            ghost
+            [class.active]="viewMode === 'grid'"
+            nbTooltip="Grid View"
+            (click)="setViewMode('grid')"
+          >
+            <nb-icon icon="grid_view"></nb-icon>
+          </button>
+          <button
+            nbButton
+            ghost
+            [class.active]="viewMode === 'list'"
+            nbTooltip="List View"
+            (click)="setViewMode('list')"
+          >
+            <nb-icon icon="view_list"></nb-icon>
+          </button>
+          <button
+            nbButton
+            ghost
+            [class.active]="viewMode === 'compact'"
+            nbTooltip="Compact View"
+            (click)="setViewMode('compact')"
+          >
+            <nb-icon icon="view_comfy"></nb-icon>
+          </button>
+        </div>
+
+        <!-- Sort Dropdown -->
+        <button nbButton [matMenuTriggerFor]="sortMenu" class="sort-button">
+          <nb-icon icon="sort"></nb-icon>
+          <span>Sort: {{ getCurrentSortLabel() }}</span>
+          <nb-icon icon="arrow_drop_down"></nb-icon>
+        </button>
+        <nb-menu #sortMenu="matMenu">
+          <button
+            nb-menu-item
+            *ngFor="let option of sortOptions"
+            [class.active]="currentSort === option.value"
+            (click)="changeSort(option.value)"
+          >
+            <nb-icon *ngIf="currentSort === option.value">check"></nb-icon>
+            <span>{{ option.label }}</span>
+            <nb-icon *ngIf="option.direction === 'asc'">arrow_upward"></nb-icon>
+            <nb-icon *ngIf="option.direction === 'desc'">arrow_downward"></nb-icon>
+          </button>
+        </nb-menu>
+
+        <!-- Filter Button -->
+        <button nbButton appearance="outline" color="primary" (click)="toggleFilterSidebar()">
+          <nb-icon icon="filter_list"></nb-icon>
+          <span>Filters</span>
+          <span class="filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+        </button>
+
+        <!-- Clear Filters Button -->
+        <button nbButton color="warn" (click)="clearFilters()" *ngIf="filterForm.dirty">
+          <nb-icon icon="clear"></nb-icon>
+          <span>Clear</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area with Filter Sidebar -->
+    <div class="content-with-sidebar">
+      <!-- Filter Sidebar -->
+      <div class="filter-sidebar" [class.open]="filterSidebarOpen">
+        <div class="filter-sidebar-header">
+          <h3>Filters</h3>
+          <button nbButton ghost (click)="toggleFilterSidebar()">
+            <nb-icon icon="close"></nb-icon>
+          </button>
+        </div>
+
+        <div class="filter-sidebar-content">
+          <form [formGroup]="filterForm">
+            <h4>Categories</h4>
+            <div class="filter-group">
+              <nb-checkbox formControlName="categories.escort" color="primary">Escort</nb-checkbox>
+              <nb-checkbox formControlName="categories.massage" color="primary"
+                >Massage</nb-checkbox
+              >
+              <nb-checkbox formControlName="categories.striptease" color="primary"
+                >Striptease</nb-checkbox
+              >
+            </div>
+
+            <h4>Location</h4>
+            <nb-form-field appearance="outline" class="full-width">
+              <nb-form-field-label>Select Location</nb-form-field-label>
+              <nb-select formControlName="location" multiple>
+                <nb-option value="Oslo">Oslo</nb-option>
+                <nb-option value="Bergen">Bergen</nb-option>
+                <nb-option value="Trondheim">Trondheim</nb-option>
+                <nb-option value="Stavanger">Stavanger</nb-option>
+                <nb-option value="Kristiansand">Kristiansand</nb-option>
+                <nb-option value="Tromsø">Tromsø</nb-option>
+              </nb-select>
+            </nb-form-field>
+
+            <h4>Date Range</h4>
+            <div class="date-range-picker">
+              <nb-form-field appearance="outline">
+                <nb-form-field-label>From</nb-form-field-label>
+                <input
+                  nbInput
+                  fullWidth
+                  [matDatepicker]="fromPicker"
+                  formControlName="dateRange.from"
+                />
+                <nb-datepicker-toggle matSuffix [for]="fromPicker"></nb-datepicker-toggle>
+                <nb-datepicker #fromPicker></nb-datepicker>
+              </nb-form-field>
+
+              <nb-form-field appearance="outline">
+                <nb-form-field-label>To</nb-form-field-label>
+                <input
+                  nbInput
+                  fullWidth
+                  [matDatepicker]="toPicker"
+                  formControlName="dateRange.to"
+                />
+                <nb-datepicker-toggle matSuffix [for]="toPicker"></nb-datepicker-toggle>
+                <nb-datepicker #toPicker></nb-datepicker>
+              </nb-form-field>
+            </div>
+
+            <h4>Status</h4>
+            <div class="filter-group">
+              <nb-checkbox formControlName="status.online" color="primary">Online Now</nb-checkbox>
+              <nb-checkbox formControlName="status.touring" color="primary">Touring</nb-checkbox>
+              <nb-checkbox formControlName="status.verified" color="primary">Verified</nb-checkbox>
+            </div>
+
+            <h4>Saved Filters</h4>
+            <div class="saved-filters">
+              <button
+                nbButton
+                appearance="outline"
+                (click)="loadSavedFilter('favorite')"
+                class="saved-filter-btn"
+              >
+                <nb-icon icon="favorite"></nb-icon> Favorites
+              </button>
+              <button
+                nbButton
+                appearance="outline"
+                (click)="loadSavedFilter('recent')"
+                class="saved-filter-btn"
+              >
+                <nb-icon icon="history"></nb-icon> Recently Viewed
+              </button>
+              <button
+                nbButton
+                appearance="outline"
+                (click)="saveCurrentFilter()"
+                class="saved-filter-btn"
+              >
+                <nb-icon icon="save"></nb-icon> Save Current Filter
+              </button>
+            </div>
+
+            <div class="filter-actions">
+              <button nbButton (click)="clearFilters()">Reset All</button>
+              <button nbButton status="primary" color="primary" (click)="applyFilters()">
+                Apply Filters
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Active Filters Display -->
+        <div class="active-filters" *ngIf="hasActiveFilters()">
+          <span class="active-filters-label">Active Filters:</span>
+          <div class="filter-chips">
+            <mat-chip-set>
+              <mat-chip
+                *ngFor="let filter of getActiveFilters()"
+                [removable]="true"
+                (removed)="removeFilter(filter)"
+              >
+                {{ filter.label }}
+                <nb-icon matChipRemove>cancel"></nb-icon>
+              </mat-chip>
+              <mat-chip color="warn" (click)="clearFilters()">
+                Clear All
+                <nb-icon icon="clear"></nb-icon>
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading">
+          <emerald-skeleton-loader
+            type="card"
+            [count]="viewMode === 'list' ? 5 : 9"
+            [animated]="true"
+          >
+          </emerald-skeleton-loader>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-container" *ngIf="error && !loading">
+          <nb-icon class="error-icon">error_outline"></nb-icon>
+          <p class="error-text">{{ error }}</p>
+          <button nbButton status="primary" color="primary" (click)="loadAds()">
+            <nb-icon icon="refresh"></nb-icon>
+            Try Again
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-container" *ngIf="filteredAds.length === 0 && !loading && !error">
+          <nb-icon class="empty-icon">search_off"></nb-icon>
+          <p class="empty-text">No profiles found</p>
+          <p class="empty-subtext">Try adjusting your filters or search query</p>
+          <button nbButton status="primary" color="primary" (click)="clearFilters()">
+            <nb-icon icon="clear"></nb-icon>
+            Clear Filters
+          </button>
+        </div>
+
+        <!-- List/Grid View using Emerald CardGrid -->
+        <emerald-card-grid
+          *ngIf="filteredAds.length > 0 && !loading && !error"
+          [items]="getCurrentPageAds()"
+          [columns]="getColumnsForViewMode()"
+          [gap]="16"
+          [layout]="viewMode === 'list' ? 'grid' : 'grid'"
+          (itemClick)="viewAdDetails($event._id)"
+        >
+          <ng-template #itemTemplate let-ad>
+            <emerald-app-card
+              [ad]="ad"
+              [layout]="
+                viewMode === 'list' ? 'list' : viewMode === 'compact' ? 'tinder' : 'netflix'
+              "
+              [isOnline]="ad.isAdvertiserOnline"
+              [showActions]="true"
+              [showDescription]="viewMode !== 'compact'"
+              (viewDetails)="viewAdDetails($event)"
+              (like)="likeAd($event)"
+              (chat)="startChat($event)"
+              (share)="shareAd($event)"
+            >
+            </emerald-app-card>
+          </ng-template>
+        </emerald-card-grid>
+
+        <!-- Pagination using Emerald Pager -->
+        <div class="pagination-container" *ngIf="totalPages > 1 && filteredAds.length > 0">
+          <emerald-pager
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [showPageSize]="true"
+            [pageSize]="itemsPerPage"
+            [pageSizes]="[10, 20, 50, 100]"
+            style="default"
+            size="medium"
+            align="center"
+            (pageChange)="goToPage($event)"
+            (pageSizeChange)="changePageSize($event)"
+          >
+          </emerald-pager>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Action Button -->
+<emerald-floating-action-button
+  icon="fa-plus"
+  label="Create New Ad"
+  color="primary"
+  size="large"
+  position="bottom-right"
+  [showTooltip]="true"
+  tooltipText="Create a new advertisement"
+  [hasMenu]="true"
+  [menuItems]="fabMenuItems"
+  (buttonClick)="onFabClick()"
+  (menuItemClick)="onFabMenuItemClick($event)"
+>
+</emerald-floating-action-button>
+
+<!-- Save Filter Dialog -->
+<ng-template #saveFilterDialog>
+  <h2 nb-dialog-title>Save Filter</h2>
+  <nb-dialog-content>
+    <nb-form-field appearance="outline" class="full-width">
+      <nb-form-field-label>Filter Name</nb-form-field-label>
+      <input nbInput fullWidth [(ngModel)]="newFilterName" placeholder="My Custom Filter" />
+    </nb-form-field>
+  </nb-dialog-content>
+  <nb-dialog-actions align="end">
+    <button nbButton nb-dialog-close>Cancel</button>
+    <button
+      nbButton
+      status="primary"
+      color="primary"
+      [nb-dialog-close]="newFilterName"
+      [disabled]="!newFilterName"
+    >
+      Save
+    </button>
+  </nb-dialog-actions>
+</ng-template>

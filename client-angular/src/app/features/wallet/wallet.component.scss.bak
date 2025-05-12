@@ -1,0 +1,397 @@
+@use 'design-tokens' as dt;
+
+.wallet-container {
+  padding: nb-theme(padding);
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: nb-theme(margin);
+
+  .wallet-title {
+    margin: 0;
+    color: nb-theme(text-basic-color);
+  }
+
+  .wallet-actions {
+    display: flex;
+    gap: nb-theme(spacing);
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: nb-theme(padding-lg);
+  text-align: center;
+
+  p {
+    margin-top: nb-theme(margin);
+    color: nb-theme(text-hint-color);
+  }
+}
+
+.balance-overview {
+  margin-bottom: nb-theme(margin);
+
+  .total-balance-card {
+    margin-bottom: nb-theme(margin);
+
+    .card-title {
+      margin: 0;
+      color: nb-theme(text-basic-color);
+    }
+
+    .card-subtitle {
+      margin: nb-theme(margin-xs) 0 0;
+      color: nb-theme(text-hint-color);
+    }
+
+    .total-balance {
+      margin: 0;
+      font-size: nb-theme(text-heading-1-font-size);
+      font-weight: nb-theme(text-heading-1-font-weight);
+      color: nb-theme(text-primary-color);
+    }
+  }
+
+  .currency-balances {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: nb-theme(spacing);
+
+    .currency-balance-card {
+      .card-title {
+        margin: 0;
+        color: nb-theme(text-basic-color);
+      }
+
+      .card-subtitle {
+        margin: nb-theme(margin-xs) 0 0;
+        color: nb-theme(text-hint-color);
+        font-size: nb-theme(text-caption-font-size);
+      }
+
+      h3 {
+        margin: 0;
+        font-size: nb-theme(text-heading-4-font-size);
+        color: nb-theme(text-basic-color);
+      }
+    }
+  }
+}
+
+.wallet-tabs {
+  nb-tabset {
+    padding: nb-theme(padding) 0;
+  }
+}
+
+.transactions-container {
+  .transactions-filters {
+    display: flex;
+    gap: nb-theme(spacing);
+    margin-bottom: nb-theme(margin);
+    flex-wrap: wrap;
+  }
+
+  .transactions-table-container {
+    position: relative;
+
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: nb-theme(overlay-backdrop-background-color);
+      z-index: 1;
+    }
+
+    nb-list {
+      .transaction-header {
+        font-weight: nb-theme(text-heading-6-font-weight);
+        color: nb-theme(text-hint-color);
+        border-bottom: 1px solid nb-theme(divider-color);
+      }
+
+      .transaction-header,
+      .transaction-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+        gap: nb-theme(spacing);
+        align-items: center;
+        padding: nb-theme(padding-sm) nb-theme(padding);
+
+        .transaction-date {
+          white-space: nowrap;
+        }
+
+        .transaction-type-badge {
+          display: inline-block;
+          padding: nb-theme(badge-padding);
+          border-radius: nb-theme(badge-border-radius);
+          font-size: nb-theme(text-caption-font-size);
+          font-weight: nb-theme(text-button-font-weight);
+          text-transform: uppercase;
+
+          &.transaction-deposit {
+            background-color: nb-theme(color-success-100);
+            color: nb-theme(color-success-800);
+          }
+
+          &.transaction-withdrawal {
+            background-color: nb-theme(color-warning-100);
+            color: nb-theme(color-warning-800);
+          }
+
+          &.transaction-transfer {
+            background-color: nb-theme(color-info-100);
+            color: nb-theme(color-info-800);
+          }
+
+          &.transaction-payment {
+            background-color: nb-theme(color-info-100);
+            color: nb-theme(color-info-800);
+          }
+
+          &.transaction-refund {
+            background-color: nb-theme(color-success-100);
+            color: nb-theme(color-success-800);
+          }
+
+          &.transaction-fee {
+            background-color: nb-theme(background-basic-color-2);
+            color: nb-theme(text-hint-color);
+          }
+        }
+
+        .transaction-status-badge {
+          display: inline-block;
+          padding: nb-theme(badge-padding);
+          border-radius: nb-theme(badge-border-radius);
+          font-size: nb-theme(text-caption-font-size);
+          font-weight: nb-theme(text-button-font-weight);
+          text-transform: uppercase;
+
+          &.status-pending {
+            background-color: nb-theme(color-warning-100);
+            color: nb-theme(color-warning-800);
+          }
+
+          &.status-completed {
+            background-color: nb-theme(color-success-100);
+            color: nb-theme(color-success-800);
+          }
+
+          &.status-failed {
+            background-color: nb-theme(color-danger-100);
+            color: nb-theme(color-danger-800);
+          }
+
+          &.status-cancelled {
+            background-color: nb-theme(background-basic-color-2);
+            color: nb-theme(text-hint-color);
+          }
+        }
+
+        .positive-amount {
+          color: nb-theme(color-success-600);
+        }
+
+        .negative-amount {
+          color: nb-theme(color-danger-600);
+        }
+      }
+    }
+
+    .no-data-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      text-align: center;
+
+      nb-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+        color: nb-theme(text-hint-color);
+      }
+
+      p {
+        margin: 0 0 16px;
+        color: nb-theme(text-hint-color);
+      }
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-top: 1px solid nb-theme(divider-color);
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .page-info {
+          color: nb-theme(text-hint-color);
+        }
+      }
+    }
+  }
+}
+
+.payment-methods-container {
+  .payment-methods-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .payment-methods-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+
+    .payment-method-card {
+      nb-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .default-badge {
+          background-color: nb-theme(color-success-100);
+          color: nb-theme(color-success-800);
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+
+      .crypto-address {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: monospace;
+      }
+
+      .actions-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+    }
+  }
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+
+  h2 {
+    margin-bottom: 24px;
+  }
+
+  .settings-section {
+    margin-bottom: 32px;
+
+    h3 {
+      margin-bottom: 16px;
+    }
+  }
+
+  .notification-group {
+    margin-bottom: 24px;
+
+    h4 {
+      margin-bottom: 12px;
+    }
+
+    nb-checkbox {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .wallet-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .wallet-title {
+      margin-bottom: 16px;
+    }
+
+    .wallet-actions {
+      width: 100%;
+
+      button {
+        flex: 1;
+      }
+    }
+  }
+
+  .transactions-filters {
+    flex-direction: column;
+
+    mat-form-field {
+      width: 100% !important;
+    }
+  }
+
+  .currency-balances {
+    grid-template-columns: 1fr !important;
+  }
+
+  .payment-methods-list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.floating-action-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  nb-icon {
+    font-size: 24px;
+  }
+}

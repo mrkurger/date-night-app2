@@ -11,7 +11,6 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { UserSettingsComponent } from './user-settings.component';
 import { AuthService } from '../../core/services/auth.service';
@@ -184,7 +183,6 @@ describe('UserSettingsComponent', () => {
         { provide: ThemeService, useClass: MockThemeService },
         { provide: UserPreferencesService, useClass: MockUserPreferencesService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserSettingsComponent);

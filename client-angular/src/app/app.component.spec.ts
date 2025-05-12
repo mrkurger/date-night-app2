@@ -12,7 +12,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
@@ -122,7 +121,6 @@ describe('AppComponent', () => {
         NotificationComponent,
         DebugInfoComponent,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA], // Add these to handle unknown elements and attributes
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: NotificationService, useValue: mockNotificationService },

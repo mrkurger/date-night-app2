@@ -7,16 +7,19 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbToastrModule,
+  NbToastrService,
+  NbSpinnerModule,
+} from '@nebular/theme';
 import { AlertService } from '../../../../core/services/alert.service';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { AlertTimeWindow } from '../../../../core/models/alert.model';
@@ -29,23 +32,23 @@ import { AlertTimeWindow } from '../../../../core/models/alert.model';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbToastrModule,
+    NbSpinnerModule,
     ReactiveFormsModule,
   ],
   template: `
-    <mat-card class="create-alert-card">
-      <mat-card-header>
-        <mat-card-title>Create Error Alert</mat-card-title>
-        <mat-card-subtitle>Set up alerts for specific error categories</mat-card-subtitle>
-      </mat-card-header>
+    <nb-card class="create-alert-card">
+      <nb-card-header>
+        <nb-card-title>Create Error Alert</mat-card-title>
+        <nb-card-subtitle>Set up alerts for specific error categories</mat-card-subtitle>
+      </nb-card-header>
 
-      <mat-card-content>
+      <nb-card-content>
         <form [formGroup]="alertForm" (ngSubmit)="onSubmit()">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Alert Name</mat-label>
@@ -120,8 +123,8 @@ import { AlertTimeWindow } from '../../../../core/models/alert.model';
             </button>
           </div>
         </form>
-      </mat-card-content>
-    </mat-card>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
@@ -183,7 +186,7 @@ export class CreateErrorAlertComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private snackBar: MatSnackBar,
+    private snackBar: NbToastrService,
   ) {
     this.alertForm = this.fb.group({
       name: ['', Validators.required],

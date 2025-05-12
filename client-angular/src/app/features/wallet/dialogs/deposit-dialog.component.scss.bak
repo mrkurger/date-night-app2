@@ -1,0 +1,50 @@
+:host {
+  nb-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .close-button {
+      margin-left: auto; // Pushes the button to the far right
+    }
+  }
+
+  nb-form-field {
+    margin-bottom: 1.25rem;
+  }
+
+  nb-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  nb-radio {
+    display: block;
+  }
+
+  .actions-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  nb-spinner {
+    margin-right: 0.5rem; // Space between spinner and text in button
+  }
+
+  // Ensure hint and error messages are styled appropriately
+  nb-hint,
+  nb-error {
+    display: block; // Ensure they take up full width if needed
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  nb-error span {
+    display: block; // Each error message on a new line if multiple
+  }
+}

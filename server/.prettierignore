@@ -7,4 +7,10 @@ build
 logs
 uploads
 *.md
+CHANGELOG.html
+AILESSONS.html
+GLOSSARY.html
+_docs_index.html
+_glossary.html
+_docs*.html
 package-lock.json

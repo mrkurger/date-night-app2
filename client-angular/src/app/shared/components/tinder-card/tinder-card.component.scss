@@ -1,0 +1,220 @@
+@use 'design-tokens' as dt;
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.tinder-card {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  border-radius: var(--card-border-radius);
+  background-color: var(--card-background-color);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+  user-select: none;
+  touch-action: none;
+
+  &.swiping {
+    transition: none;
+  }
+
+  &.like {
+    animation: like-animation 0.8s ease-out forwards;
+  }
+
+  &.dislike {
+    animation: dislike-animation 0.8s ease-out forwards;
+  }
+
+  &.superlike {
+    animation: superlike-animation 0.8s ease-out forwards;
+  }
+
+  nb-card-header {
+    padding: var(--card-header-padding);
+    border-bottom: none;
+
+    .card-header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .age-badge {
+        margin-left: auto;
+      }
+    }
+  }
+
+  nb-card-body {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .media-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+
+      .media-content {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .media-navigation {
+        position: absolute;
+        bottom: 1rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+        z-index: 2;
+
+        .media-indicators {
+          display: flex;
+          gap: 0.5rem;
+
+          .media-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(var(--text-basic-color), 0.3);
+            transition: background-color 0.2s;
+
+            &.active {
+              background-color: var(--color-primary-500);
+            }
+          }
+        }
+      }
+    }
+
+    .card-content {
+      padding: var(--card-padding);
+      flex: 1;
+
+      h2 {
+        margin: 0;
+        color: var(--text-basic-color);
+        font-size: var(--text-heading-4-font-size);
+      }
+
+      .subtitle {
+        color: var(--text-hint-color);
+        margin: 0.5rem 0;
+      }
+
+      .description {
+        color: var(--text-basic-color);
+        margin: 0.5rem 0;
+        font-size: var(--text-paragraph-font-size);
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  nb-card-footer {
+    padding: var(--card-footer-padding);
+    border-top: none;
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 1rem;
+
+      button {
+        width: 60px;
+        height: 60px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        nb-icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .swipe-overlay {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    nb-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    span {
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    &.like-overlay {
+      right: 2rem;
+      color: var(--color-success-500);
+    }
+
+    &.dislike-overlay {
+      left: 2rem;
+      color: var(--color-danger-500);
+    }
+
+    &.superlike-overlay {
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--color-info-500);
+    }
+  }
+}
+
+@keyframes like-animation {
+  to {
+    transform: translateX(200%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes dislike-animation {
+  to {
+    transform: translateX(-200%) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes superlike-animation {
+  to {
+    transform: translateY(-200%) scale(0.8);
+    opacity: 0;
+  }
+}

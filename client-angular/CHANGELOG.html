@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Migration Changelog</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      .version {
+        background: #f7f9fc;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .version h2 {
+        margin-top: 0;
+      }
+      .changes {
+        margin-left: 1rem;
+      }
+      .type {
+        font-weight: bold;
+        color: #3366ff;
+      }
+      .date {
+        color: #8f9bb3;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Material UI to Nebular Migration Changelog</h1>
+
+    <div class="version">
+      <h2>Version 1.0.0 - Initial Migration</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Nebular dependencies (@nebular/theme, @nebular/eva-icons)</li>
+          <li>Nebular module for centralized imports</li>
+          <li>Migration script (migrate-to-nebular.sh)</li>
+          <li>Migration documentation (MIGRATION_GUIDE.html)</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated app layout to use Nebular layout components</li>
+          <li>Migrated TinderCard component to use Nebular components</li>
+          <li>Updated theme configuration in styles.scss</li>
+          <li>Replaced Material icons with Eva icons</li>
+        </ul>
+
+        <h3>Removed</h3>
+        <ul>
+          <li>Angular Material dependencies</li>
+          <li>Material theme configuration</li>
+          <li>Material-specific styles and utilities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.1 - Component Updates</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Nebular-specific animations and transitions</li>
+          <li>Custom theme variables for consistent styling</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated form controls to use Nebular inputs</li>
+          <li>Migrated dialog components to use NbDialogService</li>
+          <li>Updated notification system to use NbToastrService</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Theme inheritance issues in nested components</li>
+          <li>Icon alignment in buttons and cards</li>
+          <li>Form field validation styles</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.2 - Style Refinements</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Dark theme support using Nebular's theming system</li>
+          <li>Custom color palette for consistent branding</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Refined component spacing and alignment</li>
+          <li>Updated typography to match design system</li>
+          <li>Improved responsive behavior of layout components</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Mobile navigation issues</li>
+          <li>Theme switching bugs</li>
+          <li>Card layout inconsistencies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.3 - Performance Improvements</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Lazy loading for Nebular modules</li>
+          <li>Performance monitoring for UI components</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Optimized theme variable usage</li>
+          <li>Reduced bundle size by removing unused styles</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Memory leaks in dynamic components</li>
+          <li>Style recalculation performance issues</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

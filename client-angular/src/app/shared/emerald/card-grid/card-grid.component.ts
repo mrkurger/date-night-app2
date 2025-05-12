@@ -7,10 +7,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ContentChild,
+  TemplateRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppCardComponent } from '../app-card/app-card.component';
-import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
+import { NbCardModule, NbSpinnerModule, NbIconModule } from '@nebular/theme';
 
 /**
  * Card Grid Component
@@ -19,11 +25,65 @@ import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-
  * Supports various layouts including default, compact, and masonry.
  */
 @Component({
-  selector: 'emerald-card-grid',
-  templateUrl: '../components/card-grid/card-grid.component.html',
-  styleUrls: ['../components/card-grid/card-grid.component.scss'],
+  selector: 'app-card-grid',
+  template: `
+    <div class="card-grid" [ngClass]="layout" [ngStyle]="getGridStyle()">
+      <ng-container *ngIf="!isLoading; else loadingTpl">
+        <ng-container *ngIf="items.length > 0; else emptyTpl">
+          <ng-container *ngFor="let item of items">
+            <nb-card [class.clickable]="true" (click)="onItemClick(item)" [ngClass]="cardLayout">
+              <nb-card-header *ngIf="item.title">
+                {{ item.title }}
+              </nb-card-header>
+              <nb-card-body>
+                <ng-container
+                  *ngTemplateOutlet="
+                    itemTemplate || defaultItemTemplate;
+                    context: { $implicit: item }
+                  "
+                ></ng-container>
+              </nb-card-body>
+            </nb-card>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <ng-template #defaultItemTemplate let-item>
+      <div class="card-content">
+        <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="item.title" />
+        <div class="card-details">
+          <p *ngIf="item.subtitle" class="subtitle">{{ item.subtitle }}</p>
+          <p *ngIf="item.description" class="description">{{ item.description }}</p>
+          <div *ngIf="item.tags?.length" class="tags">
+            <span *ngFor="let tag of item.tags.slice(0, maxTags)" class="tag">
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #loadingTpl>
+      <div class="loading-grid">
+        <nb-card *ngFor="let i of getSkeletonArray()" class="skeleton-card">
+          <nb-card-body>
+            <nb-spinner></nb-spinner>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </ng-template>
+
+    <ng-template #emptyTpl>
+      <div class="empty-state">
+        <nb-icon icon="alert-circle-outline"></nb-icon>
+        <p>{{ emptyStateMessage }}</p>
+      </div>
+    </ng-template>
+  `,
+  styleUrls: ['./card-grid.component.scss'],
   standalone: true,
-  imports: [CommonModule, AppCardComponent, SkeletonLoaderComponent],
+  imports: [CommonModule, NbCardModule, NbSpinnerModule, NbIconModule],
 })
 export class CardGridComponent {
   /**
@@ -78,17 +138,6 @@ export class CardGridComponent {
   @Input() isLoading = false;
 
   /**
-   * Alias for isLoading to match the component in components directory
-   */
-  @Input() set loading(value: boolean) {
-    this.isLoading = value;
-  }
-
-  get loading(): boolean {
-    return this.isLoading;
-  }
-
-  /**
    * The message to display when there are no items
    */
   @Input() emptyStateMessage = 'No items to display';
@@ -107,20 +156,9 @@ export class CardGridComponent {
   }>();
 
   /**
-   * Handles the click event on a card
-   * @param itemId The ID of the clicked item
+   * Optional template for custom item rendering
    */
-  handleCardClick(itemId: string): void {
-    this.cardClick.emit(itemId);
-  }
-
-  /**
-   * Handles the click event on an action button
-   * @param event The action click event
-   */
-  handleActionClick(event: { id: string; itemId: string }): void {
-    this.actionClick.emit(event);
-  }
+  @ContentChild('itemTemplate') itemTemplate?: TemplateRef<any>;
 
   /**
    * Get the grid style based on the inputs
@@ -152,9 +190,4 @@ export class CardGridComponent {
       .fill(0)
       .map((_, i) => i);
   }
-
-  /**
-   * Optional template for custom item rendering
-   */
-  @ContentChild('itemTemplate') itemTemplate?: TemplateRef<any>;
 }

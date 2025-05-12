@@ -2,16 +2,33 @@ import {
   HttpInterceptorFn,
   HttpRequest,
   HttpHandlerFn,
-  HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { AuthService } from '../services/auth.service';
+import { retryWithBackoff } from '../utils/rxjs-operators';
+
+/**
+ * Error categories for classification
+ */
+export enum ErrorCategory {
+  NETWORK = 'network',
+  SERVER = 'server',
+  CLIENT = 'client',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  TIMEOUT = 'timeout',
+  UNKNOWN = 'unknown',
+  RATE_LIMIT = 'rate_limit',
+  NOT_FOUND = 'not_found',
+  CONFLICT = 'conflict',
+}
 
 /**
  * Configuration interface for HttpErrorInterceptor
@@ -57,10 +74,10 @@ let config: HttpErrorInterceptorConfig = { ...defaultConfig };
  * @param newConfig Partial configuration to override default settings
  */
 export function configureHttpErrorInterceptor(
-  newConfig: Partial<HttpErrorInterceptorConfig>
+  newConfig: Partial<HttpErrorInterceptorConfig>,
 ): void {
   config = { ...config, ...newConfig };
-  console.log('HttpErrorInterceptor configured:', config);
+  // Configuration is applied silently
 }
 
 /**
@@ -71,8 +88,8 @@ export function configureHttpErrorInterceptor(
  */
 export const httpErrorInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
-  next: HttpHandlerFn
-): Observable<HttpEvent<unknown>> => {
+  next: HttpHandlerFn,
+) => {
   const router = inject(Router);
   const notificationService = inject(NotificationService);
   const telemetryService = inject(TelemetryService);
@@ -86,24 +103,18 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
   return next(request).pipe(
     // Apply retry logic if enabled
     config.retryFailedRequests
-      ? retry({
-          count: config.maxRetryAttempts,
-          delay: (error, retryCount) => {
-            // Only retry certain types of errors
-            if (isRetryable(error)) {
-              // Add jitter to prevent thundering herd problem
-              const jitter = Math.random() * config.retryJitter;
-              return config.retryDelay * retryCount + jitter;
-            }
-            return throwError(() => error);
-          },
-        })
+      ? retryWithBackoff(
+          config.maxRetryAttempts,
+          config.retryDelay,
+          config.retryDelay * Math.pow(2, config.maxRetryAttempts),
+          isRetryable,
+        )
       : retry(0),
 
     catchError((error: HttpErrorResponse) => {
       handleError(error, request, router, notificationService, telemetryService, authService);
       return throwError(() => error);
-    })
+    }),
   );
 };
 
@@ -133,7 +144,7 @@ function handleError(
   router: Router,
   notificationService: NotificationService,
   telemetryService: TelemetryService,
-  authService: AuthService
+  authService: AuthService,
 ): void {
   // Log error if enabled
   if (config.logErrors) {
@@ -144,7 +155,7 @@ function handleError(
         url: request.url,
         method: request.method,
         headers: sanitizeHeaders(
-          request.headers.keys().map(key => ({ key, value: request.headers.get(key) }))
+          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
         ),
         body: sanitizeBody(request.body),
       });
@@ -156,9 +167,8 @@ function handleError(
     telemetryService.trackError({
       name: 'HttpError',
       message: error.message,
-      stack: error.error?.stack,
-      status: error.status,
-      url: config.sanitizeSensitiveData ? sanitizeUrl(request.url) : request.url,
+      statusCode: error.status, // Changed status to statusCode
+      url: request.url,
     });
   }
 
@@ -209,21 +219,21 @@ function getErrorMessage(error: HttpErrorResponse): string {
  * Checks if the URL should be skipped
  */
 function shouldSkipUrl(url: string): boolean {
-  return config.skipUrls.some(skipUrl => url.includes(skipUrl));
+  return config.skipUrls.some((skipUrl) => url.includes(skipUrl));
 }
 
 /**
  * Sanitizes headers to remove sensitive information
  */
 function sanitizeHeaders(
-  headers: Array<{ key: string; value: string | null }>
+  headers: Array<{ key: string; value: string | null }>,
 ): Array<{ key: string; value: string | null }> {
   if (!config.sanitizeSensitiveData) {
     return headers;
   }
 
   const sensitiveHeaders = ['authorization', 'cookie', 'x-auth-token'];
-  return headers.map(header => {
+  return headers.map((header) => {
     if (sensitiveHeaders.includes(header.key.toLowerCase())) {
       return { key: header.key, value: '[REDACTED]' };
     }
@@ -246,8 +256,8 @@ function sanitizeBody(body: unknown): unknown {
   const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn'];
   const sanitized = { ...(body as Record<string, unknown>) };
 
-  Object.keys(sanitized).forEach(key => {
-    if (sensitiveFields.some(field => key.toLowerCase().includes(field))) {
+  Object.keys(sanitized).forEach((key) => {
+    if (sensitiveFields.some((field) => key.toLowerCase().includes(field))) {
       sanitized[key] = '[REDACTED]';
     } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
       sanitized[key] = sanitizeBody(sanitized[key]);
@@ -272,7 +282,7 @@ function sanitizeUrl(url: string): string {
     const params = new URLSearchParams(urlObj.search);
 
     let modified = false;
-    sensitiveParams.forEach(param => {
+    sensitiveParams.forEach((param) => {
       if (params.has(param)) {
         params.set(param, '[REDACTED]');
         modified = true;

@@ -1,44 +1,39 @@
 // Main Stylesheet
 // This is the main entry point for all styles in the application
 
-// Import design system
-@use 'design-system/index';
-
-// Import themes
-@use 'themes/light';
-@use 'themes/dark';
-// Use @import for CSS files only (not SCSS)
-@use 'theme.css' as theme;
-// Import global micro-interactions
-@use 'global-micro-interactions';
+// @use rules must come first
+@use '@nebular/theme/styles/theming' as theming;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/dark' as dark-theme;
+@use './mixins/index' as mixins;
 
 // Import Leaflet CSS
-@import '../../../node_modules/leaflet/dist/leaflet.css';
+@use 'leaflet/dist/leaflet.css' as *;
+
+// Eva Icons
+@use 'node_modules/eva-icons/style/eva-icons.css' as *;
+
+// Nebular prebuilt theme - use correct path
+@use '@nebular/theme/prebuilt/default.css' as *;
+
+// Register the default theme
+$nb-themes: theming.nb-register-theme((), default, default-theme.$theme);
+
+// Register the dark theme
+$nb-themes: theming.nb-register-theme((), dark, dark-theme.$theme);
+
+// Install the themes
+@include theming.nb-install() {
+  @include theming.nb-theme-global();
+}
 
 // Global styles
-html {
-  font-size: 16px;
-  height: 100%;
-}
-
 body {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-normal);
-  color: var(--body-color);
-  background-color: var(--body-bg);
-  overflow-x: hidden;
-  min-height: 100%;
-
-  /* Apply theme transition to body */
-  &.theme-transition,
-  &.light-theme,
-  &.dark-theme {
-    transition:
-      background-color var(--transition-normal) var(--transition-ease),
-      color var(--transition-normal) var(--transition-ease);
-  }
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+// Add additional global styles here
 
 // Main layout
 .app-container {
@@ -49,35 +44,35 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 1rem;
+  padding: theming.var(--padding);
 }
 
 // Header
 .app-header {
   position: sticky;
   top: 0;
-  z-index: var(--z-index-sticky);
-  background-color: var(--navbar-bg);
-  border-bottom: 1px solid var(--navbar-border-color);
-  box-shadow: var(--shadow-sm);
+  z-index: theming.var(--layout-z-index);
+  background-color: theming.var(--header-background-color);
+  border-bottom: theming.var(--divider-width) solid theming.var(--divider-color);
+  box-shadow: theming.var(--shadow);
 }
 
 // Footer
 .app-footer {
-  background-color: var(--footer-bg);
-  color: var(--footer-color);
-  padding: 1.5rem 0;
+  background-color: theming.var(--footer-background-color);
+  color: theming.var(--footer-text-color);
+  padding: theming.var(--padding-lg) 0;
 }
 
 // Responsive font sizes
-@media (max-width: 576px) {
-  html {
+@media (max-width: theming.var(--breakpoint-sm)) {
+  :root {
     font-size: 14px;
   }
 }
 
-@media (min-width: 1200px) {
-  html {
+@media (min-width: theming.var(--breakpoint-xl)) {
+  :root {
     font-size: 18px;
   }
 }
@@ -89,21 +84,22 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--neutral-200);
+  background: theming.var(--scrollbar-background-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--neutral-500);
-  border-radius: var(--border-radius-full);
+  background: theming.var(--scrollbar-color);
+  border-radius: theming.var(--border-radius);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--neutral-600);
+  background: theming.var(--scrollbar-hover-color);
 }
 
 // Focus visible utility
-.focus-visible-only:focus:not(:focus-visible) {
-  outline: none;
+:focus-visible {
+  outline: 2px solid theming.var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 // Print styles

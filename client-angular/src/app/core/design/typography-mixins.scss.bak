@@ -1,0 +1,231 @@
+@use 'sass:color';
+/**
+ * DateNight.io Typography Mixins
+ * 
+ * This file contains mixins for consistent typography styling throughout the application.
+ * Use these mixins instead of directly applying font properties to maintain consistency.
+ */
+
+@use 'emerald-tokens' as *;
+
+// Heading mixins
+@mixin heading-1 {
+  font-family: $font-family-heading;
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-6;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-3xl;
+  }
+}
+
+@mixin heading-2 {
+  font-family: $font-family-heading;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-5;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-2xl;
+  }
+}
+
+@mixin heading-3 {
+  font-family: $font-family-heading;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-snug;
+  margin-bottom: $spacing-4;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-xl;
+  }
+}
+
+@mixin heading-4 {
+  font-family: $font-family-heading;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-snug;
+  margin-bottom: $spacing-3;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-lg;
+  }
+}
+
+@mixin heading-5 {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-snug;
+  margin-bottom: $spacing-3;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-base;
+  }
+}
+
+@mixin heading-6 {
+  font-family: $font-family-heading;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-2;
+  color: $color-dark-gray-3;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-sm;
+  }
+}
+
+// Body text mixins
+@mixin body-large {
+  font-family: $font-family-base;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-relaxed;
+  color: $color-dark-gray-2;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-base;
+  }
+}
+
+@mixin body-default {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-dark-gray-2;
+}
+
+@mixin body-small {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-dark-gray-2;
+}
+
+@mixin body-xs {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-dark-gray-2;
+}
+
+// Special text styles
+@mixin caption {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-dark-gray-1;
+  letter-spacing: 0.01em;
+}
+
+@mixin label {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  color: $color-dark-gray-2;
+  letter-spacing: 0.01em;
+}
+
+@mixin button-text {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: 0.01em;
+}
+
+@mixin button-text-small {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: 0.01em;
+}
+
+@mixin button-text-large {
+  font-family: $font-family-base;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: 0.01em;
+}
+
+// Link styles
+@mixin link {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast $transition-timing-default;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary-dark;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: color.adjust($color-primary-dark, $lightness: -10%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($color-primary, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+// Truncation
+@mixin truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin truncate-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Responsive typography
+@mixin responsive-font-size(
+  $min-size,
+  $max-size,
+  $min-width: $breakpoint-mobile,
+  $max-width: $breakpoint-desktop-large
+) {
+  font-size: $min-size;
+
+  @media (min-width: $min-width) {
+    font-size: calc(
+      #{$min-size} + #{strip-unit($max-size - $min-size)} *
+        ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)})
+    );
+  }
+
+  @media (min-width: $max-width) {
+    font-size: $max-size;
+  }
+}
+
+// Helper function to strip units
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}

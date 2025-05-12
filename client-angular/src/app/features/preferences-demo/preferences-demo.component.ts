@@ -6,13 +6,7 @@
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ADS: Sample ad data for demonstration (default: see below)
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   UserPreferencesService,
@@ -22,6 +16,14 @@ import {
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 import { Subscription } from 'rxjs';
 import { Ad } from '../../core/models/ad.interface';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSelectModule,
+  NbFormFieldModule,
+  NbLayoutModule,
+} from '@nebular/theme';
 
 // Mock data for demonstration
 const MOCK_ADS: Ad[] = [
@@ -164,137 +166,174 @@ const MOCK_ADS: Ad[] = [
 
 @Component({
   selector: 'app-preferences-demo',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbLayoutModule,
+    AdCardComponent,
+  ],
   template: `
     <div class="preferences-demo-container">
-      <mat-card class="settings-card">
-        <mat-card-header>
-          <mat-card-title>User Preferences Demo</mat-card-title>
-          <mat-card-subtitle>Customize your viewing experience</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
+      <nb-card class="settings-card">
+        <nb-card-header>
+          <h3>User Preferences Demo</h3>
+          <p class="subtitle">Customize your viewing experience</p>
+        </nb-card-header>
+        <nb-card-body>
           <div class="settings-form">
-            <mat-form-field appearance="fill">
-              <mat-label>Default View Type</mat-label>
-              <mat-select [(ngModel)]="defaultViewType" (selectionChange)="onViewTypeChange()">
-                <mat-option value="netflix">Netflix Style</mat-option>
-                <mat-option value="tinder">Tinder Style</mat-option>
-                <mat-option value="list">List View</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-form-field>
+              <label>Default View Type</label>
+              <nb-select
+                fullWidth
+                [(ngModel)]="defaultViewType"
+                (selectedChange)="onViewTypeChange()"
+                placeholder="Select view type"
+              >
+                <nb-option value="netflix">Netflix Style</nb-option>
+                <nb-option value="tinder">Tinder Style</nb-option>
+                <nb-option value="list">List View</nb-option>
+              </nb-select>
+            </nb-form-field>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Content Density</mat-label>
-              <mat-select [(ngModel)]="contentDensity" (selectionChange)="onContentDensityChange()">
-                <mat-option *ngFor="let option of contentDensityOptions" [value]="option.value">
+            <nb-form-field>
+              <label>Content Density</label>
+              <nb-select
+                fullWidth
+                [(ngModel)]="contentDensity"
+                (selectedChange)="onContentDensityChange()"
+                placeholder="Select content density"
+              >
+                <nb-option *ngFor="let option of contentDensityOptions" [value]="option.value">
                   {{ option.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Card Size</mat-label>
-              <mat-select [(ngModel)]="cardSize" (selectionChange)="onCardSizeChange()">
-                <mat-option *ngFor="let option of cardSizeOptions" [value]="option.value">
+            <nb-form-field>
+              <label>Card Size</label>
+              <nb-select
+                fullWidth
+                [(ngModel)]="cardSize"
+                (selectedChange)="onCardSizeChange()"
+                placeholder="Select card size"
+              >
+                <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">
                   {{ option.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+
+            <div class="settings-info">
+              <p>
+                Current Settings:
+                <span class="setting-value">{{ getContentDensityLabel() }}</span> density,
+                <span class="setting-value">{{ getCardSizeLabel() }}</span> cards
+              </p>
+            </div>
+
+            <button nbButton status="basic" (click)="resetPreferences()">
+              <nb-icon icon="refresh-outline"></nb-icon>
+              Reset to Defaults
+            </button>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary" (click)="resetPreferences()">Reset to Defaults</button>
-        </mat-card-actions>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
 
-      <div class="demo-section">
-        <h2>Preview</h2>
-        <p class="demo-description">
-          Current settings: {{ defaultViewType | titlecase }} view,
-          {{ getContentDensityLabel() }} density, {{ getCardSizeLabel() }} cards
-        </p>
-
-        <div class="cards-container" [ngClass]="'layout-' + defaultViewType">
-          <app-ad-card
-            *ngFor="let ad of mockAds"
-            [ad]="ad"
-            [layout]="defaultViewType === 'list' ? 'list' : 'grid'"
-            (viewDetails)="onViewDetails($event)"
-            (like)="onLike($event)"
-            (chat)="onChat($event)"
-          ></app-ad-card>
-        </div>
-      </div>
+      <!-- Preview Section -->
+      <nb-card class="preview-card">
+        <nb-card-header>
+          <h3>Preview</h3>
+          <p class="subtitle">See how your content will look with these settings</p>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="preview-grid" [class]="contentDensity + ' ' + cardSize">
+            <app-ad-card
+              *ngFor="let ad of mockAds"
+              [ad]="ad"
+              [cardSize]="cardSize"
+              [contentDensity]="contentDensity"
+              (viewDetails)="onViewDetails($event)"
+              (like)="onLike($event)"
+              (chat)="onChat($event)"
+            ></app-ad-card>
+          </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
   styles: [
     `
-      .preferences-demo-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 24px;
+      :host {
+        display: block;
       }
 
-      .settings-card {
-        margin-bottom: 24px;
+      .preferences-demo-container {
+        padding: 2rem;
+        display: grid;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .subtitle {
+        color: var(--text-hint-color);
+        margin: 0;
       }
 
       .settings-form {
         display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
+        flex-direction: column;
+        gap: 1.5rem;
       }
 
-      mat-form-field {
-        min-width: 200px;
-        flex: 1;
+      .settings-info {
+        padding: 1rem;
+        background-color: var(--background-basic-color-2);
+        border-radius: var(--border-radius);
+        color: var(--text-basic-color);
+
+        .setting-value {
+          color: var(--text-primary-color);
+          font-weight: 600;
+        }
       }
 
-      .demo-section {
-        margin-top: 32px;
-      }
-
-      .demo-description {
-        margin-bottom: 24px;
-        color: #666;
-      }
-
-      .cards-container {
+      .preview-grid {
         display: grid;
-        gap: 24px;
-      }
+        gap: 1.5rem;
 
-      .layout-netflix,
-      .layout-tinder {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      }
-
-      .layout-list {
-        grid-template-columns: 1fr;
-      }
-
-      @media (max-width: 768px) {
-        .settings-form {
-          flex-direction: column;
+        &.compact {
+          gap: 1rem;
         }
 
-        .layout-netflix,
-        .layout-tinder {
-          grid-template-columns: 1fr;
+        &.comfortable {
+          gap: 2rem;
+        }
+
+        &.spacious {
+          gap: 2.5rem;
+        }
+
+        &.small {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        &.medium {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+
+        &.large {
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         }
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AdCardComponent,
   ],
 })
 export class PreferencesDemoComponent implements OnInit, OnDestroy {

@@ -1,0 +1,71 @@
+<nb-card>
+  <nb-card-header class="dialog-header">
+    <h3>Transaction Details</h3>
+    <button nbButton ghost (click)="close()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="transaction-details">
+      <div class="detail-row">
+        <div class="label">Transaction ID</div>
+        <div class="value">
+          {{ transaction.id }}
+          <button nbButton ghost size="small" (click)="copyToClipboard(transaction.id)">
+            <nb-icon icon="copy-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="label">Type</div>
+        <div class="value">
+          <nb-badge [text]="transaction.type" [status]="getTypeStatus(transaction.type)"></nb-badge>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="label">Amount</div>
+        <div
+          class="value"
+          [ngClass]="{ positive: transaction.amount > 0, negative: transaction.amount < 0 }"
+        >
+          {{ formatTransactionAmount(transaction) }}
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="label">Status</div>
+        <div class="value">
+          <nb-badge
+            [text]="transaction.status"
+            [status]="getStatusStatus(transaction.status)"
+          ></nb-badge>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="label">Date</div>
+        <div class="value">{{ transaction.createdAt | date: 'medium' }}</div>
+      </div>
+
+      <div class="detail-row" *ngIf="transaction.description">
+        <div class="label">Description</div>
+        <div class="value">{{ transaction.description }}</div>
+      </div>
+
+      <ng-container *ngIf="transaction.metadata">
+        <div class="detail-section">
+          <h4>Metadata</h4>
+          <div class="detail-row" *ngFor="let key of getMetadataKeys()">
+            <div class="label">{{ formatMetadataKey(key) }}</div>
+            <div class="value">{{ transaction.metadata[key] }}</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="dialog-footer">
+    <button nbButton status="basic" (click)="close()">Close</button>
+  </nb-card-footer>
+</nb-card>

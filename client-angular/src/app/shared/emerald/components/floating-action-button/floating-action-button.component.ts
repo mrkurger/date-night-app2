@@ -9,7 +9,6 @@
 // - ANIMATION_DURATION: Duration of animations in milliseconds (default: 300)
 //   Related to: floating-action-button.component.scss
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**

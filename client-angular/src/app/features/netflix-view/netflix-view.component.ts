@@ -16,7 +16,8 @@ import {
   ElementRef,
   ViewChildren,
   QueryList,
-  CUSTOM_ELEMENTS_SCHEMA,
+  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -28,14 +29,23 @@ import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
-// Import Emerald components
-import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
-import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
-import { PageHeaderComponent } from '../../shared/emerald/components/page-header/page-header.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
-import { LabelComponent } from '../../shared/emerald/components/label/label.component';
-import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
-import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.component';
+// Import Nebular components
+import {
+  NbCardModule,
+  NbLayoutModule,
+  NbButtonModule,
+  NbIconModule,
+  NbBadgeModule,
+  NbToggleModule,
+  NbDialogModule,
+  NbSelectModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbUserModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbDialogService,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-netflix-view',
@@ -47,16 +57,21 @@ import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.c
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,
-    // Add Emerald components
-    AppCardComponent,
-    CardGridComponent,
-    PageHeaderComponent,
-    SkeletonLoaderComponent,
-    LabelComponent,
-    FloatingActionButtonComponent,
-    ToggleComponent,
+    // Add Nebular components
+    NbCardModule,
+    NbLayoutModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbToggleModule,
+    NbDialogModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbUserModule,
+    NbTagModule,
+    NbSpinnerModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add schema for custom elements
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
@@ -88,6 +103,8 @@ export class NetflixViewComponent implements OnInit {
     },
   };
 
+  @ViewChild('filtersDialog') filtersDialog!: TemplateRef<any>;
+
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
@@ -95,6 +112,7 @@ export class NetflixViewComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
+    private dialogService: NbDialogService,
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -481,71 +499,12 @@ export class NetflixViewComponent implements OnInit {
    * Open the filters modal
    */
   openFilters(): void {
-    // Open filters modal using Bootstrap
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = new bootstrap.Modal(modal);
-          bsModal.show();
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.add('show');
-          modal.style.display = 'block';
-          document.body.classList.add('modal-open');
-
-          // Create backdrop if it doesn't exist
-          let backdrop = document.querySelector('.modal-backdrop');
-          if (!backdrop) {
-            backdrop = document.createElement('div');
-            backdrop.className = 'modal-backdrop fade show';
-            document.body.appendChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error opening modal:', error);
-        // Simple fallback
-        modal.style.display = 'block';
-      }
-    }
-  }
-
-  /**
-   * Close the filters modal
-   */
-  closeFilters(): void {
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = bootstrap.Modal.getInstance(modal);
-          if (bsModal) {
-            bsModal.hide();
-          }
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.remove('show');
-          modal.style.display = 'none';
-          document.body.classList.remove('modal-open');
-
-          // Remove backdrop
-          const backdrop = document.querySelector('.modal-backdrop');
-          if (backdrop) {
-            backdrop.parentNode?.removeChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error closing modal:', error);
-        // Simple fallback
-        modal.style.display = 'none';
-      }
-    }
+    this.dialogService.open(this.filtersDialog, {
+      context: {},
+      hasBackdrop: true,
+      closeOnBackdropClick: true,
+      closeOnEsc: true,
+    });
   }
 
   /**

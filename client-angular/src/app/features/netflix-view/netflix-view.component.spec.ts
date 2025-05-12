@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NetflixViewComponent } from './netflix-view.component';
@@ -148,7 +147,6 @@ describe('NetflixViewComponent', () => {
         { provide: ChatService, useClass: MockChatService },
         { provide: AuthService, useClass: MockAuthService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle custom elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetflixViewComponent);

@@ -1,0 +1,299 @@
+@use 'sass:color';
+@use 'design-tokens' as dt;
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background-color: nb-theme(background-basic-color-1);
+}
+
+.netflix-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Hero Section
+.hero-card {
+  margin-bottom: nb-theme(card-margin-bottom);
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+
+  nb-card-header {
+    background-color: nb-theme(card-header-basic-background-color);
+    border-bottom: none;
+    padding: nb-theme(card-padding);
+
+    .hero-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: nb-theme(card-padding);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  nb-card-body {
+    height: 70vh;
+    padding: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(nb-theme(background-basic-color-1), 0.1),
+        rgba(nb-theme(background-basic-color-1), 0.9)
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      padding: nb-theme(card-padding);
+      color: nb-theme(text-basic-color);
+      max-width: 800px;
+      margin-top: auto;
+
+      h1 {
+        font-size: nb-theme(text-heading-1-font-size);
+        margin-bottom: 1rem;
+      }
+
+      .hero-description {
+        font-size: nb-theme(text-paragraph-font-size);
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+// Main Content
+.netflix-content {
+  padding: nb-theme(layout-padding);
+}
+
+// Filters Bar
+.filters-bar {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  background-color: nb-theme(background-basic-color-2);
+
+  .filters-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .section-title {
+      font-size: nb-theme(text-heading-4-font-size);
+      margin: 0;
+    }
+  }
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+
+  .loading-text {
+    color: nb-theme(text-hint-color);
+  }
+}
+
+// Error State
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+  text-align: center;
+
+  nb-icon {
+    font-size: 3rem;
+  }
+
+  .error-text {
+    color: nb-theme(text-danger-color);
+    font-size: nb-theme(text-subtitle-font-size);
+  }
+}
+
+// Netflix-style Rows
+.netflix-rows {
+  .row-section {
+    margin-bottom: 3rem;
+
+    .row-title {
+      font-size: nb-theme(text-heading-5-font-size);
+      margin-bottom: 1rem;
+      color: nb-theme(text-basic-color);
+    }
+
+    .empty-row {
+      padding: 2rem;
+      text-align: center;
+      background-color: nb-theme(background-basic-color-2);
+      border-radius: nb-theme(card-border-radius);
+
+      .empty-row-text {
+        color: nb-theme(text-hint-color);
+      }
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 0.5rem;
+
+      .netflix-card {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        nb-card-header {
+          padding: nb-theme(card-padding);
+          background-color: nb-theme(card-header-basic-background-color);
+        }
+
+        nb-card-body {
+          height: 200px;
+          padding: 0;
+          position: relative;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+              to bottom,
+              rgba(nb-theme(background-basic-color-1), 0.1),
+              rgba(nb-theme(background-basic-color-1), 0.9)
+            );
+          }
+
+          .card-content {
+            position: relative;
+            padding: nb-theme(card-padding);
+            color: nb-theme(text-basic-color);
+
+            h3 {
+              font-size: nb-theme(text-subtitle-font-size);
+              margin-bottom: 0.5rem;
+            }
+
+            p {
+              font-size: nb-theme(text-caption-font-size);
+              margin-bottom: 1rem;
+            }
+
+            .card-tags {
+              display: flex;
+              gap: 0.5rem;
+              flex-wrap: wrap;
+            }
+          }
+        }
+
+        nb-card-footer {
+          display: flex;
+          justify-content: space-around;
+          padding: nb-theme(card-padding);
+          background-color: nb-theme(card-footer-basic-background-color);
+        }
+      }
+    }
+  }
+}
+
+// Floating Action Button
+.floating-action-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: nb-theme(button-hero-shadow);
+
+  nb-icon {
+    font-size: 1.5rem;
+  }
+}
+
+// Dialog Styles
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h5 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: nb-theme(text-heading-6-font-size);
+  }
+}
+
+nb-card-body {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.toggle-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: nb-theme(text-hint-color);
+  }
+}
+
+nb-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

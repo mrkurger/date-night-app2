@@ -12,7 +12,6 @@ import {
   // DebugElement, // Commented out as it's currently unused
   Component,
   NO_ERRORS_SCHEMA,
-  // CUSTOM_ELEMENTS_SCHEMA,
   ViewChild,
   TemplateRef,
 } from '@angular/core';

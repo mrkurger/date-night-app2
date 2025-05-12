@@ -1,0 +1,124 @@
+/**
+ * BEM Utilities
+ * 
+ * This file provides mixins and functions to help implement BEM naming conventions.
+ * BEM stands for Block, Element, Modifier.
+ * 
+ * Usage:
+ * @use 'path/to/bem-utilities' as bem;
+ * 
+ * .block {
+ *   // Block styles
+ *   
+ *   @include bem.element('element') {
+ *     // Element styles
+ *   }
+ *   
+ *   @include bem.modifier('modifier') {
+ *     // Modifier styles
+ *   }
+ *   
+ *   @include bem.element('element') {
+ *     // Element styles
+ *     
+ *     @include bem.modifier('modifier') {
+ *       // Element modifier styles
+ *     }
+ *   }
+ * }
+ */
+
+/// Element mixin
+/// @param {String} $element - Element name
+@mixin element($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+/// Modifier mixin
+/// @param {String} $modifier - Modifier name
+@mixin modifier($modifier) {
+  &--#{$modifier} {
+    @content;
+  }
+}
+
+/// Block mixin
+/// @param {String} $block - Block name
+@mixin block($block) {
+  .#{$block} {
+    @content;
+  }
+}
+
+/// State mixin
+/// @param {String} $state - State name
+@mixin state($state) {
+  &.is-#{$state} {
+    @content;
+  }
+}
+
+/// When mixin - for contextual styling
+/// @param {String} $context - Context selector
+@mixin when($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+/// Responsive mixin
+/// @param {String} $breakpoint - Breakpoint name
+@mixin responsive($breakpoint) {
+  @if $breakpoint == 'mobile' {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == 'tablet' {
+    @media (min-width: 768px) and (max-width: 1023px) {
+      @content;
+    }
+  } @else if $breakpoint == 'desktop' {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == 'desktop-large' {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  } @else if $breakpoint == 'desktop-xl' {
+    @media (min-width: 1440px) {
+      @content;
+    }
+  }
+}
+
+/// Generate BEM class name
+/// @param {String} $block - Block name
+/// @param {String} $element - Element name
+/// @param {String} $modifier - Modifier name
+/// @return {String} BEM class name
+@function bem($block, $element: null, $modifier: null) {
+  $name: $block;
+
+  @if $element != null {
+    $name: $name + '__' + $element;
+  }
+
+  @if $modifier != null {
+    $name: $name + '--' + $modifier;
+  }
+
+  @return $name;
+}
+
+/// Generate BEM selector
+/// @param {String} $block - Block name
+/// @param {String} $element - Element name
+/// @param {String} $modifier - Modifier name
+/// @return {String} BEM selector
+@function bem-selector($block, $element: null, $modifier: null) {
+  $selector: '.' + bem($block, $element, $modifier);
+  @return $selector;
+}

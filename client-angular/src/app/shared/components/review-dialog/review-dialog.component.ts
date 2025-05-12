@@ -7,34 +7,46 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { NbDialogRef, NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { ReviewFormComponent } from '../review-form/review-form.component';
+
+export interface ReviewData {
+  adId?: string;
+  userId?: string;
+  advertiserId?: string;
+  rating: number;
+  title: string;
+  content: string;
+  categories: {
+    communication: number;
+    appearance: number;
+    location: number;
+    value: number;
+  };
+}
 
 export interface ReviewDialogData {
   advertiserId: string;
   advertiserName: string;
   adId?: string;
-  existingReview?: any;
+  existingReview?: ReviewData;
 }
 
 @Component({
   selector: 'app-review-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, ReviewFormComponent],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
   template: `
-    <div class="review-dialog-container">
-      <div class="dialog-header">
-        <h2 mat-dialog-title>{{ data.existingReview ? 'Edit Review' : 'Write a Review' }}</h2>
-        <button mat-icon-button (click)="onClose()">
-          <mat-icon>close</mat-icon>
+    <nb-card class="review-dialog-container">
+      <nb-card-header class="dialog-header">
+        <h2>{{ data.existingReview ? 'Edit Review' : 'Write a Review' }}</h2>
+        <button nbButton ghost (click)="onClose()">
+          <nb-icon icon="close"></nb-icon>
         </button>
-      </div>
+      </nb-card-header>
 
-      <mat-dialog-content>
+      <nb-card-body>
         <app-review-form
           [advertiserId]="data.advertiserId"
           [advertiserName]="data.advertiserName"
@@ -43,47 +55,33 @@ export interface ReviewDialogData {
           (submitted)="onReviewSubmitted($event)"
           (cancelled)="onClose()"
         ></app-review-form>
-      </mat-dialog-content>
-    </div>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
       .review-dialog-container {
-        min-width: 500px;
         max-width: 800px;
-        padding: 0;
+        width: 100%;
       }
 
       .dialog-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #eee;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 500;
-      }
-
-      mat-dialog-content {
-        padding: 0;
-        margin: 0;
-        max-height: 80vh;
-        overflow-y: auto;
       }
     `,
   ],
 })
 export class ReviewDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<ReviewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReviewDialogData,
-  ) {}
+  constructor(private dialogRef: NbDialogRef<ReviewDialogComponent>) {}
 
-  onReviewSubmitted(review: any): void {
+  data: ReviewDialogData = {
+    advertiserId: '',
+    advertiserName: '',
+  };
+
+  onReviewSubmitted(review: ReviewData): void {
     this.dialogRef.close(review);
   }
 

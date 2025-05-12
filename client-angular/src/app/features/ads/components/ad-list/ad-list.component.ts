@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { AdService } from '../../../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -59,9 +58,7 @@ export class AdListComponent implements OnInit {
 
   loadAds(): void {
     this.loading = true;
-    this.adService.getAds().subscribe({
-      next: (data) => {
-        this.ads = data;
+    this.adService.getAds().subscribe({ next: (response) => { this.ads = response.ads;
         this.loading = false;
       },
       error: (err) => {

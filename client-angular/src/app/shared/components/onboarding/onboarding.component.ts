@@ -7,13 +7,17 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
+import { NbButtonModule, NbIconModule, NbProgressBarModule } from '@nebular/theme';
 
 export interface OnboardingStep {
   id: string;
@@ -34,9 +38,9 @@ export interface OnboardingStep {
   imports: [
     CommonModule,
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
     RouterModule,
   ],
 })

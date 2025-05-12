@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scripts - Glossary</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .glossary-item {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .glossary-term {
+        font-family: monospace;
+        font-weight: bold;
+        color: #3498db;
+        font-size: 1.2rem;
+      }
+
+      .glossary-type {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 0.5rem;
+        background-color: #34495e;
+        color: white;
+      }
+
+      .glossary-description {
+        margin-top: 0.5rem;
+      }
+
+      .glossary-usage {
+        margin-top: 0.5rem;
+        background-color: #f6f8fa;
+        padding: 0.5rem;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+
+      .glossary-params {
+        margin-top: 0.5rem;
+      }
+
+      .glossary-param {
+        margin-left: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .param-name {
+        font-family: monospace;
+        font-weight: bold;
+      }
+
+      .param-type {
+        color: #7f8c8d;
+        font-style: italic;
+        margin-left: 0.5rem;
+      }
+
+      .glossary-returns {
+        margin-top: 0.5rem;
+      }
+
+      .glossary-example {
+        margin-top: 1rem;
+        background-color: #f6f8fa;
+        padding: 1rem;
+        border-radius: 3px;
+        overflow-x: auto;
+      }
+
+      .glossary-nav {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .glossary-nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .glossary-nav li {
+        margin-right: 1rem;
+      }
+
+      .glossary-nav a {
+        text-decoration: none;
+        color: #3498db;
+        font-family: monospace;
+      }
+
+      .glossary-nav a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Scripts - Glossary</h1>
+      <p>
+        This glossary contains definitions and documentation for functions and utilities in the
+        scripts directory.
+      </p>
+
+      <div class="glossary-nav">
+        <ul>
+          <li><a href="#checkPackageJson">checkPackageJson</a></li>
+          <li><a href="#getInstalledDependencies">getInstalledDependencies</a></li>
+          <li><a href="#installDependencies">installDependencies</a></li>
+          <li><a href="#checkAndInstallForComponent">checkAndInstallForComponent</a></li>
+          <li><a href="#ensureDataDirectory">ensureDataDirectory</a></li>
+          <li><a href="#checkMongoDBRunning">checkMongoDBRunning</a></li>
+          <li><a href="#startMongoDB">startMongoDB</a></li>
+          <li><a href="#ensureMongoDB">ensureMongoDB</a></li>
+          <li><a href="#updateServerCSP">updateServerCSP</a></li>
+          <li><a href="#updateClientCSP">updateClientCSP</a></li>
+        </ul>
+      </div>
+
+      <!-- install-missing-deps.js functions -->
+      <div id="checkPackageJson" class="glossary-item">
+        <div class="glossary-term">checkPackageJson</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Checks if a package.json file exists in the specified directory.
+        </div>
+
+        <div class="glossary-usage">checkPackageJson(dir)</div>
+
+        <div class="glossary-params">
+          <strong>Parameters:</strong>
+          <div class="glossary-param">
+            <span class="param-name">dir</span>
+            <span class="param-type">string</span> - The directory to check for package.json
+          </div>
+        </div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">boolean</span> - True if package.json
+          exists, false otherwise
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Check if package.json exists in the server directory
+const hasPackageJson = checkPackageJson(serverDir);
+if (!hasPackageJson) {
+  console.error('Error: package.json not found in server directory');
+}</pre
+          >
+        </div>
+      </div>
+
+      <div id="getInstalledDependencies" class="glossary-item">
+        <div class="glossary-term">getInstalledDependencies</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Gets the installed dependencies from a package.json file.
+        </div>
+
+        <div class="glossary-usage">getInstalledDependencies(dir)</div>
+
+        <div class="glossary-params">
+          <strong>Parameters:</strong>
+          <div class="glossary-param">
+            <span class="param-name">dir</span>
+            <span class="param-type">string</span> - The directory containing package.json
+          </div>
+        </div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">object</span> - Object with prod and
+          dev properties containing the installed dependencies
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Get installed dependencies from the client directory
+const installed = getInstalledDependencies(clientDir);
+console.log('Production dependencies:', Object.keys(installed.prod));
+console.log('Development dependencies:', Object.keys(installed.dev));</pre
+          >
+        </div>
+      </div>
+
+      <div id="installDependencies" class="glossary-item">
+        <div class="glossary-term">installDependencies</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">Installs dependencies in a specific directory.</div>
+
+        <div class="glossary-usage">installDependencies(directory, dependencies, isDev)</div>
+
+        <div class="glossary-params">
+          <strong>Parameters:</strong>
+          <div class="glossary-param">
+            <span class="param-name">directory</span>
+            <span class="param-type">string</span> - The directory to install dependencies in
+          </div>
+          <div class="glossary-param">
+            <span class="param-name">dependencies</span>
+            <span class="param-type">Array&lt;string&gt;</span> - List of dependencies to install
+          </div>
+          <div class="glossary-param">
+            <span class="param-name">isDev</span>
+            <span class="param-type">boolean</span> - Whether to install as dev dependencies
+            (default: false)
+          </div>
+        </div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">void</span>
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Install production dependencies in the server directory
+installDependencies(serverDir, ['express', 'mongoose'], false);
+
+// Install development dependencies in the client directory
+installDependencies(clientDir, ['jest', 'eslint'], true);</pre
+          >
+        </div>
+      </div>
+
+      <div id="checkAndInstallForComponent" class="glossary-item">
+        <div class="glossary-term">checkAndInstallForComponent</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Checks for and installs missing dependencies for a component.
+        </div>
+
+        <div class="glossary-usage">
+          checkAndInstallForComponent(dir, componentName, componentDeps)
+        </div>
+
+        <div class="glossary-params">
+          <strong>Parameters:</strong>
+          <div class="glossary-param">
+            <span class="param-name">dir</span>
+            <span class="param-type">string</span> - The directory of the component
+          </div>
+          <div class="glossary-param">
+            <span class="param-name">componentName</span>
+            <span class="param-type">string</span> - The name of the component (for logging)
+          </div>
+          <div class="glossary-param">
+            <span class="param-name">componentDeps</span>
+            <span class="param-type">object</span> - Object with prod and dev properties containing
+            the dependencies to check
+          </div>
+        </div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">void</span>
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Check and install dependencies for the server component
+checkAndInstallForComponent(serverDir, 'Server', {
+  prod: ['express', 'mongoose', 'dotenv'],
+  dev: ['nodemon', 'jest']
+});</pre
+          >
+        </div>
+      </div>
+
+      <!-- ensure-mongodb.js functions -->
+      <div id="ensureDataDirectory" class="glossary-item">
+        <div class="glossary-term">ensureDataDirectory</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Ensures the MongoDB data directory exists and has proper permissions.
+        </div>
+
+        <div class="glossary-usage">ensureDataDirectory()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">void</span>
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Ensure the MongoDB data directory exists and has proper permissions
+ensureDataDirectory();</pre
+          >
+        </div>
+      </div>
+
+      <div id="checkMongoDBRunning" class="glossary-item">
+        <div class="glossary-term">checkMongoDBRunning</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">Checks if MongoDB is already running.</div>
+
+        <div class="glossary-usage">checkMongoDBRunning()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">Promise&lt;boolean&gt;</span> - Promise
+          that resolves to true if MongoDB is running, false otherwise
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Check if MongoDB is running
+const isRunning = await checkMongoDBRunning();
+if (isRunning) {
+  console.log('MongoDB is already running');
+} else {
+  console.log('MongoDB is not running, starting it...');
+}</pre
+          >
+        </div>
+      </div>
+
+      <div id="startMongoDB" class="glossary-item">
+        <div class="glossary-term">startMongoDB</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">Starts MongoDB with appropriate options.</div>
+
+        <div class="glossary-usage">startMongoDB()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">Promise&lt;boolean&gt;</span> - Promise
+          that resolves to true if MongoDB was started successfully
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Start MongoDB
+try {
+  await startMongoDB();
+  console.log('MongoDB started successfully');
+} catch (error) {
+  console.error('Failed to start MongoDB:', error.message);
+}</pre
+          >
+        </div>
+      </div>
+
+      <div id="ensureMongoDB" class="glossary-item">
+        <div class="glossary-term">ensureMongoDB</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Ensures MongoDB is running by checking if it's already running and starting it if not.
+        </div>
+
+        <div class="glossary-usage">ensureMongoDB()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">Promise&lt;boolean&gt;</span> - Promise
+          that resolves to true if MongoDB is running
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Ensure MongoDB is running
+try {
+  await ensureMongoDB();
+  console.log('MongoDB is ready');
+} catch (error) {
+  console.error('Failed to ensure MongoDB is running:', error.message);
+}</pre
+          >
+        </div>
+      </div>
+
+      <!-- fix-csp-issues.js functions -->
+      <div id="updateServerCSP" class="glossary-item">
+        <div class="glossary-term">updateServerCSP</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Updates the Content Security Policy (CSP) configuration in the server.
+        </div>
+
+        <div class="glossary-usage">updateServerCSP()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">void</span>
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Update the server CSP configuration
+updateServerCSP();</pre
+          >
+        </div>
+      </div>
+
+      <div id="updateClientCSP" class="glossary-item">
+        <div class="glossary-term">updateClientCSP</div>
+        <span class="glossary-type">Function</span>
+
+        <div class="glossary-description">
+          Updates the Content Security Policy (CSP) configuration in the client.
+        </div>
+
+        <div class="glossary-usage">updateClientCSP()</div>
+
+        <div class="glossary-returns">
+          <strong>Returns:</strong> <span class="param-type">void</span>
+        </div>
+
+        <div class="glossary-example">
+          <pre>
+// Update the client CSP configuration
+updateClientCSP();</pre
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

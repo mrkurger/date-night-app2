@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -17,47 +16,46 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+// Nebular Imports (will be expanded as needed)
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTabsetModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbToggleModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbSpinnerModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbMenuModule,
+  NbActionsModule,
+  NbDialogService,
+  NbToastrService,
+  NbListModule,
+  NbAlertModule,
+  NbTagModule,
+  NbUserModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+} from '@nebular/theme';
 
 import {
   WalletService,
   Wallet,
-  WalletBalance,
   WalletTransaction,
-  PaymentMethod,
   TransactionFilters,
+  PaymentMethod,
+  WalletBalance,
 } from '../../core/services/wallet.service';
 import { PaymentService } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
 
-import { ClipboardModule } from '@angular/cdk/clipboard';
 import { QRCodeModule } from '../../shared/qrcode/qrcode.module';
-
-// Import Emerald components
-import { PagerComponent } from '../../shared/emerald/components/pager/pager.component';
-import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
 
 // Import dialogs
 import { DepositDialogComponent } from './dialogs/deposit-dialog.component';
@@ -65,6 +63,9 @@ import { WithdrawDialogComponent } from './dialogs/withdraw-dialog.component';
 import { TransferDialogComponent } from './dialogs/transfer-dialog.component';
 import { AddPaymentMethodDialogComponent } from './dialogs/add-payment-method-dialog.component';
 import { TransactionDetailsDialogComponent } from './dialogs/transaction-details-dialog.component';
+
+type TransactionType = 'deposit' | 'withdrawal' | 'transfer' | 'payment' | 'refund' | null;
+type TransactionStatus = 'pending' | 'completed' | 'failed' | 'cancelled' | null;
 
 @Component({
   selector: 'app-wallet',
@@ -76,33 +77,28 @@ import { TransactionDetailsDialogComponent } from './dialogs/transaction-details
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
-    MatChipsModule,
-    MatExpansionModule,
-    MatDividerModule,
-    MatBadgeModule,
-    MatMenuModule,
-    MatSlideToggleModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTabsetModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbToggleModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbSpinnerModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbMenuModule,
+    NbActionsModule,
+    NbListModule,
+    NbAlertModule,
+    NbTagModule,
+    NbUserModule,
+    NbAccordionModule,
     QRCodeModule,
-    ClipboardModule,
-    // Emerald components
-    PagerComponent,
-    FloatingActionButtonComponent,
+    NbDatepickerModule,
   ],
 })
 export class WalletComponent implements OnInit {
@@ -154,13 +150,25 @@ export class WalletComponent implements OnInit {
   // Display columns for transactions table
   displayedColumns: string[] = ['date', 'type', 'amount', 'status', 'actions'];
 
+  // Filter properties
+  selectedType: TransactionType = null;
+  selectedStatus: TransactionStatus = null;
+  fromDate: Date | null = null;
+  toDate: Date | null = null;
+
+  // New properties for filtering
+  balanceFilter: { search: string } = { search: '' };
+  paymentMethodsFilter: { search: string; type: string } = { search: '', type: '' };
+  filteredBalances: WalletBalance[] = [];
+  filteredPaymentMethods: PaymentMethod[] = [];
+
   constructor(
     public walletService: WalletService,
     private paymentService: PaymentService,
     private notificationService: NotificationService,
     private authService: AuthService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService,
     private fb: FormBuilder,
   ) {
     // Initialize settings form
@@ -199,21 +207,21 @@ export class WalletComponent implements OnInit {
     this.walletService.getWallet().subscribe({
       next: (wallet) => {
         this.wallet = wallet;
-        this.balances = wallet.balances;
+        // Map balances to match expected interface
+        this.balances = wallet.balances.map((balance) => ({
+          currency: balance.currency,
+          available: balance.available,
+          pending: balance.pending,
+          reserved: balance.reserved,
+          total: balance.available + balance.pending, // Calculate total for withdraw dialog
+        }));
         this.selectedCurrency = wallet.settings.defaultCurrency;
-
-        // Update settings form
-        this.settingsForm.patchValue(wallet.settings);
-
+        this.filterBalances();
         this.loading.wallet = false;
-
-        // Load transactions and payment methods
-        this.loadTransactions();
-        this.loadPaymentMethods();
       },
       error: (error) => {
+        this.toastrService.danger('Failed to load wallet. Please try again.', 'Wallet Error');
         console.error('Error loading wallet:', error);
-        this.notificationService.error('Failed to load wallet data');
         this.loading.wallet = false;
       },
     });
@@ -248,17 +256,38 @@ export class WalletComponent implements OnInit {
   loadPaymentMethods(): void {
     this.loading.paymentMethods = true;
 
-    this.walletService.getWalletPaymentMethods().subscribe({
-      next: (paymentMethods) => {
-        this.paymentMethods = paymentMethods;
+    this.walletService.getPaymentMethods().subscribe({
+      next: (methods) => {
+        // Map payment methods to include name and details properties
+        this.paymentMethods = methods.map((method) => ({
+          ...method,
+          name: this.getPaymentMethodDisplayName(method), // Add name property
+          details: this.getPaymentMethodDetails(method), // Add details property
+        }));
+        this.filterPaymentMethods();
         this.loading.paymentMethods = false;
       },
       error: (error) => {
+        this.toastrService.danger(
+          'Failed to load payment methods. Please try again.',
+          'Payment Methods Error',
+        );
         console.error('Error loading payment methods:', error);
-        this.notificationService.error('Failed to load payment methods');
         this.loading.paymentMethods = false;
       },
     });
+  }
+
+  // Add helper method to get payment method details
+  private getPaymentMethodDetails(method: PaymentMethod): any {
+    if (method.cardDetails) {
+      return method.cardDetails;
+    } else if (method.bankDetails) {
+      return method.bankDetails;
+    } else if (method.cryptoDetails) {
+      return method.cryptoDetails;
+    }
+    return {};
   }
 
   /**
@@ -301,9 +330,8 @@ export class WalletComponent implements OnInit {
    * Open deposit dialog
    */
   openDepositDialog(): void {
-    const dialogRef = this.dialog.open(DepositDialogComponent, {
-      width: '500px',
-      data: {
+    const dialogRef = this.dialogService.open<any>(DepositDialogComponent, {
+      context: {
         currencies: this.walletService.SUPPORTED_CURRENCIES.concat(
           this.walletService.SUPPORTED_CRYPTOCURRENCIES,
         ),
@@ -312,47 +340,120 @@ export class WalletComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    dialogRef.onClose.subscribe((result) => {
+      if (result?.success) {
         this.loadWallet();
       }
     });
+  }
+
+  /**
+   * Filter balances based on search and active filters
+   */
+  filterBalances(): void {
+    if (!this.balances?.length) {
+      this.filteredBalances = [];
+      return;
+    }
+
+    this.filteredBalances = this.balances.filter((balance) => {
+      const matchesCurrency =
+        !this.balanceFilter.search ||
+        balance.currency.toLowerCase().includes(this.balanceFilter.search.toLowerCase());
+      return matchesCurrency;
+    });
+  }
+
+  /**
+   * Filter payment methods based on search and active filters
+   */
+  filterPaymentMethods(): void {
+    if (!this.paymentMethods?.length) {
+      this.filteredPaymentMethods = [];
+      return;
+    }
+
+    this.filteredPaymentMethods = this.paymentMethods.filter((method) => {
+      const methodName = this.getPaymentMethodDisplayName(method).toLowerCase();
+      const matchesSearch =
+        !this.paymentMethodsFilter.search ||
+        methodName.includes(this.paymentMethodsFilter.search.toLowerCase());
+      const matchesType =
+        !this.paymentMethodsFilter.type || method.type === this.paymentMethodsFilter.type;
+      return matchesSearch && matchesType;
+    });
+  }
+
+  /**
+   * Map wallet balance to withdraw balance
+   */
+  private mapToWithdrawBalance(balance: WalletBalance): WalletBalance {
+    return {
+      currency: balance.currency,
+      available: balance.available,
+      pending: balance.pending,
+      reserved: balance.reserved || 0,
+      total: balance.available + balance.pending,
+    };
+  }
+
+  /**
+   * Map payment method to withdraw payment method
+   */
+  private mapToWithdrawPaymentMethod(method: PaymentMethod): PaymentMethod {
+    return {
+      ...method,
+      id: method._id || method.id || '',
+      name: this.getPaymentMethodDisplayName(method),
+      details: method.cardDetails || method.bankDetails || method.cryptoDetails || {},
+    };
   }
 
   /**
    * Open withdraw dialog
    */
   openWithdrawDialog(): void {
-    const dialogRef = this.dialog.open(WithdrawDialogComponent, {
-      width: '500px',
-      data: {
-        balances: this.balances,
-        paymentMethods: this.paymentMethods,
-        selectedCurrency: this.selectedCurrency,
-      },
-    });
+    // Create copies of balances and payment methods with the required properties
+    const mappedBalances = this.balances.map((balance) => ({
+      ...balance,
+      total: balance.total || balance.available + balance.pending, // Ensure total is non-optional
+    }));
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadWallet();
-      }
-    });
+    const mappedPaymentMethods = this.paymentMethods.map((method) => ({
+      ...method,
+      name: method.name || this.getPaymentMethodDisplayName(method), // Ensure name is non-optional
+      details: method.details || this.getPaymentMethodDetails(method), // Ensure details is non-optional
+    }));
+
+    this.dialogService
+      .open(WithdrawDialogComponent, {
+        context: {
+          balances: mappedBalances,
+          paymentMethods: mappedPaymentMethods,
+          selectedCurrency: this.selectedCurrency,
+        },
+        hasBackdrop: true,
+        closeOnBackdropClick: false,
+      })
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.loadWallet();
+          this.loadPaymentMethods();
+          this.loadTransactions();
+        }
+      });
   }
 
   /**
    * Open transfer dialog
    */
   openTransferDialog(): void {
-    const dialogRef = this.dialog.open(TransferDialogComponent, {
-      width: '500px',
-      data: {
-        balances: this.balances,
-        selectedCurrency: this.selectedCurrency,
-      },
+    const dialogRef = this.dialogService.open(TransferDialogComponent, {
+      context: {},
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    dialogRef.onClose.subscribe((result) => {
+      if (result === true || result?.success) {
         this.loadWallet();
       }
     });
@@ -362,16 +463,12 @@ export class WalletComponent implements OnInit {
    * Open add payment method dialog
    */
   openAddPaymentMethodDialog(): void {
-    const dialogRef = this.dialog.open(AddPaymentMethodDialogComponent, {
-      width: '500px',
-      data: {
-        currencies: this.walletService.SUPPORTED_CURRENCIES,
-        cryptocurrencies: this.walletService.SUPPORTED_CRYPTOCURRENCIES,
-      },
+    const dialogRef = this.dialogService.open(AddPaymentMethodDialogComponent, {
+      context: {},
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    dialogRef.onClose.subscribe((result) => {
+      if (result === true || result?.success) {
         this.loadPaymentMethods();
       }
     });
@@ -382,9 +479,27 @@ export class WalletComponent implements OnInit {
    * @param transaction Transaction to view
    */
   openTransactionDetailsDialog(transaction: WalletTransaction): void {
-    this.dialog.open(TransactionDetailsDialogComponent, {
-      width: '600px',
-      data: { transaction },
+    // Create a new object that exactly matches the expected interface
+    const transactionWithId = {
+      id: transaction._id || '',
+      _id: transaction._id,
+      type: transaction.type,
+      amount: transaction.amount,
+      currency: transaction.currency,
+      status: transaction.status,
+      paymentMethodId: transaction.paymentMethodId,
+      paymentMethod: transaction.paymentMethod,
+      fee: transaction.fee,
+      description: transaction.description,
+      createdAt:
+        typeof transaction.createdAt === 'object'
+          ? (transaction.createdAt as Date).toISOString()
+          : transaction.createdAt,
+    };
+
+    // Use type assertion to satisfy the compiler
+    this.dialogService.open(TransactionDetailsDialogComponent, {
+      context: { transaction: transactionWithId as any },
     });
   }
 
@@ -455,22 +570,7 @@ export class WalletComponent implements OnInit {
    * @param type Transaction type
    */
   getTransactionTypeClass(type: string): string {
-    switch (type) {
-      case 'deposit':
-        return 'transaction-deposit';
-      case 'withdrawal':
-        return 'transaction-withdrawal';
-      case 'transfer':
-        return 'transaction-transfer';
-      case 'payment':
-        return 'transaction-payment';
-      case 'refund':
-        return 'transaction-refund';
-      case 'fee':
-        return 'transaction-fee';
-      default:
-        return '';
-    }
+    return `transaction-${type.toLowerCase()}`;
   }
 
   /**
@@ -478,18 +578,7 @@ export class WalletComponent implements OnInit {
    * @param status Transaction status
    */
   getTransactionStatusClass(status: string): string {
-    switch (status) {
-      case 'pending':
-        return 'status-pending';
-      case 'completed':
-        return 'status-completed';
-      case 'failed':
-        return 'status-failed';
-      case 'cancelled':
-        return 'status-cancelled';
-      default:
-        return '';
-    }
+    return `status-${status.toLowerCase()}`;
   }
 
   /**
@@ -603,5 +692,20 @@ export class WalletComponent implements OnInit {
    */
   hasTransactions(): boolean {
     return this.totalTransactions > 0;
+  }
+
+  /**
+   * Copy text to clipboard and show a notification
+   */
+  copyToClipboard(text: string): void {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        this.notificationService.success('Address copied to clipboard');
+      },
+      (err) => {
+        console.error('Could not copy text: ', err);
+        this.notificationService.error('Failed to copy to clipboard');
+      },
+    );
   }
 }

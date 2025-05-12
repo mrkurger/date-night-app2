@@ -7,24 +7,34 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTabsModule } from '@angular/material/tabs';
+
 import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbTableModule,
+  NbPaginationChangeEvent,
+  NbSortEvent,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbIconModule,
+  NbDialogModule,
+  NbDialog,
+  NbTagModule,
+  NbBadgeModule,
+  NbTooltipModule,
+  NbTabsetModule,
+} from '@nebular/theme';
 import { AlertService } from '../../../../core/services/alert.service';
 import {
   Alert,
@@ -43,22 +53,26 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatIconModule,
-    MatDialogModule,
-    MatChipsModule,
-    MatBadgeModule,
-    MatTooltipModule,
-    MatTabsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTableModule,
+    NbPaginatorModule,
+    NbSortModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbIconModule,
+    NbDialogModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbTooltipModule,
+    NbTabsetModule,
     ReactiveFormsModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
   ],
   template: `
     <div class="alert-management-container">
@@ -67,7 +81,7 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
       <div class="alert-header">
         <div class="alert-actions">
           <button mat-raised-button color="primary" (click)="openAlertDialog()">
-            <mat-icon>add</mat-icon> Create Alert
+            <nb-icon icon="add"></nb-icon> Create Alert
           </button>
         </div>
 
@@ -88,8 +102,8 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
       <mat-tab-group [(selectedIndex)]="selectedTabIndex">
         <mat-tab label="Alert Definitions">
           <div class="alert-definitions-container">
-            <mat-card>
-              <mat-card-content>
+            <nb-card>
+              <nb-card-content>
                 <table mat-table [dataSource]="alerts" matSort (matSortChange)="sortAlerts($event)">
                   <!-- Name Column -->
                   <ng-container matColumnDef="name">
@@ -101,9 +115,9 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                   <ng-container matColumnDef="severity">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
                     <td mat-cell *matCellDef="let alert">
-                      <mat-chip [ngClass]="getSeverityClass(alert.severity)">
+                      <nb-tag [ngClass]="getSeverityClass(alert.severity)">
                         {{ getSeverityLabel(alert.severity) }}
-                      </mat-chip>
+                      </nb-tag>
                     </td>
                   </ng-container>
 
@@ -120,27 +134,27 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                     <th mat-header-cell *matHeaderCellDef>Notifications</th>
                     <td mat-cell *matCellDef="let alert">
                       <div class="notification-channels">
-                        <mat-icon *ngIf="hasChannel(alert, 'ui')" matTooltip="UI Notification">
+                        <nb-icon *ngIf="hasChannel(alert, 'ui')" nbTooltip="UI Notification">
                           notifications
-                        </mat-icon>
+                        </nb-icon>
                         <mat-icon
                           *ngIf="hasChannel(alert, 'email')"
-                          matTooltip="Email Notification"
+                          nbTooltip="Email Notification"
                         >
                           email
-                        </mat-icon>
+                        </nb-icon>
                         <mat-icon
                           *ngIf="hasChannel(alert, 'slack')"
-                          matTooltip="Slack Notification"
+                          nbTooltip="Slack Notification"
                         >
                           chat
-                        </mat-icon>
+                        </nb-icon>
                         <mat-icon
                           *ngIf="hasChannel(alert, 'webhook')"
-                          matTooltip="Webhook Notification"
+                          nbTooltip="Webhook Notification"
                         >
                           http
-                        </mat-icon>
+                        </nb-icon>
                       </div>
                     </td>
                   </ng-container>
@@ -153,7 +167,7 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                         [checked]="alert.enabled"
                         (change)="toggleAlert(alert, $event.checked)"
                         color="primary"
-                      ></mat-slide-toggle>
+                      ></nb-toggle>
                     </td>
                   </ng-container>
 
@@ -165,25 +179,25 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                         mat-icon-button
                         color="primary"
                         (click)="editAlert(alert)"
-                        matTooltip="Edit"
+                        nbTooltip="Edit"
                       >
-                        <mat-icon>edit</mat-icon>
+                        <nb-icon icon="edit"></nb-icon>
                       </button>
                       <button
                         mat-icon-button
                         color="primary"
                         (click)="testAlert(alert)"
-                        matTooltip="Test"
+                        nbTooltip="Test"
                       >
-                        <mat-icon>play_arrow</mat-icon>
+                        <nb-icon icon="play_arrow"></nb-icon>
                       </button>
                       <button
                         mat-icon-button
                         color="warn"
                         (click)="deleteAlert(alert)"
-                        matTooltip="Delete"
+                        nbTooltip="Delete"
                       >
-                        <mat-icon>delete</mat-icon>
+                        <nb-icon icon="delete"></nb-icon>
                       </button>
                     </td>
                   </ng-container>
@@ -198,15 +212,15 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                   [length]="totalAlerts"
                   (page)="onPageChange($event)"
                 ></mat-paginator>
-              </mat-card-content>
-            </mat-card>
+              </nb-card-body>
+            </nb-card>
           </div>
         </mat-tab>
 
         <mat-tab label="Active Alerts">
           <div class="active-alerts-container">
-            <mat-card>
-              <mat-card-content>
+            <nb-card>
+              <nb-card-content>
                 <table
                   mat-table
                   [dataSource]="activeAlerts"
@@ -229,9 +243,9 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                   <ng-container matColumnDef="severity">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
                     <td mat-cell *matCellDef="let event">
-                      <mat-chip [ngClass]="getSeverityClass(event.severity)">
+                      <nb-tag [ngClass]="getSeverityClass(event.severity)">
                         {{ getSeverityLabel(event.severity) }}
-                      </mat-chip>
+                      </nb-tag>
                     </td>
                   </ng-container>
 
@@ -263,17 +277,17 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                         color="primary"
                         (click)="acknowledgeAlert(event)"
                         [disabled]="event.acknowledged"
-                        matTooltip="Acknowledge"
+                        nbTooltip="Acknowledge"
                       >
-                        <mat-icon>check_circle</mat-icon>
+                        <nb-icon icon="check_circle"></nb-icon>
                       </button>
                       <button
                         mat-icon-button
                         color="primary"
                         (click)="viewAlertDetails(event)"
-                        matTooltip="View Details"
+                        nbTooltip="View Details"
                       >
-                        <mat-icon>info</mat-icon>
+                        <nb-icon icon="info"></nb-icon>
                       </button>
                     </td>
                   </ng-container>
@@ -281,8 +295,8 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
                   <tr mat-header-row *matHeaderRowDef="activeDisplayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: activeDisplayedColumns"></tr>
                 </table>
-              </mat-card-content>
-            </mat-card>
+              </nb-card-body>
+            </nb-card>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -390,7 +404,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private dialog: MatDialog,
+    private dialog: NbDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -434,17 +448,17 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
    * Handle page change event
    * @param event Page event
    */
-  onPageChange(event: PageEvent): void {
+  onPageChange(event: NbPaginationChangeEvent): void {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     this.loadAlerts();
   }
 
   /**
-   * Sort alerts
-   * @param sort Sort event
+   * NbSortEvent alerts
+   * @param sort NbSortEvent event
    */
-  sortAlerts(sort: Sort): void {
+  sortAlerts(sort: NbSortEvent): void {
     if (!sort.active || sort.direction === '') {
       return;
     }
@@ -463,10 +477,10 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sort active alerts
-   * @param sort Sort event
+   * NbSortEvent active alerts
+   * @param sort NbSortEvent event
    */
-  sortActiveAlerts(sort: Sort): void {
+  sortActiveAlerts(sort: NbSortEvent): void {
     if (!sort.active || sort.direction === '') {
       return;
     }
@@ -505,7 +519,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
       data: { alert },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result) {
         this.loadAlerts();
       }

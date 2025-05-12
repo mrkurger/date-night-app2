@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Lessons Learned - Material UI to Nebular Migration</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      .lesson {
+        background: #f7f9fc;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .lesson h3 {
+        margin-top: 0;
+      }
+      code {
+        background: #edf1f7;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      pre {
+        background: #edf1f7;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+      .tip {
+        background: #e7f1ff;
+        border-left: 4px solid #3366ff;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AI Lessons Learned - Material UI to Nebular Migration</h1>
+
+    <h2>Component Migration Patterns</h2>
+
+    <div class="lesson">
+      <h3>1. Layout Component Migration</h3>
+      <p>
+        When migrating from Material's layout components to Nebular's, we discovered several key
+        patterns:
+      </p>
+      <ul>
+        <li>
+          Nebular's layout system is more opinionated and requires proper nesting of components
+        </li>
+        <li>The <code>nb-layout</code> component must be the root container</li>
+        <li>Sidebar and header components need specific placement within the layout hierarchy</li>
+      </ul>
+      <div class="tip">
+        <strong>Best Practice:</strong> Always start migration from the root layout components and
+        work your way down to ensure proper component hierarchy.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Form Control Differences</h3>
+      <p>Key differences in form control implementation between Material and Nebular:</p>
+      <ul>
+        <li>Nebular form controls use different validation patterns</li>
+        <li>Status classes are handled differently in Nebular</li>
+        <li>Form field appearance customization requires different approaches</li>
+      </ul>
+      <pre>
+// Material UI
+&lt;mat-form-field appearance="outline">
+  &lt;input matInput [formControl]="control">
+  &lt;mat-error *ngIf="control.hasError('required')">
+    Required field
+  &lt;/mat-error>
+&lt;/mat-form-field>
+
+// Nebular
+&lt;nb-form-field>
+  &lt;input nbInput [formControl]="control">
+  &lt;ng-container *ngIf="control.hasError('required')">
+    Required field
+  &lt;/ng-container>
+&lt;/nb-form-field></pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>3. Theme Migration Strategy</h3>
+      <p>Lessons learned about theme migration:</p>
+      <ul>
+        <li>Nebular's theme system is more extensive and requires careful planning</li>
+        <li>Custom variables need to be mapped to Nebular's theme structure</li>
+        <li>Some Material-specific color functions need to be reimplemented</li>
+      </ul>
+      <pre>
+// Material UI
+$theme-colors: (
+  primary: mat-palette($mat-indigo),
+  accent: mat-palette($mat-pink)
+);
+
+// Nebular
+$nb-themes: nb-register-theme((
+  color-primary-100: #f2f6ff,
+  color-primary-500: #3366ff,
+  color-primary-900: #091c7a
+), default, default);</pre
+      >
+    </div>
+
+    <h2>Common Challenges and Solutions</h2>
+
+    <div class="lesson">
+      <h3>1. Icon System Migration</h3>
+      <p>Challenges faced when migrating from Material Icons to Eva Icons:</p>
+      <ul>
+        <li>Icon name mapping is not one-to-one</li>
+        <li>Eva Icons have different naming conventions</li>
+        <li>Some icons need to be combined to achieve the same effect</li>
+      </ul>
+      <div class="tip">
+        <strong>Solution:</strong> Created a mapping service to handle icon name translations and
+        fallbacks.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Dialog System Differences</h3>
+      <p>Key differences in dialog implementation:</p>
+      <ul>
+        <li>Nebular uses a different context system</li>
+        <li>Dialog styling and animations differ significantly</li>
+        <li>Dialog results are handled differently</li>
+      </ul>
+      <pre>
+// Material UI
+const dialogRef = this.dialog.open(DialogComponent, {
+  data: { ... }
+});
+
+// Nebular
+const dialogRef = this.dialogService.open(DialogComponent, {
+  context: { ... }
+});</pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>3. Performance Considerations</h3>
+      <p>Performance impacts observed during migration:</p>
+      <ul>
+        <li>Nebular's theme system can impact initial load time</li>
+        <li>Dynamic theme switching requires optimization</li>
+        <li>Some components need lazy loading strategies</li>
+      </ul>
+      <div class="tip">
+        <strong>Solution:</strong> Implemented lazy loading for feature modules and optimized theme
+        variable usage.
+      </div>
+    </div>
+
+    <h2>Testing Insights</h2>
+
+    <div class="lesson">
+      <h3>1. Component Testing</h3>
+      <p>Key learnings about testing Nebular components:</p>
+      <ul>
+        <li>Nebular components require specific TestBed configuration</li>
+        <li>Theme testing requires additional setup</li>
+        <li>Some Material test helpers need to be replaced</li>
+      </ul>
+      <pre>
+// Test setup for Nebular components
+TestBed.configureTestingModule({
+  imports: [
+    NbThemeModule.forRoot(),
+    // Other required modules
+  ],
+  providers: [
+    { provide: NB_DOCUMENT, useValue: document },
+    // Other required providers
+  ]
+});</pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>2. E2E Testing Considerations</h3>
+      <p>Changes needed for E2E tests:</p>
+      <ul>
+        <li>Updated element selectors for Nebular components</li>
+        <li>Modified interaction patterns for some components</li>
+        <li>Added new test cases for Nebular-specific features</li>
+      </ul>
+    </div>
+
+    <h2>Future Considerations</h2>
+
+    <div class="lesson">
+      <h3>1. Maintenance Strategy</h3>
+      <p>Long-term maintenance considerations:</p>
+      <ul>
+        <li>Keep track of Nebular updates and breaking changes</li>
+        <li>Maintain documentation of custom components and themes</li>
+        <li>Regular performance monitoring of theme system</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Scalability Lessons</h3>
+      <p>Insights for scaling the application:</p>
+      <ul>
+        <li>Organize components by feature modules</li>
+        <li>Implement proper lazy loading strategies</li>
+        <li>Use shared components effectively</li>
+      </ul>
+    </div>
+  </body>
+</html>

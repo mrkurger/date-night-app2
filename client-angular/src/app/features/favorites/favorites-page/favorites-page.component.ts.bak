@@ -7,28 +7,37 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+  NbDividerComponent,
+} from '../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbTabsetModule,
+  NbCardModule,
+  NbMenuModule,
+  NbCheckboxModule,
+  NbToggleModule,
+  NbTooltipModule,
+  NbToastrModule,
+  NbDialogModule,
+  NbDatepickerModule,
+  NbContextMenuModule,
+  NbActionsModule,
+} from '@nebular/theme';
 
 import {
   FavoriteService,
@@ -66,24 +75,24 @@ interface FilterPreset {
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatCardModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbTabsetModule,
+    NbCardModule,
+    NbMenuModule,
+    NbCheckboxModule,
+    NbToggleModule,
+    NbTooltipModule,
+    NbToastrModule,
+    NbDialogModule,
+    NbDatepickerModule,
+    NbContextMenuModule,
+    NbActionsModule,
     FavoriteButtonComponent,
     LoadingSpinnerComponent,
   ],
@@ -94,209 +103,108 @@ interface FilterPreset {
 
         <div class="favorites-actions" *ngIf="favorites && favorites.length > 0">
           <button
-            mat-raised-button
-            color="primary"
+            nbButton
+            status="primary"
             [disabled]="selectedFavorites.length === 0"
-            [matMenuTriggerFor]="batchMenu"
+            [nbContextMenu]="batchActions"
+            nbContextMenuTag="batch-menu"
           >
             Batch Actions ({{ selectedFavorites.length }})
+            <nb-icon icon="chevron-down-outline"></nb-icon>
           </button>
-
-          <mat-menu #batchMenu="matMenu">
-            <button mat-menu-item (click)="removeFavoritesBatch()">
-              <mat-icon>delete</mat-icon>
-              <span>Remove Selected</span>
-            </button>
-            <button mat-menu-item (click)="openTagsDialog()">
-              <mat-icon>label</mat-icon>
-              <span>Add Tags to Selected</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('high')">
-              <mat-icon>priority_high</mat-icon>
-              <span>Set High Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('normal')">
-              <mat-icon>remove_circle_outline</mat-icon>
-              <span>Set Normal Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('low')">
-              <mat-icon>arrow_downward</mat-icon>
-              <span>Set Low Priority</span>
-            </button>
-          </mat-menu>
         </div>
       </div>
 
       <div class="filters-container" *ngIf="favorites && favorites.length > 0">
         <div class="filters-header">
           <h3>Filters</h3>
-          <button mat-button color="primary" (click)="toggleAdvancedFilters()">
+          <button nbButton ghost (click)="toggleAdvancedFilters()">
             {{ showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters' }}
-            <mat-icon>{{ showAdvancedFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <nb-icon [icon]="showAdvancedFilters ? 'chevron-up-outline' : 'chevron-down-outline'">
+            </nb-icon>
           </button>
         </div>
 
         <div class="basic-filters">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Search favorites</mat-label>
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search-outline"></nb-icon>
             <input
-              matInput
+              nbInput
+              fullWidth
               [(ngModel)]="filterOptions.search"
               (input)="onSearchChange($event)"
               placeholder="Search by title, description, or notes"
             />
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+          </nb-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Sort by</mat-label>
-            <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
-              <mat-option value="newest">Newest first</mat-option>
-              <mat-option value="oldest">Oldest first</mat-option>
-              <mat-option value="price-asc">Price: Low to High</mat-option>
-              <mat-option value="price-desc">Price: High to Low</mat-option>
-              <mat-option value="title-asc">Title: A to Z</mat-option>
-              <mat-option value="title-desc">Title: Z to A</mat-option>
-              <mat-option value="priority-high">Priority: High to Low</mat-option>
-              <mat-option value="priority-low">Priority: Low to High</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <nb-select
+            fullWidth
+            [(ngModel)]="filterOptions.sort"
+            (selectedChange)="applyFilters()"
+            placeholder="Sort by"
+          >
+            <nb-option value="newest">Newest first</nb-option>
+            <nb-option value="oldest">Oldest first</nb-option>
+            <nb-option value="price-asc">Price: Low to High</nb-option>
+            <nb-option value="price-desc">Price: High to Low</nb-option>
+            <nb-option value="title-asc">Title: A to Z</nb-option>
+            <nb-option value="title-desc">Title: Z to A</nb-option>
+            <nb-option value="priority-high">Priority: High to Low</nb-option>
+            <nb-option value="priority-low">Priority: Low to High</nb-option>
+          </nb-select>
 
           <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
-            <div class="tags-label">Filter by tag:</div>
-            <div class="tags-chips">
-              <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-                <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
-                  {{ tag.tag }} ({{ tag.count }})
-                </mat-chip-option>
-              </mat-chip-listbox>
-            </div>
+            <label class="label">Filter by tag:</label>
+            <nb-tag-list>
+              <nb-tag
+                *ngFor="let tag of userTags"
+                [text]="tag.tag + ' (' + tag.count + ')'"
+                [selected]="selectedTagFilters.includes(tag.tag)"
+                (click)="toggleTagFilter(tag.tag)"
+                appearance="outline"
+                status="basic"
+              >
+              </nb-tag>
+            </nb-tag-list>
           </div>
         </div>
 
         <div class="advanced-filters" *ngIf="showAdvancedFilters">
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Priority</mat-label>
-              <mat-select [(ngModel)]="filterOptions.priority" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option value="high">High</mat-option>
-                <mat-option value="normal">Normal</mat-option>
-                <mat-option value="low">Low</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Category</mat-label>
-              <mat-select [(ngModel)]="filterOptions.category" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                  {{ category.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.priority"
+              (selectedChange)="applyFilters()"
+              placeholder="Priority"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option value="high">
+                <nb-icon icon="arrow-up-outline" class="priority-icon high"></nb-icon>
+                High
+              </nb-option>
+              <nb-option value="normal">
+                <nb-icon icon="minus-outline" class="priority-icon normal"></nb-icon>
+                Normal
+              </nb-option>
+              <nb-option value="low">
+                <nb-icon icon="arrow-down-outline" class="priority-icon low"></nb-icon>
+                Low
+              </nb-option>
+            </nb-select>
           </div>
 
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>County</mat-label>
-              <mat-select [(ngModel)]="filterOptions.county" (selectionChange)="onCountyChange()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let county of counties" [value]="county">
-                  {{ county }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>City</mat-label>
-              <mat-select [(ngModel)]="filterOptions.city" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let city of cities" [value]="city">
-                  {{ city }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="filter-row">
-            <div class="price-range">
-              <span class="range-label">Price Range:</span>
-              <div class="price-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>Min</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMin"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>Max</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMax"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-row">
-            <div class="date-range">
-              <span class="range-label">Date Added:</span>
-              <div class="date-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>From</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="fromPicker"
-                    [(ngModel)]="dateFrom"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #fromPicker></mat-datepicker>
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>To</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="toPicker"
-                    [(ngModel)]="dateTo"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #toPicker></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-actions">
-            <button mat-button color="primary" (click)="saveFilterPreset()">
-              <mat-icon>save</mat-icon>
-              Save Filter Preset
-            </button>
-            <button mat-button [matMenuTriggerFor]="presetMenu" *ngIf="filterPresets.length > 0">
-              <mat-icon>filter_list</mat-icon>
-              Load Preset
-            </button>
-            <mat-menu #presetMenu="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let preset of filterPresets"
-                (click)="loadFilterPreset(preset)"
-              >
-                {{ preset.name }}
-              </button>
-            </mat-menu>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.category"
+              (selectedChange)="applyFilters()"
+              placeholder="Category"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option *ngFor="let category of categories" [value]="category.value">
+                {{ category.label }}
+              </nb-option>
+            </nb-select>
           </div>
         </div>
 
@@ -445,7 +353,7 @@ interface FilterPreset {
 
             <div class="favorite-actions">
               <app-favorite-button
-                [adId]="favorite.ad._id"
+                [adId]="this.getAdIdAsString(favorite.ad._id)"
                 (favoriteChanged)="onFavoriteRemoved($event, favorite)"
               ></app-favorite-button>
 
@@ -480,7 +388,12 @@ interface FilterPreset {
                   }}</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item (click)="removeFavorite(getAdIdAsString(favorite.ad._id))">
+                <button
+                  mat-menu-item
+                  (click)="
+                    removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))
+                  "
+                >
                   <mat-icon>delete</mat-icon>
                   <span>Remove from Favorites</span>
                 </button>
@@ -876,6 +789,7 @@ export class FavoritesPageComponent implements OnInit {
   userTags: FavoriteTag[] = [];
   selectedFavorites: string[] = [];
   filterOptions: FavoriteFilterOptions = {
+    search: '',
     sort: 'newest',
   };
   selectedTagFilters: string[] = [];
@@ -894,12 +808,44 @@ export class FavoritesPageComponent implements OnInit {
   ];
   private searchSubject = new Subject<string>();
 
+  batchActions = [
+    {
+      title: 'Remove Selected',
+      icon: 'trash-2-outline',
+      data: 'remove',
+    },
+    {
+      title: 'Add Tags to Selected',
+      icon: 'pricetags-outline',
+      data: 'tags',
+    },
+    {
+      title: 'Set High Priority',
+      icon: 'arrow-up-outline',
+      data: 'priority-high',
+    },
+    {
+      title: 'Set Normal Priority',
+      icon: 'minus-outline',
+      data: 'priority-normal',
+    },
+    {
+      title: 'Set Low Priority',
+      icon: 'arrow-down-outline',
+      data: 'priority-low',
+    },
+  ];
+
   constructor(
     private favoriteService: FavoriteService,
     private dialogService: DialogService,
     private notificationService: NotificationService,
-    private router: Router
-  ) {}
+    private router: Router,
+  ) {
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => this.applyFilters());
+  }
 
   ngOnInit(): void {
     this.loadFavorites();
@@ -907,7 +853,6 @@ export class FavoritesPageComponent implements OnInit {
     this.loadLocationData();
     this.loadFilterPresets();
 
-    // Set up search debounce
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilters());
@@ -921,19 +866,19 @@ export class FavoritesPageComponent implements OnInit {
     this.error = false;
 
     this.favoriteService.getFavorites(this.filterOptions).subscribe(
-      favorites => {
-        this.favorites = favorites.map(favorite => ({
+      (favorites) => {
+        this.favorites = favorites.map((favorite) => ({
           ...favorite,
           selected: false,
         }));
         this.loading = false;
       },
-      error => {
+      (error) => {
         console.error('Error loading favorites:', error);
         this.error = true;
         this.loading = false;
         this.notificationService.error('Failed to load favorites. Please try again.');
-      }
+      },
     );
   }
 
@@ -942,12 +887,12 @@ export class FavoritesPageComponent implements OnInit {
    */
   loadUserTags(): void {
     this.favoriteService.getUserTags().subscribe(
-      tags => {
+      (tags) => {
         this.userTags = tags;
       },
-      error => {
+      (error) => {
         console.error('Error loading tags:', error);
-      }
+      },
     );
   }
 
@@ -978,6 +923,7 @@ export class FavoritesPageComponent implements OnInit {
    */
   resetFilters(): void {
     this.filterOptions = {
+      search: '',
       sort: 'newest',
     };
     this.selectedTagFilters = [];
@@ -1063,7 +1009,7 @@ export class FavoritesPageComponent implements OnInit {
         notes: '',
         placeholder: 'Enter a name for this filter preset',
       })
-      .subscribe(name => {
+      .subscribe((name) => {
         if (name) {
           const preset: FilterPreset = {
             name,
@@ -1112,7 +1058,7 @@ export class FavoritesPageComponent implements OnInit {
    * Get the label for a category value
    */
   getCategoryLabel(value: string): string {
-    const category = this.categories.find(c => c.value === value);
+    const category = this.categories.find((c) => c.value === value);
     return category ? category.label : value;
   }
 
@@ -1141,7 +1087,7 @@ export class FavoritesPageComponent implements OnInit {
 
     if (this.filterOptions.dateFrom && this.filterOptions.dateTo) {
       return `${formatDate(this.filterOptions.dateFrom as Date)} - ${formatDate(
-        this.filterOptions.dateTo as Date
+        this.filterOptions.dateTo as Date,
       )}`;
     } else if (this.filterOptions.dateFrom) {
       return `After ${formatDate(this.filterOptions.dateFrom as Date)}`;
@@ -1217,7 +1163,7 @@ export class FavoritesPageComponent implements OnInit {
    * Remove a specific tag filter
    */
   removeTagFilter(tag: string): void {
-    this.selectedTagFilters = this.selectedTagFilters.filter(t => t !== tag);
+    this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
     this.applyFilters();
   }
 
@@ -1245,23 +1191,25 @@ export class FavoritesPageComponent implements OnInit {
    */
   updateSelectedFavorites(): void {
     this.selectedFavorites = this.favorites
-      .filter(favorite => favorite.selected)
-      .map(favorite => favorite.ad._id);
+      .filter((favorite) => favorite.selected)
+      .map((favorite) => this.getAdIdAsString(favorite.ad._id));
   }
 
   /**
    * Remove a single favorite
    */
-  removeFavorite(adId: string): void {
+  removeFavorite(adId: string | { city: string; county: string }): void {
     this.favoriteService.removeFavorite(adId).subscribe(
       () => {
-        this.favorites = this.favorites.filter(favorite => favorite.ad._id !== adId);
+        this.favorites = this.favorites.filter(
+          (favorite) => this.getAdIdAsString(favorite.ad._id) !== adId,
+        );
         this.notificationService.success('Removed from favorites');
       },
-      error => {
+      (error) => {
         console.error('Error removing favorite:', error);
         this.notificationService.error('Failed to remove from favorites');
-      }
+      },
     );
   }
 
@@ -1272,18 +1220,18 @@ export class FavoritesPageComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     this.favoriteService.removeFavoritesBatch(this.selectedFavorites).subscribe(
-      result => {
+      (result) => {
         // Remove the favorites from the local array
         this.favorites = this.favorites.filter(
-          favorite => !this.selectedFavorites.includes(favorite.ad._id)
+          (favorite) => !this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id)),
         );
         this.selectedFavorites = [];
         this.notificationService.success(`Removed ${result.removed} items from favorites`);
       },
-      error => {
+      (error) => {
         console.error('Error removing favorites batch:', error);
         this.notificationService.error('Failed to remove items from favorites');
-      }
+      },
     );
   }
 
@@ -1298,18 +1246,18 @@ export class FavoritesPageComponent implements OnInit {
         maxLength: 500,
         placeholder: 'Add your personal notes about this ad...',
       })
-      .subscribe(notes => {
+      .subscribe((notes) => {
         if (notes !== undefined) {
-          this.favoriteService.updateNotes(favorite.ad._id, notes).subscribe(
+          this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe(
             () => {
               // Update local state
               favorite.notes = notes;
               this.notificationService.success('Notes updated successfully');
             },
-            error => {
+            (error) => {
               console.error('Error updating notes:', error);
               this.notificationService.error('Failed to update notes');
-            }
+            },
           );
         }
       });
@@ -1320,8 +1268,10 @@ export class FavoritesPageComponent implements OnInit {
    */
   openTagsDialogForSingle(favorite: Favorite): void {
     // Get all user tags for suggestions
-    this.favoriteService.getUserTags().subscribe(tags => {
-      const suggestedTags = tags.map(tag => tag.tag).filter(tag => !favorite.tags.includes(tag));
+    this.favoriteService.getUserTags().subscribe((tags) => {
+      const suggestedTags = tags
+        .map((tag) => tag.tag)
+        .filter((tag) => !favorite.tags.includes(tag));
 
       this.dialogService
         .openTagsDialog({
@@ -1330,19 +1280,21 @@ export class FavoritesPageComponent implements OnInit {
           suggestedTags,
           maxTags: 10,
         })
-        .subscribe(updatedTags => {
+        .subscribe((updatedTags) => {
           if (updatedTags) {
-            this.favoriteService.updateTags(favorite.ad._id, updatedTags).subscribe(
-              () => {
-                // Update local state
-                favorite.tags = updatedTags;
-                this.notificationService.success('Tags updated successfully');
-              },
-              error => {
-                console.error('Error updating tags:', error);
-                this.notificationService.error('Failed to update tags');
-              }
-            );
+            this.favoriteService
+              .updateTags(this.getAdIdAsString(favorite.ad._id), updatedTags)
+              .subscribe(
+                () => {
+                  // Update local state
+                  favorite.tags = updatedTags;
+                  this.notificationService.success('Tags updated successfully');
+                },
+                (error) => {
+                  console.error('Error updating tags:', error);
+                  this.notificationService.error('Failed to update tags');
+                },
+              );
           }
         });
     });
@@ -1355,8 +1307,8 @@ export class FavoritesPageComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     // Get all user tags for suggestions
-    this.favoriteService.getUserTags().subscribe(tags => {
-      const suggestedTags = tags.map(tag => tag.tag);
+    this.favoriteService.getUserTags().subscribe((tags) => {
+      const suggestedTags = tags.map((tag) => tag.tag);
 
       this.dialogService
         .openTagsDialog({
@@ -1365,11 +1317,11 @@ export class FavoritesPageComponent implements OnInit {
           suggestedTags,
           maxTags: 10,
         })
-        .subscribe(newTags => {
+        .subscribe((newTags) => {
           if (newTags && newTags.length > 0) {
             // For each selected favorite, add the new tags
-            const updatePromises = this.selectedFavorites.map(adId => {
-              const favorite = this.favorites.find(f => f.ad._id === adId);
+            const updatePromises = this.selectedFavorites.map((adId) => {
+              const favorite = this.favorites.find((f) => f.ad._id === adId);
               if (!favorite) return null;
 
               // Combine existing tags with new tags, removing duplicates
@@ -1383,17 +1335,17 @@ export class FavoritesPageComponent implements OnInit {
             Promise.all(updatePromises)
               .then(() => {
                 // Update local state
-                this.favorites.forEach(favorite => {
-                  if (this.selectedFavorites.includes(favorite.ad._id)) {
+                this.favorites.forEach((favorite) => {
+                  if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
                     const existingTags = favorite.tags || [];
                     favorite.tags = [...new Set([...existingTags, ...newTags])];
                   }
                 });
                 this.notificationService.success(
-                  `Tags added to ${this.selectedFavorites.length} favorites`
+                  `Tags added to ${this.selectedFavorites.length} favorites`,
                 );
               })
-              .catch(error => {
+              .catch((error) => {
                 console.error('Error updating tags batch:', error);
                 this.notificationService.error('Failed to update tags for some favorites');
               });
@@ -1406,16 +1358,16 @@ export class FavoritesPageComponent implements OnInit {
    * Update priority for a single favorite
    */
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
-    this.favoriteService.updatePriority(favorite.ad._id, priority).subscribe(
+    this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe(
       () => {
         // Update local state
         favorite.priority = priority;
         this.notificationService.success(`Priority set to ${priority}`);
       },
-      error => {
+      (error) => {
         console.error('Error updating priority:', error);
         this.notificationService.error('Failed to update priority');
-      }
+      },
     );
   }
 
@@ -1425,23 +1377,23 @@ export class FavoritesPageComponent implements OnInit {
   setPriorityBatch(priority: 'low' | 'normal' | 'high'): void {
     if (this.selectedFavorites.length === 0) return;
 
-    const updatePromises = this.selectedFavorites.map(adId =>
-      firstValueFrom(this.favoriteService.updatePriority(adId, priority))
+    const updatePromises = this.selectedFavorites.map((adId) =>
+      firstValueFrom(this.favoriteService.updatePriority(adId, priority)),
     );
 
     Promise.all(updatePromises)
       .then(() => {
         // Update local state
-        this.favorites.forEach(favorite => {
-          if (this.selectedFavorites.includes(favorite.ad._id)) {
+        this.favorites.forEach((favorite) => {
+          if (this.selectedFavorites.includes(this.getAdIdAsString(favorite.ad._id))) {
             favorite.priority = priority;
           }
         });
         this.notificationService.success(
-          `Priority set to ${priority} for ${this.selectedFavorites.length} favorites`
+          `Priority set to ${priority} for ${this.selectedFavorites.length} favorites`,
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error updating priority batch:', error);
         this.notificationService.error('Failed to update priority for some favorites');
       });
@@ -1451,18 +1403,18 @@ export class FavoritesPageComponent implements OnInit {
    * Toggle notifications for a favorite
    */
   toggleNotifications(favorite: Favorite): void {
-    this.favoriteService.toggleNotifications(favorite.ad._id).subscribe(
+    this.favoriteService.toggleNotifications(this.getAdIdAsString(favorite.ad._id)).subscribe(
       () => {
         // Update local state
         favorite.notificationsEnabled = !favorite.notificationsEnabled;
         this.notificationService.success(
-          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'}`
+          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'}`,
         );
       },
-      error => {
+      (error) => {
         console.error('Error toggling notifications:', error);
         this.notificationService.error('Failed to update notification settings');
-      }
+      },
     );
   }
 
@@ -1471,7 +1423,7 @@ export class FavoritesPageComponent implements OnInit {
    */
   onFavoriteRemoved(removed: boolean, favorite: Favorite): void {
     if (removed) {
-      this.favorites = this.favorites.filter(f => f._id !== favorite._id);
+      this.favorites = this.favorites.filter((f) => f._id !== favorite._id);
     }
   }
 
@@ -1501,5 +1453,15 @@ export class FavoritesPageComponent implements OnInit {
    */
   getAdIdAsString(adId: string | { city: string; county: string }): string {
     return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  }
+
+  toggleTagFilter(tag: string): void {
+    const index = this.selectedTagFilters.indexOf(tag);
+    if (index === -1) {
+      this.selectedTagFilters.push(tag);
+    } else {
+      this.selectedTagFilters.splice(index, 1);
+    }
+    this.applyFilters();
   }
 }

@@ -1,0 +1,519 @@
+<!-- ===================================================
+     CUSTOMIZABLE SETTINGS IN THIS FILE
+     ===================================================
+     This file contains settings for component configuration (user-settings.component)
+     
+     COMMON CUSTOMIZATIONS:
+     - SETTING_NAME: Description of setting (default: value)
+       Related to: other_file.html:OTHER_SETTING
+     =================================================== -->
+<app-main-layout>
+  <div class="settings-container">
+    <div class="settings-header">
+      <h1 class="settings-title">Account Settings</h1>
+      <p class="settings-subtitle">Manage your account preferences and personal information</p>
+    </div>
+
+    <div class="settings-content">
+      <!-- Settings Navigation -->
+      <div class="settings-nav">
+        <ul class="nav-tabs">
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'profile'"
+              (click)="setActiveTab('profile')"
+            >
+              <i class="fas fa-user"></i> Profile
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'security'"
+              (click)="setActiveTab('security')"
+            >
+              <i class="fas fa-lock"></i> Security
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'notifications'"
+              (click)="setActiveTab('notifications')"
+            >
+              <i class="fas fa-bell"></i> Notifications
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'privacy'"
+              (click)="setActiveTab('privacy')"
+            >
+              <i class="fas fa-shield-alt"></i> Privacy
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'display'"
+              (click)="setActiveTab('display')"
+            >
+              <i class="fas fa-desktop"></i> Display
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Settings Content -->
+      <div class="settings-body">
+        <!-- Loading State -->
+        <div class="settings-loading" *ngIf="loading">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p>Loading your settings...</p>
+        </div>
+
+        <!-- Profile Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'profile' && !loading">
+          <h2 class="panel-title">Profile Information</h2>
+          <p class="panel-description">Update your personal information and profile details</p>
+
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+            <div class="form-group">
+              <label for="name" class="form-label">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="form-control"
+                [class.is-invalid]="
+                  profileForm.get('name')?.invalid && profileForm.get('name')?.touched
+                "
+              />
+              <div class="invalid-feedback" *ngIf="profileForm.get('name')?.errors?.['required']">
+                Name is required
+              </div>
+              <div class="invalid-feedback" *ngIf="profileForm.get('name')?.errors?.['minlength']">
+                Name must be at least 2 characters
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-control"
+                [class.is-invalid]="
+                  profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+                "
+              />
+              <div class="invalid-feedback" *ngIf="profileForm.get('email')?.errors?.['required']">
+                Email is required
+              </div>
+              <div class="invalid-feedback" *ngIf="profileForm.get('email')?.errors?.['email']">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number (optional)</label>
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                class="form-control"
+                [class.is-invalid]="
+                  profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched
+                "
+              />
+              <div class="invalid-feedback" *ngIf="profileForm.get('phone')?.errors?.['pattern']">
+                Please enter a valid phone number
+              </div>
+              <small class="form-text text-muted">Format: +47 12345678</small>
+            </div>
+
+            <div class="form-group">
+              <label for="bio" class="form-label">Bio (optional)</label>
+              <textarea id="bio" formControlName="bio" class="form-control" rows="4"></textarea>
+              <small class="form-text text-muted">Tell others a bit about yourself</small>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="profileForm.invalid || loading"
+              >
+                <i class="fas fa-save"></i> Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Security Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'security' && !loading">
+          <h2 class="panel-title">Security Settings</h2>
+          <p class="panel-description">Manage your password and account security</p>
+
+          <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+            <div class="form-group">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                formControlName="currentPassword"
+                class="form-control"
+                [class.is-invalid]="
+                  passwordForm.get('currentPassword')?.invalid &&
+                  passwordForm.get('currentPassword')?.touched
+                "
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="passwordForm.get('currentPassword')?.errors?.['required']"
+              >
+                Current password is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                formControlName="newPassword"
+                class="form-control"
+                [class.is-invalid]="
+                  passwordForm.get('newPassword')?.invalid &&
+                  passwordForm.get('newPassword')?.touched
+                "
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="passwordForm.get('newPassword')?.errors?.['required']"
+              >
+                New password is required
+              </div>
+              <div
+                class="invalid-feedback"
+                *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']"
+              >
+                Password must be at least 6 characters
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                class="form-control"
+                [class.is-invalid]="
+                  passwordForm.get('confirmPassword')?.invalid &&
+                  passwordForm.get('confirmPassword')?.touched
+                "
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']"
+              >
+                Please confirm your new password
+              </div>
+              <div
+                class="invalid-feedback"
+                *ngIf="passwordForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+              >
+                Passwords do not match
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="passwordForm.invalid || loading"
+              >
+                <i class="fas fa-key"></i> Change Password
+              </button>
+            </div>
+          </form>
+
+          <div class="danger-zone">
+            <h3 class="danger-title">Danger Zone</h3>
+            <div class="danger-action">
+              <div class="danger-info">
+                <h4>Delete Account</h4>
+                <p>
+                  Permanently delete your account and all associated data. This action cannot be
+                  undone.
+                </p>
+              </div>
+              <button class="btn btn-danger" (click)="deleteAccount()">
+                <i class="fas fa-trash"></i> Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'notifications' && !loading">
+          <h2 class="panel-title">Notification Preferences</h2>
+          <p class="panel-description">Control how and when you receive notifications</p>
+
+          <form [formGroup]="notificationForm" (ngSubmit)="saveNotificationSettings()">
+            <div class="form-check-group">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  id="emailNotifications"
+                  formControlName="emailNotifications"
+                  class="form-check-input"
+                />
+                <label for="emailNotifications" class="form-check-label">Email Notifications</label>
+                <small class="form-text text-muted">Receive notifications via email</small>
+              </div>
+
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  id="chatNotifications"
+                  formControlName="chatNotifications"
+                  class="form-check-input"
+                />
+                <label for="chatNotifications" class="form-check-label">Chat Notifications</label>
+                <small class="form-text text-muted"
+                  >Receive notifications for new chat messages</small
+                >
+              </div>
+
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  id="newMatchNotifications"
+                  formControlName="newMatchNotifications"
+                  class="form-check-input"
+                />
+                <label for="newMatchNotifications" class="form-check-label"
+                  >New Match Notifications</label
+                >
+                <small class="form-text text-muted"
+                  >Receive notifications when someone likes your profile</small
+                >
+              </div>
+
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  id="marketingEmails"
+                  formControlName="marketingEmails"
+                  class="form-check-input"
+                />
+                <label for="marketingEmails" class="form-check-label">Marketing Emails</label>
+                <small class="form-text text-muted"
+                  >Receive promotional emails and special offers</small
+                >
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <i class="fas fa-save"></i> Save Preferences
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Privacy Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'privacy' && !loading">
+          <h2 class="panel-title">Privacy Settings</h2>
+          <p class="panel-description">Control your privacy and data sharing preferences</p>
+
+          <form [formGroup]="privacyForm" (ngSubmit)="savePrivacySettings()">
+            <div class="form-group">
+              <label for="profileVisibility" class="form-label">Profile Visibility</label>
+              <select
+                id="profileVisibility"
+                formControlName="profileVisibility"
+                class="form-select"
+              >
+                <option value="public">Public - Visible to everyone</option>
+                <option value="registered">
+                  Registered Users - Only visible to registered users
+                </option>
+                <option value="private">Private - Only visible to users you've matched with</option>
+              </select>
+            </div>
+
+            <div class="form-check">
+              <input
+                type="checkbox"
+                id="showOnlineStatus"
+                formControlName="showOnlineStatus"
+                class="form-check-input"
+              />
+              <label for="showOnlineStatus" class="form-check-label">Show Online Status</label>
+              <small class="form-text text-muted">Allow others to see when you're online</small>
+            </div>
+
+            <div class="form-group">
+              <label for="allowMessaging" class="form-label">Who Can Message You</label>
+              <select id="allowMessaging" formControlName="allowMessaging" class="form-select">
+                <option value="all">Everyone</option>
+                <option value="matches">Only Matches</option>
+                <option value="none">No One (Disable messaging)</option>
+              </select>
+            </div>
+
+            <div class="form-check">
+              <input
+                type="checkbox"
+                id="dataSharing"
+                formControlName="dataSharing"
+                class="form-check-input"
+              />
+              <label for="dataSharing" class="form-check-label"
+                >Data Sharing for Service Improvement</label
+              >
+              <small class="form-text text-muted"
+                >Allow anonymous usage data to be collected to improve our services</small
+              >
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <i class="fas fa-save"></i> Save Privacy Settings
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Display Settings -->
+        <div class="settings-panel" *ngIf="activeTab === 'display' && !loading">
+          <h2 class="panel-title">Display Settings</h2>
+          <p class="panel-description">Customize your viewing experience</p>
+
+          <form [formGroup]="displayForm" (ngSubmit)="saveDisplaySettings()">
+            <!-- Theme Selection -->
+            <div class="form-group">
+              <label class="form-label">Theme</label>
+              <div class="theme-options">
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'light'"
+                  (click)="setTheme('light')"
+                >
+                  <div class="theme-preview theme-preview-light">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">Light</span>
+                </div>
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'dark'"
+                  (click)="setTheme('dark')"
+                >
+                  <div class="theme-preview theme-preview-dark">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">Dark</span>
+                </div>
+                <div
+                  class="theme-option"
+                  [class.active]="currentTheme === 'system'"
+                  (click)="setTheme('system')"
+                >
+                  <div class="theme-preview theme-preview-system">
+                    <div class="theme-preview-header"></div>
+                    <div class="theme-preview-content"></div>
+                  </div>
+                  <span class="theme-option-label">System</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Default View Type -->
+            <div class="form-group">
+              <label for="defaultViewType" class="form-label">Default View Type</label>
+              <select id="defaultViewType" formControlName="defaultViewType" class="form-select">
+                <option value="netflix">Netflix View</option>
+                <option value="tinder">Tinder View</option>
+                <option value="list">List View</option>
+              </select>
+              <small class="form-text text-muted"
+                >Choose your preferred view when browsing profiles</small
+              >
+            </div>
+
+            <!-- Content Density -->
+            <div class="form-group">
+              <label for="contentDensity" class="form-label">Content Density</label>
+              <select id="contentDensity" formControlName="contentDensity" class="form-select">
+                <option *ngFor="let option of contentDensityOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+              <small class="form-text text-muted">Adjust how compact content appears</small>
+            </div>
+
+            <!-- Card Size -->
+            <div class="form-group">
+              <label for="cardSize" class="form-label">Card Size</label>
+              <select id="cardSize" formControlName="cardSize" class="form-select">
+                <option *ngFor="let option of cardSizeOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+              <small class="form-text text-muted">Choose the size of profile cards</small>
+            </div>
+
+            <!-- Preview -->
+            <div class="display-preview">
+              <h4>Preview</h4>
+              <div
+                class="preview-container"
+                [attr.data-density]="displayForm.get('contentDensity')?.value"
+                [attr.data-size]="displayForm.get('cardSize')?.value"
+              >
+                <div class="preview-card">
+                  <div class="preview-card-image"></div>
+                  <div class="preview-card-content">
+                    <div class="preview-card-title"></div>
+                    <div class="preview-card-text"></div>
+                  </div>
+                </div>
+                <div class="preview-card">
+                  <div class="preview-card-image"></div>
+                  <div class="preview-card-content">
+                    <div class="preview-card-title"></div>
+                    <div class="preview-card-text"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" (click)="resetDisplaySettings()">
+                <i class="fas fa-undo"></i> Reset to Defaults
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="displayForm.pristine || loading"
+              >
+                <i class="fas fa-save"></i> Save Display Settings
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-main-layout>

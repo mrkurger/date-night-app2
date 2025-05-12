@@ -1,0 +1,130 @@
+.location-matching-container {
+  padding: 20px;
+}
+
+.card {
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.result-item {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  &.highlight {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+}
+
+.result-card {
+  display: flex;
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.result-image {
+  flex: 0 0 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 4px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    flex: 0 0 auto;
+    height: 180px;
+  }
+}
+
+.result-content {
+  flex: 1;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .location,
+  .distance {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+
+  .description {
+    margin-bottom: 10px;
+  }
+
+  .rating {
+    margin-bottom: 10px;
+
+    .stars {
+      color: #ffc107;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.form-range {
+  width: 100%;
+}
+
+.form-check {
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+.is-invalid {
+  border-color: #dc3545;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}

@@ -21,8 +21,10 @@
     "baseUrl": "./",
     "paths": {
       "rxjs": ["node_modules/rxjs"],
-      "rxjs/*": ["node_modules/rxjs/*"]
-    }
+      "rxjs/*": ["node_modules/rxjs/*"],
+      "@core/*": ["src/app/core/*"]
+    },
+    "types": ["jasmine"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

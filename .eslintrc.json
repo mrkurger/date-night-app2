@@ -1,6 +1,14 @@
 {
   "root": true,
-  "ignorePatterns": ["dist/**/*"],
+  "ignorePatterns": [
+    "dist/**/*",
+    "**/CHANGELOG.html",
+    "**/AILESSONS.html",
+    "**/GLOSSARY.html",
+    "_docs_index.html",
+    "_glossary.html",
+    "_docs*.html"
+  ],
   "plugins": ["@typescript-eslint"],
   "overrides": [
     {

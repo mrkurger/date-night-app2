@@ -9,6 +9,7 @@
 // ===================================================
 import walletService from '../services/wallet.service.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { sendSuccess, sendError } from '../utils/response.js';
 
 /**
  * Wallet Controller for handling wallet-related API endpoints
@@ -435,6 +436,15 @@ class WalletController {
     } catch (error) {
       next(error);
     }
+  }
+}
+
+export async function someHandler(req, res) {
+  try {
+    const result = await doSomething();
+    return sendSuccess(res, result);
+  } catch (err) {
+    return sendError(res, err, err.status || 500);
   }
 }
 

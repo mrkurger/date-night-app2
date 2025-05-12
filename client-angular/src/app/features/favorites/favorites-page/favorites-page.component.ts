@@ -7,28 +7,36 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+  NbDividerComponent,
+} from '../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbTabsetModule,
+  NbCardModule,
+  NbMenuModule,
+  NbCheckboxModule,
+  NbToggleModule,
+  NbTooltipModule,
+  NbToastrModule,
+  NbDialogModule,
+  NbDatepickerModule,
+  NbContextMenuModule,
+  NbActionsModule,
+} from '@nebular/theme';
 
 import {
   FavoriteService,
@@ -66,24 +74,24 @@ interface FilterPreset {
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatCardModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbTabsetModule,
+    NbCardModule,
+    NbMenuModule,
+    NbCheckboxModule,
+    NbToggleModule,
+    NbTooltipModule,
+    NbToastrModule,
+    NbDialogModule,
+    NbDatepickerModule,
+    NbContextMenuModule,
+    NbActionsModule,
     FavoriteButtonComponent,
     LoadingSpinnerComponent,
   ],
@@ -94,274 +102,173 @@ interface FilterPreset {
 
         <div class="favorites-actions" *ngIf="favorites && favorites.length > 0">
           <button
-            mat-raised-button
-            color="primary"
+            nbButton
+            status="primary"
             [disabled]="selectedFavorites.length === 0"
-            [matMenuTriggerFor]="batchMenu"
+            [nbContextMenu]="batchActions"
+            nbContextMenuTag="batch-menu"
           >
             Batch Actions ({{ selectedFavorites.length }})
+            <nb-icon icon="chevron-down-outline"></nb-icon>
           </button>
-
-          <mat-menu #batchMenu="matMenu">
-            <button mat-menu-item (click)="removeFavoritesBatch()">
-              <mat-icon>delete</mat-icon>
-              <span>Remove Selected</span>
-            </button>
-            <button mat-menu-item (click)="openTagsDialog()">
-              <mat-icon>label</mat-icon>
-              <span>Add Tags to Selected</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('high')">
-              <mat-icon>priority_high</mat-icon>
-              <span>Set High Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('normal')">
-              <mat-icon>remove_circle_outline</mat-icon>
-              <span>Set Normal Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('low')">
-              <mat-icon>arrow_downward</mat-icon>
-              <span>Set Low Priority</span>
-            </button>
-          </mat-menu>
         </div>
       </div>
 
       <div class="filters-container" *ngIf="favorites && favorites.length > 0">
         <div class="filters-header">
           <h3>Filters</h3>
-          <button mat-button color="primary" (click)="toggleAdvancedFilters()">
+          <button nbButton ghost (click)="toggleAdvancedFilters()">
             {{ showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters' }}
-            <mat-icon>{{ showAdvancedFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <nb-icon [icon]="showAdvancedFilters ? 'chevron-up-outline' : 'chevron-down-outline'">
+            </nb-icon>
           </button>
         </div>
 
         <div class="basic-filters">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Search favorites</mat-label>
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search-outline"></nb-icon>
             <input
-              matInput
+              nbInput
+              fullWidth
               [(ngModel)]="filterOptions.search"
               (input)="onSearchChange($event)"
               placeholder="Search by title, description, or notes"
             />
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+          </nb-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Sort by</mat-label>
-            <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
-              <mat-option value="newest">Newest first</mat-option>
-              <mat-option value="oldest">Oldest first</mat-option>
-              <mat-option value="price-asc">Price: Low to High</mat-option>
-              <mat-option value="price-desc">Price: High to Low</mat-option>
-              <mat-option value="title-asc">Title: A to Z</mat-option>
-              <mat-option value="title-desc">Title: Z to A</mat-option>
-              <mat-option value="priority-high">Priority: High to Low</mat-option>
-              <mat-option value="priority-low">Priority: Low to High</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <nb-select
+            fullWidth
+            [(ngModel)]="filterOptions.sort"
+            (selectedChange)="applyFilters()"
+            placeholder="Sort by"
+          >
+            <nb-option value="newest">Newest first</nb-option>
+            <nb-option value="oldest">Oldest first</nb-option>
+            <nb-option value="price-asc">Price: Low to High</nb-option>
+            <nb-option value="price-desc">Price: High to Low</nb-option>
+            <nb-option value="title-asc">Title: A to Z</nb-option>
+            <nb-option value="title-desc">Title: Z to A</nb-option>
+            <nb-option value="priority-high">Priority: High to Low</nb-option>
+            <nb-option value="priority-low">Priority: Low to High</nb-option>
+          </nb-select>
 
           <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
-            <div class="tags-label">Filter by tag:</div>
-            <div class="tags-chips">
-              <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-                <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
-                  {{ tag.tag }} ({{ tag.count }})
-                </mat-chip-option>
-              </mat-chip-listbox>
-            </div>
+            <label class="label">Filter by tag:</label>
+            <nb-tag-list>
+              <nb-tag
+                *ngFor="let tag of userTags"
+                [text]="tag.tag + ' (' + tag.count + ')'"
+                [selected]="selectedTagFilters.includes(tag.tag)"
+                (click)="toggleTagFilter(tag.tag)"
+                appearance="outline"
+                status="basic"
+              >
+              </nb-tag>
+            </nb-tag-list>
           </div>
         </div>
 
         <div class="advanced-filters" *ngIf="showAdvancedFilters">
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Priority</mat-label>
-              <mat-select [(ngModel)]="filterOptions.priority" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option value="high">High</mat-option>
-                <mat-option value="normal">Normal</mat-option>
-                <mat-option value="low">Low</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Category</mat-label>
-              <mat-select [(ngModel)]="filterOptions.category" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                  {{ category.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.priority"
+              (selectedChange)="applyFilters()"
+              placeholder="Priority"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option value="high">
+                <nb-icon icon="arrow-up-outline" class="priority-icon high"></nb-icon>
+                High
+              </nb-option>
+              <nb-option value="normal">
+                <nb-icon icon="minus-outline" class="priority-icon normal"></nb-icon>
+                Normal
+              </nb-option>
+              <nb-option value="low">
+                <nb-icon icon="arrow-down-outline" class="priority-icon low"></nb-icon>
+                Low
+              </nb-option>
+            </nb-select>
           </div>
 
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>County</mat-label>
-              <mat-select [(ngModel)]="filterOptions.county" (selectionChange)="onCountyChange()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let county of counties" [value]="county">
-                  {{ county }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>City</mat-label>
-              <mat-select [(ngModel)]="filterOptions.city" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let city of cities" [value]="city">
-                  {{ city }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="filter-row">
-            <div class="price-range">
-              <span class="range-label">Price Range:</span>
-              <div class="price-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>Min</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMin"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>Max</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMax"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-row">
-            <div class="date-range">
-              <span class="range-label">Date Added:</span>
-              <div class="date-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>From</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="fromPicker"
-                    [(ngModel)]="dateFrom"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #fromPicker></mat-datepicker>
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>To</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="toPicker"
-                    [(ngModel)]="dateTo"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #toPicker></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-actions">
-            <button mat-button color="primary" (click)="saveFilterPreset()">
-              <mat-icon>save</mat-icon>
-              Save Filter Preset
-            </button>
-            <button mat-button [matMenuTriggerFor]="presetMenu" *ngIf="filterPresets.length > 0">
-              <mat-icon>filter_list</mat-icon>
-              Load Preset
-            </button>
-            <mat-menu #presetMenu="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let preset of filterPresets"
-                (click)="loadFilterPreset(preset)"
-              >
-                {{ preset.name }}
-              </button>
-            </mat-menu>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.category"
+              (selectedChange)="applyFilters()"
+              placeholder="Category"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option *ngFor="let category of categories" [value]="category.value">
+                {{ category.label }}
+              </nb-option>
+            </nb-select>
           </div>
         </div>
 
         <div class="filter-summary" *ngIf="isFiltered">
           <div class="active-filters">
             <span class="filter-label">Active filters:</span>
-            <mat-chip-set>
-              <mat-chip *ngIf="filterOptions.search" (removed)="clearSearchFilter()">
+            <nb-tag-set>
+              <nb-tag *ngIf="filterOptions.search" (removed)="clearSearchFilter()">
                 Search: {{ filterOptions.search }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.priority" (removed)="clearPriorityFilter()">
+              </nb-tag>
+              <nb-tag *ngIf="filterOptions.priority" (removed)="clearPriorityFilter()">
                 Priority: {{ filterOptions.priority | titlecase }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.category" (removed)="clearCategoryFilter()">
+              </nb-tag>
+              <nb-tag *ngIf="filterOptions.category" (removed)="clearCategoryFilter()">
                 Category: {{ getCategoryLabel(filterOptions.category) }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.county" (removed)="clearCountyFilter()">
+              </nb-tag>
+              <nb-tag *ngIf="filterOptions.county" (removed)="clearCountyFilter()">
                 County: {{ filterOptions.county }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.city" (removed)="clearCityFilter()">
+              </nb-tag>
+              <nb-tag *ngIf="filterOptions.city" (removed)="clearCityFilter()">
                 City: {{ filterOptions.city }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
+              </nb-tag>
               <mat-chip
                 *ngIf="filterOptions.priceMin !== undefined || filterOptions.priceMax !== undefined"
                 (removed)="clearPriceFilter()"
               >
                 Price: {{ getPriceRangeLabel() }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
+              </nb-tag>
               <mat-chip
                 *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
                 (removed)="clearDateFilter()"
               >
                 Date: {{ getDateRangeLabel() }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
-              <mat-chip *ngFor="let tag of selectedTagFilters" (removed)="removeTagFilter(tag)">
+              </nb-tag>
+              <nb-tag *ngFor="let tag of selectedTagFilters" (removed)="removeTagFilter(tag)">
                 Tag: {{ tag }}
                 <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
+                  <nb-icon icon="cancel"></nb-icon>
                 </button>
-              </mat-chip>
+              </nb-tag>
             </mat-chip-set>
           </div>
           <button mat-button color="primary" (click)="resetFilters()">
-            <mat-icon>clear</mat-icon>
+            <nb-icon icon="clear"></nb-icon>
             Clear All Filters
           </button>
         </div>
@@ -373,14 +280,14 @@ interface FilterPreset {
       </div>
 
       <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)">
-        <mat-card>
-          <mat-card-content>
-            <mat-icon class="empty-icon">favorite_border</mat-icon>
+        <nb-card>
+          <nb-card-content>
+            <nb-icon class="empty-icon">favorite_border</nb-icon>
             <h3>No favorites yet</h3>
             <p>Browse ads and click the heart icon to add them to your favorites.</p>
             <button mat-raised-button color="primary" routerLink="/ads">Browse Ads</button>
-          </mat-card-content>
-        </mat-card>
+          </nb-card-body>
+        </nb-card>
       </div>
 
       <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0">
@@ -416,30 +323,30 @@ interface FilterPreset {
 
               <div class="favorite-details">
                 <span class="favorite-location">
-                  <mat-icon>location_on</mat-icon>
+                  <nb-icon icon="location_on"></nb-icon>
                   {{ favorite.ad.location }}
                 </span>
 
                 <span class="favorite-price" *ngIf="favorite.ad.price">
-                  <mat-icon>attach_money</mat-icon>
+                  <nb-icon icon="attach_money"></nb-icon>
                   {{ favorite.ad.price | currency: 'NOK' : 'symbol' : '1.0-0' }}
                 </span>
 
                 <span class="favorite-date">
-                  <mat-icon>event</mat-icon>
+                  <nb-icon icon="event"></nb-icon>
                   Added {{ favorite.createdAt | date: 'mediumDate' }}
                 </span>
 
                 <span class="favorite-priority" [ngClass]="'priority-' + favorite.priority">
-                  <mat-icon>{{ getPriorityIcon(favorite.priority) }}</mat-icon>
+                  <nb-icon icon="{{ getPriorityIcon(favorite.priority) }}"></nb-icon>
                   {{ favorite.priority | titlecase }} Priority
                 </span>
               </div>
 
               <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
-                <mat-chip-listbox>
-                  <mat-chip *ngFor="let tag of favorite.tags">{{ tag }}</mat-chip>
-                </mat-chip-listbox>
+                <nb-tag-list>
+                  <nb-tag *ngFor="let tag of favorite.tags">{{ tag }}</nb-tag>
+                </nb-tag-list>
               </div>
             </div>
 
@@ -449,75 +356,75 @@ interface FilterPreset {
                 (favoriteChanged)="onFavoriteRemoved($event, favorite)"
               ></app-favorite-button>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options">
-                <mat-icon>more_vert</mat-icon>
+              <button mat-icon-button [nbContextMenu]="menu" nbTooltip="More options">
+                <nb-icon icon="more_vert"></nb-icon>
               </button>
 
-              <mat-menu #menu="matMenu">
+              <nb-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
-                  <mat-icon>visibility</mat-icon>
+                  <nb-icon icon="visibility"></nb-icon>
                   <span>View Ad</span>
                 </button>
                 <button mat-menu-item (click)="openNotesDialog(favorite)">
-                  <mat-icon>note</mat-icon>
+                  <nb-icon icon="note"></nb-icon>
                   <span>Edit Notes</span>
                 </button>
                 <button mat-menu-item (click)="openTagsDialogForSingle(favorite)">
-                  <mat-icon>label</mat-icon>
+                  <nb-icon icon="label"></nb-icon>
                   <span>Edit Tags</span>
                 </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item [matMenuTriggerFor]="priorityMenu">
-                  <mat-icon>priority_high</mat-icon>
+                <nb-divider></nb-divider>
+                <button mat-menu-item [nbContextMenu]="priorityMenu">
+                  <nb-icon icon="priority_high"></nb-icon>
                   <span>Set Priority</span>
                 </button>
                 <button mat-menu-item (click)="toggleNotifications(favorite)">
-                  <mat-icon>{{
+                  <nb-icon>{{
                     favorite.notificationsEnabled ? 'notifications' : 'notifications_off'
-                  }}</mat-icon>
+                  }}</nb-icon>
                   <span>{{
                     favorite.notificationsEnabled ? 'Disable Notifications' : 'Enable Notifications'
                   }}</span>
                 </button>
-                <mat-divider></mat-divider>
+                <nb-divider></nb-divider>
                 <button
                   mat-menu-item
                   (click)="
                     removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))
                   "
                 >
-                  <mat-icon>delete</mat-icon>
+                  <nb-icon icon="delete"></nb-icon>
                   <span>Remove from Favorites</span>
                 </button>
-              </mat-menu>
+              </nb-menu>
 
-              <mat-menu #priorityMenu="matMenu">
+              <nb-menu #priorityMenu="matMenu">
                 <button mat-menu-item (click)="updatePriority(favorite, 'high')">
-                  <mat-icon>arrow_upward</mat-icon>
+                  <nb-icon icon="arrow_upward"></nb-icon>
                   <span>High</span>
                 </button>
                 <button mat-menu-item (click)="updatePriority(favorite, 'normal')">
-                  <mat-icon>remove</mat-icon>
+                  <nb-icon icon="remove"></nb-icon>
                   <span>Normal</span>
                 </button>
                 <button mat-menu-item (click)="updatePriority(favorite, 'low')">
-                  <mat-icon>arrow_downward</mat-icon>
+                  <nb-icon icon="arrow_downward"></nb-icon>
                   <span>Low</span>
                 </button>
-              </mat-menu>
+              </nb-menu>
             </div>
           </div>
 
-          <mat-divider *ngIf="favorite.notes"></mat-divider>
+          <nb-divider *ngIf="favorite.notes"></nb-divider>
 
           <div class="favorite-notes" *ngIf="favorite.notes">
-            <mat-icon>note</mat-icon>
+            <nb-icon icon="note"></nb-icon>
             <p>{{ favorite.notes }}</p>
           </div>
 
-          <mat-card-actions>
+          <nb-card-actions>
             <button mat-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
-              <mat-icon>visibility</mat-icon>
+              <nb-icon icon="visibility"></nb-icon>
               View Ad
             </button>
 
@@ -527,7 +434,7 @@ interface FilterPreset {
               [routerLink]="['/chat']"
               [queryParams]="{ userId: favorite.ad.userId }"
             >
-              <mat-icon>chat</mat-icon>
+              <nb-icon icon="chat"></nb-icon>
               Contact Advertiser
             </button>
 
@@ -538,9 +445,9 @@ interface FilterPreset {
               class="notifications-toggle"
             >
               Notifications
-            </mat-slide-toggle>
-          </mat-card-actions>
-        </mat-card>
+            </nb-toggle>
+          </nb-card-footer>
+        </nb-card>
       </div>
     </div>
   `,
@@ -881,6 +788,7 @@ export class FavoritesPageComponent implements OnInit {
   userTags: FavoriteTag[] = [];
   selectedFavorites: string[] = [];
   filterOptions: FavoriteFilterOptions = {
+    search: '',
     sort: 'newest',
   };
   selectedTagFilters: string[] = [];
@@ -899,12 +807,44 @@ export class FavoritesPageComponent implements OnInit {
   ];
   private searchSubject = new Subject<string>();
 
+  batchActions = [
+    {
+      title: 'Remove Selected',
+      icon: 'trash-2-outline',
+      data: 'remove',
+    },
+    {
+      title: 'Add Tags to Selected',
+      icon: 'pricetags-outline',
+      data: 'tags',
+    },
+    {
+      title: 'Set High Priority',
+      icon: 'arrow-up-outline',
+      data: 'priority-high',
+    },
+    {
+      title: 'Set Normal Priority',
+      icon: 'minus-outline',
+      data: 'priority-normal',
+    },
+    {
+      title: 'Set Low Priority',
+      icon: 'arrow-down-outline',
+      data: 'priority-low',
+    },
+  ];
+
   constructor(
     private favoriteService: FavoriteService,
     private dialogService: DialogService,
     private notificationService: NotificationService,
     private router: Router,
-  ) {}
+  ) {
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => this.applyFilters());
+  }
 
   ngOnInit(): void {
     this.loadFavorites();
@@ -912,7 +852,6 @@ export class FavoritesPageComponent implements OnInit {
     this.loadLocationData();
     this.loadFilterPresets();
 
-    // Set up search debounce
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilters());
@@ -983,6 +922,7 @@ export class FavoritesPageComponent implements OnInit {
    */
   resetFilters(): void {
     this.filterOptions = {
+      search: '',
       sort: 'newest',
     };
     this.selectedTagFilters = [];
@@ -1512,5 +1452,15 @@ export class FavoritesPageComponent implements OnInit {
    */
   getAdIdAsString(adId: string | { city: string; county: string }): string {
     return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  }
+
+  toggleTagFilter(tag: string): void {
+    const index = this.selectedTagFilters.indexOf(tag);
+    if (index === -1) {
+      this.selectedTagFilters.push(tag);
+    } else {
+      this.selectedTagFilters.splice(index, 1);
+    }
+    this.applyFilters();
   }
 }

@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -17,12 +16,14 @@ import { CommonModule } from '@angular/common';
  * Can be used for displaying content in a contained, styled box.
  */
 @Component({
+  
   selector: 'app-card',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+,
 })
 export class CardComponent {
   /**

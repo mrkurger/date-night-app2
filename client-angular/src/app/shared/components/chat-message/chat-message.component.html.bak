@@ -1,0 +1,95 @@
+<div [ngClass]="getMessageClasses()">
+  <div class="message__avatar" *ngIf="!isCurrentUser && showSender">
+    <img [src]="getSenderProfileImage()" [alt]="getSenderName()" class="avatar-img" />
+  </div>
+
+  <div class="message__content">
+    <div class="message__header" *ngIf="showSender && !isCurrentUser">
+      <span class="message__sender">{{ getSenderName() }}</span>
+    </div>
+
+    <div class="message__body">
+      <!-- Loading state while decrypting -->
+      <div class="message__loading" *ngIf="isDecrypting">
+        <span class="spinner"></span>
+        <span>Decrypting message...</span>
+      </div>
+
+      <!-- System message -->
+      <div
+        class="message__text message__text--system"
+        *ngIf="message.type === 'system' && !isDecrypting"
+      >
+        {{ decryptedContent }}
+      </div>
+
+      <!-- Regular message -->
+      <div class="message__text" *ngIf="message.type !== 'system' && !isDecrypting">
+        <!-- Encryption indicator -->
+        <span
+          class="message__encryption-indicator"
+          *ngIf="message.isEncrypted && !decryptionFailed"
+        >
+          <i class="icon-lock" aria-hidden="true"></i>
+        </span>
+
+        <!-- Decryption failed indicator -->
+        <span
+          class="message__encryption-indicator message__encryption-indicator--failed"
+          *ngIf="decryptionFailed"
+        >
+          <i class="icon-lock-open" aria-hidden="true"></i>
+        </span>
+
+        <!-- Message content -->
+        <span [innerHTML]="decryptedContent | linkify"></span>
+      </div>
+
+      <!-- Attachments -->
+      <div
+        class="message__attachments"
+        *ngIf="message.attachments && message.attachments.length > 0"
+      >
+        <div class="attachment" *ngFor="let attachment of message.attachments">
+          <!-- Image attachment -->
+          <div class="attachment__image" *ngIf="attachment.type === 'image'">
+            <img
+              [src]="attachment.url"
+              [alt]="attachment.name || 'Image attachment'"
+              (click)="openAttachment(attachment)"
+            />
+          </div>
+
+          <!-- File attachment -->
+          <div class="attachment__file" *ngIf="attachment.type !== 'image'">
+            <div class="attachment__icon">
+              <i class="icon-file" aria-hidden="true"></i>
+            </div>
+            <div class="attachment__details">
+              <div class="attachment__name">{{ attachment.name }}</div>
+              <div class="attachment__size">{{ attachment.size | fileSize }}</div>
+            </div>
+            <button class="attachment__download" (click)="downloadAttachment(attachment)">
+              <i class="icon-download" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message__footer">
+      <span class="message__time">{{ getTimestamp() | timeAgo }}</span>
+
+      <!-- Read indicator -->
+      <span class="message__read-status" *ngIf="isCurrentUser">
+        <i class="icon-check" [class.icon-check-double]="message.read" aria-hidden="true"></i>
+      </span>
+
+      <!-- Expiry indicator -->
+      <span class="message__expiry" *ngIf="message.expiresAt">
+        <i class="icon-timer" aria-hidden="true"></i>
+        <span class="message__expiry-time">Expires {{ getExpiryDate() | timeAgo }}</span>
+      </span>
+    </div>
+  </div>
+</div>

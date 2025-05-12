@@ -87,3 +87,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 debug.log
+
+# ephemeral files
+.DS_Store
+*.log
+test-results/
+archive/

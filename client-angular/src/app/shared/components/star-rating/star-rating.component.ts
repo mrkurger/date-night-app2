@@ -7,15 +7,13 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-star-rating',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, NbIconModule, NbTooltipModule],
   template: `
     <div class="star-rating" [class.small]="small" [class.readonly]="readonly">
       <span
@@ -26,11 +24,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         (click)="onRatingChange(i + 1)"
         (mouseenter)="onStarHover(i + 1)"
         (mouseleave)="onStarLeave()"
-        [matTooltip]="getTooltip(i + 1)"
+        [nbTooltip]="getTooltip(i + 1)"
       >
-        <mat-icon *ngIf="star.filled">star</mat-icon>
-        <mat-icon *ngIf="star.half">star_half</mat-icon>
-        <mat-icon *ngIf="!star.filled && !star.half">star_border</mat-icon>
+        <nb-icon *ngIf="star.filled">star</nb-icon>
+        <nb-icon *ngIf="star.half">star_half</nb-icon>
+        <nb-icon *ngIf="!star.filled && !star.half">star_border</nb-icon>
       </span>
 
       <span class="rating-text" *ngIf="showRatingText">

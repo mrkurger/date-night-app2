@@ -7,61 +7,59 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { NbButtonModule, NbIconModule, NbCardModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-error-message',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],
   template: `
-    <div class="error-container">
-      <mat-icon class="error-icon">error</mat-icon>
-      <div class="error-content">
-        <h3 class="error-title">{{ title }}</h3>
-        <p class="error-message">{{ message }}</p>
-        <div class="error-actions" *ngIf="showRetry">
-          <button mat-button color="primary" (click)="onRetry.emit()">
-            <mat-icon>refresh</mat-icon> Retry
-          </button>
+    <nb-card status="danger" class="error-container">
+      <nb-card-body>
+        <div class="error-content">
+          <nb-icon icon="alert-circle-outline" class="error-icon"></nb-icon>
+          <div class="error-text">
+            <h3 class="error-title">{{ title }}</h3>
+            <p class="error-message">{{ message }}</p>
+            <div class="error-actions" *ngIf="showRetry">
+              <button nbButton status="primary" size="small" (click)="onRetry.emit()">
+                <nb-icon icon="refresh-outline"></nb-icon>
+                Retry
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
       .error-container {
+        margin: 1rem 0;
+      }
+      .error-content {
         display: flex;
-        padding: 16px;
-        background-color: #ffebee;
-        border-radius: 4px;
-        margin: 16px 0;
         align-items: flex-start;
       }
       .error-icon {
-        color: #f44336;
-        margin-right: 16px;
-        font-size: 24px;
-        height: 24px;
-        width: 24px;
+        font-size: 1.5rem;
+        margin-right: 1rem;
       }
-      .error-content {
+      .error-text {
         flex: 1;
       }
       .error-title {
-        margin: 0 0 8px 0;
-        font-size: 16px;
-        font-weight: 500;
-        color: #d32f2f;
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        font-weight: 600;
       }
       .error-message {
-        margin: 0 0 8px 0;
-        color: #616161;
+        margin: 0 0 0.5rem 0;
+        font-size: 0.875rem;
       }
       .error-actions {
-        margin-top: 8px;
+        margin-top: 0.5rem;
       }
     `,
   ],

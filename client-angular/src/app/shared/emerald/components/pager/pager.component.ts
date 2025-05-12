@@ -9,7 +9,14 @@
 // - SHOW_FIRST_LAST: Whether to show first/last page buttons (default: true)
 //   Related to: pager.component.html
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**

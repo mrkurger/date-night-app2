@@ -9,7 +9,7 @@
 // - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
 // - EMOJI_CATEGORIES: Categories of emojis available in the picker (default: see below)
 // ===================================================
-import {
+import { 
   Component,
   OnInit,
   OnDestroy,
@@ -17,29 +17,31 @@ import {
   ElementRef,
   TemplateRef,
   AfterViewChecked,
-} from '@angular/core';
 import { ChatService } from '../../core/services/chat.service';
+import { NbSortComponent, NbSortHeaderComponent, NbSortEvent } from '../../shared/components/custom-nebular-components';
+
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialog, NbDialogModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbMenuModule, NbTooltipModule, NbTabsetModule } from '@nebular/theme';
 import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 
 // Material Imports
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTabsModule } from '@angular/material/tabs';
+
+
+
+
+
+
+
 
 // Emerald Components
-import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
+// TODO: Migrate to Nebular UI - import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
+// TODO: Migrate to Nebular UI - import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
 
 // Interfaces
 interface ChatMessage {
@@ -101,22 +103,23 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const TYPING_INDICATOR_DELAY = 500; // ms
 
 @Component({
+  
   selector: 'app-chat',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule,
-    MatTooltipModule,
-    MatTabsModule,
-    MatDialogModule,
+    NbIconModule,
+    NbButtonModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbMenuModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    NbDialogModule,
     AvatarComponent,
     SkeletonLoaderComponent,
-  ],
+   NbSortComponent, NbSortHeaderComponent, NbSortEvent],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
@@ -261,7 +264,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: NbDialogService,
   ) {
     const currentUser = this.authService.getCurrentUser();
     this.currentUserId = currentUser ? currentUser._id : '';
@@ -418,7 +421,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
 
         this.loadingContacts = false;
-      },
+      }
     });
   }
 
@@ -432,7 +435,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       lastSeen: contact.lastSeen || new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24),
       pinned: contact.pinned || false,
       archived: contact.archived || false,
-      typing: false,
+      typing: false
     }));
   }
 
@@ -470,7 +473,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
               this.extractMediaFromMessages();
             }
           }
-        },
+        }
       });
     }
   }
@@ -545,7 +548,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       type: att.type || att.mimeType || 'application/octet-stream',
       size: att.size || 0,
       url: att.url || att.path || '',
-      timestamp: new Date(att.timestamp || att.createdAt || Date.now()),
+      timestamp: new Date(att.timestamp || att.createdAt || Date.now())
     }));
   }
 
@@ -600,7 +603,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         matches.forEach((url) => {
           this.galleryLinks.push({
             url,
-            timestamp: message.timestamp,
+            timestamp: message.timestamp
           });
         });
       }
@@ -659,7 +662,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           error: (err) => {
             console.error('Error sending message:', err);
             this.notificationService.error('Failed to send message. Please try again.');
-          },
+          }
         });
     }
   }
@@ -948,7 +951,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         // Update message groups
         this.groupMessagesByDate();
       },
-      error: (err) => console.error('Error marking message as read:', err),
+      error: (err) => console.error('Error marking message as read:', err)
     });
   }
 
@@ -986,7 +989,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   archiveAllChats(): void {
     this.contacts = this.contacts.map((contact) => ({
       ...contact,
-      archived: true,
+      archived: true
     }));
 
     this.filterContacts();
@@ -1072,7 +1075,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       filtered = filtered.filter((contact) => !contact.archived);
     }
 
-    // Sort: pinned first, then by last message time
+    // NbSortEvent: pinned first, then by last message time
     filtered.sort((a, b) => {
       if (a.pinned && !b.pinned) return -1;
       if (!a.pinned && b.pinned) return 1;
@@ -1190,7 +1193,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const messageToForward = message;
 
     // When a contact is selected, forward the message
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result) {
         // In a real app, you would call an API to forward the message
         this.notificationService.success('Message forwarded');
@@ -1293,7 +1296,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     const dialogRef = this.dialog.open(this.newMessageDialog);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result) {
         // Handle result if needed
       }
@@ -1317,7 +1320,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.dialog.open(this.imagePreviewDialog, {
       maxWidth: '90vw',
       maxHeight: '90vh',
-      panelClass: 'image-preview-dialog',
+      panelClass: 'image-preview-dialog'
     });
   }
 
@@ -1338,7 +1341,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       navigator
         .share({
           title: this.previewImage.name,
-          url: this.previewImage.url,
+          url: this.previewImage.url
         })
         .catch((err) => {
           console.error('Error sharing image:', err);
@@ -1413,7 +1416,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.dialog.open(this.mediaGalleryDialog, {
       width: '80vw',
       maxWidth: '800px',
-      maxHeight: '80vh',
+      maxHeight: '80vh'
     });
   }
 
@@ -1581,7 +1584,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
             size: 1024 * 1024 * 1.2, // 1.2MB
             url: '#',
             timestamp: new Date(now.setHours(9, 36)),
-          },
+          }
         ],
       },
       {
@@ -1604,7 +1607,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         message: contact.lastMessage,
         timestamp: contact.lastMessageTime,
         read: contact.unreadCount === 0,
-      },
+      }
     ];
   }
 }

@@ -7,17 +7,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
+import { NbSpinnerModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-loading-spinner',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, NbSpinnerModule],
   template: `
     <div class="spinner-container">
-      <mat-spinner [diameter]="50"></mat-spinner>
+      <nb-spinner size="large"></nb-spinner>
       <p *ngIf="message" class="spinner-message">{{ message }}</p>
     </div>
   `,
@@ -28,16 +27,16 @@ import { CommonModule } from '@angular/common';
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: 1.25rem;
       }
       .spinner-message {
-        margin-top: 10px;
-        color: #555;
-        font-size: 14px;
+        margin-top: 0.625rem;
+        color: nb-theme(text-hint-color);
+        font-size: 0.875rem;
       }
     `,
   ],
 })
 export class LoadingSpinnerComponent {
-  message = '';
+  @Input() message = '';
 }

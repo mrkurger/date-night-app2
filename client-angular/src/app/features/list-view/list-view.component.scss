@@ -15,7 +15,7 @@
 // Variables
 $filter-sidebar-width: 320px;
 $card-hover-transform: translateY(-8px) scale(1.02);
-$active-filter-bg: color.adjust(ds.$color-primary, $lightness: 35%);
+$active-filter-bg: ds.$color-primary;
 
 .list-view-container {
   padding: ds.$spacing-6 0;

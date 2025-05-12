@@ -1,118 +1,73 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (register.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   AbstractControl,
   ValidationErrors,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../../core/services/user.service';
-import { finalize } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 
-// Material Modules
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// Custom validator for password matching
+function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  if (password && confirmPassword && password.value !== confirmPassword.value) {
+    return { passwordMismatch: true };
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [ReactiveFormsModule, RouterLink, NgIf],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  isLoading = false;
-  errorMessage = '';
-  hidePassword = true;
-  hideConfirmPassword = true;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
     private router: Router,
   ) {
     this.registerForm = this.fb.group(
       {
-        username: ['', [Validators.required, Validators.minLength(3)]],
+        firstname: ['', Validators.required],
+        lastname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
-        role: ['user', Validators.required],
         termsAccepted: [false, Validators.requiredTrue],
       },
-      { validators: this.passwordMatchValidator },
+      { validators: passwordMatchValidator },
     );
   }
 
   ngOnInit(): void {
-    // Redirect if already logged in
-    if (this.userService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-    }
-  }
-
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-
-    return null;
+    // Initialize the component
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.valid) {
+      // Process the form data
+      console.log('Registration form submitted', this.registerForm.value);
 
-    this.isLoading = true;
-    this.errorMessage = '';
-
-    const { username, email, password, role } = this.registerForm.value;
-
-    this.userService
-      .register({ username, email, password, role })
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/dashboard']);
-        },
-        error: (error) => {
-          this.errorMessage = error.message || 'Registration failed. Please try again.';
-        },
+      // Navigate to login page
+      this.router.navigate(['/login']);
+    } else {
+      // Mark all fields as touched to trigger validation
+      Object.keys(this.registerForm.controls).forEach((key) => {
+        const control = this.registerForm.get(key);
+        control?.markAsTouched();
       });
+    }
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/login']);
   }
 }

@@ -7,23 +7,31 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
+
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbTabsetModule,
+  NbTableModule,
+  NbPaginationChangeEvent,
+  NbSortEvent,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbDatepickerModule,
+  NbSpinnerModule,
+  NbTagModule,
+  NbIconModule,
+} from '@nebular/theme';
 import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
@@ -34,22 +42,26 @@ import { of } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatIconModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTabsetModule,
+    NbTableModule,
+    NbPaginatorModule,
+    NbSortModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbDatepickerModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTagModule,
+    NbIconModule,
     ReactiveFormsModule,
     NgxChartsModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
   ],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
@@ -206,7 +218,7 @@ export class PerformanceDashboardComponent implements OnInit {
       value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
     }));
 
-    // Sort by date
+    // NbSortEvent by date
     series.sort((a, b) => a.name.localeCompare(b.name));
 
     return [
@@ -228,13 +240,13 @@ export class PerformanceDashboardComponent implements OnInit {
     this.loadDashboardData();
   }
 
-  onPageChange(event: PageEvent): void {
+  onPageChange(event: NbPaginationChangeEvent): void {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     this.loadDashboardData();
   }
 
-  sortData(sort: Sort): void {
+  sortData(sort: NbSortEvent): void {
     // Implement sorting logic
     if (!sort.active || sort.direction === '') {
       return;

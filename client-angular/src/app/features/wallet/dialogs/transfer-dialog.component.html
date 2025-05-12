@@ -1,0 +1,77 @@
+<nb-card>
+  <nb-card-header>
+    <h3>Transfer Funds</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="transferForm" (ngSubmit)="transfer()">
+      <nb-form-field>
+        <label>Amount</label>
+        <input
+          nbInput
+          type="number"
+          formControlName="amount"
+          [status]="f.amount.dirty ? (f.amount.invalid ? 'danger' : 'success') : 'basic'"
+          placeholder="Enter amount"
+        />
+        <nb-form-field-control>
+          <span *ngIf="f.amount.valid && f.amount.dirty" class="text-success"
+            >Amount looks good!</span
+          >
+          <span
+            *ngIf="f.amount.invalid && (f.amount.dirty || f.amount.touched)"
+            class="text-danger"
+          >
+            <span *ngIf="f.amount.errors?.['required']">Amount is required</span>
+            <span *ngIf="f.amount.errors?.['min']">Amount must be greater than 0</span>
+            <span *ngIf="f.amount.errors?.['max']">Amount exceeds your balance</span>
+          </span>
+        </nb-form-field-control>
+      </nb-form-field>
+
+      <nb-form-field>
+        <label>Recipient</label>
+        <input
+          nbInput
+          type="text"
+          formControlName="recipient"
+          [status]="f.recipient.dirty ? (f.recipient.invalid ? 'danger' : 'success') : 'basic'"
+          placeholder="Enter recipient's username or email"
+        />
+        <nb-form-field-control>
+          <span *ngIf="f.recipient.valid && f.recipient.dirty" class="text-success"
+            >Recipient found!</span
+          >
+          <span
+            *ngIf="f.recipient.invalid && (f.recipient.dirty || f.recipient.touched)"
+            class="text-danger"
+          >
+            <span *ngIf="f.recipient.errors?.['required']">Recipient is required</span>
+            <span *ngIf="f.recipient.errors?.['userNotFound']">User not found</span>
+          </span>
+        </nb-form-field-control>
+      </nb-form-field>
+
+      <nb-form-field>
+        <label>Note (Optional)</label>
+        <textarea
+          nbInput
+          formControlName="note"
+          placeholder="Add a note to the recipient"
+        ></textarea>
+      </nb-form-field>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="basic" (click)="cancel()">Cancel</button>
+    <button
+      nbButton
+      status="primary"
+      [disabled]="!transferForm.valid || isSubmitting"
+      (click)="transfer()"
+    >
+      <nb-icon icon="checkmark-circle-2-outline" pack="eva" *ngIf="!isSubmitting"></nb-icon>
+      <nb-spinner size="small" *ngIf="isSubmitting"></nb-spinner>
+      Transfer
+    </button>
+  </nb-card-footer>
+</nb-card>

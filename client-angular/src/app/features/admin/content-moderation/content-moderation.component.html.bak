@@ -1,0 +1,158 @@
+<div class="content-moderation">
+  <div class="moderation-header">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2>Content Moderation</h2>
+        <p class="text-muted">Review and moderate user-submitted content</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <button class="btn btn-outline-primary" (click)="loadPendingMedia()">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Alert -->
+  <div *ngIf="error" class="alert alert-danger">
+    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading content for moderation...</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-container" *ngIf="!loading && pendingMedia.length">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by ad title"
+            [(ngModel)]="searchTerm"
+            (input)="applyFilters()"
+          />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="mediaTypeFilter" (change)="applyFilters()">
+          <option value="all">All Media Types</option>
+          <option value="image">Images Only</option>
+          <option value="video">Videos Only</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="sortOrder" (change)="applyFilters()">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="title">Ad Title (A-Z)</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-outline-secondary w-100" (click)="resetFilters()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Grid -->
+  <div class="media-grid" *ngIf="!loading && filteredMedia.length">
+    <div class="card media-card" *ngFor="let media of paginatedMedia">
+      <div
+        class="media-type-badge"
+        [ngClass]="{ video: media.type === 'video', image: media.type === 'image' }"
+      >
+        <i [class]="'fas ' + getMediaTypeIcon(media.type)"></i>
+        {{ media.type }}
+      </div>
+      <div class="card-img-container">
+        <img
+          *ngIf="media.type === 'image'"
+          [src]="getSafeUrl(media.url)"
+          alt="Media preview"
+          class="card-img-top"
+          (error)="onMediaLoadError(media)"
+        />
+        <div *ngIf="media.type === 'video' || media.hasLoadError" class="video-placeholder">
+          <i
+            class="fas"
+            [ngClass]="media.hasLoadError ? 'fa-exclamation-circle' : 'fa-play-circle'"
+          ></i>
+        </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ media.adTitle }}</h5>
+        <p class="card-text">
+          <small class="text-muted">
+            <i class="fas fa-clock"></i> {{ media.createdAt | date: 'short' }}
+          </small>
+        </p>
+        <button class="btn btn-primary w-100" (click)="openModerationModal(moderationModal, media)">
+          <i class="fas fa-check-square"></i> Moderate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container" *ngIf="!loading && filteredMedia.length > itemsPerPage">
+    <nav aria-label="Moderation pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [ngClass]="{ disabled: currentPage === 1 }">
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of getPageNumbers()"
+          [ngClass]="{ active: page === currentPage }"
+        >
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: currentPage === totalPages }">
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="items-per-page">
+      <label>Items per page:</label>
+      <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+        <option [value]="12">12</option>
+        <option [value]="24">24</option>
+        <option [value]="48">48</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !filteredMedia.length" class="empty-state">
+    <div class="empty-state-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h3>No Pending Content</h3>
+    <p>There are no media items waiting for moderation at this time.</p>
+    <button class="btn btn-outline-primary" (click)="loadPendingMedia()">
+      <i class="fas fa-sync-alt"></i> Refresh
+    </button>
+  </div>
+</div>
+
+<!-- Moderation Modal -->
+<ng-template #moderationModal let-modal>
+  <app-moderation-modal
+    [media]="selectedMedia"
+    [form]="moderationForm"
+    (onSubmit)="submitModeration()"
+    (onClose)="modal.dismiss()"
+  >
+  </app-moderation-modal>
+</ng-template>

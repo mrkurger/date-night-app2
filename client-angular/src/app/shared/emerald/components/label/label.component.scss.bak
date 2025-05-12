@@ -1,0 +1,133 @@
+@use 'src/styles/design-system/index.scss' as ds;
+@use '../../../../core/design/emerald-tokens' as emerald;
+@use 'sass:color';
+@use '../../../../core/design/design-tokens' as tokens;
+
+// Define missing variables
+// Define success light color
+$success-light: color.adjust(emerald.$color-success, $lightness: 40%);
+$success-medium: color.adjust(emerald.$color-success, $lightness: 20%);
+$success-dark: color.adjust(emerald.$color-success, $lightness: -10%);
+
+$warning-light: color.adjust(emerald.$color-warning, $lightness: 40%);
+$warning-medium: color.adjust(emerald.$color-warning, $lightness: 20%);
+$warning-dark: color.adjust(emerald.$color-warning, $lightness: -10%);
+
+$danger-100: color.adjust(emerald.$color-error, $lightness: 40%);
+$danger-300: color.adjust(emerald.$color-error, $lightness: 20%);
+$danger-700: color.adjust(emerald.$color-error, $lightness: -10%);
+
+$info-light: color.adjust(emerald.$color-info, $lightness: 40%);
+$info-medium: color.adjust(emerald.$color-info, $lightness: 20%);
+$info-dark: color.adjust(emerald.$color-info, $lightness: -10%);
+
+// Emerald Label Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/Label
+
+.emerald-label {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 0.25rem;
+
+  // Label Sizes
+  &--small {
+    padding: 2px 6px;
+    font-size: 0.75rem;
+
+    .emerald-label__icon {
+      font-size: 10px;
+      margin-right: 4px;
+    }
+  }
+
+  &--medium {
+    padding: 4px 8px;
+    font-size: 0.875rem;
+
+    .emerald-label__icon {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+
+  &--large {
+    padding: 6px 12px;
+    font-size: 1rem;
+
+    .emerald-label__icon {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+  }
+
+  // Label Variants
+  &--primary {
+    background-color: color.adjust(emerald.$color-primary, $lightness: 35%);
+    color: color.adjust(emerald.$color-primary-dark, $lightness: -10%);
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid color.adjust(emerald.$color-primary, $lightness: 15%);
+    }
+  }
+
+  &--success {
+    background-color: $success-light;
+    color: $success-dark;
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $success-medium;
+    }
+  }
+
+  &--warning {
+    background-color: $warning-light;
+    color: $warning-dark;
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $warning-medium;
+    }
+  }
+
+  &--danger {
+    background-color: $danger-100;
+    color: $danger-700;
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $danger-300;
+    }
+  }
+
+  &--info {
+    background-color: $info-light;
+    color: $info-dark;
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid $info-medium;
+    }
+  }
+
+  &--neutral {
+    background-color: emerald.$color-light-gray-1;
+    color: emerald.$color-dark-gray-2;
+
+    &.emerald-label--outlined {
+      background-color: transparent;
+      border: 1px solid emerald.$color-light-gray-2;
+    }
+  }
+
+  // Label Shapes
+  &--rounded {
+    border-radius: 0.375rem;
+  }
+
+  &--pill {
+    border-radius: 9999px;
+  }
+}

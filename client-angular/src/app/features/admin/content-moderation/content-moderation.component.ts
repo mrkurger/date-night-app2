@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import {

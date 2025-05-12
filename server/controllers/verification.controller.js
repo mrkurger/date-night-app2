@@ -12,6 +12,7 @@ import User from '../models/user.model.js';
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
+import { sendSuccess, sendError } from '../utils/response.js';
 
 // Helper function to ensure uploads directory exists
 const ensureUploadsDirectory = () => {
@@ -633,6 +634,15 @@ const getUserVerificationStatus = async (req, res) => {
     });
   }
 };
+
+export async function someHandler(req, res) {
+  try {
+    const result = await doSomething();
+    return sendSuccess(res, result);
+  } catch (err) {
+    return sendError(res, err, err.status || 500);
+  }
+}
 
 // Export the controller
 export default {

@@ -7,15 +7,19 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NbDividerComponent } from '../custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { RouterModule } from '@angular/router';
+import {
+  NbBadgeModule,
+  NbButtonModule,
+  NbIconModule,
+  NbMenuModule,
+  NbDividerModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 import { AlertService } from '../../../core/services/alert.service';
 import { AlertEvent, AlertSeverity } from '../../../core/models/alert.model';
 import { Subject } from 'rxjs';
@@ -26,13 +30,14 @@ import { takeUntil } from 'rxjs/operators';
   standalone: true,
   imports: [
     CommonModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatDividerModule,
-    MatTooltipModule,
+    NbBadgeModule,
+    NbButtonModule,
+    NbIconModule,
+    NbMenuModule,
+    NbDividerModule,
+    NbTooltipModule,
     RouterModule,
+    NbDividerComponent,
   ],
   template: `
     <button
@@ -40,14 +45,14 @@ import { takeUntil } from 'rxjs/operators';
       [matBadge]="unacknowledgedCount"
       [matBadgeHidden]="unacknowledgedCount === 0"
       matBadgeColor="warn"
-      [matMenuTriggerFor]="alertMenu"
+      [nbContextMenu]="alertMenu"
       aria-label="Show alerts"
-      matTooltip="Alerts"
+      nbTooltip="Alerts"
     >
-      <mat-icon>notifications</mat-icon>
+      <nb-icon icon="notifications"></nb-icon>
     </button>
 
-    <mat-menu #alertMenu="matMenu" class="alert-menu">
+    <nb-menu #alertMenu="matMenu" class="alert-menu">
       <div class="alert-menu-header">
         <h3 class="alert-menu-title">Alerts</h3>
         <button
@@ -60,7 +65,7 @@ import { takeUntil } from 'rxjs/operators';
         </button>
       </div>
 
-      <mat-divider></mat-divider>
+      <nb-divider></nb-divider>
 
       <div class="alert-list-container">
         <ng-container *ngIf="activeAlerts.length > 0; else noAlerts">
@@ -81,9 +86,9 @@ import { takeUntil } from 'rxjs/operators';
                 mat-icon-button
                 (click)="acknowledgeAlert(alert, $event)"
                 [disabled]="alert.acknowledged"
-                matTooltip="Acknowledge"
+                nbTooltip="Acknowledge"
               >
-                <mat-icon>check_circle</mat-icon>
+                <nb-icon icon="check_circle"></nb-icon>
               </button>
             </div>
           </div>
@@ -91,12 +96,12 @@ import { takeUntil } from 'rxjs/operators';
 
         <ng-template #noAlerts>
           <div class="no-alerts">
-            <mat-icon>check_circle</mat-icon>
+            <nb-icon icon="check_circle"></nb-icon>
             <p>No active alerts</p>
           </div>
         </ng-template>
       </div>
-    </mat-menu>
+    </nb-menu>
   `,
   styles: [
     `

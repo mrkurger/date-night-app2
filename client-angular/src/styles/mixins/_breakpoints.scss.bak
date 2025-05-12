@@ -1,0 +1,68 @@
+// Breakpoint mixins for responsive design
+@use '@nebular/theme/styles/theming' as *;
+@use 'sass:map';
+
+// Media query breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+// Media up - min-width: breakpoint
+@mixin media-breakpoint-up($name) {
+  @if map.has-key($breakpoints, $name) {
+    @media (min-width: map.get($breakpoints, $name)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint `#{$name}`.";
+  }
+}
+
+// Media down - max-width: breakpoint - 0.02px
+@mixin media-breakpoint-down($name) {
+  @if map.has-key($breakpoints, $name) {
+    $width: map.get($breakpoints, $name) - 0.02;
+    @media (max-width: $width) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint `#{$name}`.";
+  }
+}
+
+// Media between - min-width: breakpoint1, max-width: breakpoint2 - 0.02px
+@mixin media-breakpoint-between($min, $max) {
+  @if map.has-key($breakpoints, $min) and map.has-key($breakpoints, $max) {
+    $min-width: map.get($breakpoints, $min);
+    $max-width: map.get($breakpoints, $max) - 0.02;
+    @media (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint `#{$min}` or `#{$max}`.";
+  }
+}
+
+// Export Nebular fallback mixins
+@mixin nb-breakpoint-down($name) {
+  @include media-breakpoint-down($name) {
+    @content;
+  }
+}
+
+@mixin nb-breakpoint-up($name) {
+  @include media-breakpoint-up($name) {
+    @content;
+  }
+}
+
+@mixin nb-breakpoint-between($min, $max) {
+  @include media-breakpoint-between($min, $max) {
+    @content;
+  }
+}

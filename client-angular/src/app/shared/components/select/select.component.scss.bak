@@ -1,0 +1,283 @@
+@use '../../../core/design/typography-mixins' as typography;
+@use 'sass:color';
+/**
+ * Select Component Styles
+ * 
+ * Implements the DateNight.io select styles using the design system.
+ */
+
+@use '../../../../app/core/design/design-tokens' as ds;
+
+.select {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // Label
+  &__label {
+    @include typography.label;
+    margin-bottom: ds.$spacing-1;
+    color: ds.$color-dark-gray-2;
+  }
+
+  // Required indicator
+  &__required-indicator {
+    color: ds.$color-error;
+    margin-left: ds.$spacing-1;
+  }
+
+  // Select container
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  // Select field
+  &__field {
+    width: 100%;
+    font-family: ds.$font-family-base;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all ds.$transition-fast ds.$transition-timing-default;
+    padding-right: 2rem; // Space for the dropdown icon
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    option {
+      font-family: ds.$font-family-base;
+      background-color: ds.$color-white;
+      color: ds.$color-dark-gray-2;
+
+      &:disabled {
+        color: ds.$color-medium-gray-2;
+      }
+    }
+  }
+
+  // Helper text
+  &__helper-text {
+    @include typography.body-xs;
+    margin-top: ds.$spacing-1;
+    color: ds.$color-dark-gray-1;
+
+    &--error {
+      color: ds.$color-error;
+    }
+  }
+
+  // Dropdown icon
+  &__icon {
+    position: absolute;
+    right: ds.$spacing-3;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: ds.$color-dark-gray-1;
+    transition: transform ds.$transition-fast ds.$transition-timing-default;
+  }
+
+  // Size variants
+  &--small {
+    .select__field {
+      @include typography.body-small;
+      padding: ds.$spacing-1 ds.$spacing-2;
+      height: 32px;
+    }
+
+    .select__icon {
+      right: ds.$spacing-2;
+    }
+  }
+
+  &--medium {
+    .select__field {
+      @include typography.body-default;
+      padding: ds.$spacing-2 ds.$spacing-3;
+      height: 40px;
+    }
+  }
+
+  &--large {
+    .select__field {
+      @include typography.body-default;
+      padding: ds.$spacing-3 ds.$spacing-4;
+      height: 48px;
+    }
+
+    .select__icon {
+      right: ds.$spacing-4;
+    }
+  }
+
+  // Variant styles
+  &--outlined {
+    .select__container {
+      border: 1px solid ds.$color-light-gray-2;
+      border-radius: ds.$border-radius-md;
+      background-color: ds.$color-white;
+    }
+
+    &.select--focused .select__container {
+      border-color: ds.$color-primary;
+      box-shadow: 0 0 0 1px ds.$color-primary;
+    }
+
+    &.select--error .select__container {
+      border-color: ds.$color-error;
+      box-shadow: 0 0 0 1px ds.$color-error;
+    }
+  }
+
+  &--filled {
+    .select__container {
+      background-color: ds.$color-light-gray-1;
+      border-radius: ds.$border-radius-md;
+      border: 1px solid transparent;
+    }
+
+    &.select--focused .select__container {
+      background-color: color.adjust(ds.$color-light-gray-1, $lightness: 2%);
+      border-color: ds.$color-primary;
+    }
+
+    &.select--error .select__container {
+      border-color: ds.$color-error;
+    }
+  }
+
+  &--standard {
+    .select__container {
+      border-bottom: 1px solid ds.$color-light-gray-2;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .select__field {
+      padding-left: 0;
+    }
+
+    .select__icon {
+      right: 0;
+    }
+
+    &.select--focused .select__container {
+      border-bottom-color: ds.$color-primary;
+    }
+
+    &.select--error .select__container {
+      border-bottom-color: ds.$color-error;
+    }
+  }
+
+  // State variants
+  &--disabled {
+    opacity: 0.6;
+
+    .select__container {
+      cursor: not-allowed;
+      background-color: ds.$color-light-gray-1;
+    }
+
+    .select__label {
+      color: ds.$color-medium-gray-2;
+    }
+
+    .select__icon {
+      color: ds.$color-medium-gray-2;
+    }
+  }
+
+  &--focused {
+    .select__icon {
+      transform: translateY(-50%) rotate(180deg);
+      color: ds.$color-primary;
+    }
+  }
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .select {
+      &__label {
+        color: ds.$color-light-gray-1;
+      }
+
+      &__field {
+        color: ds.$color-white;
+
+        option {
+          background-color: ds.$color-dark-gray-2;
+          color: ds.$color-light-gray-1;
+
+          &:disabled {
+            color: ds.$color-medium-gray-1;
+          }
+        }
+      }
+
+      &__helper-text {
+        color: ds.$color-medium-gray-1;
+      }
+
+      &__icon {
+        color: ds.$color-medium-gray-1;
+      }
+
+      // Variant styles in dark mode
+      &--outlined {
+        .select__container {
+          border-color: ds.$color-dark-gray-1;
+          background-color: ds.$color-dark-gray-2;
+        }
+      }
+
+      &--filled {
+        .select__container {
+          background-color: ds.$color-dark-gray-3;
+        }
+
+        &.select--focused .select__container {
+          background-color: color.adjust(ds.$color-dark-gray-3, $lightness: 5%);
+        }
+      }
+
+      &--standard {
+        .select__container {
+          border-bottom-color: ds.$color-dark-gray-1;
+        }
+      }
+
+      // State variants in dark mode
+      &--disabled {
+        .select__container {
+          background-color: color.adjust(ds.$color-dark-gray-2, $lightness: -3%);
+        }
+      }
+
+      &--focused {
+        .select__icon {
+          color: ds.$color-primary-light;
+        }
+      }
+    }
+  }
+}

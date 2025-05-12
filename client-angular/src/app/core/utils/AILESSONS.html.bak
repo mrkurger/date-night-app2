@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation Utils AI Lessons</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      .lesson {
+        margin-bottom: 30px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+      }
+      .security {
+        color: #d73a49;
+      }
+      code {
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f6f8fa;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      nav {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f6f8fa;
+        border-radius: 5px;
+      }
+      nav a {
+        margin-right: 15px;
+        text-decoration: none;
+        color: #0366d6;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .warning {
+        background-color: #fff8e1;
+        border-left: 4px solid #ffc107;
+        padding: 10px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../../../_docs_index.html">Main Documentation</a>
+      <a href="./CHANGELOG.html">Changelog</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </nav>
+
+    <h1>Validation Utils AI Lessons</h1>
+
+    <div class="lesson">
+      <h2 class="security">Security: Comprehensive URL Validation</h2>
+      <p>
+        When validating URLs for security purposes, it's crucial to check for all potentially
+        dangerous protocols, not just the most common ones.
+      </p>
+
+      <h3>Key Insights:</h3>
+      <ul>
+        <li>
+          XSS attacks can be executed through various URL protocols beyond just
+          <code>javascript:</code>
+        </li>
+        <li>
+          Protocols like <code>data:</code> can be used to embed executable content directly in URLs
+        </li>
+        <li>
+          Even seemingly benign protocols like <code>file:</code> can lead to security issues in web
+          applications
+        </li>
+      </ul>
+
+      <h3>Implementation Pattern:</h3>
+      <pre>
+// Define a comprehensive list of dangerous protocols
+const dangerousProtocols = [
+  'javascript:', 'data:', 'vbscript:', 'file:', 
+  'about:', 'blob:', 'ftp:', 'ws:', 'wss:',
+  'mailto:', 'tel:', 'sms:'
+];
+
+// Check URL against all dangerous protocols
+const lowercaseUrl = url.toLowerCase();
+for (const protocol of dangerousProtocols) {
+  if (lowercaseUrl.startsWith(protocol)) {
+    return false; // Reject the URL
+  }
+}
+        </pre
+      >
+
+      <div class="warning">
+        <p>
+          <strong>Important:</strong> URL validation should be implemented both on the client side
+          and server side. Client-side validation improves user experience, but server-side
+          validation is essential for security as client-side checks can be bypassed.
+        </p>
+      </div>
+
+      <h3>Testing:</h3>
+      <p>When testing URL validation, ensure you check:</p>
+      <ul>
+        <li>Valid URLs with common protocols (http, https)</li>
+        <li>Valid relative URLs</li>
+        <li>
+          URLs with dangerous protocols in various case formats (JavaScript:, JAVASCRIPT:, etc.)
+        </li>
+        <li>URLs with encoded characters that might bypass simple checks</li>
+      </ul>
+    </div>
+  </body>
+</html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation Utils AI Lessons</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      .lesson {
+        margin-bottom: 30px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+      }
+      .lesson-title {
+        font-weight: bold;
+        color: #0366d6;
+      }
+      code {
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f6f8fa;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      nav {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f6f8fa;
+        border-radius: 5px;
+      }
+      nav a {
+        margin-right: 15px;
+        text-decoration: none;
+        color: #0366d6;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .tip {
+        background-color: #e6f6e6;
+        border-left: 4px solid #28a745;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .warning {
+        background-color: #fff8e6;
+        border-left: 4px solid #f9c513;
+        padding: 10px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../../../_docs_index.html">Documentation Index</a>
+      <a href="./CHANGELOG.html">Changelog</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </nav>
+
+    <h1>Validation Utils AI Lessons</h1>
+
+    <div class="lesson">
+      <h2>JavaScript Type Coercion and Strict Equality</h2>
+      <p class="lesson-title">Using Number.isNaN() vs isNaN()</p>
+
+      <p>
+        When validating data in JavaScript/TypeScript, it's important to understand the differences
+        between similar-looking functions and how type coercion can affect validation results.
+      </p>
+
+      <h3>The Problem with global isNaN()</h3>
+      <p>
+        The global <code>isNaN()</code> function attempts to convert its argument to a number before
+        checking if it's NaN:
+      </p>
+      <pre>
+// These all return true with global isNaN()
+isNaN("hello")  // Converts to NaN, then returns true
+isNaN({})       // Converts to NaN, then returns true
+isNaN(undefined) // Converts to NaN, then returns true
+
+// This returns false
+isNaN("123")    // Converts to 123, then returns false
+        </pre
+      >
+
+      <h3>The Solution: Number.isNaN()</h3>
+      <p>
+        <code>Number.isNaN()</code> is more strict and only returns true if the value is exactly the
+        <code>NaN</code> value:
+      </p>
+      <pre>
+// These all return false with Number.isNaN()
+Number.isNaN("hello")  // Not NaN (it's a string), returns false
+Number.isNaN({})       // Not NaN (it's an object), returns false
+Number.isNaN(undefined) // Not NaN (it's undefined), returns false
+
+// This returns true
+Number.isNaN(NaN)      // It is NaN, returns true
+Number.isNaN(0/0)      // Results in NaN, returns true
+        </pre
+      >
+
+      <div class="tip">
+        <strong>Best Practice:</strong> Always use <code>Number.isNaN()</code> instead of the global
+        <code>isNaN()</code>
+        for more predictable behavior, especially in validation functions.
+      </div>
+
+      <h3>Application in Date Validation</h3>
+      <p>
+        In our <code>isValidISODate()</code> function, we use <code>date.getTime()</code> which
+        returns NaN for invalid dates. Using <code>Number.isNaN()</code> ensures we're specifically
+        checking for the NaN value rather than relying on type coercion.
+      </p>
+      <pre>
+// Better approach
+const date = new Date(dateString);
+return !Number.isNaN(date.getTime());
+        </pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h2>Form Validation Best Practices</h2>
+      <p>
+        The validation utilities in this module follow several best practices for form validation:
+      </p>
+
+      <ul>
+        <li><strong>Early returns:</strong> Check for null/empty values first and return early</li>
+        <li>
+          <strong>Specific error messages:</strong> Each validation function is focused on a
+          specific type of validation
+        </li>
+        <li>
+          <strong>Reusability:</strong> Functions are designed to be reused across the application
+        </li>
+        <li>
+          <strong>Configurability:</strong> Some functions accept options to customize validation
+          rules
+        </li>
+      </ul>
+
+      <div class="warning">
+        <strong>Security Note:</strong> When validating user input, always validate on both client
+        and server side. Client-side validation improves user experience, but server-side validation
+        is essential for security.
+      </div>
+    </div>
+  </body>
+</html>

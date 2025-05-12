@@ -1,0 +1,684 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (alert-management.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../../../shared/components/custom-nebular-components';
+
+import { CommonModule } from '@angular/common';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbTableModule,
+  NbPaginationChangeEvent,
+  NbSortEvent,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbIconModule,
+  NbDialogModule,
+  NbDialog,
+  NbTagModule,
+  NbBadgeModule,
+  NbTooltipModule,
+  NbTabsetModule,
+} from '@nebular/theme';
+import { AlertService } from '../../../../core/services/alert.service';
+import {
+  Alert,
+  AlertEvent,
+  AlertSeverity,
+  AlertConditionType,
+  AlertTimeWindow,
+  AlertChannel,
+} from '../../../../core/models/alert.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog.component';
+
+@Component({
+  selector: 'app-alert-management',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTableModule,
+    NbPaginatorModule,
+    NbSortModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbIconModule,
+    NbDialogModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    ReactiveFormsModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
+  ],
+  template: `
+    <div class="alert-management-container">
+      <h1>Alert Management</h1>
+
+      <div class="alert-header">
+        <div class="alert-actions">
+          <button mat-raised-button color="primary" (click)="openAlertDialog()">
+            <mat-icon>add</mat-icon> Create Alert
+          </button>
+        </div>
+
+        <div class="active-alerts-badge" *ngIf="unacknowledgedCount > 0">
+          <button
+            mat-raised-button
+            color="warn"
+            [matBadge]="unacknowledgedCount"
+            matBadgePosition="after"
+            matBadgeColor="accent"
+            (click)="selectedTabIndex = 1"
+          >
+            Active Alerts
+          </button>
+        </div>
+      </div>
+
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+        <mat-tab label="Alert Definitions">
+          <div class="alert-definitions-container">
+            <mat-card>
+              <mat-card-content>
+                <table mat-table [dataSource]="alerts" matSort (matSortChange)="sortAlerts($event)">
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                    <td mat-cell *matCellDef="let alert">{{ alert.name }}</td>
+                  </ng-container>
+
+                  <!-- Severity Column -->
+                  <ng-container matColumnDef="severity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <mat-chip [ngClass]="getSeverityClass(alert.severity)">
+                        {{ getSeverityLabel(alert.severity) }}
+                      </mat-chip>
+                    </td>
+                  </ng-container>
+
+                  <!-- Condition Column -->
+                  <ng-container matColumnDef="condition">
+                    <th mat-header-cell *matHeaderCellDef>Condition</th>
+                    <td mat-cell *matCellDef="let alert">
+                      {{ getConditionDescription(alert.condition) }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Notifications Column -->
+                  <ng-container matColumnDef="notifications">
+                    <th mat-header-cell *matHeaderCellDef>Notifications</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <div class="notification-channels">
+                        <mat-icon *ngIf="hasChannel(alert, 'ui')" matTooltip="UI Notification">
+                          notifications
+                        </mat-icon>
+                        <mat-icon
+                          *ngIf="hasChannel(alert, 'email')"
+                          matTooltip="Email Notification"
+                        >
+                          email
+                        </mat-icon>
+                        <mat-icon
+                          *ngIf="hasChannel(alert, 'slack')"
+                          matTooltip="Slack Notification"
+                        >
+                          chat
+                        </mat-icon>
+                        <mat-icon
+                          *ngIf="hasChannel(alert, 'webhook')"
+                          matTooltip="Webhook Notification"
+                        >
+                          http
+                        </mat-icon>
+                      </div>
+                    </td>
+                  </ng-container>
+
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <mat-slide-toggle
+                        [checked]="alert.enabled"
+                        (change)="toggleAlert(alert, $event.checked)"
+                        color="primary"
+                      ></mat-slide-toggle>
+                    </td>
+                  </ng-container>
+
+                  <!-- Actions Column -->
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="editAlert(alert)"
+                        matTooltip="Edit"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="testAlert(alert)"
+                        matTooltip="Test"
+                      >
+                        <mat-icon>play_arrow</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        (click)="deleteAlert(alert)"
+                        matTooltip="Delete"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+
+                <mat-paginator
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  [length]="totalAlerts"
+                  (page)="onPageChange($event)"
+                ></mat-paginator>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Active Alerts">
+          <div class="active-alerts-container">
+            <mat-card>
+              <mat-card-content>
+                <table
+                  mat-table
+                  [dataSource]="activeAlerts"
+                  matSort
+                  (matSortChange)="sortActiveAlerts($event)"
+                >
+                  <!-- Timestamp Column -->
+                  <ng-container matColumnDef="timestamp">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
+                    <td mat-cell *matCellDef="let event">{{ event.timestamp | date: 'medium' }}</td>
+                  </ng-container>
+
+                  <!-- Alert Name Column -->
+                  <ng-container matColumnDef="alertName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Alert</th>
+                    <td mat-cell *matCellDef="let event">{{ event.alertName }}</td>
+                  </ng-container>
+
+                  <!-- Severity Column -->
+                  <ng-container matColumnDef="severity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
+                    <td mat-cell *matCellDef="let event">
+                      <mat-chip [ngClass]="getSeverityClass(event.severity)">
+                        {{ getSeverityLabel(event.severity) }}
+                      </mat-chip>
+                    </td>
+                  </ng-container>
+
+                  <!-- Message Column -->
+                  <ng-container matColumnDef="message">
+                    <th mat-header-cell *matHeaderCellDef>Message</th>
+                    <td mat-cell *matCellDef="let event">{{ event.message }}</td>
+                  </ng-container>
+
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                    <td mat-cell *matCellDef="let event">
+                      <span
+                        class="status-badge"
+                        [ngClass]="event.acknowledged ? 'acknowledged' : 'unacknowledged'"
+                      >
+                        {{ event.acknowledged ? 'Acknowledged' : 'Unacknowledged' }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <!-- Actions Column -->
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let event">
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="acknowledgeAlert(event)"
+                        [disabled]="event.acknowledged"
+                        matTooltip="Acknowledge"
+                      >
+                        <mat-icon>check_circle</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="viewAlertDetails(event)"
+                        matTooltip="View Details"
+                      >
+                        <mat-icon>info</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="activeDisplayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: activeDisplayedColumns"></tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  `,
+  styles: [
+    `
+      .alert-management-container {
+        padding: 20px;
+      }
+
+      .alert-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .alert-definitions-container,
+      .active-alerts-container {
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .mat-column-actions {
+        width: 120px;
+      }
+
+      .notification-channels {
+        display: flex;
+        gap: 8px;
+      }
+
+      .severity-info {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      .severity-warning {
+        background-color: #ff9800;
+        color: white;
+      }
+
+      .severity-error {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .severity-critical {
+        background-color: #9c27b0;
+        color: white;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .unacknowledged {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .acknowledged {
+        background-color: #4caf50;
+        color: white;
+      }
+    `,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AlertManagementComponent implements OnInit, OnDestroy {
+  // Alert definitions
+  alerts: Alert[] = [];
+  displayedColumns: string[] = [
+    'name',
+    'severity',
+    'condition',
+    'notifications',
+    'status',
+    'actions',
+  ];
+  pageSize = 10;
+  pageIndex = 0;
+  totalAlerts = 0;
+
+  // Active alerts
+  activeAlerts: AlertEvent[] = [];
+  activeDisplayedColumns: string[] = [
+    'timestamp',
+    'alertName',
+    'severity',
+    'message',
+    'status',
+    'actions',
+  ];
+  unacknowledgedCount = 0;
+
+  // Tab selection
+  selectedTabIndex = 0;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private alertService: AlertService,
+    private dialog: NbDialogService,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadAlerts();
+    this.loadActiveAlerts();
+
+    // Subscribe to active alerts updates
+    this.alertService.activeAlerts$.pipe(takeUntil(this.destroy$)).subscribe((alerts) => {
+      this.activeAlerts = alerts;
+    });
+
+    // Subscribe to unacknowledged count updates
+    this.alertService.unacknowledgedCount$.pipe(takeUntil(this.destroy$)).subscribe((count) => {
+      this.unacknowledgedCount = count;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Load alert definitions
+   */
+  loadAlerts(): void {
+    this.alertService.getAlerts().subscribe((alerts) => {
+      this.alerts = alerts;
+      this.totalAlerts = alerts.length;
+    });
+  }
+
+  /**
+   * Load active alert events
+   */
+  loadActiveAlerts(): void {
+    this.alertService.getActiveAlertEvents().subscribe();
+  }
+
+  /**
+   * Handle page change event
+   * @param event Page event
+   */
+  onPageChange(event: NbPaginationChangeEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.loadAlerts();
+  }
+
+  /**
+   * NbSortEvent alerts
+   * @param sort NbSortEvent event
+   */
+  sortAlerts(sort: NbSortEvent): void {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+
+    this.alerts = this.alerts.slice().sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return this.compare(a.name, b.name, isAsc);
+        case 'severity':
+          return this.compare(a.severity, b.severity, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  /**
+   * NbSortEvent active alerts
+   * @param sort NbSortEvent event
+   */
+  sortActiveAlerts(sort: NbSortEvent): void {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+
+    this.activeAlerts = this.activeAlerts.slice().sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'timestamp':
+          return this.compare(a.timestamp, b.timestamp, isAsc);
+        case 'alertName':
+          return this.compare(a.alertName, b.alertName, isAsc);
+        case 'severity':
+          return this.compare(a.severity, b.severity, isAsc);
+        case 'status':
+          return this.compare(a.acknowledged, b.acknowledged, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  /**
+   * Compare function for sorting
+   */
+  private compare(a: any, b: any, isAsc: boolean): number {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  /**
+   * Open alert creation/edit dialog
+   * @param alert Optional alert to edit
+   */
+  openAlertDialog(alert?: Alert): void {
+    const dialogRef = this.dialog.open(AlertFormDialogComponent, {
+      width: '600px',
+      data: { alert },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadAlerts();
+      }
+    });
+  }
+
+  /**
+   * Edit an alert
+   * @param alert Alert to edit
+   */
+  editAlert(alert: Alert): void {
+    this.openAlertDialog(alert);
+  }
+
+  /**
+   * Test an alert
+   * @param alert Alert to test
+   */
+  testAlert(alert: Alert): void {
+    this.alertService.testAlert(alert).subscribe((result) => {
+      // Show result in a dialog or notification
+      console.log('Test result:', result);
+    });
+  }
+
+  /**
+   * Delete an alert
+   * @param alert Alert to delete
+   */
+  deleteAlert(alert: Alert): void {
+    if (confirm(`Are you sure you want to delete the alert "${alert.name}"?`)) {
+      this.alertService.deleteAlert(alert.id!).subscribe(() => {
+        this.loadAlerts();
+      });
+    }
+  }
+
+  /**
+   * Toggle alert enabled state
+   * @param alert Alert to toggle
+   * @param enabled New enabled state
+   */
+  toggleAlert(alert: Alert, enabled: boolean): void {
+    this.alertService.toggleAlert(alert.id!, enabled).subscribe(() => {
+      alert.enabled = enabled;
+    });
+  }
+
+  /**
+   * Acknowledge an alert event
+   * @param event Alert event to acknowledge
+   */
+  acknowledgeAlert(event: AlertEvent): void {
+    this.alertService.acknowledgeAlertEvent(event.id).subscribe();
+  }
+
+  /**
+   * View alert event details
+   * @param event Alert event to view
+   */
+  viewAlertDetails(event: AlertEvent): void {
+    // Open a dialog with alert details
+    console.log('View alert details:', event);
+  }
+
+  /**
+   * Get severity CSS class
+   * @param severity Alert severity
+   */
+  getSeverityClass(severity: AlertSeverity): string {
+    switch (severity) {
+      case AlertSeverity.INFO:
+        return 'severity-info';
+      case AlertSeverity.WARNING:
+        return 'severity-warning';
+      case AlertSeverity.ERROR:
+        return 'severity-error';
+      case AlertSeverity.CRITICAL:
+        return 'severity-critical';
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Get severity label
+   * @param severity Alert severity
+   */
+  getSeverityLabel(severity: AlertSeverity): string {
+    switch (severity) {
+      case AlertSeverity.INFO:
+        return 'Info';
+      case AlertSeverity.WARNING:
+        return 'Warning';
+      case AlertSeverity.ERROR:
+        return 'Error';
+      case AlertSeverity.CRITICAL:
+        return 'Critical';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  /**
+   * Get condition description
+   * @param condition Alert condition
+   */
+  getConditionDescription(condition: any): string {
+    switch (condition.type) {
+      case AlertConditionType.ERROR_COUNT:
+        return `> ${condition.threshold} errors in ${this.getTimeWindowLabel(condition.timeWindow)}`;
+      case AlertConditionType.ERROR_RATE:
+        return `> ${condition.threshold}% error rate in ${this.getTimeWindowLabel(condition.timeWindow)}`;
+      case AlertConditionType.PERFORMANCE_THRESHOLD:
+        return `Response time > ${condition.threshold}ms in ${this.getTimeWindowLabel(condition.timeWindow)}`;
+      case AlertConditionType.ERROR_PATTERN:
+        return `Error pattern: ${condition.pattern}`;
+      case AlertConditionType.STATUS_CODE:
+        return `Status code: ${condition.statusCode}`;
+      case AlertConditionType.ERROR_CATEGORY:
+        return `Error category: ${condition.errorCategory}`;
+      default:
+        return 'Unknown condition';
+    }
+  }
+
+  /**
+   * Get time window label
+   * @param timeWindow Time window
+   */
+  getTimeWindowLabel(timeWindow: AlertTimeWindow): string {
+    switch (timeWindow) {
+      case AlertTimeWindow.MINUTES_5:
+        return '5 minutes';
+      case AlertTimeWindow.MINUTES_15:
+        return '15 minutes';
+      case AlertTimeWindow.MINUTES_30:
+        return '30 minutes';
+      case AlertTimeWindow.HOURS_1:
+        return '1 hour';
+      case AlertTimeWindow.HOURS_6:
+        return '6 hours';
+      case AlertTimeWindow.HOURS_12:
+        return '12 hours';
+      case AlertTimeWindow.HOURS_24:
+        return '24 hours';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  /**
+   * Check if alert has a specific notification channel
+   * @param alert Alert to check
+   * @param channel Channel to check for
+   */
+  hasChannel(alert: Alert, channel: string): boolean {
+    return alert.notifications.some((n) => n.channel === channel);
+  }
+}

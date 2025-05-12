@@ -18,7 +18,6 @@ const tokenBlacklistSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
-    unique: true,
     // index: true, // Removed duplicate index - unique already creates an index
   },
   tokenType: {
@@ -94,5 +93,4 @@ tokenBlacklistSchema.statics.cleanupExpired = async function () {
   return this.deleteMany({ expiresAt: { $lt: now } });
 };
 
-const TokenBlacklist = mongoose.model('TokenBlacklist', tokenBlacklistSchema);
-export { TokenBlacklist };
+export default mongoose.model('TokenBlacklist', tokenBlacklistSchema);

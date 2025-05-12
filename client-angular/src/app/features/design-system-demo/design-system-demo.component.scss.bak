@@ -1,0 +1,207 @@
+/**
+ * Design System Demo Component Styles
+ */
+
+@use '../../core/design/main' as ds;
+
+.design-demo {
+  padding: 2rem 0;
+
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__title {
+    @include ds.heading-1;
+  }
+
+  &__description {
+    @include ds.body-large;
+  }
+
+  &__section {
+    margin-bottom: 0.5rem;
+  }
+
+  &__section-title {
+    @include ds.heading-2;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -0.75rem;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      border-radius: 9999px;
+    }
+  }
+
+  &__card-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+// Typography examples
+.heading-1 {
+  @include ds.heading-1;
+}
+
+.heading-2 {
+  @include ds.heading-2;
+}
+
+.heading-3 {
+  @include ds.heading-3;
+}
+
+.heading-4 {
+  @include ds.heading-4;
+}
+
+.heading-5 {
+  @include ds.heading-5;
+}
+
+.heading-6 {
+  @include ds.heading-6;
+}
+
+.body-large {
+  @include ds.body-large;
+}
+
+.body-default {
+  @include ds.body-default;
+}
+
+.body-small {
+  @include ds.body-small;
+}
+
+.body-xs {
+  @include ds.body-xs;
+}
+
+.caption {
+  @include ds.caption;
+}
+
+.label {
+  @include ds.label;
+}
+
+// Color swatches
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.75rem;
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__sample {
+    width: 60px;
+    height: 60px;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  &__name {
+    @include ds.body-small;
+    text-align: center;
+  }
+}
+
+// Button grid
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+// Form grid
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Icon grid
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.icon-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__label {
+    @include ds.caption;
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
+
+// CSS Variables for color swatches
+:root {
+  --color-primary: #{#3b82f6};
+  --color-primary-light: #{#60a5fa};
+  --color-primary-dark: #{#2563eb};
+
+  --color-secondary: #{#8b5cf6};
+  --color-secondary-light: #{#a78bfa};
+  --color-secondary-dark: #{#7c3aed};
+
+  --color-light-gray-2: #{#e5e7eb};
+  --color-medium-gray-1: #{#9ca3af};
+  --color-medium-gray-2: #{#6b7280};
+  --color-dark-gray-1: #{#4b5563};
+  --color-dark-gray-2: #{#374151};
+}
+
+// Dark mode styles
+@media (prefers-color-scheme: dark) {
+  body.dark-mode-enabled {
+    .design-demo {
+      &__title {
+        color: #60a5fa;
+      }
+
+      &__section-title {
+        &:after {
+          background-color: #60a5fa;
+        }
+      }
+    }
+
+    .color-swatch {
+      &__sample {
+        border-color: #4b5563;
+      }
+    }
+  }
+}

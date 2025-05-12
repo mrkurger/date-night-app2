@@ -12,76 +12,80 @@
     <!-- Search and Filters Bar -->
     <div class="search-filters-bar">
       <div class="search-box">
-        <mat-form-field appearance="outline" class="search-input-field">
-          <mat-label>Search profiles...</mat-label>
+        <nb-form-field appearance="outline" class="search-input-field">
+          <nb-form-field-label>Search profiles...</nb-form-field-label>
           <input
-            matInput
+            nbInput
+            fullWidth
             [formControl]="$any(filterForm.controls['searchQuery'])"
             (input)="onSearchChange()"
           />
-          <mat-icon matPrefix>search</mat-icon>
-        </mat-form-field>
+          <nb-icon matPrefix>search"></nb-icon>
+        </nb-form-field>
       </div>
 
       <div class="view-controls">
         <!-- View Mode Toggle -->
         <div class="view-toggle">
           <button
-            mat-icon-button
+            nbButton
+            ghost
             [class.active]="viewMode === 'grid'"
-            matTooltip="Grid View"
+            nbTooltip="Grid View"
             (click)="setViewMode('grid')"
           >
-            <mat-icon>grid_view</mat-icon>
+            <nb-icon icon="grid_view"></nb-icon>
           </button>
           <button
-            mat-icon-button
+            nbButton
+            ghost
             [class.active]="viewMode === 'list'"
-            matTooltip="List View"
+            nbTooltip="List View"
             (click)="setViewMode('list')"
           >
-            <mat-icon>view_list</mat-icon>
+            <nb-icon icon="view_list"></nb-icon>
           </button>
           <button
-            mat-icon-button
+            nbButton
+            ghost
             [class.active]="viewMode === 'compact'"
-            matTooltip="Compact View"
+            nbTooltip="Compact View"
             (click)="setViewMode('compact')"
           >
-            <mat-icon>view_comfy</mat-icon>
+            <nb-icon icon="view_comfy"></nb-icon>
           </button>
         </div>
 
         <!-- Sort Dropdown -->
-        <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-button">
-          <mat-icon>sort</mat-icon>
+        <button nbButton [nbContextMenu]="sortMenu" class="sort-button">
+          <nb-icon icon="sort"></nb-icon>
           <span>Sort: {{ getCurrentSortLabel() }}</span>
-          <mat-icon>arrow_drop_down</mat-icon>
+          <nb-icon icon="arrow_drop_down"></nb-icon>
         </button>
-        <mat-menu #sortMenu="matMenu">
+        <nb-menu #sortMenu="matMenu">
           <button
-            mat-menu-item
+            nb-menu-item
             *ngFor="let option of sortOptions"
             [class.active]="currentSort === option.value"
             (click)="changeSort(option.value)"
           >
-            <mat-icon *ngIf="currentSort === option.value">check</mat-icon>
+            <nb-icon *ngIf="currentSort === option.value">check"></nb-icon>
             <span>{{ option.label }}</span>
-            <mat-icon *ngIf="option.direction === 'asc'">arrow_upward</mat-icon>
-            <mat-icon *ngIf="option.direction === 'desc'">arrow_downward</mat-icon>
+            <nb-icon *ngIf="option.direction === 'asc'">arrow_upward"></nb-icon>
+            <nb-icon *ngIf="option.direction === 'desc'">arrow_downward"></nb-icon>
           </button>
-        </mat-menu>
+        </nb-menu>
 
         <!-- Filter Button -->
-        <button mat-stroked-button color="primary" (click)="toggleFilterSidebar()">
-          <mat-icon>filter_list</mat-icon>
+        <button nbButton appearance="outline" color="primary" (click)="toggleFilterSidebar()">
+          <nb-icon icon="filter_list"></nb-icon>
           <span>Filters</span>
           <span class="filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
         </button>
 
         <!-- Clear Filters Button -->
-        <button mat-button color="warn" (click)="clearFilters()" *ngIf="filterForm.dirty">
-          <mat-icon>clear</mat-icon>
+        <button nbButton color="warn" (click)="clearFilters()" *ngIf="filterForm.dirty">
+          <nb-icon icon="clear"></nb-icon>
           <span>Clear</span>
         </button>
       </div>
@@ -93,8 +97,8 @@
       <div class="filter-sidebar" [class.open]="filterSidebarOpen">
         <div class="filter-sidebar-header">
           <h3>Filters</h3>
-          <button mat-icon-button (click)="toggleFilterSidebar()">
-            <mat-icon>close</mat-icon>
+          <button nbButton ghost (click)="toggleFilterSidebar()">
+            <nb-icon icon="close"></nb-icon>
           </button>
         </div>
 
@@ -102,82 +106,93 @@
           <form [formGroup]="filterForm">
             <h4>Categories</h4>
             <div class="filter-group">
-              <mat-checkbox formControlName="categories.escort" color="primary"
-                >Escort</mat-checkbox
+              <nb-checkbox formControlName="categories.escort" color="primary">Escort</nb-checkbox>
+              <nb-checkbox formControlName="categories.massage" color="primary"
+                >Massage</nb-checkbox
               >
-              <mat-checkbox formControlName="categories.massage" color="primary"
-                >Massage</mat-checkbox
-              >
-              <mat-checkbox formControlName="categories.striptease" color="primary"
-                >Striptease</mat-checkbox
+              <nb-checkbox formControlName="categories.striptease" color="primary"
+                >Striptease</nb-checkbox
               >
             </div>
 
             <h4>Location</h4>
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Select Location</mat-label>
-              <mat-select formControlName="location" multiple>
-                <mat-option value="Oslo">Oslo</mat-option>
-                <mat-option value="Bergen">Bergen</mat-option>
-                <mat-option value="Trondheim">Trondheim</mat-option>
-                <mat-option value="Stavanger">Stavanger</mat-option>
-                <mat-option value="Kristiansand">Kristiansand</mat-option>
-                <mat-option value="Tromsø">Tromsø</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-form-field appearance="outline" class="full-width">
+              <nb-form-field-label>Select Location</nb-form-field-label>
+              <nb-select formControlName="location" multiple>
+                <nb-option value="Oslo">Oslo</nb-option>
+                <nb-option value="Bergen">Bergen</nb-option>
+                <nb-option value="Trondheim">Trondheim</nb-option>
+                <nb-option value="Stavanger">Stavanger</nb-option>
+                <nb-option value="Kristiansand">Kristiansand</nb-option>
+                <nb-option value="Tromsø">Tromsø</nb-option>
+              </nb-select>
+            </nb-form-field>
 
             <h4>Date Range</h4>
             <div class="date-range-picker">
-              <mat-form-field appearance="outline">
-                <mat-label>From</mat-label>
-                <input matInput [matDatepicker]="fromPicker" formControlName="dateRange.from" />
-                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromPicker></mat-datepicker>
-              </mat-form-field>
+              <nb-form-field appearance="outline">
+                <nb-form-field-label>From</nb-form-field-label>
+                <input
+                  nbInput
+                  fullWidth
+                  [matDatepicker]="fromPicker"
+                  formControlName="dateRange.from"
+                />
+                <nb-datepicker-toggle matSuffix [for]="fromPicker"></nb-datepicker-toggle>
+                <nb-datepicker #fromPicker></nb-datepicker>
+              </nb-form-field>
 
-              <mat-form-field appearance="outline">
-                <mat-label>To</mat-label>
-                <input matInput [matDatepicker]="toPicker" formControlName="dateRange.to" />
-                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                <mat-datepicker #toPicker></mat-datepicker>
-              </mat-form-field>
+              <nb-form-field appearance="outline">
+                <nb-form-field-label>To</nb-form-field-label>
+                <input
+                  nbInput
+                  fullWidth
+                  [matDatepicker]="toPicker"
+                  formControlName="dateRange.to"
+                />
+                <nb-datepicker-toggle matSuffix [for]="toPicker"></nb-datepicker-toggle>
+                <nb-datepicker #toPicker></nb-datepicker>
+              </nb-form-field>
             </div>
 
             <h4>Status</h4>
             <div class="filter-group">
-              <mat-checkbox formControlName="status.online" color="primary"
-                >Online Now</mat-checkbox
-              >
-              <mat-checkbox formControlName="status.touring" color="primary">Touring</mat-checkbox>
-              <mat-checkbox formControlName="status.verified" color="primary"
-                >Verified</mat-checkbox
-              >
+              <nb-checkbox formControlName="status.online" color="primary">Online Now</nb-checkbox>
+              <nb-checkbox formControlName="status.touring" color="primary">Touring</nb-checkbox>
+              <nb-checkbox formControlName="status.verified" color="primary">Verified</nb-checkbox>
             </div>
 
             <h4>Saved Filters</h4>
             <div class="saved-filters">
               <button
-                mat-stroked-button
+                nbButton
+                appearance="outline"
                 (click)="loadSavedFilter('favorite')"
                 class="saved-filter-btn"
               >
-                <mat-icon>favorite</mat-icon> Favorites
+                <nb-icon icon="favorite"></nb-icon> Favorites
               </button>
               <button
-                mat-stroked-button
+                nbButton
+                appearance="outline"
                 (click)="loadSavedFilter('recent')"
                 class="saved-filter-btn"
               >
-                <mat-icon>history</mat-icon> Recently Viewed
+                <nb-icon icon="history"></nb-icon> Recently Viewed
               </button>
-              <button mat-stroked-button (click)="saveCurrentFilter()" class="saved-filter-btn">
-                <mat-icon>save</mat-icon> Save Current Filter
+              <button
+                nbButton
+                appearance="outline"
+                (click)="saveCurrentFilter()"
+                class="saved-filter-btn"
+              >
+                <nb-icon icon="save"></nb-icon> Save Current Filter
               </button>
             </div>
 
             <div class="filter-actions">
-              <button mat-button (click)="clearFilters()">Reset All</button>
-              <button mat-raised-button color="primary" (click)="applyFilters()">
+              <button nbButton (click)="clearFilters()">Reset All</button>
+              <button nbButton status="primary" color="primary" (click)="applyFilters()">
                 Apply Filters
               </button>
             </div>
@@ -191,19 +206,19 @@
         <div class="active-filters" *ngIf="hasActiveFilters()">
           <span class="active-filters-label">Active Filters:</span>
           <div class="filter-chips">
-            <mat-chip-set>
+            <nb-tag-set>
               <mat-chip
                 *ngFor="let filter of getActiveFilters()"
                 [removable]="true"
                 (removed)="removeFilter(filter)"
               >
                 {{ filter.label }}
-                <mat-icon matChipRemove>cancel</mat-icon>
-              </mat-chip>
-              <mat-chip color="warn" (click)="clearFilters()">
+                <nb-icon matChipRemove>cancel"></nb-icon>
+              </nb-tag>
+              <nb-tag color="warn" (click)="clearFilters()">
                 Clear All
-                <mat-icon>clear</mat-icon>
-              </mat-chip>
+                <nb-icon icon="clear"></nb-icon>
+              </nb-tag>
             </mat-chip-set>
           </div>
         </div>
@@ -220,21 +235,21 @@
 
         <!-- Error State -->
         <div class="error-container" *ngIf="error && !loading">
-          <mat-icon class="error-icon">error_outline</mat-icon>
+          <nb-icon class="error-icon">error_outline"></nb-icon>
           <p class="error-text">{{ error }}</p>
-          <button mat-raised-button color="primary" (click)="loadAds()">
-            <mat-icon>refresh</mat-icon>
+          <button nbButton status="primary" color="primary" (click)="loadAds()">
+            <nb-icon icon="refresh"></nb-icon>
             Try Again
           </button>
         </div>
 
         <!-- Empty State -->
         <div class="empty-container" *ngIf="filteredAds.length === 0 && !loading && !error">
-          <mat-icon class="empty-icon">search_off</mat-icon>
+          <nb-icon class="empty-icon">search_off"></nb-icon>
           <p class="empty-text">No profiles found</p>
           <p class="empty-subtext">Try adjusting your filters or search query</p>
-          <button mat-raised-button color="primary" (click)="clearFilters()">
-            <mat-icon>clear</mat-icon>
+          <button nbButton status="primary" color="primary" (click)="clearFilters()">
+            <nb-icon icon="clear"></nb-icon>
             Clear Filters
           </button>
         </div>
@@ -305,22 +320,23 @@
 
 <!-- Save Filter Dialog -->
 <ng-template #saveFilterDialog>
-  <h2 mat-dialog-title>Save Filter</h2>
-  <mat-dialog-content>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Filter Name</mat-label>
-      <input matInput [(ngModel)]="newFilterName" placeholder="My Custom Filter" />
-    </mat-form-field>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+  <h2 nb-dialog-title>Save Filter</h2>
+  <nb-dialog-content>
+    <nb-form-field appearance="outline" class="full-width">
+      <nb-form-field-label>Filter Name</nb-form-field-label>
+      <input nbInput fullWidth [(ngModel)]="newFilterName" placeholder="My Custom Filter" />
+    </nb-form-field>
+  </nb-dialog-content>
+  <nb-dialog-actions align="end">
+    <button nbButton nb-dialog-close>Cancel</button>
     <button
-      mat-raised-button
+      nbButton
+      status="primary"
       color="primary"
-      [mat-dialog-close]="newFilterName"
+      [nb-dialog-close]="newFilterName"
       [disabled]="!newFilterName"
     >
       Save
     </button>
-  </mat-dialog-actions>
+  </nb-dialog-actions>
 </ng-template>

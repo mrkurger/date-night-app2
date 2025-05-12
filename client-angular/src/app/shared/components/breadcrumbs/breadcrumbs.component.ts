@@ -7,10 +7,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { NbIconModule } from '@nebular/theme';
 import { filter } from 'rxjs/operators';
 
 export interface Breadcrumb {
@@ -24,7 +23,7 @@ export interface Breadcrumb {
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, NbIconModule],
 })
 export class BreadcrumbsComponent implements OnInit {
   @Input() homeLabel = 'Home';

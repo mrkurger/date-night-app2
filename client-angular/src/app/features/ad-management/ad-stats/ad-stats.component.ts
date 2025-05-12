@@ -7,36 +7,73 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NbSortModule } from '../../../shared/components/custom-nebular-components';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MaterialModule } from '../../../shared/material.module';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
+import {
+  NbCardModule,
+  NbSpinnerModule,
+  NbTableModule,
+  NbTreeGridModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbButtonModule,
+  NbSortDirection,
+  NbSortRequest,
+  NbTreeGridDataSourceBuilder,
+  NbSelectModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-stats',
   templateUrl: './ad-stats.component.html',
   styleUrls: ['./ad-stats.component.scss'],
   standalone: true,
-  imports: [CommonModule, MaterialModule, DatePipe],
+  imports: [
+    CommonModule,
+    DatePipe,
+    NbCardModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbTreeGridModule,
+    NbSortModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbButtonModule,
+    NbSelectModule,
+  ],
 })
 export class AdStatsComponent implements OnInit {
+  // Make Math available to the template
+  Math = Math;
+
   loading = false;
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource: any[] = [];
   viewsData: any[] = [];
   clicksData: any[] = [];
   adTitle = 'Loading...';
   displayedColumns: string[] = ['date', 'views', 'clicks', 'inquiries', 'conversionRate'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // Nebular pagination
+  pageSize = 10;
+  pageSizes = [5, 10, 25, 100];
+  currentPage = 1;
+  totalItems = 0;
+
+  // Nebular sorting
+  sortColumn: string = '';
+  sortDirection: NbSortDirection = NbSortDirection.NONE;
+
+  rawData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private adService: AdService,
+    public dataSourceBuilder: NbTreeGridDataSourceBuilder<any>,
   ) {}
 
   getTotalViews(data: any[]): number {
@@ -86,12 +123,40 @@ export class AdStatsComponent implements OnInit {
   }
 
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource = this.dataSource.filter((item) =>
+      Object.values(item).some(
+        (val) => val && typeof val === 'string' && val.toLowerCase().includes(filterValue),
+      ),
+    );
+    this.totalItems = this.dataSource.length;
+    this.currentPage = 1;
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  onSort(sortRequest: NbSortRequest): void {
+    this.sortColumn = sortRequest.column;
+    this.sortDirection = sortRequest.direction;
+    this.sortData();
+  }
+
+  sortData(): void {
+    if (this.sortColumn && this.sortDirection !== NbSortDirection.NONE) {
+      this.dataSource = [...this.dataSource].sort((a, b) => {
+        const aValue = a[this.sortColumn];
+        const bValue = b[this.sortColumn];
+        const dir = this.sortDirection === NbSortDirection.ASCENDING ? 1 : -1;
+
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return aValue.localeCompare(bValue) * dir;
+        }
+
+        return (aValue - bValue) * dir;
+      });
     }
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
   }
 
   private loadSampleData() {
@@ -104,13 +169,8 @@ export class AdStatsComponent implements OnInit {
       conversionRate: Math.random() * 100,
     }));
 
-    this.dataSource.data = sampleData;
-
-    // Set up paginator and sort after data is loaded
-    setTimeout(() => {
-      if (this.paginator) this.dataSource.paginator = this.paginator;
-      if (this.sort) this.dataSource.sort = this.sort;
-    });
+    this.rawData = sampleData;
+    this.totalItems = sampleData.length;
 
     this.viewsData = sampleData.map((item) => ({
       name: item.date,
@@ -120,5 +180,19 @@ export class AdStatsComponent implements OnInit {
       name: item.date,
       value: item.clicks,
     }));
+
+    // Initialize the tree grid data source
+    const formattedData = sampleData.map((item) => ({
+      data: item,
+    }));
+
+    // Update dataSource with the correct type
+    this.dataSource = formattedData;
+  }
+
+  // Helper method to get the data for the current page
+  get paginatedData(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.rawData.slice(startIndex, startIndex + this.pageSize);
   }
 }

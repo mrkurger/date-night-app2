@@ -7,21 +7,58 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+// Nebular imports
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbLayoutModule,
+  NbListModule,
+  NbBadgeModule,
+  NbAlertModule,
+} from '@nebular/theme';
+
 import { PaymentService, SubscriptionPrice } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbLayoutModule,
+    NbListModule,
+    NbBadgeModule,
+    NbAlertModule,
+  ],
 })
 export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;

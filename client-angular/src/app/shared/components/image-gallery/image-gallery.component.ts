@@ -7,15 +7,13 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { NbIconModule, NbButtonModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-image-gallery',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, NbIconModule, NbButtonModule],
   template: `
     <div class="gallery-container">
       <div class="gallery-main" *ngIf="images.length > 0">
@@ -31,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
             (click)="prevImage()"
             [disabled]="currentIndex === 0"
           >
-            <mat-icon>chevron_left</mat-icon>
+            <nb-icon icon="chevron_left"></nb-icon>
           </button>
           <button
             mat-icon-button
@@ -39,12 +37,12 @@ import { MatButtonModule } from '@angular/material/button';
             (click)="nextImage()"
             [disabled]="currentIndex === images.length - 1"
           >
-            <mat-icon>chevron_right</mat-icon>
+            <nb-icon icon="chevron_right"></nb-icon>
           </button>
         </div>
       </div>
       <div class="gallery-empty" *ngIf="images.length === 0">
-        <mat-icon class="empty-icon">image</mat-icon>
+        <nb-icon class="empty-icon">image</nb-icon>
         <p>No images available</p>
       </div>
       <div class="gallery-thumbnails" *ngIf="showThumbnails && images.length > 1">

@@ -7,194 +7,169 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import {
-  FormsModule,
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
+  ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+} from '@nebular/theme';
+import { SharedModule } from '../../shared.module';
 
 export interface ResponseDialogData {
   title: string;
+  message?: string;
   reviewTitle?: string;
   reviewContent?: string;
+  placeholder?: string;
+  minLength?: number;
+  maxLength?: number;
 }
 
 @Component({
   selector: 'app-response-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
   template: `
-    <div class="response-dialog-container">
-      <div class="dialog-header">
-        <h2 mat-dialog-title>{{ data.title || 'Respond to Review' }}</h2>
-        <button mat-icon-button (click)="onClose()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-
-      <mat-dialog-content>
-        <div class="review-preview" *ngIf="data.reviewTitle || data.reviewContent">
-          <h3 *ngIf="data.reviewTitle">{{ data.reviewTitle }}</h3>
-          <p *ngIf="data.reviewContent">{{ data.reviewContent }}</p>
-        </div>
-
-        <form [formGroup]="responseForm" (ngSubmit)="onSubmit()">
-          <p class="response-intro">
-            Your response will be publicly visible alongside the review. This is your opportunity to
-            address the reviewer's feedback.
-          </p>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Your Response</mat-label>
+    <nb-card>
+      <nb-card-header>
+        <h3>{{ data?.title || 'Response' }}</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <p>{{ data?.message }}</p>
+        <form [formGroup]="responseForm">
+          <nb-form-field>
             <textarea
-              matInput
+              nbInput
+              fullWidth
               formControlName="response"
-              placeholder="Write your response here"
-              rows="6"
+              [placeholder]="data?.placeholder || 'Enter your response'"
+              [rows]="4"
             ></textarea>
-            <mat-hint align="end"
-              >{{ responseForm.get('response')?.value?.length || 0 }}/1000</mat-hint
-            >
-            <mat-error *ngIf="responseForm.get('response')?.hasError('required')">
-              Response is required
-            </mat-error>
-            <mat-error *ngIf="responseForm.get('response')?.hasError('minlength')">
-              Response must be at least 10 characters
-            </mat-error>
-            <mat-error *ngIf="responseForm.get('response')?.hasError('maxlength')">
-              Response cannot exceed 1000 characters
-            </mat-error>
-          </mat-form-field>
-
-          <div class="form-actions">
-            <button mat-button type="button" (click)="onClose()">Cancel</button>
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="responseForm.invalid || submitting"
-            >
-              <mat-icon *ngIf="submitting">hourglass_empty</mat-icon>
-              Submit Response
-            </button>
-          </div>
+            <nb-form-field-control>
+              <span *ngIf="responseForm.get('response')?.errors?.['required']" class="text-danger">
+                Response is required
+              </span>
+              <span *ngIf="responseForm.get('response')?.errors?.['minlength']" class="text-danger">
+                Response must be at least {{ data?.minLength }} characters
+              </span>
+              <span *ngIf="responseForm.get('response')?.errors?.['maxlength']" class="text-danger">
+                Response cannot exceed {{ data?.maxLength }} characters
+              </span>
+            </nb-form-field-control>
+          </nb-form-field>
         </form>
-      </mat-dialog-content>
-    </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="cancel()">Cancel</button>
+        <button
+          nbButton
+          status="primary"
+          [disabled]="responseForm.invalid || isSubmitting"
+          (click)="submit()"
+        >
+          <nb-icon icon="checkmark-circle-2-outline" pack="eva" *ngIf="!isSubmitting"></nb-icon>
+          <nb-spinner size="small" *ngIf="isSubmitting"></nb-spinner>
+          Submit
+        </button>
+      </nb-card-footer>
+    </nb-card>
   `,
   styles: [
     `
-      .response-dialog-container {
-        min-width: 500px;
-        max-width: 700px;
-      }
+      :host {
+        nb-card {
+          max-width: 600px;
+          width: 100%;
+        }
 
-      .dialog-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #eee;
-      }
+        nb-card-footer {
+          display: flex;
+          justify-content: flex-end;
+          gap: 1rem;
+        }
 
-      h2 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 500;
-      }
+        form {
+          margin-top: 1rem;
+        }
 
-      mat-dialog-content {
-        padding: 24px;
-      }
-
-      .review-preview {
-        background-color: #f5f5f5;
-        padding: 16px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        border-left: 4px solid #2196f3;
-      }
-
-      .review-preview h3 {
-        margin-top: 0;
-        margin-bottom: 8px;
-        font-size: 16px;
-        font-weight: 500;
-      }
-
-      .review-preview p {
-        margin: 0;
-        color: #555;
-        font-style: italic;
-      }
-
-      .response-intro {
-        margin-top: 0;
-        margin-bottom: 20px;
-        color: #555;
-      }
-
-      .full-width {
-        width: 100%;
-        margin-bottom: 20px;
-      }
-
-      .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
+        textarea {
+          width: 100%;
+        }
       }
     `,
   ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+  ],
 })
-export class ResponseDialogComponent {
+export class ResponseDialogComponent implements OnInit {
   responseForm: FormGroup;
-  submitting = false;
+  isSubmitting = false;
 
   constructor(
+    private dialogRef: NbDialogRef<ResponseDialogComponent>,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<ResponseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ResponseDialogData,
+    @Inject(NB_DIALOG_CONFIG) public data: ResponseDialogData,
   ) {
     this.responseForm = this.fb.group({
-      response: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+      response: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(data?.minLength || 1),
+          Validators.maxLength(data?.maxLength || 1000),
+        ],
+      ],
     });
   }
 
-  onSubmit(): void {
+  ngOnInit(): void {
+    // Update validators with actual min/max lengths if needed
+    const currentValidators = this.responseForm.get('response')?.validator;
+    if (currentValidators) {
+      this.responseForm
+        .get('response')
+        ?.setValidators([
+          currentValidators,
+          Validators.minLength(this.data?.minLength || 1),
+          Validators.maxLength(this.data?.maxLength || 1000),
+        ]);
+      this.responseForm.get('response')?.updateValueAndValidity();
+    }
+  }
+
+  submit(): void {
     if (this.responseForm.invalid) {
       return;
     }
 
-    this.submitting = true;
-
-    // Close dialog with response text
+    this.isSubmitting = true;
+    // Simulate API call
     setTimeout(() => {
       this.dialogRef.close(this.responseForm.value.response);
-      this.submitting = false;
-    }, 500);
+    }, 1000);
   }
 
-  onClose(): void {
+  cancel(): void {
     this.dialogRef.close();
   }
 }

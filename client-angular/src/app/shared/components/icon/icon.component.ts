@@ -7,7 +7,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -17,12 +16,14 @@ import { CommonModule } from '@angular/common';
  * Supports different sizes and colors.
  */
 @Component({
+  
   selector: 'app-icon',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+,
 })
 export class IconComponent {
   /**

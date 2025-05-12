@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
+import { 
   Component,
   OnInit,
   OnDestroy,
@@ -15,7 +15,6 @@ import {
   ElementRef,
   AfterViewChecked,
   ChangeDetectorRef,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +27,7 @@ import { ChatMessageComponent } from '../../../shared/components/chat-message/ch
 import { ChatSettingsComponent } from '../../../shared/components/chat-settings/chat-settings.component';
 
 @Component({
+  
   selector: 'app-chat-room',
   standalone: true,
   imports: [CommonModule, FormsModule, ChatMessageComponent, ChatSettingsComponent],

@@ -91,9 +91,27 @@ const serverErrorResponse = (message = 'Internal server error', error = null) =>
   return errorResponse(message, 500, error);
 };
 
+/**
+ * Sends a success response
+ * @param {Object} res - Express response object
+ * @param {any} payload - Data to include in the response
+ */
+export function sendSuccess(res, payload) {
+  res.status(200).json({ success: true, data: payload });
+}
+
+/**
+ * Sends an error response
+ * @param {Object} res - Express response object
+ * @param {Error|string} err - Error details
+ * @param {number} code - HTTP status code (default: 500)
+ */
+export function sendError(res, err, code = 500) {
+  console.error('Error:', err.message || err);
+  res.status(code).json({ success: false, error: err.message || 'Internal Error' });
+}
+
 export {
-  successResponse,
-  errorResponse,
   validationErrorResponse,
   notFoundResponse,
   unauthorizedResponse,
@@ -101,12 +119,16 @@ export {
   serverErrorResponse,
 };
 
+export { sendSuccess as successResponse, sendError as errorResponse };
+
 export default {
-  successResponse,
-  errorResponse,
   validationErrorResponse,
   notFoundResponse,
   unauthorizedResponse,
   forbiddenResponse,
   serverErrorResponse,
+  sendSuccess,
+  sendError,
+  successResponse, // still refers to the pure response object if you need it
+  errorResponse,
 };

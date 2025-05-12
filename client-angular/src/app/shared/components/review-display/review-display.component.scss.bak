@@ -1,0 +1,160 @@
+@use '../../../styles/variables' as vars;
+@use '../../../styles/mixins' as mix;
+
+.review-card {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &.pending {
+    border: 1px solid var(--color-warning);
+    background-color: rgba(var(--color-warning-rgb), 0.05);
+  }
+}
+
+.review-rating {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  color: var(--color-success);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.reviewer-name {
+  font-weight: 500;
+}
+
+.review-date {
+  margin-left: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.85em;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+
+.review-content {
+  margin: 16px 0;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.category-ratings {
+  margin: 16px 0;
+
+  h4 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+  }
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+
+  .category-label {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    color: var(--color-text-muted);
+  }
+}
+
+.meeting-date {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+}
+
+.advertiser-response {
+  margin-top: 24px;
+  padding-top: 16px;
+
+  .response-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .response-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+
+  .response-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .response-name {
+    font-size: 0.875rem;
+  }
+
+  .response-date {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .response-content {
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    font-style: italic;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .review-rating {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 8px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

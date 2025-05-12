@@ -7,20 +7,22 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
-// Material Modules
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// Nebular Modules
+import {
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-login',
@@ -30,12 +32,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbTooltipModule,
   ],
 })
 export class LoginComponent implements OnInit {

@@ -9,7 +9,7 @@
 // ===================================================
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
-import { TokenBlacklist } from '../models/token-blacklist.model.js';
+import TokenBlacklist from '../models/token-blacklist.model.js';
 
 /**
  * Middleware to authenticate users

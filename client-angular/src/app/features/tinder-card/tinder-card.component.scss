@@ -1,4 +1,5 @@
 /* Tinder Card Component Styles */
+@use '@nebular/theme/styles/theming' as *;
 @use '../../../core/design/animation-utilities' as animation;
 @use '../../../core/design/micro-interactions' as micro;
 @use '../../../core/design/dark-mode' as dark;
@@ -10,72 +11,157 @@
   perspective: 1000px;
 }
 
-.tinder-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--border-radius-xl);
-  overflow: hidden;
-  background-color: var(--neutral-100);
-  box-shadow: var(--shadow-lg);
-  transition:
-    transform var(--transition-normal) var(--transition-timing-default),
-    opacity var(--transition-normal) var(--transition-timing-default),
-    box-shadow var(--transition-normal) var(--transition-timing-default);
-  transform-origin: center center;
-  cursor: grab;
-  display: flex;
-  flex-direction: column;
-  will-change: transform;
+nb-card.tinder-card {
+  margin: 0;
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease;
+  background: var(--background-basic-color-1);
 
-  // Add entrance animation
-  @include animation.scale-in(0.5s);
-
-  // Dark mode support
-  @include dark.background(var(--neutral-100));
-  @include dark.shadow(var(--shadow-lg));
-
-  &:hover {
-    box-shadow: var(--shadow-xl);
-  }
-
-  &:active {
+  &.swiping {
     cursor: grabbing;
-    transform: scale(0.98);
   }
-}
 
-.tinder-card.swiped-left {
-  transform: translateX(-150%) rotate(-20deg);
-  opacity: 0;
-  animation: swipe-left 0.5s var(--transition-timing-default) forwards;
-}
-
-.tinder-card.swiped-right {
-  transform: translateX(150%) rotate(20deg);
-  opacity: 0;
-  animation: swipe-right 0.5s var(--transition-timing-default) forwards;
-}
-
-@keyframes swipe-left {
-  0% {
-    transform: translateX(0) rotate(0deg);
-    opacity: 1;
+  &.swiped-left {
+    transform: translateX(-150%) rotate(-30deg);
   }
-  100% {
-    transform: translateX(-150%) rotate(-20deg);
-    opacity: 0;
-  }
-}
 
-@keyframes swipe-right {
-  0% {
-    transform: translateX(0) rotate(0deg);
-    opacity: 1;
+  &.swiped-right {
+    transform: translateX(150%) rotate(30deg);
   }
-  100% {
-    transform: translateX(150%) rotate(20deg);
-    opacity: 0;
+
+  .card-media {
+    position: relative;
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    overflow: hidden;
+
+    img,
+    video {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .media-dots {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+
+      .media-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-disabled-color);
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &.active {
+          background: var(--color-primary-500);
+        }
+      }
+    }
+
+    .media-nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+
+      &.prev-button {
+        left: 1rem;
+      }
+
+      &.next-button {
+        right: 1rem;
+      }
+    }
+
+    .like-indicator,
+    .dislike-indicator {
+      position: absolute;
+      top: 2rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      background: var(--background-basic-color-1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+
+      nb-icon {
+        font-size: 1.5rem;
+      }
+    }
+
+    .like-indicator {
+      right: 2rem;
+      border: 2px solid var(--color-success-500);
+      color: var(--color-success-500);
+    }
+
+    .dislike-indicator {
+      left: 2rem;
+      border: 2px solid var(--color-danger-500);
+      color: var(--color-danger-500);
+    }
+  }
+
+  nb-card-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--divider-color);
+
+    .card-title {
+      margin: 0;
+      font-size: var(--text-heading-4-font-size);
+      font-weight: var(--text-heading-4-font-weight);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-location {
+      margin: 0.5rem 0 0;
+      color: var(--text-hint-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      nb-icon {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1rem;
+
+    .card-description {
+      margin: 0 0 1rem;
+      color: var(--text-basic-color);
+    }
+
+    nb-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  }
+
+  nb-card-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--divider-color);
+
+    button {
+      nb-icon {
+        font-size: 1.5rem;
+      }
+    }
   }
 }
 

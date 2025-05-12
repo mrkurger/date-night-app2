@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services Changelog</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        border-left: 5px solid #2c7be5;
+      }
+      h1 {
+        margin: 0;
+        color: #2c7be5;
+      }
+      h2 {
+        margin-top: 30px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+        color: #2c7be5;
+      }
+      h3 {
+        margin-top: 25px;
+        color: #495057;
+      }
+      .version {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-left: 5px solid #2c7be5;
+      }
+      .version-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .version-number {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #2c7be5;
+      }
+      .version-date {
+        color: #6c757d;
+      }
+      .change-category {
+        margin-bottom: 20px;
+      }
+      .change-type {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      .feature {
+        color: #28a745;
+      }
+      .fix {
+        color: #dc3545;
+      }
+      .improvement {
+        color: #17a2b8;
+      }
+      .breaking {
+        color: #dc3545;
+        font-weight: bold;
+      }
+      .change-list {
+        list-style-type: none;
+        padding-left: 20px;
+      }
+      .change-list li {
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .change-list li:before {
+        content: '•';
+        position: absolute;
+        left: -15px;
+        color: #2c7be5;
+      }
+      .nav {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .nav a {
+        text-decoration: none;
+        color: #2c7be5;
+        padding: 5px 10px;
+        border-radius: 3px;
+        background-color: #f8f9fa;
+        transition: background-color 0.2s;
+      }
+      .nav a:hover {
+        background-color: #e9ecef;
+      }
+      code {
+        background-color: #f8f9fa;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+      }
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #2c7be5;
+        cursor: help;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Services Changelog</h1>
+      <p>Documentation of changes to the core services in the Date Night App</p>
+    </header>
+
+    <div class="nav">
+      <a href="../../../_docs_index.html">Main Documentation</a>
+      <a href="./AILESSONS.html">AI Lessons</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
+        <span class="version-number">Version 1.3.0</span>
+        <span class="version-date">May 7, 2024</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>
+            Added new
+            <a href="./GLOSSARY.html#FileEncryptionService" class="tooltip"
+              >FileEncryptionService<span class="tooltip-text"
+                >Service for encrypting and decrypting files</span
+              ></a
+            >
+            to handle secure file operations
+          </li>
+          <li>
+            Implemented <code>encryptFile</code> method that takes a File object and returns
+            encrypted data with IV
+          </li>
+          <li>
+            Implemented <code>decryptFile</code> method that takes encrypted data and IV to restore
+            original file content
+          </li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type fix">Fixes</span></h3>
+        <ul class="change-list">
+          <li>
+            Fixed SASS deprecation warnings in micro-interactions.scss by updating to newer syntax
+          </li>
+          <li>Fixed parent selector issues in animation-utilities.scss</li>
+          <li>Updated darken/lighten functions to use color.scale for better SASS compatibility</li>
+          <li>Fixed undefined variable issues in component SCSS files by updating import paths</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
+        <span class="version-number">Version 1.2.0</span>
+        <span class="version-date">May 15, 2023</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>Added Emerald UI CSS integration to improve component styling</li>
+          <li>Implemented CSS imports in multiple component SCSS files</li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type fix">Fixes</span></h3>
+        <ul class="change-list">
+          <li>
+            Fixed type errors in
+            <a href="./GLOSSARY.html#FavoriteService" class="tooltip"
+              >FavoriteService<span class="tooltip-text"
+                >Service for managing user favorites</span
+              ></a
+            >
+            tests by updating mock objects to match interface requirements
+          </li>
+          <li>Fixed <code>ChatMessage</code> interface implementation in chat component tests</li>
+          <li>Updated location property in mock Ad objects to use the correct object structure</li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type improvement">Improvements</span></h3>
+        <ul class="change-list">
+          <li>Refactored chat component tests to use observable properties instead of methods</li>
+          <li>Enhanced test assertions to be more specific and less brittle</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
+        <span class="version-number">Version 1.1.0</span>
+        <span class="version-date">April 20, 2023</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>
+            Added
+            <a href="./GLOSSARY.html#FavoriteService" class="tooltip"
+              >FavoriteService<span class="tooltip-text"
+                >Service for managing user favorites</span
+              ></a
+            >
+            with comprehensive test coverage
+          </li>
+          <li>
+            Implemented message encryption in
+            <a href="./GLOSSARY.html#ChatService" class="tooltip"
+              >ChatService<span class="tooltip-text"
+                >Service for handling real-time messaging</span
+              ></a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type improvement">Improvements</span></h3>
+        <ul class="change-list">
+          <li>
+            Enhanced <code>Ad</code> interface with additional properties for better type safety
+          </li>
+          <li>Improved error handling in HTTP services</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
+        <span class="version-number">Version 1.0.0</span>
+        <span class="version-date">March 15, 2023</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>Initial release of core services</li>
+          <li>
+            Implemented
+            <a href="./GLOSSARY.html#AdService" class="tooltip"
+              >AdService<span class="tooltip-text">Service for managing advertisements</span></a
+            >
+            for ad management
+          </li>
+          <li>
+            Added
+            <a href="./GLOSSARY.html#AuthService" class="tooltip"
+              >AuthService<span class="tooltip-text"
+                >Service for authentication and authorization</span
+              ></a
+            >
+            for user authentication
+          </li>
+          <li>
+            Created
+            <a href="./GLOSSARY.html#NotificationService" class="tooltip"
+              >NotificationService<span class="tooltip-text"
+                >Service for displaying notifications</span
+              ></a
+            >
+            for system notifications
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

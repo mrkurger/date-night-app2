@@ -7,27 +7,33 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { FavoriteService } from '../../../core/services/favorite.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { DialogService } from '../../../core/services/dialog.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-favorite-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
   template: `
     <button
       mat-icon-button
       [color]="isFavorite ? 'warn' : ''"
-      [matTooltip]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+      [nbTooltip]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
       (click)="toggleFavorite()"
       [disabled]="loading"
       [class.favorite-button]="true"
@@ -35,7 +41,7 @@ import { Router } from '@angular/router';
       [class.button-small]="small"
       [class.button-large]="large"
     >
-      <mat-icon>{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <nb-icon icon="{{ isFavorite ? 'favorite' : 'favorite_border' }}"></nb-icon>
     </button>
   `,
   styles: [

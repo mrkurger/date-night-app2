@@ -1,0 +1,75 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for admin.module settings
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
+import { NgModule } from '@angular/core';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../shared/components/custom-nebular-components';
+
+import { CommonModule } from '@angular/common';
+import { AdminRoutingModule } from './admin-routing.module';
+import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
+import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
+import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbTabsetModule,
+  NbCardModule,
+  NbButtonModule,
+  NbTableModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbDatepickerModule,
+  NbSpinnerModule,
+  NbTagModule,
+  NbIconModule,
+} from '@nebular/theme';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+/**
+ * Admin Module
+ *
+ * Note: All components in this module are standalone components.
+ * They are imported in the module's imports array rather than being declared
+ * in the declarations array. This is the recommended approach for Angular 19+.
+ */
+@NgModule({
+  declarations: [], // No declarations as all components are standalone
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    // Material modules and other shared modules
+    NbTabsetModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTableModule,
+    NbPaginatorModule,
+    NbSortModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbDatepickerModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTagModule,
+    NbIconModule,
+    ReactiveFormsModule,
+    NgxChartsModule,
+    // Standalone components
+    TelemetryDashboardComponent,
+    ErrorDashboardComponent,
+    PerformanceDashboardComponent,
+  ],
+})
+export class AdminModule {}

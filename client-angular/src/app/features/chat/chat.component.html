@@ -4,62 +4,64 @@
     <div class="chat-header">
       <h2>Messages</h2>
       <div class="chat-header-actions">
-        <button mat-icon-button matTooltip="New Message" (click)="openNewMessageDialog()">
-          <mat-icon>add</mat-icon>
+        <button nbButton ghost nbTooltip="New Message" (click)="openNewMessageDialog()">
+          <nb-icon icon="add"></nb-icon>
         </button>
-        <button mat-icon-button matTooltip="Settings" [matMenuTriggerFor]="settingsMenu">
-          <mat-icon>more_vert</mat-icon>
+        <button nbButton ghost nbTooltip="Settings" [nbContextMenu]="settingsMenu">
+          <nb-icon icon="more_vert"></nb-icon>
         </button>
-        <mat-menu #settingsMenu="matMenu">
-          <button mat-menu-item (click)="toggleNotifications()">
-            <mat-icon>{{ notificationsEnabled ? 'notifications' : 'notifications_off' }}</mat-icon>
+        <nb-menu #settingsMenu="matMenu">
+          <button nb-menu-item (click)="toggleNotifications()">
+            <nb-icon
+              icon="{{ notificationsEnabled ? 'notifications' : 'notifications_off' }}"
+            ></nb-icon>
             <span>{{ notificationsEnabled ? 'Mute Notifications' : 'Enable Notifications' }}</span>
           </button>
-          <button mat-menu-item (click)="markAllAsRead()">
-            <mat-icon>done_all</mat-icon>
+          <button nb-menu-item (click)="markAllAsRead()">
+            <nb-icon icon="done_all"></nb-icon>
             <span>Mark All as Read</span>
           </button>
-          <button mat-menu-item (click)="archiveAllChats()">
-            <mat-icon>archive</mat-icon>
+          <button nb-menu-item (click)="archiveAllChats()">
+            <nb-icon icon="archive"></nb-icon>
             <span>Archive All</span>
           </button>
-        </mat-menu>
+        </nb-menu>
       </div>
     </div>
 
     <div class="chat-search">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Search conversations..." [(ngModel)]="searchTerm" />
+      <nb-form-field appearance="outline" class="search-field">
+        <nb-icon matPrefix>search"></nb-icon>
+        <input nbInput fullWidth placeholder="Search conversations..." [(ngModel)]="searchTerm" />
         <button
           *ngIf="searchTerm"
           matSuffix
-          mat-icon-button
+          nb-icon-button
           aria-label="Clear"
           (click)="searchTerm = ''"
         >
-          <mat-icon>close</mat-icon>
+          <nb-icon icon="close"></nb-icon>
         </button>
-      </mat-form-field>
+      </nb-form-field>
 
       <!-- Conversation Filters -->
       <div class="conversation-filters">
         <button
-          mat-button
+          nbButton
           [class.active]="currentFilter === 'all'"
           (click)="filterConversations('all')"
         >
           All
         </button>
         <button
-          mat-button
+          nbButton
           [class.active]="currentFilter === 'unread'"
           (click)="filterConversations('unread')"
         >
           Unread
         </button>
         <button
-          mat-button
+          nbButton
           [class.active]="currentFilter === 'archived'"
           (click)="filterConversations('archived')"
         >
@@ -106,7 +108,7 @@
             </div>
             <div class="contact-badges">
               <div class="unread-badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
-              <mat-icon *ngIf="contact.pinned" class="pin-icon">push_pin</mat-icon>
+              <nb-icon *ngIf="contact.pinned" class="pin-icon">push_pin"></nb-icon>
             </div>
           </div>
         </div>
@@ -114,10 +116,10 @@
 
       <!-- Empty State -->
       <div *ngIf="filteredContacts.length === 0 && !loadingContacts" class="empty-contacts">
-        <mat-icon>forum</mat-icon>
+        <nb-icon icon="forum"></nb-icon>
         <p>No conversations found</p>
-        <button mat-stroked-button color="primary" (click)="openNewMessageDialog()">
-          <mat-icon>add</mat-icon>
+        <button nbButton appearance="outline" color="primary" (click)="openNewMessageDialog()">
+          <nb-icon icon="add"></nb-icon>
           Start a new chat
         </button>
       </div>
@@ -132,12 +134,13 @@
       <div class="chat-main-header">
         <div class="header-left">
           <button
-            mat-icon-button
+            nbButton
+            ghost
             class="back-button"
             (click)="deselectContact()"
-            matTooltip="Back to conversations"
+            nbTooltip="Back to conversations"
           >
-            <mat-icon>arrow_back</mat-icon>
+            <nb-icon icon="arrow_back"></nb-icon>
           </button>
 
           <emerald-avatar
@@ -162,53 +165,53 @@
         </div>
 
         <div class="header-actions">
-          <button mat-icon-button matTooltip="Media Gallery" (click)="openMediaGallery()">
-            <mat-icon>photo_library</mat-icon>
+          <button nbButton ghost nbTooltip="Media Gallery" (click)="openMediaGallery()">
+            <nb-icon icon="photo_library"></nb-icon>
           </button>
-          <button mat-icon-button matTooltip="Search in Conversation" (click)="openSearchInChat()">
-            <mat-icon>search</mat-icon>
+          <button nbButton ghost nbTooltip="Search in Conversation" (click)="openSearchInChat()">
+            <nb-icon icon="search"></nb-icon>
           </button>
-          <button mat-icon-button [matMenuTriggerFor]="chatMenu" matTooltip="More Options">
-            <mat-icon>more_vert</mat-icon>
+          <button nbButton ghost [nbContextMenu]="chatMenu" nbTooltip="More Options">
+            <nb-icon icon="more_vert"></nb-icon>
           </button>
-          <mat-menu #chatMenu="matMenu">
-            <button mat-menu-item (click)="togglePin()">
-              <mat-icon>{{ isPinned() ? 'push_pin' : 'push_pin' }}</mat-icon>
+          <nb-menu #chatMenu="matMenu">
+            <button nb-menu-item (click)="togglePin()">
+              <nb-icon icon="{{ isPinned() ? 'push_pin' : 'push_pin' }}"></nb-icon>
               <span>{{ isPinned() ? 'Unpin Conversation' : 'Pin Conversation' }}</span>
             </button>
-            <button mat-menu-item [matMenuTriggerFor]="autoDeletionMenu">
-              <mat-icon>auto_delete</mat-icon>
+            <button nb-menu-item [nbContextMenu]="autoDeletionMenu">
+              <nb-icon icon="auto_delete"></nb-icon>
               <span>Message Auto-Deletion</span>
             </button>
-            <button mat-menu-item (click)="blockContact()">
-              <mat-icon>block</mat-icon>
+            <button nb-menu-item (click)="blockContact()">
+              <nb-icon icon="block"></nb-icon>
               <span>Block Contact</span>
             </button>
-            <button mat-menu-item (click)="clearConversation()">
-              <mat-icon>delete_sweep</mat-icon>
+            <button nb-menu-item (click)="clearConversation()">
+              <nb-icon icon="delete_sweep"></nb-icon>
               <span>Clear Conversation</span>
             </button>
-          </mat-menu>
+          </nb-menu>
 
           <!-- Auto-Deletion Submenu -->
-          <mat-menu #autoDeletionMenu="matMenu">
-            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 1)">
-              <mat-icon>timer</mat-icon>
+          <nb-menu #autoDeletionMenu="matMenu">
+            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 1)">
+              <nb-icon icon="timer"></nb-icon>
               <span>Delete after 1 day</span>
             </button>
-            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 7)">
-              <mat-icon>timer</mat-icon>
+            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 7)">
+              <nb-icon icon="timer"></nb-icon>
               <span>Delete after 7 days</span>
             </button>
-            <button mat-menu-item (click)="configureMessageAutoDeletion(true, 30)">
-              <mat-icon>timer</mat-icon>
+            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 30)">
+              <nb-icon icon="timer"></nb-icon>
               <span>Delete after 30 days</span>
             </button>
-            <button mat-menu-item (click)="configureMessageAutoDeletion(false, 0)">
-              <mat-icon>timer_off</mat-icon>
+            <button nb-menu-item (click)="configureMessageAutoDeletion(false, 0)">
+              <nb-icon icon="timer_off"></nb-icon>
               <span>Disable auto-deletion</span>
             </button>
-          </mat-menu>
+          </nb-menu>
         </div>
       </div>
 
@@ -239,9 +242,9 @@
                 <div
                   *ngIf="message.expiresAt"
                   class="temporary-message-indicator"
-                  [matTooltip]="getRemainingTime(message.expiresAt)"
+                  [nbTooltip]="getRemainingTime(message.expiresAt)"
                 >
-                  <mat-icon>timer</mat-icon>
+                  <nb-icon icon="timer"></nb-icon>
                 </div>
 
                 <!-- Message Text -->
@@ -270,13 +273,13 @@
                       class="file-attachment"
                       (click)="downloadAttachment(attachment)"
                     >
-                      <mat-icon>{{ getFileIcon(attachment) }}</mat-icon>
+                      <nb-icon icon="{{ getFileIcon(attachment) }}"></nb-icon>
                       <div class="file-info">
                         <div class="file-name">{{ attachment.name }}</div>
                         <div class="file-size">{{ formatFileSize(attachment.size) }}</div>
                       </div>
-                      <button mat-icon-button>
-                        <mat-icon>download</mat-icon>
+                      <button nbButton ghost>
+                        <nb-icon icon="download"></nb-icon>
                       </button>
                     </div>
                   </div>
@@ -289,18 +292,18 @@
                   <span
                     *ngIf="message.expiresAt"
                     class="message-expiry"
-                    [matTooltip]="getRemainingTime(message.expiresAt)"
+                    [nbTooltip]="getRemainingTime(message.expiresAt)"
                   >
-                    <mat-icon class="expiry-icon">timer</mat-icon>
+                    <nb-icon class="expiry-icon">timer"></nb-icon>
                   </span>
                   <span
                     *ngIf="message.sender.id === currentUserId"
                     class="message-status"
                     [class.read]="message.read"
                   >
-                    <mat-icon class="status-icon">{{
-                      message.read ? 'done_all' : 'done'
-                    }}</mat-icon>
+                    <nb-icon class="status-icon"
+                      >{{ message.read ? 'done_all' : 'done' }}"></nb-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -309,9 +312,9 @@
               <span
                 *ngIf="message.expiresAt"
                 class="message__expiry"
-                [matTooltip]="getRemainingTime(message.expiresAt)"
+                [nbTooltip]="getRemainingTime(message.expiresAt)"
               >
-                <mat-icon [class.rotating]="isAboutToExpire(message.expiresAt)">timer</mat-icon>
+                <nb-icon [class.rotating]="isAboutToExpire(message.expiresAt)">timer"></nb-icon>
               </span>
             </div>
           </div>
@@ -336,7 +339,7 @@
 
         <!-- Empty State -->
         <div *ngIf="messages.length === 0" class="empty-messages">
-          <mat-icon>chat</mat-icon>
+          <nb-icon icon="chat"></nb-icon>
           <h3>No messages yet</h3>
           <p>Start the conversation by sending a message below!</p>
         </div>
@@ -345,14 +348,14 @@
       <!-- Reply Preview (if replying to a message) -->
       <div *ngIf="replyingTo" class="reply-preview">
         <div class="reply-content">
-          <mat-icon>reply</mat-icon>
+          <nb-icon icon="reply"></nb-icon>
           <div class="reply-text">
             <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
             <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
           </div>
         </div>
-        <button mat-icon-button (click)="cancelReply()">
-          <mat-icon>close</mat-icon>
+        <button nbButton ghost (click)="cancelReply()">
+          <nb-icon icon="close"></nb-icon>
         </button>
       </div>
 
@@ -361,43 +364,44 @@
         <!-- Reply Preview -->
         <div class="reply-preview" *ngIf="replyingTo">
           <div class="reply-content">
-            <mat-icon>reply</mat-icon>
+            <nb-icon icon="reply"></nb-icon>
             <div class="reply-text">
               <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
               <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
             </div>
           </div>
-          <button mat-icon-button (click)="cancelReply()">
-            <mat-icon>close</mat-icon>
+          <button nbButton ghost (click)="cancelReply()">
+            <nb-icon icon="close"></nb-icon>
           </button>
         </div>
 
         <!-- Temporary Message Mode Indicator -->
         <div class="temp-message-indicator" *ngIf="temporaryMessageMode">
-          <mat-icon>timer</mat-icon>
+          <nb-icon icon="timer"></nb-icon>
           <span>Temporary message mode: {{ formatTTL(temporaryMessageTTL) }}</span>
-          <button mat-icon-button (click)="toggleTemporaryMessageMode()">
-            <mat-icon>close</mat-icon>
+          <button nbButton ghost (click)="toggleTemporaryMessageMode()">
+            <nb-icon icon="close"></nb-icon>
           </button>
         </div>
 
         <!-- Input Controls -->
         <div class="input-controls">
           <!-- Attachment Button -->
-          <button mat-icon-button (click)="openAttachmentMenu()" matTooltip="Add attachment">
-            <mat-icon>attach_file</mat-icon>
+          <button nbButton ghost (click)="openAttachmentMenu()" nbTooltip="Add attachment">
+            <nb-icon icon="attach_file"></nb-icon>
           </button>
 
           <!-- Temporary Message Toggle -->
           <button
-            mat-icon-button
+            nbButton
+            ghost
             (click)="toggleTemporaryMessageMode()"
             [class.active]="temporaryMessageMode"
-            [matTooltip]="
+            [nbTooltip]="
               temporaryMessageMode ? 'Disable temporary message' : 'Enable temporary message'
             "
           >
-            <mat-icon>timer</mat-icon>
+            <nb-icon icon="timer"></nb-icon>
           </button>
 
           <!-- Text Input -->
@@ -415,18 +419,19 @@
           </div>
 
           <!-- Emoji Picker -->
-          <button mat-icon-button (click)="toggleEmojiPicker()" matTooltip="Add emoji">
-            <mat-icon>sentiment_satisfied_alt</mat-icon>
+          <button nbButton ghost (click)="toggleEmojiPicker()" nbTooltip="Add emoji">
+            <nb-icon icon="sentiment_satisfied_alt"></nb-icon>
           </button>
 
           <!-- Send Button -->
           <button
-            mat-icon-button
+            nbButton
+            ghost
             (click)="sendMessage()"
             [disabled]="!canSendMessage()"
-            matTooltip="Send message"
+            nbTooltip="Send message"
           >
-            <mat-icon>send</mat-icon>
+            <nb-icon icon="send"></nb-icon>
           </button>
         </div>
 
@@ -434,11 +439,12 @@
         <div class="emoji-picker" *ngIf="showEmojiPicker">
           <div class="emoji-categories">
             <button
-              mat-icon-button
+              nbButton
+              ghost
               *ngFor="let category of emojiCategories"
               (click)="selectEmojiCategory(category)"
             >
-              <mat-icon>{{ category.icon }}</mat-icon>
+              <nb-icon icon="{{ category.icon }}"></nb-icon>
             </button>
           </div>
           <div class="emoji-list">
@@ -454,46 +460,43 @@
       </div>
 
       <!-- Message Settings Menu -->
-      <mat-menu #messageSettings="matMenu">
-        <button
-          mat-menu-item
-          (click)="configureMessageAutoDeletion(!messageAutoDeletionEnabled, 7)"
-        >
-          <mat-icon>{{ messageAutoDeletionEnabled ? 'timer_off' : 'timer' }}</mat-icon>
+      <nb-menu #messageSettings="matMenu">
+        <button nb-menu-item (click)="configureMessageAutoDeletion(!messageAutoDeletionEnabled, 7)">
+          <nb-icon icon="{{ messageAutoDeletionEnabled ? 'timer_off' : 'timer' }}"></nb-icon>
           <span>{{
             messageAutoDeletionEnabled ? 'Disable auto-deletion' : 'Enable auto-deletion'
           }}</span>
         </button>
 
-        <mat-divider></mat-divider>
+        <nb-divider></nb-divider>
 
         <!-- Temporary Message Duration Options -->
-        <button mat-menu-item [matMenuTriggerFor]="tempMessageDuration">
-          <mat-icon>schedule</mat-icon>
+        <button nb-menu-item [nbContextMenu]="tempMessageDuration">
+          <nb-icon icon="schedule"></nb-icon>
           <span>Temporary message duration</span>
         </button>
-      </mat-menu>
+      </nb-menu>
 
       <!-- Temporary Message Duration Submenu -->
-      <mat-menu #tempMessageDuration="matMenu">
-        <button mat-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
-        <button mat-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
-      </mat-menu>
+      <nb-menu #tempMessageDuration="matMenu">
+        <button nb-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
+        <button nb-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
+      </nb-menu>
     </div>
 
     <!-- Empty State (No Conversation Selected) -->
     <div *ngIf="!selectedContactId" class="empty-state">
       <div class="empty-state-content">
-        <mat-icon class="empty-icon">chat</mat-icon>
+        <nb-icon class="empty-icon">chat"></nb-icon>
         <h3>Select a conversation</h3>
         <p>Choose a contact from the list to start chatting</p>
-        <button mat-raised-button color="primary" (click)="openNewMessageDialog()">
-          <mat-icon>add</mat-icon>
+        <button nbButton status="primary" color="primary" (click)="openNewMessageDialog()">
+          <nb-icon icon="add"></nb-icon>
           Start a new chat
         </button>
       </div>
@@ -503,13 +506,13 @@
 
 <!-- New Message Dialog Template -->
 <ng-template #newMessageDialog>
-  <h2 mat-dialog-title>New Message</h2>
-  <mat-dialog-content>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Search contacts</mat-label>
-      <input matInput [(ngModel)]="newMessageSearch" placeholder="Type a name..." />
-      <mat-icon matPrefix>search</mat-icon>
-    </mat-form-field>
+  <h2 nb-dialog-title>New Message</h2>
+  <nb-dialog-content>
+    <nb-form-field appearance="outline" class="full-width">
+      <nb-form-field-label>Search contacts</nb-form-field-label>
+      <input nbInput fullWidth [(ngModel)]="newMessageSearch" placeholder="Type a name..." />
+      <nb-icon matPrefix>search"></nb-icon>
+    </nb-form-field>
 
     <div class="contact-list">
       <div
@@ -531,27 +534,27 @@
         <p>No contacts found</p>
       </div>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-  </mat-dialog-actions>
+  </nb-dialog-content>
+  <nb-dialog-actions align="end">
+    <button nbButton nb-dialog-close>Cancel</button>
+  </nb-dialog-actions>
 </ng-template>
 
 <!-- Image Preview Dialog Template -->
 <ng-template #imagePreviewDialog>
   <div class="image-preview-container">
-    <button mat-icon-button class="close-button" mat-dialog-close>
-      <mat-icon>close</mat-icon>
+    <button nbButton ghost class="close-button" nb-dialog-close>
+      <nb-icon icon="close"></nb-icon>
     </button>
 
     <img [src]="previewImage?.url" [alt]="previewImage?.name" class="preview-image" />
 
     <div class="image-preview-actions">
-      <button mat-icon-button matTooltip="Download" (click)="downloadImage()">
-        <mat-icon>download</mat-icon>
+      <button nbButton ghost nbTooltip="Download" (click)="downloadImage()">
+        <nb-icon icon="download"></nb-icon>
       </button>
-      <button mat-icon-button matTooltip="Share" (click)="shareImage()">
-        <mat-icon>share</mat-icon>
+      <button nbButton ghost nbTooltip="Share" (click)="shareImage()">
+        <nb-icon icon="share"></nb-icon>
       </button>
     </div>
   </div>
@@ -559,13 +562,13 @@
 
 <!-- Search in Chat Dialog Template -->
 <ng-template #searchInChatDialog>
-  <h2 mat-dialog-title>Search in Conversation</h2>
-  <mat-dialog-content>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Search messages</mat-label>
-      <input matInput [(ngModel)]="chatSearchQuery" placeholder="Type to search..." />
-      <mat-icon matPrefix>search</mat-icon>
-    </mat-form-field>
+  <h2 nb-dialog-title>Search in Conversation</h2>
+  <nb-dialog-content>
+    <nb-form-field appearance="outline" class="full-width">
+      <nb-form-field-label>Search messages</nb-form-field-label>
+      <input nbInput fullWidth [(ngModel)]="chatSearchQuery" placeholder="Type to search..." />
+      <nb-icon matPrefix>search"></nb-icon>
+    </nb-form-field>
 
     <div class="search-results">
       <div
@@ -582,24 +585,24 @@
         <p>No messages found</p>
       </div>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-  </mat-dialog-actions>
+  </nb-dialog-content>
+  <nb-dialog-actions align="end">
+    <button nbButton nb-dialog-close>Close</button>
+  </nb-dialog-actions>
 </ng-template>
 
 <!-- Media Gallery Dialog Template -->
 <ng-template #mediaGalleryDialog>
-  <h2 mat-dialog-title>Media Gallery</h2>
-  <mat-dialog-content>
+  <h2 nb-dialog-title>Media Gallery</h2>
+  <nb-dialog-content>
     <div class="gallery-tabs">
-      <button mat-button [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">
+      <button nbButton [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">
         Images
       </button>
-      <button mat-button [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">
+      <button nbButton [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">
         Files
       </button>
-      <button mat-button [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">
+      <button nbButton [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">
         Links
       </button>
     </div>
@@ -626,7 +629,7 @@
         class="gallery-file"
         (click)="downloadAttachment(file)"
       >
-        <mat-icon>{{ getFileIcon(file) }}</mat-icon>
+        <nb-icon icon="{{ getFileIcon(file) }}"></nb-icon>
         <div class="file-info">
           <div class="file-name">{{ file.name }}</div>
           <div class="file-meta">
@@ -634,8 +637,8 @@
             <span class="file-date">{{ file.timestamp | date: 'shortDate' }}</span>
           </div>
         </div>
-        <button mat-icon-button>
-          <mat-icon>download</mat-icon>
+        <button nbButton ghost>
+          <nb-icon icon="download"></nb-icon>
         </button>
       </div>
 
@@ -647,7 +650,7 @@
     <!-- Links Tab -->
     <div *ngIf="galleryTab === 'links'" class="gallery-links">
       <div *ngFor="let link of galleryLinks" class="gallery-link" (click)="openLink(link.url)">
-        <mat-icon>link</mat-icon>
+        <nb-icon icon="link"></nb-icon>
         <div class="link-info">
           <div class="link-title">{{ link.title || link.url }}</div>
           <div class="link-url">{{ link.url }}</div>
@@ -659,8 +662,8 @@
         <p>No links shared in this conversation</p>
       </div>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-  </mat-dialog-actions>
+  </nb-dialog-content>
+  <nb-dialog-actions align="end">
+    <button nbButton nb-dialog-close>Close</button>
+  </nb-dialog-actions>
 </ng-template>

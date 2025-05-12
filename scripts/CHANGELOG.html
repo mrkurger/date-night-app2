@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scripts - Changelog</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .changelog-entry {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .changelog-date {
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .changelog-type {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+
+      .type-improvement {
+        background-color: #2ecc71;
+        color: white;
+      }
+
+      .type-bugfix {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .type-feature {
+        background-color: #3498db;
+        color: white;
+      }
+
+      .type-security {
+        background-color: #f39c12;
+        color: white;
+      }
+
+      .changelog-files {
+        margin-top: 0.5rem;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 0.5rem;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Scripts - Changelog</h1>
+
+      <div class="changelog-entry">
+        <h3><span class="changelog-date">2025-05-01</span> - Script Optimizations</h3>
+        <div>
+          <span class="changelog-type type-improvement">IMPROVEMENT</span>
+          <strong>Removed hardcoded paths from shell scripts</strong>
+        </div>
+        <p>
+          Updated shell scripts to use relative paths instead of hardcoded absolute paths, making
+          them more portable and easier to use in different environments.
+        </p>
+        <div class="changelog-files">
+          Files modified:
+          <ul>
+            <li>fix-project.sh</li>
+            <li>make-scripts-executable.sh</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <h3><span class="changelog-date">2025-05-01</span> - Linting Script Improvements</h3>
+        <div>
+          <span class="changelog-type type-improvement">IMPROVEMENT</span>
+          <strong>Improved linting scripts to properly report errors</strong>
+        </div>
+        <p>
+          Modified linting scripts to fail when there are linting errors, while adding separate
+          check scripts that don't fail. This ensures that CI/CD pipelines can properly detect
+          linting issues.
+        </p>
+        <div class="changelog-files">
+          Files modified:
+          <ul>
+            <li>package.json</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <h3><span class="changelog-date">2025-05-01</span> - Safer Audit Fix</h3>
+        <div>
+          <span class="changelog-type type-improvement">IMPROVEMENT</span>
+          <span class="changelog-type type-security">SECURITY</span>
+          <strong>Made npm audit fix safer by default</strong>
+        </div>
+        <p>
+          Modified the audit-fix script to use the standard approach without --force by default, and
+          added separate scripts for force mode and for running in all directories. This prevents
+          accidental breaking changes.
+        </p>
+        <div class="changelog-files">
+          Files modified:
+          <ul>
+            <li>package.json</li>
+            <li>fix-project.sh</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <h3>
+          <span class="changelog-date">2025-05-01</span> - Dependency Installation Consolidation
+        </h3>
+        <div>
+          <span class="changelog-type type-improvement">IMPROVEMENT</span>
+          <strong>Consolidated duplicate dependency installation scripts</strong>
+        </div>
+        <p>
+          Combined functionality from install-missing-deps.js and install-missing-dependencies.js
+          into a single script to reduce duplication and improve maintainability.
+        </p>
+        <div class="changelog-files">
+          Files modified:
+          <ul>
+            <li>scripts/install-missing-deps.js</li>
+            <li>fix-project.sh</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <h3><span class="changelog-date">2025-05-01</span> - Script Documentation</h3>
+        <div>
+          <span class="changelog-type type-feature">FEATURE</span>
+          <strong>Added comprehensive documentation for npm scripts</strong>
+        </div>
+        <p>
+          Created detailed documentation for all npm scripts in the project, including their
+          purpose, usage, and any potential issues or notes.
+        </p>
+        <div class="changelog-files">
+          Files added:
+          <ul>
+            <li>scripts/NPM_SCRIPTS.html</li>
+            <li>scripts/CHANGELOG.html</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

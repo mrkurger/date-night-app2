@@ -1,0 +1,11 @@
+<svg
+  *ngIf="name"
+  [ngClass]="iconClasses"
+  [attr.viewBox]="viewBox"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <use [attr.xlink:href]="iconHref"></use>
+</svg>
+<span *ngIf="!name" class="icon icon--placeholder" [ngClass]="iconClasses"></span>

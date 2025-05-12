@@ -6,7 +6,7 @@
     "outDir": "./out-tsc/spec",
     "module": "CommonJS",
     "target": "ES2022",
-    "types": ["jasmine", "node"],
+    "types": ["jasmine", "node", "@types/jasmine"],
     "baseUrl": "./",
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
@@ -18,19 +18,5 @@
     "moduleResolution": "node"
   },
   "files": ["src/jasmine.d.ts"],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
-}
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noImplicitAny": false,
-    "noEmitOnError": false,
-    "moduleResolution": "node"
-  },
-  "files": ["src/test.d.ts", "src/typings.d.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

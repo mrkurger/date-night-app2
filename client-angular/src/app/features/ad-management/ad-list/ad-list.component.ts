@@ -10,7 +10,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { MaterialModule } from '../../../shared/material.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -20,7 +20,7 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [CommonModule, RouterModule, SharedModule],
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];

@@ -7,29 +7,211 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../../core/models/ad.interface';
 import { UserPreferencesService } from '../../../core/services/user-preferences.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatBadgeModule } from '@angular/material/badge';
 import { Subscription } from 'rxjs';
+import {
+  NbIconModule,
+  NbButtonModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbCardModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-card',
-  templateUrl: './ad-card.component.html',
-  styleUrls: ['./ad-card.component.scss'],
+  template: `
+    <nb-card [ngClass]="[size, density]" class="ad-card">
+      <nb-card-header>
+        <div class="ad-header">
+          <div class="ad-badges">
+            <nb-badge *ngIf="isFeatured" text="Featured" status="primary"></nb-badge>
+            <nb-badge *ngIf="isNew" text="New" status="success"></nb-badge>
+            <nb-badge *ngIf="isTrending" text="Trending" status="warning"></nb-badge>
+          </div>
+          <span class="ad-price">{{ ad?.price | currency }}</span>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="ad-images">
+          <img [src]="getPrimaryImage()" [alt]="ad?.title" class="primary-image" />
+          <img
+            *ngIf="getSecondaryImage()"
+            [src]="getSecondaryImage()"
+            [alt]="ad?.title"
+            class="secondary-image"
+          />
+          <span *ngIf="getImageCount() > 1" class="image-count">+{{ getImageCount() - 1 }}</span>
+        </div>
+        <h3 class="ad-title">{{ ad?.title }}</h3>
+        <p class="ad-description">{{ ad?.description }}</p>
+        <div class="ad-location">
+          <nb-icon icon="pin-outline"></nb-icon>
+          <span>{{ ad?.location }}</span>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <div class="ad-actions">
+          <button nbButton ghost size="small" (click)="onLike($event)">
+            <nb-icon [icon]="isFavorite ? 'heart' : 'heart-outline'"></nb-icon>
+          </button>
+          <button nbButton ghost size="small" (click)="onShare($event)">
+            <nb-icon icon="share-outline"></nb-icon>
+          </button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .ad-card {
+        height: 100%;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .ad-card:hover {
+        transform: translateY(-4px);
+      }
+
+      /* Header styles */
+      .ad-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .ad-badges {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .ad-price {
+        font-weight: 600;
+        color: var(--text-primary-color);
+      }
+
+      /* Image styles */
+      .ad-images {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+        margin-bottom: 1rem;
+      }
+
+      .primary-image,
+      .secondary-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .secondary-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+
+      .ad-images:hover .secondary-image {
+        opacity: 1;
+      }
+
+      .image-count {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+      }
+
+      /* Content styles */
+      .ad-title {
+        margin: 0 0 0.5rem;
+        font-size: var(--text-heading-6-font-size);
+        color: var(--text-basic-color);
+      }
+
+      .ad-description {
+        margin: 0 0 1rem;
+        font-size: var(--text-paragraph-font-size);
+        color: var(--text-hint-color);
+      }
+
+      .ad-location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-hint-color);
+        font-size: 0.875rem;
+      }
+
+      /* Action styles */
+      .ad-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+      }
+
+      /* Size variants */
+      :host-context(.size-sm) .ad-images {
+        height: 160px;
+      }
+
+      :host-context(.size-md) .ad-images {
+        height: 200px;
+      }
+
+      :host-context(.size-lg) .ad-images {
+        height: 240px;
+      }
+
+      /* Density variants */
+      :host-context(.density-compact) {
+        .ad-description {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      :host-context(.density-comfortable) {
+        .ad-description {
+          margin-bottom: 1rem;
+        }
+      }
+
+      :host-context(.density-spacious) {
+        .ad-description {
+          margin-bottom: 1.5rem;
+        }
+      }
+    `,
+  ],
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatBadgeModule,
+    NbIconModule,
+    NbButtonModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbCardModule,
   ],
 })
 export class AdCardComponent implements OnInit, OnDestroy {
@@ -42,33 +224,36 @@ export class AdCardComponent implements OnInit, OnDestroy {
   @Input() isFeatured = false;
   @Input() isNew = false;
   @Input() isTrending = false;
+  @Input() cardSize: 'small' | 'medium' | 'large' = 'medium';
+  @Input() contentDensity: 'comfortable' | 'compact' | 'condensed' = 'comfortable';
+  @Input() isFavorite = false;
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  @Input() density: 'compact' | 'comfortable' | 'spacious' = 'comfortable';
 
   @Output() viewDetails = new EventEmitter<string>();
   @Output() like = new EventEmitter<string>();
   @Output() chat = new EventEmitter<string>();
   @Output() share = new EventEmitter<string>();
 
-  // User preference properties
-  cardSize: 'small' | 'medium' | 'large' = 'medium';
-  contentDensity: 'comfortable' | 'compact' | 'condensed' = 'comfortable';
-
   private subscriptions: Subscription[] = [];
 
   constructor(private userPreferencesService: UserPreferencesService) {}
 
   ngOnInit(): void {
-    // Load initial preferences
-    const preferences = this.userPreferencesService.getPreferences();
-    this.cardSize = preferences.cardSize;
-    this.contentDensity = preferences.contentDensity;
+    // Load initial preferences if not provided as inputs
+    if (!this.cardSize || !this.contentDensity) {
+      const preferences = this.userPreferencesService.getPreferences();
+      if (!this.cardSize) this.cardSize = preferences.cardSize;
+      if (!this.contentDensity) this.contentDensity = preferences.contentDensity;
 
-    // Subscribe to preference changes
-    this.subscriptions.push(
-      this.userPreferencesService.preferences$.subscribe((prefs) => {
-        this.cardSize = prefs.cardSize;
-        this.contentDensity = prefs.contentDensity;
-      }),
-    );
+      // Subscribe to preference changes only if not provided as inputs
+      this.subscriptions.push(
+        this.userPreferencesService.preferences$.subscribe((prefs) => {
+          if (!this.cardSize) this.cardSize = prefs.cardSize;
+          if (!this.contentDensity) this.contentDensity = prefs.contentDensity;
+        }),
+      );
+    }
   }
 
   ngOnDestroy(): void {

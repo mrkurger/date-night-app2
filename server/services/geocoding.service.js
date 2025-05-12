@@ -14,9 +14,21 @@ import Location from '../models/location.model.js'; // Added .js
 import { AppError } from '../middleware/errorHandler.js'; // Added .js
 import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
+import LRU from 'lru-cache';
+import fetch from 'node-fetch';
 
 // Initialize cache with 1 day TTL and check period of 1 hour
 const cache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 });
+const lruCache = new LRU({ max: 500, ttl: 1000 * 60 * 5 }); // 5m
+
+export async function geocode(addr) {
+  const key = addr.toLowerCase();
+  if (lruCache.has(key)) return lruCache.get(key);
+  const res = await fetch(`https://maps.api/geocode?addr=${encodeURIComponent(addr)}`);
+  const data = await res.json();
+  lruCache.set(key, data);
+  return data;
+}
 
 /**
  * Geocoding service for converting addresses to coordinates and vice versa

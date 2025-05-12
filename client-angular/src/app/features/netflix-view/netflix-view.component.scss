@@ -1,116 +1,86 @@
-@use 'src/styles/design-system/index.scss' as ds;
 @use 'sass:color';
-@use '../../core/design/design-tokens' as tokens;
-
-// Netflix View Component Styles with Emerald Integration
-// Variables for customization
-$hero-section-height: 70vh;
-$card-animation-duration: 300ms;
+@use 'design-tokens' as dt;
 
 :host {
   display: block;
-
-  // Override Emerald component variables for consistent styling
-  --primary-500: #{color-primary};
-  --primary-600: #{tokens.$color-primary-dark};
-  --primary-700: #{color.adjust(tokens.$color-primary-dark, $lightness: -10%)};
-  --neutral-100: #{tokens.$color-white};
-  --neutral-900: #{tokens.$color-black};
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background-basic-color-1);
 }
 
 .netflix-container {
-  margin-bottom: spacing-16;
+  width: 100%;
+  min-height: 100vh;
 }
 
-// Hero Section Customization
-::ng-deep emerald-page-header {
-  margin-bottom: tokens.$spacing-12;
+// Hero Section
+.hero-card {
+  margin-bottom: var(--card-margin-bottom);
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
 
-  .emerald-page-header {
-    height: $hero-section-height;
-    min-height: 600px;
+  nb-card-header {
+    background-color: var(--card-header-basic-background-color);
+    border-bottom: none;
+    padding: var(--card-padding);
 
-    &__background {
-      &::after {
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.1) 0%,
-          rgba(0, 0, 0, 0.5) 50%,
-          rgba(0, 0, 0, 0.8) 100%
-        );
-      }
-    }
-
-    &__content {
-      max-width: 800px;
-    }
-
-    &__title {
-      font-size: tokens.$font-size-3xl;
-      font-weight: tokens.$font-weight-bold;
-      margin-bottom: tokens.$spacing-4;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    &__subtitle {
-      font-size: tokens.$font-size-lg;
-      margin-bottom: tokens.$spacing-4;
+    .hero-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-
-      &::before {
-        content: '\f3c5'; // Map marker icon
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        margin-right: tokens.$spacing-2;
-        color: tokens.$primary-500;
-      }
+      gap: var(--card-padding);
     }
 
-    &__actions {
-      margin-top: tokens.$spacing-6;
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
     }
   }
-}
 
-// Hero content styling
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  gap: tokens.$spacing-4;
-}
+  nb-card-body {
+    height: 70vh;
+    padding: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-// Hero description styling
-.hero-description {
-  font-size: tokens.$font-size-lg;
-  margin: tokens.$spacing-6 0;
-  line-height: 1.7;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3; // Standard property for compatibility
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  color: tokens.$neutral-100;
-}
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(var(--background-basic-color-1), 0.1),
+        rgba(var(--background-basic-color-1), 0.9)
+      );
+    }
 
-// Hero tags styling
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: tokens.$spacing-2;
-  margin-top: tokens.$spacing-2;
+    .hero-content {
+      position: relative;
+      padding: var(--card-padding);
+      color: var(--text-basic-color);
+      max-width: 800px;
+      margin-top: auto;
 
-  ::ng-deep emerald-label {
-    margin-bottom: tokens.$spacing-2;
+      h1 {
+        font-size: var(--text-heading-1-font-size);
+        margin-bottom: 1rem;
+      }
 
-    .emerald-label {
-      background-color: rgba(tokens.$neutral-900, 0.6);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(tokens.$neutral-100, 0.2);
+      .hero-description {
+        font-size: var(--text-paragraph-font-size);
+        margin-bottom: 1.5rem;
+      }
 
-      &:hover {
-        background-color: rgba(tokens.$neutral-900, 0.8);
+      .hero-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
       }
     }
   }
@@ -118,51 +88,24 @@ $card-animation-duration: 300ms;
 
 // Main Content
 .netflix-content {
-  padding-bottom: tokens.$spacing-16;
+  padding: var(--layout-padding);
 }
 
 // Filters Bar
 .filters-bar {
-  margin-bottom: tokens.$spacing-8;
-  position: relative;
-  z-index: 1;
-}
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  background-color: var(--background-basic-color-2);
 
-.filters-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: tokens.$spacing-4 0;
-}
+  .filters-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.section-title {
-  font-family: tokens.$font-family-base;
-  font-size: tokens.$font-size-2xl;
-  font-weight: tokens.$font-weight-bold;
-  margin: 0;
-  color: tokens.$neutral-900;
-}
-
-.filter-button {
-  background-color: tokens.$neutral-100;
-  border: none;
-  border-radius: tokens.$border-radius-md;
-  padding: tokens.$spacing-2 tokens.$spacing-4;
-  font-weight: tokens.$font-weight-medium;
-  font-size: tokens.$font-size-sm;
-  color: tokens.$neutral-700;
-  box-shadow: tokens.$shadow-sm;
-  transition: all tokens.$transition-normal tokens.$transition-ease;
-
-  &:hover {
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-2px);
-    color: tokens.$primary-500;
-  }
-
-  i {
-    margin-right: tokens.$spacing-2;
-    color: tokens.$primary-500;
+    .section-title {
+      font-size: var(--text-heading-4-font-size);
+      margin: 0;
+    }
   }
 }
 
@@ -172,15 +115,12 @@ $card-animation-duration: 300ms;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
-  text-align: center;
-  padding: tokens.$spacing-8 0;
-}
+  min-height: 300px;
+  gap: 1rem;
 
-.loading-text {
-  margin-top: tokens.$spacing-4;
-  color: tokens.$neutral-600;
-  font-weight: tokens.$font-weight-medium;
+  .loading-text {
+    color: var(--text-hint-color);
+  }
 }
 
 // Error State
@@ -189,277 +129,171 @@ $card-animation-duration: 300ms;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  min-height: 300px;
+  gap: 1rem;
   text-align: center;
-  padding: tokens.$spacing-8;
-}
 
-.error-icon {
-  font-size: tokens.$font-size-4xl;
-  color: tokens.$error;
-  margin-bottom: tokens.$spacing-4;
-}
-
-.error-text {
-  font-size: tokens.$font-size-xl;
-  font-weight: tokens.$font-weight-medium;
-  color: tokens.$neutral-800;
-  margin-bottom: tokens.$spacing-6;
-}
-
-.retry-button {
-  padding: tokens.$spacing-2 tokens.$spacing-6;
-  background-color: tokens.$primary-500;
-  color: tokens.$neutral-100;
-  border: none;
-  border-radius: tokens.$border-radius-md;
-  font-weight: tokens.$font-weight-medium;
-  transition: all tokens.$transition-normal tokens.$transition-ease;
-
-  &:hover {
-    background-color: tokens.$primary-600;
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-md;
+  nb-icon {
+    font-size: 3rem;
   }
 
-  i {
-    margin-right: tokens.$spacing-2;
+  .error-text {
+    color: var(--text-danger-color);
+    font-size: var(--text-subtitle-font-size);
   }
 }
 
 // Netflix-style Rows
 .netflix-rows {
-  margin-top: tokens.$spacing-8;
+  .row-section {
+    margin-bottom: 3rem;
+
+    .row-title {
+      font-size: var(--text-heading-5-font-size);
+      margin-bottom: 1rem;
+      color: var(--text-basic-color);
+    }
+
+    .empty-row {
+      padding: 2rem;
+      text-align: center;
+      background-color: var(--background-basic-color-2);
+      border-radius: var(--card-border-radius);
+
+      .empty-row-text {
+        color: var(--text-hint-color);
+      }
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 0.5rem;
+
+      .netflix-card {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        nb-card-header {
+          padding: var(--card-padding);
+          background-color: var(--card-header-basic-background-color);
+        }
+
+        nb-card-body {
+          height: 200px;
+          padding: 0;
+          position: relative;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+              to bottom,
+              rgba(var(--background-basic-color-1), 0.1),
+              rgba(var(--background-basic-color-1), 0.9)
+            );
+          }
+
+          .card-content {
+            position: relative;
+            padding: var(--card-padding);
+            color: var(--text-basic-color);
+
+            h3 {
+              font-size: var(--text-subtitle-font-size);
+              margin-bottom: 0.5rem;
+            }
+
+            p {
+              font-size: var(--text-caption-font-size);
+              margin-bottom: 1rem;
+            }
+
+            .card-tags {
+              display: flex;
+              gap: 0.5rem;
+              flex-wrap: wrap;
+            }
+          }
+        }
+
+        nb-card-footer {
+          display: flex;
+          justify-content: space-around;
+          padding: var(--card-padding);
+          background-color: var(--card-footer-basic-background-color);
+        }
+      }
+    }
+  }
 }
 
-.row-section {
-  margin-bottom: tokens.$spacing-12;
-}
-
-.row-title {
-  font-family: tokens.$font-family-base;
-  font-size: tokens.$font-size-xl;
-  font-weight: tokens.$font-weight-semibold;
-  margin-bottom: tokens.$spacing-4;
-  color: tokens.$neutral-800;
-}
-
-// Empty state
-.empty-row {
+// Floating Action Button
+.floating-action-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 200px;
-  background-color: tokens.$neutral-200;
-  border-radius: tokens.$border-radius-lg;
-  margin: tokens.$spacing-4 0;
-}
+  justify-content: center;
+  box-shadow: var(--button-hero-shadow);
 
-.empty-row-text {
-  color: tokens.$neutral-600;
-  font-weight: tokens.$font-weight-medium;
-}
-
-// CardGrid customization
-::ng-deep emerald-card-grid {
-  .emerald-card-grid {
-    &__netflix-row {
-      position: relative;
-      overflow: visible;
-
-      // Add navigation arrows
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 60px;
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      &::before {
-        left: 0;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-      }
-
-      &::after {
-        right: 0;
-        background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-      }
-    }
+  nb-icon {
+    font-size: 1.5rem;
   }
 }
 
-// AppCard customization
-::ng-deep emerald-app-card {
-  .emerald-app-card {
-    transition:
-      transform $card-animation-duration tokens.$transition-ease,
-      box-shadow $card-animation-duration tokens.$transition-ease;
+// Dialog Styles
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    &:hover {
-      transform: translateY(-8px) scale(1.05);
-      z-index: 5;
-      box-shadow: tokens.$shadow-lg;
-    }
-
-    &--netflix {
-      height: 280px;
-
-      .emerald-app-card__content-overlay {
-        background: linear-gradient(
-          to top,
-          rgba(tokens.$neutral-900, 0.8),
-          rgba(tokens.$neutral-900, 0)
-        );
-      }
-    }
-
-    &__title {
-      font-weight: tokens.$font-weight-bold;
-    }
-
-    &__fab {
-      &--left {
-        background-color: tokens.$error;
-      }
-
-      &--right {
-        background-color: tokens.$primary-500;
-      }
-    }
+  h5 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: var(--text-heading-6-font-size);
   }
 }
 
-// Modal Styles
-.modal-content {
-  border-radius: tokens.$border-radius-lg;
-  border: none;
-  box-shadow: tokens.$shadow-xl;
-}
-
-.modal-header {
-  border-bottom: 1px solid tokens.$neutral-300;
-  padding: tokens.$spacing-4 tokens.$spacing-6;
-}
-
-.modal-title {
-  font-family: tokens.$font-family-base;
-  font-weight: tokens.$font-weight-semibold;
-  color: tokens.$neutral-800;
-}
-
-.modal-body {
-  padding: tokens.$spacing-6;
-}
-
-.modal-footer {
-  border-top: 1px solid tokens.$neutral-300;
-  padding: tokens.$spacing-4 tokens.$spacing-6;
-}
-
-// Floating Action Button customization
-::ng-deep emerald-floating-action-button {
-  .emerald-floating-action-button {
-    &__button {
-      background-color: tokens.$primary-500;
-
-      &:hover {
-        background-color: tokens.$primary-600;
-      }
-    }
-  }
-}
-
-// Toggle customization
-::ng-deep emerald-toggle {
-  .emerald-toggle {
-    &__switch {
-      &--checked {
-        background-color: tokens.$primary-500;
-      }
-    }
-  }
-}
-
-// Responsive Adjustments
-@media (max-width: tokens.$breakpoint-lg) {
-  ::ng-deep emerald-page-header {
-    .emerald-page-header {
-      height: 60vh;
-      min-height: 500px;
-
-      &__title {
-        font-size: tokens.$font-size-2xl;
-      }
-    }
-  }
-
-  .hero-description {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: tokens.$breakpoint-md) {
-  ::ng-deep emerald-page-header {
-    .emerald-page-header {
-      height: 50vh;
-      min-height: 400px;
-
-      &__actions {
-        flex-wrap: wrap;
-        gap: tokens.$spacing-2;
-      }
-    }
-  }
-
-  .hero-description {
-    font-size: tokens.$font-size-base;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-
-  .section-title {
-    font-size: tokens.$font-size-xl;
-  }
-}
-
-@media (max-width: tokens.$breakpoint-sm) {
-  ::ng-deep emerald-page-header {
-    .emerald-page-header {
-      height: 40vh;
-      min-height: 300px;
-
-      &__title {
-        font-size: tokens.$font-size-xl;
-      }
-
-      &__subtitle {
-        font-size: tokens.$font-size-base;
-      }
-    }
-  }
-
-  .hero-description {
-    font-size: tokens.$font-size-sm;
-    margin: tokens.$spacing-4 0;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-
-  .section-title {
-    font-size: tokens.$font-size-lg;
-  }
-
-  .filters-content {
+nb-card-body {
+  form {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: tokens.$spacing-2;
+    gap: 1.5rem;
   }
+}
 
-  .filter-button {
-    margin-top: tokens.$spacing-2;
+.toggle-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: var(--text-hint-color);
   }
+}
+
+nb-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }

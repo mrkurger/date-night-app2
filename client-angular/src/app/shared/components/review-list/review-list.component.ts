@@ -7,15 +7,19 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit } from '@angular/core';
+import { NbDividerComponent } from '../custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { RouterModule } from '@angular/router';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbDividerModule,
+  NbTagModule,
+  NbTooltipModule,
+} from '@nebular/theme';
 import { Review } from '../../../core/models/review.interface';
 import { ReviewService } from '../../../core/services/review.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
@@ -29,42 +33,44 @@ import { DialogService } from '../../../core/services/dialog.service';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatChipsModule,
-    MatTooltipModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbDividerModule,
+    NbTagModule,
+    NbTooltipModule,
     RouterModule,
     StarRatingComponent,
     TimeAgoPipe,
+    NbDividerComponent,
   ],
   template: `
     <div class="reviews-container">
-      <h3 class="reviews-title">{{ title }} ({{ reviews.length }})</h3>
+      <h3 class="reviews-title">
+      </h3>
 
       <div *ngIf="reviews.length === 0" class="no-reviews">
         <p>No reviews yet. Be the first to leave a review!</p>
       </div>
 
-      <mat-card *ngFor="let review of reviews" class="review-card">
-        <mat-card-header>
+      <nb-card *ngFor="let review of reviews" class="review-card">
+        <nb-card-header>
           <img
             mat-card-avatar
             [src]="review.reviewer.profileImage || 'assets/images/default-avatar.png'"
             [alt]="review.reviewer.username"
             class="reviewer-avatar"
           />
-          <mat-card-title>
+          <nb-card-title>
             <a [routerLink]="['/profile', review.reviewer._id]">{{ review.reviewer.username }}</a>
           </mat-card-title>
-          <mat-card-subtitle>
+          <nb-card-subtitle>
             <app-star-rating [rating]="review.rating" [readonly]="true"></app-star-rating>
             <span class="review-date">{{ review.createdAt | timeAgo }}</span>
           </mat-card-subtitle>
-        </mat-card-header>
+        </nb-card-header>
 
-        <mat-card-content>
+        <nb-card-content>
           <h4 class="review-title">{{ review.title }}</h4>
           <p class="review-content">{{ review.content }}</p>
 
@@ -104,12 +110,12 @@ import { DialogService } from '../../../core/services/dialog.service';
           </div>
 
           <div class="verified-badge" *ngIf="review.isVerifiedMeeting">
-            <mat-icon>verified</mat-icon>
+            <nb-icon icon="verified"></nb-icon>
             <span>Verified Meeting</span>
           </div>
-        </mat-card-content>
+        </nb-card-body>
 
-        <mat-divider *ngIf="review.advertiserResponse"></mat-divider>
+        <nb-divider *ngIf="review.advertiserResponse"></nb-divider>
 
         <div class="advertiser-response" *ngIf="review.advertiserResponse">
           <h5>Response from advertiser</h5>
@@ -117,14 +123,14 @@ import { DialogService } from '../../../core/services/dialog.service';
           <small>{{ review.advertiserResponse.date | timeAgo }}</small>
         </div>
 
-        <mat-card-actions align="end">
+        <nb-card-actions align="end">
           <button
             mat-button
             color="primary"
             (click)="markHelpful(review._id)"
             [disabled]="!isAuthenticated || helpfulMarked.includes(review._id)"
           >
-            <mat-icon>thumb_up</mat-icon>
+            <nb-icon icon="thumb_up"></nb-icon>
             Helpful ({{ review.helpfulVotes }})
           </button>
 
@@ -134,7 +140,7 @@ import { DialogService } from '../../../core/services/dialog.service';
             (click)="openReportDialog(review._id)"
             [disabled]="!isAuthenticated || reportedReviews.includes(review._id)"
           >
-            <mat-icon>flag</mat-icon>
+            <nb-icon icon="flag"></nb-icon>
             Report
           </button>
 
@@ -144,15 +150,15 @@ import { DialogService } from '../../../core/services/dialog.service';
             color="accent"
             (click)="openResponseDialog(review._id)"
           >
-            <mat-icon>reply</mat-icon>
+            <nb-icon icon="reply"></nb-icon>
             Respond
           </button>
-        </mat-card-actions>
-      </mat-card>
+        </nb-card-footer>
+      </nb-card>
 
       <div class="load-more" *ngIf="hasMoreReviews">
         <button mat-button color="primary" (click)="loadMoreReviews()" [disabled]="loading">
-          <mat-icon>more_horiz</mat-icon>
+          <nb-icon icon="more_horiz"></nb-icon>
           Load More Reviews
         </button>
       </div>

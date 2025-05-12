@@ -7,19 +7,23 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-// Material Imports
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbAlertModule,
+} from '@nebular/theme';
 
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -34,13 +38,16 @@ import { UserProfile } from '../../core/models/user.interface';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatCheckboxModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbAlertModule,
   ],
-  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
@@ -48,6 +55,7 @@ export class ProfileComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -155,9 +163,8 @@ export class ProfileComponent implements OnInit {
     });
 
     // Add profile image if selected
-    const fileInput = document.getElementById('profileImage') as HTMLInputElement;
-    if (fileInput?.files && fileInput.files.length > 0) {
-      formData.append('profileImage', fileInput.files[0]);
+    if (this.selectedFile) {
+      formData.append('profileImage', this.selectedFile);
     }
 
     this.userService
@@ -175,5 +182,12 @@ export class ProfileComponent implements OnInit {
           this.userProfile = response;
         }
       });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 }

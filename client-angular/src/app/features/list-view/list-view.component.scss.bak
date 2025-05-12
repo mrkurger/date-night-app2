@@ -1,0 +1,375 @@
+@use 'sass:color';
+@use '../../../app/core/design/design-tokens' as ds;
+
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains styles for the list view component
+//
+// COMMON CUSTOMIZATIONS:
+// - $filter-sidebar-width: Width of the filter sidebar (default: 320px)
+// - $card-hover-transform: Transform effect on card hover (default: translateY(-8px) scale(1.02))
+// - $active-filter-bg: Background color for active filter chips (default: ds.$primary-100)
+// ===================================================
+
+// Variables
+$filter-sidebar-width: 320px;
+$card-hover-transform: translateY(-8px) scale(1.02);
+$active-filter-bg: color.adjust(ds.$color-primary, $lightness: 35%);
+
+.list-view-container {
+  padding: ds.$spacing-6 0;
+  position: relative;
+}
+
+/* Search and Filters Bar */
+.search-filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ds.$spacing-4;
+  margin: ds.$spacing-6 0;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ds.$neutral-100;
+  padding: ds.$spacing-4;
+  border-radius: ds.$border-radius-lg;
+  box-shadow: ds.$shadow-sm;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-input-field {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.view-controls {
+  display: flex;
+  gap: ds.$spacing-2;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  background-color: ds.$neutral-200;
+  border-radius: ds.$border-radius-md;
+  padding: ds.$spacing-1;
+  margin-right: ds.$spacing-2;
+
+  button {
+    border-radius: ds.$border-radius-md;
+
+    &.active {
+      background-color: ds.$primary-500;
+      color: white;
+    }
+  }
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  gap: ds.$spacing-2;
+}
+
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  background-color: ds.$primary-500;
+  color: white;
+  border-radius: ds.$border-radius-full;
+  font-size: ds.$font-size-xs;
+  margin-left: ds.$spacing-2;
+  padding: 0 ds.$spacing-1;
+}
+
+/* Content with Sidebar Layout */
+.content-with-sidebar {
+  display: flex;
+  gap: ds.$spacing-6;
+  position: relative;
+}
+
+/* Filter Sidebar */
+.filter-sidebar {
+  width: $filter-sidebar-width;
+  background-color: white;
+  border-radius: ds.$border-radius-lg;
+  box-shadow: ds.$shadow-md;
+  padding: ds.$spacing-4;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 10;
+
+  @media (max-width: ds.$breakpoint-lg) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.filter-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: ds.$spacing-4;
+  padding-bottom: ds.$spacing-3;
+  border-bottom: 1px solid ds.$neutral-300;
+
+  h3 {
+    font-size: ds.$font-size-xl;
+    font-weight: ds.$font-weight-semibold;
+    margin: 0;
+  }
+}
+
+.filter-sidebar-content {
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  padding-right: ds.$spacing-2;
+
+  h4 {
+    font-size: 1rem;
+    font-weight: ds.$font-weight-semibold;
+    margin: ds.$spacing-4 0 ds.$spacing-2;
+    color: ds.$neutral-700;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-4;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .date-range-picker {
+    display: flex;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-4;
+
+    mat-form-field {
+      flex: 1;
+    }
+  }
+
+  .saved-filters {
+    display: flex;
+    flex-direction: column;
+    gap: ds.$spacing-2;
+    margin-bottom: ds.$spacing-6;
+
+    .saved-filter-btn {
+      text-align: left;
+      justify-content: flex-start;
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: ds.$spacing-6;
+    padding-top: ds.$spacing-4;
+    border-top: 1px solid ds.$neutral-300;
+  }
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  min-width: 0; // Prevent flex item from overflowing
+}
+
+/* Active Filters */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ds.$spacing-2;
+  margin-bottom: ds.$spacing-4;
+  padding: ds.$spacing-3;
+  background-color: ds.$neutral-100;
+  border-radius: ds.$border-radius-md;
+}
+
+.active-filters-label {
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-700;
+  margin-right: ds.$spacing-2;
+}
+
+.filter-chips {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: ds.$spacing-2;
+
+  mat-chip {
+    background-color: $active-filter-bg;
+
+    &[color='warn'] {
+      background-color: ds.$error-100;
+      color: ds.$error;
+    }
+  }
+}
+
+/* Loading State */
+.loading-container {
+  min-height: 400px;
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: ds.$spacing-8;
+}
+
+.error-icon {
+  font-size: ds.$font-size-4xl;
+  color: ds.$error;
+  margin-bottom: ds.$spacing-4;
+  width: auto;
+  height: auto;
+}
+
+.error-text {
+  font-size: ds.$font-size-xl;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-800;
+  margin-bottom: ds.$spacing-6;
+}
+
+/* Empty State */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: ds.$spacing-8;
+  background-color: ds.$neutral-100;
+  border-radius: ds.$border-radius-lg;
+  border: 1px dashed ds.$neutral-400;
+}
+
+.empty-icon {
+  font-size: ds.$font-size-4xl;
+  color: ds.$neutral-500;
+  margin-bottom: ds.$spacing-4;
+  width: auto;
+  height: auto;
+}
+
+.empty-text {
+  font-size: ds.$font-size-xl;
+  font-weight: ds.$font-weight-medium;
+  color: ds.$neutral-800;
+  margin-bottom: ds.$spacing-2;
+}
+
+.empty-subtext {
+  color: ds.$neutral-600;
+  margin-bottom: ds.$spacing-6;
+}
+
+/* Pagination */
+.pagination-container {
+  margin-top: ds.$spacing-8;
+  padding-top: ds.$spacing-6;
+  border-top: 1px solid ds.$neutral-200;
+}
+
+/* Dialog Styles */
+.full-width {
+  width: 100%;
+}
+
+/* Card Hover Effects */
+::ng-deep {
+  .emerald-app-card {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &:hover {
+      transform: $card-hover-transform;
+      box-shadow: ds.$shadow-lg;
+    }
+  }
+
+  // List view specific styles
+  .emerald-app-card[ng-reflect-layout='list'] {
+    &:hover {
+      transform: translateY(0) scale(1.01);
+    }
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: ds.$breakpoint-lg) {
+  .content-with-sidebar {
+    flex-direction: column;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: ds.$breakpoint-md) {
+  .search-filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-controls {
+    margin-top: ds.$spacing-4;
+    justify-content: space-between;
+  }
+
+  .active-filters {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .active-filters-label {
+      margin-bottom: ds.$spacing-2;
+    }
+  }
+}
+
+@media (max-width: ds.$breakpoint-sm) {
+  .view-toggle {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: ds.$spacing-2;
+  }
+
+  .sort-button {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

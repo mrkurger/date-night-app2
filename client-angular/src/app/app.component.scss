@@ -1,3 +1,112 @@
+@use '@nebular/theme/styles/theming' as *;
+
+:host {
+  display: block;
+
+  nb-layout-header {
+    background-color: var(--background-basic-color-1);
+    box-shadow: var(--shadow);
+
+    .brand-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-basic-color);
+
+      .brand-accent {
+        color: var(--color-primary-500);
+      }
+    }
+
+    nb-actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .ml-auto {
+        margin-left: auto;
+      }
+
+      nb-action {
+        padding: 0 1rem;
+
+        a[nbButton] {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          nb-icon {
+            font-size: 1.25rem;
+          }
+        }
+
+        nb-badge {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  nb-layout-column {
+    padding: 2rem;
+    background-color: var(--background-basic-color-2);
+  }
+
+  nb-layout-footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--background-basic-color-1);
+    border-top: 1px solid var(--divider-color);
+    color: var(--text-hint-color);
+  }
+
+  // Context Menu Styles
+  nb-card.notifications-menu {
+    max-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    nb-card-header {
+      padding: 1rem;
+      font-weight: bold;
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    nb-list {
+      nb-list-item {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--divider-color);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // User Menu Styles
+  nb-menu {
+    nb-menu-item {
+      a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-basic-color);
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: var(--background-basic-color-2);
+        }
+
+        nb-icon {
+          font-size: 1.25rem;
+          color: var(--text-hint-color);
+        }
+      }
+    }
+  }
+}
+
 /* App Component Styles */
 
 /* Header Styles */

@@ -1,0 +1,258 @@
+@use '../../../core/design/design-tokens' as tokens;
+@use '../../../core/design/typography-mixins' as typography;
+
+.message {
+  display: flex;
+  margin-bottom: 1rem;
+  position: relative;
+
+  &--incoming {
+    justify-content: flex-start;
+
+    .message__content {
+      background-color: var(--color-background-light);
+      border-radius: 1rem 1rem 1rem 0;
+    }
+  }
+
+  &--outgoing {
+    justify-content: flex-end;
+
+    .message__content {
+      background-color: var(--color-primary-light);
+      border-radius: 1rem 1rem 0 1rem;
+    }
+  }
+
+  &--system {
+    justify-content: center;
+
+    .message__content {
+      background-color: var(--color-background-medium);
+      border-radius: 1rem;
+      max-width: 80%;
+      text-align: center;
+      font-style: italic;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &--encrypted {
+    .message__content {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/icons/lock-pattern.svg');
+        background-repeat: repeat;
+        opacity: 0.05;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &--decryption-failed {
+    .message__content {
+      background-color: var(--color-warning-light);
+      border: 1px solid var(--color-warning);
+    }
+
+    .message__text {
+      color: var(--color-warning-dark);
+    }
+  }
+}
+
+.message__avatar {
+  margin-right: 0.5rem;
+  align-self: flex-end;
+
+  .avatar-img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.message__content {
+  padding: 0.75rem 1rem;
+  max-width: 70%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.message__header {
+  margin-bottom: 0.25rem;
+}
+
+.message__sender {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text-dark);
+}
+
+.message__body {
+  word-break: break-word;
+}
+
+.message__text {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+
+  &--system {
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+}
+
+.message__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.message__time {
+  margin-right: 0.5rem;
+}
+
+.message__read-status {
+  color: var(--color-primary);
+}
+
+.message__expiry {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+
+  .icon-timer {
+    margin-right: 0.25rem;
+    color: var(--color-warning);
+  }
+}
+
+.message__encryption-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.25rem;
+  color: var(--color-success);
+
+  &--failed {
+    color: var(--color-warning);
+  }
+}
+
+.message__loading {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  color: var(--color-text-muted);
+
+  .spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+  }
+}
+
+.message__attachments {
+  margin-top: 0.5rem;
+}
+
+.attachment {
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  &__image {
+    img {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  }
+
+  &__file {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  &__details {
+    flex: 1;
+  }
+
+  &__name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+  &__size {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  &__download {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .message__content {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .message__content {
+    max-width: 90%;
+  }
+
+  .message__avatar {
+    .avatar-img {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+}

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cluster Module - AI Lessons</title>
+    <style>
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #2ecc71;
+        --accent-color: #e74c3c;
+        --text-color: #333;
+        --background-color: #f9f9f9;
+        --card-background: #fff;
+        --border-color: #ddd;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--card-background);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--primary-color);
+      }
+
+      h1 {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-top: 0;
+      }
+
+      h2 {
+        margin-top: 30px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-top: 20px;
+      }
+
+      .lesson {
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: rgba(52, 152, 219, 0.05);
+        border-left: 4px solid var(--primary-color);
+        border-radius: 0 5px 5px 0;
+      }
+
+      .lesson-title {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+        border: 1px solid var(--border-color);
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: var(--card-background);
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .navigation a {
+        color: var(--primary-color);
+        text-decoration: none;
+        padding: 5px 10px;
+      }
+
+      .navigation a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <a href="../../../_docs_index.html">Main Documentation</a>
+      <a href="./CHANGELOG.html">Changelog</a>
+      <a href="./GLOSSARY.html">Glossary</a>
+    </div>
+
+    <div class="container">
+      <h1>Cluster Module - AI Lessons</h1>
+
+      <h2>Module Design Patterns</h2>
+
+      <div class="lesson">
+        <div class="lesson-title">Modular Architecture for Map Features</div>
+        <p>
+          The Cluster Module demonstrates the importance of separating specialized functionality
+          into dedicated modules. By isolating map clustering logic, we achieve:
+        </p>
+        <ul>
+          <li>Better code organization and maintainability</li>
+          <li>Reduced coupling between components</li>
+          <li>Ability to lazy-load map clustering functionality only when needed</li>
+          <li>Easier testing of clustering features in isolation</li>
+        </ul>
+      </div>
+
+      <h2>Integration Patterns</h2>
+
+      <div class="lesson">
+        <div class="lesson-title">Module Import Strategy</div>
+        <p>When integrating specialized modules like the Cluster Module, it's important to:</p>
+        <ul>
+          <li>Import only in components that need clustering functionality</li>
+          <li>Consider lazy loading for performance optimization</li>
+          <li>Maintain clear documentation of dependencies</li>
+        </ul>
+        <p>Example integration in a component:</p>
+        <pre>
+@Component({
+  selector: 'app-map-with-clustering',
+  templateUrl: './map-with-clustering.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ClusterModule,
+    // Other imports...
+  ]
+})
+export class MapWithClusteringComponent {
+  // Component implementation
+}</pre
+        >
+      </div>
+
+      <h2>Testing</h2>
+
+      <div class="lesson">
+        <div class="lesson-title">Testing Strategies for Map Modules</div>
+        <p>When testing modules that interact with maps and clustering:</p>
+        <ul>
+          <li>Mock external map services and APIs</li>
+          <li>Test clustering algorithms with known data sets</li>
+          <li>Verify performance with large marker sets</li>
+          <li>Test edge cases like zero markers or extremely dense marker clusters</li>
+        </ul>
+      </div>
+
+      <h2>Dependencies</h2>
+
+      <div class="lesson">
+        <div class="lesson-title">Module Dependencies</div>
+        <p>The Cluster Module has the following dependencies:</p>
+        <ul>
+          <li><strong>@angular/core</strong> - Core Angular functionality</li>
+          <li><strong>@angular/common</strong> - Common Angular directives and pipes</li>
+        </ul>
+        <p>Future implementations may include:</p>
+        <ul>
+          <li>Map library integrations (Leaflet, Google Maps, etc.)</li>
+          <li>Custom clustering algorithms</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

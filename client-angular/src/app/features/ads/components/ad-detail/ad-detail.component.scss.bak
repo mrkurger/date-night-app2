@@ -1,0 +1,80 @@
+.ad-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.ad-images {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+
+  img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .image-thumbnails {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+
+    img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.ad-info {
+  flex: 1;
+  min-width: 300px;
+
+  .ad-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2196f3;
+    margin-bottom: 16px;
+  }
+
+  .ad-location,
+  .ad-date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #757575;
+
+    nb-icon {
+      margin-right: 8px;
+    }
+  }
+
+  .ad-description {
+    margin: 24px 0;
+
+    h3 {
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+  }
+
+  .ad-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+  }
+}

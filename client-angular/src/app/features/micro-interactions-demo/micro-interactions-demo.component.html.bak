@@ -1,0 +1,341 @@
+<div [class]="bem.block()">
+  <header [class]="bem.element('header')">
+    <div class="container">
+      <h1 [class]="bem.element('title')">Micro-interactions</h1>
+      <p [class]="bem.element('description')">
+        This page demonstrates micro-interactions used throughout the DateNight.io application.
+        Micro-interactions provide feedback, guide users, and create a more engaging experience.
+      </p>
+      <button (click)="toggleTheme()" [class]="bem.element('theme-toggle')">
+        Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Introduction -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Introduction</h2>
+      <p>
+        Micro-interactions are small, subtle animations and effects that provide feedback and
+        enhance the user experience. They help users understand what's happening, guide them through
+        the interface, and make the application feel more responsive and polished.
+      </p>
+      <p>
+        DateNight.io uses a consistent set of micro-interactions throughout the application to
+        create a cohesive and engaging experience. This page showcases these micro-interactions and
+        provides examples of how to implement them.
+      </p>
+    </section>
+
+    <!-- Hover Effects -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Hover Effects</h2>
+      <p>
+        Hover effects provide feedback when users hover over interactive elements. They help users
+        understand what elements are clickable and what will happen when they click.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('hover-grid')">
+          <div
+            *ngFor="let effect of hoverEffects"
+            [class]="bem.element('hover-item', [effect.class])"
+          >
+            <h3 [class]="bem.element('hover-name')">{{ effect.name }}</h3>
+            <p [class]="bem.element('hover-description')">{{ effect.description }}</p>
+            <pre *ngIf="effect.code" [class]="bem.element('code')">{{ effect.code }}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading States -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Loading States</h2>
+      <p>
+        Loading states provide feedback when the application is processing a request or loading
+        content. They help users understand that something is happening and prevent them from
+        thinking the application is frozen or unresponsive.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('loading-demo')">
+          <button
+            [class]="
+              bem.element('loading-button', [
+                isLoading ? 'loading' : '',
+                isSuccess ? 'success' : '',
+                isError ? 'error' : '',
+              ])
+            "
+            (click)="simulateLoading()"
+            [disabled]="isLoading"
+          >
+            <span [class]="bem.element('loading-button-text')">
+              {{
+                isLoading
+                  ? 'Loading...'
+                  : isSuccess
+                    ? 'Success!'
+                    : isError
+                      ? 'Error!'
+                      : 'Click to Load'
+              }}
+            </span>
+            <span *ngIf="isLoading" [class]="bem.element('spinner')"></span>
+            <span *ngIf="isSuccess" [class]="bem.element('success-icon')">✓</span>
+            <span *ngIf="isError" [class]="bem.element('error-icon')">✕</span>
+          </button>
+
+          <button
+            [class]="
+              bem.element('loading-button', [
+                'error-demo',
+                isLoading ? 'loading' : '',
+                isSuccess ? 'success' : '',
+                isError ? 'error' : '',
+              ])
+            "
+            (click)="simulateError()"
+            [disabled]="isLoading"
+          >
+            <span [class]="bem.element('loading-button-text')">
+              {{
+                isLoading
+                  ? 'Loading...'
+                  : isSuccess
+                    ? 'Success!'
+                    : isError
+                      ? 'Error!'
+                      : 'Simulate Error'
+              }}
+            </span>
+            <span *ngIf="isLoading" [class]="bem.element('spinner')"></span>
+            <span *ngIf="isSuccess" [class]="bem.element('success-icon')">✓</span>
+            <span *ngIf="isError" [class]="bem.element('error-icon')">✕</span>
+          </button>
+        </div>
+
+        <div [class]="bem.element('loading-grid')">
+          <div *ngFor="let state of loadingStates" [class]="bem.element('loading-item')">
+            <h3 [class]="bem.element('loading-name')">{{ state.name }}</h3>
+            <p [class]="bem.element('loading-description')">{{ state.description }}</p>
+            <div [class]="bem.element('loading-example', [state.class])">
+              <div
+                *ngIf="state.class === 'button-loading'"
+                [class]="bem.element('demo-button', ['loading'])"
+              >
+                <span>Loading</span>
+                <span [class]="bem.element('spinner')"></span>
+              </div>
+
+              <div *ngIf="state.class === 'skeleton-loader'" [class]="bem.element('skeleton')">
+                <div [class]="bem.element('skeleton-line', ['short'])"></div>
+                <div [class]="bem.element('skeleton-line', ['medium'])"></div>
+                <div [class]="bem.element('skeleton-line', ['long'])"></div>
+                <div [class]="bem.element('skeleton-line', ['medium'])"></div>
+              </div>
+
+              <div *ngIf="state.class === 'progress-bar'" [class]="bem.element('progress')">
+                <div [class]="bem.element('progress-bar')"></div>
+              </div>
+
+              <div *ngIf="state.class === 'pulse-loading'" [class]="bem.element('pulse')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transition Effects -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Transition Effects</h2>
+      <p>
+        Transition effects provide smooth animations when elements enter, exit, or change state.
+        They help users understand what's happening and create a more polished experience.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('transition-grid')">
+          <div
+            *ngFor="let effect of transitionEffects"
+            [class]="bem.element('transition-item', [effect.class])"
+          >
+            <h3 [class]="bem.element('transition-name')">{{ effect.name }}</h3>
+            <p [class]="bem.element('transition-description')">{{ effect.description }}</p>
+            <pre *ngIf="effect.code" [class]="bem.element('code')">{{ effect.code }}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Animations -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Feedback Animations</h2>
+      <p>
+        Feedback animations provide visual cues when users interact with the application. They help
+        users understand the result of their actions and create a more engaging experience.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('feedback-grid')">
+          <div
+            *ngFor="let animation of feedbackAnimations"
+            [class]="bem.element('feedback-item', [animation.class])"
+          >
+            <h3 [class]="bem.element('feedback-name')">{{ animation.name }}</h3>
+            <p [class]="bem.element('feedback-description')">{{ animation.description }}</p>
+
+            <div [class]="bem.element('feedback-demo')">
+              <div
+                *ngIf="animation.class === 'success-animation'"
+                [class]="bem.element('success-demo')"
+              >
+                <button [class]="bem.element('demo-button')" (click)="simulateLoading()">
+                  Show Success
+                </button>
+              </div>
+
+              <div
+                *ngIf="animation.class === 'error-animation'"
+                [class]="bem.element('error-demo')"
+              >
+                <button [class]="bem.element('demo-button')" (click)="simulateError()">
+                  Show Error
+                </button>
+              </div>
+
+              <div *ngIf="animation.class === 'click-ripple'" [class]="bem.element('ripple-demo')">
+                <button [class]="bem.element('demo-button', ['ripple'])">Click for Ripple</button>
+              </div>
+
+              <div
+                *ngIf="animation.class === 'shake-animation'"
+                [class]="bem.element('shake-demo')"
+              >
+                <button
+                  #shakeButton
+                  [class]="bem.element('demo-button', ['shake'])"
+                  (click)="simulateShake(shakeButton)"
+                >
+                  Click to Shake
+                </button>
+              </div>
+            </div>
+
+            <pre *ngIf="animation.code" [class]="bem.element('code')">{{ animation.code }}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility Considerations -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Accessibility Considerations</h2>
+      <p>
+        When implementing micro-interactions, it's important to consider accessibility. Some users
+        may prefer reduced motion or may be using assistive technologies that don't support
+        animations.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <h3 [class]="bem.element('subsection-title')">Respecting User Preferences</h3>
+        <p>
+          Use the <code>prefers-reduced-motion</code> media query to respect user preferences for
+          reduced motion:
+        </p>
+        <pre [class]="bem.element('code')">
+&#64;media (prefers-reduced-motion: reduce) &#123;
+  /* Reduce or eliminate animations */
+  .animated-element &#123;
+    animation: none;
+    transition: none;
+  &#125;
+&#125;</pre
+        >
+
+        <h3 [class]="bem.element('subsection-title')">Providing Alternatives</h3>
+        <p>
+          Ensure that all information conveyed through animations is also available through other
+          means:
+        </p>
+        <pre [class]="bem.element('code')"><!-- Instead of just a spinner -->
+<button aria-busy="true">
+  <span class="spinner" aria-hidden="true"></span>
+  <span>Loading...</span>
+</button></pre>
+      </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Best Practices</h2>
+
+      <div [class]="bem.element('example')">
+        <ul [class]="bem.element('best-practices-list')">
+          <li>
+            <strong>Be subtle:</strong> Micro-interactions should enhance the experience, not
+            distract from it. Keep animations short and subtle.
+          </li>
+          <li>
+            <strong>Be consistent:</strong> Use the same micro-interactions for similar actions
+            throughout the application to create a cohesive experience.
+          </li>
+          <li>
+            <strong>Be purposeful:</strong> Every micro-interaction should serve a purpose, whether
+            it's providing feedback, guiding users, or creating delight.
+          </li>
+          <li>
+            <strong>Be accessible:</strong> Respect user preferences for reduced motion and ensure
+            that all information is available through other means.
+          </li>
+          <li>
+            <strong>Be performant:</strong> Optimize animations for performance to ensure a smooth
+            experience on all devices.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Resources</h2>
+      <ul [class]="bem.element('resources-list')">
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations"
+            target="_blank"
+            >MDN: Using CSS Animations</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions"
+            target="_blank"
+            >MDN: Using CSS Transitions</a
+          >
+        </li>
+        <li>
+          <a href="https://web.dev/prefers-reduced-motion/" target="_blank"
+            >Web.dev: prefers-reduced-motion</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html"
+            target="_blank"
+            >WCAG: Animation from Interactions</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.smashingmagazine.com/2021/10/modern-css-solutions-for-common-problems/"
+            target="_blank"
+            >Smashing Magazine: Modern CSS Solutions</a
+          >
+        </li>
+      </ul>
+    </section>
+  </main>
+</div>

@@ -7,11 +7,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 export interface HelpItem {
   id: string;
@@ -28,7 +25,7 @@ export interface HelpItem {
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
 })
 export class ContextualHelpComponent implements OnInit {
   @Input() helpItems: HelpItem[] = [];

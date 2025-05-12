@@ -7,24 +7,34 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+  NbDividerComponent,
+} from '../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbDividerModule,
+  NbMenuModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbSpinnerModule,
+  NbToggleModule,
+  NbTooltipModule,
+  NbDialogModule,
+  NbDialog,
+  NbSelectModule,
+  NbTagModule,
+  NbCheckboxModule,
+} from '@nebular/theme';
 import {
   FavoriteService,
   Favorite,
@@ -42,24 +52,28 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatCheckboxModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbDividerModule,
+    NbMenuModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbSpinnerModule,
+    NbToggleModule,
+    NbTooltipModule,
+    NbDialogModule,
+    NbSelectModule,
+    NbTagModule,
+    NbCheckboxModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     FavoriteButtonComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
+    NbDividerComponent,
   ],
   template: `
     <div class="favorites-container">
@@ -71,33 +85,32 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
             mat-raised-button
             color="primary"
             [disabled]="selectedFavorites.length === 0"
-            [matMenuTriggerFor]="batchMenu"
+            [nbContextMenu]="batchMenu"
           >
-            Batch Actions ({{ selectedFavorites.length }})
           </button>
 
-          <mat-menu #batchMenu="matMenu">
+          <nb-menu #batchMenu="matMenu">
             <button mat-menu-item (click)="removeFavoritesBatch()">
-              <mat-icon>delete</mat-icon>
+              <nb-icon icon="delete"></nb-icon>
               <span>Remove Selected</span>
             </button>
             <button mat-menu-item (click)="openTagsDialog()">
-              <mat-icon>label</mat-icon>
+              <nb-icon icon="label"></nb-icon>
               <span>Add Tags to Selected</span>
             </button>
             <button mat-menu-item (click)="setPriorityBatch('high')">
-              <mat-icon>priority_high</mat-icon>
+              <nb-icon icon="priority_high"></nb-icon>
               <span>Set High Priority</span>
             </button>
             <button mat-menu-item (click)="setPriorityBatch('normal')">
-              <mat-icon>remove_circle_outline</mat-icon>
+              <nb-icon icon="remove_circle_outline"></nb-icon>
               <span>Set Normal Priority</span>
             </button>
             <button mat-menu-item (click)="setPriorityBatch('low')">
-              <mat-icon>arrow_downward</mat-icon>
+              <nb-icon icon="arrow_downward"></nb-icon>
               <span>Set Low Priority</span>
             </button>
-          </mat-menu>
+          </nb-menu>
         </div>
       </div>
 
@@ -110,11 +123,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
             (input)="onSearchChange($event)"
             placeholder="Search by title, description, or notes"
           />
-          <mat-icon matSuffix>search</mat-icon>
+          <nb-icon matSuffix>search</nb-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Sort by</mat-label>
+          <mat-label>NbSortEvent by</mat-label>
           <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
             <mat-option value="newest">Newest first</mat-option>
             <mat-option value="oldest">Oldest first</mat-option>
@@ -130,16 +143,16 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
         <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
           <div class="tags-label">Filter by tag:</div>
           <div class="tags-chips">
-            <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-              <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
+            <nb-tag-list multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
+              <nb-tag-option *ngFor="let tag of userTags" [value]="tag.tag">
                 {{ tag.tag }} ({{ tag.count }})
               </mat-chip-option>
-            </mat-chip-listbox>
+            </nb-tag-list>
           </div>
         </div>
 
         <button mat-button color="primary" (click)="resetFilters()" *ngIf="isFiltered">
-          <mat-icon>clear</mat-icon>
+          <nb-icon icon="clear"></nb-icon>
           Clear Filters
         </button>
       </div>
@@ -150,14 +163,14 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
       </div>
 
       <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)">
-        <mat-card>
-          <mat-card-content>
-            <mat-icon class="empty-icon">favorite_border</mat-icon>
+        <nb-card>
+          <nb-card-content>
+            <nb-icon class="empty-icon">favorite_border</nb-icon>
             <h3>No favorites yet</h3>
             <p>Browse ads and click the heart icon to add them to your favorites.</p>
             <button mat-raised-button color="primary" routerLink="/ads">Browse Ads</button>
-          </mat-card-content>
-        </mat-card>
+          </nb-card-body>
+        </nb-card>
       </div>
 
       <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0">
@@ -193,30 +206,30 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
               <div class="favorite-details">
                 <span class="favorite-location">
-                  <mat-icon>location_on</mat-icon>
+                  <nb-icon icon="location_on"></nb-icon>
                   {{ favorite.ad.location }}
                 </span>
 
                 <span class="favorite-price">
-                  <mat-icon>attach_money</mat-icon>
+                  <nb-icon icon="attach_money"></nb-icon>
                   {{ favorite.ad.price | currency: 'NOK' : 'symbol' : '1.0-0' }}
                 </span>
 
                 <span class="favorite-date">
-                  <mat-icon>event</mat-icon>
+                  <nb-icon icon="event"></nb-icon>
                   Added {{ favorite.createdAt | date: 'mediumDate' }}
                 </span>
 
                 <span class="favorite-priority" [ngClass]="'priority-' + favorite.priority">
-                  <mat-icon>{{ getPriorityIcon(favorite.priority) }}</mat-icon>
+                  <nb-icon icon="{{ getPriorityIcon(favorite.priority) }}"></nb-icon>
                   {{ favorite.priority | titlecase }} Priority
                 </span>
               </div>
 
               <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
-                <mat-chip-listbox>
-                  <mat-chip *ngFor="let tag of favorite.tags">{{ tag }}</mat-chip>
-                </mat-chip-listbox>
+                <nb-tag-list>
+                  <nb-tag *ngFor="let tag of favorite.tags">{{ tag }}</nb-tag>
+                </nb-tag-list>
               </div>
             </div>
 
@@ -226,73 +239,73 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
                 (favoriteChanged)="onFavoriteRemoved($event, favorite)"
               ></app-favorite-button>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options">
-                <mat-icon>more_vert</mat-icon>
+              <button mat-icon-button [nbContextMenu]="menu" nbTooltip="More options">
+                <nb-icon icon="more_vert"></nb-icon>
               </button>
 
-              <mat-menu #menu="matMenu">
+              <nb-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
-                  <mat-icon>visibility</mat-icon>
+                  <nb-icon icon="visibility"></nb-icon>
                   <span>View Ad</span>
                 </button>
                 <button mat-menu-item (click)="openNotesDialog(favorite)">
-                  <mat-icon>note</mat-icon>
+                  <nb-icon icon="note"></nb-icon>
                   <span>Edit Notes</span>
                 </button>
                 <button mat-menu-item (click)="openTagsDialogForSingle(favorite)">
-                  <mat-icon>label</mat-icon>
+                  <nb-icon icon="label"></nb-icon>
                   <span>Edit Tags</span>
                 </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item [matMenuTriggerFor]="priorityMenu">
-                  <mat-icon>priority_high</mat-icon>
+                <nb-divider></nb-divider>
+                <button mat-menu-item [nbContextMenu]="priorityMenu">
+                  <nb-icon icon="priority_high"></nb-icon>
                   <span>Set Priority</span>
                 </button>
                 <button mat-menu-item (click)="toggleNotifications(favorite)">
-                  <mat-icon>{{
+                  <nb-icon>{{
                     favorite.notificationsEnabled ? 'notifications' : 'notifications_off'
-                  }}</mat-icon>
+                  }}</nb-icon>
                   <span>{{
                     favorite.notificationsEnabled ? 'Disable Notifications' : 'Enable Notifications'
                   }}</span>
                 </button>
-                <mat-divider></mat-divider>
+                <nb-divider></nb-divider>
                 <button
                   mat-menu-item
                   (click)="removeFavorite(this.getAdIdAsString(favorite.ad._id))"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <nb-icon icon="delete"></nb-icon>
                   <span>Remove from Favorites</span>
                 </button>
-              </mat-menu>
+              </nb-menu>
 
-              <mat-menu #priorityMenu="matMenu">
+              <nb-menu #priorityMenu="matMenu">
                 <button mat-menu-item (click)="updatePriority(favorite, 'high')">
-                  <mat-icon>arrow_upward</mat-icon>
+                  <nb-icon icon="arrow_upward"></nb-icon>
                   <span>High</span>
                 </button>
                 <button mat-menu-item (click)="updatePriority(favorite, 'normal')">
-                  <mat-icon>remove</mat-icon>
+                  <nb-icon icon="remove"></nb-icon>
                   <span>Normal</span>
                 </button>
                 <button mat-menu-item (click)="updatePriority(favorite, 'low')">
-                  <mat-icon>arrow_downward</mat-icon>
+                  <nb-icon icon="arrow_downward"></nb-icon>
                   <span>Low</span>
                 </button>
-              </mat-menu>
+              </nb-menu>
             </div>
           </div>
 
-          <mat-divider *ngIf="favorite.notes"></mat-divider>
+          <nb-divider *ngIf="favorite.notes"></nb-divider>
 
           <div class="favorite-notes" *ngIf="favorite.notes">
-            <mat-icon>note</mat-icon>
+            <nb-icon icon="note"></nb-icon>
             <p>{{ favorite.notes }}</p>
           </div>
 
-          <mat-card-actions>
+          <nb-card-actions>
             <button mat-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
-              <mat-icon>visibility</mat-icon>
+              <nb-icon icon="visibility"></nb-icon>
               View Ad
             </button>
 
@@ -302,7 +315,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
               [routerLink]="['/chat']"
               [queryParams]="{ userId: favorite.ad.userId }"
             >
-              <mat-icon>chat</mat-icon>
+              <nb-icon icon="chat"></nb-icon>
               Contact Advertiser
             </button>
 
@@ -313,9 +326,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
               class="notifications-toggle"
             >
               Notifications
-            </mat-slide-toggle>
-          </mat-card-actions>
-        </mat-card>
+            </nb-toggle>
+          </nb-card-footer>
+        </nb-card>
       </div>
     </div>
   `,
@@ -586,7 +599,7 @@ export class FavoritesListComponent implements OnInit {
   constructor(
     private favoriteService: FavoriteService,
     private notificationService: NotificationService,
-    private dialog: MatDialog,
+    private dialog: NbDialogService,
   ) {
     // Set up debounced search
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
@@ -702,7 +715,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         this.updateNotes(favorite, result);
       }
@@ -720,7 +733,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')
@@ -745,7 +758,7 @@ export class FavoritesListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')

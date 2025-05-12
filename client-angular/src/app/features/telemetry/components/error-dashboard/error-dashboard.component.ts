@@ -7,22 +7,30 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  NbCardModule,
+  NbTableModule,
+  NbPaginationChangeEvent,
+  NbSortEvent,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbDatepickerModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTagModule,
+  NbSpinnerModule,
+} from '@nebular/theme';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
 
 // Define ErrorCategory enum locally since it's not exported from http-error.interceptor
@@ -53,30 +61,34 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
+    NbCardModule,
+    NbTableModule,
+    NbPaginatorModule,
+    NbSortModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbDatepickerModule,
+    NbDatepickerModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTagModule,
+    NbSpinnerModule,
     ReactiveFormsModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
   ],
   template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>
 
-      <mat-card class="filter-card">
-        <mat-card-header>
-          <mat-card-title>Filters</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+      <nb-card class="filter-card">
+        <nb-card-header>
+          <nb-card-title>Filters</mat-card-title>
+        </nb-card-header>
+        <nb-card-content>
           <form [formGroup]="filterForm" class="filter-form">
             <mat-form-field appearance="outline">
               <mat-label>Error Category</mat-label>
@@ -109,50 +121,50 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
             <div class="filter-actions">
               <button mat-raised-button color="primary" (click)="applyFilters()">
-                <mat-icon>filter_list</mat-icon> Apply Filters
+                <nb-icon icon="filter_list"></nb-icon> Apply Filters
               </button>
-              <button mat-button (click)="resetFilters()"><mat-icon>clear</mat-icon> Reset</button>
+              <button mat-button (click)="resetFilters()"><nb-icon icon="clear"></nb-icon> Reset</button>
             </div>
           </form>
-        </mat-card-content>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
 
       <div class="dashboard-content">
         <div class="error-stats">
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-content>
               <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>
               <div class="stat-label">Total Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-content>
               <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>
               <div class="stat-label">Unique Error Codes</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-content>
               <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>
               <div class="stat-label">Server Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-content>
               <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>
               <div class="stat-label">Client Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
         </div>
 
-        <mat-card class="error-list-card">
-          <mat-card-header>
-            <mat-card-title>Recent Errors</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
+        <nb-card class="error-list-card">
+          <nb-card-header>
+            <nb-card-title>Recent Errors</mat-card-title>
+          </nb-card-header>
+          <nb-card-content>
             <div class="loading-container" *ngIf="loading">
               <mat-spinner diameter="40"></mat-spinner>
             </div>
@@ -178,9 +190,9 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
               <ng-container matColumnDef="category">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                 <td mat-cell *matCellDef="let error">
-                  <mat-chip [ngClass]="'category-' + error.context?.category">
+                  <nb-tag [ngClass]="'category-' + error.context?.category">
                     {{ error.context?.category || 'unknown' }}
-                  </mat-chip>
+                  </nb-tag>
                 </td>
               </ng-container>
 
@@ -203,7 +215,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let error">
                   <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">
-                    <mat-icon>visibility</mat-icon>
+                    <nb-icon icon="visibility"></nb-icon>
                   </button>
                 </td>
               </ng-container>
@@ -224,8 +236,8 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
               *ngIf="!loading && errors.length > 0"
             >
             </mat-paginator>
-          </mat-card-content>
-        </mat-card>
+          </nb-card-body>
+        </nb-card>
       </div>
     </div>
   `,
@@ -470,7 +482,7 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle page change event
    */
-  pageChanged(event: PageEvent): void {
+  pageChanged(event: NbPaginationChangeEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadErrors();
@@ -479,7 +491,7 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle sort change event
    */
-  sortData(sort: Sort): void {
+  sortData(sort: NbSortEvent): void {
     this.sortField = sort.active;
     this.sortDirection = sort.direction || 'asc';
     this.loadErrors();

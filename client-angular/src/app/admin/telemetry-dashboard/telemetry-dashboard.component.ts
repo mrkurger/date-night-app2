@@ -7,24 +7,31 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
 import { TelemetryService } from '../../core/services/telemetry.service';
 import { Chart, registerables } from 'chart.js';
+import {
+  NbCardModule,
+  NbTabsetModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSelectModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbDatepickerModule,
+  NbSpinnerModule,
+  NbTableModule,
+  NbListModule,
+  NbTreeGridModule,
+} from '@nebular/theme';
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -34,20 +41,20 @@ Chart.register(...registerables);
   standalone: true,
   imports: [
     CommonModule,
-    MatTabsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbListModule,
+    NbTreeGridModule,
   ],
   template: `
     <div class="dashboard-container">
@@ -55,220 +62,218 @@ Chart.register(...registerables);
 
       <div class="filter-section">
         <form [formGroup]="filterForm" class="filter-form">
-          <mat-form-field appearance="outline">
-            <mat-label>Date Range</mat-label>
-            <mat-select formControlName="dateRange">
-              <mat-option value="today">Today</mat-option>
-              <mat-option value="yesterday">Yesterday</mat-option>
-              <mat-option value="last7days">Last 7 Days</mat-option>
-              <mat-option value="last30days">Last 30 Days</mat-option>
-              <mat-option value="custom">Custom Range</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <nb-form-field>
+            <nb-select fullWidth formControlName="dateRange" placeholder="Date Range">
+              <nb-option value="today">Today</nb-option>
+              <nb-option value="yesterday">Yesterday</nb-option>
+              <nb-option value="last7days">Last 7 Days</nb-option>
+              <nb-option value="last30days">Last 30 Days</nb-option>
+              <nb-option value="custom">Custom Range</nb-option>
+            </nb-select>
+          </nb-form-field>
 
           <ng-container *ngIf="filterForm.get('dateRange')?.value === 'custom'">
-            <mat-form-field appearance="outline">
-              <mat-label>Start Date</mat-label>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
-              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-              <mat-datepicker #startPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="startPicker"
+                formControlName="startDate"
+                placeholder="Start Date"
+              />
+              <nb-datepicker #startPicker></nb-datepicker>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>End Date</mat-label>
-              <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
-              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-              <mat-datepicker #endPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="endPicker"
+                formControlName="endDate"
+                placeholder="End Date"
+              />
+              <nb-datepicker #endPicker></nb-datepicker>
+            </nb-form-field>
           </ng-container>
 
-          <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+          <button nbButton status="primary" (click)="applyFilters()">Apply Filters</button>
         </form>
       </div>
 
-      <mat-tabs>
-        <mat-tab label="Error Analysis">
+      <nb-tabset>
+        <nb-tab tabTitle="Error Analysis">
           <div class="tab-content">
             <div class="loading-container" *ngIf="isLoadingErrors">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner status="primary"></nb-spinner>
               <p>Loading error data...</p>
             </div>
 
             <div class="charts-container" *ngIf="!isLoadingErrors">
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Errors by Type</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Errors by Type</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #errorsByTypeChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
 
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Errors Over Time</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Errors Over Time</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #errorsOverTimeChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
             </div>
 
-            <mat-card class="table-card" *ngIf="!isLoadingErrors">
-              <mat-card-header>
-                <mat-card-title>Recent Errors</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
+            <nb-card class="table-card" *ngIf="!isLoadingErrors">
+              <nb-card-header>
+                <h4>Recent Errors</h4>
+              </nb-card-header>
+              <nb-card-body>
                 <div class="table-container">
-                  <table mat-table [dataSource]="errorDataSource" matSort>
-                    <ng-container matColumnDef="timestamp">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-                      <td mat-cell *matCellDef="let error">
-                        {{ error.timestamp | date: 'medium' }}
+                  <table [nbTreeGrid]="errorDataSource">
+                    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="errorColumns"></tr>
+                    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: errorColumns"></tr>
+
+                    <ng-container nbTreeGridColumn="timestamp">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Timestamp</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.timestamp | date: 'medium' }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="errorCode">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>
-                      <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>
+                    <ng-container nbTreeGridColumn="errorCode">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Error Code</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.errorCode }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="statusCode">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                      <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>
+                    <ng-container nbTreeGridColumn="statusCode">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Status</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.statusCode }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="url">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>
-                      <td mat-cell *matCellDef="let error">{{ error.url }}</td>
+                    <ng-container nbTreeGridColumn="url">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>URL</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.url }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="userMessage">
-                      <th mat-header-cell *matHeaderCellDef>User Message</th>
-                      <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>
+                    <ng-container nbTreeGridColumn="userMessage">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>User Message</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.userMessage }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let error">
-                        <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">
-                          <mat-icon>visibility</mat-icon>
+                    <ng-container nbTreeGridColumn="actions">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        <button nbButton ghost (click)="viewErrorDetails(error.data)">
+                          <nb-icon icon="eye-outline"></nb-icon>
                         </button>
                       </td>
                     </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="errorColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: errorColumns"></tr>
                   </table>
 
-                  <mat-paginator
-                    [pageSizeOptions]="[10, 25, 50]"
-                    showFirstLastButtons
-                  ></mat-paginator>
+                  <div class="pagination-container">
+                    <nb-select [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
+                      <nb-option [value]="10">10 per page</nb-option>
+                      <nb-option [value]="25">25 per page</nb-option>
+                      <nb-option [value]="50">50 per page</nb-option>
+                    </nb-select>
+                    <div class="pagination-controls">
+                      <button
+                        nbButton
+                        ghost
+                        [disabled]="currentPage === 1"
+                        (click)="previousPage()"
+                      >
+                        <nb-icon icon="arrow-left"></nb-icon>
+                      </button>
+                      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                      <button
+                        nbButton
+                        ghost
+                        [disabled]="currentPage === totalPages"
+                        (click)="nextPage()"
+                      >
+                        <nb-icon icon="arrow-right"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </mat-card-content>
-            </mat-card>
+              </nb-card-body>
+            </nb-card>
           </div>
-        </mat-tab>
+        </nb-tab>
 
-        <mat-tab label="Performance Metrics">
+        <nb-tab tabTitle="Performance Metrics">
           <div class="tab-content">
             <div class="loading-container" *ngIf="isLoadingPerformance">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner status="primary"></nb-spinner>
               <p>Loading performance data...</p>
             </div>
 
             <div class="charts-container" *ngIf="!isLoadingPerformance">
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Average Response Time by Endpoint</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Average Response Time by Endpoint</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #responseTimeByEndpointChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
 
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Response Time Trends</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Response Time Trends</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #responseTimeTrendsChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
             </div>
-
-            <mat-card class="table-card" *ngIf="!isLoadingPerformance">
-              <mat-card-header>
-                <mat-card-title>Endpoint Performance</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="table-container">
-                  <table mat-table [dataSource]="performanceDataSource" matSort>
-                    <ng-container matColumnDef="url">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Endpoint</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.url }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="method">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Method</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.method }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="avgDuration">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Avg. Duration (ms)</th>
-                      <td mat-cell *matCellDef="let perf">
-                        {{ perf.avgDuration | number: '1.0-0' }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="p95Duration">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>P95 Duration (ms)</th>
-                      <td mat-cell *matCellDef="let perf">
-                        {{ perf.p95Duration | number: '1.0-0' }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="count">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request Count</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.count }}</td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="performanceColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: performanceColumns"></tr>
-                  </table>
-
-                  <mat-paginator
-                    [pageSizeOptions]="[10, 25, 50]"
-                    showFirstLastButtons
-                  ></mat-paginator>
-                </div>
-              </mat-card-content>
-            </mat-card>
           </div>
-        </mat-tab>
-      </mat-tabs>
+        </nb-tab>
+      </nb-tabset>
     </div>
   `,
   styles: [
     `
+      :host {
+        display: block;
+      }
+
       .dashboard-container {
-        padding: 20px;
+        padding: 2rem;
+      }
+
+      h1 {
+        margin-bottom: 2rem;
+        color: var(--text-basic-color);
       }
 
       .filter-section {
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
       }
 
       .filter-form {
         display: flex;
+        gap: 1rem;
+        align-items: flex-start;
         flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
       }
 
-      .tab-content {
-        padding: 20px 0;
+      nb-form-field {
+        min-width: 200px;
       }
 
       .loading-container {
@@ -276,22 +281,19 @@ Chart.register(...registerables);
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 40px;
+        padding: 2rem;
+        gap: 1rem;
       }
 
       .charts-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-        gap: 20px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
       }
 
       .chart-card {
-        height: 350px;
-      }
-
-      .table-card {
-        margin-bottom: 20px;
+        height: 100%;
       }
 
       .table-container {
@@ -301,6 +303,24 @@ Chart.register(...registerables);
       table {
         width: 100%;
       }
+
+      .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 1rem 0;
+      }
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      nb-icon {
+        color: var(--text-basic-color);
+      }
     `,
   ],
 })
@@ -309,21 +329,21 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('errorsOverTimeChart') errorsOverTimeChartRef!: ElementRef;
   @ViewChild('responseTimeByEndpointChart') responseTimeByEndpointChartRef!: ElementRef;
   @ViewChild('responseTimeTrendsChart') responseTimeTrendsChartRef!: ElementRef;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   filterForm: FormGroup;
-
   isLoadingErrors = true;
   isLoadingPerformance = true;
-
   errorDataSource: any[] = [];
   performanceDataSource: any[] = [];
-
   errorColumns = ['timestamp', 'errorCode', 'statusCode', 'url', 'userMessage', 'actions'];
   performanceColumns = ['url', 'method', 'avgDuration', 'p95Duration', 'count'];
 
-  // Chart instances
+  // Pagination
+  currentPage = 1;
+  pageSize = 10;
+  totalPages = 1;
+
+  // Charts
   errorsByTypeChart: Chart | null = null;
   errorsOverTimeChart: Chart | null = null;
   responseTimeByEndpointChart: Chart | null = null;
@@ -346,12 +366,32 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Charts will be initialized after data is loaded
+    // Chart initialization will be handled by loadErrorData and loadPerformanceData
   }
 
   applyFilters(): void {
     this.loadErrorData();
     this.loadPerformanceData();
+  }
+
+  onPageSizeChange(newSize: number): void {
+    this.pageSize = newSize;
+    this.currentPage = 1;
+    this.loadErrorData();
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadErrorData();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadErrorData();
+    }
   }
 
   loadErrorData(): void {

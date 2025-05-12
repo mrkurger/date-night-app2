@@ -7,7 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../../shared/components/custom-nebular-components';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -19,7 +24,7 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipe],
+  imports: [CommonModule, TimeAgoPipe, NbSortComponent, NbSortHeaderComponent, NbSortEvent],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })
@@ -120,7 +125,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sort rooms by last activity
+   * NbSortEvent rooms by last activity
    */
   sortRooms(rooms: ChatRoom[]): ChatRoom[] {
     return [...rooms].sort((a, b) => {

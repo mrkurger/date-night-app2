@@ -12,7 +12,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 
 import { AdvertiserProfileComponent } from './advertiser-profile.component';
 import { AdService } from '../../core/services/ad.service';
@@ -111,7 +110,6 @@ describe('AdvertiserProfileComponent', () => {
         { provide: AuthService, useClass: MockAuthService },
         { provide: NotificationService, useClass: MockNotificationService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdvertiserProfileComponent);

@@ -7,7 +7,6 @@
 // - DEFAULT_VIEW: Default view type (default: 'netflix')
 //   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { NetflixViewComponent } from '../netflix-view/netflix-view.component';

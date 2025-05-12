@@ -1,0 +1,191 @@
+<div [class]="bem.block()">
+  <header [class]="bem.element('header')">
+    <div class="container">
+      <h1 [class]="bem.element('title')">DateNight.io Design System</h1>
+      <p [class]="bem.element('description')">
+        This style guide showcases the design system elements and components used throughout the
+        application.
+      </p>
+      <button (click)="toggleDarkMode()" [class]="bem.element('theme-toggle')">
+        Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Typography -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Typography</h2>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Headings</h3>
+        <div [class]="bem.element('example')">
+          <h1>Heading 1</h1>
+          <h2>Heading 2</h2>
+          <h3>Heading 3</h3>
+          <h4>Heading 4</h4>
+          <h5>Heading 5</h5>
+          <h6>Heading 6</h6>
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Body Text</h3>
+        <div [class]="bem.element('example')">
+          <p class="body-large">
+            Body Large - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
+            mauris.
+          </p>
+          <p>
+            Body Default - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
+            mauris.
+          </p>
+          <p class="body-small">
+            Body Small - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
+            mauris.
+          </p>
+          <p class="body-xs">
+            Body XS - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.
+          </p>
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Special Text Styles</h3>
+        <div [class]="bem.element('example')">
+          <p class="caption">Caption Text - Used for image captions, footnotes, etc.</p>
+          <label class="label">Form Label - Used for form field labels</label>
+          <p><a href="javascript:void(0)">Link Text - Used for hyperlinks</a></p>
+          <p class="button-text">Button Text - Used for button labels</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colors -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Colors</h2>
+
+      <div [class]="bem.element('color-grid')">
+        <div
+          *ngFor="let color of colors"
+          [class]="bem.element('color-item')"
+          [attr.data-color]="color.name"
+        >
+          <div [class]="bem.element('color-swatch', [color.class])"></div>
+          <div [class]="bem.element('color-info')">
+            <span [class]="bem.element('color-name')">{{ color.name }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Spacing</h2>
+
+      <div [class]="bem.element('spacing-grid')">
+        <div *ngFor="let spacing of spacings" [class]="bem.element('spacing-item')">
+          <div [class]="bem.element('spacing-example', [spacing.class])"></div>
+          <div [class]="bem.element('spacing-info')">
+            <span [class]="bem.element('spacing-name')">{{ spacing.name }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Responsive Design -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Responsive Design</h2>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Breakpoints</h3>
+        <div [class]="bem.element('example')">
+          <div [class]="bem.element('breakpoint-item', ['mobile'])">
+            <span>Mobile: < 768px</span>
+          </div>
+          <div [class]="bem.element('breakpoint-item', ['tablet'])">
+            <span>Tablet: 768px - 1023px</span>
+          </div>
+          <div [class]="bem.element('breakpoint-item', ['desktop'])">
+            <span>Desktop: 1024px - 1279px</span>
+          </div>
+          <div [class]="bem.element('breakpoint-item', ['desktop-large'])">
+            <span>Desktop Large: 1280px - 1439px</span>
+          </div>
+          <div [class]="bem.element('breakpoint-item', ['desktop-xl'])">
+            <span>Desktop XL: ≥ 1440px</span>
+          </div>
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Responsive Grid</h3>
+        <div [class]="bem.element('example')">
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+              <div [class]="bem.element('grid-item')">col-12 col-md-6 col-lg-4</div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div [class]="bem.element('grid-item')">col-12 col-md-6 col-lg-4</div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4">
+              <div [class]="bem.element('grid-item')">col-12 col-md-12 col-lg-4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Animations -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Animations & Micro-interactions</h2>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Transitions</h3>
+        <div [class]="bem.element('example')">
+          <div [class]="bem.element('animation-item', ['fade-in'])">Fade In</div>
+          <div [class]="bem.element('animation-item', ['slide-in-top'])">Slide In Top</div>
+          <div [class]="bem.element('animation-item', ['slide-in-bottom'])">Slide In Bottom</div>
+          <div [class]="bem.element('animation-item', ['slide-in-left'])">Slide In Left</div>
+          <div [class]="bem.element('animation-item', ['slide-in-right'])">Slide In Right</div>
+          <div [class]="bem.element('animation-item', ['scale-in'])">Scale In</div>
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Micro-interactions</h3>
+        <div [class]="bem.element('example')">
+          <div [class]="bem.element('micro-item', ['hover-scale'])">Hover Scale</div>
+          <div [class]="bem.element('micro-item', ['hover-lift'])">Hover Lift</div>
+          <div [class]="bem.element('micro-item', ['hover-color'])">Hover Color</div>
+          <div [class]="bem.element('micro-item', ['click-ripple'])">Click Ripple</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Accessibility</h2>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Focus States</h3>
+        <div [class]="bem.element('example')">
+          <button [class]="bem.element('focus-example')">Focus me (Tab)</button>
+          <a href="javascript:void(0)" [class]="bem.element('focus-example')">Focusable Link</a>
+          <input type="text" [class]="bem.element('focus-example')" placeholder="Focusable Input" />
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Screen Reader Text</h3>
+        <div [class]="bem.element('example')">
+          <button [class]="bem.element('a11y-example')">
+            <span class="sr-only">Close dialog</span>
+            <span aria-hidden="true">×</span>
+          </button>
+          <p>The × button has text "Close dialog" that is only visible to screen readers.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
