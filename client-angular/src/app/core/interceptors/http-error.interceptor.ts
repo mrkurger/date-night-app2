@@ -84,7 +84,6 @@ export function configureHttpErrorInterceptor(
  * HTTP Error Interceptor
  *
  * Handles HTTP errors and provides user-friendly error messages.
- * Can be configured with various options to customize behavior.
  */
 export const httpErrorInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
@@ -95,97 +94,45 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
   const telemetryService = inject(TelemetryService);
   const authService = inject(AuthService);
 
-  // Skip processing for URLs in the skipUrls list
-  if (shouldSkipUrl(request.url)) {
+  // Skip processing for asset requests
+  if (request.url.includes('/assets/')) {
     return next(request);
   }
 
   return next(request).pipe(
-    // Apply retry logic if enabled
-    config.retryFailedRequests
-      ? retryWithBackoff(
-          config.maxRetryAttempts,
-          config.retryDelay,
-          config.retryDelay * Math.pow(2, config.maxRetryAttempts),
-          isRetryable,
-        )
-      : retry(0),
-
+    retry({
+      count: 2,
+      delay: 1000,
+      resetOnSuccess: true,
+    }),
     catchError((error: HttpErrorResponse) => {
-      handleError(error, request, router, notificationService, telemetryService, authService);
+      // Log error
+      console.error('HTTP Error:', error);
+
+      // Track error with telemetry
+      telemetryService.trackError({
+        name: 'HttpError',
+        message: error.message,
+        statusCode: error.status,
+        url: request.url,
+      });
+
+      // Handle authentication errors
+      if (error.status === 401) {
+        authService.logout();
+        router.navigate(['/auth/login'], {
+          queryParams: { returnUrl: router.url },
+        });
+      }
+
+      // Show notification
+      const message = getErrorMessage(error);
+      notificationService.error(message);
+
       return throwError(() => error);
     }),
   );
 };
-
-/**
- * Determines if the error is retryable
- */
-function isRetryable(error: HttpErrorResponse): boolean {
-  // Don't retry client-side errors
-  if (!error.status) return false;
-
-  // Don't retry authentication errors
-  if (error.status === 401 || error.status === 403) return false;
-
-  // Don't retry bad requests or not found
-  if (error.status === 400 || error.status === 404) return false;
-
-  // Retry server errors and network issues
-  return error.status >= 500 || error.status === 0;
-}
-
-/**
- * Handles the HTTP error response
- */
-function handleError(
-  error: HttpErrorResponse,
-  request: HttpRequest<unknown>,
-  router: Router,
-  notificationService: NotificationService,
-  telemetryService: TelemetryService,
-  authService: AuthService,
-): void {
-  // Log error if enabled
-  if (config.logErrors) {
-    console.error('HTTP Error:', error);
-
-    if (config.includeRequestDetails) {
-      console.error('Request that caused error:', {
-        url: request.url,
-        method: request.method,
-        headers: sanitizeHeaders(
-          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
-        ),
-        body: sanitizeBody(request.body),
-      });
-    }
-  }
-
-  // Track error with telemetry if enabled
-  if (config.trackErrors) {
-    telemetryService.trackError({
-      name: 'HttpError',
-      message: error.message,
-      statusCode: error.status, // Changed status to statusCode
-      url: request.url,
-    });
-  }
-
-  // Handle authentication errors
-  if (error.status === 401 && config.redirectToLogin) {
-    authService.logout();
-    router.navigate(['/auth/login'], {
-      queryParams: { returnUrl: router.url },
-    });
-  }
-
-  // Show notification if enabled
-  if (config.showNotifications) {
-    const message = getErrorMessage(error);
-    notificationService.error(message);
-  }
-}
 
 /**
  * Gets a user-friendly error message
@@ -201,17 +148,21 @@ function getErrorMessage(error: HttpErrorResponse): string {
     case 0:
       return 'Unable to connect to the server. Please check your internet connection.';
     case 400:
-      return 'The request was invalid. Please check your input and try again.';
+      return 'Invalid request. Please check your input.';
     case 401:
       return 'You need to log in to access this resource.';
     case 403:
       return 'You do not have permission to access this resource.';
     case 404:
       return 'The requested resource was not found.';
+    case 409:
+      return 'A conflict occurred. Please try again.';
+    case 429:
+      return 'Too many requests. Please try again later.';
     case 500:
-      return 'An error occurred on the server. Please try again later.';
+      return 'An internal server error occurred. Please try again later.';
     default:
-      return `An error occurred (${error.status}). Please try again later.`;
+      return 'An unexpected error occurred. Please try again.';
   }
 }
 

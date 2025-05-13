@@ -5,7 +5,6 @@ import { NotificationComponent } from './shared/components/notification/notifica
 import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
 import {
-  NbThemeModule,
   NbLayoutModule,
   NbIconModule,
   NbSidebarModule,
@@ -18,7 +17,7 @@ import {
   NbSidebarService,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { ThemeService, Theme } from './core/services/theme.service';
+import { ThemeService } from './core/services/theme.service';
 import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
 

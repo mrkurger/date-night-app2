@@ -202,34 +202,38 @@ export class UserService {
     }
   }
 
+  /**
+   * Get the current user from the server
+   * @returns Observable of the current user
+   */
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${this.authUrl}/me`).pipe(
+      tap((user) => {
+        this.currentUserSubject.next(user);
+        this.authStatusSubject.next(true);
+      }),
+      catchError((error) => {
+        this.logout();
+        return throwError(() => error);
+      }),
+    );
+  }
+
   private handleAuthentication(response: AuthResponse): void {
-    const { token, user } = response;
-    localStorage.setItem('token', token);
-    this.currentUserSubject.next(user);
+    localStorage.setItem('token', response.token);
+    this.currentUserSubject.next(response.user);
     this.authStatusSubject.next(true);
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An unknown error occurred';
-
+    let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
       // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = error.error.message;
     } else {
       // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = error.error?.message || error.message;
     }
-
     return throwError(() => new Error(errorMessage));
-  }
-
-  /**
-   * Get the current user profile
-   */
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`).pipe(
-      tap((user) => this.currentUserSubject.next(user)),
-      catchError(this.handleError),
-    );
   }
 }

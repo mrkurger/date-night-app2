@@ -2,155 +2,102 @@ name: Angular Tests
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, Nebular-UI-Refactor]
     paths:
-      - 'client-angular/**'
-      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
+      - 'client-angular/**'  # Trigger workflow for changes in Angular client
+      - '.github/workflows/angular-tests.yml'  # Trigger workflow changes
   pull_request:
     branches: [main, develop]
     paths:
-      - 'client-angular/**'
-      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
-  workflow_dispatch: # Allow manual triggering
-
-# Prevent multiple instances from running concurrently
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+      - 'client-angular/**'  # Trigger workflow for PRs in Angular client
+      - '.github/workflows/angular-tests.yml'  # Trigger workflow changes
 
 jobs:
+  # Unit Test Job
   test:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 20 # Add timeout to prevent runaway jobs
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 20  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js and Install Dependencies
-        uses: ./.github/actions/setup-nodejs
+      # Step 2: Setup Node.js using the official setup action
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          safe-install: 'true'
-          update-lockfile: 'false'
-          check-missing: 'true'
 
-      - name: Cache Angular dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./client-angular/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-angular-
-
-      - name: Verify Angular dependencies
-        working-directory: ./client-angular
-        run: |
-          echo "Checking package.json and lockfile consistency..."
-          
-          # Check if package-lock.json is valid JSON
-          if ! jq empty package-lock.json 2>/dev/null; then
-            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
-            rm -f package-lock.json
-            npm install --package-lock-only
-          fi
-          
-          # Check for dependency mismatches
-          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
-          if [ -n "$MISMATCHES" ]; then
-            echo "Found dependency mismatches:"
-            echo "$MISMATCHES"
-            echo "Attempting to fix..."
-            npm install --no-audit
-          fi
-
-      - name: Ensure specific dependencies are installed
+      # Step 3: Install dependencies
+      # Using `npm ci` ensures a clean install matching the lockfile
+      - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm list angularx-qrcode || npm install angularx-qrcode@19.0.0
-          npm list @swimlane/ngx-charts || npm install @swimlane/ngx-charts@22.0.0-alpha.1
-          npm list chart.js || npm install chart.js@4.4.9
+          npm ci
 
-      - name: Run unit tests
+      # Step 4: Run unit tests using Angular CLI
+      # Ensure ChromeHeadless is installed for testing
+      - name: Install Chrome Browser
+        run: sudo apt-get install -y google-chrome-stable
+
+      - name: Run Unit Tests
         working-directory: ./client-angular
         run: npm test -- --watch=false --browsers=ChromeHeadless --no-progress
 
-      - name: Prepare test results directory
+      # Step 5: Prepare test results directory
+      - name: Prepare Test Results Directory
         run: |
           mkdir -p downloaded-reports/angular
           cp -r ./client-angular/coverage/* downloaded-reports/angular/ || true
 
-      - name: Upload test results
+      # Step 6: Upload test results as an artifact
+      - name: Upload Test Results
         uses: actions/upload-artifact@v4
-        if: ${{ always() }}
+        if: always()
         with:
-          name: angular-test-results
-          path: downloaded-reports/angular
-          retention-days: 14
+          name: test-results
+          path: |
+            ./client-angular/coverage
+            downloaded-reports/angular
           if-no-files-found: warn
 
+  # End-to-End Test Job
   e2e:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 30 # Add timeout to prevent runaway jobs
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 30  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js and Install Dependencies
-        uses: ./.github/actions/setup-nodejs
+      # Step 2: Setup Node.js using the official setup action
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          safe-install: 'true'
-          update-lockfile: 'false'
-          check-missing: 'true'
 
-      - name: Cache Angular dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./client-angular/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-angular-
+      # Step 3: Start Angular application
+      - name: Start Angular App
+        run: npx ng serve --host=0.0.0.0 --port=4200
 
-      - name: Verify Angular dependencies
-        working-directory: ./client-angular
-        run: |
-          echo "Checking package.json and lockfile consistency..."
-          
-          # Check if package-lock.json is valid JSON
-          if ! jq empty package-lock.json 2>/dev/null; then
-            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
-            rm -f package-lock.json
-            npm install --package-lock-only
-          fi
-          
-          # Check for dependency mismatches
-          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
-          if [ -n "$MISMATCHES" ]; then
-            echo "Found dependency mismatches:"
-            echo "$MISMATCHES"
-            echo "Attempting to fix..."
-            npm install --no-audit
-          fi
+      # Step 4: Wait for the app to be ready
+      - name: Wait for App
+        run: npx wait-on http://localhost:4200
 
-      - name: Run Cypress tests
+      # Step 5: Run Cypress tests
+      - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./client-angular
@@ -158,104 +105,53 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:4200'
           browser: chrome
-          record: false # Set to true if you have Cypress Dashboard
 
-      - name: Prepare Cypress results directory
-        if: ${{ always() }}
+      # Step 6: Prepare Cypress screenshots directory
+      - name: Prepare Cypress Screenshots Directory
+        if: failure()
         run: |
-          mkdir -p downloaded-reports/angular/cypress
-          
-          # Copy screenshots if they exist
-          if [ -d "./client-angular/cypress/screenshots" ]; then
-            mkdir -p downloaded-reports/angular/cypress/screenshots
-            cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress/screenshots/ || true
-          fi
-          
-          # Copy videos if they exist
-          if [ -d "./client-angular/cypress/videos" ]; then
-            mkdir -p downloaded-reports/angular/cypress/videos
-            cp -r ./client-angular/cypress/videos/* downloaded-reports/angular/cypress/videos/ || true
-          fi
+          mkdir -p downloaded-reports/angular/cypress-screenshots
+          cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress-screenshots/ || true
 
-      - name: Upload Cypress results
+      # Step 7: Upload Cypress screenshots as an artifact
+      - name: Upload Cypress Screenshots
         uses: actions/upload-artifact@v4
-        if: ${{ always() }}
+        if: failure()
         with:
-          name: cypress-results
-          path: downloaded-reports/angular/cypress
-          retention-days: 14
+          name: cypress-screenshots
+          path: |
+            ./client-angular/cypress/screenshots
+            downloaded-reports/angular/cypress-screenshots
           if-no-files-found: warn
 
+  # Linting Job
   lint:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 10 # Add timeout to prevent runaway jobs
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 10  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js and Install Dependencies
-        uses: ./.github/actions/setup-nodejs
+      # Step 2: Setup Node.js using the official setup action
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          safe-install: 'true'
-          update-lockfile: 'false'
-          check-missing: 'true'
 
-      - name: Cache Angular dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./client-angular/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-angular-
-
-      - name: Verify Angular dependencies
-        working-directory: ./client-angular
+      # Step 3: Install ESLint and Angular ESLint plugins
+      - name: Install ESLint
         run: |
-          echo "Checking package.json and lockfile consistency..."
-          
-          # Check if package-lock.json is valid JSON
-          if ! jq empty package-lock.json 2>/dev/null; then
-            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
-            rm -f package-lock.json
-            npm install --package-lock-only
-          fi
-          
-          # Check for dependency mismatches
-          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
-          if [ -n "$MISMATCHES" ]; then
-            echo "Found dependency mismatches:"
-            echo "$MISMATCHES"
-            echo "Attempting to fix..."
-            npm install --no-audit
-          fi
+          cd ./client-angular
+          npm install eslint @angular-eslint/builder @angular-eslint/eslint-plugin @angular-eslint/eslint-plugin-template --save-dev
 
+      # Step 4: Run ESLint to lint the Angular client
       - name: Run ESLint
         working-directory: ./client-angular
         run: npx ng lint client-angular
-        # continue-on-error: true # <-- REMOVED: Lint errors will now fail the workflow
-        
-      - name: Generate lint report
-        if: ${{ failure() }}
-        working-directory: ./client-angular
-        run: |
-          mkdir -p ../downloaded-reports/angular/lint
-          npx ng lint client-angular --format json > ../downloaded-reports/angular/lint/eslint-report.json || true
-          
-      - name: Upload lint report
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: eslint-report
-          path: downloaded-reports/angular/lint
-          retention-days: 14
-          if-no-files-found: warn

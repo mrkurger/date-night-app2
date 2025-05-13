@@ -21,23 +21,7 @@ import { CoreModule } from './core/core.module';
 import { NebularModule } from './shared/nebular.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './core/config/socket.config';
-import {
-  NbThemeModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbToastrModule,
-  NbWindowModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbSidebarModule,
-  NbLayoutModule,
-  NbActionsModule,
-  NbUserModule,
-  NbSearchModule,
-  NbContextMenuModule,
-  NbButtonModule,
-  NbIconModule,
-} from '@nebular/theme';
+import { NbThemeModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 export const appConfig: ApplicationConfig = {
@@ -54,20 +38,6 @@ export const appConfig: ApplicationConfig = {
       NebularModule,
       SocketIoModule.forRoot(socketConfig),
       NbThemeModule.forRoot({ name: 'default' }),
-      NbLayoutModule,
-      NbActionsModule,
-      NbUserModule,
-      NbSearchModule,
-      NbContextMenuModule,
-      NbButtonModule,
-      NbIconModule,
-      NbMenuModule.forRoot(),
-      NbDialogModule.forRoot(),
-      NbToastrModule.forRoot(),
-      NbWindowModule.forRoot(),
-      NbDatepickerModule.forRoot(),
-      NbTimepickerModule.forRoot(),
-      NbSidebarModule.forRoot(),
       NbEvaIconsModule,
     ),
   ],
