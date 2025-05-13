@@ -20,8 +20,11 @@ export interface ChatMessage {
   sender: string;
   receiver: string;
   content: string;
+  message?: string; // Legacy support
   timestamp: Date;
   read: boolean;
+  isEncrypted?: boolean;
+  createdAt?: Date;
   attachments?: Array<{
     id: string;
     name: string;
@@ -45,6 +48,8 @@ export interface ChatRoom {
   unreadCount: number;
   createdAt: Date;
   updatedAt: Date;
+  pinned?: boolean;
+  encryptionEnabled?: boolean;
 }
 
 @Injectable({
@@ -59,6 +64,10 @@ export class ChatService {
   private newMessageSubject = new Subject<ChatMessage>();
   private messageReadSubject = new Subject<string>();
   private typingStatusSubject = new BehaviorSubject<boolean>(false);
+
+  // Online users observable
+  private onlineUsersSubject = new BehaviorSubject<string[]>([]);
+  public onlineUsers$ = this.onlineUsersSubject.asObservable();
 
   // Public observables
   public newMessage$ = this.newMessageSubject.asObservable();
@@ -146,5 +155,16 @@ export class ChatService {
    */
   createAdRoom(adId: string): Observable<ChatRoom> {
     return this.http.post<ChatRoom>(`${this.apiUrl}/rooms/ad`, { adId });
+  }
+
+  disconnectSocket(): void {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+    }
+  }
+
+  archiveRoom(roomId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/archive`, {});
   }
 }

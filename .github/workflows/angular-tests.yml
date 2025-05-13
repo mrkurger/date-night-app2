@@ -37,6 +37,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
 
       - name: Cache Angular dependencies
         uses: actions/cache@v4
@@ -47,6 +50,27 @@ jobs:
           key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-angular-
+
+      - name: Verify Angular dependencies
+        working-directory: ./client-angular
+        run: |
+          echo "Checking package.json and lockfile consistency..."
+          
+          # Check if package-lock.json is valid JSON
+          if ! jq empty package-lock.json 2>/dev/null; then
+            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
+            rm -f package-lock.json
+            npm install --package-lock-only
+          fi
+          
+          # Check for dependency mismatches
+          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+          if [ -n "$MISMATCHES" ]; then
+            echo "Found dependency mismatches:"
+            echo "$MISMATCHES"
+            echo "Attempting to fix..."
+            npm install --no-audit
+          fi
 
       - name: Ensure specific dependencies are installed
         run: |
@@ -91,6 +115,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
 
       - name: Cache Angular dependencies
         uses: actions/cache@v4
@@ -101,6 +128,27 @@ jobs:
           key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-angular-
+
+      - name: Verify Angular dependencies
+        working-directory: ./client-angular
+        run: |
+          echo "Checking package.json and lockfile consistency..."
+          
+          # Check if package-lock.json is valid JSON
+          if ! jq empty package-lock.json 2>/dev/null; then
+            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
+            rm -f package-lock.json
+            npm install --package-lock-only
+          fi
+          
+          # Check for dependency mismatches
+          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+          if [ -n "$MISMATCHES" ]; then
+            echo "Found dependency mismatches:"
+            echo "$MISMATCHES"
+            echo "Attempting to fix..."
+            npm install --no-audit
+          fi
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -156,6 +204,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
 
       - name: Cache Angular dependencies
         uses: actions/cache@v4
@@ -166,6 +217,27 @@ jobs:
           key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-angular-
+
+      - name: Verify Angular dependencies
+        working-directory: ./client-angular
+        run: |
+          echo "Checking package.json and lockfile consistency..."
+          
+          # Check if package-lock.json is valid JSON
+          if ! jq empty package-lock.json 2>/dev/null; then
+            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
+            rm -f package-lock.json
+            npm install --package-lock-only
+          fi
+          
+          # Check for dependency mismatches
+          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+          if [ -n "$MISMATCHES" ]; then
+            echo "Found dependency mismatches:"
+            echo "$MISMATCHES"
+            echo "Attempting to fix..."
+            npm install --no-audit
+          fi
 
       - name: Run ESLint
         working-directory: ./client-angular

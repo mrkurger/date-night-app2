@@ -39,6 +39,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: '22'
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
       
       - name: Install marked package for Markdown processing
         run: npm install marked

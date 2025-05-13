@@ -173,6 +173,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 })
 export class AlertFormDialogComponent {
   @Input() alert?: Alert;
+  variables: string[] = ['userId', 'errorCode', 'timestamp', 'url', 'method']; // Available variables for dynamic content
 
   alertForm: FormGroup;
   protected AlertSeverity = AlertSeverity;

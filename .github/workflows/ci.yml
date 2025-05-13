@@ -21,6 +21,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
 
       - name: Lint code
         run: npm run lint
@@ -56,6 +59,9 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: 22.x
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
 
       - name: Run security audit
         run: npm run analyze:security

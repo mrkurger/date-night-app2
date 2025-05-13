@@ -1,0 +1,405 @@
+name: Dependency Check and Fix
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Run weekly on Monday at midnight
+  workflow_dispatch: # Allow manual triggering
+  pull_request:
+    paths:
+      - '**/package.json'
+      - '**/package-lock.json'
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    timeout-minutes: 30 # Add timeout to prevent runaway jobs
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Check npm version
+        run: |
+          echo "Using npm version: $(npm --version)"
+          echo "Using node version: $(node --version)"
+      
+      - name: Check root package.json and lockfile
+        id: check-root
+        run: |
+          echo "Checking root package.json and lockfile..."
+          
+          # Check if package-lock.json is valid JSON
+          if ! jq empty package-lock.json 2>/dev/null; then
+            echo "Warning: package-lock.json is not valid JSON. Will regenerate it."
+            rm -f package-lock.json
+            npm install --package-lock-only
+            echo "ROOT_LOCKFILE_FIXED=true" >> $GITHUB_ENV
+          else
+            echo "Root lockfile is valid JSON"
+          fi
+          
+          # Check for dependency mismatches
+          MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+          if [ -n "$MISMATCHES" ]; then
+            echo "Found dependency mismatches in root project:"
+            echo "$MISMATCHES"
+            echo "ROOT_DEPS_MISMATCH=true" >> $GITHUB_ENV
+          else
+            echo "No dependency mismatches found in root project"
+          fi
+      
+      - name: Check server package.json and lockfile
+        id: check-server
+        run: |
+          if [ -d "server" ] && [ -f "server/package.json" ]; then
+            cd server
+            echo "Checking server package.json and lockfile..."
+            
+            # Check if package-lock.json is valid JSON
+            if ! jq empty package-lock.json 2>/dev/null; then
+              echo "Warning: server package-lock.json is not valid JSON. Will regenerate it."
+              rm -f package-lock.json
+              npm install --package-lock-only
+              echo "SERVER_LOCKFILE_FIXED=true" >> $GITHUB_ENV
+            else
+              echo "Server lockfile is valid JSON"
+            fi
+            
+            # Check for dependency mismatches
+            MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+            if [ -n "$MISMATCHES" ]; then
+              echo "Found dependency mismatches in server project:"
+              echo "$MISMATCHES"
+              echo "SERVER_DEPS_MISMATCH=true" >> $GITHUB_ENV
+            else
+              echo "No dependency mismatches found in server project"
+            fi
+          else
+            echo "No server package.json found"
+          fi
+      
+      - name: Check client-angular package.json and lockfile
+        id: check-client
+        run: |
+          if [ -d "client-angular" ] && [ -f "client-angular/package.json" ]; then
+            cd client-angular
+            echo "Checking client-angular package.json and lockfile..."
+            
+            # Check if package-lock.json is valid JSON
+            if ! jq empty package-lock.json 2>/dev/null; then
+              echo "Warning: client-angular package-lock.json is not valid JSON. Will regenerate it."
+              rm -f package-lock.json
+              npm install --package-lock-only
+              echo "CLIENT_LOCKFILE_FIXED=true" >> $GITHUB_ENV
+            else
+              echo "Client lockfile is valid JSON"
+            fi
+            
+            # Check for dependency mismatches
+            MISMATCHES=$(npm ls 2>&1 | grep -i "UNMET DEPENDENCY\|invalid\|missing" || true)
+            if [ -n "$MISMATCHES" ]; then
+              echo "Found dependency mismatches in client-angular project:"
+              echo "$MISMATCHES"
+              echo "CLIENT_DEPS_MISMATCH=true" >> $GITHUB_ENV
+            else
+              echo "No dependency mismatches found in client-angular project"
+            fi
+          else
+            echo "No client-angular package.json found"
+          fi
+      
+      - name: Fix root dependencies
+        if: env.ROOT_DEPS_MISMATCH == 'true'
+        run: |
+          echo "Fixing root dependencies..."
+          npm install --no-audit
+          echo "ROOT_DEPS_FIXED=true" >> $GITHUB_ENV
+      
+      - name: Fix server dependencies
+        if: env.SERVER_DEPS_MISMATCH == 'true'
+        run: |
+          if [ -d "server" ] && [ -f "server/package.json" ]; then
+            echo "Fixing server dependencies..."
+            cd server
+            npm install --no-audit
+            echo "SERVER_DEPS_FIXED=true" >> $GITHUB_ENV
+          fi
+      
+      - name: Fix client-angular dependencies
+        if: env.CLIENT_DEPS_MISMATCH == 'true'
+        run: |
+          if [ -d "client-angular" ] && [ -f "client-angular/package.json" ]; then
+            echo "Fixing client-angular dependencies..."
+            cd client-angular
+            npm install --no-audit
+            echo "CLIENT_DEPS_FIXED=true" >> $GITHUB_ENV
+          fi
+      
+      - name: Check for missing dependencies
+        run: |
+          echo "Checking for missing dependencies in root project..."
+          MISSING_ROOT=""
+          if [ -f "package.json" ]; then
+            DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+            for DEP in $DEPS; do
+              if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
+                MISSING_ROOT="$MISSING_ROOT $DEP"
+              fi
+            done
+          fi
+          
+          echo "Checking for missing dependencies in server project..."
+          MISSING_SERVER=""
+          if [ -d "server" ] && [ -f "server/package.json" ]; then
+            cd server
+            DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+            for DEP in $DEPS; do
+              if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
+                MISSING_SERVER="$MISSING_SERVER $DEP"
+              fi
+            done
+            cd ..
+          fi
+          
+          echo "Checking for missing dependencies in client-angular project..."
+          MISSING_CLIENT=""
+          if [ -d "client-angular" ] && [ -f "client-angular/package.json" ]; then
+            cd client-angular
+            DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+            for DEP in $DEPS; do
+              if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
+                MISSING_CLIENT="$MISSING_CLIENT $DEP"
+              fi
+            done
+            cd ..
+          fi
+          
+          # Report missing dependencies
+          if [ -n "$MISSING_ROOT" ]; then
+            echo "Missing dependencies in root project:$MISSING_ROOT"
+            echo "ROOT_MISSING_DEPS=true" >> $GITHUB_ENV
+          fi
+          
+          if [ -n "$MISSING_SERVER" ]; then
+            echo "Missing dependencies in server project:$MISSING_SERVER"
+            echo "SERVER_MISSING_DEPS=true" >> $GITHUB_ENV
+          fi
+          
+          if [ -n "$MISSING_CLIENT" ]; then
+            echo "Missing dependencies in client-angular project:$MISSING_CLIENT"
+            echo "CLIENT_MISSING_DEPS=true" >> $GITHUB_ENV
+          fi
+      
+      - name: Install missing dependencies
+        run: |
+          if [ "$ROOT_MISSING_DEPS" = "true" ]; then
+            echo "Installing missing dependencies in root project..."
+            npm install
+            echo "ROOT_MISSING_FIXED=true" >> $GITHUB_ENV
+          fi
+          
+          if [ "$SERVER_MISSING_DEPS" = "true" ]; then
+            echo "Installing missing dependencies in server project..."
+            cd server
+            npm install
+            cd ..
+            echo "SERVER_MISSING_FIXED=true" >> $GITHUB_ENV
+          fi
+          
+          if [ "$CLIENT_MISSING_DEPS" = "true" ]; then
+            echo "Installing missing dependencies in client-angular project..."
+            cd client-angular
+            npm install
+            cd ..
+            echo "CLIENT_MISSING_FIXED=true" >> $GITHUB_ENV
+          fi
+      
+      - name: Generate dependency report
+        run: |
+          mkdir -p downloaded-reports/dependencies
+          
+          echo "# Dependency Check Report" > downloaded-reports/dependencies/report.md
+          echo "Generated on: $(date)" >> downloaded-reports/dependencies/report.md
+          echo "" >> downloaded-reports/dependencies/report.md
+          
+          echo "## Root Project" >> downloaded-reports/dependencies/report.md
+          if [ "$ROOT_LOCKFILE_FIXED" = "true" ]; then
+            echo "- ✅ Regenerated invalid lockfile" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$ROOT_DEPS_MISMATCH" = "true" ]; then
+            echo "- ⚠️ Found dependency mismatches" >> downloaded-reports/dependencies/report.md
+            if [ "$ROOT_DEPS_FIXED" = "true" ]; then
+              echo "  - ✅ Fixed dependency mismatches" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No dependency mismatches found" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$ROOT_MISSING_DEPS" = "true" ]; then
+            echo "- ⚠️ Found missing dependencies" >> downloaded-reports/dependencies/report.md
+            if [ "$ROOT_MISSING_FIXED" = "true" ]; then
+              echo "  - ✅ Installed missing dependencies" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No missing dependencies found" >> downloaded-reports/dependencies/report.md
+          fi
+          echo "" >> downloaded-reports/dependencies/report.md
+          
+          echo "## Server Project" >> downloaded-reports/dependencies/report.md
+          if [ "$SERVER_LOCKFILE_FIXED" = "true" ]; then
+            echo "- ✅ Regenerated invalid lockfile" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$SERVER_DEPS_MISMATCH" = "true" ]; then
+            echo "- ⚠️ Found dependency mismatches" >> downloaded-reports/dependencies/report.md
+            if [ "$SERVER_DEPS_FIXED" = "true" ]; then
+              echo "  - ✅ Fixed dependency mismatches" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No dependency mismatches found" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$SERVER_MISSING_DEPS" = "true" ]; then
+            echo "- ⚠️ Found missing dependencies" >> downloaded-reports/dependencies/report.md
+            if [ "$SERVER_MISSING_FIXED" = "true" ]; then
+              echo "  - ✅ Installed missing dependencies" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No missing dependencies found" >> downloaded-reports/dependencies/report.md
+          fi
+          echo "" >> downloaded-reports/dependencies/report.md
+          
+          echo "## Client Angular Project" >> downloaded-reports/dependencies/report.md
+          if [ "$CLIENT_LOCKFILE_FIXED" = "true" ]; then
+            echo "- ✅ Regenerated invalid lockfile" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$CLIENT_DEPS_MISMATCH" = "true" ]; then
+            echo "- ⚠️ Found dependency mismatches" >> downloaded-reports/dependencies/report.md
+            if [ "$CLIENT_DEPS_FIXED" = "true" ]; then
+              echo "  - ✅ Fixed dependency mismatches" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No dependency mismatches found" >> downloaded-reports/dependencies/report.md
+          fi
+          if [ "$CLIENT_MISSING_DEPS" = "true" ]; then
+            echo "- ⚠️ Found missing dependencies" >> downloaded-reports/dependencies/report.md
+            if [ "$CLIENT_MISSING_FIXED" = "true" ]; then
+              echo "  - ✅ Installed missing dependencies" >> downloaded-reports/dependencies/report.md
+            fi
+          else
+            echo "- ✅ No missing dependencies found" >> downloaded-reports/dependencies/report.md
+          fi
+          
+          # Generate HTML report
+          cat > downloaded-reports/dependencies/index.html << 'EOL'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Dependency Check Report</title>
+            <link rel="stylesheet" href="/docs/component-library/styles/style.css">
+          </head>
+          <body>
+            <header>
+              <div class="container">
+                <h1>Date Night App Documentation</h1>
+                <nav>
+                  <ul>
+                    <li><a href="/_docs_index.html">Home</a></li>
+                    <li><a href="/_glossary.html">Glossary</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </header>
+            
+            <main class="container">
+              <h1>Dependency Check Report</h1>
+              <p>Last updated: $(date)</p>
+              
+              <div id="report-content">
+          EOL
+          
+          # Convert markdown to HTML and append to the HTML file
+          cat downloaded-reports/dependencies/report.md | sed 's/^## /\<h2\>/g' | sed 's/^# /\<h1\>/g' | sed 's/^- ✅ /\<p class="success"\>✅ /g' | sed 's/^- ⚠️ /\<p class="warning"\>⚠️ /g' | sed 's/^  - ✅ /\<p class="success indent"\>✅ /g' | sed 's/$/<\/p>/g' >> downloaded-reports/dependencies/index.html
+          
+          # Close the HTML file
+          cat >> downloaded-reports/dependencies/index.html << 'EOL'
+              </div>
+            </main>
+            
+            <footer>
+              <div class="container">
+                <p>&copy; 2025 Date Night App. All rights reserved.</p>
+              </div>
+            </footer>
+          </body>
+          </html>
+          EOL
+      
+      - name: Upload dependency report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-report
+          path: downloaded-reports/dependencies
+          retention-days: 14
+          if-no-files-found: warn
+      
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      
+      - name: Commit and push changes
+        run: |
+          # Only commit if there are changes
+          if git diff --name-only | grep -q "package-lock.json\|package.json"; then
+            git add "**/package-lock.json" "**/package.json"
+            git commit -m "fix: update dependencies and lockfiles [skip ci]"
+            
+            # If this is a pull request, don't push directly
+            if [ "${{ github.event_name }}" != "pull_request" ]; then
+              git push
+            else
+              echo "Changes detected but not pushing in pull request context"
+            fi
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create PR for dependency fixes
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "fix: update dependencies and lockfiles"
+          title: "fix: update dependencies and lockfiles"
+          body: |
+            This PR fixes dependency mismatches and updates lockfiles.
+            
+            ## Changes
+            - Regenerated invalid lockfiles
+            - Fixed dependency mismatches
+            - Installed missing dependencies
+            
+            See the dependency report for details.
+          branch: fix/dependencies-${{ github.run_id }}
+          base: main
+          labels: dependencies,automated-pr
+          draft: false
