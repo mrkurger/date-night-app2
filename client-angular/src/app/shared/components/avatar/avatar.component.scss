@@ -1,0 +1,54 @@
+.avatar {
+  position: relative;
+  display: inline-block;
+
+  /* Base styles */
+  &.clickable {
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Size variations */
+  &.small {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.medium {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.large {
+    width: 64px;
+    height: 64px;
+  }
+
+  &.giant {
+    width: 96px;
+    height: 96px;
+  }
+
+  /* Online status badge */
+  .status-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--background-basic-color-1);
+
+    &.online {
+      background-color: var(--color-success-default);
+    }
+
+    &.offline {
+      background-color: var(--color-danger-default);
+    }
+  }
+}

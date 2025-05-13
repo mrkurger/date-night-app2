@@ -35,23 +35,41 @@ import {
   NbPopoverModule,
   NbTooltipModule,
   NbTabsetModule,
+  NbRouteTabsetModule,
   NbBadgeModule,
   NbAlertModule,
-  NbProgressBarModule,
   NbSearchModule,
   NbWindowModule,
   NbTagModule,
   NbTreeGridModule,
   NbStepperModule,
-  NbTableModule,
+  NbCalendarModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-const NEBULAR_MODULES: Array<Type<any> | ModuleWithProviders<any>> = [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
+// Import custom Nebular-compatible components/modules
+import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
+import { NbSortModule } from './components/custom-nebular-components/nb-sort/nb-sort.module';
+import { NbPaginatorModule } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+
+/**
+ * Core Nebular modules that need to be configured at the root level
+ */
+const ROOT_NEBULAR_MODULES: Array<ModuleWithProviders<any>> = [
   NbThemeModule.forRoot({ name: 'default' }),
+  NbMenuModule.forRoot(),
+  NbToastrModule.forRoot(),
+  NbDialogModule.forRoot(),
+  NbSidebarModule.forRoot(),
+  NbDatepickerModule.forRoot(),
+  NbTimepickerModule.forRoot(),
+  NbWindowModule.forRoot(),
+];
+
+/**
+ * Feature Nebular modules that can be imported multiple times
+ */
+const FEATURE_NEBULAR_MODULES: Array<Type<any>> = [
   NbLayoutModule,
   NbButtonModule,
   NbCardModule,
@@ -61,44 +79,58 @@ const NEBULAR_MODULES: Array<Type<any> | ModuleWithProviders<any>> = [
   NbUserModule,
   NbActionsModule,
   NbContextMenuModule,
-  NbMenuModule.forRoot(),
-  NbToastrModule.forRoot(),
-  NbDialogModule.forRoot(),
   NbSpinnerModule,
   NbChatModule,
-  NbSidebarModule.forRoot(),
   NbListModule,
   NbSelectModule,
   NbAccordionModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbDatepickerModule.forRoot(),
-  NbTimepickerModule.forRoot(),
   NbToggleModule,
   NbPopoverModule,
   NbTooltipModule,
   NbTabsetModule,
+  NbRouteTabsetModule,
   NbBadgeModule,
   NbAlertModule,
-  NbProgressBarModule,
   NbSearchModule,
-  NbWindowModule.forRoot(),
   NbTagModule,
   NbTreeGridModule,
   NbStepperModule,
-  NbTableModule,
+  NbCalendarModule,
   NbEvaIconsModule,
 ];
 
+/**
+ * Custom Nebular-compatible components and modules
+ */
+const CUSTOM_NEBULAR_COMPONENTS = [NbErrorComponent];
+
+const CUSTOM_NEBULAR_MODULES = [NbSortModule, NbPaginatorModule];
+
+/**
+ * NebularModule
+ *
+ * This module provides all Nebular components, directives, and services
+ * needed throughout the application. It should be imported in the SharedModule.
+ */
 @NgModule({
-  imports: NEBULAR_MODULES,
-  exports: NEBULAR_MODULES,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...ROOT_NEBULAR_MODULES,
+    ...FEATURE_NEBULAR_MODULES,
+    ...CUSTOM_NEBULAR_MODULES,
+    NbErrorComponent,
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...FEATURE_NEBULAR_MODULES,
+    ...CUSTOM_NEBULAR_MODULES,
+    NbErrorComponent,
+  ],
 })
 export class NebularModule {}
-
-// Export a SharedModule for backward compatibility
-@NgModule({
-  imports: [NebularModule],
-  exports: [NebularModule],
-})
-export class SharedModule {}

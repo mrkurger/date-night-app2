@@ -1,0 +1,39 @@
+@import '@nebular/theme/styles/theming';
+@import '@nebular/theme/styles/themes/default';
+
+:host {
+  display: block;
+}
+
+nb-layout-header {
+  background-color: nb-theme(header-background-color);
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+nb-sidebar {
+  margin-top: nb-theme(header-height);
+}
+
+nb-menu {
+  margin: 0 -0.5rem;
+}
+
+nb-layout-footer {
+  padding: 1rem;
+  text-align: center;
+  background-color: nb-theme(footer-background-color);
+  border-top: 1px solid nb-theme(border-basic-color-3);
+}
+
+nb-user {
+  cursor: pointer;
+}
+
+nb-action {
+  &:hover {
+    background-color: nb-theme(action-background-color);
+  }
+}

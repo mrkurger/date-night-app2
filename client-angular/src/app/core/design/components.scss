@@ -1,11 +1,11 @@
-/**
+/*
  * DateNight.io Component Styles
  * 
  * This file contains base styles for common components used throughout the application.
  * These styles should be imported and extended by specific component implementations.
  */
 
-@use 'emerald-tokens' as *;
+@use './variables' as *;
 
 // Import variables
 @use 'variables' as vars;

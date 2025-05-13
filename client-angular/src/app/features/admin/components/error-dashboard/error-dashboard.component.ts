@@ -8,11 +8,11 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input } from '@angular/core';
-import {
-  NbPaginatorModule,
-  NbSortModule,
-  NbSortHeaderComponent,
-} from '../../../../shared/components/custom-nebular-components';
+import { NbSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { NbPaginatorComponent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.component';
+import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
@@ -42,14 +42,9 @@ import {
   NbTreeGridDataSourceBuilder,
   NbDialogService,
 } from '@nebular/theme';
+import { NbErrorComponent } from '../../../../shared/components/custom-nebular-components/nb-error/nb-error.component';
 
 // Define interfaces for pagination and sorting
-interface PaginationEvent {
-  pageIndex: number;
-  pageSize: number;
-  length: number;
-}
-
 interface ErrorData {
   timestamp: Date;
   errorCode: string;
@@ -80,14 +75,16 @@ interface ErrorData {
     NbToggleModule,
     NbTooltipModule,
     NbTreeGridModule,
-    NbPaginatorModule,
-    NbSortModule,
+    NbErrorComponent,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
   ],
   templateUrl: './error-dashboard.component.html',
   styleUrls: ['./error-dashboard.component.scss'],
 })
 export class ErrorDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(NbSortHeaderComponent) sort: NbSortHeaderComponent;
+  @ViewChild(NbSortComponent) sort: NbSortComponent;
   @ViewChild('errorDetailsDialog') errorDetailsDialog!: TemplateRef<any>;
 
   filterForm: FormGroup;
@@ -278,13 +275,25 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     this.loadDashboardData();
   }
 
-  onPageChange(event: any): void {
-    this.currentPage = event.pageIndex + 1;
+  /**
+   * Handle page change event from paginator
+   */
+  onPageChange(event: NbPaginationChangeEvent): void {
+    this.currentPage = event.page;
     this.pageSize = event.pageSize;
     this.loadDashboardData();
   }
 
   getCategoryLabel(category: string): string {
     return category.replace('_', ' ').toUpperCase();
+  }
+
+  /**
+   * Handle sort event from sort component
+   */
+  sortData(sort: NbSortEvent): void {
+    // Implement sorting logic if needed, then reload data
+    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
+    this.loadDashboardData();
   }
 }

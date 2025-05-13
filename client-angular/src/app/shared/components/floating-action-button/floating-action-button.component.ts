@@ -1,158 +1,128 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbIconModule,
+  NbTooltipModule,
+  NbContextMenuModule,
+  NbMenuService,
+  NbMenuItem,
+} from '@nebular/theme';
 
+export interface FabMenuItem extends NbMenuItem {
+  data?: any;
+}
+
+/**
+ * Floating Action Button Component
+ *
+ * A modern floating action button using Nebular UI components.
+ * Features icon, tooltip, and optional context menu.
+ */
 @Component({
-  selector: 'app-floating-action-button',
+  selector: 'app-fab',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
   template: `
     <button
       nbButton
       [status]="status"
       [size]="size"
-      class="fab"
-      [class.fab--expanded]="expanded"
-      [nbTooltip]="tooltip"
-      [nbTooltipPlacement]="tooltipPosition"
+      [disabled]="disabled"
+      [nbTooltip]="tooltipText"
+      [nbTooltipStatus]="status"
+      [nbContextMenu]="items"
+      [nbContextMenuTag]="menuTag"
+      [class]="'fab fab--' + position"
       (click)="onClick($event)"
     >
       <nb-icon [icon]="icon"></nb-icon>
-      <span class="fab__label" *ngIf="label && expanded">{{ label }}</span>
     </button>
-
-    <div
-      class="fab-menu"
-      *ngIf="menuItems && menuItems.length > 0"
-      [class.fab-menu--open]="expanded"
-    >
-      <button
-        *ngFor="let item of menuItems"
-        nbButton
-        [status]="item.status || 'primary'"
-        size="medium"
-        class="fab-menu__item"
-        [nbTooltip]="item.tooltip"
-        [nbTooltipPlacement]="tooltipPosition"
-        (click)="onMenuItemClick($event, item)"
-      >
-        <nb-icon [icon]="item.icon"></nb-icon>
-        <span class="fab-menu__label" *ngIf="item.label && expanded">{{ item.label }}</span>
-      </button>
-    </div>
   `,
   styles: [
     `
       :host {
         position: fixed;
-        right: var(--margin);
-        bottom: var(--margin);
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: flex-end;
-        gap: var(--spacing);
         z-index: 1000;
       }
 
       .fab {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: var(--spacing);
-        border-radius: 50%;
-        padding: 0;
-        width: 56px;
-        height: 56px;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow);
+        box-shadow: nb-theme(shadow-lg);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
 
-        &--expanded {
-          border-radius: 28px;
-          padding: 0 var(--padding);
-          width: auto;
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: nb-theme(shadow-xl);
+        }
 
-          .fab__label {
-            opacity: 1;
-            width: auto;
-            margin-right: var(--spacing-xs);
-          }
+        &:active {
+          transform: scale(0.95);
         }
 
         nb-icon {
           font-size: 1.5rem;
         }
-      }
 
-      .fab__label {
-        opacity: 0;
-        width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
+        // Positions
+        &--bottom-right {
+          bottom: 2rem;
+          right: 2rem;
+        }
 
-      .fab-menu {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing);
-        opacity: 0;
-        transform: translateY(20px);
-        pointer-events: none;
-        transition: all 0.3s ease;
+        &--bottom-left {
+          bottom: 2rem;
+          left: 2rem;
+        }
 
-        &--open {
-          opacity: 1;
-          transform: translateY(0);
-          pointer-events: auto;
+        &--top-right {
+          top: 2rem;
+          right: 2rem;
+        }
+
+        &--top-left {
+          top: 2rem;
+          left: 2rem;
+        }
+
+        &--center {
+          bottom: 2rem;
+          left: 50%;
+          transform: translateX(-50%);
+
+          &:hover {
+            transform: translateX(-50%) scale(1.05);
+          }
+
+          &:active {
+            transform: translateX(-50%) scale(0.95);
+          }
         }
       }
 
-      .fab-menu__item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--spacing);
-        border-radius: 50%;
-        padding: 0;
-        width: 48px;
-        height: 48px;
-        transition: all 0.3s ease;
-
-        &:hover {
-          transform: scale(1.1);
-        }
+      // Size variations
+      :host-context([size='small']) .fab {
+        width: 3rem;
+        height: 3rem;
 
         nb-icon {
           font-size: 1.25rem;
         }
       }
 
-      .fab-menu__label {
-        opacity: 0;
-        width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
+      :host-context([size='large']) .fab {
+        width: 5rem;
+        height: 5rem;
 
-      :host-context(.fab-menu--open) {
-        .fab-menu__item {
-          border-radius: 24px;
-          padding: 0 var(--padding);
-          width: auto;
-
-          .fab-menu__label {
-            opacity: 1;
-            width: auto;
-            margin-right: var(--spacing-xs);
-          }
-        }
-      }
-
-      @media (max-width: 768px) {
-        :host {
-          right: var(--margin-sm);
-          bottom: var(--margin-sm);
+        nb-icon {
+          font-size: 2rem;
         }
       }
     `,
@@ -160,31 +130,39 @@ import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 })
 export class FloatingActionButtonComponent {
   @Input() icon = 'plus-outline';
-  @Input() label?: string;
-  @Input() tooltip?: string;
-  @Input() tooltipPosition: 'top' | 'right' | 'bottom' | 'left' = 'left';
-  @Input() status: 'primary' | 'success' | 'info' | 'warning' | 'danger' = 'primary';
-  @Input() size: 'tiny' | 'small' | 'medium' | 'large' | 'giant' = 'large';
-  @Input() expanded = false;
-  @Input() menuItems?: Array<{
-    icon: string;
-    label?: string;
-    tooltip?: string;
-    status?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
-    data?: any;
-  }>;
+  @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
+  @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center' =
+    'bottom-right';
+  @Input() tooltipText = '';
+  @Input() disabled = false;
+  @Input() items: FabMenuItem[] = [];
 
-  @Output() click = new EventEmitter<MouseEvent>();
-  @Output() menuItemClick = new EventEmitter<{
-    event: MouseEvent;
-    item: any;
-  }>();
+  @Output() buttonClick = new EventEmitter<void>();
+  @Output() menuItemClick = new EventEmitter<FabMenuItem>();
 
-  onClick(event: MouseEvent) {
-    this.click.emit(event);
+  readonly menuTag = 'fab-menu-' + Math.random().toString(36).substring(7);
+
+  constructor(private nbMenuService: NbMenuService) {
+    // Subscribe to menu item clicks
+    this.nbMenuService.onItemClick().subscribe((event) => {
+      if (event.tag === this.menuTag && event.item) {
+        this.menuItemClick.emit(event.item as FabMenuItem);
+      }
+    });
   }
 
-  onMenuItemClick(event: MouseEvent, item: any) {
-    this.menuItemClick.emit({ event, item });
+  onClick(event: Event): void {
+    if (!this.items.length) {
+      event.stopPropagation();
+      this.buttonClick.emit();
+    }
+  }
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    // Close the menu when clicking outside
+    // The menu will close automatically when clicking outside
+    // No need to manually close it
   }
 }

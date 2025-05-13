@@ -14,7 +14,6 @@ import {
   NbPaginatorComponent,
   NbSortComponent,
   NbSortHeaderComponent,
-  NbSortEvent,
 } from '../../../../shared/components/custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
@@ -25,8 +24,6 @@ import {
   NbButtonModule,
   NbTabsetModule,
   NbTableModule,
-  NbPaginationChangeEvent,
-  NbSortEvent,
   NbFormFieldModule,
   NbInputModule,
   NbSelectModule,
@@ -39,6 +36,8 @@ import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
 @Component({
   selector: 'app-performance-dashboard',
@@ -49,22 +48,18 @@ import { of } from 'rxjs';
     NbButtonModule,
     NbTabsetModule,
     NbTableModule,
-    NbPaginatorModule,
-    NbSortModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
-    NbDatepickerModule,
     NbDatepickerModule,
     NbSpinnerModule,
     NbTagModule,
     NbIconModule,
     ReactiveFormsModule,
     NgxChartsModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-    NbSortEvent,
   ],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
@@ -243,18 +238,21 @@ export class PerformanceDashboardComponent implements OnInit {
     this.loadDashboardData();
   }
 
+  /**
+   * Handle page change event from paginator
+   */
   onPageChange(event: NbPaginationChangeEvent): void {
+    this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
     this.loadDashboardData();
   }
 
+  /**
+   * Handle sort event from sort component
+   */
   sortData(sort: NbSortEvent): void {
-    // Implement sorting logic
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-
+    // Implement sorting logic if needed, then reload data
+    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
     this.loadDashboardData();
   }
 

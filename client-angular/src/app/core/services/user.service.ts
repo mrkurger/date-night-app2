@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators'; // Removed map
+import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User, UserProfile, PublicProfile } from '../models/user.interface';
 
@@ -235,5 +235,57 @@ export class UserService {
       errorMessage = error.error?.message || error.message;
     }
     return throwError(() => new Error(errorMessage));
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
+
+  createUser(user: Partial<User>): Observable<User> {
+    return this.http.post<User>(this.apiUrl, user);
+  }
+
+  updateUser(id: string, updates: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${id}`, updates);
+  }
+
+  deleteUser(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  banUser(id: string): Observable<User> {
+    return this.updateUser(id, { status: 'banned' });
+  }
+
+  unbanUser(id: string): Observable<User> {
+    return this.updateUser(id, { status: 'active' });
+  }
+
+  getUserStats(): Observable<{
+    total: number;
+    active: number;
+    banned: number;
+    suspended: number;
+  }> {
+    return this.getUsers().pipe(
+      map((users) => ({
+        total: users.length,
+        active: users.filter((u) => u.status === 'active').length,
+        banned: users.filter((u) => u.status === 'banned').length,
+        suspended: users.filter((u) => u.status === 'suspended').length,
+      })),
+    );
+  }
+
+  getUsersByRole(role: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/by-role/${role}`);
+  }
+
+  updateUserRole(userId: string, role: string): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${userId}/role`, { role });
   }
 }

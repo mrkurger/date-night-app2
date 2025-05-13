@@ -70,6 +70,7 @@
             <li><a href="./CHANGELOG.html">Changelog</a></li>
             <li><a href="./AILESSONS.html">AI Lessons</a></li>
             <li><a href="./GLOSSARY.html">Glossary</a></li>
+            <li><a href="./AUTH_IMPLEMENTATION.html">Implementation Details</a></li>
           </ul>
         </aside>
 
@@ -86,7 +87,186 @@
             <input type="text" id="glossary-search" placeholder="Search glossary..." />
           </div>
 
-          <div class="glossary-entries"></div>
+          <div class="glossary-entries">
+            <div class="glossary-entry" id="AuthCallbackComponent">
+              <h3>AuthCallbackComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/components/auth-callback/auth-callback.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  A component that handles OAuth authentication callbacks from external providers. It
+                  processes authentication results and redirects users to appropriate destinations
+                  based on success or failure of the authentication attempt.
+                </p>
+                <p>
+                  This component is designed to work with multiple OAuth providers (Google, Facebook,
+                  Apple, Microsoft) and determines the provider from query parameters.
+                </p>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="AuthLayoutComponent">
+              <h3>AuthLayoutComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/components/auth-layout/auth-layout.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  A container component that provides consistent layout and styling for all
+                  authentication-related pages. It includes the application branding and a router
+                  outlet for rendering nested authentication components like login, register, and
+                  password reset.
+                </p>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="LoginComponent">
+              <h3>LoginComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/login/login.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  Provides a form for user authentication. Supports traditional email/password login
+                  as well as social login options through OAuth providers. Handles form validation,
+                  submission, and error feedback.
+                </p>
+                <h4>Methods</h4>
+                <ul>
+                  <li>
+                    <span class="tooltip">
+                      onSubmit()<span class="tooltip-text">Handles form submission for traditional login. Validates the form and attempts to authenticate the user with the provided credentials.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="tooltip">
+                      socialLogin(provider: string)<span class="tooltip-text">Initiates OAuth authentication flow with the specified provider (e.g., 'google', 'facebook', 'apple', 'microsoft').</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="RegisterComponent">
+              <h3>RegisterComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/register/register.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  Provides a form for new user registration. Supports both traditional registration
+                  with email/password and social registration through OAuth providers. Handles form
+                  validation, submission, and error feedback.
+                </p>
+                <h4>Methods</h4>
+                <ul>
+                  <li>
+                    <span class="tooltip">
+                      onSubmit()<span class="tooltip-text">Handles form submission for traditional registration. Validates the form and attempts to register a new user with the provided information.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="tooltip">
+                      socialLogin(provider: string)<span class="tooltip-text">Initiates OAuth registration flow with the specified provider (e.g., 'google', 'facebook', 'apple', 'microsoft').</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="tooltip">
+                      onCancel()<span class="tooltip-text">Redirects the user back to the login page.</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="RequestPasswordComponent">
+              <h3>RequestPasswordComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/components/request-password/request-password.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  Provides a form for users to request a password reset. Users enter their email
+                  address, and if valid, a password reset link is sent to that address.
+                </p>
+                <h4>Methods</h4>
+                <ul>
+                  <li>
+                    <span class="tooltip">
+                      onSubmit()<span class="tooltip-text">Handles form submission for password reset requests. Validates the email and sends a reset link if valid.</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="ResetPasswordComponent">
+              <h3>ResetPasswordComponent</h3>
+              <div class="entry-meta">Type: Component | Path: /features/auth/components/reset-password/reset-password.component.ts</div>
+              <div class="entry-description">
+                <p>
+                  Allows users to set a new password after receiving a password reset link. The
+                  component validates the reset token and provides a form for entering a new password.
+                </p>
+                <h4>Methods</h4>
+                <ul>
+                  <li>
+                    <span class="tooltip">
+                      onSubmit()<span class="tooltip-text">Handles form submission for password reset. Validates the form and attempts to update the user's password with the provided new password.</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="AuthService_requestPassword">
+              <h3>AuthService.requestPassword</h3>
+              <div class="entry-meta">Type: Method | Path: /core/services/auth.service.ts</div>
+              <div class="entry-description">
+                <p>
+                  Sends a request to the server to initiate the password reset process for a user's
+                  account.
+                </p>
+                <h4>Parameters</h4>
+                <table class="params-table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                  <tr>
+                    <td>email</td>
+                    <td>string</td>
+                    <td>The email address of the user's account</td>
+                  </tr>
+                </table>
+                <h4>Returns</h4>
+                <p>Observable&lt;void&gt; - An observable that completes when the request is processed</p>
+              </div>
+            </div>
+
+            <div class="glossary-entry" id="AuthService_resetPassword">
+              <h3>AuthService.resetPassword</h3>
+              <div class="entry-meta">Type: Method | Path: /core/services/auth.service.ts</div>
+              <div class="entry-description">
+                <p>
+                  Completes the password reset process by sending the reset token and new password to
+                  the server.
+                </p>
+                <h4>Parameters</h4>
+                <table class="params-table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                  <tr>
+                    <td>token</td>
+                    <td>string</td>
+                    <td>The reset token from the password reset link</td>
+                  </tr>
+                  <tr>
+                    <td>password</td>
+                    <td>string</td>
+                    <td>The new password for the user's account</td>
+                  </tr>
+                </table>
+                <h4>Returns</h4>
+                <p>Observable&lt;void&gt; - An observable that completes when the password is reset</p>
+              </div>
+            </div>
+          </div>
         </article>
       </div>
     </main>

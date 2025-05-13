@@ -18,11 +18,12 @@ import { switchMap, tap } from 'rxjs/operators';
 import { LocationService } from '../../../core/services/location.service';
 import { NorwayCity } from '../../../core/constants/norway-locations';
 import { NebularModule } from '../../../shared/nebular.module';
+import { NbErrorComponent } from '../../../shared/components/custom-nebular-components/nb-error/nb-error.component';
 
 @Component({
   selector: 'app-ad-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule, NbErrorComponent],
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
 })

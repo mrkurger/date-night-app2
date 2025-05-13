@@ -12,18 +12,64 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbTagModule,
+  NbBadgeModule,
+  NbLayoutModule,
+} from '@nebular/theme';
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { Ad } from '../../core/models/ad.interface';
 
+/**
+ * Advertiser Profile Component
+ *
+ * Displays and manages an advertiser's profile information using Nebular UI components.
+ * Features include:
+ * - Profile viewing with responsive layout
+ * - Profile editing with form validation
+ * - Media gallery with thumbnails
+ * - Status badges (Featured, Touring)
+ * - Actions (Edit, Delete, Upgrade)
+ *
+ * Uses Nebular components:
+ * - NbCard for layout containers
+ * - NbBadge for status indicators
+ * - NbForm components for editing
+ * - NbButton for actions
+ * - NbIcon for visual indicators
+ * - NbSpinner for loading states
+ */
 @Component({
   selector: 'app-advertiser-profile',
   templateUrl: './advertiser-profile.component.html',
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbLayoutModule,
+  ],
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;

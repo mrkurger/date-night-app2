@@ -1,0 +1,107 @@
+// Spacing utilities using Nebular theme variables
+@use '@nebular/theme/styles/theming' as *;
+
+// Spacing scale
+$spacing-scale: (
+  0: 0,
+  1: nb-theme(spacing-1),
+  2: nb-theme(spacing-2),
+  3: nb-theme(spacing-3),
+  4: nb-theme(spacing-4),
+  5: nb-theme(spacing-5),
+  6: nb-theme(spacing-6),
+  7: nb-theme(spacing-7),
+  8: nb-theme(spacing-8),
+);
+
+// Margin utilities
+@each $size, $value in $spacing-scale {
+  .nb-m-#{$size} {
+    margin: $value;
+  }
+  .nb-mt-#{$size} {
+    margin-top: $value;
+  }
+  .nb-mr-#{$size} {
+    margin-right: $value;
+  }
+  .nb-mb-#{$size} {
+    margin-bottom: $value;
+  }
+  .nb-ml-#{$size} {
+    margin-left: $value;
+  }
+  .nb-mx-#{$size} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+  .nb-my-#{$size} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+}
+
+// Padding utilities
+@each $size, $value in $spacing-scale {
+  .nb-p-#{$size} {
+    padding: $value;
+  }
+  .nb-pt-#{$size} {
+    padding-top: $value;
+  }
+  .nb-pr-#{$size} {
+    padding-right: $value;
+  }
+  .nb-pb-#{$size} {
+    padding-bottom: $value;
+  }
+  .nb-pl-#{$size} {
+    padding-left: $value;
+  }
+  .nb-px-#{$size} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .nb-py-#{$size} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+}
+
+// Gap utilities
+@each $size, $value in $spacing-scale {
+  .nb-gap-#{$size} {
+    gap: $value;
+  }
+  .nb-row-gap-#{$size} {
+    row-gap: $value;
+  }
+  .nb-column-gap-#{$size} {
+    column-gap: $value;
+  }
+}
+
+// Auto margins
+.nb-m-auto {
+  margin: auto;
+}
+.nb-mt-auto {
+  margin-top: auto;
+}
+.nb-mr-auto {
+  margin-right: auto;
+}
+.nb-mb-auto {
+  margin-bottom: auto;
+}
+.nb-ml-auto {
+  margin-left: auto;
+}
+.nb-mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.nb-my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}

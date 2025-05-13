@@ -7,15 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule , Component} from '@angular/core';
-import { NbPaginatorModule, NbSortModule } from '../../shared/components/custom-nebular-components';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminRoutingModule } from './admin-routing.module';
-import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
-import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
-import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminRoutingModule } from './admin-routing.module';
+
+// Nebular imports
 import {
   NbTabsetModule,
   NbCardModule,
@@ -28,28 +25,56 @@ import {
   NbSpinnerModule,
   NbTagModule,
   NbIconModule,
+  NbListModule,
+  NbUserModule,
+  NbActionsModule,
+  NbSearchModule,
+  NbSidebarModule,
+  NbContextMenuModule,
+  NbSecurityModule,
+  NbLayoutModule,
 } from '@nebular/theme';
+
+// Charts
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+// Custom components
+import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
+import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
+import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { RevenueAnalyticsComponent } from './components/revenue-analytics/revenue-analytics.component';
+import { ContentModerationComponent } from './components/content-moderation/content-moderation.component';
+import { SystemHealthComponent } from './components/system-health/system-health.component';
+import { AuditLogComponent } from './components/audit-log/audit-log.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 /**
  * Admin Module
  *
- * Note: All components in this module are standalone components.
- * They are imported in the module's imports array rather than being declared
- * in the declarations array. This is the recommended approach for Angular 19+.
+ * Provides administrative functionality including:
+ * - User Management & Moderation
+ * - System Performance Monitoring
+ * - Error Tracking & Analysis
+ * - Revenue Analytics
+ * - Content Moderation
+ * - System Health Monitoring
+ * - Audit Logging
+ * - Administrative Settings
+ *
+ * All components are standalone and lazy-loaded.
+ * Protected by AdminGuard for admin-only access.
  */
 @NgModule({
-  declarations: [], // No declarations as all components are standalone
   imports: [
     CommonModule,
     AdminRoutingModule,
-    // Material modules and other shared modules
+    ReactiveFormsModule,
+    // Nebular modules
     NbTabsetModule,
     NbCardModule,
     NbButtonModule,
     NbTableModule,
-    NbPaginatorModule,
-    NbSortModule,
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
@@ -57,12 +82,26 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     NbSpinnerModule,
     NbTagModule,
     NbIconModule,
-    ReactiveFormsModule,
+    NbListModule,
+    NbUserModule,
+    NbActionsModule,
+    NbSearchModule,
+    NbSidebarModule,
+    NbContextMenuModule,
+    NbSecurityModule,
+    NbLayoutModule,
+    // Charts
     NgxChartsModule,
     // Standalone components
     TelemetryDashboardComponent,
     ErrorDashboardComponent,
     PerformanceDashboardComponent,
+    UserManagementComponent,
+    RevenueAnalyticsComponent,
+    ContentModerationComponent,
+    SystemHealthComponent,
+    AuditLogComponent,
+    AdminSettingsComponent,
   ],
 })
 export class AdminModule {}

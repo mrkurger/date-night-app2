@@ -1,0 +1,150 @@
+// Typography utilities using Nebular theme variables
+@use '@nebular/theme/styles/theming' as *;
+
+// Font families
+.nb-font-primary {
+  font-family: nb-theme(text-paragraph-font-family);
+}
+
+.nb-font-secondary {
+  font-family: nb-theme(text-heading-font-family);
+}
+
+// Font weights
+.nb-font-thin {
+  font-weight: nb-theme(text-thin-font-weight);
+}
+
+.nb-font-light {
+  font-weight: nb-theme(text-light-font-weight);
+}
+
+.nb-font-regular {
+  font-weight: nb-theme(text-regular-font-weight);
+}
+
+.nb-font-medium {
+  font-weight: nb-theme(text-medium-font-weight);
+}
+
+.nb-font-bold {
+  font-weight: nb-theme(text-bold-font-weight);
+}
+
+// Font sizes
+.nb-text-tiny {
+  font-size: nb-theme(text-tiny-font-size);
+  line-height: nb-theme(text-tiny-line-height);
+}
+
+.nb-text-caption {
+  font-size: nb-theme(text-caption-font-size);
+  line-height: nb-theme(text-caption-line-height);
+}
+
+.nb-text-subtitle {
+  font-size: nb-theme(text-subtitle-font-size);
+  line-height: nb-theme(text-subtitle-line-height);
+}
+
+.nb-text-paragraph {
+  font-size: nb-theme(text-paragraph-font-size);
+  line-height: nb-theme(text-paragraph-line-height);
+}
+
+.nb-text-h6 {
+  font-size: nb-theme(text-heading-6-font-size);
+  line-height: nb-theme(text-heading-6-line-height);
+}
+
+.nb-text-h5 {
+  font-size: nb-theme(text-heading-5-font-size);
+  line-height: nb-theme(text-heading-5-line-height);
+}
+
+.nb-text-h4 {
+  font-size: nb-theme(text-heading-4-font-size);
+  line-height: nb-theme(text-heading-4-line-height);
+}
+
+.nb-text-h3 {
+  font-size: nb-theme(text-heading-3-font-size);
+  line-height: nb-theme(text-heading-3-line-height);
+}
+
+.nb-text-h2 {
+  font-size: nb-theme(text-heading-2-font-size);
+  line-height: nb-theme(text-heading-2-line-height);
+}
+
+.nb-text-h1 {
+  font-size: nb-theme(text-heading-1-font-size);
+  line-height: nb-theme(text-heading-1-line-height);
+}
+
+// Text colors
+.nb-text-basic {
+  color: nb-theme(text-basic-color);
+}
+
+.nb-text-alternate {
+  color: nb-theme(text-alternate-color);
+}
+
+.nb-text-disabled {
+  color: nb-theme(text-disabled-color);
+}
+
+.nb-text-hint {
+  color: nb-theme(text-hint-color);
+}
+
+// Text transforms
+.nb-text-capitalize {
+  text-transform: capitalize;
+}
+
+.nb-text-uppercase {
+  text-transform: uppercase;
+}
+
+.nb-text-lowercase {
+  text-transform: lowercase;
+}
+
+// Text decorations
+.nb-text-underline {
+  text-decoration: underline;
+}
+
+.nb-text-line-through {
+  text-decoration: line-through;
+}
+
+// Text alignment
+.nb-text-left {
+  text-align: left;
+}
+
+.nb-text-center {
+  text-align: center;
+}
+
+.nb-text-right {
+  text-align: right;
+}
+
+// Text wrapping
+.nb-text-nowrap {
+  white-space: nowrap;
+}
+
+.nb-text-wrap {
+  white-space: normal;
+}
+
+.nb-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

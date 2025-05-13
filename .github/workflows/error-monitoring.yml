@@ -1,28 +1,38 @@
 # .github/workflows/error-monitoring.yml
+# Workflow to monitor errors in completed workflows and handle them using a custom script.
+
 name: Error Monitoring
 
 on:
   workflow_run:
-    workflows: ['*']
+    workflows: ['*'] # Monitor all workflows in the repository
     types:
-      - completed
+      - completed # Trigger only when a workflow run completes
 
 jobs:
   monitor:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
 
+    steps:
+      # Step 1: Checkout the repository to access scripts and code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Process Error using a custom JavaScript script
       - name: Process Error
         uses: actions/github-script@v7
         with:
           script: |
-            const handleError = require('./.github/scripts/handle-workflow-errors.js')
-            await handleError(context.payload.workflow_run)
+            // Import the error handling function using ESModules syntax
+            import handleError from './.github/scripts/handle-workflow-errors.js';
 
+            // Execute the error handler with the payload data
+            await handleError(context.payload.workflow_run);
+
+      # Step 3: Upload an error report artifact for further analysis
       - name: Upload Error Report
         uses: actions/upload-artifact@v4
         with:
-          name: error-report-${{ github.run_id }}
-          path: workflow-error-logs/
-          retention-days: 14
+          name: error-report-${{ github.run_id }} # Unique name for the artifact using the run ID
+          path: workflow-error-logs/ # Directory containing error logs
+          retention-days: 14 # Retain the artifact for 14 days

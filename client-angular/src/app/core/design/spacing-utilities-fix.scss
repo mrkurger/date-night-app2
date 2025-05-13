@@ -1,0 +1,41 @@
+/**
+ * Spacing Utilities Fix
+ *
+ * This file fixes issues with the spacing utilities.
+ */
+
+@use 'tokens' as *;
+
+// Responsive spacing utilities
+@media (min-width: $breakpoint-mobile) {
+  .m-md-0 {
+    margin: 0 !important;
+  }
+  .m-md-1 {
+    margin: $spacing-1 !important;
+  }
+  .m-md-2 {
+    margin: $spacing-2 !important;
+  }
+  // Add more utilities as needed
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .m-lg-0 {
+    margin: 0 !important;
+  }
+  .m-lg-1 {
+    margin: $spacing-1 !important;
+  }
+  .m-lg-2 {
+    margin: $spacing-2 !important;
+  }
+  // Add more utilities as needed
+}
+
+// Export the media query values for JavaScript usage
+:root {
+  --breakpoint-mobile: #{$breakpoint-mobile};
+  --breakpoint-tablet: #{$breakpoint-tablet};
+  --breakpoint-desktop: #{$breakpoint-desktop};
+}

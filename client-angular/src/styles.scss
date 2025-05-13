@@ -1,21 +1,38 @@
 @use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default' as default-theme;
-@use '@nebular/theme/styles/themes/dark' as dark-theme;
-@use '@nebular/theme/styles/globals' as *;
+@use '@nebular/theme/styles/themes/default';
+@use '@nebular/theme/styles/themes/cosmic' as dark;
+@use './app/core/design/tokens' as tokens;
+@use './app/core/design/utilities' as utils;
+@use '@fontsource/inter' as inter;
+@use '@fontsource/poppins' as poppins;
+@use './app/core/design/responsive' as responsive;
+@use './app/core/design/animations' as animations;
+@use './app/core/design/typography' as typography;
+@use './app/core/design/spacing' as spacing;
+@use './app/core/design/spacing-utilities-fix' as spacing-fix;
 
 // Import Eva Icons
-@import 'eva-icons/style/eva-icons.css';
+@import url('https://unpkg.com/@nebular/theme@15.0.0/styles/prebuilt/default.css');
+@import url('https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css');
 
-// Import Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
-
-// Import Design System
-@use './app/core/design/design-tokens' as tokens;
-@use './app/core/design/nebular-theme-customization' as theme;
-
-// Register custom themes
-$nb-themes: nb-register-theme(theme.$date-night-theme, default, default-theme.$theme);
-$nb-themes: nb-register-theme(theme.$date-night-dark-theme, dark, dark-theme.$theme);
+// Using the theme configuration from nebular-theme-customization.scss
+$nb-themes: nb-register-theme(
+  (
+    // Base properties
+    color-primary-100: var(--primary-100, #f2f6ff),
+    color-primary-200: var(--primary-200, #d9e4ff),
+    color-primary-300: var(--primary-300, #a6c1ff),
+    color-primary-400: var(--primary-400, #598bff),
+    color-primary-500: var(--primary-500, #3366ff),
+    color-primary-600: var(--primary-600, #274bdb),
+    color-primary-700: var(--primary-700, #1a34b8),
+    color-primary-800: var(--primary-800, #102694),
+    color-primary-900: var(--primary-900, #091c7a),
+    // Add more theme properties as needed
+  ),
+  default,
+  default.$theme
+);
 
 // Install Nebular Theme
 @include nb-install() {
@@ -27,28 +44,29 @@ html,
 body {
   height: 100%;
   margin: 0;
-  font-family: tokens.$font-primary;
-  background-color: tokens.$neutral-50;
-  color: tokens.$neutral-900;
+  font-family: nb-theme(text-paragraph-font-family);
+  background-color: nb-theme(background-basic-color-1);
+  color: nb-theme(text-basic-color);
 }
 
 // Component styles
 nb-card {
-  margin-bottom: 1rem;
+  margin-bottom: nb-theme(card-margin-bottom);
   border-radius: nb-theme(card-border-radius);
   box-shadow: nb-theme(card-shadow);
   transition:
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
+    transform 0.2s nb-theme(transition-timing-function),
+    box-shadow 0.2s nb-theme(transition-timing-function);
 
   &:hover {
     transform: translateY(-2px);
+    box-shadow: nb-theme(card-shadow-hover);
   }
 }
 
 // Form styles
 nb-form-field {
-  margin-bottom: 1rem;
+  margin-bottom: nb-theme(form-field-spacing);
 
   input,
   textarea,
@@ -59,16 +77,16 @@ nb-form-field {
 
   &.has-error {
     .error-message {
-      color: nb-theme(color-danger-500);
-      font-size: 0.875rem;
-      margin-top: 0.25rem;
+      color: nb-theme(color-danger-default);
+      font-size: nb-theme(text-caption-font-size);
+      margin-top: nb-theme(form-field-spacing);
     }
   }
 }
 
 // Button styles
 [nbButton] {
-  font-family: nb-theme(text-paragraph-font-family) !important;
+  font-family: nb-theme(text-button-font-family) !important;
   font-weight: nb-theme(text-button-font-weight) !important;
   text-transform: nb-theme(text-button-text-transform) !important;
   border-radius: nb-theme(button-border-radius) !important;
@@ -77,12 +95,18 @@ nb-form-field {
 }
 
 // Utility classes
-@import './app/core/design/bem-utilities';
-@import './app/core/design/responsive-utilities';
-@import './app/core/design/accessibility-utilities';
-@import './app/core/design/animation-utilities';
-@import './app/core/design/dark-mode';
-@import './app/core/design/components';
-@import './app/core/design/typography-mixins';
-@import './app/core/design/spacing-utilities';
-@import './app/core/design/micro-interactions';
+.nb-margin {
+  margin: nb-theme(margin);
+}
+
+.nb-padding {
+  padding: nb-theme(padding);
+}
+
+.nb-rounded {
+  border-radius: nb-theme(border-radius);
+}
+
+.nb-shadow {
+  box-shadow: nb-theme(shadow);
+}

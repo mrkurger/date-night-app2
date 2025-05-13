@@ -1,46 +1,117 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NebularModule } from './nebular.module';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbDialogModule,
+  NbToastrModule,
+  NbWindowModule,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSelectModule,
+  NbTagModule,
+  NbListModule,
+  NbUserModule,
+  NbBadgeModule,
+  NbAlertModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbContextMenuModule,
+  NbActionsModule,
+  NbTabsetModule,
+  NbRouteTabsetModule,
+  NbAccordionModule,
+  NbStepperModule,
+  NbTreeGridModule,
+  NbPopoverModule,
+  NbTooltipModule,
+  NbToggleModule,
+  NbChatModule,
+  NbCalendarModule,
+  NbSpinnerModule,
+  NbSearchModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-// Import shared components
-import { ChatMessageComponent } from './components/chat-message/chat-message.component';
-import { FavoriteButtonComponent } from './components/favorite-button/favorite-button.component';
-import { AlertNotificationsComponent } from './components/alert-notifications/alert-notifications.component';
-import { ResponseDialogComponent } from './components/response-dialog/response-dialog.component';
+// Import custom components
+import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
+import { NbSortModule } from './components/custom-nebular-components/nb-sort/nb-sort.module';
+import { NbPaginatorModule } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
-// Import shared pipes
-import { TimeAgoPipe } from './pipes/time-ago.pipe';
-import { FileSizePipe } from './pipes/file-size.pipe';
-import { LinkifyPipe } from './pipes/linkify.pipe';
+const NEBULAR_MODULES = [
+  // Basic Nebular modules
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSelectModule,
+  NbTagModule,
+  NbListModule,
+  NbUserModule,
+  NbBadgeModule,
+  NbAlertModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbContextMenuModule,
+  NbActionsModule,
+  NbTabsetModule,
+  NbRouteTabsetModule,
+  NbAccordionModule,
+  NbStepperModule,
+  NbTreeGridModule,
+  NbEvaIconsModule,
 
-const SHARED_COMPONENTS = [
-  ChatMessageComponent,
-  FavoriteButtonComponent,
-  AlertNotificationsComponent,
-  ResponseDialogComponent,
+  // Additional modules needed
+  NbPopoverModule,
+  NbTooltipModule,
+  NbToggleModule,
+  NbChatModule,
+  NbCalendarModule,
+  NbSpinnerModule,
+  NbSearchModule,
 ];
 
-const SHARED_PIPES = [TimeAgoPipe, FileSizePipe, LinkifyPipe];
+// Custom components and modules
+const CUSTOM_COMPONENTS = [NbErrorComponent];
+
+const CUSTOM_MODULES = [NbSortModule, NbPaginatorModule];
 
 /**
  * Shared Module
  *
- * This module exports common Angular modules and our NebularModule
- * for use throughout the application.
+ * This module exports common Angular modules and Nebular modules.
+ * Standalone components and pipes should be imported directly where needed.
+ *
+ * Note: All components and pipes have been migrated to standalone.
+ * They should be imported directly in the components that use them.
  */
 @NgModule({
-  declarations: [...SHARED_COMPONENTS, ...SHARED_PIPES],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NebularModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...NEBULAR_MODULES,
+    ...CUSTOM_MODULES,
+    ...CUSTOM_COMPONENTS,
+  ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
-    NebularModule,
-    ...SHARED_COMPONENTS,
-    ...SHARED_PIPES,
+    ...NEBULAR_MODULES,
+    ...CUSTOM_MODULES,
+    ...CUSTOM_COMPONENTS,
   ],
 })
 export class SharedModule {}

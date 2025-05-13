@@ -4,93 +4,146 @@ import { CommonModule } from '@angular/common';
 /**
  * Skeleton Loader Component
  *
- * This component provides a loading placeholder for content that takes time to load.
- * It can be customized to match the shape and size of the content it's replacing.
- *
- * Usage:
- * ```html
- * <!-- Basic usage -->
- * <app-skeleton-loader></app-skeleton-loader>
- *
- * <!-- Custom dimensions -->
- * <app-skeleton-loader [width]="100" [height]="20"></app-skeleton-loader>
- *
- * <!-- Custom shape -->
- * <app-skeleton-loader [shape]="'circle'" [width]="40"></app-skeleton-loader>
- *
- * <!-- Text placeholder with multiple lines -->
- * <app-skeleton-loader [type]="'text'" [lines]="3"></app-skeleton-loader>
- *
- * <!-- Card placeholder -->
- * <app-skeleton-loader [type]="'card'" [imageHeight]="200"></app-skeleton-loader>
- * ```
+ * A modern skeleton loader component for content placeholders.
+ * Features customizable appearance, animation, and various shapes.
  */
 @Component({
-  selector: 'app-skeleton-loader',
+  selector: 'app-skeleton',
   standalone: true,
   imports: [CommonModule],
   template: `
     <div
-      class="skeleton-loader"
-      [class.skeleton-loader--circle]="shape === 'circle'"
-      [class.skeleton-loader--rect]="shape === 'rect'"
+      class="skeleton"
+      [class]="'skeleton--' + variant"
       [style.width]="width"
       [style.height]="height"
-      [style.margin]="margin"
+      [class.skeleton--animated]="animated"
     >
-      <div class="skeleton-loader__animation"></div>
+      <div
+        *ngFor="let i of getArray(); trackBy: trackByFn"
+        class="skeleton__item"
+        [class]="'skeleton__item--' + type"
+        [style.width]="itemWidth"
+        [style.height]="itemHeight"
+      ></div>
     </div>
   `,
   styles: [
     `
-      :host {
-        display: block;
+      .skeleton {
+        display: flex;
+        flex-direction: column;
+        gap: nb-theme(spacing-2);
       }
 
-      .skeleton-loader {
-        background: var(--background-basic-color-2);
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        position: relative;
+      /* Variants */
+      .skeleton--text .skeleton__item {
+        border-radius: nb-theme(border-radius);
       }
 
-      .skeleton-loader--circle {
+      .skeleton--card .skeleton__item {
+        border-radius: nb-theme(card-border-radius);
+      }
+
+      .skeleton--circle .skeleton__item {
         border-radius: 50%;
       }
 
-      .skeleton-loader--rect {
-        border-radius: var(--border-radius);
-      }
-
-      .skeleton-loader__animation {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+      /* Animation */
+      .skeleton--animated .skeleton__item {
         background: linear-gradient(
           90deg,
-          transparent,
-          var(--background-basic-color-3),
-          transparent
+          nb-theme(background-basic-color-2) 25%,
+          nb-theme(background-basic-color-3) 37%,
+          nb-theme(background-basic-color-2) 63%
         );
-        animation: skeleton-loading 1.5s infinite;
+        background-size: 400% 100%;
+        animation: skeleton-loading 1.4s ease infinite;
+      }
+
+      .skeleton__item {
+        background-color: nb-theme(background-basic-color-2);
+      }
+
+      /* Types */
+      .skeleton__item--text {
+        height: 1em;
+      }
+
+      .skeleton__item--text:last-child {
+        width: 80%;
+      }
+
+      .skeleton__item--title {
+        height: 1.5em;
+        margin-bottom: nb-theme(spacing-2);
+      }
+
+      .skeleton__item--avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .skeleton__item--thumbnail {
+        width: 100px;
+        height: 100px;
+      }
+
+      .skeleton__item--button {
+        height: 2.25rem;
+        width: 100px;
+        border-radius: nb-theme(button-rectangle-border-radius);
       }
 
       @keyframes skeleton-loading {
         0% {
-          transform: translateX(-100%);
+          background-position: 100% 50%;
         }
         100% {
-          transform: translateX(100%);
+          background-position: 0 50%;
         }
+      }
+
+      /* Dark theme adjustments */
+      :host-context([data-theme='dark']) .skeleton--animated .skeleton__item {
+        background: linear-gradient(
+          90deg,
+          nb-theme(background-basic-color-3) 25%,
+          nb-theme(background-basic-color-4) 37%,
+          nb-theme(background-basic-color-3) 63%
+        );
+      }
+
+      :host-context([data-theme='dark']) .skeleton__item {
+        background-color: nb-theme(background-basic-color-3);
       }
     `,
   ],
 })
 export class SkeletonLoaderComponent {
-  @Input() shape: 'circle' | 'rect' = 'rect';
-  @Input() width = '100%';
-  @Input() height = '20px';
-  @Input() margin = '0';
+  @Input() type: 'text' | 'title' | 'avatar' | 'thumbnail' | 'button' = 'text';
+  @Input() variant: 'text' | 'card' | 'circle' = 'text';
+  @Input() width?: string;
+  @Input() height?: string;
+  @Input() itemWidth?: string;
+  @Input() itemHeight?: string;
+  @Input() count = 1;
+  @Input() animated = true;
+
+  /**
+   * Get array of items based on count
+   */
+  getArray(): number[] {
+    return Array(this.count)
+      .fill(0)
+      .map((_, i) => i);
+  }
+
+  /**
+   * Track items by index for better performance
+   */
+  trackByFn(index: number): number {
+    return index;
+  }
 }

@@ -1,6 +1,7 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default' as default-theme;
 @use '@nebular/theme/styles/global/breakpoints' as *;
+@use '../../core/design/design-tokens' as *;
 /* Removed emerald-ui import as it's causing build issues */
 
 // ===================================================

@@ -22,6 +22,9 @@
 @use 'sass:color';
 @use 'sass:map';
 
+// Dark mode utilities using Nebular theme variables
+@use '@nebular/theme/styles/theming' as *;
+
 // Dark mode mixin
 // Applies styles when dark mode is active
 @mixin mode {
@@ -182,4 +185,90 @@ $color-map: (
       --shadow-modal: 0 0 0 1px rgba(#{var(--color-white)}, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
     }
   }
+}
+
+// Dark mode specific styles
+[data-theme='dark'] {
+  // Background colors
+  .nb-bg-dark {
+    background-color: nb-theme(background-basic-color-1);
+  }
+
+  .nb-bg-dark-accent {
+    background-color: nb-theme(background-basic-color-2);
+  }
+
+  // Text colors
+  .nb-text-dark {
+    color: nb-theme(text-basic-color);
+  }
+
+  .nb-text-dark-hint {
+    color: nb-theme(text-hint-color);
+  }
+
+  // Border colors
+  .nb-border-dark {
+    border-color: nb-theme(border-basic-color-3);
+  }
+
+  // Card styles
+  nb-card {
+    background-color: nb-theme(card-background-color);
+    border-color: nb-theme(card-border-color);
+  }
+
+  // Button styles
+  [nbButton] {
+    &.appearance-filled {
+      background-color: nb-theme(button-filled-background-color);
+      border-color: nb-theme(button-filled-border-color);
+      color: nb-theme(button-filled-text-color);
+
+      &:hover {
+        background-color: nb-theme(button-filled-hover-background-color);
+        border-color: nb-theme(button-filled-hover-border-color);
+      }
+    }
+
+    &.appearance-outline {
+      background-color: nb-theme(button-outline-background-color);
+      border-color: nb-theme(button-outline-border-color);
+      color: nb-theme(button-outline-text-color);
+
+      &:hover {
+        background-color: nb-theme(button-outline-hover-background-color);
+        border-color: nb-theme(button-outline-hover-border-color);
+      }
+    }
+  }
+
+  // Form styles
+  nb-form-field {
+    input,
+    textarea,
+    select {
+      background-color: nb-theme(input-basic-background-color);
+      border-color: nb-theme(input-basic-border-color);
+      color: nb-theme(input-basic-text-color);
+
+      &:focus {
+        border-color: nb-theme(input-basic-focus-border-color);
+      }
+    }
+  }
+
+  // Icon colors
+  nb-icon {
+    color: nb-theme(text-basic-color);
+  }
+}
+
+// Theme transition
+.nb-theme-transition {
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }

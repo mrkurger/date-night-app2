@@ -85,8 +85,36 @@
           </button>
         </div>
 
+        <div class="social-auth">
+          <p class="divider"><span>or continue with</span></p>
+
+          <div class="social-buttons">
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('google')">
+              <nb-icon icon="google-outline"></nb-icon> Google
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('facebook')">
+              <nb-icon icon="facebook-outline"></nb-icon> Facebook
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
+              <nb-icon icon="apple-outline"></nb-icon> Apple
+            </button>
+
+            <button
+              nbButton
+              ghost
+              status="primary"
+              type="button"
+              (click)="socialLogin('microsoft')"
+            >
+              <nb-icon icon="microsoft-outline"></nb-icon> Microsoft
+            </button>
+          </div>
+        </div>
+
         <div class="form-footer">
-          <a routerLink="/auth/forgot-password" class="forgot-password">Forgot Password?</a>
+          <a routerLink="/auth/request-password" class="forgot-password">Forgot Password?</a>
           <span class="spacer"></span>
           <span
             >Don't have an account?

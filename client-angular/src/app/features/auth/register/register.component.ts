@@ -10,6 +10,17 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
+import {
+  NbButtonModule,
+  NbCheckboxModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+} from '@nebular/theme';
+import { finalize } from 'rxjs/operators';
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -26,16 +37,30 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  styleUrls: ['./register.component.scss', './social-login.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgIf],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    NgIf,
+    NbButtonModule,
+    NbCheckboxModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbInputModule,
+  ],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  isLoading = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private authService: AuthService,
+    private userService: UserService,
+    private nbAuthService: NbAuthService,
   ) {
     this.registerForm = this.fb.group(
       {
@@ -51,16 +76,40 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Initialize the component
+    // Redirect if already logged in
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // Process the form data
-      console.log('Registration form submitted', this.registerForm.value);
+      this.isLoading = true;
+      this.errorMessage = '';
 
-      // Navigate to login page
-      this.router.navigate(['/login']);
+      const { firstname, lastname, email, password } = this.registerForm.value;
+
+      // Create a username from first name and last name (for example)
+      const username = (firstname + lastname).toLowerCase();
+
+      this.authService
+        .register({
+          username,
+          email,
+          password,
+          confirmPassword: password,
+          role: 'user',
+          acceptTerms: true,
+        })
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/dashboard']);
+          },
+          error: (error) => {
+            this.errorMessage = error.message || 'Registration failed. Please try again.';
+          },
+        });
     } else {
       // Mark all fields as touched to trigger validation
       Object.keys(this.registerForm.controls).forEach((key) => {
@@ -71,6 +120,31 @@ export class RegisterComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
+  }
+
+  socialLogin(provider: string): void {
+    this.isLoading = true;
+
+    this.nbAuthService.authenticate(provider).subscribe((result: NbAuthResult) => {
+      this.isLoading = false;
+      if (result.isSuccess()) {
+        // Only allow redirects to internal routes for security
+        const redirect = result.getRedirect();
+        if (
+          redirect &&
+          redirect.startsWith('/') &&
+          !redirect.startsWith('//') &&
+          !redirect.includes(':')
+        ) {
+          this.router.navigateByUrl(redirect);
+        } else {
+          this.router.navigateByUrl('/dashboard');
+        }
+      } else {
+        this.errorMessage =
+          result.getErrors()[0] || `Registration with ${provider} failed. Please try again.`;
+      }
+    });
   }
 }

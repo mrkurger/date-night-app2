@@ -571,12 +571,13 @@ export class FavoritesListComponent implements OnInit {
 
   openNotesDialog(favorite: Favorite): void {
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Edit Notes',
-        notes: favorite.notes || '',
-        maxLength: 500,
-        placeholder: 'Add personal notes about this ad...',
+      context: {
+        data: {
+          title: 'Edit Notes',
+          notes: favorite.notes || '',
+          maxLength: 500,
+          placeholder: 'Add personal notes about this ad...',
+        },
       },
     });
 
@@ -589,12 +590,13 @@ export class FavoritesListComponent implements OnInit {
 
   openTagsDialogForSingle(favorite: Favorite): void {
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Edit Tags',
-        notes: favorite.tags ? favorite.tags.join(', ') : '',
-        maxLength: 200,
-        placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+      context: {
+        data: {
+          title: 'Edit Tags',
+          notes: favorite.tags ? favorite.tags.join(', ') : '',
+          maxLength: 200,
+          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+        },
       },
     });
 
@@ -614,12 +616,13 @@ export class FavoritesListComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Add Tags to Selected Favorites',
-        notes: '',
-        maxLength: 200,
-        placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+      context: {
+        data: {
+          title: 'Add Tags to Selected Favorites',
+          notes: '',
+          maxLength: 200,
+          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+        },
       },
     });
 

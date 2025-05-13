@@ -1,24 +1,30 @@
 // ===================================================
 // DESIGN SYSTEM ENTRY POINT
 // ===================================================
-// This file is the main entry point for the design system
-//
-// IMPORT HIERARCHY:
-// 1. This file (index.scss) is the main entry point
-// 2. It forwards all design system components and utilities
-// 3. Components and utilities import tokens as needed
-//
-// USAGE:
-// - In application styles: @use '~/styles/design-system' as ds;
-// - Then use tokens: color: ds.$color-primary;
-//
-// IMPORTANT:
-// - Always use @use or @forward instead of @import
-// - Keep the forwarding hierarchy flat to avoid circular dependencies
+// This file is the main entry point for the design system.
+// It combines Nebular theme variables with our design tokens.
 // ===================================================
 
 /* Import Nebular Theme */
-@use '@nebular/theme/styles/theming' as nb-theme;
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/dark' as dark-theme;
+
+/* Import Design Tokens */
+@use '../../app/core/design/design-tokens' as *;
+@use '../../app/core/design/nebular-theme-customization' as theme;
+
+/* Forward Base Styles */
+@forward '../variables';
+@forward '../mixins/index';
+@forward './typography';
+@forward './colors';
+@forward './spacing';
+@forward './breakpoints';
+
+/* Register Themes */
+$nb-themes: nb-register-theme(theme.$date-night-theme, default, default-theme.$theme);
+$nb-themes: nb-register-theme(theme.$date-night-dark-theme, dark, dark-theme.$theme);
 @use '@nebular/theme/styles/themes/default' as nb-default;
 
 /* Forward core design tokens and variables */

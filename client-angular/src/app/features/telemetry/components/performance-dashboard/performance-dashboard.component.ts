@@ -7,12 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit , Input} from '@angular/core';
-import {
-  NbPaginatorModule,
-  NbSortModule,
-  NbSortEvent,
-} from '../../../../shared/components/custom-nebular-components';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import {
@@ -25,12 +20,17 @@ import {
   NbButtonModule,
   NbIconModule,
   NbSpinnerModule,
-, NbSortEvent} from '@nebular/theme';
+} from '@nebular/theme';
 import {
   TelemetryService,
   PerformanceTelemetry,
 } from '../../../../core/services/telemetry.service';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { NbPaginatorComponent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.component';
+import { NbSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
 /**
  * Performance Dashboard Component
@@ -57,8 +57,9 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
     NbIconModule,
     NbSpinnerModule,
     ReactiveFormsModule,
-    NbPaginatorModule,
-    NbSortModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
   ],
   template: `
     <div class="dashboard-container">
@@ -204,7 +205,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
               [total]="totalItems"
               [pageSize]="pageSize"
               [page]="pageIndex + 1"
-              (pageChange)="pageChanged($event)"
+              (pageChange)="onPageChange($event)"
             ></nb-paginator>
           </nb-card-body>
         </nb-card>
@@ -325,14 +326,14 @@ export class PerformanceDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPerformanceData();
+    this.loadDashboardData();
     this.performanceStats$ = this.getPerformanceStatistics();
   }
 
   /**
    * Load performance data with current pagination, sorting, and filtering
    */
-  loadPerformanceData(): void {
+  loadDashboardData(): void {
     this.loading = true;
     const filters = this.getFilters();
 
@@ -394,20 +395,21 @@ export class PerformanceDashboardComponent implements OnInit {
   }
 
   /**
-   * Handle page change event
+   * Handle page change event from paginator
    */
-  pageChanged(page: number): void {
-    this.pageIndex = page - 1;
-    this.loadPerformanceData();
+  onPageChange(event: NbPaginationChangeEvent): void {
+    this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
+    this.pageSize = event.pageSize;
+    this.loadDashboardData();
   }
 
   /**
-   * Handle sort change event
+   * Handle sort event from sort component
    */
   sortData(sort: NbSortEvent): void {
-    this.sortField = sort.active;
-    this.sortDirection = sort.direction;
-    this.loadPerformanceData();
+    // Implement sorting logic if needed, then reload data
+    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
+    this.loadDashboardData();
   }
 
   /**
@@ -415,7 +417,7 @@ export class PerformanceDashboardComponent implements OnInit {
    */
   applyFilters(): void {
     this.pageIndex = 0; // Reset to first page when filtering
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**
@@ -430,7 +432,7 @@ export class PerformanceDashboardComponent implements OnInit {
       toDate: null,
     });
     this.pageIndex = 0;
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**

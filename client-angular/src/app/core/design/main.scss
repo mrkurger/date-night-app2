@@ -1,34 +1,34 @@
 @use 'sass:math';
 @use 'sass:color';
 
-// ===================================================
-// CORE DESIGN SYSTEM
-// ===================================================
-// This file contains global styles and imports all design system files.
-// It is forwarded by the main design system entry point.
-//
-// IMPORT HIERARCHY:
-// 1. This file imports design-tokens.scss and components.scss
-// 2. It is forwarded by /styles/design-system/index.scss
-// 3. Application code should import from /styles/design-system/index.scss
-//
-// IMPORTANT:
-// - DO NOT import design-tokens.scss directly in application code
-// - Always use @forward instead of @import when creating entry points
-// - Use @use for importing in component styles
-// ===================================================
+/* ===================================================
+ * CORE DESIGN SYSTEM
+ * ===================================================
+ * This file contains global styles and imports all design system files.
+ * It is forwarded by the main design system entry point.
+ *
+ * IMPORT HIERARCHY:
+ * 1. This file imports design-tokens.scss and components.scss
+ * 2. It is forwarded by /styles/design-system/index.scss
+ * 3. Application code should import from /styles/design-system/index.scss
+ *
+ * IMPORTANT:
+ * - DO NOT import design-tokens.scss directly in application code
+ * - Always use @forward instead of @import when creating entry points
+ * - Use @use for importing in component styles
+ * =================================================== */
 
-// Import design tokens - this is the ONLY place that should directly import design-tokens.scss
-@use 'design-tokens' as *;
+/* Import design tokens - this is the ONLY place that should directly import design-tokens.scss */
+@use './design-tokens' as *;
 @forward 'variables';
 @forward 'components';
-// Prevent duplicate variable definitions by using 'hide' to hide conflicting variables
+/* Prevent duplicate variable definitions by using 'hide' to hide conflicting variables */
 @forward 'typography-mixins';
 
-// Forward spacing utilities
+/* Forward spacing utilities */
 @forward 'spacing-utilities';
 
-// Forward design utilities
+/* Forward design utilities */
 @forward 'bem-utilities';
 @forward 'responsive-utilities';
 @forward 'accessibility-utilities';
@@ -37,13 +37,10 @@
 @forward 'micro-interactions';
 @forward 'dark-mode';
 
-// Import emerald-ui integration
+/* Import emerald-ui integration */
 @forward 'emerald-ui-integration';
 
-// Import fonts - optimized to reduce size
-// Only import the weights we actually use in the application
-
-// Reset and base styles
+/* Reset and base styles */
 *,
 *::before,
 *::after {
@@ -51,8 +48,8 @@
 }
 
 html {
-  font-family: $font-family-base;
-  line-height: $line-height-normal;
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth;
@@ -60,17 +57,17 @@ html {
 
 body {
   margin: 0;
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  font-weight: $font-weight-regular;
-  line-height: $line-height-normal;
-  color: $color-dark-gray-2;
-  background-color: $color-light-gray-1;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-dark-gray-2);
+  background-color: var(--color-light-gray-1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Typography
+/* Typography */
 h1,
 h2,
 h3,
@@ -78,104 +75,104 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: $spacing-3;
-  font-family: $font-family-heading;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-tight;
-  color: $color-dark-gray-3;
+  margin-bottom: var(--spacing-3);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-dark-gray-3);
 }
 
 h1 {
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-3xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-3xl);
   }
 }
 
 h2 {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-2xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-2xl);
   }
 }
 
 h3 {
-  font-size: $font-size-2xl;
+  font-size: var(--font-size-2xl);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-xl);
   }
 }
 
 h4 {
-  font-size: $font-size-xl;
+  font-size: var(--font-size-xl);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-lg;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-lg);
   }
 }
 
 h5 {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-base;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-base);
   }
 }
 
 h6 {
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-sm;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-sm);
   }
 }
 
 p {
   margin-top: 0;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4);
 }
 
 a {
-  color: $color-primary;
+  color: var(--color-primary);
   text-decoration: none;
   background-color: transparent;
-  transition: color $transition-normal $transition-timing-default;
+  transition: color var(--transition-normal) var(--transition-timing-default);
 
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
     text-decoration: underline;
   }
 
   &:focus-visible {
-    outline: 2px solid rgba($color-primary, 0.5);
+    outline: 2px solid rgba(var(--color-primary), 0.5);
     outline-offset: 2px;
   }
 }
 
-// Lists
+/* Lists */
 ul,
 ol {
-  padding-left: $spacing-5;
+  padding-left: var(--spacing-5);
   margin-top: 0;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4);
 }
 
-// Code
+/* Code */
 code,
 pre {
   font-family: 'Roboto Mono', monospace;
-  font-size: $font-size-sm;
+  font-size: var(--font-size-sm);
 }
 
 code {
-  color: $color-primary-dark;
+  color: var(--color-primary-dark);
   word-wrap: break-word;
 }
 

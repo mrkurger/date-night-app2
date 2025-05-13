@@ -24,8 +24,9 @@ import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
   imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
   template: `
     <button
-      mat-icon-button
-      [color]="isFavorite ? 'warn' : ''"
+      nbButton
+      ghost
+      [status]="isFavorite ? 'danger' : 'basic'"
       [nbTooltip]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
       (click)="toggleFavorite()"
       [disabled]="loading"
@@ -34,47 +35,44 @@ import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
       [class.button-small]="small"
       [class.button-large]="large"
     >
-      <nb-icon icon="{{ isFavorite ? 'favorite' : 'favorite_border' }}"></nb-icon>
+      <nb-icon [icon]="isFavorite ? 'heart' : 'heart-outline'"></nb-icon>
     </button>
   `,
   styles: [
     `
       .favorite-button {
         transition: transform 0.2s ease;
+        padding: 0.4rem !important;
       }
 
       .favorite-button:hover {
         transform: scale(1.1);
       }
 
-      .is-favorite mat-icon {
-        color: #f44336;
-      }
-
       .button-small {
         width: 30px;
         height: 30px;
         line-height: 30px;
-      }
 
-      .button-small mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        line-height: 18px;
+        nb-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          line-height: 18px;
+        }
       }
 
       .button-large {
         width: 48px;
         height: 48px;
         line-height: 48px;
-      }
 
-      .button-large mat-icon {
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
-        line-height: 28px;
+        nb-icon {
+          font-size: 28px;
+          width: 28px;
+          height: 28px;
+          line-height: 28px;
+        }
       }
     `,
   ],

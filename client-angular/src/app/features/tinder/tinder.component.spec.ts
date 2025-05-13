@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { expect } from '@jest/globals';
 
 import { TinderComponent } from './tinder.component';
-import { AdService } from '../../core/services/ad.service';
+import { AdService, GetAdsResponse } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -47,7 +47,7 @@ class MockMainLayoutComponent {
 // Mock data
 const mockAds: Ad[] = [
   {
-    _id: '1',
+    _id: 'ad1',
     title: 'Test Ad 1',
     description: 'Test description 1',
     price: 100,
@@ -63,6 +63,7 @@ const mockAds: Ad[] = [
       username: 'Test User 1',
       profileImage: '/assets/images/default-profile.jpg',
     },
+    userId: 'user1',
     isActive: true,
     isFeatured: false,
     isTrending: false,
@@ -75,7 +76,7 @@ const mockAds: Ad[] = [
     tags: ['tag1', 'tag2'],
   },
   {
-    _id: '2',
+    _id: 'ad2',
     title: 'Test Ad 2',
     description: 'Test description 2',
     price: 200,
@@ -91,6 +92,7 @@ const mockAds: Ad[] = [
       username: 'Test User 2',
       profileImage: '/assets/images/default-profile.jpg',
     },
+    userId: 'user2',
     isActive: true,
     isFeatured: false,
     isTrending: false,
@@ -107,19 +109,19 @@ const mockAds: Ad[] = [
 // Mock services
 class MockAdService {
   getAds() {
-    return of({ ads: mockAds });
+    return of({ ads: mockAds, total: mockAds.length } as GetAdsResponse);
   }
   recordSwipe() {
-    return of({ success: true });
+    return of(undefined);
   }
   likeAd() {
-    return of({ success: true });
+    return of(undefined);
   }
   dislikeAd() {
-    return of({ success: true });
+    return of(undefined);
   }
   superlikeAd() {
-    return of({ success: true });
+    return of(undefined);
   }
   getCounties() {
     return of(['Oslo', 'Vestland']);
@@ -133,7 +135,7 @@ class MockNotificationService {
 
 class MockChatService {
   startChat() {
-    return of({ success: true });
+    return of(undefined);
   }
 }
 
@@ -188,7 +190,7 @@ describe('TinderComponent', () => {
   });
 
   it('should load ads on init', fakeAsync(() => {
-    spyOn(adService, 'getAds').and.returnValue(of({ ads: mockAds }));
+    spyOn(adService, 'getAds').and.returnValue(of({ ads: mockAds, total: mockAds.length }));
     component.ngOnInit();
     tick();
 
@@ -199,16 +201,17 @@ describe('TinderComponent', () => {
   }));
 
   it('should handle like action', fakeAsync(() => {
-    spyOn(adService, 'likeAd').and.returnValue(of({ success: true }));
+    spyOn(adService, 'likeAd').and.returnValue(of(undefined));
     spyOn(notificationService, 'success');
     component.ads = [...mockAds];
     component.currentAd = mockAds[0];
     component.nextAd = mockAds[1];
 
-    component.onCardAction({ action: 'like', itemId: mockAds[0]._id });
+    const adId = typeof mockAds[0]._id === 'string' ? mockAds[0]._id : mockAds[0]._id.city;
+    component.onCardAction({ action: 'like', itemId: adId });
     tick(300);
 
-    expect(adService.likeAd).toHaveBeenCalledWith(mockAds[0]._id);
+    expect(adService.likeAd).toHaveBeenCalledWith(adId);
     expect(notificationService.success).toHaveBeenCalled();
     expect(component.currentAd).toEqual(mockAds[1]);
     expect(component.nextAd).toBeNull();

@@ -1,4 +1,3 @@
-import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -11,10 +10,12 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 // Nebular Modules
 import {
@@ -30,11 +31,12 @@ import {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink,
     NbCardModule,
     NbFormFieldModule,
     NbInputModule,
@@ -54,6 +56,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private authService: AuthService,
+    private nbAuthService: NbAuthService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -94,5 +98,30 @@ export class LoginComponent implements OnInit {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
         },
       });
+  }
+
+  socialLogin(provider: string): void {
+    this.isLoading = true;
+
+    this.nbAuthService.authenticate(provider).subscribe((result: NbAuthResult) => {
+      this.isLoading = false;
+      if (result.isSuccess()) {
+        // Only allow redirects to internal routes for security
+        const redirect = result.getRedirect();
+        if (
+          redirect &&
+          redirect.startsWith('/') &&
+          !redirect.startsWith('//') &&
+          !redirect.includes(':')
+        ) {
+          this.router.navigateByUrl(redirect);
+        } else {
+          this.router.navigateByUrl(this.returnUrl);
+        }
+      } else {
+        this.errorMessage =
+          result.getErrors()[0] || `Login with ${provider} failed. Please try again.`;
+      }
+    });
   }
 }

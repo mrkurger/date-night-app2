@@ -15,15 +15,13 @@ import {
   NbSortDirection,
   NbSortRequest,
 } from '@nebular/theme';
-import {
-  NbPaginatorComponent,
-  NbSortComponent,
-  NbSortHeaderComponent,
-} from '../../../../shared/components/custom-nebular-components';
+import { NbSortModule } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { NbPaginatorModule } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { NbSortComponent } from '../../../../shared/components/custom-nebular-components';
 
 /**
  * Error Dashboard Component
@@ -51,9 +49,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
     NbTagModule,
     NbSpinnerModule,
     NbDatepickerModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
+    NbSortModule,
+    NbPaginatorModule,
   ],
   template: `
     <div class="dashboard-container">

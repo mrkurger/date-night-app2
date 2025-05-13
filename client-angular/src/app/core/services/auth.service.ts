@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { NbRoleProvider } from '@nebular/security';
 import {
   User,
   LoginDTO,
@@ -25,7 +26,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements NbRoleProvider {
   private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
@@ -37,6 +38,23 @@ export class AuthService {
     private router: Router,
   ) {
     this.checkAuthStatus();
+  }
+
+  /**
+   * Implement NbRoleProvider interface
+   * Returns the role of the current user
+   */
+  getRole(): Observable<string> {
+    return this.currentUser$.pipe(
+      map((user) => {
+        if (!user) return 'guest';
+        // Return the highest role based on hierarchy: admin > moderator > user > guest
+        if (user.roles.includes('admin')) return 'admin';
+        if (user.roles.includes('moderator')) return 'moderator';
+        if (user.roles.includes('user')) return 'user';
+        return 'guest';
+      }),
+    );
   }
 
   /**
@@ -374,5 +392,22 @@ export class AuthService {
         throw error;
       }),
     );
+  }
+
+  /**
+   * Request password reset
+   * @param email User email
+   */
+  requestPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/request-password`, { email });
+  }
+
+  /**
+   * Reset password with token
+   * @param token Reset token from email
+   * @param password New password
+   */
+  resetPassword(token: string, password: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, { token, password });
   }
 }

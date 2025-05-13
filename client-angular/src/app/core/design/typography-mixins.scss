@@ -6,7 +6,8 @@
  * Use these mixins instead of directly applying font properties to maintain consistency.
  */
 
-@use 'emerald-tokens' as *;
+@use './variables' as *;
+@use './design-tokens' as *;
 
 // Heading mixins
 @mixin heading-1 {

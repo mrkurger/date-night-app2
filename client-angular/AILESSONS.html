@@ -210,6 +210,84 @@ TestBed.configureTestingModule({
       </ul>
     </div>
 
+    <h2>Nebular UI Framework Analysis - May 13, 2025</h2>
+
+    <div class="lesson">
+      <h3>Analysis of Nebular UI Implementation</h3>
+      
+      <p>
+        A comprehensive analysis of the codebase reveals that the Angular client is already
+        extensively using Nebular UI components. The application has successfully implemented
+        most core Nebular components, including:
+      </p>
+      
+      <ul>
+        <li>Layout components (<code>nb-layout</code>, <code>nb-sidebar</code>)</li>
+        <li>Form controls (<code>nb-input</code>, <code>nb-select</code>, etc.)</li>
+        <li>Data presentation components (<code>nb-card</code>, <code>nb-list</code>)</li>
+        <li>Dialog system (<code>NbDialogService</code>)</li>
+        <li>Navigation components (<code>nb-menu</code>, <code>nb-actions</code>)</li>
+      </ul>
+      
+      <p>
+        The following components were identified as candidates for replacement with Nebular equivalents:
+      </p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+          <tr style="background-color: #edf1f7;">
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Custom Component</th>
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Nebular Equivalent</th>
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Recommendation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-card</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-card</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Replace with Nebular Card and use CSS customization</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-skeleton</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-skeleton</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Replace with Nebular Skeleton</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-button</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-button</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Use Nebular Button directly with consistent styling</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-carousel</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">No equivalent</td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Keep custom component but ensure styling consistency</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Benefits of Complete Migration</h3>
+      
+      <p>
+        Completing the migration to Nebular UI components would provide several benefits:
+      </p>
+      
+      <ul>
+        <li><strong>Consistency:</strong> A unified design language across the application</li>
+        <li><strong>Maintainability:</strong> Less custom code to maintain</li>
+        <li><strong>Theme support:</strong> Better leverage of Nebular's theming capabilities</li>
+        <li><strong>Accessibility:</strong> Nebular components follow accessibility best practices</li>
+        <li><strong>Performance:</strong> Optimized components with proper change detection</li>
+      </ul>
+      
+      <p>
+        The application already has custom Nebular themes defined in <code>core/design/nebular-theme-customization.ts</code>.
+        When replacing custom components with Nebular equivalents, it's important to extend these themes
+        to maintain visual consistency.
+      </p>
+    </div>
+
     <h2>Future Considerations</h2>
 
     <div class="lesson">

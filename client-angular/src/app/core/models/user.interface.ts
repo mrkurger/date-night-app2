@@ -1,116 +1,125 @@
 export interface User {
-  _id: string;
-  id?: string; // Alias for _id for compatibility
+  id: string;
+  _id?: string; // MongoDB ID field, needed for compatibility with existing code
   username: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
-  name?: string; // Full name of the user
-  displayName?: string; // Display name for the user
-  phone?: string; // Phone number
-  bio?: string; // User biography or description
-  role: 'user' | 'advertiser' | 'admin';
-  roles?: string[]; // For role-based authorization
-  online?: boolean;
-  lastActive?: Date;
+  roles: string[];
+  status: 'active' | 'banned' | 'suspended';
   createdAt: Date;
-  updatedAt: Date;
-  travelPlan?: TravelPlanItem[];
-  album?: string[];
-  socialProfiles?: {
-    github?: { id: string };
-    google?: { id: string };
-    reddit?: { id: string };
-    apple?: { id: string };
+  lastLogin?: Date;
+  profile?: {
+    firstName?: string;
+    lastName?: string;
+    avatar?: string;
+    bio?: string;
+    location?: {
+      city?: string;
+      country?: string;
+    };
   };
-  subscriptionTier?: 'free' | 'premium' | 'vip';
-  subscriptionExpires?: Date;
+  preferences?: {
+    emailNotifications: boolean;
+    pushNotifications: boolean;
+    theme: 'light' | 'dark';
+    language: string;
+  };
+  stats?: {
+    totalLogins: number;
+    totalPosts: number;
+    totalLikes: number;
+    reputation: number;
+  };
+  metadata?: {
+    browser?: string;
+    platform?: string;
+    lastIp?: string;
+  };
   notificationSettings?: NotificationSettings;
   privacySettings?: PrivacySettings;
-  profileImage?: string;
-  avatarUrl?: string; // Alias for profileImage for compatibility
-  avatar?: string; // URL to user's avatar image
+}
+
+export interface PublicProfile {
+  id: string;
+  username: string;
+  profile?: {
+    avatar?: string;
+    bio?: string;
+    location?: {
+      city?: string;
+      country?: string;
+    };
+  };
+  stats?: {
+    totalPosts: number;
+    reputation: number;
+  };
+}
+
+export interface UserProfile {
+  firstName?: string;
+  lastName?: string;
+  avatar?: string;
+  bio?: string;
   location?: {
     city?: string;
     country?: string;
   };
-}
-
-export interface UserProfile extends User {
-  phoneNumber?: string;
-  website?: string;
-  preferences?: {
-    notifications?: boolean;
-    darkMode?: boolean;
-    language?: string;
+  preferences: {
+    emailNotifications: boolean;
+    pushNotifications: boolean;
+    theme: 'light' | 'dark';
+    language: string;
   };
-}
-
-export interface PublicProfile {
-  _id: string;
-  username: string;
-  profileImage?: string;
-  bio?: string;
-  role: string;
 }
 
 export interface TravelPlanItem {
-  location: {
-    type: 'Point';
-    coordinates: [number, number]; // [longitude, latitude]
+  id: string;
+  userId: string;
+  destination: {
+    city: string;
+    country: string;
   };
-  county: string;
-  city: string;
-  startDate: Date;
-  endDate: Date;
-  active: boolean;
+  dates: {
+    start: Date;
+    end: Date;
+  };
+  status: 'planned' | 'active' | 'completed' | 'cancelled';
+  visibility: 'public' | 'private' | 'connections';
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface LoginDTO {
   email: string;
   password: string;
-  rememberMe?: boolean;
 }
 
-export interface RegisterDTO {
+export interface RegisterDTO extends LoginDTO {
   username: string;
-  email: string;
-  password: string;
   confirmPassword: string;
-  role: 'user' | 'advertiser';
-  acceptTerms: boolean;
+  role?: string;
+  acceptTerms?: boolean;
 }
 
 export interface AuthResponse {
-  token: string;
-  refreshToken?: string;
-  expiresIn?: number; // Expiration time in seconds
   user: User;
-}
-
-export interface TokenPayload {
-  id: string;
-  role: string;
-  iat: number;
-  exp: number;
-}
-
-export interface OAuthProvider {
-  name: string;
-  url: string;
-  icon: string;
+  token: string;
+  refreshToken: string;
+  expiresIn?: number; // Add this to match the AuthService usage
 }
 
 export interface NotificationSettings {
-  emailNotifications?: boolean;
-  chatNotifications?: boolean;
-  marketingEmails?: boolean;
-  newMatchNotifications?: boolean;
+  email: boolean;
+  push: boolean;
+  sms: boolean;
+  inApp: boolean;
+  marketing: boolean;
 }
 
 export interface PrivacySettings {
-  profileVisibility?: 'public' | 'private' | 'friends';
-  showOnlineStatus?: boolean;
-  allowMessaging?: 'all' | 'friends' | 'none';
-  dataSharing?: boolean;
+  profileVisibility: 'public' | 'private' | 'connections';
+  showOnlineStatus: boolean;
+  showLastSeen: boolean;
+  allowDms: 'all' | 'connections' | 'none';
+  showEmail: boolean;
 }

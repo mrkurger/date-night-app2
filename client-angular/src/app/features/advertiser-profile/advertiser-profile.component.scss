@@ -4,7 +4,7 @@
 .advertiser-profile-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: nb-theme(padding-lg);
 }
 
 /* Loading and Error States */
@@ -16,26 +16,25 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: 40px;
+  padding: nb-theme(padding-xl);
 }
 
 .loading-text {
-  margin-top: 16px;
-  color: var(--neutral-600);
+  margin-top: nb-theme(margin);
+  color: nb-theme(text-hint-color);
   font-weight: 500;
 }
 
 .error-icon {
-  font-size: 48px;
-  color: var(--error);
-  margin-bottom: 16px;
+  font-size: 3rem;
+  margin-bottom: nb-theme(margin);
 }
 
 .error-text {
-  font-size: 20px;
+  font-size: nb-theme(text-heading-4-font-size);
   font-weight: 500;
-  color: var(--neutral-800);
-  margin-bottom: 24px;
+  color: nb-theme(text-basic-color);
+  margin-bottom: nb-theme(margin-lg);
 }
 
 .retry-button {
@@ -44,9 +43,8 @@
 
 /* Profile Content */
 .profile-content {
-  background-color: var(--neutral-100);
-  border-radius: 16px;
-  box-shadow: var(--shadow-md);
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(border-radius);
   overflow: hidden;
 }
 
@@ -55,7 +53,7 @@
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 992px) {
+  @media (min-width: nb-theme(breakpoint-lg)) {
     flex-direction: row;
   }
 }
@@ -63,7 +61,7 @@
 .profile-media {
   flex: 0 0 100%;
 
-  @media (min-width: 992px) {
+  @media (min-width: nb-theme(breakpoint-lg)) {
     flex: 0 0 50%;
   }
 }
@@ -117,22 +115,22 @@
 .thumbnail-row {
   display: flex;
   overflow-x: auto;
-  padding: 8px;
-  background-color: var(--neutral-200);
-  gap: 8px;
+  padding: nb-theme(padding-sm);
+  background-color: nb-theme(background-basic-color-2);
+  gap: nb-theme(spacing-sm);
 }
 
 .thumbnail {
   flex: 0 0 80px;
   height: 60px;
-  border-radius: 8px;
+  border-radius: nb-theme(border-radius);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: nb-theme(shadow);
   }
 }
 
@@ -144,150 +142,90 @@
 
 .profile-info {
   flex: 1;
-  padding: 24px;
+  padding: nb-theme(padding-lg);
 }
 
 .profile-title-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: nb-theme(margin);
 }
 
 .profile-title {
-  font-size: 28px;
+  font-size: nb-theme(text-heading-2-font-size);
   font-weight: 700;
-  color: var(--neutral-900);
+  color: nb-theme(text-basic-color);
   margin: 0;
 }
 
 .profile-actions {
   display: flex;
-  gap: 8px;
+  gap: nb-theme(spacing-sm);
 }
 
 .profile-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: nb-theme(spacing);
+  margin-bottom: nb-theme(margin);
 }
 
 .profile-meta-item {
   display: flex;
   align-items: center;
-  color: var(--neutral-700);
-  font-size: 16px;
+  color: nb-theme(text-hint-color);
+  font-size: nb-theme(text-subtitle-font-size);
+  gap: nb-theme(spacing-xs);
 
-  i {
-    color: var(--primary);
-    margin-right: 8px;
+  nb-icon {
+    color: nb-theme(color-primary-500);
   }
 }
 
 .profile-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.profile-tag {
-  background-color: var(--neutral-200);
-  color: var(--neutral-700);
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 14px;
-  font-weight: 500;
+  margin-bottom: nb-theme(margin-lg);
 }
 
 .profile-description {
-  margin-bottom: 24px;
+  margin-bottom: nb-theme(margin-lg);
+
+  .section-title {
+    font-size: nb-theme(text-heading-6-font-size);
+    font-weight: 600;
+    color: nb-theme(text-basic-color);
+    margin: 0 0 nb-theme(margin-sm);
+  }
 
   p {
-    color: var(--neutral-700);
-    line-height: 1.6;
+    color: nb-theme(text-basic-color);
+    line-height: nb-theme(text-line-height);
+    margin: 0;
   }
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--neutral-800);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--neutral-300);
 }
 
 /* Edit Form */
 .edit-form {
-  margin-bottom: 24px;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -8px;
-
-  .form-group {
-    padding: 0 8px;
-    flex: 1;
-  }
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: var(--neutral-800);
-}
-
-.form-control,
-.form-select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--neutral-400);
-  border-radius: 8px;
-  font-size: 16px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-
-  &:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary), 0.2);
-    outline: none;
+  nb-form-field {
+    margin-bottom: nb-theme(margin);
   }
 
-  &.is-invalid {
-    border-color: var(--error);
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: nb-theme(spacing);
+
+    @media (min-width: nb-theme(breakpoint-md)) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
-}
 
-.invalid-feedback {
-  color: var(--error);
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-.form-check {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.form-check-input {
-  margin-right: 8px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
+  .form-actions {
+    display: flex;
+    gap: nb-theme(spacing);
+    margin-top: nb-theme(margin-lg);
+    justify-content: flex-end;
+  }
 }
 
 /* Contact Actions */
@@ -370,4 +308,24 @@
   background-color: var(--neutral-200);
   border-radius: 8px;
   color: var(--neutral-600);
+}
+
+// Dark theme adjustments
+:host-context([data-theme='dark']) {
+  .profile-content {
+    background-color: nb-theme(background-basic-color-1);
+  }
+
+  .thumbnail-row {
+    background-color: nb-theme(background-basic-color-2);
+  }
+
+  .profile-title,
+  .profile-description .section-title {
+    color: nb-theme(text-basic-color);
+  }
+
+  .profile-meta-item {
+    color: nb-theme(text-hint-color);
+  }
 }

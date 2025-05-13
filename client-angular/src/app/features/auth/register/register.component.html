@@ -145,7 +145,35 @@
           <button nbButton status="basic" type="button" (click)="onCancel()">Cancel</button>
         </div>
 
-        <div class="login-link">Already have an account? <a routerLink="/login">Login</a></div>
+        <div class="social-auth">
+          <p class="divider"><span>or register with</span></p>
+
+          <div class="social-buttons">
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('google')">
+              <nb-icon icon="google-outline"></nb-icon> Google
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('facebook')">
+              <nb-icon icon="facebook-outline"></nb-icon> Facebook
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
+              <nb-icon icon="apple-outline"></nb-icon> Apple
+            </button>
+
+            <button
+              nbButton
+              ghost
+              status="primary"
+              type="button"
+              (click)="socialLogin('microsoft')"
+            >
+              <nb-icon icon="microsoft-outline"></nb-icon> Microsoft
+            </button>
+          </div>
+        </div>
+
+        <div class="login-link">Already have an account? <a routerLink="/auth/login">Login</a></div>
       </form>
     </nb-card-body>
   </nb-card>

@@ -1,6 +1,7 @@
 // Design tokens for the application
 $font-family-primary: 'Roboto', sans-serif;
 $font-family-secondary: 'Open Sans', sans-serif;
+$font-heading: $font-family-secondary;
 
 // Font Weights
 $font-weight-light: 300;
@@ -96,6 +97,20 @@ $z-index-modal-backdrop: 1040;
 $z-index-modal: 1050;
 $z-index-popover: 1060;
 $z-index-tooltip: 1070;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 992px;
+$breakpoint-desktop: 1200px;
+
+// Color system for design system access
+$color-primary: #3366ff;
+
+// Design system access
+$ds: (
+  'color-primary': $color-primary,
+  'font-heading': $font-heading,
+);
 
 // Transitions
 $transition-base: all 0.2s ease-in-out;

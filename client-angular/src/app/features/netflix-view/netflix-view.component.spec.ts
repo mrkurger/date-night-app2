@@ -1,3 +1,5 @@
+/// <reference types="jasmine" />
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
@@ -5,6 +7,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbLayoutModule,
+  NbTagModule,
+  NbBadgeModule,
+  NbToggleModule,
+} from '@nebular/theme';
 
 import { NetflixViewComponent } from './netflix-view.component';
 import { AdService } from '../../core/services/ad.service';
@@ -12,17 +24,6 @@ import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-
-// Import Emerald components
-import {
-  AppCardComponent,
-  CardGridComponent,
-  PageHeaderComponent,
-  SkeletonLoaderComponent,
-  LabelComponent,
-  FloatingActionButtonComponent,
-  ToggleComponent,
-} from '../../shared/emerald';
 
 // Mock data
 const mockAds = [
@@ -74,37 +75,27 @@ class MockAdService {
   }
 }
 
-class MockNotificationService {
+class MockNotificationService implements Partial<NotificationService> {
   success(message: string): void {
-    // Mock success notification for tests
     console.log('Success:', message);
-    this.onSuccess?.(message);
   }
 
   error(message: string): void {
-    // Mock error notification for tests
     console.error('Error:', message);
-    this.onError?.(message);
   }
 
   info(message: string): void {
-    // Mock info notification for tests
     console.info('Info:', message);
-    this.onSuccess?.(message);
   }
 
   warning(message: string): void {
-    // Mock warning notification for tests
     console.warn('Warning:', message);
-    this.onError?.(message);
   }
 
   removeToast(id: string): void {
-    // Mock toast removal for tests
     console.log('Removing toast:', id);
   }
 
-  // Mock observables
   toasts$ = of([]);
   unreadCount$ = of(0);
 }
@@ -134,14 +125,14 @@ describe('NetflixViewComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         NetflixViewComponent,
-        // Import Emerald components
-        AppCardComponent,
-        CardGridComponent,
-        PageHeaderComponent,
-        SkeletonLoaderComponent,
-        LabelComponent,
-        FloatingActionButtonComponent,
-        ToggleComponent,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbLayoutModule,
+        NbTagModule,
+        NbBadgeModule,
+        NbToggleModule,
       ],
       providers: [
         { provide: AdService, useClass: MockAdService },
@@ -159,12 +150,11 @@ describe('NetflixViewComponent', () => {
     authService = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
 
-    // Spy on router navigation
     spyOn(router, 'navigateByUrl').and.stub();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
   });
 
   describe('Initialization', () => {
@@ -179,14 +169,14 @@ describe('NetflixViewComponent', () => {
       expect(adService.getFeaturedAds).toHaveBeenCalled();
       expect(adService.getTrendingAds).toHaveBeenCalled();
       expect(adService.getAds).toHaveBeenCalled();
-      expect(component.loading).toBeFalse();
+      expect(component.loading).toBe(false);
       expect(component.error).toBeNull();
-      expect(component.featuredAd).toBeTruthy();
-      expect(component.adsByCategory['Featured']).toBeTruthy();
-      expect(component.adsByCategory['Most Popular']).toBeTruthy();
-      expect(component.adsByCategory['New Arrivals']).toBeTruthy();
-      expect(component.adsByCategory['Nearby']).toBeTruthy();
-      expect(component.adsByCategory['Touring']).toBeTruthy();
+      expect(component.featuredAd).toBeDefined();
+      expect(component.adsByCategory['Featured']).toBeDefined();
+      expect(component.adsByCategory['Most Popular']).toBeDefined();
+      expect(component.adsByCategory['New Arrivals']).toBeDefined();
+      expect(component.adsByCategory['Nearby']).toBeDefined();
+      expect(component.adsByCategory['Touring']).toBeDefined();
     }));
 
     it('should check authentication status on init', fakeAsync(() => {
@@ -196,7 +186,7 @@ describe('NetflixViewComponent', () => {
       tick();
 
       expect(authService.currentUser$.subscribe).toHaveBeenCalled();
-      expect(component.isAuthenticated).toBeTrue();
+      expect(component.isAuthenticated).toBe(true);
     }));
 
     it('should handle error when loading featured ads fails', fakeAsync(() => {

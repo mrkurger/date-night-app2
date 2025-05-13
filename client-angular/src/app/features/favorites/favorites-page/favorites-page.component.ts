@@ -68,6 +68,12 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
+import { NbTagListComponent } from '@nebular/theme/components/tag/tag-list.component';
+import { NbDatepickerComponent } from '@nebular/theme/components/datepicker/datepicker.component';
+import { NbFormFieldComponent } from '@nebular/theme/components/form-field/form-field.component';
+import { NbCheckboxComponent } from '@nebular/theme/components/checkbox/checkbox.component';
+import { NbAlertComponent } from '@nebular/theme/components/alert/alert.component';
+import { NbSpinnerComponent } from '@nebular/theme/components/spinner/spinner.component';
 
 /**
  * Interface for saved filter presets
@@ -125,6 +131,13 @@ interface FilterPreset {
     NbTableModule,
     FavoriteButtonComponent,
     LoadingSpinnerComponent,
+    NbTagListComponent,
+    NbDatepickerComponent,
+    NbFormFieldComponent,
+    NbCheckboxComponent,
+    NbAlertComponent,
+    NbSpinnerComponent,
+    NbContextMenuModule,
   ],
   template: `
     <div class="favorites-page">

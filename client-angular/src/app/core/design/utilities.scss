@@ -1,0 +1,127 @@
+// Utility classes for common use cases
+@use '@nebular/theme/styles/theming' as *;
+
+// Display utilities
+.nb-d-flex {
+  display: flex;
+}
+.nb-d-block {
+  display: block;
+}
+.nb-d-inline {
+  display: inline;
+}
+.nb-d-inline-block {
+  display: inline-block;
+}
+.nb-d-none {
+  display: none;
+}
+
+// Flex utilities
+.nb-flex-row {
+  flex-direction: row;
+}
+.nb-flex-column {
+  flex-direction: column;
+}
+.nb-flex-wrap {
+  flex-wrap: wrap;
+}
+.nb-flex-nowrap {
+  flex-wrap: nowrap;
+}
+.nb-flex-grow-1 {
+  flex-grow: 1;
+}
+.nb-flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+// Alignment utilities
+.nb-align-items-center {
+  align-items: center;
+}
+.nb-align-items-start {
+  align-items: flex-start;
+}
+.nb-align-items-end {
+  align-items: flex-end;
+}
+.nb-justify-content-center {
+  justify-content: center;
+}
+.nb-justify-content-between {
+  justify-content: space-between;
+}
+.nb-justify-content-around {
+  justify-content: space-around;
+}
+
+// Text utilities
+.nb-text-center {
+  text-align: center;
+}
+.nb-text-left {
+  text-align: left;
+}
+.nb-text-right {
+  text-align: right;
+}
+.nb-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Position utilities
+.nb-position-relative {
+  position: relative;
+}
+.nb-position-absolute {
+  position: absolute;
+}
+.nb-position-fixed {
+  position: fixed;
+}
+
+// Overflow utilities
+.nb-overflow-hidden {
+  overflow: hidden;
+}
+.nb-overflow-auto {
+  overflow: auto;
+}
+.nb-overflow-scroll {
+  overflow: scroll;
+}
+
+// Cursor utilities
+.nb-cursor-pointer {
+  cursor: pointer;
+}
+.nb-cursor-default {
+  cursor: default;
+}
+
+// Visibility utilities
+.nb-visible {
+  visibility: visible;
+}
+.nb-invisible {
+  visibility: hidden;
+}
+
+// Z-index utilities
+.nb-z-1 {
+  z-index: 1;
+}
+.nb-z-2 {
+  z-index: 2;
+}
+.nb-z-3 {
+  z-index: 3;
+}
+.nb-z-top {
+  z-index: 9999;
+}

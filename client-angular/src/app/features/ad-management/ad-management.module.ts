@@ -31,6 +31,7 @@ import {
   NbTreeGridModule,
   NbUserModule,
   NbBadgeModule,
+  NbTableModule,
 } from '@nebular/theme';
 import { SharedModule } from '../../shared/shared.module';
 import { AdManagementComponent } from './ad-management.component';
@@ -38,7 +39,6 @@ import { AdFormComponent } from './ad-form/ad-form.component';
 import { AdListComponent } from './ad-list/ad-list.component';
 import { AdStatsComponent } from './ad-stats/ad-stats.component';
 import { TravelItineraryComponent } from './travel-itinerary/travel-itinerary.component';
-import { NbPaginatorModule, NbSortModule } from '../../shared/components/custom-nebular-components';
 
 const routes: Routes = [
   {
@@ -80,9 +80,8 @@ const routes: Routes = [
     NbTreeGridModule,
     NbUserModule,
     NbBadgeModule,
+    NbTableModule,
     SharedModule,
-    NbPaginatorModule,
-    NbSortModule,
     AdFormComponent,
     AdListComponent,
     AdManagementComponent,

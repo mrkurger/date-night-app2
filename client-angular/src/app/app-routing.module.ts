@@ -11,6 +11,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AdminLayoutComponent } from './features/admin/admin-layout.component';
+import { AdminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -30,14 +32,45 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./features/admin/admin.module').then((m) => m.AdminModule),
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] },
+    component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
+    children: [
+      {
+        path: 'users',
+        loadComponent: () =>
+          import('./features/admin/components/user-management/user-management.component').then(
+            (m) => m.UserManagementComponent,
+          ),
+      },
+      {
+        path: 'revenue',
+        loadComponent: () =>
+          import('./features/admin/components/revenue-analytics/revenue-analytics.component').then(
+            (m) => m.RevenueAnalyticsComponent,
+          ),
+      },
+      {
+        path: 'health',
+        loadComponent: () =>
+          import('./features/admin/components/system-health/system-health.component').then(
+            (m) => m.SystemHealthComponent,
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'users',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/browse',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 
