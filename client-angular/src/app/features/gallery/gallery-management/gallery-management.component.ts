@@ -18,7 +18,9 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-gallery-management',
   templateUrl: './gallery-management.component.html',
-  styleUrls: ['./gallery-management.component.scss'],
+  styleUrls: ['./gallery-management.component.scss'],,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class GalleryManagementComponent implements OnInit {
   @Input() adId: string;

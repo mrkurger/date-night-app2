@@ -4,7 +4,7 @@
 // Emerald AppCard Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/AppCard
 
-.emerald-app-card {
+.nb-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -64,11 +64,11 @@
     border-radius: 50%;
     margin-right: 6px;
 
-    .emerald-app-card__status-label--online & {
+    .nb-card__status-label--online & {
       background-color: ds.$color-white;
     }
 
-    .emerald-app-card__status-label--offline & {
+    .nb-card__status-label--offline & {
       background-color: ds.$color-white;
     }
   }
@@ -306,7 +306,7 @@
     max-width: 400px;
     margin: 0 auto;
 
-    .emerald-app-card__media {
+    .nb-card__media {
       height: 100%;
     }
   }
@@ -315,19 +315,19 @@
     height: 280px;
     width: 200px;
 
-    .emerald-app-card__media {
+    .nb-card__media {
       height: 100%;
     }
 
-    .emerald-app-card__title {
+    .nb-card__title {
       font-size: ds.$font-size-base;
     }
 
-    .emerald-app-card__description {
+    .nb-card__description {
       display: none;
     }
 
-    .emerald-app-card__fab {
+    .nb-card__fab {
       width: 36px;
       height: 36px;
 
@@ -341,13 +341,13 @@
     flex-direction: row;
     height: 160px;
 
-    .emerald-app-card__media {
+    .nb-card__media {
       width: 160px;
       min-width: 160px;
       height: 100%;
     }
 
-    .emerald-app-card__content-overlay {
+    .nb-card__content-overlay {
       position: relative;
       height: 100%;
       background: ds.$color-white;
@@ -356,11 +356,11 @@
       padding: ds.$spacing-4;
     }
 
-    .emerald-app-card__content {
+    .nb-card__content {
       color: ds.$color-black;
     }
 
-    .emerald-app-card__fab {
+    .nb-card__fab {
       display: none;
     }
   }
@@ -368,17 +368,17 @@
 
 // Responsive Styles
 @media (max-width: ds.$breakpoint-md) {
-  .emerald-app-card {
+  .nb-card {
     &--list {
       flex-direction: column;
       height: auto;
 
-      .emerald-app-card__media {
+      .nb-card__media {
         width: 100%;
         height: 200px;
       }
 
-      .emerald-app-card__content-overlay {
+      .nb-card__content-overlay {
         position: absolute;
         height: 40%;
         background: linear-gradient(to top, rgba(ds.$color-black, 0.8), rgba(ds.$color-black, 0));
@@ -386,7 +386,7 @@
         -webkit-backdrop-filter: blur(ds.$blur-medium);
       }
 
-      .emerald-app-card__content {
+      .nb-card__content {
         color: ds.$color-white;
       }
     }
@@ -394,7 +394,7 @@
 }
 
 @media (max-width: ds.$breakpoint-sm) {
-  .emerald-app-card {
+  .nb-card {
     &--tinder {
       height: 60vh;
     }

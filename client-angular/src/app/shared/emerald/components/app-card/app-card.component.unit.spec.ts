@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 // ===================================================
 // UNIT TESTS FOR APP CARD COMPONENT
 // ===================================================

@@ -1,3 +1,7 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -19,7 +23,7 @@ import { RouterModule } from '@angular/router';
  * Documentation: https://docs-emerald.condorlabs.io/PageHeader
  */
 @Component({
-  selector: 'emerald-page-header',
+  selector: 'nb-header',
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.scss'],
   standalone: true,

@@ -1,100 +1,46 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbLayoutModule,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbSelectModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbToastrModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbAccordionModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbTooltipModule,
-  NbPopoverModule,
-  NbContextMenuModule,
-  NbMenuModule,
-  NbSidebarModule,
-  NbSearchModule,
-  NbTreeGridModule,
-  NbAutocompleteModule,
-  NbAlertModule,
-  NbTableModule,
-  NbToggleModule,
-  NbTagModule,
-} from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { RouterModule } from '@angular/router';
+import { NebularModule } from './nebular.module';
 
-// Regular modules that don't need special configuration
-const nebularModules = [
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbSelectModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbAccordionModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbTooltipModule,
-  NbPopoverModule,
-  NbSearchModule,
-  NbTreeGridModule,
-  NbAutocompleteModule,
-  NbEvaIconsModule,
-  NbLayoutModule,
-  NbToggleModule,
-  NbTagModule,
-  NbAlertModule,
-  NbTableModule,
+// Import shared components
+import { ChatMessageComponent } from './components/chat-message/chat-message.component';
+import { FavoriteButtonComponent } from './components/favorite-button/favorite-button.component';
+import { AlertNotificationsComponent } from './components/alert-notifications/alert-notifications.component';
+import { ResponseDialogComponent } from './components/response-dialog/response-dialog.component';
+
+// Import shared pipes
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { FileSizePipe } from './pipes/file-size.pipe';
+import { LinkifyPipe } from './pipes/linkify.pipe';
+
+const SHARED_COMPONENTS = [
+  ChatMessageComponent,
+  FavoriteButtonComponent,
+  AlertNotificationsComponent,
+  ResponseDialogComponent,
 ];
 
+const SHARED_PIPES = [TimeAgoPipe, FileSizePipe, LinkifyPipe];
+
+/**
+ * Shared Module
+ *
+ * This module exports common Angular modules and our NebularModule
+ * for use throughout the application.
+ */
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ...nebularModules,
-    // Modules with providers need separate imports
-    NbDialogModule.forRoot(),
-    NbToastrModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbSidebarModule.forRoot(),
-    NbDatepickerModule.forRoot(),
-    NbContextMenuModule,
-  ],
+  declarations: [...SHARED_COMPONENTS, ...SHARED_PIPES],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NebularModule],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ...nebularModules,
-    NbDialogModule,
-    // Only export regular modules, not ones with providers
+    RouterModule,
+    NebularModule,
+    ...SHARED_COMPONENTS,
+    ...SHARED_PIPES,
   ],
 })
 export class SharedModule {}
-
-/**
- * Material replacement module - provides Nebular components as replacements for Material UI
- * This module helps with the migration from Material to Nebular
- */
-@NgModule({
-  imports: [CommonModule, ...nebularModules, NbDialogModule.forChild()],
-  exports: [CommonModule, ...nebularModules, NbDialogModule],
-})
-export class SharedMaterialModule {}

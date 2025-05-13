@@ -2,33 +2,33 @@
 <!-- Documentation: https://docs-emerald.condorlabs.io/Toggle -->
 
 <div
-  class="emerald-toggle-container"
+  class="nb-toggle-container"
   [ngClass]="{
-    'emerald-toggle-container--label-left': labelPosition === 'left',
-    'emerald-toggle-container--label-right': labelPosition === 'right',
-    'emerald-toggle-container--disabled': disabled,
+    'nb-toggle-container--label-left': labelPosition === 'left',
+    'nb-toggle-container--label-right': labelPosition === 'right',
+    'nb-toggle-container--disabled': disabled,
   }"
 >
   <!-- Label (Left Position) -->
-  <label *ngIf="label && labelPosition === 'left'" [for]="id" class="emerald-toggle__label">
+  <label *ngIf="label && labelPosition === 'left'" [for]="id" class="nb-toggle__label">
     {{ label }}
-    <span *ngIf="required" class="emerald-toggle__required">*</span>
+    <span *ngIf="required" class="nb-toggle__required">*</span>
   </label>
 
   <!-- Toggle Switch -->
   <div
-    class="emerald-toggle"
+    class="nb-toggle"
     [ngClass]="{
-      'emerald-toggle--small': size === 'small',
-      'emerald-toggle--medium': size === 'medium',
-      'emerald-toggle--large': size === 'large',
-      'emerald-toggle--primary': color === 'primary',
-      'emerald-toggle--success': color === 'success',
-      'emerald-toggle--warning': color === 'warning',
-      'emerald-toggle--danger': color === 'danger',
-      'emerald-toggle--info': color === 'info',
-      'emerald-toggle--checked': value,
-      'emerald-toggle--disabled': disabled,
+      'nb-toggle--small': size === 'small',
+      'nb-toggle--medium': size === 'medium',
+      'nb-toggle--large': size === 'large',
+      'nb-toggle--primary': color === 'primary',
+      'nb-toggle--success': color === 'success',
+      'nb-toggle--warning': color === 'warning',
+      'nb-toggle--danger': color === 'danger',
+      'nb-toggle--info': color === 'info',
+      'nb-toggle--checked': value,
+      'nb-toggle--disabled': disabled,
     }"
   >
     <input
@@ -39,18 +39,18 @@
       [disabled]="disabled"
       [required]="required"
       [attr.aria-label]="ariaLabel || label"
-      class="emerald-toggle__input"
+      class="nb-toggle__input"
       (change)="toggle()"
     />
 
-    <div class="emerald-toggle__track">
-      <div class="emerald-toggle__thumb"></div>
+    <div class="nb-toggle__track">
+      <div class="nb-toggle__thumb"></div>
     </div>
   </div>
 
   <!-- Label (Right Position) -->
-  <label *ngIf="label && labelPosition === 'right'" [for]="id" class="emerald-toggle__label">
+  <label *ngIf="label && labelPosition === 'right'" [for]="id" class="nb-toggle__label">
     {{ label }}
-    <span *ngIf="required" class="emerald-toggle__required">*</span>
+    <span *ngIf="required" class="nb-toggle__required">*</span>
   </label>
 </div>

@@ -1,3 +1,8 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================

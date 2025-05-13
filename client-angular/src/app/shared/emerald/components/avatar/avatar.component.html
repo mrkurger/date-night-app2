@@ -1,13 +1,13 @@
 <!-- Emerald Avatar Component -->
 <!-- Documentation: https://docs-emerald.condorlabs.io/Avatar -->
 
-<div class="emerald-avatar-container">
+<div class="nb-user-container">
   <div
-    class="emerald-avatar"
+    class="nb-user"
     [ngClass]="{
-      'emerald-avatar--small': size === 'small',
-      'emerald-avatar--medium': size === 'medium',
-      'emerald-avatar--large': size === 'large',
+      'nb-user--small': size === 'small',
+      'nb-user--medium': size === 'medium',
+      'nb-user--large': size === 'large',
     }"
     (click)="toggleDropdown($event)"
   >
@@ -16,26 +16,26 @@
       *ngIf="imageUrl"
       [src]="imageUrl"
       [alt]="name || 'User avatar'"
-      class="emerald-avatar__image"
+      class="nb-user__image"
       (error)="onImageError($event)"
     />
 
     <!-- Fallback to Initials -->
-    <span class="emerald-avatar__initials" *ngIf="!imageUrl">{{ getInitials() }}</span>
+    <span class="nb-user__initials" *ngIf="!imageUrl">{{ getInitials() }}</span>
 
     <!-- Online Status Indicator -->
     <span
       *ngIf="isOnline !== undefined"
-      class="emerald-avatar__status"
+      class="nb-user__status"
       [ngClass]="{
-        'emerald-avatar__status--online': isOnline,
-        'emerald-avatar__status--offline': !isOnline,
+        'nb-user__status--online': isOnline,
+        'nb-user__status--offline': !isOnline,
       }"
     >
     </span>
 
     <!-- Dropdown Toggle Indicator -->
-    <span *ngIf="showDropdown" class="emerald-avatar__dropdown-indicator">
+    <span *ngIf="showDropdown" class="nb-user__dropdown-indicator">
       <i
         class="fas"
         [ngClass]="{ 'fa-chevron-down': !isDropdownOpen, 'fa-chevron-up': isDropdownOpen }"
@@ -44,33 +44,33 @@
   </div>
 
   <!-- Dropdown Menu -->
-  <div *ngIf="showDropdown && isDropdownOpen" class="emerald-avatar__dropdown">
-    <div class="emerald-avatar__dropdown-arrow"></div>
+  <div *ngIf="showDropdown && isDropdownOpen" class="nb-user__dropdown">
+    <div class="nb-user__dropdown-arrow"></div>
 
-    <ul class="emerald-avatar__dropdown-menu">
+    <ul class="nb-user__dropdown-menu">
       <ng-container *ngFor="let item of dropdownItems">
         <!-- Divider -->
-        <li *ngIf="item.divider" class="emerald-avatar__dropdown-divider"></li>
+        <li *ngIf="item.divider" class="nb-user__dropdown-divider"></li>
 
         <!-- Menu Item -->
-        <li *ngIf="!item.divider" class="emerald-avatar__dropdown-item">
+        <li *ngIf="!item.divider" class="nb-user__dropdown-item">
           <a
             *ngIf="item.route"
             [routerLink]="item.route"
-            class="emerald-avatar__dropdown-link"
+            class="nb-user__dropdown-link"
             (click)="onItemClick(item, $event)"
           >
-            <i *ngIf="item.icon" class="emerald-avatar__dropdown-icon {{ item.icon }}"></i>
-            <span class="emerald-avatar__dropdown-label">{{ item.label }}</span>
+            <i *ngIf="item.icon" class="nb-user__dropdown-icon {{ item.icon }}"></i>
+            <span class="nb-user__dropdown-label">{{ item.label }}</span>
           </a>
 
           <button
             *ngIf="!item.route"
-            class="emerald-avatar__dropdown-button"
+            class="nb-user__dropdown-button"
             (click)="onItemClick(item, $event)"
           >
-            <i *ngIf="item.icon" class="emerald-avatar__dropdown-icon {{ item.icon }}"></i>
-            <span class="emerald-avatar__dropdown-label">{{ item.label }}</span>
+            <i *ngIf="item.icon" class="nb-user__dropdown-icon {{ item.icon }}"></i>
+            <span class="nb-user__dropdown-label">{{ item.label }}</span>
           </button>
         </li>
       </ng-container>

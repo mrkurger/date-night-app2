@@ -1,3 +1,6 @@
+import { Input } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -34,7 +37,7 @@ import {
   NbSelectModule,
   NbTagModule,
   NbCheckboxModule,
-} from '@nebular/theme';
+, NbDialogService} from '@nebular/theme';
 import {
   FavoriteService,
   Favorite,

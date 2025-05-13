@@ -2,34 +2,34 @@
 <!-- Documentation: https://docs-emerald.condorlabs.io/AppCard -->
 
 <div
-  class="emerald-app-card"
+  class="nb-card"
   [ngClass]="{
-    'emerald-app-card--tinder': layout === 'tinder',
-    'emerald-app-card--netflix': layout === 'netflix',
-    'emerald-app-card--list': layout === 'list',
+    'nb-card--tinder': layout === 'tinder',
+    'nb-card--netflix': layout === 'netflix',
+    'nb-card--list': layout === 'list',
   }"
   (click)="onViewDetails()"
 >
   <!-- Card Background Image -->
-  <div class="emerald-app-card__media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
+  <div class="nb-card__media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
     <!-- Online/Offline Status Label -->
     <div
-      class="emerald-app-card__status-label"
+      class="nb-card__status-label"
       [ngClass]="{
-        'emerald-app-card__status-label--online': isOnline,
-        'emerald-app-card__status-label--offline': !isOnline,
+        'nb-card__status-label--online': isOnline,
+        'nb-card__status-label--offline': !isOnline,
       }"
     >
-      <span class="emerald-app-card__status-indicator"></span>
-      <span class="emerald-app-card__status-text">{{ isOnline ? 'Online' : 'Offline' }}</span>
+      <span class="nb-card__status-indicator"></span>
+      <span class="nb-card__status-text">{{ isOnline ? 'Online' : 'Offline' }}</span>
     </div>
 
     <!-- Media Navigation Dots -->
-    <div class="emerald-app-card__media-dots" *ngIf="getMediaCount() > 1">
+    <div class="nb-card__media-dots" *ngIf="getMediaCount() > 1">
       <div
         *ngFor="let dot of getMediaDots(); let i = index"
-        class="emerald-app-card__media-dot"
-        [ngClass]="{ 'emerald-app-card__media-dot--active': i === currentMediaIndex }"
+        class="nb-card__media-dot"
+        [ngClass]="{ 'nb-card__media-dot--active': i === currentMediaIndex }"
         (click)="
           $event.stopPropagation(); currentMediaIndex = i; backgroundImageUrl = getCurrentMediaUrl()
         "
@@ -39,7 +39,7 @@
     <!-- Media Navigation Buttons -->
     <button
       *ngIf="getMediaCount() > 1"
-      class="emerald-app-card__media-nav emerald-app-card__media-nav--prev"
+      class="nb-card__media-nav nb-card__media-nav--prev"
       (click)="prevMedia($event)"
       aria-label="Previous image"
     >
@@ -47,7 +47,7 @@
     </button>
     <button
       *ngIf="getMediaCount() > 1"
-      class="emerald-app-card__media-nav emerald-app-card__media-nav--next"
+      class="nb-card__media-nav nb-card__media-nav--next"
       (click)="nextMedia($event)"
       aria-label="Next image"
     >
@@ -55,24 +55,24 @@
     </button>
 
     <!-- Content Overlay with Blur Effect -->
-    <div class="emerald-app-card__content-overlay">
-      <div class="emerald-app-card__content">
-        <h3 class="emerald-app-card__title" *ngIf="ad">{{ ad.title }}</h3>
-        <h3 class="emerald-app-card__title" *ngIf="!ad">Untitled</h3>
+    <div class="nb-card__content-overlay">
+      <div class="nb-card__content">
+        <h3 class="nb-card__title" *ngIf="ad">{{ ad.title }}</h3>
+        <h3 class="nb-card__title" *ngIf="!ad">Untitled</h3>
 
-        <div class="emerald-app-card__meta" *ngIf="ad">
-          <div class="emerald-app-card__location" *ngIf="ad.location">
+        <div class="nb-card__meta" *ngIf="ad">
+          <div class="nb-card__location" *ngIf="ad.location">
             <i class="fas fa-map-marker-alt"></i>
             <span>{{ ad.location }}</span>
           </div>
 
-          <div class="emerald-app-card__price" *ngIf="ad.price">
+          <div class="nb-card__price" *ngIf="ad.price">
             <i class="fas fa-tag"></i>
             <span>{{ formatPrice(ad.price) }}</span>
           </div>
         </div>
 
-        <p class="emerald-app-card__description" *ngIf="ad && showDescription && ad.description">
+        <p class="nb-card__description" *ngIf="ad && showDescription && ad.description">
           {{ getTruncatedDescription() }}
         </p>
       </div>
@@ -80,10 +80,10 @@
   </div>
 
   <!-- Card Actions -->
-  <div class="emerald-app-card__actions" *ngIf="showActions">
+  <div class="nb-card__actions" *ngIf="showActions">
     <!-- Bottom Left Floating Action Button -->
     <button
-      class="emerald-app-card__fab emerald-app-card__fab--left"
+      class="nb-card__fab nb-card__fab--left"
       (click)="onLike($event)"
       aria-label="Like"
     >
@@ -92,7 +92,7 @@
 
     <!-- Bottom Right Floating Action Button -->
     <button
-      class="emerald-app-card__fab emerald-app-card__fab--right"
+      class="nb-card__fab nb-card__fab--right"
       (click)="onChat($event)"
       aria-label="Chat"
     >
@@ -100,16 +100,16 @@
     </button>
 
     <!-- Tinder-specific Swipe Actions -->
-    <div class="emerald-app-card__swipe-actions" *ngIf="layout === 'tinder'">
+    <div class="nb-card__swipe-actions" *ngIf="layout === 'tinder'">
       <button
-        class="emerald-app-card__swipe-button emerald-app-card__swipe-button--left"
+        class="nb-card__swipe-button nb-card__swipe-button--left"
         (click)="onSwipe('left', $event)"
         aria-label="Swipe left"
       >
         <i class="fas fa-times"></i>
       </button>
       <button
-        class="emerald-app-card__swipe-button emerald-app-card__swipe-button--right"
+        class="nb-card__swipe-button nb-card__swipe-button--right"
         (click)="onSwipe('right', $event)"
         aria-label="Swipe right"
       >

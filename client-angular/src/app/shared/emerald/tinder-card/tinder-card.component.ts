@@ -43,7 +43,7 @@ export interface TinderCardData {
 }
 
 @Component({
-  selector: 'emerald-tinder-card',
+  selector: 'nb-flip-card',
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,

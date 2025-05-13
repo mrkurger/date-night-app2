@@ -1,3 +1,5 @@
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -58,7 +60,9 @@ export class AdListComponent implements OnInit {
 
   loadAds(): void {
     this.loading = true;
-    this.adService.getAds().subscribe({ next: (response) => { this.ads = response.ads;
+    this.adService.getAds().subscribe({
+      next: (response) => {
+        this.ads = response.ads;
         this.loading = false;
       },
       error: (err) => {

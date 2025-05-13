@@ -1,3 +1,5 @@
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -30,7 +32,7 @@ import {
   NbSelectModule,
   NbDatepickerModule,
   NbSpinnerModule,
-} from '@nebular/theme';
+, NbSortEvent} from '@nebular/theme';
 
 import { TelemetryService } from '../../core/services/telemetry.service';
 import { TelemetryDashboardComponent } from './telemetry-dashboard.component';

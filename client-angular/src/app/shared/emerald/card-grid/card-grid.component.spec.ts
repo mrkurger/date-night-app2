@@ -23,7 +23,7 @@ import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-
 // Test host component to test CardGridComponent in a realistic scenario
 @Component({
   template: `
-    <emerald-card-grid
+    <nb-card-grid
       [items]="items"
       [layout]="layout"
       [columns]="columns"
@@ -36,7 +36,7 @@ import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-
       <ng-template #itemTemplate let-item>
         <div class="custom-item">{{ item.title }}</div>
       </ng-template>
-    </emerald-card-grid>
+    </nb-card-grid>
   `,
   standalone: true,
   imports: [CardGridComponent, CommonTestModule],

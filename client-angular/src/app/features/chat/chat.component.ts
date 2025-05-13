@@ -1,3 +1,8 @@
+import { ViewChild } from '@angular/core';
+import { Input } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -25,7 +30,7 @@ import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialog, NbDialogModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbMenuModule, NbTooltipModule, NbTabsetModule } from '@nebular/theme';
+import { NbDialog, NbDialogModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbMenuModule, NbTooltipModule, NbTabsetModule , NbDialogService} from '@nebular/theme';
 import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 

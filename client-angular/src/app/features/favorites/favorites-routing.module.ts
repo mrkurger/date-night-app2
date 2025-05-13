@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FavoritesListComponent } from './favorites-list/favorites-list.component';
 import { FavoritesPageComponent } from './favorites-page/favorites-page.component';

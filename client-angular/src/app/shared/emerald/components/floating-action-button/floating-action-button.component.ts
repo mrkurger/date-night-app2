@@ -1,3 +1,7 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -20,7 +24,7 @@ import { CommonModule } from '@angular/common';
  * Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
  */
 @Component({
-  selector: 'emerald-floating-action-button',
+  selector: 'nb-fab',
   templateUrl: './floating-action-button.component.html',
   styleUrls: ['./floating-action-button.component.scss'],
   standalone: true,

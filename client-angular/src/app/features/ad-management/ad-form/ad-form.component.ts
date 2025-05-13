@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -17,37 +17,19 @@ import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { LocationService } from '../../../core/services/location.service';
 import { NorwayCity } from '../../../core/constants/norway-locations';
-import {
-  NbSpinnerModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbButtonModule,
-  NbIconModule,
-} from '@nebular/theme';
+import { NebularModule } from '../../../shared/nebular.module';
 
 @Component({
   selector: 'app-ad-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule],
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NbSpinnerModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbButtonModule,
-    NbIconModule,
-  ],
 })
 export class AdFormComponent implements OnInit {
+  @Input() initialData?: any;
+  @Output() formSubmit = new EventEmitter<any>();
+
   adForm: FormGroup;
   isEditMode = false;
   adId: string | null = null;
@@ -63,11 +45,26 @@ export class AdFormComponent implements OnInit {
     private toastrService: NbToastrService,
     private locationService: LocationService,
   ) {
-    this.adForm = this.createForm();
+    this.adForm = this.fb.group({
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(1000)]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      location: ['', Validators.required],
+      category: ['', Validators.required],
+      images: [[]],
+      isActive: [true],
+      isTouring: [false],
+      tourDates: [[]],
+      services: [[]],
+      contactInfo: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
-    // Load counties
+    if (this.initialData) {
+      this.adForm.patchValue(this.initialData);
+    }
+
     this.loading = true;
     this.locationService.getCounties().subscribe((counties) => {
       this.counties = counties;
@@ -82,8 +79,6 @@ export class AdFormComponent implements OnInit {
 
           if (this.isEditMode && this.adId) {
             this.loading = true;
-            // In a real app, you would fetch the ad data from a service
-            // return this.adService.getAd(this.adId);
             return of({
               title: 'Sample Ad',
               description: 'This is a sample ad description',
@@ -99,8 +94,6 @@ export class AdFormComponent implements OnInit {
         tap((ad) => {
           if (ad) {
             this.adForm.patchValue(ad);
-
-            // Load cities for the selected county
             if (ad.county) {
               this.loadCitiesForCounty(ad.county);
             }
@@ -111,60 +104,28 @@ export class AdFormComponent implements OnInit {
       .subscribe();
   }
 
-  /**
-   * Load cities when county changes
-   */
   onCountyChange(): void {
     const county = this.adForm.get('county')?.value;
     if (county) {
       this.loadCitiesForCounty(county);
-      this.adForm.get('city')?.setValue(''); // Reset city when county changes
+      this.adForm.get('city')?.setValue('');
     }
   }
 
-  /**
-   * Load cities for a specific county
-   */
   private loadCitiesForCounty(county: string): void {
     this.locationService.getCitiesByCounty(county).subscribe((cities) => {
       this.cities = cities;
     });
   }
 
-  createForm(): FormGroup {
-    return this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
-      category: ['', Validators.required],
-      price: [null, [Validators.required, Validators.min(0)]],
-      county: ['', Validators.required],
-      city: ['', Validators.required],
-      isActive: [true],
-    });
+  onSubmit(): void {
+    if (this.adForm.valid) {
+      this.formSubmit.emit(this.adForm.value);
+    }
   }
 
-  onSubmit(): void {
-    if (this.adForm.invalid) {
-      return;
-    }
-
-    this.loading = true;
-    const adData = this.adForm.value;
-
-    // In a real app, you would save the ad data using a service
-    // const request = this.isEditMode
-    //   ? this.adService.updateAd(this.adId, adData)
-    //   : this.adService.createAd(adData);
-
-    // Simulating API call
-    setTimeout(() => {
-      this.loading = false;
-      this.toastrService.success(
-        `Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`,
-        'Success',
-      );
-      this.router.navigate(['../list'], { relativeTo: this.route });
-    }, 1000);
+  get f() {
+    return this.adForm.controls;
   }
 
   onCancel(): void {

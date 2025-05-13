@@ -1,13 +1,7 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (icon.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NbIconModule } from '@nebular/theme';
+import { IconService } from '../../../core/services/icon.service';
 
 /**
  * Icon Component
@@ -16,70 +10,45 @@ import { CommonModule } from '@angular/common';
  * Supports different sizes and colors.
  */
 @Component({
-  
   selector: 'app-icon',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-,
+  imports: [CommonModule, NbIconModule],
+  template: `
+    <nb-icon
+      [icon]="iconName"
+      [status]="status"
+      [options]="{ animation: animation }"
+      [class]="customClass"
+      [style.fontSize.px]="size"
+    >
+    </nb-icon>
+  `,
+  styles: [
+    `
+      :host {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      nb-icon {
+        cursor: inherit;
+      }
+    `,
+  ],
 })
-export class IconComponent {
-  /**
-   * The name of the icon to display.
-   * This should match an icon name in the icon registry.
-   */
-  @Input() name = '';
+export class IconComponent implements OnInit {
+  @Input() name!: string;
+  @Input() filled: boolean = true;
+  @Input() size: number = 24;
+  @Input() status: string = 'basic';
+  @Input() animation?: 'zoom' | 'pulse' | 'shake' | 'flip';
+  @Input() customClass: string = '';
 
-  /**
-   * The size of the icon.
-   * - 'small': 16px
-   * - 'medium': 24px
-   * - 'large': 32px
-   * @default 'medium'
-   */
-  @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  iconName!: string;
 
-  /**
-   * The color of the icon.
-   * - 'inherit': Inherits color from parent
-   * - 'primary': Primary color
-   * - 'secondary': Secondary color
-   * - 'success': Success color
-   * - 'warning': Warning color
-   * - 'error': Error color
-   * - 'info': Info color
-   * @default 'inherit'
-   */
-  @Input() color: 'inherit' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' =
-    'inherit';
+  constructor(private iconService: IconService) {}
 
-  /**
-   * Gets the CSS classes for the icon based on its properties.
-   * @returns An object with CSS class names as keys and boolean values
-   */
-  get iconClasses(): Record<string, boolean> {
-    return {
-      icon: true,
-      [`icon--${this.size}`]: true,
-      [`icon--${this.color}`]: this.color !== 'inherit',
-    };
-  }
-
-  /**
-   * Gets the href for the SVG sprite symbol based on its name.
-   * @returns The href for the SVG symbol
-   */
-  get iconHref(): string {
-    return `assets/icons.svg#${this.name}`;
-  }
-
-  /**
-   * Gets the viewBox for the SVG icon.
-   * @returns The SVG viewBox attribute value
-   */
-  get viewBox(): string {
-    return '0 0 24 24';
+  ngOnInit() {
+    this.iconName = this.iconService.getIconName(this.name, this.filled);
   }
 }

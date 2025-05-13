@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';

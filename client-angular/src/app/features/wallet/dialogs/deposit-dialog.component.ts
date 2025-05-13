@@ -4,7 +4,7 @@ import {
   Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-} from '@angular/core';
+, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {

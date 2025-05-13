@@ -14,7 +14,7 @@ $primary-darker: color.adjust(emerald.$color-primary, $lightness: -20%);
 // Emerald PageHeader Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/PageHeader
 
-.emerald-page-header {
+.nb-header {
   position: relative;
   padding: 24px 0;
   background-color: emerald.$color-white;
@@ -24,15 +24,15 @@ $primary-darker: color.adjust(emerald.$color-primary, $lightness: -20%);
     color: emerald.$color-white;
     padding: 48px 0;
 
-    .emerald-page-header__title,
-    .emerald-page-header__subtitle,
-    .emerald-page-header__breadcrumb,
-    .emerald-page-header__breadcrumb-link,
-    .emerald-page-header__back-link {
+    .nb-header__title,
+    .nb-header__subtitle,
+    .nb-header__breadcrumb,
+    .nb-header__breadcrumb-link,
+    .nb-header__back-link {
       color: emerald.$color-white;
     }
 
-    .emerald-page-header__breadcrumb-separator {
+    .nb-header__breadcrumb-separator {
       color: rgba(emerald.$color-white, 0.6);
     }
   }
@@ -290,7 +290,7 @@ $primary-darker: color.adjust(emerald.$color-primary, $lightness: -20%);
 
 // Responsive Styles
 @media (max-width: 768px) {
-  .emerald-page-header {
+  .nb-header {
     padding: 16px 0;
 
     &--with-background {
@@ -317,7 +317,7 @@ $primary-darker: color.adjust(emerald.$color-primary, $lightness: -20%);
 }
 
 @media (max-width: 640px) {
-  .emerald-page-header {
+  .nb-header {
     &__title {
       font-size: 1.125rem;
     }

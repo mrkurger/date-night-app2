@@ -1,74 +1,98 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbIconModule, NbButtonModule } from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+
+interface NotificationMessage {
+  message: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  duration?: number;
+}
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule, NbIconModule, NbButtonModule],
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss'],
-  animations: [
-    trigger('notificationAnimation', [
-      transition(':enter', [
-        style({ transform: 'translateY(100%)', opacity: 0 }),
-        animate('300ms ease-out', style({ transform: 'translateY(0)', opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in', style({ transform: 'translateY(100%)', opacity: 0 })),
-      ]),
-    ]),
+  imports: [CommonModule, NebularModule],
+  template: `
+    <div class="notifications-container">
+      <nb-card
+        *ngFor="let notification of notifications"
+        [status]="getNotificationStatus(notification)"
+        class="notification-card"
+      >
+        <nb-card-body>
+          <div class="notification-content">
+            <nb-icon [icon]="getNotificationIcon(notification)"></nb-icon>
+            <span class="notification-message">{{ notification.message }}</span>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  `,
+  styles: [
+    `
+      .notifications-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        max-width: 400px;
+      }
+
+      .notification-card {
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .notification-message {
+        flex: 1;
+      }
+
+      nb-icon {
+        font-size: 1.5rem;
+      }
+    `,
   ],
 })
-export class NotificationComponent implements OnInit, OnDestroy {
-  @Input() message: string = '';
-  @Input() type: 'success' | 'error' | 'warning' | 'info' = 'info';
-  @Input() duration: number = 3000;
-  @Output() closed = new EventEmitter<void>();
+export class NotificationComponent {
+  @Input() notifications: NotificationMessage[] = [];
 
-  private timer: any;
-
-  ngOnInit(): void {
-    if (this.duration > 0) {
-      this.timer = setTimeout(() => {
-        this.close();
-      }, this.duration);
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-  }
-
-  close(): void {
-    this.closed.emit();
-  }
-
-  get icon(): string {
-    switch (this.type) {
+  getNotificationStatus(notification: NotificationMessage): string {
+    switch (notification.type) {
       case 'success':
-        return 'checkmark-circle-2';
+        return 'success';
       case 'error':
-        return 'close-circle';
+        return 'danger';
       case 'warning':
-        return 'alert-circle';
+        return 'warning';
       case 'info':
       default:
         return 'info';
     }
   }
 
-  get statusClass(): string {
-    return `notification-${this.type}`;
+  getNotificationIcon(notification: NotificationMessage): string {
+    switch (notification.type) {
+      case 'success':
+        return 'checkmark-circle-2-outline';
+      case 'error':
+        return 'alert-circle-outline';
+      case 'warning':
+        return 'alert-triangle-outline';
+      case 'info':
+      default:
+        return 'info-outline';
+    }
   }
 }

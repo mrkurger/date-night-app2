@@ -1,3 +1,5 @@
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 /// <reference types="jasmine" />
 
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';

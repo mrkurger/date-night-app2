@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 /**
  * BEM Utility
  *
@@ -20,7 +21,9 @@
  *       </div>
  *     </div>
  *   `
- * })
+ *,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule] })
  * export class CardComponent {
  *   bem = new BemUtil('card');
  *   isActive = false;

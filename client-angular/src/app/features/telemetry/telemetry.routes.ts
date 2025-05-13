@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
 

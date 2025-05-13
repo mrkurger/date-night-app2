@@ -2,24 +2,24 @@
 <!-- Documentation: https://docs-emerald.condorlabs.io/CardGrid -->
 
 <!-- Loading State -->
-<div *ngIf="loading" class="emerald-card-grid" [ngStyle]="getGridStyle()">
+<div *ngIf="loading" class="nb-card-grid" [ngStyle]="getGridStyle()">
   <div
     *ngFor="let i of getSkeletonArray()"
-    class="emerald-card-grid__item"
-    [ngClass]="{ 'emerald-card-grid__item--animated': animated }"
+    class="nb-card-grid__item"
+    [ngClass]="{ 'nb-card-grid__item--animated': animated }"
   >
-    <emerald-skeleton-loader type="card" [animated]="true"></emerald-skeleton-loader>
+    <nb-skeleton type="card" [animated]="true"></nb-skeleton>
   </div>
 </div>
 
 <!-- Netflix Layout -->
-<div *ngIf="!loading && layout === 'netflix'" class="emerald-card-grid emerald-card-grid--netflix">
-  <div class="emerald-card-grid__netflix-row">
-    <div class="emerald-card-grid__netflix-items">
+<div *ngIf="!loading && layout === 'netflix'" class="nb-card-grid nb-card-grid--netflix">
+  <div class="nb-card-grid__netflix-row">
+    <div class="nb-card-grid__netflix-items">
       <div
         *ngFor="let item of items"
-        class="emerald-card-grid__item emerald-card-grid__item--netflix"
-        [ngClass]="{ 'emerald-card-grid__item--animated': animated }"
+        class="nb-card-grid__item nb-card-grid__item--netflix"
+        [ngClass]="{ 'nb-card-grid__item--animated': animated }"
         [style.margin-right.px]="gap"
         (click)="onItemClick(item)"
       >
@@ -29,7 +29,7 @@
           ></ng-container>
         </ng-container>
         <ng-template #defaultTemplate>
-          <emerald-app-card
+          <nb-card
             *ngIf="item.title"
             [title]="item.title"
             [subtitle]="item.subtitle"
@@ -44,8 +44,8 @@
             [layout]="cardLayout"
             (click)="handleCardClick(item.id)"
             (actionClick)="handleActionClick($event)"
-          ></emerald-app-card>
-          <div *ngIf="!item.title" class="emerald-card-grid__default-item">
+          ></nb-card>
+          <div *ngIf="!item.title" class="nb-card-grid__default-item">
             {{ item.name || item.label || 'Item' }}
           </div>
         </ng-template>
@@ -57,16 +57,16 @@
 <!-- Grid or Masonry Layout -->
 <div
   *ngIf="!loading && layout !== 'netflix'"
-  class="emerald-card-grid"
-  [ngClass]="{ 'emerald-card-grid--masonry': layout === 'masonry' }"
+  class="nb-card-grid"
+  [ngClass]="{ 'nb-card-grid--masonry': layout === 'masonry' }"
   [ngStyle]="getGridStyle()"
 >
   <div
     *ngFor="let item of items"
-    class="emerald-card-grid__item"
+    class="nb-card-grid__item"
     [ngClass]="{
-      'emerald-card-grid__item--animated': animated,
-      'emerald-card-grid__item--masonry': layout === 'masonry',
+      'nb-card-grid__item--animated': animated,
+      'nb-card-grid__item--masonry': layout === 'masonry',
     }"
     (click)="onItemClick(item)"
   >
@@ -74,7 +74,7 @@
       <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
     </ng-container>
     <ng-template #defaultTemplate>
-      <emerald-app-card
+      <nb-card
         *ngIf="item.title"
         [title]="item.title"
         [subtitle]="item.subtitle"
@@ -89,8 +89,8 @@
         [layout]="cardLayout"
         (click)="handleCardClick(item.id)"
         (actionClick)="handleActionClick($event)"
-      ></emerald-app-card>
-      <div *ngIf="!item.title" class="emerald-card-grid__default-item">
+      ></nb-card>
+      <div *ngIf="!item.title" class="nb-card-grid__default-item">
         {{ item.name || item.label || 'Item' }}
       </div>
     </ng-template>
@@ -98,8 +98,8 @@
 </div>
 
 <!-- Empty State -->
-<div *ngIf="!loading && items.length === 0" class="emerald-card-grid__empty">
-  <div class="emerald-card-grid__empty-content">
+<div *ngIf="!loading && items.length === 0" class="nb-card-grid__empty">
+  <div class="nb-card-grid__empty-content">
     <i class="fas fa-search"></i>
     <p>No items found</p>
   </div>

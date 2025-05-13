@@ -1,4 +1,6 @@
 @use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/global/breakpoints' as *;
 @use '../../../core/design/main' as ds;
 @use '../../../../styles/mixins/_breakpoints' as breakpoints;
 @use '../../../core/design/animation-utilities' as animation;
@@ -186,4 +188,134 @@
 
 @include nb-install() {
   @include chat-room-theme();
+
+  .chat-room {
+    height: 100%;
+
+    nb-card {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: nb-theme(card-border-radius);
+      box-shadow: nb-theme(card-shadow);
+
+      nb-card-header {
+        padding: nb-theme(card-padding);
+        border-bottom: 1px solid nb-theme(divider-color);
+
+        .chat-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      nb-card-body {
+        flex: 1;
+        padding: nb-theme(card-padding);
+        overflow: hidden;
+
+        .messages-container {
+          height: 100%;
+          overflow-y: auto;
+          padding-right: 0.5rem;
+          scrollbar-width: thin;
+          scrollbar-color: nb-theme(scrollbar-color) nb-theme(scrollbar-background-color);
+
+          &::-webkit-scrollbar {
+            width: nb-theme(scrollbar-width);
+          }
+
+          &::-webkit-scrollbar-track {
+            background: nb-theme(scrollbar-background-color);
+            border-radius: nb-theme(scrollbar-width);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: nb-theme(scrollbar-color);
+            border-radius: nb-theme(scrollbar-width);
+
+            &:hover {
+              background: nb-theme(color-primary-focus);
+            }
+          }
+
+          .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: nb-theme(spacing);
+          }
+
+          .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: nb-theme(text-hint-color);
+            font-size: nb-theme(text-subtitle-font-size);
+            padding: 0.5rem 0;
+
+            nb-icon {
+              animation: pulse 1s infinite;
+              color: nb-theme(color-primary-500);
+            }
+          }
+        }
+      }
+
+      nb-card-footer {
+        padding: nb-theme(card-padding);
+        border-top: 1px solid nb-theme(divider-color);
+
+        form {
+          width: 100%;
+
+          nb-form-field {
+            width: 100%;
+
+            input {
+              padding-right: 3rem;
+            }
+
+            button {
+              margin-right: 0.5rem;
+            }
+          }
+        }
+      }
+    }
+
+    // Responsive styles
+    @include media-breakpoint-down(md) {
+      nb-card-header {
+        padding: nb-theme(card-padding-small);
+      }
+
+      nb-card-body {
+        padding: nb-theme(card-padding-small);
+      }
+
+      nb-card-footer {
+        padding: nb-theme(card-padding-small);
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      nb-card {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

@@ -15,7 +15,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -33,7 +33,7 @@ export class MockMainLayoutComponent {
 }
 
 @Component({
-  selector: 'emerald-app-card',
+  selector: 'nb-card',
   template: '<div>Mock App Card</div>',
   standalone: true,
   imports: [CommonModule],
@@ -57,7 +57,7 @@ export class MockAppCardComponent {
 }
 
 @Component({
-  selector: 'emerald-skeleton-loader',
+  selector: 'nb-skeleton',
   template: '<div>Loading...</div>',
   standalone: true,
   imports: [CommonModule],

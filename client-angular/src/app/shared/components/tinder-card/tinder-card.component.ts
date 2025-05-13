@@ -45,7 +45,7 @@ export interface TinderCardAction {
 export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
 @Component({
-  selector: 'app-tinder-card',
+  selector: 'nb-tinder-card',
   standalone: true,
   imports: [
     CommonModule,
@@ -61,331 +61,462 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
       #card
       class="tinder-card"
       [class.swiping]="isSwiping"
-      [class.like]="state === 'like'"
-      [class.dislike]="state === 'dislike'"
-      [class.superlike]="state === 'superlike'"
-      [style.transform]="transform"
-      (mousedown)="onMouseDown($event)"
-      (touchstart)="onTouchStart($event)"
+      [class.liked]="isLiked"
+      [class.disliked]="isDisliked"
+      [ngStyle]="cardStyle"
     >
-      <nb-card-header>
-        <div class="card-header-content">
-          <nb-user
-            [name]="title"
-            [title]="subtitle"
-            [picture]="currentMedia?.thumbnail || currentMedia?.url"
-            size="large"
-          >
-          </nb-user>
-          <div class="age-badge">
-            <nb-badge [text]="age" status="primary" position="top right"></nb-badge>
-          </div>
+      <div class="like-indicator" [class.visible]="showLikeIndicator">
+        <nb-icon icon="heart" status="success"></nb-icon>
+        <span>LIKE</span>
+      </div>
+      <div class="dislike-indicator" [class.visible]="showDislikeIndicator">
+        <nb-icon icon="close" status="danger"></nb-icon>
+        <span>NOPE</span>
+      </div>
+
+      <div class="media-container">
+        <div class="media-item" [ngStyle]="mediaStyle">
+          <ng-container [ngSwitch]="currentMedia.type">
+            <img
+              *ngSwitchCase="'image'"
+              [src]="currentMedia.url"
+              [alt]="title"
+              class="media-content"
+            />
+            <video
+              *ngSwitchCase="'video'"
+              [src]="currentMedia.url"
+              [poster]="currentMedia.thumbnail"
+              controls
+              class="media-content"
+            ></video>
+          </ng-container>
         </div>
-      </nb-card-header>
+
+        <div class="media-navigation" *ngIf="media.length > 1">
+          <div class="media-dots">
+            <span
+              *ngFor="let m of media; let i = index"
+              class="media-dot"
+              [class.active]="i === currentMediaIndex"
+              (click)="setMediaIndex(i)"
+            ></span>
+          </div>
+          <button
+            nbButton
+            ghost
+            class="media-nav-button prev"
+            (click)="previousMedia()"
+            *ngIf="currentMediaIndex > 0"
+          >
+            <nb-icon icon="chevron-left"></nb-icon>
+          </button>
+          <button
+            nbButton
+            ghost
+            class="media-nav-button next"
+            (click)="nextMedia()"
+            *ngIf="currentMediaIndex < media.length - 1"
+          >
+            <nb-icon icon="chevron-right"></nb-icon>
+          </button>
+        </div>
+      </div>
 
       <nb-card-body>
-        <div class="media-container" (click)="onMediaClick()">
-          <img
-            *ngIf="currentMedia?.type === 'image'"
-            [src]="currentMedia.url"
-            [alt]="title"
-            class="media-content"
-          />
-          <video
-            *ngIf="currentMedia?.type === 'video'"
-            [src]="currentMedia.url"
-            controls
-            class="media-content"
-          ></video>
-
-          <!-- Media Navigation -->
-          <div class="media-navigation" *ngIf="media.length > 1">
-            <button
-              nbButton
-              ghost
-              size="small"
-              (click)="previousMedia(); $event.stopPropagation()"
-              [disabled]="currentMediaIndex === 0"
-            >
-              <nb-icon icon="arrow-ios-back-outline"></nb-icon>
-            </button>
-            <div class="media-indicators">
-              <div
-                *ngFor="let m of media; let i = index"
-                class="media-indicator"
-                [class.active]="i === currentMediaIndex"
-              ></div>
-            </div>
-            <button
-              nbButton
-              ghost
-              size="small"
-              (click)="nextMedia(); $event.stopPropagation()"
-              [disabled]="currentMediaIndex === media.length - 1"
-            >
-              <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
-            </button>
-          </div>
+        <div class="card-header">
+          <h2 class="title">{{ title }}</h2>
+          <span class="age" *ngIf="age">{{ age }}</span>
         </div>
-
-        <div class="card-content">
-          <h2>{{ title }}</h2>
-          <p class="subtitle">{{ subtitle }}</p>
-          <p class="description">{{ description }}</p>
-
-          <div class="tags" *ngIf="tags && tags.length > 0">
-            <nb-tag
-              *ngFor="let tag of tags"
-              [text]="tag"
-              status="primary"
-              appearance="outline"
-              size="small"
-            >
-            </nb-tag>
-          </div>
+        <div class="subtitle" *ngIf="subtitle">{{ subtitle }}</div>
+        <p class="description" *ngIf="description">{{ description }}</p>
+        <div class="tags" *ngIf="tags && tags.length">
+          <nb-tag
+            *ngFor="let tag of tags"
+            [text]="tag"
+            appearance="filled"
+            status="primary"
+            size="small"
+          ></nb-tag>
         </div>
       </nb-card-body>
 
       <nb-card-footer>
-        <div class="action-buttons">
-          <button
-            nbButton
-            status="danger"
-            shape="round"
-            size="large"
-            (click)="onActionClick('dislike')"
-          >
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
-          <button
-            nbButton
-            status="info"
-            shape="round"
-            size="large"
-            (click)="onActionClick('superlike')"
-          >
-            <nb-icon icon="star-outline"></nb-icon>
-          </button>
-          <button
-            nbButton
-            status="success"
-            shape="round"
-            size="large"
-            (click)="onActionClick('like')"
-          >
-            <nb-icon icon="heart-outline"></nb-icon>
-          </button>
-        </div>
+        <button nbButton ghost status="danger" (click)="onDislike()">
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+        <button nbButton ghost status="success" (click)="onLike()">
+          <nb-icon icon="heart-outline"></nb-icon>
+        </button>
       </nb-card-footer>
-
-      <!-- Swipe Overlays -->
-      <div class="swipe-overlay like-overlay" [style.opacity]="likeOpacity">
-        <nb-icon icon="heart" status="success"></nb-icon>
-        <span>LIKE</span>
-      </div>
-      <div class="swipe-overlay dislike-overlay" [style.opacity]="dislikeOpacity">
-        <nb-icon icon="close" status="danger"></nb-icon>
-        <span>NOPE</span>
-      </div>
-      <div class="swipe-overlay superlike-overlay" [style.opacity]="superlikeOpacity">
-        <nb-icon icon="star" status="info"></nb-icon>
-        <span>SUPER LIKE</span>
-      </div>
     </nb-card>
   `,
-  styleUrls: ['./tinder-card.component.scss'],
+  styles: [
+    `
+      :host {
+        display: block;
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .tinder-card {
+        position: relative;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        transform-origin: center center;
+        user-select: none;
+        touch-action: none;
+
+        &.swiping {
+          transition: none;
+        }
+
+        &.liked {
+          .like-indicator {
+            opacity: 1;
+          }
+        }
+
+        &.disliked {
+          .dislike-indicator {
+            opacity: 1;
+          }
+        }
+      }
+
+      .like-indicator,
+      .dislike-indicator {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        nb-icon {
+          font-size: 48px;
+          margin-bottom: 8px;
+        }
+
+        span {
+          font-size: 24px;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+      }
+
+      .like-indicator {
+        right: 24px;
+        color: var(--color-success-500);
+      }
+
+      .dislike-indicator {
+        left: 24px;
+        color: var(--color-danger-500);
+      }
+
+      .media-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+      }
+
+      .media-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .media-content {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .media-navigation {
+        position: absolute;
+        bottom: 16px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .media-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .media-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.active {
+          background-color: var(--color-primary-500);
+          transform: scale(1.2);
+        }
+      }
+
+      .media-nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 8px;
+
+        &.prev {
+          left: 16px;
+        }
+
+        &.next {
+          right: 16px;
+        }
+
+        nb-icon {
+          color: white;
+        }
+      }
+
+      nb-card-body {
+        padding: 16px;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-basic-color);
+      }
+
+      .age {
+        font-size: 20px;
+        color: var(--text-hint-color);
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: var(--text-hint-color);
+        margin-bottom: 12px;
+      }
+
+      .description {
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--text-basic-color);
+        margin-bottom: 16px;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      nb-card-footer {
+        display: flex;
+        justify-content: space-around;
+        padding: 16px;
+        background-color: var(--background-basic-color-1);
+
+        button {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          nb-icon {
+            font-size: 24px;
+          }
+        }
+      }
+    `,
+  ],
 })
 export class TinderCardComponent implements AfterViewInit, OnDestroy {
-  @Input() title: string = '';
-  @Input() subtitle: string = '';
-  @Input() description: string = '';
   @Input() media: TinderCardMedia[] = [];
+  @Input() title = '';
+  @Input() age?: number;
+  @Input() subtitle?: string;
+  @Input() description?: string;
   @Input() tags: string[] = [];
-  @Input() itemId: string = '';
-  @Input() age: string = '';
-  @Input() state: TinderCardState = 'default';
-  @Input() swipeable: boolean = true;
 
-  @Output() swipe = new EventEmitter<{ direction: 'left' | 'right' | 'up'; itemId: string }>();
-  @Output() actionClick = new EventEmitter<{ action: string; itemId: string }>();
-  @Output() mediaChange = new EventEmitter<{ index: number; media: TinderCardMedia }>();
+  @Output() like = new EventEmitter<void>();
+  @Output() dislike = new EventEmitter<void>();
+  @Output() superlike = new EventEmitter<void>();
 
   @ViewChild('card') cardElement!: ElementRef;
 
   currentMediaIndex = 0;
-  currentMedia: TinderCardMedia | null = null;
-  transform = '';
   isSwiping = false;
-  startX = 0;
-  startY = 0;
-  currentX = 0;
-  currentY = 0;
-  likeOpacity = 0;
-  dislikeOpacity = 0;
-  superlikeOpacity = 0;
+  isLiked = false;
+  isDisliked = false;
+  showLikeIndicator = false;
+  showDislikeIndicator = false;
+  cardStyle: any = {};
+  mediaStyle: any = {};
 
-  private readonly SWIPE_THRESHOLD = 100;
-  private readonly ROTATION_FACTOR = 0.1;
+  private startX = 0;
+  private startY = 0;
+  private initialX = 0;
+  private initialY = 0;
+  private xOffset = 0;
+  private yOffset = 0;
+  private swipeThreshold = 100;
 
-  constructor() {}
+  get currentMedia(): TinderCardMedia {
+    return this.media[this.currentMediaIndex];
+  }
 
   ngAfterViewInit(): void {
-    if (this.media.length > 0) {
-      this.currentMedia = this.media[0];
-    }
-
-    // Add event listeners for mouse and touch events
-    if (this.swipeable) {
-      document.addEventListener('mousemove', this.onMouseMove.bind(this));
-      document.addEventListener('mouseup', this.onMouseUp.bind(this));
-      document.addEventListener('touchmove', this.onTouchMove.bind(this));
-      document.addEventListener('touchend', this.onTouchEnd.bind(this));
-    }
+    this.setupTouchEvents();
   }
 
   ngOnDestroy(): void {
-    // Remove event listeners
-    if (this.swipeable) {
-      document.removeEventListener('mousemove', this.onMouseMove.bind(this));
-      document.removeEventListener('mouseup', this.onMouseUp.bind(this));
-      document.removeEventListener('touchmove', this.onTouchMove.bind(this));
-      document.removeEventListener('touchend', this.onTouchEnd.bind(this));
+    this.removeTouchEvents();
+  }
+
+  private setupTouchEvents(): void {
+    const element = this.cardElement.nativeElement;
+    element.addEventListener('mousedown', this.dragStart.bind(this));
+    element.addEventListener('mousemove', this.drag.bind(this));
+    element.addEventListener('mouseup', this.dragEnd.bind(this));
+    element.addEventListener('touchstart', this.dragStart.bind(this));
+    element.addEventListener('touchmove', this.drag.bind(this));
+    element.addEventListener('touchend', this.dragEnd.bind(this));
+  }
+
+  private removeTouchEvents(): void {
+    const element = this.cardElement.nativeElement;
+    element.removeEventListener('mousedown', this.dragStart.bind(this));
+    element.removeEventListener('mousemove', this.drag.bind(this));
+    element.removeEventListener('mouseup', this.dragEnd.bind(this));
+    element.removeEventListener('touchstart', this.dragStart.bind(this));
+    element.removeEventListener('touchmove', this.drag.bind(this));
+    element.removeEventListener('touchend', this.dragEnd.bind(this));
+  }
+
+  private dragStart(e: MouseEvent | TouchEvent): void {
+    if (e instanceof MouseEvent) {
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+    } else {
+      this.startX = e.touches[0].clientX;
+      this.startY = e.touches[0].clientY;
     }
-  }
 
-  onMouseDown(event: MouseEvent): void {
-    if (!this.swipeable) return;
-    this.startSwiping(event.clientX, event.clientY);
-  }
-
-  onTouchStart(event: TouchEvent): void {
-    if (!this.swipeable) return;
-    const touch = event.touches[0];
-    this.startSwiping(touch.clientX, touch.clientY);
-  }
-
-  onMouseMove(event: MouseEvent): void {
-    if (!this.isSwiping) return;
-    this.updateSwipe(event.clientX, event.clientY);
-  }
-
-  onTouchMove(event: TouchEvent): void {
-    if (!this.isSwiping) return;
-    const touch = event.touches[0];
-    this.updateSwipe(touch.clientX, touch.clientY);
-  }
-
-  onMouseUp(): void {
-    this.endSwiping();
-  }
-
-  onTouchEnd(): void {
-    this.endSwiping();
-  }
-
-  private startSwiping(x: number, y: number): void {
+    this.initialX = this.xOffset;
+    this.initialY = this.yOffset;
     this.isSwiping = true;
-    this.startX = x;
-    this.startY = y;
-    this.currentX = x;
-    this.currentY = y;
   }
 
-  private updateSwipe(x: number, y: number): void {
+  private drag(e: MouseEvent | TouchEvent): void {
     if (!this.isSwiping) return;
 
-    this.currentX = x;
-    this.currentY = y;
+    e.preventDefault();
 
-    const deltaX = this.currentX - this.startX;
-    const deltaY = this.currentY - this.startY;
-    const rotation = deltaX * this.ROTATION_FACTOR;
+    let currentX: number;
+    let currentY: number;
 
-    this.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
-
-    // Update overlay opacities
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-    const maxDelta = Math.max(absX, absY);
-    const opacity = Math.min(maxDelta / this.SWIPE_THRESHOLD, 1);
-
-    if (deltaX > 0) {
-      this.likeOpacity = opacity;
-      this.dislikeOpacity = 0;
-      this.superlikeOpacity = 0;
-    } else if (deltaX < 0) {
-      this.likeOpacity = 0;
-      this.dislikeOpacity = opacity;
-      this.superlikeOpacity = 0;
-    } else if (deltaY < 0) {
-      this.likeOpacity = 0;
-      this.dislikeOpacity = 0;
-      this.superlikeOpacity = opacity;
+    if (e instanceof MouseEvent) {
+      currentX = e.clientX;
+      currentY = e.clientY;
+    } else {
+      currentX = e.touches[0].clientX;
+      currentY = e.touches[0].clientY;
     }
+
+    this.xOffset = currentX - this.startX;
+    this.yOffset = currentY - this.startY;
+
+    const rotate = this.xOffset * 0.1;
+    this.cardStyle = {
+      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,
+    };
+
+    this.showLikeIndicator = this.xOffset > this.swipeThreshold;
+    this.showDislikeIndicator = this.xOffset < -this.swipeThreshold;
   }
 
-  private endSwiping(): void {
-    if (!this.isSwiping) return;
+  private dragEnd(): void {
+    this.initialX = this.xOffset;
+    this.initialY = this.yOffset;
 
-    const deltaX = this.currentX - this.startX;
-    const deltaY = this.currentY - this.startY;
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-
-    if (absX > this.SWIPE_THRESHOLD || absY > this.SWIPE_THRESHOLD) {
-      // Determine swipe direction
-      if (absX > absY) {
-        // Horizontal swipe
-        this.swipe.emit({
-          direction: deltaX > 0 ? 'right' : 'left',
-          itemId: this.itemId,
-        });
-      } else {
-        // Vertical swipe (only upward swipe is considered)
-        if (deltaY < 0) {
-          this.swipe.emit({
-            direction: 'up',
-            itemId: this.itemId,
-          });
-        }
-      }
+    if (this.xOffset > this.swipeThreshold) {
+      this.onLike();
+    } else if (this.xOffset < -this.swipeThreshold) {
+      this.onDislike();
+    } else {
+      this.resetCard();
     }
 
-    // Reset state
     this.isSwiping = false;
-    this.transform = '';
-    this.likeOpacity = 0;
-    this.dislikeOpacity = 0;
-    this.superlikeOpacity = 0;
   }
 
-  onActionClick(action: string): void {
-    this.actionClick.emit({ action, itemId: this.itemId });
+  private resetCard(): void {
+    this.cardStyle = {
+      transform: 'translate(0px, 0px) rotate(0deg)',
+      transition: 'transform 0.3s ease',
+    };
+    this.xOffset = 0;
+    this.yOffset = 0;
+    this.showLikeIndicator = false;
+    this.showDislikeIndicator = false;
   }
 
-  onMediaClick(): void {
-    // Handle media click (e.g., open fullscreen view)
+  onLike(): void {
+    this.isLiked = true;
+    this.cardStyle = {
+      transform: 'translate(150%, 0) rotate(40deg)',
+      transition: 'transform 0.3s ease',
+    };
+    setTimeout(() => this.like.emit(), 300);
+  }
+
+  onDislike(): void {
+    this.isDisliked = true;
+    this.cardStyle = {
+      transform: 'translate(-150%, 0) rotate(-40deg)',
+      transition: 'transform 0.3s ease',
+    };
+    setTimeout(() => this.dislike.emit(), 300);
+  }
+
+  setMediaIndex(index: number): void {
+    this.currentMediaIndex = index;
   }
 
   previousMedia(): void {
     if (this.currentMediaIndex > 0) {
       this.currentMediaIndex--;
-      this.currentMedia = this.media[this.currentMediaIndex];
-      this.mediaChange.emit({
-        index: this.currentMediaIndex,
-        media: this.currentMedia,
-      });
     }
   }
 
   nextMedia(): void {
     if (this.currentMediaIndex < this.media.length - 1) {
       this.currentMediaIndex++;
-      this.currentMedia = this.media[this.currentMediaIndex];
-      this.mediaChange.emit({
-        index: this.currentMediaIndex,
-        media: this.currentMedia,
-      });
     }
   }
 }

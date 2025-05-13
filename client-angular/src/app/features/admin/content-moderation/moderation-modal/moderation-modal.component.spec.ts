@@ -1,7 +1,7 @@
 /// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { SimpleChange, DebugElement } from '@angular/core';
+import { SimpleChange, DebugElement , Component} from '@angular/core';
 import { By, DomSanitizer } from '@angular/platform-browser';
 
 import { ModerationModalComponent } from './moderation-modal.component';

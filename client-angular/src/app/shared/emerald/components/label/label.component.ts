@@ -1,3 +1,5 @@
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,21 +10,20 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
+import { NbTagComponent } from '@nebular/theme';
 
 /**
- * Emerald Label Component
+ * Label Component
  *
- * A wrapper for the Emerald.js Label component.
- * This component displays a label with various styles and variants.
- *
- * Documentation: https://docs-emerald.condorlabs.io/Label
+ * A wrapper for Nebular's NbTagComponent.
+ * This component displays a tag/label with various styles and variants.
  */
 @Component({
-  selector: 'emerald-label',
+  selector: 'nb-tag',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbTagComponent],
 })
 export class LabelComponent {
   @Input() text = '';

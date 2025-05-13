@@ -7,14 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  ElementRef,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../../../core/models/ad.interface';
 
@@ -27,7 +20,7 @@ import { Ad } from '../../../../core/models/ad.interface';
  * Documentation: https://docs-emerald.condorlabs.io/AppCard
  */
 @Component({
-  selector: 'emerald-app-card',
+  selector: 'nb-card',
   templateUrl: './app-card.component.html',
   styleUrls: ['./app-card.component.scss'],
   standalone: true,

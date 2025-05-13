@@ -9,14 +9,7 @@
 // - SHOW_FIRST_LAST: Whether to show first/last page buttons (default: true)
 //   Related to: pager.component.html
 // ===================================================
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -28,7 +21,7 @@ import { CommonModule } from '@angular/common';
  * Documentation: https://docs-emerald.condorlabs.io/Pager
  */
 @Component({
-  selector: 'emerald-pager',
+  selector: 'nb-paginator',
   templateUrl: './pager.component.html',
   styleUrls: ['./pager.component.scss'],
   standalone: true,

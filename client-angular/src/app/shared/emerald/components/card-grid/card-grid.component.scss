@@ -12,7 +12,7 @@ $border-radius-full: 9999px;
 // Emerald CardGrid Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/CardGrid
 
-.emerald-card-grid {
+.nb-card-grid {
   display: grid;
   width: 100%;
 
@@ -149,7 +149,7 @@ $border-radius-full: 9999px;
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .emerald-card-grid {
+  .nb-card-grid {
     &__item--netflix {
       width: 160px;
     }
@@ -157,7 +157,7 @@ $border-radius-full: 9999px;
 }
 
 @media (max-width: 640px) {
-  .emerald-card-grid {
+  .nb-card-grid {
     &__item--netflix {
       width: 140px;
     }

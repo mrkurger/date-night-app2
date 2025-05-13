@@ -9,12 +9,12 @@ $font-weight-semibold: 600;
 // Emerald Avatar Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Avatar
 
-.emerald-avatar-container {
+.nb-user-container {
   position: relative;
   display: inline-block;
 }
 
-.emerald-avatar {
+.nb-user {
   position: relative;
   display: flex;
   align-items: center;
@@ -40,13 +40,13 @@ $font-weight-semibold: 600;
     height: 32px;
     font-size: 0.75rem;
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 8px;
       height: 8px;
       border-width: 1px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 8px;
     }
   }
@@ -56,13 +56,13 @@ $font-weight-semibold: 600;
     height: 48px;
     font-size: 0.875rem;
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 10px;
       height: 10px;
       border-width: 2px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 10px;
     }
   }
@@ -72,13 +72,13 @@ $font-weight-semibold: 600;
     height: 64px;
     font-size: 1rem;
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 12px;
       height: 12px;
       border-width: 2px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 12px;
     }
   }
@@ -100,7 +100,7 @@ $font-weight-semibold: 600;
   }
 
   // No Image Fallback
-  &--no-image .emerald-avatar__initials {
+  &--no-image .nb-user__initials {
     display: flex;
   }
 
@@ -140,7 +140,7 @@ $font-weight-semibold: 600;
 }
 
 // Dropdown Menu
-.emerald-avatar__dropdown {
+.nb-user__dropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;

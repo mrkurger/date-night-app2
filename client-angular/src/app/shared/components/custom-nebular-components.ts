@@ -1,12 +1,19 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, NgModule } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbSortDirection,
+  NbSortRequest,
+  NbTreeGridDataSource,
+  NbSortDirective,
+  NbTreeGridComponent,
+} from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 
 // Interfaces
 export interface NbSortEvent {
-  active: string;
-  direction: 'asc' | 'desc' | '';
+  column: string;
+  direction: NbSortDirection;
 }
 
 // Components
@@ -79,57 +86,73 @@ export class NbPaginatorComponent {
 
 @Component({
   selector: 'nb-sort',
+  standalone: true,
+  imports: [CommonModule],
   template: '<ng-content></ng-content>',
   styleUrls: ['./custom-nebular-components.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class NbSortComponent {
-  @Output() sortChange = new EventEmitter<NbSortEvent>();
-  active: string = '';
-  direction: 'asc' | 'desc' | '' = '';
+  @Output() sortChange = new EventEmitter<NbSortRequest>();
+  sortColumn: string = '';
+  sortDirection: NbSortDirection = NbSortDirection.NONE;
 
-  sort(id: string) {
-    if (this.active === id) {
-      this.direction = this.direction === 'asc' ? 'desc' : this.direction === 'desc' ? '' : 'asc';
-    } else {
-      this.active = id;
-      this.direction = 'asc';
-    }
-    this.sortChange.emit({ active: this.active, direction: this.direction });
+  sort(request: NbSortRequest): void {
+    this.sortColumn = request.column;
+    this.sortDirection = request.direction;
+    this.sortChange.emit(request);
   }
 }
 
 @Component({
   selector: '[nb-sort-header]',
+  standalone: true,
+  imports: [CommonModule],
   template: `
-    <div class="nb-sort-header-container" (click)="sort()">
+    <div class="nb-sort-header-container" (click)="sortData()">
       <ng-content></ng-content>
-      <div class="nb-sort-header-arrow" *ngIf="sortComponent.active === id">
+      <div class="nb-sort-header-arrow" *ngIf="isCurrentSortColumn()">
         <span
           class="nb-sort-header-pointer-left"
-          [class.asc]="sortComponent.direction === 'asc'"
-          [class.desc]="sortComponent.direction === 'desc'"
+          [class.asc]="currentDirection === NbSortDirection.ASCENDING"
+          [class.desc]="currentDirection === NbSortDirection.DESCENDING"
         ></span>
         <span
           class="nb-sort-header-pointer-right"
-          [class.asc]="sortComponent.direction === 'asc'"
-          [class.desc]="sortComponent.direction === 'desc'"
+          [class.asc]="currentDirection === NbSortDirection.ASCENDING"
+          [class.desc]="currentDirection === NbSortDirection.DESCENDING"
         ></span>
       </div>
     </div>
   `,
   styleUrls: ['./custom-nebular-components.scss'],
-  host: {
-    '[class.nb-sort-header-sorted]': 'sortComponent.active === id',
-  },
 })
 export class NbSortHeaderComponent {
-  @Input('nb-sort-header') id!: string;
+  @Input('nb-sort-header') column!: string;
+  protected NbSortDirection = NbSortDirection;
 
-  constructor(public sortComponent: NbSortComponent) {}
+  constructor(private sortComponent: NbSortComponent) {}
 
-  sort() {
-    this.sortComponent.sort(this.id);
+  sortData(): void {
+    const direction = this.getNextDirection();
+    this.sortComponent.sort({ column: this.column, direction });
+  }
+
+  isCurrentSortColumn(): boolean {
+    return this.sortComponent.sortColumn === this.column;
+  }
+
+  get currentDirection(): NbSortDirection {
+    return this.isCurrentSortColumn() ? this.sortComponent.sortDirection : NbSortDirection.NONE;
+  }
+
+  private getNextDirection(): NbSortDirection {
+    if (!this.isCurrentSortColumn() || this.currentDirection === NbSortDirection.NONE) {
+      return NbSortDirection.ASCENDING;
+    }
+    return this.currentDirection === NbSortDirection.ASCENDING
+      ? NbSortDirection.DESCENDING
+      : NbSortDirection.NONE;
   }
 }
 
@@ -143,39 +166,3 @@ export class NbSortHeaderComponent {
 export class NbDividerComponent {
   @Input() vertical: boolean = false;
 }
-
-// Modules
-@NgModule({
-  imports: [CommonModule, NbButtonModule, FormsModule],
-  declarations: [NbSortComponent, NbSortHeaderComponent],
-  exports: [NbSortComponent, NbSortHeaderComponent],
-})
-export class NbSortModule {}
-
-@NgModule({
-  imports: [CommonModule, NbButtonModule, FormsModule],
-  declarations: [],
-  exports: [NbPaginatorComponent],
-})
-export class NbPaginatorModule {}
-
-@NgModule({
-  imports: [CommonModule],
-  declarations: [],
-  exports: [NbDividerComponent],
-})
-export class NbDividerModule {}
-
-// Main module that exports all components
-@NgModule({
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    FormsModule,
-    NbSortModule,
-    NbPaginatorModule,
-    NbDividerModule,
-  ],
-  exports: [NbSortModule, NbPaginatorModule, NbDividerModule],
-})
-export class NbCustomComponentsModule {}

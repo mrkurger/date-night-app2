@@ -1,3 +1,7 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../nebular.module';
+import { environment } from '../../../../environments/environment';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,199 +11,137 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-// Define a local environment object to avoid import issues
-const environment = {
-  production: false,
-};
 
 @Component({
   selector: 'app-debug-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NebularModule],
   template: `
-    <div class="debug-panel" *ngIf="showDebugInfo">
-      <h3>Debug Information</h3>
-      <div class="debug-content">
-        <p><strong>Angular Version:</strong> 19.2.0</p>
-        <p><strong>Environment:</strong> {{ environment }}</p>
-        <p><strong>Browser:</strong> {{ browserInfo }}</p>
-        <p><strong>Screen Size:</strong> {{ screenSize }}</p>
-        <p><strong>User Agent:</strong> {{ userAgent }}</p>
-        <p><strong>PWA Enabled:</strong> {{ isPwaEnabled }}</p>
-        <p><strong>Service Worker:</strong> {{ hasServiceWorker }}</p>
-        <p><strong>Online Status:</strong> {{ isOnline ? 'Online' : 'Offline' }}</p>
-        <p><strong>Rendering Mode:</strong> {{ renderingMode }}</p>
-        <div class="css-test">
-          <p>
-            <strong>CSS Test:</strong> <span class="bootstrap-test">Bootstrap</span> |
-            <span class="fontawesome-test">FontAwesome</span> |
-            <span class="material-test">Material</span>
-          </p>
-        </div>
-      </div>
-      <button (click)="toggleDebugInfo()" class="close-btn">Close</button>
-    </div>
-    <button (click)="toggleDebugInfo()" *ngIf="!showDebugInfo" class="debug-toggle">Debug</button>
+    <nb-card *ngIf="showDebugInfo" class="debug-info">
+      <nb-card-header>
+        Debug Information
+        <button nbButton ghost size="tiny" (click)="toggleDebugInfo()">
+          <nb-icon icon="minus-outline"></nb-icon>
+        </button>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item> <strong>Environment:</strong> {{ environment }} </nb-list-item>
+          <nb-list-item> <strong>Version:</strong> {{ version }} </nb-list-item>
+          <nb-list-item> <strong>Build:</strong> {{ buildNumber }} </nb-list-item>
+          <nb-list-item> <strong>API URL:</strong> {{ apiUrl }} </nb-list-item>
+          <nb-list-item> <strong>User Agent:</strong> {{ userAgent }} </nb-list-item>
+          <nb-list-item> <strong>Screen Size:</strong> {{ screenSize }} </nb-list-item>
+          <nb-list-item> <strong>Memory Usage:</strong> {{ memoryUsage }} </nb-list-item>
+        </nb-list>
+        <nb-accordion>
+          <nb-accordion-item>
+            <nb-accordion-item-header> Performance Metrics </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <nb-list>
+                <nb-list-item *ngFor="let metric of performanceMetrics">
+                  <strong>{{ metric.name }}:</strong> {{ metric.value }}
+                </nb-list-item>
+              </nb-list>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
-      .debug-panel {
+      .debug-info {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 15px;
-        border-radius: 8px;
-        z-index: 9999;
-        max-width: 400px;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
+        z-index: 1000;
+        width: 400px;
+        opacity: 0.9;
+        backdrop-filter: blur(4px);
 
-      .debug-panel h3 {
-        margin-top: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        padding-bottom: 8px;
-      }
+        nb-card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
 
-      .debug-content {
-        font-size: 12px;
-      }
+        nb-list-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 8px;
+          border-bottom: 1px solid nb-theme(border-basic-color-3);
 
-      .debug-content p {
-        margin: 5px 0;
-      }
-
-      .close-btn {
-        background-color: #ff4081;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-      }
-
-      .debug-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        z-index: 9999;
-      }
-
-      .bootstrap-test {
-        padding: 2px 5px;
-        background-color: #0d6efd;
-        border-radius: 3px;
-      }
-
-      .fontawesome-test::before {
-        content: '\\f005';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        margin-right: 5px;
-      }
-
-      .material-test {
-        font-family: 'Material Icons';
-        vertical-align: middle;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
       }
     `,
   ],
 })
 export class DebugInfoComponent implements OnInit {
-  showDebugInfo = false;
+  showDebugInfo = !environment.production;
   environment = environment.production ? 'Production' : 'Development';
-  browserInfo = '';
-  screenSize = '';
-  userAgent = '';
-  isPwaEnabled = 'Checking...';
-  hasServiceWorker = 'Checking...';
-  isOnline = navigator.onLine;
-  renderingMode = 'Checking...';
+  version = '1.0.0'; // Replace with actual version from package.json
+  buildNumber = 'dev'; // Replace with actual build number
+  apiUrl = environment.apiUrl;
+  userAgent = navigator.userAgent;
+  screenSize = `${window.innerWidth}x${window.innerHeight}`;
+  memoryUsage = 'N/A';
+  performanceMetrics: Array<{ name: string; value: string }> = [];
 
   ngOnInit() {
-    this.getBrowserInfo();
-    this.checkPwaStatus();
-    this.checkRenderingMode();
+    this.updatePerformanceMetrics();
+    this.updateMemoryUsage();
 
-    // Listen for online/offline events
-    window.addEventListener('online', () => (this.isOnline = true));
-    window.addEventListener('offline', () => (this.isOnline = false));
-
-    // Listen for screen size changes
-    window.addEventListener('resize', () => {
-      this.screenSize = `${window.innerWidth}x${window.innerHeight}`;
-    });
+    // Update metrics periodically
+    setInterval(() => {
+      this.updatePerformanceMetrics();
+      this.updateMemoryUsage();
+    }, 5000);
   }
 
   toggleDebugInfo() {
     this.showDebugInfo = !this.showDebugInfo;
   }
 
-  private getBrowserInfo() {
-    this.userAgent = navigator.userAgent;
-    this.screenSize = `${window.innerWidth}x${window.innerHeight}`;
+  private updatePerformanceMetrics() {
+    if (window.performance) {
+      const navigation = performance.getEntriesByType(
+        'navigation',
+      )[0] as PerformanceNavigationTiming;
+      const paint = performance.getEntriesByType('paint');
 
-    // Detect browser
-    const ua = navigator.userAgent;
-    if (ua.includes('Firefox')) {
-      this.browserInfo = 'Firefox';
-    } else if (ua.includes('Chrome') && !ua.includes('Edg')) {
-      this.browserInfo = 'Chrome';
-    } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-      this.browserInfo = 'Safari';
-    } else if (ua.includes('Edg')) {
-      this.browserInfo = 'Edge';
-    } else {
-      this.browserInfo = 'Unknown';
+      this.performanceMetrics = [
+        {
+          name: 'Page Load',
+          value: `${Math.round(navigation.loadEventEnd - navigation.startTime)}ms`,
+        },
+        {
+          name: 'First Paint',
+          value: `${Math.round(paint[0]?.startTime || 0)}ms`,
+        },
+        {
+          name: 'First Contentful Paint',
+          value: `${Math.round(paint[1]?.startTime || 0)}ms`,
+        },
+        {
+          name: 'DOM Interactive',
+          value: `${Math.round(navigation.domInteractive - navigation.startTime)}ms`,
+        },
+        {
+          name: 'DOM Complete',
+          value: `${Math.round(navigation.domComplete - navigation.startTime)}ms`,
+        },
+      ];
     }
   }
 
-  private checkPwaStatus() {
-    // Check if running as installed PWA
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      this.isPwaEnabled = 'Yes (Standalone)';
-    } else if (window.navigator && (window.navigator as any).standalone === true) {
-      this.isPwaEnabled = 'Yes (iOS Standalone)';
-    } else {
-      this.isPwaEnabled = 'No';
+  private updateMemoryUsage() {
+    if (window.performance && (performance as any).memory) {
+      const memory = (performance as any).memory;
+      this.memoryUsage = `${Math.round(memory.usedJSHeapSize / 1048576)} MB`;
     }
-
-    // Check for service worker support
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .getRegistrations()
-        .then((registrations) => {
-          this.hasServiceWorker =
-            registrations.length > 0 ? 'Yes (Active)' : 'Supported but not registered';
-        })
-        .catch(() => {
-          this.hasServiceWorker = 'Error checking';
-        });
-    } else {
-      this.hasServiceWorker = 'Not supported';
-    }
-  }
-
-  private checkRenderingMode() {
-    // Check if Angular is running in development mode
-    setTimeout(() => {
-      const appRoot = document.querySelector('app-root');
-      if (appRoot && appRoot.hasAttribute('ng-version')) {
-        this.renderingMode = 'Angular (Client-side)';
-      } else {
-        this.renderingMode = 'Unknown';
-      }
-    }, 0);
   }
 }

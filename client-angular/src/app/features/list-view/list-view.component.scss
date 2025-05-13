@@ -165,7 +165,7 @@ $active-filter-bg: ds.$color-primary;
     gap: ds.$spacing-2;
     margin-bottom: ds.$spacing-4;
 
-    mat-form-field {
+    nb-form-field {
       flex: 1;
     }
   }
@@ -221,12 +221,13 @@ $active-filter-bg: ds.$color-primary;
   flex-wrap: wrap;
   gap: ds.$spacing-2;
 
-  mat-chip {
-    background-color: $active-filter-bg;
+  nb-tag {
+    margin: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-    &[color='warn'] {
-      background-color: ds.$error-100;
-      color: ds.$error;
+    &:hover {
+      transform: translateY(-1px);
     }
   }
 }
@@ -310,7 +311,7 @@ $active-filter-bg: ds.$color-primary;
 
 /* Card Hover Effects */
 ::ng-deep {
-  .emerald-app-card {
+  .nb-card {
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
@@ -322,7 +323,7 @@ $active-filter-bg: ds.$color-primary;
   }
 
   // List view specific styles
-  .emerald-app-card[ng-reflect-layout='list'] {
+  .nb-card[ng-reflect-layout='list'] {
     &:hover {
       transform: translateY(0) scale(1.01);
     }
@@ -371,5 +372,66 @@ $active-filter-bg: ds.$color-primary;
   .sort-button {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+.pagination {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: nb-theme(background-basic-color-2);
+  border-radius: nb-theme(border-radius);
+
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    nb-select {
+      min-width: 120px;
+    }
+
+    .page-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .page-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        button {
+          min-width: 2.5rem;
+          height: 2.5rem;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.active {
+            background-color: nb-theme(color-primary-500);
+            color: nb-theme(text-control-color);
+            border-color: nb-theme(color-primary-500);
+          }
+        }
+      }
+
+      button {
+        nb-icon {
+          font-size: 1.25rem;
+        }
+
+        &[disabled] {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .page-info {
+      color: nb-theme(text-hint-color);
+      font-size: 0.875rem;
+    }
   }
 }

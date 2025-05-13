@@ -7,30 +7,47 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NbToggleModule } from '@nebular/theme';
 
 /**
- * Emerald Toggle Component
+ * Toggle Component
  *
- * A wrapper for the Emerald.js Toggle component.
+ * A wrapper for Nebular's NbToggleComponent.
  * This component displays a toggle switch for boolean values.
- *
- * Documentation: https://docs-emerald.condorlabs.io/Toggle
  */
 @Component({
-  selector: 'emerald-toggle',
-  templateUrl: './toggle.component.html',
-  styleUrls: ['./toggle.component.scss'],
+  selector: 'nb-toggle',
+  template: `
+    <nb-toggle
+      [checked]="value"
+      [disabled]="disabled"
+      [status]="color"
+      [labelPosition]="labelPosition"
+      [name]="name"
+      [required]="required"
+      [aria-label]="ariaLabel || label"
+      (checkedChange)="toggle($event)"
+    >
+      {{ label }}
+      <span *ngIf="required" class="required-indicator">*</span>
+    </nb-toggle>
+  `,
+  styles: [
+    `
+      :host {
+        display: inline-block;
+      }
+      .required-indicator {
+        color: var(--color-danger-500);
+        margin-left: 0.25rem;
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbToggleModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -42,11 +59,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class ToggleComponent implements ControlValueAccessor {
   @Input() label?: string;
   @Input() labelPosition: 'left' | 'right' = 'right';
-  @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() color: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() disabled = false;
   @Input() name?: string;
-  @Input() id?: string;
   @Input() required = false;
   @Input() ariaLabel?: string;
 
@@ -55,21 +70,16 @@ export class ToggleComponent implements ControlValueAccessor {
   value = false;
 
   // ControlValueAccessor methods
-  onChange = (value: any): void => {
-    // Will be overridden by registerOnChange
-  };
-
-  onTouched = (value: any): void => {
-    // Will be overridden by registerOnTouched
-  };
+  onChange = (value: any): void => {};
+  onTouched = (value: any): void => {};
 
   /**
    * Toggle the value
    */
-  toggle(): void {
+  toggle(checked: boolean): void {
     if (this.disabled) return;
 
-    this.value = !this.value;
+    this.value = checked;
     this.onChange(this.value);
     this.onTouched(this.value);
     this.change.emit(this.value);

@@ -1,50 +1,29 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (error-dashboard.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbTableModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbIconModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbDatepickerModule,
+  NbSortDirection,
+  NbSortRequest,
+} from '@nebular/theme';
 import {
   NbPaginatorComponent,
   NbSortComponent,
   NbSortHeaderComponent,
-  NbSortEvent,
 } from '../../../../shared/components/custom-nebular-components';
-
-import { CommonModule } from '@angular/common';
-
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import {
-  NbCardModule,
-  NbTableModule,
-  NbPaginationChangeEvent,
-  NbSortEvent,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbButtonModule,
-  NbIconModule,
-  NbTagModule,
-  NbSpinnerModule,
-} from '@nebular/theme';
-import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
-
-// Define ErrorCategory enum locally since it's not exported from http-error.interceptor
-export enum ErrorCategory {
-  NETWORK = 'network',
-  SERVER = 'server',
-  CLIENT = 'client',
-  AUTHENTICATION = 'authentication',
-  AUTHORIZATION = 'authorization',
-  VALIDATION = 'validation',
-  TIMEOUT = 'timeout',
-  UNKNOWN = 'unknown',
-}
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
+import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 /**
  * Error Dashboard Component
@@ -61,24 +40,20 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     NbCardModule,
+    NbButtonModule,
     NbTableModule,
-    NbPaginatorModule,
-    NbSortModule,
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
-    NbDatepickerModule,
-    NbDatepickerModule,
-    NbButtonModule,
     NbIconModule,
     NbTagModule,
     NbSpinnerModule,
-    ReactiveFormsModule,
+    NbDatepickerModule,
     NbPaginatorComponent,
     NbSortComponent,
     NbSortHeaderComponent,
-    NbSortEvent,
   ],
   template: `
     <div class="dashboard-container">
@@ -86,44 +61,55 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
       <nb-card class="filter-card">
         <nb-card-header>
-          <nb-card-title>Filters</mat-card-title>
+          <h5>Filters</h5>
         </nb-card-header>
-        <nb-card-content>
+        <nb-card-body>
           <form [formGroup]="filterForm" class="filter-form">
-            <mat-form-field appearance="outline">
-              <mat-label>Error Category</mat-label>
-              <mat-select formControlName="category">
-                <mat-option value="">All Categories</mat-option>
-                <mat-option *ngFor="let category of errorCategories" [value]="category.value">
+            <nb-form-field>
+              <nb-select fullWidth formControlName="category" placeholder="Error Category">
+                <nb-option value="">All Categories</nb-option>
+                <nb-option *ngFor="let category of errorCategories" [value]="category.value">
                   {{ category.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Status Code</mat-label>
-              <input matInput type="number" formControlName="statusCode" placeholder="e.g., 500" />
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                type="number"
+                formControlName="statusCode"
+                placeholder="Status Code (e.g., 500)"
+              />
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>From Date</mat-label>
-              <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" />
-              <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-              <mat-datepicker #fromPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                [nbDatepicker]="fromPicker"
+                formControlName="fromDate"
+                placeholder="From Date"
+              />
+              <nb-datepicker #fromPicker></nb-datepicker>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>To Date</mat-label>
-              <input matInput [matDatepicker]="toPicker" formControlName="toDate" />
-              <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-              <mat-datepicker #toPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                [nbDatepicker]="toPicker"
+                formControlName="toDate"
+                placeholder="To Date"
+              />
+              <nb-datepicker #toPicker></nb-datepicker>
+            </nb-form-field>
 
             <div class="filter-actions">
-              <button mat-raised-button color="primary" (click)="applyFilters()">
-                <nb-icon icon="filter_list"></nb-icon> Apply Filters
+              <button nbButton status="primary" (click)="applyFilters()">
+                <nb-icon icon="funnel-outline"></nb-icon> Apply Filters
               </button>
-              <button mat-button (click)="resetFilters()"><nb-icon icon="clear"></nb-icon> Reset</button>
+              <button nbButton status="basic" (click)="resetFilters()">
+                <nb-icon icon="close-outline"></nb-icon> Reset
+              </button>
             </div>
           </form>
         </nb-card-body>
@@ -132,28 +118,28 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
       <div class="dashboard-content">
         <div class="error-stats">
           <nb-card class="stat-card">
-            <nb-card-content>
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>
               <div class="stat-label">Total Errors</div>
             </nb-card-body>
           </nb-card>
 
           <nb-card class="stat-card">
-            <nb-card-content>
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>
               <div class="stat-label">Unique Error Codes</div>
             </nb-card-body>
           </nb-card>
 
           <nb-card class="stat-card">
-            <nb-card-content>
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>
               <div class="stat-label">Server Errors</div>
             </nb-card-body>
           </nb-card>
 
           <nb-card class="stat-card">
-            <nb-card-content>
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>
               <div class="stat-label">Client Errors</div>
             </nb-card-body>
@@ -162,80 +148,77 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
         <nb-card class="error-list-card">
           <nb-card-header>
-            <nb-card-title>Recent Errors</mat-card-title>
+            <h5>Recent Errors</h5>
           </nb-card-header>
-          <nb-card-content>
+          <nb-card-body>
             <div class="loading-container" *ngIf="loading">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner></nb-spinner>
             </div>
 
-            <table
-              mat-table
-              [dataSource]="errors"
-              matSort
-              (matSortChange)="sortData($event)"
-              class="error-table"
-              *ngIf="!loading"
-            >
-              <ng-container matColumnDef="timestamp">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-                <td mat-cell *matCellDef="let error">{{ error.timestamp | date: 'medium' }}</td>
+            <table nbTable [nbSort]="sort" [dataSource]="errors" *ngIf="!loading">
+              <tr nbTableHeaderRow *nbTableHeaderRowDef="displayedColumns"></tr>
+              <tr nbTableRow *nbTableRowDef="let row; columns: displayedColumns"></tr>
+
+              <ng-container nbColumnDef="timestamp">
+                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Timestamp</th>
+                <td nbTableCell *nbTableCellDef="let error">
+                  {{ error.timestamp | date: 'medium' }}
+                </td>
               </ng-container>
 
-              <ng-container matColumnDef="errorCode">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>
-                <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>
+              <ng-container nbColumnDef="errorCode">
+                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Error Code</th>
+                <td nbTableCell *nbTableCellDef="let error">{{ error.errorCode }}</td>
               </ng-container>
 
-              <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                <td mat-cell *matCellDef="let error">
-                  <nb-tag [ngClass]="'category-' + error.context?.category">
-                    {{ error.context?.category || 'unknown' }}
+              <ng-container nbColumnDef="category">
+                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Category</th>
+                <td nbTableCell *nbTableCellDef="let error">
+                  <nb-tag
+                    [status]="getCategoryStatus(error.context?.category)"
+                    [text]="error.context?.category || 'unknown'"
+                  >
                   </nb-tag>
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="statusCode">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>
+              <ng-container nbColumnDef="statusCode">
+                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Status</th>
+                <td nbTableCell *nbTableCellDef="let error">{{ error.statusCode }}</td>
               </ng-container>
 
-              <ng-container matColumnDef="userMessage">
-                <th mat-header-cell *matHeaderCellDef>User Message</th>
-                <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>
+              <ng-container nbColumnDef="userMessage">
+                <th nbTableHeaderCell *nbTableHeaderCellDef>User Message</th>
+                <td nbTableCell *nbTableCellDef="let error">{{ error.userMessage }}</td>
               </ng-container>
 
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef>URL</th>
-                <td mat-cell *matCellDef="let error">{{ error.url }}</td>
+              <ng-container nbColumnDef="url">
+                <th nbTableHeaderCell *nbTableHeaderCellDef>URL</th>
+                <td nbTableCell *nbTableCellDef="let error">{{ error.url }}</td>
               </ng-container>
 
-              <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let error">
-                  <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">
-                    <nb-icon icon="visibility"></nb-icon>
+              <ng-container nbColumnDef="actions">
+                <th nbTableHeaderCell *nbTableHeaderCellDef></th>
+                <td nbTableCell *nbTableCellDef="let error">
+                  <button nbButton ghost (click)="viewErrorDetails(error)">
+                    <nb-icon icon="eye-outline"></nb-icon>
                   </button>
                 </td>
               </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
 
             <div class="no-data-message" *ngIf="!loading && errors.length === 0">
               No errors found matching the current filters.
             </div>
 
-            <mat-paginator
-              [length]="totalErrors"
+            <nb-paginator
+              [total]="totalErrors"
               [pageSize]="pageSize"
               [pageSizeOptions]="[5, 10, 25, 50]"
-              (page)="pageChanged($event)"
+              (pageChange)="pageChanged($event)"
               *ngIf="!loading && errors.length > 0"
             >
-            </mat-paginator>
+            </nb-paginator>
           </nb-card-body>
         </nb-card>
       </div>
@@ -249,7 +232,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
       h1 {
         margin-bottom: 20px;
-        color: #333;
+        color: var(--text-basic-color);
       }
 
       .filter-card {
@@ -262,7 +245,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
         gap: 16px;
       }
 
-      .filter-form mat-form-field {
+      .filter-form nb-form-field {
         flex: 1 1 200px;
       }
 
@@ -293,12 +276,12 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
       .stat-value {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #3f51b5;
+        color: var(--text-primary-color);
       }
 
       .stat-label {
         font-size: 1rem;
-        color: #666;
+        color: var(--text-hint-color);
       }
 
       .error-list-card {
@@ -318,41 +301,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
       .no-data-message {
         text-align: center;
         padding: 20px;
-        color: #666;
-      }
-
-      mat-chip.category-network {
-        background-color: #ff9800;
-      }
-      mat-chip.category-authentication {
-        background-color: #f44336;
-      }
-      mat-chip.category-authorization {
-        background-color: #e91e63;
-      }
-      mat-chip.category-validation {
-        background-color: #9c27b0;
-      }
-      mat-chip.category-server {
-        background-color: #673ab7;
-      }
-      mat-chip.category-client {
-        background-color: #3f51b5;
-      }
-      mat-chip.category-timeout {
-        background-color: #2196f3;
-      }
-      mat-chip.category-rate_limit {
-        background-color: #03a9f4;
-      }
-      mat-chip.category-not_found {
-        background-color: #00bcd4;
-      }
-      mat-chip.category-conflict {
-        background-color: #009688;
-      }
-      mat-chip.category-unknown {
-        background-color: #607d8b;
+        color: var(--text-hint-color);
       }
     `,
   ],
@@ -364,12 +313,12 @@ export class ErrorDashboardComponent implements OnInit {
   loading = true;
 
   // Pagination
-  pageIndex = 0;
+  currentPage = 1;
   pageSize = 10;
 
   // Sorting
   sortField = 'timestamp';
-  sortDirection = 'desc';
+  sortDirection: NbSortDirection = NbSortDirection.DESCENDING;
 
   // Table columns
   displayedColumns = [
@@ -393,6 +342,9 @@ export class ErrorDashboardComponent implements OnInit {
 
   // Error statistics
   errorStats$: Observable<any>;
+
+  // Sort state
+  @ViewChild(NbSortComponent) sort!: NbSortComponent;
 
   constructor(
     private telemetryService: TelemetryService,
@@ -424,7 +376,7 @@ export class ErrorDashboardComponent implements OnInit {
     this.telemetryService
       .getErrorStatistics({
         ...filters,
-        page: this.pageIndex,
+        page: this.currentPage,
         limit: this.pageSize,
         sort: this.sortField,
         order: this.sortDirection,
@@ -482,8 +434,8 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle page change event
    */
-  pageChanged(event: NbPaginationChangeEvent): void {
-    this.pageIndex = event.pageIndex;
+  pageChanged(event: { page: number; pageSize: number }): void {
+    this.currentPage = event.page;
     this.pageSize = event.pageSize;
     this.loadErrors();
   }
@@ -491,9 +443,9 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle sort change event
    */
-  sortData(sort: NbSortEvent): void {
-    this.sortField = sort.active;
-    this.sortDirection = sort.direction || 'asc';
+  sortData(sort: NbSortRequest): void {
+    this.sortField = sort.column;
+    this.sortDirection = sort.direction;
     this.loadErrors();
   }
 
@@ -501,7 +453,7 @@ export class ErrorDashboardComponent implements OnInit {
    * Apply filters from the form
    */
   applyFilters(): void {
-    this.pageIndex = 0; // Reset to first page when filtering
+    this.currentPage = 1; // Reset to first page when filtering
     this.loadErrors();
   }
 
@@ -515,7 +467,7 @@ export class ErrorDashboardComponent implements OnInit {
       fromDate: null,
       toDate: null,
     });
-    this.pageIndex = 0;
+    this.currentPage = 1;
     this.loadErrors();
   }
 
@@ -552,5 +504,28 @@ export class ErrorDashboardComponent implements OnInit {
     // This would typically open a dialog with detailed error information
     console.log('View error details:', error);
     // Implementation for error details dialog would go here
+  }
+
+  getCategoryStatus(category: string | undefined): string {
+    switch (category) {
+      case ErrorCategory.NETWORK:
+        return 'basic';
+      case ErrorCategory.SERVER:
+        return 'info';
+      case ErrorCategory.CLIENT:
+        return 'success';
+      case ErrorCategory.AUTHENTICATION:
+        return 'warning';
+      case ErrorCategory.AUTHORIZATION:
+        return 'danger';
+      case ErrorCategory.VALIDATION:
+        return 'control';
+      case ErrorCategory.TIMEOUT:
+        return 'warning';
+      case ErrorCategory.UNKNOWN:
+        return 'basic';
+      default:
+        return 'basic';
+    }
   }
 }

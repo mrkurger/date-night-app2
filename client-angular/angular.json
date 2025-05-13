@@ -4,7 +4,11 @@
   "projects": {
     "client-angular": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,16 +21,12 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
-              "src/manifest.webmanifest",
-              "src/assets",
-              "src/favicon.ico"
+            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
+            "styles": [
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
             ],
-            "styles": ["src/styles.scss", "~@nebular/theme/styles/prebuilt/default.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/core/design"]
@@ -42,8 +42,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "50kB",
-                  "maximumError": "100kB"
+                  "maximumWarning": "50kb",
+                  "maximumError": "100kb"
                 }
               ],
               "outputHashing": "all"
@@ -80,16 +80,11 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "~@nebular/theme/styles/prebuilt/default.css"
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -124,9 +119,9 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "~@nebular/theme/styles/prebuilt/default.css"
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -184,9 +179,9 @@
               }
             ],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "~@nebular/theme/styles/prebuilt/default.css"
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {

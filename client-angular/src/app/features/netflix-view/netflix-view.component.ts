@@ -18,6 +18,7 @@ import {
   QueryList,
   ViewChild,
   TemplateRef,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -45,7 +46,26 @@ import {
   NbTagModule,
   NbSpinnerModule,
   NbDialogService,
+  NbTableModule,
+  NbDatepickerModule,
+  NbSortDirection,
+  NbSortRequest,
 } from '@nebular/theme';
+import {
+  NbPaginatorComponent,
+  NbSortComponent,
+  NbSortHeaderComponent,
+} from '../../shared/components/custom-nebular-components';
+import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { ErrorCategory } from '../../core/interceptors/http-error.interceptor';
+import { TelemetryService, ErrorTelemetry } from '../../core/services/telemetry.service';
+
+interface GetAdsResponse {
+  ads: Ad[];
+  total: number;
+  page: number;
+  limit: number;
+}
 
 @Component({
   selector: 'app-netflix-view',
@@ -71,6 +91,11 @@ import {
     NbUserModule,
     NbTagModule,
     NbSpinnerModule,
+    NbTableModule,
+    NbDatepickerModule,
+    NbPaginatorComponent,
+    NbSortComponent,
+    NbSortHeaderComponent,
   ],
 })
 export class NetflixViewComponent implements OnInit {
@@ -158,7 +183,8 @@ export class NetflixViewComponent implements OnInit {
 
             // Get all ads for other categories
             this.adService.getAds().subscribe({
-              next: (allAds) => {
+              next: (response: GetAdsResponse) => {
+                const allAds = response.ads;
                 if (allAds && allAds.length > 0) {
                   // If we don't have a featured ad yet, set one from all ads
                   if (!this.featuredAd && allAds.length > 0) {
@@ -198,24 +224,18 @@ export class NetflixViewComponent implements OnInit {
               error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
-                console.error('Error loading all ads:', err);
               },
             });
           },
           error: (err) => {
-            console.error('Error loading trending ads:', err);
-            // Continue loading other categories even if trending fails
-            this.adsByCategory['Most Popular'] = [];
-            // Pass an empty array since allAds is not defined in this scope
-            this.loadRemainingCategories([]);
+            this.error = 'Failed to load trending ads. Please try again.';
+            this.loading = false;
           },
         });
       },
       error: (err) => {
-        console.error('Error loading featured ads:', err);
-        // Continue loading other categories even if featured fails
-        this.adsByCategory['Featured'] = [];
-        this.loadTrendingAndRemainingAds();
+        this.error = 'Failed to load featured ads. Please try again.';
+        this.loading = false;
       },
     });
   }
@@ -227,28 +247,22 @@ export class NetflixViewComponent implements OnInit {
         this.loadRemainingCategories();
       },
       error: (err) => {
-        console.error('Error loading trending ads:', err);
-        this.adsByCategory['Most Popular'] = [];
-        this.loadRemainingCategories();
+        this.error = 'Failed to load trending ads. Please try again.';
+        this.loading = false;
       },
     });
   }
 
   private loadRemainingCategories(existingAds?: Ad[]): void {
-    if (existingAds && existingAds.length > 0) {
-      this.processAllAds(existingAds);
-    } else {
-      this.adService.getAds().subscribe({
-        next: (allAds) => {
-          this.processAllAds(allAds);
-        },
-        error: (err) => {
-          this.error = 'Failed to load ads. Please try again.';
-          this.loading = false;
-          console.error('Error loading all ads:', err);
-        },
-      });
-    }
+    this.adService.getAds().subscribe({
+      next: (response: GetAdsResponse) => {
+        this.processAllAds(response.ads);
+      },
+      error: (err) => {
+        this.error = 'Failed to load ads. Please try again.';
+        this.loading = false;
+      },
+    });
   }
 
   private processAllAds(allAds: Ad[]): void {

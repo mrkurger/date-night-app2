@@ -7,13 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NbDividerComponent } from '../custom-nebular-components';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

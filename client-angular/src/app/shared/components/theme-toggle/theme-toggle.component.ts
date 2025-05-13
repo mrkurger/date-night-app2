@@ -1,3 +1,8 @@
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../../core/services/theme.service';
+import { Subscription } from 'rxjs';
+import { NbIconModule, NbButtonModule, NbToggleModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,9 +12,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-import { ThemeService } from '../../../core/services/theme.service';
-import { Subscription } from 'rxjs';
 
 /**
  * Theme toggle component
@@ -18,10 +20,71 @@ import { Subscription } from 'rxjs';
  */
 @Component({
   selector: 'app-theme-toggle',
-  templateUrl: './theme-toggle.component.html',
-  styleUrls: ['./theme-toggle.component.scss'],
+  template: `
+    <ng-container [ngSwitch]="mode">
+      <!-- Icon only mode -->
+      <button
+        *ngSwitchCase="'icon-only'"
+        nbButton
+        ghost
+        size="medium"
+        [attr.aria-label]="themeAriaLabel"
+        (click)="toggleTheme()"
+      >
+        <nb-icon [icon]="themeIcon"></nb-icon>
+      </button>
+
+      <!-- With label mode -->
+      <button
+        *ngSwitchCase="'with-label'"
+        nbButton
+        ghost
+        size="medium"
+        [attr.aria-label]="themeAriaLabel"
+        (click)="toggleTheme()"
+      >
+        <nb-icon [icon]="themeIcon"></nb-icon>
+        <span class="label" [class.label-left]="labelPosition === 'left'">{{ label }}</span>
+      </button>
+
+      <!-- Toggle switch mode -->
+      <nb-toggle
+        *ngSwitchCase="'toggle'"
+        [checked]="isDarkMode"
+        (checkedChange)="toggleTheme()"
+        [status]="'primary'"
+      >
+        <span class="label" [class.label-left]="labelPosition === 'left'">{{ label }}</span>
+      </nb-toggle>
+    </ng-container>
+  `,
+  styles: [
+    `
+      :host {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .label {
+        margin-left: 0.5rem;
+      }
+
+      .label-left {
+        margin-left: 0;
+        margin-right: 0.5rem;
+        order: -1;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbIconModule, NbButtonModule, NbToggleModule],
 })
 export class ThemeToggleComponent implements OnInit, OnDestroy {
   /**
@@ -81,7 +144,7 @@ export class ThemeToggleComponent implements OnInit, OnDestroy {
    * Get the appropriate icon based on the current theme
    */
   get themeIcon(): string {
-    return this.isDarkMode ? 'fa-sun' : 'fa-moon';
+    return this.isDarkMode ? 'sun-outline' : 'moon-outline';
   }
 
   /**

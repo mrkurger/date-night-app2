@@ -1,3 +1,66 @@
+:host {
+  display: block;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+}
+
+nb-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+nb-checkbox {
+  margin-bottom: 0.5rem;
+}
+
+nb-card {
+  margin-bottom: 0;
+}
+
+nb-card-header {
+  h3 {
+    margin: 0;
+  }
+}
+
+// Loading state
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+// Error messages
+nb-error {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+// Icon prefixes
+nb-icon[nbPrefix] {
+  color: nb-theme(text-hint-color);
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
 .ad-form-container {
   padding: 20px;
   max-width: 800px;
@@ -5,7 +68,7 @@
 
   h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: nb-theme(text-basic-color);
   }
 
   .loading-spinner {
@@ -21,7 +84,7 @@
       display: flex;
       gap: 16px;
 
-      mat-form-field {
+      nb-form-field {
         flex: 1;
       }
     }

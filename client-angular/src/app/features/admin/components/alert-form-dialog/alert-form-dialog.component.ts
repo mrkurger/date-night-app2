@@ -1,27 +1,16 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (alert-form-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   NbDialogRef,
-  NB_DIALOG_CONFIG,
+  NbCardModule,
   NbButtonModule,
   NbFormFieldModule,
   NbInputModule,
   NbSelectModule,
-  NbToggleModule,
   NbCheckboxModule,
   NbIconModule,
-  NbAccordionModule,
-  NbCardModule,
 } from '@nebular/theme';
-import { AlertService } from '../../../../core/services/alert.service';
 import {
   Alert,
   AlertSeverity,
@@ -29,349 +18,276 @@ import {
   AlertTimeWindow,
   AlertChannel,
 } from '../../../../core/models/alert.model';
-import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-alert-form-dialog',
-  templateUrl: './alert-form-dialog.component.html',
-  styleUrls: ['./alert-form-dialog.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
+    NbCardModule,
     NbButtonModule,
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
-    NbToggleModule,
     NbCheckboxModule,
     NbIconModule,
-    NbAccordionModule,
-    NbCardModule,
+  ],
+  template: `
+    <nb-card>
+      <nb-card-header>
+        <h3>{{ alert ? 'Edit Alert' : 'Create Alert' }}</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="alertForm" (ngSubmit)="onSubmit()">
+          <!-- Basic Information -->
+          <nb-form-field>
+            <label>Name</label>
+            <input nbInput formControlName="name" placeholder="Alert name" />
+          </nb-form-field>
+
+          <nb-form-field>
+            <label>Description</label>
+            <textarea
+              nbInput
+              formControlName="description"
+              placeholder="Alert description"
+            ></textarea>
+          </nb-form-field>
+
+          <nb-form-field>
+            <label>Severity</label>
+            <nb-select formControlName="severity">
+              <nb-option *ngFor="let severity of severityOptions" [value]="severity">
+                {{ AlertSeverity[severity] }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+
+          <!-- Condition -->
+          <div formGroupName="condition">
+            <nb-form-field>
+              <label>Condition Type</label>
+              <nb-select formControlName="type">
+                <nb-option *ngFor="let type of conditionTypeOptions" [value]="type">
+                  {{ AlertConditionType[type] }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+
+            <nb-form-field *ngIf="showThresholdField()">
+              <label>Threshold</label>
+              <input
+                nbInput
+                type="number"
+                formControlName="threshold"
+                placeholder="Threshold value"
+              />
+            </nb-form-field>
+
+            <nb-form-field *ngIf="showTimeWindowField()">
+              <label>Time Window</label>
+              <nb-select formControlName="timeWindow">
+                <nb-option *ngFor="let window of timeWindowOptions" [value]="window">
+                  {{ getTimeWindowLabel(window) }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+
+            <nb-form-field *ngIf="showPatternField()">
+              <label>Pattern</label>
+              <input nbInput formControlName="pattern" placeholder="Error pattern" />
+            </nb-form-field>
+
+            <nb-form-field *ngIf="showStatusCodeField()">
+              <label>Status Code</label>
+              <input
+                nbInput
+                type="number"
+                formControlName="statusCode"
+                placeholder="HTTP status code"
+              />
+            </nb-form-field>
+          </div>
+
+          <!-- Notification Channels -->
+          <div class="channels-section">
+            <label>Notification Channels</label>
+            <div class="channels-grid">
+              <nb-checkbox
+                *ngFor="let channel of channelOptions"
+                [checked]="isChannelSelected(channel)"
+                (checkedChange)="toggleChannel(channel)"
+              >
+                {{ channel }}
+              </nb-checkbox>
+            </div>
+          </div>
+
+          <!-- Enabled State -->
+          <nb-checkbox formControlName="enabled">Enable Alert</nb-checkbox>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="close()">Cancel</button>
+        <button nbButton status="primary" (click)="onSubmit()" [disabled]="!alertForm.valid">
+          {{ alert ? 'Update' : 'Create' }}
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  `,
+  styles: [
+    `
+      nb-card {
+        max-width: 600px;
+      }
+
+      nb-form-field {
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+      .channels-section {
+        margin: 1rem 0;
+      }
+
+      .channels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      nb-card-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+
+      textarea {
+        min-height: 100px;
+      }
+    `,
   ],
 })
-export class AlertFormDialogComponent implements OnInit {
+export class AlertFormDialogComponent {
+  @Input() alert?: Alert;
+
   alertForm: FormGroup;
-  isEditMode = false;
+  protected AlertSeverity = AlertSeverity;
+  protected AlertConditionType = AlertConditionType;
 
-  // Options for dropdowns
-  severityOptions = [
-    { value: AlertSeverity.INFO, label: 'Info' },
-    { value: AlertSeverity.WARNING, label: 'Warning' },
-    { value: AlertSeverity.ERROR, label: 'Error' },
-    { value: AlertSeverity.CRITICAL, label: 'Critical' },
-  ];
-
-  conditionTypeOptions = [
-    { value: AlertConditionType.ERROR_COUNT, label: 'Error Count' },
-    { value: AlertConditionType.ERROR_RATE, label: 'Error Rate' },
-    { value: AlertConditionType.PERFORMANCE_THRESHOLD, label: 'Performance Threshold' },
-    { value: AlertConditionType.ERROR_PATTERN, label: 'Error Pattern' },
-    { value: AlertConditionType.STATUS_CODE, label: 'Status Code' },
-    { value: AlertConditionType.ERROR_CATEGORY, label: 'Error Category' },
-  ];
-
-  timeWindowOptions = [
-    { value: AlertTimeWindow.MINUTES_5, label: '5 minutes' },
-    { value: AlertTimeWindow.MINUTES_15, label: '15 minutes' },
-    { value: AlertTimeWindow.MINUTES_30, label: '30 minutes' },
-    { value: AlertTimeWindow.HOURS_1, label: '1 hour' },
-    { value: AlertTimeWindow.HOURS_6, label: '6 hours' },
-    { value: AlertTimeWindow.HOURS_12, label: '12 hours' },
-    { value: AlertTimeWindow.HOURS_24, label: '24 hours' },
-  ];
-
-  channelOptions = [
-    { value: AlertChannel.UI, label: 'UI Notification' },
-    { value: AlertChannel.EMAIL, label: 'Email' },
-    { value: AlertChannel.SLACK, label: 'Slack' },
-    { value: AlertChannel.WEBHOOK, label: 'Webhook' },
-  ];
-
-  // Available variables for message templates
-  variables = 'errorMessage, timestamp, count, endpoint';
-
-  errorCategoryOptions = [
-    { value: ErrorCategory.NETWORK, label: 'Network' },
-    { value: ErrorCategory.AUTHENTICATION, label: 'Authentication' },
-    { value: ErrorCategory.AUTHORIZATION, label: 'Authorization' },
-    { value: ErrorCategory.VALIDATION, label: 'Validation' },
-    { value: ErrorCategory.SERVER, label: 'Server' },
-    { value: ErrorCategory.CLIENT, label: 'Client' },
-    { value: ErrorCategory.TIMEOUT, label: 'Timeout' },
-    { value: ErrorCategory.RATE_LIMIT, label: 'Rate Limit' },
-    { value: ErrorCategory.NOT_FOUND, label: 'Not Found' },
-    { value: ErrorCategory.CONFLICT, label: 'Conflict' },
-    { value: ErrorCategory.UNKNOWN, label: 'Unknown' },
-  ];
+  severityOptions = Object.values(AlertSeverity);
+  conditionTypeOptions = Object.values(AlertConditionType);
+  timeWindowOptions = Object.values(AlertTimeWindow);
+  channelOptions: AlertChannel[] = ['ui', 'email', 'slack', 'webhook'];
 
   constructor(
-    private fb: FormBuilder,
+    private dialogRef: NbDialogRef<AlertFormDialogComponent>,
+    private formBuilder: FormBuilder,
     private alertService: AlertService,
-    public dialogRef: NbDialogRef<AlertFormDialogComponent>,
-    @Inject(NB_DIALOG_CONFIG) public data: { alert?: Alert },
   ) {
-    this.alertForm = this.createAlertForm();
-
-    if (data?.alert) {
-      this.isEditMode = true;
-      this.populateForm(data.alert);
-    }
-  }
-
-  ngOnInit(): void {
-    // Initialize form and load any existing alert data if in edit mode
-    this.initializeForm();
-  }
-
-  private initializeForm(): void {
-    if (this.data && this.data.alert) {
-      // In edit mode, populate form with existing alert data
-      this.alertForm.patchValue(this.data.alert);
-    }
-  }
-
-  /**
-   * Create the alert form
-   */
-  createAlertForm(): FormGroup {
-    return this.fb.group({
+    this.alertForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],
-      enabled: [true],
-      severity: [AlertSeverity.WARNING, Validators.required],
-      condition: this.fb.group({
+      severity: [AlertSeverity.INFO, Validators.required],
+      condition: this.formBuilder.group({
         type: [AlertConditionType.ERROR_COUNT, Validators.required],
-        threshold: [10, [Validators.required, Validators.min(1)]],
-        timeWindow: [AlertTimeWindow.MINUTES_15, Validators.required],
-        errorCode: [''],
-        statusCode: [null],
-        errorCategory: [''],
-        endpoint: [''],
+        threshold: [null],
+        timeWindow: [AlertTimeWindow.MINUTES_5],
         pattern: [''],
+        statusCode: [null],
       }),
-      notifications: this.fb.array([this.createNotificationGroup()]),
+      channels: [['ui'], Validators.required],
+      enabled: [true],
     });
-  }
 
-  /**
-   * Create a notification form group
-   */
-  createNotificationGroup(): FormGroup {
-    return this.fb.group({
-      channel: [AlertChannel.UI, Validators.required],
-      email: [''],
-      slackWebhook: [''],
-      webhookUrl: [''],
-      messageTemplate: [''],
-    });
-  }
-
-  /**
-   * Get the notifications form array
-   */
-  get notificationsArray(): FormArray {
-    return this.alertForm.get('notifications') as FormArray;
-  }
-
-  /**
-   * Add a new notification
-   */
-  addNotification(): void {
-    this.notificationsArray.push(this.createNotificationGroup());
-  }
-
-  /**
-   * Remove a notification
-   * @param index Index of the notification to remove
-   */
-  removeNotification(index: number): void {
-    if (this.notificationsArray.length > 1) {
-      this.notificationsArray.removeAt(index);
+    if (this.alert) {
+      this.alertForm.patchValue(this.alert);
     }
   }
 
-  /**
-   * Handle condition type change
-   */
-  onConditionTypeChange(): void {
-    const conditionType = this.alertForm.get('condition.type')?.value;
-    const conditionGroup = this.alertForm.get('condition') as FormGroup;
-
-    // Reset validators
-    conditionGroup.get('errorCode')?.clearValidators();
-    conditionGroup.get('statusCode')?.clearValidators();
-    conditionGroup.get('errorCategory')?.clearValidators();
-    conditionGroup.get('pattern')?.clearValidators();
-
-    // Set validators based on condition type
-    switch (conditionType) {
-      case AlertConditionType.ERROR_COUNT:
-      case AlertConditionType.ERROR_RATE:
-        // No additional validators needed
-        break;
-      case AlertConditionType.STATUS_CODE:
-        conditionGroup.get('statusCode')?.setValidators([Validators.required]);
-        break;
-      case AlertConditionType.ERROR_CATEGORY:
-        conditionGroup.get('errorCategory')?.setValidators([Validators.required]);
-        break;
-      case AlertConditionType.ERROR_PATTERN:
-        conditionGroup.get('pattern')?.setValidators([Validators.required]);
-        break;
-    }
-
-    // Update validators
-    conditionGroup.get('errorCode')?.updateValueAndValidity();
-    conditionGroup.get('statusCode')?.updateValueAndValidity();
-    conditionGroup.get('errorCategory')?.updateValueAndValidity();
-    conditionGroup.get('pattern')?.updateValueAndValidity();
+  showThresholdField(): boolean {
+    const type = this.alertForm.get('condition.type')?.value;
+    return [
+      AlertConditionType.ERROR_COUNT,
+      AlertConditionType.ERROR_RATE,
+      AlertConditionType.PERFORMANCE_THRESHOLD,
+    ].includes(type);
   }
 
-  /**
-   * Handle notification channel change
-   * @param index Index of the notification
-   */
-  onChannelChange(index: number): void {
-    const notificationGroup = this.notificationsArray.at(index) as FormGroup;
-    const channel = notificationGroup.get('channel')?.value;
-
-    // Reset validators
-    notificationGroup.get('email')?.clearValidators();
-    notificationGroup.get('slackWebhook')?.clearValidators();
-    notificationGroup.get('webhookUrl')?.clearValidators();
-
-    // Set validators based on channel
-    switch (channel) {
-      case AlertChannel.EMAIL:
-        notificationGroup.get('email')?.setValidators([Validators.required, Validators.email]);
-        break;
-      case AlertChannel.SLACK:
-        notificationGroup.get('slackWebhook')?.setValidators([Validators.required]);
-        break;
-      case AlertChannel.WEBHOOK:
-        notificationGroup.get('webhookUrl')?.setValidators([Validators.required]);
-        break;
-    }
-
-    // Update validators
-    notificationGroup.get('email')?.updateValueAndValidity();
-    notificationGroup.get('slackWebhook')?.updateValueAndValidity();
-    notificationGroup.get('webhookUrl')?.updateValueAndValidity();
+  showTimeWindowField(): boolean {
+    const type = this.alertForm.get('condition.type')?.value;
+    return [
+      AlertConditionType.ERROR_COUNT,
+      AlertConditionType.ERROR_RATE,
+      AlertConditionType.PERFORMANCE_THRESHOLD,
+    ].includes(type);
   }
 
-  /**
-   * Populate the form with an existing alert
-   * @param alert Alert to populate the form with
-   */
-  populateForm(alert: Alert): void {
-    // Set basic fields
-    this.alertForm.patchValue({
-      name: alert.name,
-      description: alert.description || '',
-      enabled: alert.enabled,
-      severity: alert.severity,
-      condition: {
-        type: alert.condition.type,
-        threshold: alert.condition.threshold,
-        timeWindow: alert.condition.timeWindow,
-        errorCode: alert.condition.errorCode || '',
-        statusCode: alert.condition.statusCode || null,
-        errorCategory: alert.condition.errorCategory || '',
-        endpoint: alert.condition.endpoint || '',
-        pattern: alert.condition.pattern || '',
-      },
-    });
+  showPatternField(): boolean {
+    return this.alertForm.get('condition.type')?.value === AlertConditionType.ERROR_PATTERN;
+  }
 
-    // Set notifications
-    this.notificationsArray.clear();
-    if (alert.notifications && alert.notifications.length > 0) {
-      alert.notifications.forEach((notification) => {
-        const notificationGroup = this.createNotificationGroup();
-        notificationGroup.patchValue({
-          channel: notification.channel,
-          email: notification.email || '',
-          slackWebhook: notification.slackWebhook || '',
-          webhookUrl: notification.webhookUrl || '',
-          messageTemplate: notification.messageTemplate || '',
-        });
-        this.notificationsArray.push(notificationGroup);
-      });
+  showStatusCodeField(): boolean {
+    return this.alertForm.get('condition.type')?.value === AlertConditionType.STATUS_CODE;
+  }
+
+  getTimeWindowLabel(window: AlertTimeWindow): string {
+    switch (window) {
+      case AlertTimeWindow.MINUTES_5:
+        return '5 minutes';
+      case AlertTimeWindow.MINUTES_15:
+        return '15 minutes';
+      case AlertTimeWindow.MINUTES_30:
+        return '30 minutes';
+      case AlertTimeWindow.HOURS_1:
+        return '1 hour';
+      case AlertTimeWindow.HOURS_6:
+        return '6 hours';
+      case AlertTimeWindow.HOURS_12:
+        return '12 hours';
+      case AlertTimeWindow.HOURS_24:
+        return '24 hours';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  isChannelSelected(channel: AlertChannel): boolean {
+    const channels = this.alertForm.get('channels')?.value || [];
+    return channels.includes(channel);
+  }
+
+  toggleChannel(channel: AlertChannel): void {
+    const channels = this.alertForm.get('channels')?.value || [];
+    const index = channels.indexOf(channel);
+
+    if (index === -1) {
+      channels.push(channel);
     } else {
-      // Add default notification if none exists
-      this.notificationsArray.push(this.createNotificationGroup());
+      channels.splice(index, 1);
     }
 
-    // Update validators
-    this.onConditionTypeChange();
-    for (let i = 0; i < this.notificationsArray.length; i++) {
-      this.onChannelChange(i);
+    this.alertForm.patchValue({ channels });
+  }
+
+  onSubmit(): void {
+    if (this.alertForm.valid) {
+      const formValue = this.alertForm.value;
+
+      if (this.alert) {
+        this.alertService
+          .updateAlert(this.alert.id, formValue)
+          .subscribe(() => this.dialogRef.close(true));
+      } else {
+        this.alertService.createAlert(formValue).subscribe(() => this.dialogRef.close(true));
+      }
     }
   }
 
-  /**
-   * Save the alert
-   */
-  saveAlert(): void {
-    if (this.alertForm.invalid) {
-      return;
-    }
-
-    const formValue = this.alertForm.value;
-    const alert: Alert = {
-      name: formValue.name,
-      description: formValue.description,
-      enabled: formValue.enabled,
-      severity: formValue.severity,
-      condition: {
-        type: formValue.condition.type,
-        threshold: formValue.condition.threshold,
-        timeWindow: formValue.condition.timeWindow,
-      },
-      notifications: formValue.notifications,
-    };
-
-    // Add conditional fields based on condition type
-    switch (formValue.condition.type) {
-      case AlertConditionType.ERROR_COUNT:
-      case AlertConditionType.ERROR_RATE:
-        // No additional fields needed
-        break;
-      case AlertConditionType.STATUS_CODE:
-        alert.condition.statusCode = formValue.condition.statusCode;
-        break;
-      case AlertConditionType.ERROR_CATEGORY:
-        alert.condition.errorCategory = formValue.condition.errorCategory;
-        break;
-      case AlertConditionType.PERFORMANCE_THRESHOLD:
-        if (formValue.condition.endpoint) {
-          alert.condition.endpoint = formValue.condition.endpoint;
-        }
-        break;
-      case AlertConditionType.ERROR_PATTERN:
-        alert.condition.pattern = formValue.condition.pattern;
-        break;
-    }
-
-    if (this.isEditMode && this.data.alert?.id) {
-      // Update existing alert
-      this.alertService.updateAlert(this.data.alert.id, alert).subscribe(
-        (updatedAlert) => {
-          this.dialogRef.close(updatedAlert);
-        },
-        (error) => {
-          console.error('Error updating alert:', error);
-        },
-      );
-    } else {
-      // Create new alert
-      this.alertService.createAlert(alert).subscribe(
-        (newAlert) => {
-          this.dialogRef.close(newAlert);
-        },
-        (error) => {
-          console.error('Error creating alert:', error);
-        },
-      );
-    }
+  close(): void {
+    this.dialogRef.close();
   }
 }

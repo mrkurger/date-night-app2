@@ -9,7 +9,7 @@
 // ===================================================
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MapComponent } from './map.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild , OnDestroy} from '@angular/core';
 // import { By } from '@angular/platform-browser';
 import * as L from 'leaflet';
 import { MapMonitoringService } from '../../../core/services/map-monitoring.service';
@@ -80,7 +80,9 @@ spyOn(L, 'divIcon').and.returnValue(
       (locationSelected)="onLocationSelected($event)"
       (markerClick)="onMarkerClick($event)"
     ></app-map>
-  `,
+  `,,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 class TestHostComponent {
   @ViewChild('mapComponent') mapComponent!: MapComponent;

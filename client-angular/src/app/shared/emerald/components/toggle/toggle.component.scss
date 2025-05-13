@@ -19,7 +19,7 @@ $shadow-lg:
 // Emerald Toggle Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Toggle
 
-.emerald-toggle-container {
+.nb-toggle-container {
   display: flex;
   align-items: center;
 
@@ -27,7 +27,7 @@ $shadow-lg:
   &--label-left {
     flex-direction: row;
 
-    .emerald-toggle__label {
+    .nb-toggle__label {
       margin-right: 12px;
     }
   }
@@ -35,7 +35,7 @@ $shadow-lg:
   &--label-right {
     flex-direction: row;
 
-    .emerald-toggle__label {
+    .nb-toggle__label {
       margin-left: 12px;
     }
   }
@@ -46,7 +46,7 @@ $shadow-lg:
   }
 }
 
-.emerald-toggle {
+.nb-toggle {
   position: relative;
   display: inline-block;
 
@@ -55,12 +55,12 @@ $shadow-lg:
     width: 36px;
     height: 20px;
 
-    .emerald-toggle__thumb {
+    .nb-toggle__thumb {
       width: 16px;
       height: 16px;
     }
 
-    &.emerald-toggle--checked .emerald-toggle__thumb {
+    &.nb-toggle--checked .nb-toggle__thumb {
       transform: translateX(16px);
     }
   }
@@ -69,12 +69,12 @@ $shadow-lg:
     width: 48px;
     height: 24px;
 
-    .emerald-toggle__thumb {
+    .nb-toggle__thumb {
       width: 20px;
       height: 20px;
     }
 
-    &.emerald-toggle--checked .emerald-toggle__thumb {
+    &.nb-toggle--checked .nb-toggle__thumb {
       transform: translateX(24px);
     }
   }
@@ -83,43 +83,43 @@ $shadow-lg:
     width: 60px;
     height: 30px;
 
-    .emerald-toggle__thumb {
+    .nb-toggle__thumb {
       width: 26px;
       height: 26px;
     }
 
-    &.emerald-toggle--checked .emerald-toggle__thumb {
+    &.nb-toggle--checked .nb-toggle__thumb {
       transform: translateX(30px);
     }
   }
 
   // Toggle Colors
   &--primary {
-    &.emerald-toggle--checked .emerald-toggle__track {
+    &.nb-toggle--checked .nb-toggle__track {
       background-color: $primary;
     }
   }
 
   &--success {
-    &.emerald-toggle--checked .emerald-toggle__track {
+    &.nb-toggle--checked .nb-toggle__track {
       background-color: emerald.$color-success;
     }
   }
 
   &--warning {
-    &.emerald-toggle--checked .emerald-toggle__track {
+    &.nb-toggle--checked .nb-toggle__track {
       background-color: emerald.$color-warning;
     }
   }
 
   &--danger {
-    &.emerald-toggle--checked .emerald-toggle__track {
+    &.nb-toggle--checked .nb-toggle__track {
       background-color: $danger;
     }
   }
 
   &--info {
-    &.emerald-toggle--checked .emerald-toggle__track {
+    &.nb-toggle--checked .nb-toggle__track {
       background-color: emerald.$color-info;
     }
   }
@@ -131,7 +131,7 @@ $shadow-lg:
     height: 0;
     position: absolute;
 
-    &:focus + .emerald-toggle__track {
+    &:focus + .nb-toggle__track {
       box-shadow: 0 0 0 2px rgba($primary, 0.3);
     }
   }
@@ -151,7 +151,7 @@ $shadow-lg:
     align-items: center;
     padding: 2px;
 
-    .emerald-toggle--disabled & {
+    .nb-toggle--disabled & {
       cursor: not-allowed;
     }
   }
@@ -166,18 +166,18 @@ $shadow-lg:
 }
 
 // Toggle Label
-.emerald-toggle__label {
+.nb-toggle__label {
   font-size: 0.875rem;
   color: emerald.$color-dark-gray-3;
   cursor: pointer;
 
-  .emerald-toggle-container--disabled & {
+  .nb-toggle-container--disabled & {
     cursor: not-allowed;
   }
 }
 
 // Required Indicator
-.emerald-toggle__required {
+.nb-toggle__required {
   color: $danger;
   margin-left: 2px;
 }

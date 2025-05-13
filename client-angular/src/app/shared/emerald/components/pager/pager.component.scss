@@ -9,7 +9,7 @@ $font-primary: emerald.$font-family-base;
 // Emerald Pager Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/Pager
 
-.emerald-pager {
+.nb-paginator {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,11 +72,11 @@ $font-primary: emerald.$font-family-base;
     font-size: 0.875rem;
     color: emerald.$color-dark-gray-3;
 
-    .emerald-pager--large & {
+    .nb-paginator--large & {
       font-size: 1rem;
     }
 
-    .emerald-pager--small & {
+    .nb-paginator--small & {
       font-size: 0.75rem;
     }
   }
@@ -127,13 +127,13 @@ $font-primary: emerald.$font-family-base;
     }
 
     // Size variants
-    .emerald-pager--large & {
+    .nb-paginator--large & {
       min-width: 44px;
       height: 44px;
       font-size: 1rem;
     }
 
-    .emerald-pager--small & {
+    .nb-paginator--small & {
       min-width: 28px;
       height: 28px;
       font-size: 0.75rem;
@@ -141,7 +141,7 @@ $font-primary: emerald.$font-family-base;
     }
 
     // Style variants
-    .emerald-pager--compact & {
+    .nb-paginator--compact & {
       min-width: 32px;
       margin: 0 emerald.$spacing-1;
     }
@@ -150,7 +150,7 @@ $font-primary: emerald.$font-family-base;
 
 // Responsive adjustments
 @media (max-width: 640px) {
-  .emerald-pager {
+  .nb-paginator {
     flex-direction: column;
 
     &__size-selector {

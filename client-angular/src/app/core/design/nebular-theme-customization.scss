@@ -1,20 +1,244 @@
-/* Import Nebular Theme */
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default';
+/**
+ * DateNight.io Nebular Theme Customization
+ * 
+ * This file contains custom theme variables for Nebular components.
+ * Includes both light and dark theme configurations.
+ */
 
-/* Define custom theme */
-$theme: (
-  text-basic-color: var(--text-basic-color),
-  text-hint-color: var(--text-hint-color),
-  background-basic-color-1: var(--background-basic-color-1),
-  color-primary-500: var(--color-primary-500),
-  color-success-500: var(--color-success-500),
-  color-warning-500: var(--color-warning-500),
-  color-danger-500: var(--color-danger-500),
-  border-radius: 0.25rem,
-  border-radius-lg: 0.5rem,
-  shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+@use '@nebular/theme/styles/theming' as *;
+
+// Base theme variables shared between light and dark themes
+$theme-base: (
+  // Layout
+  layout-padding: 2.25rem,
+  layout-medium-padding: 1.5rem,
+  layout-small-padding: 1rem,
+
+  // Header
+  header-height: 4.75rem,
+  header-padding: 1.25rem,
+
+  // Footer
+  footer-height: 4.75rem,
+  footer-padding: 1.25rem,
+
+  // Sidebar
+  sidebar-width: 16rem,
+  sidebar-width-compact: 4rem,
+
+  // Card
+  card-border-radius: 0.5rem,
+  card-padding: 1.5rem,
+
+  // Button
+  btn-padding: 0.75rem 1.5rem,
+  btn-rectangle-border-radius: 0.375rem,
+  btn-semi-round-border-radius: 0.75rem,
+  btn-round-border-radius: 1.5rem,
+
+  // Input
+  input-border-radius: 0.375rem,
+  input-padding: 0.75rem 1rem,
+
+  // Menu
+  menu-item-padding: 0.75rem 1rem,
+  menu-item-icon-margin: 0.5rem,
+
+  // User
+  user-picture-size: 2.5rem,
+  user-initials-text-size: 1rem,
+
+  // Actions
+  actions-size-small: 1.5rem,
+  actions-size-medium: 2rem,
+  actions-size-large: 2.5rem,
+
+  // Typography
+  text-heading-1-font-size: 2.5rem,
+  text-heading-2-font-size: 2rem,
+  text-heading-3-font-size: 1.75rem,
+  text-heading-4-font-size: 1.5rem,
+  text-heading-5-font-size: 1.25rem,
+  text-heading-6-font-size: 1rem,
+
+  text-paragraph-font-size: 1rem,
+  text-paragraph-line-height: 1.5,
+
+  text-subtitle-font-size: 0.875rem,
+  text-subtitle-line-height: 1.5,
+
+  text-caption-font-size: 0.75rem,
+  text-caption-line-height: 1.35,
+
+  // Fonts
+  text-basic-font-family: 'Inter, sans-serif',
+  text-heading-font-family: 'Poppins, sans-serif'
 );
 
-/* Register the theme */
-$nb-themes: nb-register-theme($theme, default, default);
+// Light theme configuration
+$date-night-theme: (
+  // Brand Colors
+  color-primary-100: #cceeff,
+  color-primary-200: #99ddff,
+  color-primary-300: #66ccff,
+  color-primary-400: #33bbff,
+  color-primary-500: #00aaff,
+  color-primary-600: #0088cc,
+  color-primary-700: #006699,
+  color-primary-800: #004466,
+  color-primary-900: #002233,
+
+  // Semantic Colors
+  color-success-100: #e6fff2,
+  color-success-200: #b3ffdb,
+  color-success-300: #80ffc5,
+  color-success-400: #4dffae,
+  color-success-500: #00d68f,
+  color-success-600: #00a86f,
+  color-success-700: #007a4f,
+  color-success-800: #004c30,
+  color-success-900: #001e10,
+
+  color-info-100: #e6f6ff,
+  color-info-200: #b3e3ff,
+  color-info-300: #80d1ff,
+  color-info-400: #4dbeff,
+  color-info-500: #0095ff,
+  color-info-600: #0077cc,
+  color-info-700: #005999,
+  color-info-800: #003b66,
+  color-info-900: #001d33,
+
+  color-warning-100: #fff6e6,
+  color-warning-200: #ffe4b3,
+  color-warning-300: #ffd280,
+  color-warning-400: #ffc14d,
+  color-warning-500: #ffaa00,
+  color-warning-600: #cc8800,
+  color-warning-700: #996600,
+  color-warning-800: #664400,
+  color-warning-900: #332200,
+
+  color-danger-100: #ffe6ed,
+  color-danger-200: #ffb3c7,
+  color-danger-300: #ff80a1,
+  color-danger-400: #ff4d7b,
+  color-danger-500: #ff3d71,
+  color-danger-600: #cc314a,
+  color-danger-700: #992523,
+  color-danger-800: #661819,
+  color-danger-900: #330c0c,
+
+  // Background Colors
+  background-basic-color-1: #ffffff,
+  background-basic-color-2: #f7f9fc,
+  background-basic-color-3: #edf1f7,
+  background-basic-color-4: #e4e9f2,
+
+  // Border Colors
+  border-basic-color-1: #e4e9f2,
+  border-basic-color-2: #e4e9f2,
+  border-basic-color-3: #e4e9f2,
+  border-basic-color-4: #e4e9f2,
+  border-basic-color-5: #e4e9f2,
+
+  // Text Colors
+  text-basic-color: #222b45,
+  text-alternate-color: #ffffff,
+  text-control-color: #ffffff,
+  text-disabled-color: #8f9bb3,
+  text-hint-color: #8f9bb3,
+
+  // Shadow
+  shadow: (0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)),
+  shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+  shadow-md: (0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)),
+  shadow-lg: (0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1))
+) !global;
+
+// Merge base theme with light theme
+$date-night-theme: map-merge($theme-base, $date-night-theme) !global;
+
+// Dark theme configuration
+$date-night-dark-theme: (
+  // Brand Colors (adjusted for dark theme)
+  color-primary-100: #002233,
+  color-primary-200: #004466,
+  color-primary-300: #006699,
+  color-primary-400: #0088cc,
+  color-primary-500: #00aaff,
+  color-primary-600: #33bbff,
+  color-primary-700: #66ccff,
+  color-primary-800: #99ddff,
+  color-primary-900: #cceeff,
+
+  // Semantic Colors (adjusted for dark theme)
+  color-success-100: #001e10,
+  color-success-200: #004c30,
+  color-success-300: #007a4f,
+  color-success-400: #00a86f,
+  color-success-500: #00d68f,
+  color-success-600: #4dffae,
+  color-success-700: #80ffc5,
+  color-success-800: #b3ffdb,
+  color-success-900: #e6fff2,
+
+  color-info-100: #001d33,
+  color-info-200: #003b66,
+  color-info-300: #005999,
+  color-info-400: #0077cc,
+  color-info-500: #0095ff,
+  color-info-600: #4dbeff,
+  color-info-700: #80d1ff,
+  color-info-800: #b3e3ff,
+  color-info-900: #e6f6ff,
+
+  color-warning-100: #332200,
+  color-warning-200: #664400,
+  color-warning-300: #996600,
+  color-warning-400: #cc8800,
+  color-warning-500: #ffaa00,
+  color-warning-600: #ffc14d,
+  color-warning-700: #ffd280,
+  color-warning-800: #ffe4b3,
+  color-warning-900: #fff6e6,
+
+  color-danger-100: #330c0c,
+  color-danger-200: #661819,
+  color-danger-300: #992523,
+  color-danger-400: #cc314a,
+  color-danger-500: #ff3d71,
+  color-danger-600: #ff4d7b,
+  color-danger-700: #ff80a1,
+  color-danger-800: #ffb3c7,
+  color-danger-900: #ffe6ed,
+
+  // Background Colors
+  background-basic-color-1: #1a1f33,
+  background-basic-color-2: #151a2e,
+  background-basic-color-3: #101429,
+  background-basic-color-4: #0c0f24,
+
+  // Border Colors
+  border-basic-color-1: #101429,
+  border-basic-color-2: #151a2e,
+  border-basic-color-3: #1a1f33,
+  border-basic-color-4: #1f2438,
+  border-basic-color-5: #24293d,
+
+  // Text Colors
+  text-basic-color: #ffffff,
+  text-alternate-color: #1a1f33,
+  text-control-color: #ffffff,
+  text-disabled-color: #4f5774,
+  text-hint-color: #6a7187,
+
+  // Shadow (adjusted for dark theme)
+  shadow: (0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3)),
+  shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2),
+  shadow-md: (0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)),
+  shadow-lg: (0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3))
+) !global;
+
+// Merge base theme with dark theme
+$date-night-dark-theme: map-merge($theme-base, $date-night-dark-theme) !global;

@@ -1,3 +1,5 @@
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NbButtonModule, NbCardModule, NbIconModule } from '@nebular/theme';

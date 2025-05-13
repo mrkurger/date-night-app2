@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { NbSortEvent } from '@nebular/theme';
+import { Injectable, Component } from '@angular/core';
 import {
   NbSortComponent,
   NbSortHeaderComponent,

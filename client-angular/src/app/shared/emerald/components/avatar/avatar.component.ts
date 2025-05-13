@@ -1,3 +1,7 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -19,7 +23,7 @@ import { RouterModule } from '@angular/router';
  * Documentation: https://docs-emerald.condorlabs.io/Avatar
  */
 @Component({
-  selector: 'emerald-avatar',
+  selector: 'nb-user',
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   standalone: true,
@@ -92,7 +96,7 @@ export class AvatarComponent {
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
     target.style.display = 'none';
-    (event.currentTarget as HTMLElement).classList.add('emerald-avatar--no-image');
+    (event.currentTarget as HTMLElement).classList.add('nb-user--no-image');
   }
 }
 

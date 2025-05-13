@@ -9,7 +9,7 @@
 // ===================================================
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {
@@ -43,24 +43,13 @@ export class AuthService {
    * Check if user is authenticated on service initialization
    */
   private checkAuthStatus(): void {
-    // With HttpOnly cookies, we need to validate with the server
-    // We don't have access to the token expiration time client-side
-    this.validateToken().subscribe({
-      next: () => {
-        // Removed unused 'user' parameter
-        // Set auto refresh token timer (every 12 hours)
-        this.setAutoRefresh(12 * 60 * 60 * 1000);
-      },
-      error: () => {
-        // Try to refresh the token if validation fails
-        this.refreshToken().subscribe({
-          error: () => {
-            // Clear user state if refresh fails
-            this.currentUserSubject.next(null);
-          },
-        });
-      },
-    });
+    this.http
+      .get<{ user: User | null }>(`${this.apiUrl}/status`)
+      .pipe(
+        map((response) => response.user),
+        catchError(() => of(null)),
+      )
+      .subscribe((user) => this.currentUserSubject.next(user));
   }
 
   /**
@@ -84,24 +73,24 @@ export class AuthService {
   /**
    * Logout user and clear stored data
    */
-  logout(): void {
+  logout(): Observable<void> {
     // Send logout request to server to clear cookies
-    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
-
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         console.error('Logout error:', err);
         // Still clear local state even if server request fails
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      },
-    });
+        return throwError(() => err);
+      }),
+    );
   }
 
   /**
@@ -344,5 +333,46 @@ export class AuthService {
           }
         }),
       );
+  }
+
+  signIn(email: string, password: string): Observable<User> {
+    return this.http.post<{ user: User }>(`${this.apiUrl}/signin`, { email, password }).pipe(
+      map((response) => response.user),
+      tap((user) => this.currentUserSubject.next(user)),
+      catchError((error) => {
+        console.error('Sign in error:', error);
+        throw error;
+      }),
+    );
+  }
+
+  signUp(email: string, password: string, displayName: string): Observable<User> {
+    return this.http
+      .post<{ user: User }>(`${this.apiUrl}/signup`, {
+        email,
+        password,
+        displayName,
+      })
+      .pipe(
+        map((response) => response.user),
+        tap((user) => this.currentUserSubject.next(user)),
+        catchError((error) => {
+          console.error('Sign up error:', error);
+          throw error;
+        }),
+      );
+  }
+
+  signOut(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/signout`, {}).pipe(
+      tap(() => {
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/auth/login']);
+      }),
+      catchError((error) => {
+        console.error('Sign out error:', error);
+        throw error;
+      }),
+    );
   }
 }

@@ -29,6 +29,7 @@ export interface User {
   privacySettings?: PrivacySettings;
   profileImage?: string;
   avatarUrl?: string; // Alias for profileImage for compatibility
+  avatar?: string; // URL to user's avatar image
   location?: {
     city?: string;
     country?: string;

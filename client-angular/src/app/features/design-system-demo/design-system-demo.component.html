@@ -342,70 +342,70 @@
         <nb-card>
           <h3 class="heading-4 mb-4">Checkboxes (now Toggles)</h3>
           <div class="form-grid">
-            <emerald-toggle
+            <nb-toggle
               label="Default Toggle"
               [(ngModel)]="checkboxValue"
               (change)="onToggleChange($event, 'Default Toggle')"
             >
-            </emerald-toggle>
+            </nb-toggle>
 
-            <emerald-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
-            </emerald-toggle>
+            <nb-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
+            </nb-toggle>
 
-            <emerald-toggle label="Disabled Toggle" [disabled]="true"> </emerald-toggle>
+            <nb-toggle label="Disabled Toggle" [disabled]="true"> </nb-toggle>
 
-            <emerald-toggle
+            <nb-toggle
               label="Disabled Checked Toggle"
               [(ngModel)]="disabledCheckedToggleValue"
               [disabled]="true"
             >
-            </emerald-toggle>
+            </nb-toggle>
 
-            <emerald-toggle label="Toggle with (conceptual) Error"> </emerald-toggle>
+            <nb-toggle label="Toggle with (conceptual) Error"> </nb-toggle>
 
-            <emerald-toggle label="Toggle with (conceptual) Helper Text"> </emerald-toggle>
+            <nb-toggle label="Toggle with (conceptual) Helper Text"> </nb-toggle>
           </div>
         </nb-card>
 
         <nb-card>
           <h3 class="heading-4 mb-4">Toggle Sizes</h3>
           <div class="form-grid">
-            <emerald-toggle label="Small Toggle" size="small"> </emerald-toggle>
+            <nb-toggle label="Small Toggle" size="small"> </nb-toggle>
 
-            <emerald-toggle label="Medium Toggle (Default)" size="medium"> </emerald-toggle>
+            <nb-toggle label="Medium Toggle (Default)" size="medium"> </nb-toggle>
 
-            <emerald-toggle label="Large Toggle" size="large"> </emerald-toggle>
+            <nb-toggle label="Large Toggle" size="large"> </nb-toggle>
           </div>
         </nb-card>
 
         <nb-card>
           <h3 class="heading-4 mb-4">Toggle Colors (Emerald Specific)</h3>
           <div class="form-grid">
-            <emerald-toggle
+            <nb-toggle
               label="Primary Toggle"
               color="primary"
               [(ngModel)]="primaryToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Success Toggle"
               color="success"
               [(ngModel)]="successToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Warning Toggle"
               color="warning"
               [(ngModel)]="warningToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Danger Toggle"
               color="danger"
               [(ngModel)]="dangerToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Info Toggle"
               color="info"
               [(ngModel)]="infoToggleValue"
-            ></emerald-toggle>
+            ></nb-toggle>
           </div>
         </nb-card>
 

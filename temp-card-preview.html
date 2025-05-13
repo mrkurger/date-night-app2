@@ -36,6 +36,7 @@
         background-color: #fff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         width: 350px; /* Added a fixed width for better preview */
+        position: relative; /* Added for status bar positioning */
       }
 
       .c-card__header {
@@ -200,6 +201,439 @@
       .c-card__action {
         /* Specific styles for actions within a card, if needed */
       }
+
+      /* --- Carousel Styles --- */
+      .c-card__carousel {
+        position: relative;
+        width: 100%;
+        margin-bottom: 16px;
+        overflow: hidden;
+      }
+
+      .c-card__carousel-image-container {
+        display: flex; /* Allows images to sit side-by-side for transition or direct display */
+        width: 100%;
+        height: 200px; /* Fixed height for carousel images */
+        background-color: #eee; /* Fallback bg for image container */
+      }
+
+      .c-card__carousel-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, might crop */
+        display: none; /* Hide all images by default */
+        flex-shrink: 0; /* Prevent shrinking if in a flex container */
+      }
+
+      .c-card__carousel-image--active {
+        display: block; /* Show only the active image */
+      }
+
+      .c-card__carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        border: none;
+        padding: 8px 10px;
+        cursor: pointer;
+        font-size: 1.1em;
+        z-index: 10;
+        border-radius: 4px;
+        line-height: 1;
+      }
+      .c-card__carousel-nav:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      .c-card__carousel-nav--prev {
+        left: 8px;
+      }
+      .c-card__carousel-nav--next {
+        right: 8px;
+      }
+
+      .c-card__carousel-dots {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 10;
+      }
+
+      .c-card__carousel-dot {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .c-card__carousel-dot:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      .c-card__carousel-dot--active {
+        background-color: white;
+      }
+
+      /* --- Dating Site Card Enhancements --- */
+      .c-card__meta-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85em;
+        color: #555;
+        margin-top: 4px; /* Add some space above */
+        margin-bottom: 8px; /* Add some space below before description or carousel */
+      }
+
+      .c-card__online-status {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+      .c-card__online-status--online {
+        background-color: #2ecc71; /* Green for online */
+        box-shadow: 0 0 5px #2ecc71;
+      }
+      .c-card__online-status--offline {
+        background-color: #95a5a6; /* Grey for offline */
+      }
+
+      .c-card__distance {
+        font-size: 0.85em;
+      }
+
+      .c-card__footer--dating-actions {
+        justify-content: space-around; /* Distribute buttons more evenly */
+      }
+
+      .c-card__action--icon-btn {
+        font-size: 1.4em; /* Make icons larger */
+        padding: 10px;
+        border-radius: 50%; /* Circular buttons */
+        width: 44px; /* Fixed width */
+        height: 44px; /* Fixed height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .c-card__action--dismiss {
+        color: #e74c3c; /* Reddish for dismiss */
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+      }
+      .c-card__action--dismiss:hover {
+        background-color: #fdf2f2;
+        border-color: #e74c3c;
+      }
+
+      .c-card__action--favorite {
+        color: #fd5068; /* Pink/Red for favorite */
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+      }
+      .c-card__action--favorite:hover {
+        background-color: #fff0f2;
+        border-color: #fd5068;
+      }
+
+      .c-card__action--chat {
+        color: #3498db; /* Blue for chat */
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+      }
+      .c-card__action--chat:hover {
+        background-color: #eef7fc;
+        border-color: #3498db;
+      }
+
+      /* --- Tinder-Style Card --- */
+      .c-card--swipe {
+        width: 300px;
+        height: 450px;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+      .c-card--swipe__image-full {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .c-card--swipe__info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+        color: white;
+      }
+      .c-card--swipe__name {
+        font-size: 1.8em;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+      }
+      .c-card--swipe__details {
+        font-size: 1.1em;
+      }
+      .c-card--swipe__actions {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+      }
+      .c-card--swipe__action-btn {
+        background-color: white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        color: #fd5068; /* Tinder-like red */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+      .c-card--swipe__action-btn--like {
+        color: #4ccc93; /* Tinder-like green */
+      }
+
+      /* --- Netflix-Style Card --- */
+      .c-card--media {
+        width: 180px; /* Typical poster width */
+        height: 270px; /* Typical poster height (3:2 aspect ratio) */
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        background-color: #222;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition:
+          transform 0.2s ease-out,
+          box-shadow 0.2s ease-out;
+        cursor: pointer;
+      }
+      .c-card--media:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+      .c-card--media__poster {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .c-card--media__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+        color: white;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+      }
+      .c-card--media:hover .c-card--media__overlay {
+        opacity: 1;
+      }
+      .c-card--media__title {
+        font-size: 1em;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .c-card--media__genre {
+        font-size: 0.8em;
+        color: #bbb;
+      }
+
+      /* --- Recipe Card --- */
+      .c-card--recipe {
+        width: 320px;
+      }
+      .c-card--recipe__image-container {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+      }
+      .c-card--recipe__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .c-card--recipe__title {
+        font-size: 1.3em;
+        margin-bottom: 8px;
+      }
+      .c-card--recipe__meta {
+        font-size: 0.85em;
+        color: #777;
+        margin-bottom: 12px;
+      }
+      .c-card--recipe__meta span {
+        margin-right: 10px;
+      }
+      .c-card--recipe__description {
+        font-size: 0.9em;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      /* --- E-commerce Product Card --- */
+      .c-card--product {
+        width: 280px;
+        text-align: center;
+        position: relative; /* Added for status bar positioning */
+      }
+      .c-card--product__image-container {
+        width: 100%;
+        height: 220px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+      .c-card--product__image {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+      .c-card--product__name {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #333;
+      }
+      .c-card--product__price {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 8px;
+      }
+      .c-card--product__rating {
+        color: #f39c12; /* Star color */
+        margin-bottom: 12px;
+      }
+
+      /* --- Music Track Card --- */
+      .c-card--music {
+        width: 300px;
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background-color: #2c3e50; /* Dark theme */
+        color: white;
+        position: relative; /* Added for status bar positioning */
+      }
+      .c-card--music__album-art {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-right: 12px;
+      }
+      .c-card--music__info {
+        flex-grow: 1;
+      }
+      .c-card--music__title {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+      }
+      .c-card--music__artist {
+        font-size: 0.9em;
+        color: #bdc3c7;
+      }
+      .c-card--music__play-btn {
+        font-size: 1.8em;
+        color: #1abc9c; /* Play button color */
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+      }
+
+      /* Ensure cards can have absolute positioned elements */
+      .c-card,
+      .c-card--swipe,
+      .c-card--media,
+      .c-card--product,
+      .c-card--music,
+      .c-card--recipe {
+        position: relative;
+      }
+
+      .c-card__status-bar {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 4px 8px;
+        border-radius: 12px;
+        z-index: 10;
+        color: white;
+      }
+
+      .c-card__distance {
+        font-size: 0.85em;
+      }
+
+      /* Add Tinder-style action buttons */
+      .c-card--swipe__action-buttons {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 40px;
+        z-index: 20;
+      }
+
+      .c-card--swipe__action-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s;
+      }
+
+      .c-card--swipe__action-button:hover {
+        transform: scale(1.1);
+      }
+
+      .c-card--swipe__action-button--like {
+        color: #4caf50;
+      }
+
+      .c-card--swipe__action-button--dislike {
+        color: #f44336;
+      }
     </style>
   </head>
   <body>
@@ -210,7 +644,7 @@
           <div class="c-card__image-wrapper">
             <img
               class="c-card__image"
-              src="https://via.placeholder.com/60"
+              src="client-angular/src/assets/img/1.webp"
               alt="User Profile Picture"
             />
           </div>
@@ -220,6 +654,35 @@
           </div>
         </header>
         <section class="c-card__body">
+          <div class="c-card__carousel">
+            <div class="c-card__carousel-image-container">
+              <img
+                src="client-angular/src/assets/img/2.webp"
+                alt="Profile gallery image 1"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/3.webp"
+                alt="Profile gallery image 2"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/4.webp"
+                alt="Profile gallery image 3"
+                class="c-card__carousel-image"
+              />
+            </div>
+            <button
+              class="c-card__carousel-nav c-card__carousel-nav--prev"
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            <button class="c-card__carousel-nav c-card__carousel-nav--next" aria-label="Next image">
+              &gt;
+            </button>
+            <div class="c-card__carousel-dots"></div>
+          </div>
           <p class="c-card__description">
             Passionate developer with a love for creating intuitive and dynamic user experiences.
             Enjoys hiking and photography in their free time.
@@ -251,8 +714,8 @@
           <div class="c-card__image-wrapper">
             <img
               class="c-card__image"
-              src="https://via.placeholder.com/60/FFD700/000000?Text=Logo"
-              alt="Company Logo"
+              src="client-angular/src/assets/img/5.jpeg"
+              alt="Advertiser Profile Picture"
             />
           </div>
           <div class="c-card__title-group">
@@ -261,6 +724,35 @@
           </div>
         </header>
         <section class="c-card__body">
+          <div class="c-card__carousel">
+            <div class="c-card__carousel-image-container">
+              <img
+                src="client-angular/src/assets/img/6.jpeg"
+                alt="Advertiser gallery image 1"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/7.jpeg"
+                alt="Advertiser gallery image 2"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/8.jpeg"
+                alt="Advertiser gallery image 3"
+                class="c-card__carousel-image"
+              />
+            </div>
+            <button
+              class="c-card__carousel-nav c-card__carousel-nav--prev"
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            <button class="c-card__carousel-nav c-card__carousel-nav--next" aria-label="Next image">
+              &gt;
+            </button>
+            <div class="c-card__carousel-dots"></div>
+          </div>
           <p class="c-card__description">
             Your friendly neighborhood cafe, serving freshly brewed coffee and delicious homemade
             pastries since 2010.
@@ -304,5 +796,652 @@
         </footer>
       </article>
     </div>
+
+    <div class="preview-section">
+      <h2>Profile Card Example (Dating Site Style)</h2>
+      <article class="c-card" data-card-type="profile-dating">
+        <header class="c-card__header">
+          <div class="c-card__image-wrapper">
+            <img
+              class="c-card__image"
+              src="client-angular/src/assets/img/1.webp"
+              alt="User Profile Picture"
+            />
+          </div>
+          <div class="c-card__title-group">
+            <h3 class="c-card__title">Alex Doe, 29</h3>
+            <p class="c-card__subtitle">Software Engineer</p>
+            <div class="c-card__meta-info">
+              <span
+                class="c-card__online-status c-card__online-status--online"
+                title="Online"
+              ></span>
+              <span class="c-card__distance">5 km away</span>
+            </div>
+          </div>
+        </header>
+        <section class="c-card__body">
+          <div class="c-card__carousel">
+            <div class="c-card__carousel-image-container">
+              <img
+                src="client-angular/src/assets/img/2.webp"
+                alt="Profile gallery image 1"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/3.webp"
+                alt="Profile gallery image 2"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/4.webp"
+                alt="Profile gallery image 3"
+                class="c-card__carousel-image"
+              />
+            </div>
+            <button
+              class="c-card__carousel-nav c-card__carousel-nav--prev"
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            <button class="c-card__carousel-nav c-card__carousel-nav--next" aria-label="Next image">
+              &gt;
+            </button>
+            <div class="c-card__carousel-dots"></div>
+          </div>
+          <p class="c-card__description">
+            Passionate developer with a love for creating intuitive and dynamic user experiences.
+            Enjoys hiking and photography in their free time. Looking for someone with a shared
+            sense of adventure.
+          </p>
+          <div class="c-card__custom-content">
+            <div class="c-profile-details">
+              <dl class="c-profile-details__list">
+                <dt class="c-profile-details__term">Interests:</dt>
+                <dd class="c-profile-details__description">
+                  Coding, Hiking, Photography, AI, Travel
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+        <footer class="c-card__footer c-card__footer--dating-actions">
+          <button
+            class="c-button c-card__action--icon-btn c-card__action--dismiss"
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+          <button
+            class="c-button c-card__action--icon-btn c-card__action--favorite"
+            aria-label="Favorite"
+          >
+            ❤
+          </button>
+          <button class="c-button c-card__action--icon-btn c-card__action--chat" aria-label="Chat">
+            💬
+          </button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Advertiser Card Example (Dating Site Style)</h2>
+      <article class="c-card" data-card-type="advertiser-dating">
+        <header class="c-card__header">
+          <div class="c-card__image-wrapper">
+            <img
+              class="c-card__image"
+              src="client-angular/src/assets/img/5.jpeg"
+              alt="User Profile Picture"
+            />
+          </div>
+          <div class="c-card__title-group">
+            <h3 class="c-card__title">Casey B., 32</h3>
+            <p class="c-card__subtitle">Graphic Designer</p>
+            <div class="c-card__meta-info">
+              <span
+                class="c-card__online-status c-card__online-status--offline"
+                title="Offline"
+              ></span>
+              <span class="c-card__distance">12 km away</span>
+            </div>
+          </div>
+        </header>
+        <section class="c-card__body">
+          <div class="c-card__carousel">
+            <div class="c-card__carousel-image-container">
+              <img
+                src="client-angular/src/assets/img/6.jpeg"
+                alt="User gallery image 1"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/7.jpeg"
+                alt="User gallery image 2"
+                class="c-card__carousel-image"
+              />
+              <img
+                src="client-angular/src/assets/img/8.jpeg"
+                alt="User gallery image 3"
+                class="c-card__carousel-image"
+              />
+            </div>
+            <button
+              class="c-card__carousel-nav c-card__carousel-nav--prev"
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            <button class="c-card__carousel-nav c-card__carousel-nav--next" aria-label="Next image">
+              &gt;
+            </button>
+            <div class="c-card__carousel-dots"></div>
+          </div>
+          <p class="c-card__description">
+            Creative soul who enjoys art, music, and exploring new cafes. My ideal date involves
+            good conversation and laughter.
+          </p>
+          <div class="c-card__custom-content">
+            <div class="c-advertiser-details">
+              <dl class="c-advertiser-details__list">
+                <dt class="c-advertiser-details__term">Looking for:</dt>
+                <dd class="c-advertiser-details__description">A kind and genuine connection.</dd>
+                <dt class="c-advertiser-details__term">Hobbies:</dt>
+                <dd class="c-advertiser-details__description">
+                  Painting, Indie Music, Baking, Yoga
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+        <footer class="c-card__footer c-card__footer--dating-actions">
+          <button
+            class="c-button c-card__action--icon-btn c-card__action--dismiss"
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+          <button
+            class="c-button c-card__action--icon-btn c-card__action--favorite"
+            aria-label="Favorite"
+          >
+            ❤
+          </button>
+          <button class="c-button c-card__action--icon-btn c-card__action--chat" aria-label="Chat">
+            💬
+          </button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Tinder-Style Swipe Card</h2>
+      <article class="c-card c-card--swipe">
+        <div class="c-card__status-bar">
+          <span class="c-card__online-status c-card__online-status--online" title="Online"></span>
+          <span class="c-card__distance">3 km away</span>
+        </div>
+        <img
+          src="client-angular/src/assets/img/enjoying-the-beach-v0-ecajs9ieitue1.webp"
+          alt="Profile picture for swipe card"
+          class="c-card--swipe__image-full"
+        />
+        <div class="c-card--swipe__info">
+          <h3 class="c-card--swipe__name">Jamie, 28</h3>
+          <p class="c-card--swipe__details">Loves adventure & good food</p>
+        </div>
+        <div class="c-card--swipe__action-buttons">
+          <button class="c-card--swipe__action-button c-card--swipe__action-button--dislike">
+            ✕
+          </button>
+          <button class="c-card--swipe__action-button c-card--swipe__action-button--like">
+            ❤
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Netflix-Style Media Card</h2>
+      <article class="c-card--media">
+        <img
+          src="client-angular/src/assets/img/stranda.jpeg"
+          alt="Movie Poster"
+          class="c-card--media__poster"
+        />
+        <div class="c-card--media__overlay">
+          <h4 class="c-card--media__title">Epic Adventure Film</h4>
+          <p class="c-card--media__genre">Action, Sci-Fi</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Recipe Card</h2>
+      <article class="c-card c-card--recipe">
+        <div class="c-card--recipe__image-container">
+          <img
+            src="client-angular/src/assets/img/6.png"
+            alt="Pasta dish"
+            class="c-card--recipe__image"
+          />
+        </div>
+        <div class="c-card__body">
+          <h3 class="c-card--recipe__title">Creamy Tomato Pasta</h3>
+          <p class="c-card--recipe__meta">
+            <span>Prep: 15 mins</span>
+            <span>Cook: 20 mins</span>
+            <span>Serves: 4</span>
+          </p>
+          <p class="c-card--recipe__description">
+            A quick and easy pasta dish that's perfect for a weeknight dinner. Full of flavor and
+            simple ingredients.
+          </p>
+        </div>
+        <footer class="c-card__footer">
+          <button class="c-button c-button--primary c-card__action">View Recipe</button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>E-commerce Product Card</h2>
+      <article class="c-card c-card--product">
+        <div class="c-card__status-bar">
+          <span class="c-card__online-status c-card__online-status--online" title="Online"></span>
+          <span class="c-card__distance">8 km away</span>
+        </div>
+        <div class="c-card--product__image-container">
+          <img
+            src="client-angular/src/assets/img/2.jpeg"
+            alt="Product image"
+            class="c-card--product__image"
+          />
+        </div>
+        <div class="c-card__body">
+          <h3 class="c-card--product__name">Wireless Smart Speaker</h3>
+          <p class="c-card--product__price">$79.99</p>
+          <div class="c-card--product__rating">
+            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span>
+          </div>
+        </div>
+        <footer class="c-card__footer" style="justify-content: center">
+          <button class="c-button c-button--primary c-card__action">Add to Cart</button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Music Track Card</h2>
+      <article class="c-card c-card--music">
+        <div class="c-card__status-bar">
+          <span class="c-card__online-status c-card__online-status--offline" title="Offline"></span>
+          <span class="c-card__distance">15 km away</span>
+        </div>
+        <img
+          src="client-angular/src/assets/img/stranda.jpeg"
+          alt="Album art"
+          class="c-card--music__album-art"
+        />
+        <div class="c-card--music__info">
+          <h4 class="c-card--music__title">Midnight Drive</h4>
+          <p class="c-card--music__artist">The Night Owls</p>
+        </div>
+        <button class="c-card--music__play-btn" aria-label="Play track">▶</button>
+      </article>
+    </div>
+
+    <div class="preview-section">
+      <h2>Nebular Cards Examples</h2>
+
+      <!-- Nebular Profile Card -->
+      <nb-card>
+        <nb-card-header class="nb-card__header">
+          <div class="nb-card__image-wrapper">
+            <img
+              class="nb-card__image"
+              src="client-angular/src/assets/img/1.webp"
+              alt="User Profile Picture"
+            />
+          </div>
+          <div class="nb-card__title-group">
+            <h3 class="nb-card__title">Alex Doe</h3>
+            <p class="nb-card__subtitle">Software Engineer</p>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="nb-card__carousel">
+            <div class="nb-card__carousel-container">
+              <img
+                src="client-angular/src/assets/img/2.webp"
+                alt="Profile gallery image 1"
+                class="nb-card__carousel-image"
+              />
+            </div>
+            <button nbButton ghost class="nb-card__nav-btn nb-card__nav-btn--prev">
+              <i class="eva eva-arrow-back-outline"></i>
+            </button>
+            <button nbButton ghost class="nb-card__nav-btn nb-card__nav-btn--next">
+              <i class="eva eva-arrow-forward-outline"></i>
+            </button>
+          </div>
+          <p class="nb-card__description">
+            Passionate developer with a love for creating intuitive experiences.
+          </p>
+          <nb-list>
+            <nb-list-item>
+              <i class="eva eva-heart-outline"></i>
+              <span>Coding, Hiking, Photography</span>
+            </nb-list-item>
+            <nb-list-item>
+              <i class="eva eva-pin-outline"></i>
+              <span>San Francisco, CA</span>
+            </nb-list-item>
+          </nb-list>
+        </nb-card-body>
+        <nb-card-footer>
+          <button nbButton status="primary">View Profile</button>
+          <button nbButton ghost>Message</button>
+        </nb-card-footer>
+      </nb-card>
+
+      <!-- Nebular Tinder-Style Card -->
+      <nb-card class="nb-card--swipe">
+        <div class="nb-card__status">
+          <nb-badge status="success" text="Online"></nb-badge>
+          <span class="nb-card__distance"> <i class="eva eva-pin-outline"></i> 3km </span>
+        </div>
+        <img
+          src="client-angular/src/assets/img/enjoying-the-beach-v0-ecajs9ieitue1.webp"
+          alt="Profile picture"
+          class="nb-card__full-image"
+        />
+        <div class="nb-card__overlay">
+          <h3 class="nb-card__name">Jamie, 28</h3>
+          <p class="nb-card__bio">Loves adventure & good food</p>
+          <div class="nb-card__actions">
+            <button nbButton status="danger" shape="round">
+              <i class="eva eva-close-outline"></i>
+            </button>
+            <button nbButton status="success" shape="round">
+              <i class="eva eva-heart-outline"></i>
+            </button>
+          </div>
+        </div>
+      </nb-card>
+
+      <!-- Nebular E-commerce Card -->
+      <nb-card>
+        <nb-card-body class="nb-card--product">
+          <div class="nb-card__status">
+            <nb-badge status="success" text="In Stock"></nb-badge>
+            <span class="nb-card__location">
+              <i class="eva eva-pin-outline"></i> Local Pickup Available
+            </span>
+          </div>
+          <img
+            src="client-angular/src/assets/img/2.jpeg"
+            alt="Product"
+            class="nb-card__product-image"
+          />
+          <h3 class="nb-card__product-name">Wireless Smart Speaker</h3>
+          <div class="nb-card__price">$79.99</div>
+          <nb-rating max="5" value="4"></nb-rating>
+          <button nbButton status="primary" fullWidth>
+            <i class="eva eva-shopping-cart-outline"></i>
+            Add to Cart
+          </button>
+        </nb-card-body>
+      </nb-card>
+
+      <!-- Nebular Music Track Card -->
+      <nb-card class="nb-card--music">
+        <nb-card-body>
+          <div class="nb-card__status">
+            <nb-badge status="warning" text="Premium"></nb-badge>
+          </div>
+          <div class="nb-card__music-content">
+            <img
+              src="client-angular/src/assets/img/stranda.jpeg"
+              alt="Album art"
+              class="nb-card__album-art"
+            />
+            <div class="nb-card__track-info">
+              <h4 class="nb-card__track-title">Midnight Drive</h4>
+              <p class="nb-card__artist">The Night Owls</p>
+            </div>
+            <button nbButton ghost status="primary" class="nb-card__play-btn">
+              <i class="eva eva-play-circle-outline"></i>
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <style>
+      /* Nebular Card Styles */
+      nb-card {
+        max-width: 350px;
+        margin: 1rem;
+        border: none;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .nb-card__header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nb-card__image-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .nb-card__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .nb-card__carousel {
+        position: relative;
+        margin: 1rem 0;
+      }
+
+      .nb-card__carousel-container {
+        height: 200px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .nb-card__carousel-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .nb-card__nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .nb-card__nav-btn--prev {
+        left: 8px;
+      }
+
+      .nb-card__nav-btn--next {
+        right: 8px;
+      }
+
+      .nb-card__status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 10;
+      }
+
+      .nb-card--swipe {
+        width: 300px;
+        height: 450px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .nb-card__full-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .nb-card__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        color: white;
+      }
+
+      .nb-card__actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+      }
+
+      .nb-card--product {
+        text-align: center;
+      }
+
+      .nb-card__product-image {
+        width: 100%;
+        height: 220px;
+        object-fit: contain;
+        margin-bottom: 1rem;
+      }
+
+      .nb-card--music {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+      }
+
+      .nb-card__music-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nb-card__album-art {
+        width: 70px;
+        height: 70px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+
+      .nb-card__track-info {
+        flex: 1;
+      }
+
+      .nb-card__play-btn {
+        font-size: 1.5rem;
+      }
+
+      nb-list-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .eva {
+        font-size: 1.2rem;
+      }
+    </style>
+
+    <!-- Add Eva Icons CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const carousels = document.querySelectorAll('.c-card__carousel');
+
+        carousels.forEach(carousel => {
+          const imageContainer = carousel.querySelector('.c-card__carousel-image-container');
+          if (!imageContainer) return;
+
+          const images = Array.from(imageContainer.querySelectorAll('.c-card__carousel-image'));
+          const prevButton = carousel.querySelector('.c-card__carousel-nav--prev');
+          const nextButton = carousel.querySelector('.c-card__carousel-nav--next');
+          const dotsContainer = carousel.querySelector('.c-card__carousel-dots');
+
+          if (images.length === 0) {
+            if (prevButton) prevButton.style.display = 'none';
+            if (nextButton) nextButton.style.display = 'none';
+            if (dotsContainer) dotsContainer.style.display = 'none';
+            // carousel.style.display = 'none'; // Optionally hide the whole carousel
+            return;
+          }
+
+          let currentImageIndex = 0;
+
+          function updateCarouselState() {
+            images.forEach((img, index) => {
+              img.classList.toggle('c-card__carousel-image--active', index === currentImageIndex);
+            });
+            if (dotsContainer) {
+              const dots = dotsContainer.querySelectorAll('.c-card__carousel-dot');
+              dots.forEach((dot, index) => {
+                dot.classList.toggle('c-card__carousel-dot--active', index === currentImageIndex);
+              });
+            }
+          }
+
+          function setupDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = ''; // Clear existing dots
+            images.forEach((_, index) => {
+              const dot = document.createElement('span');
+              dot.classList.add('c-card__carousel-dot');
+              dot.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateCarouselState();
+              });
+              dotsContainer.appendChild(dot);
+            });
+          }
+
+          if (dotsContainer) setupDots();
+          updateCarouselState(); // Show the first image (and set up active dot)
+
+          if (prevButton) {
+            prevButton.addEventListener('click', () => {
+              currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+              updateCarouselState();
+            });
+          }
+
+          if (nextButton) {
+            nextButton.addEventListener('click', () => {
+              currentImageIndex = (currentImageIndex + 1) % images.length;
+              updateCarouselState();
+            });
+          }
+
+          if (images.length <= 1) {
+            if (prevButton) prevButton.style.display = 'none';
+            if (nextButton) nextButton.style.display = 'none';
+            if (dotsContainer) dotsContainer.style.display = 'none';
+          }
+        });
+      });
+    </script>
   </body>
 </html>

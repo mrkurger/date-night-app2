@@ -1,3 +1,5 @@
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 

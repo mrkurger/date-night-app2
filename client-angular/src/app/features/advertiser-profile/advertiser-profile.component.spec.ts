@@ -1,3 +1,6 @@
+import { Input } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -21,7 +24,9 @@ import { NotificationService } from '../../core/services/notification.service';
 // Mock MainLayoutComponent
 @Component({
   selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content></ng-content>',,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

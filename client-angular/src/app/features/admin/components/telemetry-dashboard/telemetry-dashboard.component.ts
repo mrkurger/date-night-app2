@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -20,14 +21,14 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
     <div class="telemetry-dashboard-container">
       <h1>Application Telemetry Dashboard</h1>
 
-      <mat-tab-group animationDuration="0ms">
-        <mat-tab label="Error Monitoring">
+      <nb-tabset>
+        <nb-tab tabTitle="Error Monitoring">
           <app-error-dashboard></app-error-dashboard>
-        </mat-tab>
-        <mat-tab label="Performance Monitoring">
+        </nb-tab>
+        <nb-tab tabTitle="Performance Monitoring">
           <app-performance-dashboard></app-performance-dashboard>
-        </mat-tab>
-      </mat-tab-group>
+        </nb-tab>
+      </nb-tabset>
     </div>
   `,
   styles: [
@@ -40,8 +41,10 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
         margin-bottom: 20px;
       }
 
-      ::ng-deep .mat-tab-body-content {
-        padding: 20px 0;
+      ::ng-deep nb-tabset {
+        .tab-content {
+          padding: 20px 0;
+        }
       }
     `,
   ],

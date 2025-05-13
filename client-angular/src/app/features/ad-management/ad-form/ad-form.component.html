@@ -5,164 +5,144 @@
     <nb-spinner status="primary" size="large"></nb-spinner>
   </div>
 
-  <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
-    <nb-card>
-      <nb-card-body>
-        <div class="form-row">
-          <nb-form-field class="full-width">
-            <label for="title">Title</label>
-            <input
-              nbInput
-              fullWidth
-              formControlName="title"
-              placeholder="Enter a catchy title"
-              id="title"
-            />
-            <nb-hint
-              *ngIf="adForm.get('title')?.hasError('required') && adForm.get('title')?.touched"
-              status="danger"
-            >
+  <nb-card>
+    <nb-card-header>
+      <h3>{{ isEditMode ? 'Edit' : 'Create' }} Advertisement</h3>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="form-group">
+          <label for="title" class="label">Title</label>
+          <nb-form-field>
+            <input nbInput fullWidth id="title" formControlName="title" placeholder="Enter title" />
+            <nb-icon nbPrefix icon="edit-2-outline"></nb-icon>
+            <nb-error *ngIf="f.title.errors?.required && (f.title.dirty || f.title.touched)">
               Title is required
-            </nb-hint>
-            <nb-hint *ngIf="adForm.get('title')?.hasError('maxlength')" status="danger">
-              Title cannot exceed 100 characters
-            </nb-hint>
+            </nb-error>
+            <nb-error *ngIf="f.title.errors?.maxlength">
+              Title must be less than 100 characters
+            </nb-error>
           </nb-form-field>
         </div>
 
-        <div class="form-row">
-          <nb-form-field class="full-width">
-            <label for="description">Description</label>
+        <div class="form-group">
+          <label for="description" class="label">Description</label>
+          <nb-form-field>
             <textarea
               nbInput
               fullWidth
-              formControlName="description"
-              rows="5"
-              placeholder="Describe your services in detail"
               id="description"
+              formControlName="description"
+              placeholder="Enter description"
+              rows="4"
             ></textarea>
-            <nb-hint
+            <nb-error
               *ngIf="
-                adForm.get('description')?.hasError('required') &&
-                adForm.get('description')?.touched
+                f.description.errors?.required && (f.description.dirty || f.description.touched)
               "
-              status="danger"
             >
               Description is required
-            </nb-hint>
-            <nb-hint *ngIf="adForm.get('description')?.hasError('maxlength')" status="danger">
-              Description cannot exceed 1000 characters
-            </nb-hint>
+            </nb-error>
+            <nb-error *ngIf="f.description.errors?.maxlength">
+              Description must be less than 1000 characters
+            </nb-error>
           </nb-form-field>
         </div>
 
-        <div class="form-row two-columns">
+        <div class="form-group">
+          <label for="price" class="label">Price</label>
           <nb-form-field>
-            <label for="category">Category</label>
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              id="price"
+              formControlName="price"
+              placeholder="Enter price"
+            />
+            <nb-icon nbPrefix icon="pricetags-outline"></nb-icon>
+            <nb-error *ngIf="f.price.errors?.required && (f.price.dirty || f.price.touched)">
+              Price is required
+            </nb-error>
+            <nb-error *ngIf="f.price.errors?.min"> Price must be greater than 0 </nb-error>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <label for="location" class="label">Location</label>
+          <nb-form-field>
             <nb-select
-              formControlName="category"
-              placeholder="Select category"
+              fullWidth
+              id="location"
+              formControlName="location"
+              placeholder="Select location"
+            >
+              <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
+            </nb-select>
+            <nb-error
+              *ngIf="f.location.errors?.required && (f.location.dirty || f.location.touched)"
+            >
+              Location is required
+            </nb-error>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="label">Category</label>
+          <nb-form-field>
+            <nb-select
               fullWidth
               id="category"
+              formControlName="category"
+              placeholder="Select category"
             >
-              <nb-option *ngFor="let category of categories" [value]="category">
+              <nb-option *ngFor="let category of categories" [value]="category.toLowerCase()">
                 {{ category }}
               </nb-option>
             </nb-select>
-            <nb-hint
-              *ngIf="
-                adForm.get('category')?.hasError('required') && adForm.get('category')?.touched
-              "
-              status="danger"
+            <nb-error
+              *ngIf="f.category.errors?.required && (f.category.dirty || f.category.touched)"
             >
               Category is required
-            </nb-hint>
-          </nb-form-field>
-
-          <nb-form-field>
-            <label for="price">Price (USD)</label>
-            <div class="input-with-prefix">
-              <span class="prefix">$</span>
-              <input nbInput type="number" formControlName="price" placeholder="0" id="price" />
-            </div>
-            <nb-hint
-              *ngIf="adForm.get('price')?.hasError('required') && adForm.get('price')?.touched"
-              status="danger"
-            >
-              Price is required
-            </nb-hint>
-            <nb-hint *ngIf="adForm.get('price')?.hasError('min')" status="danger">
-              Price cannot be negative
-            </nb-hint>
+            </nb-error>
           </nb-form-field>
         </div>
 
-        <div class="form-row two-columns">
+        <div class="form-group">
+          <label for="contactInfo" class="label">Contact Information</label>
           <nb-form-field>
-            <label for="county">County</label>
-            <nb-select
-              formControlName="county"
-              placeholder="Select county"
+            <input
+              nbInput
               fullWidth
-              id="county"
-              (selectedChange)="onCountyChange()"
+              id="contactInfo"
+              formControlName="contactInfo"
+              placeholder="Enter contact information"
+            />
+            <nb-icon nbPrefix icon="phone-outline"></nb-icon>
+            <nb-error
+              *ngIf="
+                f.contactInfo.errors?.required && (f.contactInfo.dirty || f.contactInfo.touched)
+              "
             >
-              <nb-option *ngFor="let county of counties" [value]="county">
-                {{ county }}
-              </nb-option>
-            </nb-select>
-            <nb-hint
-              *ngIf="adForm.get('county')?.hasError('required') && adForm.get('county')?.touched"
-              status="danger"
-            >
-              County is required
-            </nb-hint>
-          </nb-form-field>
-
-          <nb-form-field>
-            <label for="city">City</label>
-            <nb-select formControlName="city" placeholder="Select city" fullWidth id="city">
-              <nb-option *ngFor="let city of cities" [value]="city.name">
-                {{ city.name }}
-              </nb-option>
-            </nb-select>
-            <nb-hint
-              *ngIf="adForm.get('city')?.hasError('required') && adForm.get('city')?.touched"
-              status="danger"
-            >
-              City is required
-            </nb-hint>
+              Contact information is required
+            </nb-error>
           </nb-form-field>
         </div>
 
-        <div class="form-row">
-          <nb-checkbox formControlName="isActive" status="primary">
-            Make this advertisement active immediately
-          </nb-checkbox>
+        <div class="form-group">
+          <nb-checkbox formControlName="isActive">Active</nb-checkbox>
         </div>
-      </nb-card-body>
 
-      <nb-card-footer class="actions-footer">
-        <button nbButton status="basic" type="button" (click)="onCancel()">Cancel</button>
-        <button nbButton status="primary" type="submit" [disabled]="adForm.invalid">
-          {{ isEditMode ? 'Update' : 'Create' }} Advertisement
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  </form>
+        <div class="form-group">
+          <nb-checkbox formControlName="isTouring">Touring</nb-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button nbButton status="primary" size="large" [disabled]="!adForm.valid" type="submit">
+            {{ isEditMode ? 'Update' : 'Create' }} Advertisement
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
 </div>
-
-<style>
-  .input-with-prefix {
-    display: flex;
-    align-items: center;
-  }
-  .prefix {
-    margin-right: 0.5rem;
-  }
-  .actions-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-</style>

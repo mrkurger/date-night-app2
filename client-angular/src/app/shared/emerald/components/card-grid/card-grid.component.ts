@@ -1,3 +1,6 @@
+import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,15 +12,6 @@
 // - GRID_COLUMNS: Number of columns in the grid (default: responsive)
 //   Related to: card-grid.component.scss
 // ===================================================
-import { 
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ContentChild,
-  TemplateRef,
-  NO_ERRORS_SCHEMA,
-import { CommonModule } from '@angular/common';
 // import { Ad } from '../../../../core/models/ad.interface';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { AppCardComponent } from '../app-card/app-card.component';
@@ -31,12 +25,71 @@ import { AppCardComponent } from '../app-card/app-card.component';
  * Documentation: https://docs-emerald.condorlabs.io/CardGrid
  */
 @Component({
-  selector: 'emerald-card-grid',
-  templateUrl: './card-grid.component.html',
-  styleUrls: ['./card-grid.component.scss'],
+  selector: 'nb-card-grid',
+  template: `
+    <div class="card-grid" [ngStyle]="getGridStyle()">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-container">
+        <nb-spinner size="large"></nb-spinner>
+      </div>
+
+      <!-- Grid Items -->
+      <ng-container *ngIf="!loading">
+        <div
+          *ngFor="let item of items"
+          class="card-grid__item"
+          [ngClass]="{ 'card-grid__item--animated': animated }"
+          (click)="onItemClick(item)"
+        >
+          <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }">
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  `,
+  styles: [
+    `
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(var(--min-item-width, 280px), 1fr));
+        gap: var(--grid-gap, 1rem);
+        width: 100%;
+      }
+
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        grid-column: 1 / -1;
+      }
+
+      .card-grid__item {
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          transform: translateY(-4px);
+        }
+
+        &--animated {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `,
+  ],
   standalone: true,
-  imports: [CommonModule, SkeletonLoaderComponent, AppCardComponent],
-  schemas: [NO_ERRORS_SCHEMA]
+  imports: [CommonModule, NbCardModule, NbSpinnerModule, SkeletonLoaderComponent, AppCardComponent],
 })
 export class CardGridComponent {
   /**
@@ -97,24 +150,17 @@ export class CardGridComponent {
   /**
    * Get the grid style based on the inputs
    */
-  getGridStyle(): { [key: string]: string } {
-    if (this.layout === 'netflix') {
-      return {};
-    }
+  getGridStyle() {
+    const styles: any = {
+      '--grid-gap': `${this.gap}px`,
+      '--min-item-width': `${this.minItemWidth}px`,
+    };
 
     if (this.columns) {
-      return {
-        display: 'grid',
-        'grid-template-columns': `repeat(${this.columns}, 1fr)`,
-        gap: `${this.gap}px`,
-      };
+      styles['grid-template-columns'] = `repeat(${this.columns}, 1fr)`;
     }
 
-    return {
-      display: 'grid',
-      'grid-template-columns': `repeat(auto-fill, minmax(${this.minItemWidth}px, 1fr))`,
-      gap: `${this.gap}px`,
-    };
+    return styles;
   }
 
   /**
@@ -134,7 +180,7 @@ export class CardGridComponent {
   }
 
   /**
-   * Card layout for emerald-app-card
+   * Card layout for nb-card
    */
   get cardLayout(): 'netflix' | 'tinder' | 'list' {
     return this.layout === 'netflix' ? 'netflix' : 'list';

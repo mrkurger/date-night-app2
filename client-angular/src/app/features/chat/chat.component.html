@@ -5,502 +5,178 @@
       <h2>Messages</h2>
       <div class="chat-header-actions">
         <button nbButton ghost nbTooltip="New Message" (click)="openNewMessageDialog()">
-          <nb-icon icon="add"></nb-icon>
+          <nb-icon icon="plus-outline"></nb-icon>
         </button>
-        <button nbButton ghost nbTooltip="Settings" [nbContextMenu]="settingsMenu">
-          <nb-icon icon="more_vert"></nb-icon>
+        <button nbButton ghost nbTooltip="Settings" [nbContextMenu]="settingsItems">
+          <nb-icon icon="more-vertical-outline"></nb-icon>
         </button>
-        <nb-menu #settingsMenu="matMenu">
-          <button nb-menu-item (click)="toggleNotifications()">
-            <nb-icon
-              icon="{{ notificationsEnabled ? 'notifications' : 'notifications_off' }}"
-            ></nb-icon>
-            <span>{{ notificationsEnabled ? 'Mute Notifications' : 'Enable Notifications' }}</span>
-          </button>
-          <button nb-menu-item (click)="markAllAsRead()">
-            <nb-icon icon="done_all"></nb-icon>
-            <span>Mark All as Read</span>
-          </button>
-          <button nb-menu-item (click)="archiveAllChats()">
-            <nb-icon icon="archive"></nb-icon>
-            <span>Archive All</span>
-          </button>
-        </nb-menu>
       </div>
     </div>
 
     <div class="chat-search">
-      <nb-form-field appearance="outline" class="search-field">
-        <nb-icon matPrefix>search"></nb-icon>
-        <input nbInput fullWidth placeholder="Search conversations..." [(ngModel)]="searchTerm" />
+      <nb-form-field>
+        <nb-icon nbPrefix icon="search-outline"></nb-icon>
+        <input
+          nbInput
+          fullWidth
+          type="text"
+          placeholder="Search conversations..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="filterConversations()"
+        />
         <button
-          *ngIf="searchTerm"
-          matSuffix
-          nb-icon-button
-          aria-label="Clear"
-          (click)="searchTerm = ''"
+          nbSuffix
+          nbButton
+          ghost
+          *ngIf="searchQuery"
+          (click)="clearSearch()"
+          nbTooltip="Clear search"
         >
-          <nb-icon icon="close"></nb-icon>
+          <nb-icon icon="close-outline"></nb-icon>
         </button>
       </nb-form-field>
-
-      <!-- Conversation Filters -->
-      <div class="conversation-filters">
-        <button
-          nbButton
-          [class.active]="currentFilter === 'all'"
-          (click)="filterConversations('all')"
-        >
-          All
-        </button>
-        <button
-          nbButton
-          [class.active]="currentFilter === 'unread'"
-          (click)="filterConversations('unread')"
-        >
-          Unread
-        </button>
-        <button
-          nbButton
-          [class.active]="currentFilter === 'archived'"
-          (click)="filterConversations('archived')"
-        >
-          Archived
-        </button>
-      </div>
     </div>
 
-    <div class="chat-contacts">
-      <!-- Loading State -->
-      <div *ngIf="loadingContacts" class="contacts-loading">
-        <emerald-skeleton-loader
-          type="list"
-          [count]="3"
-          [animated]="true"
-        ></emerald-skeleton-loader>
-      </div>
-
-      <!-- Contact List -->
+    <div class="conversation-list" #conversationList>
       <div
         *ngFor="let contact of filteredContacts"
-        class="contact-item"
-        [class.active]="selectedContactId === contact.id"
-        [class.unread]="contact.unreadCount > 0"
+        class="conversation-item"
+        [class.active]="contact.id === selectedContactId"
         (click)="selectContact(contact.id)"
       >
-        <emerald-avatar
-          [imageUrl]="contact.imageUrl"
+        <app-avatar
+          [imageUrl]="contact.profileImage"
           [name]="contact.name"
-          [isOnline]="contact.online"
+          [status]="contact.status"
           size="medium"
-        >
-        </emerald-avatar>
-
-        <div class="contact-info">
-          <div class="contact-name-row">
-            <div class="contact-name">{{ contact.name }}</div>
-            <div class="contact-time">{{ contact.lastMessageTime | date: 'shortTime' }}</div>
+        ></app-avatar>
+        <div class="conversation-info">
+          <div class="conversation-header">
+            <span class="contact-name">{{ contact.name }}</span>
+            <span class="last-message-time">{{
+              contact.lastMessage?.timestamp | date: 'shortTime'
+            }}</span>
           </div>
-          <div class="contact-preview-row">
-            <div class="contact-preview">
-              <span *ngIf="contact.typing" class="typing-indicator">typing...</span>
-              <span *ngIf="!contact.typing">{{ contact.lastMessage }}</span>
-            </div>
-            <div class="contact-badges">
-              <div class="unread-badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
-              <nb-icon *ngIf="contact.pinned" class="pin-icon">push_pin"></nb-icon>
-            </div>
+          <div class="conversation-preview">
+            <p class="last-message">
+              {{ contact.lastMessage?.content || 'No messages yet' }}
+            </p>
+            <nb-badge
+              *ngIf="contact.unreadCount"
+              [text]="contact.unreadCount.toString()"
+              status="primary"
+              position="top right"
+            ></nb-badge>
           </div>
         </div>
       </div>
 
-      <!-- Empty State -->
-      <div *ngIf="filteredContacts.length === 0 && !loadingContacts" class="empty-contacts">
-        <nb-icon icon="forum"></nb-icon>
+      <div *ngIf="loading" class="loading-conversations">
+        <app-skeleton-loader *ngFor="let i of [1, 2, 3, 4, 5]"></app-skeleton-loader>
+      </div>
+
+      <div *ngIf="!loading && filteredContacts.length === 0" class="no-conversations">
+        <nb-icon icon="message-circle-outline" size="large"></nb-icon>
         <p>No conversations found</p>
-        <button nbButton appearance="outline" color="primary" (click)="openNewMessageDialog()">
-          <nb-icon icon="add"></nb-icon>
-          Start a new chat
-        </button>
       </div>
     </div>
   </div>
 
   <!-- Main Chat Area -->
   <div class="chat-main">
-    <!-- Active Conversation -->
-    <div *ngIf="selectedContactId" class="chat-conversation">
-      <!-- Conversation Header -->
-      <div class="chat-main-header">
-        <div class="header-left">
-          <button
-            nbButton
-            ghost
-            class="back-button"
-            (click)="deselectContact()"
-            nbTooltip="Back to conversations"
-          >
-            <nb-icon icon="arrow_back"></nb-icon>
-          </button>
-
-          <emerald-avatar
-            [imageUrl]="getSelectedContact()?.imageUrl"
-            [name]="getSelectedContact()?.name"
-            [isOnline]="getSelectedContact()?.online"
-            size="medium"
-            (avatarClick)="viewContactProfile()"
-          >
-          </emerald-avatar>
-
-          <div class="chat-recipient">
-            <div class="recipient-name">{{ getSelectedContact()?.name }}</div>
-            <div class="recipient-status" [class.online]="getSelectedContact()?.online">
-              {{
-                getSelectedContact()?.online
-                  ? 'Online'
-                  : 'Last seen ' + (getSelectedContact()?.lastSeen | date: 'shortTime')
-              }}
-            </div>
-          </div>
-        </div>
-
-        <div class="header-actions">
-          <button nbButton ghost nbTooltip="Media Gallery" (click)="openMediaGallery()">
-            <nb-icon icon="photo_library"></nb-icon>
-          </button>
-          <button nbButton ghost nbTooltip="Search in Conversation" (click)="openSearchInChat()">
-            <nb-icon icon="search"></nb-icon>
-          </button>
-          <button nbButton ghost [nbContextMenu]="chatMenu" nbTooltip="More Options">
-            <nb-icon icon="more_vert"></nb-icon>
-          </button>
-          <nb-menu #chatMenu="matMenu">
-            <button nb-menu-item (click)="togglePin()">
-              <nb-icon icon="{{ isPinned() ? 'push_pin' : 'push_pin' }}"></nb-icon>
-              <span>{{ isPinned() ? 'Unpin Conversation' : 'Pin Conversation' }}</span>
-            </button>
-            <button nb-menu-item [nbContextMenu]="autoDeletionMenu">
-              <nb-icon icon="auto_delete"></nb-icon>
-              <span>Message Auto-Deletion</span>
-            </button>
-            <button nb-menu-item (click)="blockContact()">
-              <nb-icon icon="block"></nb-icon>
-              <span>Block Contact</span>
-            </button>
-            <button nb-menu-item (click)="clearConversation()">
-              <nb-icon icon="delete_sweep"></nb-icon>
-              <span>Clear Conversation</span>
-            </button>
-          </nb-menu>
-
-          <!-- Auto-Deletion Submenu -->
-          <nb-menu #autoDeletionMenu="matMenu">
-            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 1)">
-              <nb-icon icon="timer"></nb-icon>
-              <span>Delete after 1 day</span>
-            </button>
-            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 7)">
-              <nb-icon icon="timer"></nb-icon>
-              <span>Delete after 7 days</span>
-            </button>
-            <button nb-menu-item (click)="configureMessageAutoDeletion(true, 30)">
-              <nb-icon icon="timer"></nb-icon>
-              <span>Delete after 30 days</span>
-            </button>
-            <button nb-menu-item (click)="configureMessageAutoDeletion(false, 0)">
-              <nb-icon icon="timer_off"></nb-icon>
-              <span>Disable auto-deletion</span>
-            </button>
-          </nb-menu>
-        </div>
-      </div>
-
-      <!-- Message List -->
-      <div class="message-list" #messageList>
-        <div class="message-group" *ngFor="let group of messageGroups">
-          <div class="date-separator">{{ group.date | date }}</div>
-
-          <div
-            class="message"
-            *ngFor="let message of group.messages"
-            [id]="'message-' + message._id"
-            [ngClass]="{
-              'message--outgoing': message.sender.id === currentUserId,
-              'message--incoming': message.sender.id !== currentUserId,
-              'message--expiring': message.expiresAt,
-              'message--about-to-expire': isAboutToExpire(message.expiresAt),
-            }"
-          >
-            <!-- Message Content -->
-            <div class="message__content">
-              <div
-                class="message-bubble"
-                [class.temporary-message]="message.expiresAt"
-                [class.about-to-expire]="message.expiresAt && isAboutToExpire(message.expiresAt)"
-              >
-                <!-- Temporary Message Indicator -->
-                <div
-                  *ngIf="message.expiresAt"
-                  class="temporary-message-indicator"
-                  [nbTooltip]="getRemainingTime(message.expiresAt)"
-                >
-                  <nb-icon icon="timer"></nb-icon>
-                </div>
-
-                <!-- Message Text -->
-                <div
-                  class="message-content"
-                  [innerHTML]="formatMessageContent(message.message)"
-                ></div>
-
-                <!-- Message Attachments -->
-                <div
-                  *ngIf="message.attachments && message.attachments.length > 0"
-                  class="message-attachments"
-                >
-                  <!-- Image Attachment -->
-                  <div *ngFor="let attachment of message.attachments" class="attachment">
-                    <img
-                      *ngIf="isImageAttachment(attachment)"
-                      [src]="attachment.url"
-                      [alt]="attachment.name"
-                      (click)="openImagePreview(attachment)"
-                    />
-
-                    <!-- File Attachment -->
-                    <div
-                      *ngIf="!isImageAttachment(attachment)"
-                      class="file-attachment"
-                      (click)="downloadAttachment(attachment)"
-                    >
-                      <nb-icon icon="{{ getFileIcon(attachment) }}"></nb-icon>
-                      <div class="file-info">
-                        <div class="file-name">{{ attachment.name }}</div>
-                        <div class="file-size">{{ formatFileSize(attachment.size) }}</div>
-                      </div>
-                      <button nbButton ghost>
-                        <nb-icon icon="download"></nb-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Message Metadata -->
-                <div class="message-meta">
-                  <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
-                  <!-- Expiry indicator for temporary messages -->
-                  <span
-                    *ngIf="message.expiresAt"
-                    class="message-expiry"
-                    [nbTooltip]="getRemainingTime(message.expiresAt)"
-                  >
-                    <nb-icon class="expiry-icon">timer"></nb-icon>
-                  </span>
-                  <span
-                    *ngIf="message.sender.id === currentUserId"
-                    class="message-status"
-                    [class.read]="message.read"
-                  >
-                    <nb-icon class="status-icon"
-                      >{{ message.read ? 'done_all' : 'done' }}"></nb-icon
-                    >
-                  </span>
-                </div>
-              </div>
-
-              <!-- Expiry Indicator -->
-              <span
-                *ngIf="message.expiresAt"
-                class="message__expiry"
-                [nbTooltip]="getRemainingTime(message.expiresAt)"
-              >
-                <nb-icon [class.rotating]="isAboutToExpire(message.expiresAt)">timer"></nb-icon>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Typing Indicator -->
-        <div *ngIf="isContactTyping" class="typing-indicator-container">
-          <emerald-avatar
-            [imageUrl]="getSelectedContact()?.imageUrl"
-            [name]="getSelectedContact()?.name"
+    <ng-container *ngIf="selectedContactId; else noChat">
+      <div class="chat-header">
+        <div class="contact-info">
+          <app-avatar
+            [imageUrl]="selectedContact?.profileImage"
+            [name]="selectedContact?.name"
+            [status]="selectedContact?.status"
             size="small"
-          >
-          </emerald-avatar>
-          <div class="typing-bubble">
-            <div class="typing-dots">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+          ></app-avatar>
+          <div class="contact-details">
+            <h3>{{ selectedContact?.name }}</h3>
+            <span class="status-text">{{ selectedContact?.status | titlecase }}</span>
           </div>
         </div>
-
-        <!-- Empty State -->
-        <div *ngIf="messages.length === 0" class="empty-messages">
-          <nb-icon icon="chat"></nb-icon>
-          <h3>No messages yet</h3>
-          <p>Start the conversation by sending a message below!</p>
+        <div class="chat-actions">
+          <button nbButton ghost nbTooltip="Voice Call">
+            <nb-icon icon="phone-outline"></nb-icon>
+          </button>
+          <button nbButton ghost nbTooltip="Video Call">
+            <nb-icon icon="video-outline"></nb-icon>
+          </button>
+          <button nbButton ghost nbTooltip="Chat Info" [nbContextMenu]="chatMenuItems">
+            <nb-icon icon="more-vertical-outline"></nb-icon>
+          </button>
         </div>
       </div>
 
-      <!-- Reply Preview (if replying to a message) -->
-      <div *ngIf="replyingTo" class="reply-preview">
-        <div class="reply-content">
-          <nb-icon icon="reply"></nb-icon>
-          <div class="reply-text">
-            <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
-            <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
-          </div>
-        </div>
-        <button nbButton ghost (click)="cancelReply()">
-          <nb-icon icon="close"></nb-icon>
-        </button>
-      </div>
-
-      <!-- Message Input Area -->
-      <div class="message-input-area">
-        <!-- Reply Preview -->
-        <div class="reply-preview" *ngIf="replyingTo">
-          <div class="reply-content">
-            <nb-icon icon="reply"></nb-icon>
-            <div class="reply-text">
-              <div class="reply-to">Replying to {{ replyingTo.sender.username }}</div>
-              <div class="reply-message">{{ truncateMessage(replyingTo.message) }}</div>
+      <div class="messages-container" #messagesContainer>
+        <div class="messages-list">
+          <div *ngFor="let message of currentMessages" class="message-group">
+            <div class="message-date" *ngIf="showMessageDate(message)">
+              {{ message.timestamp | date }}
             </div>
-          </div>
-          <button nbButton ghost (click)="cancelReply()">
-            <nb-icon icon="close"></nb-icon>
-          </button>
-        </div>
-
-        <!-- Temporary Message Mode Indicator -->
-        <div class="temp-message-indicator" *ngIf="temporaryMessageMode">
-          <nb-icon icon="timer"></nb-icon>
-          <span>Temporary message mode: {{ formatTTL(temporaryMessageTTL) }}</span>
-          <button nbButton ghost (click)="toggleTemporaryMessageMode()">
-            <nb-icon icon="close"></nb-icon>
-          </button>
-        </div>
-
-        <!-- Input Controls -->
-        <div class="input-controls">
-          <!-- Attachment Button -->
-          <button nbButton ghost (click)="openAttachmentMenu()" nbTooltip="Add attachment">
-            <nb-icon icon="attach_file"></nb-icon>
-          </button>
-
-          <!-- Temporary Message Toggle -->
-          <button
-            nbButton
-            ghost
-            (click)="toggleTemporaryMessageMode()"
-            [class.active]="temporaryMessageMode"
-            [nbTooltip]="
-              temporaryMessageMode ? 'Disable temporary message' : 'Enable temporary message'
-            "
-          >
-            <nb-icon icon="timer"></nb-icon>
-          </button>
-
-          <!-- Text Input -->
-          <div class="message-input" [class.temp-message-mode]="temporaryMessageMode">
-            <textarea
-              [(ngModel)]="newMessage"
-              (keyup.enter)="handleEnterKey($event)"
-              (input)="onTyping()"
-              [placeholder]="
-                temporaryMessageMode ? 'Type a temporary message...' : 'Type a message...'
-              "
-              #messageInput
+            <div
+              class="message"
+              [class.outgoing]="message.senderId === currentUserId"
+              [class.incoming]="message.senderId !== currentUserId"
             >
-            </textarea>
+              <div class="message-content">
+                <p>{{ message.content }}</p>
+                <span class="message-time">{{ message.timestamp | date: 'shortTime' }}</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Emoji Picker -->
-          <button nbButton ghost (click)="toggleEmojiPicker()" nbTooltip="Add emoji">
-            <nb-icon icon="sentiment_satisfied_alt"></nb-icon>
-          </button>
-
-          <!-- Send Button -->
-          <button
-            nbButton
-            ghost
-            (click)="sendMessage()"
-            [disabled]="!canSendMessage()"
-            nbTooltip="Send message"
-          >
-            <nb-icon icon="send"></nb-icon>
-          </button>
+          <div *ngIf="isTyping" class="typing-indicator">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
         </div>
+      </div>
 
-        <!-- Emoji Picker Panel -->
-        <div class="emoji-picker" *ngIf="showEmojiPicker">
-          <div class="emoji-categories">
+      <div class="message-input">
+        <nb-form-field>
+          <nb-icon nbPrefix icon="message-square-outline"></nb-icon>
+          <input
+            nbInput
+            fullWidth
+            type="text"
+            placeholder="Type a message..."
+            [(ngModel)]="newMessage"
+            (keyup.enter)="sendMessage()"
+            (input)="onTyping()"
+          />
+          <div nbSuffix class="message-actions">
+            <button nbButton ghost nbTooltip="Add attachment">
+              <nb-icon icon="attach-outline"></nb-icon>
+            </button>
+            <button nbButton ghost nbTooltip="Add emoji">
+              <nb-icon icon="smiling-face-outline"></nb-icon>
+            </button>
             <button
               nbButton
-              ghost
-              *ngFor="let category of emojiCategories"
-              (click)="selectEmojiCategory(category)"
+              status="primary"
+              size="small"
+              [disabled]="!newMessage.trim()"
+              (click)="sendMessage()"
             >
-              <nb-icon icon="{{ category.icon }}"></nb-icon>
+              <nb-icon icon="paper-plane-outline"></nb-icon>
             </button>
           </div>
-          <div class="emoji-list">
-            <button
-              *ngFor="let emoji of currentCategoryEmojis"
-              class="emoji-item"
-              (click)="addEmoji(emoji)"
-            >
-              {{ emoji }}
-            </button>
-          </div>
-        </div>
+        </nb-form-field>
       </div>
+    </ng-container>
 
-      <!-- Message Settings Menu -->
-      <nb-menu #messageSettings="matMenu">
-        <button nb-menu-item (click)="configureMessageAutoDeletion(!messageAutoDeletionEnabled, 7)">
-          <nb-icon icon="{{ messageAutoDeletionEnabled ? 'timer_off' : 'timer' }}"></nb-icon>
-          <span>{{
-            messageAutoDeletionEnabled ? 'Disable auto-deletion' : 'Enable auto-deletion'
-          }}</span>
-        </button>
-
-        <nb-divider></nb-divider>
-
-        <!-- Temporary Message Duration Options -->
-        <button nb-menu-item [nbContextMenu]="tempMessageDuration">
-          <nb-icon icon="schedule"></nb-icon>
-          <span>Temporary message duration</span>
-        </button>
-      </nb-menu>
-
-      <!-- Temporary Message Duration Submenu -->
-      <nb-menu #tempMessageDuration="matMenu">
-        <button nb-menu-item (click)="setTemporaryMessageTTL(1)">1 hour</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(4)">4 hours</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(8)">8 hours</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(24)">1 day</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(48)">2 days</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(72)">3 days</button>
-        <button nb-menu-item (click)="setTemporaryMessageTTL(168)">7 days</button>
-      </nb-menu>
-    </div>
-
-    <!-- Empty State (No Conversation Selected) -->
-    <div *ngIf="!selectedContactId" class="empty-state">
-      <div class="empty-state-content">
-        <nb-icon class="empty-icon">chat"></nb-icon>
+    <ng-template #noChat>
+      <div class="no-chat-selected">
+        <nb-icon icon="message-square-outline" size="huge"></nb-icon>
         <h3>Select a conversation</h3>
-        <p>Choose a contact from the list to start chatting</p>
-        <button nbButton status="primary" color="primary" (click)="openNewMessageDialog()">
-          <nb-icon icon="add"></nb-icon>
-          Start a new chat
-        </button>
+        <p>Choose a contact to start chatting</p>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>
 
@@ -520,13 +196,13 @@
         class="contact-option"
         (click)="selectNewMessageContact(contact)"
       >
-        <emerald-avatar
+        <nb-user
           [imageUrl]="contact.imageUrl"
           [name]="contact.name"
           [isOnline]="contact.online"
           size="small"
         >
-        </emerald-avatar>
+        </nb-user>
         <div class="contact-name">{{ contact.name }}</div>
       </div>
 

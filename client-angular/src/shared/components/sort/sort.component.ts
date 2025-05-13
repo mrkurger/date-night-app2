@@ -15,7 +15,7 @@ import {
 } from '../../../app/shared/components/custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
-import { NbButtonModule } from '@nebular/theme';
+import { NbButtonModule, NbSortEvent } from '@nebular/theme';
 
 export interface NbSortEvent {
   active: string;

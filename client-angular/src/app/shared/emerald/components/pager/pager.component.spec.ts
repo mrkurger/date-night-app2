@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PagerComponent } from './pager.component';
@@ -69,7 +70,7 @@ describe('PagerComponent', () => {
     spyOn(component.pageChange, 'emit');
 
     // Get the page buttons
-    const pageButtons = fixture.debugElement.queryAll(By.css('.emerald-pager__button--page'));
+    const pageButtons = fixture.debugElement.queryAll(By.css('.nb-paginator__button--page'));
 
     // Click on page 4
     pageButtons[3].nativeElement.click();
@@ -82,7 +83,7 @@ describe('PagerComponent', () => {
     spyOn(component.pageChange, 'emit');
 
     // Get the next button
-    const nextButton = fixture.debugElement.query(By.css('.emerald-pager__button--next'));
+    const nextButton = fixture.debugElement.query(By.css('.nb-paginator__button--next'));
 
     // Click on next button
     nextButton.nativeElement.click();
@@ -95,7 +96,7 @@ describe('PagerComponent', () => {
     spyOn(component.pageChange, 'emit');
 
     // Get the previous button
-    const prevButton = fixture.debugElement.query(By.css('.emerald-pager__button--prev'));
+    const prevButton = fixture.debugElement.query(By.css('.nb-paginator__button--prev'));
 
     // Click on previous button
     prevButton.nativeElement.click();
@@ -109,7 +110,7 @@ describe('PagerComponent', () => {
     fixture.detectChanges();
 
     // Get the previous button
-    const prevButton = fixture.debugElement.query(By.css('.emerald-pager__button--prev'));
+    const prevButton = fixture.debugElement.query(By.css('.nb-paginator__button--prev'));
 
     // Expect previous button to be disabled
     expect(prevButton.nativeElement.disabled).toBeTruthy();
@@ -120,7 +121,7 @@ describe('PagerComponent', () => {
     fixture.detectChanges();
 
     // Get the next button
-    const nextButton = fixture.debugElement.query(By.css('.emerald-pager__button--next'));
+    const nextButton = fixture.debugElement.query(By.css('.nb-paginator__button--next'));
 
     // Expect next button to be disabled
     expect(nextButton.nativeElement.disabled).toBeTruthy();
@@ -128,15 +129,15 @@ describe('PagerComponent', () => {
 
   it('should highlight the current page', () => {
     // Get the page buttons
-    const pageButtons = fixture.debugElement.queryAll(By.css('.emerald-pager__button--page'));
+    const pageButtons = fixture.debugElement.queryAll(By.css('.nb-paginator__button--page'));
 
     // Expect the third button (page 3) to have the active class
-    expect(pageButtons[2].nativeElement.classList).toContain('emerald-pager__button--active');
+    expect(pageButtons[2].nativeElement.classList).toContain('nb-paginator__button--active');
   });
 
   it('should show page size selector when showPageSize is true', () => {
     // Initially, page size selector should not be shown
-    let pageSizeSelector = fixture.debugElement.query(By.css('.emerald-pager__size-selector'));
+    let pageSizeSelector = fixture.debugElement.query(By.css('.nb-paginator__size-selector'));
     expect(pageSizeSelector).toBeNull();
 
     // Set showPageSize to true
@@ -144,7 +145,7 @@ describe('PagerComponent', () => {
     fixture.detectChanges();
 
     // Now, page size selector should be shown
-    pageSizeSelector = fixture.debugElement.query(By.css('.emerald-pager__size-selector'));
+    pageSizeSelector = fixture.debugElement.query(By.css('.nb-paginator__size-selector'));
     expect(pageSizeSelector).toBeTruthy();
   });
 
@@ -168,15 +169,15 @@ describe('PagerComponent', () => {
 
   it('should apply the correct CSS classes based on style, size, and align props', () => {
     // Get the pager container
-    const pagerContainer = fixture.debugElement.query(By.css('.emerald-pager'));
+    const pagerContainer = fixture.debugElement.query(By.css('.nb-paginator'));
 
     // Initially, no style, size, or align classes should be applied
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--simple');
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--compact');
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--small');
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--large');
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--left');
-    expect(pagerContainer.nativeElement.classList).not.toContain('emerald-pager--right');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--simple');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--compact');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--small');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--large');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--left');
+    expect(pagerContainer.nativeElement.classList).not.toContain('nb-paginator--right');
 
     // Set style, size, and align props
     component.style = 'simple';
@@ -185,8 +186,8 @@ describe('PagerComponent', () => {
     fixture.detectChanges();
 
     // Now, the corresponding classes should be applied
-    expect(pagerContainer.nativeElement.classList).toContain('emerald-pager--simple');
-    expect(pagerContainer.nativeElement.classList).toContain('emerald-pager--small');
-    expect(pagerContainer.nativeElement.classList).toContain('emerald-pager--left');
+    expect(pagerContainer.nativeElement.classList).toContain('nb-paginator--simple');
+    expect(pagerContainer.nativeElement.classList).toContain('nb-paginator--small');
+    expect(pagerContainer.nativeElement.classList).toContain('nb-paginator--left');
   });
 });

@@ -10,38 +10,41 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-gallery',
   template: `
-    <div class="gallery-container mat-elevation-z2">
+    <div class="gallery-container">
       <nb-card>
         <nb-card-header>
-          <nb-card-title>Photo Gallery</mat-card-title>
+          <h5>Photo Gallery</h5>
           <div class="view-toggle">
             <button
-              mat-icon-button
-              [color]="viewMode === 'grid' ? 'primary' : ''"
+              nbButton
+              ghost
+              [status]="viewMode === 'grid' ? 'primary' : 'basic'"
               (click)="setViewMode('grid')"
-              aria-label="Grid view"
+              nbTooltip="Grid view"
             >
-              <nb-icon icon="grid_view"></nb-icon>
+              <nb-icon icon="grid-outline"></nb-icon>
             </button>
             <button
-              mat-icon-button
-              [color]="viewMode === 'list' ? 'primary' : ''"
+              nbButton
+              ghost
+              [status]="viewMode === 'list' ? 'primary' : 'basic'"
               (click)="setViewMode('list')"
-              aria-label="List view"
+              nbTooltip="List view"
             >
-              <nb-icon icon="view_list"></nb-icon>
+              <nb-icon icon="list-outline"></nb-icon>
             </button>
           </div>
         </nb-card-header>
-        <nb-card-content>
+        <nb-card-body>
           <div
             [ngClass]="{ 'gallery-grid': viewMode === 'grid', 'gallery-list': viewMode === 'list' }"
           >
@@ -74,11 +77,21 @@ import { Subscription } from 'rxjs';
       .view-toggle {
         display: flex;
         margin-left: auto;
+        gap: 8px;
       }
     `,
   ],
   standalone: true,
-  imports: [CommonModule, RouterModule, SharedModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+  ],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

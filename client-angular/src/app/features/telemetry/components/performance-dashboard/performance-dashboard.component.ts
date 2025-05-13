@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 import {
   NbPaginatorModule,
   NbSortModule,
@@ -25,7 +25,7 @@ import {
   NbButtonModule,
   NbIconModule,
   NbSpinnerModule,
-} from '@nebular/theme';
+, NbSortEvent} from '@nebular/theme';
 import {
   TelemetryService,
   PerformanceTelemetry,

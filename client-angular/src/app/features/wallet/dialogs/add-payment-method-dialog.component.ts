@@ -12,6 +12,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {

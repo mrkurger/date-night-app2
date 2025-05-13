@@ -3,95 +3,21 @@
 @use '@nebular/theme/styles/themes/dark' as dark-theme;
 @use '@nebular/theme/styles/globals' as *;
 
-// Custom theme variables
-$theme: (
-  // Base colors
-  color-primary-100: #f2f6ff,
-  color-primary-200: #d9e4ff,
-  color-primary-300: #a6c1ff,
-  color-primary-400: #598bff,
-  color-primary-500: #3366ff,
-  color-primary-600: #274bdb,
-  color-primary-700: #1a34b8,
-  color-primary-800: #102694,
-  color-primary-900: #091c7a,
+// Import Eva Icons
+@import 'eva-icons/style/eva-icons.css';
 
-  // Basic colors
-  color-basic-100: #ffffff,
-  color-basic-200: #f7f9fc,
-  color-basic-300: #edf1f7,
-  color-basic-400: #e4e9f2,
-  color-basic-500: #c5cee0,
-  color-basic-600: #8f9bb3,
-  color-basic-700: #2e3a59,
-  color-basic-800: #222b45,
-  color-basic-900: #1a2138,
-  color-basic-1000: #151a30,
-  color-basic-1100: #101426,
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-  // Text colors
-  text-basic-color: color-basic-800,
-  text-disabled-color: color-basic-600,
-  text-hint-color: color-basic-600,
+// Import Design System
+@use './app/core/design/design-tokens' as tokens;
+@use './app/core/design/nebular-theme-customization' as theme;
 
-  // Background colors
-  background-basic-color-1: color-basic-100,
-  background-basic-color-2: color-basic-200,
-  background-basic-color-3: color-basic-300,
-  background-basic-color-4: color-basic-400,
+// Register custom themes
+$nb-themes: nb-register-theme(theme.$date-night-theme, default, default-theme.$theme);
+$nb-themes: nb-register-theme(theme.$date-night-dark-theme, dark, dark-theme.$theme);
 
-  // Border colors
-  border-basic-color-1: color-basic-100,
-  border-basic-color-2: color-basic-200,
-  border-basic-color-3: color-basic-300,
-  border-basic-color-4: color-basic-400,
-  border-basic-color-5: color-basic-500,
-
-  // Divider color
-  divider-color: color-basic-300,
-
-  // Shadow
-  shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1)
-);
-
-$dark-theme: (
-  // Dark theme variables
-  color-basic-100: #1b1b38,
-  color-basic-200: #1a1a37,
-  color-basic-300: #24243e,
-  color-basic-400: #2b2b4c,
-  color-basic-500: #363b62,
-  color-basic-600: #4c5188,
-  color-basic-700: #6c72ac,
-  color-basic-800: #8f94cc,
-  color-basic-900: #b5b9e5,
-  color-basic-1000: #dcdefc,
-  color-basic-1100: #f7f8ff,
-
-  background-basic-color-1: color-basic-100,
-  background-basic-color-2: color-basic-200,
-  background-basic-color-3: color-basic-300,
-  background-basic-color-4: color-basic-400,
-
-  border-basic-color-1: color-basic-100,
-  border-basic-color-2: color-basic-200,
-  border-basic-color-3: color-basic-300,
-  border-basic-color-4: color-basic-400,
-  border-basic-color-5: color-basic-500,
-
-  text-basic-color: color-basic-1000,
-  text-disabled-color: color-basic-600,
-  text-hint-color: color-basic-600,
-
-  divider-color: color-basic-300,
-
-  shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2)
-);
-
-$nb-themes: nb-register-theme($theme, default, default-theme.$default);
-$nb-themes: nb-register-theme($dark-theme, dark, dark-theme.$dark);
-
-// Include Nebular styles
+// Install Nebular Theme
 @include nb-install() {
   @include nb-theme-global();
 }
@@ -99,15 +25,64 @@ $nb-themes: nb-register-theme($dark-theme, dark, dark-theme.$dark);
 // Global styles
 html,
 body {
-  margin: 0;
-  padding: 0;
   height: 100%;
+  margin: 0;
+  font-family: tokens.$font-primary;
+  background-color: tokens.$neutral-50;
+  color: tokens.$neutral-900;
 }
 
-body {
-  font-family: var(--text-paragraph-font-family);
-  font-size: var(--text-paragraph-font-size);
-  line-height: var(--text-paragraph-line-height);
-  color: var(--text-basic-color);
-  background-color: var(--background-basic-color-1);
+// Component styles
+nb-card {
+  margin-bottom: 1rem;
+  border-radius: nb-theme(card-border-radius);
+  box-shadow: nb-theme(card-shadow);
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
+
+// Form styles
+nb-form-field {
+  margin-bottom: 1rem;
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    font-family: nb-theme(text-paragraph-font-family);
+  }
+
+  &.has-error {
+    .error-message {
+      color: nb-theme(color-danger-500);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+// Button styles
+[nbButton] {
+  font-family: nb-theme(text-paragraph-font-family) !important;
+  font-weight: nb-theme(text-button-font-weight) !important;
+  text-transform: nb-theme(text-button-text-transform) !important;
+  border-radius: nb-theme(button-border-radius) !important;
+  padding: nb-theme(button-padding) !important;
+  transition: all nb-theme(transition-duration) nb-theme(transition-timing-function) !important;
+}
+
+// Utility classes
+@import './app/core/design/bem-utilities';
+@import './app/core/design/responsive-utilities';
+@import './app/core/design/accessibility-utilities';
+@import './app/core/design/animation-utilities';
+@import './app/core/design/dark-mode';
+@import './app/core/design/components';
+@import './app/core/design/typography-mixins';
+@import './app/core/design/spacing-utilities';
+@import './app/core/design/micro-interactions';

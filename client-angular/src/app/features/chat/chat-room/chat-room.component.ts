@@ -1,13 +1,4 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (chat-room.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { 
+import {
   Component,
   OnInit,
   OnDestroy,
@@ -15,62 +6,108 @@ import {
   ElementRef,
   AfterViewChecked,
   ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import {
+  NbCardModule,
+  NbUserModule,
+  NbActionsModule,
+  NbContextMenuModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbButtonModule,
+} from '@nebular/theme';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ChatService, ChatMessage, ChatRoom } from '../../../core/services/chat.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { EncryptionService } from '../../../core/services/encryption.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ChatMessageComponent } from '../../../shared/components/chat-message/chat-message.component';
-import { ChatSettingsComponent } from '../../../shared/components/chat-settings/chat-settings.component';
+
+interface ChatUser {
+  id: string;
+  username: string;
+  avatar?: string;
+}
 
 @Component({
-  
   selector: 'app-chat-room',
   standalone: true,
-  imports: [CommonModule, FormsModule, ChatMessageComponent, ChatSettingsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NbCardModule,
+    NbUserModule,
+    NbActionsModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    ChatMessageComponent,
+  ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })
 export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @ViewChild('messageContainer') messageContainer!: ElementRef;
+  @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
 
   roomId = '';
   room: ChatRoom | null = null;
   messages: ChatMessage[] = [];
-  newMessage = '';
   loading = true;
   loadingMore = false;
   showSettings = false;
 
   currentUserId = '';
-  otherUser: any = null;
-
-  isEncryptionEnabled = false;
-  encryptionStatus: 'enabled' | 'disabled' | 'initializing' = 'initializing';
+  otherUser: ChatUser | null = null;
 
   private subscriptions: Subscription[] = [];
-  private scrollToBottom = true;
+  private shouldScrollToBottom = true;
   private oldestMessageId: string | null = null;
-  hasMoreMessages = true; // Made public for template access // Made public for template access // Made public for template access // Made public for template access // Made public for template access
+  hasMoreMessages = true;
+
+  contact: ChatUser | null = null;
+  isTyping = false;
+  private destroy$ = new Subject<void>();
+
+  messageForm = new FormGroup({
+    message: new FormControl('', [Validators.required]),
+  });
+
+  chatActions = [
+    { title: 'View Profile', icon: 'person-outline' },
+    { title: 'Clear Chat', icon: 'trash-2-outline' },
+    { title: 'Block User', icon: 'slash-outline' },
+    { title: 'Report', icon: 'alert-triangle-outline' },
+  ];
+
+  newMessage = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private chatService: ChatService,
     private authService: AuthService,
-    private encryptionService: EncryptionService,
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) {
+    this.currentUserId = this.authService.getCurrentUserId();
+  }
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.getCurrentUserId();
-
-    // Get room ID from route params
     this.route.paramMap.subscribe((params) => {
       const roomId = params.get('id');
       if (roomId) {
@@ -78,22 +115,30 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.loadRoom();
         this.loadMessages();
         this.setupSocketListeners();
-        this.checkEncryptionStatus();
       } else {
         this.router.navigate(['/chat']);
       }
     });
+
+    // Subscribe to typing status
+    this.subscriptions.push(
+      this.chatService.typingStatus$.pipe(takeUntil(this.destroy$)).subscribe((isTyping) => {
+        this.isTyping = isTyping;
+        this.scrollToBottomIfNeeded();
+      }),
+    );
   }
 
   ngAfterViewChecked(): void {
-    if (this.scrollToBottom) {
-      this.scrollMessagesToBottom();
-      this.scrollToBottom = false;
+    if (this.shouldScrollToBottom) {
+      this.scrollToBottomIfNeeded();
+      this.shouldScrollToBottom = false;
     }
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
+    this.destroy$.next();
+    this.destroy$.complete();
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
@@ -105,12 +150,10 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.chatService.getRooms().subscribe(
       (rooms) => {
-        const room = rooms.find((r) => r._id === this.roomId);
+        const room = rooms.find((r) => r.id === this.roomId);
         if (room) {
           this.room = room;
           this.determineOtherUser();
-
-          // Mark messages as read
           this.chatService.markMessagesAsRead(this.roomId).subscribe();
         } else {
           this.notificationService.error('Chat room not found');
@@ -136,13 +179,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       (messages) => {
         this.messages = messages;
         this.loading = false;
-        this.scrollToBottom = true;
+        this.shouldScrollToBottom = true;
 
         if (messages.length > 0) {
-          this.oldestMessageId = messages[messages.length - 1]._id;
+          this.oldestMessageId = messages[messages.length - 1].id;
         }
 
-        // If we got fewer messages than requested, there are no more
         this.hasMoreMessages = messages.length >= 50;
       },
       (error) => {
@@ -166,12 +208,10 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.getMessages(this.roomId, 50, this.oldestMessageId).subscribe(
       (messages) => {
         if (messages.length > 0) {
-          // Add messages to the end (they come in reverse chronological order)
           this.messages = [...this.messages, ...messages];
-          this.oldestMessageId = messages[messages.length - 1]._id;
+          this.oldestMessageId = messages[messages.length - 1].id;
         }
 
-        // If we got fewer messages than requested, there are no more
         this.hasMoreMessages = messages.length >= 50;
         this.loadingMore = false;
       },
@@ -187,71 +227,30 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Set up socket listeners for real-time updates
    */
   setupSocketListeners(): void {
-    // Connect to socket
     this.chatService.connectSocket();
 
-    // Listen for new messages
-    this.chatService.onNewMessage((message) => {
-      if (message.roomId === this.roomId) {
-        this.messages = [message, ...this.messages];
-        this.scrollToBottom = true;
+    this.subscriptions.push(
+      this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe((message) => {
+        if (message.roomId === this.roomId) {
+          this.messages = [message, ...this.messages];
+          this.shouldScrollToBottom = true;
 
-        // Mark message as read if it's not from current user
-        if (message.sender !== this.currentUserId) {
-          this.chatService.markAsRead(message._id).subscribe();
+          if (message.sender !== this.currentUserId) {
+            this.chatService.markMessageAsRead(message.id).subscribe();
+          }
         }
-      }
-    });
+      }),
+    );
 
-    // Listen for message read events
-    this.chatService.onMessageRead((data) => {
-      const { messageId } = data;
-      const message = this.messages.find((m) => m._id === messageId);
-      if (message) {
-        message.read = true;
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
-  /**
-   * Check encryption status for the room
-   */
-  async checkEncryptionStatus(): Promise<void> {
-    this.encryptionStatus = 'initializing';
-
-    try {
-      // Check if encryption is available
-      const isAvailable = this.encryptionService.isEncryptionAvailable();
-      if (!isAvailable) {
-        this.encryptionStatus = 'disabled';
-        return;
-      }
-
-      // Try to get the room key
-      const roomKey = await this.encryptionService.getRoomKey(this.roomId);
-      if (roomKey) {
-        this.encryptionStatus = 'enabled';
-        this.isEncryptionEnabled = true;
-      } else {
-        // Try to set up encryption for the room
-        this.encryptionService.setupRoomEncryption(this.roomId).subscribe(
-          (success) => {
-            this.encryptionStatus = success ? 'enabled' : 'disabled';
-            this.isEncryptionEnabled = success;
-          },
-          (error) => {
-            console.error('Error setting up encryption:', error);
-            this.encryptionStatus = 'disabled';
-            this.isEncryptionEnabled = false;
-          },
-        );
-      }
-    } catch (error) {
-      console.error('Error checking encryption status:', error);
-      this.encryptionStatus = 'disabled';
-      this.isEncryptionEnabled = false;
-    }
+    this.subscriptions.push(
+      this.chatService.messageRead$.pipe(takeUntil(this.destroy$)).subscribe((messageId) => {
+        const message = this.messages.find((m) => m.id === messageId);
+        if (message) {
+          message.read = true;
+          this.cdr.detectChanges();
+        }
+      }),
+    );
   }
 
   /**
@@ -262,15 +261,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
-    // Find the other user in the participants
-    const otherParticipant = this.room.participants.find((p) => p !== this.currentUserId);
+    const otherParticipant = this.room.participants.find((p) => p.id !== this.currentUserId);
     if (otherParticipant) {
-      // Get user details (this would be implemented in a real app)
-      // For now, we'll just use a placeholder
       this.otherUser = {
-        id: otherParticipant,
-        name: 'User ' + otherParticipant.substring(0, 5),
-        avatar: '/assets/img/default-profile.jpg',
+        id: otherParticipant.id,
+        username: otherParticipant.username,
+        avatar: otherParticipant.avatar || '/assets/img/default-profile.jpg',
       };
     }
   }
@@ -279,30 +275,32 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
    * Send a new message
    */
   sendMessage(): void {
-    if (!this.newMessage.trim()) {
-      return;
+    if (this.messageForm.valid && this.otherUser) {
+      const messageText = this.messageForm.get('message')?.value;
+      if (messageText) {
+        this.chatService
+          .sendMessage({
+            id: Date.now().toString(),
+            roomId: this.roomId,
+            sender: this.currentUserId,
+            receiver: this.otherUser.id,
+            content: messageText,
+            timestamp: new Date(),
+            read: false,
+          })
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.messageForm.reset();
+              this.scrollToBottomIfNeeded();
+            },
+            (error) => {
+              this.notificationService.error('Failed to send message');
+              console.error('Error sending message:', error);
+            },
+          );
+      }
     }
-
-    const content = this.newMessage.trim();
-    this.newMessage = '';
-
-    // Focus the input field after sending
-    setTimeout(() => {
-      this.messageInput.nativeElement.focus();
-    }, 0);
-
-    this.chatService.sendMessage(this.roomId, content).subscribe(
-      (message) => {
-        // Message will be added via socket listener
-        this.scrollToBottom = true;
-      },
-      (error) => {
-        console.error('Error sending message:', error);
-        this.notificationService.error('Failed to send message');
-        // Restore the message if it failed to send
-        this.newMessage = content;
-      },
-    );
   }
 
   /**
@@ -330,7 +328,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       .sendMessageWithAttachments(this.roomId, this.newMessage, files)
       .then((message) => {
         // Message will be added via socket listener
-        this.scrollToBottom = true;
+        this.scrollToBottomIfNeeded();
         this.newMessage = '';
       })
       .catch((error) => {
@@ -352,10 +350,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   /**
    * Scroll messages container to bottom
    */
-  scrollMessagesToBottom(): void {
-    if (this.messageContainer) {
-      const element = this.messageContainer.nativeElement;
-      element.scrollTop = element.scrollHeight;
+  scrollToBottomIfNeeded(): void {
+    try {
+      if (this.messageContainer) {
+        this.messageContainer.nativeElement.scrollTop =
+          this.messageContainer.nativeElement.scrollHeight;
+        this.cdr.detectChanges();
+      }
+    } catch (err) {
+      console.error('Error scrolling to bottom:', err);
     }
   }
 
@@ -364,8 +367,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   onScroll(event: Event): void {
     const element = event.target as HTMLElement;
-
-    // If scrolled near the top, load more messages
     if (element.scrollTop < 100 && this.hasMoreMessages && !this.loadingMore) {
       this.loadMoreMessages();
     }
@@ -394,5 +395,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   navigateBack(): void {
     this.router.navigate(['/chat']);
+  }
+
+  isOwnMessage(message: ChatMessage): boolean {
+    return message.sender === this.currentUserId;
   }
 }

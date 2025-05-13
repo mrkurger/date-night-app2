@@ -13,7 +13,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-} from '@angular/core';
+, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
 import { TelemetryService } from '../../core/services/telemetry.service';

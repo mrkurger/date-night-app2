@@ -7,37 +7,68 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
-import { routes, routingProviders } from './app.routes';
-import { CoreModule } from './core/core.module';
-import { NebularModule } from './shared/nebular.module';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from '../environments/environment';
+import { routes } from './app.routes';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
-
-const socketConfig: SocketIoConfig = {
-  url: environment.socketUrl || 'http://localhost:3000',
-  options: {},
-};
+import { CoreModule } from './core/core.module';
+import { NebularModule } from './shared/nebular.module';
+import { SocketIoModule } from 'ngx-socket-io';
+import { socketConfig } from './core/config/socket.config';
+import {
+  NbThemeModule,
+  NbMenuModule,
+  NbDialogModule,
+  NbToastrModule,
+  NbWindowModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbSidebarModule,
+  NbLayoutModule,
+  NbActionsModule,
+  NbUserModule,
+  NbSearchModule,
+  NbContextMenuModule,
+  NbButtonModule,
+  NbIconModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
     provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: true, // Enable PWA in all environments
+      enabled: true,
       registrationStrategy: 'registerImmediately',
     }),
-    routingProviders,
-    importProvidersFrom(CoreModule, NebularModule, SocketIoModule.forRoot(socketConfig)),
+    importProvidersFrom(
+      CoreModule,
+      NebularModule,
+      SocketIoModule.forRoot(socketConfig),
+      NbThemeModule.forRoot({ name: 'default' }),
+      NbLayoutModule,
+      NbActionsModule,
+      NbUserModule,
+      NbSearchModule,
+      NbContextMenuModule,
+      NbButtonModule,
+      NbIconModule,
+      NbMenuModule.forRoot(),
+      NbDialogModule.forRoot(),
+      NbToastrModule.forRoot(),
+      NbWindowModule.forRoot(),
+      NbDatepickerModule.forRoot(),
+      NbTimepickerModule.forRoot(),
+      NbSidebarModule.forRoot(),
+      NbEvaIconsModule,
+    ),
   ],
 };

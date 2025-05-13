@@ -1,26 +1,13 @@
 <!-- Emerald Label Component -->
 <!-- Documentation: https://docs-emerald.condorlabs.io/Label -->
 
-<span
-  class="emerald-label"
-  [ngClass]="{
-    'emerald-label--primary': variant === 'primary',
-    'emerald-label--success': variant === 'success',
-    'emerald-label--warning': variant === 'warning',
-    'emerald-label--danger': variant === 'danger',
-    'emerald-label--info': variant === 'info',
-    'emerald-label--neutral': variant === 'neutral',
-    'emerald-label--small': size === 'small',
-    'emerald-label--medium': size === 'medium',
-    'emerald-label--large': size === 'large',
-    'emerald-label--rounded': rounded,
-    'emerald-label--outlined': outlined,
-    'emerald-label--pill': pill,
-  }"
+<nb-tag
+  [text]="text"
+  [status]="variant"
+  [size]="size"
+  [appearance]="outlined ? 'outline' : 'filled'"
+  [removable]="false"
+  [selected]="false"
 >
-  <!-- Icon (if provided) -->
-  <i *ngIf="icon" class="emerald-label__icon {{ icon }}"></i>
-
-  <!-- Label Text -->
-  <span class="emerald-label__text">{{ text }}</span>
-</span>
+  <nb-icon *ngIf="icon" [icon]="icon"></nb-icon>
+</nb-tag>

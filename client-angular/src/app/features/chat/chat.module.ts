@@ -10,57 +10,24 @@
 // - ENABLE_END_TO_END_ENCRYPTION: Enable end-to-end encryption (default: true)
 // ===================================================
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbDialogModule,
-  NbIconModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbMenuModule,
-  NbTooltipModule,
-  NbTabsetModule,
-} from '@nebular/theme';
-
-// Chat Components
+import { SharedModule } from '../../shared/shared.module';
+import { ChatRoutingModule } from './chat-routing.module';
+import { ChatComponent } from './chat.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { ChatMessageComponent } from '../../shared/components/chat-message/chat-message.component';
 import { ChatSettingsComponent } from '../../shared/components/chat-settings/chat-settings.component';
-
-// Pipes
 import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 
-// Routes
-import { CHAT_ROUTES } from './chat.routes';
-
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(CHAT_ROUTES),
-
-    // Material Modules
-    NbDialogModule,
-    NbIconModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbMenuModule,
-    NbTooltipModule,
-    NbTabsetModule,
-
-    // Components
+  declarations: [
+    ChatComponent,
     ChatListComponent,
     ChatRoomComponent,
     ChatMessageComponent,
     ChatSettingsComponent,
-
-    // Pipes
-    LinkifyPipe,
   ],
+  imports: [SharedModule, ChatRoutingModule],
+  providers: [LinkifyPipe],
 })
 export class ChatModule {}

@@ -11,6 +11,12 @@ on:
     paths:
       - 'client-angular/**'
       - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
+  workflow_dispatch: # Allow manual triggering
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -24,12 +30,23 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js and Install Dependencies
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Cache Angular dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./client-angular/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-angular-
 
       - name: Ensure specific dependencies are installed
         run: |
@@ -49,12 +66,11 @@ jobs:
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ always() }}
         with:
-          name: test-results
-          path: |
-            ./client-angular/coverage
-            downloaded-reports/angular
+          name: angular-test-results
+          path: downloaded-reports/angular
+          retention-days: 14
           if-no-files-found: warn
 
   e2e:
@@ -68,12 +84,23 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js and Install Dependencies
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Cache Angular dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./client-angular/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-angular-
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -83,21 +110,32 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:4200'
           browser: chrome
+          record: false # Set to true if you have Cypress Dashboard
 
-      - name: Prepare Cypress screenshots directory
-        if: failure()
+      - name: Prepare Cypress results directory
+        if: ${{ always() }}
         run: |
-          mkdir -p downloaded-reports/angular/cypress-screenshots
-          cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress-screenshots/ || true
+          mkdir -p downloaded-reports/angular/cypress
+          
+          # Copy screenshots if they exist
+          if [ -d "./client-angular/cypress/screenshots" ]; then
+            mkdir -p downloaded-reports/angular/cypress/screenshots
+            cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress/screenshots/ || true
+          fi
+          
+          # Copy videos if they exist
+          if [ -d "./client-angular/cypress/videos" ]; then
+            mkdir -p downloaded-reports/angular/cypress/videos
+            cp -r ./client-angular/cypress/videos/* downloaded-reports/angular/cypress/videos/ || true
+          fi
 
-      - name: Upload Cypress screenshots
+      - name: Upload Cypress results
         uses: actions/upload-artifact@v4
-        if: failure()
+        if: ${{ always() }}
         with:
-          name: cypress-screenshots
-          path: |
-            ./client-angular/cypress/screenshots
-            downloaded-reports/angular/cypress-screenshots
+          name: cypress-results
+          path: downloaded-reports/angular/cypress
+          retention-days: 14
           if-no-files-found: warn
 
   lint:
@@ -111,14 +149,41 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js and Install Dependencies
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Cache Angular dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./client-angular/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-angular-${{ hashFiles('./client-angular/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-angular-
+
       - name: Run ESLint
         working-directory: ./client-angular
         run: npx ng lint client-angular
         # continue-on-error: true # <-- REMOVED: Lint errors will now fail the workflow
+        
+      - name: Generate lint report
+        if: ${{ failure() }}
+        working-directory: ./client-angular
+        run: |
+          mkdir -p ../downloaded-reports/angular/lint
+          npx ng lint client-angular --format json > ../downloaded-reports/angular/lint/eslint-report.json || true
+          
+      - name: Upload lint report
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-report
+          path: downloaded-reports/angular/lint
+          retention-days: 14
+          if-no-files-found: warn

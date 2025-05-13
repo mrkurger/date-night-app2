@@ -1,3 +1,6 @@
+import { Input } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // This file contains settings for component configuration (notes-dialog.component)
 //

@@ -11,7 +11,21 @@ jobs:
     env:
       REPORTS_BASE_DIR: downloaded-reports
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Cleanup old reports
         run: |
-          find ${{ env.REPORTS_BASE_DIR }} -type f -mtime +30 -delete
-          find ${{ env.REPORTS_BASE_DIR }} -type d -empty -delete
+          # Create directory if it doesn't exist
+          mkdir -p ${{ env.REPORTS_BASE_DIR }}
+          
+          # Find and delete files older than 30 days
+          find ${{ env.REPORTS_BASE_DIR }} -type f -mtime +30 -delete || true
+          
+          # Find and delete empty directories
+          find ${{ env.REPORTS_BASE_DIR }} -type d -empty -delete || true
+          
+      - name: List remaining files
+        run: |
+          echo "Remaining files in ${{ env.REPORTS_BASE_DIR }}:"
+          find ${{ env.REPORTS_BASE_DIR }} -type f | wc -l

@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../core/services/theme.service';
 import { BemUtil } from '../../core/utils/bem.util';

@@ -15,8 +15,9 @@
     "strict": false,
     "noImplicitAny": false,
     "noEmitOnError": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types", "src/typings.d.ts"]
   },
-  "files": ["src/jasmine.d.ts"],
+  "files": ["src/test.ts", "src/jasmine.d.ts", "src/typings.d.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

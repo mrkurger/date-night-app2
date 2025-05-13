@@ -1,3 +1,4 @@
+import { Output } from '@angular/core';
 /// <reference types="@types/jasmine" />
 
 /// <reference types="@types/jasmine" />

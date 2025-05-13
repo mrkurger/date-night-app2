@@ -1,3 +1,7 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -24,25 +28,27 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
         />
         <div class="gallery-controls" *ngIf="images.length > 1">
           <button
-            mat-icon-button
+            nbButton
+            ghost
             class="nav-button prev"
             (click)="prevImage()"
             [disabled]="currentIndex === 0"
           >
-            <nb-icon icon="chevron_left"></nb-icon>
+            <nb-icon icon="chevron-left"></nb-icon>
           </button>
           <button
-            mat-icon-button
+            nbButton
+            ghost
             class="nav-button next"
             (click)="nextImage()"
             [disabled]="currentIndex === images.length - 1"
           >
-            <nb-icon icon="chevron_right"></nb-icon>
+            <nb-icon icon="chevron-right"></nb-icon>
           </button>
         </div>
       </div>
       <div class="gallery-empty" *ngIf="images.length === 0">
-        <nb-icon class="empty-icon">image</nb-icon>
+        <nb-icon icon="image-outline"></nb-icon>
         <p>No images available</p>
       </div>
       <div class="gallery-thumbnails" *ngIf="showThumbnails && images.length > 1">
@@ -70,7 +76,7 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
         height: 0;
         padding-bottom: 75%;
         overflow: hidden;
-        border-radius: 4px;
+        border-radius: var(--border-radius);
       }
       .main-image {
         position: absolute;
@@ -94,7 +100,10 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
       }
       .nav-button {
         background-color: rgba(0, 0, 0, 0.5);
-        color: white;
+        color: var(--text-control-color);
+        &:hover:not(:disabled) {
+          background-color: rgba(0, 0, 0, 0.7);
+        }
       }
       .gallery-thumbnails {
         display: flex;
@@ -105,7 +114,7 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
       .thumbnail {
         width: 60px;
         height: 60px;
-        border-radius: 4px;
+        border-radius: var(--border-radius);
         overflow: hidden;
         cursor: pointer;
         opacity: 0.7;
@@ -113,7 +122,7 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
       }
       .thumbnail.active {
         opacity: 1;
-        border: 2px solid #3f51b5;
+        border: 2px solid var(--color-primary-500);
       }
       .thumbnail img {
         width: 100%;
@@ -126,11 +135,11 @@ import { NbIconModule, NbButtonModule } from '@nebular/theme';
         align-items: center;
         justify-content: center;
         height: 200px;
-        background-color: #f5f5f5;
-        border-radius: 4px;
-        color: #757575;
+        background-color: var(--background-basic-color-2);
+        border-radius: var(--border-radius);
+        color: var(--text-hint-color);
       }
-      .empty-icon {
+      nb-icon {
         font-size: 48px;
         height: 48px;
         width: 48px;
