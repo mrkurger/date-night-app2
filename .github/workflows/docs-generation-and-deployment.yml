@@ -80,7 +80,7 @@ jobs:
           ref: main # Ensure we have the latest changes after documentation generation
 
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
