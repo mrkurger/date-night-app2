@@ -1,17 +1,18 @@
 # .github/workflows/base-config.yml
-# Add this shared configuration file for reusable properties
+# Shared configuration file for reusable workflow properties and jobs
 name: Base Configuration
 
 on:
-  workflow_call:
+  workflow_call:  # Allows this workflow to be called by other workflows
     inputs:
       node-version:
-        description: 'Node.js version'
+        description: 'Node.js version to use'
         required: false
         type: string
-        default: '22.x'
+        default: '20.x'  # Use stable LTS version by default
 
 env:
+  # Directory structure for reports and artifacts
   REPORTS_DIR: downloaded-reports
   ARTIFACTS_DIR: .github/artifacts
   REPORTS_SECURITY: downloaded-reports/security
@@ -20,40 +21,49 @@ env:
   REPORTS_ANGULAR: downloaded-reports/angular
   REPORTS_SERVER: downloaded-reports/server
   REPORTS_SNYK: downloaded-reports/snyk
-  RETENTION_ARTIFACTS: 14
+  RETENTION_ARTIFACTS: 14  # Retain artifacts for 14 days
 
 jobs:
+  # Job for setting up the Node.js environment
   node-setup:
     name: Setup Node.js Environment
     runs-on: ubuntu-latest
     outputs:
       node-path: ${{ steps.get-node-path.outputs.node-path }}
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v4
+      
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         id: node-setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
           cache: 'npm'
-      - name: Get Node.js path
+      
+      # Step 3: Output Node.js path
+      - name: Get Node.js Path
         id: get-node-path
         run: echo "node-path=$(which node)" >> $GITHUB_OUTPUT
 
+  # Job for setting up a MongoDB service
   mongodb-setup:
     name: Setup MongoDB Service
     runs-on: ubuntu-latest
     services:
       mongodb:
-        image: mongo:6
+        image: mongo:6  # Use MongoDB version 6
         ports:
-          - 27017:27017
+          - 27017:27017  # Expose default MongoDB port
 
+  # Job for setting up report directories
   setup-reports:
     name: Setup Report Directories
     runs-on: ubuntu-latest
     steps:
-      - name: Create report directories
+      # Step 1: Create necessary report directories
+      - name: Create Report Directories
         run: |
           mkdir -p \
             ${{ env.REPORTS_SECURITY }} \
@@ -63,36 +73,10 @@ jobs:
             ${{ env.REPORTS_SERVER }} \
             ${{ env.REPORTS_SNYK }}
 
-      - name: Configure artifact retention
-        run: |
-          echo "Uploading reports to artifacts"
-
-          if [ -d "${{ env.REPORTS_DIR }}" ]; then
-            echo "Reports directory exists, proceeding with upload"
-            
-            # Upload the reports directory as an artifact
-            tar -czvf reports.tar.gz "${{ env.REPORTS_DIR }}"
-            
-            echo "Reports directory compressed successfully"
-            
-            mv reports.tar.gz "${{ env.ARTIFACTS_DIR }}"
-            
-            echo "Reports directory moved to artifacts directory"
-            
-            echo "Uploading artifact"
-            
-            # Upload the reports artifact
-            curl -X POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              -H "Content-Type: application/json" \
-              -d '{
-                "name": "reports",
-                "path": "${{ env.ARTIFACTS_DIR }}/reports.tar.gz",
-                "retention_days": ${{ env.RETENTION_ARTIFACTS }}
-              }' \
-              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts"
-          else
-            echo "Reports directory does not exist, skipping upload"
-          fi
+      # Step 2: Upload report directories as an artifact
+      - name: Upload Reports Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: ${{ env.REPORTS_DIR }}
+          retention-days: ${{ env.RETENTION_ARTIFACTS }}
