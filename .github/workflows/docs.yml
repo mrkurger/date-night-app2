@@ -1,37 +1,39 @@
 name: Documentation
+
 on:
   push:
-    branches: [main]
+    branches: [main]  # Trigger workflow on pushes to the main branch
     paths:
-      - 'docs/**'
-  workflow_dispatch:
+      - 'docs/**'  # Trigger only when files in the docs directory are updated
+  workflow_dispatch:  # Allow manual triggering of the workflow
 
 jobs:
+  # Job to build and upload documentation
   build-docs:
-    runs-on: ubuntu-latest
-    needs: [setup]
+    runs-on: ubuntu-latest  # Specify the runner environment
     steps:
-      - uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Build documentation
+      # Step 2: Setup Node.js
+      # Use the official Node.js action for reliability
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'  # Use stable LTS version
+
+      # Step 3: Install dependencies and build documentation
+      - name: Build Documentation
         run: |
           cd docs
-          npm ci
-          npm run build
+          npm ci  # Clean install dependencies
+          npm run build  # Build the documentation
 
-      - name: Upload documentation
+      # Step 4: Upload documentation as an artifact
+      - name: Upload Documentation
         uses: actions/upload-artifact@v4
         with:
-          name: documentation-${{ github.run_id }}
-          path: docs/build
-          retention-days: 14
-
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Setup Node.js and Install Dependencies
-        uses: ./.github/actions/setup-nodejs
-        with:
-          node-version: '22'
+          name: documentation-${{ github.run_id }}  # Include the run ID for traceability
+          path: docs/build  # Path to the built documentation
+          retention-days: 14  # Keep the artifact for 14 days
