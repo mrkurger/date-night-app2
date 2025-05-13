@@ -2,7 +2,7 @@ name: Angular Tests
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, Nebular-UI-Refactor]
     paths:
       - 'client-angular/**'
       - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
