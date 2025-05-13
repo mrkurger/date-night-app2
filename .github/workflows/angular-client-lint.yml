@@ -1,0 +1,90 @@
+# Workflow name: Appears in the Actions tab of the GitHub repository.
+name: Angular Client Lint
+
+# Defines the triggers for the workflow.
+on:
+  # Trigger on push events to the 'main' or 'develop' branches.
+  push:
+    branches:
+      - main
+      - develop
+    # Only run if files in 'client-angular/**' or this workflow file itself change.
+    paths:
+      - 'client-angular/**'
+      - '.github/workflows/angular-client-lint.yml'
+  # Trigger on pull request events targeting the 'main' or 'develop' branches.
+  pull_request:
+    branches:
+      - main
+      - develop
+    # Only run if files in 'client-angular/**' change.
+    paths:
+      - 'client-angular/**'
+  # Allows manual triggering of the workflow from the Actions tab.
+  workflow_dispatch:
+
+# Defines the jobs to be run in the workflow.
+jobs:
+  # 'lint-angular-client' job: Lints the Angular client application.
+  lint-angular-client:
+    # Specifies the runner environment.
+    runs-on: ubuntu-latest
+    # Sets a name for the job that will appear in the GitHub UI.
+    name: Lint Angular Client (Node ${{ matrix.node-version }})
+    # Sets default settings for all 'run' steps in this job.
+    defaults:
+      run:
+        # All 'run' commands will execute in the 'client-angular' directory by default.
+        # This assumes 'client-angular' is the root of your Angular workspace.
+        working-directory: ./client-angular
+
+    # Defines a build matrix for running the job with different Node.js versions.
+    strategy:
+      matrix:
+        # NOTE: Your project's package.json requires Node 22.14.0 (npm 10.9.2).
+        # This workflow uses Node 20.x as per the failing job's log ('lint (20.x)').
+        # Consider aligning these versions for consistency.
+        node-version: ['22.x']
+
+    # Defines the sequence of steps for the job.
+    steps:
+      # Step 1: Check out the repository code.
+      # 'uses' specifies an action to run. 'actions/checkout@v4' is a standard GitHub action.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js.
+      # Uses the Node.js version from the build matrix.
+      # Caches npm dependencies for faster subsequent runs.
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # Enable caching of npm packages.
+          cache: 'npm'
+          # Specify the path to the package-lock.json file for cache invalidation.
+          cache-dependency-path: client-angular/package-lock.json
+
+      # Step 3: Install project dependencies.
+      # 'npm ci' is recommended for CI environments as it provides faster and more reliable builds
+      # by installing dependencies exactly as defined in package-lock.json.
+      # This command runs in the 'client-angular' directory due to 'defaults.run.working-directory'.
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: Configure Angular ESLint.
+      # 'npx ng add @angular-eslint/schematics' installs necessary ESLint packages (if not already present)
+      # and, crucially, updates 'angular.json' to configure the 'lint' target for your project.
+      # '--skip-confirmation' attempts to run non-interactively, suitable for CI.
+      # This command also runs in the 'client-angular' directory.
+      - name: Configure Angular ESLint (ng add @angular-eslint/schematics)
+        run: npx ng add @angular-eslint/schematics --skip-confirmation
+
+      # Step 5: Run the linter.
+      # 'npx ng lint client-angular' executes the linting process for the project named 'client-angular'.
+      # This command also runs in the 'client-angular' directory.
+      # If 'client-angular' is the default project in your angular.json, 'npx ng lint' might suffice.
+      - name: Run ESLint
+        run: npx ng lint client-angular
+        # If you have multiple projects and 'client-angular' is not the default,
+        # explicitly naming it (as done here) is correct.
