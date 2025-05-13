@@ -1,3 +1,6 @@
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -259,6 +262,7 @@ export class CreateErrorAlertComponent implements OnInit {
   onSubmit(): void {
     if (this.alertForm.valid) {
       // Handle form submission
+      // eslint-disable-next-line no-console
       console.log(this.alertForm.value);
     }
   }

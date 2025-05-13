@@ -1,3 +1,4 @@
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,7 +11,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, Input, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule
+    NbCardModule, } from '@angular/common';
 
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';

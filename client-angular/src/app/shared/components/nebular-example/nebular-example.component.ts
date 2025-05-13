@@ -1,3 +1,8 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -397,6 +402,7 @@ export class NebularExampleComponent {
 
   // Methods
   onSubmit(): void {
+    // eslint-disable-next-line no-console
     console.log('Form submitted:', this.formData);
     // Reset form
     this.formData = {

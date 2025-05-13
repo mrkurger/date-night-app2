@@ -15,12 +15,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 /**
- * Emerald PageHeader Component
+ * /*DEPRECATED:Emerald*/ PageHeader Component
  *
- * A wrapper for the Emerald.js PageHeader component.
+ * A wrapper for the /*DEPRECATED:Emerald*/.js PageHeader component.
  * This component displays a page header with title, breadcrumbs, and actions.
  *
- * Documentation: https://docs-emerald.condorlabs.io/PageHeader
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/PageHeader
  */
 @Component({
   selector: 'nb-header',

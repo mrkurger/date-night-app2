@@ -1,3 +1,9 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbPaginatorModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,13 +21,14 @@ import {
   NbSortDirection,
   NbSortRequest,
 } from '@nebular/theme';
-import { NbSortModule } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
-import { NbPaginatorModule } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import {
+  AppSortComponent,
+  AppSortHeaderComponent,
+} from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { NbSortComponent } from '../../../../shared/components/custom-nebular-components';
 
 /**
  * Error Dashboard Component
@@ -49,9 +56,8 @@ import { NbSortComponent } from '../../../../shared/components/custom-nebular-co
     NbTagModule,
     NbSpinnerModule,
     NbDatepickerModule,
-    NbSortModule,
-    NbPaginatorModule,
-  ],
+  
+    NbPaginatorModule,],
   template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>
@@ -341,7 +347,7 @@ export class ErrorDashboardComponent implements OnInit {
   errorStats$: Observable<any>;
 
   // Sort state
-  @ViewChild(NbSortComponent) sort!: NbSortComponent;
+  @ViewChild(AppSortComponent) sort!: AppSortComponent;
 
   constructor(
     private telemetryService: TelemetryService,
@@ -499,6 +505,7 @@ export class ErrorDashboardComponent implements OnInit {
    */
   viewErrorDetails(error: ErrorTelemetry): void {
     // This would typically open a dialog with detailed error information
+    // eslint-disable-next-line no-console
     console.log('View error details:', error);
     // Implementation for error details dialog would go here
   }

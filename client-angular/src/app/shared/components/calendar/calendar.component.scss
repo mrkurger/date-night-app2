@@ -15,12 +15,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px;
-  background: ds.$color-primary-light;
+  background: ds.var(--color-primary)-light;
 
   .current-month {
     font-weight: 500;
     font-size: 1.1em;
-    color: ds.$color-primary;
+    color: ds.var(--color-primary);
   }
 
   .btn-nav {
@@ -28,7 +28,7 @@
     border: none;
     padding: 8px;
     cursor: pointer;
-    color: ds.$color-primary;
+    color: ds.var(--color-primary);
     border-radius: 4px;
     transition: all 0.2s ease;
 
@@ -37,7 +37,7 @@
     }
 
     &:focus {
-      outline: 2px solid ds.$color-primary;
+      outline: 2px solid ds.var(--color-primary);
       outline-offset: 2px;
     }
   }
@@ -56,7 +56,7 @@
   .weekday {
     text-align: center;
     font-weight: 500;
-    color: ds.$color-neutral-600;
+    color: var(--color-neutral-600) /* TODO: Verify correct CSS variable */;
     font-size: 0.9em;
     padding: 8px 0;
   }
@@ -84,41 +84,41 @@
   border-radius: 50%;
   cursor: pointer;
   font-size: 0.9em;
-  color: ds.$color-neutral-900;
+  color: var(--color-neutral-900) /* TODO: Verify correct CSS variable */;
   transition: all 0.2s ease;
 
   &:hover:not(.disabled) {
-    background: ds.$color-primary-light;
+    background: ds.var(--color-primary)-light;
   }
 
   &:focus {
-    outline: 2px solid ds.$color-primary;
+    outline: 2px solid ds.var(--color-primary);
     outline-offset: 2px;
   }
 
   &.other-month {
-    color: ds.$color-neutral-400;
+    color: var(--color-neutral-400) /* TODO: Verify correct CSS variable */;
   }
 
   &.today {
-    background: ds.$color-primary-light;
+    background: ds.var(--color-primary)-light;
     font-weight: bold;
   }
 
   &.selected {
-    background: ds.$color-primary;
+    background: ds.var(--color-primary);
     color: white;
     font-weight: bold;
 
     &:hover {
-      background: color.scale(ds.$color-primary, $lightness: -5%);
+      background: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
     }
   }
 
   &.disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: ds.$color-neutral-100;
+    background: var(--color-neutral-100) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -127,7 +127,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ds.$color-neutral-500;
+  color: var(--color-neutral-500) /* TODO: Verify correct CSS variable */;
   font-size: 0.8em;
   padding: 4px;
 }

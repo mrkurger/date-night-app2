@@ -1,7 +1,7 @@
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains tests for the Emerald AppCard component
+// This file contains tests for the /*DEPRECATED:Emerald*/ AppCard component
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AD: Mock ad data for testing
@@ -71,12 +71,12 @@ describe('AppCardComponent', () => {
     });
 
     it('should initialize with default values', () => {
-      const newComponent = new AppCardComponent();
-      expect(newComponent.layout).toBe('netflix');
-      expect(newComponent.showActions).toBeTrue();
-      expect(newComponent.showDescription).toBeTrue();
-      expect(newComponent.isOnline).toBeFalse();
-      expect(newComponent.currentMediaIndex).toBe(0);
+      // Use the existing component instance instead of creating a new one
+      expect(component.layout).toBe('netflix');
+      expect(component.showActions).toBeTrue();
+      expect(component.showDescription).toBeTrue();
+      expect(component.isOnline).toBeFalse();
+      expect(component.currentMediaIndex).toBe(0);
     });
 
     it('should set background image on init', () => {

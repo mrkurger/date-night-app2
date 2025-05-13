@@ -18,87 +18,91 @@
 // Component Block
 .component-name {
   display: block;
-  border-radius: ds.$border-radius-lg;
-  background-color: ds.$color-white;
-  box-shadow: ds.$shadow-md;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+  background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
-  transition: all ds.$transition-normal ds.$transition-timing-default;
+  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   // Block modifier
   &--enabled {
-    border-left: 4px solid ds.$color-primary;
+    border-left: 4px solid ds.var(--color-primary);
   }
 
   // Header element
   &__header {
-    padding: ds.$spacing-4;
-    border-bottom: 1px solid ds.$color-light-gray-2;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    border-bottom: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
   }
 
   // Title element
   &__title {
     @include ds.heading-4;
-    margin-bottom: ds.$spacing-2;
+
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   // Subtitle element
   &__subtitle {
     @include ds.body-small;
-    color: ds.$color-dark-gray-1;
+
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
   }
 
   // Content element
   &__content {
-    padding: ds.$spacing-4;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   // Primary content element
   &__primary-content {
-    margin-bottom: ds.$spacing-4;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   // Secondary content element
   &__secondary-content {
-    padding: ds.$spacing-3;
-    background-color: ds.$color-light-gray-1;
-    border-radius: ds.$border-radius-md;
-    margin-top: ds.$spacing-3;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    margin-top: var(--spacing-3) /* TODO: Verify correct CSS variable */;
   }
 
   // Description element
   &__description {
     @include ds.body-small;
+
     margin-bottom: 0;
   }
 
   // Actions element
   &__actions {
     display: flex;
-    gap: ds.$spacing-3;
-    padding: ds.$spacing-4;
-    border-top: 1px solid ds.$color-light-gray-2;
+    gap: var(--spacing-3) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    border-top: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
   }
 
   // Button element
   &__button {
     @include ds.button-text;
-    padding: ds.$spacing-2 ds.$spacing-4;
-    border-radius: ds.$border-radius-md;
+
+    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     border: none;
     cursor: pointer;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     // Primary button modifier
     &--primary {
-      background-color: ds.$color-primary;
-      color: ds.$color-white;
+      background-color: ds.var(--color-primary);
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
 
       &:hover {
-        background-color: ds.$color-primary-dark;
+        background-color: ds.var(--color-primary)-dark;
       }
 
       &:focus-visible {
-        outline: 2px solid rgba(ds.$color-primary, 0.5);
+        outline: 2px solid rgba(ds.var(--color-primary), 0.5);
         outline-offset: 2px;
       }
 
@@ -110,15 +114,15 @@
     // Secondary button modifier
     &--secondary {
       background-color: transparent;
-      color: ds.$color-primary;
-      border: 1px solid ds.$color-primary;
+      color: ds.var(--color-primary);
+      border: 1px solid ds.var(--color-primary);
 
       &:hover {
-        background-color: rgba(ds.$color-primary, 0.05);
+        background-color: rgba(ds.var(--color-primary), 0.05);
       }
 
       &:focus-visible {
-        outline: 2px solid rgba(ds.$color-primary, 0.5);
+        outline: 2px solid rgba(ds.var(--color-primary), 0.5);
         outline-offset: 2px;
       }
 
@@ -130,14 +134,14 @@
 }
 
 // Responsive styles
-@media (max-width: ds.$breakpoint-tablet) {
+@media (max-width: var(--breakpoint-tablet) /* TODO: Verify correct CSS variable */) {
   .component-name {
-    border-radius: ds.$border-radius-md;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
 
     &__header,
     &__content,
     &__actions {
-      padding: ds.$spacing-3;
+      padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
     }
 
     &__actions {
@@ -154,33 +158,33 @@
 @media (prefers-color-scheme: dark) {
   body.dark-mode-enabled {
     .component-name {
-      background-color: ds.$color-dark-gray-2;
-      box-shadow: ds.$shadow-md;
+      background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+      box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
 
       &__header,
       &__actions {
-        border-color: ds.$color-dark-gray-1;
+        border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       &__title {
-        color: ds.$color-white;
+        color: var(--color-white) /* TODO: Verify correct CSS variable */;
       }
 
       &__subtitle {
-        color: ds.$color-medium-gray-2;
+        color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
       }
 
       &__secondary-content {
-        background-color: ds.$color-dark-gray-3;
+        background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
       }
 
       &__button {
         &--secondary {
-          border-color: ds.$color-primary-light;
-          color: ds.$color-primary-light;
+          border-color: ds.var(--color-primary)-light;
+          color: ds.var(--color-primary)-light;
 
           &:hover {
-            background-color: rgba(ds.$color-primary-light, 0.1);
+            background-color: rgba(ds.var(--color-primary)-light, 0.1);
           }
         }
       }

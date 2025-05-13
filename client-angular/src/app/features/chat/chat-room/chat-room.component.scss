@@ -186,8 +186,8 @@
   }
 }
 
-@include nb-install() {
-  @include chat-room-theme();
+@include nb-install {
+  @include chat-room-theme;
 
   .chat-room {
     height: 100%;

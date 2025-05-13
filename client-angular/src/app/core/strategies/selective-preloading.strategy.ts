@@ -21,6 +21,7 @@ export class SelectivePreloadingStrategy implements PreloadingStrategy {
 
       // Log the preloaded module in development mode
       if (!environment.production) {
+        // eslint-disable-next-line no-console
         console.log(`Preloaded: ${route.path}`);
       }
 

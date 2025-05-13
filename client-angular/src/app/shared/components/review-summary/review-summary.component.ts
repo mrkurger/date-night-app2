@@ -1,3 +1,4 @@
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,7 +9,6 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { NbDividerComponent } from '../custom-nebular-components';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NbButtonModule, NbIconModule, NbProgressBarModule, NbCardModule } from '@nebular/theme';
@@ -25,7 +25,6 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
     NbIconModule,
     NbProgressBarModule,
     RouterModule,
-    NbDividerComponent,
     StarRatingComponent,
     NbCardModule,
   ],
@@ -59,7 +58,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
             </div>
           </div>
 
-          <nb-divider></nb-divider>
+          <hr />
 
           <div class="category-ratings" *ngIf="showCategoryRatings">
             <div class="category-rating">

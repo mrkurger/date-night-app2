@@ -5,111 +5,111 @@
 
 .micro-demo {
   &__header {
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
-    padding: ds.$spacing-12 0;
-    margin-bottom: ds.$spacing-12;
+    background-color: ds.var(--color-primary);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-12) /* TODO: Verify correct CSS variable */ 0;
+    margin-bottom: var(--spacing-12) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
+      background-color: ds.var(--color-primary)-dark;
     }
   }
 
   &__title {
-    font-size: ds.$font-size-4xl;
-    margin-bottom: ds.$spacing-4;
+    font-size: var(--font-size-4xl) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   &__description {
-    font-size: ds.$font-size-lg;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
     max-width: 800px;
   }
 
   &__theme-toggle {
-    margin-top: ds.$spacing-6;
-    padding: ds.$spacing-3 ds.$spacing-6;
-    background-color: ds.$color-white;
-    color: ds.$color-primary;
+    margin-top: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
+    color: ds.var(--color-primary);
     border: none;
-    border-radius: ds.$border-radius-md;
-    font-weight: ds.$font-weight-medium;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     &:hover {
-      background-color: rgba(ds.$color-white, 0.9);
+      background-color: rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.9);
     }
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
-      color: ds.$color-light-gray-1;
+      background-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
+      color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
 
       &:hover {
-        background-color: ds.$color-dark-gray-2;
+        background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
       }
     }
   }
 
   &__section {
-    margin-bottom: ds.$spacing-16;
-    padding-bottom: ds.$spacing-12;
-    border-bottom: 1px solid ds.$color-light-gray-2;
+    margin-bottom: var(--spacing-16) /* TODO: Verify correct CSS variable */;
+    padding-bottom: var(--spacing-12) /* TODO: Verify correct CSS variable */;
+    border-bottom: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      border-bottom-color: ds.$color-dark-gray-1;
+      border-bottom-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__section-title {
-    font-size: ds.$font-size-3xl;
-    margin-bottom: ds.$spacing-8;
+    font-size: var(--font-size-3xl) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-8) /* TODO: Verify correct CSS variable */;
     position: relative;
 
     &:after {
       content: '';
       position: absolute;
-      bottom: ds.$spacing-3;
+      bottom: var(--spacing-3) /* TODO: Verify correct CSS variable */;
       left: 0;
       width: 60px;
       height: 4px;
-      background-color: ds.$color-primary;
-      border-radius: ds.$border-radius-full;
+      background-color: ds.var(--color-primary);
+      border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
 
       @include darkmode.dark-mode {
-        background-color: ds.$color-primary-light;
+        background-color: ds.var(--color-primary)-light;
       }
     }
   }
 
   &__subsection-title {
-    font-size: ds.$font-size-xl;
-    margin-bottom: ds.$spacing-4;
+    font-size: var(--font-size-xl) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   &__example {
-    background-color: ds.$color-white;
-    border-radius: ds.$border-radius-lg;
-    padding: ds.$spacing-6;
-    margin-bottom: ds.$spacing-6;
-    box-shadow: ds.$shadow-sm;
+    background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-2;
-      box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
+      background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+      box-shadow: 0 0 0 1px rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.1);
     }
   }
 
   &__code {
-    background-color: ds.$color-light-gray-1;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-    margin: ds.$spacing-4 0;
+    background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    margin: var(--spacing-4) /* TODO: Verify correct CSS variable */ 0;
     overflow-x: auto;
     font-family: monospace;
-    font-size: ds.$font-size-sm;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-3;
+      background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -117,17 +117,17 @@
   &__hover-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: ds.$spacing-6;
+    gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &__hover-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-    transition: all ds.$transition-normal ds.$transition-timing-default;
+    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     &--hover-scale {
@@ -138,7 +138,7 @@
       @include mixins.hover-lift;
     }
 
-    // @include mixins.hover-color-shift(color, ds.$color-dark-gray-1, ds.$color-primary); // TODO: Mixin not implemented
+    // @include mixins.hover-color-shift(color, var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */, ds.var(--color-primary)); // TODO: Mixin not implemented
 
     &--hover-border {
       position: relative;
@@ -150,8 +150,8 @@
         left: 0;
         width: 0;
         height: 2px;
-        background-color: ds.$color-primary;
-        transition: width ds.$transition-normal ds.$transition-timing-default;
+        background-color: ds.var(--color-primary);
+        transition: width var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
       }
 
       &:hover::after {
@@ -161,25 +161,25 @@
   }
 
   &__hover-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__hover-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
+      color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
   // Loading states
   &__loading-demo {
     display: flex;
-    gap: ds.$spacing-4;
-    margin-bottom: ds.$spacing-8;
+    gap: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-8) /* TODO: Verify correct CSS variable */;
     flex-wrap: wrap;
   }
 
@@ -188,18 +188,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: ds.$spacing-3 ds.$spacing-6;
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    background-color: ds.var(--color-primary);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
-    border-radius: ds.$border-radius-md;
-    font-weight: ds.$font-weight-medium;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
     min-width: 150px;
 
     &:hover:not(:disabled) {
-      background-color: color.scale(ds.$color-primary, $lightness: -5%);
+      background-color: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
     }
 
     &:disabled {
@@ -208,36 +208,36 @@
     }
 
     &--loading {
-      background-color: ds.$color-primary;
+      background-color: ds.var(--color-primary);
     }
 
     &--success {
-      background-color: ds.$color-success;
+      background-color: var(--color-success) /* TODO: Verify correct CSS variable */;
     }
 
     &--error {
-      background-color: ds.$color-error;
+      background-color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
 
     &--error-demo {
-      background-color: ds.$color-secondary;
+      background-color: var(--color-secondary) /* TODO: Verify correct CSS variable */;
 
       &:hover:not(:disabled) {
-        background-color: color.scale(ds.$color-secondary, $lightness: -5%);
+        background-color: color.scale(var(--color-secondary) /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
       }
     }
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
+      background-color: ds.var(--color-primary)-dark;
 
       &:hover:not(:disabled) {
-        background-color: color.scale(ds.$color-primary-dark, $lightness: 5%);
+        background-color: color.scale(ds.var(--color-primary)-dark, var(--lightness) /* TODO: Verify correct CSS variable */: 5%);
       }
     }
   }
 
   &__loading-button-text {
-    margin-right: ds.$spacing-2;
+    margin-right: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__spinner {
@@ -246,7 +246,7 @@
     height: 16px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    border-top-color: ds.$color-white;
+    border-top-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     animation: spin 1s ease-in-out infinite;
   }
 
@@ -264,31 +264,31 @@
   &__loading-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: ds.$spacing-6;
+    gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &__loading-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
+    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__loading-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__loading-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
+      color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -303,17 +303,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: ds.$spacing-2 ds.$spacing-4;
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
+    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    background-color: ds.var(--color-primary);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
-    border-radius: ds.$border-radius-md;
-    font-weight: ds.$font-weight-medium;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     &:hover {
-      background-color: color.scale(ds.$color-primary, $lightness: -5%);
+      background-color: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
     }
 
     &--loading {
@@ -351,10 +351,10 @@
     }
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
+      background-color: ds.var(--color-primary)-dark;
 
       &:hover {
-        background-color: color.scale(ds.$color-primary-dark, $lightness: 5%);
+        background-color: color.scale(ds.var(--color-primary)-dark, var(--lightness) /* TODO: Verify correct CSS variable */: 5%);
       }
     }
   }
@@ -363,20 +363,20 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: ds.$spacing-2;
+    gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__skeleton-line {
     height: 12px;
     background: linear-gradient(
       90deg,
-      ds.$color-light-gray-2 25%,
-      ds.$color-light-gray-1 50%,
-      ds.$color-light-gray-2 75%
+      var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ 25%,
+      var(--color-light-gray-1) /* TODO: Verify correct CSS variable */ 50%,
+      var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ 75%
     );
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
-    border-radius: ds.$border-radius-sm;
+    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
 
     &--short {
       width: 40%;
@@ -393,9 +393,9 @@
     @include darkmode.dark-mode {
       background: linear-gradient(
         90deg,
-        ds.$color-dark-gray-1 25%,
-        ds.$color-dark-gray-2 50%,
-        ds.$color-dark-gray-1 75%
+        var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ 25%,
+        var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */ 50%,
+        var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ 75%
       );
     }
   }
@@ -403,36 +403,36 @@
   &__progress {
     width: 100%;
     height: 8px;
-    background-color: ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-full;
+    background-color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
     overflow: hidden;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-1;
+      background-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__progress-bar {
     height: 100%;
     width: 30%;
-    background-color: ds.$color-primary;
-    border-radius: ds.$border-radius-full;
+    background-color: ds.var(--color-primary);
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
     animation: progress 2s infinite;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-primary-light;
+      background-color: ds.var(--color-primary)-light;
     }
   }
 
   &__pulse {
     width: 20px;
     height: 20px;
-    background-color: ds.$color-primary;
+    background-color: ds.var(--color-primary);
     border-radius: 50%;
     animation: pulse 1.5s infinite;
 
     @include darkmode.dark-mode {
-      background-color: ds.$color-primary-light;
+      background-color: ds.var(--color-primary)-light;
     }
   }
 
@@ -440,16 +440,16 @@
   &__transition-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: ds.$spacing-6;
+    gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &__transition-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
+    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     &--fade-in {
@@ -464,17 +464,17 @@
   }
 
   &__transition-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__transition-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
+      color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -482,52 +482,52 @@
   &__feedback-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: ds.$spacing-6;
+    gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &__feedback-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
+    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__feedback-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   &__feedback-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
+      color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__feedback-demo {
-    margin-bottom: ds.$spacing-4;
+    margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   // Best practices and resources
   &__best-practices-list,
   &__resources-list {
     list-style-type: disc;
-    padding-left: ds.$spacing-6;
+    padding-left: var(--spacing-6) /* TODO: Verify correct CSS variable */;
 
     li {
-      margin-bottom: ds.$spacing-2;
+      margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &__resources-list {
     a {
-      color: ds.$color-primary;
+      color: ds.var(--color-primary);
       text-decoration: none;
 
       &:hover {
@@ -535,12 +535,12 @@
       }
 
       &:focus-visible {
-        outline: 2px solid ds.$color-primary;
+        outline: 2px solid ds.var(--color-primary);
         outline-offset: 2px;
       }
 
       @include darkmode.dark-mode {
-        color: ds.$color-primary-light;
+        color: ds.var(--color-primary)-light;
       }
     }
   }

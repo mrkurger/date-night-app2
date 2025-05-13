@@ -1,7 +1,7 @@
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains settings for emerald.module settings
+// This file contains settings for /*DEPRECATED:emerald*/.module settings
 //
 // COMMON CUSTOMIZATIONS:
 // - NOTIFICATION_DURATION: Duration for notifications in milliseconds (default: 3000)
@@ -11,7 +11,7 @@ import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Import all Emerald components
+// Import all /*DEPRECATED:Emerald*/ components
 import { AppCardComponent } from './components/app-card/app-card.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -28,12 +28,12 @@ import { FloatingActionButtonComponent } from './components/floating-action-butt
 import { TinderCardComponent } from './tinder-card/tinder-card.component';
 
 /**
- * Emerald.js Integration Module
+ * /*DEPRECATED:Emerald*/.js Integration Module
  *
- * This module provides Angular wrappers for Emerald.js UI components.
- * Emerald.js is a UI component library that provides a set of reusable UI components.
+ * This module provides Angular wrappers for /*DEPRECATED:Emerald*/.js UI components.
+ * /*DEPRECATED:Emerald*/.js is a UI component library that provides a set of reusable UI components.
  *
- * Documentation: https://docs-emerald.condorlabs.io/
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/
  *
  * Components included:
  * - AppCard: Card component for displaying ads in various layouts
@@ -53,12 +53,9 @@ import { TinderCardComponent } from './tinder-card/tinder-card.component';
   declarations: [
     // No declarations needed for standalone components
   ],
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    // Import standalone components
-    AppCardComponent,
     AvatarComponent,
     CarouselComponent,
     InfoPanelComponent,
@@ -69,8 +66,8 @@ import { TinderCardComponent } from './tinder-card/tinder-card.component';
     ToggleComponent,
     CardGridComponent,
     FloatingActionButtonComponent,
-    TinderCardComponent,
-  ],
+    TinderCardComponent
+    AppCardComponent,],
   // No exports needed for standalone components - they are imported directly where needed
 })
 export class EmeraldModule {}

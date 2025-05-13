@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-undef */
 /**
  * Script to fix Angular core imports and decorators
  * This script will:
@@ -217,6 +218,7 @@ async function fixFile(filePath) {
 
   if (modified) {
     await fs.writeFile(filePath, newContent, 'utf8');
+
     console.log(`Updated ${filePath}`);
   }
 }

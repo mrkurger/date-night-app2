@@ -1,3 +1,5 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../../core/services/theme.service';

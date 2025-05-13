@@ -1,3 +1,10 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // LIST VIEW COMPONENT
 // ===================================================
@@ -262,12 +269,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
     // Apply category filters
     if (Object.values(filters.categories).some((value) => value)) {
-      filtered = filtered.filter((ad) => {
-        return Object.entries(filters.categories).some(
+      filtered = filtered.filter((ad) =>
+        Object.entries(filters.categories).some(
           ([category, isSelected]) =>
             isSelected && ad.category.toLowerCase() === category.toLowerCase(),
-        );
-      });
+        ),
+      );
     }
 
     // Apply location filter
@@ -610,7 +617,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     const halfVisible = Math.floor(maxVisiblePages / 2);
 
     let startPage = Math.max(1, this.currentPage - halfVisible);
-    let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
+    const endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
 
     // Adjust start page if we're near the end
     if (endPage - startPage + 1 < maxVisiblePages) {

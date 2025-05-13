@@ -9,7 +9,6 @@ import { NebularSharedModule } from './nebular-shared.module';
 
 // Import custom components
 import { NbErrorComponent } from '../components/custom-nebular-components/nb-error/nb-error.component';
-import { NbSortModule } from '../components/custom-nebular-components/nb-sort/nb-sort.module';
 import { NbPaginatorModule } from '../components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
 // Create array of components and modules to import and export
@@ -22,12 +21,12 @@ const MODULES = [
   ReactiveFormsModule,
   HttpClientModule,
   NebularSharedModule,
-  NbSortModule,
   NbPaginatorModule,
 ];
 
 @NgModule({
-  imports: [...MODULES, ...COMPONENTS],
+  imports: [...MODULES, ...COMPONENTS
+    NbErrorComponent,],
   exports: [...MODULES, ...COMPONENTS],
 })
 export class SharedModule {}

@@ -5,7 +5,7 @@
  * It includes functions for lazy loading, debouncing, throttling, and performance monitoring.
  */
 import { Observable, Subject, timer } from 'rxjs';
-import { debounceTime, throttleTime, takeUntil, finalize, tap } from 'rxjs/operators';
+import { debounceTime, throttleTime, takeUntil, finalize } from 'rxjs/operators';
 
 export class PerformanceUtil {
   private static instance: PerformanceUtil;
@@ -30,7 +30,7 @@ export class PerformanceUtil {
    * @param time The debounce time in milliseconds
    * @returns A debounced function
    */
-  public debounce<T extends (...args: any[]) => any>(
+  public debounce<T extends (...args: unknown[]) => unknown>(
     fn: T,
     time: number = this.DEFAULT_DEBOUNCE_TIME,
   ): (...args: Parameters<T>) => void {
@@ -54,7 +54,7 @@ export class PerformanceUtil {
    * @param time The throttle time in milliseconds
    * @returns A throttled function
    */
-  public throttle<T extends (...args: any[]) => any>(
+  public throttle<T extends (...args: unknown[]) => unknown>(
     fn: T,
     time: number = this.DEFAULT_THROTTLE_TIME,
   ): (...args: Parameters<T>) => void {
@@ -101,7 +101,7 @@ export class PerformanceUtil {
 
     this.recordMetric(label, duration);
 
-    console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+    // Performance logging is handled by recordMetric
 
     return result;
   }
@@ -121,7 +121,7 @@ export class PerformanceUtil {
 
       this.recordMetric(label, duration);
 
-      console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+      // Performance logging is handled by recordMetric
 
       return result;
     } catch (error) {
@@ -130,7 +130,7 @@ export class PerformanceUtil {
 
       this.recordMetric(`${label} (error)`, duration);
 
-      console.debug(`[Performance] ${label} (error): ${duration.toFixed(2)}ms`);
+      // Performance logging is handled by recordMetric
 
       throw error;
     }
@@ -152,7 +152,7 @@ export class PerformanceUtil {
 
           this.recordMetric(label, duration);
 
-          console.debug(`[Performance] ${label}: ${duration.toFixed(2)}ms`);
+          // Performance logging is handled by recordMetric
         }),
       );
     };
@@ -244,7 +244,7 @@ export class PerformanceUtil {
    * @param fn The function to memoize
    * @returns A memoized version of the function
    */
-  public memoize<T extends (...args: any[]) => any>(fn: T): T {
+  public memoize<T extends (...args: unknown[]) => unknown>(fn: T): T {
     const cache = new Map<string, ReturnType<T>>();
 
     return ((...args: Parameters<T>): ReturnType<T> => {
@@ -266,7 +266,7 @@ export class PerformanceUtil {
    * @param fn The async function to memoize
    * @returns A memoized version of the async function
    */
-  public memoizeAsync<T extends (...args: any[]) => Promise<any>>(fn: T): T {
+  public memoizeAsync<T extends (...args: unknown[]) => Promise<unknown>>(fn: T): T {
     const cache = new Map<string, ReturnType<T>>();
 
     return (async (...args: Parameters<T>): Promise<ReturnType<T>> => {
@@ -288,7 +288,7 @@ export class PerformanceUtil {
    * @param fn The function to run in a worker
    * @returns A function that returns a Promise for the result
    */
-  public runInWorker<T extends (...args: any[]) => any>(
+  public runInWorker<T extends (...args: unknown[]) => unknown>(
     fn: T,
   ): (...args: Parameters<T>) => Promise<ReturnType<T>> {
     // Create a worker from a blob URL
@@ -330,7 +330,7 @@ export class PerformanceUtil {
    * @param fn The async function to make cancelable
    * @returns An object with the async function and a cancel method
    */
-  public makeCancelable<T extends (...args: any[]) => Promise<any>>(
+  public makeCancelable<T extends (...args: unknown[]) => Promise<unknown>>(
     fn: T,
   ): {
     execute: (...args: Parameters<T>) => Promise<ReturnType<T>>;
@@ -340,20 +340,16 @@ export class PerformanceUtil {
 
     return {
       execute: async (...args: Parameters<T>): Promise<ReturnType<T>> => {
-        try {
-          const result = await Promise.race([
-            fn(...args),
-            new Promise<never>((_, reject) => {
-              cancelSubject.pipe(takeUntil(timer(0))).subscribe(() => {
-                reject(new Error('Operation canceled'));
-              });
-            }),
-          ]);
+        const result = await Promise.race([
+          fn(...args),
+          new Promise<never>((_, reject) => {
+            cancelSubject.pipe(takeUntil(timer(0))).subscribe(() => {
+              reject(new Error('Operation canceled'));
+            });
+          }),
+        ]);
 
-          return result as ReturnType<T>;
-        } catch (error) {
-          throw error;
-        }
+        return result as ReturnType<T>;
       },
       cancel: () => {
         cancelSubject.next();

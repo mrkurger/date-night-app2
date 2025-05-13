@@ -20,139 +20,108 @@
  * }
  */
 
-@use 'design-tokens' as tokens;
-
 // Transition mixin
-// @param {String} $property - CSS property to transition
-// @param {String} $duration - Duration of the transition
-// @param {String} $timing - Timing function of the transition
-// @param {String} $delay - Delay before the transition starts
-@mixin transition(
-  $property: all,
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  transition: $property $duration $timing $delay;
+// @param {String} var(--property) /* TODO: Verify correct CSS variable */ - CSS property to transition
+// @param {String} var(--duration) /* TODO: Verify correct CSS variable */ - Duration of the transition
+// @param {String} var(--timing) /* TODO: Verify correct CSS variable */ - Timing function of the transition
+// @param {String} var(--delay) /* TODO: Verify correct CSS variable */ - Delay before the transition starts
+@mixin transition() {
+  transition: var(--property) /* TODO: Verify correct CSS variable */ var(--duration)
+    /* TODO: Verify correct CSS variable */ var(--timing) /* TODO: Verify correct CSS variable */
+    var(--delay) /* TODO: Verify correct CSS variable */;
 }
 
 // Fade in animation
-@mixin fade-in(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
+@mixin fade-in() {
   & {
-    animation: fade-in $duration $timing $delay forwards;
+    animation: fade-in var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+      /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+      forwards;
   }
 }
 
 // Fade out animation
-@mixin fade-out(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: fade-out $duration $timing $delay forwards;
+@mixin fade-out() {
+  animation: fade-out var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    forwards;
 }
 
 // Slide in from top animation
-@mixin slide-in-top(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
+@mixin slide-in-top() {
   & {
-    animation: slide-in-top $duration $timing $delay forwards;
+    animation: slide-in-top var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+      /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+      forwards;
   }
 }
 
 // Slide in from bottom animation
-@mixin slide-in-bottom(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
+@mixin slide-in-bottom() {
   & {
-    animation: slide-in-bottom $duration $timing $delay forwards;
+    animation: slide-in-bottom var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+      /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+      forwards;
   }
 }
 
 // Slide in from left animation
-@mixin slide-in-left(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: slide-in-left $duration $timing $delay forwards;
+@mixin slide-in-left() {
+  animation: slide-in-left var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    forwards;
 }
 
 // Slide in from right animation
-@mixin slide-in-right(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
+@mixin slide-in-right() {
   & {
-    animation: slide-in-right $duration $timing $delay forwards;
+    animation: slide-in-right var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+      /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+      forwards;
   }
 }
 
 // Scale in animation
-@mixin scale-in(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: scale-in $duration $timing $delay forwards;
+@mixin scale-in() {
+  animation: scale-in var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    forwards;
 }
 
 // Scale out animation
-@mixin scale-out(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: scale-out $duration $timing $delay forwards;
+@mixin scale-out() {
+  animation: scale-out var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    forwards;
 }
 
 // Rotate animation
-@mixin rotate(
-  $degrees: 360deg,
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: rotate $duration $timing $delay infinite;
+@mixin rotate() {
+  animation: rotate var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    infinite;
   animation-fill-mode: forwards;
   transform-origin: center;
 }
 
 // Pulse animation
-@mixin pulse(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: pulse $duration $timing $delay infinite;
+@mixin pulse() {
+  animation: pulse var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    infinite;
 }
 
 // Shake animation
-@mixin shake(
-  $duration: var(--transition-fast),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: shake $duration $timing $delay;
+@mixin shake() {
+  animation: shake var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */;
 }
 
 // Bounce animation
-@mixin bounce(
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $delay: 0s
-) {
-  animation: bounce $duration $timing $delay infinite;
+@mixin bounce() {
+  animation: bounce var(--duration) /* TODO: Verify correct CSS variable */ var(--timing)
+    /* TODO: Verify correct CSS variable */ var(--delay) /* TODO: Verify correct CSS variable */
+    infinite;
 }
 
 // Stagger children animations
@@ -162,11 +131,11 @@
 // @param {String} $stagger - Delay between each child
 // @param {String} $selector - Child selector
 @mixin stagger-children(
-  $animation,
-  $duration: var(--transition-normal),
-  $timing: var(--transition-timing-default),
-  $stagger: 0.1s,
-  $selector: '> *'
+  $selector: '> *',
+  $animation: fade-in,
+  $duration: 0.3s,
+  $timing: ease-in-out,
+  $stagger: 0.1s
 ) {
   #{$selector} {
     animation: $animation $duration $timing;

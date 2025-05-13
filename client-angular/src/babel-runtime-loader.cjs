@@ -1,0 +1,37 @@
+// This is a custom module loader to handle the missing @babel/runtime/helpers/asyncToGenerator.js
+// It intercepts require calls for the missing module and returns the actual implementation
+
+const Module = require('module');
+const path = require('path');
+const fs = require('fs');
+
+// Store the original require function
+const originalRequire = Module.prototype.require;
+
+// The path to the actual implementation
+const actualImplementationPath = path.resolve(
+  __dirname,
+  '../node_modules/@babel/runtime/helpers/asyncToGenerator.js',
+);
+
+// The path that tests are trying to load
+const missingModulePath =
+  '/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js';
+
+// Override the require function
+Module.prototype.require = function (id) {
+  // If the requested module is the missing one, return the actual implementation
+  if (id === missingModulePath) {
+    // eslint-disable-next-line no-console
+    console.log(
+      'Intercepted request for missing Babel runtime helper, redirecting to actual implementation',
+    );
+    return originalRequire.call(this, actualImplementationPath);
+  }
+
+  // Otherwise, use the original require function
+  return originalRequire.call(this, id);
+};
+
+// Log that the loader is active
+// eslint-disable-next-line no-consoleconsole.log('Babel runtime helper loader is active');

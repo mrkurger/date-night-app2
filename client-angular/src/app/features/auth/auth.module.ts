@@ -82,13 +82,9 @@ const socialLinks = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-
-    // Nebular Theme
-    NbLayoutModule,
     NbCardModule,
     NbInputModule,
     NbButtonModule,
@@ -99,80 +95,46 @@ const socialLinks = [
     NbRadioModule,
     NbAlertModule,
     NbTooltipModule,
-
     // Nebular Auth
     NbAuthModule.forRoot({
       strategies: [
         NbOAuth2AuthStrategy.setup({
           name: 'google',
-          clientId: 'YOUR_GOOGLE_CLIENT_ID',
-          clientSecret: '',
-          authorize: {
+    authorize: {
             endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-            responseType: NbOAuth2ResponseType.CODE,
-            scope: 'profile email',
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-          token: {
+    redirectUri: `${window.location.origin}/auth/callback`,
+    token: {
             endpoint: `${environment.apiUrl}/auth/google/callback`,
-            grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
-            class: NbAuthOAuth2JWTToken,
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-        }),
-        NbOAuth2AuthStrategy.setup({
+    redirectUri: `${window.location.origin}/auth/callback`,
+    NbOAuth2AuthStrategy.setup({
           name: 'facebook',
-          clientId: 'YOUR_FACEBOOK_CLIENT_ID',
-          clientSecret: '',
-          authorize: {
+    authorize: {
             endpoint: 'https://www.facebook.com/v10.0/dialog/oauth',
-            responseType: NbOAuth2ResponseType.CODE,
-            scope: 'email',
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-          token: {
+    redirectUri: `${window.location.origin}/auth/callback`,
+    token: {
             endpoint: `${environment.apiUrl}/auth/facebook/callback`,
-            grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
-            class: NbAuthOAuth2JWTToken,
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-        }),
-        NbOAuth2AuthStrategy.setup({
+    redirectUri: `${window.location.origin}/auth/callback`,
+    NbOAuth2AuthStrategy.setup({
           name: 'apple',
-          clientId: 'YOUR_APPLE_CLIENT_ID',
-          clientSecret: '',
-          authorize: {
+    authorize: {
             endpoint: 'https://appleid.apple.com/auth/authorize',
-            responseType: NbOAuth2ResponseType.CODE,
-            scope: 'name email',
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-          token: {
+    redirectUri: `${window.location.origin}/auth/callback`,
+    token: {
             endpoint: `${environment.apiUrl}/auth/apple/callback`,
-            grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
-            class: NbAuthOAuth2JWTToken,
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-        }),
-        NbOAuth2AuthStrategy.setup({
+    redirectUri: `${window.location.origin}/auth/callback`,
+    NbOAuth2AuthStrategy.setup({
           name: 'microsoft',
-          clientId: 'YOUR_MICROSOFT_CLIENT_ID',
-          clientSecret: '',
-          clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
-          authorize: {
+    authorize: {
             endpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-            responseType: NbOAuth2ResponseType.CODE,
-            scope: 'openid profile email',
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-          token: {
+    redirectUri: `${window.location.origin}/auth/callback`,
+    token: {
             endpoint: `${environment.apiUrl}/auth/microsoft/callback`,
-            grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
-            class: NbAuthOAuth2JWTToken,
-            redirectUri: `${window.location.origin}/auth/callback`,
-          },
-        }),
-      ],
+    redirectUri: `${window.location.origin}/auth/callback`
+    LoginComponent,
+    RegisterComponent,
+    RequestPasswordComponent,
+    ResetPasswordComponent,
+    AuthLayoutComponent,],
     }),
 
     // Components

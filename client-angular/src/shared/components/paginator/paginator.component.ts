@@ -1,12 +1,10 @@
 import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NbPaginatorComponent } from '../../../app/shared/components/custom-nebular-components';
-
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'nb-paginator',
   standalone: true,
-  imports: [CommonModule, NbPaginatorComponent],
+  imports: [CommonModule],
   template: `
     <div class="paginator-container">
       <button nbButton status="basic" [disabled]="page === 1" (click)="onPrevious()">

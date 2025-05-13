@@ -1,3 +1,8 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -444,7 +449,7 @@ import { Subscription } from 'rxjs';
         margin-bottom: 0.5rem;
       }
 
-      // Dark theme adjustments
+      /* Dark theme adjustments */
       :host-context([data-theme='dark']) {
         .hint-text {
           color: nb-theme(text-hint-color);

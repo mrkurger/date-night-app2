@@ -3,36 +3,31 @@
 
 :root {
   // Base colors
-  --body-bg: #{$color-neutral-200};
-  --body-color: #{$color-neutral-800};
+  --body-bg: var(--color-neutral-200);
+  --body-color: var(--color-neutral-800);
 
   // Component colors
-  --navbar-bg: #{$color-neutral-100};
-  --navbar-color: #{$color-neutral-800};
-  --navbar-border-color: #{$color-neutral-300};
-
-  --sidebar-bg: #{$color-neutral-100};
-  --sidebar-color: #{$color-neutral-800};
-  --sidebar-border-color: #{$color-neutral-300};
-
-  --footer-bg: #{$color-neutral-800};
-  --footer-color: #{$color-neutral-200};
-
-  --card-bg: #{$color-neutral-100};
-  --card-border-color: #{$color-neutral-300};
-
-  --input-bg: #{$color-neutral-100};
-  --input-border-color: #{$color-neutral-400};
-  --input-color: #{$color-neutral-800};
-  --input-placeholder-color: #{$color-neutral-500};
-
-  --btn-default-bg: #{$color-neutral-100};
-  --btn-default-color: #{$color-neutral-800};
-  --btn-default-border-color: #{$color-neutral-400};
+  --navbar-bg: var(--color-neutral-100);
+  --navbar-color: var(--color-neutral-800);
+  --navbar-border-color: var(--color-neutral-300);
+  --sidebar-bg: var(--color-neutral-100);
+  --sidebar-color: var(--color-neutral-800);
+  --sidebar-border-color: var(--color-neutral-300);
+  --footer-bg: var(--color-neutral-800);
+  --footer-color: var(--color-neutral-200);
+  --card-bg: var(--color-neutral-100);
+  --card-border-color: var(--color-neutral-300);
+  --input-bg: var(--color-neutral-100);
+  --input-border-color: var(--color-neutral-400);
+  --input-color: var(--color-neutral-800);
+  --input-placeholder-color: var(--color-neutral-500);
+  --btn-default-bg: var(--color-neutral-100);
+  --btn-default-color: var(--color-neutral-800);
+  --btn-default-border-color: var(--color-neutral-400);
 
   // Semantic colors
-  --success-bg: rgba(#{$color-success}, 0.1);
-  --warning-bg: rgba(#{$color-warning}, 0.1);
-  --error-bg: rgba(#{$color-error}, 0.1);
-  --info-bg: rgba(#{$color-info}, 0.1);
+  --success-bg: var(--color-success);
+  --warning-bg: var(--color-warning);
+  --error-bg: var(--color-error);
+  --info-bg: var(--color-info);
 }

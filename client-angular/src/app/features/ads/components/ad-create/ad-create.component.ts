@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
@@ -59,6 +63,7 @@ export class AdCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.adForm.valid) {
       // Process the form data
+      // eslint-disable-next-line no-console
       console.log('Form submitted', this.adForm.value);
 
       // Navigate back to the list

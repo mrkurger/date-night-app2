@@ -2,7 +2,7 @@
 @use 'src/styles/mixins/_dark-mode.scss' as darkmode;
 @use 'src/styles/mixins/index.scss' as mixins;
 
-@include nb-install() {
+@include nb-install {
   :host {
     display: block;
     padding: var(--padding);

@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';

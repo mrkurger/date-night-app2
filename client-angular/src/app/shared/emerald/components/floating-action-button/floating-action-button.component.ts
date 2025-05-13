@@ -16,12 +16,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald FloatingActionButton Component
+ * /*DEPRECATED:Emerald*/ FloatingActionButton Component
  *
  * A floating action button for primary actions.
  * This component provides a prominent way to promote a primary action.
  *
- * Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/FloatingActionButton
  */
 @Component({
   selector: 'nb-fab',

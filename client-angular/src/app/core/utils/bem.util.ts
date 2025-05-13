@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
  *   `
  *,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule] })
+  imports: [] })
  * export class CardComponent {
  *   bem = new BemUtil('card');
  *   isActive = false;

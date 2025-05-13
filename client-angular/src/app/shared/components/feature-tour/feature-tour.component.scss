@@ -1,4 +1,4 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 .feature-tour-overlay {
   position: fixed;
@@ -44,7 +44,7 @@
     transform: translateX(-50%);
     border-width: 10px 10px 0;
     border-style: solid;
-    border-color: $neutral-100 transparent transparent;
+    border-color: var(--neutral-100) /* TODO: Verify correct CSS variable */ transparent transparent;
   }
 
   &[data-position='right']::after {
@@ -55,7 +55,7 @@
     transform: translateY(-50%);
     border-width: 10px 10px 10px 0;
     border-style: solid;
-    border-color: transparent $neutral-100 transparent transparent;
+    border-color: transparent var(--neutral-100) /* TODO: Verify correct CSS variable */ transparent transparent;
   }
 
   &[data-position='bottom']::after {
@@ -66,7 +66,7 @@
     transform: translateX(-50%);
     border-width: 0 10px 10px;
     border-style: solid;
-    border-color: transparent transparent $neutral-100;
+    border-color: transparent transparent var(--neutral-100) /* TODO: Verify correct CSS variable */;
   }
 
   &[data-position='left']::after {
@@ -77,53 +77,53 @@
     transform: translateY(-50%);
     border-width: 10px 0 10px 10px;
     border-style: solid;
-    border-color: transparent transparent transparent $neutral-100;
+    border-color: transparent transparent transparent var(--neutral-100) /* TODO: Verify correct CSS variable */;
   }
 }
 
 .tooltip-content {
-  background-color: $neutral-100;
+  background-color: var(--neutral-100) /* TODO: Verify correct CSS variable */;
   border-radius: 0.5rem;
-  box-shadow: $shadow-xl;
-  padding: $spacing-6;
+  box-shadow: var(--shadow-xl) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   animation: fadeIn 0.3s ease-in-out;
 }
 
 .tooltip-title {
-  font-family: $font-primary;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $neutral-900;
-  margin: 0 0 $spacing-2 0;
+  font-family: var(--font-primary) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-xl) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-bold) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
+  margin: 0 0 var(--spacing-2) /* TODO: Verify correct CSS variable */ 0;
 }
 
 .tooltip-description {
-  font-size: $font-size-base;
-  line-height: $line-height-relaxed;
-  color: $neutral-700;
-  margin-bottom: $spacing-4;
+  font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
+  line-height: var(--line-height-relaxed) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-700) /* TODO: Verify correct CSS variable */;
+  margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 }
 
 .tooltip-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
   .btn-previous {
-    color: $neutral-700;
+    color: var(--neutral-700) /* TODO: Verify correct CSS variable */;
   }
 
   .btn-skip {
     margin-left: auto;
-    margin-right: $spacing-2;
-    color: $neutral-600;
+    margin-right: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
   }
 
   .btn-next {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
+    gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -133,29 +133,29 @@
   align-items: center;
 
   .progress-text {
-    font-size: $font-size-sm;
-    color: $neutral-600;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
   }
 
   .progress-dots {
     display: flex;
-    gap: $spacing-1;
+    gap: var(--spacing-1) /* TODO: Verify correct CSS variable */;
 
     .dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: $neutral-300;
+      background-color: var(--neutral-300) /* TODO: Verify correct CSS variable */;
       cursor: pointer;
       transition: all 0.2s ease;
 
       &.active {
-        background-color: $primary-500;
+        background-color: var(--primary-500) /* TODO: Verify correct CSS variable */;
         transform: scale(1.2);
       }
 
       &:hover {
-        background-color: $primary-300;
+        background-color: var(--primary-300) /* TODO: Verify correct CSS variable */;
       }
     }
   }
@@ -180,15 +180,15 @@
   }
 
   .tooltip-title {
-    font-size: $font-size-lg;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
   }
 
   .tooltip-description {
-    font-size: $font-size-sm;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
   }
 
   .tooltip-actions {
     flex-wrap: wrap;
-    gap: $spacing-2;
+    gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 }

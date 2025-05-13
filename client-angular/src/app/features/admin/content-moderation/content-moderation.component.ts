@@ -133,6 +133,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
           this.applyFilters();
 
           if (this.pendingMedia.length === 0) {
+            // eslint-disable-next-line no-console
             console.log('No pending media items found');
           }
         },

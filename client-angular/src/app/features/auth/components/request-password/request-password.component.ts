@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,8 +12,10 @@ import {
   NbIconModule,
   NbSpinnerModule,
   NbFormFieldModule,
+  NbAlertModule,
+  NbTooltipModule,
 } from '@nebular/theme';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -28,6 +33,8 @@ import { finalize } from 'rxjs/operators';
     NbIconModule,
     NbSpinnerModule,
     NbFormFieldModule,
+    NbAlertModule,
+    NbTooltipModule,
   ],
 })
 export class RequestPasswordComponent {

@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbUserModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import {
   Component,
   OnInit,

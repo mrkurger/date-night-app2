@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,7 +12,6 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input } from '@angular/core';
-import { NbSortModule } from '../../../shared/components/custom-nebular-components';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
@@ -39,7 +42,6 @@ import {
     NbSpinnerModule,
     NbTableModule,
     NbTreeGridModule,
-    NbSortModule,
     NbInputModule,
     NbFormFieldModule,
     NbIconModule,

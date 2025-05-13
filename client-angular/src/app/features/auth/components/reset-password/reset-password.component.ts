@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -17,8 +20,9 @@ import {
   NbSpinnerModule,
   NbFormFieldModule,
   NbTooltipModule,
+  NbAlertModule,
 } from '@nebular/theme';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 
 // Custom validator for password matching
@@ -50,6 +54,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
     NbSpinnerModule,
     NbFormFieldModule,
     NbTooltipModule,
+    NbAlertModule,
   ],
 })
 export class ResetPasswordComponent implements OnInit {

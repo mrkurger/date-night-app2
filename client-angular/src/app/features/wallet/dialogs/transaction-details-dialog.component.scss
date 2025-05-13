@@ -177,7 +177,7 @@ h4 {
   font-weight: 600;
 }
 
-@include nb-install() {
+@include nb-install {
   .transaction-details {
     max-width: 600px;
     width: 100%;

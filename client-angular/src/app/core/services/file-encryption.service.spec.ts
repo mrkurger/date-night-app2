@@ -1,3 +1,12 @@
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains tests for the file encryption service
+//
+// COMMON CUSTOMIZATIONS:
+// - None specific to this service
+// ===================================================
+
 import { TestBed } from '@angular/core/testing';
 import { FileEncryptionService } from './file-encryption.service';
 import { EncryptionService } from './encryption.service';
@@ -7,7 +16,10 @@ describe('FileEncryptionService', () => {
   let encryptionServiceSpy: jasmine.SpyObj<EncryptionService>;
 
   beforeEach(() => {
+    // Create a spy for the EncryptionService with the methods used in FileEncryptionService
     const spy = jasmine.createSpyObj('EncryptionService', ['encrypt', 'decrypt']);
+    spy.encrypt.and.returnValue(Promise.resolve(new ArrayBuffer(8)));
+    spy.decrypt.and.returnValue(Promise.resolve(new ArrayBuffer(8)));
 
     TestBed.configureTestingModule({
       providers: [FileEncryptionService, { provide: EncryptionService, useValue: spy }],

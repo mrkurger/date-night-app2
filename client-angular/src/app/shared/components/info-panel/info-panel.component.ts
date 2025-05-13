@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {

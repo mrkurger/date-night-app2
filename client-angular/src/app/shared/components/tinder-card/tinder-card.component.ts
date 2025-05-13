@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================

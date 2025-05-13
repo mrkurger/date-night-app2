@@ -82,14 +82,10 @@ const routes: Routes = [
  * New routes should be added to app.routes.ts.
  */
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: SelectivePreloadingStrategy,
-      scrollPositionRestoration: 'enabled',
-      anchorScrolling: 'enabled',
-      initialNavigation: 'enabledBlocking', // for SSR
-    }),
-  ],
+  imports: [RouterModule.forRoot(routes,
+    {
+      preloadingStrategy: SelectivePreloadingStrategy
+    AdminLayoutComponent,],
   exports: [RouterModule],
   providers: [SelectivePreloadingStrategy],
 })

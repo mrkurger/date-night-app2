@@ -11,20 +11,18 @@
 @use '@nebular/theme/styles/themes/dark' as dark-theme;
 
 /* Import Design Tokens */
-@use '../../app/core/design/design-tokens' as *;
+
 @use '../../app/core/design/nebular-theme-customization' as theme;
 
 /* Forward Base Styles */
 @forward '../variables';
 @forward '../mixins/index';
-@forward './typography';
+@forward './_typography';
 @forward './colors';
 @forward './spacing';
 @forward './breakpoints';
 
 /* Register Themes */
-$nb-themes: nb-register-theme(theme.$date-night-theme, default, default-theme.$theme);
-$nb-themes: nb-register-theme(theme.$date-night-dark-theme, dark, dark-theme.$theme);
 @use '@nebular/theme/styles/themes/default' as nb-default;
 
 /* Forward core design tokens and variables */
@@ -33,9 +31,11 @@ $nb-themes: nb-register-theme(theme.$date-night-dark-theme, dark, dark-theme.$th
 
 /* Forward utilities */
 @forward '../../app/core/design/bem-utilities';
-@forward '../../app/core/design/responsive-utilities';
+// Temporarily commenting out to avoid duplicate $breakpoints variable
+// @forward '../../app/core/design/responsive-utilities';
 @forward '../../app/core/design/accessibility-utilities';
-@forward '../../app/core/design/animation-utilities';
+// Temporarily commenting out to avoid duplicate mixins
+// @forward '../../app/core/design/animation-utilities';
 @forward '../../app/core/design/dark-mode';
 
 /* Forward component styles */

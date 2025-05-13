@@ -10,9 +10,6 @@
 // Import Leaflet CSS
 @use 'leaflet/dist/leaflet.css' as *;
 
-// Eva Icons
-@use 'node_modules/eva-icons/style/eva-icons.css' as *;
-
 // Nebular prebuilt theme - use correct path
 @use '@nebular/theme/prebuilt/default.css' as *;
 
@@ -23,8 +20,8 @@ $nb-themes: theming.nb-register-theme((), default, default-theme.$theme);
 $nb-themes: theming.nb-register-theme((), dark, dark-theme.$theme);
 
 // Install the themes
-@include theming.nb-install() {
-  @include theming.nb-theme-global();
+@include theming.nb-install {
+  @include theming.nb-theme-global;
 }
 
 // Global styles

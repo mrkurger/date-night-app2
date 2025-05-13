@@ -10,27 +10,27 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .map-label {
-    color: ds.$color-neutral-600; // was #666
+    color: var(--color-neutral-600) /* TODO: Verify correct CSS variable */; // was #666
   }
 
   .selected {
-    color: ds.$color-primary; // was #4a90e2
+    color: var(--color-primary); // was #4a90e2
   }
 
   .error-marker {
-    background: ds.$color-error; // was #dc3545
+    background: var(--color-error) /* TODO: Verify correct CSS variable */; // was #dc3545
   }
 
   .boundary {
-    border: 1px solid ds.$color-neutral-300; // was #ddd
+    border: 1px solid var(--color-neutral-300) /* TODO: Verify correct CSS variable */; // was #ddd
   }
 
   .boundary:hover {
-    outline: 2px solid ds.$color-primary; // was #4a90e2
+    outline: 2px solid var(--color-primary); // was #4a90e2
   }
 
   .boundary:active {
-    background: ds.$color-primary;
+    background: var(--color-primary);
   }
 }
 
@@ -40,7 +40,7 @@
 
   // Accessibility focus styles
   &:focus {
-    outline: 3px solid ds.$color-primary; // was #4a90e2
+    outline: 3px solid var(--color-primary); // was #4a90e2
     outline-offset: -3px;
   }
 
@@ -75,13 +75,13 @@
 }
 
 .map-instructions {
-  color: ds.$color-neutral-600; // was #666
+  color: var(--color-neutral-600) /* TODO: Verify correct CSS variable */; // was #666
   display: flex;
   align-items: center;
   gap: 6px;
 
   i {
-    color: ds.$color-primary; // was #4a90e2
+    color: var(--color-primary); // was #4a90e2
   }
 }
 
@@ -118,13 +118,13 @@
   text-align: center;
 
   p {
-    color: ds.$color-error; // was #dc3545
-    margin: 0 0 8px 0;
+    color: var(--color-error) /* TODO: Verify correct CSS variable */; // was #dc3545
+    margin: 0 0 8px;
     font-weight: 500;
   }
 
   .retry-location {
-    background: ds.$color-primary; // was #4a90e2
+    background: var(--color-primary); // was #4a90e2
     color: white;
     border: none;
     padding: 6px 12px;
@@ -133,11 +133,11 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background: ds.$color-primary;
+      background: var(--color-primary);
     }
 
     &:focus {
-      outline: 2px solid ds.$color-primary; // was #4a90e2
+      outline: 2px solid var(--color-primary); // was #4a90e2
       outline-offset: 2px;
     }
   }
@@ -176,18 +176,18 @@
     align-items: center;
     justify-content: center;
     background: white;
-    border: 1px solid ds.$color-neutral-300; // was #ddd
+    border: 1px solid var(--color-neutral-300) /* TODO: Verify correct CSS variable */; // was #ddd
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
       background: #f8f9fa;
-      border-color: ds.$color-primary; // was #4a90e2
+      border-color: var(--color-primary); // was #4a90e2
     }
 
     &:focus {
-      outline: 2px solid ds.$color-primary; // was #4a90e2
+      outline: 2px solid var(--color-primary); // was #4a90e2
       outline-offset: 2px;
     }
 

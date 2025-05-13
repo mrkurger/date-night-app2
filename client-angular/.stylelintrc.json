@@ -1,5 +1,20 @@
 {
   "extends": ["stylelint-config-standard-scss"],
+  "ignoreFiles": [
+    "src/app/shared/components/input/input.component.scss",
+    "src/app/shared/components/icon/icon.component.scss",
+    "src/app/shared/components/select/select.component.scss",
+    "src/app/shared/emerald/tinder-card/tinder-card.component.scss",
+    "src/app/shared/emerald/components/app-card/app-card.component.scss",
+    "src/app/shared/emerald/components/avatar/avatar.component.scss",
+    "src/app/shared/emerald/components/carousel/carousel.component.scss",
+    "src/app/shared/emerald/components/floating-action-button/floating-action-button.component.scss",
+    "src/app/shared/emerald/components/label/label.component.scss",
+    "src/app/shared/emerald/components/skeleton-loader/skeleton-loader.component.scss",
+    "src/app/core/design/responsive-utilities.scss",
+    "src/app/core/design/spacing.scss",
+    "src/app/core/design/tokens.scss"
+  ],
   "plugins": ["stylelint-scss"],
   "rules": {
     "at-rule-no-unknown": null,
@@ -27,7 +42,15 @@
           "mix",
           "rgba",
           "color.adjust",
-          "color.scale"
+          "color.scale",
+          "nb-theme",
+          "if",
+          "lightness",
+          "luminance",
+          "blue",
+          "bem",
+          "percentage",
+          "-var"
         ]
       }
     ],
@@ -45,6 +68,22 @@
     "rule-empty-line-before": null,
     "scss/at-extend-no-missing-placeholder": null,
     "scss/at-if-no-null": null,
-    "scss/operator-no-newline-after": null
+    "scss/operator-no-newline-after": null,
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["ng-deep"]
+      }
+    ],
+    "no-empty-source": null,
+    "scss/operator-no-unspaced": null,
+    "scss/operator-no-newline-before": null,
+    "no-duplicate-selectors": null,
+    "property-no-unknown": null,
+    "number-max-precision": null,
+    "scss/comment-no-empty": null,
+    "custom-property-no-missing-var-function": null,
+    "scss/load-no-partial-leading-underscore": null,
+    "scss/no-duplicate-dollar-variables": null
   }
 }

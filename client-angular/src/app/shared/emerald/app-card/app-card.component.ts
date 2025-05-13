@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';

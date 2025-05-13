@@ -29,19 +29,16 @@ import { StarRatingComponent } from '../components/star-rating/star-rating.compo
  * and interacting with reviews.
  */
 @NgModule({
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule,
     NbDialogModule,
-    // Import all standalone components
-    ReviewFormComponent,
     ReviewListComponent,
     ReviewSummaryComponent,
     ReviewDialogComponent,
     ResponseDialogComponent,
     ReportDialogComponent,
-    StarRatingComponent,
-  ],
+    StarRatingComponent
+    ReviewFormComponent,],
   exports: [
     // Export all components for use in other modules
     ReviewFormComponent,

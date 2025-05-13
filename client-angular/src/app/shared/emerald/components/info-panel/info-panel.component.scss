@@ -1,57 +1,15 @@
-@use 'src/styles/design-system/index.scss' as ds;
-@use '../../core/design/variables' as *;
-@use 'sass:color';
-// Define variables locally for testing
-$color-white: #f3f4f6;
-$color-light-gray-1: #e5e7eb;
-$color-light-gray-2: #d1d5db;
-$color-dark-gray-1: #4b5563;
-$color-dark-gray-2: #374151;
-$color-black: #111827;
-$border-radius-md: 0.375rem;
-$border-radius-sm: 0.25rem;
-$border-radius-full: 9999px;
-$shadow-md:
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$font-size-xs: 0.75rem;
-$font-size-sm: 0.875rem;
-$font-size-lg: 1.125rem;
-$font-weight-semibold: 600;
-$primary: #3b82f6;
-// Define primary light color
-$primary-light: color.adjust($primary, $lightness: 35%);
-// Define primary darker color
-$primary-darker: color.adjust($primary-dark, $lightness: -10%);
-$color-success: #10b981;
-// Success color
-$success-light: #dcfce7;
-$success-dark: #15803d;
-$color-warning: #f59e0b;
-$warning-light: #fef3c7;
-$warning-dark: #b45309;
-$danger: #ef4444;
-$danger-100: #fee2e2;
-$danger-700: #b91c1c;
-$color-info: #0ea5e9;
-$info-light: #e0f2fe;
-$info-dark: #0369a1;
-
-// Emerald InfoPanel Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/InfoPanel
-
-.emerald-info-panel {
-  background-color: $color-white;
-  border-radius: $border-radius-md;
+.nb-info-panel {
+  background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
 
   // Panel Variants
   &--bordered {
-    border: 1px solid $color-light-gray-2;
+    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
   }
 
   &--shadowed {
-    box-shadow: $shadow-md;
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
   }
 
   // Panel Header
@@ -60,13 +18,13 @@ $info-dark: #0369a1;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid $color-light-gray-1;
+    border-bottom: 1px solid var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
 
-    .emerald-info-panel--collapsible & {
+    .nebular-info-panel--collapsible & {
       cursor: pointer;
 
       &:hover {
-        background-color: $color-white;
+        background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
       }
     }
   }
@@ -77,22 +35,22 @@ $info-dark: #0369a1;
 
   &__title {
     margin: 0;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $color-black;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    color: var(--color-black) /* TODO: Verify correct CSS variable */;
   }
 
   &__subtitle {
     margin: 4px 0 0;
-    font-size: $font-size-sm;
-    color: $color-dark-gray-1;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
   }
 
   // Collapse Toggle
   &__toggle {
     background: none;
     border: none;
-    color: $color-dark-gray-1;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
     width: 24px;
     height: 24px;
@@ -102,7 +60,7 @@ $info-dark: #0369a1;
     transition: transform 0.2s ease;
 
     &:hover {
-      color: $color-black;
+      color: var(--color-black) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -115,7 +73,7 @@ $info-dark: #0369a1;
     opacity: 1;
     overflow: hidden;
 
-    .emerald-info-panel--collapsed & {
+    .nebular-info-panel--collapsed & {
       max-height: 0;
       opacity: 0;
     }
@@ -139,13 +97,13 @@ $info-dark: #0369a1;
     flex: 1;
     display: flex;
     align-items: center;
-    color: $color-dark-gray-2;
-    font-size: $font-size-sm;
+    color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
   }
 
   &__item-icon {
     margin-right: 8px;
-    color: $color-dark-gray-1;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     width: 16px;
     text-align: center;
   }
@@ -153,18 +111,18 @@ $info-dark: #0369a1;
   &__item-value {
     flex: 1;
     text-align: right;
-    font-weight: $font-weight-semibold;
-    color: $color-black;
-    font-size: $font-size-sm;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+    color: var(--color-black) /* TODO: Verify correct CSS variable */;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
   }
 
   // Badge Value
   &__badge {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: $border-radius-sm;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-semibold;
+    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
+    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
 
     &--primary {
       background-color: #dbeafe; /* primary-100 */
@@ -202,38 +160,38 @@ $info-dark: #0369a1;
     position: relative;
     height: 8px;
     width: 100px;
-    background-color: $color-light-gray-1;
-    border-radius: $border-radius-full;
+    background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
     overflow: hidden;
     display: inline-block;
   }
 
   &__progress-bar {
     height: 100%;
-    border-radius: $border-radius-full;
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
 
     &--primary {
-      background-color: $primary;
+      background-color: var(--primary) /* TODO: Verify correct CSS variable */;
     }
 
     &--success {
-      background-color: $color-success;
+      background-color: var(--color-success) /* TODO: Verify correct CSS variable */;
     }
 
     &--warning {
-      background-color: $color-warning;
+      background-color: var(--color-warning) /* TODO: Verify correct CSS variable */;
     }
 
     &--danger {
-      background-color: $danger;
+      background-color: var(--danger) /* TODO: Verify correct CSS variable */;
     }
 
     &--info {
-      background-color: $color-info;
+      background-color: var(--color-info) /* TODO: Verify correct CSS variable */;
     }
 
     &--neutral {
-      background-color: $color-dark-gray-1;
+      background-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -242,9 +200,9 @@ $info-dark: #0369a1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: $font-size-xs;
-    color: $color-black;
-    text-shadow: 0 0 2px rgba($color-white, 0.8);
+    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
+    color: var(--color-black) /* TODO: Verify correct CSS variable */;
+    text-shadow: 0 0 2px rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.8);
   }
 
   // Boolean Value
@@ -257,13 +215,13 @@ $info-dark: #0369a1;
     border-radius: 50%;
 
     &--true {
-      background-color: $success-light;
-      color: $color-success;
+      background-color: var(--success-light) /* TODO: Verify correct CSS variable */;
+      color: var(--color-success) /* TODO: Verify correct CSS variable */;
     }
 
     &--false {
-      background-color: $danger-100;
-      color: $danger;
+      background-color: var(--danger-100) /* TODO: Verify correct CSS variable */;
+      color: var(--danger) /* TODO: Verify correct CSS variable */;
     }
   }
 }

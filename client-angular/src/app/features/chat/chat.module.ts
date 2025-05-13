@@ -21,13 +21,13 @@ import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 
 @NgModule({
   declarations: [
+    ],
+  imports: [SharedModule, ChatRoutingModule
     ChatComponent,
     ChatListComponent,
     ChatRoomComponent,
     ChatMessageComponent,
-    ChatSettingsComponent,
-  ],
-  imports: [SharedModule, ChatRoutingModule],
+    ChatSettingsComponent,],
   providers: [LinkifyPipe],
 })
 export class ChatModule {}

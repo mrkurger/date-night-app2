@@ -1,9 +1,8 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default';
 
-$nb-themes: nb-register-theme((// add your custom variables here), default, default);
 
-@include nb-install() {
-  @include nb-theme-global();
-  @include nb-auth-global();
+@include nb-install {
+  @include nb-theme-global;
+  @include nb-auth-global;
 }

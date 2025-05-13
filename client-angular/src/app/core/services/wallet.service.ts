@@ -531,6 +531,21 @@ export class WalletService {
   }
 
   /**
+   * Withdraw funds
+   * @param data Withdrawal data
+   */
+  withdraw(data: {
+    amount: number;
+    currency: string;
+    paymentMethodId: string;
+    memo?: string;
+  }): Observable<WalletTransaction> {
+    return this.http
+      .post<{ data: { transaction: WalletTransaction } }>(`${this.apiUrl}/withdraw`, data)
+      .pipe(map((response) => response.data.transaction));
+  }
+
+  /**
    * Refresh wallet data
    */
   private refreshWallet(): void {

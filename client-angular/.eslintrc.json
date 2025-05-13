@@ -1,6 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*", "node_modules/**/*", "dist/**/*"],
+  "ignorePatterns": [
+    "projects/**/*",
+    "node_modules/**/*",
+    "dist/**/*",
+    "src/babel-runtime-loader.cjs",
+    "src/babel-runtime-loader.js"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],

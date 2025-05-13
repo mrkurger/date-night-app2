@@ -309,7 +309,7 @@
   }
 
   &--apple {
-    background-color: #000000;
+    background-color: #000;
     color: var(--text-control-color);
   }
 }
@@ -370,7 +370,7 @@
   }
 }
 
-@include nb-install() {
+@include nb-install {
   :host {
     display: block;
     max-width: 400px;

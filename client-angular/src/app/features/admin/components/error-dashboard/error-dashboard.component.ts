@@ -1,3 +1,9 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbPaginatorModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,11 +14,11 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input } from '@angular/core';
-import { NbSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { NbPaginatorComponent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.component';
+import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+
 import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
-import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
@@ -36,8 +42,6 @@ import {
   NbToggleModule,
   NbTooltipModule,
   NbTreeGridModule,
-  NbSortDirection,
-  NbSortRequest,
   NbTreeGridDataSource,
   NbTreeGridDataSourceBuilder,
   NbDialogService,
@@ -76,15 +80,15 @@ interface ErrorData {
     NbTooltipModule,
     NbTreeGridModule,
     NbErrorComponent,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-  ],
+    AppSortComponent,
+    AppSortHeaderComponent,
+  
+    NbPaginatorModule,],
   templateUrl: './error-dashboard.component.html',
   styleUrls: ['./error-dashboard.component.scss'],
 })
 export class ErrorDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(NbSortComponent) sort: NbSortComponent;
+  @ViewChild(AppSortComponent) sort: AppSortComponent;
   @ViewChild('errorDetailsDialog') errorDetailsDialog!: TemplateRef<any>;
 
   filterForm: FormGroup;
@@ -105,7 +109,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
 
   // Sorting
   sortColumn = '';
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
+  sortDirection: 'asc' | 'desc' | '' = '';
 
   private destroy$ = new Subject<void>();
 
@@ -269,9 +273,9 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSort(sortRequest: NbSortRequest): void {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
+  onSort(sort: AppSortEvent): void {
+    this.sortColumn = sort.active;
+    this.sortDirection = sort.direction;
     this.loadDashboardData();
   }
 
@@ -291,7 +295,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   /**
    * Handle sort event from sort component
    */
-  sortData(sort: NbSortEvent): void {
+  sortData(sort: AppSortEvent): void {
     // Implement sorting logic if needed, then reload data
     // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
     this.loadDashboardData();

@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Inject } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -62,7 +65,8 @@ export interface WalletTransaction {
     NbIconModule,
     FormsModule,
     ReactiveFormsModule,
-  ],
+  
+    NbBadgeModule,],
   templateUrl: './transaction-details-dialog.component.html',
   styleUrls: ['./transaction-details-dialog.component.scss'],
 })

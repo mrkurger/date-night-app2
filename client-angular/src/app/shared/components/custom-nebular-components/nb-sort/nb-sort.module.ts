@@ -1,5 +1,5 @@
-// Export the NbSortEvent type
-export interface NbSortEvent {
+// Custom sort event interface (was NbSortEvent)
+export interface AppSortEvent {
   active: string;
   direction: 'asc' | 'desc' | '';
 }

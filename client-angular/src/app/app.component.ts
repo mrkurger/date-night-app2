@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbUserModule } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

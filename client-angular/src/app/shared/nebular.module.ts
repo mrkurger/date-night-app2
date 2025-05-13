@@ -49,8 +49,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 // Import custom Nebular-compatible components/modules
 import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { NbSortModule } from './components/custom-nebular-components/nb-sort/nb-sort.module';
-import { NbPaginatorModule } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
 /**
  * Core Nebular modules that need to be configured at the root level
@@ -106,7 +105,7 @@ const FEATURE_NEBULAR_MODULES: Array<Type<any>> = [
  */
 const CUSTOM_NEBULAR_COMPONENTS = [NbErrorComponent];
 
-const CUSTOM_NEBULAR_MODULES = [NbSortModule, NbPaginatorModule];
+const CUSTOM_NEBULAR_MODULES = [];
 
 /**
  * NebularModule

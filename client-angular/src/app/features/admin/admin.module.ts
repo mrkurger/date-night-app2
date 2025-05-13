@@ -66,12 +66,9 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
  * Protected by AdminGuard for admin-only access.
  */
 @NgModule({
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    // Nebular modules
-    NbTabsetModule,
     NbCardModule,
     NbButtonModule,
     NbTableModule,
@@ -90,10 +87,6 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
     NbContextMenuModule,
     NbSecurityModule,
     NbLayoutModule,
-    // Charts
-    NgxChartsModule,
-    // Standalone components
-    TelemetryDashboardComponent,
     ErrorDashboardComponent,
     PerformanceDashboardComponent,
     UserManagementComponent,
@@ -101,7 +94,7 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
     ContentModerationComponent,
     SystemHealthComponent,
     AuditLogComponent,
-    AdminSettingsComponent,
-  ],
+    AdminSettingsComponent
+    TelemetryDashboardComponent,],
 })
 export class AdminModule {}

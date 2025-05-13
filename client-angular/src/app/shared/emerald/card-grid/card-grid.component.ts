@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -173,6 +175,20 @@ export class CardGridComponent {
    */
   onItemClick(item: any): void {
     this.cardClick.emit(item.id);
+  }
+
+  /**
+   * Alias for onItemClick to support tests
+   */
+  handleCardClick(itemId: string): void {
+    this.cardClick.emit(itemId);
+  }
+
+  /**
+   * Handle action click
+   */
+  handleActionClick(event: { id: string; itemId: string }): void {
+    this.actionClick.emit(event);
   }
 
   /**

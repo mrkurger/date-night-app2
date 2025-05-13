@@ -1,3 +1,6 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';

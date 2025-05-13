@@ -1,14 +1,11 @@
 @use 'src/styles/design-system/index.scss' as ds;
 @use '../../core/design/variables' as *;
 @use 'sass:color';
-@use '../../../../core/design/design-tokens' as tokens;
+
 
 // Shadow variables
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-$shadow-md:
   0 4px 6px -1px rgba(0, 0, 0, 0.1),
   0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg:
   0 10px 15px -3px rgba(0, 0, 0, 0.1),
   0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
@@ -16,46 +13,46 @@ $shadow-lg:
 // Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
 
 // Container for positioning the FAB
-.emerald-fab-container {
+.nebular-fab-container {
   position: fixed;
   z-index: 50;
 
   // Position variants
   &--bottom-right {
-    right: emerald.$spacing-6;
-    bottom: emerald.$spacing-6;
+    right: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    bottom: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &--bottom-left {
-    left: emerald.$spacing-6;
-    bottom: emerald.$spacing-6;
+    left: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    bottom: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &--top-right {
-    right: emerald.$spacing-6;
-    top: emerald.$spacing-6;
+    right: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    top: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &--top-left {
-    left: emerald.$spacing-6;
-    top: emerald.$spacing-6;
+    left: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    top: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &--center {
     left: 50%;
-    bottom: emerald.$spacing-6;
+    bottom: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
     transform: translateX(-50%);
   }
 }
 
 // Main FAB button
-.emerald-fab {
+.nebular-fab {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   border: none;
-  box-shadow: $shadow-lg;
+  box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
   cursor: pointer;
   transition:
     transform 0.3s ease,
@@ -70,7 +67,7 @@ $shadow-lg:
 
   i {
     font-size: 1.25rem;
-    color: emerald.$color-white;
+    color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
   }
 
   // Size variants
@@ -94,10 +91,10 @@ $shadow-lg:
 
   // Color variants
   &--primary {
-    background-color: emerald.$color-primary;
+    background-color: emerald.var(--color-primary);
 
     &:hover:not(:disabled) {
-      background-color: emerald.$color-primary-dark;
+      background-color: emerald.var(--color-primary)-dark;
     }
   }
 
@@ -110,7 +107,7 @@ $shadow-lg:
   }
 
   &--success {
-    background-color: emerald.$color-success;
+    background-color: emerald.var(--color-success) /* TODO: Verify correct CSS variable */;
 
     &:hover:not(:disabled) {
       background-color: #15803d;
@@ -118,7 +115,7 @@ $shadow-lg:
   }
 
   &--danger {
-    background-color: emerald.$color-error;
+    background-color: emerald.var(--color-error) /* TODO: Verify correct CSS variable */;
 
     &:hover:not(:disabled) {
       background-color: #b91c1c;
@@ -126,23 +123,23 @@ $shadow-lg:
   }
 
   &--warning {
-    background-color: emerald.$color-warning;
+    background-color: emerald.var(--color-warning) /* TODO: Verify correct CSS variable */;
 
     &:hover:not(:disabled) {
       background-color: #b45309;
 
       i {
-        color: emerald.$color-black;
+        color: emerald.var(--color-black) /* TODO: Verify correct CSS variable */;
       }
     }
 
     i {
-      color: emerald.$color-black;
+      color: emerald.var(--color-black) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &--info {
-    background-color: emerald.$color-info;
+    background-color: emerald.var(--color-info) /* TODO: Verify correct CSS variable */;
 
     &:hover:not(:disabled) {
       background-color: #1d4ed8;
@@ -160,7 +157,7 @@ $shadow-lg:
   &:focus {
     outline: none;
     box-shadow:
-      0 0 0 3px rgba(emerald.$color-primary, 0.3),
+      0 0 0 3px rgba(emerald.var(--color-primary), 0.3),
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
@@ -186,9 +183,9 @@ $shadow-lg:
   // Tooltip
   &__tooltip {
     position: absolute;
-    background-color: emerald.$color-dark-gray-3;
-    color: emerald.$color-white;
-    padding: emerald.$spacing-1 emerald.$spacing-2;
+    background-color: emerald.var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
+    color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
+    padding: emerald.var(--spacing-1) /* TODO: Verify correct CSS variable */ emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
     border-radius: 0.375rem;
     font-size: 0.75rem;
     white-space: nowrap;
@@ -199,32 +196,32 @@ $shadow-lg:
       transform 0.2s ease;
 
     // Position the tooltip based on the FAB position
-    .emerald-fab-container--bottom-right &,
-    .emerald-fab-container--bottom-left &,
-    .emerald-fab-container--center & {
+    .nebular-fab-container--bottom-right &,
+    .nebular-fab-container--bottom-left &,
+    .nebular-fab-container--center & {
       bottom: 100%;
-      margin-bottom: emerald.$spacing-2;
+      margin-bottom: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
       transform: translateY(5px);
     }
 
-    .emerald-fab-container--top-right &,
-    .emerald-fab-container--top-left & {
+    .nebular-fab-container--top-right &,
+    .nebular-fab-container--top-left & {
       top: 100%;
-      margin-top: emerald.$spacing-2;
+      margin-top: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
       transform: translateY(-5px);
     }
 
-    .emerald-fab-container--bottom-right &,
-    .emerald-fab-container--top-right & {
+    .nebular-fab-container--bottom-right &,
+    .nebular-fab-container--top-right & {
       right: 0;
     }
 
-    .emerald-fab-container--bottom-left &,
-    .emerald-fab-container--top-left & {
+    .nebular-fab-container--bottom-left &,
+    .nebular-fab-container--top-left & {
       left: 0;
     }
 
-    .emerald-fab-container--center & {
+    .nebular-fab-container--center & {
       left: 50%;
       transform: translateX(-50%) translateY(5px);
     }
@@ -234,18 +231,18 @@ $shadow-lg:
     opacity: 1;
     transform: translateY(0);
 
-    .emerald-fab-container--center & {
+    .nebular-fab-container--center & {
       transform: translateX(-50%) translateY(0);
     }
   }
 }
 
 // FAB Menu
-.emerald-fab-menu {
+.nebular-fab-menu {
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: emerald.$spacing-2;
+  gap: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
   z-index: 20;
   pointer-events: none;
 
@@ -280,11 +277,11 @@ $shadow-lg:
   &__item {
     display: flex;
     align-items: center;
-    padding: emerald.$spacing-2 emerald.$spacing-3;
+    padding: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */ emerald.var(--spacing-3) /* TODO: Verify correct CSS variable */;
     border-radius: 9999px;
     border: none;
-    background-color: emerald.$color-white;
-    color: emerald.$color-dark-gray-3;
+    background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
+    color: emerald.var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -297,17 +294,17 @@ $shadow-lg:
     pointer-events: none;
 
     i {
-      margin-right: emerald.$spacing-2;
+      margin-right: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
     }
 
     // Color variants
     &--primary {
       i {
-        color: emerald.$color-primary;
+        color: emerald.var(--color-primary);
       }
 
       &:hover {
-        background-color: rgba(emerald.$color-primary, 0.1);
+        background-color: rgba(emerald.var(--color-primary), 0.1);
       }
     }
 
@@ -323,21 +320,21 @@ $shadow-lg:
 
     &--success {
       i {
-        color: emerald.$color-success;
+        color: emerald.var(--color-success) /* TODO: Verify correct CSS variable */;
       }
 
       &:hover {
-        background-color: rgba(emerald.$color-success, 0.1);
+        background-color: rgba(emerald.var(--color-success) /* TODO: Verify correct CSS variable */, 0.1);
       }
     }
 
     &--danger {
       i {
-        color: emerald.$color-error;
+        color: emerald.var(--color-error) /* TODO: Verify correct CSS variable */;
       }
 
       &:hover {
-        background-color: rgba(emerald.$color-error, 0.1);
+        background-color: rgba(emerald.var(--color-error) /* TODO: Verify correct CSS variable */, 0.1);
       }
     }
 
@@ -347,17 +344,17 @@ $shadow-lg:
       }
 
       &:hover {
-        background-color: rgba(emerald.$color-warning, 0.1);
+        background-color: rgba(emerald.var(--color-warning) /* TODO: Verify correct CSS variable */, 0.1);
       }
     }
 
     &--info {
       i {
-        color: emerald.$color-info;
+        color: emerald.var(--color-info) /* TODO: Verify correct CSS variable */;
       }
 
       &:hover {
-        background-color: rgba(emerald.$color-info, 0.1);
+        background-color: rgba(emerald.var(--color-info) /* TODO: Verify correct CSS variable */, 0.1);
       }
     }
 
@@ -368,8 +365,8 @@ $shadow-lg:
     &:focus {
       outline: none;
       box-shadow:
-        0 0 0 2px rgba(emerald.$color-primary, 0.3),
-        $shadow-md;
+        0 0 0 2px rgba(emerald.var(--color-primary), 0.3),
+        var(--shadow-md) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -384,15 +381,15 @@ $shadow-lg:
   &--open {
     pointer-events: auto;
 
-    .emerald-fab-menu__item {
+    .nebular-fab-menu__item {
       opacity: 1;
       transform: scale(1) translateY(0);
       pointer-events: auto;
 
       // Staggered animation for menu items
-      @for $i from 1 through 10 {
-        &:nth-child(#{$i}) {
-          transition-delay: #{$i * 0.05}s;
+      @for var(--i) /* TODO: Verify correct CSS variable */ from 1 through 10 {
+        &:nth-child(#{var(--i) /* TODO: Verify correct CSS variable */}) {
+          transition-delay: #{var(--i) /* TODO: Verify correct CSS variable */ * 0.05}s;
         }
       }
     }
@@ -400,7 +397,7 @@ $shadow-lg:
 }
 
 // Backdrop for closing menu when clicking outside
-.emerald-fab-backdrop {
+.nebular-fab-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -412,29 +409,29 @@ $shadow-lg:
 
 // Responsive adjustments
 @media (max-width: 640px) {
-  .emerald-fab-container {
+  .nebular-fab-container {
     &--bottom-right,
     &--bottom-left,
     &--top-right,
     &--top-left {
-      margin: emerald.$spacing-2;
+      margin: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
-  .emerald-fab {
+  .nebular-fab {
     &--large {
       width: 64px;
       height: 64px;
     }
   }
 
-  .emerald-fab-menu {
+  .nebular-fab-menu {
     &__item-label {
       display: none;
     }
 
     &__item {
-      padding: emerald.$spacing-2;
+      padding: emerald.var(--spacing-2) /* TODO: Verify correct CSS variable */;
 
       i {
         margin-right: 0;

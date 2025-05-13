@@ -1,3 +1,5 @@
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -63,6 +65,7 @@ export class TravelItineraryComponent implements OnInit {
   onSubmit(): void {
     if (this.travelForm.valid) {
       // Process the form data
+      // eslint-disable-next-line no-console
       console.log('Form submitted', this.travelForm.value);
 
       // Navigate back to the list

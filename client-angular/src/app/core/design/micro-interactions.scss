@@ -30,18 +30,18 @@
  * Note: All micro-interactions respect the user's prefers-reduced-motion setting.
  */
 
-@use 'design-tokens' as tokens;
+
 @use 'animation-utilities' as animation;
 
 // Hover scale
 // Scales an element slightly on hover
-@mixin hover-scale($scale: 1.05, $duration: var(--transition-fast)) {
+@mixin hover-scale(var(--scale) /* TODO: Verify correct CSS variable */: 1.05, var(--duration) /* TODO: Verify correct CSS variable */: var(--transition-fast)) {
   & {
-    transition: transform $duration var(--transition-timing-default);
+    transition: transform var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
   }
 
   &:hover {
-    transform: scale($scale);
+    transform: scale(var(--scale) /* TODO: Verify correct CSS variable */);
   }
 
   @include animation.respect-reduced-motion;
@@ -49,14 +49,14 @@
 
 // Hover lift
 // Lifts an element slightly and adds a shadow on hover
-@mixin hover-lift($y: -4px, $shadow: var(--shadow-md), $duration: var(--transition-fast)) {
+@mixin hover-lift(var(--y) /* TODO: Verify correct CSS variable */: -4px, var(--shadow) /* TODO: Verify correct CSS variable */: var(--shadow-md), var(--duration) /* TODO: Verify correct CSS variable */: var(--transition-fast)) {
   transition:
-    transform $duration var(--transition-timing-default),
-    box-shadow $duration var(--transition-timing-default);
+    transform var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default),
+    box-shadow var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
 
   &:hover {
-    transform: translateY($y);
-    box-shadow: $shadow;
+    transform: translateY(var(--y) /* TODO: Verify correct CSS variable */);
+    box-shadow: var(--shadow) /* TODO: Verify correct CSS variable */;
   }
 
   @include animation.respect-reduced-motion;
@@ -65,18 +65,14 @@
 // Hover color shift
 // Changes the color of an element on hover
 @mixin hover-color-shift(
-  $property: color,
-  $from: inherit,
-  $to: var(--color-primary),
-  $duration: var(--transition-fast)
 ) {
   & {
-    #{$property}: $from;
-    transition: #{$property} $duration var(--transition-timing-default);
+    #{var(--property) /* TODO: Verify correct CSS variable */}: var(--from) /* TODO: Verify correct CSS variable */;
+    transition: #{var(--property) /* TODO: Verify correct CSS variable */} var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
   }
 
   &:hover {
-    #{$property}: $to;
+    #{var(--property) /* TODO: Verify correct CSS variable */}: var(--to) /* TODO: Verify correct CSS variable */;
   }
 
   @include animation.respect-reduced-motion;
@@ -84,7 +80,7 @@
 
 // Click ripple
 // Adds a ripple effect on click
-@mixin click-ripple($color: var(--color-primary), $duration: var(--transition-normal)) {
+@mixin click-ripple(var(--color) /* TODO: Verify correct CSS variable */: var(--color-primary), var(--duration) /* TODO: Verify correct CSS variable */: var(--transition-normal)) {
   & {
     position: relative;
     overflow: hidden;
@@ -97,7 +93,7 @@
     left: 50%;
     width: 5px;
     height: 5px;
-    background: rgba($color, 0.3);
+    background: rgba(var(--color) /* TODO: Verify correct CSS variable */, 0.3);
     opacity: 0;
     border-radius: 100%;
     transform: scale(1, 1) translate(-50%, -50%);
@@ -105,7 +101,7 @@
   }
 
   &:active::after {
-    animation: ripple $duration ease-out;
+    animation: ripple var(--duration) /* TODO: Verify correct CSS variable */ ease-out;
   }
 
   @include animation.respect-reduced-motion;
@@ -113,12 +109,12 @@
 
 // Focus highlight
 // Adds a highlight effect on focus
-@mixin focus-highlight($color: var(--color-primary), $duration: var(--transition-fast)) {
-  transition: box-shadow $duration var(--transition-timing-default);
+@mixin focus-highlight(var(--color) /* TODO: Verify correct CSS variable */: var(--color-primary), var(--duration) /* TODO: Verify correct CSS variable */: var(--transition-fast)) {
+  transition: box-shadow var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgba($color, 0.5);
+    box-shadow: 0 0 0 2px rgba(var(--color) /* TODO: Verify correct CSS variable */, 0.5);
   }
 
   @include animation.respect-reduced-motion;
@@ -127,10 +123,6 @@
 // Loading spinner
 // Adds a loading spinner
 @mixin loading-spinner(
-  $size: 24px,
-  $border-width: 2px,
-  $color: var(--color-primary),
-  $duration: 0.8s
 ) {
   &::before {
     content: '';
@@ -138,14 +130,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: $size;
-    height: $size;
-    margin-top: -$size / 2;
-    margin-left: -$size / 2;
+    width: var(--size) /* TODO: Verify correct CSS variable */;
+    height: var(--size) /* TODO: Verify correct CSS variable */;
+    margin-top: -var(--size) /* TODO: Verify correct CSS variable */ / 2;
+    margin-left: -var(--size) /* TODO: Verify correct CSS variable */ / 2;
     border-radius: 50%;
-    border: $border-width solid transparent;
-    border-top-color: $color;
-    animation: spinner $duration linear infinite;
+    border: var(--border-width) /* TODO: Verify correct CSS variable */ solid transparent;
+    border-top-color: var(--color) /* TODO: Verify correct CSS variable */;
+    animation: spinner var(--duration) /* TODO: Verify correct CSS variable */ linear infinite;
   }
 
   @include animation.respect-reduced-motion;
@@ -154,9 +146,6 @@
 // Success checkmark
 // Adds a success checkmark animation
 @mixin success-checkmark(
-  $size: 24px,
-  $color: var(--color-success),
-  $duration: var(--transition-normal)
 ) {
   position: relative;
 
@@ -165,14 +154,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: $size;
-    height: $size / 2;
-    margin-top: -$size / 4;
-    margin-left: -$size / 4;
-    border-right: 2px solid $color;
-    border-bottom: 2px solid $color;
+    width: var(--size) /* TODO: Verify correct CSS variable */;
+    height: var(--size) /* TODO: Verify correct CSS variable */ / 2;
+    margin-top: -var(--size) /* TODO: Verify correct CSS variable */ / 4;
+    margin-left: -var(--size) /* TODO: Verify correct CSS variable */ / 4;
+    border-right: 2px solid var(--color) /* TODO: Verify correct CSS variable */;
+    border-bottom: 2px solid var(--color) /* TODO: Verify correct CSS variable */;
     transform: rotate(45deg) scale(0);
-    animation: checkmark $duration var(--transition-timing-default) forwards;
+    animation: checkmark var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) forwards;
   }
 
   @include animation.respect-reduced-motion;
@@ -180,15 +169,15 @@
 
 // Error shake
 // Adds a shake animation for error states
-@mixin error-shake($duration: 0.4s) {
-  animation: shake $duration var(--transition-timing-default);
+@mixin error-shake(var(--duration) /* TODO: Verify correct CSS variable */: 0.4s) {
+  animation: shake var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
 
   @include animation.respect-reduced-motion;
 }
 
 // Notification badge
 // Adds a pulsing notification badge
-@mixin notification-badge($size: 8px, $color: var(--color-error), $duration: 1.5s) {
+@mixin notification-badge(var(--size) /* TODO: Verify correct CSS variable */: 8px, var(--color) /* TODO: Verify correct CSS variable */: var(--color-error), var(--duration) /* TODO: Verify correct CSS variable */: 1.5s) {
   position: relative;
 
   &::after {
@@ -196,11 +185,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: $size;
-    height: $size;
-    background-color: $color;
+    width: var(--size) /* TODO: Verify correct CSS variable */;
+    height: var(--size) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color) /* TODO: Verify correct CSS variable */;
     border-radius: 50%;
-    animation: pulse-effect $duration var(--transition-timing-default) infinite;
+    animation: pulse-effect var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) infinite;
   }
 
   @include animation.respect-reduced-motion;
@@ -208,7 +197,7 @@
 
 // Typing indicator
 // Adds a typing indicator animation
-@mixin typing-indicator($color: var(--color-primary), $duration: 1s) {
+@mixin typing-indicator(var(--color) /* TODO: Verify correct CSS variable */: var(--color-primary), var(--duration) /* TODO: Verify correct CSS variable */: 1s) {
   display: inline-flex;
   align-items: center;
 
@@ -217,8 +206,8 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background-color: $color;
-    animation: typing-dot $duration infinite;
+    background-color: var(--color) /* TODO: Verify correct CSS variable */;
+    animation: typing-dot var(--duration) /* TODO: Verify correct CSS variable */ infinite;
     margin-right: 4px;
   }
 
@@ -227,8 +216,8 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background-color: $color;
-    animation: typing-dot $duration infinite;
+    background-color: var(--color) /* TODO: Verify correct CSS variable */;
+    animation: typing-dot var(--duration) /* TODO: Verify correct CSS variable */ infinite;
     animation-delay: 0.3s;
   }
 
@@ -238,7 +227,7 @@
 // Loading button
 // Adds a loading state to a button with spinner
 // Usage: Add a .loading class to the button when loading
-@mixin loading-button($spinner-size: 16px, $spinner-color: var(--color-white)) {
+@mixin loading-button(var(--spinner-size) /* TODO: Verify correct CSS variable */: 16px, var(--spinner-color) /* TODO: Verify correct CSS variable */: var(--color-white)) {
   position: relative;
 
   &.loading {
@@ -254,13 +243,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: $spinner-size;
-      height: $spinner-size;
-      margin-top: -$spinner-size / 2;
-      margin-left: -$spinner-size / 2;
-      border: 2px solid rgba($spinner-color, 0.3);
+      width: var(--spinner-size) /* TODO: Verify correct CSS variable */;
+      height: var(--spinner-size) /* TODO: Verify correct CSS variable */;
+      margin-top: -var(--spinner-size) /* TODO: Verify correct CSS variable */ / 2;
+      margin-left: -var(--spinner-size) /* TODO: Verify correct CSS variable */ / 2;
+      border: 2px solid rgba(var(--spinner-color) /* TODO: Verify correct CSS variable */, 0.3);
       border-radius: 50%;
-      border-top-color: $spinner-color;
+      border-top-color: var(--spinner-color) /* TODO: Verify correct CSS variable */;
       animation: spinner 1s ease-in-out infinite;
     }
   }
@@ -281,13 +270,10 @@
 // Skeleton loading
 // Creates a skeleton loading effect for content placeholders
 @mixin skeleton-loading(
-  $bg-color-start: var(--color-light-gray-2),
-  $bg-color-mid: var(--color-light-gray-1)
 ) {
-  background: linear-gradient(90deg, $bg-color-start 25%, $bg-color-mid 50%, $bg-color-start 75%);
+  background: linear-gradient(90deg, var(--bg-color-start) /* TODO: Verify correct CSS variable */ 25%, var(--bg-color-mid) /* TODO: Verify correct CSS variable */ 50%, var(--bg-color-start) /* TODO: Verify correct CSS variable */ 75%);
   background-size: 200% 100%;
   border-radius: var(--border-radius-sm);
-
   animation: skeleton-loading 1.5s infinite;
 
   @include animation.respect-reduced-motion;
@@ -295,11 +281,10 @@
 
 // Page transition
 // Adds a smooth transition when navigating between pages
-@mixin page-transition($duration: var(--transition-normal), $y-offset: 10px) {
+@mixin page-transition(var(--duration) /* TODO: Verify correct CSS variable */: var(--transition-normal), var(--y-offset) /* TODO: Verify correct CSS variable */: 10px) {
   opacity: 0;
-  transform: translateY($y-offset);
-
-  animation: page-enter $duration forwards;
+  transform: translateY(var(--y-offset) /* TODO: Verify correct CSS variable */);
+  animation: page-enter var(--duration) /* TODO: Verify correct CSS variable */ forwards;
 
   @include animation.respect-reduced-motion;
 }
@@ -307,22 +292,18 @@
 // Hover border
 // Adds a colored border or underline effect on hover
 @mixin hover-border(
-  $color: var(--color-primary),
-  $position: bottom,
-  $width: 2px,
-  $duration: var(--transition-normal)
 ) {
   position: relative;
 
   &::after {
     content: '';
     position: absolute;
-    #{$position}: 0;
+    #{var(--position) /* TODO: Verify correct CSS variable */}: 0;
     left: 0;
     width: 0;
-    height: $width;
-    background-color: $color;
-    transition: width $duration var(--transition-timing-default);
+    height: var(--width) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color) /* TODO: Verify correct CSS variable */;
+    transition: width var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default);
   }
 
   &:hover::after {
@@ -334,8 +315,8 @@
 
 // Pulse animation (renamed to avoid conflict with animation-utilities)
 // Adds a pulsing effect to an element
-@mixin pulse-effect($scale: 1.05, $duration: 1.5s, $color: var(--color-primary)) {
-  animation: pulse $duration var(--transition-timing-default) infinite;
+@mixin pulse-effect(var(--scale) /* TODO: Verify correct CSS variable */: 1.05, var(--duration) /* TODO: Verify correct CSS variable */: 1.5s, var(--color) /* TODO: Verify correct CSS variable */: var(--color-primary)) {
+  animation: pulse var(--duration) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) infinite;
 
   @include animation.respect-reduced-motion;
 }
@@ -343,14 +324,10 @@
 // Progress bar
 // Creates an animated progress bar
 @mixin progress-bar(
-  $height: 4px,
-  $color: var(--color-primary),
-  $bg-color: var(--color-light-gray-2),
-  $duration: 2s
 ) {
   position: relative;
-  height: $height;
-  background-color: $bg-color;
+  height: var(--height) /* TODO: Verify correct CSS variable */;
+  background-color: var(--bg-color) /* TODO: Verify correct CSS variable */;
   border-radius: var(--border-radius-full);
   overflow: hidden;
 
@@ -361,9 +338,9 @@
     left: 0;
     height: 100%;
     width: 30%;
-    background-color: $color;
+    background-color: var(--color) /* TODO: Verify correct CSS variable */;
     border-radius: var(--border-radius-full);
-    animation: progress $duration infinite;
+    animation: progress var(--duration) /* TODO: Verify correct CSS variable */ infinite;
   }
 
   @include animation.respect-reduced-motion;

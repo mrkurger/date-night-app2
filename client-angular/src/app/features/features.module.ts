@@ -19,20 +19,17 @@ import { TinderComponent } from './tinder/tinder.component';
 import { AdDetailsComponent } from './ad-details/ad-details.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     RouterModule,
     NbCardModule,
     NbButtonModule,
     NbIconModule,
     NbLayoutModule,
-    // Include standalone components in imports if they're used in routes
-    ChatComponent,
     ProfileComponent,
     GalleryComponent,
     TinderComponent,
-    AdDetailsComponent,
-  ],
+    AdDetailsComponent
+    ChatComponent,],
   declarations: [],
 })
 export class FeaturesModule {}

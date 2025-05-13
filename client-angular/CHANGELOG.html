@@ -181,5 +181,76 @@
         <li>Update tests after component replacements</li>
       </ul>
     </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed Karma Test Runner Compatibility</h2>
+      
+      <p>Fixed an issue where Karma tests were failing due to incompatibility between Karma 6.4.x and rimraf 5.x.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a patch script <code>fix-karma-rimraf.js</code> that modifies Karma's <code>temp_dir.js</code> to handle both rimraf 3.x and 5.x APIs</li>
+        <li>Added a <code>fix-karma</code> npm script to the root package.json</li>
+        <li>Updated the client-angular test scripts to run the fix before tests</li>
+        <li>This fixes the error: <code>TypeError: rimraf is not a function</code> that was occurring during test runs</li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>The root package.json has an override for rimraf to version 5.0.5</li>
+        <li>Karma 6.4.0 expects rimraf to be a function (as in version 3.x)</li>
+        <li>In rimraf 5.x, the API has changed and it's no longer a direct function</li>
+        <li>The patch modifies Karma to check the rimraf type and use the appropriate API</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed Babel Runtime Missing Module Issue</h2>
+      
+      <p>Fixed an issue where Angular tests were failing due to missing Babel runtime helper files.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a custom module loader script <code>fix-babel-runtime-loader.js</code> to intercept module requests</li>
+        <li>Added a test runner script that uses the custom module loader</li>
+        <li>Added a <code>test:with-loader</code> npm script to the client-angular package.json</li>
+        <li>Added a <code>fix-babel</code> npm script to the root package.json</li>
+        <li>Created a combined <code>fix-tests</code> script that runs both fixes</li>
+        <li>This fixes the error: <code>Error: Can't resolve '@babel/runtime/helpers/asyncToGenerator.js'</code></li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>The tests were looking for Babel runtime helpers in a nested node_modules structure that doesn't exist</li>
+        <li>We created a custom module loader that intercepts require calls for the missing module</li>
+        <li>The loader redirects the requests to the actual implementation in the root node_modules</li>
+        <li>This approach is more robust than trying to create the complex directory structure</li>
+        <li>It works even when the build-angular directory is a symbolic link</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed CSS Path Resolution in Karma Tests</h2>
+      
+      <p>Fixed an issue where Karma tests were failing due to missing CSS files.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a script <code>fix-karma-css-paths.js</code> to create placeholder CSS files</li>
+        <li>Added a <code>fix-css</code> npm script to the root package.json</li>
+        <li>Updated the <code>fix-tests</code> script to include the CSS fix</li>
+        <li>Updated the Karma configuration to include the CSS files</li>
+        <li>This fixes the errors: <code>Can't resolve 'node_modules/@nebular/theme/styles/prebuilt/default.css'</code> and <code>Can't resolve 'node_modules/eva-icons/style/eva-icons.css'</code></li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>Karma was looking for CSS files in the client-angular/node_modules directory</li>
+        <li>We created the directory structure and placeholder CSS files to satisfy these dependencies</li>
+        <li>The placeholder files are empty but allow the tests to run without CSS-related errors</li>
+        <li>We also updated the Karma configuration to explicitly include these files</li>
+        <li>This approach is more maintainable than modifying the Angular configuration</li>
+      </ul>
+    </div>
   </body>
 </html>

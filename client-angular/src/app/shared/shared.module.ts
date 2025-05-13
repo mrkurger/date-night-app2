@@ -43,8 +43,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 // Import custom components
 import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { NbSortModule } from './components/custom-nebular-components/nb-sort/nb-sort.module';
-import { NbPaginatorModule } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
 const NEBULAR_MODULES = [
   // Basic Nebular modules
@@ -85,7 +84,7 @@ const NEBULAR_MODULES = [
 // Custom components and modules
 const CUSTOM_COMPONENTS = [NbErrorComponent];
 
-const CUSTOM_MODULES = [NbSortModule, NbPaginatorModule];
+const CUSTOM_MODULES = [];
 
 /**
  * Shared Module
@@ -104,7 +103,8 @@ const CUSTOM_MODULES = [NbSortModule, NbPaginatorModule];
     ...NEBULAR_MODULES,
     ...CUSTOM_MODULES,
     ...CUSTOM_COMPONENTS,
-  ],
+  
+    NbErrorComponent,],
   exports: [
     CommonModule,
     FormsModule,

@@ -1,3 +1,9 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbPaginatorModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,10 +24,10 @@ import {
   NbDialogService,
 } from '@nebular/theme';
 import {
-  NbPaginatorComponent,
-  NbSortComponent,
-  NbSortHeaderComponent,
-} from '../../../../shared/components/custom-nebular-components';
+  /*DEPRECATED:NbPaginatorComponent*/,
+  AppSortComponent,
+  AppSortHeaderComponent,
+} from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AlertService } from '../../../../core/services/alert.service';
 import {
   Alert,
@@ -38,8 +44,7 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
 @Component({
   selector: 'app-alert-management',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbButtonModule,
@@ -54,10 +59,9 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
     NbBadgeModule,
     NbTooltipModule,
     NbTabsetModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-  ],
+    AppSortComponent,
+    AppSortHeaderComponent
+    NbPaginatorModule,],
   template: `
     <div class="alert-management-container">
       <h1>Alert Management</h1>
@@ -87,84 +91,92 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
           <div class="alert-definitions-container">
             <nb-card>
               <nb-card-body>
-                <table [nbSort]="alerts" (sortChange)="sortAlerts($event)">
-                  <tr>
-                    <th nb-sort-header="name">Name</th>
-                    <th nb-sort-header="severity">Severity</th>
-                    <th>Condition</th>
-                    <th>Notifications</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                  <tr *ngFor="let alert of alerts">
-                    <td>{{ alert.name }}</td>
-                    <td>
-                      <nb-tag [status]="getSeverityStatus(alert.severity)">
-                        {{ getSeverityLabel(alert.severity) }}
-                      </nb-tag>
-                    </td>
-                    <td>{{ getConditionDescription(alert.condition) }}</td>
-                    <td>
-                      <div class="notification-channels">
-                        <nb-icon
-                          *ngIf="hasChannel(alert, 'ui')"
-                          icon="bell-outline"
-                          nbTooltip="UI Notification"
-                        ></nb-icon>
-                        <nb-icon
-                          *ngIf="hasChannel(alert, 'email')"
-                          icon="email-outline"
-                          nbTooltip="Email Notification"
-                        ></nb-icon>
-                        <nb-icon
-                          *ngIf="hasChannel(alert, 'slack')"
-                          icon="message-square-outline"
-                          nbTooltip="Slack Notification"
-                        ></nb-icon>
-                        <nb-icon
-                          *ngIf="hasChannel(alert, 'webhook')"
-                          icon="link-2-outline"
-                          nbTooltip="Webhook Notification"
-                        ></nb-icon>
-                      </div>
-                    </td>
-                    <td>
-                      <nb-toggle
-                        [checked]="alert.enabled"
-                        (checkedChange)="toggleAlert(alert, $event)"
-                      ></nb-toggle>
-                    </td>
-                    <td>
-                      <button
-                        nbButton
-                        ghost
-                        status="primary"
-                        (click)="editAlert(alert)"
-                        nbTooltip="Edit"
-                      >
-                        <nb-icon icon="edit-outline"></nb-icon>
-                      </button>
-                      <button
-                        nbButton
-                        ghost
-                        status="primary"
-                        (click)="testAlert(alert)"
-                        nbTooltip="Test"
-                      >
-                        <nb-icon icon="play-circle-outline"></nb-icon>
-                      </button>
-                      <button
-                        nbButton
-                        ghost
-                        status="danger"
-                        (click)="deleteAlert(alert)"
-                        nbTooltip="Delete"
-                      >
-                        <nb-icon icon="trash-2-outline"></nb-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+                <app-sort
+                  [active]="sortColumn"
+                  [direction]="sortDirection"
+                  (sortChange)="sortAlerts($event)"
+                >
+                  <table>
+                    <tr>
+                      <th><app-sort-header appSortHeaderId="name">Name</app-sort-header></th>
+                      <th>
+                        <app-sort-header appSortHeaderId="severity">Severity</app-sort-header>
+                      </th>
+                      <th>Condition</th>
+                      <th>Notifications</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let alert of alerts">
+                      <td>{{ alert.name }}</td>
+                      <td>
+                        <nb-tag [status]="getSeverityStatus(alert.severity)">
+                          {{ getSeverityLabel(alert.severity) }}
+                        </nb-tag>
+                      </td>
+                      <td>{{ getConditionDescription(alert.condition) }}</td>
+                      <td>
+                        <div class="notification-channels">
+                          <nb-icon
+                            *ngIf="hasChannel(alert, 'ui')"
+                            icon="bell-outline"
+                            nbTooltip="UI Notification"
+                          ></nb-icon>
+                          <nb-icon
+                            *ngIf="hasChannel(alert, 'email')"
+                            icon="email-outline"
+                            nbTooltip="Email Notification"
+                          ></nb-icon>
+                          <nb-icon
+                            *ngIf="hasChannel(alert, 'slack')"
+                            icon="message-square-outline"
+                            nbTooltip="Slack Notification"
+                          ></nb-icon>
+                          <nb-icon
+                            *ngIf="hasChannel(alert, 'webhook')"
+                            icon="link-2-outline"
+                            nbTooltip="Webhook Notification"
+                          ></nb-icon>
+                        </div>
+                      </td>
+                      <td>
+                        <nb-toggle
+                          [checked]="alert.enabled"
+                          (checkedChange)="toggleAlert(alert, $event)"
+                        ></nb-toggle>
+                      </td>
+                      <td>
+                        <button
+                          nbButton
+                          ghost
+                          status="primary"
+                          (click)="editAlert(alert)"
+                          nbTooltip="Edit"
+                        >
+                          <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                        <button
+                          nbButton
+                          ghost
+                          status="primary"
+                          (click)="testAlert(alert)"
+                          nbTooltip="Test"
+                        >
+                          <nb-icon icon="play-circle-outline"></nb-icon>
+                        </button>
+                        <button
+                          nbButton
+                          ghost
+                          status="danger"
+                          (click)="deleteAlert(alert)"
+                          nbTooltip="Delete"
+                        >
+                          <nb-icon icon="trash-2-outline"></nb-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </app-sort>
 
                 <nb-paginator
                   [pageSize]="pageSize"
@@ -183,53 +195,61 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
           <div class="active-alerts-container">
             <nb-card>
               <nb-card-body>
-                <table [nbSort]="activeAlerts" (sortChange)="sortActiveAlerts($event)">
-                  <tr>
-                    <th nb-sort-header="timestamp">Time</th>
-                    <th nb-sort-header="alertName">Alert</th>
-                    <th nb-sort-header="severity">Severity</th>
-                    <th>Message</th>
-                    <th nb-sort-header="status">Status</th>
-                    <th>Actions</th>
-                  </tr>
-                  <tr *ngFor="let event of activeAlerts">
-                    <td>{{ event.timestamp | date: 'medium' }}</td>
-                    <td>{{ event.alertName }}</td>
-                    <td>
-                      <nb-tag [status]="getSeverityStatus(event.severity)">
-                        {{ getSeverityLabel(event.severity) }}
-                      </nb-tag>
-                    </td>
-                    <td>{{ event.message }}</td>
-                    <td>
-                      <nb-badge
-                        [text]="event.acknowledged ? 'Acknowledged' : 'Unacknowledged'"
-                        [status]="event.acknowledged ? 'success' : 'danger'"
-                      ></nb-badge>
-                    </td>
-                    <td>
-                      <button
-                        nbButton
-                        ghost
-                        status="primary"
-                        (click)="acknowledgeAlert(event)"
-                        [disabled]="event.acknowledged"
-                        nbTooltip="Acknowledge"
-                      >
-                        <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
-                      </button>
-                      <button
-                        nbButton
-                        ghost
-                        status="primary"
-                        (click)="viewAlertDetails(event)"
-                        nbTooltip="View Details"
-                      >
-                        <nb-icon icon="info-outline"></nb-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+                <app-sort
+                  [active]="activeSortColumn"
+                  [direction]="activeSortDirection"
+                  (sortChange)="sortActiveAlerts($event)"
+                >
+                  <table>
+                    <tr>
+                      <th><app-sort-header appSortHeaderId="timestamp">Time</app-sort-header></th>
+                      <th><app-sort-header appSortHeaderId="alertName">Alert</app-sort-header></th>
+                      <th>
+                        <app-sort-header appSortHeaderId="severity">Severity</app-sort-header>
+                      </th>
+                      <th>Message</th>
+                      <th><app-sort-header appSortHeaderId="status">Status</app-sort-header></th>
+                      <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let event of activeAlerts">
+                      <td>{{ event.timestamp | date: 'medium' }}</td>
+                      <td>{{ event.alertName }}</td>
+                      <td>
+                        <nb-tag [status]="getSeverityStatus(event.severity)">
+                          {{ getSeverityLabel(event.severity) }}
+                        </nb-tag>
+                      </td>
+                      <td>{{ event.message }}</td>
+                      <td>
+                        <nb-badge
+                          [text]="event.acknowledged ? 'Acknowledged' : 'Unacknowledged'"
+                          [status]="event.acknowledged ? 'success' : 'danger'"
+                        ></nb-badge>
+                      </td>
+                      <td>
+                        <button
+                          nbButton
+                          ghost
+                          status="primary"
+                          (click)="acknowledgeAlert(event)"
+                          [disabled]="event.acknowledged"
+                          nbTooltip="Acknowledge"
+                        >
+                          <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                        </button>
+                        <button
+                          nbButton
+                          ghost
+                          status="primary"
+                          (click)="viewAlertDetails(event)"
+                          nbTooltip="View Details"
+                        >
+                          <nb-icon icon="info-outline"></nb-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </app-sort>
               </nb-card-body>
             </nb-card>
           </div>
@@ -299,6 +319,12 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
 
   // Tab selection
   selectedTabIndex = 0;
+
+  // Sorting
+  sortColumn: string | null = null;
+  sortDirection: string = 'asc';
+  activeSortColumn: string | null = null;
+  activeSortDirection: string = 'asc';
 
   private destroy$ = new Subject<void>();
 

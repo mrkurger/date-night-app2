@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NbDividerComponent } from '../../../shared/components/custom-nebular-components';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -9,13 +8,14 @@ import {
   NbCardModule,
   NbIconModule,
   NbButtonModule,
-  NbDividerModule,
   NbMenuModule,
   NbSpinnerModule,
   NbToggleModule,
   NbDialogModule,
   NbDialog,
-, NbDialogService} from '@nebular/theme';
+  NbDialogService,
+} from '@nebular/theme';
+import { NbDividerModule } from '../../../shared/mocks/nb-divider.module';
 import { of, throwError } from 'rxjs';
 import { FavoritesListComponent } from './favorites-list.component';
 import { FavoriteService } from '../../../core/services/favorite.service';

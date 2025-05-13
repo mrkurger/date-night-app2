@@ -1,4 +1,4 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 .onboarding-overlay {
   position: fixed;
@@ -17,8 +17,8 @@
 
 .onboarding-modal {
   background-color: white;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-xl;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-xl) /* TODO: Verify correct CSS variable */;
   width: 90%;
   max-width: 800px;
   max-height: 90vh;
@@ -32,30 +32,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-6 $spacing-8;
-  border-bottom: 1px solid $neutral-300;
+  padding: var(--spacing-6) /* TODO: Verify correct CSS variable */ var(--spacing-8) /* TODO: Verify correct CSS variable */;
+  border-bottom: 1px solid var(--neutral-300) /* TODO: Verify correct CSS variable */;
 }
 
 .onboarding-title {
-  font-family: $font-primary;
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-bold;
-  color: $neutral-900;
+  font-family: var(--font-primary) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-2xl) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-bold) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
   margin: 0;
 }
 
 .onboarding-close {
   background: none;
   border: none;
-  color: $neutral-600;
+  color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
   cursor: pointer;
-  padding: $spacing-2;
-  border-radius: $border-radius-full;
-  transition: all $transition-normal $transition-ease;
+  padding: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
+  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-ease) /* TODO: Verify correct CSS variable */;
 
   &:hover {
-    background-color: $neutral-200;
-    color: $neutral-900;
+    background-color: var(--neutral-200) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
   }
 
   mat-icon {
@@ -66,40 +66,40 @@
 }
 
 .onboarding-content {
-  padding: $spacing-8;
+  padding: var(--spacing-8) /* TODO: Verify correct CSS variable */;
   flex: 1;
 }
 
 .onboarding-media {
-  margin-bottom: $spacing-6;
-  border-radius: $border-radius-md;
+  margin-bottom: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
-  box-shadow: $shadow-md;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
 }
 
 .onboarding-image,
 .onboarding-video {
   width: 100%;
   display: block;
-  border-radius: $border-radius-md;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
 }
 
 .onboarding-description {
-  font-size: $font-size-lg;
-  line-height: $line-height-relaxed;
-  color: $neutral-800;
-  margin-bottom: $spacing-6;
+  font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+  line-height: var(--line-height-relaxed) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-800) /* TODO: Verify correct CSS variable */;
+  margin-bottom: var(--spacing-6) /* TODO: Verify correct CSS variable */;
 }
 
 .onboarding-progress {
-  padding: 0 $spacing-8 $spacing-4;
+  padding: 0 var(--spacing-8) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
 
   .progress-text {
-    font-size: $font-size-sm;
-    color: $neutral-600;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
     text-align: right;
   }
 }
@@ -107,25 +107,25 @@
 .onboarding-dots {
   display: flex;
   justify-content: center;
-  gap: $spacing-2;
-  padding: $spacing-4 0;
+  gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ 0;
 
   .dot {
     width: 12px;
     height: 12px;
-    border-radius: $border-radius-full;
-    background-color: $neutral-300;
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
+    background-color: var(--neutral-300) /* TODO: Verify correct CSS variable */;
     border: none;
     cursor: pointer;
-    transition: all $transition-normal $transition-ease;
+    transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-ease) /* TODO: Verify correct CSS variable */;
 
     &.active {
-      background-color: $primary-500;
+      background-color: var(--primary-500) /* TODO: Verify correct CSS variable */;
       transform: scale(1.2);
     }
 
     &:hover {
-      background-color: $primary-300;
+      background-color: var(--primary-300) /* TODO: Verify correct CSS variable */;
     }
   }
 }
@@ -134,26 +134,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-6 $spacing-8;
-  border-top: 1px solid $neutral-300;
-  gap: $spacing-4;
+  padding: var(--spacing-6) /* TODO: Verify correct CSS variable */ var(--spacing-8) /* TODO: Verify correct CSS variable */;
+  border-top: 1px solid var(--neutral-300) /* TODO: Verify correct CSS variable */;
+  gap: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
   .btn-previous {
-    color: $neutral-700;
+    color: var(--neutral-700) /* TODO: Verify correct CSS variable */;
   }
 
   .btn-skip {
     margin-left: auto;
-    color: $neutral-600;
+    color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
   }
 
   .btn-next,
   .btn-cta {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
-    padding: $spacing-2 $spacing-6;
-    font-weight: $font-weight-medium;
+    gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -186,23 +186,23 @@
   }
 
   .onboarding-header {
-    padding: $spacing-4 $spacing-6;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   .onboarding-title {
-    font-size: $font-size-xl;
+    font-size: var(--font-size-xl) /* TODO: Verify correct CSS variable */;
   }
 
   .onboarding-content {
-    padding: $spacing-6;
+    padding: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   .onboarding-description {
-    font-size: $font-size-base;
+    font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
   }
 
   .onboarding-actions {
-    padding: $spacing-4 $spacing-6;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
     flex-wrap: wrap;
   }
 }
@@ -214,6 +214,6 @@
 .btn-skip:focus,
 .btn-next:focus,
 .btn-cta:focus {
-  outline: 2px solid $primary-500;
+  outline: 2px solid var(--primary-500) /* TODO: Verify correct CSS variable */;
   outline-offset: 2px;
 }

@@ -1,4 +1,3 @@
-@use '../../../../core/design/design-tokens' as ds;
 @use 'sass:color';
 
 // Emerald AppCard Component Styles
@@ -8,19 +7,19 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: ds.$border-radius-lg;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
-  box-shadow: ds.$shadow-md;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
   height: 100%;
-  background-color: ds.$color-white;
+  background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: ds.$shadow-lg;
+    box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
   }
 
   // Card Media Section
@@ -42,18 +41,18 @@
     align-items: center;
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: ds.$font-size-sm;
-    font-weight: ds.$font-weight-semibold;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
     z-index: 2;
 
     &--online {
-      background-color: rgba(ds.$color-success, 0.9);
-      color: ds.$color-white;
+      background-color: rgba(var(--color-success) /* TODO: Verify correct CSS variable */, 0.9);
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
 
     &--offline {
-      background-color: rgba(ds.$color-error, 0.9);
-      color: ds.$color-white;
+      background-color: rgba(var(--color-error) /* TODO: Verify correct CSS variable */, 0.9);
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -65,11 +64,11 @@
     margin-right: 6px;
 
     .nb-card__status-label--online & {
-      background-color: ds.$color-white;
+      background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
 
     .nb-card__status-label--offline & {
-      background-color: ds.$color-white;
+      background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -88,14 +87,14 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: rgba(ds.$color-white, 0.5);
+    background-color: rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.5);
     cursor: pointer;
     transition:
       background-color 0.2s ease,
       transform 0.2s ease;
 
     &--active {
-      background-color: ds.$color-white;
+      background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
       transform: scale(1.2);
     }
   }
@@ -108,8 +107,8 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: rgba(ds.$color-black, 0.6);
-    color: ds.$color-white;
+    background-color: rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.6);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
     display: flex;
     align-items: center;
@@ -119,7 +118,7 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba(ds.$color-black, 0.8);
+      background-color: rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.8);
     }
 
     &--prev {
@@ -138,33 +137,37 @@
     left: 0;
     right: 0;
     height: 30%;
-    background: linear-gradient(to top, rgba(ds.$color-black, 0.8), rgba(ds.$color-black, 0));
-    backdrop-filter: blur(ds.$blur-medium);
-    -webkit-backdrop-filter: blur(ds.$blur-medium);
+    background: linear-gradient(
+      to top,
+      rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.8),
+      rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0)
+    );
+    backdrop-filter: blur(var(--blur-medium) /* TODO: Verify correct CSS variable */);
+    -webkit-backdrop-filter: blur(var(--blur-medium) /* TODO: Verify correct CSS variable */);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: ds.$spacing-4;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
     z-index: 1;
   }
 
   &__content {
-    color: ds.$color-white;
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
   }
 
   &__title {
-    margin: 0 0 ds.$spacing-2;
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-bold;
+    margin: 0 0 var(--spacing-2) /* TODO: Verify correct CSS variable */;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-bold) /* TODO: Verify correct CSS variable */;
     line-height: 1.2;
   }
 
   &__meta {
     display: flex;
     align-items: center;
-    gap: ds.$spacing-4;
-    margin-bottom: ds.$spacing-2;
-    font-size: ds.$font-size-sm;
+    gap: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
   }
 
   &__location,
@@ -173,14 +176,14 @@
     align-items: center;
 
     i {
-      margin-right: ds.$spacing-1;
+      margin-right: var(--spacing-1) /* TODO: Verify correct CSS variable */;
       font-size: 14px;
     }
   }
 
   &__description {
     margin: 0;
-    font-size: ds.$font-size-sm;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
     line-height: 1.4;
     opacity: 0.9;
     display: -webkit-box;
@@ -196,7 +199,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: ds.$spacing-4;
+    padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
     z-index: 3;
     pointer-events: none;
   }
@@ -204,18 +207,18 @@
   // Floating Action Buttons
   &__fab {
     position: absolute;
-    bottom: ds.$spacing-4;
+    bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
+    background-color: var(--color-primary);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: ds.$shadow-md;
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transition:
       transform 0.2s ease,
       background-color 0.2s ease;
@@ -226,20 +229,20 @@
     }
 
     &--left {
-      left: ds.$spacing-4;
-      background-color: ds.$color-error;
+      left: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+      background-color: var(--color-error) /* TODO: Verify correct CSS variable */;
 
       &:hover {
-        background-color: color.adjust(ds.$color-error, $lightness: -10%);
+        background-color: var(--color-error-dark);
       }
     }
 
     &--right {
-      right: ds.$spacing-4;
-      background-color: ds.$color-primary;
+      right: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+      background-color: var(--color-primary);
 
       &:hover {
-        background-color: color.adjust(ds.$color-primary, $lightness: -10%);
+        background-color: var(--color-primary-dark);
       }
     }
   }
@@ -248,8 +251,8 @@
   &__swipe-actions {
     display: flex;
     justify-content: center;
-    gap: ds.$spacing-6;
-    margin-top: ds.$spacing-4;
+    gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    margin-top: var(--spacing-4) /* TODO: Verify correct CSS variable */;
     pointer-events: auto;
   }
 
@@ -262,7 +265,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: ds.$shadow-md;
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transition:
       transform 0.2s ease,
       background-color 0.2s ease;
@@ -272,11 +275,11 @@
     }
 
     &--left {
-      background-color: ds.$color-error;
-      color: ds.$color-white;
+      background-color: var(--color-error) /* TODO: Verify correct CSS variable */;
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
 
       &:hover {
-        background-color: color.adjust(ds.$color-error, $lightness: -10%);
+        background-color: var(--color-error-dark);
       }
 
       i {
@@ -285,11 +288,11 @@
     }
 
     &--right {
-      background-color: ds.$color-success;
-      color: ds.$color-white;
+      background-color: var(--color-success) /* TODO: Verify correct CSS variable */;
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
 
       &:hover {
-        background-color: color.adjust(ds.$color-success, $lightness: -10%);
+        background-color: var(--color-success-dark);
       }
 
       i {
@@ -320,7 +323,7 @@
     }
 
     .nb-card__title {
-      font-size: ds.$font-size-base;
+      font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
     }
 
     .nb-card__description {
@@ -350,14 +353,14 @@
     .nb-card__content-overlay {
       position: relative;
       height: 100%;
-      background: ds.$color-white;
+      background: var(--color-white) /* TODO: Verify correct CSS variable */;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      padding: ds.$spacing-4;
+      padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
     }
 
     .nb-card__content {
-      color: ds.$color-black;
+      color: var(--color-black) /* TODO: Verify correct CSS variable */;
     }
 
     .nb-card__fab {
@@ -367,7 +370,7 @@
 }
 
 // Responsive Styles
-@media (max-width: ds.$breakpoint-md) {
+@media (max-width: var(--breakpoint-md) /* TODO: Verify correct CSS variable */) {
   .nb-card {
     &--list {
       flex-direction: column;
@@ -381,35 +384,39 @@
       .nb-card__content-overlay {
         position: absolute;
         height: 40%;
-        background: linear-gradient(to top, rgba(ds.$color-black, 0.8), rgba(ds.$color-black, 0));
-        backdrop-filter: blur(ds.$blur-medium);
-        -webkit-backdrop-filter: blur(ds.$blur-medium);
+        background: linear-gradient(
+          to top,
+          rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.8),
+          rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0)
+        );
+        backdrop-filter: blur(var(--blur-medium) /* TODO: Verify correct CSS variable */);
+        -webkit-backdrop-filter: blur(var(--blur-medium) /* TODO: Verify correct CSS variable */);
       }
 
       .nb-card__content {
-        color: ds.$color-white;
+        color: var(--color-white) /* TODO: Verify correct CSS variable */;
       }
     }
   }
 }
 
-@media (max-width: ds.$breakpoint-sm) {
+@media (max-width: var(--breakpoint-sm) /* TODO: Verify correct CSS variable */) {
   .nb-card {
     &--tinder {
       height: 60vh;
     }
 
     &__title {
-      font-size: ds.$font-size-base;
+      font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
     }
 
     &__meta {
-      gap: ds.$spacing-2;
-      font-size: ds.$font-size-xs;
+      gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+      font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
     }
 
     &__description {
-      font-size: ds.$font-size-xs;
+      font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
       -webkit-line-clamp: 1;
       line-clamp: 1;
     }

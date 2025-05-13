@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -59,6 +61,7 @@ export class AdDetailComponent implements OnInit {
 
   onContact(): void {
     // In a real app, this would open a contact dialog or navigate to a chat page
+    // eslint-disable-next-line no-console
     console.log('Contact seller');
   }
 

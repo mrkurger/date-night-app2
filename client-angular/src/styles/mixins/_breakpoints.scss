@@ -27,6 +27,7 @@ $breakpoints: (
 @mixin media-breakpoint-down($name) {
   @if map.has-key($breakpoints, $name) {
     $width: map.get($breakpoints, $name) - 0.02;
+
     @media (max-width: $width) {
       @content;
     }
@@ -40,6 +41,7 @@ $breakpoints: (
   @if map.has-key($breakpoints, $min) and map.has-key($breakpoints, $max) {
     $min-width: map.get($breakpoints, $min);
     $max-width: map.get($breakpoints, $max) - 0.02;
+
     @media (min-width: $min-width) and (max-width: $max-width) {
       @content;
     }

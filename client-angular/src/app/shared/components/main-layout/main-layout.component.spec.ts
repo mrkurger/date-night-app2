@@ -16,7 +16,7 @@ import { MainLayoutComponent } from './main-layout.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { AdService } from '../../../core/services/ad.service';
 import { ThemeService } from '../../../core/services/theme.service';
-import { ToggleComponent as EmeraldToggleComponent } from '../../emerald/components/toggle/toggle.component';
+
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 describe('MainLayoutComponent', () => {
@@ -74,12 +74,9 @@ describe('MainLayoutComponent', () => {
     } as any);
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MainLayoutComponent,
-        EmeraldToggleComponent,
-        ThemeToggleComponent,
-      ],
+      imports: [RouterTestingModule,
+    MainLayoutComponent,
+    ThemeToggleComponent],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
         { provide: AdService, useValue: adServiceMock },

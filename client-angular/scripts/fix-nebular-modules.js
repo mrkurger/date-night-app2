@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 /**
  * Fix Nebular Modules
- * 
+ *
  * This script adds missing Nebular modules to component imports
  */
 import fs from 'fs';
@@ -9,12 +10,7 @@ import { fileURLToPath } from 'url';
 
 // Get the current file's directory
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);Fix Nebular Modules
- *
- * This script adds missing Nebular modules to component imports
- */
-const fs = require('fs');
-const path = require('path');
+const __dirname = path.dirname(__filename);
 
 // Function to recursively find all .ts files
 function findTsFiles(dir, fileList = []) {
@@ -83,6 +79,7 @@ function fixNebularModules() {
 
           // Write back the updated content
           fs.writeFileSync(possibleModuleFile, moduleContent);
+
           console.log(`  Updated module file with NebularSharedModule`);
         }
       }

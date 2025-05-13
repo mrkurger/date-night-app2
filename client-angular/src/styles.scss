@@ -11,33 +11,10 @@
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
 
-// Import Eva Icons
-@import url('https://unpkg.com/@nebular/theme@15.0.0/styles/prebuilt/default.css');
-@import url('https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css');
+// Removed: @import url('https://unpkg.com/@nebular/theme@15.0.0/styles/prebuilt/default.css');
+// Removed: @import url('https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css');
 
-// Using the theme configuration from nebular-theme-customization.scss
-$nb-themes: nb-register-theme(
-  (
-    // Base properties
-    color-primary-100: var(--primary-100, #f2f6ff),
-    color-primary-200: var(--primary-200, #d9e4ff),
-    color-primary-300: var(--primary-300, #a6c1ff),
-    color-primary-400: var(--primary-400, #598bff),
-    color-primary-500: var(--primary-500, #3366ff),
-    color-primary-600: var(--primary-600, #274bdb),
-    color-primary-700: var(--primary-700, #1a34b8),
-    color-primary-800: var(--primary-800, #102694),
-    color-primary-900: var(--primary-900, #091c7a),
-    // Add more theme properties as needed
-  ),
-  default,
-  default.$theme
-);
-
-// Install Nebular Theme
-@include nb-install() {
-  @include nb-theme-global();
-}
+// Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
 
 // Global styles
 html,

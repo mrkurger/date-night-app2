@@ -1,7 +1,8 @@
+import { NbTagModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains tests for the Emerald AppCard component
+// This file contains tests for the /*DEPRECATED:Emerald*/ AppCard component
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEM: Mock item data for testing
@@ -33,7 +34,8 @@ import { LabelComponent } from '../components/label/label.component';
     </div>
   `,
   standalone: true,
-  imports: [CommonModule, LabelComponent],
+  imports: [CommonModule, LabelComponent
+    NbTagModule,],
 })
 class TestAppCardComponent extends AppCardComponent {}
 

@@ -5,7 +5,7 @@
 // Slightly enlarges an element on hover
 // @param {Number} $scale - The scale factor (default: 1.05)
 @mixin hover-scale($scale: 1.05) {
-  transition: transform ds.$transition-fast ds.$transition-timing-default;
+  transition: transform var(--transition-fast) var(--transition-timing-default);
 
   @media (prefers-reduced-motion: no-preference) {
     &:hover {
@@ -16,16 +16,16 @@
 
 // Hover Lift
 // Adds a subtle lift effect with shadow on hover
-// @param {String} $shadow - The shadow to apply on hover (default: ds.$shadow-md)
-@mixin hover-lift($shadow: ds.$shadow-md) {
+// @param {String} var(--nb-shadow) - The shadow to apply on hover (default: var(--shadow-md))
+@mixin hover-lift(var(--nb-shadow): var(--shadow-md)) {
   transition:
-    transform ds.$transition-fast ds.$transition-timing-default,
-    box-shadow ds.$transition-fast ds.$transition-timing-default;
+    transform var(--transition-fast) var(--transition-timing-default),
+    box-shadow var(--transition-fast) var(--transition-timing-default);
 
   @media (prefers-reduced-motion: no-preference) {
     &:hover {
       transform: translateY(-2px);
-      box-shadow: $shadow;
+      box-shadow: var(--nb-shadow);
     }
   }
 }
@@ -37,7 +37,7 @@
 // @param {Color} $to - The target color on hover
 @mixin hover-color-shift($property, $from, $to) {
   #{$property}: $from;
-  transition: #{$property} ds.$transition-fast ds.$transition-timing-default;
+  transition: #{$property} var(--transition-fast) var(--transition-timing-default);
 
   &:hover {
     #{$property}: $to;
@@ -60,7 +60,7 @@
     width: 0;
     height: $width;
     background-color: $color;
-    transition: width ds.$transition-normal ds.$transition-timing-default;
+    transition: width var(--transition-normal) var(--transition-timing-default);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -122,7 +122,7 @@
       margin-left: -8px;
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      border-top-color: ds.$color-neutral-100; // was #fff
+      border-top-color: var(--color-neutral-100);
       animation: spin 1s ease-in-out infinite;
     }
   }
@@ -130,8 +130,8 @@
   @media (prefers-reduced-motion: reduce) {
     &.loading::after {
       animation: none;
-      border-top-color: ds.$color-neutral-100; // was #fff
-      border-right-color: ds.$color-neutral-100; // was #fff
+      border-top-color: var(--color-neutral-100);
+      border-right-color: var(--color-neutral-100);
     }
   }
 }
@@ -141,12 +141,12 @@
 @mixin skeleton-loading {
   background: linear-gradient(
     90deg,
-    ds.$color-neutral-300 25%,
-    ds.$color-neutral-200 50%,
-    ds.$color-neutral-300 75%
+    var(--color-neutral-300) 25%,
+    var(--color-neutral-200) 50%,
+    var(--color-neutral-300) 75%
   );
   background-size: 200% 100%;
-  border-radius: ds.$border-radius-sm;
+  border-radius: var(--border-radius-sm);
 
   @media (prefers-reduced-motion: no-preference) {
     animation: skeleton-loading 1.5s infinite;
@@ -155,9 +155,9 @@
   @include dark-mode {
     background: linear-gradient(
       90deg,
-      ds.$color-neutral-800 25%,
-      ds.$color-neutral-700 50%,
-      ds.$color-neutral-800 75%
+      var(--color-neutral-800) 25%,
+      var(--color-neutral-700) 50%,
+      var(--color-neutral-800) 75%
     );
   }
 }
@@ -184,7 +184,7 @@
   position: relative;
 
   &.success {
-    background-color: ds.$color-success !important;
+    background-color: var(--color-success) !important;
 
     .success-icon {
       display: inline-flex;
@@ -207,7 +207,7 @@
   position: relative;
 
   &.error {
-    background-color: ds.$color-error !important;
+    background-color: var(--color-error) !important;
 
     .error-icon {
       display: inline-flex;
@@ -238,7 +238,7 @@
 // Adds a consistent focus style for keyboard navigation
 @mixin focus-visible {
   &:focus-visible {
-    outline: 2px solid ds.$color-primary;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 }

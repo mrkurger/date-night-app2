@@ -4,7 +4,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "module": "CommonJS",
+    "module": "esnext",
     "target": "ES2022",
     "types": ["jasmine", "node", "@types/jasmine"],
     "baseUrl": "./",
@@ -18,6 +18,6 @@
     "moduleResolution": "node",
     "typeRoots": ["node_modules/@types", "src/typings.d.ts"]
   },
-  "files": ["src/test.ts", "src/jasmine.d.ts", "src/typings.d.ts"],
+  "files": ["src/test.ts", "src/jasmine.d.ts", "src/typings.d.ts", "src/polyfills.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

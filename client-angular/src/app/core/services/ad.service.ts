@@ -1,16 +1,15 @@
-import { NbSortEvent } from '@nebular/theme';
 import { Injectable, Component } from '@angular/core';
 import {
-  NbSortComponent,
-  NbSortHeaderComponent,
-  NbSortEvent,
-} from '../../shared/components/custom-nebular-components';
+  AppSortComponent,
+  AppSortHeaderComponent,
+} from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Ad, AdCreateDTO, AdUpdateDTO } from '../models/ad.interface';
+import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 export interface GetAdsResponse {
   ads: Ad[];

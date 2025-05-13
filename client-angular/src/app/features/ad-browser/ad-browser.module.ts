@@ -22,12 +22,9 @@ const routes = [
 
 @NgModule({
   // No declarations needed as AdBrowserComponent is standalone
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     SharedModule,
-    RouterModule.forChild(routes),
-    // Import the standalone component
-    AdBrowserComponent,
-  ],
+    RouterModule.forChild(routes)
+    AdBrowserComponent,],
 })
 export class AdBrowserModule {}

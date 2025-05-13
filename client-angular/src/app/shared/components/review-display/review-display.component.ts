@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
@@ -11,14 +13,12 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NbDividerComponent } from '../custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
 import {
   NbButtonModule,
   NbIconModule,
   NbCardModule,
-  NbDividerModule,
   NbTooltipModule,
   NbBadgeModule,
 } from '@nebular/theme';
@@ -72,10 +72,8 @@ export interface Review {
     NbButtonModule,
     NbIconModule,
     NbCardModule,
-    NbDividerModule,
     NbTooltipModule,
     NbBadgeModule,
-    NbDividerComponent,
   ],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],

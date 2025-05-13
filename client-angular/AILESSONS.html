@@ -288,6 +288,167 @@ TestBed.configureTestingModule({
       </p>
     </div>
 
+    <h2>Testing Infrastructure</h2>
+
+    <div class="lesson">
+      <h3>Karma and rimraf Compatibility - May 13, 2025</h3>
+      <p>
+        We encountered and resolved a critical issue with Karma test runner and the rimraf dependency.
+        This provides important lessons about dependency management in modern JavaScript projects.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Karma 6.4.x expects rimraf to be a function (as in version 3.x)</li>
+        <li>The project had an override for rimraf to version 5.x in the root package.json</li>
+        <li>In rimraf 5.x, the API changed from a function to an object with methods</li>
+        <li>This caused the error: <code>TypeError: rimraf is not a function</code></li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        Rather than downgrading rimraf (which could cause other compatibility issues), we created a patch
+        for Karma's <code>temp_dir.js</code> file to handle both API versions:
+      </p>
+      
+      <pre>
+// Original code in temp_dir.js
+rimraf(path, done)
+
+// Patched code
+typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Dependency Overrides:</strong> Package overrides in monorepos can cause unexpected compatibility issues</li>
+        <li><strong>API Changes:</strong> Major version updates of utilities like rimraf can change their API significantly</li>
+        <li><strong>Patching Strategy:</strong> Sometimes patching a dependency is better than downgrading or forking</li>
+        <li><strong>Automation:</strong> We added the patch to the test scripts to ensure it's applied consistently</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When using package overrides in a monorepo, always check compatibility with all tools and frameworks used across the project. Consider creating compatibility layers for critical dependencies.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>Babel Runtime Module Resolution - May 13, 2025</h3>
+      <p>
+        We encountered and resolved an issue with missing Babel runtime helpers in Angular tests.
+        This provides valuable insights into Node.js module resolution and custom module loaders.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Angular tests were failing with: <code>Error: Can't resolve '@babel/runtime/helpers/asyncToGenerator.js'</code></li>
+        <li>The tests were looking for the file in a nested node_modules structure that didn't exist</li>
+        <li>The path was hardcoded in the generated test files: <code>/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js</code></li>
+        <li>This structure is typical in older Angular versions but not in Angular 19</li>
+        <li>The build-angular directory was a symbolic link, making it impossible to create the nested structure</li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        We created a custom module loader that intercepts require calls for the missing module:
+      </p>
+      
+      <pre>
+// Custom module loader
+const Module = require('module');
+const path = require('path');
+
+// Store the original require function
+const originalRequire = Module.prototype.require;
+
+// The path to the actual implementation
+const actualImplementationPath = path.resolve(__dirname, 
+  '../../node_modules/@babel/runtime/helpers/asyncToGenerator.js');
+
+// The path that tests are trying to load
+const missingModulePath = '/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js';
+
+// Override the require function
+Module.prototype.require = function(id) {
+  // If the requested module is the missing one, return the actual implementation
+  if (id === missingModulePath) {
+    return originalRequire.call(this, actualImplementationPath);
+  }
+  
+  // Otherwise, use the original require function
+  return originalRequire.call(this, id);
+};</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Module Resolution:</strong> Understanding how Node.js module resolution works is crucial</li>
+        <li><strong>Custom Module Loaders:</strong> Overriding Module.prototype.require allows intercepting module requests</li>
+        <li><strong>Symbolic Links:</strong> Be aware of symbolic links in node_modules that can prevent directory creation</li>
+        <li><strong>Multiple Solutions:</strong> We tried several approaches before finding the most robust solution</li>
+        <li><strong>Test Runner Integration:</strong> Created a custom test runner script that loads the module loader first</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When dealing with hardcoded paths in generated code, a custom module loader can be more robust than trying to recreate the expected directory structure or using webpack aliases. This approach works at the Node.js level and doesn't require changes to the build configuration.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>CSS Path Resolution in Karma Tests - May 13, 2025</h3>
+      <p>
+        We encountered and resolved an issue with missing CSS files in Karma tests.
+        This provides insights into how Karma resolves static assets and how to handle missing dependencies.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Karma tests were failing with: <code>Error: Can't resolve 'node_modules/@nebular/theme/styles/prebuilt/default.css'</code></li>
+        <li>Also failing with: <code>Error: Can't resolve 'node_modules/eva-icons/style/eva-icons.css'</code></li>
+        <li>The tests were looking for CSS files in the client-angular/node_modules directory</li>
+        <li>These CSS files were referenced in the Angular configuration but not available in the test environment</li>
+        <li>The CSS files are needed for the tests to run, even though the styles aren't actually used in the tests</li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        We created placeholder CSS files and updated the Karma configuration:
+      </p>
+      
+      <pre>
+// 1. Create the directory structure
+fs.mkdirSync(path.join(clientNodeModulesDir, '@nebular'), { recursive: true });
+fs.mkdirSync(nebularThemeDir, { recursive: true });
+fs.mkdirSync(nebularThemeStylesDir, { recursive: true });
+fs.mkdirSync(nebularThemePrebuiltDir, { recursive: true });
+
+// 2. Create placeholder CSS files
+const defaultCssContent = `
+/* This is a placeholder CSS file created by the fix-karma-css-paths.js script */
+/* It's used to prevent Karma test failures due to missing CSS files */
+`;
+fs.writeFileSync(defaultCssPath, defaultCssContent);
+
+// 3. Update Karma configuration to include the CSS files
+karmaConfig = karmaConfig.replace(
+  /files: \[/,
+  `files: [
+  { pattern: 'node_modules/@nebular/theme/styles/prebuilt/default.css', included: true },
+  { pattern: 'node_modules/eva-icons/style/eva-icons.css', included: true },`
+);</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Asset Resolution:</strong> Karma has its own asset resolution mechanism separate from Angular</li>
+        <li><strong>Placeholder Files:</strong> Creating empty placeholder files can satisfy dependencies without needing the actual content</li>
+        <li><strong>Karma Configuration:</strong> Explicitly including files in the Karma configuration ensures they're available during tests</li>
+        <li><strong>Test Environment:</strong> The test environment often has different requirements than the development environment</li>
+        <li><strong>Automation:</strong> Creating a script to set up the test environment ensures consistency and reproducibility</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When dealing with missing assets in test environments, create placeholder files rather than trying to copy or symlink the actual files. This approach is more lightweight and avoids potential issues with file permissions or symbolic links.
+      </div>
+    </div>
+
     <h2>Future Considerations</h2>
 
     <div class="lesson">
@@ -297,6 +458,7 @@ TestBed.configureTestingModule({
         <li>Keep track of Nebular updates and breaking changes</li>
         <li>Maintain documentation of custom components and themes</li>
         <li>Regular performance monitoring of theme system</li>
+        <li>Monitor dependencies for API changes that might require patches or compatibility layers</li>
       </ul>
     </div>
 
@@ -307,6 +469,7 @@ TestBed.configureTestingModule({
         <li>Organize components by feature modules</li>
         <li>Implement proper lazy loading strategies</li>
         <li>Use shared components effectively</li>
+        <li>Create automated scripts for common maintenance tasks</li>
       </ul>
     </div>
   </body>

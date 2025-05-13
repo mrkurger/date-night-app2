@@ -1,3 +1,8 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbPaginatorModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -20,6 +25,8 @@ import {
   NbButtonModule,
   NbIconModule,
   NbSpinnerModule,
+  NbTabsetModule,
+  NbTagModule,
 } from '@nebular/theme';
 import {
   TelemetryService,
@@ -27,10 +34,9 @@ import {
 } from '../../../../core/services/telemetry.service';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
-import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
-import { NbPaginatorComponent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.component';
-import { NbSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
 /**
  * Performance Dashboard Component
@@ -56,11 +62,13 @@ import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebu
     NbButtonModule,
     NbIconModule,
     NbSpinnerModule,
+    NbTabsetModule,
+    NbTagModule,
     ReactiveFormsModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-  ],
+    AppSortComponent,
+    AppSortHeaderComponent,
+  
+    NbPaginatorModule,],
   template: `
     <div class="dashboard-container">
       <h1>Performance Monitoring Dashboard</h1>
@@ -163,22 +171,15 @@ import { NbSortHeaderComponent } from '../../../../shared/components/custom-nebu
               <nb-spinner></nb-spinner>
             </div>
 
-            <table
-              nbTable
-              [nbSort]="true"
-              (nbSortChange)="sortData($event)"
-              [nbSortActive]="sortField"
-              [nbSortDirection]="sortDirection"
-              *ngIf="!loading"
-            >
+            <table nbTable *ngIf="!loading">
               <thead>
                 <tr>
-                  <th nbSortHeader="timestamp">Timestamp</th>
-                  <th nbSortHeader="method">Method</th>
+                  <th>Timestamp</th>
+                  <th>Method</th>
                   <th>URL</th>
-                  <th nbSortHeader="duration">Duration (ms)</th>
-                  <th nbSortHeader="ttfb">TTFB (ms)</th>
-                  <th nbSortHeader="responseSize">Response Size</th>
+                  <th>Duration (ms)</th>
+                  <th>TTFB (ms)</th>
+                  <th>Response Size</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -299,10 +300,6 @@ export class PerformanceDashboardComponent implements OnInit {
   pageIndex = 0;
   pageSize = 10;
 
-  // Sorting
-  sortField = 'timestamp';
-  sortDirection = 'desc';
-
   // Table columns
   displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions'];
 
@@ -342,8 +339,6 @@ export class PerformanceDashboardComponent implements OnInit {
         ...filters,
         page: this.pageIndex,
         limit: this.pageSize,
-        sort: this.sortField,
-        order: this.sortDirection,
       })
       .pipe(
         catchError((error) => {
@@ -400,15 +395,6 @@ export class PerformanceDashboardComponent implements OnInit {
   onPageChange(event: NbPaginationChangeEvent): void {
     this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
-    this.loadDashboardData();
-  }
-
-  /**
-   * Handle sort event from sort component
-   */
-  sortData(sort: NbSortEvent): void {
-    // Implement sorting logic if needed, then reload data
-    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
     this.loadDashboardData();
   }
 
@@ -502,6 +488,7 @@ export class PerformanceDashboardComponent implements OnInit {
    */
   viewPerformanceDetails(item: PerformanceTelemetry): void {
     // This would typically open a dialog with detailed performance information
+    // eslint-disable-next-line no-console
     console.log('View performance details:', item);
     // Implementation for performance details dialog would go here
   }

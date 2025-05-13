@@ -20,6 +20,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)
+    ProfileComponent,
+    EditProfileComponent,],
 })
 export class ProfileModule {}

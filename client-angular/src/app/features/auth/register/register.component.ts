@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import {
@@ -19,8 +22,11 @@ import {
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
+  NbCardModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -41,13 +47,16 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    CommonModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbAlertModule,
     RouterLink,
     NgIf,
-    NbButtonModule,
     NbCheckboxModule,
-    NbFormFieldModule,
     NbIconModule,
-    NbInputModule,
   ],
 })
 export class RegisterComponent implements OnInit {

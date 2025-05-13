@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
@@ -429,6 +433,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
    * Handle view details click
    */
   onViewDetails(adId: string): void {
+    // eslint-disable-next-line no-console
     console.log('View details for ad:', adId);
   }
 
@@ -436,6 +441,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
    * Handle like click
    */
   onLike(adId: string): void {
+    // eslint-disable-next-line no-console
     console.log('Like ad:', adId);
   }
 
@@ -443,6 +449,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
    * Handle chat click
    */
   onChat(adId: string): void {
+    // eslint-disable-next-line no-console
     console.log('Chat about ad:', adId);
   }
 }

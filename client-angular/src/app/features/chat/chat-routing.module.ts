@@ -22,7 +22,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)
+    ChatComponent,
+    ChatListComponent,
+    ChatRoomComponent,],
   exports: [RouterModule],
 })
 export class ChatRoutingModule {}

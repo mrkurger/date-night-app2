@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================

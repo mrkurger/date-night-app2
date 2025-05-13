@@ -48,11 +48,10 @@ export function cspInterceptorFactory() {
 }
 
 export function authInterceptorFactory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   authService: AuthService,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   userService: UserService,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   router: Router,
 ) {
   // These services are injected but not directly used in the factory

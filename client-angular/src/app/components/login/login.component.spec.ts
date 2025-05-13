@@ -1,5 +1,3 @@
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -31,28 +29,19 @@ import {
   NbTooltipModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 import { LoginComponent } from '../../features/auth/login/login.component';
 import { UserService } from '../../core/services/user.service';
-import { User, AuthResponse } from '../../core/models/user.interface';
-
-// Add custom matchers
-declare global {
-  namespace jasmine {
-    interface Matchers<T> {
-      toBeTruthy(): boolean;
-      toBeFalsy(): boolean;
-      toBeDefined(): boolean;
-      toBe(expected: any): boolean;
-      toHaveBeenCalledWith(...params: any[]): boolean;
-    }
-  }
-}
+import { AuthService } from '../../core/services/auth.service';
+import { User } from '../../core/models/user.interface';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let userService: jasmine.SpyObj<UserService>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let nbAuthService: jasmine.SpyObj<NbAuthService>;
   let router: Router;
 
   const mockUser: User = {
@@ -60,12 +49,12 @@ describe('LoginComponent', () => {
     id: 'user123',
     username: 'testuser',
     email: 'test@example.com',
-    role: 'user',
+    roles: ['user'],
+    status: 'active',
     createdAt: new Date(),
-    updatedAt: new Date(),
   };
 
-  const mockAuthResponse: AuthResponse = {
+  const mockAuthResponse = {
     token: 'mock-token',
     refreshToken: 'mock-refresh-token',
     expiresIn: 86400,
@@ -73,21 +62,27 @@ describe('LoginComponent', () => {
   };
 
   beforeEach(async () => {
-    // Create spy for UserService
+    // Create spies for services
     const userServiceSpy = jasmine.createSpyObj<UserService>('UserService', [
       'login',
       'isAuthenticated',
     ]);
     userServiceSpy.isAuthenticated.and.returnValue(false); // Default to not authenticated
 
+    const authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', [
+      'login',
+      'isAuthenticated',
+    ]);
+    authServiceSpy.isAuthenticated.and.returnValue(false);
+
+    const nbAuthServiceSpy = jasmine.createSpyObj<NbAuthService>('NbAuthService', ['authenticate']);
+
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        FormsModule,
-        RouterTestingModule.withRoutes([
-          { path: 'browse', component: LoginComponent },
-          { path: 'dashboard', component: LoginComponent },
-        ]),
+      imports: [ReactiveFormsModule,
+    FormsModule,
+    RouterTestingModule.withRoutes([
+          { path: 'browse',
+    { path: 'dashboard']),
         HttpClientTestingModule,
         BrowserAnimationsModule,
         NbThemeModule.forRoot(),
@@ -99,13 +94,19 @@ describe('LoginComponent', () => {
         NbSpinnerModule,
         NbTooltipModule,
         NbEvaIconsModule,
-        LoginComponent,
         CommonModule,
       ],
-      providers: [{ provide: UserService, useValue: userServiceSpy }],
+      providers: [
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: NbAuthService, useValue: nbAuthServiceSpy },
+        LoginComponent,
+      ],
     }).compileComponents();
 
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj<NbAuthService>;
     router = TestBed.inject(Router);
   });
 
@@ -116,17 +117,17 @@ describe('LoginComponent', () => {
   });
 
   it('should create', () => {
-    (expect(component) as any).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('should initialize the login form with empty fields', () => {
-    (expect(component.loginForm) as any).toBeDefined();
-    (expect(component.loginForm.get('email')?.value) as any).toBe('');
-    (expect(component.loginForm.get('password')?.value) as any).toBe('');
+    expect(component.loginForm).toBeDefined();
+    expect(component.loginForm.get('email')?.value).toBe('');
+    expect(component.loginForm.get('password')?.value).toBe('');
   });
 
   it('should mark form as invalid when empty', () => {
-    (expect(component.loginForm.valid) as any).toBeFalsy();
+    expect(component.loginForm.valid).toBeFalsy();
   });
 
   it('should mark form as valid when all fields are filled', () => {
@@ -135,7 +136,7 @@ describe('LoginComponent', () => {
       password: 'Password123!',
     });
 
-    (expect(component.loginForm.valid) as any).toBeTruthy();
+    expect(component.loginForm.valid).toBeTruthy();
   });
 
   it('should call UserService.login when form is submitted', () => {
@@ -157,10 +158,10 @@ describe('LoginComponent', () => {
     component.onSubmit();
 
     // Verify service was called with correct parameters
-    (expect(userService.login) as any).toHaveBeenCalledWith(loginData);
+    expect(userService.login).toHaveBeenCalledWith(loginData);
 
     // Verify navigation occurred
-    (expect(router.navigate) as any).toHaveBeenCalledWith(['/dashboard']);
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
   it('should display error message on login failure', () => {
@@ -171,18 +172,63 @@ describe('LoginComponent', () => {
     });
 
     // Mock failed login
-    const errorResponse = { message: 'Invalid credentials' };
+    const errorResponse = new Error('Invalid credentials');
     userService.login.and.returnValue(throwError(() => errorResponse));
 
     // Submit form
     component.onSubmit();
 
     // Verify error is displayed
-    (expect(component.errorMessage) as any).toBe('Invalid credentials');
+    expect(component.errorMessage).toBe('Invalid credentials');
 
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
-    (expect(compiled.querySelector('.error-message')) as any).toBeTruthy();
+    expect(compiled.querySelector('.error-message')).toBeTruthy();
+  });
+
+  it('should handle social login', () => {
+    // Mock successful social login
+    const mockAuthResult = {
+      isSuccess: () => true,
+      getRedirect: () => '/dashboard',
+      getErrors: () => [],
+    } as NbAuthResult;
+
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
+
+    // Spy on router navigation
+    spyOn(router, 'navigateByUrl');
+
+    // Call social login
+    component.socialLogin('google');
+
+    // Verify service was called
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('google');
+
+    // Verify navigation occurred
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+    expect(component.isLoading).toBeFalse();
+  });
+
+  it('should handle social login failure', () => {
+    // Mock failed social login
+    const mockAuthResult = {
+      isSuccess: () => false,
+      getRedirect: () => null,
+      getErrors: () => ['Authentication failed'],
+    } as NbAuthResult;
+
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
+
+    // Call social login
+    component.socialLogin('facebook');
+
+    // Verify service was called
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('facebook');
+
+    // Verify error message is set
+    expect(component.errorMessage).toBe('Authentication failed');
+    expect(component.isLoading).toBeFalse();
   });
 });

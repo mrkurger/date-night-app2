@@ -1,0 +1,34 @@
+/* Test styles */
+@import 'styles';
+
+/* Mock Nebular theme */
+:root {
+  --card-background-color: #fff;
+  --card-text-color: #000;
+  --card-border-color: #eee;
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --button-filled-primary-background-color: #36f;
+  --button-filled-primary-text-color: #fff;
+  --button-filled-primary-focus-background-color: #274bdb;
+  --button-filled-primary-hover-background-color: #598bff;
+  --input-background-color: #f7f9fc;
+  --input-border-color: #e4e9f2;
+  --input-text-color: #222b45;
+  --input-placeholder-text-color: #8f9bb3;
+  --text-primary-color: #222b45;
+  --text-secondary-color: #8f9bb3;
+  --text-hint-color: #a6aebd;
+  --background-basic-color-1: #fff;
+  --background-basic-color-2: #f7f9fc;
+  --background-basic-color-3: #edf1f7;
+  --background-basic-color-4: #e4e9f2;
+}
+
+/* Mock Eva Icons */
+.eva {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentcolor;
+  mask-size: cover;
+}

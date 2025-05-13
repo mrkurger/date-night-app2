@@ -19,12 +19,21 @@
             "outputPath": "dist/client-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "node_modules/eva-icons/style/fonts/",
+                "output": "/assets/fonts/"
+              }
+            ],
             "styles": [
-              "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/eva-icons/style/eva-icons.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -82,8 +91,8 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/eva-icons/style/eva-icons.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -107,7 +116,7 @@
             "outputPath": "dist/date-night-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -116,11 +125,16 @@
               },
               "src/manifest.webmanifest",
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/eva-icons/style/fonts/",
+                "output": "/assets/fonts/"
+              }
             ],
             "styles": [
-              "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/eva-icons/style/eva-icons.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -179,8 +193,8 @@
               }
             ],
             "styles": [
-              "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/eva-icons/style/eva-icons.css",
               "src/styles.scss"
             ],
             "scripts": [],

@@ -1,3 +1,6 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -125,6 +128,11 @@ export class ResponseDialogComponent implements OnInit {
   responseForm: FormGroup;
   isSubmitting = false;
 
+  // Alias for isSubmitting to support tests
+  get submitting(): boolean {
+    return this.isSubmitting;
+  }
+
   constructor(
     private dialogRef: NbDialogRef<ResponseDialogComponent>,
     private fb: FormBuilder,
@@ -157,6 +165,11 @@ export class ResponseDialogComponent implements OnInit {
     }
   }
 
+  // Alias for submit() to support tests
+  onSubmit(): void {
+    this.submit();
+  }
+
   submit(): void {
     if (this.responseForm.invalid) {
       return;
@@ -166,7 +179,13 @@ export class ResponseDialogComponent implements OnInit {
     // Simulate API call
     setTimeout(() => {
       this.dialogRef.close(this.responseForm.value.response);
+      this.isSubmitting = false;
     }, 1000);
+  }
+
+  // Method to close the dialog
+  onClose(): void {
+    this.dialogRef.close();
   }
 
   cancel(): void {

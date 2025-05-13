@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Inject } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';

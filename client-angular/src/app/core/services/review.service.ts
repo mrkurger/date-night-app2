@@ -1,9 +1,7 @@
-import { NbSortEvent } from '@nebular/theme';
 import { Injectable, Component } from '@angular/core';
 import {
-  NbSortComponent,
-  NbSortHeaderComponent,
-  NbSortEvent,
+  /*DEPRECATED:NbSortComponent*/,
+  /*DEPRECATED:NbSortHeaderComponent*/,
 } from '../../shared/components/custom-nebular-components';
 
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +9,9 @@ import { Observable } from 'rxjs';
 // Removed unused catchError import
 import { environment } from '../../../environments/environment';
 import { Review } from '../models/review.interface';
+import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Injectable({
   providedIn: 'root',

@@ -1,12 +1,10 @@
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NbDividerComponent } from '../../../app/shared/components/custom-nebular-components';
-
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'nb-divider',
   standalone: true,
-  imports: [CommonModule, NbDividerComponent],
+  imports: [CommonModule],
   template: `<div class="divider" [class.vertical]="vertical"></div>`,
   styles: `
     .divider {
@@ -27,8 +25,3 @@ import { CommonModule } from '@angular/common';
 export class NbDividerComponent {
   @Input() vertical: boolean = false;
 }
-
-export const NbDividerModule = {
-  declarations: [NbDividerComponent],
-  exports: [NbDividerComponent],
-};

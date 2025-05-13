@@ -1,3 +1,11 @@
+export interface UserSubscription {
+  tier: string;
+  expires: string;
+  status: string;
+  cancelAtPeriodEnd?: boolean;
+  currentPeriodEnd?: string;
+}
+
 export interface User {
   id: string;
   _id?: string; // MongoDB ID field, needed for compatibility with existing code
@@ -36,6 +44,7 @@ export interface User {
   };
   notificationSettings?: NotificationSettings;
   privacySettings?: PrivacySettings;
+  subscription?: UserSubscription;
 }
 
 export interface PublicProfile {

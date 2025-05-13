@@ -1,3 +1,9 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -125,30 +131,32 @@ export interface ChatSettings {
   styles: [
     `
       .settings-group {
-        margin-bottom: nb-theme(margin-lg);
+        margin-bottom: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
 
         .hint-text {
-          margin: nb-theme(margin-xs) 0 nb-theme(margin);
-          color: nb-theme(text-hint-color);
-          font-size: nb-theme(text-caption-font-size);
+          margin: var(--nb-theme-margin-xs) 0 var(--nb-theme-margin); /* was nb-theme(margin-xs) 0 nb-theme(margin) */
+          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
+          font-size: var(
+            --nb-theme-text-caption-font-size
+          ); /* was nb-theme(text-caption-font-size) */
         }
       }
 
       .settings-alert {
-        margin-bottom: nb-theme(margin);
+        margin-bottom: var(--nb-theme-margin); /* was nb-theme(margin) */
       }
 
       .settings-actions {
         display: flex;
-        gap: nb-theme(spacing);
+        gap: var(--nb-theme-spacing); /* was nb-theme(spacing) */
         justify-content: flex-end;
-        margin-top: nb-theme(margin-lg);
+        margin-top: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
       }
 
-      // Dark theme adjustments
+      /* Dark theme adjustments */
       :host-context([data-theme='dark']) {
         .hint-text {
-          color: nb-theme(text-hint-color);
+          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
         }
       }
     `,

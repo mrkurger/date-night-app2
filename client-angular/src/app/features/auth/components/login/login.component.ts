@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -21,6 +25,7 @@ import {
   NbIconModule,
   NbSpinnerModule,
   NbAlertModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 
 @Component({
@@ -37,6 +42,7 @@ import {
     NbIconModule,
     NbSpinnerModule,
     NbAlertModule,
+    NbTooltipModule,
   ],
   template: `
     <div class="login-container">

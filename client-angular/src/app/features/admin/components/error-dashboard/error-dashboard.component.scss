@@ -1,7 +1,7 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/globals' as *;
 
-@include nb-install-component() {
+@include nb-install-component {
   .dashboard-container {
     padding: 1rem;
   }

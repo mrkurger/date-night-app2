@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,14 +11,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  AfterViewInit,
-, Input} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -38,6 +35,22 @@ import {
 import { PaymentService, SubscriptionPrice } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
+import { UserSubscription } from '../../core/models/user.interface';
+
+// Stripe interfaces
+interface StripeError {
+  message: string;
+}
+
+interface StripeCardElementEvent {
+  error?: StripeError;
+  complete: boolean;
+}
+
+interface StripeCardElement {
+  on(event: string, handler: (event: StripeCardElementEvent) => void): void;
+  destroy(): void;
+}
 
 @Component({
   selector: 'app-payment',
@@ -65,11 +78,11 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
 
   subscriptionPrices: SubscriptionPrice[] = [];
   paymentForm: FormGroup;
-  cardErrors: string;
+  cardErrors = '';
   loading = false;
   selectedPrice: SubscriptionPrice | null = null;
-  stripeCardElement: any;
-  currentSubscription: any;
+  stripeCardElement: StripeCardElement;
+  currentSubscription: UserSubscription | null = null;
   private subscriptions = new Subscription();
 
   constructor(
@@ -123,7 +136,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.stripeCardElement = this.paymentService.createCardElement('card-element');
 
-      this.stripeCardElement.on('change', (event: any) => {
+      this.stripeCardElement.on('change', (event: StripeCardElementEvent) => {
         this.cardErrors = event.error ? event.error.message : '';
       });
     }, 100);
@@ -155,8 +168,9 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.currentSubscription = {
-        tier: currentUser.subscriptionTier,
-        expires: currentUser.subscriptionExpires,
+        tier: currentUser.subscription?.tier || 'free',
+        expires: currentUser.subscription?.expires || '',
+        status: currentUser.subscription?.status || 'inactive',
       };
     }
   }
@@ -204,7 +218,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
       const sub = this.paymentService
         .createSubscription(this.paymentForm.value.priceId, paymentMethod.id)
         .subscribe(
-          (subscription) => {
+          () => {
             this.notificationService.success('Subscription created successfully');
             this.loading = false;
             this.router.navigate(['/profile']);

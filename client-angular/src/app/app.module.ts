@@ -18,10 +18,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { AdminLayoutComponent } from './features/admin/admin-layout.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,10 +36,8 @@ import { AdminLayoutComponent } from './features/admin/admin-layout.component';
     NbDialogModule.forRoot(),
     NbToastrModule.forRoot(),
     NbWindowModule.forRoot(),
-    // Admin
-    AdminLayoutComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [],
 })
 export class AppModule {}

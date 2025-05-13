@@ -1,3 +1,9 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';

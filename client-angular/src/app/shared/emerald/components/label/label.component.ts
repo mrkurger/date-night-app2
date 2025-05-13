@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -23,7 +25,9 @@ import { NbTagComponent } from '@nebular/theme';
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbTagComponent],
+  imports: [CommonModule, NbTagComponent
+    NbTagModule,
+    NbIconModule,],
 })
 export class LabelComponent {
   @Input() text = '';

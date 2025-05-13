@@ -28,13 +28,13 @@ export class IconService {
   }
 
   /**
-   * Maps Material icon names to Eva icon equivalents and adds appropriate suffix
-   * @param name Material icon name
+   * Maps /*DEPRECATED:Material*/ icon names to Eva icon equivalents and adds appropriate suffix
+   * @param name /*DEPRECATED:Material*/ icon name
    * @param filled Whether to use filled variant
    * @returns Eva icon name with suffix
    */
   getIconName(name: string, filled: boolean = true): string {
-    // Map of Material icon names to Eva icon names
+    // Map of /*DEPRECATED:Material*/ icon names to Eva icon names
     const materialToEva: { [key: string]: string } = {
       // Navigation
       menu: 'menu-2',
@@ -82,7 +82,7 @@ export class IconService {
       photo_library: 'image-2',
     };
 
-    // Convert Material icon name to Eva icon name
+    // Convert /*DEPRECATED:Material*/ icon name to Eva icon name
     const evaName = materialToEva[name] || name;
 
     // For 'favorite_border' we want to force outline variant

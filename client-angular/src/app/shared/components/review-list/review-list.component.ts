@@ -1,6 +1,9 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,7 +13,6 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NbDividerComponent } from '../custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
 
@@ -19,7 +21,6 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
-  NbDividerModule,
   NbTagModule,
   NbTooltipModule,
 } from '@nebular/theme';
@@ -39,13 +40,11 @@ import { DialogService } from '../../../core/services/dialog.service';
     NbCardModule,
     NbButtonModule,
     NbIconModule,
-    NbDividerModule,
     NbTagModule,
     NbTooltipModule,
     RouterModule,
     StarRatingComponent,
     TimeAgoPipe,
-    NbDividerComponent,
   ],
   template: `
     <div class="reviews-container">
@@ -118,7 +117,7 @@ import { DialogService } from '../../../core/services/dialog.service';
           </div>
         </nb-card-body>
 
-        <nb-divider *ngIf="review.advertiserResponse"></nb-divider>
+        <hr *ngIf="review.advertiserResponse"></hr>
 
         <div class="advertiser-response" *ngIf="review.advertiserResponse">
           <h5>Response from advertiser</h5>
@@ -281,6 +280,8 @@ export class ReviewListComponent implements OnInit {
   page = 1;
   helpfulMarked: string[] = [];
   reportedReviews: string[] = [];
+  private currentUserId: string | null = null;
+  private userSub: Subscription | null = null;
 
   constructor(
     private reviewService: ReviewService,
@@ -293,14 +294,19 @@ export class ReviewListComponent implements OnInit {
     this.loadReviews();
     this.loadHelpfulMarked();
     this.loadReportedReviews();
+    this.userSub = this.authService.currentUser$.subscribe((user) => {
+      this.currentUserId = user ? user.id : null;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
   }
 
   get isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
-  }
-
-  get currentUserId(): string | undefined {
-    return this.authService.currentUser?.id;
   }
 
   loadReviews(): void {
@@ -433,7 +439,6 @@ export class ReviewListComponent implements OnInit {
     if (!this.isAuthenticated || !this.currentUserId) {
       return false;
     }
-
     // Check if the current user is the advertiser and hasn't responded yet
     return this.currentUserId === review.advertiser._id && !review.advertiserResponse;
   }

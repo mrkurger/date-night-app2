@@ -1,3 +1,5 @@
+import { NbUserModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

@@ -1,19 +1,5 @@
-import { EventEmitter } from '@angular/core';
-import { Output } from '@angular/core';
-import { Input } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (feature-tour.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { 
+import { NbIconModule } from '@nebular/theme';
+import {
   Component,
   ElementRef,
   EventEmitter,
@@ -22,10 +8,34 @@ import {
   OnInit,
   Output,
   Renderer2,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
+/**
+ * Feature Tour Component
+ *
+ * A customizable component for displaying feature tours and walkthroughs.
+ * Configure settings below to customize the behavior.
+ * @see other_file.ts:OTHER_SETTING for related functionality
+ */
 
+// Style interfaces
+interface TooltipStyles {
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  transform?: string;
+}
+
+interface SpotlightStyles {
+  top: string;
+  left: string;
+  width: string;
+  height: string;
+  transform?: string;
+}
 
 export interface TourStep {
   id: string;
@@ -38,7 +48,6 @@ export interface TourStep {
 }
 
 @Component({
-  
   selector: 'app-feature-tour',
   templateUrl: './feature-tour.component.html',
   styleUrls: ['./feature-tour.component.scss'],
@@ -162,7 +171,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
       // Scroll element into view if needed
       this.targetElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
+        block: 'center',
       });
 
       // Update position after a short delay to ensure scrolling is complete
@@ -183,7 +192,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
   }
 
   // Calculate tooltip position based on target element and specified position
-  getTooltipStyle(): any {
+  getTooltipStyle(): TooltipStyles {
     if (!this.targetRect && this.currentStep.position !== 'center') {
       // Default to center position if no target element
       return {
@@ -239,7 +248,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
   }
 
   // Calculate spotlight position and size
-  getSpotlightStyle(): any {
+  getSpotlightStyle(): SpotlightStyles {
     if (!this.targetRect) {
       return {
         top: '50%',

@@ -1,3 +1,4 @@
+import { NbIconModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';

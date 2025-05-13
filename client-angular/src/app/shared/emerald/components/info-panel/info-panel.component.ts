@@ -5,12 +5,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald InfoPanel Component
+ * /*DEPRECATED:Emerald*/ InfoPanel Component
  *
- * A wrapper for the Emerald.js InfoPanel component.
+ * A wrapper for the /*DEPRECATED:Emerald*/.js InfoPanel component.
  * This component displays information in a structured panel format.
  *
- * Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/InfoPanel
  */
 
 // ===================================================
@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
 // ===================================================
 
 @Component({
-  selector: 'emerald-info-panel',
+  selector: '/*DEPRECATED:emerald*/-info-panel',
   templateUrl: './info-panel.component.html',
   styleUrls: ['./info-panel.component.scss'],
   standalone: true,

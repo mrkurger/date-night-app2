@@ -1,3 +1,4 @@
+import { NbTagModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -47,7 +48,8 @@ export interface TinderCardData {
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, LabelComponent],
+  imports: [CommonModule, LabelComponent
+    NbTagModule,],
 })
 export class TinderCardComponent implements AfterViewInit, OnDestroy {
   @Input() data!: TinderCardData;

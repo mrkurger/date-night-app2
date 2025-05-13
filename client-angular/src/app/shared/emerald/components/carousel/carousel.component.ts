@@ -11,15 +11,15 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald Carousel Component
+ * /*DEPRECATED:Emerald*/ Carousel Component
  *
- * A wrapper for the Emerald.js Carousel component.
+ * A wrapper for the /*DEPRECATED:Emerald*/.js Carousel component.
  * This component displays a carousel of images or other content.
  *
- * Documentation: https://docs-emerald.condorlabs.io/Carousel
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/Carousel
  */
 @Component({
-  selector: 'emerald-carousel',
+  selector: '/*DEPRECATED:emerald*/-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   standalone: true,

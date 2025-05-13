@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbUserModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
 import {
   Component,
   OnInit,
@@ -30,11 +34,9 @@ import {
 // Custom Components
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
 import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
-import {
-  NbSortComponent,
-  NbSortHeaderComponent,
-  NbSortEvent,
-} from '../../shared/components/custom-nebular-components';
+import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 // Services
 import {
@@ -84,10 +86,11 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     NbDialogModule,
     AvatarComponent,
     SkeletonLoaderComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-    NbSortEvent,
-  ],
+    AppSortComponent,
+    AppSortHeaderComponent,
+  
+    NbBadgeModule,
+    NbUserModule,],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })

@@ -1,73 +1,72 @@
 @use 'variables' as *;
 
 // Spacing Utilities
-@each $key,
-  $value
+@each var(--key) /* TODO: Verify correct CSS variable */,
     in (
       '0': 0,
-      '1': $spacing-1,
-      '2': $spacing-2,
-      '3': $spacing-3,
-      '4': $spacing-4,
-      '5': $spacing-5,
-      '6': $spacing-6,
-      '8': $spacing-8,
-      '10': $spacing-10,
-      '12': $spacing-12,
-      '16': $spacing-16,
-      '20': $spacing-20,
-      '24': $spacing-24,
+      '1': var(--spacing-1) /* TODO: Verify correct CSS variable */,
+      '2': var(--spacing-2) /* TODO: Verify correct CSS variable */,
+      '3': var(--spacing-3) /* TODO: Verify correct CSS variable */,
+      '4': var(--spacing-4) /* TODO: Verify correct CSS variable */,
+      '5': var(--spacing-5) /* TODO: Verify correct CSS variable */,
+      '6': var(--spacing-6) /* TODO: Verify correct CSS variable */,
+      '8': var(--spacing-8) /* TODO: Verify correct CSS variable */,
+      '10': var(--spacing-10) /* TODO: Verify correct CSS variable */,
+      '12': var(--spacing-12) /* TODO: Verify correct CSS variable */,
+      '16': var(--spacing-16) /* TODO: Verify correct CSS variable */,
+      '20': var(--spacing-20) /* TODO: Verify correct CSS variable */,
+      '24': var(--spacing-24) /* TODO: Verify correct CSS variable */,
       'auto': auto
     )
 {
   // Margin
-  .m-#{$key} {
-    margin: $value;
+  .m-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .mx-#{$key} {
-    margin-left: $value;
-    margin-right: $value;
+  .mx-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-left: var(--value) /* TODO: Verify correct CSS variable */;
+    margin-right: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .my-#{$key} {
-    margin-top: $value;
-    margin-bottom: $value;
+  .my-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-top: var(--value) /* TODO: Verify correct CSS variable */;
+    margin-bottom: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .mt-#{$key} {
-    margin-top: $value;
+  .mt-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-top: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .mr-#{$key} {
-    margin-right: $value;
+  .mr-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-right: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .mb-#{$key} {
-    margin-bottom: $value;
+  .mb-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-bottom: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .ml-#{$key} {
-    margin-left: $value;
+  .ml-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    margin-left: var(--value) /* TODO: Verify correct CSS variable */;
   }
 
   // Padding
-  .p-#{$key} {
-    padding: $value;
+  .p-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .px-#{$key} {
-    padding-left: $value;
-    padding-right: $value;
+  .px-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-left: var(--value) /* TODO: Verify correct CSS variable */;
+    padding-right: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .py-#{$key} {
-    padding-top: $value;
-    padding-bottom: $value;
+  .py-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-top: var(--value) /* TODO: Verify correct CSS variable */;
+    padding-bottom: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .pt-#{$key} {
-    padding-top: $value;
+  .pt-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-top: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .pr-#{$key} {
-    padding-right: $value;
+  .pr-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-right: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .pb-#{$key} {
-    padding-bottom: $value;
+  .pb-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-bottom: var(--value) /* TODO: Verify correct CSS variable */;
   }
-  .pl-#{$key} {
-    padding-left: $value;
+  .pl-#{var(--key) /* TODO: Verify correct CSS variable */} {
+    padding-left: var(--value) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -184,28 +183,28 @@
 
 // Gap Utilities
 .gap-1 {
-  gap: $spacing-1;
+  gap: var(--spacing-1) /* TODO: Verify correct CSS variable */;
 }
 .gap-2 {
-  gap: $spacing-2;
+  gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
 }
 .gap-3 {
-  gap: $spacing-3;
+  gap: var(--spacing-3) /* TODO: Verify correct CSS variable */;
 }
 .gap-4 {
-  gap: $spacing-4;
+  gap: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 }
 .gap-5 {
-  gap: $spacing-5;
+  gap: var(--spacing-5) /* TODO: Verify correct CSS variable */;
 }
 .gap-6 {
-  gap: $spacing-6;
+  gap: var(--spacing-6) /* TODO: Verify correct CSS variable */;
 }
 .gap-8 {
-  gap: $spacing-8;
+  gap: var(--spacing-8) /* TODO: Verify correct CSS variable */;
 }
 .gap-10 {
-  gap: $spacing-10;
+  gap: var(--spacing-10) /* TODO: Verify correct CSS variable */;
 }
 
 // Text Utilities
@@ -233,19 +232,19 @@
 }
 
 .font-weight-light {
-  font-weight: $font-weight-light;
+  font-weight: var(--font-weight-light) /* TODO: Verify correct CSS variable */;
 }
 .font-weight-normal {
-  font-weight: $font-weight-normal;
+  font-weight: var(--font-weight-normal) /* TODO: Verify correct CSS variable */;
 }
 .font-weight-medium {
-  font-weight: $font-weight-medium;
+  font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
 }
 .font-weight-semibold {
-  font-weight: $font-weight-semibold;
+  font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
 }
 .font-weight-bold {
-  font-weight: $font-weight-bold;
+  font-weight: var(--font-weight-bold) /* TODO: Verify correct CSS variable */;
 }
 
 .text-truncate {
@@ -261,118 +260,118 @@
 
 // Color Utilities
 .text-primary {
-  color: $color-primary;
+  color: var(--color-primary);
 }
 .text-secondary {
-  color: $color-secondary;
+  color: var(--color-secondary);
 }
 .text-success {
-  color: $color-success;
+  color: var(--color-success);
 }
 .text-warning {
-  color: $color-warning;
+  color: var(--color-warning);
 }
 .text-error {
-  color: $color-error;
+  color: var(--color-error);
 }
 .text-info {
-  color: $color-info;
+  color: var(--color-info);
 }
 .text-neutral-100 {
-  color: $color-neutral-100;
+  color: var(--color-neutral-100);
 }
 .text-neutral-200 {
-  color: $color-neutral-200;
+  color: var(--color-neutral-200);
 }
 .text-neutral-300 {
-  color: $color-neutral-300;
+  color: var(--color-neutral-300);
 }
 .text-neutral-400 {
-  color: $color-neutral-400;
+  color: var(--color-neutral-400);
 }
 .text-neutral-500 {
-  color: $color-neutral-500;
+  color: var(--color-neutral-500);
 }
 .text-neutral-600 {
-  color: $color-neutral-600;
+  color: var(--color-neutral-600);
 }
 .text-neutral-700 {
-  color: $color-neutral-700;
+  color: var(--color-neutral-700);
 }
 .text-neutral-800 {
-  color: $color-neutral-800;
+  color: var(--color-neutral-800);
 }
 .text-neutral-900 {
-  color: $color-neutral-900;
+  color: var(--color-neutral-900);
 }
 
 .bg-primary {
-  background-color: $color-primary;
+  background-color: var(--color-primary);
 }
 .bg-primary-light {
-  background-color: $color-primary-light;
+  background-color: var(--color-primary-light);
 }
 .bg-secondary {
-  background-color: $color-secondary;
+  background-color: var(--color-secondary);
 }
 .bg-secondary-light {
-  background-color: $color-secondary-light;
+  background-color: var(--color-secondary-light);
 }
 .bg-success {
-  background-color: $color-success;
+  background-color: var(--color-success);
 }
 .bg-warning {
-  background-color: $color-warning;
+  background-color: var(--color-warning);
 }
 .bg-error {
-  background-color: $color-error;
+  background-color: var(--color-error);
 }
 .bg-info {
-  background-color: $color-info;
+  background-color: var(--color-info);
 }
 .bg-neutral-100 {
-  background-color: $color-neutral-100;
+  background-color: var(--color-neutral-100);
 }
 .bg-neutral-200 {
-  background-color: $color-neutral-200;
+  background-color: var(--color-neutral-200);
 }
 .bg-neutral-300 {
-  background-color: $color-neutral-300;
+  background-color: var(--color-neutral-300);
 }
 .bg-neutral-400 {
-  background-color: $color-neutral-400;
+  background-color: var(--color-neutral-400);
 }
 .bg-neutral-500 {
-  background-color: $color-neutral-500;
+  background-color: var(--color-neutral-500);
 }
 .bg-neutral-600 {
-  background-color: $color-neutral-600;
+  background-color: var(--color-neutral-600);
 }
 .bg-neutral-700 {
-  background-color: $color-neutral-700;
+  background-color: var(--color-neutral-700);
 }
 .bg-neutral-800 {
-  background-color: $color-neutral-800;
+  background-color: var(--color-neutral-800);
 }
 .bg-neutral-900 {
-  background-color: $color-neutral-900;
+  background-color: var(--color-neutral-900);
 }
 
 // Border Utilities
 .border {
-  border: $border-width-thin solid $color-neutral-300;
+  border: var(--border-width-thin) solid var(--color-neutral-300);
 }
 .border-top {
-  border-top: $border-width-thin solid $color-neutral-300;
+  border-top: var(--border-width-thin) solid var(--color-neutral-300);
 }
 .border-right {
-  border-right: $border-width-thin solid $color-neutral-300;
+  border-right: var(--border-width-thin) solid var(--color-neutral-300);
 }
 .border-bottom {
-  border-bottom: $border-width-thin solid $color-neutral-300;
+  border-bottom: var(--border-width-thin) solid var(--color-neutral-300);
 }
 .border-left {
-  border-left: $border-width-thin solid $color-neutral-300;
+  border-left: var(--border-width-thin) solid var(--color-neutral-300);
 }
 
 .border-0 {
@@ -392,44 +391,44 @@
 }
 
 .border-primary {
-  border-color: $color-primary;
+  border-color: var(--color-primary);
 }
 .border-secondary {
-  border-color: $color-secondary;
+  border-color: var(--color-secondary);
 }
 .border-success {
-  border-color: $color-success;
+  border-color: var(--color-success);
 }
 .border-warning {
-  border-color: $color-warning;
+  border-color: var(--color-warning);
 }
 .border-error {
-  border-color: $color-error;
+  border-color: var(--color-error);
 }
 .border-info {
-  border-color: $color-info;
+  border-color: var(--color-info);
 }
 
 .rounded-none {
   border-radius: 0;
 }
 .rounded-sm {
-  border-radius: $border-radius-sm;
+  border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
 }
 .rounded-md {
-  border-radius: $border-radius-md;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
 }
 .rounded-lg {
-  border-radius: $border-radius-lg;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
 }
 .rounded-xl {
-  border-radius: $border-radius-xl;
+  border-radius: var(--border-radius-xl) /* TODO: Verify correct CSS variable */;
 }
 .rounded-2xl {
-  border-radius: $border-radius-2xl;
+  border-radius: var(--border-radius-2xl) /* TODO: Verify correct CSS variable */;
 }
 .rounded-full {
-  border-radius: $border-radius-full;
+  border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
 }
 
 // Shadow Utilities
@@ -437,22 +436,22 @@
   box-shadow: none;
 }
 .shadow-sm {
-  box-shadow: $shadow-sm;
+  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
 }
 .shadow-md {
-  box-shadow: $shadow-md;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
 }
 .shadow-lg {
-  box-shadow: $shadow-lg;
+  box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
 }
 .shadow-xl {
-  box-shadow: $shadow-xl;
+  box-shadow: var(--shadow-xl) /* TODO: Verify correct CSS variable */;
 }
 .shadow-2xl {
-  box-shadow: $shadow-2xl;
+  box-shadow: var(--shadow-2xl) /* TODO: Verify correct CSS variable */;
 }
 .shadow-inner {
-  box-shadow: $shadow-inner;
+  box-shadow: var(--shadow-inner) /* TODO: Verify correct CSS variable */;
 }
 
 // Position Utilities
@@ -575,23 +574,23 @@
   z-index: auto;
 }
 .z-dropdown {
-  z-index: $z-index-dropdown;
+  z-index: var(--z-index-dropdown) /* TODO: Verify correct CSS variable */;
 }
 .z-sticky {
-  z-index: $z-index-sticky;
+  z-index: var(--z-index-sticky) /* TODO: Verify correct CSS variable */;
 }
 .z-fixed {
-  z-index: $z-index-fixed;
+  z-index: var(--z-index-fixed) /* TODO: Verify correct CSS variable */;
 }
 .z-modal-backdrop {
-  z-index: $z-index-modal-backdrop;
+  z-index: var(--z-index-modal-backdrop) /* TODO: Verify correct CSS variable */;
 }
 .z-modal {
-  z-index: $z-index-modal;
+  z-index: var(--z-index-modal) /* TODO: Verify correct CSS variable */;
 }
 .z-popover {
-  z-index: $z-index-popover;
+  z-index: var(--z-index-popover) /* TODO: Verify correct CSS variable */;
 }
 .z-tooltip {
-  z-index: $z-index-tooltip;
+  z-index: var(--z-index-tooltip) /* TODO: Verify correct CSS variable */;
 }

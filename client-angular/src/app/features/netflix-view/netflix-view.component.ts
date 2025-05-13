@@ -1,3 +1,10 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbUserModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -51,11 +58,8 @@ import {
   NbSortDirection,
   NbSortRequest,
 } from '@nebular/theme';
-import {
-  NbPaginatorComponent,
-  NbSortComponent,
-  NbSortHeaderComponent,
-} from '../../shared/components/custom-nebular-components';
+import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../core/services/telemetry.service';
@@ -72,13 +76,10 @@ interface GetAdsResponse {
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,
-    // Add Nebular components
-    NbCardModule,
     NbLayoutModule,
     NbButtonModule,
     NbIconModule,
@@ -93,10 +94,9 @@ interface GetAdsResponse {
     NbSpinnerModule,
     NbTableModule,
     NbDatepickerModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
-  ],
+    AppSortComponent,
+    AppSortHeaderComponent
+    NbCardModule,],
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
@@ -367,7 +367,7 @@ export class NetflixViewComponent implements OnInit {
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        this.router.navigateByUrl(`/chat/${room._id}`);
+        this.router.navigateByUrl(`/chat/${room.id}`);
       },
       error: (err) => {
         this.notificationService.error('Failed to start chat');

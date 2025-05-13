@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbButtonModule, NbIconModule, NbSelectModule } from '@nebular/theme';
@@ -110,7 +112,7 @@ import { NbPaginationChangeEvent } from './nb-paginator.module';
     `,
   ],
 })
-export class NbPaginatorComponent implements OnInit {
+export class /*DEPRECATED:NbPaginatorComponent*/ implements OnInit {
   @Input() length: number = 0;
   @Input() pageSize: number = 10;
   @Input() pageSizeOptions: number[] = [];

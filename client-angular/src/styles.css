@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@nebular/theme/styles/prebuilt/default.css';
+/* Removed: @import '@nebular/theme/styles/prebuilt/default.css'; */
+/* Removed: @import 'node_modules/eva-icons/style/eva-icons.css'; */
 @import 'assets/styles/design-system.scss';
 
 /* Import Google Fonts */

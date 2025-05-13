@@ -1,17 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../nebular.module';
-
-interface NotificationMessage {
-  message: string;
-  type: 'success' | 'error' | 'warning' | 'info';
-  duration?: number;
-}
+import { NotificationMessage } from './notification.model';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule, NebularModule],
+  imports: [CommonModule, NebularModule
+    NbCardModule,
+    NbIconModule,],
   template: `
     <div class="notifications-container">
       <nb-card
@@ -65,8 +64,20 @@ interface NotificationMessage {
     `,
   ],
 })
-export class NotificationComponent {
+export class NotificationComponent implements OnDestroy {
   @Input() notifications: NotificationMessage[] = [];
+
+  // This property is used in tests
+  get activeNotifications(): NotificationMessage[] {
+    return this.notifications;
+  }
+
+  private timeoutIds: number[] = [];
+
+  ngOnDestroy(): void {
+    // Clear any timeouts
+    this.timeoutIds.forEach((id) => clearTimeout(id));
+  }
 
   getNotificationStatus(notification: NotificationMessage): string {
     switch (notification.type) {

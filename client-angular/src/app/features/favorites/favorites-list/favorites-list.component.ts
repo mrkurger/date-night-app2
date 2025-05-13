@@ -1,3 +1,8 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -17,6 +22,7 @@ import {
   NbSelectModule,
   NbTagModule,
   NbCheckboxModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import {
   FavoriteService,
@@ -29,6 +35,7 @@ import { FavoriteButtonComponent } from '../../../shared/components/favorite-but
 import { NotesDialogComponent } from '../../../shared/components/notes-dialog/notes-dialog.component';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NbContextMenuModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-favorites-list',
@@ -52,6 +59,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     NbTagModule,
     NbCheckboxModule,
     FavoriteButtonComponent,
+    NbAlertModule,
+    NbSpinnerModule,
+    NbContextMenuModule,
   ],
   template: `
     <div class="favorites-container">

@@ -118,15 +118,11 @@
 
 // Animation Mixins
 @mixin animate(
-  $animation,
-  $duration: $transition-normal,
-  $timing: $transition-timing-default,
-  $delay: 0s
 ) {
-  animation-name: $animation;
-  animation-duration: $duration;
-  animation-timing-function: $timing;
-  animation-delay: $delay;
+  animation-name: var(--animation) /* TODO: Verify correct CSS variable */;
+  animation-duration: var(--duration) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--timing) /* TODO: Verify correct CSS variable */;
+  animation-delay: var(--delay) /* TODO: Verify correct CSS variable */;
   animation-fill-mode: both;
 }
 
@@ -165,30 +161,33 @@
 
 .pulse {
   @include animate(pulse, 1s, ease-in-out, 0s);
+
   animation-iteration-count: infinite;
 }
 
 .spin {
   @include animate(spin, 1s, linear, 0s);
+
   animation-iteration-count: infinite;
 }
 
 .bounce {
   @include animate(bounce, 1s, ease-in-out, 0s);
+
   animation-iteration-count: infinite;
 }
 
 // Duration Modifiers
 .duration-fast {
-  animation-duration: $transition-fast;
+  animation-duration: var(--transition-fast) /* TODO: Verify correct CSS variable */;
 }
 
 .duration-normal {
-  animation-duration: $transition-normal;
+  animation-duration: var(--transition-normal) /* TODO: Verify correct CSS variable */;
 }
 
 .duration-slow {
-  animation-duration: $transition-slow;
+  animation-duration: var(--transition-slow) /* TODO: Verify correct CSS variable */;
 }
 
 // Timing Function Modifiers
@@ -213,7 +212,7 @@
 }
 
 .timing-default {
-  animation-timing-function: $transition-timing-default;
+  animation-timing-function: var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 // Delay Modifiers
@@ -239,33 +238,33 @@
 
 // Transition Utilities
 .transition-all {
-  transition: all $transition-normal $transition-timing-default;
+  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 .transition-colors {
   transition:
-    background-color $transition-normal $transition-timing-default,
-    border-color $transition-normal $transition-timing-default,
-    color $transition-normal $transition-timing-default,
-    fill $transition-normal $transition-timing-default,
-    stroke $transition-normal $transition-timing-default;
+    background-color var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    border-color var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    color var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    fill var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    stroke var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 .transition-opacity {
-  transition: opacity $transition-normal $transition-timing-default;
+  transition: opacity var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 .transition-shadow {
-  transition: box-shadow $transition-normal $transition-timing-default;
+  transition: box-shadow var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 .transition-transform {
-  transition: transform $transition-normal $transition-timing-default;
+  transition: transform var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 }
 
 // Hover Effect Utilities
 .hover-scale {
-  transition: transform $transition-normal $transition-timing-default;
+  transition: transform var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   &:hover {
     transform: scale(1.05);
@@ -274,19 +273,19 @@
 
 .hover-lift {
   transition:
-    transform $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    transform var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    box-shadow var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-lg;
+    box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
   }
 }
 
 .hover-glow {
-  transition: box-shadow $transition-normal $transition-timing-default;
+  transition: box-shadow var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   &:hover {
-    box-shadow: 0 0 15px rgba($color-primary, 0.5);
+    box-shadow: 0 0 15px rgba(var(--color-primary), 0.5);
   }
 }

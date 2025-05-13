@@ -1,11 +1,12 @@
 @use '../../../core/design/typography-mixins' as typography;
+
 /**
  * Checkbox Component Styles
  * 
  * Implements the DateNight.io checkbox styles using the design system.
  */
 
-@use '../../../../app/core/design/design-tokens' as ds;
+
 
 .checkbox {
   display: inline-flex;
@@ -39,7 +40,7 @@
     }
 
     &:focus-visible + .checkbox__custom {
-      box-shadow: 0 0 0 2px rgba(ds.$color-primary, 0.4);
+      box-shadow: 0 0 0 2px rgba(ds.var(--color-primary), 0.4);
     }
   }
 
@@ -48,42 +49,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid ds.$color-medium-gray-1;
-    background-color: ds.$color-white;
-    color: ds.$color-white;
-    border-radius: ds.$border-radius-sm;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    border: 2px solid var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     app-icon {
       opacity: 0;
       transform: scale(0.8);
-      transition: all ds.$transition-fast ds.$transition-timing-default;
+      transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
     }
   }
 
   // Label
   &__label {
     @include typography.body-default;
-    margin-left: ds.$spacing-2;
+
+    margin-left: var(--spacing-2) /* TODO: Verify correct CSS variable */;
     user-select: none;
-    color: ds.$color-dark-gray-2;
+    color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
   }
 
   // Required indicator
   &__required-indicator {
-    color: ds.$color-error;
-    margin-left: ds.$spacing-1;
+    color: var(--color-error) /* TODO: Verify correct CSS variable */;
+    margin-left: var(--spacing-1) /* TODO: Verify correct CSS variable */;
   }
 
   // Helper text
   &__helper-text {
     @include typography.body-xs;
-    margin-top: ds.$spacing-1;
-    margin-left: calc(var(--checkbox-size) + #{ds.$spacing-2});
-    color: ds.$color-dark-gray-1;
+
+    margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
+    margin-left: calc(var(--checkbox-size) + #{var(--spacing-2) /* TODO: Verify correct CSS variable */});
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     &--error {
-      color: ds.$color-error;
+      color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -126,8 +129,8 @@
   // State variants
   &--checked {
     .checkbox__custom {
-      border-color: ds.$color-primary;
-      background-color: ds.$color-primary;
+      border-color: ds.var(--color-primary);
+      background-color: ds.var(--color-primary);
 
       app-icon {
         opacity: 1;
@@ -138,7 +141,7 @@
 
   &--focused {
     .checkbox__custom {
-      border-color: ds.$color-primary;
+      border-color: ds.var(--color-primary);
     }
   }
 
@@ -147,35 +150,35 @@
     opacity: 0.6;
 
     .checkbox__custom {
-      background-color: ds.$color-light-gray-1;
-      border-color: ds.$color-medium-gray-1;
+      background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     .checkbox__label {
-      color: ds.$color-medium-gray-2;
+      color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
     }
 
     &.checkbox--checked .checkbox__custom {
-      background-color: ds.$color-medium-gray-1;
-      border-color: ds.$color-medium-gray-1;
+      background-color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &--error {
     .checkbox__custom {
-      border-color: ds.$color-error;
+      border-color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
 
     &.checkbox--checked .checkbox__custom {
-      background-color: ds.$color-error;
-      border-color: ds.$color-error;
+      background-color: var(--color-error) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
   // Hover state
   &:not(.checkbox--disabled):hover {
     .checkbox__custom {
-      border-color: ds.$color-primary;
+      border-color: ds.var(--color-primary);
     }
   }
 }
@@ -185,52 +188,52 @@
   body.dark-mode-enabled {
     .checkbox {
       &__custom {
-        border-color: ds.$color-medium-gray-2;
-        background-color: ds.$color-dark-gray-2;
+        border-color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
+        background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
       }
 
       &__label {
-        color: ds.$color-light-gray-1;
+        color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       &__helper-text {
-        color: ds.$color-medium-gray-1;
+        color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       // State variants in dark mode
       &--checked {
         .checkbox__custom {
-          border-color: ds.$color-primary-light;
-          background-color: ds.$color-primary-light;
+          border-color: ds.var(--color-primary)-light;
+          background-color: ds.var(--color-primary)-light;
         }
       }
 
       &--focused {
         .checkbox__custom {
-          border-color: ds.$color-primary-light;
+          border-color: ds.var(--color-primary)-light;
         }
       }
 
       &--disabled {
         .checkbox__custom {
-          background-color: ds.$color-dark-gray-3;
-          border-color: ds.$color-dark-gray-1;
+          background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
+          border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
         }
 
         .checkbox__label {
-          color: ds.$color-medium-gray-1;
+          color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
         }
 
         &.checkbox--checked .checkbox__custom {
-          background-color: ds.$color-dark-gray-1;
-          border-color: ds.$color-dark-gray-1;
+          background-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
+          border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
         }
       }
 
       // Hover state in dark mode
       &:not(.checkbox--disabled):hover {
         .checkbox__custom {
-          border-color: ds.$color-primary-light;
+          border-color: ds.var(--color-primary)-light;
         }
       }
     }

@@ -1,75 +1,77 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbIconModule } from '@nebular/theme';
-import { NbSortEvent } from './nb-sort.module';
+import { AppSortEvent } from './nb-sort.module';
 
+// Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)
 @Component({
-  selector: 'nb-sort',
+  selector: 'app-sort',
   standalone: true,
   template: `<ng-content></ng-content>`,
 })
-export class NbSortComponent {
+export class AppSortComponent {
   @Input() active: string = '';
   @Input() direction: 'asc' | 'desc' | '' = '';
-  @Output() sortChange = new EventEmitter<NbSortEvent>();
+  @Output() sortChange = new EventEmitter<AppSortEvent>();
 
-  sort(sortEvent: NbSortEvent): void {
+  sort(sortEvent: AppSortEvent): void {
     this.active = sortEvent.active;
     this.direction = sortEvent.direction;
     this.sortChange.emit(sortEvent);
   }
 }
 
+// Refactored: Custom sort header component (was /*DEPRECATED:NbSortHeaderComponent*/)
 @Component({
-  selector: 'nb-sort-header',
+  selector: 'app-sort-header',
   standalone: true,
   imports: [CommonModule, NbIconModule],
   template: `
-    <div class="nb-sort-header" (click)="toggleSort()" [class.nb-sort-header-sorted]="active">
+    <div class="app-sort-header" (click)="toggleSort()" [class.app-sort-header-sorted]="active">
       <ng-content></ng-content>
       <nb-icon
         *ngIf="active"
         [icon]="direction === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"
-        class="nb-sort-header-icon"
+        class="app-sort-header-icon"
       ></nb-icon>
     </div>
   `,
   styles: [
     `
-      .nb-sort-header {
+      .app-sort-header {
         cursor: pointer;
         display: flex;
         align-items: center;
       }
 
-      .nb-sort-header-icon {
+      .app-sort-header-icon {
         margin-left: 0.5rem;
         font-size: 0.875rem;
       }
 
-      .nb-sort-header-sorted {
+      .app-sort-header-sorted {
         font-weight: bold;
       }
     `,
   ],
 })
-export class NbSortHeaderComponent {
-  @Input() nbSortHeaderId!: string;
+export class AppSortHeaderComponent {
+  @Input() appSortHeaderId!: string;
 
   get active(): boolean {
-    return this.sort.active === this.nbSortHeaderId;
+    return this.sort.active === this.appSortHeaderId;
   }
 
   get direction(): 'asc' | 'desc' | '' {
     return this.active ? this.sort.direction : '';
   }
 
-  constructor(private sort: NbSortComponent) {}
+  constructor(private sort: AppSortComponent) {}
 
   toggleSort(): void {
     const newDirection = this.getNextSortDirection();
     this.sort.sort({
-      active: this.nbSortHeaderId,
+      active: this.appSortHeaderId,
       direction: newDirection,
     });
   }

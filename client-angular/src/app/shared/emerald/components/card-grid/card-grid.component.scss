@@ -1,13 +1,9 @@
 @use 'src/styles/design-system/index.scss' as ds;
 @use '../../core/design/variables' as *;
 @use 'sass:color';
-@use '../../../../core/design/design-tokens' as tokens;
+
 
 // Border radius variables
-$border-radius-sm: 0.25rem;
-$border-radius-md: 0.375rem;
-$border-radius-lg: 0.5rem;
-$border-radius-full: 9999px;
 
 // Emerald CardGrid Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/CardGrid
@@ -25,16 +21,16 @@ $border-radius-full: 9999px;
     &--animated {
       animation: fadeIn 0.5s ease forwards;
 
-      @for $i from 1 through 20 {
-        &:nth-child(#{$i}) {
-          animation-delay: #{$i * 0.05}s;
+      @for var(--i) /* TODO: Verify correct CSS variable */ from 1 through 20 {
+        &:nth-child(#{var(--i) /* TODO: Verify correct CSS variable */}) {
+          animation-delay: #{var(--i) /* TODO: Verify correct CSS variable */ * 0.05}s;
         }
       }
     }
 
     &--masonry {
       break-inside: avoid;
-      margin-bottom: emerald.$spacing-4;
+      margin-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -46,7 +42,7 @@ $border-radius-full: 9999px;
   }
 
   &__netflix-row {
-    margin-bottom: emerald.$spacing-6;
+    margin-bottom: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
   }
 
   &__netflix-items {
@@ -54,7 +50,7 @@ $border-radius-full: 9999px;
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: emerald.$spacing-4; // Space for scrollbar
+    padding-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */; // Space for scrollbar
 
     // Hide scrollbar but keep functionality
     &::-webkit-scrollbar {
@@ -62,17 +58,17 @@ $border-radius-full: 9999px;
     }
 
     &::-webkit-scrollbar-track {
-      background: emerald.$color-light-gray-1;
-      border-radius: $border-radius-full;
+      background: emerald.var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+      border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: emerald.$color-medium-gray-1;
-      border-radius: $border-radius-full;
+      background: emerald.var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
+      border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: emerald.$color-medium-gray-2;
+      background: emerald.var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -84,7 +80,7 @@ $border-radius-full: 9999px;
   // Masonry layout styles
   &--masonry {
     columns: 3;
-    column-gap: emerald.$spacing-4;
+    column-gap: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
     @media (max-width: 1024px) {
       columns: 2;
@@ -97,9 +93,9 @@ $border-radius-full: 9999px;
 
   // Default item style when no template is provided
   &__default-item {
-    background-color: emerald.$color-white;
-    border-radius: $border-radius-lg;
-    padding: emerald.$spacing-4;
+    background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
+    border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+    padding: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     height: 100%;
     display: flex;
@@ -107,13 +103,13 @@ $border-radius-full: 9999px;
     justify-content: center;
     text-align: center;
     font-weight: 500;
-    color: emerald.$color-dark-gray-3;
+    color: emerald.var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
   }
 
   // Empty state styles
   &__empty {
     width: 100%;
-    padding: emerald.$spacing-8 0;
+    padding: emerald.var(--spacing-8) /* TODO: Verify correct CSS variable */ 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,11 +117,11 @@ $border-radius-full: 9999px;
 
   &__empty-content {
     text-align: center;
-    color: emerald.$color-medium-gray-2;
+    color: emerald.var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
 
     i {
       font-size: 1.875rem;
-      margin-bottom: emerald.$spacing-4;
+      margin-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
     }
 
     p {

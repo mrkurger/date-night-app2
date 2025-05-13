@@ -104,64 +104,78 @@
     <nb-card-header>Recent Errors</nb-card-header>
     <nb-card-body>
       <div class="table-container" *ngIf="!loading; else loadingTemplate">
-        <table nbTable [nbTreeGrid]="dataSource" [nbSort]="sort" (sortChange)="onSort($event)">
-          <!-- Timestamp Column -->
-          <ng-container nbTreeGridColumnDef="timestamp">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>Timestamp</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">
-              {{ row.data.timestamp | date: 'medium' }}
-            </td>
-          </ng-container>
+        <app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
+          <table nbTable [nbTreeGrid]="dataSource">
+            <!-- Timestamp Column -->
+            <ng-container nbTreeGridColumnDef="timestamp">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+                <app-sort-header appSortHeaderId="timestamp">Timestamp</app-sort-header>
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                {{ row.data.timestamp | date: 'medium' }}
+              </td>
+            </ng-container>
 
-          <!-- Error Code Column -->
-          <ng-container nbTreeGridColumnDef="errorCode">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>Error Code</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.errorCode }}</td>
-          </ng-container>
+            <!-- Error Code Column -->
+            <ng-container nbTreeGridColumnDef="errorCode">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+                <app-sort-header appSortHeaderId="errorCode">Error Code</app-sort-header>
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.errorCode }}</td>
+            </ng-container>
 
-          <!-- Status Column -->
-          <ng-container nbTreeGridColumnDef="status">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>Status</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.statusCode }}</td>
-          </ng-container>
+            <!-- Status Column -->
+            <ng-container nbTreeGridColumnDef="status">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+                <app-sort-header appSortHeaderId="status">Status</app-sort-header>
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.statusCode }}</td>
+            </ng-container>
 
-          <!-- Category Column -->
-          <ng-container nbTreeGridColumnDef="category">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>Category</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">
-              <nb-badge
-                [text]="getCategoryLabel(row.data.category)"
-                [status]="getCategoryStatus(row.data.category)"
-              >
-              </nb-badge>
-            </td>
-          </ng-container>
+            <!-- Category Column -->
+            <ng-container nbTreeGridColumnDef="category">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+                <app-sort-header appSortHeaderId="category">Category</app-sort-header>
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                <nb-badge
+                  [text]="getCategoryLabel(row.data.category)"
+                  [status]="getCategoryStatus(row.data.category)"
+                >
+                </nb-badge>
+              </td>
+            </ng-container>
 
-          <!-- URL Column -->
-          <ng-container nbTreeGridColumnDef="url">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>URL</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row" class="url-cell">{{ row.data.url }}</td>
-          </ng-container>
+            <!-- URL Column -->
+            <ng-container nbTreeGridColumnDef="url">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+                <app-sort-header appSortHeaderId="url">URL</app-sort-header>
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row" class="url-cell">
+                {{ row.data.url }}
+              </td>
+            </ng-container>
 
-          <!-- Message Column -->
-          <ng-container nbTreeGridColumnDef="message">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Message</th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.userMessage }}</td>
-          </ng-container>
+            <!-- Message Column -->
+            <ng-container nbTreeGridColumnDef="message">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Message</th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">{{ row.data.userMessage }}</td>
+            </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container nbTreeGridColumnDef="actions">
-            <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">
-              <button nbButton ghost (click)="viewErrorDetails(row.data)">
-                <nb-icon icon="eye-outline"></nb-icon>
-              </button>
-            </td>
-          </ng-container>
+            <!-- Actions Column -->
+            <ng-container nbTreeGridColumnDef="actions">
+              <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                <button nbButton ghost (click)="viewErrorDetails(row.data)">
+                  <nb-icon icon="eye-outline"></nb-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="displayedColumns"></tr>
-          <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+            <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="displayedColumns"></tr>
+            <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </app-sort>
 
         <nb-paginator
           [length]="totalErrors"

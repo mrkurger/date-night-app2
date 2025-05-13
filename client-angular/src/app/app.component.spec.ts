@@ -114,12 +114,10 @@ describe('AppComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([
-          { path: 'browse', component: MockComponent },
-          { path: 'login', component: MockComponent },
-          { path: 'dashboard', component: MockComponent },
-        ]),
+      imports: [RouterTestingModule.withRoutes([
+          { path: 'browse',
+    { path: 'login',
+    { path: 'dashboard']),
         TestAppComponent, // Use our test component instead of the real one
         NotificationComponent,
         DebugInfoComponent,

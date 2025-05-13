@@ -1,4 +1,4 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 // Define CSS variables for use in the component
 :host {
@@ -167,7 +167,7 @@
 .nav-divider {
   height: 1px;
   background-color: var(--sidebar-border-color);
-  margin: 16px 16px;
+  margin: 16px;
 }
 
 .sidebar-footer {

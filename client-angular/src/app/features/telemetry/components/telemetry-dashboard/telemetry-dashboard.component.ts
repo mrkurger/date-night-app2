@@ -1,3 +1,4 @@
+import { NbCardModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE

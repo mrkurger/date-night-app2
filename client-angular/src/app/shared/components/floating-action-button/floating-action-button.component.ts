@@ -1,3 +1,4 @@
+import { NbIconModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {

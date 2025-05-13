@@ -4,38 +4,38 @@
  * This file fixes issues with the spacing utilities.
  */
 
-@use 'tokens' as *;
+
 
 // Responsive spacing utilities
-@media (min-width: $breakpoint-mobile) {
+@media (min-width: var(--breakpoint-mobile) /* TODO: Verify correct CSS variable */) {
   .m-md-0 {
     margin: 0 !important;
   }
   .m-md-1 {
-    margin: $spacing-1 !important;
+    margin: var(--spacing-1) /* TODO: Verify correct CSS variable */ !important;
   }
   .m-md-2 {
-    margin: $spacing-2 !important;
+    margin: var(--spacing-2) /* TODO: Verify correct CSS variable */ !important;
   }
   // Add more utilities as needed
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (min-width: var(--breakpoint-tablet) /* TODO: Verify correct CSS variable */) {
   .m-lg-0 {
     margin: 0 !important;
   }
   .m-lg-1 {
-    margin: $spacing-1 !important;
+    margin: var(--spacing-1) /* TODO: Verify correct CSS variable */ !important;
   }
   .m-lg-2 {
-    margin: $spacing-2 !important;
+    margin: var(--spacing-2) /* TODO: Verify correct CSS variable */ !important;
   }
   // Add more utilities as needed
 }
 
 // Export the media query values for JavaScript usage
 :root {
-  --breakpoint-mobile: #{$breakpoint-mobile};
-  --breakpoint-tablet: #{$breakpoint-tablet};
-  --breakpoint-desktop: #{$breakpoint-desktop};
+  --breakpoint-mobile: #{var(--breakpoint-mobile) /* TODO: Verify correct CSS variable */};
+  --breakpoint-tablet: #{var(--breakpoint-tablet) /* TODO: Verify correct CSS variable */};
+  --breakpoint-desktop: #{var(--breakpoint-desktop) /* TODO: Verify correct CSS variable */};
 }

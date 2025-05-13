@@ -17,12 +17,12 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
 import { AppCardComponent } from '../app-card/app-card.component';
 
 /**
- * Emerald CardGrid Component
+ * /*DEPRECATED:Emerald*/ CardGrid Component
  *
  * A responsive grid layout for displaying multiple cards.
  * This component provides a flexible grid system for displaying ads or other content.
  *
- * Documentation: https://docs-emerald.condorlabs.io/CardGrid
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/CardGrid
  */
 @Component({
   selector: 'nb-card-grid',

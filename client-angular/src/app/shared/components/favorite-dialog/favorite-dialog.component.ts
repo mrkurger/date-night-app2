@@ -1,3 +1,9 @@
+import { NbToggleModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // This file contains settings for component configuration (favorite-dialog.component)
 //
@@ -65,7 +71,8 @@ export interface FavoriteDialogResult {
     NbToggleModule,
     FormsModule,
     ReactiveFormsModule,
-  ],
+  
+    NbCardModule,],
   template: `
     <nb-card class="favorite-dialog-container">
       <nb-card-header class="dialog-header">

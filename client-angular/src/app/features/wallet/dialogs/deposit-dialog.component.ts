@@ -1,10 +1,15 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import {
   Component,
   OnInit,
   Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-, Input} from '@angular/core';
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -20,15 +25,19 @@ import {
   NbSpinnerModule,
   NbIconModule,
 } from '@nebular/theme';
-import {
-  WalletService,
-  DepositRequest,
-  PaymentMethod,
-} from '../../../core/services/wallet.service';
-import { NotificationService } from '../../../core/services/notification.service';
+import { WalletService, PaymentMethod, WalletBalance } from '../../../core/services/wallet.service';
+import { NbToastrService } from '@nebular/theme';
 
-export interface DepositDialogContext {
-  currencies: string[];
+interface DepositRequest {
+  amount: number;
+  currency: string;
+  paymentMethodId?: string;
+  description?: string;
+}
+
+// Dialog config interface
+interface DepositDialogConfig {
+  balances: WalletBalance[];
   paymentMethods: PaymentMethod[];
   selectedCurrency?: string;
 }
@@ -50,7 +59,8 @@ export interface DepositDialogContext {
     NbRadioModule,
     NbSpinnerModule,
     NbIconModule,
-  ],
+  
+    NbAlertModule,],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DepositDialogComponent implements OnInit {
@@ -61,8 +71,7 @@ export class DepositDialogComponent implements OnInit {
     protected ref: NbDialogRef<DepositDialogComponent>,
     private fb: FormBuilder,
     private walletService: WalletService,
-    private notificationService: NotificationService,
-    @Inject(NB_DIALOG_CONFIG) public context: DepositDialogContext,
+    @Inject(NB_DIALOG_CONFIG) public context: DepositDialogConfig,
     private cdr: ChangeDetectorRef,
   ) {
     this.depositForm = this.fb.group({

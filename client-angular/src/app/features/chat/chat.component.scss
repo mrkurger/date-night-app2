@@ -1,7 +1,7 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default' as default-theme;
 @use '@nebular/theme/styles/global/breakpoints' as *;
-@use '../../core/design/design-tokens' as *;
+
 /* Removed emerald-ui import as it's causing build issues */
 
 // ===================================================
@@ -10,19 +10,13 @@
 // This file contains styles for the chat component
 //
 // COMMON CUSTOMIZATIONS:
-// - $sidebar-width: Width of the chat sidebar (default: 320px)
-// - $message-bubble-sent: Background color for sent messages (default: $primary-500)
-// - $message-bubble-received: Background color for received messages (default: $neutral-100)
-// - $typing-indicator-color: Color of the typing indicator (default: $primary-500)
+// - var(--sidebar-width) /* TODO: Verify correct CSS variable */: Width of the chat sidebar (default: 320px)
+// - var(--message-bubble-sent) /* TODO: Verify correct CSS variable */: Background color for sent messages (default: var(--primary-500) /* TODO: Verify correct CSS variable */)
+// - var(--message-bubble-received) /* TODO: Verify correct CSS variable */: Background color for received messages (default: var(--neutral-100) /* TODO: Verify correct CSS variable */)
+// - var(--typing-indicator-color) /* TODO: Verify correct CSS variable */: Color of the typing indicator (default: var(--primary-500) /* TODO: Verify correct CSS variable */)
 // ===================================================
 
 // Variables
-$sidebar-width: 320px;
-$message-bubble-sent: nb-theme(color-primary-500);
-$message-bubble-received: nb-theme(background-basic-color-2);
-$typing-indicator-color: nb-theme(color-primary-500);
-$temporary-message-color: nb-theme(color-warning-500);
-$temporary-message-bg: nb-theme(color-warning-100);
 
 // Animations
 @keyframes pulse-shadow {
@@ -71,7 +65,7 @@ $temporary-message-bg: nb-theme(color-warning-100);
 // Chat Container
 .chat-container {
   display: grid;
-  grid-template-columns: $sidebar-width 1fr;
+  grid-template-columns: var(--sidebar-width) /* TODO: Verify correct CSS variable */ 1fr;
   gap: nb-theme(spacing-md);
   height: calc(100vh - 140px);
   max-width: 1400px;
@@ -1158,7 +1152,7 @@ $temporary-message-bg: nb-theme(color-warning-100);
 }
 
 // Responsive Styles
-@media (max-width: $breakpoint-md) {
+@media (max-width: var(--breakpoint-md) /* TODO: Verify correct CSS variable */) {
   .message {
     max-width: 90%;
   }

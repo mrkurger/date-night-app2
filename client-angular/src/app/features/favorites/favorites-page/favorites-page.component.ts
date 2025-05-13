@@ -1,3 +1,9 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbTagModule } from '@nebular/theme';
+import { NbAlertModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
@@ -10,12 +16,6 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  NbSortComponent,
-  NbSortHeaderComponent,
-  NbSortEvent,
-  NbDividerComponent,
-} from '../../../shared/components/custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -68,12 +68,9 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
-import { NbTagListComponent } from '@nebular/theme/components/tag/tag-list.component';
-import { NbDatepickerComponent } from '@nebular/theme/components/datepicker/datepicker.component';
-import { NbFormFieldComponent } from '@nebular/theme/components/form-field/form-field.component';
-import { NbCheckboxComponent } from '@nebular/theme/components/checkbox/checkbox.component';
-import { NbAlertComponent } from '@nebular/theme/components/alert/alert.component';
-import { NbSpinnerComponent } from '@nebular/theme/components/spinner/spinner.component';
+import { AppSortComponent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortEvent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 /**
  * Interface for saved filter presets
@@ -131,13 +128,8 @@ interface FilterPreset {
     NbTableModule,
     FavoriteButtonComponent,
     LoadingSpinnerComponent,
-    NbTagListComponent,
-    NbDatepickerComponent,
-    NbFormFieldComponent,
-    NbCheckboxComponent,
-    NbAlertComponent,
-    NbSpinnerComponent,
-    NbContextMenuModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
   ],
   template: `
     <div class="favorites-page">

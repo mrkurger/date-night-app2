@@ -1,27 +1,24 @@
 @use '../../core/design/variables' as *;
 @use 'sass:color';
-@use '../../../../core/design/design-tokens' as tokens;
+
 
 // Shadow variables
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-$shadow-md:
   0 4px 6px -1px rgba(0, 0, 0, 0.1),
   0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg:
   0 10px 15px -3px rgba(0, 0, 0, 0.1),
   0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
 // Emerald SkeletonLoader Component Styles
 // Documentation: https://docs-emerald.condorlabs.io/SkeletonLoader
 
-.emerald-skeleton-container {
+.nebular-skeleton-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.emerald-skeleton {
-  background-color: emerald.$color-light-gray-2;
+.nebular-skeleton {
+  background-color: emerald.var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
   position: relative;
 
@@ -33,7 +30,7 @@ $shadow-lg:
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(emerald.$color-white, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(emerald.var(--color-white) /* TODO: Verify correct CSS variable */, 0.2), transparent);
     animation: skeleton-loading 1.5s infinite;
   }
 
@@ -63,13 +60,13 @@ $shadow-lg:
 }
 
 // Card Skeleton
-.emerald-skeleton-card {
+.nebular-skeleton-card {
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   overflow: hidden;
-  background-color: emerald.$color-white;
-  box-shadow: $shadow-sm;
+  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
 
   &__media {
     height: 160px;
@@ -103,13 +100,13 @@ $shadow-lg:
 }
 
 // Profile Skeleton
-.emerald-skeleton-profile {
+.nebular-skeleton-profile {
   display: flex;
   align-items: center;
   padding: 16px;
-  background-color: emerald.$color-white;
+  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
   border-radius: 8px;
-  box-shadow: $shadow-sm;
+  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
 
   &__avatar {
     width: 64px;
@@ -134,19 +131,19 @@ $shadow-lg:
 }
 
 // List Skeleton
-.emerald-skeleton-list {
+.nebular-skeleton-list {
   display: flex;
   flex-direction: column;
-  background-color: emerald.$color-white;
+  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
   border-radius: 8px;
-  box-shadow: $shadow-sm;
+  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
 
   &__item {
     display: flex;
     align-items: center;
     padding: 16px;
-    border-bottom: 1px solid emerald.$color-light-gray-1;
+    border-bottom: 1px solid emerald.var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
 
     &:last-child {
       border-bottom: none;

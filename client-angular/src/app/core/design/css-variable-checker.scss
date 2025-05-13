@@ -13,7 +13,6 @@
  * @include checker.check-typography();
  */
 
-@use 'design-tokens' as tokens;
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:meta';
@@ -115,7 +114,7 @@ $hardcoded-typography: (
 
 // Mixin to check all hardcoded values
 @mixin check-all() {
-  @include check-colors();
-  @include check-spacing();
-  @include check-typography();
+  @include check-colors;
+  @include check-spacing;
+  @include check-typography;
 }

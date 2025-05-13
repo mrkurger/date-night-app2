@@ -9,20 +9,17 @@
 @use '../../../styles/variables.css' as *;
 
 // Common theme settings
-$theme-common: (
+$nb-themes: (
   font-family-primary: var(--font-family-base),
   font-family-secondary: var(--font-family-base),
-  
   text-heading-1-font-size: var(--font-size-4xl),
   text-heading-2-font-size: var(--font-size-3xl),
   text-heading-3-font-size: var(--font-size-2xl),
   text-heading-4-font-size: var(--font-size-xl),
   text-heading-5-font-size: var(--font-size-lg),
   text-heading-6-font-size: var(--font-size-md),
-  
   border-radius: var(--border-radius-md),
   shadow: var(--shadow-md),
-  
   layout-padding: 2rem,
   layout-medium-padding: 1.5rem,
   layout-small-padding: 1rem,
@@ -30,7 +27,7 @@ $theme-common: (
   divider-color: var(--border-color),
   divider-style: solid,
   divider-width: 1px,
-  
+
   button-filled-small-padding: 0.5rem 1rem,
   button-filled-medium-padding: 0.75rem 1.5rem,
   button-filled-large-padding: 1rem 2rem,
@@ -40,11 +37,10 @@ $theme-common: (
 );
 
 // Light theme configuration
-$date-night-theme: map-merge($theme-common, (
+$nb-themes-light: (
   // Layout
   layout-background-color: var(--body-bg),
   layout-text-color: var(--body-color),
-  
   // Basic colors
   color-primary-100: var(--primary-100),
   color-primary-200: var(--primary-200),
@@ -55,31 +51,27 @@ $date-night-theme: map-merge($theme-common, (
   color-primary-700: var(--primary-700),
   color-primary-800: var(--primary-800),
   color-primary-900: var(--primary-900),
-  
   background-basic-color-1: var(--neutral-100),
   background-basic-color-2: var(--neutral-200),
   background-basic-color-3: var(--neutral-300),
   background-basic-color-4: var(--neutral-400),
-  
   border-basic-color-1: var(--neutral-300),
   border-basic-color-2: var(--neutral-400),
   border-basic-color-3: var(--neutral-500),
   border-basic-color-4: var(--neutral-600),
   border-basic-color-5: var(--neutral-700),
-  
   text-basic-color: var(--body-color),
   text-alternate-color: var(--neutral-100),
   text-control-color: var(--neutral-100),
   text-disabled-color: var(--neutral-600),
   text-hint-color: var(--neutral-700),
-
   // Status colors
   color-success-default: var(--success),
   color-info-default: var(--info),
   color-warning-default: var(--warning),
-  color-danger-default: var(--danger),
-));
-
+  color-danger-default: var(--danger)
+);
+$nb-themes-components: (
   // Card
   card-border-radius: 0.5rem,
   card-padding: 1.5rem,
@@ -130,7 +122,7 @@ $date-night-theme: map-merge($theme-common, (
 );
 
 // Light theme configuration
-$date-night-theme: (
+$nb-themes-light-custom: (
   // Brand Colors
   color-primary-100: #cceeff,
   color-primary-200: #99ddff,
@@ -208,17 +200,16 @@ $date-night-theme: (
   shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
   shadow-md: (0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)),
   shadow-lg: (0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1))
-) !global;
+);
 
 // Merge base theme with light theme
-$date-night-theme: map-merge($theme-base, $date-night-theme) !global;
+$nb-theme-merged: map-merge($nb-themes, $nb-themes-light);
 
 // Dark theme configuration
-$date-night-dark-theme: map-merge($theme-common, (
+$nb-themes-dark: (
   // Layout
   layout-background-color: var(--neutral-900),
   layout-text-color: var(--neutral-200),
-
   // Basic colors - using CSS variables for dark theme
   color-primary-100: var(--primary-100),
   color-primary-200: var(--primary-200),
@@ -229,33 +220,27 @@ $date-night-dark-theme: map-merge($theme-common, (
   color-primary-700: var(--primary-700),
   color-primary-800: var(--primary-800),
   color-primary-900: var(--primary-900),
-
   background-basic-color-1: var(--neutral-900),
   background-basic-color-2: var(--neutral-800),
   background-basic-color-3: var(--neutral-700),
   background-basic-color-4: var(--neutral-600),
-
   border-basic-color-1: var(--neutral-700),
   border-basic-color-2: var(--neutral-600),
   border-basic-color-3: var(--neutral-500),
   border-basic-color-4: var(--neutral-400),
   border-basic-color-5: var(--neutral-300),
-
   text-basic-color: var(--neutral-200),
   text-alternate-color: var(--neutral-900),
   text-control-color: var(--neutral-200),
   text-disabled-color: var(--neutral-600),
   text-hint-color: var(--neutral-500),
-
   // Component specific
   header-background-color: var(--neutral-800),
   header-text-color: var(--neutral-200),
   header-hint-color: var(--neutral-500),
-
   footer-background-color: var(--neutral-800),
   footer-text-color: var(--neutral-200),
   footer-icon-color: var(--neutral-400),
-
   // Cards & Containers
   card-background-color: var(--neutral-800),
   card-text-color: var(--neutral-200),
@@ -263,14 +248,12 @@ $date-night-dark-theme: map-merge($theme-common, (
   card-shadow: var(--shadow-md),
   card-header-text-color: var(--neutral-200),
   card-header-hint-color: var(--neutral-500),
-
   // Forms
   form-control-background-color: var(--neutral-800),
   form-control-border-color: var(--neutral-700),
   form-control-text-color: var(--neutral-200),
   form-control-placeholder-color: var(--neutral-600),
   form-control-focus-border-color: var(--primary-500),
-
   // Select & Dropdowns
   select-option-background-color: var(--neutral-800),
   select-option-text-color: var(--neutral-200),
@@ -278,15 +261,13 @@ $date-night-dark-theme: map-merge($theme-common, (
   select-option-hover-text-color: var(--neutral-100),
   select-option-selected-background-color: var(--primary-600),
   select-option-selected-text-color: var(--neutral-100),
-
   // Status colors
   color-success-default: var(--success),
   color-info-default: var(--info),
   color-warning-default: var(--warning),
   color-danger-default: var(--danger),
-
   // Links
   link-text-color: var(--primary-400),
   link-text-hover-color: var(--primary-300),
-  link-text-focus-color: var(--primary-500),
+  link-text-focus-color: var(--primary-500)
 );

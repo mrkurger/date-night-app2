@@ -24,9 +24,9 @@ import { NotificationService } from '../../core/services/notification.service';
 // Mock MainLayoutComponent
 @Component({
   selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',,
+  template: '<ng-content></ng-content>',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule]
+  imports: [ReactiveFormsModule],
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -102,7 +102,9 @@ describe('AdvertiserProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, AdvertiserProfileComponent],
+      imports: [RouterTestingModule,
+    ReactiveFormsModule,
+    AdvertiserProfileComponent],
       declarations: [MockMainLayoutComponent],
       providers: [
         {

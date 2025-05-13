@@ -5,248 +5,248 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-2 $spacing-4;
-  border-radius: $border-radius-md;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-md;
-  line-height: $line-height-normal;
+  padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-md) /* TODO: Verify correct CSS variable */;
+  line-height: var(--line-height-normal) /* TODO: Verify correct CSS variable */;
   text-align: center;
   cursor: pointer;
-  transition: all $transition-normal $transition-timing-default;
+  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
   border: none;
   outline: none;
   white-space: nowrap;
 }
 
 @mixin button-primary {
-  background-color: $color-primary;
-  color: $color-neutral-100;
+  background-color: var(--color-primary);
+  color: var(--color-neutral-100) /* TODO: Verify correct CSS variable */;
 
   &:hover,
   &:focus {
-    background-color: $color-primary-dark;
-    box-shadow: $shadow-md;
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transform: translateY(-1px);
   }
 
   &:active {
-    background-color: $color-primary-dark;
+    background-color: var(--color-primary-dark);
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
   }
 }
 
 @mixin button-secondary {
-  background-color: $color-secondary;
-  color: $color-neutral-100;
+  background-color: var(--color-secondary);
+  color: var(--color-neutral-100);
 
   &:hover,
   &:focus {
-    background-color: $color-secondary-dark;
-    box-shadow: $shadow-md;
+    background-color: var(--color-secondary-dark);
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transform: translateY(-1px);
   }
 
   &:active {
-    background-color: $color-secondary-dark;
+    background-color: var(--color-secondary-dark);
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
   }
 }
 
 @mixin button-outline-primary {
   background-color: transparent;
-  color: $color-primary;
-  border: $border-width-thin solid $color-primary;
+  color: var(--color-primary);
+  border: var(--border-width-thin) solid var(--color-primary);
 
   &:hover,
   &:focus {
-    background-color: $color-primary-light;
-    color: $color-neutral-100;
-    border-color: $color-primary-light;
-    box-shadow: $shadow-md;
+    background-color: var(--color-primary-light);
+    color: var(--color-neutral-100);
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transform: translateY(-1px);
   }
 
   &:active {
-    background-color: $color-primary;
-    color: $color-neutral-100;
-    border-color: $color-primary;
+    background-color: var(--color-primary);
+    color: var(--color-neutral-100);
+    border-color: var(--color-primary);
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
   }
 }
 
 @mixin button-outline-secondary {
   background-color: transparent;
-  color: $color-secondary;
-  border: $border-width-thin solid $color-secondary;
+  color: var(--color-secondary);
+  border: var(--border-width-thin) solid var(--color-secondary);
 
   &:hover,
   &:focus {
-    background-color: $color-secondary-light;
-    color: $color-neutral-100;
-    border-color: $color-secondary-light;
-    box-shadow: $shadow-md;
+    background-color: var(--color-secondary-light);
+    color: var(--color-neutral-100);
+    border-color: var(--color-secondary-light);
+    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
     transform: translateY(-1px);
   }
 
   &:active {
-    background-color: $color-secondary;
-    color: $color-neutral-100;
-    border-color: $color-secondary;
+    background-color: var(--color-secondary);
+    color: var(--color-neutral-100);
+    border-color: var(--color-secondary);
     transform: translateY(0);
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
   }
 }
 
 @mixin button-ghost {
   background-color: transparent;
-  color: $color-neutral-700;
+  color: var(--color-neutral-700);
 
   &:hover,
   &:focus {
-    background-color: $color-neutral-200;
-    color: $color-neutral-900;
+    background-color: var(--color-neutral-200);
+    color: var(--color-neutral-900);
   }
 
   &:active {
-    background-color: $color-neutral-300;
+    background-color: var(--color-neutral-300);
   }
 }
 
 @mixin button-small {
-  padding: $spacing-1 $spacing-3;
-  font-size: $font-size-sm;
-  border-radius: $border-radius-sm;
+  padding: var(--spacing-1) /* TODO: Verify correct CSS variable */ var(--spacing-3) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin button-large {
-  padding: $spacing-3 $spacing-6;
-  font-size: $font-size-lg;
-  border-radius: $border-radius-lg;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
 }
 
 // Card Mixins
 @mixin card-base {
-  background-color: $color-neutral-100;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
+  background-color: var(--color-neutral-100);
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
   transition:
-    transform $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    transform var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    box-shadow var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-lg;
+    box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
   }
 }
 
 @mixin card-header {
-  padding: $spacing-4 $spacing-6;
-  border-bottom: $border-width-thin solid $color-neutral-300;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  border-bottom: var(--border-width-thin) solid var(--color-neutral-300);
 }
 
 @mixin card-body {
-  padding: $spacing-6;
+  padding: var(--spacing-6) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin card-footer {
-  padding: $spacing-4 $spacing-6;
-  border-top: $border-width-thin solid $color-neutral-300;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  border-top: var(--border-width-thin) solid var(--color-neutral-300);
 }
 
 // Form Mixins
 @mixin form-group {
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin form-label {
   display: block;
-  margin-bottom: $spacing-2;
-  font-weight: $font-weight-medium;
-  color: $color-neutral-800;
+  margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
+  color: var(--color-neutral-800);
 }
 
 @mixin form-control {
   display: block;
   width: 100%;
-  padding: $spacing-3 $spacing-4;
-  font-size: $font-size-md;
-  line-height: $line-height-normal;
-  color: $color-neutral-800;
-  background-color: $color-neutral-100;
-  border: $border-width-thin solid $color-neutral-400;
-  border-radius: $border-radius-md;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-md) /* TODO: Verify correct CSS variable */;
+  line-height: var(--line-height-normal) /* TODO: Verify correct CSS variable */;
+  color: var(--color-neutral-800);
+  background-color: var(--color-neutral-100);
+  border: var(--border-width-thin) solid var(--color-neutral-400);
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
   transition:
-    border-color $transition-normal $transition-timing-default,
-    box-shadow $transition-normal $transition-timing-default;
+    border-color var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */,
+    box-shadow var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   &:focus {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.2);
   }
 
   &::placeholder {
-    color: $color-neutral-500;
+    color: var(--color-neutral-500);
   }
 }
 
 @mixin form-control-small {
-  padding: $spacing-2 $spacing-3;
-  font-size: $font-size-sm;
-  border-radius: $border-radius-sm;
+  padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-3) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin form-control-large {
-  padding: $spacing-4 $spacing-5;
-  font-size: $font-size-lg;
-  border-radius: $border-radius-lg;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-5) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
 }
 
 // Badge Mixins
 @mixin badge-base {
   display: inline-flex;
   align-items: center;
-  padding: $spacing-1 $spacing-2;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
+  padding: var(--spacing-1) /* TODO: Verify correct CSS variable */ var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
-  border-radius: $border-radius-full;
+  border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin badge-primary {
-  background-color: rgba($color-primary, 0.1);
-  color: $color-primary-dark;
+  background-color: rgba(var(--color-primary), 0.1);
+  color: var(--color-primary-dark);
 }
 
 @mixin badge-secondary {
-  background-color: rgba($color-secondary, 0.1);
-  color: $color-secondary-dark;
+  background-color: rgba(var(--color-secondary), 0.1);
+  color: var(--color-secondary-dark);
 }
 
 @mixin badge-success {
-  background-color: rgba($color-success, 0.1);
-  color: $color-success;
+  background-color: rgba(var(--color-success), 0.1);
+  color: var(--color-success);
 }
 
 @mixin badge-warning {
-  background-color: rgba($color-warning, 0.1);
-  color: $color-warning;
+  background-color: rgba(var(--color-warning), 0.1);
+  color: var(--color-warning);
 }
 
 @mixin badge-error {
-  background-color: rgba($color-error, 0.1);
-  color: $color-error;
+  background-color: rgba(var(--color-error), 0.1);
+  color: var(--color-error);
 }
 
 @mixin badge-info {
-  background-color: rgba($color-info, 0.1);
-  color: $color-info;
+  background-color: rgba(var(--color-info), 0.1);
+  color: var(--color-info);
 }
 
 // Avatar Mixins
@@ -255,35 +255,35 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-full;
-  background-color: $color-neutral-300;
-  color: $color-neutral-700;
-  font-weight: $font-weight-medium;
+  border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
+  background-color: var(--color-neutral-300);
+  color: var(--color-neutral-700);
+  font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
 }
 
 @mixin avatar-small {
   width: 2rem;
   height: 2rem;
-  font-size: $font-size-xs;
+  font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin avatar-medium {
   width: 3rem;
   height: 3rem;
-  font-size: $font-size-sm;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin avatar-large {
   width: 4rem;
   height: 4rem;
-  font-size: $font-size-md;
+  font-size: var(--font-size-md) /* TODO: Verify correct CSS variable */;
 }
 
 @mixin avatar-xlarge {
   width: 6rem;
   height: 6rem;
-  font-size: $font-size-lg;
+  font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
 }
 
 // Component Classes

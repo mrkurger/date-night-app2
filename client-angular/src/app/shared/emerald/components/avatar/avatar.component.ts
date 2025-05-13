@@ -15,12 +15,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 /**
- * Emerald Avatar Component
+ * /*DEPRECATED:Emerald*/ Avatar Component
  *
- * A wrapper for the Emerald.js Avatar component.
+ * A wrapper for the /*DEPRECATED:Emerald*/.js Avatar component.
  * This component displays a user avatar with optional dropdown menu.
  *
- * Documentation: https://docs-emerald.condorlabs.io/Avatar
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/Avatar
  */
 @Component({
   selector: 'nb-user',

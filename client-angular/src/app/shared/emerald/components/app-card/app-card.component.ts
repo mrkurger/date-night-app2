@@ -9,15 +9,15 @@
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ad } from '../../../../core/models/ad.interface';
+import type { Ad } from '../../../../core/models/ad.interface';
 
 /**
- * Emerald AppCard Component
+ * /*DEPRECATED:Emerald*/ AppCard Component
  *
- * A wrapper for the Emerald.js AppCard component.
+ * A wrapper for the /*DEPRECATED:Emerald*/.js AppCard component.
  * This component displays an advertiser card with various layouts and features.
  *
- * Documentation: https://docs-emerald.condorlabs.io/AppCard
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/AppCard
  */
 @Component({
   selector: 'nb-card',

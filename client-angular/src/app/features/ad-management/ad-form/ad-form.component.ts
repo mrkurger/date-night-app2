@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -23,7 +27,11 @@ import { NbErrorComponent } from '../../../shared/components/custom-nebular-comp
 @Component({
   selector: 'app-ad-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule, NbErrorComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule, NbErrorComponent
+    NbCardModule,
+    NbFormFieldModule,
+    NbSelectModule,
+    NbIconModule,],
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
 })

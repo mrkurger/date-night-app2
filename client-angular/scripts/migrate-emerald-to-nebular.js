@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-undef */
 /**
  * Script to help migrate from Emerald UI to Nebular UI
  * This script will:
@@ -19,10 +20,10 @@ const __dirname = dirname(__filename);
 // Component mapping from Emerald to Nebular
 const componentMap = {
   // Selectors
-  'emerald-app-card': 'nb-card',
+  'emerald-app-card-selector': 'nb-card',
   'emerald-avatar': 'nb-user',
-  'emerald-pager': 'nb-paginator',
-  'emerald-card-grid': 'nb-card-grid',
+  'emerald-pager-selector': 'nb-paginator',
+  'emerald-card-grid-selector': 'nb-card-grid',
   'emerald-floating-action-button': 'nb-fab',
   'emerald-page-header': 'nb-header',
   'emerald-toggle': 'nb-toggle',
@@ -107,6 +108,7 @@ async function replaceInFile(filePath) {
 
   if (modified) {
     await fs.writeFile(filePath, content, 'utf8');
+
     console.log(`Updated ${filePath}`);
   }
 }

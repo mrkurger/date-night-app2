@@ -1,3 +1,5 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../nebular.module';
@@ -15,7 +17,9 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-debug-info',
   standalone: true,
-  imports: [CommonModule, NebularModule],
+  imports: [CommonModule, NebularModule
+    NbCardModule,
+    NbIconModule,],
   template: `
     <nb-card *ngIf="showDebugInfo" class="debug-info">
       <nb-card-header>

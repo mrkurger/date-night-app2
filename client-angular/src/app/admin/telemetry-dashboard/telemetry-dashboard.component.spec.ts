@@ -11,10 +11,9 @@ import { Component } from '@angular/core';
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  NbPaginatorComponent,
-  NbSortComponent,
-  NbSortHeaderComponent,
-  NbSortEvent,
+  /*DEPRECATED:NbPaginatorComponent*/,
+  AppSortComponent as /*DEPRECATED:NbSortComponent*/,
+  AppSortHeaderComponent as /*DEPRECATED:NbSortHeaderComponent*/,
 } from '../../shared/components/custom-nebular-components';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,14 +24,12 @@ import {
   NbButtonModule,
   NbIconModule,
   NbTableModule,
-  NbPaginationModule,
-  NbSortModule,
   NbFormFieldModule,
   NbInputModule,
   NbSelectModule,
   NbDatepickerModule,
   NbSpinnerModule,
-, NbSortEvent} from '@nebular/theme';
+} from '@nebular/theme';
 
 import { TelemetryService } from '../../core/services/telemetry.service';
 import { TelemetryDashboardComponent } from './telemetry-dashboard.component';
@@ -111,12 +108,9 @@ describe('TelemetryDashboardComponent', () => {
         NbButtonModule,
         NbIconModule,
         NbTableModule,
-        NbPaginatorModule,
-        NbSortModule,
         NbFormFieldModule,
         NbInputModule,
         NbSelectModule,
-        NbDatepickerModule,
         NbDatepickerModule,
         NbSpinnerModule,
         TelemetryDashboardComponent,

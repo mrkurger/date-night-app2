@@ -1,3 +1,8 @@
+import { NbDatepickerModule } from '@nebular/theme';
+import { NbSelectModule } from '@nebular/theme';
+import { NbFormFieldModule } from '@nebular/theme';
+import { NbPaginatorModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
@@ -10,11 +15,6 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  NbPaginatorComponent,
-  NbSortComponent,
-  NbSortHeaderComponent,
-} from '../../../../shared/components/custom-nebular-components';
 
 import { CommonModule } from '@angular/common';
 
@@ -36,8 +36,10 @@ import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { NbSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Component({
   selector: 'app-performance-dashboard',
@@ -48,9 +50,6 @@ import { NbPaginationChangeEvent } from '../../../../shared/components/custom-ne
     NbButtonModule,
     NbTabsetModule,
     NbTableModule,
-    NbPaginatorComponent,
-    NbSortComponent,
-    NbSortHeaderComponent,
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
@@ -58,9 +57,12 @@ import { NbPaginationChangeEvent } from '../../../../shared/components/custom-ne
     NbSpinnerModule,
     NbTagModule,
     NbIconModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
     ReactiveFormsModule,
     NgxChartsModule,
-  ],
+  
+    NbPaginatorModule,],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
 })
@@ -250,7 +252,7 @@ export class PerformanceDashboardComponent implements OnInit {
   /**
    * Handle sort event from sort component
    */
-  sortData(sort: NbSortEvent): void {
+  sortData(sort: AppSortEvent): void {
     // Implement sorting logic if needed, then reload data
     // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
     this.loadDashboardData();

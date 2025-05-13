@@ -1,7 +1,8 @@
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains tests for the Emerald CardGrid component
+// This file contains tests for the /*DEPRECATED:Emerald*/ CardGrid component
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEMS: Mock items data for testing
@@ -39,7 +40,8 @@ import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-
     </nb-card-grid>
   `,
   standalone: true,
-  imports: [CardGridComponent, CommonTestModule],
+  imports: [CardGridComponent, CommonTestModule
+    NbCardModule,],
 })
 class TestHostComponent {
   items = MOCK_ITEMS;

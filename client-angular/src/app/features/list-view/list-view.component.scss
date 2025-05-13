@@ -1,5 +1,5 @@
 @use 'sass:color';
-@use '../../../app/core/design/design-tokens' as ds;
+
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -7,18 +7,15 @@
 // This file contains styles for the list view component
 //
 // COMMON CUSTOMIZATIONS:
-// - $filter-sidebar-width: Width of the filter sidebar (default: 320px)
-// - $card-hover-transform: Transform effect on card hover (default: translateY(-8px) scale(1.02))
-// - $active-filter-bg: Background color for active filter chips (default: ds.$primary-100)
+// - var(--filter-sidebar-width) /* TODO: Verify correct CSS variable */: Width of the filter sidebar (default: 320px)
+// - var(--card-hover-transform) /* TODO: Verify correct CSS variable */: Transform effect on card hover (default: translateY(-8px) scale(1.02))
+// - var(--active-filter-bg) /* TODO: Verify correct CSS variable */: Background color for active filter chips (default: var(--color-primary-100))
 // ===================================================
 
 // Variables
-$filter-sidebar-width: 320px;
-$card-hover-transform: translateY(-8px) scale(1.02);
-$active-filter-bg: ds.$color-primary;
 
 .list-view-container {
-  padding: ds.$spacing-6 0;
+  padding: var(--spacing-6) 0;
   position: relative;
 }
 
@@ -26,14 +23,14 @@ $active-filter-bg: ds.$color-primary;
 .search-filters-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: ds.$spacing-4;
-  margin: ds.$spacing-6 0;
+  gap: var(--spacing-4);
+  margin: var(--spacing-6) 0;
   align-items: center;
   justify-content: space-between;
-  background-color: ds.$neutral-100;
-  padding: ds.$spacing-4;
-  border-radius: ds.$border-radius-lg;
-  box-shadow: ds.$shadow-sm;
+  background-color: var(--color-neutral-100);
+  padding: var(--spacing-4);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .search-box {
@@ -48,7 +45,7 @@ $active-filter-bg: ds.$color-primary;
 
 .view-controls {
   display: flex;
-  gap: ds.$spacing-2;
+  gap: var(--spacing-2);
   align-items: center;
   flex-wrap: wrap;
 }
@@ -56,16 +53,16 @@ $active-filter-bg: ds.$color-primary;
 .view-toggle {
   display: flex;
   align-items: center;
-  background-color: ds.$neutral-200;
-  border-radius: ds.$border-radius-md;
-  padding: ds.$spacing-1;
-  margin-right: ds.$spacing-2;
+  background-color: var(--color-neutral-200);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-1);
+  margin-right: var(--spacing-2);
 
   button {
-    border-radius: ds.$border-radius-md;
+    border-radius: var(--border-radius-md);
 
     &.active {
-      background-color: ds.$primary-500;
+      background-color: var(--color-primary);
       color: white;
     }
   }
@@ -74,7 +71,7 @@ $active-filter-bg: ds.$color-primary;
 .sort-button {
   display: flex;
   align-items: center;
-  gap: ds.$spacing-2;
+  gap: var(--spacing-2);
 }
 
 .filter-badge {
@@ -83,33 +80,33 @@ $active-filter-bg: ds.$color-primary;
   justify-content: center;
   min-width: 20px;
   height: 20px;
-  background-color: ds.$primary-500;
+  background-color: var(--color-primary);
   color: white;
-  border-radius: ds.$border-radius-full;
-  font-size: ds.$font-size-xs;
-  margin-left: ds.$spacing-2;
-  padding: 0 ds.$spacing-1;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  margin-left: var(--spacing-2);
+  padding: 0 var(--spacing-1);
 }
 
 /* Content with Sidebar Layout */
 .content-with-sidebar {
   display: flex;
-  gap: ds.$spacing-6;
+  gap: var(--spacing-6);
   position: relative;
 }
 
 /* Filter Sidebar */
 .filter-sidebar {
-  width: $filter-sidebar-width;
+  width: var(--filter-sidebar-width) /* TODO: Verify correct CSS variable */;
   background-color: white;
-  border-radius: ds.$border-radius-lg;
-  box-shadow: ds.$shadow-md;
-  padding: ds.$spacing-4;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-4);
   flex-shrink: 0;
   transition: transform 0.3s ease;
   z-index: 10;
 
-  @media (max-width: ds.$breakpoint-lg) {
+  @media (max-width: var(--breakpoint-lg) /* TODO: Verify correct CSS variable */) {
     position: fixed;
     top: 0;
     left: 0;
@@ -126,13 +123,13 @@ $active-filter-bg: ds.$color-primary;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ds.$spacing-4;
-  padding-bottom: ds.$spacing-3;
-  border-bottom: 1px solid ds.$neutral-300;
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-3);
+  border-bottom: 1px solid var(--color-neutral-300);
 
   h3 {
-    font-size: ds.$font-size-xl;
-    font-weight: ds.$font-weight-semibold;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
     margin: 0;
   }
 }
@@ -140,20 +137,20 @@ $active-filter-bg: ds.$color-primary;
 .filter-sidebar-content {
   max-height: calc(100vh - 150px);
   overflow-y: auto;
-  padding-right: ds.$spacing-2;
+  padding-right: var(--spacing-2);
 
   h4 {
     font-size: 1rem;
-    font-weight: ds.$font-weight-semibold;
-    margin: ds.$spacing-4 0 ds.$spacing-2;
-    color: ds.$neutral-700;
+    font-weight: var(--font-weight-semibold);
+    margin: var(--spacing-4) 0 var(--spacing-2);
+    color: var(--color-neutral-700);
   }
 
   .filter-group {
     display: flex;
     flex-direction: column;
-    gap: ds.$spacing-2;
-    margin-bottom: ds.$spacing-4;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
   }
 
   .full-width {
@@ -162,8 +159,8 @@ $active-filter-bg: ds.$color-primary;
 
   .date-range-picker {
     display: flex;
-    gap: ds.$spacing-2;
-    margin-bottom: ds.$spacing-4;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
 
     nb-form-field {
       flex: 1;
@@ -173,8 +170,8 @@ $active-filter-bg: ds.$color-primary;
   .saved-filters {
     display: flex;
     flex-direction: column;
-    gap: ds.$spacing-2;
-    margin-bottom: ds.$spacing-6;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-6);
 
     .saved-filter-btn {
       text-align: left;
@@ -185,9 +182,9 @@ $active-filter-bg: ds.$color-primary;
   .filter-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: ds.$spacing-6;
-    padding-top: ds.$spacing-4;
-    border-top: 1px solid ds.$neutral-300;
+    margin-top: var(--spacing-6);
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--color-neutral-300);
   }
 }
 
@@ -202,24 +199,24 @@ $active-filter-bg: ds.$color-primary;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: ds.$spacing-2;
-  margin-bottom: ds.$spacing-4;
-  padding: ds.$spacing-3;
-  background-color: ds.$neutral-100;
-  border-radius: ds.$border-radius-md;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-3);
+  background-color: var(--color-neutral-100);
+  border-radius: var(--border-radius-md);
 }
 
 .active-filters-label {
-  font-weight: ds.$font-weight-medium;
-  color: ds.$neutral-700;
-  margin-right: ds.$spacing-2;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-700);
+  margin-right: var(--spacing-2);
 }
 
 .filter-chips {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: ds.$spacing-2;
+  gap: var(--spacing-2);
 
   nb-tag {
     margin: 0.25rem;
@@ -245,22 +242,22 @@ $active-filter-bg: ds.$color-primary;
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: ds.$spacing-8;
+  padding: var(--spacing-8);
 }
 
 .error-icon {
-  font-size: ds.$font-size-4xl;
-  color: ds.$error;
-  margin-bottom: ds.$spacing-4;
+  font-size: var(--font-size-4xl);
+  color: var(--error);
+  margin-bottom: var(--spacing-4);
   width: auto;
   height: auto;
 }
 
 .error-text {
-  font-size: ds.$font-size-xl;
-  font-weight: ds.$font-weight-medium;
-  color: ds.$neutral-800;
-  margin-bottom: ds.$spacing-6;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+  margin-bottom: var(--spacing-6);
 }
 
 /* Empty State */
@@ -271,37 +268,37 @@ $active-filter-bg: ds.$color-primary;
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  padding: ds.$spacing-8;
-  background-color: ds.$neutral-100;
-  border-radius: ds.$border-radius-lg;
-  border: 1px dashed ds.$neutral-400;
+  padding: var(--spacing-8);
+  background-color: var(--color-neutral-100);
+  border-radius: var(--border-radius-lg);
+  border: 1px dashed var(--color-neutral-400);
 }
 
 .empty-icon {
-  font-size: ds.$font-size-4xl;
-  color: ds.$neutral-500;
-  margin-bottom: ds.$spacing-4;
+  font-size: var(--font-size-4xl);
+  color: var(--color-neutral-500);
+  margin-bottom: var(--spacing-4);
   width: auto;
   height: auto;
 }
 
 .empty-text {
-  font-size: ds.$font-size-xl;
-  font-weight: ds.$font-weight-medium;
-  color: ds.$neutral-800;
-  margin-bottom: ds.$spacing-2;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+  margin-bottom: var(--spacing-2);
 }
 
 .empty-subtext {
-  color: ds.$neutral-600;
-  margin-bottom: ds.$spacing-6;
+  color: var(--color-neutral-600);
+  margin-bottom: var(--spacing-6);
 }
 
 /* Pagination */
 .pagination-container {
-  margin-top: ds.$spacing-8;
-  padding-top: ds.$spacing-6;
-  border-top: 1px solid ds.$neutral-200;
+  margin-top: var(--spacing-8);
+  padding-top: var(--spacing-6);
+  border-top: 1px solid var(--color-neutral-200);
 }
 
 /* Dialog Styles */
@@ -317,8 +314,8 @@ $active-filter-bg: ds.$color-primary;
       box-shadow 0.3s ease;
 
     &:hover {
-      transform: $card-hover-transform;
-      box-shadow: ds.$shadow-lg;
+      transform: var(--card-hover-transform);
+      box-shadow: var(--shadow-lg);
     }
   }
 
@@ -331,7 +328,7 @@ $active-filter-bg: ds.$color-primary;
 }
 
 /* Responsive Adjustments */
-@media (max-width: ds.$breakpoint-lg) {
+@media (max-width: var(--breakpoint-lg) /* TODO: Verify correct CSS variable */) {
   .content-with-sidebar {
     flex-direction: column;
   }
@@ -341,14 +338,14 @@ $active-filter-bg: ds.$color-primary;
   }
 }
 
-@media (max-width: ds.$breakpoint-md) {
+@media (max-width: var(--breakpoint-md) /* TODO: Verify correct CSS variable */) {
   .search-filters-bar {
     flex-direction: column;
     align-items: stretch;
   }
 
   .view-controls {
-    margin-top: ds.$spacing-4;
+    margin-top: var(--spacing-4);
     justify-content: space-between;
   }
 
@@ -357,16 +354,16 @@ $active-filter-bg: ds.$color-primary;
     align-items: flex-start;
 
     .active-filters-label {
-      margin-bottom: ds.$spacing-2;
+      margin-bottom: var(--spacing-2);
     }
   }
 }
 
-@media (max-width: ds.$breakpoint-sm) {
+@media (max-width: var(--breakpoint-sm) /* TODO: Verify correct CSS variable */) {
   .view-toggle {
     width: 100%;
     justify-content: space-between;
-    margin-bottom: ds.$spacing-2;
+    margin-bottom: var(--spacing-2);
   }
 
   .sort-button {
@@ -378,8 +375,8 @@ $active-filter-bg: ds.$color-primary;
 .pagination {
   margin-top: 2rem;
   padding: 1rem;
-  background-color: nb-theme(background-basic-color-2);
-  border-radius: nb-theme(border-radius);
+  background-color: var(--background-basic-color-2);
+  border-radius: var(--border-radius);
 
   .pagination-controls {
     display: flex;
@@ -410,9 +407,9 @@ $active-filter-bg: ds.$color-primary;
           justify-content: center;
 
           &.active {
-            background-color: nb-theme(color-primary-500);
-            color: nb-theme(text-control-color);
-            border-color: nb-theme(color-primary-500);
+            background-color: var(--color-primary-500);
+            color: var(--text-control-color);
+            border-color: var(--color-primary-500);
           }
         }
       }
@@ -430,7 +427,7 @@ $active-filter-bg: ds.$color-primary;
     }
 
     .page-info {
-      color: nb-theme(text-hint-color);
+      color: var(--text-hint-color);
       font-size: 0.875rem;
     }
   }

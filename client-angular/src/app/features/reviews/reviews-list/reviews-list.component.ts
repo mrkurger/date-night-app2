@@ -1,3 +1,7 @@
+import { NbIconModule } from '@nebular/theme';
+import { NbUserModule } from '@nebular/theme';
+import { NbBadgeModule } from '@nebular/theme';
+import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
