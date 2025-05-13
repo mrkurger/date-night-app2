@@ -1,63 +1,109 @@
+# Workflow name: Appears in the Actions tab of the GitHub repository.
 name: Server Tests
 
+# Defines the triggers for the workflow.
 on:
+  # Trigger on push events to the 'main' or 'develop' branches.
   push:
-    branches: [main, develop]
+    branches: [main, develop, Nebular-UI-Refactor]
+    # Only run if files in 'server/**' or the workflow file itself change.
     paths:
       - 'server/**'
       - '.github/workflows/server-tests.yml'
+  # Trigger on pull request events targeting the 'main' or 'develop' branches.
   pull_request:
     branches: [main, develop]
+    # Only run if files in 'server/**' change.
     paths:
       - 'server/**'
 
+# Defines the jobs to be run in the workflow.
 jobs:
+  # 'test' job: Runs server-side tests.
   test:
+    # Specifies the runner environment. 'ubuntu-latest' uses the latest stable Ubuntu image.
     runs-on: ubuntu-latest
+    # Sets a maximum execution time for the job.
     timeout-minutes: 15
 
+    # Defines services to be run as part of the job. Useful for databases, etc.
     services:
+      # Service name: 'mongodb'
       mongodb:
+        # Docker image for the service.
         image: mongo:6
+        # Maps ports from the service container to the runner.
         ports:
-          - 27017:27017
+          - 27017:27017 # MongoDB default port
 
+    # Defines the sequence of steps for the 'test' job.
     steps:
+      # Step 1: Check out the repository code.
+      # 'uses' specifies an action to run. 'actions/checkout@v4' is a standard GitHub action.
       - uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js and install dependencies.
       - name: Setup Node.js and Install Dependencies
+        # 'uses' specifies a custom local action.
         uses: ./.github/actions/setup-nodejs
+        # 'with' provides inputs to the action.
         with:
-          node-version: '22.x'
+          node-version: '22.x' # Specifies the Node.js version to set up.
+        # 'working-directory' specifies the directory where the action (.github/actions/setup-nodejs)
+        # and its internal commands (like npm install) will be executed.
+        # This was previously incorrectly indented under 'with'.
         working-directory: server
 
+      # Step 3: Run the tests.
       - name: Run tests
+        # 'run' executes shell commands.
         run: npm test
+        # 'working-directory' specifies the directory for this 'run' command.
         working-directory: server
+        # 'env' sets environment variables for this step.
         env:
           NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/test
+          MONGODB_URI: mongodb://localhost:27017/test # Connection string for the MongoDB service
 
+  # 'lint' job: Runs linting checks on the server-side code.
   lint:
+    # Specifies the runner environment.
     runs-on: ubuntu-latest
+    # Sets environment variables for all steps in this job.
     env:
-      CI: true
+      CI: true # Common environment variable indicating a CI environment.
+    # Sets a maximum execution time for the job.
     timeout-minutes: 10 # Add timeout to prevent runaway jobs
 
+    # 'strategy' defines a build matrix for running the job multiple times with different configurations.
     strategy:
       matrix:
-        node-version: [22.x]
+        # Defines a matrix variable 'node-version'. The job will run once for each version in the list.
+        node-version: [22.x] # Currently, only one version is specified.
 
+    # Defines the sequence of steps for the 'lint' job.
     steps:
+      # Step 1: Check out the repository code.
       - uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js and install dependencies.
       - name: Setup Node.js and Install Dependencies
+        # Uses the same custom local action.
         uses: ./.github/actions/setup-nodejs
+        # Inputs for the action.
         with:
+          # Uses the 'node-version' from the build matrix.
           node-version: ${{ matrix.node-version }}
+        # 'working-directory' for the action's execution.
+        # This was previously incorrectly indented under 'with'.
         working-directory: ./server
 
+      # Step 3: Run ESLint.
       - name: Run ESLint
+        # 'working-directory' for this 'run' command.
         working-directory: ./server
+        # Executes the ESLint command.
         run: npx eslint .
-        # continue-on-error: true # <-- REMOVED: Lint errors will now fail the workflow
+        # Example of how to handle errors (commented out):
+        # continue-on-error: true # If true, workflow continues even if this step fails.
+                                 # REMOVED: Lint errors will now fail the workflow by default.
