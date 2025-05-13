@@ -1,8 +1,46 @@
-import { ViewChild } from '@angular/core';
-import { Input } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  TemplateRef,
+  AfterViewChecked,
+  Input,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+// Nebular Components
+import {
+  NbDialogService,
+  NbDialogModule,
+  NbIconModule,
+  NbButtonModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbMenuModule,
+  NbTooltipModule,
+  NbTabsetModule,
+} from '@nebular/theme';
+
+// Custom Components
+import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
+import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import {
+  NbSortComponent,
+  NbSortHeaderComponent,
+  NbSortEvent,
+} from '../../shared/components/custom-nebular-components';
+
+// Services
+import { ChatService } from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -14,35 +52,8 @@ import { Component } from '@angular/core';
 // - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
 // - EMOJI_CATEGORIES: Categories of emojis available in the picker (default: see below)
 // ===================================================
-import { 
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  TemplateRef,
-  AfterViewChecked,
-import { ChatService } from '../../core/services/chat.service';
-import { NbSortComponent, NbSortHeaderComponent, NbSortEvent } from '../../shared/components/custom-nebular-components';
-
-import { AuthService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialog, NbDialogModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbMenuModule, NbTooltipModule, NbTabsetModule , NbDialogService} from '@nebular/theme';
-import { Subscription, BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
 
 // Material Imports
-
-
-
-
-
-
-
 
 // Emerald Components
 // TODO: Migrate to Nebular UI - import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
@@ -108,7 +119,6 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const TYPING_INDICATOR_DELAY = 500; // ms
 
 @Component({
-  
   selector: 'app-chat',
   standalone: true,
   imports: [
@@ -124,7 +134,10 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     NbDialogModule,
     AvatarComponent,
     SkeletonLoaderComponent,
-   NbSortComponent, NbSortHeaderComponent, NbSortEvent],
+    NbSortComponent,
+    NbSortHeaderComponent,
+    NbSortEvent,
+  ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
@@ -426,7 +439,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
 
         this.loadingContacts = false;
-      }
+      },
     });
   }
 
@@ -440,7 +453,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       lastSeen: contact.lastSeen || new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24),
       pinned: contact.pinned || false,
       archived: contact.archived || false,
-      typing: false
+      typing: false,
     }));
   }
 
@@ -478,7 +491,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
               this.extractMediaFromMessages();
             }
           }
-        }
+        },
       });
     }
   }
@@ -553,7 +566,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       type: att.type || att.mimeType || 'application/octet-stream',
       size: att.size || 0,
       url: att.url || att.path || '',
-      timestamp: new Date(att.timestamp || att.createdAt || Date.now())
+      timestamp: new Date(att.timestamp || att.createdAt || Date.now()),
     }));
   }
 
@@ -608,7 +621,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         matches.forEach((url) => {
           this.galleryLinks.push({
             url,
-            timestamp: message.timestamp
+            timestamp: message.timestamp,
           });
         });
       }
@@ -667,7 +680,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           error: (err) => {
             console.error('Error sending message:', err);
             this.notificationService.error('Failed to send message. Please try again.');
-          }
+          },
         });
     }
   }
@@ -956,7 +969,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         // Update message groups
         this.groupMessagesByDate();
       },
-      error: (err) => console.error('Error marking message as read:', err)
+      error: (err) => console.error('Error marking message as read:', err),
     });
   }
 
@@ -994,7 +1007,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   archiveAllChats(): void {
     this.contacts = this.contacts.map((contact) => ({
       ...contact,
-      archived: true
+      archived: true,
     }));
 
     this.filterContacts();
@@ -1325,7 +1338,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.dialog.open(this.imagePreviewDialog, {
       maxWidth: '90vw',
       maxHeight: '90vh',
-      panelClass: 'image-preview-dialog'
+      panelClass: 'image-preview-dialog',
     });
   }
 
@@ -1346,7 +1359,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       navigator
         .share({
           title: this.previewImage.name,
-          url: this.previewImage.url
+          url: this.previewImage.url,
         })
         .catch((err) => {
           console.error('Error sharing image:', err);
@@ -1421,7 +1434,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.dialog.open(this.mediaGalleryDialog, {
       width: '80vw',
       maxWidth: '800px',
-      maxHeight: '80vh'
+      maxHeight: '80vh',
     });
   }
 
@@ -1589,7 +1602,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
             size: 1024 * 1024 * 1.2, // 1.2MB
             url: '#',
             timestamp: new Date(now.setHours(9, 36)),
-          }
+          },
         ],
       },
       {
@@ -1612,7 +1625,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         message: contact.lastMessage,
         timestamp: contact.lastMessageTime,
         read: contact.unreadCount === 0,
-      }
+      },
     ];
   }
 }

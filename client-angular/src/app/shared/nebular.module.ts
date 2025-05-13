@@ -4,7 +4,9 @@
 // This file contains all Nebular module imports and exports
 // for consistent UI components across the application
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders, Type } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NbThemeModule,
   NbLayoutModule,
@@ -44,13 +46,12 @@ import {
   NbTableModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-const NB_MODULES = [
+const NEBULAR_MODULES: Array<Type<any> | ModuleWithProviders<any>> = [
   CommonModule,
   FormsModule,
   ReactiveFormsModule,
+  NbThemeModule.forRoot({ name: 'default' }),
   NbLayoutModule,
   NbButtonModule,
   NbCardModule,
@@ -60,19 +61,19 @@ const NB_MODULES = [
   NbUserModule,
   NbActionsModule,
   NbContextMenuModule,
-  NbMenuModule,
-  NbToastrModule,
-  NbDialogModule,
+  NbMenuModule.forRoot(),
+  NbToastrModule.forRoot(),
+  NbDialogModule.forRoot(),
   NbSpinnerModule,
   NbChatModule,
-  NbSidebarModule,
+  NbSidebarModule.forRoot(),
   NbListModule,
   NbSelectModule,
   NbAccordionModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
+  NbDatepickerModule.forRoot(),
+  NbTimepickerModule.forRoot(),
   NbToggleModule,
   NbPopoverModule,
   NbTooltipModule,
@@ -81,7 +82,7 @@ const NB_MODULES = [
   NbAlertModule,
   NbProgressBarModule,
   NbSearchModule,
-  NbWindowModule,
+  NbWindowModule.forRoot(),
   NbTagModule,
   NbTreeGridModule,
   NbStepperModule,
@@ -90,20 +91,8 @@ const NB_MODULES = [
 ];
 
 @NgModule({
-  imports: [
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbToastrModule.forRoot(),
-    NbWindowModule.forRoot(),
-    NbDatepickerModule.forRoot(),
-    NbTimepickerModule.forRoot(),
-    NbSidebarModule.forRoot(),
-    NbContextMenuModule,
-    NbEvaIconsModule,
-    ...NB_MODULES,
-  ],
-  exports: [...NB_MODULES],
+  imports: NEBULAR_MODULES,
+  exports: NEBULAR_MODULES,
 })
 export class NebularModule {}
 

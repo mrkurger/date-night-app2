@@ -12,6 +12,11 @@ on:
       - 'client-angular/**'  # Trigger workflow for PRs in Angular client
       - '.github/workflows/angular-tests.yml'  # Trigger workflow changes
 
+# Add concurrency settings to cancel in-progress runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # Unit Test Job
   test:

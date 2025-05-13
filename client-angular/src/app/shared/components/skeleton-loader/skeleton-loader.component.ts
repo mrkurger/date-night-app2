@@ -1,5 +1,4 @@
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -33,133 +32,49 @@ import { CommonModule } from '@angular/common';
   template: `
     <div
       class="skeleton-loader"
-      [ngClass]="[
-        'skeleton-loader--' + type,
-        'skeleton-loader--' + shape,
-        animated ? 'skeleton-loader--animated' : '',
-      ]"
-      [ngStyle]="getStyles()"
+      [class.skeleton-loader--circle]="shape === 'circle'"
+      [class.skeleton-loader--rect]="shape === 'rect'"
+      [style.width]="width"
+      [style.height]="height"
+      [style.margin]="margin"
     >
-      <ng-container [ngSwitch]="type">
-        <!-- Basic skeleton -->
-        <ng-container *ngSwitchCase="'basic'">
-          <div class="skeleton-loader__item"></div>
-        </ng-container>
-
-        <!-- Text skeleton with multiple lines -->
-        <ng-container *ngSwitchCase="'text'">
-          <div
-            class="skeleton-loader__line"
-            *ngFor="let line of getLinesArray(); let i = index"
-            [ngStyle]="getLineStyles(i)"
-          ></div>
-        </ng-container>
-
-        <!-- Card skeleton with image and text -->
-        <ng-container *ngSwitchCase="'card'">
-          <div class="skeleton-loader__image" [ngStyle]="{ 'height.px': imageHeight }"></div>
-          <div class="skeleton-loader__card-content">
-            <div class="skeleton-loader__title"></div>
-            <div class="skeleton-loader__text"></div>
-            <div class="skeleton-loader__text" [ngStyle]="{ 'width.%': 70 }"></div>
-          </div>
-        </ng-container>
-
-        <!-- Avatar skeleton -->
-        <ng-container *ngSwitchCase="'avatar'">
-          <div class="skeleton-loader__avatar"></div>
-        </ng-container>
-
-        <!-- Button skeleton -->
-        <ng-container *ngSwitchCase="'button'">
-          <div class="skeleton-loader__button"></div>
-        </ng-container>
-      </ng-container>
+      <div class="skeleton-loader__animation"></div>
     </div>
   `,
   styles: [
     `
-      .skeleton-loader {
+      :host {
         display: block;
-        position: relative;
+      }
+
+      .skeleton-loader {
+        background: var(--background-basic-color-2);
+        border-radius: var(--border-radius);
         overflow: hidden;
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-        border-radius: var(--border-radius-md);
+        position: relative;
       }
 
       .skeleton-loader--circle {
         border-radius: 50%;
       }
 
-      .skeleton-loader--rounded {
-        border-radius: var(--border-radius-full);
+      .skeleton-loader--rect {
+        border-radius: var(--border-radius);
       }
 
-      .skeleton-loader--animated {
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          animation: skeleton-loading 1.5s infinite;
-        }
-      }
-
-      .skeleton-loader__line {
-        height: 12px;
-        margin-bottom: 8px;
-        border-radius: var(--border-radius-sm);
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-
-      .skeleton-loader__image {
-        width: 100%;
-        height: 200px;
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-        border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
-      }
-
-      .skeleton-loader__card-content {
-        padding: 16px;
-      }
-
-      .skeleton-loader__title {
-        height: 24px;
-        margin-bottom: 16px;
-        border-radius: var(--border-radius-sm);
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-      }
-
-      .skeleton-loader__text {
-        height: 12px;
-        margin-bottom: 8px;
-        border-radius: var(--border-radius-sm);
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-
-      .skeleton-loader__avatar {
+      .skeleton-loader__animation {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
-      }
-
-      .skeleton-loader__button {
-        width: 100%;
-        height: 100%;
-        border-radius: var(--border-radius-md);
-        background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--background-basic-color-3),
+          transparent
+        );
+        animation: skeleton-loading 1.5s infinite;
       }
 
       @keyframes skeleton-loading {
@@ -170,87 +85,12 @@ import { CommonModule } from '@angular/common';
           transform: translateX(100%);
         }
       }
-
-      /* Dark mode support */
-      :host-context(.dark-theme) .skeleton-loader {
-        background-color: var(--skeleton-bg-dark, rgba(255, 255, 255, 0.08));
-      }
     `,
   ],
 })
 export class SkeletonLoaderComponent {
-  /**
-   * Width of the skeleton loader
-   */
-  @Input() width?: number | string;
-
-  /**
-   * Height of the skeleton loader
-   */
-  @Input() height?: number | string;
-
-  /**
-   * Type of skeleton loader
-   */
-  @Input() type: 'basic' | 'text' | 'card' | 'avatar' | 'button' = 'basic';
-
-  /**
-   * Shape of the skeleton loader
-   */
-  @Input() shape: 'rectangle' | 'circle' | 'rounded' = 'rectangle';
-
-  /**
-   * Number of lines for text type
-   */
-  @Input() lines = 3;
-
-  /**
-   * Whether to animate the skeleton loader
-   */
-  @Input() animated = true;
-
-  /**
-   * Height of the image for card type
-   */
-  @Input() imageHeight = 200;
-
-  /**
-   * Gets the styles for the skeleton loader
-   * @returns The styles object
-   */
-  getStyles(): { [key: string]: any } {
-    const styles: { [key: string]: any } = {};
-
-    if (this.width) {
-      styles['width'] = typeof this.width === 'number' ? `${this.width}px` : this.width;
-    }
-
-    if (this.height) {
-      styles['height'] = typeof this.height === 'number' ? `${this.height}px` : this.height;
-    }
-
-    return styles;
-  }
-
-  /**
-   * Gets an array of the specified number of lines
-   * @returns An array with the specified number of elements
-   */
-  getLinesArray(): number[] {
-    return Array(this.lines).fill(0);
-  }
-
-  /**
-   * Gets the styles for a specific line in text type
-   * @param index The index of the line
-   * @returns The styles object
-   */
-  getLineStyles(index: number): { [key: string]: any } {
-    // Make lines have varying widths for a more natural look
-    if (index === this.lines - 1) {
-      return { width: `${70 + Math.random() * 30}%` };
-    }
-
-    return { width: '100%' };
-  }
+  @Input() shape: 'circle' | 'rect' = 'rect';
+  @Input() width = '100%';
+  @Input() height = '20px';
+  @Input() margin = '0';
 }

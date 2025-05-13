@@ -539,7 +539,7 @@ interface FilterPreset {
     `
       :host {
         display: block;
-        padding: 2rem;
+        padding: var(--padding);
       }
 
       .favorites-page {
@@ -551,7 +551,7 @@ interface FilterPreset {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: var(--margin);
       }
 
       .page-title {
@@ -560,10 +560,10 @@ interface FilterPreset {
       }
 
       .filters-container {
-        background-color: var(--background-basic-color-1);
-        border-radius: var(--border-radius);
-        padding: 1.5rem;
-        margin-bottom: 2rem;
+        background-color: var(--card-background-color);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: var(--margin);
         box-shadow: var(--shadow);
       }
 
@@ -571,7 +571,7 @@ interface FilterPreset {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--margin);
 
         h3 {
           margin: 0;
@@ -581,29 +581,29 @@ interface FilterPreset {
 
       .basic-filters {
         display: grid;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
+        gap: var(--spacing);
+        margin-bottom: var(--margin);
       }
 
       .advanced-filters {
         display: grid;
-        gap: 1rem;
-        padding-top: 1.5rem;
+        gap: var(--spacing);
+        padding-top: var(--padding);
         border-top: 1px solid var(--divider-color);
       }
 
       .filter-row {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        gap: var(--spacing);
       }
 
       .active-filters {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 1rem;
-        padding-top: 1.5rem;
+        gap: var(--spacing);
+        padding-top: var(--padding);
         border-top: 1px solid var(--divider-color);
 
         h4 {
@@ -614,7 +614,7 @@ interface FilterPreset {
 
       .favorite-item {
         display: flex;
-        gap: 1rem;
+        gap: var(--spacing);
         width: 100%;
       }
 
@@ -626,18 +626,18 @@ interface FilterPreset {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-bottom: 1rem;
+        margin-bottom: var(--margin);
 
         h3 {
           margin: 0;
-          font-size: 1.25rem;
+          font-size: var(--text-heading-6-font-size);
 
           a {
             color: var(--text-basic-color);
             text-decoration: none;
 
             &:hover {
-              color: var(--color-primary-500);
+              color: var(--color-primary-hover);
             }
           }
         }
@@ -646,12 +646,12 @@ interface FilterPreset {
       .favorite-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--margin);
       }
 
       .favorite-tags {
-        margin-bottom: 1rem;
+        margin-bottom: var(--margin);
       }
 
       .favorite-notes {
@@ -662,41 +662,41 @@ interface FilterPreset {
 
       .priority-icon {
         &.high {
-          color: var(--color-danger-500);
+          color: var(--color-danger-default);
         }
 
         &.normal {
-          color: var(--color-warning-500);
+          color: var(--color-warning-default);
         }
 
         &.low {
-          color: var(--color-success-500);
+          color: var(--color-success-default);
         }
       }
 
       nb-checkbox {
-        margin-top: 0.25rem;
+        margin-top: var(--spacing-xs);
       }
 
       nb-tag-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: var(--spacing-xs);
       }
 
       nb-spinner {
-        margin: 2rem auto;
+        margin: var(--margin) auto;
       }
 
       nb-alert {
-        margin-bottom: 2rem;
+        margin-bottom: var(--margin);
       }
 
       nb-list-item {
-        padding: 1rem;
-        border-radius: var(--border-radius);
-        background-color: var(--background-basic-color-1);
-        margin-bottom: 1rem;
+        padding: var(--card-padding);
+        border-radius: var(--card-border-radius);
+        background-color: var(--card-background-color);
+        margin-bottom: var(--margin);
         box-shadow: var(--shadow);
 
         &:last-child {
@@ -1364,11 +1364,11 @@ export class FavoritesPageComponent implements OnInit {
   getPriorityIcon(priority: string): string {
     switch (priority) {
       case 'high':
-        return 'arrow_upward';
+        return 'arrow-up-outline';
       case 'low':
-        return 'arrow_downward';
+        return 'arrow-down-outline';
       default:
-        return 'remove_circle_outline';
+        return 'minus-outline';
     }
   }
 
