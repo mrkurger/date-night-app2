@@ -29,12 +29,15 @@ import routes from './routes/index.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpecs from './config/swagger.js';
 // Import but not using urlValidatorMiddleware yet - will be enabled in future
-// import { urlValidatorMiddleware } from './middleware/url-validator.js';
 import { mongoSanitize } from './middleware/mongo-sanitize.js';
 import client from 'prom-client';
+import { patchExpressRoute } from './middleware/url-validator.js';
 
 const app = express();
 let server;
+
+// Apply the patch to express.Route for all subsequent route definitions
+patchExpressRoute(express);
 
 // collect default metrics
 client.collectDefaultMetrics();
