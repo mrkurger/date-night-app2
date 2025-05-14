@@ -1,0 +1,38 @@
+name: Trivy Security Scan
+
+on:
+  push:
+    branches:
+      - "**" # Runs on all branches
+
+jobs:
+  trivy-scan:
+    name: Run Trivy Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Trivy
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      # Step 3: Scan filesystem for vulnerabilities
+      - name: Scan Repository
+        run: trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+
+      # Step 4: Scan for secrets
+      - name: Scan for Secrets
+        run: trivy fs --security-checks secret --exit-code 1 .
+
+      # Step 5: Scan dependencies (e.g., npm, pip, Maven)
+      - name: Scan Dependencies
+        run: trivy fs --security-checks vuln --exit-code 1 .
