@@ -1,13 +1,3 @@
-import { NbTagModule } from '@nebular/theme';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains the Tinder card component
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import {
   Component,
   Input,
@@ -18,6 +8,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NbTagModule, NbIconModule, NbButtonModule, NbCardModule } from '@nebular/theme';
 import { LabelComponent } from '../components/label/label.component';
 
 /**
@@ -48,8 +39,7 @@ export interface TinderCardData {
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, LabelComponent
-    NbTagModule,],
+  imports: [CommonModule, LabelComponent, NbTagModule, NbIconModule, NbButtonModule, NbCardModule],
 })
 export class TinderCardComponent implements AfterViewInit, OnDestroy {
   @Input() data!: TinderCardData;

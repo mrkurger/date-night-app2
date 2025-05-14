@@ -1,22 +1,16 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Inject } from '@angular/core';
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (tags-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-
+import {
+  NbIconModule,
+  NbFormFieldModule,
+  NbTagModule,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+} from '@nebular/theme';
 
 export interface TagsDialogData {
   title: string;
@@ -32,7 +26,17 @@ export interface TagsDialogData {
 @Component({
   selector: 'app-tags-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbTagModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbTagModule,
+  ],
   template: `
     <nb-card>
       <nb-card-header class="dialog-header">

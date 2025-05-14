@@ -1,18 +1,19 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-// ===================================================
-// This file contains settings for component configuration (favorite-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  NbToggleModule,
+  NbIconModule,
+  NbSelectModule,
+  NbFormFieldModule,
+  NbTagModule,
+  NbCardModule,
+  NbDialogModule,
+  NbButtonModule,
+  NbInputModule,
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbTagInputAddEvent,
+} from '@nebular/theme';
 
 import {
   FormsModule,
@@ -46,7 +47,20 @@ export interface FavoriteDialogResult {
 @Component({
   selector: 'app-favorite-dialog',
   standalone: true,
-  imports: [CommonModule, NbDialogModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbTagModule, NbToggleModule, FormsModule, ReactiveFormsModule, NbCardModule],
+  imports: [
+    CommonModule,
+    NbDialogModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+  ],
   template: `
     <nb-card class="favorite-dialog-container">
       <nb-card-header class="dialog-header">

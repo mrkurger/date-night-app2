@@ -40,7 +40,7 @@
       (click)="prevMedia($event)"
       aria-label="Previous media"
     >
-      <i class="fas fa-chevron-left"></i>
+      <nb-icon icon="arrow-left-outline"></nb-icon>
     </button>
     <button
       *ngIf="media && media.length > 1"
@@ -48,16 +48,16 @@
       (click)="nextMedia($event)"
       aria-label="Next media"
     >
-      <i class="fas fa-chevron-right"></i>
+      <nb-icon icon="arrow-right-outline"></nb-icon>
     </button>
 
     <!-- Like/Dislike Indicators -->
     <div class="nb-flip-card__like-indicator">
-      <i class="fas fa-heart"></i>
+      <nb-icon icon="heart-outline"></nb-icon>
       <span>LIKE</span>
     </div>
     <div class="nb-flip-card__dislike-indicator">
-      <i class="fas fa-times"></i>
+      <nb-icon icon="close-outline"></nb-icon>
       <span>NOPE</span>
     </div>
   </div>
@@ -71,7 +71,7 @@
         <span class="nb-flip-card__age" *ngIf="age">{{ age }}</span>
       </h2>
       <p class="nb-flip-card__subtitle" *ngIf="subtitle">
-        <i class="fas fa-map-marker-alt"></i> {{ subtitle }}
+        <nb-icon icon="map-outline"></nb-icon> {{ subtitle }}
       </p>
     </div>
 
@@ -81,12 +81,7 @@
 
       <!-- Tags -->
       <div class="nb-flip-card__tags" *ngIf="tags && tags.length">
-        <nb-tag
-          *ngFor="let tag of tags.slice(0, 5)"
-          [text]="tag"
-          size="small"
-          color="secondary"
-        >
+        <nb-tag *ngFor="let tag of tags.slice(0, 5)" [text]="tag" size="small" color="secondary">
         </nb-tag>
       </div>
     </div>
@@ -111,28 +106,28 @@
           title="View Details"
           (click)="$event.stopPropagation(); onActionClick('info')"
         >
-          <i class="fas fa-info-circle"></i>
+          <nb-icon icon="info-outline"></nb-icon>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--dislike"
           title="Dislike"
           (click)="$event.stopPropagation(); onSwipe('left')"
         >
-          <i class="fas fa-times"></i>
+          <nb-icon icon="close-outline"></nb-icon>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--like"
           title="Like"
           (click)="$event.stopPropagation(); onSwipe('right')"
         >
-          <i class="fas fa-heart"></i>
+          <nb-icon icon="heart-outline"></nb-icon>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--chat"
           title="Start Chat"
           (click)="$event.stopPropagation(); onActionClick('chat')"
         >
-          <i class="fas fa-comment"></i>
+          <nb-icon icon="message-circle-outline"></nb-icon>
         </button>
       </ng-template>
     </div>

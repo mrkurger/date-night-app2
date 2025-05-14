@@ -114,24 +114,21 @@ import('./utils/logger.js').then(({ requestLogger, logger }) => {
 
 // Security middleware
 // Set security HTTP headers with improved CSP
-// Allow unsafe-eval in development mode for Angular
+// CSP is now stricter: 'unsafe-inline' and 'unsafe-eval' removed
 const isDevelopment = process.env.NODE_ENV === 'development';
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        // Use nonce-based CSP and allow unsafe-eval in development
         scriptSrc: [
           "'self'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
-          ...(isDevelopment ? ["'unsafe-eval'", "'unsafe-inline'"] : []),
           'https://fonts.googleapis.com',
         ],
         styleSrc: [
           "'self'",
           (req, res) => `'nonce-${res.locals.cspNonce}'`,
-          "'unsafe-inline'", // Angular needs this
           'https://fonts.googleapis.com',
         ],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
@@ -143,14 +140,12 @@ app.use(
           'https://api.stripe.com',
           ...(isDevelopment ? ['http://localhost:*', 'ws://localhost:*'] : []),
         ],
-        // Add additional security directives
         objectSrc: ["'none'"],
         baseUri: ["'self'"],
         formAction: ["'self'"],
         frameAncestors: ["'self'"],
       },
     },
-    // Additional security headers
     crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: { policy: 'cross-origin' },
     xssFilter: true,

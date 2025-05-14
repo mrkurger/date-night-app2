@@ -167,7 +167,8 @@ export class AuthService implements NbRoleProvider {
    * The auth interceptor has been updated to handle this.
    */
   getToken(): string | null {
-    return null; // Token is in HttpOnly cookie, not accessible via JS
+    // Token is now stored in HttpOnly cookie; not accessible via JS
+    return null;
   }
 
   /**

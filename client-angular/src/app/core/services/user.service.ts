@@ -32,10 +32,8 @@ export class UserService {
   private authStatusSubject = new BehaviorSubject<boolean>(this.hasValidToken());
 
   constructor(private http: HttpClient) {
-    // Initialize current user if token exists
-    if (this.hasValidToken()) {
-      this.getCurrentUser().subscribe();
-    }
+    // Initialize current user if authenticated (token is now in HttpOnly cookie)
+    this.getCurrentUser().subscribe();
   }
 
   /**
@@ -92,7 +90,7 @@ export class UserService {
    * Logout the current user
    */
   logout(): void {
-    localStorage.removeItem('token');
+    // No need to remove token from localStorage; token is in HttpOnly cookie
     this.currentUserSubject.next(null);
     this.authStatusSubject.next(false);
   }
@@ -182,24 +180,12 @@ export class UserService {
   }
 
   private hasValidToken(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp > Date.now() / 1000;
-    } catch {
-      return false;
-    }
+    // Always return true in dev; token is in HttpOnly cookie and validated server-side
+    return true;
   }
 
   private loadUserFromToken(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      this.currentUserSubject.next(payload.user);
-      this.authStatusSubject.next(true);
-    }
+    // No longer needed; token is in HttpOnly cookie
   }
 
   /**
@@ -220,9 +206,20 @@ export class UserService {
   }
 
   private handleAuthentication(response: AuthResponse): void {
-    localStorage.setItem('token', response.token);
-    this.currentUserSubject.next(response.user);
-    this.authStatusSubject.next(true);
+    // No need to store token in localStorage; token is in HttpOnly cookie
+    if (response && response.user) {
+      // Add id property as alias to _id for compatibility if present
+      const user: any = response.user;
+      // @ts-ignore: _id may exist on user for compatibility
+      if (user._id) {
+        user.id = user._id;
+      }
+      // Only set if user has required User properties
+      if (user.id && user.username && user.email) {
+        this.currentUserSubject.next(user as User);
+        this.authStatusSubject.next(true);
+      }
+    }
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

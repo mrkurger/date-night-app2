@@ -17,6 +17,8 @@ import { Router } from '@angular/router';
  *
  * This interceptor adds authentication-related headers and ensures
  * credentials are sent with cross-origin requests to our API.
+ *
+ * Token is now stored in HttpOnly cookies; no need to add Authorization header from localStorage.
  */
 export const authInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,
@@ -25,12 +27,7 @@ export const authInterceptor: HttpInterceptorFn = (
   const userService = inject(UserService);
   const router = inject(Router);
 
-  // Add auth token to request if available
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    request = addToken(request, token);
-  }
+  // No longer add auth token from localStorage; rely on HttpOnly cookies
 
   // Add withCredentials for all requests to the API
   // This ensures cookies are sent with cross-origin requests
@@ -51,11 +48,3 @@ export const authInterceptor: HttpInterceptorFn = (
     }),
   );
 };
-
-function addToken(request: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
-  return request.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}

@@ -28,12 +28,7 @@ const baseDirectives = {
   'default-src': ["'self'"],
   'img-src': ["'self'", 'data:', 'blob:', 'https://docs-emerald.condorlabs.io'],
   'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://docs-emerald.condorlabs.io'],
-  'style-src': [
-    "'self'",
-    "'unsafe-inline'",
-    'https://fonts.googleapis.com',
-    'https://docs-emerald.condorlabs.io',
-  ],
+  'style-src': ["'self'", 'https://fonts.googleapis.com', 'https://docs-emerald.condorlabs.io'],
   'connect-src': ["'self'", 'ws:', 'wss:', 'https://docs-emerald.condorlabs.io'],
   'frame-src': ["'self'"],
   'object-src': ["'none'"],
@@ -43,18 +38,10 @@ const baseDirectives = {
   'manifest-src': ["'self'"],
 };
 
-// Development-specific CSP directives
+// Development-specific CSP directives (no unsafe-eval/inline)
 const developmentDirectives = {
   ...baseDirectives,
-  // Allow eval in development for hot module replacement and debugging
-  'script-src': [
-    "'self'",
-    "'unsafe-eval'",
-    "'unsafe-inline'",
-    'https://cdn.jsdelivr.net',
-    'https://docs-emerald.condorlabs.io',
-  ],
-  // More permissive connect-src for development tools
+  'script-src': ["'self'", 'https://cdn.jsdelivr.net', 'https://docs-emerald.condorlabs.io'],
   'connect-src': [
     ...baseDirectives['connect-src'],
     'http://localhost:*',
@@ -66,7 +53,6 @@ const developmentDirectives = {
 // Production-specific CSP directives
 const productionDirectives = {
   ...baseDirectives,
-  // More restrictive script-src for production
   'script-src': [
     "'self'",
     'https://cdn.jsdelivr.net',
@@ -74,7 +60,6 @@ const productionDirectives = {
     // Allow Angular's inline scripts with nonces or hashes in production
     "'sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'",
   ],
-  // Add report-uri for CSP violation reporting in production
   'report-uri': ['/api/v1/csp-report'],
 };
 

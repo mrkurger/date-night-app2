@@ -154,7 +154,7 @@ const logout = async (req, res) => {
         lastActive: new Date(),
       });
 
-      // Blacklist the current token
+      // Blacklist the current token (access and refresh) on logout for security
       if (req.token) {
         const TokenBlacklist = (await import('../../models/token-blacklist.model.js')).default;
 
